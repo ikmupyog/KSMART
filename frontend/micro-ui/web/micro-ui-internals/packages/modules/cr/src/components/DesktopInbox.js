@@ -7,7 +7,6 @@ import CRTable from "./inbox/CrTable";
 import Filter from "./inbox/Filter";
 import BirthSearchInbox from "./inbox/search";
 import { convertEpochToDateDMY } from  "../utils";
-import { LOCALE } from "../components/constants/Localization";
 
 const DesktopInbox = ({
   data,
@@ -239,7 +238,7 @@ const DesktopInbox = ({
   } else if (data && data.length === 0) {
     result = (
       <Card style={{ marginTop: 20 }}>
-        {t(LOCALE.NO_COMPLAINTS_EMPLOYEE)
+        {t("CS_MYAPPLICATIONS_NO_APPLICATION")
           .split("\\n")
           .map((text, index) => (
             <p key={index} style={{ textAlign: "center" }}>
@@ -274,7 +273,7 @@ const DesktopInbox = ({
   } else {
     result = (
       <Card style={{ marginTop: 20 }}>
-        {t(LOCALE.ERROR_LOADING_RESULTS)
+        {t("CS_COMMON_ERROR_LOADING_RESULTS")
           .split("\\n")
           .map((text, index) => (
             <p key={index} style={{ textAlign: "center" }}>

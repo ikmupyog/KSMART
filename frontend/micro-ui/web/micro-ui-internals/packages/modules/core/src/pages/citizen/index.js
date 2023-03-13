@@ -1,7 +1,7 @@
-import { BackButton } from "@egovernments/digit-ui-react-components";
+import { BackButton,CardBasedOptions,ComplaintIcon ,OBPSIcon,DropIcon} from "@egovernments/digit-ui-react-components";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Route, Switch, useLocation, useRouteMatch } from "react-router-dom";
+import { Route, Switch, useLocation, useRouteMatch, useHistory } from "react-router-dom";
 import ErrorBoundary from "../../components/ErrorBoundaries";
 import { AppHome } from "../../components/Home";
 import TopBarSideBar from "../../components/TopBarSideBar";
@@ -54,7 +54,113 @@ const Home = ({
     let Module_br = "Birth Certificate"
     let Module_dr = "Death Certificate"
     let crDeath = "cr-death"
+    let matchPath=`/digit-ui/citizen/${code.toLowerCase()}`
     // console.log(code);
+    const history = useHistory();
+    
+    const birthProps = {
+      header: t(""),
+      sideOption: {
+        name: t(""),
+        onClick: () => history.push("/digit-ui/citizen/all-services"),
+      },
+      options: [
+        {
+          name: t("Birth Registration"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname: '/digit-ui/citizen/cr-birth-home',
+            state: { module: "cr-birth" }
+          }),
+        },
+
+      ],
+      styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
+    };
+    const birthRegProps = {
+      header: t(""),
+      sideOption: {
+        name: t(""),
+        onClick: () => history.push("/digit-ui/citizen/all-services"),
+      },
+      options: [
+        {
+          name: t("New Registration"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname: `${matchPath}/cr-birth-creation`,
+            state: { module: "cr-birth" }
+          }),
+        },
+        {
+          name: t("Still Birth Registration"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname: `${matchPath}/cr-stillbirth-creation`,
+            state: { module: "cr-birth" }
+          }),
+        },
+        {
+          name: t("Download Certificate"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname:`${matchPath}/create-birth-certificate`,
+            state: { module: "cr-birth" }
+          }),
+        },
+        
+
+      ],
+      styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
+    };
+    const DearhRegProps = {
+      header: t(""),
+      sideOption: {
+        name: t(""),
+        onClick: () => history.push("/digit-ui/citizen/all-services"),
+      },
+      options: [
+        {
+          name: t("New Registration"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname: `${matchPath}/cr-death-creation`,
+            state: { module: "cr-birth" }
+          }),
+        },
+        {
+          name: t("Download Certificate"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname: `${matchPath}/create-death-certificate`,
+            state: { module: "cr-birth" }
+          }),
+        },    
+
+      ],
+      styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
+    };
+
+    const deathProps = {
+      header: t(""),
+      sideOption: {
+        name: t(""),
+        onClick: () => history.push("/digit-ui/citizen/all-services"),
+      },
+      options: [
+        {
+        name: t("Death Registration"),
+        Icon: <OBPSIcon />,
+        onClick: () => history.push({
+          pathname: '/digit-ui/citizen/cr-death-home',
+          state: { module: "cr-death" }
+        }),
+
+      },
+
+      ],
+      styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
+    };
     return (
       <React.Fragment>
         {code === "CR" && location?.state?.module === crBirth ? (
@@ -64,8 +170,11 @@ const Home = ({
               <BackButton className="moduleLinkHomePageBackButton" />
                 <h1>{t(Module_br.toUpperCase())}</h1>
             </div>
-            <div className="moduleLinkHomePageModuleLinks">
+            {/* <div className="moduleLinkHomePageModuleLinks">
               <Links key={index} module={location?.state?.module} matchPath={`/digit-ui/citizen/${code.toLowerCase()}`} userType={"citizen"} />
+            </div> */}
+             <div className="ServicesSection" style={{display:"flex",marginTop:"20px"}}>
+                <CardBasedOptions {...birthRegProps} />
             </div>
           </Route>
         ) :
@@ -76,11 +185,31 @@ const Home = ({
               <BackButton className="moduleLinkHomePageBackButton" />
                 <h1>{t(Module_dr.toUpperCase())}</h1>
             </div>
-            <div className="moduleLinkHomePageModuleLinks">
+            {/* <div className="moduleLinkHomePageModuleLinks">
               <Links key={index} module={location?.state?.module} matchPath={`/digit-ui/citizen/${code.toLowerCase()}`} userType={"citizen"} />
+            </div> */}
+            <div className="ServicesSection" style={{display:"flex",marginTop:"20px"}}>
+                <CardBasedOptions {...DearhRegProps} />
             </div>
           </Route>
-        ) :
+        ) : 
+        code === "CR"?
+        (
+          <Route key={index} path={`${path}/${code.toLowerCase()}-home`}>
+            <div className="moduleLinkHomePage">
+              <img src={bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
+              <BackButton className="moduleLinkHomePageBackButton" />
+              <h1>{t("MODULE_" + code.toUpperCase())}</h1>
+            </div>
+            <div className="moduleLinkHomePageModuleLinks">
+            <div className="ServicesSection" style={{display:"flex"}}>
+                <CardBasedOptions {...birthProps} />
+                <CardBasedOptions {...deathProps} />
+         </div>
+            </div>
+          </Route>
+        )
+        :
          (
           <Route key={index} path={`${path}/${code.toLowerCase()}-home`}>
             <div className="moduleLinkHomePage">

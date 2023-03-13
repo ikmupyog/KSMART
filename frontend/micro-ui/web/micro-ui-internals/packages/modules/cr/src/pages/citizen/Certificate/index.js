@@ -68,7 +68,7 @@ const DeathCertificateSearch = ({ path }) => {
         filestoreId={storeId}
         isSuccess={isSuccess}
         isLoading={isLoading}
-        count={Count}
+        count={count} 
       />
     </React.Fragment>
   );

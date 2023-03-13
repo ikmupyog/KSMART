@@ -14,7 +14,6 @@ const ApplicationDetails = () => {
   const [showToast, setShowToast] = useState(null);
   // const [callUpdateService, setCallUpdateValve] = useState(false);
   const [businessService, setBusinessService] = useState("BIRTHHOSP21"); //DIRECTRENEWAL
-  // const [businessService, setBusinessService] = useState("NewBirthTwentyOne"); //DIRECTRENEWAL
   const [numberOfApplications, setNumberOfApplications] = useState([]);
   const [allowedToNextYear, setAllowedToNextYear] = useState(false);
   sessionStorage.setItem("applicationNumber", applicationNumber)

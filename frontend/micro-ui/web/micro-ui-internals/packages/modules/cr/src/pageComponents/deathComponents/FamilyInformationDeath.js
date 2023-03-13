@@ -8,7 +8,6 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
-
   const { data: Spouse = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "SpouseType");
   let cmbspouse = [];
   Spouse &&
@@ -16,8 +15,13 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
     Spouse["birth-death-service"].SpouseType.map((ob) => {
       cmbspouse.push(ob);
     });
-    const [SpouseType, setSpouseType] = useState(formData?.FamilyInformationDeath?.SpouseType?.code ? formData?.FamilyInformationDeath?.SpouseType : formData?.FamilyInformationDeath?.SpouseType ?
-      (cmbspouse.filter(cmbspouse => cmbspouse.code === formData?.FamilyInformationDeath?.SpouseType)[0]) : "");
+  const [SpouseType, setSpouseType] = useState(
+    formData?.FamilyInformationDeath?.SpouseType?.code
+      ? formData?.FamilyInformationDeath?.SpouseType
+      : formData?.FamilyInformationDeath?.SpouseType
+      ? cmbspouse.filter((cmbspouse) => cmbspouse.code === formData?.FamilyInformationDeath?.SpouseType)[0]
+      : ""
+  );
   const [SpouseUnavailable, setSpouseUnavailable] = useState(
     formData?.FamilyInformationDeath?.SpouseUnavailable
       ? formData?.FamilyInformationDeath?.SpouseUnavailable
@@ -39,7 +43,9 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
   //     ? cmbspouse.filter((cmbspouse) => cmbspouse.code === formData?.InformationDeath?.SpouseType)[0]
   //     : null
   // );
-    const [SpouseNameEN, setSpouseNameEN] = useState(iseditDeath ? formData?.FamilyInformationDeath?.SpouseNameEN ?. formData?.FamilyInformationDeath?.SpouseNameEN : "");
+  const [SpouseNameEN, setSpouseNameEN] = useState(
+    iseditDeath ? formData?.FamilyInformationDeath?.SpouseNameEN?.formData?.FamilyInformationDeath?.SpouseNameEN : ""
+  );
 
   // const [SpouseNameEN, setSpouseNameEN] = useState(
   //   formData?.FamilyInformationDeath?.SpouseNameEN ? formData?.FamilyInformationDeath?.SpouseNameEN : ""
@@ -87,9 +93,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
   const [FamilyEmailId, setFamilyEmailId] = useState(
     formData?.FamilyInformationDeath?.FamilyEmailId ? formData?.FamilyInformationDeath?.FamilyEmailId : ""
   );
-
-  const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  let naturetypecmbvalue = null;
+  const [inputValue, setInputValue] = useState("");
 
   const onSkip = () => onSelect();
 
@@ -245,26 +249,18 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
 
   const goNext = () => {
     sessionStorage.setItem("SpouseType", SpouseType ? SpouseType.code : null);
-    // sessionStorage.setItem("setTitleB", setTitleB ? setTitleB.code : null);
     sessionStorage.setItem("SpouseNameEN", SpouseNameEN ? SpouseNameEN : null);
     sessionStorage.setItem("SpouseNameMl", SpouseNameMl ? SpouseNameMl : null);
     sessionStorage.setItem("SpouseAadhaar", SpouseAadhaar ? SpouseAadhaar : null);
-
     sessionStorage.setItem("FatherNameEn", FatherNameEn ? FatherNameEn : null);
     sessionStorage.setItem("FatherNameMl", FatherNameMl ? FatherNameMl : null);
     sessionStorage.setItem("FatherAadharNo", FatherAadharNo ? FatherAadharNo : null);
-    // sessionStorage.setItem("FatherMobile", FatherMobile ? FatherMobile : null);
-
     sessionStorage.setItem("MotherNameEn", MotherNameEn ? MotherNameEn : null);
     sessionStorage.setItem("MotherNameMl", MotherNameMl ? MotherNameMl : null);
     sessionStorage.setItem("MotherAadharNo", MotherAadharNo ? MotherAadharNo : null);
-    // sessionStorage.setItem("MotherEmail", MotherEmail ? MotherEmail : null);
-    // sessionStorage.setItem("MotherMobile", MotherMobile ? MotherMobile : null);
-
     sessionStorage.setItem("FatherUnavailable", FatherUnavailable);
     sessionStorage.setItem("MotherUnavailable", MotherUnavailable);
     sessionStorage.setItem("SpouseUnavailable", SpouseUnavailable);
-
     sessionStorage.setItem("FamilyMobileNo", FamilyMobileNo);
     sessionStorage.setItem("FamilyEmailId", FamilyEmailId);
 
@@ -286,34 +282,14 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
       FamilyEmailId,
     });
   };
-  
-  if (iseditDeath) {
 
+  if (iseditDeath) {
     if (formData?.FamilyInformationDeath?.SpouseType != null) {
       if (cmbspouse.length > 0 && (SpouseType === undefined || SpouseType === "")) {
-        setSpouseType(cmbspouse.filter(cmbspouse => cmbspouse.code === formData?.FamilyInformationDeath?.SpouseType)[0]);
+        setSpouseType(cmbspouse.filter((cmbspouse) => cmbspouse.code === formData?.FamilyInformationDeath?.SpouseType)[0]);
       }
     }
   }
-    // if (formData?.ChildDetails?.medicalAttensionSub != null) {
-    //   if (cmbAttDeliverySub.length > 0 && (medicalAttensionSub === undefined || medicalAttensionSub === "")) {
-    //     setMedicalAttensionSub(cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.ChildDetails?.medicalAttensionSub)[0]);
-    //   }
-    // }
-    // if (formData?.ChildDetails?.pregnancyDuration != null) {
-    //   console.log("pregnancyDuration" + pregnancyDuration);
-    //   if (cmbPregWeek.length > 0 && (pregnancyDuration === undefined || pregnancyDuration === "")) {
-    //     setPregnancyDuration(cmbPregWeek.filter(cmbPregWeek => parseInt(cmbPregWeek.code) === formData?.ChildDetails?.pregnancyDuration)[0]);
-    //   }
-    // }
-    // if (formData?.ChildDetails?.deliveryMethods != null) {
-    //   if (cmbDeliveryMethod.length > 0 && (deliveryMethods === undefined || deliveryMethods === "")) {
-    //     // console.log(cmbDeliveryMethod.filter(cmbDeliveryMethod => parseInt(cmbDeliveryMethod.code) === formData?.ChildDetails?.deliveryMethods)[0]);
-    //     setDeliveryMethod(cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.ChildDetails?.deliveryMethods)[0]);
-    //   }
-    // }
-  
-  const [inputValue, setInputValue] = useState("");
 
   const handleBlur = (event) => {
     const value = event.target.value;
@@ -372,7 +348,6 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
                     option={cmbspouse}
                     selected={SpouseType}
                     select={setSelectSpouseType}
-                    disabled={isEdit}
                     placeholder={`${t("CR_SPOUSE_TYPE_EN")}`}
                   />
                 </div>
@@ -388,7 +363,6 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
                     name="SpouseNameEN"
                     value={SpouseNameEN}
                     onChange={setSelectSpouseNameEN}
-                    disable={isEdit}
                     placeholder={`${t("CR_NAME_EN")}`}
                     {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                   />
@@ -405,7 +379,6 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
                     name="SpouseNameMl"
                     value={SpouseNameMl}
                     onChange={setSelectSpouseNameMl}
-                    disable={isEdit}
                     placeholder={`${t("CR_NAME_ML")}`}
                     {...(validation = {
                       pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -427,7 +400,6 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
                     defaultValue={inputValue}
                     onBlur={handleBlur}
                     onChange={setSelectSpouseAadhaar}
-                    disable={isEdit}
                     placeholder={`${t("CS_COMMON_AADHAAR")}`}
                     {...(validation = { isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                   />
@@ -471,7 +443,6 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
                     name="FatherNameEn"
                     value={FatherNameEn}
                     onChange={setSelectFatherNameEn}
-                    disable={isEdit}
                     placeholder={`${t("CR_NAME_EN")}`}
                     {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_NAME_EN") })}
                   />
@@ -488,7 +459,6 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
                     name="FatherNameMl"
                     value={FatherNameMl}
                     onChange={setSelectFatherNameMl}
-                    disable={isEdit}
                     placeholder={`${t("CR_NAME_ML")}`}
                     {...(validation = {
                       pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -508,7 +478,6 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
                     name="FatherAadharNo"
                     value={FatherAadharNo}
                     onChange={setSelectFatherAadharNo}
-                    disable={isEdit}
                     placeholder={`${t("CS_COMMON_AADHAAR")}`}
                     {...(validation = { pattern: "^[0-9]{12}$", type: "number", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                   />
@@ -554,7 +523,6 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
                     name="MotherNameEn"
                     value={MotherNameEn}
                     onChange={setSelectMotherNameEn}
-                    disable={isEdit}
                     placeholder={`${t("CR_NAME_EN")}`}
                     {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_NAME_EN") })}
                   />
@@ -572,7 +540,6 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
                     name="MotherNameMl"
                     value={MotherNameMl}
                     onChange={setSelectMotherNameMl}
-                    disable={isEdit}
                     placeholder={`${t("CR_NAME_ML")}`}
                     {...(validation = {
                       pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -592,7 +559,6 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
                     name="MotherAadharNo"
                     value={MotherAadharNo}
                     onChange={setSelectMotherAadharNo}
-                    disable={isEdit}
                     placeholder={`${t("CS_COMMON_AADHAAR")}`}
                     {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                   />
@@ -623,7 +589,6 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
                 name="FamilyMobileNo"
                 value={FamilyMobileNo}
                 onChange={setSelectFamilyMobileNo}
-                disable={isEdit}
                 placeholder={`${t("CR_FAMILY_MOBILE_NO")}`}
                 {...(validation = { pattern: "^[0-9 ]*$", isRequired: false, type: "text", title: t("CR_INVALID_PHONE_NO") })}
               />
@@ -641,7 +606,6 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
                 name="FamilyEmailId"
                 value={FamilyEmailId}
                 onChange={setSelectFamilyEmailId}
-                disable={isEdit}
                 placeholder={`${t("CR_EMAIL_ID")}`}
                 {...(validation = { isRequired: false, type: "email", title: t("CR_INVALID_EMAIL_ID") })}
               />

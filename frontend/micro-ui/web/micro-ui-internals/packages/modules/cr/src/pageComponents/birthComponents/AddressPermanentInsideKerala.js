@@ -12,7 +12,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   permntInKeralaAdrHouseNameMl, setpermntInKeralaAdrHouseNameMl, permntInKeralaAdrLocalityNameEn, setpermntInKeralaAdrLocalityNameEn,
   permntInKeralaAdrLocalityNameMl, setpermntInKeralaAdrLocalityNameMl, permntInKeralaAdrStreetNameEn, setpermntInKeralaAdrStreetNameEn,
   permntInKeralaAdrStreetNameMl, setpermntInKeralaAdrStreetNameMl, lbs, setLbs, Talukvalues, setLbsTalukvalue, Villagevalues, setLbsVillagevalue, permntInKeralaWardNo,
-  setpermntInKeralaWardNo, PostOfficevalues, setPostOfficevalues
+  setpermntInKeralaWardNo, PostOfficevalues, setPostOfficevalues,isEditBirth = false, isEditDeath = false
 
 }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -194,11 +194,8 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
     }
   }
   function setSelectpermntInKeralaAdrHouseNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setpermntInKeralaAdrHouseNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+      setpermntInKeralaAdrHouseNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectpermntInKeralaAdrHouseNameMl(e) {
@@ -211,11 +208,8 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   }
 
   function setSelectpermntInKeralaAdrLocalityNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setpermntInKeralaAdrLocalityNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+      setpermntInKeralaAdrLocalityNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
@@ -229,11 +223,8 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   }
 
   function setSelectpermntInKeralaAdrStreetNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setpermntInKeralaAdrStreetNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+      setpermntInKeralaAdrStreetNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
@@ -261,37 +252,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   //     }
   // }, [lbs, isInitialRender]);
   const goNext = () => {
-    //  sessionStorage.setItem("permntInKeralaAdrLBTypeName", permntInKeralaAdrLBTypeName.code);
-
-    // sessionStorage.setItem("permntInKeralaAdrHouseNameEn", permntInKeralaAdrHouseNameEn ? permntInKeralaAdrHouseNameEn : null);
-    // sessionStorage.setItem("permntInKeralaAdrHouseNameMl", permntInKeralaAdrHouseNameMl ? permntInKeralaAdrHouseNameMl : null);
-    // sessionStorage.setItem("permntInKeralaAdrLocalityNameEn", permntInKeralaAdrLocalityNameEn ? permntInKeralaAdrLocalityNameEn : null);
-    // sessionStorage.setItem("permntInKeralaAdrLocalityNameMl", permntInKeralaAdrLocalityNameMl ? permntInKeralaAdrLocalityNameMl : null);
-    // sessionStorage.setItem("permntInKeralaAdrStreetNameEn", permntInKeralaAdrStreetNameEn ? permntInKeralaAdrStreetNameEn : null);
-    // sessionStorage.setItem("permntInKeralaAdrStreetNameMl", permntInKeralaAdrStreetNameMl ? permntInKeralaAdrStreetNameMl : null);
-    // sessionStorage.setItem("permntInKeralaAdrVillage", permntInKeralaAdrVillage ? permntInKeralaAdrVillage.code : null);
-    // sessionStorage.setItem("permntInKeralaAdrLBName", permntInKeralaAdrLBName ? permntInKeralaAdrLBName : null);
-    // sessionStorage.setItem("permntInKeralaAdrDistrict", permntInKeralaAdrDistrict ? permntInKeralaAdrDistrict.code : null);
-    // sessionStorage.setItem("permntInKeralaAdrTaluk", permntInKeralaAdrTaluk ? permntInKeralaAdrTaluk.code : null);
-    // sessionStorage.setItem("permntInKeralaAdrPostOffice", permntInKeralaAdrPostOffice ? permntInKeralaAdrPostOffice.code : null);
-    // sessionStorage.setItem("permntInKeralaAdrPincode", permntInKeralaAdrPincode ? permntInKeralaAdrPincode.code : null);
-    // sessionStorage.setItem("permntInKeralaWardNo", permntInKeralaWardNo ? permntInKeralaWardNo.code : null);
-
-    // onSelect(config.key, {
-    //   permntInKeralaAdrLBName,
-    //   permntInKeralaAdrDistrict,
-    //   permntInKeralaAdrTaluk,
-    //   permntInKeralaAdrVillage,
-    //   permntInKeralaAdrLocalityNameEn,
-    //   permntInKeralaAdrStreetNameEn,
-    //   permntInKeralaAdrHouseNameEn,
-    //   permntInKeralaAdrLocalityNameMl,
-    //   permntInKeralaAdrStreetNameMl,
-    //   permntInKeralaAdrHouseNameMl,
-    //   permntInKeralaAdrPincode,
-    //   permntInKeralaAdrPostOffice,
-    //   permntInKeralaWardNo,
-    // });
+    
   };
 
   if (islocalbodiesLoading || isPostOfficeLoading || isDistrictLoading || isTalukLoading || isVillageLoading || isWardLoaded) {

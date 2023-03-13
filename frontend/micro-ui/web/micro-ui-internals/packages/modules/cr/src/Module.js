@@ -10,6 +10,8 @@ import AddressPermanent from "../src/pageComponents/birthComponents/AddressPerma
 import MultipleBirth from "../src/pageComponents/birthComponents/MultipleBirth";
 import CreateBirthRegistration from "./pages/citizen/BirthRegistration";
 import CreateStillBirthRegistration from "./pages/citizen/StillBirthRegistration";
+import CreateBornOutsideRegistration from "./pages/citizen/BornOutsideReg";
+
 
 import ParentsDetails from "../src/pageComponents/birthComponents/ParentsDetails";
 import BirthPlaceHospital from "../src/pageComponents/birthComponents/BirthPlaceHospital";
@@ -37,8 +39,10 @@ import StillBirthPlaceHospital from "../src/pageComponents/stillBirthComponents/
 import StillBirthPlaceHome from "../src/pageComponents/stillBirthComponents/StillBirthPlaceHome";
 import StillBirthInitiatorDetails from "../src/pageComponents/stillBirthComponents/StillBirthInitiatorDetails";
 import StillBirthCheckPage from "./pages/citizen/StillBirthRegistration/StillBirthCheckPage";
+import BornOutsideCheckPage from "./pages/citizen/BornOutsideReg/BornOutsideCheckPage";
 
 import BornOutsideChildDetails from "../src/pageComponents/bornOutsideIndiaComponents/BornOutsideChildDetails";
+import BornOutsideParentsDetails from "../src/pageComponents/bornOutsideIndiaComponents/BornOutsideParentsDetails";
 
 
 // import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
@@ -103,6 +107,8 @@ import CitizenApp from "./pages/citizen";
 import CreateMarriageRegistration from "./pages/citizen/MarriageRegistration";
 import GroomDetails from "./pageComponents/marriageComponents/GroomDetails";
 import BrideDetails from "./pageComponents/marriageComponents/BrideDetails";
+import MarriageInstitution from "./pageComponents/marriageComponents/MarriageInstitution";
+import MarriagePublicPlace from "./pageComponents/marriageComponents/MarriagePublicPlace"
 export const CRModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
 
@@ -130,14 +136,22 @@ export const CRLinks = ({ matchPath, userType }) => {
     {
       link: `${matchPath}/cr-birth-creation`,
       i18nKey: t("CR_BIRTH_REGISTRATION"),
+      section:'birth'
     },
     {
       link: `${matchPath}/cr-stillbirth-creation`,
       i18nKey: t("CR_STILL_BIRTH_REGISTRATION"),
+      section:'birth'
+    },
+    {
+      link: `${matchPath}/cr-outsideindiabirth-creation`,
+      i18nKey: t("CR_OUTSIDEINDIA_BIRTH_REGISTRATION"),
+      section:'birth'
     },
     {
       link: `${matchPath}/cr-death-creation`,
       i18nKey: t("CR_DEATH_REGISTRATION"),
+      section:'death'
     },
     // {
     //   link: `${matchPath}/cr-marriage-creation`,
@@ -146,10 +160,12 @@ export const CRLinks = ({ matchPath, userType }) => {
     {
       link: `${matchPath}/create-birth-certificate`,
       i18nKey: t("CR_BIRTH_CERTIFICATE"),
+      section:'birth'
     },
     {
       link: `${matchPath}/create-death-certificate`,
       i18nKey: t("CR_DEATH_CERTIFICATE"),
+      section:'death'
     },
 
     // {
@@ -192,6 +208,7 @@ const componentsToRegister = {
   MultipleBirth,
   CRCreateBirthRegistration: CreateBirthRegistration,
   CRCreateStillBirthRegistration: CreateStillBirthRegistration,
+  CRCreateBornOutsideRegistration: CreateBornOutsideRegistration,  
   ParentsDetails,
   BirthPlaceHospital,
   BirthPlaceInstitution,
@@ -218,6 +235,9 @@ const componentsToRegister = {
   StillBirthPlaceVehicle,
   StillBirthInitiatorDetails,
   StillBirthCheckPage,
+  //////////////////
+  BornOutsideChildDetails,
+  BornOutsideParentsDetails,
   //////////////////
   // SearchRegistry,
   AdoptionDetails,
@@ -269,6 +289,8 @@ const componentsToRegister = {
   CRCreateMarriageRegistration: CreateMarriageRegistration,
   GroomDetails,
   BrideDetails,
+  MarriageInstitution,
+  MarriagePublicPlace,
 };
 
 export const initCRComponents = () => {

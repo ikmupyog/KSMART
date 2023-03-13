@@ -11,9 +11,6 @@ const Initiater = ({ config, onSelect, userType, formData,iseditDeath }) => {
 
   const { t } = useTranslation();
   let validation = {};
-
-  const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-
   const [IsDeclarationInitiator, setIsDeclarationInitiator] = useState(
     formData?.Initiator?.IsDeclarationInitiator ? formData?.Initiator?.IsDeclarationInitiator : false
   );
@@ -198,28 +195,9 @@ const Initiater = ({ config, onSelect, userType, formData,iseditDeath }) => {
           <div className="col-md-12">
             
             <CheckBox label={t("CR_INITIATOR_DECLARATION_STATEMENT")} onChange={setselectIsDeclarationInitiator} value={IsDeclarationInitiator} checked={IsDeclarationInitiator} />
-            {/* <CheckBox label={t("TestDescription")} onChange={setDeclarationInfotwo} value={isDeclarationInfotwo} checked={isDeclarationInfotwo} /> */}
           </div>
         </div>
-        {/* <div className="row">
-          <div className="col-md-12">
-            <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DOCUMENTS")}`}</span>
-            </h1>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <CheckBox label={t("TestDocuments")} onChange={setDeclarationInfoone} value={isDeclarationInfoone} checked={isDeclarationInfoone} />
-          </div>
-        </div> */}
-        {/* <div className="row">
-          <div className="col-md-12">
-            <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t(" CR_INITIATOR_DETAILS")}`}</span>
-            </h1>
-          </div>
-        </div> */}
+        
 
         <div className="row">
           <div className="col-md-12">
@@ -236,7 +214,6 @@ const Initiater = ({ config, onSelect, userType, formData,iseditDeath }) => {
                 name="InitiatorRelation"
                 value={InitiatorRelation}
                 onChange={setSelectInitiatorRelation}
-                disable={isEdit}
                 placeholder={`${t("CR_RELATION")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_RELATION") })}
               />
@@ -254,7 +231,6 @@ const Initiater = ({ config, onSelect, userType, formData,iseditDeath }) => {
                 name="InitiatorAadhaar"
                 value={InitiatorAadhaar}
                 onChange={setSelectInitiatorAadhaar}
-                disable={isEdit}
                 placeholder={`${t("CS_COMMON_AADHAAR")}`}
                 {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
               />
@@ -273,7 +249,6 @@ const Initiater = ({ config, onSelect, userType, formData,iseditDeath }) => {
                 name="InitiatorName"
                 value={InitiatorName}
                 onChange={setSelectInitiatorName}
-                disable={isEdit}
                 placeholder={`${t("CR_INITIATOR_NAME")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMANT_NAME") })}
               />
@@ -293,7 +268,6 @@ const Initiater = ({ config, onSelect, userType, formData,iseditDeath }) => {
                 name="InitiatorMobile"
                 value={InitiatorMobile}
                 onChange={setSelectInitiatorMobile}
-                disable={isEdit}
                 placeholder={`${t("CR_MOBILE_NO")}`}
                 {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "number", title: t("CR_INVALID_MOBILE_NO") })}
               />
@@ -313,7 +287,6 @@ const Initiater = ({ config, onSelect, userType, formData,iseditDeath }) => {
                 name="InitiatorAddress"
                 value={InitiatorAddress}
                 onChange={setSelectInitiatorAddress}
-                disable={isEdit}
                 placeholder={`${t("CR_ADDRESS")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRESS") })}
               />

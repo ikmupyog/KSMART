@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCountry, setpermtaddressCountry,
     permtaddressStateName, setpermtaddressStateName, value, setValue, countryvalue, setCountryValue,
     isPrsentAddress, setIsPrsentAddress,countryValuePermanent, setCountryValuePermanent,
-    valuePermanent, setValuePermanent
+    valuePermanent, setValuePermanent,isEditBirth = false, isEditDeath = false
 }) => {
     const stateId = Digit.ULBService.getStateId();
     let tenantId = "";
