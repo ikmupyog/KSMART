@@ -87,13 +87,14 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
     formData?.BornOutsideChildDetails?.childPassportNo ? formData?.BornOutsideChildDetails?.childPassportNo : ""
   );
   const [childArrivalDate, setchildArrivalDate] = useState( formData?.BornOutsideChildDetails?.childArrivalDate ? formData?.BornOutsideChildDetails?.childArrivalDate : "" );
-  const [birthPlace, selectBirthPlace] = useState(
-    formData?.BornOutsideChildDetails?.birthPlace ? formData?.BornOutsideChildDetails?.birthPlace : null
+  const [outsideBirthPlace, selectoutsideBirthPlace] = useState(
+    formData?.BornOutsideChildDetails?.outsideBirthPlace ? formData?.BornOutsideChildDetails?.outsideBirthPlace : null
   );
   const [country, setcountry] = useState(formData?.BornOutsideChildDetails?.country ? formData?.BornOutsideChildDetails?.country  : null
     );
-    const [provinceEn, setprovinceEn] = useState(formData?.BornOutsideChildDetails?.provinceEn ? formData?.BornOutsideChildDetails?.provinceEn  : ""
-    );
+    const [provinceEn, setprovinceEn] = useState(formData?.BornOutsideChildDetails?.provinceEn ? formData?.BornOutsideChildDetails?.provinceEn  : "");
+    const [cityTown, setcityTown] = useState(formData?.BornOutsideChildDetails?.cityTown ? formData?.BornOutsideChildDetails?.cityTown   : "" );
+    const [postCode, setpostCode] = useState(formData?.BornOutsideChildDetails?.postCode ? formData?.BornOutsideChildDetails?.postCode   : "" );
   const [toast, setToast] = useState(false);
   const [AadharError, setAadharError] = useState(formData?.BornOutsideChildDetails?.childAadharNo ? false : false);
   const [ChildPassportError, setChildPassportError] = useState(formData?.BornOutsideChildDetails?.childPassportNo ? false : false);
@@ -113,8 +114,27 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
       setcountry(value);
      
     }
-    function setSelectPostCode(e) {
-      setPostCode(e.target.value);
+    function setSelectcityTown(e) {
+      if (e.target.value.length === 51) {
+        return false;
+        // window.alert("Username shouldn't exceed 10 characters")
+      } else {
+        setcityTown(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+      
+      }
+    }
+    function setSelectpostCode(e) {
+      if (e.target.value.length != 0) {
+        if (e.target.value.length > 6) {
+          return false;
+        } else if (e.target.value.length < 6) {
+          setpostCode(e.target.value);
+          return false;
+        } else {
+          setpostCode(e.target.value);
+         
+        }
+      }
     }
   function setselectChildDOB(value) {
     setChildDOB(value);
@@ -220,6 +240,15 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
      
     }
   }
+
+  function setSelectoutsideBirthPlace(e) {
+    if (e.target.value.length === 51) {
+      return false;
+    } else {
+      setoutsideBirthPlace(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+     
+    }
+  }
   let validFlag = true;
   const goNext = () => {
     if (AadharError) {
@@ -254,8 +283,8 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
       setchildArrivalDateError(false);
     }
     if (validFlag == true) {
-      sessionStorage.setItem("stateId", stateId ? stateId : null);
-      sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
+      // sessionStorage.setItem("stateId", stateId ? stateId : null);
+      // sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
       sessionStorage.setItem("childDOB", childDOB ? childDOB : null);
       sessionStorage.setItem("birthDateTime", birthDateTime ? birthDateTime : null);
       sessionStorage.setItem("gender", gender ? gender.code : null);
@@ -269,7 +298,9 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
       sessionStorage.setItem("childMiddleNameMl", childMiddleNameMl ? childMiddleNameMl : null);
       sessionStorage.setItem("childLastNameMl", childLastNameMl ? childLastNameMl : null);
       sessionStorage.setItem("provinceEn", provinceEn ? provinceEn : null);
-      sessionStorage.setItem("birthPlace", birthPlace.code);
+      sessionStorage.setItem("cityTown", cityTown ? cityTown : null);
+      sessionStorage.setItem("postCode", postCode ? postCode : null);
+      sessionStorage.setItem("outsideBirthPlace",  outsideBirthPlace ? outsideBirthPlace : null);
 
       onSelect(config.key, {
         stateId,
@@ -281,7 +312,9 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
         childPassportNo,
         childArrivalDate,
         childFirstNameEn, childMiddleNameEn, childLastNameEn, childFirstNameMl, childMiddleNameMl, childLastNameMl,provinceEn,
-        birthPlace,
+        cityTown,
+        postCode,
+        outsideBirthPlace,
       });
     }
   };
@@ -308,7 +341,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
         <BackButton>{t("CS_COMMON_BACK")}</BackButton>
         {window.location.href.includes("/citizen") ? <Timeline /> : null}
         {window.location.href.includes("/employee") ? <Timeline /> : null}
-        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!childDOB || !gender || !birthPlace}>
+        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!childDOB || !gender || !outsideBirthPlace}>
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-12">
@@ -558,7 +591,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
        
    <div className="row">
    <div className="col-md-12">
- <div className="col-md-4">
+ <div className="col-md-3">
             <CardLabel>
               {`${t("CS_COMMON_COUNTRY")}`}
               <span className="mandatorycss">*</span>
@@ -572,7 +605,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
               placeholder={`${t("CS_COMMON_COUNTRY")}`}
             />
           </div>
-          <div className="col-md-4">
+          <div className="col-md-3">
             <CardLabel>{t("CR_STATE_REGION_PROVINCE_EN")} <span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
@@ -585,22 +618,69 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
             />
           </div>
-          {/* <div className="col-md-6">
-                <CardLabel>
-                  {t("CR_PLACE_OF_BIRTH")}<span className="mandatorycss">*</span></CardLabel>
-                <Dropdown
-                  t={t}
-                  optionKey="code"
-                  isMandatory={false}
-                  option={cmbPlaceMaster}
-                  selected={birthPlace}
-                  select={setselectBirthPlace}
-                  placeholder={`${t("CR_BIRTH_PLACE")}`}
-                />
-              </div> */}
+          <div className="col-md-3">
+            <CardLabel>
+              {t("CR_CITY_TOWN_EN")} <span className="mandatorycss">*</span>
+            </CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="cityTown"
+              value={cityTown}
+              onChange={setSelectcityTown}
+              placeholder={`${t("CR_CITY_TOWN_EN")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_TOWN_EN") })}
+            />
+          </div>
+          <div className="col-md-3">
+            <CardLabel>{t("CR_ZIP_CODE")}<span className="mandatorycss">*</span></CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="postCode"
+              value={postCode}
+              onChange={setSelectpostCode}
+              placeholder={`${t("CR_ZIP_CODE")}`}
+              {...(validation = {
+                pattern: "^[a-zA-Z-.0-9`' ]*$",
+                isRequired: true,
+                type: "number",
+                max: 6,
+                min: 6,
+                title: t("CR_INVALID_ZIP_CODE"),
+              })}
+            />
+          </div>
+         
           </div>
           
-          </div>  
+          </div> 
+          <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-4">
+                    <CardLabel>
+                      {`${t("CR_OUTSIDE_BIRTH_PLACE")}`}
+                      <span className="mandatorycss">*</span>
+                    </CardLabel>
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      name="outsideBirthPlace"
+                      value={outsideBirthPlace}
+                      onChange={setSelectoutsideBirthPlace}
+                      disable={isEdit}
+                      //  onChange={(e,v) => this.updateTextField(e,v)}
+                      // disable={isChildName}
+                      placeholder={`${t("CR_OUTSIDE_BIRTH_PLACE")}`}
+                      {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_OUTSIDE_BIRTH_PLACE") })}
+                    />
+                  </div> 
+                  </div> 
+                  </div> 
 
           {toast && (
             <Toast

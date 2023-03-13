@@ -8,7 +8,6 @@ const Informer = ({ config, onSelect, userType, formData,iseditDeath }) => {
   const { t } = useTranslation();
   let validation = {};
 
-  const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
 
   const [IsDeclarationInformer, setIsDeclarationInformer] = useState(
     formData?.InformantDetails?.IsDeclarationInformer ? formData?.InformantDetails?.IsDeclarationInformer : false
@@ -199,28 +198,9 @@ const Informer = ({ config, onSelect, userType, formData,iseditDeath }) => {
         <div className="row">
           <div className="col-md-12">
             <CheckBox label={t("CR_INFORMER_DECLARATION_STATEMENT")} onChange={setDeclarationInfo} value={IsDeclarationInformer} checked={IsDeclarationInformer} />
-            {/* <CheckBox label={t("TestDescription")} onChange={setDeclarationInfotwo} value={isDeclarationInfotwo} checked={isDeclarationInfotwo} /> */}
           </div>
         </div>
-        {/* <div className="row">
-          <div className="col-md-12">
-            <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DOCUMENTS")}`}</span>
-            </h1>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <CheckBox label={t("TestDocuments")} onChange={setDeclarationInfoone} value={isDeclarationInfoone} checked={isDeclarationInfoone} />
-          </div>
-        </div> */}
-        {/* <div className="row">
-          <div className="col-md-12">
-            <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t(" CR_INFORMANT_DETAILS")}`}</span>
-            </h1>
-          </div>
-        </div> */}
+        
 
         <div className="row">
           <div className="col-md-12">
@@ -237,7 +217,6 @@ const Informer = ({ config, onSelect, userType, formData,iseditDeath }) => {
                 name="InformantAadharNo"
                 value={InformantAadharNo}
                 onChange={setSelectInformantAadharNo}
-                disable={isEdit}
                 placeholder={`${t("CS_COMMON_AADHAAR")}`}
                 {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
               />
@@ -256,7 +235,6 @@ const Informer = ({ config, onSelect, userType, formData,iseditDeath }) => {
                 name="InformantNameEn"
                 value={InformantNameEn}
                 onChange={setSelectInformantNameEn}
-                disable={isEdit}
                 placeholder={`${t("CR_INFORMANT_NAME")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMANT_NAME") })}
               />
@@ -275,7 +253,6 @@ const Informer = ({ config, onSelect, userType, formData,iseditDeath }) => {
                 name="DeathSignedOfficerDesignation"
                 value={DeathSignedOfficerDesignation}
                 onChange={setSelectDeathSignedOfficerDesignation}
-                disable={isEdit}
                 placeholder={`${t("CR_INFORMER_DESIGNATION")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMER_DESIGNATION") })}
               />
@@ -293,7 +270,6 @@ const Informer = ({ config, onSelect, userType, formData,iseditDeath }) => {
                 name="InformantMobileNo"
                 value={InformantMobileNo}
                 onChange={setSelectInformantMobileNo}
-                disable={isEdit}
                 placeholder={`${t("CR_MOBILE_NO")}`}
                 {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
               />
@@ -313,7 +289,6 @@ const Informer = ({ config, onSelect, userType, formData,iseditDeath }) => {
                 name="InformantAddress"
                 value={InformantAddress}
                 onChange={setSelectInformantAddress}
-                disable={isEdit}
                 placeholder={`${t("CR_ADDRESS")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRESS") })}
               />

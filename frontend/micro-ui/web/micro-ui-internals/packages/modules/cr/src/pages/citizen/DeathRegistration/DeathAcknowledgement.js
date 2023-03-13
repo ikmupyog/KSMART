@@ -32,8 +32,8 @@ const BannerPicker = (props) => {
     // />
     <Banner
     message={GetActionMessage(props)}
-    applicationNumber={props.data?.InformationDeath[0]?.DeathACKNo}
-    info={props.isSuccess ? props.DeathACKNo : ""}
+    applicationNumber={props.data?.InformationDeath?.DeathACKNo}
+    info={props.isSuccess ? props.InformationDeath?.DeathACKNo : ""}
     successful={props.isSuccess}
   />
   );
