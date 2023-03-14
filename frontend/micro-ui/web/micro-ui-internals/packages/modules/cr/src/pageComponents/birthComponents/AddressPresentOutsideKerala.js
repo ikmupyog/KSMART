@@ -186,13 +186,15 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
     }
   }
   function setSelectoutsideKeralaHouseNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setoutsideKeralaHouseNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      setoutsideKeralaHouseNameMl('');
+    }
+    else {
+      setoutsideKeralaHouseNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       if (isPrsentAddress) {
-        setpermntOutsideKeralaHouseNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+        setpermntOutsideKeralaHouseNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       } else {
         setpermntOutsideKeralaHouseNameMl('');
       }
@@ -209,13 +211,15 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
     }
   }
   function setSelectoutsideKeralaLocalityNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setoutsideKeralaLocalityNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      setoutsideKeralaLocalityNameMl('');
+    }
+    else {
+      setoutsideKeralaLocalityNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       if (isPrsentAddress) {
-        setpermntOutsideKeralaLocalityNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+        setpermntOutsideKeralaLocalityNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       } else {
         setpermntOutsideKeralaLocalityNameMl('');
       }
@@ -232,13 +236,15 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
     }
   }
   function setSelectoutsideKeralaStreetNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setoutsideKeralaStreetNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      setoutsideKeralaStreetNameMl('');
+    }
+    else {
+      setoutsideKeralaLocalityNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       if (isPrsentAddress) {
-        setpermntOutsideKeralaStreetNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+        setpermntOutsideKeralaStreetNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       } else {
         setpermntOutsideKeralaStreetNameMl('');
       }
@@ -254,9 +260,14 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
       }
     }
   }
-
+  function setCheckMalayalamInputField(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
+    if (!(e.key.match(pattern))) {
+      e.preventDefault();
+    }
+  }
   const goNext = () => {
-    
+
   };
 
   if (isDistrictLoading || isTalukLoading || isVillageLoading) {
@@ -432,6 +443,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
               optionKey="i18nKey"
               name="presentOutsideKeralaLocalityNameMl"
               value={presentOutsideKeralaLocalityNameMl}
+              onKeyPress={setCheckMalayalamInputField}
               onChange={setSelectoutsideKeralaLocalityNameMl}
               placeholder={`${t("CR_LOCALITY_ML")}`}
               {...(validation = {
@@ -465,6 +477,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
               optionKey="i18nKey"
               name="presentOutsideKeralaStreetNameMl"
               value={presentOutsideKeralaStreetNameMl}
+              onKeyPress={setCheckMalayalamInputField}
               onChange={setSelectoutsideKeralaStreetNameMl}
               placeholder={`${t("CR_STREET_NAME_ML")}`}
               {...(validation = {
@@ -504,6 +517,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
               optionKey="i18nKey"
               name="presentOutsideKeralaHouseNameMl"
               value={presentOutsideKeralaHouseNameMl}
+              onKeyPress={setCheckMalayalamInputField}
               onChange={setSelectoutsideKeralaHouseNameMl}
               placeholder={`${t("CR_HOUSE_NAME_ML")}`}
               {...(validation = {

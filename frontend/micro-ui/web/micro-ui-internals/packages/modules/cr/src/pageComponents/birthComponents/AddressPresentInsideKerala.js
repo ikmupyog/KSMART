@@ -18,7 +18,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     permntInKeralaAdrHouseNameEn, setpermntInKeralaAdrHouseNameEn, permntInKeralaAdrHouseNameMl, setpermntInKeralaAdrHouseNameMl,
     permntInKeralaAdrLocalityNameEn, setpermntInKeralaAdrLocalityNameEn, permntInKeralaAdrLocalityNameMl,
     setpermntInKeralaAdrLocalityNameMl, permntInKeralaAdrStreetNameEn, setpermntInKeralaAdrStreetNameEn, permntInKeralaAdrStreetNameMl,
-    setpermntInKeralaAdrStreetNameMl, permntInKeralaWardNo, setpermntInKeralaWardNo,isEditBirth = false, isEditDeath = false
+    setpermntInKeralaAdrStreetNameMl, permntInKeralaWardNo, setpermntInKeralaWardNo, isEditBirth = false, isEditDeath = false
 
 }) => {
     const stateId = Digit.ULBService.getStateId();
@@ -255,13 +255,15 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
         }
     }
     function setSelectinsideKeralaHouseNameMl(e) {
-        if (e.target.value.length === 51) {
-            return false;
-            // window.alert("Username shouldn't exceed 10 characters")
-        } else {
-            setinsideKeralaHouseNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' ]/gi, ""));
+        let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+        if (!(e.target.value.match(pattern))) {
+            e.preventDefault();
+            setinsideKeralaHouseNameMl('');
+        }
+        else {
+            setinsideKeralaHouseNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
             if (isPrsentAddress) {
-                setpermntInKeralaAdrHouseNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' ]/gi, ""));
+                setpermntInKeralaAdrHouseNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
             } else {
                 setpermntInKeralaAdrHouseNameMl('');
             }
@@ -280,13 +282,15 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     }
 
     function setSelectinsideKeralaLocalityNameMl(e) {
-        if (e.target.value.length === 51) {
-            return false;
-            // window.alert("Username shouldn't exceed 10 characters")
-        } else {
-            setinsideKeralaLocalityNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+        let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+        if (!(e.target.value.match(pattern))) {
+            e.preventDefault();
+            setinsideKeralaLocalityNameMl('');
+        }
+        else {
+            setinsideKeralaLocalityNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
             if (isPrsentAddress) {
-                setpermntInKeralaAdrLocalityNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+                setpermntInKeralaAdrLocalityNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
             } else {
                 setpermntInKeralaAdrLocalityNameMl('');
             }
@@ -305,13 +309,15 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     }
 
     function setSelectinsideKeralaStreetNameMl(e) {
-        if (e.target.value.length === 51) {
-            return false;
-            // window.alert("Username shouldn't exceed 10 characters")
-        } else {
-            setinsideKeralaStreetNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+        let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+        if (!(e.target.value.match(pattern))) {
+            e.preventDefault();
+            setinsideKeralaStreetNameMl('');
+        }
+        else {
+            setinsideKeralaStreetNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
             if (isPrsentAddress) {
-                setpermntInKeralaAdrStreetNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+                setpermntInKeralaAdrStreetNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
             } else {
                 setpermntInKeralaAdrStreetNameMl('');
             }
@@ -326,7 +332,12 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
             setpermntInKeralaWardNo('');
         }
     }
-
+    function setCheckMalayalamInputField(e) {
+        let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
+        if (!(e.key.match(pattern))) {
+            e.preventDefault();
+        }
+    }
     const goNext = () => {
 
     };
@@ -532,6 +543,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                                 optionKey="i18nKey"
                                 name="presentInsideKeralaLocalityNameMl"
                                 value={presentInsideKeralaLocalityNameMl}
+                                onKeyPress={setCheckMalayalamInputField}
                                 onChange={setSelectinsideKeralaLocalityNameMl}
                                 placeholder={`${t("CR_LOCALITY_ML")}`}
                                 {...(validation = {
@@ -550,6 +562,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                                 optionKey="i18nKey"
                                 name="presentInsideKeralaStreetNameMl"
                                 value={presentInsideKeralaStreetNameMl}
+                                onKeyPress={setCheckMalayalamInputField}
                                 onChange={setSelectinsideKeralaStreetNameMl}
                                 placeholder={`${t("CR_STREET_NAME_ML")}`}
                                 {...(validation = {
@@ -571,6 +584,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                                 optionKey="i18nKey"
                                 name="presentInsideKeralaHouseNameMl"
                                 value={presentInsideKeralaHouseNameMl}
+                                onKeyPress={setCheckMalayalamInputField}
                                 onChange={setSelectinsideKeralaHouseNameMl}
                                 placeholder={`${t("CR_HOUSE_NAME_ML")}`}
                                 {...(validation = {
