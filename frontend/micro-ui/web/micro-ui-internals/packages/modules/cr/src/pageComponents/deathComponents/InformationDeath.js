@@ -211,7 +211,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
   const [InstitutionFilterList, setInstitutionFilterList] = useState(null);
   const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(false);
   // Home
-  const [DeathPlaceHomepostofficeId, setDeathPlaceHomepostofficeId] = useState(formData?.InformationDeath?.DeathPlaceHomepostofficeId ? formData?.InformationDeath?.DeathPlaceHomepostofficeId : null);
+  const [DeathPlaceHomePostofficeId, setDeathPlaceHomepostofficeId] = useState(formData?.InformationDeath?.DeathPlaceHomePostofficeId ? formData?.InformationDeath?.DeathPlaceHomePostofficeId : null);
   const [DeathPlaceHomepincode, setDeathPlaceHomepincode] = useState(formData?.InformationDeath?.DeathPlaceHomepincode ? formData?.InformationDeath?.DeathPlaceHomepincode :null );
 
   const [DeathPlaceHomeHoueNameEn, setDeathPlaceHomehoueNameEn] = useState(formData?.InformationDeath?.DeathPlaceHomeHoueNameEn ?formData?.InformationDeath?.DeathPlaceHomeHoueNameEn : null );
@@ -337,7 +337,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
           <DeathPlaceHome
             DeathPlaceWardId={DeathPlaceWardId}
             DeathPlaceType={DeathPlaceType}
-            DeathPlaceHomepostofficeId={DeathPlaceHomepostofficeId}
+            DeathPlaceHomePostofficeId={DeathPlaceHomePostofficeId}
             DeathPlaceHomepincode={DeathPlaceHomepincode}
             DeathPlaceHomeHoueNameEn={DeathPlaceHomeHoueNameEn}
             DeathPlaceHomeHoueNameMl={DeathPlaceHomeHoueNameMl}
@@ -557,7 +557,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
         workFlowCode = "DEATHHOSP";
         console.log(workFlowCode);
       } else {
-        workFlowCode = "DEATHHOME";
+        workFlowCode = "21DEATHHHOME";
       }
     }
     if (DeceasedGender == null || DeceasedGender == "" || DeceasedGender == undefined) {
@@ -690,7 +690,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
         sessionStorage.setItem("DeathPlaceHomeLocalityMl", DeathPlaceHomeLocalityMl ? DeathPlaceHomeLocalityMl : null);
         sessionStorage.setItem("DeathPlaceHomeStreetNameEn", DeathPlaceHomeStreetNameEn ? DeathPlaceHomeStreetNameEn : null);
         sessionStorage.setItem("DeathPlaceHomeStreetNameMl", DeathPlaceHomeStreetNameMl ? DeathPlaceHomeStreetNameMl : null);
-        sessionStorage.setItem("DeathPlaceHomepostofficeId", DeathPlaceHomepostofficeId ? DeathPlaceHomepostofficeId.code : null);
+        sessionStorage.setItem("DeathPlaceHomePostofficeId", DeathPlaceHomePostofficeId ? DeathPlaceHomePostofficeId.code : null);
         sessionStorage.setItem("DeathPlaceHomepincode", DeathPlaceHomepincode ? DeathPlaceHomepincode.code : null);
       }
       if (DeathPlace.code === "VEHICLE") {
@@ -766,7 +766,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
         DeathPlaceHomeLocalityMl,
         DeathPlaceHomeStreetNameEn,
         DeathPlaceHomeStreetNameMl,
-        DeathPlaceHomepostofficeId,
+        DeathPlaceHomePostofficeId,
         DeathPlaceHomepincode,
         DeathPlaceType,
         VehicleNumber,
@@ -950,7 +950,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                 formData={formData}
                 DeathPlaceWardId={DeathPlaceWardId}
                 setDeathPlaceWardId={setDeathPlaceWardId}
-                DeathPlaceHomepostofficeId={DeathPlaceHomepostofficeId}
+                DeathPlaceHomePostofficeId={DeathPlaceHomePostofficeId}
                 setDeathPlaceHomepostofficeId={setDeathPlaceHomepostofficeId}
                 DeathPlaceHomepincode={DeathPlaceHomepincode}
                 setDeathPlaceHomepincode={setDeathPlaceHomepincode}

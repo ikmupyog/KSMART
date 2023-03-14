@@ -206,25 +206,25 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                       :{" "}
-                      {t(InformationDeath.DeathPlaceHomehoueNameMl) +
+                      {t(InformationDeath.DeathPlaceHomeHoueNameMl) +
                         "," +
-                        InformationDeath.DeathPlaceHomelocalityMl +
+                        InformationDeath.DeathPlaceHomeLocalityMl +
                         "," +
-                        InformationDeath.DeathPlaceHomestreetNameMl +
+                        InformationDeath.DeathPlaceHomeStreetNameMl +
                         "," +
-                        InformationDeath.DeathPlaceHomepostofficeId.namelocal +
+                        InformationDeath.DeathPlaceHomePostofficeId.namelocal +
                         "," +
-                        InformationDeath.DeathPlaceHomepostofficeId.pincode +
+                        InformationDeath.DeathPlaceHomePostofficeId.pincode +
                         "/" +
-                        InformationDeath.DeathPlaceHomehoueNameEn +
+                        InformationDeath.DeathPlaceHomeHoueNameEn +
                         "," +
                         InformationDeath.DeathPlaceHomeLocalityEn +
                         "," +
-                        InformationDeath.DeathPlaceHomestreetNameEn +
+                        InformationDeath.DeathPlaceHomeStreetNameEn +
                         "," +
-                        InformationDeath.DeathPlaceHomepostofficeId.name +
+                        InformationDeath.DeathPlaceHomePostofficeId.name +
                         "," +
-                        InformationDeath.DeathPlaceHomepostofficeId.pincode}
+                        InformationDeath.DeathPlaceHomePostofficeId.pincode}
                     </CardText>
                   </div>
                 </div>
