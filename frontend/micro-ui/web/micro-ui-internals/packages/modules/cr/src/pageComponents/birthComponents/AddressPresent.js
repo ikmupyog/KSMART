@@ -56,6 +56,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
         if (isInitialRender) {
             if (cmbLB.length > 0) {
                 currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
+                console.log(currentLB);
                 // setAdrsLBName(currentLB[0]);
                 cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
                 setaddressCountry(cmbFilterCountry[0]);
