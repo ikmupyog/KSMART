@@ -1125,6 +1125,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 setadrsPermntOutsideIndiaCityTown={setadrsPermntOutsideIndiaCityTown}
                                 permanentOutsideIndiaPostCode={permanentOutsideIndiaPostCode}
                                 setPermantpostCode={setPermantpostCode}
+                                permntOutsideIndiaprovinceMl={permntOutsideIndiaprovinceMl}
+                                setPermntOutsideIndiaprovinceMl={setPermntOutsideIndiaprovinceMl}
                                 // permntOutsideIndiaCountry={permntOutsideIndiaCountry}
                                 // setPermntOutsideIndiaCountry={setPermntOutsideIndiaCountry}
                                 countryvalue={countryvalue}
