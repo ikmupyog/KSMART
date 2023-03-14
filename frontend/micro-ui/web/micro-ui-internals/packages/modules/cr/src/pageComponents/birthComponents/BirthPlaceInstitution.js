@@ -8,6 +8,7 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
   InstitutionFilterList, setInstitutionFilterList, isInitialRenderInstitutionList, setIsInitialRenderInstitutionList,
   isEditBirth = false
 }) => {
+  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -41,11 +42,12 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
     if (formData?.ChildDetails?.institutionTypeCode != null) {
       if (cmbInstitutionType.length > 0 && (institution === undefined || institution === "")) {
         setInstitution(cmbInstitutionType.filter(cmbInstitutionType => cmbInstitutionType.code === formData?.ChildDetails?.institutionTypeCode)[0]);
-        // cmbhospitalMl = cmbhospital.filter(cmbhospital => cmbhospital.code === formData?.ChildDetails?.hospitalCode)[0];
-        // selectHospitalNameMl(cmbhospitalMl);
       }
+    }
+    if (formData?.ChildDetails?.institutionNameCode != null) {      
       if (cmbInstitutionList.length > 0 && (institutionId === undefined || institutionId === "")) {
         setInstitutionId(cmbInstitutionList.filter(cmbInstitutionList => cmbInstitutionList.code === formData?.ChildDetails?.institutionNameCode)[0]);
+        setInstitutionIdMl(cmbInstitutionList.filter(cmbInstitutionList => cmbInstitutionList.code === formData?.ChildDetails?.institutionNameCode)[0]);
       }
     }
   }
@@ -97,6 +99,7 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
                 option={cmbInstitutionType}
                 selected={institution}
                 select={setselectInstitution}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_INSTITUTION_TYPE")}`}
               />
             </div>
@@ -108,6 +111,7 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
                 option={InstitutionFilterList}
                 selected={institutionId}
                 select={setselectInstitutionId}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_INSTITUTION_NAME_EN")}`}
               />
             </div>

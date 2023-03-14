@@ -150,14 +150,12 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
   const [hospitalName, selectHospitalName] = useState(formData?.ChildDetails?.hospitalName?.code ? formData?.ChildDetails?.hospitalName : formData?.ChildDetails?.hospitalName ? "" : "");
   const [hospitalNameMl, selectHospitalNameMl] = useState(formData?.ChildDetails?.hospitalNameMl?.code ? formData?.ChildDetails?.hospitalNameMl : formData?.ChildDetails?.hospitalNameMl ? "" : "");
 
-  // const [hospitalName, selectHospitalName] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? "" : formData?.ChildDetails?.hospitalName); //formData?.ChildDetails?.hospitalName ? formData?.ChildDetails?.hospitalName : null
-  // const [hospitalNameMl, selectHospitalNameMl] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? "" : formData?.ChildDetails?.hospitalNameMl);
+  const [institution, setInstitution] = useState(formData?.ChildDetails?.institution.code ? formData?.ChildDetails?.institution : formData?.ChildDetails?.institutionTypeCode ? "" : "");
+  const [institutionId, setInstitutionId] = useState(formData?.ChildDetails?.institutionId.code ? formData?.ChildDetails?.institutionId : formData?.ChildDetails?.institutionNameCode ? "" : "");
+  const [institutionIdMl, setInstitutionIdMl] = useState(formData?.ChildDetails?.institutionIdMl.code ? formData?.ChildDetails?.institutionIdMl : formData?.ChildDetails?.institutionNameCode ? "" : "");
+  
 
-  const [institution, setInstitution] = useState(formData?.ChildDetails?.institution ? formData?.ChildDetails?.institution : null);
-  const [institutionIdMl, setInstitutionIdMl] = useState(formData?.ChildDetails?.institutionIdMl ? formData?.ChildDetails?.institutionIdMl : null);
-  const [institutionId, setInstitutionId] = useState(formData?.ChildDetails?.institutionId ? formData?.ChildDetails?.institutionId : null);
   const [adrsPostOffice, setAdrsPostOffice] = useState(formData?.ChildDetails?.adrsPostOffice?.code ? formData?.ChildDetails?.adrsPostOffice : formData?.ChildDetails?.adrsPostOffice ? "" : "");
-
   // const [adrsPostOffice, setAdrsPostOffice] = useState(formData?.ChildDetails?.adrsPostOffice ? formData?.ChildDetails?.adrsPostOffice : null);
   const [adrsPincode, setAdrsPincode] = useState(formData?.ChildDetails?.adrsPincode ? formData?.ChildDetails?.adrsPincode : null);
   const [adrsHouseNameEn, setAdrsHouseNameEn] = useState(formData?.ChildDetails?.adrsHouseNameEn ? formData?.ChildDetails?.adrsHouseNameEn : "");

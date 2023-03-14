@@ -14,6 +14,7 @@ import AddressPermanentOutsideKerala from "./AddressPermanentOutsideKerala";
 import AddressPermanentOutsideIndia from "./AddressPermanentOutsideIndia";
 
 const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = false, isEditDeath = false }) => {
+    console.log(formData);
     const stateId = Digit.ULBService.getStateId();
     let tenantId = "";
     tenantId = Digit.ULBService.getCurrentTenantId();
