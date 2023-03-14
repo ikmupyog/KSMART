@@ -69,7 +69,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
         }
     }, [Country, State, localbodies, Villagevalues, isInitialRender]);
 
-    if (isEditBirth) {
+    if (isEditBirth || isEditDeath) {
         if (formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry != null) {
             if (cmbCountry.length > 0 && (presentaddressCountry === undefined || presentaddressCountry === "")) {
                 setaddressCountry(cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry)[0]);
