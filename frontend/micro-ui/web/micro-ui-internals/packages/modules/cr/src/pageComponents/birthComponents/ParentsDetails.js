@@ -160,11 +160,13 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
   }
 
   function setSelectMotherFirstNameMl(e) {
-    if (e.target.value.trim().length === 51 || e.target.value.trim() === ".") {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setMotherFirstNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if(!(e.target.value.match(pattern))){
+      e.preventDefault();
+      setMotherFirstNameMl('');
+    }
+    else{
+      setMotherFirstNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectMotherAadhar(e) {
@@ -268,11 +270,13 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
     }
   }
   function setSelectFatherFirstNameMl(e) {
-    if (e.target.value.trim().length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setFatherFirstNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if(!(e.target.value.match(pattern))){
+      e.preventDefault();
+      setFatherFirstNameMl('');
+    }
+    else{
+      setFatherFirstNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
@@ -310,7 +314,12 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
       setIsFatherInfo(e.target.checked);
     }
   }
-
+  function setCheckMalayalamInputField(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
+    if(!(e.key.match(pattern))){
+      e.preventDefault();
+    }    
+  }
   if (isEditBirth) {
 
     if (formData?.ChildDetails?.ParentsDetails?.motherNationality != null) {
@@ -625,6 +634,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                       optionKey="i18nKey"
                       name="motherFirstNameMl"
                       value={motherFirstNameMl}
+                      onKeyPress = {setCheckMalayalamInputField}
                       onChange={setSelectMotherFirstNameMl}
                       disable={isDisableEdit}
                       placeholder={`${t("CR_MOTHER_NAME_ML")}`}
@@ -820,6 +830,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                       optionKey="i18nKey"
                       name="fatherFirstNameMl"
                       value={fatherFirstNameMl}
+                      onKeyPress = {setCheckMalayalamInputField}
                       onChange={setSelectFatherFirstNameMl}
                       disable={isDisableEdit}
                       placeholder={`${t("CR_FATHER_NAME_ML")}`}

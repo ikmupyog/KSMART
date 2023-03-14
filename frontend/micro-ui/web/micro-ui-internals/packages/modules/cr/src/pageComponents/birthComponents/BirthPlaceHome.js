@@ -130,14 +130,13 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
     }
   }
   function setSelectAdrsHouseNameMl(e) {
-    // if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]*$") != null)) {
-    //   setAdrsHouseNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-    // }
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setAdrsHouseNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if(!(e.target.value.match(pattern))){
+      e.preventDefault();
+      setAdrsHouseNameMl('');
+    }
+    else{
+      setAdrsHouseNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
@@ -147,11 +146,13 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
     }
   }
   function setSelectAdrsLocalityNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setAdrsLocalityNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if(!(e.target.value.match(pattern))){
+      e.preventDefault();
+      setAdrsLocalityNameMl('');
+    }
+    else{
+      setAdrsLocalityNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
@@ -161,16 +162,24 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
     }
   }
   function setSelectAdrsStreetNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setAdrsStreetNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if(!(e.target.value.match(pattern))){
+      e.preventDefault();
+      setAdrsStreetNameMl('');
+    }
+    else{
+      setAdrsStreetNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectWard(value) {
     console.log(value);
     setWardNo(value);
+  }
+  function setCheckMalayalamInputField(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
+    if(!(e.key.match(pattern))){
+      e.preventDefault();
+    }    
   }
   let validFlag = true;
 
@@ -312,6 +321,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
                 optionKey="i18nKey"
                 name="adrsLocalityNameMl"
                 value={adrsLocalityNameMl}
+                onKeyPress = {setCheckMalayalamInputField}
                 onChange={setSelectAdrsLocalityNameMl}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_LOCALITY_ML")}`}
@@ -331,6 +341,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
                 optionKey="i18nKey"
                 name="adrsStreetNameMl"
                 value={adrsStreetNameMl}
+                onKeyPress = {setCheckMalayalamInputField}
                 onChange={setSelectAdrsStreetNameMl}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_STREET_NAME_ML")}`}
@@ -347,6 +358,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
                 optionKey="i18nKey"
                 name="adrsHouseNameMl"
                 value={adrsHouseNameMl}
+                onKeyPress = {setCheckMalayalamInputField}
                 onChange={setSelectAdrsHouseNameMl}
                 placeholder={`${t("CR_HOUSE_NAME_ML")}`}
 

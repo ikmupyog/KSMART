@@ -407,8 +407,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
     if(!(e.key.match(pattern))){
       e.preventDefault();
-    }
-    
+    }    
   }
   function setSelectChildFirstNameMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
@@ -419,21 +418,6 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
     else{
       setChildFirstNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
-    // const RegExp = "^[\u0D00-\u0D7F\u0020-\u0040\u200D\u200C\"]*$/g";
-    //let pattern = /^^[\u0D00-\u0D7F\u200D\u200C]/;
-    //console.log(e.target.value);
-    // console.log(e.target.value.match(RegExp));
-    // // const tempName = e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, '');
-    // if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match(pattern) != null)) {
-      // setChildFirstNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-      
-    // }
-    // if (e.target.value.length === 51) {
-    //   return false;
-    //   // window.alert("Username shouldn't exceed 10 characters")
-    // } else {
-    //   setChildFirstNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
-    // }
   }
   function setSelectChildMiddleNameMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
@@ -446,11 +430,13 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
     }
   }
   function setSelectChildLastNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setChildLastNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if(!(e.target.value.match(pattern))){
+      e.preventDefault();
+      setChildLastNameMl('');
+    }
+    else{
+      setChildLastNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectPregnancyDuration(e) {

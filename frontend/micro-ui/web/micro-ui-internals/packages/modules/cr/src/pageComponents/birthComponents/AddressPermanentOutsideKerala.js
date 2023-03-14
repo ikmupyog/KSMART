@@ -177,7 +177,12 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
       setpermntOutsideKeralaCityVilgeEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
-
+  function setCheckMalayalamInputField(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
+    if(!(e.key.match(pattern))){
+      e.preventDefault();
+    }    
+  }
   const goNext = () => {
   };
 
@@ -355,6 +360,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
               optionKey="i18nKey"
               name="permntOutsideKeralaLocalityNameMl"
               value={permntOutsideKeralaLocalityNameMl}
+              onKeyPress = {setCheckMalayalamInputField}
               onChange={setSelectpermntOutsideKeralaLocalityNameMl}
               placeholder={`${t("CR_LOCALITY_ML")}`}
               {...(validation = {
@@ -388,6 +394,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
               optionKey="i18nKey"
               name="permntOutsideKeralaStreetNameMl"
               value={permntOutsideKeralaStreetNameMl}
+              onKeyPress = {setCheckMalayalamInputField}
               onChange={setSelectpermntOutsideKeralaStreetNameMl}
               placeholder={`${t("CR_STREET_NAME_ML")}`}
               {...(validation = {
@@ -427,6 +434,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
               optionKey="i18nKey"
               name="permntOutsideKeralaHouseNameMl"
               value={permntOutsideKeralaHouseNameMl}
+              onKeyPress = {setCheckMalayalamInputField}
               onChange={setSelectpermntOutsideKeralaHouseNameMl}
               placeholder={`${t("CR_HOUSE_NAME_ML")}`}
               {...(validation = {

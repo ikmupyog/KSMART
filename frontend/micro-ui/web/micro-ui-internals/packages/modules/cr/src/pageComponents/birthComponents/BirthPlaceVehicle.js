@@ -99,10 +99,13 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
     }
   }
   function setSelectVehicleFromMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-    } else {
-      setvehicleFromMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if(!(e.target.value.match(pattern))){
+      e.preventDefault();
+      setvehicleFromMl('');
+    }
+    else{
+      setvehicleFromMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectVehicleHaltPlace(e) {
@@ -118,10 +121,13 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
   //   }
   // }
   function setSelectVehicleToMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-    } else {
-      setvehicleToMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if(!(e.target.value.match(pattern))){
+      e.preventDefault();
+      setvehicleToMl('');
+    }
+    else{
+      setvehicleToMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectVehicleOtherDetailsEn(e) {
@@ -135,7 +141,12 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
   function setSelectWard(value) {
     setWardNo(value);
   }
-
+  function setCheckMalayalamInputField(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
+    if(!(e.key.match(pattern))){
+      e.preventDefault();
+    }    
+  }
   let validFlag = true;
   const goNext = () => {
 
@@ -233,8 +244,9 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
               optionKey="i18nKey"
               name="vehicleFromMl"
               value={vehicleFromMl}
+              onKeyPress = {setCheckMalayalamInputField}
               onChange={setSelectVehicleFromMl}
-              placeholder={`${t("CR_VEHICLE_FROM_EN")}`}
+              placeholder={`${t("CR_VEHICLE_FROM_ML")}`}
               {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_VEHICLE_FROM") })}
             />
           </div>
@@ -246,6 +258,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
               optionKey="i18nKey"
               name="vehicleToMl"
               value={vehicleToMl}
+              onKeyPress = {setCheckMalayalamInputField}
               onChange={setSelectVehicleToMl}
               placeholder={`${t("CR_VEHICLE_TO_ML")}`}
               {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_VEHICLE_TO") })}
