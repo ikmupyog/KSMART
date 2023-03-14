@@ -62,15 +62,15 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.marraigeApplicationType
 
-            - jsonPath: $.MarriageDetails.*.marraigeBusinessService
+            - jsonPath: $.MarriageDetails.*.businessService
 
-            - jsonPath: $.MarriageDetails.*.marraigeWorkflowCode
+            - jsonPath: $.MarriageDetails.*.workflowCode
 
-            - jsonPath: $.MarriageDetails.*.marraigeFileNo
+            - jsonPath: $.MarriageDetails.*.fileNo
 
-            - jsonPath: $.MarriageDetails.*.marraigeFileDate
+            - jsonPath: $.MarriageDetails.*.fileDate
 
-            - jsonPath: $.MarriageDetails.*.marraigeFileStatus
+            - jsonPath: $.MarriageDetails.*.fileStatus
 
             - jsonPath: $.MarriageDetails.*.applicationnumber
 
@@ -78,9 +78,9 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.registration_date
 
-            - jsonPath: $.MarriageDetails.*.marraigeAction
+            - jsonPath: $.MarriageDetails.*.action
 
-            - jsonPath: $.MarriageDetails.*.marraigeStatus
+            - jsonPath: $.MarriageDetails.*.status
 
             - jsonPath: $.MarriageDetails.*.auditDetails.createdTime
 

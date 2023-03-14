@@ -107,15 +107,15 @@ public class MarriageApplicationDetail {
     private String applicationtype;
 
     @Size(max = 64)
-    @JsonProperty("marraigeBusinessService")
+    @JsonProperty("businessService")
     private String businessservice;
 
     @Size(max = 64)
-    @JsonProperty("marraigeWorkflowCode")
+    @JsonProperty("workflowCode")
     private String workflowcode;
 
     @Size(max = 64)
-    @JsonProperty("marraigeFileNo")
+    @JsonProperty("fileNo")
     private String fileno;
 
 
@@ -126,19 +126,19 @@ public class MarriageApplicationDetail {
     @JsonProperty("registration_date")
     private Long registrationDate;
 
-    @JsonProperty("marraigeFileDate")
+    @JsonProperty("fileDate")
     private long file_date;
 
     @Size(max = 64)
-    @JsonProperty("marraigeFileStatus")
+    @JsonProperty("fileStatus")
     private String file_status;
 
     @Size(max = 64)
-    @JsonProperty("marraigeAction")
+    @JsonProperty("action")
     private String action;
 
     @Size(max = 64)
-    @JsonProperty("marraigeStatus")
+    @JsonProperty("status")
     private String status;
     @Size(max = 1000)
     @JsonProperty("placeid")
