@@ -163,6 +163,14 @@ const Home = ({
             state: { module: "cr-birth" }
           }),
         },
+        {
+          name:  t("TL_MY_APPLICATIONS_HEADER"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname: `${matchPath}/my-application`,
+            state: { module: "cr-death" }
+          }),
+        },    
         
 
       ],
