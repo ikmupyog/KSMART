@@ -150,9 +150,9 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
   const [hospitalName, selectHospitalName] = useState(formData?.ChildDetails?.hospitalName?.code ? formData?.ChildDetails?.hospitalName : formData?.ChildDetails?.hospitalName ? "" : "");
   const [hospitalNameMl, selectHospitalNameMl] = useState(formData?.ChildDetails?.hospitalNameMl?.code ? formData?.ChildDetails?.hospitalNameMl : formData?.ChildDetails?.hospitalNameMl ? "" : "");
 
-  const [institution, setInstitution] = useState(formData?.ChildDetails?.institution.code ? formData?.ChildDetails?.institution : formData?.ChildDetails?.institutionTypeCode ? "" : "");
-  const [institutionId, setInstitutionId] = useState(formData?.ChildDetails?.institutionId.code ? formData?.ChildDetails?.institutionId : formData?.ChildDetails?.institutionNameCode ? "" : "");
-  const [institutionIdMl, setInstitutionIdMl] = useState(formData?.ChildDetails?.institutionIdMl.code ? formData?.ChildDetails?.institutionIdMl : formData?.ChildDetails?.institutionNameCode ? "" : "");
+  const [institution, setInstitution] = useState(formData?.ChildDetails?.institution?.code ? formData?.ChildDetails?.institution : formData?.ChildDetails?.institutionTypeCode ? "" : "");
+  const [institutionId, setInstitutionId] = useState(formData?.ChildDetails?.institutionId?.code ? formData?.ChildDetails?.institutionId : formData?.ChildDetails?.institutionNameCode ? "" : "");
+  const [institutionIdMl, setInstitutionIdMl] = useState(formData?.ChildDetails?.institutionIdMl?.code ? formData?.ChildDetails?.institutionIdMl : formData?.ChildDetails?.institutionNameCode ? "" : "");
   
 
   const [adrsPostOffice, setAdrsPostOffice] = useState(formData?.ChildDetails?.adrsPostOffice?.code ? formData?.ChildDetails?.adrsPostOffice : formData?.ChildDetails?.adrsPostOffice ? "" : "");
@@ -164,7 +164,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
   const [adrsLocalityNameMl, setAdrsLocalityNameMl] = useState(formData?.ChildDetails?.adrsLocalityNameMl ? formData?.ChildDetails?.adrsLocalityNameMl : "");
   const [adrsStreetNameEn, setAdrsStreetNameEn] = useState(formData?.ChildDetails?.adrsStreetNameEn ? formData?.ChildDetails?.adrsStreetNameEn : "");
   const [adrsStreetNameMl, setAdrsStreetNameMl] = useState(formData?.ChildDetails?.adrsStreetNameMl ? formData?.ChildDetails?.adrsStreetNameMl : "");
-  const [wardNo, setWardNo] = useState(formData.ChildDetails?.wardNo ? formData.ChildDetails?.wardNo : null);
+  const [wardNo, setWardNo] = useState(formData.ChildDetails?.wardNo?.code ? formData.ChildDetails?.wardNo : formData?.ChildDetails?.wardNo ? "" : "");
 
   const [vehicleType, setvehicleType] = useState(formData?.ChildDetails?.vehicleType ? formData?.ChildDetails?.vehicleType : "");
   const [vehicleRegistrationNo, setvehicleRegistrationNo] = useState(formData?.ChildDetails?.vehicleRegistrationNo ? formData?.ChildDetails?.vehicleRegistrationNo : "");
