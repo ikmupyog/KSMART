@@ -397,10 +397,10 @@ CREATE OR REPLACE FUNCTION public.process_eg_marriage_witness_details_audit()
 AS $BODY$
 BEGIN
         IF (TG_OP = 'DELETE') THEN
-            INSERT INTO eg_birth_mother_information_audit SELECT 'D', now(), OLD.*;
+            INSERT INTO eg_marriage_witness_details_audit SELECT 'D', now(), OLD.*;
 RETURN OLD;
 ELSIF (TG_OP = 'UPDATE') THEN
-            INSERT INTO eg_birth_mother_information_audit SELECT 'U', now(), OLD.*;
+            INSERT INTO eg_marriage_witness_details_audit SELECT 'U', now(), OLD.*;
 RETURN NEW;
 END IF;
 RETURN NULL;

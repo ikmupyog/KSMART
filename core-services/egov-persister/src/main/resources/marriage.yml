@@ -7,12 +7,13 @@ serviceMaps:
       isTransaction: true
       queryMaps:
         - query: INSERT INTO public.eg_marriage_details(
-                 id, dateofmarriage, dateofreporting, districtid, lbtype, tenantid, placetype, placeothers, placeid, placename_en, 
-                 street_name_en, street_name_ml, placename_mal, ward_code, talukid, village_name, marriage_type, oth_marriage_type,
-                 landmark, locality_en, locality_ml, othersspecify, applicationtype, businessservice, workflowcode, fileno, file_date, 
-                 file_status, applicationnumber, registrationno, 
-                 registration_date, action, status, createdtime, createdby, lastmodifiedtime, lastmodifiedby)
-                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+                id, dateofmarriage, dateofreporting, districtid, lbtype, tenantid, placetype, placeothers, placeid, placename_en, street_name_en,
+                street_name_ml, placename_mal, ward_code, talukid, village_name, marriage_type, oth_marriage_type, landmark, locality_en, locality_ml,
+                othersspecify, applicationtype, businessservice, workflowcode, fileno, file_date, file_status, applicationnumber, registrationno,
+                registration_date, action, status, createdtime, createdby, lastmodifiedtime, lastmodifiedby, houseno_and_nameen, houseno_and_nameml, 
+                religious_institution, public_or_privateplace, public_or_privateplacennameplace_en, public_or_privateplacennameplace_ml, 
+                religious_institution_other, religious_institution_othername_en, religious_institution_othername_ml)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
           basePath: MarriageDetails.*
           jsonMaps:
             - jsonPath: $.MarriageDetails.*.id
@@ -89,6 +90,23 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.auditDetails.lastModifiedBy
 
+            - jsonPath: $.MarriageDetails.*.marriageHouseNoAndNameEn
+
+            - jsonPath: $.MarriageDetails.*.marriageHouseNoAndNameMal
+
+            - jsonPath: $.MarriageDetails.*.marriageReligiousInstitution
+
+            - jsonPath: $.MarriageDetails.*.marriagePublicOrPrivatePlace
+
+            - jsonPath: $.MarriageDetails.*.marriagePublicOrPrivateNamePlaceEn
+
+            - jsonPath: $.MarriageDetails.*.marriagePublicOrPrivateNamePlaceMal
+
+            - jsonPath: $.MarriageDetails.*.marriageReligiousInstitutionOther
+
+            - jsonPath: $.MarriageDetails.*.marriageReligiousInstitutionOtherNameEn
+
+            - jsonPath: $.MarriageDetails.*.marriageReligiousInstitutionOtherNameMal
 
 
         - query: INSERT INTO public.eg_marriage_bride_details(
@@ -368,40 +386,61 @@ serviceMaps:
 
 
         - query : INSERT INTO public.eg_marriage_witness_details(
-                  id, adharno, name_en, name_mal, age, address_en, address_mal, mobile, is_message_received, 
-                  is_esigned, marriageid, createdtime, createdby, lastmodifiedtime, lastmodifiedby)
-                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+                  id, adharno, name_en, name_mal, age, address_en, address_mal, mobile, is_message_received, is_esigned,
+                  marriageid, createdtime, createdby, lastmodifiedtime, lastmodifiedby, w2_adharno, w2_name_en, w2_name_mal, w2_age, w2_address_en,
+                  w2_address_mal, w2_mobile, w2_is_message_received, w2_is_esigned)
+                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
           basePath: MarriageDetails.*.WitnessDetail
           jsonMaps:
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.id
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witnessAdharNo
+                - jsonPath: $.MarriageDetails.*.WitnessDetail.id
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witnessNameEn
+                - jsonPath: $.MarriageDetails.*.WitnessDetail.witness1AdharNo
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witnessNameMal
+                - jsonPath: $.MarriageDetails.*.WitnessDetail.witness1NameEn
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witnessAge
+                - jsonPath: $.MarriageDetails.*.WitnessDetail.witness1NameMal
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witnessAddresSEn
+                - jsonPath: $.MarriageDetails.*.WitnessDetail.witness1Age
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witnessAddressMal
+                - jsonPath: $.MarriageDetails.*.WitnessDetail.witness1AddresSEn
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witnessMobile
+                - jsonPath: $.MarriageDetails.*.WitnessDetail.witness1AddressMal
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witnessISmessageReceived
+                - jsonPath: $.MarriageDetails.*.WitnessDetail.witness1Mobile
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witnessISEsigned
+                - jsonPath: $.MarriageDetails.*.WitnessDetail.witness1ISmessageReceived
 
-            - jsonPath: $.MarriageDetails.*.id
+                - jsonPath: $.MarriageDetails.*.WitnessDetail.witness1ISEsigned
 
-            - jsonPath: $.MarriageDetails.*.auditDetails.createdTime
+                - jsonPath: $.MarriageDetails.*.id
 
-            - jsonPath: $.MarriageDetails.*.auditDetails.createdBy
+                - jsonPath: $.MarriageDetails.*.auditDetails.createdTime
 
-            - jsonPath: $.MarriageDetails.*.auditDetails.lastModifiedTime
+                - jsonPath: $.MarriageDetails.*.auditDetails.createdBy
 
-            - jsonPath: $.MarriageDetails.*.auditDetails.lastModifiedBy
+                - jsonPath: $.MarriageDetails.*.auditDetails.lastModifiedTime
+
+                - jsonPath: $.MarriageDetails.*.auditDetails.lastModifiedBy
+
+                - jsonPath: $.MarriageDetails.*.WitnessDetail.witness2AdharNo
+
+                - jsonPath: $.MarriageDetails.*.WitnessDetail.witness2NameEn
+
+                - jsonPath: $.MarriageDetails.*.WitnessDetail.witness2NameMal
+
+                - jsonPath: $.MarriageDetails.*.WitnessDetail.witness2Age
+
+                - jsonPath: $.MarriageDetails.*.WitnessDetail.witness2AddresSEn
+
+                - jsonPath: $.MarriageDetails.*.WitnessDetail.witness2AddressMal
+
+                - jsonPath: $.MarriageDetails.*.WitnessDetail.witness2Mobile
+
+                - jsonPath: $.MarriageDetails.*.WitnessDetail.witness2ISmessageReceived
+
+                - jsonPath: $.MarriageDetails.*.WitnessDetail.witness2ISEsigned
+
 
 
 
@@ -416,11 +455,13 @@ serviceMaps:
 
 
         - query: UPDATE public.eg_marriage_details
-                 SET  dateofmarriage=?, dateofreporting=?, districtid=?, lbtype=?, tenantid=?, placetype=?, placeothers=?, placeid=?, 
-                  placename_en=?, street_name_en=?, street_name_ml=?, placename_mal=?, ward_code=?, talukid=?, village_name=?, marriage_type=?, 
-                 oth_marriage_type=?, landmark=?, locality_en=?, locality_ml=?, othersspecify=?, applicationtype=?, businessservice=?, workflowcode=?, 
-                 fileno=?, file_date=?, file_status=?, applicationnumber=?, registrationno=?, registration_date=?, action=?, status=?, 
-                  lastmodifiedtime=?, lastmodifiedby=?
+                SET  dateofmarriage=?, dateofreporting=?, districtid=?, lbtype=?, tenantid=?, placetype=?, placeothers=?, placeid=?, placename_en=?,
+                street_name_en=?, street_name_ml=?, placename_mal=?, ward_code=?, talukid=?, village_name=?, marriage_type=?, oth_marriage_type=?, 
+               landmark=?, locality_en=?, locality_ml=?, othersspecify=?, applicationtype=?, businessservice=?, workflowcode=?, fileno=?, file_date=?, 
+               file_status=?, applicationnumber=?, registrationno=?, registration_date=?, action=?, status=?, lastmodifiedtime=?, 
+               lastmodifiedby=?, houseno_and_nameen=?, houseno_and_nameml=?, religious_institution=?, public_or_privateplace=?, 
+               public_or_privateplacennameplace_en=?, public_or_privateplacennameplace_ml=?, religious_institution_other=?,
+               religious_institution_othername_en=?, religious_institution_othername_ml=?
                  WHERE id=?;
 
           basePath: MarriageDetails.*
@@ -492,6 +533,24 @@ serviceMaps:
             - jsonPath: $.MarriageDetails.*.auditDetails.lastModifiedTime
 
             - jsonPath: $.MarriageDetails.*.auditDetails.lastModifiedBy
+
+            - jsonPath: $.MarriageDetails.*.marriageHouseNoAndNameEn
+
+            - jsonPath: $.MarriageDetails.*.marriageHouseNoAndNameMal
+
+            - jsonPath: $.MarriageDetails.*.marriageReligiousInstitution
+
+            - jsonPath: $.MarriageDetails.*.marriagePublicOrPrivatePlace
+
+            - jsonPath: $.MarriageDetails.*.marriagePublicOrPrivateNamePlaceEn
+
+            - jsonPath: $.MarriageDetails.*.marriagePublicOrPrivateNamePlaceMal
+
+            - jsonPath: $.MarriageDetails.*.marriageReligiousInstitutionOther
+
+            - jsonPath: $.MarriageDetails.*.marriageReligiousInstitutionOtherNameEn
+
+            - jsonPath: $.MarriageDetails.*.marriageReligiousInstitutionOtherNameMal
 
             - jsonPath: $.MarriageDetails.*.id
 
@@ -764,32 +823,53 @@ serviceMaps:
 
 
         - query : UPDATE public.eg_marriage_witness_details
-                  SET  adharno=?, name_en=?, name_mal=?, age=?, address_en=?, address_mal=?, mobile=?, is_message_received=?, is_esigned=?, 
-                 lastmodifiedtime=?, lastmodifiedby=?
+                  SET  adharno=?, name_en=?, name_mal=?, age=?, address_en=?, address_mal=?, mobile=?, is_message_received=?, is_esigned=?, marriageid=?, 
+                  lastmodifiedtime=?, lastmodifiedby=?, w2_adharno=?, w2_name_en=?, w2_name_mal=?, w2_age=?, w2_address_en=?, w2_address_mal=?, w2_mobile=?,
+                  w2_is_message_received=?, w2_is_esigned=?
                   WHERE marriageid=?;
           basePath: MarriageDetails.*.WitnessDetail
           jsonMaps:
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witnessAdharNo
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness1AdharNo
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witnessNameEn
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness1NameEn
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witnessNameMal
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness1NameMal
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witnessAge
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness1Age
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witnessAddresSEn
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness1AddresSEn
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witnessAddressMal
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness1AddressMal
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witnessMobile
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness1Mobile
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witnessISmessageReceived
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness1ISmessageReceived
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witnessISEsigned
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness1ISEsigned
+
+            - jsonPath: $.MarriageDetails.*.id
 
             - jsonPath: $.MarriageDetails.*.auditDetails.lastModifiedTime
 
             - jsonPath: $.MarriageDetails.*.auditDetails.lastModifiedBy
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness2AdharNo
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness2NameEn
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness2NameMal
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness2Age
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness2AddresSEn
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness2AddressMal
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness2Mobile
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness2ISmessageReceived
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness2ISEsigned
 
             - jsonPath: $.MarriageDetails.*.id

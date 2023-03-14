@@ -15,43 +15,82 @@ public class WitnessDetails {
     @JsonProperty("id")
     private String id;
     @Size(max = 15)
-    @JsonProperty("witnessAdharNo")
+    @JsonProperty("witness1AdharNo")
     private String adharno;
 
     @Size(max = 200)
-    @JsonProperty("witnessNameEn")
+    @JsonProperty("witness1NameEn")
     private String name_en;
 
 
     @Size(max = 200)
-    @JsonProperty("witnessNameMal")
+    @JsonProperty("witness1NameMal")
     private String name_mal;
 
 
-    @JsonProperty("witnessAge")
+    @JsonProperty("witness1Age")
     private Integer age;
 
     @Size(max = 200)
-    @JsonProperty("witnessAddresSEn")
+    @JsonProperty("witness1AddresSEn")
     private String address_en;
 
     @Size(max = 200)
-    @JsonProperty("witnessAddressMal")
+    @JsonProperty("witness1AddressMal")
     private String address_mal;
 
     @Size(max = 150)
-    @JsonProperty("witnessMobile")
+    @JsonProperty("witness1Mobile")
     private String mobile;
 
 
-    @JsonProperty("witnessISmessageReceived")
+    @JsonProperty("witness1ISmessageReceived")
     private Boolean is_message_received;
 
-    @JsonProperty("witnessISEsigned")
+    @JsonProperty("witness1ISEsigned")
     private     Boolean is_esigned;
+
+
+
+    @Size(max = 15)
+    @JsonProperty("witness2AdharNo")
+    private String w2Adharno;
+
+    @Size(max = 200)
+    @JsonProperty("witness2NameEn")
+    private String w2Name_en;
+
+
+    @Size(max = 200)
+    @JsonProperty("witness2NameMal")
+    private String w2Name_mal;
+
+
+    @JsonProperty("witness2Age")
+    private Integer w2Age;
+
+    @Size(max = 200)
+    @JsonProperty("witness2AddresSEn")
+    private String w2Address_en;
+
+    @Size(max = 200)
+    @JsonProperty("witness2AddressMal")
+    private String w2Address_mal;
+
+    @Size(max = 150)
+    @JsonProperty("witness2Mobile")
+    private String w2Mobile;
+
+
+    @JsonProperty("witness2ISmessageReceived")
+    private Boolean w2Is_message_received;
+
+    @JsonProperty("witness2ISEsigned")
+    private     Boolean w2Is_esigned;
     @Size(max = 64)
     @JsonProperty("marriageid")
     private String marriageid;
+
 
 
 

@@ -145,6 +145,39 @@ public class MarriageApplicationDetail {
     private String placeid;
 
 
+    @Size(max = 2500)
+    @JsonProperty("marriageHouseNoAndNameEn")
+    private String marriageHouseNoAndNameEn;
+    @Size(max = 2500)
+    @JsonProperty("marriageHouseNoAndNameMal")
+    private String marriageHouseNoAndNameMal;
+
+    @Size(max = 1000)
+    @JsonProperty("marriageReligiousInstitutionOther")
+    private String marriageReligiousInstitutionOther;
+
+    @Size(max = 1000)
+    @JsonProperty("marriagePublicOrPrivatePlace")
+    private String marriagePublicOrPrivatePlace;
+
+    @Size(max = 2500)
+    @JsonProperty("marriagePublicOrPrivateNamePlaceEn")
+    private String marriagePublicOrPrivateNamePlaceEn;
+    @Size(max = 2500)
+    @JsonProperty("marriagePublicOrPrivateNamePlaceMal")
+    private String marriagePublicOrPrivateNamePlaceMal;
+
+
+    @Size(max = 1000)
+    @JsonProperty("marriageReligiousInstitution")
+    private String marriageReligiousInstitution;
+
+    @Size(max = 2500)
+    @JsonProperty("marriageReligiousInstitutionOtherNameEn")
+    private String marriageReligiousInstitutionOtherNameEn;
+    @Size(max = 2500)
+    @JsonProperty("marriageReligiousInstitutionOtherNameMal")
+    private String marriageReligiousInstitutionOtherNameMal;
 
     @Size(max = 64)
     @JsonProperty("applicationnumber")
