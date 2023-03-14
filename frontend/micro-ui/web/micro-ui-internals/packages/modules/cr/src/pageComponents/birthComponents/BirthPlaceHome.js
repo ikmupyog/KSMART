@@ -84,7 +84,6 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
       }
     }
     if (formData?.ChildDetails?.wardNo != null) {
-      console.log(cmbWardNo);
       if (cmbWardNo.length > 0 && (wardNo === undefined || wardNo === "")) {
         setWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.ChildDetails?.wardNo)[0]);
       }
