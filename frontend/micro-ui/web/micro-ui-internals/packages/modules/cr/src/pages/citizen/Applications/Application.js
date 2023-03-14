@@ -16,17 +16,19 @@ const MyApplications = ({view}) => {
   ) : Digit.Hooks.cr.useCRsearchApplication({}, {
     enabled: view !== "bills"
   },t);
-
+console.log(data);
   if (isLoading) {
     return <Loader />;
   }
   return (
     <React.Fragment>
-      hiiijjjj
+      
      <Header>{`${t("TL_MY_APPLICATIONS_HEADER")}`}</Header>
       {data?.map((application) => {
         return (
+          
           <div>
+            hiiijjjjadsasd
             <Card>
             {Object.keys(application).filter(e => e !== "raw" && application[e] !== null).map(item => <KeyNote keyValue={t(item)} note={t(application[item])} />)}
                <Link to={`/digit-ui/citizen/cr/application/${application?.raw?.ackNo}/${application.raw?.tenantId}`}>

@@ -45,7 +45,7 @@ const TLApplicationDetails = () => {
   };
   let multiHeaderStyle = { marginBottom: "10px", marginTop: "10px", color: "#505A5F" };
   //todo: hook should return object to render the data
-  const { isLoading, isError, error, data: application, error: errorApplication } = Digit.Hooks.tl.useTLApplicationDetails({
+  const { isLoading, isError, error, data: application, error: errorApplication } = Digit.Hooks.tl.useCRApplicationDetails({
     tenantId: tenantId,
     applicationNumber: id,
   });
