@@ -10,8 +10,7 @@ import AddressPermanent from "../src/pageComponents/birthComponents/AddressPerma
 import MultipleBirth from "../src/pageComponents/birthComponents/MultipleBirth";
 import CreateBirthRegistration from "./pages/citizen/BirthRegistration";
 import CreateStillBirthRegistration from "./pages/citizen/StillBirthRegistration";
-import CreateBornOutsideRegistration from "./pages/citizen/BornOutsideReg";
-
+import CreateBornOutsideRegistration from "./pages/citizen/BornOutsideReg"
 
 import ParentsDetails from "../src/pageComponents/birthComponents/ParentsDetails";
 import BirthPlaceHospital from "../src/pageComponents/birthComponents/BirthPlaceHospital";
@@ -39,11 +38,11 @@ import StillBirthPlaceHospital from "../src/pageComponents/stillBirthComponents/
 import StillBirthPlaceHome from "../src/pageComponents/stillBirthComponents/StillBirthPlaceHome";
 import StillBirthInitiatorDetails from "../src/pageComponents/stillBirthComponents/StillBirthInitiatorDetails";
 import StillBirthCheckPage from "./pages/citizen/StillBirthRegistration/StillBirthCheckPage";
-import BornOutsideCheckPage from "./pages/citizen/BornOutsideReg/BornOutsideCheckPage";
+
 
 import BornOutsideChildDetails from "../src/pageComponents/bornOutsideIndiaComponents/BornOutsideChildDetails";
 import BornOutsideParentsDetails from "../src/pageComponents/bornOutsideIndiaComponents/BornOutsideParentsDetails";
-
+import BornOutsideCheckPage from "./pages/citizen/BornOutsideReg/BornOutsideCheckPage";
 
 // import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
 import AdoptionMotherInformation from "../src/pageComponents/adoptionComponents/AdoptionMotherInformation";
@@ -153,33 +152,25 @@ export const CRLinks = ({ matchPath, userType }) => {
       section:'birth'
     },
     {
-      link: `${matchPath}/cr-death-creation`,
-      i18nKey: t("CR_DEATH_REGISTRATION"),
-      section:'death'
-    },
-    // {
-    //   link: `${matchPath}/cr-marriage-creation`,
-    //   i18nKey: t("CR_MARRIAGE_REGISTRATION"),
-    // },
-    {
       link: `${matchPath}/create-birth-certificate`,
       i18nKey: t("CR_BIRTH_CERTIFICATE"),
       section:'birth'
+    },
+    {
+      link: `${matchPath}/cr-death-creation`,
+      i18nKey: t("CR_DEATH_REGISTRATION"),
+      section:'death'
     },
     {
       link: `${matchPath}/create-death-certificate`,
       i18nKey: t("CR_DEATH_CERTIFICATE"),
       section:'death'
     },
-
     // {
-    //   link: `${matchPath}/tradelicence/renewal-list`,
-    //   i18nKey: t("TL_RENEWAL_HEADER"),
+    //   link: `${matchPath}/cr-marriage-creation`,
+    //   i18nKey: t("CR_MARRIAGE_REGISTRATION"),
     // },
-    // {
-    //   link: `${matchPath}/tradelicence/my-application`,
-    //   i18nKey: t("TL_MY_APPLICATIONS_HEADER"),
-    // },
+    
   ];
 
   return (
@@ -242,6 +233,7 @@ const componentsToRegister = {
   //////////////////
   BornOutsideChildDetails,
   BornOutsideParentsDetails,
+  BornOutsideCheckPage,
   //////////////////
   // SearchRegistry,
   AdoptionDetails,

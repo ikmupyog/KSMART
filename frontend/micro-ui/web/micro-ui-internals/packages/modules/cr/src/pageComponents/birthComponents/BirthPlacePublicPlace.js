@@ -59,11 +59,13 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
     }
   }
   function setSelectlocalityNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setlocalityNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if(!(e.target.value.match(pattern))){
+      e.preventDefault();
+      setlocalityNameMl('');
+    }
+    else{
+      setlocalityNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
@@ -73,11 +75,13 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
     }
   }
   function setSelectstreetNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setstreetNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if(!(e.target.value.match(pattern))){
+      e.preventDefault();
+      setstreetNameMl('');
+    }
+    else{
+      setstreetNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectVehicleOtherDetailsEn(e) {
@@ -85,6 +89,12 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
       setpublicPlaceDecpEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
     //setpublicPlaceDecpEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
+  }
+  function setCheckMalayalamInputField(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
+    if(!(e.key.match(pattern))){
+      e.preventDefault();
+    }    
   }
   let validFlag = true;
 
@@ -158,6 +168,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
                 optionKey="i18nKey"
                 name="localityNameMl"
                 value={localityNameMl}
+                onKeyPress = {setCheckMalayalamInputField}
                 onChange={setSelectlocalityNameMl}
                 placeholder={`${t("CR_LOCALITY_ML")}`}
                 {...(validation = {
@@ -192,6 +203,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
                 optionKey="i18nKey"
                 name="streetNameMl"
                 value={streetNameMl}
+                onKeyPress = {setCheckMalayalamInputField}
                 onChange={setSelectstreetNameMl}
                 placeholder={`${t("CR_STREET_NAME_ML")}`}
                 {...(validation = {

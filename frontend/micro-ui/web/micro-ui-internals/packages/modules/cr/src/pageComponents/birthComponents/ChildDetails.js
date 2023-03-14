@@ -150,14 +150,12 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
   const [hospitalName, selectHospitalName] = useState(formData?.ChildDetails?.hospitalName?.code ? formData?.ChildDetails?.hospitalName : formData?.ChildDetails?.hospitalName ? "" : "");
   const [hospitalNameMl, selectHospitalNameMl] = useState(formData?.ChildDetails?.hospitalNameMl?.code ? formData?.ChildDetails?.hospitalNameMl : formData?.ChildDetails?.hospitalNameMl ? "" : "");
 
-  // const [hospitalName, selectHospitalName] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? "" : formData?.ChildDetails?.hospitalName); //formData?.ChildDetails?.hospitalName ? formData?.ChildDetails?.hospitalName : null
-  // const [hospitalNameMl, selectHospitalNameMl] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? "" : formData?.ChildDetails?.hospitalNameMl);
+  const [institution, setInstitution] = useState(formData?.ChildDetails?.institution.code ? formData?.ChildDetails?.institution : formData?.ChildDetails?.institutionTypeCode ? "" : "");
+  const [institutionId, setInstitutionId] = useState(formData?.ChildDetails?.institutionId.code ? formData?.ChildDetails?.institutionId : formData?.ChildDetails?.institutionNameCode ? "" : "");
+  const [institutionIdMl, setInstitutionIdMl] = useState(formData?.ChildDetails?.institutionIdMl.code ? formData?.ChildDetails?.institutionIdMl : formData?.ChildDetails?.institutionNameCode ? "" : "");
+  
 
-  const [institution, setInstitution] = useState(formData?.ChildDetails?.institution ? formData?.ChildDetails?.institution : null);
-  const [institutionIdMl, setInstitutionIdMl] = useState(formData?.ChildDetails?.institutionIdMl ? formData?.ChildDetails?.institutionIdMl : null);
-  const [institutionId, setInstitutionId] = useState(formData?.ChildDetails?.institutionId ? formData?.ChildDetails?.institutionId : null);
   const [adrsPostOffice, setAdrsPostOffice] = useState(formData?.ChildDetails?.adrsPostOffice?.code ? formData?.ChildDetails?.adrsPostOffice : formData?.ChildDetails?.adrsPostOffice ? "" : "");
-
   // const [adrsPostOffice, setAdrsPostOffice] = useState(formData?.ChildDetails?.adrsPostOffice ? formData?.ChildDetails?.adrsPostOffice : null);
   const [adrsPincode, setAdrsPincode] = useState(formData?.ChildDetails?.adrsPincode ? formData?.ChildDetails?.adrsPincode : null);
   const [adrsHouseNameEn, setAdrsHouseNameEn] = useState(formData?.ChildDetails?.adrsHouseNameEn ? formData?.ChildDetails?.adrsHouseNameEn : "");
@@ -403,34 +401,40 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
     // setChildLastNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
     
   }
+  function setCheckMalayalamInputField(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
+    if(!(e.key.match(pattern))){
+      e.preventDefault();
+    }    
+  }
   function setSelectChildFirstNameMl(e) {
-    const RegExp = "/^[\u0D00-\u0D7F\u0020-\u0040\u200D\u200C\"]*$/g";
-    console.log(e.target.value.match(RegExp));
-    // const tempName = e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, '');
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match(RegExp) != null)) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if(!(e.target.value.match(pattern))){
+      e.preventDefault();
+      setChildFirstNameMl('');
+    }
+    else{
       setChildFirstNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
-    // if (e.target.value.length === 51) {
-    //   return false;
-    //   // window.alert("Username shouldn't exceed 10 characters")
-    // } else {
-    //   setChildFirstNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
-    // }
   }
   function setSelectChildMiddleNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setChildMiddleNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if(!(e.target.value.match(pattern))){
+      e.preventDefault();
+      setChildMiddleNameMl('');
+    }
+    else{
+      setChildMiddleNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectChildLastNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setChildLastNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if(!(e.target.value.match(pattern))){
+      e.preventDefault();
+      setChildLastNameMl('');
+    }
+    else{
+      setChildLastNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectPregnancyDuration(e) {
@@ -1272,6 +1276,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
                       optionKey="i18nKey"
                       name="childFirstNameMl"
                       value={childFirstNameMl}
+                      onKeyPress = {setCheckMalayalamInputField}
                       onChange={setSelectChildFirstNameMl}
                       disable={isDisableEdit}
                       placeholder={`${t("CR_FIRST_NAME_ML")}`}
@@ -1292,6 +1297,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
                       optionKey="i18nKey"
                       name="childMiddleNameMl"
                       value={childMiddleNameMl}
+                      onKeyPress = {setCheckMalayalamInputField}
                       onChange={setSelectChildMiddleNameMl}
                       disable={isDisableEdit}
                       placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
@@ -1312,6 +1318,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
                       optionKey="i18nKey"
                       name="childLastNameMl"
                       value={childLastNameMl}
+                      onKeyPress = {setCheckMalayalamInputField}
                       onChange={setSelectChildLastNameMl}
                       disable={isDisableEdit}
                       placeholder={`${t("CR_LAST_NAME_ML")}`}
