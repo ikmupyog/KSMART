@@ -39,15 +39,15 @@ const StillBirthAcknowledgement = ({ data, onSuccess,userType }) => {
   const resubmit = window.location.href.includes("edit-application");
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const isRenewTrade = !window.location.href.includes("renew-trade")
-  const mutation = Digit.Hooks.cr.useCivilRegistrationAPI(
+  const mutation = Digit.Hooks.cr.useCivilRegistrationStillBirthAPI(
     data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
     isRenewTrade
   );
-  // const mutation1 = Digit.Hooks.cr.useCivilRegistrationAPI(
+  // const mutation1 = Digit.Hooks.cr.useCivilRegistrationStillBirthAPI(
   //   data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
   //   false
   // );
-  // const mutation2 = Digit.Hooks.cr.useCivilRegistrationAPI(
+  // const mutation2 = Digit.Hooks.cr.useCivilRegistrationStillBirthAPI(
   //   data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
   //   false
   // );

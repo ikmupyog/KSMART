@@ -114,6 +114,11 @@ const Urls = {
     registry_download: "/birth-services/cr/registry/_download", 
     registry_search_birth: "/birth-services/cr/registry/_search",    
   },
+  crstillbirth: {
+    create: "/birth-services/cr/createstillbirth",
+    search:"/birth-services/cr/searchstillbirth",
+    update:"/birth-services/cr/updatestillbirth",  
+  },
   crdeath: {
     create: "/death-services/v1/deathdetails/_createdeath ",
     search: "/death-services/v1/deathdetails/_searchdeath",

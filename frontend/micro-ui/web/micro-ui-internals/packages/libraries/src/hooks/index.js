@@ -121,13 +121,17 @@ import useTenantsCR from "./cr/useTenants";
 import useCivilRegistrationMDMS from "./cr/useCivilRegistrationMDMS";
 // import useTLDocumentSearch from "./tl/useTLDocumentSearch";
 import useCivilRegistrationAPI from "./cr/useCivilRegistrationAPI";
+import useCivilRegistrationStillBirthAPI from "./cr/useCivilRegistrationStillBirthAPI";
+
 import useCivilRegistrationDeathAPI from "./cr/useCivilRegistrationDeathAPI";
 // import useTradeLicenseSearch from "./tl/useTradeLicenseSearch";
 // import { useTLSearchApplication, useTLApplicationDetails } from "./tl/useTLsearchApplication";
 // import useTLPaymentHistory from "./tl/userPaymentHistory";
 import useCRApplicationDetail from "./cr/useApplicationDetail";
+import useApplicationStillBirthDetail from "./cr/useApplicationStillBirthDetail"; 
 import useApplicationDeathDetail from "./cr/useApplicationDeathDetail"; 
 import useCRApplicationActions from "./cr/useApplicationActions";
+import useCRStillBirthApplicationActions from "./cr/useApplicationStillBirthActions";
 import useCRDeathApplicationActions from "./cr/useApplicationDeathActions";
 import useCRGenderMDMS from "./cr/useCRGenderMDMS";
 import useCRInbox from "./cr/useInbox";
@@ -329,6 +333,7 @@ const cr = {
   useTenants: useTenantsCR,
   useCivilRegistrationMDMS,
   useCivilRegistrationAPI,
+  useCivilRegistrationStillBirthAPI,
   useCivilRegistrationDeathAPI,
   useCRGenderMDMS,
   useInbox: useCRInbox,
@@ -340,7 +345,9 @@ const cr = {
   useRegistrySearchBirth,
   useSearchDeath ,
   useApplicationDetail: useCRApplicationDetail,
+  useApplicationStillBirthDetail:useApplicationStillBirthDetail,
   useApplicationActions: useCRApplicationActions,
+  useCRStillBirthApplicationActions:useCRStillBirthApplicationActions,
   useCRDeathApplicationActions: useCRDeathApplicationActions,
   useApplicationDeathDetail: useApplicationDeathDetail,
 };
