@@ -51,9 +51,8 @@ const Home = ({
   const ModuleLevelLinkHomePages = modules.map(({ code, bannerImage,...others }, index) => {
     let Links = Digit.ComponentRegistryService.getComponent(`${code}Links`) || (() => <React.Fragment />);
     let crBirth = "cr-birth"
-    let Module_br = "Birth Registration"
-    let Module_dr = "Death Registration"
     let crDeath = "cr-death"
+    let crMarriage ="cr-marriage"
     let matchPath=`/digit-ui/citizen/${code.toLowerCase()}`
     // console.log(code);
     const history = useHistory();
@@ -77,7 +76,26 @@ const Home = ({
       ],
       styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
     };
-    const birthRegProps = {
+    const marriageProps = {
+      header: t(""),
+      sideOption: {
+        name: t(""),
+        onClick: () => history.push("/digit-ui/citizen/all-services"),
+      },
+      options: [
+        {
+          name: t("CR_MARRIAGE_CODE"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname: '/digit-ui/citizen/cr-marriage-home',
+            state: { module: "cr-marriage" }
+          }),
+        },
+
+      ],
+      styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
+    };
+    const birthSectionAProps = {
       header: t(""),
       sideOption: {
         name: t(""),
@@ -105,6 +123,35 @@ const Home = ({
           Icon: <OBPSIcon />,
           onClick: () => history.push({
             pathname: `${matchPath}/cr-outsideindiabirth-creation`,
+            state: { module: "cr-birth" }
+          }),
+        },
+        {
+          name: t("CR_ADOPTION"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname:`${matchPath}/cr-adoption`,
+            state: { module: "cr-birth" }
+          }),
+        },
+        
+
+      ],
+      styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
+    };
+    const birthSectionBProps = {
+      header: t(""),
+      sideOption: {
+        name: t(""),
+        onClick: () => history.push("/digit-ui/citizen/all-services"),
+      },
+      options: [
+    
+        {
+          name:t("CR_NAME_INCLUSION_CORRECTION"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname: `${matchPath}/cr-name-inclusiom`,
             state: { module: "cr-birth" }
           }),
         },
@@ -148,6 +195,25 @@ const Home = ({
       ],
       styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
     };
+    const MarriageRegProps = {
+      header: t(""),
+      sideOption: {
+        name: t(""),
+        onClick: () => history.push("/digit-ui/citizen/all-services"),
+      },
+      options: [
+        {
+          name: t("CR_MARRIAGE_NEW_REGISTRATION"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname: `${matchPath}/cr-marriage-creation`,
+            state: { module: "cr-marriage" }
+          }),
+        },
+
+      ],
+      styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
+    };
 
     const deathProps = {
       header: t(""),
@@ -169,6 +235,7 @@ const Home = ({
       ],
       styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
     };
+
     return (
       <React.Fragment>
         {code === "CR" && location?.state?.module === crBirth ? (
@@ -176,13 +243,11 @@ const Home = ({
             <div className="moduleLinkHomePage">
               <img src={bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
               <BackButton className="moduleLinkHomePageBackButton" />
-                <h1>{t(Module_br.toUpperCase())}</h1>
+                <h1>{t("CR_BIRTH_REGISTRATION".toUpperCase())}</h1>
             </div>
-            {/* <div className="moduleLinkHomePageModuleLinks">
-              <Links key={index} module={location?.state?.module} matchPath={`/digit-ui/citizen/${code.toLowerCase()}`} userType={"citizen"} />
-            </div> */}
              <div className="ServicesSection" style={{display:"flex",marginTop:"20px"}}>
-                <CardBasedOptions {...birthRegProps} />
+                <CardBasedOptions {...birthSectionAProps} />
+                <CardBasedOptions {...birthSectionBProps} />
             </div>
           </Route>
         ) :
@@ -191,16 +256,24 @@ const Home = ({
             <div className="moduleLinkHomePage">
               <img src={bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
               <BackButton className="moduleLinkHomePageBackButton" />
-                <h1>{t(Module_dr.toUpperCase())}</h1>
+                <h1>{t("CR_DEATH_REGISTRATION".toUpperCase())}</h1>
             </div>
-            {/* <div className="moduleLinkHomePageModuleLinks">
-              <Links key={index} module={location?.state?.module} matchPath={`/digit-ui/citizen/${code.toLowerCase()}`} userType={"citizen"} />
-            </div> */}
             <div className="ServicesSection" style={{display:"flex",marginTop:"20px"}}>
                 <CardBasedOptions {...DearhRegProps} />
             </div>
           </Route>
-        ) : 
+        ) :  code === "CR" && location?.state?.module === crMarriage ? (
+          <Route key={index} path={`${path}/${crMarriage.toLowerCase()}-home`}>
+            <div className="moduleLinkHomePage">
+              <img src={bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
+              <BackButton className="moduleLinkHomePageBackButton" />
+                <h1>{t('CR_MODULE_MARRIAGE'.toUpperCase())}</h1>
+            </div>
+            <div className="ServicesSection" style={{display:"flex",marginTop:"20px"}}>
+                <CardBasedOptions {...MarriageRegProps} />
+            </div>
+          </Route>
+        ) :
         code === "CR"?
         (
           <Route key={index} path={`${path}/${code.toLowerCase()}-home`}>
@@ -213,6 +286,7 @@ const Home = ({
             <div className="ServicesSection" style={{display:"flex"}}>
                 <CardBasedOptions {...birthProps} />
                 <CardBasedOptions {...deathProps} />
+                <CardBasedOptions {...marriageProps} />
          </div>
             </div>
           </Route>
