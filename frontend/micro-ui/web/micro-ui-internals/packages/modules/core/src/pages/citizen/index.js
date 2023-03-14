@@ -66,7 +66,7 @@ const Home = ({
       },
       options: [
         {
-          name: t("Birth Registration"),
+          name: t("CR_BIRTH_CODE"),
           Icon: <OBPSIcon />,
           onClick: () => history.push({
             pathname: '/digit-ui/citizen/cr-birth-home',
@@ -85,7 +85,7 @@ const Home = ({
       },
       options: [
         {
-          name: t("New Registration"),
+          name: t("CR_BIRTH_NEW_REGISTRATION"),
           Icon: <OBPSIcon />,
           onClick: () => history.push({
             pathname: `${matchPath}/cr-birth-creation`,
@@ -93,7 +93,7 @@ const Home = ({
           }),
         },
         {
-          name: t("Still Birth Registration"),
+          name: t("CR_STILL_BIRTH_REG"),
           Icon: <OBPSIcon />,
           onClick: () => history.push({
             pathname: `${matchPath}/cr-stillbirth-creation`,
@@ -109,7 +109,7 @@ const Home = ({
           }),
         },
         {
-          name: t("Download Certificate"),
+          name: t("CR_COMMON_CERT_DOWNLOAD"),
           Icon: <OBPSIcon />,
           onClick: () => history.push({
             pathname:`${matchPath}/create-birth-certificate`,
@@ -129,19 +129,19 @@ const Home = ({
       },
       options: [
         {
-          name: t("New Registration"),
+          name: t("CR_DEATH_NEW_REGISTRATION"),
           Icon: <OBPSIcon />,
           onClick: () => history.push({
             pathname: `${matchPath}/cr-death-creation`,
-            state: { module: "cr-birth" }
+            state: { module: "cr-death" }
           }),
         },
         {
-          name: t("Download Certificate"),
+          name: t("CR_COMMON_CERT_DOWNLOAD"),
           Icon: <OBPSIcon />,
           onClick: () => history.push({
             pathname: `${matchPath}/create-death-certificate`,
-            state: { module: "cr-birth" }
+            state: { module: "cr-death" }
           }),
         },    
 
@@ -157,7 +157,7 @@ const Home = ({
       },
       options: [
         {
-        name: t("Death Registration"),
+        name: t("CR_DEATH_CODE"),
         Icon: <OBPSIcon />,
         onClick: () => history.push({
           pathname: '/digit-ui/citizen/cr-death-home',
