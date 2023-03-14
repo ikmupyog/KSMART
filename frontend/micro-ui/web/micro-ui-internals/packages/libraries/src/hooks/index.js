@@ -143,6 +143,7 @@ import useRegistrySearchBirth from "./cr/useRegistrySearchBirth";
 import useRegistrySearchDeath from "./cr/useRegistrySearchDeath";
 
 import useSearchDeath  from "./cr/useSearchDeath";
+import useSearchStillBirth  from "./cr/useSearchStillBirth";
 import useTenantsDFM from "./dfm/useTenants";
 import useFileManagmentMDMS from "./dfm/useFileManagmentMDMS";
 import useFileManagmentAPI from "./dfm/useFileManagmentAPI";
@@ -344,6 +345,7 @@ const cr = {
   useResistryDownloadBirth,
   useRegistrySearchBirth,
   useSearchDeath ,
+  useSearchStillBirth,
   useApplicationDetail: useCRApplicationDetail,
   useApplicationStillBirthDetail:useApplicationStillBirthDetail,
   useApplicationActions: useCRApplicationActions,
