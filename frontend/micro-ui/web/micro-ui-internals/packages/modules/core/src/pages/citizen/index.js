@@ -167,7 +167,7 @@ const Home = ({
           name:  t("TL_MY_APPLICATIONS_HEADER"),
           Icon: <OBPSIcon />,
           onClick: () => history.push({
-            pathname: `${matchPath}/my-application`,
+            pathname: `${matchPath}/cr/my-application`,
             state: { module: "cr-death" }
           }),
         },    
