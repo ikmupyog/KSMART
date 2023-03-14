@@ -71,7 +71,7 @@ public class FileManagementService extends AbstractFileManagementService {
 
         // encrypt PII information - aadhaarNumber, mobileNumber, emailId,...
         final ApplicantPersonal applicant = encrypt(applicantRaw);
-        serviceDetail.setApplicant(applicant);
+       serviceDetail.setApplicant(applicant);
 
         // check applicant personal exists or not
         final ApplicantPersonal existingApplicant = findApplicantPersonalByIdOrAadhaar(applicant);

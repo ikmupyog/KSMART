@@ -104,7 +104,7 @@ public class ApplicantServiceRowMapper implements ResultSetExtractor<List<Applic
                                   .fileStatus(rs.getString("filestatus"))
                                   // .fileCategory(rs.getString("filecategory"))
                                   .businessService(rs.getString("businessservice"))
-                                  .assignees(rs.getString("assignee"))
+//                                  .assignees(rs.getString("assignee"))
                                   .auditDetails(getAuditDetails(rs, SVC_FILE_PREFIX))
                                   .build();
     }
