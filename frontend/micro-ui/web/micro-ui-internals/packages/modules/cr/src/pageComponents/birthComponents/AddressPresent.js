@@ -20,6 +20,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
     const { data: State = {}, isStateLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
     const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
     const [isInitialRender, setIsInitialRender] = useState(true);
+    const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? isEditDeath : false);
 
     let cmbLB = [];
     let cmbCountry = [];
@@ -139,6 +140,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
                                 option={cmbCountry}
                                 selected={presentaddressCountry}
                                 select={setSelectaddressCountry}
+                                disable={isDisableEdit}
                             />
                         </div>
                         {countryvalue === "IND" && (
@@ -154,6 +156,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
                                     option={cmbState}
                                     selected={presentaddressStateName}
                                     select={setSelectaddressStateName}
+                                    disable={isDisableEdit}
                                 />
                             </div>
                         )}

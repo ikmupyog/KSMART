@@ -181,7 +181,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
     setWardNo(value);
   }
   function setCheckMalayalamInputField(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C -]/;
     if(!(e.key.match(pattern))){
       e.preventDefault();
     }    
