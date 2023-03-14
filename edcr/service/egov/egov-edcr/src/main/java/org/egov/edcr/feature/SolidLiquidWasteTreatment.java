@@ -55,10 +55,10 @@ import java.util.Map;
 import org.egov.common.entity.edcr.Block;
 import org.egov.common.entity.edcr.Floor;
 import org.egov.common.entity.edcr.FloorUnit;
-import org.egov.common.entity.edcr.OccupancyType;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
+import org.egov.edcr.constants.DxfFileConstants;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -66,7 +66,7 @@ public class SolidLiquidWasteTreatment extends FeatureProcess {
 
     public static final String SUBRULE_55_11_DESC = "Collection and disposal of solid and liquid Waste";
 
-    private static final String SUBRULE_55_11 = "55-11";
+    private static final String SUBRULE_55_11 = "55(11)";
 
     @Override
     public Plan validate(Plan pl) {
@@ -75,9 +75,8 @@ public class SolidLiquidWasteTreatment extends FeatureProcess {
 
     @Override
     public Plan process(Plan pl) {
-        /*
-         * validate(pl); processSolidLiquidWasteTreat(pl);
-         */
+        validate(pl);
+        processSolidLiquidWasteTreat(pl);
         return pl;
     }
 
@@ -94,7 +93,7 @@ public class SolidLiquidWasteTreatment extends FeatureProcess {
             for (Block b : pl.getBlocks()) {
                 for (Floor f : b.getBuilding().getFloors()) {
                     for (FloorUnit unit : f.getUnits()) {
-                        if (OccupancyType.OCCUPANCY_E.equals(unit.getOccupancy().getType())) {
+                        if (DxfFileConstants.E.equals(unit.getOccupancy().getTypeHelper().getType().getCode())) {
                             isFound = true;
                         }
                     }
@@ -113,8 +112,7 @@ public class SolidLiquidWasteTreatment extends FeatureProcess {
                 details.put(STATUS, Result.Verify.getResultVal());
                 scrutinyDetail.getDetail().add(details);
                 pl.getReportOutput().getScrutinyDetails().add(scrutinyDetail);
-            } else if (isFound && !pl.getUtility().getSolidLiqdWasteTrtmnt().isEmpty()) {
-
+            } else if (!pl.getUtility().getSolidLiqdWasteTrtmnt().isEmpty()) {
                 Map<String, String> details = new HashMap<>();
                 details.put(RULE_NO, SUBRULE_55_11);
                 details.put(DESCRIPTION, SUBRULE_55_11_DESC);
@@ -122,7 +120,6 @@ public class SolidLiquidWasteTreatment extends FeatureProcess {
                 details.put(STATUS, Result.Accepted.getResultVal());
                 scrutinyDetail.getDetail().add(details);
                 pl.getReportOutput().getScrutinyDetails().add(scrutinyDetail);
-
             }
         }
     }

@@ -196,6 +196,8 @@ public class DcrConstants {
     public static final String PORTICO_DISTANCETO_EXTERIORWALL = "Block %s Portico %s Portico distance to exteriorwall";
     public static final String PDF_EXT = "application/pdf";
     public static final String BLDG_WITHNAME_FOOT_PRINT_NOT_DEFINED = "Building footprint for the block %s";
+    public static final String RAINWATER_HARVESTING_CAPACITY = "Rain Water Harvesting Capacity ";
+    public static final String RAINWATERCAPACITY = "msg.error.not.defined.capacity";
 
     
 }
