@@ -83,6 +83,11 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
         setAdrsPincode(pin.pincode);
       }
     }
+    if (formData?.ChildDetails?.wardNo != null) {
+      if (cmbWardNo.length > 0 && (wardNo === undefined || wardNo === "")) {
+        setWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.ChildDetails?.wardNo)[0]);
+      }
+    }
   }
   function setSelectAdrsPostOffice(value) {
     setAdrsPostOffice(value);
@@ -176,7 +181,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
     setWardNo(value);
   }
   function setCheckMalayalamInputField(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C -]/;
     if(!(e.key.match(pattern))){
       e.preventDefault();
     }    
@@ -215,6 +220,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
                 selected={wardNo}
                 select={setSelectWard}
                 placeholder={`${t("CS_COMMON_WARD")}`}
+                disable={isDisableEdit}
                 {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
               />
             </div>
@@ -302,6 +308,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
                 name="adrsHouseNameEn"
                 value={adrsHouseNameEn}
                 onChange={setSelectAdrsHouseNameEn}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_HOUSE_NAME_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z- 0-9]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
               />
@@ -360,6 +367,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
                 value={adrsHouseNameMl}
                 onKeyPress = {setCheckMalayalamInputField}
                 onChange={setSelectAdrsHouseNameMl}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_HOUSE_NAME_ML")}`}
 
               />

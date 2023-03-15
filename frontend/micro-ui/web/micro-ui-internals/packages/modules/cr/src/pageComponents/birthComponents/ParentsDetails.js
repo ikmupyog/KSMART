@@ -573,7 +573,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
           <div className="row">
             <div className="col-md-12">
               {/* <CardLabel>{`${t("Multiple Birth")}`}</CardLabel> */}
-              <CheckBox label={t("CR_MOTHER_INFORMATION_MISSING")} onChange={setMotherInfo} value={isMotherInfo} checked={isMotherInfo} />
+              <CheckBox label={t("CR_MOTHER_INFORMATION_MISSING")} onChange={setMotherInfo} value={isMotherInfo} checked={isMotherInfo} disable={isDisableEdit} />
             </div>
           </div>
           {isMotherInfo === false && (

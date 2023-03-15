@@ -12,7 +12,7 @@ const OcrFlow = ({ path }) => {
       title: "CR_BORNOUTSIDEBIRTH_REGISTRATION",
       subTitle: "CR_BORNOUTSIDEBIRTH_NEW_REGISTRATION",
       img: <BankIcon />,
-      link: `${path}/born-outside-parents-details`,
+      link: `${path}/born-outside-child-details`,
     },
     // {
     //   title: "CR_BIRTH_ADOPTION",

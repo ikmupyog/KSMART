@@ -25,7 +25,7 @@ const OcrFlowApp = ({ parentUrl}) => {
   newConfig?.forEach((obj) => {
     config = config.concat(obj.body.filter((a) => !a.hideInCitizen));
   });
-  config.indexRoute = "born-outside-parents-details";
+  config.indexRoute = "born-outside-child-details";
   const goNext = (skipStep, index, isAddMultiple, key, isPTCreateSkip) => {
     let currentPath = pathname.split("/").pop(),
       nextPage;
@@ -152,7 +152,7 @@ const OcrFlowApp = ({ parentUrl}) => {
       <Route path={`${path}`} exact>
               <CrFlow  path={path}/>
              </Route>
-             <PrivateRoute  parentRoute={path} path={`${path}/${config.indexRoute}`} component={() => <BornOutsideBirthChildDetails parentUrl={path}  />} />
+             <PrivateRoute  parentRoute={path} path={`${path}/${config.indexRoute}`} component={() => <BornOutsideChildDetails parentUrl={path}  />} />
          
       </Switch>
     </React.Fragment>

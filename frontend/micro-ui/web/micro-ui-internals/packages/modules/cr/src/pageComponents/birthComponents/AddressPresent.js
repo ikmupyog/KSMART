@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCountry, setaddressCountry,
     presentaddressStateName, setaddressStateName, value, setValue, countryvalue, setCountryValue,
     permtaddressCountry, setpermtaddressCountry, permtaddressStateName, setpermtaddressStateName, isPrsentAddress,
-    setIsPrsentAddress, Villagevalues, setLbsVillagevalue,isEditBirth = false, isEditDeath = false
+    setIsPrsentAddress, Villagevalues, setLbsVillagevalue, isEditBirth = false, isEditDeath = false
 }) => {
     const stateId = Digit.ULBService.getStateId();
     let tenantId = "";
@@ -20,6 +20,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
     const { data: State = {}, isStateLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
     const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
     const [isInitialRender, setIsInitialRender] = useState(true);
+    const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? isEditDeath : false);
 
     let cmbLB = [];
     let cmbCountry = [];
@@ -55,13 +56,14 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
         if (isInitialRender) {
             if (cmbLB.length > 0) {
                 currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
+                console.log(currentLB);
                 // setAdrsLBName(currentLB[0]);
                 cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
                 setaddressCountry(cmbFilterCountry[0]);
                 setCountryValue(cmbFilterCountry[0].countrycode)
                 cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
                 setaddressStateName(cmbFilterState[0]);
-                setValue(cmbFilterState[0].statecode);
+                setValue(cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode)[0].statecode);
                 cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
                 setLbsVillagevalue(cmbFilterVillage);
                 setIsInitialRender(false);
@@ -69,6 +71,20 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
         }
     }, [Country, State, localbodies, Villagevalues, isInitialRender]);
 
+    if (isEditBirth || isEditDeath) {
+        if (formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry != null) {
+            if (cmbCountry.length > 0 && (presentaddressCountry === undefined || presentaddressCountry === "")) {
+                setaddressCountry(cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry)[0]);
+                setCountryValue(value.formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry);
+            }
+        }
+        if (formData?.ChildDetails?.AddressBirthDetails?.presentaddressStateName != null) {
+            if (cmbState.length > 0 && (presentaddressStateName === undefined || presentaddressStateName === "")) {
+                setaddressStateName(cmbState.filter(cmbState => cmbState.code === formData?.ChildDetails?.AddressBirthDetails?.presentaddressStateName)[0]);
+                setValue(value.formData?.ChildDetails?.AddressBirthDetails?.presentaddressStateName);
+            }
+        }
+    }
     const onSkip = () => onSelect();
 
     function setSelectaddressCountry(value) {
@@ -102,50 +118,52 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
     if (isCountryLoading || isStateLoading || islocalbodiesLoading) {
         return <Loader></Loader>;
     } else
-    return (
-        <React.Fragment>
-            <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!presentaddressCountry}>
-                <div className="row">
-                    <div className="col-md-12">
-                        <h1 className="headingh1">
-                            <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ADDRESS")}`}</span>{" "}
-                        </h1>
+        return (
+            <React.Fragment>
+                <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!presentaddressCountry}>
+                    <div className="row">
+                        <div className="col-md-12">
+                            <h1 className="headingh1">
+                                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ADDRESS")}`}</span>{" "}
+                            </h1>
+                        </div>
                     </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-6">
-                        <CardLabel>
-                            {`${t("CS_COMMON_COUNTRY")}`}
-                            <span className="mandatorycss">*</span>
-                        </CardLabel>
-                        <Dropdown
-                            t={t}
-                            optionKey="name"
-                            isMandatory={false}
-                            option={cmbCountry}
-                            selected={presentaddressCountry}
-                            select={setSelectaddressCountry}
-                        />
-                    </div>
-                    {countryvalue === "IND" && (
+                    <div className="row">
                         <div className="col-md-6">
                             <CardLabel>
-                                {`${t("CS_COMMON_STATE")}`}
+                                {`${t("CS_COMMON_COUNTRY")}`}
                                 <span className="mandatorycss">*</span>
                             </CardLabel>
                             <Dropdown
                                 t={t}
                                 optionKey="name"
                                 isMandatory={false}
-                                option={cmbState}
-                                selected={presentaddressStateName}
-                                select={setSelectaddressStateName}
+                                option={cmbCountry}
+                                selected={presentaddressCountry}
+                                select={setSelectaddressCountry}
+                                disable={isDisableEdit}
                             />
                         </div>
-                    )}
-                </div>
-            </FormStep>
-        </React.Fragment>
-    );
+                        {countryvalue === "IND" && (
+                            <div className="col-md-6">
+                                <CardLabel>
+                                    {`${t("CS_COMMON_STATE")}`}
+                                    <span className="mandatorycss">*</span>
+                                </CardLabel>
+                                <Dropdown
+                                    t={t}
+                                    optionKey="name"
+                                    isMandatory={false}
+                                    option={cmbState}
+                                    selected={presentaddressStateName}
+                                    select={setSelectaddressStateName}
+                                    disable={isDisableEdit}
+                                />
+                            </div>
+                        )}
+                    </div>
+                </FormStep>
+            </React.Fragment>
+        );
 };
 export default AddressPresent;
