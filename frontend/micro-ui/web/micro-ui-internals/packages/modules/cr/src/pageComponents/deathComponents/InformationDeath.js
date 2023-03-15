@@ -148,6 +148,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
       ? convertEpochToDate(formData?.InformationDeath?.DeathTimeFrom)
       : formData?.InformationDeath?.DeathTimeFrom
   );
+
   const handleToTimeChange = (value, cb) => {
     if (typeof value === "string") {
       cb(value);
@@ -168,13 +169,18 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
   const [ToDate, setToDate] = useState(
     isEditDeathPageComponents === false &&
       (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
-      ? convertEpochToDate(formData?.InformationDeath?.ToDateI)
+      ? convertEpochToDate(formData?.InformationDeath?.ToDate)
       : formData?.InformationDeath?.ToDate
   );
 
   const [DeathTime, setDeathTime] = useState("");
-  const [checked, setChecked] = useState(false);
-
+  const [checked, setChecked] = useState(
+    formData?.InformationDeath?.checked
+      ? formData?.InformationDeath?.checked
+      : formData?.InformationDeath?.checked
+      ? formData?.InformationDeath?.checked
+      : false
+  );
   const [TimeOfDeath, setTimeOfDeath] = useState("");
   const [DeceasedAadharNotAvailable, setDeceasedAadharNotAvailable] = useState(
     formData?.InformationDeath?.DeceasedAadharNotAvailable ? formData?.InformationDeath?.DeceasedAadharNotAvailable : false
@@ -502,7 +508,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       Difference_In_DaysRounded = Math.floor(Difference_In_Days);
     } else {
-      setToDates(null);
+      setToDate(null);
       setDOBError(true);
       setToast(true);
       setTimeout(() => {
@@ -777,7 +783,8 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
 
     if (validFlag == true) {
       sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
-//      sessionStorage.setItem("DateOfDeath", DateOfDeath ? DateOfDeath : null);
+      sessionStorage.setItem("checked", checked);
+      sessionStorage.setItem("ToDate", ToDate ? ToDate : null);
       sessionStorage.setItem("FromDate", FromDate ? FromDate : null);
       sessionStorage.setItem("DeathTimeFrom", DeathTimeFrom ? DeathTimeFrom : null);
       sessionStorage.setItem("DeathTimeTo", DeathTimeTo ? DeathTimeTo : null);
@@ -873,7 +880,8 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
 
       onSelect(config.key, {
         IsEditChangeScreen,
-        DeathDate,
+        ToDate,
+        checked,
         DeathTimeTo,
         FromDate,
         DeathTimeFrom,
@@ -1012,7 +1020,8 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
             <div className="row">
               <div className="col-md-12">
                 <div className="col-md-6">
-                  <CheckBox label={t("CR_EXACT_DEATH_DATE_NOT_AVAILABLE")} onChange={() => setChecked((checked) => !checked)} value={checked} />
+                  {/* <CheckBox label={t("CR_EXACT_DEATH_DATE_NOT_AVAILABLE")} onChange={() => setChecked((checked) => !checked)} value={checked} /> */}
+                  <CheckBox label={t("CR_EXACT_DEATH_DATE_NOT_AVAILABLE")} onChange={() => setChecked(!checked)} value={checked} checked={checked} />
                 </div>
               </div>
             </div>
