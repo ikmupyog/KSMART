@@ -50,7 +50,10 @@ services:
       retries: 2
   persister:
     container_name: persister
+
     image: 'ikmkerala/egov-persister:v1.1.4-1367130fc4-1'
+
+ 
     pull_policy: missing
     restart: 'on-failure'
     ports:
@@ -60,8 +63,8 @@ services:
     environment:
       - SERVER_PORT=8082
       - EGOV_PERSIST_YML_REPO_PATH=file:///filemgmnt.yml,file:///egov-workflow-v2-persister.yml
-#    extra_hosts:
-#      - 'host.docker.internal:host-gateway'
+    #    extra_hosts:
+    #      - 'host.docker.internal:host-gateway'
     volumes:
       - './src/main/resources/persister/filemgmnt.yml:/filemgmnt.yml'
       - './egov-workflow-v2-persister.yml:/egov-workflow-v2-persister.yml'
@@ -69,7 +72,7 @@ services:
       - ksmart
     depends_on:
       kafka:
-        condition: service_healthy 
+        condition: service_healthy
   workflowv2:
     container_name: workflowv2
     image: 'ikmkerala/egov-workflow-v2:v1.2.1-5dbbcb807b-1'
@@ -81,6 +84,7 @@ services:
       - ./dev.env
     environment:
       - SERVER_PORT=8280
+
 #    extra_hosts:
 #      - 'host.docker.internal:host-gateway'
     networks:
@@ -100,10 +104,31 @@ services:
       - SERVER_PORT=1234
 #    extra_hosts:
 #      - 'host.docker.internal:host-gateway'
+
+    #    extra_hosts:
+    #      - 'host.docker.internal:host-gateway'
+
     networks:
       - ksmart
     depends_on:
       - persister
+#  encryptor:
+#    container_name: encryptor
+#    image: 'egovio/egov-enc-service:v1.1.2-dc9ffb98f8-2'
+#    pull_policy: missing
+#    restart: 'on-failure'
+#    ports:
+#      - '1234:1234'
+#    env_file:
+#      - ./dev.env
+#    environment:
+#      - SERVER_PORT=1234
+    #    extra_hosts:
+    #      - 'host.docker.internal:host-gateway'
+#    networks:
+#      - ksmart
+#    depends_on:
+#      - persister
   minio:
     container_name: minio
     image: 'bitnami/minio:latest'
@@ -118,8 +143,8 @@ services:
       - MINIO_DEFAULT_BUCKETS=filestore
     volumes:
       - './docker_data/minio:/data'
-#    extra_hosts:
-#      - 'host.docker.internal:host-gateway'
+    #    extra_hosts:
+    #      - 'host.docker.internal:host-gateway'
     networks:
       - ksmart
     depends_on:
@@ -148,6 +173,10 @@ services:
       - MINIO_SOURCE=minio
 #    extra_hosts:
 #      - 'host.docker.internal:host-gateway'
+
+    #    extra_hosts:
+    #      - 'host.docker.internal:host-gateway'
+
     networks:
       - ksmart
     depends_on:
@@ -167,7 +196,7 @@ services:
       - DB_NAME=egov_filemgmnt
       - DB_PORT=5432
       - DB_USER=postgres
-      - DB_PASSWORD=123
+      - DB_PASSWORD=ikm
       - DATA_CONFIG_URLS=file:///residential-certificate-config.json
       - FORMAT_CONFIG_URLS=file:///residential-certificate-format.json
       - EGOV_FILESTORE_SERVICE_HOST=http://filestore:8083
@@ -175,8 +204,8 @@ services:
       - EGOV_LOCALISATION_HOST=https://ksmart-dev.lsgkerala.gov.in
       - DEFAULT_LOCALISATION_LOCALE=en_IN
       - DEFAULT_LOCALISATION_TENANT=kl
-#    extra_hosts:
-#      - 'host.docker.internal:host-gateway'
+    #    extra_hosts:
+    #      - 'host.docker.internal:host-gateway'
     volumes:
       - './src/test/resources/pdfservice/residential-certificate-config.json:/residential-certificate-config.json'
       - './src/test/resources/pdfservice/residential-certificate-format.json:/residential-certificate-format.json'
@@ -204,10 +233,10 @@ networks:
 # docker logs persister
 
 #-Dspring.profiles.active=local
-#-Dserver.port=8082 
-#-Degov.persist.yml.repo.path=file:///D:/KSMART/municipal-services/egov-filemgmnt/src/main/resources/persister/filemgmnt.yml 
-#-Dspring.datasource.url=jdbc:p6spy:postgresql://localhost:5432/egov_filemgmnt 
-#-Dspring.datasource.username=postgres 
+#-Dserver.port=8082
+#-Degov.persist.yml.repo.path=file:///D:/KSMART/municipal-services/egov-filemgmnt/src/main/resources/persister/filemgmnt.yml
+#-Dspring.datasource.url=jdbc:p6spy:postgresql://localhost:5432/egov_filemgmnt
+#-Dspring.datasource.username=postgres
 #-Dspring.datasource.password=123
 #-Dspring.kafka.bootstrap-servers=localhost:9092
 

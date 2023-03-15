@@ -13,6 +13,9 @@ import org.egov.filemgmnt.web.models.ApplicantServiceRequest;
 import org.egov.filemgmnt.web.models.ApplicantServiceResponse;
 import org.egov.filemgmnt.web.models.ApplicantServiceSearchCriteria;
 import org.egov.filemgmnt.web.models.ApplicantServiceSearchResponse;
+import org.egov.filemgmnt.web.models.ArisingFile;
+import org.egov.filemgmnt.web.models.ArisingFileRequest;
+import org.egov.filemgmnt.web.models.ArisingFileResponse;
 import org.egov.filemgmnt.web.models.RequestInfoWrapper;
 import org.egov.filemgmnt.web.models.certificate.CertificateDetails;
 import org.egov.filemgmnt.web.models.certificate.CertificateResponse;
@@ -54,6 +57,25 @@ public class FileManagementController implements FileManagementBaseController {
                                                          .applicantServiceDetail(serviceDetail)
                                                          .build());
     }
+    
+    
+   
+    @PostMapping("/applicantservices/_createArisingFile")
+    public ResponseEntity<ArisingFileResponse> createArisingFile(@RequestBody final ArisingFileRequest request) {
+        if (log.isDebugEnabled()) {
+            log.debug("ArisingFileRequest-create:  \n{}", FMUtils.toJson(request));
+        }
+
+        final ArisingFile arisingFileDetails = fmService.createArisingFile(request);
+
+        return ResponseEntity.ok(ArisingFileResponse.builder()
+                                                         .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+                                                                                                                             Boolean.TRUE))
+                                                         .arisingFileDetail(arisingFileDetails)
+                                                         .build());
+    }
+        
+    
 
     @Override
     @PutMapping("/applicantservices/_update")

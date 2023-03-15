@@ -27,7 +27,7 @@ public class ApplicantServiceQueryBuilder extends BaseQueryBuilder {
                                                            .append("    , fd.financialyear, fd.applicationdate, fd.workflowcode, fd.action, fd.filestatus")
                                                            .append("    , fd.createdby AS filedetail_createdby, fd.createdtime AS filedetail_createdtime")
                                                            .append("    , fd.lastmodifiedby AS filedetail_lastmodifiedby, fd.lastmodifiedtime AS filedetail_lastmodifiedtime")
-                                                           .append("    , fd.filecategory, fd.businessservice, fd.assignee")
+                                                           .append("    , fd.filecategory, fd.businessservice")
                                                            // applicant details (service specific)
                                                            .append("    , apc.id AS applicantdetail_id, apc.buildingNumber, apc.relationofassessee, apc.nameofoccupier")
                                                            .append("    , apc.relationofoccupier, apc.durationofresidenceinyears, apc.ownername, apc.ownernamemal")

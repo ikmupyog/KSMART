@@ -74,9 +74,14 @@ public class FMConfiguration {
     // Communication file config
     @Value("${persister.save.communicationfile.topic:}")
     private String saveCommunicationFileTopic;
+    
+    @Value("${persister.save.arisingfiledetails.topic:}")
+    private String saveArisingFileTopic;
 
     @Value("${persister.update.communicationfile.topic:}")
     private String updateCommunicationFileTopic;
+    
+    
 
     // PDF Gen
 
