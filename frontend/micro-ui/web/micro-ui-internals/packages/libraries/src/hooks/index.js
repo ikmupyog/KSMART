@@ -125,8 +125,9 @@ import useCivilRegistrationStillBirthAPI from "./cr/useCivilRegistrationStillBir
 
 import useCivilRegistrationDeathAPI from "./cr/useCivilRegistrationDeathAPI";
 // import useTradeLicenseSearch from "./tl/useTradeLicenseSearch";
-// import { useTLSearchApplication, useTLApplicationDetails } from "./tl/useTLsearchApplication";
+import { useCRSearchApplication, useCRApplicationDetails } from "./cr/useCRSearchApplication";
 // import useTLPaymentHistory from "./tl/userPaymentHistory";
+import useCRFetchBill from "./cr/useFetchBill";
 import useCRApplicationDetail from "./cr/useApplicationDetail";
 import useApplicationStillBirthDetail from "./cr/useApplicationStillBirthDetail"; 
 import useApplicationDeathDetail from "./cr/useApplicationDeathDetail"; 
@@ -352,6 +353,9 @@ const cr = {
   useCRStillBirthApplicationActions:useCRStillBirthApplicationActions,
   useCRDeathApplicationActions: useCRDeathApplicationActions,
   useApplicationDeathDetail: useApplicationDeathDetail,
+  useFetchBill: useCRFetchBill,
+  useCRSearchApplication,
+  useCRApplicationDetails
 };
 const dfm = {
   useTenants: useTenantsDFM,

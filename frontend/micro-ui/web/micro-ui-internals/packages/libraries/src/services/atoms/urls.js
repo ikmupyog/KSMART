@@ -107,9 +107,9 @@ const Urls = {
     updatepdewf: "/tl-services/pde/_updatewf"
   },
   cr: {
-    create: "/birth-services/ksmart/birth/createbirth",
-    search:"/birth-services/ksmart/birth/searchbirth",
-    update:"/birth-services/ksmart/birth/updatebirth",   
+    create: "/birth-services/cr/createbirth",
+    search:"/birth-services/cr/searchbirth",
+    update:"/birth-services/cr/updatebirth",   
     download_pdf: "/egov-pdf/download/CR/",
     registry_download: "/birth-services/cr/registry/_download", 
     registry_search_birth: "/birth-services/cr/registry/_search",    
