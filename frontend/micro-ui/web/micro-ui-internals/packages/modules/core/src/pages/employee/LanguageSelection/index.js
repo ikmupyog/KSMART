@@ -35,16 +35,21 @@ const LanguageSelection = () => {
           </h1>
           <div style={{ textAlign: "center", margin: "0 auto" }}>
             <div>
-              <img src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/login-img.png" alt="No Image" 
-              style={{ maxWidth: "450px",marginLeft: "80px",marginRight: "80px" }} />
+              <img src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/login-img.png" alt="No Image"
+                style={{ maxWidth: "450px", marginLeft: "80px", marginRight: "80px" }} />
               <label style={{ fontSize: "32px" }}>Exploring K-Smart</label><br></br>
               <label style={{ fontSize: "17px" }}>Kerala - Solutions for Managing Administrative Reformation and Transformation.</label>
             </div>
           </div>
           <div style={{ justifyContent: "space-between !important" }} >
 
-            <span style={{ marginRight: "70%" }} >2023&copy;K-Smart</span>&nbsp;
-            <span  >
+            <span style={{ justifyContent: "space-between !important" }}>2023&copy;K-Smart</span>&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span style={{ justifyContent: "space-between !important" }}>Powered By UPYOG</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span style={{ justifyContent: "space-between !important", marginLeft: "20px" }}>
               <a className="text-white text-link" href="#">Legal</a>&nbsp;&nbsp;
               <a className="text-white text-link" href="#">Privacy</a>
             </span>
@@ -65,7 +70,7 @@ const LanguageSelection = () => {
                 onClick={() => handleChangeLanguage(language)}
               ></CustomButton> */}
               <SubmitBar className="btnksmart"
-              style={{ fontSize: "17px !mportant",fontWeight:"400" }} 
+                style={{ fontSize: "17px !mportant", fontWeight: "400" }}
                 selected={language.value === selected}
                 label={language.label}
 

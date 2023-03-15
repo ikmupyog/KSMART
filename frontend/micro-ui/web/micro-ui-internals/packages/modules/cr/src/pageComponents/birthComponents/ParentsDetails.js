@@ -63,7 +63,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
       cmbReligion.push(ob);
     });
   const [isMotherInfo, setIsMotherInfo] = useState(formData?.ParentsDetails?.isMotherInfo ? formData?.ParentsDetails?.isMotherInfo :
-    formData?.ChildDetails?.ParentsDetails?.isMotherInfo ? formData?.ChildDetails?.ParentsDetails?.isMotherInfo : false);
+    formData?.ChildDetails?.ParentsDetails?.ismotherInfo ? formData?.ChildDetails?.ParentsDetails?.ismotherInfo : false);
   const [motherAadhar, setMotherAadhar] = useState(formData?.ParentsDetails?.motherAadhar ? formData?.ParentsDetails?.motherAadhar :
     formData?.ChildDetails?.ParentsDetails?.motherAadhar ? formData?.ChildDetails?.ParentsDetails?.motherAadhar : "");
   const [motherFirstNameEn, setMotherFirstNameEn] = useState(formData?.ParentsDetails?.motherFirstNameEn ? formData?.ParentsDetails?.motherFirstNameEn :
@@ -89,7 +89,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
     (cmbProfession.filter(cmbProfession => cmbProfession.code === formData?.ChildDetails?.ParentsDetails?.motherProfession)[0]) : "");
 
   const [isFatherInfo, setIsFatherInfo] = useState(formData?.ParentsDetails?.isFatherInfo ? formData?.ParentsDetails?.isFatherInfo :
-    formData?.ChildDetails?.ParentsDetails?.isFatherInfo ? formData?.ChildDetails?.ParentsDetails?.isFatherInfo : false);
+    formData?.ChildDetails?.ParentsDetails?.isfatherInfo ? formData?.ChildDetails?.ParentsDetails?.isfatherInfo : false);
   const [fatherAadhar, setFatherAadhar] = useState(formData?.ParentsDetails?.fatherAadhar ? formData?.ParentsDetails?.fatherAadhar :
     formData?.ChildDetails?.ParentsDetails?.fatherAadhar ? formData?.ChildDetails?.ParentsDetails?.fatherAadhar : "");
   const [fatherFirstNameEn, setFatherFirstNameEn] = useState(formData?.ParentsDetails?.fatherFirstNameEn ? formData?.ParentsDetails?.fatherFirstNameEn :

@@ -361,7 +361,7 @@ export const newConfig = [
         withoutLabel: true,
         key: "StillBirthParentsDetails",
         type: "component",
-        nextStep: "address-birth",
+        nextStep: "stillbirth-address",
         hideInEmployee: false,
       },
       {

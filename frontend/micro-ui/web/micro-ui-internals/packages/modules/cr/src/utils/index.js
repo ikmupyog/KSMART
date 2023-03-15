@@ -505,7 +505,7 @@ export const convertToStillBirthRegistration = (data = {}) => {
         medicalAttensionSub: data?.StillBirthChildDetails?.medicalAttensionSub ? data?.StillBirthChildDetails?.medicalAttensionSub.code : null,
         deliveryMethods: data?.StillBirthChildDetails?.deliveryMethods ? data?.StillBirthChildDetails?.deliveryMethods.code : null,
         action:"INITIATE",
-        applicationtype: "CRBRNR",
+        applicationtype: "CRBRSB",
         businessservice: "birth-services",
         workflowcode: data?.StillBirthChildDetails?.workFlowCode,
         StillBirthParentsDetails: {
