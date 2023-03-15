@@ -24,7 +24,7 @@ const App = () => {
   const CreateBornOutsideRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateBornOutsideRegistration');
   const CreateDeathRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateDeathRegistration');
   const CreateMarriageRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateMarriageRegistration');
-  const MyApplications = Digit?.ComponentRegistryService?.getComponent('MyApplications');
+  const MyCRApplications = Digit?.ComponentRegistryService?.getComponent('MyCRApplications');
 
   // const getBackPageNumber = () => {
   //   let goBacktoFromProperty = -1;
@@ -50,8 +50,8 @@ const App = () => {
         <PrivateRoute path={`${path}/cr-outsideindiabirth-creation`} component={CreateBornOutsideRegistration} />
         <PrivateRoute path={`${path}/cr-death-creation`} component={CreateDeathRegistration} />
         <PrivateRoute path={`${path}/cr-marriage-creation`} component={CreateMarriageRegistration} />
-        <PrivateRoute path={`${path}/cr/my-application`} component={MyApplications} />
-        <PrivateRoute path={`${path}/cr/my-bills`} component={() => <MyApplications view="bills" />} />
+        <PrivateRoute path={`${path}/cr/my-application`} component={MyCRApplications} />
+        <PrivateRoute path={`${path}/cr/my-bills`} component={() => <MyCRApplications view="bills" />} />
         <PrivateRoute path={`${path}/create-death-certificate`} component={() => <DeathCertificateSearch parentUrl={path}/>} /> 
         <PrivateRoute parentRoute={path} path={`${path}/create-birth-certificate`} component={() => <BirthCertificateSearch parentUrl={path} />} /> 
        </AppContainer>

@@ -22,13 +22,13 @@ console.log(data);
   }
   return (
     <React.Fragment>
-      
-     <Header>{`${t("TL_MY_APPLICATIONS_HEADER")}`}</Header>
+     
+     <Header>mayaaaa</Header>
       {data?.map((application) => {
         return (
           
           <div>
-           
+            mayaaaaaa
             <Card>
             {Object.keys(application).filter(e => e !== "raw" && application[e] !== null).map(item => <KeyNote keyValue={t(item)} note={t(application[item])} />)}
                <Link to={`/digit-ui/citizen/cr/application/${application?.raw?.ackNo}/${application.raw?.tenantId}`}>
