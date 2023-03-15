@@ -17,6 +17,9 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   const useCRModeOfPregnancy = () => {
     return useQuery("CR_MODE_PREGNANCY", () => MdmsService.getCRModeOfPregnancy(tenantId, moduleCode), config);
   };
+  const useCRFoetalDeath = () => {
+    return useQuery("CR_FOETAL_DEATH", () => MdmsService.getCRFoetalDeath(tenantId, moduleCode), config);
+  };
   const useCRPlaceMaster = () => {
     return useQuery("CR_PLACEMASTER", () => MdmsService.getCRPlaceMaster(tenantId, moduleCode), config);
   };
@@ -283,6 +286,8 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
       return useCRQualificationSub();
     case "ModeOfPregnancy":
       return useCRModeOfPregnancy();
+    case "FoetalDeath":
+      return useCRFoetalDeath();
     case "PlaceMaster":
       return useCRPlaceMaster();
     case "hospital":

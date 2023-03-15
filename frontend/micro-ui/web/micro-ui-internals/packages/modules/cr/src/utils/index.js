@@ -500,7 +500,7 @@ export const convertToStillBirthRegistration = (data = {}) => {
         streetNameEn: data?.StillBirthChildDetails?.streetNameEn,
         streetNameMl: data?.StillBirthChildDetails?.streetNameMl,
         publicPlaceDecpEn: data?.StillBirthChildDetails?.publicPlaceDecpEn,
-        causeFoetalDeath: data?.StillBirthChildDetails?.causeFoetalDeath,
+        causeFoetalDeath: data?.StillBirthChildDetails?.causeFoetalDeath ? data?.StillBirthChildDetails?.causeFoetalDeath.code : null,
         pregnancyDuration: data?.StillBirthChildDetails?.pregnancyDuration ? data?.StillBirthChildDetails?.pregnancyDuration : null,
         medicalAttensionSub: data?.StillBirthChildDetails?.medicalAttensionSub ? data?.StillBirthChildDetails?.medicalAttensionSub.code : null,
         deliveryMethods: data?.StillBirthChildDetails?.deliveryMethods ? data?.StillBirthChildDetails?.deliveryMethods.code : null,
