@@ -4,9 +4,10 @@ import { useTranslation } from "react-i18next";
 
 const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPlaceType, setpublicPlaceType,
   localityNameEn, setlocalityNameEn, localityNameMl, setlocalityNameMl, streetNameEn, setstreetNameEn,
-  streetNameMl, setstreetNameMl, publicPlaceDecpEn, setpublicPlaceDecpEn, setWardNo, wardNo
+  streetNameMl, setstreetNameMl, publicPlaceDecpEn, setpublicPlaceDecpEn, setWardNo, wardNo,isEditBirth=false
 }) => {
   const stateId = Digit.ULBService.getStateId();
+  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
   if (tenantId === "kl") {
@@ -46,6 +47,18 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
     wardmst.namecmb = wardmst.wardno + ' ( ' + wardmst.name + ' )';
     cmbWardNoFinal.push(wardmst);
   });
+  if (isEditBirth) { 
+    if (formData?.ChildDetails?.publicPlaceType != null) {
+      if (cmbOtherplace.length > 0 && (publicPlaceType === undefined || publicPlaceType === "")) {
+        setpublicPlaceType(cmbOtherplace.filter(cmbOtherplace => cmbOtherplace.code === formData?.ChildDetails?.publicPlaceType)[0]);
+      }
+    }  
+    if (formData?.ChildDetails?.wardNo != null) {
+      if (cmbWardNo.length > 0 && (wardNo === undefined || wardNo === "")) {
+        setWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.ChildDetails?.wardNo)[0]);
+      }
+    }
+  }
   const onSkip = () => onSelect();
   function setSelectpublicPlaceType(value) {
     setpublicPlaceType(value);
@@ -121,6 +134,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
                 option={cmbOtherplace}
                 selected={publicPlaceType}
                 select={setSelectpublicPlaceType}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_PUBLIC_PLACE_TYPE")}`}
               />
             </div>
@@ -135,6 +149,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
                 option={cmbWardNoFinal}
                 selected={wardNo}
                 select={setSelectWard}
+                disable={isDisableEdit}
                 placeholder={`${t("CS_COMMON_WARD")}`}
                 {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
               />
@@ -153,6 +168,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
                 name="localityNameEn"
                 value={localityNameEn}
                 onChange={setSelectlocalityNameEn}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_LOCALITY_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
               />
@@ -170,6 +186,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
                 value={localityNameMl}
                 onKeyPress = {setCheckMalayalamInputField}
                 onChange={setSelectlocalityNameMl}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_LOCALITY_ML")}`}
                 {...(validation = {
                   pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -190,6 +207,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
                 optionKey="i18nKey"
                 name="streetNameEn"
                 value={streetNameEn}
+                disable={isDisableEdit}
                 onChange={setSelectstreetNameEn}
                 placeholder={`${t("CR_STREET_NAME_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
@@ -205,6 +223,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
                 value={streetNameMl}
                 onKeyPress = {setCheckMalayalamInputField}
                 onChange={setSelectstreetNameMl}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_STREET_NAME_ML")}`}
                 {...(validation = {
                   pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -224,6 +243,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
                 optionKey="i18nKey"
                 name="publicPlaceDecpEn"
                 value={publicPlaceDecpEn}
+                disable={isDisableEdit}
                 onChange={setSelectVehicleOtherDetailsEn}
                 placeholder={`${t("CR_DESCRIPTION")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_DESCRIPTION") })}

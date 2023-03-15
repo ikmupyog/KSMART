@@ -86,7 +86,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
     Menu.map((genderDetails) => {
       menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
     });
-  WorkFlowDetails &&
+    PlaeceMaster &&
     PlaeceMaster["birth-death-service"] && PlaeceMaster["birth-death-service"].PlaceMaster &&
     PlaeceMaster["birth-death-service"].PlaceMaster.map((ob) => {
       cmbPlaceMaster.push(ob);
@@ -177,7 +177,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
   const [vehicleDesDetailsEn, setvehicleDesDetailsEn] = useState(formData?.ChildDetails?.vehicleDesDetailsEn ? formData?.ChildDetails?.vehicleDesDetailsEn : "");
   const [setadmittedHospitalEn, setSelectedadmittedHospitalEn] = useState(formData?.ChildDetails?.setadmittedHospitalEn ? formData?.ChildDetails?.setadmittedHospitalEn : "");
 
-  const [publicPlaceType, setpublicPlaceType] = useState(formData?.ChildDetails?.publicPlaceType ? formData?.ChildDetails?.publicPlaceType : "");
+  const [publicPlaceType, setpublicPlaceType] = useState(formData?.ChildDetails?.publicPlaceType?.code ? formData?.ChildDetails?.publicPlaceType : formData?.ChildDetails?.publicPlaceType ? "" : "");
   const [localityNameEn, setlocalityNameEn] = useState(formData?.ChildDetails?.localityNameEn ? formData?.ChildDetails?.localityNameEn : "");
   const [localityNameMl, setlocalityNameMl] = useState(formData?.ChildDetails?.localityNameMl ? formData?.ChildDetails?.localityNameMl : "");
   const [streetNameEn, setstreetNameEn] = useState(formData?.ChildDetails?.streetNameEn ? formData?.ChildDetails?.streetNameEn : "");
@@ -328,26 +328,29 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
     selectGender(value);
   }
   function setSelectChildAadharNo(e) {
-    // setContactno(e.target.value.length<=10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
-    if (e.target.value.length != 0) {
-      if (e.target.value.length > 12) {
-        // setChildAadharNo(e.target.value);
-        setAadharError(true);
-        return false;
-      } else if (e.target.value.length < 12) {
-        setAadharError(true);
-        setChildAadharNo(e.target.value);
-        return false;
-      } else {
-        setAadharError(false);
-        setChildAadharNo(e.target.value);
-        return true;
-      }
-    } else {
-      setAadharError(false);
-      setChildAadharNo(e.target.value);
-      return true;
+    if (e.target.value.trim().length >= 0) {
+      setChildAadharNo(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
     }
+    // setContactno(e.target.value.length<=10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
+    // if (e.target.value.length != 0) {
+    //   if (e.target.value.length > 12) {
+    //     // setChildAadharNo(e.target.value);
+    //     setAadharError(true);
+    //     return false;
+    //   } else if (e.target.value.length < 12) {
+    //     setAadharError(true);
+    //     setChildAadharNo(e.target.value);
+    //     return false;
+    //   } else {
+    //     setAadharError(false);
+    //     setChildAadharNo(e.target.value);
+    //     return true;
+    //   }
+    // } else {
+    //   setAadharError(false);
+    //   setChildAadharNo(e.target.value);
+    //   return true;
+    // }
   }
 
   function setselectChildDOB(value) {
@@ -482,7 +485,6 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
   const handleTimeChange = (value, cb) => {
     if (typeof value === "string") {
       cb(value);
-      console.log(cb);
       console.log(value);
       let hour = value;
       let period = hour > 12 ? "PM" : "AM";
@@ -514,7 +516,6 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
     // console.log(currentWorgFlow[0].WorkflowCode);
     // workFlowCode=currentWorgFlow[0].WorkflowCode;
     setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
-    console.log("workFlowCode" + currentWorgFlow[0].WorkflowCode);
   }
   function setSelectBirthWeight(e) {
     if (e.target.value.length === 5) {
@@ -537,6 +538,19 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
   }
   let validFlag = true;
   const goNext = () => {
+    if (childAadharNo != null || childAadharNo != "" || childAadharNo != undefined) {
+      let adharLength = childAadharNo;
+      if (adharLength.length < 12 || adharLength.length > 12) {
+        validFlag = false;
+        setAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setAadharError(false);
+      }
+    }
     if (AadharError) {
       validFlag = false;
       setAadharError(true);
@@ -996,7 +1010,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
                   date={childDOB}
                   name="childDOB"
                   max={convertEpochToDate(new Date())}
-                  // min={childDOB ? childDOB : convertEpochToDate("1900-01-01")}
+                  min={convertEpochToDate("1900-01-01")}
                   onChange={setselectChildDOB}
                   disable={isDisableEdit}
                   //  inputFormat="DD-MM-YYYY"
@@ -1008,7 +1022,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
                 <CardLabel>{t("CR_TIME_OF_BIRTH")}</CardLabel>
                 <CustomTimePicker name="birthDateTime" onChange={(val) => handleTimeChange(val, setbirthDateTime)}
                   value={birthDateTime}
-                  disable={isDisableEdit} />
+                  disable={isDisableEdit} 
+                  />
               </div>
               <div className="col-md-3">
                 <CardLabel>{`${t("CR_GENDER")}`}<span className="mandatorycss">*</span></CardLabel>
@@ -1061,7 +1076,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
                   {t("CR_PLACE_OF_BIRTH")}<span className="mandatorycss">*</span></CardLabel>
                 <Dropdown
                   t={t}
-                  optionKey="code"
+                  optionKey="name"
                   isMandatory={false}
                   option={cmbPlaceMaster}
                   selected={birthPlace}
