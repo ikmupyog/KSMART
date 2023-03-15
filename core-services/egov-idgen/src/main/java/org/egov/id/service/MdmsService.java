@@ -186,7 +186,7 @@ public class MdmsService {
                         .parse(mdmsResponse.getMdmsRes().get(tenantModule).get(tenantMaster).get(0));
 
                 cityCodeFromMdms = documentContext.read("$.city.code");
-                cityNameFromMdms = documentContext.read("$.city.ddrName");
+                cityNameFromMdms = documentContext.read("$.city.idgencode");
                 cityTypeFromMdms = cityCodeFromMdms.substring(0,1);               
                 log.debug("Found city code as - " + cityCodeFromMdms);
             }
