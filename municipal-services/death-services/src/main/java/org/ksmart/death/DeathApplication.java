@@ -18,9 +18,16 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
 @SpringBootApplication(scanBasePackages = "org.ksmart.death" )
+@EnableSwagger2
 @EnableAutoConfiguration
 //@Import({TracerConfiguration.class})
+
 @Import({TracerConfiguration.class,EncryptionConfiguration.class})
 public class DeathApplication {
 
@@ -30,7 +37,11 @@ public class DeathApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DeathApplication.class, args);
 	}
-	
+	public Docket apis()
+    {
+        return new Docket(DocumentationType.SWAGGER_2).select().apis(RequestHandlerSelectors.basePackage("org.ksmart.death")).build();
+
+    }
 	@Bean
     public ObjectMapper objectMapperBnd(){
         return new ObjectMapper()
