@@ -28,7 +28,7 @@ console.log(data);
         return (
           
           <div>
-            hiiijjjjadsasd
+            hiiijjjjadsasdsdfadadsfa
             <Card>
             {Object.keys(application).filter(e => e !== "raw" && application[e] !== null).map(item => <KeyNote keyValue={t(item)} note={t(application[item])} />)}
                <Link to={`/digit-ui/citizen/cr/application/${application?.raw?.ackNo}/${application.raw?.tenantId}`}>
