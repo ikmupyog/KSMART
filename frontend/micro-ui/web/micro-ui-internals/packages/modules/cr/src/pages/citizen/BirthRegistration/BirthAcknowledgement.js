@@ -2,7 +2,7 @@ import { Banner, Card, CardText, LinkButton, Loader, SubmitBar } from "@egovernm
 import React, { useEffect,useState  } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { convertToBirthRegistration,convertToDeathRegistration,convertToEditTrade, convertToResubmitTrade, convertToTrade, convertToUpdateTrade, stringToBoolean } from "../../../utils";
+import { convertToBirthRegistration } from "../../../utils";
 import getPDFData from "../../../utils/getTLAcknowledgementData";
 
 const GetActionMessage = (props) => {
@@ -32,7 +32,7 @@ const BannerPicker = (props) => {
   );
 };
 
-const BirthAcknowledgement = ({ data, onSuccess,userType }) => {
+const BirthAcknowledgement = ({ data, onSuccess,userType,isEditBirth=false }) => {
   const { t } = useTranslation();
   const [mutationHappened, setMutationHappened, clear] = Digit.Hooks.useSessionStorage("CITIZEN_TL_MUTATION_HAPPENED", false);
   const resubmit = window.location.href.includes("edit-application");
@@ -50,7 +50,7 @@ const BirthAcknowledgement = ({ data, onSuccess,userType }) => {
   //   data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
   //   false
   // );
-  const isEdit = window.location.href.includes("renew-trade");
+  
   const { data: storeData } = Digit.Hooks.useStore.getInitData();
   const { tenants } = storeData || {};
   const stateId = Digit.ULBService.getStateId();
@@ -68,11 +68,11 @@ const BirthAcknowledgement = ({ data, onSuccess,userType }) => {
       let tenantId1 = data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId;
       data.tenantId = tenantId1;
       if (!resubmit) {
-        // let formdata = !isEdit ? convertToDeathRegistration(data) : convertToEditTrade(data, fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter(y => y.module === "CR") : []);
+        // let formdata = !isEditBirth ? convertToDeathRegistration(data) : convertToEditTrade(data, fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter(y => y.module === "CR") : []);
 
-        let formdata = !isEdit ? convertToBirthRegistration(data):[] ;
+        let formdata = !isEditBirth ? convertToBirthRegistration(data):[] ;
         // formdata.BirthDetails[0].tenantId = formdata?.BirthDetails[0]?.tenantId || tenantId1;
-        if(!isEdit)
+        if(!isEditBirth)
         {
           mutation.mutate(formdata, {
             onSuccess,
@@ -93,7 +93,7 @@ const BirthAcknowledgement = ({ data, onSuccess,userType }) => {
         //   }
         // }
 
-        // !isEdit ? mutation.mutate(formdata, {
+        // !isEditBirth ? mutation.mutate(formdata, {
         //   onSuccess,
         // }) : (fydata["egf-master"] && fydata["egf-master"].FinancialYear.length > 0 && isDirectRenewal ? mutation2.mutate(formdata, {
         //   onSuccess,
@@ -116,7 +116,7 @@ const BirthAcknowledgement = ({ data, onSuccess,userType }) => {
   // useEffect(() => {
   //   if (mutation.isSuccess) {
   //     try {
-  //       let Licenses = !isEdit ? convertToUpdateTrade(mutation.data, data) : convertToUpdateTrade(mutation1.data, data);
+  //       let Licenses = !isEditBirth ? convertToUpdateTrade(mutation.data, data) : convertToUpdateTrade(mutation1.data, data);
   //       mutation2.mutate(Licenses, {
   //         onSuccess,
   //       });
@@ -134,7 +134,7 @@ const BirthAcknowledgement = ({ data, onSuccess,userType }) => {
     const data = getPDFData({ ...res }, tenantInfo, t);
     data.then((ress) => Digit.Utils.pdf.generate(ress));
   };
- // let enableLoader = !resubmit ? (!isEdit ? mutation.isIdle || mutation.isLoading : isDirectRenewal ? false : mutation1.isIdle || mutation1.isLoading):false;
+ // let enableLoader = !resubmit ? (!isEditBirth ? mutation.isIdle || mutation.isLoading : isDirectRenewal ? false : mutation1.isIdle || mutation1.isLoading):false;
   // if(enableLoader)
   // {return (<Loader />)}
   // else if( ((mutation?.isSuccess == false && mutation?.isIdle == false) || (mutation1?.isSuccess == false && mutation1?.isIdle == false )) && !isDirectRenewal && !resubmit)
@@ -176,8 +176,8 @@ if(mutation.isSuccess && mutation?.isError===null){
       {/* <BannerPicker t={t} data={mutation2.data} isSuccess={mutation2.isSuccess} isLoading={(mutation2.isIdle || mutation2.isLoading)} />
       {(mutation2.isSuccess) && <CardText>{!isDirectRenewal?t("TL_FILE_TRADE_RESPONSE"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText>}
       {(!mutation2.isSuccess) && <CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>}
-      {!isEdit && mutation2.isSuccess && <SubmitBar label={t("TL_DOWNLOAD_ACK_FORM")} onSubmit={handleDownloadPdf} />}
-      {(mutation2.isSuccess) && isEdit && (
+      {!isEditBirth && mutation2.isSuccess && <SubmitBar label={t("TL_DOWNLOAD_ACK_FORM")} onSubmit={handleDownloadPdf} />}
+      {(mutation2.isSuccess) && isEditBirth && (
         <LinkButton
           label={
             <div className="response-download-button">
