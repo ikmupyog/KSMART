@@ -328,26 +328,29 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
     selectGender(value);
   }
   function setSelectChildAadharNo(e) {
-    // setContactno(e.target.value.length<=10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
-    if (e.target.value.length != 0) {
-      if (e.target.value.length > 12) {
-        // setChildAadharNo(e.target.value);
-        setAadharError(true);
-        return false;
-      } else if (e.target.value.length < 12) {
-        setAadharError(true);
-        setChildAadharNo(e.target.value);
-        return false;
-      } else {
-        setAadharError(false);
-        setChildAadharNo(e.target.value);
-        return true;
-      }
-    } else {
-      setAadharError(false);
-      setChildAadharNo(e.target.value);
-      return true;
+    if (e.target.value.trim().length >= 0) {
+      setChildAadharNo(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
     }
+    // setContactno(e.target.value.length<=10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
+    // if (e.target.value.length != 0) {
+    //   if (e.target.value.length > 12) {
+    //     // setChildAadharNo(e.target.value);
+    //     setAadharError(true);
+    //     return false;
+    //   } else if (e.target.value.length < 12) {
+    //     setAadharError(true);
+    //     setChildAadharNo(e.target.value);
+    //     return false;
+    //   } else {
+    //     setAadharError(false);
+    //     setChildAadharNo(e.target.value);
+    //     return true;
+    //   }
+    // } else {
+    //   setAadharError(false);
+    //   setChildAadharNo(e.target.value);
+    //   return true;
+    // }
   }
 
   function setselectChildDOB(value) {
@@ -514,7 +517,6 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
     // console.log(currentWorgFlow[0].WorkflowCode);
     // workFlowCode=currentWorgFlow[0].WorkflowCode;
     setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
-    console.log("workFlowCode" + currentWorgFlow[0].WorkflowCode);
   }
   function setSelectBirthWeight(e) {
     if (e.target.value.length === 5) {
@@ -537,6 +539,19 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
   }
   let validFlag = true;
   const goNext = () => {
+    if (childAadharNo != null || childAadharNo != "" || childAadharNo != undefined) {
+      let adharLength = childAadharNo;
+      if (adharLength.length < 12 || adharLength.length > 12) {
+        validFlag = false;
+        setAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setAadharError(false);
+      }
+    }
     if (AadharError) {
       validFlag = false;
       setAadharError(true);
