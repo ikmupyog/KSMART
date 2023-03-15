@@ -30,8 +30,8 @@ public class DeathSearchCriteria {
     @JsonProperty("Id")
     private String id;
 
-    @JsonProperty("DeceasedAadharNumber")
-    private String deceasedAadharNumber;
+    // @JsonProperty("DeceasedAadharNumber")
+    // private String deceasedAadharNumber;
 
     @JsonProperty("DateOfDeath")
     private Long DateOfDeath;

@@ -179,7 +179,7 @@ public class DeathEnrichment implements BaseEnrichment{
             List<String> ackNoDetails =idGenRepository.getIdList(requestInfo,
                                         tenantId,
                                         config.getDeathACKNumberIdName(),
-                                        request.getDeathCertificateDtls().get(0).getApplicationType(),
+                                        request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getFuncionUID(),
                                         "AKNO",deathDtls.size());
             // validateFileCodes(ackNoDetails, deathDtls.size());
             ListIterator<String> itr = ackNoDetails.listIterator();
@@ -492,8 +492,10 @@ public class DeathEnrichment implements BaseEnrichment{
             List<String> ackNoDetails =idGenRepository.getIdList(requestInfo,
                                         tenantId,
                                         config.getDeathACKNumberIdName(),
-                                        request.getDeathCorrection().get(0).getApplicationType(),
+                                        request.getDeathCorrection().get(0).getDeathCorrectionBasicInfo().getFuncionUID(),
                                         "AKNO",deathDtls.size());
+                                   
+
             // validateAckNo(ackNoDetails, deathDtls.size());
             ListIterator<String> itr = ackNoDetails.listIterator();
             request.getDeathCorrection()
@@ -532,7 +534,7 @@ public class DeathEnrichment implements BaseEnrichment{
             RequestInfo requestInfo = request.getRequestInfo();
             User userInfo = requestInfo.getUserInfo();
             AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
-            System.out.println("JasmineEnrichCorrection");
+           // System.out.println("JasmineEnrichCorrection");
             request.getDeathCorrection()
                 .forEach(deathDtls -> {
                     DeathCorrectionBasicInfo deathBasicDtls = deathDtls.getDeathCorrectionBasicInfo();

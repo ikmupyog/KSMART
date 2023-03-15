@@ -391,7 +391,7 @@ serviceMaps:
      
       basePath: deathCorrection.*
       jsonMaps:
-      - jsonPath: $.deathCorrection.*.Id
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.Id
 
     - query: UPDATE public.eg_death_dtls_registry SET  dateofdeath = ? , date_of_death_to = ? , deceased_firstname_en = ? , deceased_firstname_ml = ? , deceased_middlename_en = ? , 
             deceased_middlename_ml = ? , deceased_lastname_en = ? , deceased_lastname_ml = ? ,death_place = ? ,  death_place_inst_type = ? , death_place_inst_id = ? , 		    	    			
@@ -526,7 +526,7 @@ serviceMaps:
       - jsonPath: $.deathCorrection.*.InformationDeathCorrection.RegistrationNo
       
 
-    - query: INSERT INTO public.eg_death_address_dtls_log SELECT * FROM  public.eg_death_address_dtls WHERE death_dtl_id = ? 
+    - query: INSERT INTO public.eg_death_address_registry_log SELECT * FROM  public.eg_death_address_registry WHERE death_dtl_id = ? 
              AND tenantid = ? AND addr_typeid = ?;
      
       basePath: deathCorrection.*

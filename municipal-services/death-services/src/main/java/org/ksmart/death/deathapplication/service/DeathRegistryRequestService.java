@@ -57,7 +57,6 @@ public class DeathRegistryRequestService {
         List<DeathDtl> deathDtls = deathrequest.getDeathCertificateDtls();
         List<DeathRegistryDtl> deathRegistryDetails =  new LinkedList<>();
         DeathRegistryDtl deathRegistryReading =  new DeathRegistryDtl();
-
         deathDtls.forEach(deathdet->{  
 
             if  (deathdet.getDeathBasicInfo()!=null){
@@ -66,7 +65,6 @@ public class DeathRegistryRequestService {
             if  (deathdet.getDeathStatisticalInfo()!=null){
                 deathRegistryReading.setDeathStatisticalInfo(createRegistryStatisticalInfo(deathrequest));
             }
-
             if  (deathdet.getDeathFamilyInfo()!=null){
                 deathRegistryReading.setDeathFamilyInfo(createRegistryFamilyInfo(deathrequest));
             }
@@ -76,8 +74,6 @@ public class DeathRegistryRequestService {
             if  (deathdet.getDeathInformantDtls()!=null){
                 deathRegistryReading.setDeathInformantDtls(createRegistryInformantDtls(deathrequest));
             }
-
-
             deathRegistryDetails.add(deathRegistryReading);
         });
          request = DeathRegistryRequest
@@ -94,7 +90,8 @@ public class DeathRegistryRequestService {
 
             DeathRegistryBasicInfo deathRegistryBasicInfo=new DeathRegistryBasicInfo();
             DeathBasicInfo deathBasicInfo = deathrequest.getDeathCertificateDtls().get(0).getDeathBasicInfo();
-            deathRegistryBasicInfo.setTenantId(deathBasicInfo.getTenantId());
+            
+   
             deathRegistryBasicInfo.setRegistrationUnit(deathBasicInfo.getRegistrationUnit());
             deathRegistryBasicInfo.setDateOfDeath(deathBasicInfo.getDateOfDeath());
             deathRegistryBasicInfo.setTimeOfDeath(deathBasicInfo.getTimeOfDeath());
@@ -164,6 +161,7 @@ public class DeathRegistryRequestService {
             deathRegistryBasicInfo.setReligion(deathBasicInfo.getReligion());
             deathRegistryBasicInfo.setOccupation(deathBasicInfo.getOccupation());
             deathRegistryBasicInfo.setDeathACKNo(deathBasicInfo.getDeathACKNo());
+            deathRegistryBasicInfo.setFuncionUID(deathBasicInfo.getFuncionUID());
             return deathRegistryBasicInfo;
         
     }
@@ -316,6 +314,7 @@ public DeathRegistryCorrectionRequest createRegistrycorrectionRequest( DeathCorr
 
 public DeathRegistryAddressInfo createCorrectionRegistryAddress(DeathCorrectionRequest deathrequest){
 
+    
     DeathAddressInfo deathAddress = deathrequest.getDeathCorrection().get(0).getDeathCorrAddressInfo();
     DeathRegistryAddressInfo registryAddress = new DeathRegistryAddressInfo();
     registryAddress.setPresentAddrId(deathAddress.getPresentAddrId());
@@ -379,8 +378,8 @@ public DeathRegistryCorrectionBasicInfo createCorrectionRegistryBasicInfo(DeathC
     deathRegistryBasicInfo.setDeathPlaceType(deathBasicInfo.getDeathPlaceType());
     deathRegistryBasicInfo.setDeathPlaceInstId(deathBasicInfo.getDeathPlaceInstId());
     deathRegistryBasicInfo.setVehicleNumber(deathBasicInfo.getVehicleNumber());
-    deathRegistryBasicInfo.setVehicleNumber(deathBasicInfo.getVehicleNumber());
-    deathRegistryBasicInfo.setVehicleNumber(deathBasicInfo.getVehicleNumber());
+    // deathRegistryBasicInfo.setVehicleNumber(deathBasicInfo.getVehicleNumber());
+    deathRegistryBasicInfo.setVehicleFromplaceEn(deathBasicInfo.getVehicleFromplaceEn());
     deathRegistryBasicInfo.setVehicleFromplaceMl(deathBasicInfo.getVehicleFromplaceMl());
     deathRegistryBasicInfo.setVehicleToPlaceEn(deathBasicInfo.getVehicleToPlaceEn());
     deathRegistryBasicInfo.setVehicleToPlaceMl(deathBasicInfo.getVehicleToPlaceMl());
@@ -420,7 +419,12 @@ public DeathRegistryCorrectionBasicInfo createCorrectionRegistryBasicInfo(DeathC
     deathRegistryBasicInfo.setDeceasedLastNameMl(deathBasicInfo.getDeceasedLastNameMl());
     deathRegistryBasicInfo.setDeceasedGender(deathBasicInfo.getDeceasedGender());
     deathRegistryBasicInfo.setDeathACKNo(deathBasicInfo.getDeathACKNo());
+    deathRegistryBasicInfo.setMotherNameEn(deathBasicInfo.getMotherNameEn());
+    deathRegistryBasicInfo.setMotherNameMl(deathBasicInfo.getMotherNameMl());
+    deathRegistryBasicInfo.setFatherNameEn(deathBasicInfo.getFatherNameEn());
+    deathRegistryBasicInfo.setFatherNameMl(deathBasicInfo.getFatherNameMl());
     deathRegistryBasicInfo.setRegistrationNo(deathBasicInfo.getRegistrationNo());
+    deathRegistryBasicInfo.setFuncionUID(deathBasicInfo.getFuncionUID());
     return deathRegistryBasicInfo;
 
 }
@@ -542,6 +546,7 @@ public DeathRegistryBasicInfo createRegistryBasicInfoAbandoned(DeathAbandonedReq
     deathRegistryBasicInfo.setReligion(deathBasicInfo.getReligion());
     deathRegistryBasicInfo.setOccupation(deathBasicInfo.getOccupation());
     deathRegistryBasicInfo.setDeathACKNo(deathBasicInfo.getDeathACKNo());
+    deathRegistryBasicInfo.setFuncionUID(deathBasicInfo.getFuncionUID());
     return deathRegistryBasicInfo;
 
 }

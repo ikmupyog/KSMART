@@ -137,7 +137,7 @@ public class DeathRegistryEnrichment implements BaseEnrichment{
         List<String> ackNoDetails = idGenRepository.getIdList(requestInfo,
                                     tenantId,
                                     config.getDeathRegNumberIdName(),
-                                    request.getDeathCertificateDtls().get(0).getApplicationType(),
+                                    request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getFuncionUID(),
                                     "REGN",deathDtls.size());
         // validateFileCodes(filecodes, birthDetails.size());
         ListIterator<String> itr = ackNoDetails.listIterator();
@@ -210,7 +210,7 @@ public class DeathRegistryEnrichment implements BaseEnrichment{
         List<String> ackNoDetails = idGenRepository.getIdList(requestInfo,
                                     tenantId,
                                     config.getDeathCertNumberIdName(),
-                                    request.getDeathCertificateDtls().get(0).getApplicationType(),
+                                    request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getFuncionUID(),
                                     "CERT",deathDtls.size());
         // validateFileCodes(filecodes, birthDetails.size());
         ListIterator<String> itr = ackNoDetails.listIterator();

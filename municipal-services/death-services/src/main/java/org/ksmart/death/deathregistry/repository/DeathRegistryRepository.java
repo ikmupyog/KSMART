@@ -15,11 +15,13 @@ import org.ksmart.death.deathregistry.config.DeathRegistryConfiguration;
 import org.ksmart.death.deathregistry.kafka.producer.DeathRegistryProducer;
 import org.ksmart.death.deathregistry.repository.querybuilder.DeathRegistryQueryBuilder;
 import org.ksmart.death.deathregistry.repository.rowmapper.DeathCertificateRegistryRowMapper;
+import org.ksmart.death.deathregistry.repository.rowmapper.DeathRegistryCorrectionRowMapper;
 import org.ksmart.death.deathregistry.repository.rowmapper.DeathRegistryRowMapper;
 import org.ksmart.death.deathregistry.util.DeathRegistryConstants;
 import org.ksmart.death.deathregistry.util.DeathRegistryMdmsUtil;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryCriteria;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryDtl;
+import org.ksmart.death.deathregistry.web.models.DeathRegistryCorrectionDtls;
 import org.ksmart.death.deathregistry.web.models.certmodel.DeathCertRequest;
 import org.ksmart.death.deathregistry.web.models.certmodel.DeathCertificate;
 import org.ksmart.death.deathregistry.web.models.certmodel.DeathPdfApplicationRequest;
@@ -63,22 +65,33 @@ public class DeathRegistryRepository {
     //RAkhi S on 12.02.2023    
     private final DeathRegistryProducer producer;
     private final DeathCertificateRegistryRowMapper deathCertRowMapper;
+    private final DeathRegistryCorrectionRowMapper deathCorrectionRowMapper;
+    
 
     @Autowired
     DeathRegistryRepository(JdbcTemplate jdbcTemplate, DeathRegistryQueryBuilder queryBuilder
                                 ,DeathRegistryRowMapper rowMapper
                                 ,DeathRegistryProducer producer
-                                ,DeathCertificateRegistryRowMapper deathCertRowMapper) {
+                                ,DeathCertificateRegistryRowMapper deathCertRowMapper,
+                                DeathRegistryCorrectionRowMapper deathCorrectionRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.queryBuilder = queryBuilder;
         this.rowMapper = rowMapper;
         this.producer = producer;
         this.deathCertRowMapper = deathCertRowMapper;
+        this.deathCorrectionRowMapper = deathCorrectionRowMapper;
     }
     public List<DeathRegistryDtl> getDeathApplication(DeathRegistryCriteria criteria) {
         List<Object> preparedStmtValues = new ArrayList<>();
         String query = queryBuilder.getDeathSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
         List<DeathRegistryDtl> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), rowMapper);
+        return result; 
+    }
+    //Jasmine 15.03.2023
+    public List<DeathRegistryCorrectionDtls> getDeathCorrectionApplication(DeathRegistryCriteria criteria) {
+        List<Object> preparedStmtValues = new ArrayList<>();
+        String query = queryBuilder.getDeathSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
+        List<DeathRegistryCorrectionDtls> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), deathCorrectionRowMapper);
         return result; 
     }
     //Rakhi S on 10.02.2023

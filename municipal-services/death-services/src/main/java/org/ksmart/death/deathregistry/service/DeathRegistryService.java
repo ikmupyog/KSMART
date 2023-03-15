@@ -25,6 +25,8 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryCorrectionDtls;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryCorrectionRequest;
 
+
+
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -53,6 +55,7 @@ public class DeathRegistryService {
     // private final CrDeathRegistryMdmsUtil util;
     // private final RegistryMDMSValidator mdmsValidator;
     // private final CrDeathRegistryValidator validatorService;
+   
 
     @Autowired
     DeathRegistryService(DeathRegistryProducer producer,DeathRegistryConfiguration deathConfig 
@@ -180,14 +183,31 @@ public class DeathRegistryService {
 
     String tenantId = request.getDeathCorrection().get(0).getDeathCorrectionBasicInfo().getTenantId();
 
-    System.out.println("regNo"+regNo);
+   // System.out.println("regNo"+regNo);
 
-     // List<DeathRegistryDtl> searchResult = repository.getDeathApplication(DeathRegistryCriteria
-     //                                                                       .builder()
-     //                                                                       .tenantId(tenantId)
-     //                                                                       .registrationNo(regNo)
-     //                                                                       .build());
+    // try {
+    //         ObjectMapper mapper = new ObjectMapper();
+    //         Object obj = request;
+    //         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+    //        System.out.println("RegistryUpdate "+ mapper.writeValueAsString(obj));
+    // }catch(Exception e) {
+    //     log.error("Exception while fetching from searcher: ",e);
+    // }
+     List<DeathRegistryCorrectionDtls> searchResult = repository.getDeathCorrectionApplication(DeathRegistryCriteria
+                                                                           .builder()
+                                                                           .tenantId(tenantId)
+                                                                           .registrationNo(regNo)
+                                                                           .build());
 
+     request.getDeathCorrection().get(0).getDeathCorrectionBasicInfo().setId(searchResult.get(0).getDeathCorrectionBasicInfo().getId()) ;                                                       
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            Object obj = request;
+            mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+           System.out.println("RegistryUpdate "+ mapper.writeValueAsString(obj));
+    }catch(Exception e) {
+        log.error("Exception while fetching from searcher: ",e);
+    }
      producer.push(deathConfig.getUpdateDeathRegistryTopic(), request);
 
      return request.getDeathCorrection();

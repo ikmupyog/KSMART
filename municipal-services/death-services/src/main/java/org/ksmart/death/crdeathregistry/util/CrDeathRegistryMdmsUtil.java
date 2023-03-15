@@ -212,7 +212,7 @@ public class CrDeathRegistryMdmsUtil {
         MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
                 .requestInfo(requestInfo).build();
 
-        System.out.println("mdmsreq2"+mdmsCriteriaReq);
+      // System.out.println("mdmsreq2"+mdmsCriteriaReq);
         return mdmsCriteriaReq;
     }
 
@@ -278,7 +278,7 @@ public class CrDeathRegistryMdmsUtil {
         MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
                 .requestInfo(requestInfo).build();
 
-        System.out.println("mdmsreqML"+mdmsCriteriaReq);
+       // System.out.println("mdmsreqML"+mdmsCriteriaReq);
         return mdmsCriteriaReq;
     }
      /**
@@ -408,7 +408,7 @@ public class CrDeathRegistryMdmsUtil {
         MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
                 .requestInfo(requestInfo).build();
 
-        System.out.println("mdmsreq2"+mdmsCriteriaReq);
+       // System.out.println("mdmsreq2"+mdmsCriteriaReq);
         return mdmsCriteriaReq;
     }
     private List<ModuleDetail> getcommonMasterRequestP( String tenantId

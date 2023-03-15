@@ -88,7 +88,7 @@ public class CrDeathRegistryService {
 
        String tenantId = request.getDeathCertificateDtls().get(0).getTenantId();
 
-        System.out.println("RegNo"+regNo);
+       // System.out.println("RegNo"+regNo);
 
         List<CrDeathRegistryDtl> searchResult = repository.getDeathApplication(CrDeathRegistryCriteria
                                                                               .builder()
@@ -96,7 +96,7 @@ public class CrDeathRegistryService {
                                                                               .registrationNo(regNo)
                                                                               .build());
 
-        System.out.println("RegistryUpdate-Searchresult "+searchResult);
+       //System.out.println("RegistryUpdate-Searchresult "+searchResult);
         
         validatorService.validateUpdate(request, searchResult);
 

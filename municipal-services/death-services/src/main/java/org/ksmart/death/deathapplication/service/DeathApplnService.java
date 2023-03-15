@@ -154,12 +154,12 @@ public class DeathApplnService {
           enrichmentService.setCorrectionPresentAddress(request);
           enrichmentService.setCorrectionPermanentAddress(request);
           String ackNumber = request.getDeathCorrection().get(0).getDeathCorrectionBasicInfo().getDeathACKNo();
-          System.out.println("CorrectionackNumber"+ackNumber);
-          // DeathSearchCriteria criteria =(DeathSearchCriteria.builder()
-          //                               .deathACKNo(ackNumber)
-          //                               .build());
-          // List<DeathCorrectionDtls> searchResult = repository.getDeathCorrection(criteria,request.getRequestInfo());
-          System.out.println("JasmineSearchResult");
+         // System.out.println("CorrectionackNumber"+ackNumber);
+          DeathSearchCriteria criteria =(DeathSearchCriteria.builder()
+                                        .deathACKNo(ackNumber)
+                                        .build());
+          List<DeathCorrectionDtls> searchResult = repository.getDeathCorrection(criteria,request.getRequestInfo());
+         // System.out.println("JasmineSearchResult");
           // validatorService.validateCorrectionUpdate(request, searchResult);
          // mdmsValidator.validateMDMSData(request,mdmsData);                    
           enrichmentService.enrichUpdateCorrection(request);
@@ -197,7 +197,7 @@ public class DeathApplnService {
                                         .build());
 
           List<DeathAbandonedDtls> searchResult = repository.getDeathAbandoned(criteria,request.getRequestInfo());
-          System.out.println("searchresult:"+searchResult);
+          //System.out.println("searchresult:"+searchResult);
           validatorService.validateAbandonedUpdate(request, searchResult);                   
           enrichmentService.enrichAbandonedUpdate(request);
           workflowIntegrator.callWorkFlowAbandoned(request);

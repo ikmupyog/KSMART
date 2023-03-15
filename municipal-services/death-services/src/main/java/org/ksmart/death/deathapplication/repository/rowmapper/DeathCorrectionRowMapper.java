@@ -33,6 +33,7 @@ public class DeathCorrectionRowMapper  implements ResultSetExtractor<List<DeathC
      public List<DeathCorrectionDtls> extractData(ResultSet rs) throws SQLException, DataAccessException { 
  
          List<DeathCorrectionDtls> result = new ArrayList<>();
+        // System.out.println("result"+result);
          while (rs.next()) {
     
              result.add(DeathCorrectionDtls.builder()
@@ -92,6 +93,10 @@ public class DeathCorrectionRowMapper  implements ResultSetExtractor<List<DeathC
              .deceasedGender(rs.getString("deceased_gender"))
              .deathACKNo(rs.getString("ack_no"))
              .funcionUID(rs.getString("funcion_uid"))
+             .motherNameEn(rs.getString("female_dependent_name_en"))
+             .motherNameMl(rs.getString("female_dependent_name_ml"))
+             .fatherNameEn(rs.getString("male_dependent_name_en"))
+             .fatherNameMl(rs.getString("male_dependent_name_ml"))
              .build())
              .deathCorrAddressInfo(addressRowMapper.extractData(rs))
              .deathCorrAuditDetails(getAuditDetails(rs))
