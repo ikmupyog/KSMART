@@ -17,7 +17,7 @@ import CrCitizenFlowApp from "./BirthRegistration";
 const App = () => {
   const { path, url, ...match } = useRouteMatch();
   let isSuccessScreen = window.location.href.includes("acknowledgement");
-  let isCommonPTPropertyScreen = window.location.href.includes("/tl/tradelicence/new-application/property-details");
+  // let isCommonPTPropertyScreen = window.location.href.includes("/tl/tradelicence/new-application/property-details");
 
   const CreateBirthRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateBirthRegistration');
   const CreateStillBirthRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateStillBirthRegistration');
@@ -26,19 +26,19 @@ const App = () => {
   const CreateMarriageRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateMarriageRegistration');
   const MyApplications = Digit?.ComponentRegistryService?.getComponent('MyApplications');
 
-  const getBackPageNumber = () => {
-    let goBacktoFromProperty = -1;
-    if (
-      sessionStorage.getItem("VisitedCommonPTSearch") === "true" &&
-      (sessionStorage.getItem("VisitedAccessoriesDetails") === "true" || sessionStorage.getItem("VisitedisAccessories") === "true") &&
-      isCommonPTPropertyScreen
-    ) {
-      goBacktoFromProperty = -4;
-      sessionStorage.removeItem("VisitedCommonPTSearch");
-      return goBacktoFromProperty;
-    }
-    return goBacktoFromProperty;
-  };
+  // const getBackPageNumber = () => {
+  //   let goBacktoFromProperty = -1;
+  //   if (
+  //     sessionStorage.getItem("VisitedCommonPTSearch") === "true" &&
+  //     (sessionStorage.getItem("VisitedAccessoriesDetails") === "true" || sessionStorage.getItem("VisitedisAccessories") === "true") &&
+  //     isCommonPTPropertyScreen
+  //   ) {
+  //     goBacktoFromProperty = -4;
+  //     sessionStorage.removeItem("VisitedCommonPTSearch");
+  //     return goBacktoFromProperty;
+  //   }
+  //   return goBacktoFromProperty;
+  // };
 
 
   return (

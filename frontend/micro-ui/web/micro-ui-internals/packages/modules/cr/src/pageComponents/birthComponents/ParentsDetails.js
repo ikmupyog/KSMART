@@ -63,7 +63,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
       cmbReligion.push(ob);
     });
   const [isMotherInfo, setIsMotherInfo] = useState(formData?.ParentsDetails?.isMotherInfo ? formData?.ParentsDetails?.isMotherInfo :
-    formData?.ChildDetails?.ParentsDetails?.isMotherInfo ? formData?.ChildDetails?.ParentsDetails?.isMotherInfo : false);
+    formData?.ChildDetails?.ParentsDetails?.ismotherInfo ? formData?.ChildDetails?.ParentsDetails?.ismotherInfo : false);
   const [motherAadhar, setMotherAadhar] = useState(formData?.ParentsDetails?.motherAadhar ? formData?.ParentsDetails?.motherAadhar :
     formData?.ChildDetails?.ParentsDetails?.motherAadhar ? formData?.ChildDetails?.ParentsDetails?.motherAadhar : "");
   const [motherFirstNameEn, setMotherFirstNameEn] = useState(formData?.ParentsDetails?.motherFirstNameEn ? formData?.ParentsDetails?.motherFirstNameEn :
@@ -89,7 +89,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
     (cmbProfession.filter(cmbProfession => cmbProfession.code === formData?.ChildDetails?.ParentsDetails?.motherProfession)[0]) : "");
 
   const [isFatherInfo, setIsFatherInfo] = useState(formData?.ParentsDetails?.isFatherInfo ? formData?.ParentsDetails?.isFatherInfo :
-    formData?.ChildDetails?.ParentsDetails?.isFatherInfo ? formData?.ChildDetails?.ParentsDetails?.isFatherInfo : false);
+    formData?.ChildDetails?.ParentsDetails?.isfatherInfo ? formData?.ChildDetails?.ParentsDetails?.isfatherInfo : false);
   const [fatherAadhar, setFatherAadhar] = useState(formData?.ParentsDetails?.fatherAadhar ? formData?.ParentsDetails?.fatherAadhar :
     formData?.ChildDetails?.ParentsDetails?.fatherAadhar ? formData?.ChildDetails?.ParentsDetails?.fatherAadhar : "");
   const [fatherFirstNameEn, setFatherFirstNameEn] = useState(formData?.ParentsDetails?.fatherFirstNameEn ? formData?.ParentsDetails?.fatherFirstNameEn :
@@ -170,13 +170,13 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
     }
   }
   function setSelectMotherAadhar(e) {
-    if (e.target.value.trim().length != 0) {
+    if (e.target.value.trim().length >= 0) {
       setMotherAadhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
     }
   }
 
   function setSelectFatherAadhar(e) {
-    if (e.target.value.trim().length != 0) {
+    if (e.target.value.trim().length >= 0) {
       setFatherAadhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
     }
   }
@@ -592,14 +592,14 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                     <TextInput
                       t={t}
                       isMandatory={false}
-                      type={"number"}
+                      type={"text"}
                       optionKey="i18nKey"
                       name="motherAadhar"
                       value={motherAadhar}
                       onChange={setSelectMotherAadhar}
                       disable={isDisableEdit}
                       placeholder={`${t("CS_COMMON_AADHAAR")}`}
-                      {...(validation = { pattern: "^[0-9]{12}$", type: "number", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                      {...(validation = { pattern: "^[0-9]{12}$", type: "test", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                     />
                   </div>
 
@@ -788,14 +788,14 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                     <TextInput
                       t={t}
                       isMandatory={false}
-                      type={"number"}
+                      type={"text"}
                       optionKey="i18nKey"
                       name="fatherAadhar"
                       value={fatherAadhar}
                       onChange={setSelectFatherAadhar}
                       disable={isDisableEdit}
                       placeholder={`${t("CS_COMMON_AADHAAR")}`}
-                      {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                      {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                     />
                   </div>
 

@@ -66,7 +66,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData,isEditBirth=fal
 
 
   function setSelectinitiatorAadhar(e) {
-    if (e.target.value.trim().length != 0) {
+    if (e.target.value.trim().length >= 0) {
       setinitiatorAadhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
     }
     // if (e.target.value.length != 0) {
@@ -306,7 +306,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData,isEditBirth=fal
               </CardLabel>
               <TextInput
                 t={t}
-                type={"number"}
+                type={"text"}
                 optionKey="i18nKey"
                 name="initiatorAadhar"
                 value={initiatorAadhar}
