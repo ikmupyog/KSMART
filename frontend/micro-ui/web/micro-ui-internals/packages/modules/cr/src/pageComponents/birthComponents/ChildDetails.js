@@ -485,7 +485,6 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
   const handleTimeChange = (value, cb) => {
     if (typeof value === "string") {
       cb(value);
-      console.log(cb);
       console.log(value);
       let hour = value;
       let period = hour > 12 ? "PM" : "AM";
@@ -1011,7 +1010,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
                   date={childDOB}
                   name="childDOB"
                   max={convertEpochToDate(new Date())}
-                  // min={childDOB ? childDOB : convertEpochToDate("1900-01-01")}
+                  min={convertEpochToDate("1900-01-01")}
                   onChange={setselectChildDOB}
                   disable={isDisableEdit}
                   //  inputFormat="DD-MM-YYYY"
@@ -1023,7 +1022,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
                 <CardLabel>{t("CR_TIME_OF_BIRTH")}</CardLabel>
                 <CustomTimePicker name="birthDateTime" onChange={(val) => handleTimeChange(val, setbirthDateTime)}
                   value={birthDateTime}
-                  disable={isDisableEdit} />
+                  disable={isDisableEdit} 
+                  />
               </div>
               <div className="col-md-3">
                 <CardLabel>{`${t("CR_GENDER")}`}<span className="mandatorycss">*</span></CardLabel>
@@ -1076,7 +1076,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
                   {t("CR_PLACE_OF_BIRTH")}<span className="mandatorycss">*</span></CardLabel>
                 <Dropdown
                   t={t}
-                  optionKey="code"
+                  optionKey="name"
                   isMandatory={false}
                   option={cmbPlaceMaster}
                   selected={birthPlace}
