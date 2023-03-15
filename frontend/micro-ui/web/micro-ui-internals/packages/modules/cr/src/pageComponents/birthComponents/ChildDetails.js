@@ -86,7 +86,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
     Menu.map((genderDetails) => {
       menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
     });
-  WorkFlowDetails &&
+    PlaeceMaster &&
     PlaeceMaster["birth-death-service"] && PlaeceMaster["birth-death-service"].PlaceMaster &&
     PlaeceMaster["birth-death-service"].PlaceMaster.map((ob) => {
       cmbPlaceMaster.push(ob);
