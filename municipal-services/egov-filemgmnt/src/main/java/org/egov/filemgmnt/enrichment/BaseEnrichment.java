@@ -37,8 +37,8 @@ abstract class BaseEnrichment { // NOPMD
         return auditDetails;
     }
 
-    protected List<String> generateIds(final RequestInfo requestInfo, final String tenantId, final String idKey,
-                                       final String idformat, final int count) {
-        return idgenUtil.getIdList(requestInfo, tenantId, idKey, idformat, count);
+    protected List<String> generateIds(final RequestInfo requestInfo, final String tenantId, final String idName,
+                                       final String moduleCode, String fnType, final int count) {
+        return idgenUtil.getIdList(requestInfo, tenantId, idName, moduleCode, fnType, count);
     }
 }

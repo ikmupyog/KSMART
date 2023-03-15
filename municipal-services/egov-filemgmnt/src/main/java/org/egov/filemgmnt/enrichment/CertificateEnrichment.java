@@ -46,7 +46,8 @@ public class CertificateEnrichment extends BaseEnrichment { // NOPMD
         final List<String> certNumbers = generateIds(requestInfo,
                                                      tenantId,
                                                      fmConfig.getFilemgmntFileCodeName(),
-                                                     fmConfig.getFilemgmntFileCodeFormat(),
+                                                     "FMARISING",
+                                                     "AR",
                                                      certDetails.size());
 
         final ListIterator<String> itr = certNumbers.listIterator();

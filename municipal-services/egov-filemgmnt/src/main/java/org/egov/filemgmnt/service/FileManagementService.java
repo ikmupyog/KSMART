@@ -61,7 +61,8 @@ public class FileManagementService extends AbstractFileManagementService {
 
     public ApplicantServiceDetail create(final ApplicantServiceRequest request) {
         // Get mdms data
-        final Object mdmsData = mdmsUtil.mdmsCallForModuleDetails(request.getRequestInfo(), fmConfig.getStateLevelTenantId());
+        final Object mdmsData = mdmsUtil.mdmsCallForModuleDetails(request.getRequestInfo(),
+                                                                  fmConfig.getStateLevelTenantId());
 
         // validate applicant personal
         final ApplicantServiceDetail serviceDetail = request.getApplicantServiceDetail();

@@ -29,7 +29,15 @@ public class IdRequest {
     @JsonProperty("tenantId")
     private String tenantId;
 
-    @JsonProperty("format")
-    private String format;
+//    @JsonProperty("format")
+//    private String format;
+
+    @JsonProperty("moduleCode")
+    @NotNull
+    private String moduleCode;
+
+    @JsonProperty("fnType")
+    @NotNull
+    private String fnType;
 
 }

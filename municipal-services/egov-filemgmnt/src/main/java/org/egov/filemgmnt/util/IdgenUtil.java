@@ -36,13 +36,15 @@ public class IdgenUtil {
     private ServiceRequestRepository restRepo;
 
     public List<String> getIdList(final RequestInfo requestInfo, final String tenantId, final String idName,
-                                  final String idformat, final Integer count) {
+                                  final String moduleCode, final String fnType, final Integer count) {
         final List<IdRequest> reqList = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             reqList.add(IdRequest.builder()
                                  .idName(idName)
-                                 .format(idformat)
+//                                 .format(idformat)
+                                 .moduleCode(moduleCode)
                                  .tenantId(tenantId)
+                                 .fnType(fnType)
                                  .build());
         }
 
