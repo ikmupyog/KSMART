@@ -18,6 +18,7 @@ import org.ksmart.death.deathapplication.util.DeathConstants;
 import org.ksmart.death.deathapplication.util.DeathMdmsUtil;
 import org.ksmart.death.deathapplication.util.IDGenerator;
 import org.ksmart.death.deathapplication.web.models.AuditDetails;
+import org.ksmart.death.deathapplication.web.models.DeathAbandonedDtls;
 import org.ksmart.death.deathapplication.web.models.DeathAbandonedInformantDtls;
 import org.ksmart.death.deathapplication.web.models.DeathAbandonedRequest;
 import org.ksmart.death.deathapplication.web.models.DeathDtlRequest;
@@ -706,31 +707,53 @@ public class DeathEnrichment implements BaseEnrichment{
                 });
         }
 
-    //Rakhi S on 06.03.2023  ACK no formating
-        public void setAbandonedACKNumber(DeathAbandonedRequest request) {
-            RequestInfo requestInfo = request.getRequestInfo();
-            int Year = Calendar.getInstance().get(Calendar.YEAR) ;
-            Long currentTime = Long.valueOf(System.currentTimeMillis());
-            String tenantId = requestInfo.getUserInfo().getTenantId();
-            List<Map<String, Object>> ackNoDetails = repository.getDeathACKDetails(tenantId, Year);
-
-            request.getDeathAbandonedDtls()
-            .forEach(deathdtls -> {    
-                String IDGenerated = null;
-                    IDGenerated = idGenerator.setIDGeneratorAbandoned(request, DeathConstants.FUN_MODULE_NEWAPPLN,
-                                    DeathConstants.ACK_NUMBER_CAPTION);
-                Long ackNoId=null;
-                String inputString = IDGenerated; 
-                String[] ackNoIdArray= inputString.split("-");
-                for (int i=0; i < 1; i++){
-                    ackNoId=Long.parseLong(ackNoIdArray[1]);
-                }
-                    deathdtls.getDeathBasicInfo().setDeathACKNo(IDGenerated);
-                    deathdtls.getDeathBasicInfo().setAckNoID(ackNoId);
+    //Rakhi S on 15.03.2023  ACK no formating
+    public void setAbandonedACKNumber(DeathAbandonedRequest request) {
+        RequestInfo requestInfo = request.getRequestInfo();
+        List<DeathAbandonedDtls> deathDtls = request.getDeathAbandonedDtls();
+        Long currentTime = Long.valueOf(System.currentTimeMillis());
+        String tenantId = deathDtls.get(0).getDeathBasicInfo().getTenantId();
+        
+        List<String> ackNoDetails =idGenRepository.getIdList(requestInfo,
+                                    tenantId,
+                                    config.getDeathACKNumberIdName(),
+                                    request.getDeathAbandonedDtls().get(0).getDeathBasicInfo().getFuncionUID(),
+                                    "AKNO",deathDtls.size());
+        // validateFileCodes(ackNoDetails, deathDtls.size());
+        ListIterator<String> itr = ackNoDetails.listIterator();
+        request.getDeathAbandonedDtls()
+                .forEach(deathdtls -> {
+                    deathdtls.getDeathBasicInfo().setDeathACKNo(itr.next());
+                    deathdtls.getDeathBasicInfo().setAckNoID(deathApplnUtil.setSeqId(ackNoDetails));
                     deathdtls.getDeathBasicInfo().setApplicationDate(currentTime);
-            });
 
-        }
+                });
+    }
+    //Rakhi S on 06.03.2023  ACK no formating
+        // public void setAbandonedACKNumber(DeathAbandonedRequest request) {
+        //     RequestInfo requestInfo = request.getRequestInfo();
+        //     int Year = Calendar.getInstance().get(Calendar.YEAR) ;
+        //     Long currentTime = Long.valueOf(System.currentTimeMillis());
+        //     String tenantId = requestInfo.getUserInfo().getTenantId();
+        //     List<Map<String, Object>> ackNoDetails = repository.getDeathACKDetails(tenantId, Year);
+
+        //     request.getDeathAbandonedDtls()
+        //     .forEach(deathdtls -> {    
+        //         String IDGenerated = null;
+        //             IDGenerated = idGenerator.setIDGeneratorAbandoned(request, DeathConstants.FUN_MODULE_NEWAPPLN,
+        //                             DeathConstants.ACK_NUMBER_CAPTION);
+        //         Long ackNoId=null;
+        //         String inputString = IDGenerated; 
+        //         String[] ackNoIdArray= inputString.split("-");
+        //         for (int i=0; i < 1; i++){
+        //             ackNoId=Long.parseLong(ackNoIdArray[1]);
+        //         }
+        //             deathdtls.getDeathBasicInfo().setDeathACKNo(IDGenerated);
+        //             deathdtls.getDeathBasicInfo().setAckNoID(ackNoId);
+        //             deathdtls.getDeathBasicInfo().setApplicationDate(currentTime);
+        //     });
+
+        // }
      //Rakhi S on 08.03.2023 Abandoned Update
 
         public void enrichAbandonedUpdate(DeathAbandonedRequest request) {
