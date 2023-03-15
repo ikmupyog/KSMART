@@ -8,11 +8,12 @@ import getPDFData from "../../../utils/getTLAcknowledgementData";
 const GetActionMessage = (props) => {
   const { t } = useTranslation();
   if (props.isSuccess) {
-    return !window.location.href.includes("renew-trade") || !window.location.href.includes("edit-application") ? t("Application Submitted Successfully") : t("CS_TRADE_UPDATE_APPLICATION_SUCCESS");
+    console.log(props.isSuccess);
+    return t("CR_CREATE_SUCCESS_MSG");
   } else if (props.isLoading) {
-    return !window.location.href.includes("renew-trade") || !window.location.href.includes("edit-application") ? t("CS_TRADE_APPLICATION_SUCCESS") : t("CS_TRADE_UPDATE_APPLICATION_PENDING");
+    return !window.location.href.includes("renew-trade") || !window.location.href.includes("edit-application") ? t("CR_APPLICATION_SUCCESS") : t("CR_UPDATE_APPLICATION_SUCCESS");
   } else if (!props.isSuccess) {
-    return !window.location.href.includes("renew-trade") || !window.location.href.includes("edit-application") ? t("CS_TRADE_APPLICATION_FAILED") : t("CS_TRADE_UPDATE_APPLICATION_FAILED");
+    return t("CR_CREATE_APPLICATION_FAILED") ;
   }
 };
 
@@ -21,8 +22,9 @@ const rowContainerStyle = {
   justifyContent: "space-between",
 };
 
-const BannerPicker = (props) => {
-  console.log(props);
+const BannerPicker = (props) => { 
+  // console.log(JSON.stringify(props));
+  
   return (
     // <Banner
     //   message={GetActionMessage(props)}
@@ -30,15 +32,15 @@ const BannerPicker = (props) => {
     //   info={props.isSuccess ? props.t("AK-16-2023-CRDRNR-C-KOCHI-KL") : ""}
     //   successful={props.isSuccess}
     // />
+    
     <Banner
     message={GetActionMessage(props)}
-    applicationNumber={props.data?.InformationDeath?.DeathACKNo}
-    info={props.isSuccess ? props.InformationDeath?.DeathACKNo : ""}
+    applicationNumber={props.data?.deathCertificateDtls[0]?.InformationDeath?.DeathACKNo}   
+    info={props.isSuccess ? props.applicationNumber : ""}
     successful={props.isSuccess}
   />
   );
-};
-
+};  
 const DeathAcknowledgement = ({ data, onSuccess,userType }) => {
   const { t } = useTranslation();
   const [mutationHappened, setMutationHappened, clear] = Digit.Hooks.useSessionStorage("CITIZEN_TL_MUTATION_HAPPENED", false);
@@ -49,29 +51,28 @@ const DeathAcknowledgement = ({ data, onSuccess,userType }) => {
     data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
     isRenewTrade
   );
-  const mutation1 = Digit.Hooks.cr.useCivilRegistrationDeathAPI(
-    data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
-    false
-  );
-  const mutation2 = Digit.Hooks.cr.useCivilRegistrationDeathAPI(
-    data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
-    false
-  );
+  // const mutation1 = Digit.Hooks.cr.useCivilRegistrationDeathAPI(
+  //   data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
+  //   false
+  // );
+  // const mutation2 = Digit.Hooks.cr.useCivilRegistrationDeathAPI(
+  //   data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
+  //   false
+  // );
   const isEdit = window.location.href.includes("renew-trade");
   const { data: storeData } = Digit.Hooks.useStore.getInitData();
   const { tenants } = storeData || {};
   const stateId = Digit.ULBService.getStateId();
-  const { isLoading, data: fydata = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "egf-master", "FinancialYear");
-  let isDirectRenewal = sessionStorage.getItem("isDirectRenewal") ? stringToBoolean(sessionStorage.getItem("isDirectRenewal")) : null;
+  // const { isLoading, data: fydata = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "egf-master", "FinancialYear");
+  // let isDirectRenewal = sessionStorage.getItem("isDirectRenewal") ? stringToBoolean(sessionStorage.getItem("isDirectRenewal")) : null;
   const [isInitialRender, setIsInitialRender] = useState(true);
 
   useEffect(() => {
-    if (isInitialRender) {
-      console.log("Enter");
-    const onSuccessedit = () => {
-      setMutationHappened(true);
-    };
-    // try {
+    if (isInitialRender) {      
+    // const onSuccessedit = () => {
+    //   setMutationHappened(true);
+    // };
+    try {
       setIsInitialRender(false);
       let tenantId1 = data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId;
       data.tenantId = tenantId1;
@@ -87,20 +88,20 @@ const DeathAcknowledgement = ({ data, onSuccess,userType }) => {
             onSuccess,
           })
         }
-        else{
-          if((fydata["egf-master"] && fydata["egf-master"].FinancialYear.length > 0 && isDirectRenewal))
-          {
-            mutation2.mutate(formdata, {
-              onSuccess,
-            })
-          }
-          else
-          {
-            mutation1.mutate(formdata, {
-              onSuccess,
-            })
-          }
-        }
+        // else{
+        //   if((fydata["egf-master"] && fydata["egf-master"].FinancialYear.length > 0 && isDirectRenewal))
+        //   {
+        //     mutation2.mutate(formdata, {
+        //       onSuccess,
+        //     })
+        //   }
+        //   else
+        //   {
+        //     mutation1.mutate(formdata, {
+        //       onSuccess,
+        //     })
+        //   }
+        // }
 
         // !isEdit ? mutation.mutate(formdata, {
         //   onSuccess,
@@ -117,33 +118,33 @@ const DeathAcknowledgement = ({ data, onSuccess,userType }) => {
         // })
 
       }
-    // } catch (err) {
-    // }
-  }
-  }, [fydata]);
-
-  useEffect(() => {
-    if (mutation.isSuccess || (mutation1.isSuccess && isEdit && !isDirectRenewal)) {
-      try {
-        let Licenses = !isEdit ? convertToUpdateTrade(mutation.data, data) : convertToUpdateTrade(mutation1.data, data);
-        mutation2.mutate(Licenses, {
-          onSuccess,
-        });
-      }
-      catch (er) {
-      }
+    } catch (err) {
     }
-  }, [mutation.isSuccess, mutation1.isSuccess]);
+  }
+  }, [mutation]);
 
-  // const handleDownloadPdf = async () => {
-  //   const { Licenses = [] } = mutation.data || mutation1.data || mutation2.data;
-  //   const License = (Licenses && Licenses[0]) || {};
-  //   const tenantInfo = tenants.find((tenant) => tenant.code === License.tenantId);
-  //   let res = License;
-  //   const data = getPDFData({ ...res }, tenantInfo, t);
-  //   data.then((ress) => Digit.Utils.pdf.generate(ress));
-  // };
-  let enableLoader = !resubmit ? (!isEdit ? mutation.isIdle || mutation.isLoading : isDirectRenewal ? false : mutation1.isIdle || mutation1.isLoading):false;
+  // useEffect(() => {
+  //   if (mutation.isSuccess || (mutation1.isSuccess && isEdit && !isDirectRenewal)) {
+  //     try {
+  //       let Licenses = !isEdit ? convertToUpdateTrade(mutation.data, data) : convertToUpdateTrade(mutation1.data, data);
+  //       mutation2.mutate(Licenses, {
+  //         onSuccess,
+  //       });
+  //     }
+  //     catch (er) {
+  //     }
+  //   }
+  // }, [mutation.isSuccess, mutation1.isSuccess]);
+
+  const handleDownloadPdf = async () => {
+    const { Licenses = [] } = mutation.data
+    const License = (Licenses && Licenses[0]) || {};
+    const tenantInfo = tenants.find((tenant) => tenant.code === License.tenantId);
+    let res = License;
+    const data = getPDFData({ ...res }, tenantInfo, t);
+    data.then((ress) => Digit.Utils.pdf.generate(ress));
+  };
+  // let enableLoader = !resubmit ? (!isEdit ? mutation.isIdle || mutation.isLoading : isDirectRenewal ? false : mutation1.isIdle || mutation1.isLoading):false;
   // if(enableLoader)
   // {return (<Loader />)}
   // else if( ((mutation?.isSuccess == false && mutation?.isIdle == false) || (mutation1?.isSuccess == false && mutation1?.isIdle == false )) && !isDirectRenewal && !resubmit)
@@ -161,12 +162,13 @@ const DeathAcknowledgement = ({ data, onSuccess,userType }) => {
   //   return (<Loader />)
   // }
   // else
+  if(mutation.isSuccess && mutation?.isError===null){
   return(
     <Card>
-      <BannerPicker t={t} data={mutation2.data} isSuccess={"success"} isLoading={(mutation2.isIdle || mutation2.isLoading)} />
-       <CardText>{!isDirectRenewal?t("Application Submitted Successfully"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText>
+      <BannerPicker t={t} data={mutation.data} isSuccess={"success"} isLoading={(mutation.isIdle || mutation.isLoading)} />
+       {/* <CardText>{!isDirectRenewal?t("Application Submitted Successfully"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText> */}
     
-        {/* <LinkButton
+        <LinkButton
           label={
             <div className="response-download-button">
               <span>
@@ -179,7 +181,7 @@ const DeathAcknowledgement = ({ data, onSuccess,userType }) => {
           }
           //style={{ width: "100px" }}
           onClick={handleDownloadPdf}
-        /> */}
+        />
       {/* <BannerPicker t={t} data={mutation2.data} isSuccess={mutation2.isSuccess} isLoading={(mutation2.isIdle || mutation2.isLoading)} />
       {(mutation2.isSuccess) && <CardText>{!isDirectRenewal?t("TL_FILE_TRADE_RESPONSE"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText>}
       {(!mutation2.isSuccess) && <CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>}
@@ -210,6 +212,20 @@ const DeathAcknowledgement = ({ data, onSuccess,userType }) => {
       </Link> */}
     </Card>
   );
+} else {
+  return(
+
+    <Card>
+    <BannerPicker t={t} data={mutation.data } isSuccess={mutation.isSuccess } isLoading={mutation?.isLoading } />
+    {/* {<CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>} */}
+    <Link to={`/digit-ui/citizen`}>
+      <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
+    </Link>
+  </Card>
+  );
+}
+
 };
+
 
 export default DeathAcknowledgement;

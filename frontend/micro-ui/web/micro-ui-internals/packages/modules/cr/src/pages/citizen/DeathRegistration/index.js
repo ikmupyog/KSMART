@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Route, Switch, useRouteMatch,useLocation,useHistory,Redirect } from "react-router-dom";
 import { PrivateRoute, BreadCrumb,Component } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-import ChildDetails from "../../../pageComponents/birthComponents/ChildDetails";
 import { newConfig as newConfigCR } from "../../../config/config";
+import { useQueryClient } from "react-query";
 
 const CreateDeathRegistration = ({ parentUrl }) => {
   const { t } = useTranslation();
@@ -11,6 +11,7 @@ const CreateDeathRegistration = ({ parentUrl }) => {
   const match = useRouteMatch();  
   const { pathname } = useLocation();
   const history = useHistory();
+  const queryClient = useQueryClient();
   const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_CREATE_DEATH_REG", {});
 
   const stateId = Digit.ULBService.getStateId();
@@ -110,7 +111,7 @@ const CreateDeathRegistration = ({ parentUrl }) => {
   
   const onSuccess = () => {
     sessionStorage.removeItem("CurrentFinancialYear");
-    queryClient.invalidateQueries("CR_CREATE_BIRTH");
+    queryClient.invalidateQueries("CR_CREATE_DEATH_REG");
   };
   const handleSkip = () => {};
   const handleMultiple = () => {};
