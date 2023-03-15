@@ -112,40 +112,43 @@ const WitnessDetails = ({ config, onSelect, userType, formData }) => {
   const [witness2AdharNo, setwitness2AdharNo] = useState(
     formData?.MarriageDetails?.witness2AdharNo ? formData?.MarriageDetails?.witness2AdharNo : ""
   );
-  const [witness2NameEn, setwitness2NameEn] = useState(
-    formData?.MarriageDetails?.witness2NameEn ? formData?.MarriageDetails?.witness2NameEn : ""
-  );
-  const [witness1NameEn, setwitness1NameEn] = useState(
-    formData?.MarriageDetails?.witness1NameEn ? formData?.MarriageDetails?.witness1NameEn : ""
-  );
-  const [witness1Age, setwitness1Age] = useState(
-    formData?.MarriageDetails?.witness1Age ? formData?.MarriageDetails?.witness1Age : ""
-  );
-  const [witness2Age, setwitness2Age] = useState(
-    formData?.MarriageDetails?.witness2Age ? formData?.MarriageDetails?.witness2Age : ""
-  );
+  const [witness2NameEn, setwitness2NameEn] = useState(formData?.MarriageDetails?.witness2NameEn ? formData?.MarriageDetails?.witness2NameEn : "");
+  const [witness1NameEn, setwitness1NameEn] = useState(formData?.MarriageDetails?.witness1NameEn ? formData?.MarriageDetails?.witness1NameEn : "");
+  const [witness1Age, setwitness1Age] = useState(formData?.MarriageDetails?.witness1Age ? formData?.MarriageDetails?.witness1Age : "");
+  const [witness2Age, setwitness2Age] = useState(formData?.MarriageDetails?.witness2Age ? formData?.MarriageDetails?.witness2Age : "");
   const [witness1AddresSEn, setwitness1AddresSEn] = useState(
     formData?.MarriageDetails?.witness1AddresSEn ? formData?.MarriageDetails?.witness1AddresSEn : ""
   );
   const [witness2AddresSEn, setwitness2AddresSEn] = useState(
     formData?.MarriageDetails?.witness2AddresSEn ? formData?.MarriageDetails?.witness2AddresSEn : ""
   );
-  const [witness1Mobile, setwitness1Mobile] = useState(
-    formData?.MarriageDetails?.witness1Mobile ? formData?.MarriageDetails?.witness1Mobile : ""
-  );
-  const [witness2Mobile, setwitness2Mobile] = useState(
-    formData?.MarriageDetails?.witness2Mobile ? formData?.MarriageDetails?.witness2Mobile : ""
-  );
-  
-  const [file, setFile] = useState();
-  function handleChange(e) {
-    console.log(e.target.files);
-    setFile(URL.createObjectURL(e.target.files[0]));
-  }
+  const [witness1Mobile, setwitness1Mobile] = useState(formData?.MarriageDetails?.witness1Mobile ? formData?.MarriageDetails?.witness1Mobile : "");
+  const [witness2Mobile, setwitness2Mobile] = useState(formData?.MarriageDetails?.witness2Mobile ? formData?.MarriageDetails?.witness2Mobile : "");
 
-  const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
-  };
+//   const [file, setFile] = useState();
+//   const [files, setFiles] = useState();
+//   function handleChange(e) {
+//     console.log(e.target.files);
+//     setFile(URL.createObjectURL(e.target.files[0]));
+//   }
+//   function handleFile2Change(e) {
+//     console.log(e.target.files);
+//     setFiles(URL.createObjectURL(e.target.files[1]));
+//   }
+//   const handleOptionChange = (event) => {
+//     setSelectedOption(event.target.value);
+//   };
+const [file1, setFile1] = useState(null);
+const [file2, setFile2] = useState(null);
+
+const handleFile1Change = (event) => {
+  setFile1(event.target.files[0]);
+};
+
+const handleFile2Change = (event) => {
+  setFile2(event.target.files[0]);
+};
+
 
   const onSkip = () => onSelect();
 
@@ -247,10 +250,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setwitness1Age(
-        e.target.value.replace
-          (/^^[\u0D00-\u0D7F\u200D\u200C .&'@' a-zA-Z]/gi, ""));
-       
+      setwitness1Age(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' a-zA-Z]/gi, ""));
     }
   }
   function setSelectwitness2Age(value) {
@@ -258,10 +258,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData }) => {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setwitness2Age(
-        e.target.value.replace
-          (/^^[\u0D00-\u0D7F\u200D\u200C .&'@' a-zA-Z]/gi, ""));
-       
+      setwitness2Age(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' a-zA-Z]/gi, ""));
     }
   }
   function setSelectwitness1AddresSEn(value) {
@@ -310,7 +307,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData }) => {
     setmarriageLocalityEn(value);
     // setAgeMariageStatus(value.code);
   }
-  
 
   let validFlag = true;
   const goNext = () => {
@@ -382,12 +378,11 @@ const WitnessDetails = ({ config, onSelect, userType, formData }) => {
         witness2AddresSEn,
         witness1Mobile,
         witness2Mobile,
-        
       });
     }
   };
 
-  if (isLoading || isTalukLoading || isVillageLoading ||isLBTypeLoading) {
+  if (isLoading || isTalukLoading || isVillageLoading || isLBTypeLoading) {
     return <Loader></Loader>;
   } else
     return (
@@ -409,7 +404,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData }) => {
             </div>
           </div>
           <div className="col-md-12">
-            <div className="col-md-3">
+            <div className="col-md-4">
               <CardLabel>
                 {`${t("CR_WITNESS1_ADHAR_NO")}`}
                 <span className="mandatorycss">*</span>
@@ -421,10 +416,10 @@ const WitnessDetails = ({ config, onSelect, userType, formData }) => {
                 name="witness1AdharNo"
                 onChange={setSelectwitness1AdharNo}
                 placeholder={`${t("CR_WITNESS1_ADHAR_NO")}`}
-                {...(validation = { pattern: "^[0-9]{12}$",isRequired: false, type: "number", title: t("CR_INVALID_WITNESS1_ADHAR_NO") })}
+                {...(validation = { pattern: "^[0-9]{12}$", isRequired: false, type: "number", title: t("CR_INVALID_WITNESS1_ADHAR_NO") })}
               />
             </div>
-            <div className="col-md-3">
+            <div className="col-md-4">
               <CardLabel>
                 {`${t("CR_WITNESS1_NAME")}`}
                 <span className="mandatorycss">*</span>
@@ -439,7 +434,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CR_WITNESS1_NAME")}`}
               />
             </div>
-            <div className="col-md-3">
+            <div className="col-md-4">
               <CardLabel>
                 {`${t("CR_WITNESS1_AGE")}`}
                 <span className="mandatorycss">*</span>
@@ -453,7 +448,9 @@ const WitnessDetails = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CR_WITNESS1_AGE")}`}
               />
             </div>
-            <div className="col-md-3">
+          </div>
+          <div className="col-md-12">
+            <div className="col-md-4">
               <CardLabel>
                 {`${t("CR_WITNESS1_ADDRESS")}`}
                 <span className="mandatorycss">*</span>
@@ -468,8 +465,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CR_WITNESS1_ADDRESS")}`}
               />
             </div>
-          </div>
-          <div className="col-md-12">
+
             <div className="col-md-4">
               <CardLabel>
                 {`${t("CR_WITNESS1_MOBILE_NO")}`}
@@ -485,30 +481,29 @@ const WitnessDetails = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CR_WITNESS1_MOBILE_NO")}`}
               />
             </div>
-           
           </div>
           <div className="col-md-12">
-              <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_WITNESSES_2_DETAILS")}`}</span>{" "}
-              </h1>
-            </div>
+            <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_WITNESSES_2_DETAILS")}`}</span>{" "}
+            </h1>
+          </div>
           <div className="col-md-12">
-            <div className="col-md-3">
+            <div className="col-md-4">
               <CardLabel>
                 {`${t("CR_WITNESS2_ADHAR_NO")}`}
                 <span className="mandatorycss">*</span>
               </CardLabel>
               <TextInput
-                 t={t}
-                 type={"text"}
-                 optionKey="i18nKey"
+                t={t}
+                type={"text"}
+                optionKey="i18nKey"
                 name="witness2AdharNo"
                 onChange={setSelectwitness2AdharNo}
                 placeholder={`${t("CR_WITNESS2_ADHAR_NO")}`}
-                {...(validation = { pattern: "^[0-9]{12}$",isRequired: false, type: "number",  title: t("CR_INVALID_WITNESS2_ADHAR_NO") })}
+                {...(validation = { pattern: "^[0-9]{12}$", isRequired: false, type: "number", title: t("CR_INVALID_WITNESS2_ADHAR_NO") })}
               />
             </div>
-            <div className="col-md-3">
+            <div className="col-md-4">
               <CardLabel>
                 {`${t("CR_WITNESS2_NAME")}`}
                 <span className="mandatorycss">*</span>
@@ -523,7 +518,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CR_WITNESS2_NAME")}`}
               />
             </div>
-            <div className="col-md-3">
+            <div className="col-md-4">
               <CardLabel>
                 {`${t("CR_WITNESS2_AGE")}`}
                 <span className="mandatorycss">*</span>
@@ -538,7 +533,9 @@ const WitnessDetails = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CR_WITNESS2_AGE")}`}
               />
             </div>
-            <div className="col-md-3">
+          </div>
+          <div className="col-md-12">
+            <div className="col-md-4">
               <CardLabel>
                 {`${t("CR_WITNESS2_ADDRESS")}`}
                 <span className="mandatorycss">*</span>
@@ -553,8 +550,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CR_WITNESS2_ADDRESS")}`}
               />
             </div>
-          </div>
-          <div className="col-md-12">
+
             <div className="col-md-4">
               <CardLabel>
                 {`${t("CR_WITNESS2_MOBILE_NO")}`}
@@ -570,7 +566,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData }) => {
                 placeholder={`${t("CR_WITNESS2_MOBILE_NO")}`}
               />
             </div>
-            
           </div>
           <div className="row">
             <div className="col-md-12">
@@ -598,7 +593,31 @@ const WitnessDetails = ({ config, onSelect, userType, formData }) => {
               </h1>
             </div>
           </div>
+          {/* <div className="col-md-12">
+            <div className="col-md-4">
+              <h2>Add Groom Image :</h2>
+              <input type="file" onChange={handleChange} />
+              <img src={file} />
+            </div>
+            <div className="col-md-4">
+              <h2>Add Bride Image :</h2>
+              <input type="file" onChange={handleChanges} />
+              <img src={files} />
+            </div>
+          </div> */}
+           <div>
+      <input type="file" onChange={handleFile1Change} />
+      <input type="file" onChange={handleFile2Change} />
 
+      <div style={{ display: 'flex' }}>
+        <div style={{ width: '10%' }}>
+          {file1 && <img src={URL.createObjectURL(file1)} alt="file 1" />}
+        </div>
+        <div style={{ width: '10%' }}>
+          {file2 && <img src={URL.createObjectURL(file2)} alt="file 2" />}
+        </div>
+      </div>
+    </div>
           {""}
 
           {/* <div><BackButton >{t("CS_COMMON_BACK")}</BackButton></div> */}
