@@ -191,11 +191,11 @@ public class DeathApplnController {
 
         String applicationType =request.getDeathCorrection().get(0).getApplicationType();
 
-        System.out.println("statusApprove"+status +" "+applicationType);
+        //System.out.println("statusApprove"+status +" "+applicationType);
 
         if (status.equals(DeathConstants.WORKFLOW_STATUS_APPROVED) &&  request.getDeathCorrection().get(0).getApplicationType().equals(DeathConstants.APPLICATION_CORRECTION)){
          
-            System.out.println("statusApproved"+status +" "+applicationType);
+          //  System.out.println("statusApproved"+status +" "+applicationType);
             DeathRegistryCorrectionRequest registryRequest = deathRegistryRequestService.createRegistrycorrectionRequest(request);
 
             List<DeathRegistryCorrectionDtls> registryDeathDetails =  deathRegistryService.update(registryRequest);

@@ -225,8 +225,8 @@ public class IdGenRepository {
     // }
 
        //Jasmine  
-    public IdGenerationResponse getDeathIds(RequestInfo requestInfo, String tenantId, String Idname, String functionType,  String modulecode,int count) {
-
+    public IdGenerationResponse getDeathIds(RequestInfo requestInfo, String tenantId, String Idname,  String modulecode, String functionType ,int count) {
+    //System.out.println("modulecode"+modulecode);
         List<IdRequest> reqList = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             reqList.add(IdRequest.builder().idName(Idname).moduleCode(modulecode).tenantId(tenantId).fnType(functionType).build());

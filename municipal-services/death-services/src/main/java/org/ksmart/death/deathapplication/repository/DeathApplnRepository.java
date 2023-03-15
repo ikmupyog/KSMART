@@ -174,14 +174,16 @@ public class DeathApplnRepository {
         
         List<Object> preparedStmtValues = new ArrayList<>();
         String query = queryBuilder.getDeathSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
-        // System.out.println("Query:"+query);
+        //System.out.println("Query:"+query);
         List<DeathCorrectionDtls> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), correctionRowMapper);
+      //  System.out.println("Query:"+result);
+
         if(result != null) {
 			result.forEach(deathDtl -> {
 
                 DeathCorrectionBasicInfo deathBasicDtls =deathDtl.getDeathCorrectionBasicInfo();
                 //deathBasicDtls.setDeceasedAadharNumber(encryptionDecryptionUtil.decryptObject(deathBasicDtls.getDeceasedAadharNumber(), "BndDetail", DeathBasicInfo.class,requestInfo));
-                DeathCorrectionBasicInfo dec = encryptionDecryptionUtil.decryptObject(deathBasicDtls, "BndDetail", DeathBasicInfo.class, requestInfo);
+                DeathCorrectionBasicInfo dec = encryptionDecryptionUtil.decryptObject(deathBasicDtls, "BndDetail", DeathCorrectionBasicInfo.class, requestInfo);
                 deathBasicDtls.setDeceasedAadharNumber(dec.getDeceasedAadharNumber());
                 //Rakhi S on 02.03.2023 Mdms call  
                 if(DeathConstants.DEATH_PLACE_HOSPITAL.toString().equals(deathDtl.getDeathCorrectionBasicInfo().getDeathPlace())){
@@ -195,10 +197,10 @@ public class DeathApplnRepository {
                                            , deathDtl.getDeathCorrectionBasicInfo().getDeathPlaceType());
                    Map<String,List<String>> masterDataHospitalMl = getAttributeValuesHospital(mdmsDataHospitalMl);
 
-                   String deathPlaceHospital = masterDataHospital.get(DeathConstants.HOSPITAL_LIST).toString();
+                   String deathPlaceHospital = masterDataHospital.get(DeathConstants.HOSPITAL_DATA).toString();
                    deathPlaceHospital = deathPlaceHospital.replaceAll("[\\[\\]\\(\\)]", "");
 
-                   String deathPlaceHospitalMl = masterDataHospitalMl.get(DeathConstants.HOSPITAL_LIST).toString();
+                   String deathPlaceHospitalMl = masterDataHospitalMl.get(DeathConstants.HOSPITAL_DATA).toString();
                    deathPlaceHospitalMl = deathPlaceHospitalMl.replaceAll("[\\[\\]\\(\\)]", "");
 
                 deathDtl.getDeathCorrectionBasicInfo().setDeathPlaceHospitalNameEn(deathPlaceHospital);

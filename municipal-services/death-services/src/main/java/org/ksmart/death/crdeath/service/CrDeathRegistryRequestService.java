@@ -135,7 +135,7 @@ public class CrDeathRegistryRequestService {
             }
             if (appAddressinfo.getInformantAddress()!=null){
 
-                System.out.println("HI-INFORMANT"+addressinfo.getInformantAddress());
+               // System.out.println("HI-INFORMANT"+addressinfo.getInformantAddress());
                 addressinfo.setInformantAddress(createRegistryInformantAddress(deathrequest));
             }
             deathcertreading.setAddressInfo(addressinfo);
@@ -183,7 +183,7 @@ public class CrDeathRegistryRequestService {
     public CrDeathRegistryAddress createRegistryPresentAddress(CrDeathDtlRequest deathrequest){
 
         CrDeathAddress presentAddress = deathrequest.getDeathCertificateDtls().get(0).getAddressInfo().getPresentAddress();
-        System.out.println("presentAddress"+presentAddress);
+       // System.out.println("presentAddress"+presentAddress);
         CrDeathRegistryAddress registryPresentAddress = new CrDeathRegistryAddress();
         registryPresentAddress.setTenantId(presentAddress.getTenantId());
         registryPresentAddress.setAddrTypeId(presentAddress.getAddrTypeId());

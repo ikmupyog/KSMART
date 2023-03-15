@@ -117,15 +117,15 @@ public class RegistryMDMSValidator {
             }
            
         });
-        System.out.println("mdmsResMap"+mdmsResMap);
+       // System.out.println("mdmsResMap"+mdmsResMap);
         return mdmsResMap;
     }
     private void validateIfMasterPresent(String[] masterNames, Map<String, List<String>> codes){
-        System.out.println("codescheck"+codes);
+      //  System.out.println("codescheck"+codes);
         Map<String,String> errorMap = new HashMap<>();
         for(String masterName : masterNames){
-            System.out.println("masterName"+masterName);
-            System.out.println("codesfound1"+codes.containsKey(masterName));
+          //  System.out.println("masterName"+masterName);
+          //  System.out.println("codesfound1"+codes.containsKey(masterName));
             // if(CollectionUtils.isEmpty(codes.get(masterName))){
                 if(!codes.containsKey(masterName)){
                 errorMap.put("MDMS DATA ERROR ","Unable to fetch "+ masterName + " codes from MDMS ");
