@@ -285,7 +285,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
         }
     }
     function setSelectinsideKeralaHouseNameMl(e) {
-        let pattern = /^[\u0D00-\u0D7F\u200D\u200C -]*$/;
+        let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$/;
         if (!(e.target.value.match(pattern))) {
             e.preventDefault();
             setinsideKeralaHouseNameMl('');
@@ -369,7 +369,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
         }
     }
     function setCheckMalayalamInputFieldWithSplChar(e) {
-        let pattern = /^[\u0D00-\u0D7F\u200D\u200C -]/;
+        let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]/;
         if (!(e.key.match(pattern))) {
             e.preventDefault();
         }

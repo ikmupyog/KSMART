@@ -990,6 +990,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
                   //  inputFormat="DD-MM-YYYY"
                   placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
                   {...(validation = { isRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
+               
                 />
               </div>
               <div className="col-md-2">
