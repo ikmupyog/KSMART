@@ -42,6 +42,11 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
     "birth-death-service",
     "DeliveryMethod"
   );
+  const { data: FoetalDeathList = {}, isFoetalDeathListLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
+    stateId,
+    "birth-death-service",
+    "FoetalDeath"
+  );
   const { data: PlaeceMaster = {}, isPlaceMasterLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "PlaceMaster");
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
   const [InstitutionFilterList, setInstitutionFilterList] = useState(null);
@@ -51,7 +56,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
     "birth-death-service",
     "WorkFlowBirth"
   );
-
+// console.log(FoetalDeathList);
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
@@ -73,6 +78,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
   let cmbPlaceMaster = [];
   let cmbAttDeliverySub = [];
   let cmbDeliveryMethod = [];
+  let cmbFoetalDeath = [];
   let hospitalCode = "";
   let institutionTypeCode = "";
   let institutionNameCode = "";
@@ -110,6 +116,12 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
     DeliveryMethodList["birth-death-service"].DeliveryMethod &&
     DeliveryMethodList["birth-death-service"].DeliveryMethod.map((ob) => {
       cmbDeliveryMethod.push(ob);
+    });
+    FoetalDeathList &&
+    FoetalDeathList["birth-death-service"] &&
+    FoetalDeathList["birth-death-service"].FoetalDeath &&
+    FoetalDeathList["birth-death-service"].FoetalDeath.map((ob) => {
+      cmbFoetalDeath.push(ob);
     });
   const cmbPregWeek = [
     { i18nKey: "20", code: "20" },
@@ -267,7 +279,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
   const [deliveryMethods, setDeliveryMethod] = useState(
     formData?.StillBirthChildDetails?.deliveryMethods ? formData?.StillBirthChildDetails?.deliveryMethods : null
   );
-  const [birthWeight, setBirthWeight] = useState(formData?.StillBirthChildDetails?.birthWeight ? formData?.StillBirthChildDetails?.birthWeight : "");
+  //const [birthWeight, setBirthWeight] = useState(formData?.StillBirthChildDetails?.birthWeight ? formData?.StillBirthChildDetails?.birthWeight : "");
   const [causeFoetalDeath, setcauseFoetalDeath] = useState(
     formData?.StillBirthChildDetails?.causeFoetalDeath ? formData?.StillBirthChildDetails?.causeFoetalDeath : null
   );
@@ -477,20 +489,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
   function setSelectMedicalAttensionSub(value) {
     setMedicalAttensionSub(value);
   }
-  function setSelectcauseFoetalDeath(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setcauseFoetalDeath(
-        e.target.value.replace(
-          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
-          ""
-        )
-      );
-    }
-  }
-
+  
   const handleTimeChange = (value, cb) => {
     if (typeof value === "string") {
       cb(value);
@@ -502,6 +501,9 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
       setbirthDateTime(value);
     }
   };
+  function setSelectcauseFoetalDeath(value) {
+    setcauseFoetalDeath (value);  
+  }
 
   function setSelectDeliveryMethod(value) {
     setDeliveryMethod(value);
@@ -889,7 +891,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
       sessionStorage.setItem("streetNameEn", streetNameEn ? streetNameEn : null);
       sessionStorage.setItem("streetNameMl", streetNameMl ? streetNameMl : null);
       sessionStorage.setItem("publicPlaceDecpEn", publicPlaceDecpEn ? publicPlaceDecpEn : null);     
-      sessionStorage.setItem("causeFoetalDeath", causeFoetalDeath ? causeFoetalDeath : null);
+      sessionStorage.setItem("causeFoetalDeath", causeFoetalDeath ? causeFoetalDeath.code : null);
       sessionStorage.setItem("pregnancyDuration", pregnancyDuration ? pregnancyDuration.code : null);
       sessionStorage.setItem("medicalAttensionSub", medicalAttensionSub ? medicalAttensionSub.code : null);
       sessionStorage.setItem("deliveryMethods", deliveryMethods ? deliveryMethods.code : null);
@@ -994,7 +996,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
   }
   // }
 
-  if (isWorkFlowDetailsLoading || isLoading || isAttentionOfDeliveryLoading || isDeliveryMethodListLoading || isPlaceMasterLoading) {
+  if (isWorkFlowDetailsLoading || isLoading || isAttentionOfDeliveryLoading || isDeliveryMethodListLoading ||isFoetalDeathListLoading|| isPlaceMasterLoading) {
     return <Loader></Loader>;
   } else {
     return (
@@ -1288,25 +1290,25 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
                   select={setSelectDeliveryMethod}
                   placeholder={`${t("CR_DELIVERY_METHOD")}`}
                 />
-              </div>
-           
+              </div>           
+              
               <div className="col-md-3">
                 <CardLabel>
                   {t("CR_CAUSE_FOETAL_DEATH")}
                   <span className="mandatorycss">*</span>
                 </CardLabel>
-                <TextInput
+                <Dropdown
                   t={t}
+                  optionKey="name"
                   isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="causeFoetalDeath"
-                  value={causeFoetalDeath}
-                  onChange={setSelectcauseFoetalDeath}
+                  option={cmbFoetalDeath}
+                  selected={causeFoetalDeath}
+                  select={setSelectcauseFoetalDeath}
                   placeholder={`${t("CR_CAUSE_FOETAL_DEATH")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CAUSE_FOETAL_DEATH") })}
+                 
                 />
               </div>
+              
             </div>
           </div>
           {toast && (
