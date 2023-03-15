@@ -93,6 +93,7 @@ import BirthCheckPage from "./pages/citizen/BirthRegistration/BirthCheckPage";
 import DeathCheckPage from "./pages/citizen/DeathRegistration/DeathCheckPage";
 import MarriageCheckPage from "./pages/citizen/MarriageRegistration/MarriageCheckPage";
 import BirthAcknowledgement from "./pages/citizen/BirthRegistration/BirthAcknowledgement";
+import StillBirthAcknowledgement from "./pages/citizen/StillBirthRegistration/StillBirthAcknowledgement";
 import DeathAcknowledgement from "./pages/citizen/DeathRegistration/DeathAcknowledgement";
 import MarriageAcknowledgement from "./pages/citizen/MarriageRegistration/MarriageAcknowledgement";
 import BirthCertificate from "./pages/citizen/Certificate/BirthCertificate";
@@ -278,6 +279,7 @@ const componentsToRegister = {
   BirthAcknowledgement,
   DeathAcknowledgement,
   MarriageAcknowledgement,
+  StillBirthAcknowledgement,
   BirthCertificate,
   CRCreateDeathRegistration: CreateDeathRegistration,
   TLResponse: Response,
