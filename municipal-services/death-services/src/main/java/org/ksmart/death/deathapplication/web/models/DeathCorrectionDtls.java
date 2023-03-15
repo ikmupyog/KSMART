@@ -1,6 +1,6 @@
 package org.ksmart.death.deathapplication.web.models;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.v3.oas.annotations.media.Schema;
+// import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 import lombok.ToString;
 // import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
-import org.ksmart.death.crdeath.constraints.Html;
+// import org.ksmart.death.crdeath.constraints.Html;
 import java.util.List;
 import javax.swing.text.Document;
 import javax.validation.Valid;
@@ -21,7 +21,7 @@ import javax.validation.constraints.Size;
      * Jasmine on 03.03.2023      
 */
 
-@Schema(name = "Death Registration Request", description = "An Object holds the  data for death registration ")
+//@Schema(name = "Death Registration Request", description = "An Object holds the  data for death registration ")
 @Validated
 @Getter
 @Setter
@@ -63,7 +63,7 @@ public class DeathCorrectionDtls {
    private String assignuser;
 
    @Size(max = 128)
-   @Html
+//    @Html
    private String comment;
 
    @Valid

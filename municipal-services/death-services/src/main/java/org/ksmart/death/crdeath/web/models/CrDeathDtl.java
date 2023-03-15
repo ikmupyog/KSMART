@@ -1,7 +1,7 @@
 package org.ksmart.death.crdeath.web.models;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import io.swagger.v3.oas.annotations.media.Schema;
+// import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,7 +18,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.ksmart.death.crdeath.constraints.Html;
+// import org.ksmart.death.crdeath.constraints.Html;
 // import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
 
@@ -27,8 +27,8 @@ import org.springframework.validation.annotation.Validated;
      * Updated by Jasmine
      * 
      */
-    // @Schema(description = "Applicantion details")
-@Schema(name = "CrDeath Registration Request", description = "An Object holds the  data for death registration ")
+    // //@Schema(description = "Applicantion details")
+//@Schema(name = "CrDeath Registration Request", description = "An Object holds the  data for death registration ")
 @Validated
 
 @Getter
@@ -38,126 +38,126 @@ import org.springframework.validation.annotation.Validated;
 @NoArgsConstructor
 @Builder
 public class CrDeathDtl {
-    @Schema(type = "string", format = "uuid", description = "death registration request id")
+    //@Schema(type = "string", format = "uuid", description = "death registration request id")
     @Size(max = 64)
     @JsonProperty("id")
     private String id;
 
-    @Schema(type = "string", description = "Home / Hospital kiosk/ front office")
+    //@Schema(type = "string", description = "Home / Hospital kiosk/ front office")
     @Size(max = 64)
     @JsonProperty("registrationUnit")
     private String registrationUnit;
 
-    @Schema(type = "string", description = "Tenant identification number")
+    //@Schema(type = "string", description = "Tenant identification number")
     @Size(max = 64)
     @JsonProperty("tenantId")
     private String tenantId ;
 
-    @Schema(type = "integer", description="1 for Yes /0 for No")
+    //@Schema(type = "integer", description="1 for Yes /0 for No")
     @JsonProperty("deathDateUnavailable")
     private Integer deathDateUnavailable ;
 
-    @Schema(type = "Long",description = "Death date (If death date is not known enter the from date)")
+    //@Schema(type = "Long",description = "Death date (If death date is not known enter the from date)")
     @JsonProperty("dateOfDeath")
     private Long dateOfDeath ;
 
-    @Schema(type = "string", description= "time of death" )
+    //@Schema(type = "string", description= "time of death" )
     @JsonProperty("timeOfDeath")
     private Integer  timeOfDeath ;
 
-    @Schema(type = "string", description= "am/pm" )
+    //@Schema(type = "string", description= "am/pm" )
     @Size(max = 64)
     @JsonProperty("timeOfDeathUnit")
     private String timeOfDeathUnit ;
 
-    @Schema(type = "long",description = "If death date is not known enter the todate" )
+    //@Schema(type = "long",description = "If death date is not known enter the todate" )
     @JsonProperty("dateOfDeath1")
     private Long dateOfDeath1;
 
-    @Schema(type = "string", description= "time of death" )
+    //@Schema(type = "string", description= "time of death" )
     @JsonProperty("timeOfDeath1")
     private Integer timeOfDeath1 ;
 
-    @Schema(type = "string", description= "am/pm" )
+    //@Schema(type = "string", description= "am/pm" )
     @Size(max = 64)
     @JsonProperty("timeOfDeathUnit1")
     private String timeOfDeathUnit1 ;
 
-    @Schema(type = "integer" ,description = "If it is unidentified enter 0 else 1" )
+    //@Schema(type = "integer" ,description = "If it is unidentified enter 0 else 1" )
     @JsonProperty("deceasedUnIdentified")
     private Integer deceasedUnIdentified ;
 
-    @Schema(type = "String" ,description = "Mr/Mrs/Adv etc" )
+    //@Schema(type = "String" ,description = "Mr/Mrs/Adv etc" )
     @Size(max = 64)
     @JsonProperty("deceasedTitle")
     private String deceasedTitle ;
 
-    @Schema(type = "String" ,description = "First Name in English" )
+    //@Schema(type = "String" ,description = "First Name in English" )
     @Size(max = 64)
     @JsonProperty("deceasedFirstNameEn")
     private String deceasedFirstNameEn ;
 
-    @Schema(type = "String" ,description = "First Name in Local Language" )
+    //@Schema(type = "String" ,description = "First Name in Local Language" )
     @Size(max = 64)
     @JsonProperty("deceasedFirstNameMl") 
     private String deceasedFirstNameMl;
 
-    @Schema(type = "String" ,description = "Middle Name in English" )
+    //@Schema(type = "String" ,description = "Middle Name in English" )
     @Size(max = 64)
     @JsonProperty("deceasedMiddleNameEn")
     private String deceasedMiddleNameEn ;
 
-    @Schema(type = "String" ,description = "Middle Name in Local Language" )
+    //@Schema(type = "String" ,description = "Middle Name in Local Language" )
     @Size(max = 64)
     @JsonProperty("deceasedMiddleNameMl")
     private String deceasedMiddleNameMl ;
 
-    @Schema(type = "String" ,description = "Last Name in English" )
+    //@Schema(type = "String" ,description = "Last Name in English" )
     @Size(max = 64)
     @JsonProperty("deceasedLastNameEn")
     private String deceasedLastNameEn ;
 
-    @Schema(type = "String" ,description = "Last Name in Local Language" )
+    //@Schema(type = "String" ,description = "Last Name in Local Language" )
     @Size(max = 64)
     @JsonProperty("deceasedLastNameMl")
     private String deceasedLastNameMl ;
 
     // @JsonProperty("deceasedAadharSubmitted")
     // private Integer deceasedAadharSubmitted ;
-    @Schema(type = "String" ,description = "Aadhar Number" )
+    //@Schema(type = "String" ,description = "Aadhar Number" )
     @Size(max = 12)
     @JsonProperty("deceasedAadharNumber")
     private String deceasedAadharNumber ;
 
-    @Schema(type = "String" ,description = "Gender")
+    //@Schema(type = "String" ,description = "Gender")
     @Size(max = 64)
     @JsonProperty("deceasedGender")
     private String deceasedGender ;
 
-    @Schema(type = "String" ,description = "Age")
+    //@Schema(type = "String" ,description = "Age")
     @JsonProperty("age")
     private Integer age ;
 
-    @Schema(type = "String" ,description = "Age unit (hrs/days/years")
+    //@Schema(type = "String" ,description = "Age unit (hrs/days/years")
     @Size(max = 64)
     @JsonProperty("ageUnit")
     private String ageUnit ;
 
-    @Schema(type = "Long" ,description = "Date of birth")
+    //@Schema(type = "Long" ,description = "Date of birth")
     @JsonProperty("dateOfBirth")
     private Long dateOfBirth ;
 
-    @Schema(type = "String" ,description = "Place of death from mdms data home/hospital/vehicle etc")
+    //@Schema(type = "String" ,description = "Place of death from mdms data home/hospital/vehicle etc")
     @Size(max = 64)
     @JsonProperty("deathPlace")
     private String deathPlace ;
 
-    @Schema(type = "String" ,description = "Place of death from mdms data oldagehome/orphanage etc")
+    //@Schema(type = "String" ,description = "Place of death from mdms data oldagehome/orphanage etc")
     @Size(max = 64)
     @JsonProperty("deathPlaceType")
     private String deathPlaceType ;
 
-    @Schema(type = "String" ,description = "Place of death from mdms data hospitalname/orphanageName etc")
+    //@Schema(type = "String" ,description = "Place of death from mdms data hospitalname/orphanageName etc")
     @Size(max = 64)
     @JsonProperty("deathPlaceInstId")
     private String deathPlaceInstId ;
@@ -174,32 +174,32 @@ public class CrDeathDtl {
     @JsonProperty("deathPlaceOtherEn")
     private String deathPlaceOtherEn ;
 
-    @Schema(type = "String" ,description = "Title of Informant")
+    //@Schema(type = "String" ,description = "Title of Informant")
     @Size(max = 64)
     @JsonProperty("informantTitle")
     private String  informantTitle ;
 
-    @Schema(type = "String" ,description = "Informant name in English")
+    //@Schema(type = "String" ,description = "Informant name in English")
     @Size(max = 64)
     @JsonProperty("informantNameEn")
     private String  informantNameEn ;
 
-    @Schema(type = "String" ,description = "Informant name in Local Language")
+    //@Schema(type = "String" ,description = "Informant name in Local Language")
     @Size(max = 64)
     @JsonProperty("informantNameMl")
     private String  informantNameMl ;
 
-    @Schema(type = "Integer" ,description = "Informant aadhar submitted(0/1)")
+    //@Schema(type = "Integer" ,description = "Informant aadhar submitted(0/1)")
     @JsonProperty("informantAadharSubmitted")
     private Integer  informantAadharSubmitted ;
 
-    @Schema(type = "Integer" ,description = "Informant aadhar ")
+    //@Schema(type = "Integer" ,description = "Informant aadhar ")
     @Size(max = 12)
     @JsonProperty("informantAadharNo")
     private String  informantAadharNo ;
 
     
-    @Schema(type = "Integer" ,description = "Informant Mobile Number")
+    //@Schema(type = "Integer" ,description = "Informant Mobile Number")
     @Size(max = 15)
     @JsonProperty("informantMobileNo")
     private String  informantMobileNo ;
@@ -208,7 +208,7 @@ public class CrDeathDtl {
     @JsonProperty("generalRemarks")
     private String   generalRemarks ;
 
-    @Schema(type = "String" ,description = "applicationStatus-workflow")
+    //@Schema(type = "String" ,description = "applicationStatus-workflow")
     @Size(max = 64)
     @JsonProperty("applicationStatus")
     private String   applicationStatus ;
@@ -391,23 +391,23 @@ public class CrDeathDtl {
     @JsonProperty("registrationNoId")
     private Long registrationNoId ;
     
-   //@Schema(type = "string", description = "Workflow code")
+   ////@Schema(type = "string", description = "Workflow code")
     @Size(max = 64)
    // @NotNull
     @JsonProperty("workflowCode")
     private String workflowCode;
 
-    //@Schema(type = "string", description = "Workflow action")
+    ////@Schema(type = "string", description = "Workflow action")
     @Size(max = 64)
     @JsonProperty("action")
     private String action;
 
-    //@Schema(type = "string", description = "Status of file")
+    ////@Schema(type = "string", description = "Status of file")
     // @Size(max = 64)
     // @JsonProperty("fileStatus")
     // private String fileStatus;
 
-   // @Schema(type = "string", description = "Business service")
+   // //@Schema(type = "string", description = "Business service")
     @Size(max = 64)
     @JsonProperty("businessService")
     private String businessService;
@@ -415,9 +415,9 @@ public class CrDeathDtl {
     @JsonProperty("assignee")
     private List<String> assignees;
 
-    //@Schema(type = "string", description = "Comments")
+    ////@Schema(type = "string", description = "Comments")
     @Size(max = 128)
-    @Html
+    // @Html
     private String comment;
 
     @Valid
@@ -505,31 +505,31 @@ private String assignuser;
     @JsonProperty("spouseNameML")
     private String  spouseNameMl;
 
-    @Schema(type = "integer", description="1 for Yes /0 for No")
+    //@Schema(type = "integer", description="1 for Yes /0 for No")
     @JsonProperty("spouseUnavailable")
     private Integer spouseUnavailable ;
 
-    @Schema(type = "String", description="spouseType.json mdms")
+    //@Schema(type = "String", description="spouseType.json mdms")
     @Size(max = 64)
     @JsonProperty("spouseType")
     private String spouseType ;
 
-    @Schema(type = "String", description="spouse email id")
+    //@Schema(type = "String", description="spouse email id")
     @Size(max = 64)
     @JsonProperty("spouseEmailid")
     private String  spouseEmailid;
 
-    @Schema(type = "String", description="spouse aadhaar")
+    //@Schema(type = "String", description="spouse aadhaar")
     @Size(max = 12)
     @JsonProperty("spouseAadhaar")
     private String  spouseAadhaar;
 
-    @Schema(type = "String", description="spouse mobile no")
+    //@Schema(type = "String", description="spouse mobile no")
     @Size(max = 15)
     @JsonProperty("spouseMobileno")
     private String  spouseMobileno;
 
-    @Schema(type = "String", description="funcionUID")
+    //@Schema(type = "String", description="funcionUID")
     @Size(max = 64)
     @JsonProperty("funcionUID")
     private String funcionUID ;

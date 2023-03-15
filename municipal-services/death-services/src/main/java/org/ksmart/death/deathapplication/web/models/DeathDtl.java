@@ -1,7 +1,7 @@
 package org.ksmart.death.deathapplication.web.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.v3.oas.annotations.media.Schema;
+// import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,7 +10,7 @@ import lombok.Setter;
 import lombok.ToString;
 // import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
-import org.ksmart.death.crdeath.constraints.Html;
+// import org.ksmart.death.crdeath.constraints.Html;
 import java.util.List;
 import javax.swing.text.Document;
 import javax.validation.Valid;
@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
      * Jasmine on 4.02.2023      
 */
 
-@Schema(name = "Death Registration Request", description = "An Object holds the  data for death registration ")
+//@Schema(name = "Death Registration Request", description = "An Object holds the  data for death registration ")
 @Validated
 @Getter
 @Setter
@@ -78,7 +78,7 @@ public class DeathDtl {
     private String assignuser;
 
     @Size(max = 128)
-    @Html
+    // @Html
     private String comment;
 
     @Valid
@@ -89,15 +89,15 @@ public class DeathDtl {
     }
 
     //Jasmine 01.03.2023
-    @Schema(type = "long",description = "If death date is not known enter the todate" )
+    //@Schema(type = "long",description = "If death date is not known enter the todate" )
     @JsonProperty("dateOfDeath1")
     private Long dateOfDeath1;
 
-    @Schema(type = "string", description= "time of death" )
+    //@Schema(type = "string", description= "time of death" )
     @JsonProperty("timeOfDeath1")
     private Integer timeOfDeath1 ;
 
-    @Schema(type = "string", description= "am/pm" )
+    //@Schema(type = "string", description= "am/pm" )
     @Size(max = 64)
     @JsonProperty("timeOfDeathUnit1")
     private String timeOfDeathUnit1 ;

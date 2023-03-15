@@ -1,7 +1,7 @@
 package org.ksmart.death.deathapplication.web.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.v3.oas.annotations.media.Schema;
+// import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,7 +15,7 @@ import org.springframework.validation.annotation.Validated;
      * Creates main model class  
      * Jasmine on 4.02.2023      
 */
-@Schema(name = "Death Statistical Details", description = "An Object holds the  statistical data ")
+//@Schema(name = "Death Statistical Details", description = "An Object holds the  statistical data ")
 @Validated
 
 @Getter
