@@ -18,9 +18,10 @@ const combineResponse = (applications, workflowData, totalCount) => {
   }));
 };
 
-const useTLSearch = (params, config) => {
+const useCRSearch = (params, config) => {
   return async () => {
-    const data = await Digit.TLService.search(params, config);
+    const data = await Digit.CRService.search(params, config);
+    console.log(data);
     const tenant = data?.Licenses?.[0]?.tenantId;
     const businessIds = data?.Licenses.map((application) => application.applicationNumber);
     const workflowRes = await Digit.WorkflowService.getAllApplication(tenant, { businessIds: businessIds.join() });
@@ -28,10 +29,10 @@ const useTLSearch = (params, config) => {
   };
 };
 
-export const useTLSearchApplication = (params, config = {}, t) => {
+export const useCRSearchApplication = (params, config = {}, t) => {
   const client = useQueryClient();
   let multiownername = "";
-  const result = useQuery(["TL_APPLICATIONS_LIST", params], useTLSearch(params, config), {
+  const result = useQuery(["TL_APPLICATIONS_LIST", params], useCRSearch(params, config), {
     staleTime: Infinity,
     select: (data) => {
       return data.map((i) => ({
@@ -55,10 +56,10 @@ export const useTLSearchApplication = (params, config = {}, t) => {
   return { ...result, revalidate: () => client.invalidateQueries(["TL_APPLICATIONS_LIST", params]) };
 };
 
-export const useTLApplicationDetails = (params, config) => {
+export const useCRApplicationDetails = (params, config) => {
   const client = useQueryClient();
 
-  const result = useQuery(["TL_APPLICATION_DETAILS", params], useTLSearch(params, config), {
+  const result = useQuery(["TL_APPLICATION_DETAILS", params], useCRSearch(params, config), {
     staleTime: Infinity,
     // select: (data) => {
     //   return data.map(i => ({
@@ -76,4 +77,4 @@ export const useTLApplicationDetails = (params, config) => {
   return { ...result, revalidate: () => client.invalidateQueries(["TL_APPLICATION_DETAILS", params]) };
 };
 
-export default useTLSearchApplication;
+export default useCRSearchApplication;
