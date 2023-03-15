@@ -177,7 +177,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
   const [vehicleDesDetailsEn, setvehicleDesDetailsEn] = useState(formData?.ChildDetails?.vehicleDesDetailsEn ? formData?.ChildDetails?.vehicleDesDetailsEn : "");
   const [setadmittedHospitalEn, setSelectedadmittedHospitalEn] = useState(formData?.ChildDetails?.setadmittedHospitalEn ? formData?.ChildDetails?.setadmittedHospitalEn : "");
 
-  const [publicPlaceType, setpublicPlaceType] = useState(formData?.ChildDetails?.publicPlaceType ? formData?.ChildDetails?.publicPlaceType : "");
+  const [publicPlaceType, setpublicPlaceType] = useState(formData?.ChildDetails?.publicPlaceType?.code ? formData?.ChildDetails?.publicPlaceType : formData?.ChildDetails?.publicPlaceType ? "" : "");
   const [localityNameEn, setlocalityNameEn] = useState(formData?.ChildDetails?.localityNameEn ? formData?.ChildDetails?.localityNameEn : "");
   const [localityNameMl, setlocalityNameMl] = useState(formData?.ChildDetails?.localityNameMl ? formData?.ChildDetails?.localityNameMl : "");
   const [streetNameEn, setstreetNameEn] = useState(formData?.ChildDetails?.streetNameEn ? formData?.ChildDetails?.streetNameEn : "");
