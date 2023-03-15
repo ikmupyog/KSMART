@@ -21,7 +21,7 @@ const combineResponse = (applications, workflowData, totalCount) => {
 const useCRSearch = (params, config) => {
   return async () => {
     const data = await Digit.CRService.search(params, config);
-    console.log(data);
+    // console.log(data);
     const tenant = data?.Licenses?.[0]?.tenantId;
     const businessIds = data?.Licenses.map((application) => application.applicationNumber);
     const workflowRes = await Digit.WorkflowService.getAllApplication(tenant, { businessIds: businessIds.join() });
