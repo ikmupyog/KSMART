@@ -605,41 +605,44 @@ serviceMaps:
        - jsonPath: $.CertificateDetails.*.auditDetails.lastModifiedBy
 
        - jsonPath: $.CertificateDetails.*.auditDetails.lastModifiedTime  
-       
-     - query: >
-         INSERT INTO public.eg_fm_arisingfile(id, tenantid, filenumber, filecode, filearisingmode, filearisingdate, financialyear, workflowcode, businessservice, assignee, action, filestatus, createdby, createdtime, lastmodifiedby, lastmodifiedtime)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
-       basePath: ArisingFile.*
-       jsonMaps:
-       - jsonPath: $.ArisingFile.*.id
+  - version: 1.0
+    description: Persists arising file  details in egov_filemgmnt database, eg_fm_arisingfile table
+    fromTopic: save-fm-arisingfiledetails
+    isTransaction: true
+    queryMaps:
+      - query: INSERT INTO public.eg_fm_arisingfile(id, tenantid, filenumber, filecode, filearisingmode, filearisingdate, financialyear, workflowcode, businessservice, assignee, action, filestatus, createdby, createdtime, lastmodifiedby, lastmodifiedtime)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        basePath: ArisingFile.*
+        jsonMaps:
+        - jsonPath: $.ArisingFile.*.id
 
-       - jsonPath: $.ArisingFile.*.tenantId 
+        - jsonPath: $.ArisingFile.*.tenantId 
       
-       - jsonPath: $.ArisingFile.*.filenumber 
+        - jsonPath: $.ArisingFile.*.fileNumber 
       
-       - jsonPath: $.ArisingFile.*.filecode 
+        - jsonPath: $.ArisingFile.*.fileCode 
       
-       - jsonPath: $.ArisingFile.*.filearisingmode 
+        - jsonPath: $.ArisingFile.*.fileArisingMode 
       
-       - jsonPath: $.ArisingFile.*.filearisingdate 
+        - jsonPath: $.ArisingFile.*.fileArisingDate 
        
-       - jsonPath: $.ArisingFile.*.financialyear 
-       
-       - jsonPath: $.ArisingFile.*. workflowcode
-       
-       - jsonPath: $.ArisingFile.*. businessservice
-       
-       - jsonPath: $.ArisingFile.*.assignee
-       
-       - jsonPath: $.ArisingFile.*.action
-       
-       - jsonPath: $.ArisingFile.*.filestatus
-      
-       - jsonPath: $.ArisingFile.*.auditDetails.createdBy
+        - jsonPath: $.ArisingFile.*.financialYear 
+        
+        - jsonPath: $.ArisingFile.*. workflowCode
+        
+        - jsonPath: $.ArisingFile.*. businessService
+        
+        - jsonPath: $.ArisingFile.*.assignee
+        
+        - jsonPath: $.ArisingFile.*.action
+        
+        - jsonPath: $.ArisingFile.*.fileStatus
+        
+        - jsonPath: $.ArisingFile.*.auditDetails.createdBy
 
-       - jsonPath: $.ArisingFile.*.auditDetails.createdTime
-      
-       - jsonPath: $.ArisingFile.*.auditDetails.lastModifiedBy
+        - jsonPath: $.ArisingFile.*.auditDetails.createdTime
+        
+        - jsonPath: $.ArisingFile.*.auditDetails.lastModifiedBy
 
-       - jsonPath: $.ArisingFile.*.auditDetails.lastModifiedTime      
-  	
+        - jsonPath: $.ArisingFile.*.auditDetails.lastModifiedTime      
+      
