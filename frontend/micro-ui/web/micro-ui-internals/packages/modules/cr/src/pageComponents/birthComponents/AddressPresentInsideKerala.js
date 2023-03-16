@@ -143,6 +143,11 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                 setinsideKeralaDistrict(cmbDistrict.filter(cmbDistrict => cmbDistrict.code === formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaDistrict)[0]);
             }
         }
+        if (formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaLBName != null) {
+            if (cmbLB.length > 0 && (presentInsideKeralaLBName === undefined || presentInsideKeralaLBName === "")) {
+                setinsideKeralaLBName(cmbLB.filter(cmbLB => cmbLB.code === formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaLBName)[0]);
+            }
+          }
         if (formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaTaluk != null) {
             if (cmbTaluk.length > 0 && (presentInsideKeralaTaluk === undefined || presentInsideKeralaTaluk === "")) {
                 setinsideKeralaTaluk(cmbTaluk.filter(cmbTaluk => cmbTaluk.code === formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaTaluk)[0]);
