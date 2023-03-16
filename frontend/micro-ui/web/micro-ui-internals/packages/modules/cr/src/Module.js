@@ -37,6 +37,7 @@ import StillBirthPlaceInstitution from "../src/pageComponents/stillBirthComponen
 import StillBirthPlaceHospital from "../src/pageComponents/stillBirthComponents/StillBirthPlaceHospital";
 import StillBirthPlaceHome from "../src/pageComponents/stillBirthComponents/StillBirthPlaceHome";
 import StillBirthInitiatorDetails from "../src/pageComponents/stillBirthComponents/StillBirthInitiatorDetails";
+import StillBirthInformarDetails from "./pageComponents/stillBirthComponents/StillBirthInformarDetails";
 import StillBirthCheckPage from "./pages/citizen/StillBirthRegistration/StillBirthCheckPage";
 
 
@@ -231,6 +232,7 @@ const componentsToRegister = {
   StillBirthPlacePublicPlace,
   StillBirthPlaceVehicle,
   StillBirthInitiatorDetails,
+  StillBirthInformarDetails,
   StillBirthCheckPage,
   //////////////////
   BornOutsideChildDetails,
