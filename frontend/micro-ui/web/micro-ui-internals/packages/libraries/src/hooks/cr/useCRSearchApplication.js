@@ -21,6 +21,7 @@ const combineResponse = (applications, workflowData, totalCount) => {
 const useCRSearch = (params, config) => {
   return async () => {
     const data = await Digit.CRService.search(params, config);
+    console.log("maya"+data);
     const tenant = data?.Licenses?.[0]?.tenantId;
     const businessIds = data?.Licenses.map((application) => application.applicationNumber);
     const workflowRes = await Digit.WorkflowService.getAllApplication(tenant, { businessIds: businessIds.join() });
@@ -31,7 +32,7 @@ const useCRSearch = (params, config) => {
 export const useCRSearchApplication = (params, config = {}, t) => {
   const client = useQueryClient();
   let multiownername = "";
-  const result = useQuery(["CR_APPLICATIONS_LIST", params], useCRSearch(params, config), {
+  const result = useQuery(["TL_APPLICATIONS_LIST", params], useCRSearch(params, config), {
     staleTime: Infinity,
     select: (data) => {
       return data.map((i) => ({
@@ -52,13 +53,13 @@ export const useCRSearchApplication = (params, config = {}, t) => {
       }));
     },
   });
-  return { ...result, revalidate: () => client.invalidateQueries(["CR_APPLICATIONS_LIST", params]) };
+  return { ...result, revalidate: () => client.invalidateQueries(["TL_APPLICATIONS_LIST", params]) };
 };
 
 export const useCRApplicationDetails = (params, config) => {
   const client = useQueryClient();
 
-  const result = useQuery(["CR_APPLICATION_DETAILS", params], useCRSearch(params, config), {
+  const result = useQuery(["TL_APPLICATION_DETAILS", params], useCRSearch(params, config), {
     staleTime: Infinity,
     // select: (data) => {
     //   return data.map(i => ({
@@ -73,7 +74,7 @@ export const useCRApplicationDetails = (params, config) => {
     //   }))
     // }
   });
-  return { ...result, revalidate: () => client.invalidateQueries(["CR_APPLICATION_DETAILS", params]) };
+  return { ...result, revalidate: () => client.invalidateQueries(["TL_APPLICATION_DETAILS", params]) };
 };
 
 export default useCRSearchApplication;

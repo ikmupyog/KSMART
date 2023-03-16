@@ -22,6 +22,7 @@ const MyApplications = ({view}) => {
   }
   return (
     <React.Fragment>
+      
       <Header>{`${t("TL_MY_APPLICATIONS_HEADER")}`}</Header>
       {data?.map((application) => {
         return (
