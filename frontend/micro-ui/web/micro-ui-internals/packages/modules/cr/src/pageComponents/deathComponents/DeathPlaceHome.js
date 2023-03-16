@@ -98,49 +98,51 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomePo
   });
   
   function setSelectDeathPlaceHomehoueNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setDeathPlaceHomehoueNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9 ]*$") != null)) {
+      setDeathPlaceHomehoueNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectDeathPlaceHomehoueNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setDeathPlaceHomehoueNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$/;
+    if(!(e.target.value.match(pattern))){
+      e.preventDefault();
+      setDeathPlaceHomehoueNameMl('');
+    }
+    else{
+      setDeathPlaceHomehoueNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
   function setSelectDeathPlaceHomelocalityEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      } else {
-      setDeathPlaceHomelocalityEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$")  != null)) {
+      setDeathPlaceHomelocalityEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectDeathPlaceHomelocalityMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      } else {
-      setDeathPlaceHomelocalityMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if(!(e.target.value.match(pattern))){
+      e.preventDefault();
+      setDeathPlaceHomelocalityMl('');
+    }
+    else{
+      setDeathPlaceHomelocalityMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
   function setSelectDeathPlaceHomestreetNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      } else {
-      setDeathPlaceHomestreetNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setDeathPlaceHomestreetNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectDeathPlaceHomestreetNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-     } else {
-      setDeathPlaceHomestreetNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if(!(e.target.value.match(pattern))){
+      e.preventDefault();
+      setDeathPlaceHomestreetNameMl('');
+    }
+    else{
+      setDeathPlaceHomestreetNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectDeathPlaceWardId(value) {
