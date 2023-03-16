@@ -161,12 +161,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
       ? convertEpochToDate(formData?.InformationDeath?.setDeathTimeTo)
       : formData?.InformationDeath?.setDeathTimeTo
   );
-  // const [DeathDate, setDeathDate] = useState(
-  //   isEditDeathPageComponents === false &&
-  //     (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
-  //     ? convertEpochToDate(formData?.InformationDeath?.DeathDate)
-  //     : formData?.InformationDeath?.DeathDate
-  // );
+ 
   const [ToDate, setToDate] = useState(
     isEditDeathPageComponents === false &&
       (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
@@ -189,12 +184,17 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
   const [DeceasedAadharNumber, setDeceasedAadharNumber] = useState(
     formData?.InformationDeath?.DeceasedAadharNumber ? formData?.InformationDeath?.DeceasedAadharNumber : ""
   );
+  const [isTextboxEnabled, setIsTextboxEnabled] = useState(false);
   const [DeceasedIdproofType, setSelectedDeceasedIdproofType] = useState(
     formData?.InformationDeath?.DeceasedIdproofType ? formData?.InformationDeath?.DeceasedIdproofType : null
   );
   const [DeceasedIdproofNo, setDeceasedIdproofNo] = useState(
     formData?.InformationDeath?.DeceasedIdproofNo ? formData?.InformationDeath?.DeceasedIdproofNo : null
   );
+  
+  const handleDropdownChange = () => {
+    setIsTextboxEnabled(true);
+  };
   const [DeceasedFirstNameEn, setDeceasedFirstNameEn] = useState(
     formData?.InformationDeath?.DeceasedFirstNameEn ? formData?.InformationDeath?.DeceasedFirstNameEn : ""
   );
@@ -677,6 +677,8 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
   }
   function selectDeceasedIdproofType(value) {
     setSelectedDeceasedIdproofType(value);
+        setIsTextboxEnabled(true);
+
   }
 
   const handleTimeChange = (value, cb) => {
@@ -1332,6 +1334,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                     t={t}
                     optionKey="name"
                     isMandatory={false}
+                    onChange={handleDropdownChange}
                     option={cmbDocumentType}
                     selected={DeceasedIdproofType}
                     select={selectDeceasedIdproofType}
@@ -1348,6 +1351,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                     optionKey="i18nKey"
                     name="DeceasedIdproofNo"
                     value={DeceasedIdproofNo}
+                    disabled={!isTextboxEnabled}
                     onChange={setSelectDeceasedIdproofNo}
                     placeholder={`${t("CR_ID_NO")}`}
                     {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "Text", title: t("CR_INVALID_ID") })}
