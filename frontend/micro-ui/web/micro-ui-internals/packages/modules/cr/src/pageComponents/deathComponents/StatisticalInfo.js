@@ -133,6 +133,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, iseditDeath }) 
   );
   const { data: birthStatus = {}, isLoadingBirthStatus } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "BirthStatus");
   const [isInitialRender, setIsInitialRender] = useState(true);
+ 
   let cmbbirthstatus = [];
   birthStatus &&
     birthStatus["birth-death-service"] &&
@@ -170,7 +171,33 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, iseditDeath }) 
       cmbmannerofdeath.push(ob);
     });
   console.log(mannerOfDeath);
+  const [isInitialRenderDeathCauseFilterList, setIsInitialRenderDeathCauseFilterList] = useState(false);
+  const [DeathCauseFilterList, setDeathCauseFilterList] = useState(null);
 
+  useEffect(() => {
+    if (isInitialRenderDeathCauseFilterList) {
+      if (DeathCauseMain) {
+        setDeathCauseFilterList(cmbDeathsub.filter((cmbDeathsub) => cmbDeathsub.maincode === DeathCauseMain.code));
+        setIsInitialRenderDeathCauseFilterList(false);
+      }
+    }
+  }, [DeathCauseFilterList, isInitialRenderDeathCauseFilterList]);
+  const [DeathCauseMain, setDeathCauseMain] = useState(
+
+    formData?.StatisticalInfo?.DeathCauseMain?.code
+      ? formData?.StatisticalInfo?.DeathCauseMain
+      : formData?.StatisticalInfo?.DeathCauseMain
+      ? cmbDeathmain.filter((cmbDeathmain) => cmbDeathmain.code === formData?.StatisticalInfo?.DeathCauseMain)[0]
+      : ""
+  );
+  const [DeathCauseSub, setDeathCauseSub] = useState(
+    formData?.StatisticalInfo?.DeathCauseSub?.code
+      ? formData?.StatisticalInfo?.DeathCauseSub
+      : formData?.StatisticalInfo?.DeathCauseSub
+      ? cmbDeathsub.filter((cmbDeathsub) => cmbDeathsub.code === formData?.StatisticalInfo?.DeathCauseSub)[0]
+      : ""
+  );
+ 
   // const { data: deathsub = {}, isLoadingB } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeathCauseSub");
   const [MedicalAttentionType, setMedicalAttentionType] = useState(
     formData?.StatisticalInfo?.MedicalAttentionType?.code
@@ -182,6 +209,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, iseditDeath }) 
   // const [MedicalAttentionType, setMedicalAttentionType] = useState(
   //   formData?.StatisticalInfo?.MedicalAttentionType ? formData?.StatisticalInfo?.MedicalAttentionType : null
   // );
+
   const [IsAutopsyPerformed, setIsAutopsyPerformed] = useState(
     formData?.StatisticalInfo?.IsAutopsyPerformed ? formData?.StatisticalInfo?.IsAutopsyPerformed : null
   );
@@ -208,13 +236,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, iseditDeath }) 
       ? menub.filter((menub) => menub.code === formData?.StatisticalInfo?.DeathMedicallyCertified)[0]
       : ""
   );
-  const [DeathCauseMain, setDeathCauseMain] = useState(
-    formData?.StatisticalInfo?.DeathCauseMain?.code
-      ? formData?.StatisticalInfo?.DeathCauseMain
-      : formData?.StatisticalInfo?.DeathCauseMain
-      ? cmbDeathmain.filter((cmbDeathmain) => cmbDeathmain.code === formData?.StatisticalInfo?.DeathCauseMain)[0]
-      : ""
-  );
+ 
   // const [DeathCauseMain, setDeathCauseMain] = useState(formData?.StatisticalInfo?.DeathCauseMain ? formData?.StatisticalInfo?.DeathCauseMain : null);
   const [DeathCauseMainCustom, setDeathCauseMainCustom] = useState(
     formData?.StatisticalInfo?.DeathCauseMainCustom ? formData?.StatisticalInfo?.DeathCauseMainCustom : null
@@ -232,13 +254,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, iseditDeath }) 
   // const [DeathCauseMainTimeUnit, setDeathCauseMainTimeUnit] = useState(
   //   formData?.StatisticalInfo?.DeathCauseMainTimeUnit ? formData?.StatisticalInfo?.DeathCauseMainTimeUnit : null
   // );
-  const [DeathCauseSub, setDeathCauseSub] = useState(
-    formData?.StatisticalInfo?.DeathCauseSub?.code
-      ? formData?.StatisticalInfo?.DeathCauseSub
-      : formData?.StatisticalInfo?.DeathCauseSub
-      ? cmbDeathsub.filter((cmbDeathsub) => cmbDeathsub.code === formData?.StatisticalInfo?.DeathCauseSub)[0]
-      : ""
-  );
+ 
   // const [DeathCauseSub, setDeathCauseSub] = useState(formData?.StatisticalInfo?.DeathCauseSub ? formData?.StatisticalInfo?.DeathCauseSub : null);
   const [DeathCauseSubCustom, setDeathCauseSubCustom] = useState(
     formData?.StatisticalInfo?.DeathCauseSubCustom ? formData?.StatisticalInfo?.DeathCauseSubCustom : null
@@ -366,7 +382,6 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, iseditDeath }) 
     //     setDeathCauseSubTimeUnit2(cmbDelivary.filter((cmbDelivary) => months.code === formData?.StatisticalInfo?.IsdeceasedPregnant)[0]);
     //   }
     // }
-    
   }
   let naturetypecmbvalue = null;
 
@@ -388,6 +403,8 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, iseditDeath }) 
   }
   function selectDeathCauseMain(value) {
     setDeathCauseMain(value);
+    setIsInitialRenderDeathCauseFilterList(true)
+
   }
   function selectDeathCauseMainCustom(e) {
     setDeathCauseMainCustom(e.target.value);
@@ -739,7 +756,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, iseditDeath }) 
                     t={t}
                     optionKey="name"
                     isMandatory={false}
-                    option={cmbDeathsub}
+                    option={DeathCauseFilterList}
                     selected={DeathCauseSub}
                     select={selectDeathCauseSub}
                     disabled={isEdit}
@@ -934,7 +951,6 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, iseditDeath }) 
               </div>
             </div>
           ))}
-        ;
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
