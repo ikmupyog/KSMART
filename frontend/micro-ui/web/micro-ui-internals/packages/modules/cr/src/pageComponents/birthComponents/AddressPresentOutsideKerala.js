@@ -89,6 +89,16 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
     }
   }, [cmbFilterDistrict, isInitialRender]);
   if (isEditBirth || isEditDeath) {
+    if (formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaDistrict != null) {
+      if (cmbDistrict.length > 0 && (presentOutsideKeralaDistrict === undefined || presentOutsideKeralaDistrict === "")) {
+        setoutsideKeralaDistrict(cmbDistrict.filter(cmbDistrict => cmbDistrict.code === formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaDistrict)[0]);
+      }
+    }
+    if (formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaTaluk != null) {
+      if (cmbTaluk.length > 0 && (presentOutsideKeralaTaluk === undefined || presentOutsideKeralaTaluk === "")) {
+        setoutsideKeralaTaluk(cmbTaluk.filter(cmbTaluk => cmbTaluk.code === formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaTaluk)[0]);
+      }
+    }
     if (formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaVillage != null) {
       if (cmbVillage.length > 0 && (presentOutsideKeralaVillage === undefined || presentOutsideKeralaVillage === "")) {
         setoutsideKeralaVillage(cmbVillage.filter(cmbVillage => cmbVillage.code === formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaVillage)[0]);
@@ -127,21 +137,11 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
   //   setoutsideKeralaPostOffice(value);
   // }
   function setSelectoutsideKeralaPincode(e) {
-    if (e.target.value.length != 0) {
-      if (e.target.value.length > 6) {
-        return false;
-      } else if (e.target.value.length < 6) {
-        setoutsideKeralaPincode(e.target.value);
-        return false;
-      } else {
-        setoutsideKeralaPincode(e.target.value);
-        if (isPrsentAddress) {
-          setpermntOutsideKeralaPincode(e.target.value);
-        } else {
-          setpermntOutsideKeralaPincode('');
-        }
-        return true;
-      }
+    setoutsideKeralaPincode(e.target.value.length <= 6 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 6));
+    if (isPrsentAddress) {
+      setpermntOutsideKeralaPincode(e.target.value.length <= 6 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 6));
+    } else {
+      setpermntOutsideKeralaPincode('');
     }
   }
   function setSelectoutsideKeralaPostOfficeEn(e) {
