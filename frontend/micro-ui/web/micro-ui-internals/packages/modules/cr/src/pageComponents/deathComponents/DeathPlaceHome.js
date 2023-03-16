@@ -96,23 +96,31 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomePo
     setDeathPlaceHomepincode(e.target.value.length <= 6 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 6));
     setDeathPlaceHomepostofficeId(PostOfficevalues.filter((postoffice) => parseInt(postoffice.pincode) === parseInt(e.target.value))[0]);
   });
-  
   function setSelectDeathPlaceHomehoueNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setDeathPlaceHomehoueNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z- 0-9]*$") != null)) {
+      setDeathPlaceHomehoueNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
+
   function setSelectDeathPlaceHomehoueNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setDeathPlaceHomehoueNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if(!(e.target.value.match(pattern))){
+      e.preventDefault();
+      setDeathPlaceHomehoueNameMl('');
+    }
+    else{
+      setDeathPlaceHomehoueNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
+
+  // function setSelectDeathPlaceHomehoueNameMl(e) {
+  //   if (e.target.value.length === 51) {
+  //     return false;
+  //     // window.alert("Username shouldn't exceed 10 characters")
+  //   } else {
+  //     setDeathPlaceHomehoueNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+  //   }
+  // }
 
   function setSelectDeathPlaceHomelocalityEn(e) {
     if (e.target.value.length === 51) {
@@ -142,6 +150,12 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomePo
      } else {
       setDeathPlaceHomestreetNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
     }
+  }
+  function setCheckMalayalamInputField(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
+    if(!(e.key.match(pattern))){
+      e.preventDefault();
+    }    
   }
   function setSelectDeathPlaceWardId(value) {
     setDeathPlaceWardId(value);
@@ -275,7 +289,7 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomePo
                 value={DeathPlaceHomeHoueNameEn}
                 onChange={setSelectDeathPlaceHomehoueNameEn}
                 placeholder={`${t("CR_HOUSE_NAME_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
+                {...(validation = { pattern: "^[a-zA-Z- 0-9]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
               />
             </div>
             </div>
@@ -297,7 +311,7 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomePo
                 onChange={setSelectDeathPlaceHomelocalityMl}
                 placeholder={`${t("CR_LOCALITY_ML")}`}
                 {...(validation = {
-                  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]*$",
                   isRequired: true,
                   type: "text",
                   title: t("CR_INVALID_LOCALITY_ML"),
@@ -335,13 +349,14 @@ const DeathPlaceHome = ({ config, onSelect, userType, formData ,DeathPlaceHomePo
                 optionKey="i18nKey"
                 name="DeathPlaceHomehoueNameMl"
                 value={DeathPlaceHomehoueNameMl}
+                onKeyPress = {setCheckMalayalamInputField}
                 onChange={setSelectDeathPlaceHomehoueNameMl}
                 placeholder={`${t("CR_HOUSE_NAME_ML")}`}
                 {...(validation = {
-                  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                  isRequired: false,
+                  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9`' ]*$",
+                  isRequired: true,
                   type: "text",
-                  title: t("CR_INVALID_HOUSE_NAME_ML"),
+                  title: t("CR_INVALID_LOCALITY_ML"),
                 })}
               />
             </div>

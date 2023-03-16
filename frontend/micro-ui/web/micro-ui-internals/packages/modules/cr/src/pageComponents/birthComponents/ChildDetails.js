@@ -218,7 +218,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
   const [placeTypepEnError, setplaceTypepEnError] = useState(formData?.ChildDetails?.publicPlaceType ? false : false);
   const [localNameEnError, setlocalNameEnError] = useState(formData?.ChildDetails?.localityNameEn ? false : false);
   const [localNameMlError, setlocalNameMlError] = useState(formData?.ChildDetails?.localityNameMl ? false : false);
-  const [BirthWeightError, setBirthWeightError] = useState(formData?.ChildDetails?.DeliveryMethodSub ? false : false);
+  const [BirthWeightError, setBirthWeightError] = useState(formData?.ChildDetails?.birthWeight ? false : false);
   const [MedicalAttensionSubStError, setMedicalAttensionSubStError] = useState(formData?.ChildDetails?.medicalAttensionSub ? false : false);
 
   const [DeliveryMethodStError, setDeliveryMethodStError] = useState(formData?.ChildDetails?.deliveryMethods ? false : false);
