@@ -75,7 +75,7 @@ import DeathPublicPlace from "./pageComponents/deathComponents/DeathPublicPlace"
 import DeathOutsideJurisdiction from "./pageComponents/deathComponents/DeathOutsideJurisdiction ";
 import Informer from "./pageComponents/deathComponents/Informer";
 import Initiater from "./pageComponents/deathComponents/Initiater";
-
+import MyCRApplications from "./pages/citizen/Applications/Application";
 // import DeathCertificate from "./pageComponents/deathComponents/DeathCertificate";
 // import GeneralRemarks from "./pageComponents/deathComponents/GeneralRemarks";
 import CRSearch from "./pages/employee/Search";
@@ -185,6 +185,7 @@ export const CRLinks = ({ matchPath, userType }) => {
 };
 
 const componentsToRegister = {
+  MyCRApplications,
   CustomTimePicker,
   CRModule,
   CRLinks,
