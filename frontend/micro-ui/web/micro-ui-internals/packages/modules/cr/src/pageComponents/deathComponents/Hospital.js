@@ -12,22 +12,16 @@ const Hospital = ({
   selectHospitalNameMl,
   iseditDeath,
 }) => {
-  const { t } = useTranslation();
-  let validation = {};
+  const { t } = useTranslation();  
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
   if (tenantId === "kl") {
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
-
   const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "hospital");
-  // const [DeathPlaceType, selectDeathPlaceType] = useState(formData?.HospitalDetails?.DeathPlaceType);
-  // const [HospitalNameMl, selectHospitalNameMl] = useState(formData?.HospitalDetails?.HospitalNameMl);
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [tenantboundary, setTenantboundary] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(iseditDeath ? iseditDeath : false);
-
-  console.log(hospitalData);
   if (tenantboundary) {
     queryClient.removeQueries("CR_HOSPITALMASTER");
     setTenantboundary(false);
@@ -35,8 +29,7 @@ const Hospital = ({
   let cmbhospital = [];
   let cmbhospitalMl = [];
   hospitalData &&
-    hospitalData["egov-location"] &&
-    hospitalData["egov-location"].hospitalList &&
+    hospitalData["egov-location"] && hospitalData["egov-location"].hospitalList &&
     hospitalData["egov-location"].hospitalList.map((ob) => {
       cmbhospital.push(ob);
     });
@@ -70,11 +63,7 @@ const Hospital = ({
   function setselectHospitalNameMl(value) {
     selectHospitalNameMl(value);
   }
-  const goNext = () => {
-    // sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null );
-    // sessionStorage.setItem("HospitalNameMl", HospitalNameMl.DeathPlaceType);
-    // onSelect(config.key, { HospitalName, HospitalNameMl
-    // });
+  const goNext = () => {  
   };
   if (isLoading) {
     return <Loader></Loader>;

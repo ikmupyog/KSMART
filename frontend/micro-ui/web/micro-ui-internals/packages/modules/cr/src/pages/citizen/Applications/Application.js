@@ -3,7 +3,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-const MyApplications = ({view}) => {
+const MyCRApplications = ({view}) => {
   const { t } = useTranslation();
 
   const { mobileNumber, tenantId } = Digit.UserService.getUser()?.info || {}
@@ -13,7 +13,7 @@ const MyApplications = ({view}) => {
       params: { businessService: "CR", tenantId, mobileNumber },
       config: { enabled: view === "bills" }
     }
-  ) : Digit.Hooks.cr.useCRsearchApplication({}, {
+  ) : Digit.Hooks.cr.useCRSearchApplication({}, {
     enabled: view !== "bills"
   },t);
 console.log(data);
@@ -22,17 +22,16 @@ console.log(data);
   }
   return (
     <React.Fragment>
-      
      <Header>{`${t("TL_MY_APPLICATIONS_HEADER")}`}</Header>
       {data?.map((application) => {
         return (
           
           <div>
-            hiiijjjjadsasdsdfadadsfa
+           
             <Card>
-            {Object.keys(application).filter(e => e !== "raw" && application[e] !== null).map(item => <KeyNote keyValue={t(item)} note={t(application[item])} />)}
-               <Link to={`/digit-ui/citizen/cr/application/${application?.raw?.ackNo}/${application.raw?.tenantId}`}>
-                <SubmitBar label={t(application?.raw?.status != "PENDINGPAYMENT" ? "TL_VIEW_DETAILS" : "TL_VIEW_DETAILS_PAY")} />
+              {Object.keys(application).filter(e => e !== "raw" && application[e] !== null).map(item => <KeyNote keyValue={t(item)} note={t(application[item])} />)}
+               <Link to={`/digit-ui/citizen/cr/application/${application?.applicationNumber}/${application?.tenantId}`}>
+                <SubmitBar label={t(application?.raw?.applicationStatus != "INITIATED" ? "TL_VIEW_DETAILS" : "TL_VIEW_DETAILS_PAY")} />
               </Link>{" "}
             </Card>
           </div>
@@ -41,4 +40,4 @@ console.log(data);
     </React.Fragment>
   );
 };
-export default MyApplications;
+export default MyCRApplications;

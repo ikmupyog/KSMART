@@ -139,6 +139,21 @@ const getCRModeOfPregnancyList = (tenantId, moduleCode) => ({
     ],
   },
 });
+const getCRFoetalDeathList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "FoetalDeath",
+          },
+        ],
+      },
+    ],
+  },
+});
 const getDFMajorFunctionList = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -2298,6 +2313,9 @@ export const MdmsService = {
   },
   getCRModeOfPregnancy: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRModeOfPregnancyList(tenantId, moduleCode), moduleCode);
+  },
+  getCRFoetalDeath: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getCRFoetalDeathList(tenantId, moduleCode), moduleCode);
   },
   getDFMajorFunction: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getDFMajorFunctionList(tenantId, moduleCode), moduleCode);
