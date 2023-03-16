@@ -527,7 +527,7 @@ serviceMaps:
       
 
     - query: INSERT INTO public.eg_death_address_registry_log SELECT * FROM  public.eg_death_address_registry WHERE death_dtl_id = ? 
-             AND tenantid = ? AND addr_typeid = ?;
+              AND tenantid = ? AND addr_typeid = ?;
      
       basePath: deathCorrection.*
       jsonMaps:

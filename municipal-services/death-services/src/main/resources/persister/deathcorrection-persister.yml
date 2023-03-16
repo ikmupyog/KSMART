@@ -310,7 +310,7 @@ serviceMaps:
      
       basePath: deathCorrection.*
       jsonMaps:
-      - jsonPath: $.deathCorrection.*.Id
+      - jsonPath: $.deathCorrection.*.InformationDeathCorrection.Id
 
     - query: UPDATE public.eg_death_dtls  SET dateofdeath = ? , date_of_death_to = ? , deceased_firstname_en = ? , deceased_firstname_ml = ? , deceased_middlename_en = ? , 
             deceased_middlename_ml = ? , deceased_lastname_en = ? , deceased_lastname_ml = ? ,death_place = ? ,  

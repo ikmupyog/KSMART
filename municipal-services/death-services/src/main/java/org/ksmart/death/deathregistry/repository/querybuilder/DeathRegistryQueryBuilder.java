@@ -222,6 +222,7 @@ public class DeathRegistryQueryBuilder extends BaseQueryBuilder {
          .toString();
 
 
+
 public String getDeathSearchQuery(@NotNull DeathRegistryCriteria criteria,
                   @NotNull List<Object> preparedStmtValues, Boolean isCount) {
 
@@ -232,7 +233,7 @@ StringBuilder orderBy = new StringBuilder();
                         addFilter("dt.ack_no", criteria.getDeathACKNo(), query, preparedStmtValues);  
                         addFilter("dt.deceased_firstname_en", criteria.getDeceasedFirstNameEn(), query, preparedStmtValues); 
                         //Rakhi S on 24.02.2023
-                        addFilter("dt.registration_no", criteria.getDeceasedFirstNameEn(), query, preparedStmtValues);
+                        addFilter("dt.registration_no", criteria.getRegistrationNo(), query, preparedStmtValues);
                         // addFilter("dt.dateofdeath", criteria.getDateOfDeath(), query, preparedStmtValues); 
                         addDateRangeFilter("dt.registration_date",
                         criteria.getFromDate(),
@@ -331,4 +332,16 @@ private static final String REGNOQUERY = new StringBuilder()
   
     //   return finalQuery;
     // }
+
+    //Jasmine 16.03.2023
+
+    private static final String REGISTRYID_QUERY = new StringBuilder().append("SELECT dr.id  FROM eg_death_dtls_registry  dr")                                                            
+    .toString();
+
+    public String getDeathRegistryIdSearchQuery(@NotNull DeathRegistryCriteria criteria,@NotNull List<Object> preparedStmtValues, Boolean isCount) {
+       StringBuilder query = new StringBuilder(REGISTRYID_QUERY);
+       addFilter("dr.registration_no", criteria.getRegistrationNo(), query, preparedStmtValues);      
+     return query.toString();                                              
+ }  
+
 }

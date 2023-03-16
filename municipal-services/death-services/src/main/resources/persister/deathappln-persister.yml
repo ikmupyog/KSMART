@@ -562,7 +562,7 @@ serviceMaps:
      
       basePath: deathCertificateDtls.*
       jsonMaps:
-      - jsonPath: $.deathCertificateDtls.*.id
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.Id
 
     - query: UPDATE  public.eg_death_dtls  SET 
        dateofdeath  = ? , time_of_death = ?   , timeofdeath_unit = ?  ,
@@ -736,7 +736,7 @@ serviceMaps:
     - query: INSERT INTO public.eg_death_address_dtls_log SELECT * FROM  public.eg_death_address_dtls WHERE death_dtl_id = ? 
              AND tenantid = ? AND addr_typeid = ?;
      
-      basePath: deathCertificateDtls.*.addressInfo
+      basePath: deathCertificateDtls.*
       jsonMaps:
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.Id
 

@@ -90,8 +90,10 @@ public class DeathRegistryRepository {
     //Jasmine 15.03.2023
     public List<DeathRegistryCorrectionDtls> getDeathCorrectionApplication(DeathRegistryCriteria criteria) {
         List<Object> preparedStmtValues = new ArrayList<>();
-        String query = queryBuilder.getDeathSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
+        String query = queryBuilder.getDeathRegistryIdSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
+        System.out.println("JasmineQuery"+query);
         List<DeathRegistryCorrectionDtls> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), deathCorrectionRowMapper);
+        System.out.println("JasmineResult"+result);
         return result; 
     }
     //Rakhi S on 10.02.2023
