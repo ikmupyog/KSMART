@@ -21,7 +21,6 @@ import StillBirthPlaceVehicle from "../../pageComponents/stillBirthComponents/St
 import StillBirthPlacePublicPlace from "../../pageComponents/stillBirthComponents/StillBirthPlacePublicPlace";
 
 const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
-
   const [workFlowCode, setWorkFlowCode] = useState();
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
@@ -56,7 +55,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
     "birth-death-service",
     "WorkFlowBirth"
   );
-// console.log(FoetalDeathList);
+  // console.log(FoetalDeathList);
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
@@ -71,7 +70,21 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
       return null;
     }
   };
- 
+  const convertEpochToDate = (dateEpoch) => {
+    // Returning null in else case because new Date(null) returns initial date from calender
+    if (dateEpoch) {
+      const dateFromApi = new Date(dateEpoch);
+      let month = dateFromApi.getMonth() + 1;
+      let day = dateFromApi.getDate();
+      let year = dateFromApi.getFullYear();
+      month = (month > 9 ? "" : "0") + month;
+      day = (day > 9 ? "" : "0") + day;
+      return `${year}-${month}-${day}`;
+      //  return `${day}-${month}-${year}`;
+    } else {
+      return null;
+    }
+  };
 
   let menu = [];
   let placeOfBirth = null;
@@ -117,37 +130,12 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
     DeliveryMethodList["birth-death-service"].DeliveryMethod.map((ob) => {
       cmbDeliveryMethod.push(ob);
     });
-    FoetalDeathList &&
+  FoetalDeathList &&
     FoetalDeathList["birth-death-service"] &&
     FoetalDeathList["birth-death-service"].FoetalDeath &&
     FoetalDeathList["birth-death-service"].FoetalDeath.map((ob) => {
       cmbFoetalDeath.push(ob);
     });
-  const cmbPregWeek = [
-    { i18nKey: "20", code: "20" },
-    { i18nKey: "21", code: "21" },
-    { i18nKey: "22", code: "22" },
-    { i18nKey: "22", code: "22" },
-    { i18nKey: "23", code: "23" },
-    { i18nKey: "25", code: "25" },
-    { i18nKey: "26", code: "26" },
-    { i18nKey: "27", code: "27" },
-    { i18nKey: "28", code: "28" },
-    { i18nKey: "29", code: "29" },
-    { i18nKey: "30", code: "30" },
-    { i18nKey: "31", code: "31" },
-    { i18nKey: "32", code: "32" },
-    { i18nKey: "33", code: "33" },
-    { i18nKey: "34", code: "34" },
-    { i18nKey: "35", code: "35" },
-    { i18nKey: "36", code: "36" },
-    { i18nKey: "37", code: "37" },
-    { i18nKey: "38", code: "38" },
-    { i18nKey: "39", code: "39" },
-    { i18nKey: "40", code: "40" },
-    { i18nKey: "41", code: "41" },
-    { i18nKey: "42", code: "42" },
-  ];
 
   const [childDOB, setChildDOB] = useState(formData?.StillBirthChildDetails?.childDOB ? formData?.StillBirthChildDetails?.childDOB : "");
   const [gender, selectGender] = useState(formData?.StillBirthChildDetails?.gender);
@@ -310,7 +298,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
   const [placeTypepEnError, setplaceTypepEnError] = useState(formData?.StillBirthChildDetails?.publicPlaceType ? false : false);
   const [localNameEnError, setlocalNameEnError] = useState(formData?.StillBirthChildDetails?.localityNameEn ? false : false);
   const [localNameMlError, setlocalNameMlError] = useState(formData?.StillBirthChildDetails?.localityNameMl ? false : false);
-  const [BirthWeightError, setBirthWeightError] = useState(formData?.StillBirthChildDetails?.DeliveryMethodSub ? false : false);
+  const [DeliveryMethodSubError, setDeliveryMethodSubError] = useState(formData?.StillBirthChildDetails?.DeliveryMethodSub ? false : false);
   const [causeFoetalDeathError, setcauseFoetalDeathError] = useState(formData?.StillBirthChildDetails?.causeFoetalDeath ? false : false);
 
   const [MedicalAttensionSubStError, setMedicalAttensionSubStError] = useState(formData?.StillBirthChildDetails?.medicalAttensionSub ? false : false);
@@ -320,14 +308,10 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
   const [PregnancyDurationInvalidError, setPregnancyDurationInvalidError] = useState(
     formData?.StillBirthChildDetails?.pregnancyDuration ? false : false
   );
-  
+
   const [access, setAccess] = React.useState(true);
 
-  
-
   const onSkip = () => onSelect();
-
-  
 
   React.useEffect(() => {
     if (isInitialRenderPlace) {
@@ -335,7 +319,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
         setIsInitialRenderPlace(false);
         placeOfBirth = birthPlace.code;
         setValue(placeOfBirth);
-   
+
         if (placeOfBirth === "HOSPITAL") {
           <StillBirthPlaceHospital hospitalName={hospitalName} hospitalNameMl={hospitalNameMl} />;
         }
@@ -396,7 +380,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
 
   function setselectGender(value) {
     selectGender(value);
-  }  
+  }
 
   function setselectChildDOB(value) {
     setChildDOB(value);
@@ -424,60 +408,53 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
     }
   }
 
+  function setSelectChildFirstNameEn(e) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z]*$") != null) {
+      setChildFirstNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    }
+  }
   function setSelectChildMiddleNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setChildMiddleNameEn(
-        e.target.value.replace(
-          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
-          ""
-        )
-      );
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z]*$") != null) {
+      setChildMiddleNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectChildLastNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setChildLastNameEn(
-        e.target.value.replace(
-          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
-          ""
-        )
-      );
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z]*$") != null) {
+      setChildLastNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    }
+    // setChildLastNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+  }
+  function setCheckMalayalamInputField(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
+    if (!e.key.match(pattern)) {
+      e.preventDefault();
     }
   }
   function setSelectChildFirstNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!e.target.value.match(pattern)) {
+      e.preventDefault();
+      setChildFirstNameMl("");
     } else {
-      setChildFirstNameMl(
-        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-      );
+      setChildFirstNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectChildMiddleNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!e.target.value.match(pattern)) {
+      e.preventDefault();
+      setChildMiddleNameMl("");
     } else {
-      setChildMiddleNameMl(
-        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-      );
+      setChildMiddleNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectChildLastNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!e.target.value.match(pattern)) {
+      e.preventDefault();
+      setChildLastNameMl("");
     } else {
-      setChildLastNameMl(
-        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-      );
+      setChildLastNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectPregnancyDuration(e) {
@@ -485,15 +462,20 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
       e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 2)
     );
   }
- 
+
   function setSelectMedicalAttensionSub(value) {
     setMedicalAttensionSub(value);
   }
-  
+  function setSelectcauseFoetalDeath(value) {
+    setcauseFoetalDeath(value);
+  }
+
+  function setSelectDeliveryMethod(value) {
+    setDeliveryMethod(value);
+  }
   const handleTimeChange = (value, cb) => {
     if (typeof value === "string") {
       cb(value);
-      console.log(cb);
       console.log(value);
       let hour = value;
       let period = hour > 12 ? "PM" : "AM";
@@ -501,13 +483,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
       setbirthDateTime(value);
     }
   };
-  function setSelectcauseFoetalDeath(value) {
-    setcauseFoetalDeath (value);  
-  }
 
-  function setSelectDeliveryMethod(value) {
-    setDeliveryMethod(value);
-  }
   function setselectBirthPlace(value) {
     selectBirthPlace(value);
     setValue(value.code);
@@ -520,21 +496,9 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
     // console.log(currentWorgFlow[0].WorkflowCode);
     // workFlowCode=currentWorgFlow[0].WorkflowCode;
     setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
-    console.log("workFlowCode" + currentWorgFlow[0].WorkflowCode);
   }
- 
   let validFlag = true;
   const goNext = () => {
-    // if (AadharError) {
-    //   validFlag = false;
-    //   setAadharError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 2000);
-    // } else {
-    //   setAadharError(false);
-    // }
     if (birthPlace.code === "HOSPITAL") {
       if (hospitalName == null || hospitalNameMl === null) {
         setHospitalError(true);
@@ -708,7 +672,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
       } else {
         setvehicleHaltPlaceError(false);
       }
-     
+
       if (vehicleDesDetailsEn == null || vehicleDesDetailsEn == "" || vehicleDesDetailsEn == undefined) {
         validFlag = false;
         setvehiDesDetailsEnError(true);
@@ -774,28 +738,6 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
         setplaceTypepEnError(false);
       }
     }
-    // if (birthWeight != null || birthWeight != "" || birthWeight != undefined) {
-    //   let BirthWeightCheck = birthWeight;
-    //   if (BirthWeightCheck < 0.25 || BirthWeightCheck > 10) {
-    //     validFlag = false;
-    //     setBirthWeightError(true);
-    //     setToast(true);
-    //     setTimeout(() => {
-    //       setToast(false);
-    //     }, 2000);
-    //   } else {
-    //     setBirthWeightError(false);
-    //   }
-    // }
-    // else {
-    //   setBirthWeightError(true);
-    //   validFlag = false;
-    //   setBirthWeightError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 2000);
-    // }
 
     if (causeFoetalDeath == null || causeFoetalDeath == "" || causeFoetalDeath == undefined) {
       validFlag = false;
@@ -854,7 +796,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
       sessionStorage.setItem("workFlowCode", workFlowCode);
       sessionStorage.setItem("childDOB", childDOB ? childDOB : null);
       sessionStorage.setItem("birthDateTime", birthDateTime ? birthDateTime : null);
-      sessionStorage.setItem("gender", gender ? gender.code : null);      
+      sessionStorage.setItem("gender", gender ? gender.code : null);
       sessionStorage.setItem("birthPlace", birthPlace.code);
       sessionStorage.setItem("hospitalCode", hospitalName ? hospitalName.code : null);
       sessionStorage.setItem("hospitalName", hospitalName ? hospitalName.hospitalName : null);
@@ -882,7 +824,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
       sessionStorage.setItem("vehicleToEn", vehicleToEn ? vehicleToEn : null);
       sessionStorage.setItem("vehicleFromMl", vehicleFromMl ? vehicleFromMl : null);
       sessionStorage.setItem("vehicleToMl", vehicleToMl ? vehicleToMl : null);
-      sessionStorage.setItem("vehicleHaltPlace", vehicleHaltPlace ? vehicleHaltPlace : null);  
+      sessionStorage.setItem("vehicleHaltPlace", vehicleHaltPlace ? vehicleHaltPlace : null);
       sessionStorage.setItem("setadmittedHospitalEn", setadmittedHospitalEn ? setadmittedHospitalEn.code : null);
       sessionStorage.setItem("vehicleDesDetailsEn", vehicleDesDetailsEn ? vehicleDesDetailsEn : null);
       sessionStorage.setItem("publicPlaceType", publicPlaceType ? publicPlaceType.code : null);
@@ -890,7 +832,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
       sessionStorage.setItem("localityNameMl", localityNameMl ? localityNameMl : null);
       sessionStorage.setItem("streetNameEn", streetNameEn ? streetNameEn : null);
       sessionStorage.setItem("streetNameMl", streetNameMl ? streetNameMl : null);
-      sessionStorage.setItem("publicPlaceDecpEn", publicPlaceDecpEn ? publicPlaceDecpEn : null);     
+      sessionStorage.setItem("publicPlaceDecpEn", publicPlaceDecpEn ? publicPlaceDecpEn : null);
       sessionStorage.setItem("causeFoetalDeath", causeFoetalDeath ? causeFoetalDeath.code : null);
       sessionStorage.setItem("pregnancyDuration", pregnancyDuration ? pregnancyDuration.code : null);
       sessionStorage.setItem("medicalAttensionSub", medicalAttensionSub ? medicalAttensionSub.code : null);
@@ -947,20 +889,6 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
       });
     }
   };
-  const convertEpochToDate = (dateEpoch) => {
-    // Returning null in else case because new Date(null) returns initial date from calender
-    if (dateEpoch) {
-      const dateFromApi = new Date(dateEpoch);
-      let month = dateFromApi.getMonth() + 1;
-      let day = dateFromApi.getDate();
-      let year = dateFromApi.getFullYear();
-      month = (month > 9 ? "" : "0") + month;
-      day = (day > 9 ? "" : "0") + day;
-      return `${year}-${month}-${day}`;
-    } else {
-      return null;
-    }
-  };
 
   // if (isEditBirth) {
   if (formData?.StillBirthChildDetails?.gender != null) {
@@ -996,7 +924,14 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
   }
   // }
 
-  if (isWorkFlowDetailsLoading || isLoading || isAttentionOfDeliveryLoading || isDeliveryMethodListLoading ||isFoetalDeathListLoading|| isPlaceMasterLoading) {
+  if (
+    isWorkFlowDetailsLoading ||
+    isLoading ||
+    isAttentionOfDeliveryLoading ||
+    isDeliveryMethodListLoading ||
+    isFoetalDeathListLoading ||
+    isPlaceMasterLoading
+  ) {
     return <Loader></Loader>;
   } else {
     return (
@@ -1231,7 +1166,6 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
             </div>
           </div>
 
-        
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-12">
@@ -1257,7 +1191,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
                   placeholder={`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`}
                 />
               </div>
-            
+
               <div className="col-md-3">
                 <CardLabel>{`${t("CR_PREGNANCY_DURATION")}`}</CardLabel>
                 <TextInput
@@ -1290,8 +1224,8 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
                   select={setSelectDeliveryMethod}
                   placeholder={`${t("CR_DELIVERY_METHOD")}`}
                 />
-              </div>           
-              
+              </div>
+
               <div className="col-md-3">
                 <CardLabel>
                   {t("CR_CAUSE_FOETAL_DEATH")}
@@ -1305,10 +1239,8 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
                   selected={causeFoetalDeath}
                   select={setSelectcauseFoetalDeath}
                   placeholder={`${t("CR_CAUSE_FOETAL_DEATH")}`}
-                 
                 />
               </div>
-              
             </div>
           </div>
           {toast && (
@@ -1417,8 +1349,6 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
             />
           )}
           {""}
-
-          {/* <div><BackButton >{t("CS_COMMON_BACK")}</BackButton></div> */}
         </FormStep>
       </React.Fragment>
     );

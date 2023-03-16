@@ -398,6 +398,23 @@ export const newConfig = [
         hideInEmployee: true,
         hideInCitizen: false,
       },
+      {
+        route: "stillbirth-informer-details",
+        component: "StillBirthInformarDetails",
+        texts: {
+          headerCaption: "",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "StillBirthInformarDetails",
+        nextStep: null,
+        type: "component",
+        hideInEmployee: false,
+        hideInCitizen: true,
+      },
     ],
   },
   {

@@ -26,7 +26,7 @@ const getAddress = (address, t) => {
 } 
 
 
-const TLApplicationDetails = () => {
+const CRApplicationDetails = () => {
   const { t } = useTranslation();
   const { id } = useParams();
   const { tenantId } = useParams();
@@ -362,4 +362,4 @@ if(wfdata)
   );
 };
 
-export default TLApplicationDetails;
+export default CRApplicationDetails;
