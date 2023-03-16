@@ -7,6 +7,7 @@ import org.ksmart.marriage.marriageapplication.model.marriage.*;
 //import org.ksmart.marriage.common.model.AuditDetails;
 //import org.ksmart.marriage.common.model.Document;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import java.util.List;
 @Builder
 public class MarriageApplicationDetail {
 
+    @NotNull
     @Size(max = 64)
     @JsonProperty("id")
     private String id;
@@ -102,14 +104,17 @@ public class MarriageApplicationDetail {
     @JsonProperty("marraigeOthersSpecify")
     private String othersspecify;
 
+    @NotNull
     @Size(max = 64)
     @JsonProperty("marraigeApplicationType")
     private String applicationtype;
 
+    @NotNull
     @Size(max = 64)
     @JsonProperty("businessService")
     private String businessservice;
 
+    @NotNull
     @Size(max = 64)
     @JsonProperty("workflowCode")
     private String workflowcode;

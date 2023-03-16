@@ -24,7 +24,7 @@ public class MarriageDetailsRequest {
     @Valid
     private List<MarriageApplicationDetail> marriageDetails;
 
-    public MarriageDetailsRequest addBirthDetails(MarriageApplicationDetail birthDetail) {
+    public MarriageDetailsRequest addMarriageDetails(MarriageApplicationDetail marriageDetail) {
         if (marriageDetails == null) {
             marriageDetails = null;
         }

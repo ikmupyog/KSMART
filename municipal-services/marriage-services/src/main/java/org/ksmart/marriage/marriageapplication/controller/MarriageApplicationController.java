@@ -39,7 +39,7 @@ public class MarriageApplicationController {
     }
 
 
-    @PostMapping(value = {"/_create"})
+    @PostMapping(value = {"/_createMarriage"})
     public ResponseEntity<MarriageApplicationResponse> saveMarriageDetails(@RequestBody MarriageDetailsRequest request) {
         List<MarriageApplicationDetail> marriageDetails=crMarriageService.saveMarriageDetails(request);
         MarriageApplicationResponse response= MarriageApplicationResponse.builder()
@@ -50,20 +50,20 @@ public class MarriageApplicationController {
                                                                  .build();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    @PostMapping(value = { "/_update"})
+    @PostMapping(value = { "/_updateMarriage"})
     public ResponseEntity<?> updateMarriageDetails(@RequestBody MarriageDetailsRequest request) {
         List<MarriageApplicationDetail> marriageDetails = crMarriageService.updateMarriageDetails(request);
         return new ResponseEntity<>(marriageDetails, HttpStatus.OK);
     }
 
-    @PostMapping(value = { "/_search"})
-    public ResponseEntity<MarriageApplicationResponse> listByHospitalId(@RequestBody MarriageDetailsRequest request,
+    @PostMapping(value = { "/_searchMarriage"})
+    public ResponseEntity<MarriageApplicationResponse> searchMarriageDetails(@RequestBody MarriageDetailsRequest request,
                                                                      @Valid @ModelAttribute MarriageApplicationSearchCriteria criteria) {
-        List<MarriageApplicationDetail> marriageDetailsDetails = crMarriageService.searchMarriageDetails(criteria);
+        List<MarriageApplicationDetail> marriageDetails = crMarriageService.searchMarriageDetails(criteria);
         MarriageApplicationResponse response = MarriageApplicationResponse.builder()
                 .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
                         Boolean.TRUE))
-                .marriageApplicationDetails(marriageDetailsDetails)
+                .marriageApplicationDetails(marriageDetails)
                 .build();
         return ResponseEntity.ok(response);
     }

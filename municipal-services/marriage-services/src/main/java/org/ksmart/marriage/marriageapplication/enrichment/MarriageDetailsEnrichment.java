@@ -38,11 +38,21 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
             marriage.setId(UUID.randomUUID().toString());
 
             marriage.setAuditDetails(auditDetails);
-            marriage.getBrideDetails().setId(UUID.randomUUID().toString());
-            marriage.getGroomDetails().setId(UUID.randomUUID().toString());
-            marriage.getPermanent().setId(UUID.randomUUID().toString());
-            marriage.getPresent().setId(UUID.randomUUID().toString());
-            marriage.getWitness().setId(UUID.randomUUID().toString());
+            if(marriage.getBrideDetails()!=null){
+                marriage.getBrideDetails().setId(UUID.randomUUID().toString());
+            }
+            if(marriage.getGroomDetails()!=null){
+                marriage.getGroomDetails().setId(UUID.randomUUID().toString());
+            }
+            if(marriage.getPermanent()!=null){
+                marriage.getPermanent().setId(UUID.randomUUID().toString());
+            }
+            if(marriage.getPresent()!=null){
+                marriage.getPresent().setId(UUID.randomUUID().toString());
+            }
+            if(marriage.getWitness()!=null){
+                marriage.getWitness().setId(UUID.randomUUID().toString());
+            }
 
         });
         setApplicationNumbers(request);

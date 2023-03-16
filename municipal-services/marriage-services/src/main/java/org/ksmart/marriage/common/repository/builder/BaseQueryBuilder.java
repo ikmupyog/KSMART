@@ -1,16 +1,19 @@
-package org.ksmart.marriage.marriageapplication.repository.querybuilder;
+package org.ksmart.marriage.common.repository.builder;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.ksmart.marriage.marriageapplication.model.marriage.MarriageApplicationSearchCriteria;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
+@Slf4j
 @Component
-public class BaseBirthQuery {
+public class BaseQueryBuilder {
     void addDateRangeFilter(String column, Long startDate, Long endDate, StringBuilder query,
                             List<Object> paramValues) {
 
@@ -58,6 +61,25 @@ public class BaseBirthQuery {
         }
     }
 
+    void addDateToLongFilter(String column, LocalDate value, StringBuilder query, List<Object> paramValues) {
+        if (value != null) {
+            Instant instant = value.atStartOfDay(ZoneId.systemDefault()).toInstant();
+            addWhereClause(paramValues, query);
+            query.append(column)
+                    .append("=? ");
+            paramValues.add(instant.toEpochMilli());
+        }
+    }
+
+    void addLikeFilter(final String column, final String value, final StringBuilder query, final List<Object> paramValues) {
+        if (StringUtils.isNotBlank(value)) {
+            addWhereClause(paramValues, query);
+            query.append(column)
+                    .append("LIKE ?% ");
+            paramValues.add(value);
+        }
+    }
+
     void addWhereClause(List<Object> values, StringBuilder query) {
         if (CollectionUtils.isEmpty(values)) {
             query.append(" WHERE ");
@@ -71,29 +93,4 @@ public class BaseBirthQuery {
                 .stream()
                 .collect(Collectors.joining(", "));
     }
-    void addOrderByColumns(String column, MarriageApplicationSearchCriteria.SortOrder valueSort, StringBuilder orderBy){
-        addOrderClause(orderBy);
-        if(!StringUtils.isEmpty(column)){
-            addOrderClause(orderBy);
-            orderBy.append(column);
-            addAscDesc(valueSort, orderBy);
-        }
-    }
-    void addOrderClause(StringBuilder orderBy) {
-        if (orderBy.length() == 0) {
-            orderBy.append(" ORDER BY ");
-        } else {
-            orderBy.append(" ");
-        }
-    }
-
-    void addAscDesc(MarriageApplicationSearchCriteria.SortOrder valueSort, StringBuilder query){
-        if(valueSort == null)
-            query.append(" ASC, ");
-        else if(valueSort == MarriageApplicationSearchCriteria.SortOrder.ASC)
-            query.append(" ASC, ");
-        else
-            query.append(" DESC, ");
-    }
-
 }

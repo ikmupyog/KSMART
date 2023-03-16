@@ -22,6 +22,19 @@ public class MarriageApplicationSearchCriteria {
 
     @JsonProperty("applicationNo")
     private String applicationNo;
+    @JsonProperty("sortBy")
+    private SortBy sortBy;
+    public enum SortBy {
+        applicationNumber,
+        tenantId
+    }
+    @JsonProperty("sortOrder")
+    private SortOrder sortOrder;
+
+    public enum SortOrder {
+        ASC,
+        DESC
+    }
 
 
 }
