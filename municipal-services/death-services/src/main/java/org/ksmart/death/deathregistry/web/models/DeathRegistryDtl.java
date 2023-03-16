@@ -1,7 +1,7 @@
 package org.ksmart.death.deathregistry.web.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.v3.oas.annotations.media.Schema;
+// import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,7 +17,7 @@ import javax.swing.text.Document;
      * Jasmine on 7.02.2023      
 */
 
-@Schema(name = "Death Registration Request", description = "An Object holds the  data for death registration ")
+//@Schema(name = "Death Registration Request", description = "An Object holds the  data for death registration ")
 @Validated
 @Getter
 @Setter

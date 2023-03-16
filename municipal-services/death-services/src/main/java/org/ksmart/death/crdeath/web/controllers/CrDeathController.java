@@ -45,7 +45,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/v1")
 @Validated
-public class CrDeathController implements CrDeathResource  {
+public class CrDeathController   {
+// public class CrDeathController implements CrDeathResource  {
 
     @Autowired
     private ResponseInfoFactory responseInfoFactory;
@@ -67,7 +68,7 @@ public class CrDeathController implements CrDeathResource  {
         this.deathRegistryRequestService =deathRegistryRequestService;
     }
 
-    @Override
+    // @Override
     @PostMapping("/crdeathdetails/_create")
     public ResponseEntity<CrDeathDtlResponse> create(@Valid @RequestBody CrDeathDtlRequest request) {
 
@@ -82,7 +83,7 @@ public class CrDeathController implements CrDeathResource  {
     }
 
     //RAkhi S on 05.12.2022
-    @Override
+    // @Override
     @PostMapping("/crdeathdetails/_search")
     public ResponseEntity<CrDeathDtlResponse> search(@RequestBody RequestInfoWrapper request,
                                                             @ModelAttribute CrDeathSearchCriteria criteria) {
@@ -98,7 +99,7 @@ public class CrDeathController implements CrDeathResource  {
     }
 
     //Update Begin Jasmine
-    @Override
+    // @Override
     @PutMapping("/crdeathdetails/_update")
 
     public ResponseEntity<CrDeathDtlResponse> update(@RequestBody CrDeathDtlRequest request) {

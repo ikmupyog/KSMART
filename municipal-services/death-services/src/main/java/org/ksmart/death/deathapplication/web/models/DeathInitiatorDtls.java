@@ -1,6 +1,6 @@
 package org.ksmart.death.deathapplication.web.models;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.v3.oas.annotations.media.Schema;
+// import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,7 +14,7 @@ import org.springframework.validation.annotation.Validated;
      * Creates  model class  
      * Jasmine on 11.02.2023      
 */
-@Schema(name = "Death Initiator Request", description = "An Object holds the  Initiator details of death ")
+//@Schema(name = "Death Initiator Request", description = "An Object holds the  Initiator details of death ")
 @Validated
 @Getter
 @Setter
@@ -127,7 +127,7 @@ public class DeathInitiatorDtls {
     private String documentFileStoreId ;
 
     //Rakhi s on 08.02.2023
-    @Schema(type = "boolean" ,description = "Initiator aadhar submitted(0/1)")
+    //@Schema(type = "boolean" ,description = "Initiator aadhar submitted(0/1)")
     @JsonProperty("InitiatorAadharSubmitted")
     private boolean  InitiatorAadharSubmitted ;   
 
