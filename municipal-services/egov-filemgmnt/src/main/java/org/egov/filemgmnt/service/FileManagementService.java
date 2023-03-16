@@ -211,10 +211,6 @@ public class FileManagementService extends AbstractFileManagementService {
         return request.getCertificateDetails();
     }
 
-	public ArisingFile createArisingFile(ArisingFileRequest request) {
-		producer.push(fmConfig.getSaveArisingFileTopic(), request);
-		return request.getArisingFileDetail();
-	}
-
+	
 	
 }
