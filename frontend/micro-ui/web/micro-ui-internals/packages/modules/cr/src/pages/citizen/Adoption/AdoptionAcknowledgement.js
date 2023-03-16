@@ -2,7 +2,7 @@ import { Banner, Card, CardText, LinkButton, Loader, SubmitBar } from "@egovernm
 import React, { useEffect,useState  } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { convertToBirthRegistration } from "../../../utils";
+import { convertToAdoptionRegistration } from "../../../utils";
 import getPDFData from "../../../utils/getTLAcknowledgementData";
 
 const GetActionMessage = (props) => {
@@ -70,7 +70,7 @@ const AdoptionAcknowledgement = ({ data, onSuccess,userType,isEditBirth=false })
       if (!resubmit) {
         // let formdata = !isEditBirth ? convertToDeathRegistration(data) : convertToEditTrade(data, fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter(y => y.module === "CR") : []);
 
-        let formdata = !isEditBirth ? convertToBirthRegistration(data):[] ;
+        let formdata = !isEditBirth ? convertToAdoptionRegistration(data):[] ;
         // formdata.BirthDetails[0].tenantId = formdata?.BirthDetails[0]?.tenantId || tenantId1;
         if(!isEditBirth)
         {

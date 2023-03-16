@@ -112,7 +112,7 @@ import {
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_REG_SUMMARY_HEADING")}`}</span>
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ADOPTION_REG_SUMMARY_HEADING")}`}</span>
               </h1>
             </div>
           </div>
