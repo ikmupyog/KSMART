@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, vehicleRegistrationNo, vehicleFromEn,
   vehicleToEn, vehicleFromMl, vehicleHaltPlace,  vehicleToMl, vehicleDesDetailsEn, setvehicleToEn, setadmittedHospitalEn,
   setvehicleType, setvehicleRegistrationNo, setvehicleFromEn, setvehicleFromMl, setvehicleHaltPlace,
-  setvehicleToMl, setvehicleDesDetailsEn, setSelectedadmittedHospitalEn, setWardNo, wardNo
+  setvehicleToMl, setvehicleDesDetailsEn, setSelectedadmittedHospitalEn, setWardNo, wardNo,isEditBirth=false
 }) => {
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
@@ -76,6 +76,23 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
       }
     }
   }, [localbodies, isInitialRender]);
+  if (isEditBirth) {
+    if (formData?.ChildDetails?.vehicleType != null) {
+      if (cmbVehicle.length > 0 && (vehicleType === undefined || vehicleType === "")) {
+        setvehicleType(cmbVehicle.filter(cmbVehicle => cmbVehicle.code === formData?.ChildDetails?.vehicleType)[0]);
+       }
+    }
+    if (formData?.ChildDetails?.setadmittedHospitalEn != null) {
+      if (cmbhospital.length > 0 && (setadmittedHospitalEn === undefined || setadmittedHospitalEn === "")) {
+        setSelectedadmittedHospitalEn(cmbhospital.filter(cmbhospital => cmbhospital.code === formData?.ChildDetails?.setadmittedHospitalEn)[0]);
+      }
+    }
+    if (formData?.ChildDetails?.wardNo != null) {
+      if (cmbWardNo.length > 0 && (wardNo === undefined || wardNo === "")) {
+        setWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.ChildDetails?.wardNo)[0]);
+      }
+    }
+  }
   const onSkip = () => onSelect();
 
   function setSelectVehicleType(value) {
@@ -189,6 +206,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
               value={vehicleRegistrationNo}
               onChange={setSelectVehicleRegistrationNo}
               placeholder={`${t("CR_VEHICLE_REGISTRATION_NO")}`}
+              style={{textTransform:"uppercase"}}
               {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_REGISTRATION_NO") })}
             />
           </div>
