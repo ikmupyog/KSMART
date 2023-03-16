@@ -21,6 +21,8 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
   const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "boundary-data");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [tenantboundary, setTenantboundary] = useState(false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
+
   if (tenantboundary) {
     queryClient.removeQueries("CR_HOSPITALMASTER");
     queryClient.removeQueries("TL_ZONAL_OFFICE");
@@ -99,10 +101,8 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
     setvehicleType(value);
   }
   function setSelectVehicleRegistrationNo(e) {
-    if (e.target.value.length === 10) {
-      return false;
-    } else {
-      setvehicleRegistrationNo(e.target.value);
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z0-9\-]*$") != null)) {
+      setvehicleRegistrationNo(e.target.value.length <= 15 ? e.target.value : (e.target.value).substring(0, 15));
     }
   }
   function setSelectVehicleFromEn(e) {
@@ -192,6 +192,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
               option={cmbVehicle}
               selected={vehicleType}
               select={setSelectVehicleType}
+              disable={isDisableEdit}
               placeholder={`${t("CR_VEHICLE_TYPE")}`}
             />
 
@@ -205,6 +206,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
               name="vehicleRegistrationNo"
               value={vehicleRegistrationNo}
               onChange={setSelectVehicleRegistrationNo}
+              disable={isDisableEdit}
               placeholder={`${t("CR_VEHICLE_REGISTRATION_NO")}`}
               style={{textTransform:"uppercase"}}
               {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_REGISTRATION_NO") })}
@@ -237,6 +239,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
               name="vehicleFromEn"
               value={vehicleFromEn}
               onChange={setSelectVehicleFromEn}
+              disable={isDisableEdit}
               placeholder={`${t("CR_VEHICLE_FROM_EN")}`}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_VEHICLE_FROM") })}
             />
@@ -250,6 +253,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
               name="vehicleToEn"
               value={vehicleToEn}
               onChange={setSelectVehicleToEn}
+              disable={isDisableEdit}
               placeholder={`${t("CR_VEHICLE_TO_EN")}`}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_VEHICLE_TO") })}
             />
@@ -264,6 +268,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
               value={vehicleFromMl}
               onKeyPress = {setCheckMalayalamInputField}
               onChange={setSelectVehicleFromMl}
+              disable={isDisableEdit}
               placeholder={`${t("CR_VEHICLE_FROM_ML")}`}
               {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_VEHICLE_FROM") })}
             />
@@ -278,6 +283,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
               value={vehicleToMl}
               onKeyPress = {setCheckMalayalamInputField}
               onChange={setSelectVehicleToMl}
+              disable={isDisableEdit}
               placeholder={`${t("CR_VEHICLE_TO_ML")}`}
               {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_VEHICLE_TO") })}
             />
@@ -308,6 +314,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
               option={cmbhospital}
               selected={setadmittedHospitalEn}
               select={selectadmittedHospitalEn}
+              disable={isDisableEdit}
               placeholder={`${t("CR_ADMITTED_HOSPITAL_EN")}`}
             />
           </div>
@@ -323,6 +330,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
               selected={wardNo}
               select={setSelectWard}
               placeholder={`${t("CS_COMMON_WARD")}`}
+              disable={isDisableEdit}
               {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
             />
           </div>
@@ -336,6 +344,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
               value={vehicleDesDetailsEn}
               onChange={setSelectVehicleOtherDetailsEn}
               placeholder={`${t("CR_DESCRIPTION")}`}
+              disable={isDisableEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DESCRIPTION") })}
             />
           </div>
