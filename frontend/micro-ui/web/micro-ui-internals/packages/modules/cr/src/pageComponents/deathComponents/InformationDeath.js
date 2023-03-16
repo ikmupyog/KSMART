@@ -23,19 +23,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
   }
   const { t } = useTranslation();
   let validation = {};
-  const convertEpochToDate = (dateEpoch) => {
-    if (dateEpoch) {
-      const dateFromApi = new Date(dateEpoch);
-      let month = dateFromApi.getMonth() + 1;
-      let day = dateFromApi.getDate();
-      let year = dateFromApi.getFullYear();
-      month = (month > 9 ? "" : "0") + month;
-      day = (day > 9 ? "" : "0") + day;
-      return `${year}-${month}-${day}`;
-    } else {
-      return null;
-    }
-  };
+ 
   const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
     stateId,
     "birth-death-service",
@@ -49,6 +37,19 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
   const { data: Profession = {}, isOccupationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Profession");
   const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PlaceMasterDeath");
   const { data: State = {}, isStateLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
+  const convertEpochToDate = (dateEpoch) => {
+    if (dateEpoch) {
+      const dateFromApi = new Date(dateEpoch);
+      let month = dateFromApi.getMonth() + 1;
+      let day = dateFromApi.getDate();
+      let year = dateFromApi.getFullYear();
+      month = (month > 9 ? "" : "0") + month;
+      day = (day > 9 ? "" : "0") + day;
+      return `${year}-${month}-${day}`;
+    } else {
+      return null;
+    }
+  };
   let workFlowData = [];
   let cmbAgeUnit = [];
   let cmbPlace = [];
@@ -616,24 +617,29 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
       }
     }
   }
+  // function setSelectDeceasedAadharNumber(e) {
+  //   if (e.target.value.length != 0) {
+  //     if (e.target.value.length > 12) {
+  //       setAadharError(true);
+  //       return false;
+  //     } else if (e.target.value.length < 12) {
+  //       setAadharError(true);
+  //       setDeceasedAadharNumber(e.target.value);
+  //       return false;
+  //     } else {
+  //       setAadharError(false);
+  //       setDeceasedAadharNumber(e.target.value);
+  //       return true;
+  //     }
+  //   } else {
+  //     setAadharError(false);
+  //     setDeceasedAadharNumber(e.target.value);
+  //     return true;
+  //   }
+  // }
   function setSelectDeceasedAadharNumber(e) {
-    if (e.target.value.length != 0) {
-      if (e.target.value.length > 12) {
-        setAadharError(true);
-        return false;
-      } else if (e.target.value.length < 12) {
-        setAadharError(true);
-        setDeceasedAadharNumber(e.target.value);
-        return false;
-      } else {
-        setAadharError(false);
-        setDeceasedAadharNumber(e.target.value);
-        return true;
-      }
-    } else {
-      setAadharError(false);
-      setDeceasedAadharNumber(e.target.value);
-      return true;
+    if (e.target.value.trim().length != 0) {
+      setDeceasedAadharNumber(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
     }
   }
   function setSelectDeceasedIdproofNo(e) {
@@ -663,13 +669,8 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
     setselectDeathPlace(value);
     setValue(value.code);
 
-    let currentWorgFlow = workFlowData.filter(
-      (workFlowData) =>
-        workFlowData.DeathPlace === value.code &&
-        workFlowData.startdateperiod <= Difference_In_DaysRounded &&
-        workFlowData.enddateperiod >= Difference_In_DaysRounded
-    );
-    workFlowCode = currentWorgFlow[0].WorkflowCode;
+    let currentWorkFlow = workFlowData.filter(workFlowData => workFlowData.DeathPlace === value.code &&  (workFlowData.startdateperiod <= Difference_In_DaysRounded && workFlowData.enddateperiod >= Difference_In_DaysRounded) );
+    workFlowCode = currentWorkFlow[0].WorkflowCode;    
   }
   function selectAgeUnit(value) {
     setSelectedAgeUnit(value);
@@ -713,8 +714,10 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
     } else {
       setsexError(false);
     }
-    if (AadharError) {
-      validFlag = false;
+    if (DeceasedAadharNumber != null || DeceasedAadharNumber != "" || DeceasedAadharNumber != undefined) {
+      let adharLength = DeceasedAadharNumber; 
+      if (adharLength.length < 12 || adharLength.length > 12) {
+        validFlag = false;     
       setAadharError(true);
       setToast(true);
       setTimeout(() => {
@@ -723,6 +726,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
     } else {
       setAadharError(false);
     }
+  }
     if (Age == null || Age == "" || Age == undefined) {
       validFlag = false;
       setAgeError(true);
@@ -1155,7 +1159,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                 </CardLabel>
                 <Dropdown
                   t={t}
-                  optionKey="code"
+                  optionKey="name"
                   isMandatory={false}
                   option={cmbPlace}
                   selected={DeathPlace}
@@ -1506,7 +1510,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                   {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "number", title: t("CS_COMMON_INVALID_AGE") })}
                 />
               </div>
-              <div className="col-md-2">
+              <div className="col-md-1">
                 <CardLabel>
                   {`${t("CR_AGE_UNIT")}`}
                   <span className="mandatorycss">*</span>{" "}
@@ -1521,7 +1525,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                   placeholder={`${t("CR_AGE_UNIT")}`}
                 />
               </div>
-              <div className="col-md-2">
+              <div className="col-md-1">
                 <CardLabel>
                   {t("CR_GENDER")} <span className="mandatorycss">*</span>{" "}
                 </CardLabel>
@@ -1566,7 +1570,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                   placeholder={`${t("CS_COMMON_RELIGION")}`}
                 />
               </div>
-              <div className="col-md-2">
+              <div className="col-md-4">
                 <CardLabel>{t("CR_PROFESSIONAL")}</CardLabel>
                 <Dropdown
                   t={t}
