@@ -40,14 +40,6 @@ public class TravelDistanceToExitExtract extends FeatureExtract {
 
     @Override
     public PlanDetail validate(PlanDetail pl) {
-        HashMap<String, String> errors = new HashMap<>();
-        if (pl != null && pl.getTravelDistancesToExit().isEmpty()) {
-            errors.put(DcrConstants.TRAVEL_DIST_EXIT,
-                    edcrMessageSource.getMessage(DcrConstants.OBJECTNOTDEFINED,
-                            new String[] { DcrConstants.TRAVEL_DIST_EXIT },
-                            LocaleContextHolder.getLocale()));
-            pl.addErrors(errors);
-        }
         return pl;
     }
     

@@ -46,32 +46,39 @@
  */
 
 package org.egov.edcr.feature;
+import static org.egov.edcr.constants.AmendmentConstants.*;
+import static org.egov.edcr.utility.DcrConstants.*;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.concurrent.ConcurrentHashMap;
 
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.egov.common.entity.edcr.Block;
-import org.egov.common.entity.edcr.Building;
-import org.egov.common.entity.edcr.Floor;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
+import org.egov.edcr.entity.blackbox.MeasurementDetail;
+import org.egov.edcr.entity.blackbox.PlotDetail;
+import org.egov.edcr.utility.DcrConstants;
+import org.egov.edcr.utility.Util;
+import org.egov.edcr.utility.math.Polygon;
+import org.egov.edcr.utility.math.Ray;
+import org.kabeja.dxf.DXFVertex;
+import org.kabeja.dxf.helpers.Point;
 import org.springframework.stereotype.Service;
 
 @Service
 public class OverHangs extends FeatureProcess {
 
     private static final Logger LOG = LogManager.getLogger(OverHangs.class);
-    private static final String RULE_45 = "45";
-    public static final String OVERHANGS_DESCRIPTION = "Minimum width of chajja";
-    private static final String FLOOR = "Floor";
+    private static final String SUB_RULE_24_10 = "24(10)";
+    private static final String SUB_RULE_AMD19_26_9 = "26(9)";
+    final Ray rayCasting = new Ray(new Point(-1.123456789, -1.987654321, 0d));
 
     @Override
     public Plan validate(Plan pl) {
@@ -81,58 +88,70 @@ public class OverHangs extends FeatureProcess {
 
     @Override
     public Plan process(Plan pl) {
+    	LOG.info("Processing OverHang shades...");
+        String subRule;
+        if (AMEND_NOV19.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))) {
+            subRule = SUB_RULE_AMD19_26_9;
+			pl.getFeatureAmendments().put(SHADE, AMEND_DATE_081119.toString());
+        }
+        else
+            subRule = SUB_RULE_24_10;
+        List<Block> blocks = pl.getBlocks();
+        for (Block block : blocks) {
+            if (block.getBuilding() != null &&
+					block.getBuilding().getShade() != null) {
+				MeasurementDetail shade = (MeasurementDetail) block.getBuilding().getShade();
+				PlotDetail plot = (PlotDetail) pl.getPlot();
+				if (shade.getPolyLine() != null && plot.getPolyLine() != null) {
+					scrutinyDetail = new ScrutinyDetail();
+					scrutinyDetail.addColumnHeading(1, RULE_NO);
+					scrutinyDetail.addColumnHeading(2, REQUIRED);
+					scrutinyDetail.addColumnHeading(3, PROVIDED);
+					scrutinyDetail.addColumnHeading(4, STATUS);
+					scrutinyDetail.setHeading(SHADE);
+					scrutinyDetail.setKey("Block_" + block.getName() + "_" + SHADE);
 
-        Map<String, String> details = new HashMap<>();
-        details.put(RULE_NO, RULE_45);
-        details.put(DESCRIPTION, OVERHANGS_DESCRIPTION);
+					Polygon plotPolygon = Util.getPolygon(plot.getPolyLine());
 
-        BigDecimal minWidth = BigDecimal.ZERO;
+					Iterator shadeIterator = shade.getPolyLine().getVertexIterator();
+					Boolean shadeOutSideBoundary = false;
 
-        for (Block b : pl.getBlocks()) {
+					while (shadeIterator.hasNext()) {
+						DXFVertex dxfVertex = (DXFVertex) shadeIterator.next();
+						Point point = dxfVertex.getPoint();
+						if (!rayCasting.contains(point, plotPolygon))
+							shadeOutSideBoundary = true;
 
-            ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
-            scrutinyDetail.setKey("Block_" + b.getNumber() + "_" + "Chajja");
-            scrutinyDetail.addColumnHeading(1, RULE_NO);
-            scrutinyDetail.addColumnHeading(2, FLOOR);
-            scrutinyDetail.addColumnHeading(3, DESCRIPTION);
-            scrutinyDetail.addColumnHeading(4, PERMISSIBLE);
-            scrutinyDetail.addColumnHeading(5, PROVIDED);
-            scrutinyDetail.addColumnHeading(6, STATUS);
-            Building building = b.getBuilding();
-            if (building != null) {
-                for (Floor floor : building.getFloors()) {
-                    if (floor.getOverHangs() != null && !floor.getOverHangs().isEmpty()) {
-                        List<BigDecimal> widths = floor.getOverHangs().stream().map(overhang -> overhang.getWidth())
-                                .collect(Collectors.toList());
+					}
 
-                        minWidth = widths.stream().reduce(BigDecimal::min).get();
+					Map<String, String> details = new HashMap<>();
+					details.put(RULE_NO, subRule);
+					details.put(REQUIRED,
+							DcrConstants.SHADE + " for block " + block.getNumber() + " Should be inside Plot Boundary");
 
-                        if (minWidth.compareTo(new BigDecimal("0.75")) > 0) {
-                            details.put(FLOOR, floor.getNumber().toString());
-                            details.put(PERMISSIBLE, ">0.75");
-                            details.put(PROVIDED, minWidth.toString());
-                            details.put(STATUS, Result.Accepted.getResultVal());
-                            scrutinyDetail.getDetail().add(details);
-                            pl.getReportOutput().getScrutinyDetails().add(scrutinyDetail);
-                        } else {
-                            details.put(FLOOR, floor.getNumber().toString());
-                            details.put(PERMISSIBLE, ">0.75");
-                            details.put(PROVIDED, minWidth.toString());
-                            details.put(STATUS, Result.Not_Accepted.getResultVal());
-                            scrutinyDetail.getDetail().add(details);
-                            pl.getReportOutput().getScrutinyDetails().add(scrutinyDetail);
-                        }
-                    }
-                }
-            }
+					if (shadeOutSideBoundary) {
+						details.put(PROVIDED,
+								DcrConstants.SHADE + " for block " + block.getNumber() + "  is outside Plot Boundary");
+						details.put(STATUS, Result.Not_Accepted.getResultVal());
+					} else {
+						details.put(PROVIDED,
+								DcrConstants.SHADE + " for block " + block.getNumber() + "  is inside Plot Boundary");
+						details.put(STATUS, Result.Accepted.getResultVal());
+					}
 
+					scrutinyDetail.getDetail().add(details);
+					pl.getReportOutput().getScrutinyDetails().add(scrutinyDetail);
+				}
+			}
         }
         return pl;
     }
 
     @Override
     public Map<String, Date> getAmendments() {
-        return new LinkedHashMap<>();
+        Map<String, Date> meanofAccessAmendments = new ConcurrentHashMap<>();
+        meanofAccessAmendments.put(AMEND_NOV19, AMEND_DATE_081119);
+        return meanofAccessAmendments;
     }
 
 }

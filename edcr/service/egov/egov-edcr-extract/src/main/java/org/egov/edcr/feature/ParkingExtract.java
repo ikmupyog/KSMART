@@ -16,6 +16,7 @@ import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.egov.common.entity.edcr.Balcony;
 import org.egov.common.entity.edcr.Block;
 import org.egov.common.entity.edcr.Floor;
 import org.egov.common.entity.edcr.FloorUnit;
@@ -135,6 +136,24 @@ public class ParkingExtract extends FeatureExtract {
                     block.getHallAreas().add(hall);
                 }
             }
+            
+			String balconyLayer = layerNames.getLayerName("LAYER_NAME_BLOCK_NAME_PREFIX") + block.getNumber() + "_"
+					+ layerNames.getLayerName("LAYER_NAME_UNITFA_BALCONY") + "_" + "\\d";
+			List<String> layerNamesBal = Util.getLayerNamesLike(pl.getDoc(), balconyLayer);
+			for (String s : layerNamesBal) {
+				Util.getPolyLinesByLayer(pl.getDoc(), s).forEach(balconyPolyline -> {
+					MeasurementDetail m = new MeasurementDetail(balconyPolyline, true);
+					Balcony balcony = new Balcony();
+					balcony.setNumber(
+							balconyPolyline.getLayerName().substring(balconyPolyline.getLayerName().length() - 1));
+					balcony.setArea(m.getArea());
+					balcony.setLength(m.getLength());
+					balcony.setWidth(m.getWidth());
+					balcony.setHeight(m.getHeight());
+					balcony.setMinimumSide(m.getMinimumSide());
+					block.getBalconyAreas().add(balcony);
+				});
+			}
             
             String dinningLayer = layerNames.getLayerName("LAYER_NAME_BLOCK_NAME_PREFIX") + block.getNumber() + "_"
                     + layerNames.getLayerName("LAYER_NAME_UNITFA_DINING") + "_" + "\\d";
