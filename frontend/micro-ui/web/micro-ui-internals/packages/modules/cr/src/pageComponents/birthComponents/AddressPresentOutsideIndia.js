@@ -47,7 +47,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
   }
 
   function setSelectadrsCityTown(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setadrsCityTown(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       if (isPrsentAddress) {
         setadrsPermntOutsideIndiaCityTown(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
@@ -58,7 +58,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
   }
 
   function setSelectAdressEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setAdressEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       if (isPrsentAddress) {
         setadrsPermntOutsideIndiaLineoneEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
@@ -68,7 +68,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
     }
   }
   function setSelectAdressEnB(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setAdressEnB(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       if (isPrsentAddress) {
         setadrsPermntOutsideIndiaLinetwoEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
@@ -110,7 +110,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
   }
 
   function setSelectProvinceEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setProvinceEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       if (isPrsentAddress) {
         setPermntOutsideIndiaprovinceEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));

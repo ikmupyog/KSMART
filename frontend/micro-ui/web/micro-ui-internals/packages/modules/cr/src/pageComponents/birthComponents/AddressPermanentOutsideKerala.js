@@ -121,7 +121,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
     }
   }
   function setSelectoutsideKeralaPostOfficeEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setpermntoutsideKeralaPostOfficeEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
@@ -134,7 +134,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
     }
   }
   function setSelectpermntOutsideKeralaHouseNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setpermntOutsideKeralaHouseNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
@@ -147,7 +147,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
     }
   }
   function setSelectpermntOutsideKeralaLocalityNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setpermntOutsideKeralaLocalityNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
@@ -160,7 +160,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
     }
   }
   function setSelectpermntOutsideKeralaStreetNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setpermntOutsideKeralaStreetNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
@@ -173,7 +173,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
     }
   }
   function setSelectpermntOutsideKeralaCityVilgeEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setpermntOutsideKeralaCityVilgeEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
