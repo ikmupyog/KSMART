@@ -43,6 +43,7 @@ import StillBirthCheckPage from "./pages/citizen/StillBirthRegistration/StillBir
 
 import BornOutsideChildDetails from "../src/pageComponents/bornOutsideIndiaComponents/BornOutsideChildDetails";
 import BornOutsideParentsDetails from "../src/pageComponents/bornOutsideIndiaComponents/BornOutsideParentsDetails";
+import BornOutsideStaticInfn from "./pageComponents/bornOutsideIndiaComponents/BornOutsideStaticInfn";
 import BornOutsideCheckPage from "./pages/citizen/BornOutsideReg/BornOutsideCheckPage";
 
 // import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
@@ -237,6 +238,7 @@ const componentsToRegister = {
   //////////////////
   BornOutsideChildDetails,
   BornOutsideParentsDetails,
+  BornOutsideStaticInfn,
   BornOutsideCheckPage,
   //////////////////
   // SearchRegistry,

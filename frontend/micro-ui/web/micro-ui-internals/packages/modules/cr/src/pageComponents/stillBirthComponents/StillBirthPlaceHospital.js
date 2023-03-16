@@ -3,8 +3,16 @@ import { FormStep, CardLabel, TextInput, Dropdown, Loader } from "@egovernments/
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
 
-const StillBirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospitalName, hospitalName, hospitalNameMl,
-  selectHospitalNameMl, isEditBirth = false
+const StillBirthPlaceHospital = ({
+  config,
+  onSelect,
+  userType,
+  formData,
+  selectHospitalName,
+  hospitalName,
+  hospitalNameMl,
+  selectHospitalNameMl,
+  isEditBirth = false,
 }) => {
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
@@ -25,22 +33,22 @@ const StillBirthPlaceHospital = ({ config, onSelect, userType, formData, selectH
   let cmbhospital = [];
   let cmbhospitalMl = [];
   hospitalData &&
-    hospitalData["egov-location"] && hospitalData["egov-location"].hospitalList &&
+    hospitalData["egov-location"] &&
+    hospitalData["egov-location"].hospitalList &&
     hospitalData["egov-location"].hospitalList.map((ob) => {
       cmbhospital.push(ob);
     });
   if (isEditBirth) {
     if (formData?.StillBirthChildDetails?.hospitalCode != null) {
       if (cmbhospital.length > 0 && (hospitalName === undefined || hospitalName === "")) {
-        selectHospitalName(cmbhospital.filter(cmbhospital => cmbhospital.code === formData?.StillBirthChildDetails?.hospitalCode)[0]);
-        cmbhospitalMl = cmbhospital.filter(cmbhospital => cmbhospital.code === formData?.StillBirthChildDetails?.hospitalCode)[0];
+        selectHospitalName(cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.StillBirthChildDetails?.hospitalCode)[0]);
+        cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.StillBirthChildDetails?.hospitalCode)[0];
         selectHospitalNameMl(cmbhospitalMl);
       }
     }
   }
 
   useEffect(() => {
-
     if (isInitialRender) {
       if (formData?.StillBirthChildDetails?.hospitalName) {
         selectHospitalNameMl(hospitalNameMl);
@@ -53,7 +61,7 @@ const StillBirthPlaceHospital = ({ config, onSelect, userType, formData, selectH
         }
       }
     }
-  }, [cmbhospitalMl, isInitialRender])
+  }, [cmbhospitalMl, isInitialRender]);
   const onSkip = () => onSelect();
 
   function setselectHospitalName(value) {
@@ -64,9 +72,7 @@ const StillBirthPlaceHospital = ({ config, onSelect, userType, formData, selectH
     selectHospitalNameMl(value);
   }
 
-
-  const goNext = () => {
-  };
+  const goNext = () => {};
   if (isLoading) {
     return <Loader></Loader>;
   } else
@@ -113,7 +119,6 @@ const StillBirthPlaceHospital = ({ config, onSelect, userType, formData, selectH
               />
             </div>
           </div>
-
         </FormStep>
       </React.Fragment>
     );
