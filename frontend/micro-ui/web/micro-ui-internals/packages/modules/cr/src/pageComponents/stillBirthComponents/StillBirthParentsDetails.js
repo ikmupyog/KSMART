@@ -127,7 +127,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
 
     if (formData?.StillBirthParentsDetails?.isfatherInfo != null) {
       setIsInitialRender(false);
-      setIsfatherInfo(formData?.StillBirthParentsDetails?.isfatherInfo);
+      setIsFatherInfo(formData?.StillBirthParentsDetails?.isfatherInfo);
     }
 
   }, [isInitialRender]);
