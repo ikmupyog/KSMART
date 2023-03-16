@@ -535,10 +535,27 @@ export const newConfig = [
         },
         withoutLabel: true,
         key: "BornOutsideParentsDetails",
+        nextStep: "born-outside-address",
+        type: "component",
+        hideInEmployee: false,
+      },
+      {
+        route: "born-outside-address",
+        component: "AddressBasePage",
+        texts: {
+          headerCaption: "",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "AddressBirthDetails",
         nextStep: "born-outside-static-infn",
         type: "component",
         hideInEmployee: false,
       },
+
       {
         route: "born-outside-static-infn",
         component: "BornOutsideStaticInfn",
