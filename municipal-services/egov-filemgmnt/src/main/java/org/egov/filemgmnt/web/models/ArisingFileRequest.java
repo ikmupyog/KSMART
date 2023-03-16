@@ -9,6 +9,8 @@ import javax.validation.constraints.Size;
 
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.response.ResponseInfo;
+import org.egov.filemgmnt.web.models.communication.CommunicationFile;
+import org.egov.filemgmnt.web.models.communication.CommunicationFileRequest;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -47,6 +49,15 @@ public class ArisingFileRequest {
 	    private RequestInfo requestInfo;
 
 	    @JsonProperty("ArisingFile")
-	    private ArisingFile arisingFileDetail;
+	    private List<ArisingFile> arisingFileDetail;
+	    
+	    public ArisingFileRequest addArisingFile(ArisingFile arisingFile) {
+
+	        if (arisingFileDetail == null) {
+	        	arisingFileDetail = new ArrayList<>();
+	        }
+	        arisingFileDetail.add(arisingFile);
+	        return this;
+	    }
 	    
 	 }

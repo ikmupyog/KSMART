@@ -6,6 +6,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
+import org.egov.filemgmnt.web.models.communication.CommunicationFile;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -19,7 +20,11 @@ import lombok.Setter;
 
 @Schema(description="A Object holds the file data of arising file submitted by the user")
 @Validated
-
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 
 public class ArisingFile {
 
@@ -57,13 +62,13 @@ public class ArisingFile {
     @JsonProperty("fileArisingDate")
     private Long fileArisingDate;
 
-    @Schema(type = "string", description = "Financial year")
-//  @NotNull(message = "Financial year is required")
-//    @Size(min = 4, max = 4, message = "Invalid financial year")
+    @Schema(type = "string", description = "Calendar year")
+//  @NotNull(message = "Calendar year is required")
+//    @Size(min = 4, max = 4, message = "Invalid calendar year")
     @Size(max = 10)
-//    @Pattern(regexp = "^[1-9][0-9]{3}$", message = "Invalid financial year")
-    @JsonProperty("financialYear")
-    private String financialYear;
+//    @Pattern(regexp = "^[1-9][0-9]{3}$", message = "Invalid Calendar year")
+    @JsonProperty("Year")
+    private String Year;
 
 
     @Schema(type = "string", description = "Workflow code")
