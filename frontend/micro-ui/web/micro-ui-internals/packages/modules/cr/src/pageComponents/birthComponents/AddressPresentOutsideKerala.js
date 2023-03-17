@@ -88,6 +88,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
       }
     }
   }, [cmbFilterDistrict, isInitialRender]);
+  
   if (isEditBirth || isEditDeath) {
     if (formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaDistrict != null) {
       if (cmbDistrict.length > 0 && (presentOutsideKeralaDistrict === undefined || presentOutsideKeralaDistrict === "")) {

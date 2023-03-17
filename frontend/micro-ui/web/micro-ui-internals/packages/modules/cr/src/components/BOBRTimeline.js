@@ -11,6 +11,8 @@ const getAction = (flow) => {
     default: actions = [
       'CR_BIRTH_CHILD_DETAILS',
       'CR_PARENTS_DETAILS',
+      'BIRTH_TIME_LINE_ADDRESS',
+      'BORNOUTSIDE_BIRTH_STATIC_INFORMATION',
       'BIRTH_TIME_LINE_SUMMARY',
       
     ]
