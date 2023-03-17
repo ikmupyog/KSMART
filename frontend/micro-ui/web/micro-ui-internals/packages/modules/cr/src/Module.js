@@ -2,6 +2,11 @@ import { CitizenHomeCard, CaseIcon } from "@egovernments/digit-ui-react-componen
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useRouteMatch } from "react-router-dom";
+import AdoptionChildDetails from "../src/pageComponents/adoptionComponents/AdoptionChildDetails";
+import AdoptionAddressBasePage from "../src/pageComponents/adoptionComponents/AdoptionAddressBasePage";
+import AdoptionParentsDetails from "./pageComponents/adoptionComponents/AdoptionParentsDetails";
+import AdoptionInitiatorDetails from "../src/pageComponents/adoptionComponents/AdoptionInitiatorDetails";
+
 import ChildDetails from "../src/pageComponents/birthComponents/ChildDetails";
 import AddressOne from "./pageComponents/birthComponents/OldAddressOne";
 import AddressInsideIndia from "./pageComponents/birthComponents/OldAddressInsideIndia";
@@ -9,6 +14,7 @@ import AddressSameAsAbove from "../src/pageComponents/birthComponents/AddressSam
 import AddressPermanent from "../src/pageComponents/birthComponents/AddressPermanent";
 import MultipleBirth from "../src/pageComponents/birthComponents/MultipleBirth";
 import CreateBirthRegistration from "./pages/citizen/BirthRegistration";
+import CreateAdoptions from "./pages/citizen/Adoption";
 import CreateStillBirthRegistration from "./pages/citizen/StillBirthRegistration";
 import CreateBornOutsideRegistration from "./pages/citizen/BornOutsideReg"
 
@@ -37,11 +43,13 @@ import StillBirthPlaceInstitution from "../src/pageComponents/stillBirthComponen
 import StillBirthPlaceHospital from "../src/pageComponents/stillBirthComponents/StillBirthPlaceHospital";
 import StillBirthPlaceHome from "../src/pageComponents/stillBirthComponents/StillBirthPlaceHome";
 import StillBirthInitiatorDetails from "../src/pageComponents/stillBirthComponents/StillBirthInitiatorDetails";
+import StillBirthInformarDetails from "./pageComponents/stillBirthComponents/StillBirthInformarDetails";
 import StillBirthCheckPage from "./pages/citizen/StillBirthRegistration/StillBirthCheckPage";
 
 
 import BornOutsideChildDetails from "../src/pageComponents/bornOutsideIndiaComponents/BornOutsideChildDetails";
 import BornOutsideParentsDetails from "../src/pageComponents/bornOutsideIndiaComponents/BornOutsideParentsDetails";
+import BornOutsideStaticInfn from "./pageComponents/bornOutsideIndiaComponents/BornOutsideStaticInfn";
 import BornOutsideCheckPage from "./pages/citizen/BornOutsideReg/BornOutsideCheckPage";
 
 // import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
@@ -90,9 +98,11 @@ import CRSearchdeathcorrection from "./pages/employee/SearchCorrection";
 import CRSearchDeathCorrectionRoute from "./pages/employee/DeathCorrection/DeathCorrectionroute";
 import CRDeathcorrection from "./pages/employee/DeathCorrection";
 import CustomTimePicker from "./components/CustomTimePicker";
+import AdoptionCheckPage from "./pages/citizen/Adoption/AdoptionCheckPage";
 import BirthCheckPage from "./pages/citizen/BirthRegistration/BirthCheckPage";
 import DeathCheckPage from "./pages/citizen/DeathRegistration/DeathCheckPage";
 import MarriageCheckPage from "./pages/citizen/MarriageRegistration/MarriageCheckPage";
+import AdoptionAcknowledgement from "./pages/citizen/Adoption/AdoptionAcknowledgement";
 import BirthAcknowledgement from "./pages/citizen/BirthRegistration/BirthAcknowledgement";
 import StillBirthAcknowledgement from "./pages/citizen/StillBirthRegistration/StillBirthAcknowledgement";
 import DeathAcknowledgement from "./pages/citizen/DeathRegistration/DeathAcknowledgement";
@@ -194,6 +204,10 @@ const componentsToRegister = {
   CRModule,
   CRLinks,
   CRCard,
+  AdoptionChildDetails,
+  AdoptionAddressBasePage,
+  AdoptionParentsDetails,
+  AdoptionInitiatorDetails,
   ChildDetails,
   CRCitizenApplicationDetails,
   CRApplicationDetails,
@@ -209,6 +223,7 @@ const componentsToRegister = {
   AddressPermanent,
   MultipleBirth,
   CRCreateBirthRegistration: CreateBirthRegistration,
+  CRCreateAdoptions:CreateAdoptions,
   CRCreateStillBirthRegistration: CreateStillBirthRegistration,
   CRCreateBornOutsideRegistration: CreateBornOutsideRegistration,  
   ParentsDetails,
@@ -236,10 +251,12 @@ const componentsToRegister = {
   StillBirthPlacePublicPlace,
   StillBirthPlaceVehicle,
   StillBirthInitiatorDetails,
+  StillBirthInformarDetails,
   StillBirthCheckPage,
   //////////////////
   BornOutsideChildDetails,
   BornOutsideParentsDetails,
+  BornOutsideStaticInfn,
   BornOutsideCheckPage,
   //////////////////
   // SearchRegistry,
@@ -279,9 +296,11 @@ const componentsToRegister = {
   Initiater,
   // DeathCertificate,
   // GeneralRemarks,
+  AdoptionCheckPage,
   BirthCheckPage,
   DeathCheckPage,
   MarriageCheckPage,
+  AdoptionAcknowledgement,
   BirthAcknowledgement,
   DeathAcknowledgement,
   MarriageAcknowledgement,

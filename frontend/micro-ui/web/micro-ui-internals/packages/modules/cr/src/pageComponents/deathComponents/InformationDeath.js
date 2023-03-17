@@ -23,7 +23,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
   }
   const { t } = useTranslation();
   let validation = {};
- 
+
   const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
     stateId,
     "birth-death-service",
@@ -161,12 +161,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
       ? convertEpochToDate(formData?.InformationDeath?.setDeathTimeTo)
       : formData?.InformationDeath?.setDeathTimeTo
   );
-  // const [DeathDate, setDeathDate] = useState(
-  //   isEditDeathPageComponents === false &&
-  //     (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
-  //     ? convertEpochToDate(formData?.InformationDeath?.DeathDate)
-  //     : formData?.InformationDeath?.DeathDate
-  // );
+
   const [ToDate, setToDate] = useState(
     isEditDeathPageComponents === false &&
       (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
@@ -189,12 +184,17 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
   const [DeceasedAadharNumber, setDeceasedAadharNumber] = useState(
     formData?.InformationDeath?.DeceasedAadharNumber ? formData?.InformationDeath?.DeceasedAadharNumber : ""
   );
+  const [isTextboxEnabled, setIsTextboxEnabled] = useState(false);
   const [DeceasedIdproofType, setSelectedDeceasedIdproofType] = useState(
     formData?.InformationDeath?.DeceasedIdproofType ? formData?.InformationDeath?.DeceasedIdproofType : null
   );
   const [DeceasedIdproofNo, setDeceasedIdproofNo] = useState(
     formData?.InformationDeath?.DeceasedIdproofNo ? formData?.InformationDeath?.DeceasedIdproofNo : null
   );
+
+  const handleDropdownChange = () => {
+    setIsTextboxEnabled(true);
+  };
   const [DeceasedFirstNameEn, setDeceasedFirstNameEn] = useState(
     formData?.InformationDeath?.DeceasedFirstNameEn ? formData?.InformationDeath?.DeceasedFirstNameEn : ""
   );
@@ -482,7 +482,26 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
       }
     }
   }, [isInitialRenderDeathPlace]);
-
+  function setCheckedDate(e) {
+    if (e.target.checked === true) {
+      setChecked(e.target.checked);
+      setFromDate("");
+      setToDate("");
+    } else {
+      setChecked(e.target.checked);
+      setDateOfDeath("");
+      setDeathTime("");
+    }
+  }
+  // function setChecked(e) {
+  //   if (e.target.checked === true) {
+  //     checked(e.target.checked);
+  //     setFromDate("");
+  //     setToDate("");
+  //   } else {
+  //     setDateOfDeath("");
+  //   }
+  // }
   function selectFromDate(value) {
     setFromDate(value);
     const today = new Date();
@@ -546,68 +565,45 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
     setselectedDeceasedGender(value);
   }
   function setSelectDeceasedLastNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!e.target.value.match(pattern)) {
+      e.preventDefault();
+      setDeceasedLastNameMl("");
     } else {
-      setDeceasedLastNameMl(
-        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-      );
+      setDeceasedLastNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectDeceasedMiddleNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!e.target.value.match(pattern)) {
+      e.preventDefault();
+      setDeceasedMiddleNameMl("");
     } else {
-      setDeceasedMiddleNameMl(
-        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-      );
+      setDeceasedMiddleNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectDeceasedFirstNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!e.target.value.match(pattern)) {
+      e.preventDefault();
+      setDeceasedFirstNameMl("");
     } else {
-      setDeceasedFirstNameMl(
-        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-      );
+      setDeceasedFirstNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectDeceasedFirstNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-    } else {
-      setDeceasedFirstNameEn(
-        e.target.value.replace(
-          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
-          ""
-        )
-      );
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setDeceasedFirstNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
-
   function setSelectDeceasedMiddleNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-    } else {
-      setDeceasedMiddleNameEn(
-        e.target.value.replace(
-          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
-          ""
-        )
-      );
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setDeceasedMiddleNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
-
   function setSelectDeceasedLastNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-    } else {
-      setDeceasedLastNameEn(
-        e.target.value.replace(
-          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
-          ""
-        )
-      );
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setDeceasedLastNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectAge(e) {
@@ -639,7 +635,9 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
   // }
   function setSelectDeceasedAadharNumber(e) {
     if (e.target.value.trim().length != 0) {
-      setDeceasedAadharNumber(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
+      setDeceasedAadharNumber(
+        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
+      );
     }
   }
   function setSelectDeceasedIdproofNo(e) {
@@ -669,14 +667,20 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
     setselectDeathPlace(value);
     setValue(value.code);
 
-    let currentWorkFlow = workFlowData.filter(workFlowData => workFlowData.DeathPlace === value.code &&  (workFlowData.startdateperiod <= Difference_In_DaysRounded && workFlowData.enddateperiod >= Difference_In_DaysRounded) );
-    workFlowCode = currentWorkFlow[0].WorkflowCode;    
+    let currentWorkFlow = workFlowData.filter(
+      (workFlowData) =>
+        workFlowData.DeathPlace === value.code &&
+        workFlowData.startdateperiod <= Difference_In_DaysRounded &&
+        workFlowData.enddateperiod >= Difference_In_DaysRounded
+    );
+    workFlowCode = currentWorkFlow[0].WorkflowCode;
   }
   function selectAgeUnit(value) {
     setSelectedAgeUnit(value);
   }
   function selectDeceasedIdproofType(value) {
     setSelectedDeceasedIdproofType(value);
+    setIsTextboxEnabled(true);
   }
 
   const handleTimeChange = (value, cb) => {
@@ -692,6 +696,9 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
       setDeceasedAadharNotAvailable(e.target.checked);
       setSelectedDeceasedIdproofType("");
       setDeceasedIdproofNo("");
+      setDeceasedAadharNumber("");
+      setAadharError(false);
+      setToast(false);
     }
   }
 
@@ -715,18 +722,18 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
       setsexError(false);
     }
     if (DeceasedAadharNumber != null || DeceasedAadharNumber != "" || DeceasedAadharNumber != undefined) {
-      let adharLength = DeceasedAadharNumber; 
+      let adharLength = DeceasedAadharNumber;
       if (adharLength.length < 12 || adharLength.length > 12) {
-        validFlag = false;     
-      setAadharError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      setAadharError(false);
+        validFlag = false;
+        setAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setAadharError(false);
+      }
     }
-  }
     if (Age == null || Age == "" || Age == undefined) {
       validFlag = false;
       setAgeError(true);
@@ -794,7 +801,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
       sessionStorage.setItem("DeathTimeTo", DeathTimeTo ? DeathTimeTo : null);
 
       sessionStorage.setItem("DateOfDeath", DateOfDeath ? DateOfDeath : null);
-      sessionStorage.setItem("TimeOfDeath", TimeOfDeath ? TimeOfDeath : null);
+      sessionStorage.setItem("DeathTime", DeathTime ? DeathTime : null);
       sessionStorage.setItem("DeceasedFirstNameEn", DeceasedFirstNameEn ? DeceasedFirstNameEn : null);
       sessionStorage.setItem("DeceasedMiddleNameEn", DeceasedMiddleNameEn ? DeceasedMiddleNameEn : null);
       sessionStorage.setItem("DeceasedLastNameEn", DeceasedLastNameEn ? DeceasedLastNameEn : null);
@@ -814,8 +821,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
       sessionStorage.setItem("Occupation", Occupation ? Occupation.code : null);
       sessionStorage.setItem("DeathPlace", DeathPlace ? DeathPlace.code : null);
 
-      sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
-      sessionStorage.setItem("HospitalNameMl", HospitalNameMl ? HospitalNameMl.code : null);
       sessionStorage.setItem("workFlowCode", workFlowCode);
 
       sessionStorage.setItem("DeathPlaceTypecode", DeathPlaceType ? DeathPlaceType.code : null);
@@ -825,7 +830,9 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
 
       if (DeathPlace.code === "HOSPITAL") {
         //  ?sessionStorage.setItem("DeathPlace", DeathPlace.code);
+        // sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
         sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
+        sessionStorage.setItem("HospitalNameMl", HospitalNameMl ? HospitalNameMl.code : null);
         sessionStorage.removeItem("DeathPlaceInstId");
       }
       if (DeathPlace.code === "INSTITUTION") {
@@ -891,7 +898,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
         DeathTimeFrom,
         tenantId,
         DateOfDeath,
-        TimeOfDeath,
+        DeathTime,
         DeceasedFirstNameEn,
         DeceasedMiddleNameEn,
         DeceasedLastNameEn,
@@ -1025,12 +1032,12 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
               <div className="col-md-12">
                 <div className="col-md-6">
                   {/* <CheckBox label={t("CR_EXACT_DEATH_DATE_NOT_AVAILABLE")} onChange={() => setChecked((checked) => !checked)} value={checked} /> */}
-                  <CheckBox label={t("CR_EXACT_DEATH_DATE_NOT_AVAILABLE")} onChange={() => setChecked(!checked)} value={checked} checked={checked} />
+                  <CheckBox label={t("CR_EXACT_DEATH_DATE_NOT_AVAILABLE")} onChange={setCheckedDate} value={checked} checked={checked} />
                 </div>
               </div>
             </div>
             {/* {inside && ( */}
-            {checked ? (
+            {checked === true && (
               <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-3">
@@ -1078,7 +1085,8 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                   </div>
                 </div>
               </div>
-            ) : (
+            )}
+            {checked === false && (
               <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-6">
@@ -1332,6 +1340,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                     t={t}
                     optionKey="name"
                     isMandatory={false}
+                    onChange={handleDropdownChange}
                     option={cmbDocumentType}
                     selected={DeceasedIdproofType}
                     select={selectDeceasedIdproofType}
@@ -1348,6 +1357,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                     optionKey="i18nKey"
                     name="DeceasedIdproofNo"
                     value={DeceasedIdproofNo}
+                    disabled={!isTextboxEnabled}
                     onChange={setSelectDeceasedIdproofNo}
                     placeholder={`${t("CR_ID_NO")}`}
                     {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "Text", title: t("CR_INVALID_ID") })}

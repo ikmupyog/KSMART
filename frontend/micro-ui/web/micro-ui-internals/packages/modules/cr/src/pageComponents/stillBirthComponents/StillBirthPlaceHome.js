@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, Loader, Toast } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/SBRTimeline";
+import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 // import { sleep } from "react-query/types/core/utils";
 
 const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
   adrsPincode, adrsHouseNameEn, adrsHouseNameMl, adrsLocalityNameEn, adrsLocalityNameMl, adrsStreetNameEn, adrsStreetNameMl,
   wardNo, setWardNo, adrsPostOffice, setAdrsPostOffice, setAdrsPincode, setAdrsHouseNameEn, setAdrsHouseNameMl, setAdrsLocalityNameEn,
-  setAdrsLocalityNameMl, setAdrsStreetNameEn, setAdrsStreetNameMl, PostOfficevalues, setPostOfficevalues
+  setAdrsLocalityNameMl, setAdrsStreetNameEn, setAdrsStreetNameMl, PostOfficevalues, setPostOfficevalues,
+  isEditBirth
 
 }) => {
   const [pofilter, setPofilter] = useState(false);
@@ -23,9 +24,10 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
   }
   const { data: PostOffice = {}, isPostOfficeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
   const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
-  const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
+  const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "boundary-data");
   const [isInitialRender, setIsInitialRender] = useState(true);
-const [cmbFilterPostOffice,setCmbFilterPostOffice] = useState([]);
+  const [cmbFilterPostOffice, setCmbFilterPostOffice] = useState([]);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
   let cmbPostOffice = [];
   let cmbLB = [];
   let currentLB = [];
@@ -66,15 +68,27 @@ const [cmbFilterPostOffice,setCmbFilterPostOffice] = useState([]);
     if (isInitialRender) {
       if (cmbLB.length > 0) {
         currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
-       // cmbFilterPostOffice = cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === currentLB[0].city.districtid);
-       setCmbFilterPostOffice(cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === currentLB[0].city.districtid));
-       setPostOfficevalues(cmbFilterPostOffice);
+        setCmbFilterPostOffice(cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === currentLB[0].city.districtid));
+        setPostOfficevalues(cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === currentLB[0].city.districtid));
         setIsInitialRender(false);
       }
     }
   }, [localbodies, PostOfficevalues, isInitialRender]);
   const onSkip = () => onSelect();
-
+  // if (isEditBirth) {
+  //   if (formData?.ChildDetails?.adrsPostOffice != null) {
+  //     if (cmbPostOffice.length > 0 && (adrsPostOffice === undefined || adrsPostOffice === "")) {
+  //       let pin = cmbPostOffice.filter(cmbPostOffice => cmbPostOffice.code === formData?.ChildDetails?.adrsPostOffice)[0];
+  //       setAdrsPostOffice(cmbPostOffice.filter(cmbPostOffice => cmbPostOffice.code === formData?.ChildDetails?.adrsPostOffice)[0]);
+  //       setAdrsPincode(pin.pincode);
+  //     }
+  //   }
+  //   if (formData?.ChildDetails?.wardNo != null) {
+  //     if (cmbWardNo.length > 0 && (wardNo === undefined || wardNo === "")) {
+  //       setWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.ChildDetails?.wardNo)[0]);
+  //     }
+  //   }
+  // }
   function setSelectAdrsPostOffice(value) {
     setAdrsPostOffice(value);
     setAdrsPincode(value.pincode);
@@ -101,7 +115,6 @@ const [cmbFilterPostOffice,setCmbFilterPostOffice] = useState([]);
   //     }
   //   }
   // }
-  let potemp = [];
   const setSelectAdrsPincode = (e => {
 
     if (e.target.value.length === 6) {
@@ -112,150 +125,78 @@ const [cmbFilterPostOffice,setCmbFilterPostOffice] = useState([]);
       setPostOfficevalues(cmbFilterPostOffice);
       setPofilter(false);
     }
-    setAdrsPincode(e.target.value.length <= 6 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 6));
+    setAdrsPincode(e.target.value.length <= 6 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/gi, '')).substring(0, 6));
     setAdrsPostOffice(PostOfficevalues.filter((postoffice) => parseInt(postoffice.pincode) === parseInt(e.target.value))[0]);
   });
 
-  // if (pofilter){
-    
-  //   setPostOfficevalues(potemp);
-  //   setPofilter(false);
-  //   console.log(JSON.stringify(PostOfficevalues));
-  // }
-
-    //PostOfficevalues = potemp;
-  // const changesetPincode = (e => {()
-  //   setPincode(e.target.value.length <= 6 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 6));
-  //   setPostOffice(cmbPostOffice.filter((postoffice) => {
-  //     postoffice.pincode === e.target.value.pincode
-  //   }));
-  // });
   function setSelectAdrsHouseNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setAdrsHouseNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9 ]*$") != null)) {
+      setAdrsHouseNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectAdrsHouseNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setAdrsHouseNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$/;
+    if(!(e.target.value.match(pattern))){
+      e.preventDefault();
+      setAdrsHouseNameMl('');
+    }
+    else{
+      setAdrsHouseNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
   function setSelectAdrsLocalityNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setAdrsLocalityNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setAdrsLocalityNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectAdrsLocalityNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setAdrsLocalityNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if(!(e.target.value.match(pattern))){
+      e.preventDefault();
+      setAdrsLocalityNameMl('');
+    }
+    else{
+      setAdrsLocalityNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
   function setSelectAdrsStreetNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setAdrsStreetNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setAdrsStreetNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectAdrsStreetNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setAdrsStreetNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if(!(e.target.value.match(pattern))){
+      e.preventDefault();
+      setAdrsStreetNameMl('');
+    }
+    else{
+      setAdrsStreetNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectWard(value) {
     console.log(value);
     setWardNo(value);
   }
+  function setCheckMalayalamInputField(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
+    if(!(e.key.match(pattern))){
+      e.preventDefault();
+    }    
+  }
+  function setCheckMalayalamInputSplChar(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]/;
+    if(!(e.key.match(pattern))) {
+      e.preventDefault();
+    }    
+  }
   let validFlag = true;
 
   const goNext = () => {
 
-    // if (adrsLocalityNameEn == null || adrsLocalityNameEn == "" || adrsLocalityNameEn == undefined) {
-    //   validFlag = false;
-    //   setAdsHomeLocalityNameEnError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 2000);
-    // } else {
-    //   setAdsHomeLocalityNameEnError(false);
-    // }
 
-    // if (adrsLocalityNameMl == null || adrsLocalityNameMl == "" || adrsLocalityNameMl == undefined) {
-    //   validFlag = false;
-    //   setAdsHomeLocalityNameMlError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 2000);
-    // } else {
-    //   setAdsHomeLocalityNameMlError(false);
-    // }
-    // if (adrsHouseNameEn == null || adrsHouseNameEn == "" || adrsHouseNameEn == undefined) {
-    //   validFlag = false;
-    //   setAdsHomeHouseNameEnError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 2000);
-    // } else {
-    //   setAdsHomeHouseNameEnError(false);
-    // }
-    // if (adrsHouseNameMl == null || adrsHouseNameMl == "" || adrsHouseNameMl == undefined) {
-    //   validFlag = false;
-    //   setAdsHomeHouseNameMlError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 2000);
-    // } else {
-    //   setAdsHomeHouseNameMlError(false);
-    // }
-
-
-
-    // if (validFlag == true) {
-
-    //   sessionStorage.setItem("adrsHouseNameEn", adrsHouseNameEn ? adrsHouseNameEn  : null);
-    //   sessionStorage.setItem("adrsHouseNameMl", adrsHouseNameMl  ? adrsHouseNameMl  : null);
-    //   sessionStorage.setItem("adrsLocalityNameEn", adrsLocalityNameEn  ? adrsLocalityNameEn  : null);
-    //   sessionStorage.setItem("adrsLocalityNameMl", adrsLocalityNameMl  ? adrsLocalityNameMl  : null);
-    //   sessionStorage.setItem("adrsStreetNameEn", adrsStreetNameEn  ? adrsStreetNameEn  : null);
-    //   sessionStorage.setItem("adrsStreetNameMl", adrsStreetNameMl  ? adrsStreetNameMl  : null);
-    //   sessionStorage.setItem("adrsPostOffice", adrsPostOffice  ? adrsPostOffice.code  : null);
-    //   sessionStorage.setItem("adrsPincode", adrsPincode  ? adrsPincode .code  : null);
-    //   sessionStorage.setItem(" wardNo",  wardNo.code);
-
-    //   onSelect(config.key, {
-    //     adrsHouseNameEn,
-    //     adrsHouseNameMl,
-    //     adrsLocalityNameEn,
-    //     adrsLocalityNameMl,
-    //     adrsStreetNameEn,
-    //     adrsStreetNameMl,
-    //     adrsPostOffice,
-    //     adrsPincode,
-
-    //   });
-    // }
   };
 
   if (isPostOfficeLoading || isWardLoaded || islocalbodiesLoading) {
@@ -285,6 +226,7 @@ const [cmbFilterPostOffice,setCmbFilterPostOffice] = useState([]);
                 selected={wardNo}
                 select={setSelectWard}
                 placeholder={`${t("CS_COMMON_WARD")}`}
+                disable={isDisableEdit}
                 {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
               />
             </div>
@@ -299,6 +241,7 @@ const [cmbFilterPostOffice,setCmbFilterPostOffice] = useState([]);
                 option={PostOfficevalues}
                 selected={adrsPostOffice}
                 select={setSelectAdrsPostOffice}
+                disable={isDisableEdit}
                 placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
               />
             </div>
@@ -314,6 +257,7 @@ const [cmbFilterPostOffice,setCmbFilterPostOffice] = useState([]);
                 name="adrsPincode"
                 value={adrsPincode}
                 onChange={setSelectAdrsPincode}
+                disable={isDisableEdit}
                 placeholder={`${t("CS_COMMON_PIN_CODE")}`}
                 {...(validation = {
                   pattern: "^[0-9]{6}$",
@@ -339,6 +283,7 @@ const [cmbFilterPostOffice,setCmbFilterPostOffice] = useState([]);
                 name="adrsLocalityNameEn"
                 value={adrsLocalityNameEn}
                 onChange={setSelectAdrsLocalityNameEn}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_LOCALITY_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
               />
@@ -352,6 +297,7 @@ const [cmbFilterPostOffice,setCmbFilterPostOffice] = useState([]);
                 name="adrsStreetNameEn"
                 value={adrsStreetNameEn}
                 onChange={setSelectAdrsStreetNameEn}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_STREET_NAME_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
               />
@@ -368,8 +314,9 @@ const [cmbFilterPostOffice,setCmbFilterPostOffice] = useState([]);
                 name="adrsHouseNameEn"
                 value={adrsHouseNameEn}
                 onChange={setSelectAdrsHouseNameEn}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_HOUSE_NAME_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
+                {...(validation = { pattern: "^[a-zA-Z- 0-9]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
               />
             </div>
           </div>
@@ -387,7 +334,9 @@ const [cmbFilterPostOffice,setCmbFilterPostOffice] = useState([]);
                 optionKey="i18nKey"
                 name="adrsLocalityNameMl"
                 value={adrsLocalityNameMl}
+                onKeyPress = {setCheckMalayalamInputField}
                 onChange={setSelectAdrsLocalityNameMl}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_LOCALITY_ML")}`}
                 {...(validation = {
                   pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -405,14 +354,10 @@ const [cmbFilterPostOffice,setCmbFilterPostOffice] = useState([]);
                 optionKey="i18nKey"
                 name="adrsStreetNameMl"
                 value={adrsStreetNameMl}
+                onKeyPress = {setCheckMalayalamInputField}
                 onChange={setSelectAdrsStreetNameMl}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_STREET_NAME_ML")}`}
-                {...(validation = {
-                  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                  isRequired: false,
-                  type: "text",
-                  title: t("CR_INVALID_STREET_NAME_ML"),
-                })}
               />
             </div>
             <div className="col-md-4">
@@ -426,14 +371,11 @@ const [cmbFilterPostOffice,setCmbFilterPostOffice] = useState([]);
                 optionKey="i18nKey"
                 name="adrsHouseNameMl"
                 value={adrsHouseNameMl}
+                onKeyPress = {setCheckMalayalamInputSplChar}
                 onChange={setSelectAdrsHouseNameMl}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_HOUSE_NAME_ML")}`}
-                {...(validation = {
-                  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                  isRequired: false,
-                  type: "text",
-                  title: t("CR_INVALID_HOUSE_NAME_ML"),
-                })}
+
               />
             </div>
           </div>
