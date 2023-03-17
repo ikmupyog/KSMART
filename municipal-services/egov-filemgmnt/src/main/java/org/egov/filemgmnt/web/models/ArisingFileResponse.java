@@ -41,5 +41,13 @@ public class ArisingFileResponse {
 	    @JsonProperty("ArisingFile")
 	    private List<ArisingFile> arisingFileDetail;
 	    
+	    public ArisingFileResponse addArisingFile(ArisingFile arisingFile) {
+
+	        if (arisingFileDetail == null) {
+	        	arisingFileDetail = new ArrayList<>();
+	        }
+	        arisingFileDetail.add(arisingFile);
+	        return this;
+	    }
 	    
 }

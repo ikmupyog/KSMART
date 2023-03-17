@@ -9,6 +9,7 @@ import javax.validation.constraints.Size;
 
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.response.ResponseInfo;
+import org.egov.filemgmnt.web.models.certificate.CertificateRequest;
 import org.egov.filemgmnt.web.models.communication.CommunicationFile;
 import org.egov.filemgmnt.web.models.communication.CommunicationFileRequest;
 
@@ -30,6 +31,7 @@ import org.springframework.validation.annotation.Validated;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -38,6 +40,7 @@ import lombok.Setter;
 @Schema(description = "Arising file service request for create and update")
 @Validated
 
+@Data
 @Getter
 @Setter
 @AllArgsConstructor

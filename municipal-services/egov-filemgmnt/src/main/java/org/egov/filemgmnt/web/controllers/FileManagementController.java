@@ -60,21 +60,6 @@ public class FileManagementController implements FileManagementBaseController {
     
     
    
-    @PostMapping("/applicantservices/_createArisingFile")
-    public ResponseEntity<ArisingFileResponse> createArisingFile(@RequestBody final ArisingFileRequest request) {
-        if (log.isDebugEnabled()) {
-            log.debug("ArisingFileRequest-create:  \n{}", FMUtils.toJson(request));
-        }
-
-        final ArisingFile arisingFileDetails = fmService.createArisingFile(request);
-
-        return ResponseEntity.ok(ArisingFileResponse.builder()
-                                                         .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
-                                                                                                                             Boolean.TRUE))
-                                                         .arisingFileDetail(arisingFileDetails)
-                                                         .build());
-    }
-        
     
 
     @Override
