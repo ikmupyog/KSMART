@@ -19,7 +19,7 @@ import lombok.Setter;
 
 @Schema(description="A Object holds the file data of arising file submitted by the user")
 @Validated
-
+@Builder
 
 public class ArisingFile {
 
@@ -100,6 +100,7 @@ public class ArisingFile {
 
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
-       
-    
+
+
+
 }

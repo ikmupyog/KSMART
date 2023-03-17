@@ -8,6 +8,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -21,12 +23,12 @@ public class ArisingFileSearchCriteria {
     @JsonProperty("tenantId")
     private String tenantId;
     @JsonProperty("fileCode")
-    private String fileCode;
+    private List<String> fileCode;
     @JsonProperty("fromDate")
     private Long fromDate; // file arising date
 
     @JsonProperty("toDate")
     private Long toDate; // file arising date
     @JsonProperty("fileStatus")
-    private String fileStatus;
+    private List<String>fileStatus;
 }

@@ -4,16 +4,13 @@ import org.egov.filemgmnt.service.ArisingFileService;
 import org.egov.filemgmnt.service.FileManagementService;
 import org.egov.filemgmnt.util.FMUtils;
 import org.egov.filemgmnt.util.ResponseInfoFactory;
-import org.egov.filemgmnt.web.models.ArisingFile;
-import org.egov.filemgmnt.web.models.ArisingFileRequest;
-import org.egov.filemgmnt.web.models.ArisingFileResponse;
+import org.egov.filemgmnt.web.models.*;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
+import org.egov.filemgmnt.web.models.ArisingFileSearchResponse;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -44,7 +41,22 @@ public class ArisingFileController {
                                                          .arisingFileDetail(arisingFileDetails)
                                                          .build());
     }
-        
-    
 
+
+
+
+    @PostMapping("/applicantservice/_search")
+    public ResponseEntity<ArisingFileSearchResponse> searchFile(@RequestBody final RequestInfoWrapper request,
+                                                          @ModelAttribute final ArisingFileSearchCriteria searchCriteria) {
+        if (log.isDebugEnabled()) {
+            log.debug("ArisingFile-search:  \n{}", FMUtils.toJson(searchCriteria));
+        }
+        final List<ArisingFile> result = arisingFileService.searchFile(request.getRequestInfo(), searchCriteria);
+
+        return ResponseEntity.ok(ArisingFileSearchResponse.builder()
+                .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+                        Boolean.TRUE))
+                .arisingFileDetails(result)
+                .build());
+    }
 }

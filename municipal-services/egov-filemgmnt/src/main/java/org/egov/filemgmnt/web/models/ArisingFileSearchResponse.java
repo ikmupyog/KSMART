@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.org.apache.bcel.internal.generic.NEW;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
+import org.egov.common.contract.response.ResponseInfo;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.ArrayList;
@@ -20,7 +21,9 @@ import java.util.List;
 @Builder
 
 public class ArisingFileSearchResponse {
-    @JsonProperty("ArisingFile")
+    @JsonProperty ("ResponseInfo")
+    private ResponseInfo responseInfo;
+        @JsonProperty("ArisingFile")
     private List<ArisingFile> arisingFileDetails;
     @Schema(type = "integer", format = "int32", description = "Search result count")
     @JsonProperty("Count")
