@@ -123,7 +123,8 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
   const [FatherProfError, setFatherProfError] = useState(formData?.ParentsDetails?.fatherProfession ? false : false);
   const [ReligionError, setReligionError] = useState(formData?.ParentsDetails?.Religion ? false : false);
   const [MotherMaritalStatusError, setMotherMaritalStatusError] = useState(formData?.ParentsDetails?.motherMaritalStatus ? false : false);
-  const [AdhaarDuplicationError, setAdhaarDuplicationError] = useState(formData?.ParentsDetails?.Religion ? false : false);
+  const [AdhaarDuplicationError, setAdhaarDuplicationError] = useState(false);
+  const [AgeValidationMsg, setAgeValidationMsg] = useState(false);
 
 
   const onSkip = () => onSelect();
@@ -154,7 +155,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
 
 
   function setSelectMotherFirstNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setMotherFirstNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
@@ -202,12 +203,23 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
   // }
 
   function setSelectMotherMarriageAge(e) {
-    if (e.target.value.trim().length === 3) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
+    setMotherMarriageAge(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
+    if (e.target.value < 18) {
+      validFlag = false;
+      setAgeValidationMsg(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
     } else {
-      setMotherMarriageAge(e.target.value);
+      setAgeValidationMsg(false);
     }
+    // if (e.target.value.trim().length === 3) {
+    //   return false;
+    //   // window.alert("Username shouldn't exceed 10 characters")
+    // } else {
+    //   setMotherMarriageAge(e.target.value);
+    // }
   }
 
 
@@ -265,7 +277,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
   }
 
   function setSelectFatherFirstNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setFatherFirstNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
@@ -976,7 +988,8 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                 ReligionError ||
                 // || MotherMaritalStatusError || MotherCountryError || MotherStateError || MotherDistrictError || MotherLBNameError  || MotherTalukError || MotherPlaceTypeError
                 OrderofChildrenError ||
-                AdhaarDuplicationError
+                AdhaarDuplicationError ||
+                AgeValidationMsg
               }
               label={
                 MotherAadharError ||
@@ -993,7 +1006,8 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                   FatherMobileError ||
                   ReligionError ||
                   OrderofChildrenError ||
-                  AdhaarDuplicationError
+                  AdhaarDuplicationError ||
+                  AgeValidationMsg
                   ? MotherAadharError
                     ? t(`CS_COMMON_INVALID_MOTHER_AADHAR_NO`)
                     : MotherMarriageageError
@@ -1021,10 +1035,12 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                                           : FatherMobileError
                                             ? t(`CR_INVALID_MOBILE_NO`)
                                             : AdhaarDuplicationError
-                                            ? t(`CR_DUPLICATE_AADHAR_NO`)
-                                            :
+                                              ? t(`CR_DUPLICATE_AADHAR_NO`)
+                                              : AgeValidationMsg
+                                              ? t(`CR_MOTHER_AGE_WARNING`)
+                                              :
 
-                                            setToast(false)
+                                              setToast(false)
                   : setToast(false)
               }
               onClose={() => setToast(false)}
