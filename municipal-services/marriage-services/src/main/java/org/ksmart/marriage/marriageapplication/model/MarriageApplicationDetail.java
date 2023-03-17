@@ -106,7 +106,7 @@ public class MarriageApplicationDetail {
 
     @NotNull
     @Size(max = 64)
-    @JsonProperty("marraigeApplicationType")
+    @JsonProperty("applicationType")
     private String applicationtype;
 
     @NotNull

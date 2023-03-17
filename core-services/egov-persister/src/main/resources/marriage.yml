@@ -60,7 +60,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.marraigeOthersSpecify
 
-            - jsonPath: $.MarriageDetails.*.marraigeApplicationType
+            - jsonPath: $.MarriageDetails.*.applicationType
 
             - jsonPath: $.MarriageDetails.*.businessService
 
@@ -508,7 +508,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.marraigeOthersSpecify
 
-            - jsonPath: $.MarriageDetails.*.marraigeApplicationType
+            - jsonPath: $.MarriageDetails.*.applicationType
 
             - jsonPath: $.MarriageDetails.*.businessService
 
