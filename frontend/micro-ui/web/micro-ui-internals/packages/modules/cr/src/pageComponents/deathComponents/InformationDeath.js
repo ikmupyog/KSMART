@@ -690,10 +690,17 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
   function setCheckedAdhar(e) {
     if (e.target.checked === true) {
       setDeceasedAadharNotAvailable(e.target.checked);
+
     } else {
       setDeceasedAadharNotAvailable(e.target.checked);
       setSelectedDeceasedIdproofType("");
       setDeceasedIdproofNo("");
+      setDeceasedAadharNumber("");
+      setAadharError(false);
+      setToast(false);
+
+
+
     }
   }
 
