@@ -9,8 +9,8 @@ import org.egov.kssmSnehapoorvam.web.models.SchoolSearchCriteria;
 import org.egov.kssmSnehapoorvam.web.models.SnehapoorvamRequest;
 import org.egov.kssmSnehapoorvam.web.models.SnehapoorvamResponse;
 import org.egov.kssmSnehapoorvam.web.models.SnehapoorvamSchoolReg;
-import org.egov.kssmSnehapoorvam.web.models.SnehapoorvamSchoolRequest;
-import org.egov.kssmSnehapoorvam.web.models.SnehapoorvamSchoolResponse;
+import org.egov.kssmSnehapoorvam.web.models.SnehapoorvamSearchRequest;
+import org.egov.kssmSnehapoorvam.web.models.SnehapoorvamSearchResponse;
 import org.egov.kssmSnehapoorvam.web.models.m_Snehapoorvam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -81,12 +81,12 @@ public class SnehapoorvamController {
     }
 
     @PostMapping("/v1/Search")
-    public ResponseEntity<SnehapoorvamSchoolResponse> searchSchoolCode(@RequestBody SnehapoorvamSchoolRequest request,
+    public ResponseEntity<SnehapoorvamSearchResponse> searchSchoolCode(@RequestBody SnehapoorvamSearchRequest request,
             @Valid @ModelAttribute SchoolSearchCriteria searchCriteria) {
 
         List<SnehapoorvamSchoolReg> result = obService.searchSchoolCode(searchCriteria);
 
-        SnehapoorvamSchoolResponse response = SnehapoorvamSchoolResponse.builder()
+        SnehapoorvamSearchResponse response = SnehapoorvamSearchResponse.builder()
                 .responseInfo(
                         responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))
                 .SchoolDetails(result)

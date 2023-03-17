@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SnehapoorvamSchoolResponse
+public class SnehapoorvamSearchResponse
  {
     
 
@@ -35,7 +35,7 @@ public class SnehapoorvamSchoolResponse
     // @JsonProperty("Count")
     // private int count;
 
-    public SnehapoorvamSchoolResponse addSchoolDetails(SnehapoorvamSchoolReg schooldetail) {
+    public SnehapoorvamSearchResponse addSchoolDetails(SnehapoorvamSchoolReg schooldetail) {
 
         if (schooldetail == null) {
             SchoolDetails = new ArrayList<>();
