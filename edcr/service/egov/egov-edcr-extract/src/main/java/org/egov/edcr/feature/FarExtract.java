@@ -807,7 +807,7 @@ public class FarExtract extends FeatureExtract {
 		                if ((polyLines != null && !polyLines.isEmpty()) || (mTexts != null
 		                        && !mTexts.isEmpty())) {
 				String[] stairName = fireEscapeStairName.split("_");
-				FireStair fireStair = new FireStair();
+				FireStairDetail fireStair = new FireStairDetail();
 				String stairNo = stairName[5];
 				fireStair.setNumber(stairNo);
 				if (stairName.length == 6 && stairNo != null && !stairNo.isEmpty()) {
@@ -837,7 +837,7 @@ public class FarExtract extends FeatureExtract {
 					}
 
 					List<DXFLWPolyline> fireStairPolyLines = Util.getPolyLinesByLayer(doc, fireStairLayerName);
-
+					fireStair.setStairPolylines(fireStairPolyLines);
 					if (!fireStairPolyLines.isEmpty()) {
 						List<Measurement> fireStairMeasurements = fireStairPolyLines.stream()
 								.map(flightPolyLine -> new MeasurementDetail(flightPolyLine, true))
@@ -871,7 +871,8 @@ public class FarExtract extends FeatureExtract {
 							floor.getNumber(), stairNo);
 
 					addFlight(pl, flightLayerNamePattern, fireStair);
-
+                    List<DXFLine> fireStairLines = Util.getLinesByLayer(doc, flightLayerNamePattern);
+					fireStair.setLines(fireStairLines);
 					String landingNamePattern = String.format(layerNames.getLayerName("LAYER_NAME_FIRESTAIR_LANDING"),
 							block.getNumber(), floor.getNumber(), stairNo);
 

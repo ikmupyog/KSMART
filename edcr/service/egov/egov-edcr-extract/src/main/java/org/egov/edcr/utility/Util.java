@@ -15,6 +15,7 @@ import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.Logger;
@@ -1907,4 +1908,40 @@ public class Util {
     	}
     	return occupancyTypeHelper;
     }
+    
+	public static OccupancyTypeHelper getMostRestrictiveOccupancy(Plan pl, List<OccupancyTypeHelper> distinctOccupancyTypes) {
+		List<String> occupancyTypes = distinctOccupancyTypes.stream().map(occ -> occ.getType().getCode()).collect(Collectors.toList());
+		if (occupancyTypes.contains("I2"))
+			return getOccupancyByCode(pl, "I2");
+		if (occupancyTypes.contains("I1"))
+			return getOccupancyByCode(pl, "I1");
+		if (occupancyTypes.contains("G1"))
+			return getOccupancyByCode(pl, "G1");
+		if (occupancyTypes.contains("D"))
+			return getOccupancyByCode(pl, "D");
+		if (occupancyTypes.contains("B1"))
+			return getOccupancyByCode(pl, "B1");
+		if (occupancyTypes.contains("B2"))
+			return getOccupancyByCode(pl, "B2");
+		if (occupancyTypes.contains("B3"))
+			return getOccupancyByCode(pl, "B3");
+		if (occupancyTypes.contains("C"))
+			return getOccupancyByCode(pl, "C");
+		if (occupancyTypes.contains("D1"))
+			return getOccupancyByCode(pl, "D1");
+		if (occupancyTypes.contains("E"))
+			return getOccupancyByCode(pl, "E");
+		if (occupancyTypes.contains("F"))
+			return getOccupancyByCode(pl, "F");
+		if (occupancyTypes.contains("A1"))
+			return getOccupancyByCode(pl, "A1");
+		if (occupancyTypes.contains("A2"))
+			return getOccupancyByCode(pl, "A2");
+		if (occupancyTypes.contains("A4"))
+			return getOccupancyByCode(pl, "A4");
+		if (occupancyTypes.contains("G2"))
+			return getOccupancyByCode(pl, "G2");
+		else
+			return null;
+	}
 }

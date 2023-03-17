@@ -45,10 +45,11 @@ public class FireStairExtract extends FeatureExtract {
 
 	@Override
 	public PlanDetail extract(PlanDetail pl) {
-		for (Block block : pl.getBlocks())
-			if (block.getBuilding() != null && !block.getBuilding().getFloors().isEmpty())
-				for (Floor floor : block.getBuilding().getFloors())
-					addFireStairs(pl, block, floor);
+		/*
+		 * for (Block block : pl.getBlocks()) if (block.getBuilding() != null &&
+		 * !block.getBuilding().getFloors().isEmpty()) for (Floor floor :
+		 * block.getBuilding().getFloors()) addFireStairs(pl, block, floor);
+		 */
 		return pl;
 	}
 
