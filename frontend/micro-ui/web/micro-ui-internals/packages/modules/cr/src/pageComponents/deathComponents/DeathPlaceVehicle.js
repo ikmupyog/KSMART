@@ -51,21 +51,19 @@ const DeathPlaceVehicle = ({
   }
   let cmbhospital = [];
   hospital &&
-    hospital["egov-location"] &&
-    hospital["egov-location"].hospitalList &&
+    hospital["egov-location"] && hospital["egov-location"].hospitalList &&
     hospital["egov-location"].hospitalList.map((ob) => {
       cmbhospital.push(ob);
     });
   let cmbLB = [];
   localbodies &&
-    localbodies["tenant"] &&
+    localbodies["tenant"] && localbodies["tenant"].tenants &&
     localbodies["tenant"].tenants.map((ob) => {
       cmbLB.push(ob);
     });
   let cmbVehicle = [];
   Vehicle &&
-    Vehicle["birth-death-service"] &&
-    Vehicle["birth-death-service"].VehicleType &&
+    Vehicle["birth-death-service"] && Vehicle["birth-death-service"].VehicleType &&
     Vehicle["birth-death-service"].VehicleType.map((ob) => {
       cmbVehicle.push(ob);
     });
@@ -73,7 +71,7 @@ const DeathPlaceVehicle = ({
   let cmbWardNo = [];
   let cmbWardNoFinal = [];
   boundaryList &&
-    boundaryList["egov-location"] &&
+    boundaryList["egov-location"] && boundaryList["egov-location"].TenantBoundary &&
     boundaryList["egov-location"].TenantBoundary.map((ob) => {
       if (ob?.hierarchyType.code === "REVENUE") {
         Zonal.push(...ob.boundary.children);
@@ -108,18 +106,14 @@ const DeathPlaceVehicle = ({
   function setSelectVehicleNumber(e) {
     setVehicleNumber(e.target.value);
   }
-  function setSelectVehicleFromplaceEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-    } else {
-      setVehicleFromplaceEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+  function setSelectVehicleFromplaceEn(e) {    
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setVehicleFromplaceEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectVehicleToPlaceEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-    } else {
-      setVehicleToPlaceEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setVehicleToPlaceEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
@@ -139,18 +133,24 @@ const DeathPlaceVehicle = ({
   }
 
   function setSelectVehicleFromplaceMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-    } else {
-      setVehicleFromplaceMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if(!(e.target.value.match(pattern))){
+      e.preventDefault();
+      setVehicleFromplaceMl('');
     }
+    else{
+      setVehicleFromplaceMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    }   
   }
   function setSelectVehicleToPlaceMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-    } else {
-      setVehicleToPlaceMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if(!(e.target.value.match(pattern))){
+      e.preventDefault();
+      setVehicleToPlaceMl('');
     }
+    else{
+      setVehicleToPlaceMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    }   
   }
   function setSelectGeneralRemarks(e) {
     setGeneralRemarks(e.target.value);
