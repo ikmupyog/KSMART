@@ -81,6 +81,7 @@ import MyCRApplications from "./pages/citizen/Applications/Application";
 import CRSearch from "./pages/employee/Search";
 import SearchCrApplication from "./components/SearchApplication";
 import SearchRegistryDeath from "./components/SearchRegistryDeath";
+import CRCitizenApplicationDetails from "./pages/citizen/Applications/ApplicationDetails";
 import CRApplicationDetails from "./pages/employee/ApplicationDetails";
 import CRApplicationDeathDetails from "./pages/employee/ApplicationDeathDetails";
 // import ApplicantDetails from "./pageComponents/deathComponents/ApplicantDetails";
@@ -103,6 +104,9 @@ import CRCard from "./components/CRCard";
 import Response from "./pages/Response";
 import EmployeeApp from "./pages/employee";
 import CitizenApp from "./pages/citizen";
+import CRDocuments from "./pageComponents/birthComponents/CRDocuments";
+import CRWFApplicationTimeline from "./pageComponents/birthComponents/CRWFApplicationTimeline";
+
 
 import CreateMarriageRegistration from "./pages/citizen/MarriageRegistration";
 import GroomDetails from "./pageComponents/marriageComponents/GroomDetails";
@@ -191,6 +195,7 @@ const componentsToRegister = {
   CRLinks,
   CRCard,
   ChildDetails,
+  CRCitizenApplicationDetails,
   CRApplicationDetails,
   CRApplicationDeathDetails,
   CRSearch,
@@ -284,6 +289,8 @@ const componentsToRegister = {
   BirthCertificate,
   CRCreateDeathRegistration: CreateDeathRegistration,
   TLResponse: Response,
+  CRDocuments,
+  CRWFApplicationTimeline,
   //Marriage
   CRCreateMarriageRegistration: CreateMarriageRegistration,
   GroomDetails,

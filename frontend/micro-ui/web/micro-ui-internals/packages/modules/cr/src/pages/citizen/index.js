@@ -18,6 +18,8 @@ const App = () => {
   const { path, url, ...match } = useRouteMatch();
   let isSuccessScreen = window.location.href.includes("acknowledgement");
   // let isCommonPTPropertyScreen = window.location.href.includes("/tl/tradelicence/new-application/property-details");
+  const ApplicationDetails = Digit.ComponentRegistryService.getComponent("CRCitizenApplicationDetails");
+
 
   const CreateBirthRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateBirthRegistration');
   const CreateStillBirthRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateStillBirthRegistration');
@@ -52,6 +54,7 @@ const App = () => {
         <PrivateRoute path={`${path}/cr-marriage-creation`} component={CreateMarriageRegistration} />
         <PrivateRoute path={`${path}/cr/my-application`} component={MyCRApplications} />
         <PrivateRoute path={`${path}/cr/my-bills`} component={() => <MyCRApplications view="bills" />} />
+        <PrivateRoute path={`${path}/cr/application/:id/:tenantId`} component={ApplicationDetails} />
         <PrivateRoute path={`${path}/create-death-certificate`} component={() => <DeathCertificateSearch parentUrl={path}/>} /> 
         <PrivateRoute parentRoute={path} path={`${path}/create-birth-certificate`} component={() => <BirthCertificateSearch parentUrl={path} />} /> 
        </AppContainer>

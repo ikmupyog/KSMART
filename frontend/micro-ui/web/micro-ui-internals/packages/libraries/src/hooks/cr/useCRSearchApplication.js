@@ -37,10 +37,12 @@ export const useCRSearchApplication = (params, config = {}, t) => {
     staleTime: Infinity,
     select: (data) => {
      return data.map((i) => ({
+       
         TL_COMMON_TABLE_COL_APP_NO: i.applicationNumber,
         CR_FATHER_NAME: i.ParentsDetails?.fatherFirstNameEn,
         CR_MOTHER_NAME: i.ParentsDetails?.motherFirstNameEn,
         CR_ADDRESS:i.AddressBirthDetails?.houseNameNoEnPresent,
+        TL_COMMON_CITY_NAME: i.tenantid,
         
       }));
     },
