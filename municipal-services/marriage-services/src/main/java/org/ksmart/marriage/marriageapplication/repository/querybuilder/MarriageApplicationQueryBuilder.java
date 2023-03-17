@@ -28,7 +28,13 @@ public class MarriageApplicationQueryBuilder extends BaseBirthQuery {
             .append("mrg.religious_institution_othername_en as ma_religious_institution_othername_en,mrg.religious_institution_othername_ml as ma_religious_institution_othername_ml").toString();
 
     private static final String QUERYCONDITION = new  StringBuilder()
-            .append(" FROM public.eg_marriage_details mrg LEFT JOIN eg_marriage_bride_details mbd ON mbd.marriageid = mrg.id").toString();
+            .append(" FROM public.eg_marriage_details mrg LEFT JOIN eg_marriage_bride_details mbd ON mbd.marriageid = mrg.id")
+            .append(" LEFT JOIN eg_marriage_groom_details mrd ON mrd.marriageid = mrg.id")
+            .append(" LEFT JOIN eg_marriage_present_address_details mpress ON mpress.marriageid = mrg.id")
+            .append(" LEFT JOIN eg_marriage_permanent_address_details mper ON mper.marriageid = mrg.id")
+            .append(" LEFT JOIN eg_marriage_witness_details mwd ON mwd.marriageid = mrg.id")
+
+            .toString();
 
 
 
@@ -36,9 +42,16 @@ public class MarriageApplicationQueryBuilder extends BaseBirthQuery {
                                                  @NotNull List<Object> preparedStmtValues, Boolean isCount) {
         StringBuilder query = new StringBuilder(QUERY);
         query.append(",").append(commonQueryBuilder.getQueryBrideDetails())
-                //.append(",")
+               .append(",")
+                .append(commonQueryBuilder.getGroomDetails())
+                .append(",")
+                .append(commonQueryBuilder.getPresentAddressDetails())
+                .append(",")
+                .append(commonQueryBuilder.getPermanentAddressDetails())
+                .append(",")
+                .append(commonQueryBuilder.getWitnessDetails())
 
-        .append(QUERYCONDITION).toString();
+                .append(QUERYCONDITION).toString();
 
         StringBuilder orderBy = new StringBuilder();
 

@@ -18,37 +18,37 @@ serviceMaps:
           jsonMaps:
             - jsonPath: $.MarriageDetails.*.id
 
-            - jsonPath: $.MarriageDetails.*.marraigeDOM
+            - jsonPath: $.MarriageDetails.*.marriageDOM
 
-            - jsonPath: $.MarriageDetails.*.marraigeDOR
+            - jsonPath: $.MarriageDetails.*.marriageDOR
 
-            - jsonPath: $.MarriageDetails.*.marraigeDistrictid
+            - jsonPath: $.MarriageDetails.*.marriageDistrictid
 
-            - jsonPath: $.MarriageDetails.*.marraigeLBtype
+            - jsonPath: $.MarriageDetails.*.marriageLBtype
 
-            - jsonPath: $.MarriageDetails.*.marraigeTenantid
+            - jsonPath: $.MarriageDetails.*.marriageTenantid
 
-            - jsonPath: $.MarriageDetails.*.marraigePlacetype
+            - jsonPath: $.MarriageDetails.*.marriagePlacetype
 
             - jsonPath: $.MarriageDetails.*.marriagePlaceothers
 
             - jsonPath: $.MarriageDetails.*.placeid
 
-            - jsonPath: $.MarriageDetails.*.marraigePlacenameEn
+            - jsonPath: $.MarriageDetails.*.marriagePlacenameEn
 
             - jsonPath: $.MarriageDetails.*.marriageStreetEn
 
             - jsonPath: $.MarriageDetails.*.marriageStreetMal
 
-            - jsonPath: $.MarriageDetails.*.marraigePlacenameMal
+            - jsonPath: $.MarriageDetails.*.marriagePlacenameMal
 
-            - jsonPath: $.MarriageDetails.*.marraigeWardCode
+            - jsonPath: $.MarriageDetails.*.marriageWardCode
 
-            - jsonPath: $.MarriageDetails.*.marraigeTalukID
+            - jsonPath: $.MarriageDetails.*.marriageTalukID
 
-            - jsonPath: $.MarriageDetails.*.marraigeVillageName
+            - jsonPath: $.MarriageDetails.*.marriageVillageName
 
-            - jsonPath: $.MarriageDetails.*.marraigeType
+            - jsonPath: $.MarriageDetails.*.marriageType
 
             - jsonPath: $.MarriageDetails.*.othMarriageType
 
@@ -58,7 +58,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.marriageLocalityMal
 
-            - jsonPath: $.MarriageDetails.*.marraigeOthersSpecify
+            - jsonPath: $.MarriageDetails.*.marriageOthersSpecify
 
             - jsonPath: $.MarriageDetails.*.applicationType
 
@@ -466,37 +466,37 @@ serviceMaps:
 
           basePath: MarriageDetails.*
           jsonMaps:
-            - jsonPath: $.MarriageDetails.*.marraigeDOM
+            - jsonPath: $.MarriageDetails.*.marriageDOM
 
-            - jsonPath: $.MarriageDetails.*.marraigeDOR
+            - jsonPath: $.MarriageDetails.*.marriageDOR
 
-            - jsonPath: $.MarriageDetails.*.marraigeDistrictid
+            - jsonPath: $.MarriageDetails.*.marriageDistrictid
 
-            - jsonPath: $.MarriageDetails.*.marraigeLBtype
+            - jsonPath: $.MarriageDetails.*.marriageLBtype
 
-            - jsonPath: $.MarriageDetails.*.marraigeTenantid
+            - jsonPath: $.MarriageDetails.*.marriageTenantid
 
-            - jsonPath: $.MarriageDetails.*.marraigePlacetype
+            - jsonPath: $.MarriageDetails.*.marriagePlacetype
 
             - jsonPath: $.MarriageDetails.*.marriagePlaceothers
 
             - jsonPath: $.MarriageDetails.*.placeid
 
-            - jsonPath: $.MarriageDetails.*.marraigePlacenameEn
+            - jsonPath: $.MarriageDetails.*.marriagePlacenameEn
 
             - jsonPath: $.MarriageDetails.*.marriageStreetEn
 
             - jsonPath: $.MarriageDetails.*.marriageStreetMal
 
-            - jsonPath: $.MarriageDetails.*.marraigePlacenameMal
+            - jsonPath: $.MarriageDetails.*.marriagePlacenameMal
 
-            - jsonPath: $.MarriageDetails.*.marraigeWardCode
+            - jsonPath: $.MarriageDetails.*.marriageWardCode
 
-            - jsonPath: $.MarriageDetails.*.marraigeTalukID
+            - jsonPath: $.MarriageDetails.*.marriageTalukID
 
-            - jsonPath: $.MarriageDetails.*.marraigeVillageName
+            - jsonPath: $.MarriageDetails.*.marriageVillageName
 
-            - jsonPath: $.MarriageDetails.*.marraigeType
+            - jsonPath: $.MarriageDetails.*.marriageType
 
             - jsonPath: $.MarriageDetails.*.othMarriageType
 
@@ -506,7 +506,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.marriageLocalityMal
 
-            - jsonPath: $.MarriageDetails.*.marraigeOthersSpecify
+            - jsonPath: $.MarriageDetails.*.marriageOthersSpecify
 
             - jsonPath: $.MarriageDetails.*.applicationType
 
@@ -762,7 +762,6 @@ serviceMaps:
               - jsonPath: $.MarriageDetails.*.auditDetails.lastModifiedTime
 
               - jsonPath: $.MarriageDetails.*.auditDetails.lastModifiedBy
-
 
               - jsonPath: $.MarriageDetails.*.id
 

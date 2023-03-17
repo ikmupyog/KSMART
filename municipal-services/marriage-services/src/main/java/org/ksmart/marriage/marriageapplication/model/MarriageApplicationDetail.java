@@ -23,40 +23,40 @@ public class MarriageApplicationDetail {
     @JsonProperty("id")
     private String id;
 
-    @JsonProperty("marraigeDOM")
+    @JsonProperty("marriageDOM")
     private Long dateofmarriage;
 
-    @JsonProperty("marraigeDOR")
+    @JsonProperty("marriageDOR")
     private Long dateofreporting;
 
 
 
     @Size(max = 64)
-    @JsonProperty("marraigeDistrictid")
+    @JsonProperty("marriageDistrictid")
     private String districtid;
 
     @Size(max = 64)
-    @JsonProperty("marraigeLBtype")
+    @JsonProperty("marriageLBtype")
     private String lbtype;
 
 
     @Size(max = 64)
-    @JsonProperty("marraigeTenantid")
+    @JsonProperty("marriageTenantid")
     private String tenantid;
 
     @Size(max = 64)
-    @JsonProperty("marraigePlacetype")
+    @JsonProperty("marriagePlacetype")
     private String placetype;
 
     @Size(max = 1000)
-    @JsonProperty("marraigePlacenameEn")
+    @JsonProperty("marriagePlacenameEn")
     private String placenameEn;
     @Size(max = 1000)
-    @JsonProperty("marraigePlacenameMal")
+    @JsonProperty("marriagePlacenameMal")
     private String placenameMl;
 
     @Size(max = 64)
-    @JsonProperty("marraigeWardCode")
+    @JsonProperty("marriageWardCode")
     private String ward_code;
 
 
@@ -69,11 +69,11 @@ public class MarriageApplicationDetail {
     private String street_name_ml;
 
     @Size(max = 64)
-    @JsonProperty("marraigeTalukID")
+    @JsonProperty("marriageTalukID")
     private String talukid;
 
     @Size(max = 64)
-    @JsonProperty("marraigeVillageName")
+    @JsonProperty("marriageVillageName")
     private String village_name;
 
     @Size(max = 1000)
@@ -89,7 +89,7 @@ public class MarriageApplicationDetail {
     private String locality_ml;
 
     @Size(max = 64)
-    @JsonProperty("marraigeType")
+    @JsonProperty("marriageType")
     private String marriage_type;
 
     @Size(max = 64)
@@ -101,7 +101,7 @@ public class MarriageApplicationDetail {
     private String oth_marriage_type;
 
     @Size(max = 1000)
-    @JsonProperty("marraigeOthersSpecify")
+    @JsonProperty("marriageOthersSpecify")
     private String othersspecify;
 
     @NotNull
