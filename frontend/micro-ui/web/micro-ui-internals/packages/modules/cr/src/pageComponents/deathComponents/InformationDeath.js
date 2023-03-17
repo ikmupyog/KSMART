@@ -546,69 +546,51 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
     setselectedDeceasedGender(value);
   }
   function setSelectDeceasedLastNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-    } else {
-      setDeceasedLastNameMl(
-        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-      );
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      setDeceasedLastNameMl('');
+    }
+    else {
+      setDeceasedLastNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectDeceasedMiddleNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-    } else {
-      setDeceasedMiddleNameMl(
-        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-      );
+
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      setDeceasedMiddleNameMl('');
+    }
+    else {
+      setDeceasedMiddleNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectDeceasedFirstNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-    } else {
-      setDeceasedFirstNameMl(
-        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-      );
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      setDeceasedFirstNameMl('');
+    }
+    else {
+      setDeceasedFirstNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectDeceasedFirstNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-    } else {
-      setDeceasedFirstNameEn(
-        e.target.value.replace(
-          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
-          ""
-        )
-      );
-    }
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setDeceasedFirstNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    }    
   }
-
   function setSelectDeceasedMiddleNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-    } else {
-      setDeceasedMiddleNameEn(
-        e.target.value.replace(
-          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
-          ""
-        )
-      );
-    }
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setDeceasedMiddleNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    }      
   }
-
   function setSelectDeceasedLastNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-    } else {
-      setDeceasedLastNameEn(
-        e.target.value.replace(
-          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
-          ""
-        )
-      );
-    }
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setDeceasedLastNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    } 
+    
   }
   function setSelectAge(e) {
     if (e.target.value != null || e.target.value != "") {
@@ -823,8 +805,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
       sessionStorage.setItem("Occupation", Occupation ? Occupation.code : null);
       sessionStorage.setItem("DeathPlace", DeathPlace ? DeathPlace.code : null);
 
-      sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
-      sessionStorage.setItem("HospitalNameMl", HospitalNameMl ? HospitalNameMl.code : null);
+
       sessionStorage.setItem("workFlowCode", workFlowCode);
 
       sessionStorage.setItem("DeathPlaceTypecode", DeathPlaceType ? DeathPlaceType.code : null);
@@ -834,7 +815,9 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
 
       if (DeathPlace.code === "HOSPITAL") {
         //  ?sessionStorage.setItem("DeathPlace", DeathPlace.code);
+        // sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
         sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
+        sessionStorage.setItem("HospitalNameMl", HospitalNameMl ? HospitalNameMl.code : null);
         sessionStorage.removeItem("DeathPlaceInstId");
       }
       if (DeathPlace.code === "INSTITUTION") {

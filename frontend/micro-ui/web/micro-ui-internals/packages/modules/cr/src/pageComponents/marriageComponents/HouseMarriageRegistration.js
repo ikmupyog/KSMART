@@ -66,19 +66,19 @@ const HouseMarriageRegistration = ({ config, onSelect, userType, formData }) => 
     LBType["common-masters"].LBType.map((ob) => {
       cmbLBType.push(ob);
     });
-  const [marraigeDOM, setmarraigeDOM] = useState(formData?.MarriageDetails?.marraigeDOM ? formData?.MarriageDetails?.marraigeDOM : "");
+  const [marriageDOM, setmarriageDOM] = useState(formData?.MarriageDetails?.marriageDOM ? formData?.MarriageDetails?.marriageDOM : "");
   const [marriageDistrict, setmarriageDistrict] = useState(
     formData?.MarriageDetails?.marriageDistrict ? formData?.MarriageDetails?.marriageDistrict : ""
   );
-  const [marraigeTalukID, setmarraigeTalukID] = useState(
-    formData?.MarriageDetails?.marraigeTalukID ? formData?.MarriageDetails?.marraigeTalukID : ""
+  const [marriageTalukID, setmarriageTalukID] = useState(
+    formData?.MarriageDetails?.marriageTalukID ? formData?.MarriageDetails?.marriageTalukID : ""
   );
-  const [marraigeVillageName, setmarraigeVillageName] = useState(
-    formData?.MarriageDetails?.marraigeVillageName ? formData?.MarriageDetails?.marraigeVillageName : ""
+  const [marriageVillageName, setmarriageVillageName] = useState(
+    formData?.MarriageDetails?.marriageVillageName ? formData?.MarriageDetails?.marriageVillageName : ""
   );
-  const [marraigeLBtype, setmarraigeLBtype] = useState(formData?.MarriageDetails?.marraigeLBtype ? formData?.MarriageDetails?.marraigeLBtype : "");
-  const [marraigePlacetype, setmarraigePlacetype] = useState(
-    formData?.MarriageDetails?.marraigePlacetype ? formData?.MarriageDetails?.marraigePlacetype : ""
+  const [marriageLBtype, setmarriageLBtype] = useState(formData?.MarriageDetails?.marriageLBtype ? formData?.MarriageDetails?.marriageLBtype : "");
+  const [marriagePlacetype, setmarriagePlacetype] = useState(
+    formData?.MarriageDetails?.marriagePlacetype ? formData?.MarriageDetails?.marriagePlacetype : ""
   );
   const [marriageLocalityEn, setmarriageLocalityEn] = useState(
     formData?.MarriageDetails?.marriageLocalityEn ? formData?.MarriageDetails?.marriageLocalityEn : ""
@@ -101,10 +101,10 @@ const HouseMarriageRegistration = ({ config, onSelect, userType, formData }) => 
   const [marriageLandmark, setmarriageLandmark] = useState(
     formData?.MarriageDetails?.marriageLandmark ? formData?.MarriageDetails?.marriageLandmark : ""
   );
-  const [marraigeOthersSpecify, setmarraigeOthersSpecify] = useState(
-    formData?.MarriageDetails?.marraigeOthersSpecify ? formData?.MarriageDetails?.marraigeOthersSpecify : ""
+  const [marriageOthersSpecify, setmarriageOthersSpecify] = useState(
+    formData?.MarriageDetails?.marriageOthersSpecify ? formData?.MarriageDetails?.marriageOthersSpecify : ""
   );
-  const [marraigeType, setmarraigeType] = useState(formData?.MarriageDetails?.marraigeType ? formData?.MarriageDetails?.marraigeType : "");
+  const [marriageType, setmarriageType] = useState(formData?.MarriageDetails?.marriageType ? formData?.MarriageDetails?.marriageType : "");
 
   const [file, setFile] = useState();
   function handleChange(e) {
@@ -118,8 +118,8 @@ const HouseMarriageRegistration = ({ config, onSelect, userType, formData }) => 
 
   const onSkip = () => onSelect();
 
-  function setSelectmarraigeDOM(value) {
-    setmarraigeDOM(value);
+  function setSelectmarriageDOM(value) {
+    setmarriageDOM(value);
     const today = new Date();
     const birthDate = new Date(value);
     if (birthDate.getTime() <= today.getTime()) {
@@ -129,7 +129,7 @@ const HouseMarriageRegistration = ({ config, onSelect, userType, formData }) => 
       let Difference_In_DaysRounded = Math.floor(Difference_In_Days);
       console.log(Difference_In_DaysRounded);
     } else {
-      setmarraigeDOM(null);
+      setmarriageDOM(null);
       // setDOBError(true);
       // setToast(true);
       setTimeout(() => {
@@ -141,20 +141,20 @@ const HouseMarriageRegistration = ({ config, onSelect, userType, formData }) => 
     setmarriageDistrict(value);
     console.log("District" + cmbDistrict);
   }
-  function setSelectmarraigeTalukID(value) {
-    setmarraigeTalukID(value);
+  function setSelectmarriageTalukID(value) {
+    setmarriageTalukID(value);
     console.log("Taluk" + cmbTaluk);
   }
-  function setSelectmarraigeVillageName(value) {
-    setmarraigeVillageName(value);
+  function setSelectmarriageVillageName(value) {
+    setmarriageVillageName(value);
     console.log("Village" + cmbVillage);
   }
-  function setSelectmarraigeLBtype(value) {
-    setmarraigeLBtype(value);
+  function setSelectmarriageLBtype(value) {
+    setmarriageLBtype(value);
     console.log("LBType" + cmbLBType);
   }
-  function setSelectmarraigePlacetype(value) {
-    setmarraigePlacetype(value);
+  function setSelectmarriagePlacetype(value) {
+    setmarriagePlacetype(value);
     // setAgeMariageStatus(value.code);
   }
   function setSelectmarriageLocalityEn(value) {
@@ -185,12 +185,12 @@ const HouseMarriageRegistration = ({ config, onSelect, userType, formData }) => 
     setmarriageLandmark(value);
     // setAgeMariageStatus(value.code);
   }
-  function setSelectmarraigeOthersSpecify(value) {
-    setmarraigeOthersSpecify(value);
+  function setSelectmarriageOthersSpecify(value) {
+    setmarriageOthersSpecify(value);
     // setAgeMariageStatus(value.code);
   }
-  function setSelectmarraigeType(value) {
-    setmarraigeType(value);
+  function setSelectmarriageType(value) {
+    setmarriageType(value);
     // setAgeMariageStatus(value.code);
   }
 
@@ -209,12 +209,12 @@ const HouseMarriageRegistration = ({ config, onSelect, userType, formData }) => 
       setAadharError(false);
     }
     if (validFlag == true) {
-      sessionStorage.setItem("marraigeDOM", marraigeDOM ? marraigeDOM : null);
+      sessionStorage.setItem("marriageDOM", marriageDOM ? marriageDOM : null);
       sessionStorage.setItem("marriageDistrict", marriageDistrict ? marriageDistrict : null);
-      sessionStorage.setItem("marraigeLBtype", marraigeLBtype ? marraigeLBtype : null);
-      sessionStorage.setItem("marraigeTalukID", marraigeTalukID ? marraigeTalukID : null);
-      sessionStorage.setItem("marraigeVillageName", marraigeVillageName ? marraigeVillageName : null);
-      sessionStorage.setItem("marraigePlacetype", marraigePlacetype ? marraigePlacetype : null);
+      sessionStorage.setItem("marriageLBtype", marriageLBtype ? marriageLBtype : null);
+      sessionStorage.setItem("marriageTalukID", marriageTalukID ? marriageTalukID : null);
+      sessionStorage.setItem("marriageVillageName", marriageVillageName ? marriageVillageName : null);
+      sessionStorage.setItem("marriagePlacetype", marriagePlacetype ? marriagePlacetype : null);
       sessionStorage.setItem("marriageLocalityEn", marriageLocalityEn ? marriageLocalityEn : null);
 
       sessionStorage.setItem("marriageStreetMal", marriageStreetMal ? marriageStreetMal : null);
@@ -223,17 +223,17 @@ const HouseMarriageRegistration = ({ config, onSelect, userType, formData }) => 
       sessionStorage.setItem("marriageHouseNoAndNameMal", marriageHouseNoAndNameMal ? marriageHouseNoAndNameMal : null);
       sessionStorage.setItem("marriageLocalityMal", marriageLocalityMal ? marriageLocalityMal : null);
       sessionStorage.setItem("marriageLandmark", marriageLandmark ? marriageLandmark : null);
-      sessionStorage.setItem("marraigeType", marraigeType ? marraigeType : null);
-      sessionStorage.setItem("marraigeOthersSpecify", marraigeOthersSpecify ? marraigeOthersSpecify : null);
+      sessionStorage.setItem("marriageType", marriageType ? marriageType : null);
+      sessionStorage.setItem("marriageOthersSpecify", marriageOthersSpecify ? marriageOthersSpecify : null);
       sessionStorage.setItem("tripStartTime", tripStartTime ? tripStartTime : null);
 
       onSelect(config.key, {
-        marraigeDOM,
+        marriageDOM,
         marriageDistrict,
-        marraigeLBtype,
-        marraigeVillageName,
-        marraigeTalukID,
-        marraigePlacetype,
+        marriageLBtype,
+        marriageVillageName,
+        marriageTalukID,
+        marriagePlacetype,
         marriageLocalityEn,
         marriageLocalityMal,
         marriageLandmark,
@@ -241,8 +241,8 @@ const HouseMarriageRegistration = ({ config, onSelect, userType, formData }) => 
         marriageHouseNoAndNameMal,
         marriageStreetEn,
         marriageStreetMal,
-        marraigeType,
-        marraigeOthersSpecify,
+        marriageType,
+        marriageOthersSpecify,
         tripStartTime,
         selectedOption,
         Gender,
@@ -272,9 +272,9 @@ const HouseMarriageRegistration = ({ config, onSelect, userType, formData }) => 
               <span className="mandatorycss">*</span>
             </CardLabel>
             <DatePicker
-              date={marraigeDOM}
-              name="marraigeDOM"
-              onChange={setSelectmarraigeDOM}
+              date={marriageDOM}
+              name="marriageDOM"
+              onChange={setSelectmarriageDOM}
               inputFormat="DD-MM-YYYY"
               placeholder={`${t("CR_DATE_OF_MARRIAGE")}`}
               {...(validation = { isRequired: true, title: t("CR_DATE_OF_MARRIAGE") })}
@@ -314,10 +314,10 @@ const HouseMarriageRegistration = ({ config, onSelect, userType, formData }) => 
                   t={t}
                   optionKey="name"
                   option={cmbTaluk}
-                  name="marraigeTalukID"
-                  value={marraigeTalukID}
-                  select={setSelectmarraigeTalukID}
-                  selected={marraigeTalukID}
+                  name="marriageTalukID"
+                  value={marriageTalukID}
+                  select={setSelectmarriageTalukID}
+                  selected={marriageTalukID}
                   placeholder={t("CS_COMMON_TALUK'")}
                 />
               </div>
@@ -330,10 +330,10 @@ const HouseMarriageRegistration = ({ config, onSelect, userType, formData }) => 
                   t={t}
                   optionKey="name"
                   option={cmbVillage}
-                  name="marraigeVillageName"
-                  value={marraigeVillageName}
-                  select={setSelectmarraigeVillageName}
-                  selected={marraigeVillageName}
+                  name="marriageVillageName"
+                  value={marriageVillageName}
+                  select={setSelectmarriageVillageName}
+                  selected={marriageVillageName}
                   placeholder={t("CS_COMMON_VILLAGE'")}
                 />
               </div>
@@ -348,10 +348,10 @@ const HouseMarriageRegistration = ({ config, onSelect, userType, formData }) => 
                   t={t}
                   optionKey="name"
                   option={cmbLBType}
-                  name="marraigeLBtype"
-                  value={marraigeLBtype}
-                  select={setSelectmarraigeLBtype}
-                  selected={marraigeLBtype}
+                  name="marriageLBtype"
+                  value={marriageLBtype}
+                  select={setSelectmarriageLBtype}
+                  selected={marriageLBtype}
                   placeholder={t("CS_LBTYPE'")}
                 />
               </div>
@@ -364,10 +364,10 @@ const HouseMarriageRegistration = ({ config, onSelect, userType, formData }) => 
                   t={t}
                   optionKey="name"
                   option={cmbLBType}
-                  name="marraigeLBtype"
-                  value={marraigeLBtype}
-                  select={setSelectmarraigeLBtype}
-                  selected={marraigeLBtype}
+                  name="marriageLBtype"
+                  value={marriageLBtype}
+                  select={setSelectmarriageLBtype}
+                  selected={marriageLBtype}
                   placeholder={t("CS_LB'")}
                 />
               </div>
@@ -380,10 +380,10 @@ const HouseMarriageRegistration = ({ config, onSelect, userType, formData }) => 
                   t={t}
                   optionKey="name"
                   option={cmbLBType}
-                  name="marraigeWardCode"
-                  // value={marraigeWardCode}
-                  // select={setSelectmarraigeWardCode}
-                  // selected={marraigeWardCode}
+                  name="marriageWardCode"
+                  // value={marriageWardCode}
+                  // select={setSelectmarriageWardCode}
+                  // selected={marriageWardCode}
                   placeholder={t("CS_COMMON_WARD'")}
                 />
               </div>
@@ -517,8 +517,8 @@ const HouseMarriageRegistration = ({ config, onSelect, userType, formData }) => 
                 type={"text"}
                 optionKey="i18nKey"
                 option={cmbPlaceType}
-                selected={marraigeType}
-                select={setSelectmarraigeType}
+                selected={marriageType}
+                select={setSelectmarriageType}
                 placeholder={t("CR_MARRIAGE_TYPE")}
                 isMandatory={false}
                 // option={cmbCountry}
@@ -534,8 +534,8 @@ const HouseMarriageRegistration = ({ config, onSelect, userType, formData }) => 
                 type={"text"}
                 optionKey="i18nKey"
                 option={cmbPlaceType}
-                selected={marraigeOthersSpecify}
-                select={setSelectmarraigeOthersSpecify}
+                selected={marriageOthersSpecify}
+                select={setSelectmarriageOthersSpecify}
                 placeholder={t("CR_MARRIAGE_OTHER_SPECIFY")}
                 isMandatory={false}
                 // option={cmbCountry}
