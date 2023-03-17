@@ -8,7 +8,7 @@ import javax.validation.Valid;
 import org.egov.kssmSnehapoorvam.config.SnehapoorvamConfig;
 import org.egov.kssmSnehapoorvam.kafka.Producer;
 import org.egov.kssmSnehapoorvam.repository.SnehapoorvamRepository;
-import org.egov.kssmSnehapoorvam.validors.SnehapoorvamSchoolRegValidator;
+import org.egov.kssmSnehapoorvam.validators.SnehapoorvamSchoolRegValidator;
 import org.egov.kssmSnehapoorvam.web.models.SchoolSearchCriteria;
 import org.egov.kssmSnehapoorvam.web.models.SnehapoorvamRequest;
 import org.egov.kssmSnehapoorvam.web.models.SnehapoorvamSchoolReg;

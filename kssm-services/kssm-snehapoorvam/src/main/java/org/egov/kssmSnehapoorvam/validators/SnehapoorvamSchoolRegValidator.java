@@ -1,4 +1,4 @@
-package org.egov.kssmSnehapoorvam.validors;
+package org.egov.kssmSnehapoorvam.validators;
 
 import javax.validation.Valid;
 import static org.egov.kssmSnehapoorvam.web.enums.ErrorCodes.INVALID_SEARCH;
