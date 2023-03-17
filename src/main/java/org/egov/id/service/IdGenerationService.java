@@ -278,18 +278,28 @@ public class IdGenerationService {
                 } else if (attributeName.substring(0, 2).equalsIgnoreCase("cy")) {
                     idFormat = idFormat.replace("[" + attributeName + "]",String.valueOf(Year));
 
-                } else if (attributeName.substring(0, 4).equalsIgnoreCase("code")) {                	
-                    idFormat = idFormat.replace("[" + attributeName + "]",moduleCode);     
+                } else if (attributeName.substring(0, 4).equalsIgnoreCase("code")) {       
+                	if(!StringUtils.isEmpty(moduleCode)) {
+                		
+                		idFormat = idFormat.replace("[" + attributeName + "]",moduleCode);    
+                	}
                     
-                } else if (attributeName.substring(0, 4).equalsIgnoreCase("fnty")) {                	
-                    idFormat = idFormat.replace("[" + attributeName + "]",fnType);    
+                } else if (attributeName.substring(0, 4).equalsIgnoreCase("fnty")) {   
+                	if(!StringUtils.isEmpty(fnType)) {
+                		
+                		idFormat = idFormat.replace("[" + attributeName + "]",fnType);    
+                	}
                     
                 } else if (attributeName.substring(0, 4).equalsIgnoreCase("lbty")) { 
                 	
                 	if(cityType == null) {
+                		
                 		cityType = mdmsService.getCityType(requestInfo, idRequest);
                 	}
-                    idFormat = idFormat.replace("[" + attributeName + "]",cityType);  
+                	if(!StringUtils.isEmpty(cityType)) {
+                		
+                		idFormat = idFormat.replace("[" + attributeName + "]",cityType);  
+                	}
                     
                 }else if (attributeName.substring(0, 4).equalsIgnoreCase("city")) {
                 	 
