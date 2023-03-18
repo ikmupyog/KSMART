@@ -32,11 +32,14 @@ import lombok.AllArgsConstructor;
 @NoArgsConstructor
 @Builder
 
+
 public class ArisingFileResponse {
 	
-		@JsonProperty("ResponseInfo")
+		@JsonProperty( "ResponseInfo")
 	    private ResponseInfo responseInfo;
 
 	    @JsonProperty("ArisingFile")
-	    private ArisingFile arisingFileDetail;
+	    private List<ArisingFile> arisingFileDetail;
+	    
+	    
 }

@@ -1,7 +1,8 @@
 package org.egov.filemgmnt.web.controllers;
 
+import java.util.List;
+
 import org.egov.filemgmnt.service.ArisingFileService;
-import org.egov.filemgmnt.service.FileManagementService;
 import org.egov.filemgmnt.util.FMUtils;
 import org.egov.filemgmnt.util.ResponseInfoFactory;
 import org.egov.filemgmnt.web.models.*;
@@ -32,14 +33,15 @@ public class ArisingFileController {
         if (log.isDebugEnabled()) {
             log.debug("ArisingFileRequest-create:  \n{}", FMUtils.toJson(request));
         }
-
-        final ArisingFile arisingFileDetails = arisingFileService.createArisingFile(request);
-
-        return ResponseEntity.ok(ArisingFileResponse.builder()
-                                                         .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
-                                                                                                                             Boolean.TRUE))
-                                                         .arisingFileDetail(arisingFileDetails)
-                                                         .build());
+        List<ArisingFile> arisingFileDetails = arisingFileService.createArisingFile(request);
+       
+        
+        ArisingFileResponse response = ArisingFileResponse.builder()
+        								.responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+        																						Boolean.TRUE))
+        								.arisingFileDetail(arisingFileDetails)
+        								.build();
+        return ResponseEntity.ok(response);
     }
 
 
