@@ -30,7 +30,7 @@ console.log(data);
            
             <Card>
               {Object.keys(application).filter(e => e !== "raw" && application[e] !== null).map(item => <KeyNote keyValue={t(item)} note={t(application[item])} />)}
-               <Link to={`/digit-ui/citizen/cr/cr/application/${application?.TL_COMMON_TABLE_COL_APP_NO}/${application?.TL_COMMON_CITY_NAME}`}>
+               <Link to={`/digit-ui/citizen/cr/cr/application/${application?.appl}/${application?.TL_COMMON_CITY_NAME}`}>
                 <SubmitBar label={t(application?.ChildDetails?.applicationStatus != "INITIATED" ? "TL_VIEW_DETAILS" : "TL_VIEW_DETAILS_PAY")} />
               </Link>{" "}
             </Card>

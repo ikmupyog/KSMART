@@ -51,6 +51,11 @@ import BornOutsideChildDetails from "../src/pageComponents/bornOutsideIndiaCompo
 import BornOutsideParentsDetails from "../src/pageComponents/bornOutsideIndiaComponents/BornOutsideParentsDetails";
 import BornOutsideStaticInfn from "./pageComponents/bornOutsideIndiaComponents/BornOutsideStaticInfn";
 import BornOutsideCheckPage from "./pages/citizen/BornOutsideReg/BornOutsideCheckPage";
+import BornOutsideAddressPage from "./pageComponents/bornOutsideIndiaComponents/BornOutsideAddressPage";
+import BornOutsidePresentOutsideIndia from "./pageComponents/bornOutsideIndiaComponents/BornOutsidePresentOutsideIndia";
+import BornoutsidePermanentInsideKerala from "./pageComponents/bornOutsideIndiaComponents/BornoutsidePermanentInsideKerala";
+import BornoutsideSameAsAbove from "./pageComponents/bornOutsideIndiaComponents/BornoutsideSameAsAbove";
+import BornOutsidePermanent from "./pageComponents/bornOutsideIndiaComponents/BornOutsidePermanent";
 
 // import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
 import AdoptionMotherInformation from "../src/pageComponents/adoptionComponents/AdoptionMotherInformation";
@@ -84,12 +89,15 @@ import DeathOutsideJurisdiction from "./pageComponents/deathComponents/DeathOuts
 import Informer from "./pageComponents/deathComponents/Informer";
 import Initiater from "./pageComponents/deathComponents/Initiater";
 import MyCRApplications from "./pages/citizen/Applications/Application";
+import MyCRDeathApplications from "./pages/citizen/Applications/ApplicationDeath";
 // import DeathCertificate from "./pageComponents/deathComponents/DeathCertificate";
 // import GeneralRemarks from "./pageComponents/deathComponents/GeneralRemarks";
 import CRSearch from "./pages/employee/Search";
+import CRDeathsearch from "./pages/employee/Search";
 import SearchCrApplication from "./components/SearchApplication";
 import SearchRegistryDeath from "./components/SearchRegistryDeath";
 import CRCitizenApplicationDetails from "./pages/citizen/Applications/ApplicationDetails";
+import CRDeathApplicationDetails from "./pages/citizen/Applications/ApplicationDeathDetails";
 import CRApplicationDetails from "./pages/employee/ApplicationDetails";
 import CRApplicationDeathDetails from "./pages/employee/ApplicationDeathDetails";
 // import ApplicantDetails from "./pageComponents/deathComponents/ApplicantDetails";
@@ -200,6 +208,7 @@ export const CRLinks = ({ matchPath, userType }) => {
 
 const componentsToRegister = {
   MyCRApplications,
+  MyCRDeathApplications,
   CustomTimePicker,
   CRModule,
   CRLinks,
@@ -210,9 +219,11 @@ const componentsToRegister = {
   AdoptionInitiatorDetails,
   ChildDetails,
   CRCitizenApplicationDetails,
+  CRDeathApplicationDetails,
   CRApplicationDetails,
   CRApplicationDeathDetails,
   CRSearch,
+  CRDeathsearch,
   SearchCrApplication,
   SearchRegistryDeath,
   SearchDeathApplication,
@@ -257,7 +268,13 @@ const componentsToRegister = {
   BornOutsideChildDetails,
   BornOutsideParentsDetails,
   BornOutsideStaticInfn,
+  BornOutsideAddressPage,
   BornOutsideCheckPage,
+  BornOutsideAddressPage,
+  BornOutsidePresentOutsideIndia,
+  BornoutsidePermanentInsideKerala,
+  BornoutsideSameAsAbove,
+  BornOutsidePermanent,
   //////////////////
   // SearchRegistry,
   AdoptionDetails,

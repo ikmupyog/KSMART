@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Toast, BackButton, Loader } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/CRTimeline";
-import DRTimeline from "../../components/DRTimeline";
+import Timeline from "../../components/BOBRTimeline";
 import { useTranslation } from "react-i18next";
-import AddressPresent from "./AddressPresent";
-import AddressPresentInsideKerala from "./AddressPresentInsideKerala";
-import AddressPresentOutsideKerala from "./AddressPresentOutsideKerala";
-import AddressPresentOutsideIndia from "./AddressPresentOutsideIndia";
-import AddressSameAsAbove from "./AddressSameAsAbove";
-import AddressPermanent from "./AddressPermanent";
-import AddressPermanentInsideKerala from "./AddressPermanentInsideKerala";
-import AddressPermanentOutsideKerala from "./AddressPermanentOutsideKerala";
-import AddressPermanentOutsideIndia from "./AddressPermanentOutsideIndia";
+// import AddressPresent from "./AddressPresent";
+// import AddressPresentInsideKerala from "./AddressPresentInsideKerala";
+// import AddressPresentOutsideKerala from "./AddressPresentOutsideKerala";
+// import AddressPresentOutsideIndia from "./AddressPresentOutsideIndia";
+// import AddressSameAsAbove from "./AddressSameAsAbove";
+// import AddressPermanent from "./AddressPermanent";
+// import AddressPermanentInsideKerala from "./AddressPermanentInsideKerala";
+// import AddressPermanentOutsideKerala from "./AddressPermanentOutsideKerala";
+// import AddressPermanentOutsideIndia from "./AddressPermanentOutsideIndia";
 
-const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = false, isEditDeath = false }) => {
+const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBirth = false, isEditDeath = false }) => {
     console.log(formData);
     const stateId = Digit.ULBService.getStateId();
     let tenantId = "";
@@ -31,7 +30,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
     const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
     const { data: District = {}, isDistrictLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
     const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
-    // const [isInitialRender, setIsInitialRender] = useState(true);
+    const [isInitialRender, setIsInitialRender] = useState(true);
 
     const [lbs, setLbs] = useState(0);
     const [toast, setToast] = useState(false);
@@ -79,7 +78,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
     const [presentaddressCountry, setaddressCountry] = useState(formData?.AddressBirthDetails?.presentaddressCountry?.code ? formData?.AddressBirthDetails?.presentaddressCountry : formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry ? "" : "");
     const [presentaddressStateName, setaddressStateName] = useState(formData?.AddressBirthDetails?.presentaddressStateName?.code ? formData?.AddressBirthDetails?.presentaddressStateName : formData?.ChildDetails?.AddressBirthDetails?.presentaddressStateName ? "" : "");
     const [countryvalue, setCountryValue] = useState(formData?.AddressBirthDetails?.presentaddressCountry?.code ? formData?.AddressBirthDetails?.presentaddressCountry.countrycode : formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry ? "" : "")
-    const [value, setValue] = useState(formData?.AddressBirthDetails?.presentaddressStateName?.code ? formData?.AddressBirthDetails?.presentaddressStateName.code : formData?.ChildDetails?.AddressBirthDetails?.presentaddressStateName ? "" : "");
+    const [value, setValue] = useState(formData?.AddressBirthDetails?.presentaddressStateName?.code ? formData?.AddressBirthDetails?.presentaddressStateName.statecode : formData?.ChildDetails?.AddressBirthDetails?.presentaddressStateName ? "" : "");
 
     //################################# Present Inside Kerala #########################################################################################################
 
@@ -139,7 +138,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
     const [permtaddressCountry, setpermtaddressCountry] = useState(formData?.AddressBirthDetails?.permtaddressCountry?.code ? formData?.AddressBirthDetails?.permtaddressCountry : formData?.ChildDetails?.AddressBirthDetails?.permtaddressCountry ? "" : "");
     const [permtaddressStateName, setpermtaddressStateName] = useState(formData?.AddressBirthDetails?.permtaddressStateName?.code ? formData?.AddressBirthDetails?.permtaddressStateName : formData?.ChildDetails?.AddressBirthDetails?.permtaddressStateName ? "" : "");
     const [countryValuePermanent, setCountryValuePermanent] = useState(formData?.AddressBirthDetails?.permtaddressCountry?.code ? formData?.AddressBirthDetails?.permtaddressCountry.countrycode : formData?.ChildDetails?.AddressBirthDetails?.permtaddressCountry ? "" : "");
-    const [valuePermanent, setValuePermanent] = useState(formData?.AddressBirthDetails?.presentaddressStateName?.code ? formData?.AddressBirthDetails?.permtaddressStateName.code : formData?.ChildDetails?.AddressBirthDetails?.permtaddressStateName ? "" : "");
+    const [valuePermanent, setValuePermanent] = useState(formData?.AddressBirthDetails?.presentaddressStateName?.code ? formData?.AddressBirthDetails?.permtaddressStateName.statecode : formData?.ChildDetails?.AddressBirthDetails?.permtaddressStateName ? "" : "");
     
     //################################################# Permanent Inside Kerala ##########################################################################################
 
@@ -778,8 +777,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                 <BackButton>{t("CS_COMMON_BACK")}</BackButton>
                 {/* {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null} */}
                 {/* {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null} */}
-                {window.location.href.includes("/citizen/cr/cr-birth-creation/address-birth") ? <Timeline currentStep={3} /> : null || window.location.href.includes("employee/cr/cr-flow") ? <Timeline currentStep={3} /> : null}
-                {window.location.href.includes("/citizen/cr/cr-death-creation/address-death") ? <DRTimeline currentStep={2} /> : null || window.location.href.includes("employee/cr/death-flow") ? <DRTimeline currentStep={2} /> : null}
+                {/* {window.location.href.includes("/citizen/cr/cr-birth-creation/address-birth") ? <Timeline currentStep={3} /> : null || window.location.href.includes("employee/cr/cr-flow") ? <Timeline currentStep={3} /> : null}
+                {window.location.href.includes("/citizen/cr/cr-death-creation/address-death") ? <DRTimeline currentStep={2} /> : null || window.location.href.includes("employee/cr/death-flow") ? <DRTimeline currentStep={2} /> : null} */}
                 <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
 
                     <div className="accordion-wrapper">
@@ -1194,4 +1193,4 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
             </React.Fragment>
         );
 };
-export default AddressBasePage;
+export default BornOutsideAddressPage;

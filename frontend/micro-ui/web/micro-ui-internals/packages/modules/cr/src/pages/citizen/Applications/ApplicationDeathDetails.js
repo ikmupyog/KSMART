@@ -26,7 +26,7 @@ const getAddress = (address, t) => {
 } 
 
 
-const CRCitizenApplicationDetails = () => {
+const CRDeathApplicationDetails = () => {
   
   const { t } = useTranslation();
   const { id } = useParams();
@@ -46,7 +46,7 @@ const CRCitizenApplicationDetails = () => {
   };
   let multiHeaderStyle = { marginBottom: "10px", marginTop: "10px", color: "#505A5F" };
   //todo: hook should return object to render the data
-  const { isLoading, isError, error, data: application, error: errorApplication } = Digit.Hooks.cr.useCRApplicationDetails({
+  const { isLoading, isError, error, data: application, error: errorApplication } = Digit.Hooks.cr.useCRApplicationDeathDetails({
     tenantId: tenantId,
     applicationNumber: id,
   });
@@ -420,4 +420,4 @@ if(wfdata)
   );
 };
 
-export default CRCitizenApplicationDetails;
+export default CRDeathApplicationDetails;

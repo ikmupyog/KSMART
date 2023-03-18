@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Route, Switch, useRouteMatch,useLocation,useHistory,Redirect } from "react-router-dom";
 import { PrivateRoute, BreadCrumb,Component } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-import ChildDetails from "../../../pageComponents/birthComponents/ChildDetails";
 import { newConfig as newConfigCR } from "../../../config/config";
 
 const CreateMarriageRegistration = ({ parentUrl }) => {
@@ -21,7 +20,7 @@ const CreateMarriageRegistration = ({ parentUrl }) => {
   newConfig?.forEach((obj) => {
     config = config.concat(obj.body.filter((a) => !a.hideInCitizen));
   });
-  config.indexRoute = "groom-details";
+  config.indexRoute = "marriage-registration";
   const goNext = (skipStep, index, isAddMultiple, key, isPTCreateSkip) => {
     let currentPath = pathname.split("/").pop(),
       nextPage;
@@ -110,12 +109,12 @@ const CreateMarriageRegistration = ({ parentUrl }) => {
   
   const onSuccess = () => {
     sessionStorage.removeItem("CurrentFinancialYear");
-    queryClient.invalidateQueries("CR_CREATE_BIRTH");
+    queryClient.invalidateQueries("CR_CREATE_MARRIAGE");
   };
   const handleSkip = () => {};
   const handleMultiple = () => {};
-  const CheckPage = Digit?.ComponentRegistryService?.getComponent("BirthCheckPage");
-  const BirthAcknowledgement = Digit?.ComponentRegistryService?.getComponent("BirthAcknowledgement");
+  const CheckPage = Digit?.ComponentRegistryService?.getComponent("MarriageCheckPage");
+  const MarriageAcknowledgement = Digit?.ComponentRegistryService?.getComponent("MarriageAcknowledgement");
   return (
     
     <React.Fragment>
@@ -142,7 +141,7 @@ const CreateMarriageRegistration = ({ parentUrl }) => {
         <CheckPage onSubmit={createProperty} value={params} />
       </Route>
       <Route path={`${match.path}/acknowledgement`}>
-        <BirthAcknowledgement data={params} onSuccess={onSuccess} />
+        <MarriageAcknowledgement data={params} onSuccess={onSuccess} />
       </Route>
       <Route>
         <Redirect to={`${match.path}/${config.indexRoute}`} />

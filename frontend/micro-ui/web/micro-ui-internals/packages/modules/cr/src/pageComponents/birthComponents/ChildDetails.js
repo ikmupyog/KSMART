@@ -317,7 +317,6 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
   }
 
   function setselectChildDOB(value) {
-    console.log(value);
     setChildDOB(value);
     const today = new Date();
     const birthDate = new Date(value);
