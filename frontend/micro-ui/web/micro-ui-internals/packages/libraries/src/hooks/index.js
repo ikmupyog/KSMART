@@ -121,6 +121,7 @@ import useTenantsCR from "./cr/useTenants";
 import useCivilRegistrationMDMS from "./cr/useCivilRegistrationMDMS";
 // import useTLDocumentSearch from "./tl/useTLDocumentSearch";
 import useCivilRegistrationAPI from "./cr/useCivilRegistrationAPI";
+import useCvilRegistrationAdoptionApi from "./cr/useCvilRegistrationAdoptionApi";
 import useCivilRegistrationStillBirthAPI from "./cr/useCivilRegistrationStillBirthAPI";
 
 import useCivilRegistrationDeathAPI from "./cr/useCivilRegistrationDeathAPI";
@@ -337,6 +338,7 @@ const cr = {
   useTenants: useTenantsCR,
   useCivilRegistrationMDMS,
   useCivilRegistrationAPI,
+  useCvilRegistrationAdoptionApi,
   useCivilRegistrationStillBirthAPI,
   useCivilRegistrationDeathAPI,
   useCRGenderMDMS,
