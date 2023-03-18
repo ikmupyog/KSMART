@@ -4,12 +4,15 @@ import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
 const AddressSameAsAbove = ({ config, onSelect, userType, formData, isPrsentAddress, setIsPrsentAddress,
-  isEditBirth = false, isEditDeath = false
+  isEditBirth = false, isEditDeath = false,
+  // isInitialRender, setIsInitialRender
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
   const [isInitialRender, setIsInitialRender] = useState(true);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? isEditDeath : false);
+
   // const [isPrsentAddress, setIsPrsentAddress] = useState(formData?.AddressSameAsAboveDetails?.isPrsentAddress);
 
   const onSkip = () => onSelect();
@@ -76,7 +79,9 @@ const AddressSameAsAbove = ({ config, onSelect, userType, formData, isPrsentAddr
           <div className="row">
             <div className="col-md-12" >
               <div className="col-md-12" >
-                <CheckBox label={t("CR_SAME_AS_ABOVE")} onChange={setSameAsPresent} value={isPrsentAddress} checked={isPrsentAddress} />
+                <CheckBox label={t("CR_SAME_AS_ABOVE")} onChange={setSameAsPresent} value={isPrsentAddress} 
+                checked={isPrsentAddress} 
+                disable={isDisableEdit} />
               </div>
             </div>
           </div>

@@ -5,7 +5,6 @@ import { useTranslation } from "react-i18next";
 
 const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isEditBirthPageComponents }) => {
   // console.log(JSON.stringify(formData));
-  console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -63,7 +62,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
       cmbReligion.push(ob);
     });
   const [isMotherInfo, setIsMotherInfo] = useState(formData?.ParentsDetails?.isMotherInfo ? formData?.ParentsDetails?.isMotherInfo :
-    formData?.ChildDetails?.ParentsDetails?.isMotherInfo ? formData?.ChildDetails?.ParentsDetails?.isMotherInfo : false);
+    formData?.ChildDetails?.ParentsDetails?.ismotherInfo ? formData?.ChildDetails?.ParentsDetails?.ismotherInfo : false);
   const [motherAadhar, setMotherAadhar] = useState(formData?.ParentsDetails?.motherAadhar ? formData?.ParentsDetails?.motherAadhar :
     formData?.ChildDetails?.ParentsDetails?.motherAadhar ? formData?.ChildDetails?.ParentsDetails?.motherAadhar : "");
   const [motherFirstNameEn, setMotherFirstNameEn] = useState(formData?.ParentsDetails?.motherFirstNameEn ? formData?.ParentsDetails?.motherFirstNameEn :
@@ -89,7 +88,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
     (cmbProfession.filter(cmbProfession => cmbProfession.code === formData?.ChildDetails?.ParentsDetails?.motherProfession)[0]) : "");
 
   const [isFatherInfo, setIsFatherInfo] = useState(formData?.ParentsDetails?.isFatherInfo ? formData?.ParentsDetails?.isFatherInfo :
-    formData?.ChildDetails?.ParentsDetails?.isFatherInfo ? formData?.ChildDetails?.ParentsDetails?.isFatherInfo : false);
+    formData?.ChildDetails?.ParentsDetails?.isfatherInfo ? formData?.ChildDetails?.ParentsDetails?.isfatherInfo : false);
   const [fatherAadhar, setFatherAadhar] = useState(formData?.ParentsDetails?.fatherAadhar ? formData?.ParentsDetails?.fatherAadhar :
     formData?.ChildDetails?.ParentsDetails?.fatherAadhar ? formData?.ChildDetails?.ParentsDetails?.fatherAadhar : "");
   const [fatherFirstNameEn, setFatherFirstNameEn] = useState(formData?.ParentsDetails?.fatherFirstNameEn ? formData?.ParentsDetails?.fatherFirstNameEn :
@@ -124,6 +123,9 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
   const [FatherProfError, setFatherProfError] = useState(formData?.ParentsDetails?.fatherProfession ? false : false);
   const [ReligionError, setReligionError] = useState(formData?.ParentsDetails?.Religion ? false : false);
   const [MotherMaritalStatusError, setMotherMaritalStatusError] = useState(formData?.ParentsDetails?.motherMaritalStatus ? false : false);
+  const [AdhaarDuplicationError, setAdhaarDuplicationError] = useState(false);
+  const [AgeValidationMsg, setAgeValidationMsg] = useState(false);
+  const [OrderofChildrenValidationMsg, setOrderofChildrenValidationMsg] = useState(false);
 
 
   const onSkip = () => onSelect();
@@ -154,33 +156,35 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
 
 
   function setSelectMotherFirstNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setMotherFirstNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
   function setSelectMotherFirstNameMl(e) {
-    if (e.target.value.trim().length === 51 || e.target.value.trim() === ".") {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setMotherFirstNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      setMotherFirstNameMl('');
+    }
+    else {
+      setMotherFirstNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectMotherAadhar(e) {
-    if (e.target.value.trim().length != 0) {
+    if (e.target.value.trim().length >= 0) {
       setMotherAadhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
     }
   }
 
   function setSelectFatherAadhar(e) {
-    if (e.target.value.trim().length != 0) {
+    if (e.target.value.trim().length >= 0) {
       setFatherAadhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
     }
   }
 
   function setSelectFatherMobile(e) {
-    if (e.target.value.trim().length != 0) {
+    if (e.target.value.trim().length >= 0) {
       setFatherMobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
     }
   }
@@ -200,21 +204,22 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
   // }
 
   function setSelectMotherMarriageAge(e) {
-    if (e.target.value.trim().length === 3) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
+    setMotherMarriageAge(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
+    if (e.target.value < 18) {
+      setAgeValidationMsg(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
     } else {
-      setMotherMarriageAge(e.target.value);
+      setAgeValidationMsg(false);
     }
   }
 
 
   function setSelectMotherMarriageBirth(e) {
-    if (e.target.value.trim().length === 3) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setMotherMarriageBirth(e.target.value);
+    if (e.target.value.trim().length >= 0) {
+      setMotherMarriageBirth(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
     }
   }
   function setSelectMotherEducation(value) {
@@ -236,6 +241,20 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
 
   }
   function setSelectOrderofChildren(e) {
+    if (e.target.value < 10) {
+      if (e.target.value > 4) {
+        setOrderofChildren(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
+        setOrderofChildrenValidationMsg(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setOrderofChildrenValidationMsg(false);
+        setOrderofChildren(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
+      }
+    }
+
     if (e.target.value.trim().length === 3) {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
@@ -263,16 +282,18 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
   }
 
   function setSelectFatherFirstNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setFatherFirstNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectFatherFirstNameMl(e) {
-    if (e.target.value.trim().length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setFatherFirstNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      setFatherFirstNameMl('');
+    }
+    else {
+      setFatherFirstNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
@@ -310,7 +331,12 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
       setIsFatherInfo(e.target.checked);
     }
   }
-
+  function setCheckMalayalamInputField(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
+    if (!(e.key.match(pattern))) {
+      e.preventDefault();
+    }
+  }
   if (isEditBirth) {
 
     if (formData?.ChildDetails?.ParentsDetails?.motherNationality != null) {
@@ -381,7 +407,6 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
       }
       if (motherAadhar != null || motherAadhar != "" || motherAadhar != undefined) {
         let adharLength = motherAadhar;
-        console.log(adharLength);
         if (adharLength.length < 12 || adharLength.length > 12) {
           validFlag = false;
           setMotherAadharError(true);
@@ -441,7 +466,6 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
       }
       if (fatherAadhar != null || fatherAadhar != "" || fatherAadhar != undefined) {
         let adharLength = fatherAadhar;
-        console.log(adharLength);
         if (adharLength.length < 12 || adharLength.length > 12) {
           validFlag = false;
           setFatherAadharError(true);
@@ -488,7 +512,20 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
         setReligionError(false);
       }
     }
-
+    if (isFatherInfo === false && isMotherInfo === false) {
+      if ((motherAadhar != null || motherAadhar != "" || motherAadhar != undefined) && (fatherAadhar != null || fatherAadhar != "" || fatherAadhar != undefined)) {
+        if (motherAadhar === fatherAadhar) {
+          validFlag = false;
+          setAdhaarDuplicationError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } else {
+          setAdhaarDuplicationError(false);
+        }
+      }
+    }
     if (validFlag == true) {
       sessionStorage.setItem("motherFirstNameEn", motherFirstNameEn ? motherFirstNameEn : null);
       sessionStorage.setItem("motherFirstNameMl", motherFirstNameMl ? motherFirstNameMl : null);
@@ -564,7 +601,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
           <div className="row">
             <div className="col-md-12">
               {/* <CardLabel>{`${t("Multiple Birth")}`}</CardLabel> */}
-              <CheckBox label={t("CR_MOTHER_INFORMATION_MISSING")} onChange={setMotherInfo} value={isMotherInfo} checked={isMotherInfo} />
+              <CheckBox label={t("CR_MOTHER_INFORMATION_MISSING")} onChange={setMotherInfo} value={isMotherInfo} checked={isMotherInfo} disable={isDisableEdit} />
             </div>
           </div>
           {isMotherInfo === false && (
@@ -583,14 +620,14 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                     <TextInput
                       t={t}
                       isMandatory={false}
-                      type={"number"}
+                      type={"text"}
                       optionKey="i18nKey"
                       name="motherAadhar"
                       value={motherAadhar}
                       onChange={setSelectMotherAadhar}
                       disable={isDisableEdit}
                       placeholder={`${t("CS_COMMON_AADHAAR")}`}
-                      {...(validation = { pattern: "^[0-9]{12}$", type: "number", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                      {...(validation = { pattern: "^[0-9]{12}$", type: "test", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                     />
                   </div>
 
@@ -625,6 +662,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                       optionKey="i18nKey"
                       name="motherFirstNameMl"
                       value={motherFirstNameMl}
+                      onKeyPress={setCheckMalayalamInputField}
                       onChange={setSelectMotherFirstNameMl}
                       disable={isDisableEdit}
                       placeholder={`${t("CR_MOTHER_NAME_ML")}`}
@@ -678,14 +716,14 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                       <TextInput
                         t={t}
                         isMandatory={false}
-                        type={"number"}
+                        type={"text"}
                         optionKey="i18nKey"
                         name="motherMarriageAge"
                         value={motherMarriageAge}
                         onChange={setSelectMotherMarriageAge}
                         disable={isDisableEdit}
                         placeholder={`${t("CR_MOTHER_AGE_MARRIAGE")}`}
-                        {...(validation = { pattern: "^[0-9]{3}$", type: "number", isRequired: true, title: t("CR_INVALID_MOTHER_AGE_MARRIAGE") })}
+                        {...(validation = { pattern: "^[0-9]{2}$", type: "text", isRequired: true, title: t("CR_INVALID_MOTHER_AGE_MARRIAGE") })}
                       />
                     </div>
                   )}
@@ -695,14 +733,14 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                     <TextInput
                       t={t}
                       isMandatory={false}
-                      type={"number"}
+                      type={"text"}
                       optionKey="i18nKey"
                       name="motherMarriageBirth"
                       value={motherMarriageBirth}
                       onChange={setSelectMotherMarriageBirth}
                       disable={isDisableEdit}
                       placeholder={`${t("CR_MOTHER_AGE_BIRTH")}`}
-                      {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: true, title: t("CR_INVALID_MOTHER_AGE_BIRTH") })}
+                      {...(validation = { pattern: "^[0-9]{2}$", type: "text", isRequired: true, title: t("CR_INVALID_MOTHER_AGE_BIRTH") })}
                     />
                   </div>
                 </div>
@@ -778,14 +816,14 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                     <TextInput
                       t={t}
                       isMandatory={false}
-                      type={"number"}
+                      type={"text"}
                       optionKey="i18nKey"
                       name="fatherAadhar"
                       value={fatherAadhar}
                       onChange={setSelectFatherAadhar}
                       disable={isDisableEdit}
                       placeholder={`${t("CS_COMMON_AADHAAR")}`}
-                      {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                      {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                     />
                   </div>
 
@@ -820,6 +858,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                       optionKey="i18nKey"
                       name="fatherFirstNameMl"
                       value={fatherFirstNameMl}
+                      onKeyPress={setCheckMalayalamInputField}
                       onChange={setSelectFatherFirstNameMl}
                       disable={isDisableEdit}
                       placeholder={`${t("CR_FATHER_NAME_ML")}`}
@@ -908,14 +947,14 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                 <TextInput
                   t={t}
                   isMandatory={false}
-                  type={"number"}
+                  type={"text"}
                   optionKey="i18nKey"
                   name="fatherMobile"
                   value={fatherMobile}
                   onChange={setSelectFatherMobile}
                   disable={isDisableEdit}
                   placeholder={`${t("CR_PARENTS_CONTACT_NO")}`}
-                  {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: true, title: t("CR_INVALID_PARENTS_CONTACT_NO") })}
+                  {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: true, title: t("CR_INVALID_PARENTS_CONTACT_NO") })}
                 />
               </div>
               <div className="col-md-4">
@@ -953,7 +992,10 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                 FatherMobileError ||
                 ReligionError ||
                 // || MotherMaritalStatusError || MotherCountryError || MotherStateError || MotherDistrictError || MotherLBNameError  || MotherTalukError || MotherPlaceTypeError
-                OrderofChildrenError
+                OrderofChildrenError ||
+                AdhaarDuplicationError ||
+                AgeValidationMsg ||
+                OrderofChildrenValidationMsg
               }
               label={
                 MotherAadharError ||
@@ -969,7 +1011,10 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
 
                   FatherMobileError ||
                   ReligionError ||
-                  OrderofChildrenError
+                  OrderofChildrenError ||
+                  AdhaarDuplicationError ||
+                  AgeValidationMsg || OrderofChildrenValidationMsg
+
                   ? MotherAadharError
                     ? t(`CS_COMMON_INVALID_MOTHER_AADHAR_NO`)
                     : MotherMarriageageError
@@ -996,9 +1041,15 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                                           ? t(`BIRTH_ERROR_RELIGION_CHOOSE`)
                                           : FatherMobileError
                                             ? t(`CR_INVALID_MOBILE_NO`)
-                                            :
+                                            : AdhaarDuplicationError
+                                              ? t(`CR_DUPLICATE_AADHAR_NO`)
+                                              : AgeValidationMsg
+                                                ? t(`CR_MOTHER_AGE_WARNING`)
+                                                : OrderofChildrenValidationMsg
+                                                  ? t(`CR_ORDER_CHILDREN_WARNING`)
+                                                  :
 
-                                            setToast(false)
+                                                  setToast(false)
                   : setToast(false)
               }
               onClose={() => setToast(false)}

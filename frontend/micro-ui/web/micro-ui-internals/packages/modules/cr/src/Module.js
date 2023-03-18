@@ -2,6 +2,11 @@ import { CitizenHomeCard, CaseIcon } from "@egovernments/digit-ui-react-componen
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useRouteMatch } from "react-router-dom";
+import AdoptionChildDetails from "../src/pageComponents/adoptionComponents/AdoptionChildDetails";
+import AdoptionAddressBasePage from "../src/pageComponents/adoptionComponents/AdoptionAddressBasePage";
+import AdoptionParentsDetails from "./pageComponents/adoptionComponents/AdoptionParentsDetails";
+import AdoptionInitiatorDetails from "../src/pageComponents/adoptionComponents/AdoptionInitiatorDetails";
+
 import ChildDetails from "../src/pageComponents/birthComponents/ChildDetails";
 import AddressOne from "./pageComponents/birthComponents/OldAddressOne";
 import AddressInsideIndia from "./pageComponents/birthComponents/OldAddressInsideIndia";
@@ -9,9 +14,9 @@ import AddressSameAsAbove from "../src/pageComponents/birthComponents/AddressSam
 import AddressPermanent from "../src/pageComponents/birthComponents/AddressPermanent";
 import MultipleBirth from "../src/pageComponents/birthComponents/MultipleBirth";
 import CreateBirthRegistration from "./pages/citizen/BirthRegistration";
+import CreateAdoptions from "./pages/citizen/Adoption";
 import CreateStillBirthRegistration from "./pages/citizen/StillBirthRegistration";
-import CreateBornOutsideRegistration from "./pages/citizen/BornOutsideReg";
-
+import CreateBornOutsideRegistration from "./pages/citizen/BornOutsideReg"
 
 import ParentsDetails from "../src/pageComponents/birthComponents/ParentsDetails";
 import BirthPlaceHospital from "../src/pageComponents/birthComponents/BirthPlaceHospital";
@@ -38,12 +43,19 @@ import StillBirthPlaceInstitution from "../src/pageComponents/stillBirthComponen
 import StillBirthPlaceHospital from "../src/pageComponents/stillBirthComponents/StillBirthPlaceHospital";
 import StillBirthPlaceHome from "../src/pageComponents/stillBirthComponents/StillBirthPlaceHome";
 import StillBirthInitiatorDetails from "../src/pageComponents/stillBirthComponents/StillBirthInitiatorDetails";
+import StillBirthInformarDetails from "./pageComponents/stillBirthComponents/StillBirthInformarDetails";
 import StillBirthCheckPage from "./pages/citizen/StillBirthRegistration/StillBirthCheckPage";
-import BornOutsideCheckPage from "./pages/citizen/BornOutsideReg/BornOutsideCheckPage";
+
 
 import BornOutsideChildDetails from "../src/pageComponents/bornOutsideIndiaComponents/BornOutsideChildDetails";
 import BornOutsideParentsDetails from "../src/pageComponents/bornOutsideIndiaComponents/BornOutsideParentsDetails";
-
+import BornOutsideStaticInfn from "./pageComponents/bornOutsideIndiaComponents/BornOutsideStaticInfn";
+import BornOutsideCheckPage from "./pages/citizen/BornOutsideReg/BornOutsideCheckPage";
+import BornOutsideAddressPage from "./pageComponents/bornOutsideIndiaComponents/BornOutsideAddressPage";
+import BornOutsidePresentOutsideIndia from "./pageComponents/bornOutsideIndiaComponents/BornOutsidePresentOutsideIndia";
+import BornoutsidePermanentInsideKerala from "./pageComponents/bornOutsideIndiaComponents/BornoutsidePermanentInsideKerala";
+import BornoutsideSameAsAbove from "./pageComponents/bornOutsideIndiaComponents/BornoutsideSameAsAbove";
+import BornOutsidePermanent from "./pageComponents/bornOutsideIndiaComponents/BornOutsidePermanent";
 
 // import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
 import AdoptionMotherInformation from "../src/pageComponents/adoptionComponents/AdoptionMotherInformation";
@@ -76,12 +88,16 @@ import DeathPublicPlace from "./pageComponents/deathComponents/DeathPublicPlace"
 import DeathOutsideJurisdiction from "./pageComponents/deathComponents/DeathOutsideJurisdiction ";
 import Informer from "./pageComponents/deathComponents/Informer";
 import Initiater from "./pageComponents/deathComponents/Initiater";
-
+import MyCRApplications from "./pages/citizen/Applications/Application";
+import MyCRDeathApplications from "./pages/citizen/Applications/ApplicationDeath";
 // import DeathCertificate from "./pageComponents/deathComponents/DeathCertificate";
 // import GeneralRemarks from "./pageComponents/deathComponents/GeneralRemarks";
 import CRSearch from "./pages/employee/Search";
+import CRDeathsearch from "./pages/employee/Search";
 import SearchCrApplication from "./components/SearchApplication";
 import SearchRegistryDeath from "./components/SearchRegistryDeath";
+import CRCitizenApplicationDetails from "./pages/citizen/Applications/ApplicationDetails";
+import CRDeathApplicationDetails from "./pages/citizen/Applications/ApplicationDeathDetails";
 import CRApplicationDetails from "./pages/employee/ApplicationDetails";
 import CRApplicationDeathDetails from "./pages/employee/ApplicationDeathDetails";
 // import ApplicantDetails from "./pageComponents/deathComponents/ApplicantDetails";
@@ -90,10 +106,13 @@ import CRSearchdeathcorrection from "./pages/employee/SearchCorrection";
 import CRSearchDeathCorrectionRoute from "./pages/employee/DeathCorrection/DeathCorrectionroute";
 import CRDeathcorrection from "./pages/employee/DeathCorrection";
 import CustomTimePicker from "./components/CustomTimePicker";
+import AdoptionCheckPage from "./pages/citizen/Adoption/AdoptionCheckPage";
 import BirthCheckPage from "./pages/citizen/BirthRegistration/BirthCheckPage";
 import DeathCheckPage from "./pages/citizen/DeathRegistration/DeathCheckPage";
 import MarriageCheckPage from "./pages/citizen/MarriageRegistration/MarriageCheckPage";
+import AdoptionAcknowledgement from "./pages/citizen/Adoption/AdoptionAcknowledgement";
 import BirthAcknowledgement from "./pages/citizen/BirthRegistration/BirthAcknowledgement";
+import StillBirthAcknowledgement from "./pages/citizen/StillBirthRegistration/StillBirthAcknowledgement";
 import DeathAcknowledgement from "./pages/citizen/DeathRegistration/DeathAcknowledgement";
 import MarriageAcknowledgement from "./pages/citizen/MarriageRegistration/MarriageAcknowledgement";
 import BirthCertificate from "./pages/citizen/Certificate/BirthCertificate";
@@ -103,12 +122,19 @@ import CRCard from "./components/CRCard";
 import Response from "./pages/Response";
 import EmployeeApp from "./pages/employee";
 import CitizenApp from "./pages/citizen";
+import CRDocuments from "./pageComponents/birthComponents/CRDocuments";
+import CRWFApplicationTimeline from "./pageComponents/birthComponents/CRWFApplicationTimeline";
+
 
 import CreateMarriageRegistration from "./pages/citizen/MarriageRegistration";
 import GroomDetails from "./pageComponents/marriageComponents/GroomDetails";
 import BrideDetails from "./pageComponents/marriageComponents/BrideDetails";
 import MarriageInstitution from "./pageComponents/marriageComponents/MarriageInstitution";
-import MarriagePublicPlace from "./pageComponents/marriageComponents/MarriagePublicPlace"
+import MarriagePublicPlace from "./pageComponents/marriageComponents/MarriagePublicPlace";
+import MarriageRegistration from "./pageComponents/marriageComponents/MarriageRegistration";
+import HouseMarriageRegistration from "./pageComponents/marriageComponents/HouseMarriageRegistration";
+import witnessdetails from "./pageComponents/marriageComponents/witnessdetails";
+
 export const CRModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
 
@@ -149,33 +175,25 @@ export const CRLinks = ({ matchPath, userType }) => {
       section:'birth'
     },
     {
-      link: `${matchPath}/cr-death-creation`,
-      i18nKey: t("CR_DEATH_REGISTRATION"),
-      section:'death'
-    },
-    // {
-    //   link: `${matchPath}/cr-marriage-creation`,
-    //   i18nKey: t("CR_MARRIAGE_REGISTRATION"),
-    // },
-    {
       link: `${matchPath}/create-birth-certificate`,
       i18nKey: t("CR_BIRTH_CERTIFICATE"),
       section:'birth'
+    },
+    {
+      link: `${matchPath}/cr-death-creation`,
+      i18nKey: t("CR_DEATH_REGISTRATION"),
+      section:'death'
     },
     {
       link: `${matchPath}/create-death-certificate`,
       i18nKey: t("CR_DEATH_CERTIFICATE"),
       section:'death'
     },
-
     // {
-    //   link: `${matchPath}/tradelicence/renewal-list`,
-    //   i18nKey: t("TL_RENEWAL_HEADER"),
+    //   link: `${matchPath}/cr-marriage-creation`,
+    //   i18nKey: t("CR_MARRIAGE_REGISTRATION"),
     // },
-    // {
-    //   link: `${matchPath}/tradelicence/my-application`,
-    //   i18nKey: t("TL_MY_APPLICATIONS_HEADER"),
-    // },
+    
   ];
 
   return (
@@ -189,14 +207,23 @@ export const CRLinks = ({ matchPath, userType }) => {
 };
 
 const componentsToRegister = {
+  MyCRApplications,
+  MyCRDeathApplications,
   CustomTimePicker,
   CRModule,
   CRLinks,
   CRCard,
+  AdoptionChildDetails,
+  AdoptionAddressBasePage,
+  AdoptionParentsDetails,
+  AdoptionInitiatorDetails,
   ChildDetails,
+  CRCitizenApplicationDetails,
+  CRDeathApplicationDetails,
   CRApplicationDetails,
   CRApplicationDeathDetails,
   CRSearch,
+  CRDeathsearch,
   SearchCrApplication,
   SearchRegistryDeath,
   SearchDeathApplication,
@@ -207,6 +234,7 @@ const componentsToRegister = {
   AddressPermanent,
   MultipleBirth,
   CRCreateBirthRegistration: CreateBirthRegistration,
+  CRCreateAdoptions:CreateAdoptions,
   CRCreateStillBirthRegistration: CreateStillBirthRegistration,
   CRCreateBornOutsideRegistration: CreateBornOutsideRegistration,  
   ParentsDetails,
@@ -234,10 +262,19 @@ const componentsToRegister = {
   StillBirthPlacePublicPlace,
   StillBirthPlaceVehicle,
   StillBirthInitiatorDetails,
+  StillBirthInformarDetails,
   StillBirthCheckPage,
   //////////////////
   BornOutsideChildDetails,
   BornOutsideParentsDetails,
+  BornOutsideStaticInfn,
+  BornOutsideAddressPage,
+  BornOutsideCheckPage,
+  BornOutsideAddressPage,
+  BornOutsidePresentOutsideIndia,
+  BornoutsidePermanentInsideKerala,
+  BornoutsideSameAsAbove,
+  BornOutsidePermanent,
   //////////////////
   // SearchRegistry,
   AdoptionDetails,
@@ -276,21 +313,29 @@ const componentsToRegister = {
   Initiater,
   // DeathCertificate,
   // GeneralRemarks,
+  AdoptionCheckPage,
   BirthCheckPage,
   DeathCheckPage,
   MarriageCheckPage,
+  AdoptionAcknowledgement,
   BirthAcknowledgement,
   DeathAcknowledgement,
   MarriageAcknowledgement,
+  StillBirthAcknowledgement,
   BirthCertificate,
   CRCreateDeathRegistration: CreateDeathRegistration,
   TLResponse: Response,
+  CRDocuments,
+  CRWFApplicationTimeline,
   //Marriage
   CRCreateMarriageRegistration: CreateMarriageRegistration,
   GroomDetails,
   BrideDetails,
   MarriageInstitution,
   MarriagePublicPlace,
+  MarriageRegistration,
+  HouseMarriageRegistration,
+  witnessdetails,
 };
 
 export const initCRComponents = () => {

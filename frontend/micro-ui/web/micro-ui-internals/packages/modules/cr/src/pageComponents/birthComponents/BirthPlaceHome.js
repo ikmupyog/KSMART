@@ -83,6 +83,11 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
         setAdrsPincode(pin.pincode);
       }
     }
+    if (formData?.ChildDetails?.wardNo != null) {
+      if (cmbWardNo.length > 0 && (wardNo === undefined || wardNo === "")) {
+        setWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.ChildDetails?.wardNo)[0]);
+      }
+    }
   }
   function setSelectAdrsPostOffice(value) {
     setAdrsPostOffice(value);
@@ -125,52 +130,67 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
   });
 
   function setSelectAdrsHouseNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z- 0-9]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9 ]*$") != null)) {
       setAdrsHouseNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectAdrsHouseNameMl(e) {
-    // if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]*$") != null)) {
-    //   setAdrsHouseNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-    // }
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setAdrsHouseNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$/;
+    if(!(e.target.value.match(pattern))){
+      e.preventDefault();
+      setAdrsHouseNameMl('');
+    }
+    else{
+      setAdrsHouseNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
   function setSelectAdrsLocalityNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setAdrsLocalityNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectAdrsLocalityNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setAdrsLocalityNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if(!(e.target.value.match(pattern))){
+      e.preventDefault();
+      setAdrsLocalityNameMl('');
+    }
+    else{
+      setAdrsLocalityNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
   function setSelectAdrsStreetNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setAdrsStreetNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectAdrsStreetNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setAdrsStreetNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if(!(e.target.value.match(pattern))){
+      e.preventDefault();
+      setAdrsStreetNameMl('');
+    }
+    else{
+      setAdrsStreetNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectWard(value) {
     console.log(value);
     setWardNo(value);
+  }
+  function setCheckMalayalamInputField(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
+    if(!(e.key.match(pattern))){
+      e.preventDefault();
+    }    
+  }
+  function setCheckMalayalamInputSplChar(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]/;
+    if(!(e.key.match(pattern))) {
+      e.preventDefault();
+    }    
   }
   let validFlag = true;
 
@@ -206,6 +226,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
                 selected={wardNo}
                 select={setSelectWard}
                 placeholder={`${t("CS_COMMON_WARD")}`}
+                disable={isDisableEdit}
                 {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
               />
             </div>
@@ -293,6 +314,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
                 name="adrsHouseNameEn"
                 value={adrsHouseNameEn}
                 onChange={setSelectAdrsHouseNameEn}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_HOUSE_NAME_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z- 0-9]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
               />
@@ -312,6 +334,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
                 optionKey="i18nKey"
                 name="adrsLocalityNameMl"
                 value={adrsLocalityNameMl}
+                onKeyPress = {setCheckMalayalamInputField}
                 onChange={setSelectAdrsLocalityNameMl}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_LOCALITY_ML")}`}
@@ -331,6 +354,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
                 optionKey="i18nKey"
                 name="adrsStreetNameMl"
                 value={adrsStreetNameMl}
+                onKeyPress = {setCheckMalayalamInputField}
                 onChange={setSelectAdrsStreetNameMl}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_STREET_NAME_ML")}`}
@@ -347,7 +371,9 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
                 optionKey="i18nKey"
                 name="adrsHouseNameMl"
                 value={adrsHouseNameMl}
+                onKeyPress = {setCheckMalayalamInputSplChar}
                 onChange={setSelectAdrsHouseNameMl}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_HOUSE_NAME_ML")}`}
 
               />

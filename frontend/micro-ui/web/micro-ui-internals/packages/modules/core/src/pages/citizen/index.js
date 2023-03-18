@@ -51,9 +51,8 @@ const Home = ({
   const ModuleLevelLinkHomePages = modules.map(({ code, bannerImage,...others }, index) => {
     let Links = Digit.ComponentRegistryService.getComponent(`${code}Links`) || (() => <React.Fragment />);
     let crBirth = "cr-birth"
-    let Module_br = "Birth Certificate"
-    let Module_dr = "Death Certificate"
     let crDeath = "cr-death"
+    let crMarriage ="cr-marriage"
     let matchPath=`/digit-ui/citizen/${code.toLowerCase()}`
     // console.log(code);
     const history = useHistory();
@@ -66,7 +65,7 @@ const Home = ({
       },
       options: [
         {
-          name: t("Birth Registration"),
+          name: t("CR_BIRTH_CODE"),
           Icon: <OBPSIcon />,
           onClick: () => history.push({
             pathname: '/digit-ui/citizen/cr-birth-home',
@@ -77,7 +76,7 @@ const Home = ({
       ],
       styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
     };
-    const birthRegProps = {
+    const marriageProps = {
       header: t(""),
       sideOption: {
         name: t(""),
@@ -85,7 +84,26 @@ const Home = ({
       },
       options: [
         {
-          name: t("New Registration"),
+          name: t("CR_MARRIAGE_CODE"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname: '/digit-ui/citizen/cr-marriage-home',
+            state: { module: "cr-marriage" }
+          }),
+        },
+
+      ],
+      styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
+    };
+    const birthSectionAProps = {
+      header: t(""),
+      sideOption: {
+        name: t(""),
+        onClick: () => history.push("/digit-ui/citizen/all-services"),
+      },
+      options: [
+        {
+          name: t("CR_BIRTH_NEW_REGISTRATION"),
           Icon: <OBPSIcon />,
           onClick: () => history.push({
             pathname: `${matchPath}/cr-birth-creation`,
@@ -93,7 +111,7 @@ const Home = ({
           }),
         },
         {
-          name: t("Still Birth Registration"),
+          name: t("CR_STILL_BIRTH_REG"),
           Icon: <OBPSIcon />,
           onClick: () => history.push({
             pathname: `${matchPath}/cr-stillbirth-creation`,
@@ -101,13 +119,58 @@ const Home = ({
           }),
         },
         {
-          name: t("Download Certificate"),
+          name:t("CR_OUTSIDEINDIA_BIRTH_REGISTRATION"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname: `${matchPath}/cr-outsideindiabirth-creation`,
+            state: { module: "cr-birth" }
+          }),
+        },
+        {
+          name: t("CR_ADOPTION"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname:`${matchPath}/cr-adoption`,
+            state: { module: "cr-birth" }
+          }),
+        },
+        
+
+      ],
+      styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
+    };
+    const birthSectionBProps = {
+      header: t(""),
+      sideOption: {
+        name: t(""),
+        onClick: () => history.push("/digit-ui/citizen/all-services"),
+      },
+      options: [
+    
+        {
+          name:t("CR_NAME_INCLUSION_CORRECTION"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname: `${matchPath}/cr-name-inclusiom`,
+            state: { module: "cr-birth" }
+          }),
+        },
+        {
+          name: t("CR_COMMON_CERT_DOWNLOAD"),
           Icon: <OBPSIcon />,
           onClick: () => history.push({
             pathname:`${matchPath}/create-birth-certificate`,
             state: { module: "cr-birth" }
           }),
         },
+        {
+          name:  t("TL_MY_APPLICATIONS_HEADER"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname: `${matchPath}/cr/my-application`,
+            state: { module: "cr-death" }
+          }),
+        },    
         
 
       ],
@@ -121,21 +184,79 @@ const Home = ({
       },
       options: [
         {
-          name: t("New Registration"),
+          name: t("CR_DEATH_NEW_REGISTRATION"),
           Icon: <OBPSIcon />,
           onClick: () => history.push({
             pathname: `${matchPath}/cr-death-creation`,
-            state: { module: "cr-birth" }
+            state: { module: "cr-death" }
           }),
         },
+       
         {
-          name: t("Download Certificate"),
+          name: t("CR_DEATH_CORRECTIONS"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname: `${matchPath}/cr/`,
+            state: { module: "cr-death" }
+          }),
+          
+        },
+        
+       
+        {
+          name: t("CR_COMMON_ABANDONED_DEATH"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname: `${matchPath}/cr/`,
+            state: { module: "cr-death" }
+          }),
+        }, 
+      ],
+      styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
+    };
+    const DeathcertProps = {
+      header: t(""),
+      sideOption: {
+        name: t(""),
+        onClick: () => history.push("/digit-ui/citizen/all-services"),
+      },
+      options: [
+        
+           {
+          name: t("CR_COMMON_CERT_DOWNLOAD"),
           Icon: <OBPSIcon />,
           onClick: () => history.push({
             pathname: `${matchPath}/create-death-certificate`,
-            state: { module: "cr-birth" }
+            state: { module: "cr-death" }
           }),
-        },    
+        }, 
+        {
+          name: t("TL_MY_APPLICATIONS_HEADER"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname: `${matchPath}/cr/death/my-application`,
+            state: { module: "cr-death" }
+          }),
+        },       
+
+      ],
+      styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
+    };
+    const MarriageRegProps = {
+      header: t(""),
+      sideOption: {
+        name: t(""),
+        onClick: () => history.push("/digit-ui/citizen/all-services"),
+      },
+      options: [
+        {
+          name: t("CR_MARRIAGE_NEW_REGISTRATION"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname: `${matchPath}/cr-marriage-creation`,
+            state: { module: "cr-marriage" }
+          }),
+        },
 
       ],
       styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
@@ -149,7 +270,7 @@ const Home = ({
       },
       options: [
         {
-        name: t("Death Registration"),
+        name: t("CR_DEATH_CODE"),
         Icon: <OBPSIcon />,
         onClick: () => history.push({
           pathname: '/digit-ui/citizen/cr-death-home',
@@ -161,20 +282,20 @@ const Home = ({
       ],
       styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
     };
+
     return (
       <React.Fragment>
+       
         {code === "CR" && location?.state?.module === crBirth ? (
           <Route key={index} path={`${path}/${crBirth.toLowerCase()}-home`}>
             <div className="moduleLinkHomePage">
               <img src={bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
               <BackButton className="moduleLinkHomePageBackButton" />
-                <h1>{t(Module_br.toUpperCase())}</h1>
+                <h1>{t("CR_BIRTH_REGISTRATION".toUpperCase())}</h1>
             </div>
-            {/* <div className="moduleLinkHomePageModuleLinks">
-              <Links key={index} module={location?.state?.module} matchPath={`/digit-ui/citizen/${code.toLowerCase()}`} userType={"citizen"} />
-            </div> */}
              <div className="ServicesSection" style={{display:"flex",marginTop:"20px"}}>
-                <CardBasedOptions {...birthRegProps} />
+                <CardBasedOptions {...birthSectionAProps} />
+                <CardBasedOptions {...birthSectionBProps} />
             </div>
           </Route>
         ) :
@@ -183,16 +304,25 @@ const Home = ({
             <div className="moduleLinkHomePage">
               <img src={bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
               <BackButton className="moduleLinkHomePageBackButton" />
-                <h1>{t(Module_dr.toUpperCase())}</h1>
+                <h1>{t("CR_DEATH_REGISTRATION".toUpperCase())}</h1>
             </div>
-            {/* <div className="moduleLinkHomePageModuleLinks">
-              <Links key={index} module={location?.state?.module} matchPath={`/digit-ui/citizen/${code.toLowerCase()}`} userType={"citizen"} />
-            </div> */}
             <div className="ServicesSection" style={{display:"flex",marginTop:"20px"}}>
                 <CardBasedOptions {...DearhRegProps} />
+                <CardBasedOptions {...DeathcertProps} />
             </div>
           </Route>
-        ) : 
+        ) :  code === "CR" && location?.state?.module === crMarriage ? (
+          <Route key={index} path={`${path}/${crMarriage.toLowerCase()}-home`}>
+            <div className="moduleLinkHomePage">
+              <img src={bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
+              <BackButton className="moduleLinkHomePageBackButton" />
+                <h1>{t('CR_MODULE_MARRIAGE'.toUpperCase())}</h1>
+            </div>
+            <div className="ServicesSection" style={{display:"flex",marginTop:"20px"}}>
+                <CardBasedOptions {...MarriageRegProps} />
+            </div>
+          </Route>
+        ) :
         code === "CR"?
         (
           <Route key={index} path={`${path}/${code.toLowerCase()}-home`}>
@@ -205,6 +335,7 @@ const Home = ({
             <div className="ServicesSection" style={{display:"flex"}}>
                 <CardBasedOptions {...birthProps} />
                 <CardBasedOptions {...deathProps} />
+                <CardBasedOptions {...marriageProps} />
          </div>
             </div>
           </Route>

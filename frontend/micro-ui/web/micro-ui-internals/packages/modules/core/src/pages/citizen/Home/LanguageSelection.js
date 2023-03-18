@@ -47,16 +47,21 @@ const LanguageSelection = () => {
                     </h1>
                     <div style={{ textAlign: "center", margin: "0 auto" }}>
                         <div>
-                            <img src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/login-img.png" alt="No Image" 
-                            style={{ maxWidth: "450px",marginLeft: "80px",marginRight: "80px" }} />
-                            <label style={{ fontSize: "32px",marginBottom: "20px !important" }}>Exploring K-Smart</label><br></br>
-                            <label style={{ fontSize: "17px",marginTop: "20px !important" }}>Kerala - Solutions for Managing Administrative Reformation and Transformation.</label>
+                            <img src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/login-img.png" alt="No Image"
+                                style={{ maxWidth: "450px", marginLeft: "80px", marginRight: "80px" }} />
+                            <label style={{ fontSize: "32px", marginBottom: "20px !important" }}>Exploring K-Smart</label><br></br>
+                            <label style={{ fontSize: "17px", marginTop: "20px !important" }}>Kerala - Solutions for Managing Administrative Reformation and Transformation.</label>
                         </div>
                     </div>
                     <div style={{ justifyContent: "space-between !important" }} >
 
-                        <span style={{ marginRight: "60%" }} >2023&copy;K-Smart</span>&nbsp;
-                        <span  >
+                        <span style={{ justifyContent: "space-between !important" }}>2023&copy;K-Smart</span>&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span style={{ justifyContent: "space-between !important" }}>Powered By UPYOG</span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span style={{ justifyContent: "space-between !important", marginLeft: "20px" }}>
                             <a className="text-white text-link" href="#">Legal</a>&nbsp;&nbsp;
                             <a className="text-white text-link" href="#">Privacy</a>
                         </span>
@@ -75,15 +80,15 @@ const LanguageSelection = () => {
                                 style={{}}
                                 selected={language.value === selected}
                                 label={language.label}
-                                labelStyle={{fontF:"system-ui !important",fontWeight: "400 !important",fontSize: "17px !important"}}
-                                
+                                labelStyle={{ fontF: "system-ui !important", fontWeight: "400 !important", fontSize: "17px !important" }}
+
                                 onClick={() => handleChangeLanguage(language)}
                             ></SubmitBar>
                         </div>
                     ))}
                 </div>
-                <SubmitBar className="btnksmart" style={{ width: "35%",fontF:"system-ui !important",fontWeight: "400 !important",fontSize: "17px !important" }} 
-                label={t(`CORE_COMMON_CONTINUE`)} onSubmit={handleSubmit} />
+                <SubmitBar className="btnksmart" style={{ width: "35%", fontF: "system-ui !important", fontWeight: "400 !important", fontSize: "17px !important" }}
+                    label={t(`CORE_COMMON_CONTINUE`)} onSubmit={handleSubmit} />
             </Card>
             {/* <CardHeader>{t("CS_COMMON_CHOOSE_LANGUAGE")}</CardHeader>
         <RadioButtons style={{ display:"initial" }}

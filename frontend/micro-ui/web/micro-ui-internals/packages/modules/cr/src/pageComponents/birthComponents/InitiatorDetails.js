@@ -3,20 +3,21 @@ import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, TextAre
 import { useTranslation } from "react-i18next";
 import Timeline from "../../components/CRTimeline";
 
-const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
+const InitiatorDetails = ({ config, onSelect, userType, formData,isEditBirth=false }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
   // console.log(Digit.UserService.getUser().info);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
   const {name:name,} =Digit.UserService.getUser().info ; // window.localStorage.getItem("user-info");
-  const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.InitiatorinfoDetails?.isInitiatorDeclaration : false);
-  const [isCaretaker, setIsCaretaker] = useState(formData?.InitiatorinfoDetails?.isCaretaker ? formData?.InitiatorinfoDetails?.isCaretaker : false);
-  const [relation, setrelation] = useState(formData?.InitiatorinfoDetails?.relation ? formData?.InitiatorinfoDetails?.relation : "");
-  const [initiatorNameEn, setinitiatorNameEn] = useState(formData?.InitiatorinfoDetails?.initiatorNameEn ? formData?.InitiatorinfoDetails?.initiatorNameEn : name);
-  const [initiatorAadhar, setinitiatorAadhar] = useState(formData?.InitiatorinfoDetails?.initiatorAadhar ? formData?.InitiatorinfoDetails?.initiatorAadhar : "");
-  const [initiatorMobile, setinitiatorMobile] = useState(formData?.InitiatorinfoDetails?.initiatorMobile ? formData?.InitiatorinfoDetails?.initiatorMobile : "");
-  const [initiatorDesi, setinitiatorDesi] = useState(formData?.InitiatorinfoDetails?.initiatorDesi ? formData?.InitiatorinfoDetails?.initiatorDesi : "");
-  const [initiatorAddress, setinitiatorAddress] = useState(formData?.InitiatorinfoDetails?.initiatorAddress ? formData?.InitiatorinfoDetails?.initiatorAddress : "");
+  const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.InitiatorinfoDetails?.isInitiatorDeclaration : formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration : false);
+  const [isCaretaker, setIsCaretaker] = useState(formData?.InitiatorinfoDetails?.isCaretaker ? formData?.InitiatorinfoDetails?.isCaretaker : formData?.ChildDetails?.InitiatorinfoDetails?.isCaretaker ? formData?.ChildDetails?.InitiatorinfoDetails?.isCaretaker : false);
+  const [relation, setrelation] = useState(formData?.InitiatorinfoDetails?.relation ? formData?.InitiatorinfoDetails?.relation : formData?.ChildDetails?.InitiatorinfoDetails?.relation ? formData?.ChildDetails?.InitiatorinfoDetails?.relation : "");
+  const [initiatorNameEn, setinitiatorNameEn] = useState(formData?.InitiatorinfoDetails?.initiatorNameEn ? formData?.InitiatorinfoDetails?.initiatorNameEn : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorNameEn ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorNameEn : name);
+  const [initiatorAadhar, setinitiatorAadhar] = useState(formData?.InitiatorinfoDetails?.initiatorAadhar ? formData?.InitiatorinfoDetails?.initiatorAadhar : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAadhar ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAadhar : "");
+  const [initiatorMobile, setinitiatorMobile] = useState(formData?.InitiatorinfoDetails?.initiatorMobile ? formData?.InitiatorinfoDetails?.initiatorMobile : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorMobile ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorMobile : "");
+  const [initiatorDesi, setinitiatorDesi] = useState(formData?.InitiatorinfoDetails?.initiatorDesi ? formData?.InitiatorinfoDetails?.initiatorDesi : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorDesi ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorDesi : "");
+  const [initiatorAddress, setinitiatorAddress] = useState(formData?.InitiatorinfoDetails?.initiatorAddress ? formData?.InitiatorinfoDetails?.initiatorAddress : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAddress ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAddress : "");
   const [isInitialRender, setIsInitialRender] = useState(true);
 
   const [toast, setToast] = useState(false);
@@ -42,42 +43,30 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
 
 
   function setSelectrelation(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setrelation(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+      setrelation(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
   function setSelectinitiatorNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setinitiatorNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setinitiatorNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectinitiatorDesi(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setinitiatorDesi(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setinitiatorDesi(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectinitiatorAddress(e) {
-    if (e.target.value.length === 251) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setinitiatorAddress(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setinitiatorAddress(e.target.value.length <= 250 ? e.target.value : (e.target.value).substring(0, 250));
     }
   }
 
 
   function setSelectinitiatorAadhar(e) {
-    if (e.target.value.trim().length != 0) {
+    if (e.target.value.trim().length >= 0) {
       setinitiatorAadhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
     }
     // if (e.target.value.length != 0) {
@@ -279,6 +268,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
                 onChange={setDeclarationInfo}
                 value={isInitiatorDeclaration}
                 checked={isInitiatorDeclaration}
+                disable={isDisableEdit}
               />
             </div>
           </div>
@@ -304,6 +294,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
                 value={relation}
                 onChange={setSelectrelation}
                 placeholder={`${t("CR_RELATION")}`}
+                disable={isDisableEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_RELATION") })}
               />
             </div>
@@ -315,11 +306,12 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
               </CardLabel>
               <TextInput
                 t={t}
-                type={"number"}
+                type={"text"}
                 optionKey="i18nKey"
                 name="initiatorAadhar"
                 value={initiatorAadhar}
                 onChange={setSelectinitiatorAadhar}
+                disable={isDisableEdit}
                 placeholder={`${t("CS_COMMON_AADHAAR")}`}
                 {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
               />
@@ -337,6 +329,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
                 name="initiatorNameEn"
                 value={initiatorNameEn}
                 onChange={setSelectinitiatorNameEn}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_INITIATOR_NAME")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INITIATOR_NAME") })}
               />
@@ -367,6 +360,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
                     name="initiatorDesi"
                     value={initiatorDesi}
                     onChange={setSelectinitiatorDesi}
+                    disable={isDisableEdit}
                     placeholder={`${t("CR_INFORMER_DESIGNATION")}`}
                     //            disable={isCaretaker}
                     {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMER_DESIGNATION") })}
@@ -387,6 +381,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
                 name="initiatorMobile"
                 value={initiatorMobile}
                 onChange={setSelectinitiatorMobile}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_MOBILE_NO")}`}
                 {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
               />
@@ -417,6 +412,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData }) => {
                 name="initiatorAddress"
                 value={initiatorAddress}
                 onChange={setSelectinitiatorAddress}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_INFORMER_ADDRESS")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
               />

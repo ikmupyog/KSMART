@@ -35,7 +35,7 @@ const SearchRegistryDeath = ({ tenantId, t, onSubmit, data, filestoreId, isSucce
     defaultValues: {
       offset: 0,
       limit: 10,
-      sortBy: "commencementDate",
+      sortBy: "DateOfDeath",
       sortOrder: "DESC",
     },
   });
@@ -43,7 +43,7 @@ const SearchRegistryDeath = ({ tenantId, t, onSubmit, data, filestoreId, isSucce
   useEffect(() => {
     register("offset", 0);
     register("limit", 10);
-    register("sortBy", "commencementDate");
+    register("sortBy", "DateOfDeath");
     register("sortOrder", "DESC");
   }, [register]);
 

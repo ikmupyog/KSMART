@@ -3,7 +3,7 @@ import { FormStep, CardLabel, TextInput, DatePicker, Dropdown, BackButton, Loade
 import Timeline from "../../components/BOBRTimeline";
 import { useTranslation } from "react-i18next";
 
-const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEditBirth,isEditBirthPageComponents}) => {
+const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, }) => {
   // console.log(JSON.stringify(formData));
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
@@ -63,31 +63,30 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
     });
   const [motherFirstNameEn, setMotherFirstNameEn] = useState(formData?.BornOutsideParentsDetails?.motherFirstNameEn ? formData?.BornOutsideParentsDetails?.motherFirstNameEn : "");
   const [motherFirstNameMl, setMotherFirstNameMl] = useState(formData?.BornOutsideParentsDetails?.motherFirstNameMl ? formData?.BornOutsideParentsDetails?.motherFirstNameMl : "");
-  //const [motherAadhar, setMotherAadhar] = useState(formData?.BornOutsideParentsDetails?.motherAadhar ? formData?.BornOutsideParentsDetails?.motherAadhar : "");
+
+  const [motherPassportNo, setmotherPassportNo] = useState(formData?.BornOutsideParentsDetails?.motherPassportNo ? formData?.BornOutsideParentsDetails?.motherPassportNo : "");
   const [motherMarriageAge, setMotherMarriageAge] = useState(formData?.BornOutsideParentsDetails?.motherMarriageAge ? formData?.BornOutsideParentsDetails?.motherMarriageAge : "");
   const [motherEmail, setMotherEmail] = useState(formData?.BornOutsideParentsDetails?.motherEmail ? formData?.BornOutsideParentsDetails?.motherEmail : "");
   const [motherMarriageBirth, setMotherMarriageBirth] = useState(formData?.BornOutsideParentsDetails?.motherMarriageBirth ? formData?.BornOutsideParentsDetails?.motherMarriageBirth : "");
   const [motherEducation, setMotherEducation] = useState(formData?.BornOutsideParentsDetails?.motherEducation ? formData?.BornOutsideParentsDetails?.motherEducation : null);
   const [motherProfession, setMotherProfession] = useState(formData?.BornOutsideParentsDetails?.motherProfession ? formData?.BornOutsideParentsDetails?.motherProfession : null);
-  // const [MotherAgeMarriage, setMotherAgeMarriage] = useState(formData?.BornOutsideParentsDetails?.MotherAgeMarriage ? formData?.BornOutsideParentsDetails?.MotherAgeMarriage : "");
+ 
   const [orderofChildren, setOrderofChildren] = useState(formData?.BornOutsideParentsDetails?.orderofChildren ? formData?.BornOutsideParentsDetails?.orderofChildren : "");
   const [motherNationality, setMotherNationality] = useState(formData?.BornOutsideParentsDetails?.motherNationality ? formData?.BornOutsideParentsDetails?.motherNationality : null);
   const [motherMaritalStatus, setMotherMaritalStatus] = useState(formData?.BornOutsideParentsDetails?.motherMaritalStatus ? formData?.BornOutsideParentsDetails?.motherMaritalStatus : null);
-  // const [isMotherInfo, setIsMotherInfo] = useState(formData?.BornOutsideParentsDetails?.isMotherInfo ? formData?.BornOutsideParentsDetails?.isMotherInfo : false);
-
- // const [fatherAadhar, setFatherAadhar] = useState(formData?.BornOutsideParentsDetails?.fatherAadhar ? formData?.BornOutsideParentsDetails?.fatherAadhar : "");
+  
   const [toast, setToast] = useState(false);
- // const [MotherAadharError, setMotherAadharError] = useState(formData?.BornOutsideParentsDetails?.motherAadhar ? false : false);
+ 
   const [MotherMarriageageError, setMotherMarriageageError] = useState(formData?.BornOutsideParentsDetails?.motherMarriageAge ? false : false);
   const [MotherEducationError, setMotherEducationError] = useState(formData?.BornOutsideParentsDetails?.motherEducation ? false : false);
   const [MotherProfessionError, setMotherProfessionError] = useState(formData?.BornOutsideParentsDetails?.motherProfession ? false : false);
   const [MotherNationalityError, setMotherNationalityError] = useState(formData?.BornOutsideParentsDetails?.motherNationality ? false : false);
 
- // const [FatherAadharError, setFatherAadharError] = useState(formData?.BornOutsideParentsDetails?.fatherAadhar ? false : false);
-  // const [isFatherInfo, setIsFatherInfo] = useState(formData?.BornOutsideParentsDetails?.isFatherInfo ? formData?.BornOutsideParentsDetails?.isFatherInfo : false);
+ 
   const [fatherFirstNameEn, setFatherFirstNameEn] = useState(formData?.BornOutsideParentsDetails?.fatherFirstNameEn ? formData?.BornOutsideParentsDetails?.fatherFirstNameEn : "");
   const [fatherFirstNameMl, setFatherFirstNameMl] = useState(formData?.BornOutsideParentsDetails?.fatherFirstNameMl ? formData?.BornOutsideParentsDetails?.fatherFirstNameMl : "");
   const [fatherNationality, setFatherNationality] = useState(formData?.BornOutsideParentsDetails?.fatherNationality ? formData?.BornOutsideParentsDetails?.fatherNationality : null);
+  const [fatherPassportNo, setfatherPassportNo] = useState(formData?.BornOutsideParentsDetails?.fatherPassportNo ? formData?.BornOutsideParentsDetails?.fatherPassportNo : "");
   const [fatherEducation, setFatherEducation] = useState(formData?.BornOutsideParentsDetails?.fatherEducation ? formData?.BornOutsideParentsDetails?.fatherEducation : null);
   const [fatherProfession, setFatherProfession] = useState(formData?.BornOutsideParentsDetails?.fatherProfession ? formData?.BornOutsideParentsDetails?.fatherProfession : null);
   const [Religion, setReligion] = useState(formData?.BornOutsideParentsDetails?.Religion ? formData?.BornOutsideParentsDetails?.Religion : null);
@@ -116,20 +115,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
   }, [Nation]);
 
 
-  useEffect(() => {
-    // if (isInitialRender) {
-    //   if (formData?.BornOutsideParentsDetails?.ismotherInfo != null) {
-    //     setIsInitialRender(false);
-    //     setIsMotherInfo(formData?.BornOutsideParentsDetails?.ismotherInfo);
-    //   }
-    // }
 
-    // if (formData?.BornOutsideParentsDetails?.isfatherInfo != null) {
-    //   setIsInitialRender(false);
-    //   setIsfatherInfo(formData?.BornOutsideParentsDetails?.isfatherInfo);
-    // }
-
-  }, [isInitialRender]);
 
 
   function setSelectMotherFirstNameEn(e) {
@@ -149,53 +135,24 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
       setMotherFirstNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
     }
   }
-  // function setSelectMotherAadhar(e) {
-  //   setMotherAadhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
-  //   if (e.target.value.length != 0) {
-  //     if (e.target.value.length > 12) {
-  //       // setChildAadharNo(e.target.value);
-  //       setMotherAadharError(true);
-  //       return false;
-  //     } else if (e.target.value.length < 12) {
-  //       setMotherAadharError(true);
-  //       setMotherAadhar(e.target.value);
-  //       return false;
-  //     } else {
-  //       setMotherAadharError(false);
-  //       setMotherAadhar(e.target.value);
-  //       return true;
-  //     }
-  //   } else {
-  //     setMotherAadharError(false);
-  //     setMotherAadhar(e.target.value);
-  //     return true;
-  //   }
-  // }
-  
 
-  // function setSelectFatherAadhar(e) {
-  //   setFatherAadhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
-  //   if (e.target.value.length != 0) {
-  //     if (e.target.value.length > 12) {
-  //       // setChildAadharNo(e.target.value);
-  //       setFatherAadharError(true);
-  //       return false;
-  //     } else if (e.target.value.length < 12) {
-  //       setFatherAadharError(true);
-  //       setFatherAadhar(e.target.value);
-  //       return false;
-  //     } else {
-  //       setFatherAadharError(false);
-  //       setFatherAadhar(e.target.value);
-  //       return true;
-  //     }
-  //   } else {
-  //     setFatherAadharError(false);
-  //     setFatherAadhar(e.target.value);
-  //     return true;
-  //   }
-  // }
- 
+
+  function setSelectPassportNo(e) {
+    if (e.target.value.length === 21) {
+        return false;
+        // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setmotherPassportNo(e.target.value);
+    }
+}
+  function setSelectfatherPassportNo(e) {
+    if (e.target.value.length === 21) {
+        return false;
+        // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+        setfatherPassportNo(e.target.value);
+    }
+}
   
   function setSelectFatherMobile(e) {
     if (e.target.value.trim().length != 0) {
@@ -211,11 +168,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
     }
   }
 
-  // function setSelectMotherMarriageAge(e) {
-  //   if (e.target.value.trim().length === 2) {
-  //     setMotherMarriageAge(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
-  //   }
-  // }
+
 
   function setSelectMotherMarriageAge(e) {
     if (e.target.value.trim().length === 3) {
@@ -297,43 +250,8 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
     }
   }
 
-  // function setMotherInfo(e) {
-  //   if (e.target.checked == true) {
-  //     setIsMotherInfo(e.target.checked);
-  //     setMotherFirstNameEn("");
-  //     setMotherFirstNameMl("");
-  //     setMotherAadhar("");
-  //     setMotherMaritalStatus(null);
-  //     setMotherMarriageAge("");
-  //     setMotherMarriageBirth("");
-  //     setMotherEducation(null);
-  //     setMotherProfession(null);
 
-  //     setOrderofChildren("");
-  //     // setMotherNationality(null);
-  //   } else {
 
-  //     setIsMotherInfo(e.target.checked);
-  //   }
-  // }
-  // function setFatherInfo(e) {
-  //   if (e.target.checked == true) {
-  //     setIsFatherInfo(e.target.checked);
-  //     setFatherAadhar("");
-  //     setFatherFirstNameEn("");
-
-  //     setFatherFirstNameMl("");
-
-  //     // setFatherNationality(null);
-
-  //     setFatherEducation(null);
-  //     setFatherProfession(null);
-  //     // setFatherMobile("");
-  //     // setFatherEmail("");
-  //   } else {
-  //     setIsFatherInfo(e.target.checked);
-  //   }
-  // }
 
   let validFlag = true;
   const goNext = () => {
@@ -359,20 +277,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
       } else {
         setMotherProfessionError(false);
       }
-      // if (motherAadhar != null || motherAadhar != "" || motherAadhar != undefined) {
-      //   if (MotherAadharError) {
-      //     validFlag = false;
-      //     setMotherAadharError(true);
-      //     setToast(true);
-      //     setTimeout(() => {
-      //       setToast(false);
-      //     }, 2000);
-      //     // return false;
-      //     // window.alert("Username shouldn't exceed 10 characters")
-      //   } else {
-      //     setMotherAadharError(false);
-      //   }
-      // }
+ 
       if (motherMaritalStatus == null || motherMaritalStatus == '' || motherMaritalStatus == undefined) {
         validFlag = false;
         setMotherMaritalStatusError(true);
@@ -418,37 +323,10 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
       } else {
         setFatherProfError(false);
       }
-      // if (fatherAadhar != null || fatherAadhar != "" || fatherAadhar != undefined) {
-      //   if (FatherAadharError) {
-      //     validFlag = false;
-      //     setFatherAadharError(true);
-      //     setToast(true);
-      //     setTimeout(() => {
-      //       setToast(false);
-      //     }, 2000);
-      //     // return false;
-      //     // window.alert("Username shouldn't exceed 10 characters")
-      //   } else {
-      //     setFatherAadharError(false);
-      //   }
-      // }
-
+    
     
 
-    // if (fatherFirstNameEn != null || fatherFirstNameEn != "" || fatherFirstNameEn != undefined) {
-    //   if (FatherFirstNmeEnError) {
-    //     validFlag = false;
-    //     setFatherFirstNmeEnError(true);
-    //     setToast(true);
-    //     setTimeout(() => {
-    //       setToast(false);
-    //     }, 2000);
-    //     // return false;
-    //     // window.alert("Username shouldn't exceed 10 characters")
-    //   } else {
-    //     setFatherFirstNmeEnError(false);
-    //   }
-    // }
+   
 
     if (fatherMobile != null || fatherMobile != "" || fatherMobile != undefined) {
       let mobileLength = fatherMobile;
@@ -489,21 +367,21 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
     if (validFlag == true) {
       sessionStorage.setItem("motherFirstNameEn", motherFirstNameEn ? motherFirstNameEn : null);
       sessionStorage.setItem("motherFirstNameMl", motherFirstNameMl ? motherFirstNameMl : null);
-      //sessionStorage.setItem("motherAadhar", motherAadhar ? motherAadhar : null);
+      sessionStorage.setItem("motherPassportNo", motherPassportNo  ? motherPassportNo : null);
+
       sessionStorage.setItem("motherMarriageAge", motherMarriageAge ? motherMarriageAge : null);
       sessionStorage.setItem("motherMarriageBirth", motherMarriageBirth ? motherMarriageBirth : null);
       sessionStorage.setItem("motherEducation", motherEducation ? motherEducation.code : null);
       sessionStorage.setItem("motherProfession", motherProfession ? motherProfession.code : null);
       sessionStorage.setItem("motherNationality", motherNationality ? motherNationality.code : null);
-      sessionStorage.setItem("motherMaritalStatus", motherMaritalStatus ? motherMaritalStatus : null);
-      // sessionStorage.setItem("MotherAgeMarriage", MotherAgeMarriage ? MotherAgeMarriage : null);
+     
+     
 
       sessionStorage.setItem("orderofChildren", orderofChildren ? orderofChildren : null);
-      //sessionStorage.setItem("isMotherInfo", isMotherInfo ? isMotherInfo : null);
-     // sessionStorage.setItem("isFatherInfo", isFatherInfo ? isFatherInfo : null);
-      //sessionStorage.setItem("fatherAadhar", fatherAadhar ? fatherAadhar : null);
+    
       sessionStorage.setItem("fatherFirstNameEn", fatherFirstNameEn ? fatherFirstNameEn : null);
       sessionStorage.setItem("fatherFirstNameMl", fatherFirstNameMl ? fatherFirstNameMl : null);
+      sessionStorage.setItem("fatherPassportNo", fatherPassportNo ? fatherPassportNo : null);
       sessionStorage.setItem("fatherNationality", fatherNationality ? fatherNationality.code : null);
       sessionStorage.setItem("fatherEducation", fatherEducation ? fatherEducation.code : null);
       sessionStorage.setItem("fatherProfession", fatherProfession ? fatherProfession.code : null);
@@ -514,7 +392,8 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
       onSelect(config.key, {
         motherFirstNameEn,
         motherFirstNameMl,
-      // motherAadhar,
+        motherPassportNo,
+     
         motherMaritalStatus,
         motherMarriageAge,
         motherMarriageBirth,
@@ -522,12 +401,12 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
         motherProfession,
         motherNationality,
         orderofChildren,
-        //fatherAadhar,
-        // isMotherInfo,
-      //  isFatherInfo,
+  
         fatherFirstNameEn,
         fatherFirstNameMl,
+
         fatherNationality,
+        fatherPassportNo,
         fatherEducation,
         fatherProfession,
         Religion,
@@ -547,15 +426,9 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
         {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
         {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
 
-        {/* isDisabled={!motherFirstNameEn} */}
+      
         <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}
-          isDisabled={!fatherMobile || 
-            (motherFirstNameEn === "" || motherFirstNameMl === "" || !motherNationality
-              || !motherMaritalStatus || motherMarriageBirth === "" || orderofChildren === ""
-              || !motherEducation || !motherProfession)
-            || (fatherFirstNameEn === "" || fatherFirstNameMl === "" || !fatherNationality || !fatherEducation || !fatherProfession
-            ) 
-            || !Religion || fatherMobile === ""
+          isDisabled={!fatherMobile
           }>
 
           
@@ -570,23 +443,9 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
               </div>
               <div className="row">
                 <div className="col-md-12">
-                  {/* <div className="col-md-4">
-                    <CardLabel>{`${t("CS_COMMON_AADHAAR")}`}</CardLabel>
-                    <TextInput
-                      t={t}
-                      isMandatory={false}
-                      type={"number"}
-                      optionKey="i18nKey"
-                      name="motherAadhar"
-                      value={motherAadhar}
-                      onChange={setSelectMotherAadhar}
-                      // disable={isMotherInfo}
-                      placeholder={`${t("CS_COMMON_AADHAAR")}`}
-                      {...(validation = { pattern: "^[0-9]{12}$", type: "number", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
-                    />
-                  </div> */}
+                 
 
-                  <div className="col-md-4">
+                  <div className="col-md-3">
                     <CardLabel>
                       {`${t("CR_MOTHER_NAME_EN")}`}
                       <span className="mandatorycss">*</span>
@@ -605,7 +464,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                     />
                   </div>
 
-                  <div className="col-md-4">
+                  <div className="col-md-3">
                     <CardLabel>
                       {`${t("CR_MOTHER_NAME_ML")}`}
                       <span className="mandatorycss">*</span>
@@ -628,12 +487,18 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                       })}
                     />
                   </div>
-                </div>
-              </div>
-
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="col-md-4">
+                  <div className="col-md-3" >  <CardLabel>{`${t("CR_PASSPORT_NO")}`}</CardLabel>
+                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey"
+                                name="motherPassportNo"
+                                value={motherPassportNo}
+                                onChange={setSelectPassportNo}
+                                //disable={isFatherInfo} 
+                                placeholder={`${t("CR_PASSPORT_NO")}`}
+                                style={{ textTransform: "uppercase" }}
+                                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, title: t("CR_INVALID_PASSPORT_NO") })}
+                            />
+                        </div>
+                        <div className="col-md-3">
                     <CardLabel>{`${t("CR_NATIONALITY")}`} <span className="mandatorycss">*</span></CardLabel>
                     <Dropdown
                       t={t}
@@ -646,142 +511,14 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                       placeholder={`${t("CR_NATIONALITY")}`}
                     />
                   </div>
-                  <div className="col-md-4" >
-                    <CardLabel>{`${t("CR_MOTHER_MARITAL_STATUS")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <Dropdown
-                      t={t}
-                      optionKey="i18nKey"
-                      isMandatory={false}
-                      option={cmbMaritalStatus}
-                      selected={motherMaritalStatus}
-                      select={setSelectMotherMaritalStatus}
-                      //  disabled={isMotherInfo} 
-                      placeholder={`${t("CR_MOTHER_MARITAL_STATUS")}`}
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-md-12">
-                  {ageMariageStatusHide === "MARRIED" && (
-
-                    <div className="col-md-8">
-                      <CardLabel>{`${t("CR_MOTHER_AGE_MARRIAGE")}`} <span className="mandatorycss">*</span></CardLabel>
-                      <TextInput
-                        t={t}
-                        isMandatory={false}
-                        type={"number"}
-                        optionKey="i18nKey"
-                        name="motherMarriageAge"
-                        value={motherMarriageAge}
-                        onChange={setSelectMotherMarriageAge}
-                        // disable={isMotherInfo}
-                        placeholder={`${t("CR_MOTHER_AGE_MARRIAGE")}`}
-                        {...(validation = { pattern: "^[0-9]{3}$", type: "number", isRequired: true, title: t("CR_INVALID_MOTHER_AGE_MARRIAGE") })}
-                      />
-                    </div>
-                  )}
-
-                  <div className="col-md-5">
-                    <CardLabel>{`${t("CR_MOTHER_AGE_BIRTH")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <TextInput
-                      t={t}
-                      isMandatory={false}
-                      type={"number"}
-                      optionKey="i18nKey"
-                      name="motherMarriageBirth"
-                      value={motherMarriageBirth}
-                      onChange={setSelectMotherMarriageBirth}
-                      // disable={isMotherInfo}
-                      placeholder={`${t("CR_MOTHER_AGE_BIRTH")}`}
-                      {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: true, title: t("CR_INVALID_MOTHER_AGE_BIRTH") })}
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="col-md-4">
-                    <CardLabel>{`${t("CR_ORDER_CURRENT_DELIVERY")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <TextInput
-                      t={t}
-                      isMandatory={false}
-                      type={"number"}
-                      optionKey="i18nKey"
-                      name="orderofChildren"
-                      value={orderofChildren}
-                      onChange={setSelectOrderofChildren}
-                      // disable={isMotherInfo}
-                      placeholder={`${t("CR_ORDER_CURRENT_DELIVERY")}`}
-                      {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "number", title: t("CR_INVALID_ORDER_CURRENT_DELIVERY") })}
-                    />
-                  </div>
-                  <div className="col-md-4">
-                    <CardLabel>{`${t("CR_EDUCATION")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <Dropdown
-                      t={t}
-                      optionKey="name"
-                      isMandatory={false}
-                      option={cmbQualification}
-                      selected={motherEducation}
-                      select={setSelectMotherEducation}
-                      // disabled={isMotherInfo}
-                      placeholder={`${t("CR_EDUCATION")}`}
-                    />
-                  </div>
-                  <div className="col-md-4">
-                    <CardLabel>{`${t("CR_PROFESSIONAL")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <Dropdown
-                      t={t}
-                      optionKey="name"
-                      isMandatory={false}
-                      option={cmbProfession}
-                      selected={motherProfession}
-                      select={setSelectMotherProfession}
-                      // disabled={isMotherInfo}
-                      placeholder={`${t("CR_PROFESSIONAL")}`}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-        
-
-          {/* <div className="row">
-            <div className="col-md-12">
-              <CheckBox label={t("CR_FATHER_INFORMATION_MISSING")} onChange={setFatherInfo} value={isFatherInfo} checked={isFatherInfo} />
-            </div>
-          </div> */}
-
-       
-            <div>
-              <div className="row">
-                <div className="col-md-12">
-                  <h1 className="headingh1">
-                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_FATHER_INFORMATION")}`}</span>{" "}
-                  </h1>
                 </div>
               </div>
 
+
               <div className="row">
                 <div className="col-md-12">
-                  {/* <div className="col-md-4">
-                    <CardLabel>{`${t("CS_COMMON_AADHAAR")}`}</CardLabel>
-                    <TextInput
-                      t={t}
-                      isMandatory={false}
-                      type={"number"}
-                      optionKey="i18nKey"
-                      name="fatherAadhar"
-                      value={fatherAadhar}
-                      onChange={setSelectFatherAadhar}
-                      // disable={isFatherInfo}
-                      placeholder={`${t("CS_COMMON_AADHAAR")}`}
-                      {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
-                    />
-                  </div> */}
-
-                  <div className="col-md-4">
+                 
+                  <div className="col-md-3">
                     <CardLabel>
                       {`${t("CR_FATHER_NAME_EN")}`}
                       <span className="mandatorycss">*</span>
@@ -800,7 +537,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                     />
                   </div>
 
-                  <div className="col-md-4">
+                  <div className="col-md-3">
                     <CardLabel>
                       {`${t("CR_FATHER_NAME_ML")}`}
                       <span className="mandatorycss">*</span>
@@ -823,12 +560,18 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                       })}
                     />
                   </div>
-                </div>
-              </div>
-
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="col-md-4">
+                  <div className="col-md-3" >  <CardLabel>{`${t("CR_PASSPORT_NO")}`}</CardLabel>
+                            <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey"
+                                name="fatherPassportNo"
+                                value={fatherPassportNo}
+                                onChange={setSelectfatherPassportNo}
+                                // disable={isFatherInfo}
+                                 placeholder={`${t("CR_PASSPORT_NO")}`}
+                                style={{ textTransform: "uppercase" }}
+                                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, title: t("CR_INVALID_PASSPORT_NO") })}
+                            />
+                        </div>
+                  <div className="col-md-3">
                     {/* <span className="mandatorycss">*</span> */}
                     <CardLabel>{`${t("CR_NATIONALITY")}`} <span className="mandatorycss">*</span></CardLabel>
                     <Dropdown
@@ -841,8 +584,76 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                     // disable={isFatherInfo}
                     />
                   </div>
-                  <div className="col-md-4">
-                    <CardLabel>{`${t("CR_EDUCATION")}`} <span className="mandatorycss">*</span></CardLabel>
+                 
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">                 
+
+                    <div className="col-md-8">
+                      <CardLabel>{`${t("CR_MOTHER_AGE_MARRIAGE")}`} <span className="mandatorycss">*</span></CardLabel>
+                      <TextInput
+                        t={t}
+                        isMandatory={false}
+                        type={"number"}
+                        optionKey="i18nKey"
+                        name="motherMarriageAge"
+                        value={motherMarriageAge}
+                        onChange={setSelectMotherMarriageAge}
+                        // disable={isMotherInfo}
+                        placeholder={`${t("CR_MOTHER_AGE_MARRIAGE")}`}
+                        {...(validation = { pattern: "^[0-9]{3}$", type: "number", isRequired: true, title: t("CR_INVALID_MOTHER_AGE_MARRIAGE") })}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                    <CardLabel>{`${t("CR_MOTHER_AGE_BIRTH")}`}<span className="mandatorycss">*</span></CardLabel>
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"number"}
+                      optionKey="i18nKey"
+                      name="motherMarriageBirth"
+                      value={motherMarriageBirth}
+                      onChange={setSelectMotherMarriageBirth}
+                      // disable={isMotherInfo}
+                      placeholder={`${t("CR_MOTHER_AGE_BIRTH")}`}
+                      {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: true, title: t("CR_INVALID_MOTHER_AGE_BIRTH") })}
+                    />
+                  </div>
+                    </div>
+                    </div>
+
+                    <div className="row">
+                <div className="col-md-12">
+                 
+                  <div className="col-md-3">
+                    <CardLabel>{`${t("CR_MOTHER_EDUCATION")}`}<span className="mandatorycss">*</span></CardLabel>
+                    <Dropdown
+                      t={t}
+                      optionKey="name"
+                      isMandatory={false}
+                      option={cmbQualification}
+                      selected={motherEducation}
+                      select={setSelectMotherEducation}
+                      // disabled={isMotherInfo}
+                      placeholder={`${t("CR_MOTHER_EDUCATION")}`}
+                    />
+                  </div>
+                  <div className="col-md-3">
+                    <CardLabel>{`${t("CR_MOTHER_PROFESSIONAL")}`}<span className="mandatorycss">*</span></CardLabel>
+                    <Dropdown
+                      t={t}
+                      optionKey="name"
+                      isMandatory={false}
+                      option={cmbProfession}
+                      selected={motherProfession}
+                      select={setSelectMotherProfession}
+                      // disabled={isMotherInfo}
+                      placeholder={`${t("CR_MOTHER_PROFESSIONAL")}`}
+                    />
+                  </div>
+                  <div className="col-md-3">
+                    <CardLabel>{`${t("CR_FATHER_EDUCATION")}`} <span className="mandatorycss">*</span></CardLabel>
                     <Dropdown
                       t={t}
                       optionKey="name"
@@ -853,8 +664,8 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                     // disable={isFatherInfo}
                     />
                   </div>
-                  <div className="col-md-4">
-                    <CardLabel>{`${t("CR_PROFESSIONAL")}`} <span className="mandatorycss">*</span></CardLabel>
+                  <div className="col-md-3">
+                    <CardLabel>{`${t("CR_FATHER_PROFESSIONAL")}`} <span className="mandatorycss">*</span></CardLabel>
                     <Dropdown
                       t={t}
                       optionKey="name"
@@ -865,19 +676,10 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                     // disable={isFatherInfo}
                     />
                   </div>
-                </div>
-              </div>
-            </div>
-          
-          <div className="row">
-            <div className="col-md-12">
-              <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ADDIONAL_FAMILY_INFORMATION")}`}</span>{" "}
-              </h1>
-            </div>
-          </div>
+                  </div>
+                  </div>
 
-          <div className="row">
+           <div className="row">
             <div className="col-md-12">
               <div className="col-md-4">
                 <CardLabel>{`${t("CS_COMMON_RELIGION")}`} <span className="mandatorycss">*</span></CardLabel>
@@ -927,11 +729,15 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
             </div>
           </div>
 
+
+          </div>
+             
+   
           {toast && (
             <Toast
               error={
                 // MotherAadharError ||
-                MotherMaritalStatusError ||
+                // MotherMaritalStatusError ||
                 MotherMarriageageError ||
                 MotherEducationError ||
                 MotherProfessionError ||
@@ -948,7 +754,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
               }
               label={
                 // MotherAadharError ||
-                  MotherMaritalStatusError ||
+                  // MotherMaritalStatusError ||
                   MotherMarriageageError ||
                   MotherEducationError ||
                   MotherProfessionError ||
@@ -965,7 +771,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                   //   ? t(`CS_COMMON_INVALID_MOTHER_AADHAR_NO`)
                      ? MotherMarriageageError
                       ? t(`CR_INVALID_MOTHER_AGE_AT_MARRIAGE`)
-                      : MotherMaritalStatusError ? t(`BIRTH_ERROR_MOTHER_MARITIAL_CHOOSE`)
+                     
                         : MotherEducationError
                           ? t(`BIRTH_ERROR_MOTHER_EDUCATION_CHOOSE`)
                           : MotherProfessionError

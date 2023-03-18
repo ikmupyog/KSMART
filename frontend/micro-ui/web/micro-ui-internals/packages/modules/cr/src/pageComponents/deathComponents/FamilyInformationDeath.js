@@ -353,7 +353,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
                 </div>
                 <div className="col-md-3">
                   <CardLabel>
-                    {`${t("CR_NAME_EN")}`} <span className="mandatorycss">*</span>
+                    {`${t("CR_NAME")}`} <span className="mandatorycss">*</span>
                   </CardLabel>
                   <TextInput
                     t={t}
@@ -363,8 +363,8 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
                     name="SpouseNameEN"
                     value={SpouseNameEN}
                     onChange={setSelectSpouseNameEN}
-                    placeholder={`${t("CR_NAME_EN")}`}
-                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                    placeholder={`${t("CR_NAME")}`}
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_NAME_EN") })}
                   />
                 </div>
                 <div className="col-md-3">
@@ -433,7 +433,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
               <div className="col-md-12">
                 <div className="col-md-4">
                   <CardLabel>
-                    {`${t("CR_NAME_EN")}`} <span className="mandatorycss">*</span>
+                    {`${t("CR_NAME")}`} <span className="mandatorycss">*</span>
                   </CardLabel>
                   <TextInput
                     t={t}
@@ -443,7 +443,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
                     name="FatherNameEn"
                     value={FatherNameEn}
                     onChange={setSelectFatherNameEn}
-                    placeholder={`${t("CR_NAME_EN")}`}
+                    placeholder={`${t("CR_NAME")}`}
                     {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_NAME_EN") })}
                   />
                 </div>
@@ -512,7 +512,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
               <div className="col-md-12">
                 <div className="col-md-4">
                   <CardLabel>
-                    {`${t("CR_NAME_EN")}`}
+                    {`${t("CR_NAME")}`}
                     <span className="mandatorycss">*</span>
                   </CardLabel>
                   <TextInput
@@ -523,7 +523,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
                     name="MotherNameEn"
                     value={MotherNameEn}
                     onChange={setSelectMotherNameEn}
-                    placeholder={`${t("CR_NAME_EN")}`}
+                    placeholder={`${t("CR_NAME")}`}
                     {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_NAME_EN") })}
                   />
                 </div>

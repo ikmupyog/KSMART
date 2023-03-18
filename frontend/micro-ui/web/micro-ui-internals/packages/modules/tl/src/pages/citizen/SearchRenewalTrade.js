@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom"
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
 
-const SearchRenewalTrade = (searchdata) => {
+const SearchRenewalTrade = ({searchdata,isCancelreq}) => {
     const [searchdatacat, setSearchdatacat] = useState(searchdata);
     const [errorMessage, setErrorMessage] = useState("");
     const [wardmandatory, setWardmandatory] = useState(true);
@@ -59,7 +59,7 @@ const SearchRenewalTrade = (searchdata) => {
      Digit.Hooks.tl.useSearch({tenantId, filters: payload, config})
  
     if (wardmandatory)
-         return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} data={!isLoading && isSuccess ? (searchReult?.length > 0 ? searchReult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
+         return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} data={!isLoading && isSuccess ? (searchReult?.length > 0 ? searchReult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} isCancelreq={isCancelreq} />
        // return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} data={searchReult?.length > 0 ? searchReult : { display: "ES_COMMON_NO_DATA" }} count={10} />
     else
         return (
