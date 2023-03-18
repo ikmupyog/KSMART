@@ -12,68 +12,74 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class SnehapoorvamSchoolReg {
-    
-    @JsonProperty("schoolid")
-    private Integer schoolid;
-
-    @JsonProperty("school_code")
-    private Integer school_code;
 
     @JsonProperty("school_name")
     private String school_name;
 
-    @JsonProperty("district_id")
-    private Integer district_id;
-
     @JsonProperty("revenue_district_name")
     private String revenue_district_name;
-
-    @JsonProperty("edu_district_name")
-    private String edu_district_name;
-
-    @JsonProperty("sub_district_name")
-    private String sub_district_name;
-
-    @JsonProperty("level_type_id")
-    private Integer level_type_id;
-
-    @JsonProperty("level_type")
-    private String level_type;
-
-    @JsonProperty("type_name_id")
-    private Integer type_name_id;
-
-    @JsonProperty("type_name")
-    private String type_name;
-
-    @JsonProperty("institution_type_id")
-    private Integer institution_type_id;
 
     @JsonProperty("institution_type_name")
     private String institution_type_name;
 
-    @JsonProperty("pincode")
-    private Integer pincode;
-
-    @JsonProperty("school_phone")
-    private Integer school_phone;
-
     @JsonProperty("school_address")
     private String school_address;
 
-    @JsonProperty("school_email")
-    private String school_email;
+    @JsonProperty("pincode")
+    private Integer pincode;
 
-    @JsonProperty("headmaster_name")
-    private String headmaster_name;
+    
+    // @JsonProperty("schoolid")
+    // private Integer schoolid;
 
-    @JsonProperty("headmaster_phone")
-    private Integer headmaster_phone;
+    // @JsonProperty("school_code")
+    // private Integer school_code;
 
-    @JsonProperty("status_id")
-    private Integer status_id;
+    // @JsonProperty("district_id")
+    // private Integer district_id;
 
-    @JsonProperty("tny_status")
-    private Integer tny_status;
+
+   
+    // @JsonProperty("edu_district_name")
+    // private String edu_district_name;
+
+    // @JsonProperty("sub_district_name")
+    // private String sub_district_name;
+
+    // @JsonProperty("level_type_id")
+    // private Integer level_type_id;
+
+    // @JsonProperty("level_type")
+    // private String level_type;
+
+    // @JsonProperty("type_name_id")
+    // private Integer type_name_id;
+
+    // @JsonProperty("type_name")
+    // private String type_name;
+
+    // @JsonProperty("institution_type_id")
+    // private Integer institution_type_id;
+
+   
+
+    // @JsonProperty("school_phone")
+    // private Integer school_phone;
+
+
+    // @JsonProperty("school_email")
+    // private String school_email;
+
+    // @JsonProperty("headmaster_name")
+    // private String headmaster_name;
+
+    // @JsonProperty("headmaster_phone")
+    // private Integer headmaster_phone;
+
+    // @JsonProperty("status_id")
+    // private Integer status_id;
+
+    // @JsonProperty("tny_status")
+    // private Integer tny_status;
 
 }

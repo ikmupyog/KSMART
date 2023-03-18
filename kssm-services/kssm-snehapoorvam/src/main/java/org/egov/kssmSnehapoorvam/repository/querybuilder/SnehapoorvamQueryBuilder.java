@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class SnehapoorvamQueryBuilder extends BaseQueryBuilder {
 
     private static final String QUERY = new StringBuilder()
-            .append(" select school_name, revenue_district_name,institution_type_name,revenue_district_name,pincode")
+            .append(" select school_name,institution_type_name,revenue_district_name,pincode")
             .append(" ,school_address FROM school_master_login  ")
             .toString();
 
