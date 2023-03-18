@@ -22,7 +22,7 @@ const hstyle = {
   lineHieght: "1.5rem"
 };
 
-const SearchLicenseRenewal = ({ tenantId, t, onSubmit, data, count }) => {
+const SearchLicenseRenewal = ({ tenantId, t, onSubmit, data, count, isCancelreq }) => {
 
   const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
     defaultValues: {
@@ -69,16 +69,18 @@ const SearchLicenseRenewal = ({ tenantId, t, onSubmit, data, count }) => {
       "commencementDate": finaldata?.commencementDate && finaldata?.commencementDate !== null && finaldata?.commencementDate !== "" ? true : false,
       "licenseUnitName": finaldata?.licenseUnitName && finaldata?.licenseUnitName !== null && finaldata?.licenseUnitName !== "" ? true : false,
       "licenseUnitNameLocal": finaldata?.licenseUnitNameLocal && finaldata?.licenseUnitNameLocal !== null && finaldata?.licenseUnitNameLocal !== "" ? true : false,
-      "businessSector": finaldata?.tradeLicenseDetail?.businessSector && finaldata?.tradeLicenseDetail?.businessSector !== null && finaldata?.tradeLicenseDetail?.businessSector!== "" ? true : false,
-      "noOfEmployees" :  finaldata?.tradeLicenseDetail?.noOfEmployees && finaldata?.tradeLicenseDetail?.noOfEmployees !== null && finaldata?.tradeLicenseDetail?.noOfEmployees !== "" ? true : false,
-      "desiredLicensePeriod" : finaldata?.desiredLicensePeriod && finaldata?.desiredLicensePeriod !== null && finaldata?.desiredLicensePeriod !== "" ? true : false,
-      "capitalInvestment": finaldata?.tradeLicenseDetail?.capitalInvestment && finaldata?.tradeLicenseDetail?.capitalInvestment!== null && finaldata?.tradeLicenseDetail?.capitalInvestment!== "" ? true : false,
+      "businessSector": finaldata?.tradeLicenseDetail?.businessSector && finaldata?.tradeLicenseDetail?.businessSector !== null && finaldata?.tradeLicenseDetail?.businessSector !== "" ? true : false,
+      "noOfEmployees": finaldata?.tradeLicenseDetail?.noOfEmployees && finaldata?.tradeLicenseDetail?.noOfEmployees !== null && finaldata?.tradeLicenseDetail?.noOfEmployees !== "" ? true : false,
+      "desiredLicensePeriod": finaldata?.desiredLicensePeriod && finaldata?.desiredLicensePeriod !== null && finaldata?.desiredLicensePeriod !== "" ? true : false,
+      "capitalInvestment": finaldata?.tradeLicenseDetail?.capitalInvestment && finaldata?.tradeLicenseDetail?.capitalInvestment !== null && finaldata?.tradeLicenseDetail?.capitalInvestment !== "" ? true : false,
     }
 
-    Digit.SessionStorage.set("TL_RENEWAL_TRADE", finaldata);
+    isCancelreq ? Digit.SessionStorage.set("TL_CORRECTION_TRADE", finaldata) : Digit.SessionStorage.set("TL_RENEWAL_TRADE", finaldata);
+    isCancelreq ? Digit.SessionStorage.set("TL_CORRECTED_TRADE", "") : "";
     Digit.SessionStorage.set("TL_RENEWAL_ENABLE_TRADE", formdisable);
   }
   //need to get from workflow
+  let routepath = isCancelreq ? `/digit-ui/citizen/tl/tradelicence/license-correction` : `/digit-ui/citizen/tl/tradelicence/license-renewal-pde`;
   const GetCell = (value) => <span className="cell-text" style={{ wordBreak: "break-word" }}>{value}</span>;
   const columns = useMemo(() => ([
     {
@@ -89,7 +91,7 @@ const SearchLicenseRenewal = ({ tenantId, t, onSubmit, data, count }) => {
         return (
           <div>
             <span className="link">
-              <Link onClick={event => handleLinkClick(row.original)} to={{ pathname: `/digit-ui/citizen/tl/tradelicence/license-renewal-pde` }}>
+              <Link onClick={event => handleLinkClick(row.original)} to={{ pathname: routepath }}>
                 {row.original["applicationNumber"]}
               </Link>
             </span>
@@ -98,14 +100,14 @@ const SearchLicenseRenewal = ({ tenantId, t, onSubmit, data, count }) => {
       },
     },
     {
-        Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),
-        disableSortBy: true,
-        accessor: (row) => GetCell(row.licenseUnitName),
+      Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),
+      disableSortBy: true,
+      accessor: (row) => GetCell(row.licenseUnitName),
     },
     {
-        Header: t("TL_LOCALIZATION_LICENSEE_NAME"),
-        disableSortBy: true,
-        accessor: (row) => GetCell(row.tradeLicenseDetail.owners.map(owner => owner.name+" ")),
+      Header: t("TL_LOCALIZATION_LICENSEE_NAME"),
+      disableSortBy: true,
+      accessor: (row) => GetCell(row.tradeLicenseDetail.owners.map(owner => owner.name + " ")),
     },
     {
       Header: t("TL_DOOR_DETAILS"),
