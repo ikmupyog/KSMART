@@ -18,27 +18,29 @@ const combineResponse = (applications, workflowData, totalCount) => {
   }));
 };
 
-const useCRSearch = (params, config) => {
+const useCRDeathSearch = (params, config) => {
   return async () => {
-    const data = await Digit.CRService.search(params, config);
+   // const response = await CRDeathService.CRDeathsearch({ tenantId, filters });
+    const data = await Digit.CRDeathService.CRDeathsearch(params, config);
     console.log(data);
-    const tenant = data?.ChildDetails?.[0]?.tenantId;
+    const tenant = data?.deathCertificateDtls?.[0]?.tenantId;
     console.log(data);
-    const businessIds = data?.ChildDetails.map((application) => application.applicationNumber);
+    
+    const businessIds = data?.deathCertificateDtls.map((application) => application.DeathACKNo);
     const workflowRes = await Digit.WorkflowService.getAllApplication(tenant, { businessIds: businessIds.join() });
-    return combineResponse(data?.ChildDetails, workflowRes?.ProcessInstances, data?.Count);
+    return combineResponse(data?.deathCertificateDtls, workflowRes?.ProcessInstances, data?.Count);
   };
 };
 
-export const useCRSearchApplication = (params, config = {}, t) => {
+export const useCRDeathSearchApplication = (params, config = {}, t) => {
   const client = useQueryClient();
   let multiownername = "";
-  const result = useQuery(["TL_APPLICATIONS_LIST", params], useCRSearch(params, config), {
+  const result = useQuery(["TL_APPLICATIONS_LIST", params], useCRDeathSearch(params, config), {
     staleTime: Infinity,
     select: (data) => {
      return data.map((i) => ({
        
-        TL_COMMON_TABLE_COL_APP_NO: i.applicationNumber,
+        TL_COMMON_TABLE_COL_APP_NO: i.DeathACKNo,
         CR_FATHER_NAME: i.ParentsDetails?.fatherFirstNameEn,
         CR_MOTHER_NAME: i.ParentsDetails?.motherFirstNameEn,
         CR_ADDRESS:i.AddressBirthDetails?.houseNameNoEnPresent,
@@ -50,10 +52,10 @@ export const useCRSearchApplication = (params, config = {}, t) => {
   return { ...result, revalidate: () => client.invalidateQueries(["TL_APPLICATIONS_LIST", params]) };
 };
 
-export const useCRApplicationDetails = (params, config) => {
+export const useCRApplicationDeathDetails = (params, config) => {
   const client = useQueryClient();
 
-  const result = useQuery(["TL_APPLICATION_DETAILS", params], useCRSearch(params, config), {
+  const result = useQuery(["TL_APPLICATION_DETAILS", params], useCRDeathSearch(params, config), {
     staleTime: Infinity,
     // select: (data) => {
     //   return data.map(i => ({
@@ -71,4 +73,4 @@ export const useCRApplicationDetails = (params, config) => {
   return { ...result, revalidate: () => client.invalidateQueries(["TL_APPLICATION_DETAILS", params]) };
 };
 
-export default useCRSearchApplication;
+export default useCRDeathSearchApplication;

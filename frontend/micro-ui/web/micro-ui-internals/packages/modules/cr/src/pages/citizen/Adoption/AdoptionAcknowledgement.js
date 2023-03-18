@@ -38,10 +38,14 @@ const AdoptionAcknowledgement = ({ data, onSuccess,userType,isEditBirth=false })
   const resubmit = window.location.href.includes("edit-application");
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const isRenewTrade = !window.location.href.includes("renew-trade")
-  const mutation = Digit.Hooks.cr.useCivilRegistrationAPI(
+  const mutation = Digit.Hooks.cr.useCvilRegistrationAdoptionApi(
     data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
     isRenewTrade
   );
+  // const mutation = Digit.Hooks.cr.useCivilRegistrationAPI(
+  //   data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
+  //   isRenewTrade
+  // );
   // const mutation1 = Digit.Hooks.cr.useCivilRegistrationAPI(
   //   data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
   //   false
