@@ -2,7 +2,6 @@ package org.egov.filemgmnt.web.models;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 import org.egov.common.contract.response.ResponseInfo;

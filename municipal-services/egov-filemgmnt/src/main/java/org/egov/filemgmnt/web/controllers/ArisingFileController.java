@@ -47,7 +47,7 @@ public class ArisingFileController {
 
 
 
-    @PostMapping("/applicantservice/_search")
+    @PostMapping("/applicantservice/_searchArisingfile")
     public ResponseEntity<ArisingFileSearchResponse> searchFile(@RequestBody final RequestInfoWrapper request,
                                                           @ModelAttribute final ArisingFileSearchCriteria searchCriteria) {
         if (log.isDebugEnabled()) {
