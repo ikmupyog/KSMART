@@ -23,9 +23,9 @@ public class SnehapoorvamSearchRequest {
         @JsonProperty("RequestInfo")
         private RequestInfo requestInfo;
     
-        @JsonProperty("SnehapoorvamSchoolReg")
-        @Valid
-        private List<SnehapoorvamSchoolReg> SchoolLogin;
+        // @JsonProperty("SnehapoorvamSchoolReg")
+        // @Valid
+        // private List<SnehapoorvamSchoolReg> SchoolLogin;
     
       
         // public SnehapoorvamRequest addSchoolLogin(SnehapoorvamSchoolLogin schoollogin) {
