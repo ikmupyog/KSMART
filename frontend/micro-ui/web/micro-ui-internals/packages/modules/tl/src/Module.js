@@ -24,7 +24,7 @@ import TLCheckPage from "./pages/citizen/Create/CheckPage";
 import TLDocument from "./pageComponents/TLDocumets";
 import TLAcknowledgement from "./pages/citizen/Create/TLAcknowledgement";
 import MyApplications from "./pages/citizen/Applications/Application";
-import TradeLicenseList  from "./pages/citizen/Renewal/TradeLicenseList";
+import TradeLicenseList from "./pages/citizen/Renewal/TradeLicenseList";
 import TLWFApplicationTimeline from "./pageComponents/TLWFApplicationTimeline";
 
 import SelectLicensee from "./pageComponents/SelectLicensee";
@@ -73,6 +73,14 @@ import TLLicenseUnitDetRenewal from "./pageComponents/TLLicenseUnitDetRenewal";
 import TLLicenseApplicantDetRenewal from './pageComponents/TLLicenseApplicantDetRenewal';
 import TLLocationSearch from './pageComponents/TLLocationSearch';
 
+import TLCorrectionApplicant from "./pageComponents/TLCorrectionApplicant";
+import TLCorrectionDetails from "./pageComponents/TLCorrectionDetails";
+import CorrectionTradeLicence from "./pages/citizen/Correction";
+import TLCorrectionOwner from "./pageComponents/TLCorrectionOwner";
+import TLCorrectionActivity from "./pageComponents/TLCorrectionActivity";
+import TLCorrectionPlaceOfActivity from "./pageComponents/TLCorrectionPlaceOfActivity";
+import CorrectionCheckPage from "./pages/citizen/Correction/CorrectionCheckPage"
+import TLCorrectionDetailsView from "./pageComponents/TLCorrectionDetailsView"
 export const TLModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
 
@@ -112,6 +120,10 @@ export const TLLinks = ({ matchPath, userType }) => {
     {
       link: `${matchPath}/tradelicence/license-renewal-search`,
       i18nKey: t("TL_RENEWAL_HEADER"),
+    },
+    {
+      link: `${matchPath}/tradelicence/license-correction-search`,
+      i18nKey: t("TL_CORRECTION_HEADER"),
     },
   ];
 
@@ -166,27 +178,35 @@ const componentsToRegister = {
   TLInfoLabel,
   TLWFApplicationTimeline,
   TLApplicationDetails,
-  TLCreateTradeLicence : CreateTradeLicence,
-  TLEditTrade : EditTrade,
+  TLCreateTradeLicence: CreateTradeLicence,
+  TLEditTrade: EditTrade,
   TLList,
-  TLRenewTrade : RenewTrade,
-  TLSearchTradeComponent : SearchTradeComponent,
-  TLNewApplication : NewApplication,
-  TLReNewApplication : ReNewApplication,
-  TLSearch : Search,
-  TLResponse : Response,
-  TLCreatePdeApplication  : PdeApplication,
+  TLRenewTrade: RenewTrade,
+  TLSearchTradeComponent: SearchTradeComponent,
+  TLNewApplication: NewApplication,
+  TLReNewApplication: ReNewApplication,
+  TLSearch: Search,
+  TLResponse: Response,
+  TLCreatePdeApplication: PdeApplication,
   TLPdeEntry,
-  TLSearchPde:SearchPde,
+  TLSearchPde: SearchPde,
   SearchPdeApplication,
   TLLicenseUnitDet,
   TLLicenseApplicantDet,
   TLDocumentUpload,
-  TLSearchRenewalTrade : SearchRenewalTrade,
+  TLSearchRenewalTrade: SearchRenewalTrade,
   SearchLicenseRenewal,
   TLLicenseUnitDetRenewal,
   TLLicenseApplicantDetRenewal,
-  TLLocationSearch
+  TLLocationSearch,
+  TLCorrectionApplicant,
+  TLCorrectionDetails,
+  CorrectionTradeLicence,
+  TLCorrectionOwner,
+  TLCorrectionActivity,
+  TLCorrectionPlaceOfActivity,
+  CorrectionCheckPage,
+  TLCorrectionDetailsView
 };
 export const initTLComponents = () => {
   Object.entries(componentsToRegister).forEach(([key, value]) => {
