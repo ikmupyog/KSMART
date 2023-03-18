@@ -13,8 +13,9 @@ serviceMaps:
     - query: INSERT INTO public.eg_death_dtls(id, registrationunit, tenantid, dateofdeath, time_of_death, timeofdeath_unit, death_place, death_place_inst_type, death_place_inst_id, deceased_firstname_en, deceased_firstname_ml, deceased_middlename_en, deceased_middlename_ml, deceased_lastname_en, deceased_lastname_ml, deceased_aadhar_unavailable, deceased_aadhar_number, deceased_gender, age, age_unit, informant_name_en, informant_aadhar_submitted, informant_aadhar_no, informant_mobile_no, general_remarks, status, created_by, createdtime, lastmodifiedby, lastmodifiedtime, registration_no, male_dependent_name_en, male_dependent_name_ml, male_dependent_aadharno, female_dependent_name_en, female_dependent_name_ml, female_dependent_aadharno,  vehicle_hospital_en, vehicle_fromplace_ml, vehicle_fromplace_en, vehicle_toplace_ml, vehicle_toplace_en, vehicle_number, death_place_ward_id, death_signed_officer_designation, deceased_idprooftype, application_no, file_no, ack_no, workflowcode, businessservice, action, comment, registration_date, registration_no_id, appl_type, deceased_idproofno, vehicle_first_halt, vehicle_first_halt_ml, male_dependent_unavailable, female_dependent_unavailable, spouse_name_en, spouse_name_ml, spouse_unavailable, spouse_aadhaar, spouse_type, funcion_uid, ack_no_id, application_date, death_place_locality_en, death_place_locality_ml, death_place_street_en, death_place_street_ml, death_place_country, death_place_state, death_place_district, death_place_city, death_place_remarks_en, death_place_remarks_ml, place_of_burial_en, place_of_burial_ml, death_home_locality_en, death_home_locality_ml, death_home_street_en, death_home_street_ml, death_home_housename_en, 
           death_home_housename_ml, death_home_postoffice_id, death_home_pincode, death_home_ward, death_home_taluk_id,
           family_mobile_no ,family_email ,initiator_relation,initiator_name,initiator_aadhar_submitted,initiator_aadhar_no,initiator_mobile_no , assignee ,informant_address ,initiator_address,
-          is_declaration_initiator,is_declaration_informant)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?, ?, ? ,? ,? ,? ,?);
+          is_declaration_initiator,is_declaration_informant,
+          death_date_unavailable,date_of_death_to,time_of_death_to,timeofdeath_unit_to,deceased_unidentified)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?, ?, ?, ?, ?, ?, ?, ? ,? ,? ,? ,? , ? ,? ,? ,? ,?);
      
 
       basePath: deathCertificateDtls.*
@@ -225,6 +226,15 @@ serviceMaps:
 
       - jsonPath: $.deathCertificateDtls.*.InformantDetails.IsDeclarationInformant
 
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.DeathDateUnavailable
+
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.DateOfDeath1
+
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.TimeOfDeath1 
+
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.TimeOfDeathUnit1    
+
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.DeceasedUnIdentified  
 
 
 
@@ -364,8 +374,10 @@ serviceMaps:
 
       - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.isPrsentAddress
 
-    - query: INSERT INTO public.eg_death_statistical_dtls(id, death_dtl_id, tenantid, religion, occupation, medical_attention_type, death_medically_certified, death_cause_main, death_cause_sub, death_cause_other, death_during_delivery, createdby, createdtime, lastmodifiedby, lastmodifiedtime, nationality,  smoking_type, tobacco_type,  alcohol_type, autopsy_performed, autopsy_completed, manner_of_death, death_cause_main_custom, death_cause_main_interval, death_cause_main_timeunit, death_cause_sub_custom, death_cause_sub_interval, death_cause_sub_timeunit, death_cause_sub2, death_cause_sub2_custom, death_cause_sub2_interval, death_cause_sub2_timeunit, deceased_pregnant, is_delivery)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+    - query: INSERT INTO public.eg_death_statistical_dtls(id, death_dtl_id, tenantid, religion, occupation, medical_attention_type, death_medically_certified, death_cause_main, death_cause_sub, death_cause_other, death_during_delivery, createdby, createdtime, lastmodifiedby, lastmodifiedtime, nationality,  smoking_type, tobacco_type,  alcohol_type, autopsy_performed, 
+          autopsy_completed, manner_of_death, death_cause_main_custom, death_cause_main_interval, death_cause_main_timeunit, death_cause_sub_custom, death_cause_sub_interval, death_cause_sub_timeunit, death_cause_sub2, death_cause_sub2_custom, death_cause_sub2_interval, death_cause_sub2_timeunit, deceased_pregnant, is_delivery,
+          medical_practitioner_name, medical_practitioner_aadhaar, medical_practitioner_mobile, medical_practitioner_regno, medical_practitioner_desig, medical_practitioner_address)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
      
 
       basePath: deathCertificateDtls.*
@@ -437,6 +449,19 @@ serviceMaps:
       - jsonPath: $.deathCertificateDtls.*.StatisticalInfo.IsdeceasedPregnant
 
       - jsonPath: $.deathCertificateDtls.*.StatisticalInfo.IsDelivery
+
+      - jsonPath: $.deathCertificateDtls.*.StatisticalInfo.MPName
+
+      - jsonPath: $.deathCertificateDtls.*.StatisticalInfo.MPAadharNumber
+
+      - jsonPath: $.deathCertificateDtls.*.StatisticalInfo.MPMobileNo
+
+      - jsonPath: $.deathCertificateDtls.*.StatisticalInfo.MPRegistrationNumber
+
+      - jsonPath: $.deathCertificateDtls.*.StatisticalInfo.MPDesignation
+
+      - jsonPath: $.deathCertificateDtls.*.StatisticalInfo.MPAddress
+
 #Jasmine 12.02.2023
 #commented on 15/12/2023(based on new suggession 14/12/2023 )
     # - query: INSERT INTO public.eg_death_address_dtls(id, death_dtl_id, tenantid, addr_typeid, streetname_en, streetname_ml, locality_en, locality_ml, ward_id, taluk_id, village_id, postoffice_id, pincode, district_id, state_id, country_id, createdby, createdtime, lastmodifiedby, lastmodifiedtime, location_type, housename_ml, housename_en, lbtype, postal_code)
@@ -565,7 +590,8 @@ serviceMaps:
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.Id
 
     - query: UPDATE  public.eg_death_dtls  SET 
-       dateofdeath  = ? , time_of_death = ?   , timeofdeath_unit = ?  ,
+         dateofdeath  = ? , time_of_death = ?   , timeofdeath_unit = ?  ,
+         date_of_death_to = ? , time_of_death_to = ? , timeofdeath_unit_to = ? ,
          death_place = ?  , death_place_inst_type = ? , death_place_inst_id = ?,
          deceased_firstname_en = ? , deceased_firstname_ml = ? , deceased_middlename_en = ? ,
          deceased_middlename_ml = ? , deceased_lastname_en = ? , deceased_lastname_ml = ? , 
@@ -598,6 +624,12 @@ serviceMaps:
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.TimeOfDeath
 
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.TimeOfDeathUnit
+
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.DateOfDeath1
+
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.TimeOfDeath1 
+
+      - jsonPath: $.deathCertificateDtls.*.InformationDeath.TimeOfDeathUnit1  
 
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.DeathPlace
 
@@ -907,7 +939,9 @@ serviceMaps:
          death_during_delivery = ? , lastmodifiedby = ? ,  lastmodifiedtime = ? ,  nationality = ? ,   smoking_type = ? ,  tobacco_type = ? ,   
          alcohol_type = ? ,  autopsy_performed = ? ,  autopsy_completed = ? ,  manner_of_death = ? ,  death_cause_main_custom = ? ,  death_cause_main_interval = ? ,  
          death_cause_main_timeunit = ? ,  death_cause_sub_custom = ? ,  death_cause_sub_interval = ? ,  death_cause_sub_timeunit = ? ,  death_cause_sub2 = ? ,  
-         death_cause_sub2_custom = ? ,  death_cause_sub2_interval = ? ,  death_cause_sub2_timeunit = ? ,  deceased_pregnant = ? ,  is_delivery = ? WHERE 
+         death_cause_sub2_custom = ? ,  death_cause_sub2_interval = ? ,  death_cause_sub2_timeunit = ? ,  deceased_pregnant = ? ,  is_delivery = ? ,
+         medical_practitioner_name = ? , medical_practitioner_aadhaar = ? , medical_practitioner_mobile = ? ,
+         medical_practitioner_regno = ? , medical_practitioner_desig = ? , medical_practitioner_address = ? WHERE 
          death_dtl_id = ? AND  tenantid = ?
           
       basePath: deathCertificateDtls.*
@@ -970,6 +1004,18 @@ serviceMaps:
       - jsonPath: $.deathCertificateDtls.*.StatisticalInfo.IsdeceasedPregnant
 
       - jsonPath: $.deathCertificateDtls.*.StatisticalInfo.IsDelivery
+
+      - jsonPath: $.deathCertificateDtls.*.StatisticalInfo.MPName
+
+      - jsonPath: $.deathCertificateDtls.*.StatisticalInfo.MPAadharNumber
+
+      - jsonPath: $.deathCertificateDtls.*.StatisticalInfo.MPMobileNo
+
+      - jsonPath: $.deathCertificateDtls.*.StatisticalInfo.MPRegistrationNumber
+
+      - jsonPath: $.deathCertificateDtls.*.StatisticalInfo.MPDesignation
+
+      - jsonPath: $.deathCertificateDtls.*.StatisticalInfo.MPAddress
 
       - jsonPath: $.deathCertificateDtls.*.InformationDeath.Id
 

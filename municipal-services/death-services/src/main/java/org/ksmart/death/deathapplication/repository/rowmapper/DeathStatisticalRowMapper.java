@@ -46,6 +46,13 @@ public class DeathStatisticalRowMapper implements ResultSetExtractor  , BaseRowM
         .smokingType(rs.getString("smoking_type"))
         .tobaccoType(rs.getString("tobacco_type"))
         .alcoholType(rs.getString("alcohol_type"))
+        //Rakhi S on 17.03.2023
+        .mPName(rs.getString("medical_practitioner_name"))
+        .mPAadharNumber(rs.getString("medical_practitioner_aadhaar"))
+        .mPMobileNo(rs.getLong("medical_practitioner_mobile"))
+        .mPRegistrationNumber(rs.getString("medical_practitioner_regno"))
+        .mPDesignation(rs.getString("medical_practitioner_desig"))
+        .mPAddress(rs.getString("medical_practitioner_address"))
         .build();
     }
 

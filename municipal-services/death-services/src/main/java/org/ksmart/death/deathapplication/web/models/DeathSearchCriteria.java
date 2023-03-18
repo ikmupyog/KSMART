@@ -150,5 +150,7 @@ public class DeathSearchCriteria {
         DeceasedGender,
         TenantId
     }
-    
+//RAkhi S on 18.03.2023
+    @JsonProperty("createdBy")
+    private String  createdBy ;
 }
