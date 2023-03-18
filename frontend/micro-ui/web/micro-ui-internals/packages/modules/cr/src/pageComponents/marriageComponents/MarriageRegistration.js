@@ -230,7 +230,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData }) => {
         <BackButton>{t("CS_COMMON_BACK")}</BackButton>
         {window.location.href.includes("/citizen") ? <Timeline currentStep={1} /> : null}
         {window.location.href.includes("/employee") ? <Timeline currentStep={1} /> : null}
-        <FormStep t={t}>
+        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
@@ -238,19 +238,23 @@ const MarriageRegistration = ({ config, onSelect, userType, formData }) => {
               </h1>
             </div>
           </div>
-          <div className="col-md-2">
-            <CardLabel>
-              {`${t("CR_DATE_OF_MARRIAGE")}`}
-              <span className="mandatorycss">*</span>
-            </CardLabel>
-            <DatePicker
-              date={marriageDOM}
-              name="marriageDOM"
-              onChange={setSelectmarriageDOM}
-              inputFormat="DD-MM-YYYY"
-              placeholder={`${t("CR_DATE_OF_MARRIAGE")}`}
-              {...(validation = { isRequired: true, title: t("CR_DATE_OF_MARRIAGE") })}
-            />
+          <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-2">
+                <CardLabel>
+                  {`${t("CR_DATE_OF_MARRIAGE")}`}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <DatePicker
+                  date={marriageDOM}
+                  name="marriageDOM"
+                  onChange={setSelectmarriageDOM}
+                  inputFormat="DD-MM-YYYY"
+                  placeholder={`${t("CR_DATE_OF_MARRIAGE")}`}
+                  {...(validation = { isRequired: true, title: t("CR_DATE_OF_MARRIAGE") })}
+                />
+              </div>
+            </div>
           </div>
           <div className="row">
             <div className="col-md-12">
@@ -258,7 +262,8 @@ const MarriageRegistration = ({ config, onSelect, userType, formData }) => {
                 <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PLACE_OF_MARRIAGE")}`}</span>{" "}
               </h1>
             </div>
-
+          </div>
+          <div className="row">
             <div className="col_md-12">
               <div className="col-md-4">
                 <CardLabel>
@@ -310,6 +315,8 @@ const MarriageRegistration = ({ config, onSelect, userType, formData }) => {
                 />
               </div>
             </div>
+          </div>
+          <div className="row">
             <div className="col_md-12">
               <div className="col-md-4">
                 <CardLabel>
@@ -361,114 +368,106 @@ const MarriageRegistration = ({ config, onSelect, userType, formData }) => {
               </div>
             </div>
           </div>
-
-          <div className="col_md-12">
-            <div className="col-md-4">
-              <CardLabel>
-                {`${t("CR_MARRIAGE_PLACE_TYPE")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <Dropdown
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                option={cmbPlaceType}
-                selected={marriagePlacetype}
-                select={setSelectmarriagePlacetype}
-                placeholder={t("CR_MARRIAGE_PLACE_TYPE")}
-                isMandatory={false}
+          <div className="row">
+            <div className="col_md-12">
+              <div className="col-md-4">
+                <CardLabel>
+                  {`${t("CR_MARRIAGE_PLACE_TYPE")}`}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <Dropdown
+                  t={t}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  option={cmbPlaceType}
+                  selected={marriagePlacetype}
+                  select={setSelectmarriagePlacetype}
+                  placeholder={t("CR_MARRIAGE_PLACE_TYPE")}
+                  isMandatory={false}
                 // option={cmbCountry}
-              />
-            </div>
-            <div className="col-md-4">
-              <CardLabel>
-                {`${t("CR_NAME_OF_PLACE_EN")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <Dropdown
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                option={cmbPlaceType}
-                selected={marriagePlacenameEn}
-                select={setSelectmarriagePlacenameEn}
-                placeholder={t("CR_NAME_OF_PLACE_EN")}
-                isMandatory={false}
+                />
+              </div>
+              <div className="col-md-4">
+                <CardLabel>
+                  {`${t("CR_NAME_OF_PLACE_EN")}`}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <Dropdown
+                  t={t}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  option={cmbPlaceType}
+                  selected={marriagePlacenameEn}
+                  select={setSelectmarriagePlacenameEn}
+                  placeholder={t("CR_NAME_OF_PLACE_EN")}
+                  isMandatory={false}
                 // option={cmbCountry}
-              />
-            </div>
-            <div className="col-md-4">
-              <CardLabel>
-                {`${t("CR_NAME_OF_PLACE_MAL")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <Dropdown
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                option={cmbPlaceType}
-                selected={marriagePlacenameMal}
-                select={setSelectmarriagePlacenameMal}
-                placeholder={t("CR_NAME_OF_PLACE_MAL")}
-                isMandatory={false}
+                />
+              </div>
+              <div className="col-md-4">
+                <CardLabel>
+                  {`${t("CR_NAME_OF_PLACE_MAL")}`}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <Dropdown
+                  t={t}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  option={cmbPlaceType}
+                  selected={marriagePlacenameMal}
+                  select={setSelectmarriagePlacenameMal}
+                  placeholder={t("CR_NAME_OF_PLACE_MAL")}
+                  isMandatory={false}
                 // option={cmbCountry}
-              />
-            </div>
-          </div>
-
-          <div className="col-md-12">
-            <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_MARRIAGE_CUSTOM_AND_CEREMONY_FOLLOWED_FOR_SOLEMNIZATION")}`}</span>{" "}
-            </h1>
-          </div>
-          <div className="col_md-12">
-            <div className="col-md-4">
-              <CardLabel>
-                {`${t("CR_MARRIAGE_TYPE")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <Dropdown
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                option={cmbPlaceType}
-                selected={marriageType}
-                select={setSelectmarriageType}
-                placeholder={t("CR_MARRIAGE_TYPE")}
-                isMandatory={false}
-                // option={cmbCountry}
-              />
-            </div>
-            <div className="col-md-4">
-              <CardLabel>
-                {`${t("CR_MARRIAGE_OTHER_SPECIFY")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <Dropdown
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                option={cmbPlaceType}
-                selected={marriageOthersSpecify}
-                select={setSelectmarriageOthersSpecify}
-                placeholder={t("CR_MARRIAGE_OTHER_SPECIFY")}
-                isMandatory={false}
-                // option={cmbCountry}
-              />
+                />
+              </div>
             </div>
           </div>
-
           <div className="row">
             <div className="col-md-12">
-              <h1 className="">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("")}`}</span>{" "}
+              <h1 className="headingh1">
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_MARRIAGE_CUSTOM_AND_CEREMONY_FOLLOWED_FOR_SOLEMNIZATION")}`}</span>{" "}
               </h1>
             </div>
           </div>
-
-          {""}
-
-          {/* <div><BackButton >{t("CS_COMMON_BACK")}</BackButton></div> */}
+          <div className="row">
+            <div className="col_md-12">
+              <div className="col-md-4">
+                <CardLabel>
+                  {`${t("CR_MARRIAGE_TYPE")}`}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <Dropdown
+                  t={t}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  option={cmbPlaceType}
+                  selected={marriageType}
+                  select={setSelectmarriageType}
+                  placeholder={t("CR_MARRIAGE_TYPE")}
+                  isMandatory={false}
+                // option={cmbCountry}
+                />
+              </div>
+              <div className="col-md-4">
+                <CardLabel>
+                  {`${t("CR_MARRIAGE_OTHER_SPECIFY")}`}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <Dropdown
+                  t={t}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  option={cmbPlaceType}
+                  selected={marriageOthersSpecify}
+                  select={setSelectmarriageOthersSpecify}
+                  placeholder={t("CR_MARRIAGE_OTHER_SPECIFY")}
+                  isMandatory={false}
+                // option={cmbCountry}
+                />
+              </div>
+            </div>
+          </div>
         </FormStep>
       </React.Fragment>
     );
