@@ -10,9 +10,6 @@ const getAction = (flow) => {
       break;
     default: actions = [
       'CR_MARRIAGE_REGISTRATION_DETAILS',
-      'CR_MARRIAGE_INSTITUTION_DETAILS',
-      'CR_MARRIAGE_PUBLICPLACE_DETAILS',
-      'CR_MARRIAGE_HOUSE_DETAILS',
       'CR_GROOM_DETAILS',
       'CR_BRIDE_DETAILS',
       'CR_WITNESS_DETAILS',

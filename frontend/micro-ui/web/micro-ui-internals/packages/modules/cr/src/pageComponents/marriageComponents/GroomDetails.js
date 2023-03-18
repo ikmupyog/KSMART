@@ -21,7 +21,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
   const { t } = useTranslation();
   let validation = {};
   const { data: Menu, isLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
-  const { data: Profession = {}, isProfessionLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Profession");
+ // const { data: Profession = {}, isProfessionLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Profession");
 
   
   const radiomenu = [
@@ -40,8 +40,8 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
             cmbProfession.push(ob);
         });
   const [isInitialRenderRadioButtons, setisInitialRenderRadioButtons] = useState(true);
-  const [groomProfessionEn, setGroomProfessionEn] = useState(formData?.GroomDetails?.groomProfessionEn ? formData?.GroomDetails?.groomProfessionEn : null);
-  const [groomProfessionMal, setGroomProfessionMal] = useState(formData?.GroomDetails?.groomProfessionMal ? formData?.GroomDetails?.groomProfessionMal : null);
+  //const [groomProfessionEn, setGroomProfessionEn] = useState(formData?.GroomDetails?.groomProfessionEn ? formData?.GroomDetails?.groomProfessionEn : null);
+  //const [groomProfessionMal, setGroomProfessionMal] = useState(formData?.GroomDetails?.groomProfessionMal ? formData?.GroomDetails?.groomProfessionMal : null);
   const [groomGender, selectGroomGender] = useState(formData?.GroomDetails?.groomGender);
   const [groomDOB, setGroomDOB] = useState(formData?.GroomDetails?.groomDOB ? formData?.GroomDetails?.groomDOB : "");
   const [groomFathernameEn, setGroomFathernameEn] = useState(
@@ -133,7 +133,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     if (isInitialRenderRadioButtons) {
       setisInitialRenderRadioButtons(false);
       if (selectedValueRadio) {
-        //setIsInitialRenderRadio(false);
+        setIsInitialRenderRadio(false);
         setValueRad(selectedValueRadio.code);
       }
     }
@@ -144,12 +144,12 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     { i18nKey: "CR_FOREIGN_NATIONAL", code: "FOREIGN" },
   ];
   
-  function setSelectGroomProfessionEn(value) {
-    setGroomProfessionEn(value);
-  }
-  function setSelectGroomProfessionMal(value) {
-    setGroomProfessionMal(value);
-  }
+  // function setSelectGroomProfessionEn(value) {  
+  //   setGroomProfessionEn(value);
+  // }
+  // function setSelectGroomProfessionMal(value) {
+  //   setGroomProfessionMal(value);
+  // }
   function setSelectGroomMaritalstatusID(value) {
     setGroomMaritalstatusID(value);
   }
