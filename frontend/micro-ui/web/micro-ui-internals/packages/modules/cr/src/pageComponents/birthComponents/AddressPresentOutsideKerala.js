@@ -35,6 +35,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
   const { data: District = {}, isDistrictLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
   const [toast, setToast] = useState(false);
   const [isInitialRender, setIsInitialRender] = useState(true);
+  const [cmbFilterDistrict, setCmbFilterDistrict] = useState();
 
 
   const cmbUrbanRural = [
@@ -46,7 +47,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
   let cmbDistrict = [];
   let cmbPostOffice = [];
   let districtid = null;
-  let cmbFilterDistrict = [];
+  // let cmbFilterDistrict = [];
   let cmbLB = [];
   console.log(value);
   Taluk &&
@@ -71,13 +72,14 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
   //   });
 
   useEffect(() => {
-
     if (isInitialRender) {
       if (cmbDistrict.length > 0) {
         console.log(cmbDistrict);
+        console.log(value);
         // currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
         // setinsideKeralaLBName(currentLB[0]);
-        cmbFilterDistrict = cmbDistrict.filter((cmbDistrict) => cmbDistrict.statecode === "pb");
+        console.log(cmbDistrict.filter((cmbDistrict) => cmbDistrict.statecode === value));
+        setCmbFilterDistrict(cmbDistrict.filter((cmbDistrict) => cmbDistrict.statecode === value));
         console.log(cmbFilterDistrict);
         // setoutsideKeralaDistrict(cmbFilterDistrict);
         // cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === currentLB[0].city.districtid);
@@ -85,10 +87,11 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
         // cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
         // setLbsVillagevalue(cmbFilterVillage);
         setIsInitialRender(false);
+        setInitialPresentOutsideKeralaRender(false);
       }
     }
   }, [cmbFilterDistrict, isInitialRender]);
-  
+
   if (isEditBirth || isEditDeath) {
     if (formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaDistrict != null) {
       if (cmbDistrict.length > 0 && (presentOutsideKeralaDistrict === undefined || presentOutsideKeralaDistrict === "")) {
@@ -109,13 +112,17 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
   const onSkip = () => onSelect();
 
   function setSelectoutsideKeralaDistrict(value) {
+    setoutsideKeralaDistrict(null);
+    console.log(value.code);
     setoutsideKeralaDistrict(value);
     districtid = value.districtid;
+    setCmbFilterDistrict(null);
     if (isPrsentAddress) {
       setpermntOutsideKeralaDistrict(value);
     } else {
       setpermntOutsideKeralaDistrict('');
     }
+    setIsInitialRender(true);
   }
 
   function setSelectoutsideKeralaVillage(value) {
@@ -286,7 +293,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
             <Dropdown
               t={t}
               optionKey="name"
-              option={cmbDistrict}
+              option={cmbFilterDistrict}
               selected={presentOutsideKeralaDistrict}
               select={setSelectoutsideKeralaDistrict}
               placeholder={`${t("CS_COMMON_DISTRICT")}`}

@@ -118,8 +118,10 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
   const [marriageOthersSpecify, setmarriageOthersSpecify] = useState(formData?.MarriageInstitution?.marriageOthersSpecify ? formData?.MarriageInstitution?.marriageOthersSpecify : "");
   const [marriageLocalityMal, setMarriageLocalityMal] = useState(formData?.MarriageInstitution?.marriageLocalityMal ? formData?.MarriageInstitution?.marriageLocalityMal : "");
   const [marriageType, setmarriageType] = useState(
-    formData?.GroomDetails?.marriageType ? formData?.GroomDetails?.marriageType : null
-  );
+    formData?.GroomDetails?.marriageType ? formData?.GroomDetails?.marriageType : null);
+  const [marraigeType, setMarraigeType] = useState(
+    formData?.MarriageInstitution?.marraigeType ? formData?.MarriageInstitution?.marraigeType : null);
+  
   const [marriageReligiousInstitutionOther, setMarriageReligiousInstitutionOther] = useState(
     formData?.MarriageInstitution?.marriageReligiousInstitutionOther ? formData?.MarriageInstitution?.marriageReligiousInstitutionOther : ""
   );
@@ -130,10 +132,10 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
     formData?.MarriageInstitution?.marriageStreetMal ? formData?.MarriageInstitution?.marriageStreetMal : ""
   );
   const [marriageReligiousInstitutionOtherNameEn, setMarriageReligiousInstitutionOtherNameEn] = useState(
-    formData?.GroomDetails?.marriageReligiousInstitutionOtherNameEn ? formData?.GroomDetails?.marriageReligiousInstitutionOtherNameEn : ""
+    formData?.MarriageInstitution?.marriageReligiousInstitutionOtherNameEn ? formData?.MarriageInstitution?.marriageReligiousInstitutionOtherNameEn : ""
   );
   const [marriageReligiousInstitutionOtherNameMal, setMarriageReligiousInstitutionOtherNameMal] = useState(
-    formData?.GroomDetails?.marriageReligiousInstitutionOtherNameMal ? formData?.GroomDetails?.marriageReligiousInstitutionOtherNameMal : ""
+    formData?.MarriageInstitution?.marriageReligiousInstitutionOtherNameMal ? formData?.MarriageInstitution?.marriageReligiousInstitutionOtherNameMal : ""
   );
   const [marriageStreetEn, setMarriageStreetEn] = useState(
     formData?.MarriageInstitution?.marriageStreetEn ? formData?.MarriageInstitution?.marriageStreetEn : ""
@@ -168,6 +170,7 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
   
   function setSelectmarriageDistrictid(value) {
     setmarriageDistrictid(value);
+
   }
   function setSelectMarriageReligiousInstitution(value) {
     setMarriageReligiousInstitution(value);
@@ -191,6 +194,7 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
   
   function setselectmarriageDOM(value) {
     setmarriageDOM(value);
+
     const today = new Date();
     const birthDate = new Date(value);
     if (birthDate.getTime() <= today.getTime()) {
@@ -201,6 +205,7 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
       console.log(Difference_In_DaysRounded);
     } else {
       setmarriageDOM(null);
+
       setDOBError(true);
       setToast(true);
       setTimeout(() => {
@@ -209,79 +214,62 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
     }
   }
   function setSelectMarriageReligiousInstitutionOther(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-     } 
-    else {
-        setMarriageReligiousInstitutionOther(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setMarriageReligiousInstitutionOther(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectmarriageOthersSpecify(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-     } 
-    else {
-        setmarriageOthersSpecify(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setmarriageOthersSpecify(e.target.value.replace(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50)));
+
     }
   }
 
   function setSelectMarriageReligiousInstitutionOtherNameMal(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      setMarriageLocalityMal('');
     } else {
-      setMarriageReligiousInstitutionOtherNameMal(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+      setMarriageReligiousInstitutionOtherNameMal(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectMarriageReligiousInstitutionOtherNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-     } 
-    else {
-      setMarriageReligiousInstitutionOtherNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setMarriageReligiousInstitutionOtherNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectMarriageLandmark(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-        setMarriageLandmark(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+       setMarriageLandmark(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectMarriageStreetEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-        setMarriageStreetEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+     setMarriageStreetEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectMarriageLocalityEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-        setMarriageLocalityEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+        setMarriageLocalityEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectMarriageLocalityMal(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      setMarriageLocalityMal('');
     } else {
-        setMarriageLocalityMal(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+        setMarriageLocalityMal(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectmarriageStreetMal(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      setMarriageStreetMal('');
     } else {
-      setMarriageStreetMal(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+      setMarriageStreetMal(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
@@ -351,6 +339,7 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
                   {`${t("CR_DATE_OF_MARRIAGE")}`}
                   <span className="mandatorycss">*</span>
                 </CardLabel>
+
               <DatePicker date={marriageDOM} name="marriageDOM" onChange={setselectmarriageDOM} placeholder={`${t("CR_DATE_OF_MARRIAGE")}`} />
             </div>
           </div>
@@ -366,7 +355,7 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
             <div className="col-md-12">
             <div className="col-md-4">
               <CardLabel>
-                  {`${t("CR_DISTRICT")}`}
+                  {`${t("CS_COMMON_DISTRICT")}`}
                   <span className="mandatorycss">*</span>
                 </CardLabel>
                 <Dropdown
@@ -377,12 +366,13 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
                 selected={marriageDistrictid}
                 select={setSelectmarriageDistrictid}
                 placeholder={`${t("CR_DISTRICT")}`}
+
               />
             </div>
 
             <div className="col-md-4">
               <CardLabel>
-                  {`${t("CR_LB_TYPE")}`}
+                  {`${t("CS_LBTYPE")}`}
                   <span className="mandatorycss">*</span>
                 </CardLabel>
                 <Dropdown
@@ -393,11 +383,12 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
                 selected={marriageLBtype}
                 select={setSelectmarriageLBtype}
                 placeholder={`${t("CR_LB_TYPE")}`}
+
               />
             </div>
             <div className="col-md-4">
               <CardLabel>
-                  {`${t("CR_LB")}`}
+                  {`${t("CS_LB")}`}
                   <span className="mandatorycss">*</span>
                 </CardLabel>
                 <Dropdown
@@ -408,6 +399,7 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
                 selected={marriageTenantid}
                 select={setselectmarriageTenantid}
                 placeholder={`${t("CR_LB")}`}
+
               />
             </div>
             </div>
@@ -454,6 +446,7 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
                   option={cmbWardNoFinal} 
                   selected={marriageWardCode} 
                   select={setSelectmarriageWardCode}  
+
                   {...(validation = { isRequired: false, title: t("CS_COMMON_INVALID_WARD") })} />
                 </div>
                 </div>

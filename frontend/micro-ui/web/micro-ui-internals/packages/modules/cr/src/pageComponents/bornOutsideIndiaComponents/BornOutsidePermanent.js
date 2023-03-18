@@ -2,11 +2,10 @@ import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, Loader } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 
-const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCountry, setpermtaddressCountry,
+const BornOutsidePermanent = ({ config, onSelect, userType, formData, permtaddressCountry, setpermtaddressCountry,
     permtaddressStateName, setpermtaddressStateName, value, setValue, countryvalue, setCountryValue,
     isPrsentAddress, setIsPrsentAddress, countryValuePermanent, setCountryValuePermanent,
-    valuePermanent, setValuePermanent, isEditBirth = false, isEditDeath = false,
-    // isInitialRender, setIsInitialRender
+    valuePermanent, setValuePermanent, isEditBirth = false, isEditDeath = false
 }) => {
     const stateId = Digit.ULBService.getStateId();
     let tenantId = "";
@@ -145,4 +144,4 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
             </React.Fragment>
         );
 };
-export default AddressPermanent;
+export default BornOutsidePermanent;

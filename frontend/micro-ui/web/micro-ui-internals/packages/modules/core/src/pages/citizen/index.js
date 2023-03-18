@@ -12,6 +12,7 @@ import Login from "./Login";
 import UserProfile from "./Home/UserProfile";
 import Dashboard from "./Dashboard";
 // import PDF from "../../assets/";
+import { useQueryClient } from "react-query";
 
 const getTenants = (codes, tenants) => {
   return tenants.filter((tenant) => codes.map((item) => item.code).includes(tenant.code));
@@ -32,6 +33,8 @@ const Home = ({
   sourceUrl,
   pathname,
 }) => {
+  const queryClient = useQueryClient();
+  queryClient.removeQueries("CR_CREATE_BIRTH_REG");  
   const location = useLocation()
   const classname = Digit.Hooks.fsm.useRouteSubscription(pathname);
   const { t } = useTranslation();

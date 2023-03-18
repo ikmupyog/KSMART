@@ -1001,4 +1001,41 @@ export const newConfig = [
     ]
   }
   ,
+  {
+    head: "New IFTE & OS License Application",
+    body: [
+      {
+        //if want to input index in url just pul @0 after route name owner-ship-details@0
+        type: "component",
+        route: "license-correction-root",
+        isMandatory: true,
+        component: "TLCorrectionDetailsView", //"TLCorrectionDetails",
+        texts: {
+        //  header: "TL_LB_DET_LABEL",     ///"TL_TRADE_UNITS_HEADER",
+          submitBarLabel: "CS_COMMON_NEXT",
+        },
+        key: "TradeDetails",
+        isCreateEnabled: true,
+        withoutLabel: true,
+        hideInEmployee: true,
+        nextStep: "",
+      },
+      // {
+      //   //if want to input index in url just pul @0 after route name owner-ship-details@0
+      //   type: "component",
+      //   route: "license-cancel-root",
+      //   isMandatory: true,
+      //   component: "TLCancelDetails",
+      //   texts: {
+      //     header: "TL_LB_DET_LABEL",     ///"TL_TRADE_UNITS_HEADER",
+      //     submitBarLabel: "CS_COMMON_NEXT",
+      //   },
+      //   key: "TradeDetails",
+      //   isCreateEnabled: true,
+      //   withoutLabel: true,
+      //   hideInEmployee: true,
+      //   nextStep: null,
+      // },
+    ]
+  }
 ];
