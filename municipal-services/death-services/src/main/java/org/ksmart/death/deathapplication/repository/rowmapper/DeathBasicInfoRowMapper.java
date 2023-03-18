@@ -76,6 +76,12 @@ public class DeathBasicInfoRowMapper  implements ResultSetExtractor  , BaseRowMa
           .occupation(rs.getString("occupation"))
           .deathACKNo(rs.getString("ack_no"))
           .funcionUID(rs.getString("funcion_uid"))
+          //Rakhi S on 17.03.2023
+          .deathDateUnavailable(rs.getBoolean("death_date_unavailable"))
+          .dateOfDeath1(rs.getLong("date_of_death_to"))
+          .timeOfDeath1(rs.getInt("time_of_death_to"))
+          .timeOfDeathUnit1(rs.getString("timeofdeath_unit_to"))
+          .deceasedUnIdentified(rs.getInt("deceased_unidentified"))
           .build();
       }
    
