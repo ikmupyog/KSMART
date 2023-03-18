@@ -72,9 +72,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
   //   });
 
   useEffect(() => {
-    console.log("isInitialRender" + isInitialRender);
-    console.log("isInitialPresentOutsideKeralaRender" + isInitialPresentOutsideKeralaRender);
-    if (isInitialRender || isInitialPresentOutsideKeralaRender) {
+    if (isInitialRender) {
       if (cmbDistrict.length > 0) {
         console.log(cmbDistrict);
         console.log(value);

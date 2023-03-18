@@ -6,7 +6,6 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
     presentaddressStateName, setaddressStateName, value, setValue, countryvalue, setCountryValue,
     permtaddressCountry, setpermtaddressCountry, permtaddressStateName, setpermtaddressStateName, isPrsentAddress,
     setIsPrsentAddress, Villagevalues, setLbsVillagevalue, isEditBirth = false, isEditDeath = false,
-    isInitialPresentOutsideKeralaRender,setInitialPresentOutsideKeralaRender
 }) => {
     const stateId = Digit.ULBService.getStateId();
     let tenantId = "";
