@@ -117,8 +117,13 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
   const [marriageLocalityEn, setMarriageLocalityEn] = useState(formData?.MarriageInstitution?.marriageLocalityEn ? formData?.MarriageInstitution?.marriageLocalityEn : "");
   const [marriageOthersSpecify, setmarriageOthersSpecify] = useState(formData?.MarriageInstitution?.marriageOthersSpecify ? formData?.MarriageInstitution?.marriageOthersSpecify : "");
   const [marriageLocalityMal, setMarriageLocalityMal] = useState(formData?.MarriageInstitution?.marriageLocalityMal ? formData?.MarriageInstitution?.marriageLocalityMal : "");
+<<<<<<< HEAD
   const [marriageType, setmarriageType] = useState(
     formData?.GroomDetails?.marriageType ? formData?.GroomDetails?.marriageType : null
+=======
+  const [marraigeType, setMarraigeType] = useState(
+    formData?.MarriageInstitution?.marraigeType ? formData?.MarriageInstitution?.marraigeType : null
+>>>>>>> a11d376a05 (added)
   );
   const [marriageReligiousInstitutionOther, setMarriageReligiousInstitutionOther] = useState(
     formData?.MarriageInstitution?.marriageReligiousInstitutionOther ? formData?.MarriageInstitution?.marriageReligiousInstitutionOther : ""
@@ -130,10 +135,10 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
     formData?.MarriageInstitution?.marriageStreetMal ? formData?.MarriageInstitution?.marriageStreetMal : ""
   );
   const [marriageReligiousInstitutionOtherNameEn, setMarriageReligiousInstitutionOtherNameEn] = useState(
-    formData?.GroomDetails?.marriageReligiousInstitutionOtherNameEn ? formData?.GroomDetails?.marriageReligiousInstitutionOtherNameEn : ""
+    formData?.MarriageInstitution?.marriageReligiousInstitutionOtherNameEn ? formData?.MarriageInstitution?.marriageReligiousInstitutionOtherNameEn : ""
   );
   const [marriageReligiousInstitutionOtherNameMal, setMarriageReligiousInstitutionOtherNameMal] = useState(
-    formData?.GroomDetails?.marriageReligiousInstitutionOtherNameMal ? formData?.GroomDetails?.marriageReligiousInstitutionOtherNameMal : ""
+    formData?.MarriageInstitution?.marriageReligiousInstitutionOtherNameMal ? formData?.MarriageInstitution?.marriageReligiousInstitutionOtherNameMal : ""
   );
   const [marriageStreetEn, setMarriageStreetEn] = useState(
     formData?.MarriageInstitution?.marriageStreetEn ? formData?.MarriageInstitution?.marriageStreetEn : ""

@@ -118,7 +118,7 @@ const MarriagePublicPlace = ({ config, onSelect, userType, formData }) => {
   const [marraigeOthersSpecify, setMarraigeOthersSpecify] = useState(formData?.MarriagePublicPlace?.marraigeOthersSpecify ? formData?.MarriagePublicPlace?.marraigeOthersSpecify : "");
   const [marriageLocalityMal, setMarriageLocalityMal] = useState(formData?.MarriagePublicPlace?.marriageLocalityMal ? formData?.MarriagePublicPlace?.marriageLocalityMal : "");
   const [marraigeType, setMarraigeType] = useState(
-    formData?.GroomDetails?.marraigeType ? formData?.GroomDetails?.marraigeType : null
+    formData?.MarriagePublicPlace?.marraigeType ? formData?.MarriagePublicPlace?.marraigeType : null
   );
   
   const [marriageLandmark, setMarriageLandmark] = useState(
@@ -128,10 +128,10 @@ const MarriagePublicPlace = ({ config, onSelect, userType, formData }) => {
     formData?.MarriagePublicPlace?.marriageStreetMal ? formData?.MarriagePublicPlace?.marriageStreetMal : ""
   );
   const [marriagePublicOrPrivateNamePlaceEn, setMarriagePublicOrPrivateNamePlaceEn] = useState(
-    formData?.GroomDetails?.marriagePublicOrPrivateNamePlaceEn ? formData?.GroomDetails?.marriagePublicOrPrivateNamePlaceEn : ""
+    formData?.MarriagePublicPlace?.marriagePublicOrPrivateNamePlaceEn ? formData?.MarriagePublicPlace?.marriagePublicOrPrivateNamePlaceEn : ""
   );
   const [marriagePublicOrPrivateNamePlaceMal, setMarriagePublicOrPrivateNamePlaceMal] = useState(
-    formData?.GroomDetails?.marriagePublicOrPrivateNamePlaceMal ? formData?.GroomDetails?.marriagePublicOrPrivateNamePlaceMal : ""
+    formData?.MarriagePublicPlace?.marriagePublicOrPrivateNamePlaceMal ? formData?.MarriagePublicPlace?.marriagePublicOrPrivateNamePlaceMal : ""
   );
   const [marriageStreetEn, setMarriageStreetEn] = useState(
     formData?.MarriagePublicPlace?.marriageStreetEn ? formData?.MarriagePublicPlace?.marriageStreetEn : ""
