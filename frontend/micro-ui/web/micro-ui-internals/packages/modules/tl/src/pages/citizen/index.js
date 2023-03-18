@@ -11,9 +11,7 @@ import { Route, Switch, useRouteMatch } from "react-router-dom";
 // import SearchTradeComponent from "./SearchTrade";
 
 const App = () => {
-  //console.log("renewal **********************************************************" +JSON.stringify(pathrenewal));
   const { path, url, ...match } = useRouteMatch();
-  console.log(path);
   let isSuccessScreen = window.location.href.includes("acknowledgement");
   let isCommonPTPropertyScreen = window.location.href.includes("/tl/tradelicence/new-application/property-details");
 
@@ -26,6 +24,7 @@ const App = () => {
   const SearchTradeComponent = Digit?.ComponentRegistryService?.getComponent('TLSearchTradeComponent');
   const MyApplications = Digit?.ComponentRegistryService?.getComponent('MyApplications');
   const SearchRenewalTrade = Digit?.ComponentRegistryService?.getComponent('TLSearchRenewalTrade');
+  const CorrectionTradeLicence=Digit?.ComponentRegistryService?.getComponent('CorrectionTradeLicence');
   const getBackPageNumber = () => {
     let goBacktoFromProperty = -1;
   if(sessionStorage.getItem("VisitedCommonPTSearch") === "true" && (sessionStorage.getItem("VisitedAccessoriesDetails") === "true" || sessionStorage.getItem("VisitedisAccessories") === "true") && isCommonPTPropertyScreen)
@@ -51,8 +50,11 @@ const App = () => {
           <PrivateRoute path={`${path}/tradelicence/application/:id/:tenantId`} component={ApplicationDetails} />
           <PrivateRoute path={`${path}/tradelicence/renewal-list`} component={TLList} />
           <PrivateRoute path={`${path}/tradelicence/trade-search`} component={SearchTradeComponent} />
-          <PrivateRoute path={`${path}/tradelicence/license-renewal-search`} component={SearchRenewalTrade} />
+          {/* <PrivateRoute path={`${path}/tradelicence/license-renewal-search`} component={SearchRenewalTrade} /> */}
+          <PrivateRoute path={`${path}/tradelicence/license-renewal-search`} component={()=><SearchRenewalTrade isCancelreq={false}/>} />
+          <PrivateRoute path={`${path}/tradelicence/license-correction-search`} component={()=><SearchRenewalTrade isCancelreq={true}/>}/>
           <PrivateRoute path={`${path}/tradelicence/license-renewal-pde`}   component={() => <CreateTradeLicence  isRenewal={true}/>} />
+           <PrivateRoute path={`${path}/tradelicence/license-correction`} component={() => <CorrectionTradeLicence  isRenewal={false}/>} /> 
           {/* component={() => <CreateTradeLicence  isRenewal={true}/>} />	 */}
         </AppContainer>
       </Switch>

@@ -121,11 +121,13 @@ import useTenantsCR from "./cr/useTenants";
 import useCivilRegistrationMDMS from "./cr/useCivilRegistrationMDMS";
 // import useTLDocumentSearch from "./tl/useTLDocumentSearch";
 import useCivilRegistrationAPI from "./cr/useCivilRegistrationAPI";
+import useCvilRegistrationAdoptionApi from "./cr/useCvilRegistrationAdoptionApi";
 import useCivilRegistrationStillBirthAPI from "./cr/useCivilRegistrationStillBirthAPI";
 
 import useCivilRegistrationDeathAPI from "./cr/useCivilRegistrationDeathAPI";
 // import useTradeLicenseSearch from "./tl/useTradeLicenseSearch";
 import { useCRSearchApplication, useCRApplicationDetails } from "./cr/useCRSearchApplication";
+import { useCRDeathSearchApplication, useCRApplicationDeathDetails } from "./cr/useCRDeathSearchApplication";
 // import useTLPaymentHistory from "./tl/userPaymentHistory";
 import useCRFetchBill from "./cr/useFetchBill";
 import useCRApplicationDetail from "./cr/useApplicationDetail";
@@ -138,6 +140,7 @@ import useCRGenderMDMS from "./cr/useCRGenderMDMS";
 import useCRInbox from "./cr/useInbox";
 import useCRMDMS from "./cr/useMDMS";
 import useCRSearch from "./cr/useSearch";
+import useCRDeathSearch from "./cr/useSearchDeath";
 import useRegistryDownloadDeath from "./cr/useRegistryDownloadDeath";
 import useResistryDownloadBirth from "./cr/useResistryDownloadBirth"
 import useRegistrySearchBirth from "./cr/useRegistrySearchBirth";
@@ -335,12 +338,14 @@ const cr = {
   useTenants: useTenantsCR,
   useCivilRegistrationMDMS,
   useCivilRegistrationAPI,
+  useCvilRegistrationAdoptionApi,
   useCivilRegistrationStillBirthAPI,
   useCivilRegistrationDeathAPI,
   useCRGenderMDMS,
   useInbox: useCRInbox,
   useMDMS: useCRMDMS,
   useSearch: useCRSearch,
+  useSearchDeath: useCRDeathSearch,
   useRegistrySearchDeath,
   useRegistryDownloadDeath,
   useResistryDownloadBirth,
@@ -355,7 +360,9 @@ const cr = {
   useApplicationDeathDetail: useApplicationDeathDetail,
   useFetchBill: useCRFetchBill,
   useCRSearchApplication,
-  useCRApplicationDetails
+  useCRDeathSearchApplication,
+  useCRApplicationDetails,
+  useCRApplicationDeathDetails
 };
 const dfm = {
   useTenants: useTenantsDFM,

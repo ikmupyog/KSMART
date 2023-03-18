@@ -3,7 +3,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
-const MyCRApplications = ({view}) => {
+const MyCRDeathApplications = ({view}) => {
   const { t } = useTranslation();
 
   const { mobileNumber, tenantId } = Digit.UserService.getUser()?.info || {}
@@ -13,7 +13,7 @@ const MyCRApplications = ({view}) => {
       params: { businessService: "CR", tenantId, mobileNumber },
       config: { enabled: view === "bills" }
     }
-  ) : Digit.Hooks.cr.useCRSearchApplication({}, {
+  ) : Digit.Hooks.cr.useCRDeathSearchApplication({}, {
     enabled: view !== "bills"
   },t);
 console.log(data);
@@ -22,6 +22,7 @@ console.log(data);
   }
   return (
     <React.Fragment>
+     
      <Header>{`${t("TL_MY_APPLICATIONS_HEADER")}`}</Header>
       {data?.map((application) => {
         return (
@@ -40,4 +41,4 @@ console.log(data);
     </React.Fragment>
   );
 };
-export default MyCRApplications;
+export default MyCRDeathApplications;

@@ -18,6 +18,10 @@ const App = () => {
   const { path, url, ...match } = useRouteMatch();
   let isSuccessScreen = window.location.href.includes("acknowledgement");
   // let isCommonPTPropertyScreen = window.location.href.includes("/tl/tradelicence/new-application/property-details");
+  const ApplicationDetails = Digit.ComponentRegistryService.getComponent("CRCitizenApplicationDetails");
+  const ApplicationDeathDetails = Digit.ComponentRegistryService.getComponent("CRDeathApplicationDetails");
+  
+
 
   const CreateBirthRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateBirthRegistration');
   const CreateAdoption = Digit?.ComponentRegistryService?.getComponent('CRCreateAdoptions');
@@ -26,6 +30,8 @@ const App = () => {
   const CreateDeathRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateDeathRegistration');
   const CreateMarriageRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateMarriageRegistration');
   const MyCRApplications = Digit?.ComponentRegistryService?.getComponent('MyCRApplications');
+  const MyCRDeathApplications = Digit?.ComponentRegistryService?.getComponent('MyCRDeathApplications');
+
 
   // const getBackPageNumber = () => {
   //   let goBacktoFromProperty = -1;
@@ -53,7 +59,10 @@ const App = () => {
         <PrivateRoute path={`${path}/cr-death-creation`} component={CreateDeathRegistration} />
         <PrivateRoute path={`${path}/cr-marriage-creation`} component={CreateMarriageRegistration} />
         <PrivateRoute path={`${path}/cr/my-application`} component={MyCRApplications} />
+        <PrivateRoute path={`${path}/cr/death/my-application`} component={MyCRDeathApplications} />
         <PrivateRoute path={`${path}/cr/my-bills`} component={() => <MyCRApplications view="bills" />} />
+        <PrivateRoute path={`${path}/cr/application/:id/:tenantId`} component={ApplicationDetails} />
+        <PrivateRoute path={`${path}/cr/application/:id/:tenantId`} component={ApplicationDeathDetails} />
         <PrivateRoute path={`${path}/create-death-certificate`} component={() => <DeathCertificateSearch parentUrl={path}/>} /> 
         <PrivateRoute parentRoute={path} path={`${path}/create-birth-certificate`} component={() => <BirthCertificateSearch parentUrl={path} />} /> 
        </AppContainer>

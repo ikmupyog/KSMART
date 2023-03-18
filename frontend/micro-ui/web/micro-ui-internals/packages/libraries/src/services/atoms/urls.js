@@ -112,7 +112,8 @@ const Urls = {
     update:"/birth-services/cr/updatebirth",   
     download_pdf: "/egov-pdf/download/CR/",
     registry_download: "/birth-services/cr/registry/_download", 
-    registry_search_birth: "/birth-services/cr/registry/_search",    
+    registry_search_birth: "/birth-services/cr/registry/_search",
+    create_adoption:'/birth-services/cr/createadoption'    
   },
   crstillbirth: {
     create: "/birth-services/cr/createstillbirth",

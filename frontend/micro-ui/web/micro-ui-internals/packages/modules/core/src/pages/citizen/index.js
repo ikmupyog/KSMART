@@ -191,14 +191,53 @@ const Home = ({
             state: { module: "cr-death" }
           }),
         },
+       
         {
+          name: t("CR_DEATH_CORRECTIONS"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname: `${matchPath}/cr/`,
+            state: { module: "cr-death" }
+          }),
+          
+        },
+        
+       
+        {
+          name: t("CR_COMMON_ABANDONED_DEATH"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname: `${matchPath}/cr/`,
+            state: { module: "cr-death" }
+          }),
+        }, 
+      ],
+      styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
+    };
+    const DeathcertProps = {
+      header: t(""),
+      sideOption: {
+        name: t(""),
+        onClick: () => history.push("/digit-ui/citizen/all-services"),
+      },
+      options: [
+        
+           {
           name: t("CR_COMMON_CERT_DOWNLOAD"),
           Icon: <OBPSIcon />,
           onClick: () => history.push({
             pathname: `${matchPath}/create-death-certificate`,
             state: { module: "cr-death" }
           }),
-        },    
+        }, 
+        {
+          name: t("TL_MY_APPLICATIONS_HEADER"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname: `${matchPath}/cr/death/my-application`,
+            state: { module: "cr-death" }
+          }),
+        },       
 
       ],
       styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
@@ -246,6 +285,7 @@ const Home = ({
 
     return (
       <React.Fragment>
+       
         {code === "CR" && location?.state?.module === crBirth ? (
           <Route key={index} path={`${path}/${crBirth.toLowerCase()}-home`}>
             <div className="moduleLinkHomePage">
@@ -268,6 +308,7 @@ const Home = ({
             </div>
             <div className="ServicesSection" style={{display:"flex",marginTop:"20px"}}>
                 <CardBasedOptions {...DearhRegProps} />
+                <CardBasedOptions {...DeathcertProps} />
             </div>
           </Route>
         ) :  code === "CR" && location?.state?.module === crMarriage ? (
