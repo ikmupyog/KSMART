@@ -338,7 +338,7 @@ const MarriagePublicPlace = ({ config, onSelect, userType, formData }) => {
             <div className="col-md-12">
             <div className="col-md-4">
               <CardLabel>
-                  {`${t("CR_DISTRICT")}`}
+                  {`${t("CS_COMMON_DISTRICT")}`}
                   <span className="mandatorycss">*</span>
                 </CardLabel>
                 <Dropdown
@@ -348,13 +348,13 @@ const MarriagePublicPlace = ({ config, onSelect, userType, formData }) => {
                 option={cmbDistrict}
                 selected={marriageDistrictid}
                 select={setSelectMarriageDistrictid}
-                placeholder={`${t("CR_DISTRICT")}`}
+                placeholder={`${t("CS_COMMON_DISTRICT")}`}
               />
             </div>
 
             <div className="col-md-4">
               <CardLabel>
-                  {`${t("CR_LB_TYPE")}`}
+                  {`${t("CS_LBTYPE")}`}
                   <span className="mandatorycss">*</span>
                 </CardLabel>
                 <Dropdown
@@ -364,7 +364,7 @@ const MarriagePublicPlace = ({ config, onSelect, userType, formData }) => {
                 option={cmbLBType}
                 selected={marriageLBtype}
                 select={setSelectMarriageLBtype}
-                placeholder={`${t("CR_LB_TYPE")}`}
+                placeholder={`${t("CS_LBTYPE")}`}
               />
             </div>
             <div className="col-md-4">
