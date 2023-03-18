@@ -232,6 +232,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
   const [CommencementDate, setCommencementDate] = useState(
     formData?.InformationDeath?.CommencementDate ? formData?.InformationDeath?.CommencementDate : ""
   );
+  const [cmbAgeUnitFilter, setcmbAgeUnitFilter] = useState();
 
   const [AgeUnit, setSelectedAgeUnit] = useState(
     formData?.InformationDeath?.AgeUnit?.code
@@ -374,12 +375,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
         if (stateId === "kl" && cmbReligion.length > 0) {
           cmbfilterReligion = cmbReligion.filter((cmbReligion) => cmbReligion.name.includes("No Religion"));
           setSelectedReligion(cmbfilterReligion[0]);
-        }
-      }
-      if (AgeUnit == null || AgeUnit == "") {
-        if (stateId === "kl" && cmbAgeUnit.length > 0) {
-          cmbfilterAgeUnit = cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.name.includes("Years"));
-          setSelectedAgeUnit(cmbfilterAgeUnit[0]);
         }
       }
       if (DeathPlaceCountry == null || DeathPlaceCountry == "") {
@@ -612,6 +607,29 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
         setAge(e.target.value);
       }
     }
+    if (e.target.value <= 11) {
+      setcmbAgeUnitFilter(cmbAgeUnit);
+    } else if (e.target.value > 11 && e.target.value <= 23) {
+      setcmbAgeUnitFilter(
+        cmbAgeUnit.filter(
+          (cmbAgeUnit) => cmbAgeUnit.code === "AGE_UNIT_YEARS" || cmbAgeUnit.code === "AGE_UNIT_DAYS" || cmbAgeUnit.code === "AGE_UNIT_HOURS"
+        )
+      );
+    }
+    else if (e.target.value > 23 && e.target.value <= 29) {
+      setcmbAgeUnitFilter(
+        cmbAgeUnit.filter(
+          (cmbAgeUnit) => cmbAgeUnit.code === "AGE_UNIT_YEARS" || cmbAgeUnit.code === "AGE_UNIT_DAYS" 
+        )
+      );
+    }
+    else if (e.target.value > 29 && e.target.value <= 120) {
+      setcmbAgeUnitFilter(
+        cmbAgeUnit.filter(
+          (cmbAgeUnit) => cmbAgeUnit.code === "AGE_UNIT_YEARS" 
+        )
+      );
+    }
   }
   // function setSelectDeceasedAadharNumber(e) {
   //   if (e.target.value.length != 0) {
@@ -701,7 +719,16 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
       setToast(false);
     }
   }
+  // const isTextBoxValid = () => {
 
+  //   // } else if (Age > 23 && Age <= 29) {
+  //   //   return value ===  ["Years", "Days"].includes(AgeUnit);
+  //   // } else if (Age > 29 && Age <= 120) {
+  //   //   return value ===  ["Years"].includes(AgeUnit);
+  //   // } else {
+  //   //   return false;
+  //   // }
+  // };
   const goNext = () => {
     if (Difference_In_DaysRounded <= 21) {
       if (DeathPlace.code == "HOSPITAL") {
@@ -1057,10 +1084,10 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                       })}
                     />
                   </div>
-                  <div className="col-md-3">
+                  {/* <div className="col-md-3">
                     <CardLabel>{t("CR_FROM_TIME")}</CardLabel>
                     <CustomTimePicker name="DeathTimeFrom" onChange={(val) => handleFromTimeChange(val, setDeathTimeFrom)} value={DeathTimeFrom} />
-                  </div>
+                  </div> */}
 
                   <div className="col-md-3">
                     <CardLabel>
@@ -1079,10 +1106,10 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                       })}
                     />
                   </div>
-                  <div className="col-md-3">
+                  {/* <div className="col-md-3">
                     <CardLabel>{t("CR_TO_TIME")}</CardLabel>
                     <CustomTimePicker name="DeathTimeTo" onChange={(val) => handleToTimeChange(val, setDeathTimeTo)} value={DeathTimeTo} />
-                  </div>
+                  </div> */}
                 </div>
               </div>
             )}
@@ -1503,7 +1530,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
 
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-2">
+              <div className="col-md-1">
                 <CardLabel>
                   {`${t("CR_AGE")}`}
                   <span className="mandatorycss">*</span>{" "}
@@ -1520,7 +1547,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                   {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "number", title: t("CS_COMMON_INVALID_AGE") })}
                 />
               </div>
-              <div className="col-md-1">
+              <div className="col-md-2">
                 <CardLabel>
                   {`${t("CR_AGE_UNIT")}`}
                   <span className="mandatorycss">*</span>{" "}
@@ -1529,13 +1556,15 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                   t={t}
                   optionKey="name"
                   isMandatory={false}
-                  option={cmbAgeUnit}
+                  option={cmbAgeUnitFilter}
                   selected={AgeUnit}
                   select={selectAgeUnit}
                   placeholder={`${t("CR_AGE_UNIT")}`}
                 />
               </div>
-              <div className="col-md-1">
+              {/* {!isTextBoxValid() && <p>Please enter a valid value based on the conditions</p>} */}
+
+              <div className="col-md-2">
                 <CardLabel>
                   {t("CR_GENDER")} <span className="mandatorycss">*</span>{" "}
                 </CardLabel>
@@ -1580,7 +1609,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                   placeholder={`${t("CS_COMMON_RELIGION")}`}
                 />
               </div>
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <CardLabel>{t("CR_PROFESSIONAL")}</CardLabel>
                 <Dropdown
                   t={t}
