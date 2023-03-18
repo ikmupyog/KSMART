@@ -182,7 +182,12 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     setGroomNoOfSpouse(e.target.value);
   }
   function setSelectGroomAge(e) {
-    setGroomAge(e.target.value);
+    if (e.target.value.trim().length === 3) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setGroomAge(e.target.value);
+    }
   }
   
   function setselectGroomDOB(value) {
@@ -205,17 +210,17 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     }
   }
   function setSelectGroomFirstnameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setGroomFirstnameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectGroomLastnameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setGroomLastnameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectGroomMiddlenameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
        setGroomMiddlenameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
@@ -267,13 +272,13 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
   }
   
   function setSelectGroomFathernameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setGroomFathernameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectGroomGuardiannameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
-      setGroomGuardiannameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setGroomGuardiannameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectGroomMothernameMal(e) {
@@ -286,8 +291,8 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     }
   }
   function setSelectGroomMothernameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
-      setGroomMothernameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setGroomMothernameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
@@ -414,9 +419,12 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
             </div>
             <div className="row">
             <div className="col-md-12">
-            <div className="col-md-3">
+            <div className="col-md-4">
               {" "}
-              <CardLabel>{t("CR_GROOM_AADHAR_NO")}</CardLabel>
+              <CardLabel>
+              {`${t("CR_GROOM_AADHAR_NO")}`}
+                  <span className="mandatorycss">*</span>
+              </CardLabel>
               <TextInput
                 t={t}
                 isMandatory={false}
@@ -429,7 +437,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                
               />
             </div>
-            <div className="col-md-3">
+            <div className="col-md-4">
               {" "}
               <CardLabel>{t("CR_GROOM_PASSPORT_NO")}</CardLabel>
               <TextInput
@@ -445,7 +453,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
               />
             </div>
 
-            <div className="col-md-3">
+            <div className="col-md-4">
               {" "}
               <CardLabel>{t("CR_GROOM_SOCIAL_SECURITY_NO")}</CardLabel>
               <TextInput
@@ -602,7 +610,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
           </div>
           <div className="row">
           <div className="col-md-12">
-              <div className="col-md-3">
+              <div className="col-md-4">
               <CardLabel>
                   {`${t("CR_GROOM_GENDER")}`}
                   <span className="mandatorycss">*</span>
@@ -618,14 +626,14 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 
               />
             </div>
-            <div className="col-md-3">
+            <div className="col-md-4">
              <CardLabel>
                   {`${t("CR_GROOM_DATE_OF_BIRTH")}`}
                   <span className="mandatorycss">*</span>
                 </CardLabel>
               <DatePicker date={groomDOB} name="groomDOB" onChange={setselectGroomDOB} placeholder={`${t("CR_GROOM_DATE_OF_BIRTH")}`} />
             </div>
-            <div className="col-md-3">
+            <div className="col-md-4">
               <CardLabel>
                   {`${t("CR_GROOM_AGE")}`}
                 </CardLabel>
@@ -637,13 +645,13 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 name="groomAge"
                 value={groomAge}
                 onChange={setSelectGroomAge}
-                placeholder={`${t("CR_GROOMN_AGE")}`}
+                placeholder={`${t("CR_GROOM_AGE")}`}
                
               />
             </div>
           </div>
         </div>
-        <div className="row">
+        {/* <div className="row">
             <div className="col-md-12">
               <div className="col-md-4">
               <CardLabel>
@@ -674,11 +682,11 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                                     />
             </div>
           </div>
-        </div>
+        </div> */}
             
         <div className="row">
             <div className="col-md-12">
-              <div className="col-md-3">
+              <div className="col-md-4">
                 <CardLabel>{t("CR_GROOM_MARITAL_STATUS")}</CardLabel>{" "}
                 <Dropdown
                   t={t}
@@ -690,7 +698,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   placeholder={`${t("CR_GROOM_MARITAL_STATUS")}`}
                 />
               </div>
-              <div className="col-md-3">
+              <div className="col-md-4">
                 <CardLabel>{t("CR_ANY_SPOUSE_LIVING")}</CardLabel>{" "}
                 <Dropdown
                   t={t}
@@ -702,7 +710,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   placeholder={`${t("CR_ANY_SPOUSE_LIVING")}`}
                 />
               </div>
-              <div className="col-md-3">
+              <div className="col-md-4">
                 <CardLabel>{t("CR_NUMBER_OF_SPOUSE_LIVING")}</CardLabel>{" "}
                 <TextInput
                   t={t}
@@ -738,7 +746,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
           </div>
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-3">
+              <div className="col-md-4">
                 <CardLabel>{t("CR_GROOM_FATHER_AADHAR_NO")}</CardLabel>
                 <TextInput
                   t={t}
@@ -752,7 +760,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   
                 />
               </div>
-              <div className="col-md-3">
+              <div className="col-md-4">
                 {" "}
                 <CardLabel>{t("CR_GROOM_FATHER_NAME_EN")}</CardLabel>
                 <TextInput
@@ -767,7 +775,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   
                 />
               </div>
-              <div className="col-md-3">
+              <div className="col-md-4">
                 {" "}
                 <CardLabel>{t("CR_GROOM_FATHER_NAME_ML")}</CardLabel>
                 <TextInput
@@ -786,7 +794,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
           </div>
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-3">
+              <div className="col-md-4">
                 {" "}
                 <CardLabel>{t("CR_GROOM_MOTHER_AADHAR_NO")}</CardLabel>
                 <TextInput
@@ -801,7 +809,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   
                 />
               </div>
-              <div className="col-md-3">
+              <div className="col-md-4">
                 {" "}
                 <CardLabel>{t("CR_GROOM_MOTHER_NAME_EN")}</CardLabel>
                 <TextInput
@@ -816,7 +824,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   
                 />
               </div>
-              <div className="col-md-3">
+              <div className="col-md-4">
                 {" "}
                 <CardLabel>{t("CR_GROOM_MOTHER_NAME_ML")}</CardLabel>
                 <TextInput
@@ -835,7 +843,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
           </div>
           <div className="row">
             <div className="col-md-12">
-                <div className="col-md-3">
+                <div className="col-md-4">
                 <CardLabel>{t("CR_GROOM_GUARDIAN_AADHAR_NO")}</CardLabel>
                 <TextInput
                   t={t}
@@ -849,7 +857,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   
                 />
               </div>
-              <div className="col-md-3">
+              <div className="col-md-4">
                 {" "}
                 <CardLabel>{t("CR_GROOM_GUARDIAN_NAME_EN")}</CardLabel>
                 <TextInput
@@ -864,7 +872,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                  
                 />
               </div>
-              <div className="col-md-3">
+              <div className="col-md-4">
                 {" "}
                 <CardLabel>{t("CR_GROOM_GUARDIAN_NAME_ML")}</CardLabel>
                 <TextInput
