@@ -58,6 +58,9 @@ public class MarriageApplicationQueryBuilder extends BaseBirthQuery {
         addFilter("mrg.id", criteria.getId(), query, preparedStmtValues);
         addFilter("mrg.tenantid", criteria.getTenantId(), query, preparedStmtValues);
         addFilter("mrg.applicationno", criteria.getApplicationNo(), query, preparedStmtValues);
+        addFilter("mrg.registrationno", criteria.getRegistrationNo(), query, preparedStmtValues);
+        addFilter("mrg.fileno", criteria.getFileNo(),query,preparedStmtValues);
+
 
         if (StringUtils.isEmpty(criteria.getSortBy()))
             addOrderByColumns("mrg.createdtime",null, orderBy);
@@ -65,6 +68,10 @@ public class MarriageApplicationQueryBuilder extends BaseBirthQuery {
             addOrderByColumns("mrg.tenantid",criteria.getSortOrder(), orderBy);
         else if (criteria.getSortBy() == MarriageApplicationSearchCriteria.SortBy.applicationNumber)
             addOrderByColumns("mrg.applicationno",criteria.getSortOrder(),orderBy);
+        else if (criteria.getSortBy()== MarriageApplicationSearchCriteria.SortBy.registrationNo)
+            addOrderByColumns("mrg.registrationno",criteria.getSortOrder(),orderBy);
+        else if (criteria.getSortBy()== MarriageApplicationSearchCriteria.SortBy.fileNo)
+            addOrderByColumns("mrg.fileno",criteria.getSortOrder(),orderBy);
         return query.toString();
     }
     public String getNextIDQuery() {
