@@ -240,7 +240,7 @@ const DeathCrFlowApp = (props) => {
 
   const onSuccess = () => {
     sessionStorage.removeItem("CurrentFinancialYear");
-    queryClient.invalidateQueries("CR_CREATE_BIRTH");
+    queryClient.invalidateQueries("CR_CREATE_DEATH");
   };
   const handleSkip = () => {};
   const handleMultiple = () => {};

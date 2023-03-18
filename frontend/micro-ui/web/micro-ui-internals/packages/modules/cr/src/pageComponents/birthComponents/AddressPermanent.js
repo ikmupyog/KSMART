@@ -4,7 +4,9 @@ import { useTranslation } from "react-i18next";
 
 const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCountry, setpermtaddressCountry,
     permtaddressStateName, setpermtaddressStateName, value, setValue, countryvalue, setCountryValue,
-    isPrsentAddress, setIsPrsentAddress
+    isPrsentAddress, setIsPrsentAddress, countryValuePermanent, setCountryValuePermanent,
+    valuePermanent, setValuePermanent, isEditBirth = false, isEditDeath = false,
+    // isInitialRender, setIsInitialRender
 }) => {
     const stateId = Digit.ULBService.getStateId();
     let tenantId = "";
@@ -43,82 +45,104 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
     let cmbFilterState = [];
     useEffect(() => {
 
-        if (isInitialRender) {
+        if (isInitialRender && isPrsentAddress) {
             if (cmbLB.length > 0) {
                 currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
                 // setAdrsLBName(currentLB[0]);
                 cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
                 setpermtaddressCountry(cmbFilterCountry[0]);
-                setCountryValue(cmbFilterCountry[0].countrycode)
+                setCountryValue(cmbFilterCountry[0].countrycode);
+                setCountryValuePermanent(cmbFilterCountry[0].countrycode);
                 cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
                 setpermtaddressStateName(cmbFilterState[0]);
                 setValue(cmbFilterState[0].statecode);
+                setValuePermanent(cmbFilterState[0].statecode);
+                setIsInitialRender(false);
+            }
+        } else {
+            if (cmbLB.length > 0) {
+                currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
+                // setAdrsLBName(currentLB[0]);
+                cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
+                setpermtaddressCountry(cmbFilterCountry[0]);
+                setCountryValuePermanent(cmbFilterCountry[0].countrycode);
+                cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
+                setpermtaddressStateName(cmbFilterState[0]);
+                setValuePermanent(cmbFilterState[0].statecode);
                 setIsInitialRender(false);
             }
         }
     }, [Country, State, localbodies, isInitialRender]);
-
+    if (isEditBirth || isEditDeath) {
+        if (formData?.ChildDetails?.AddressBirthDetails?.permtaddressCountry != null) {
+            if (cmbCountry.length > 0 && (permtaddressCountry === undefined || permtaddressCountry === "")) {
+                setpermtaddressCountry(cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.ChildDetails?.AddressBirthDetails?.permtaddressCountry)[0]);
+                setCountryValuePermanent(value.formData?.ChildDetails?.AddressBirthDetails?.permtaddressCountry);
+            }
+        }
+        if (formData?.ChildDetails?.AddressBirthDetails?.permtaddressStateName != null) {
+            if (cmbState.length > 0 && (permtaddressStateName === undefined || permtaddressStateName === "")) {
+                setpermtaddressStateName(cmbState.filter(cmbState => cmbState.code === formData?.ChildDetails?.AddressBirthDetails?.permtaddressStateName)[0]);
+                setValuePermanent(value.formData?.ChildDetails?.AddressBirthDetails?.permtaddressStateName);
+            }
+        }
+    }
     const onSkip = () => onSelect();
 
     function setSelectaddressCountry(value) {
         setpermtaddressCountry(value);
-        setCountryValue(value.countrycode);
+        // setCountryValue(value.countrycode);
+        setCountryValuePermanent(value.countrycode);
     }
     function setSelectaddressStateName(value) {
         setpermtaddressStateName(value);
-        setValue(value.statecode);
+        // setValue(value.statecode);
+        setValuePermanent(value.statecode);
     }
 
     const goNext = () => {
-        // sessionStorage.setItem("permtaddressCountry", permtaddressCountry.code);
-        // sessionStorage.setItem("permtaddressStateName", permtaddressStateName.code);
-
-        // onSelect(config.key, {
-        //     permtaddressCountry,
-        //     permtaddressStateName,
-        // });
     };
     if (isCountryLoading || isStateLoading || islocalbodiesLoading) {
         return <Loader></Loader>;
-    }
-    return (
-        <React.Fragment>
-            <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
-                
-                <div className="row">
-                    <div className="col-md-6">
-                        <CardLabel>
-                            {`${t("CS_COMMON_COUNTRY")}`}
-                            <span className="mandatorycss">*</span>
-                        </CardLabel>
-                        <Dropdown
-                            t={t}
-                            optionKey="name"
-                            isMandatory={false}
-                            option={cmbCountry}
-                            selected={permtaddressCountry}
-                            select={setSelectaddressCountry}
-                        />
-                    </div>
-                    {countryvalue === "IND" && (
+    } else
+        return (
+            <React.Fragment>
+                <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
+
+                    <div className="row">
                         <div className="col-md-6">
                             <CardLabel>
-                                {`${t("CS_COMMON_STATE")}`}
+                                {`${t("CS_COMMON_COUNTRY")}`}
                                 <span className="mandatorycss">*</span>
                             </CardLabel>
                             <Dropdown
                                 t={t}
                                 optionKey="name"
                                 isMandatory={false}
-                                option={cmbState}
-                                selected={permtaddressStateName}
-                                select={setSelectaddressStateName}
+                                option={cmbCountry}
+                                selected={permtaddressCountry}
+                                select={setSelectaddressCountry}
                             />
                         </div>
-                    )}
-                </div>
-            </FormStep>
-        </React.Fragment>
-    );
+                        {countryValuePermanent === "IND" && (
+                            <div className="col-md-6">
+                                <CardLabel>
+                                    {`${t("CS_COMMON_STATE")}`}
+                                    <span className="mandatorycss">*</span>
+                                </CardLabel>
+                                <Dropdown
+                                    t={t}
+                                    optionKey="name"
+                                    isMandatory={false}
+                                    option={cmbState}
+                                    selected={permtaddressStateName}
+                                    select={setSelectaddressStateName}
+                                />
+                            </div>
+                        )}
+                    </div>
+                </FormStep>
+            </React.Fragment>
+        );
 };
 export default AddressPermanent;

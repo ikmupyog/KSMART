@@ -75,14 +75,14 @@ const Profile = ({ info, stateName, t }) => {
 
 const PoweredBy = () => (
   <div className="digit-footer">
-    <img
-      alt="Powered by DIGIT"
+    {/* <img
+      alt="Powered by UPYOG"
       src={window?.globalConfigs?.getConfig?.("DIGIT_FOOTER")}
       style={{ cursor: "pointer" }}
       onClick={() => {
         window.open(window?.globalConfigs?.getConfig?.("DIGIT_HOME_URL"), "_blank").focus();
       }}
-    />{" "}
+    />{" "} */}
   </div>
 );
 

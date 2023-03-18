@@ -18,11 +18,12 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     permntInKeralaAdrHouseNameEn, setpermntInKeralaAdrHouseNameEn, permntInKeralaAdrHouseNameMl, setpermntInKeralaAdrHouseNameMl,
     permntInKeralaAdrLocalityNameEn, setpermntInKeralaAdrLocalityNameEn, permntInKeralaAdrLocalityNameMl,
     setpermntInKeralaAdrLocalityNameMl, permntInKeralaAdrStreetNameEn, setpermntInKeralaAdrStreetNameEn, permntInKeralaAdrStreetNameMl,
-    setpermntInKeralaAdrStreetNameMl, permntInKeralaWardNo, setpermntInKeralaWardNo
-
+    setpermntInKeralaAdrStreetNameMl, permntInKeralaWardNo, setpermntInKeralaWardNo, isEditBirth = false, isEditDeath = false,
+    // isInitialRender, setIsInitialRender
 }) => {
     const stateId = Digit.ULBService.getStateId();
     const [pofilter, setPofilter] = useState(false);
+    const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? isEditDeath : false);
     const { t } = useTranslation();
     let validation = {};
     let tenantId = "";
@@ -30,15 +31,15 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     if (tenantId === "kl") {
         tenantId = Digit.ULBService.getCitizenCurrentTenant();
     }
-    const [tenantWard,setTenantWard]=useState(tenantId);
+    const [tenantWard, setTenantWard] = useState(tenantId);
     const [tenantboundary, setTenantboundary] = useState(false);
     const queryClient = useQueryClient();
     if (tenantboundary) {
-      queryClient.removeQueries("TL_ZONAL_OFFICE");
-      queryClient.removeQueries("CR_VILLAGE");
-      queryClient.removeQueries("CR_TALUK");
-      queryClient.removeQueries("CR_TALUK");
-      setTenantboundary(false);
+        queryClient.removeQueries("TL_ZONAL_OFFICE");
+        queryClient.removeQueries("CR_VILLAGE");
+        queryClient.removeQueries("CR_TALUK");
+        queryClient.removeQueries("CR_TALUK");
+        setTenantboundary(false);
     }
     const { data: PostOffice = {}, isPostOfficeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
     const { data: Taluk = {}, isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
@@ -136,6 +137,40 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
         }
     }, [District, LBType, localbodies, Talukvalues, Villagevalues, PostOfficevalues, lbs, isInitialRender]);
 
+    if (isEditBirth || isEditDeath) {
+        if (formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaDistrict != null) {
+            if (cmbDistrict.length > 0 && (presentInsideKeralaDistrict === undefined || presentInsideKeralaDistrict === "")) {
+                setinsideKeralaDistrict(cmbDistrict.filter(cmbDistrict => cmbDistrict.code === formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaDistrict)[0]);
+            }
+        }
+        if (formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaLBName != null) {
+            if (cmbLB.length > 0 && (presentInsideKeralaLBName === undefined || presentInsideKeralaLBName === "")) {
+                setinsideKeralaLBName(cmbLB.filter(cmbLB => cmbLB.code === formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaLBName)[0]);
+            }
+          }
+        if (formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaTaluk != null) {
+            if (cmbTaluk.length > 0 && (presentInsideKeralaTaluk === undefined || presentInsideKeralaTaluk === "")) {
+                setinsideKeralaTaluk(cmbTaluk.filter(cmbTaluk => cmbTaluk.code === formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaTaluk)[0]);
+            }
+        }
+        if (formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaVillage != null) {
+            if (cmbVillage.length > 0 && (presentInsideKeralaVillage === undefined || presentInsideKeralaVillage === "")) {
+                setinsideKeralaVillage(cmbVillage.filter(cmbVillage => cmbVillage.code === formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaVillage)[0]);
+            }
+        }
+        if (formData?.ChildDetails?.AddressBirthDetails?.presentWardNo != null) {
+            if (cmbWardNo.length > 0 && (presentWardNo === undefined || presentWardNo === "")) {
+                setPresentWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.ChildDetails?.AddressBirthDetails?.presentWardNo)[0]);
+            }
+        }
+        if (formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaPostOffice != null) {
+            if (cmbFilterPostOffice.length > 0 && (presentInsideKeralaPostOffice === undefined || presentInsideKeralaPostOffice === "")) {
+                setinsideKeralaPostOffice(cmbFilterPostOffice.filter(cmbFilterPostOffice => cmbFilterPostOffice.code === formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaPostOffice)[0]);
+                let pin = cmbFilterPostOffice.filter(cmbFilterPostOffice => cmbFilterPostOffice.code === formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaPostOffice)[0];
+                setinsideKeralaPincode(pin.pincode);
+            }
+        }
+    }
     const onSkip = () => onSelect();
 
     function setSelectinsideKeralaDistrict(value) {
@@ -155,7 +190,8 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
             setLbsTalukvalue(cmbFilterTaluk);
             cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === districtid);
             setLbsVillagevalue(cmbFilterVillage);
-            cmbFilterPostOffice = cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === districtid);
+            // cmbFilterPostOffice = cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === districtid);
+            setCmbFilterPostOffice(cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === districtid));
             setPostOfficevalues(cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === districtid));
             setIsInitialRender(false);
         }
@@ -210,12 +246,12 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     const setSelectinsideKeralaPincode = (e => {
 
         if (e.target.value.length === 6) {
-          setPostOfficevalues(PostOfficevalues.filter((postoffice) =>
-            parseInt(postoffice.pincode) === parseInt(e.target.value)));
-          setPofilter(true);
+            setPostOfficevalues(PostOfficevalues.filter((postoffice) =>
+                parseInt(postoffice.pincode) === parseInt(e.target.value)));
+            setPofilter(true);
         } else {
-          setPostOfficevalues(cmbFilterPostOffice);
-          setPofilter(false);
+            setPostOfficevalues(cmbFilterPostOffice);
+            setPofilter(false);
         }
         setinsideKeralaPincode(e.target.value.length <= 6 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 6));
         setinsideKeralaPostOffice(PostOfficevalues.filter((postoffice) => parseInt(postoffice.pincode) === parseInt(e.target.value))[0]);
@@ -244,26 +280,25 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     //     }
     // }
     function setSelectinsideKeralaHouseNameEn(e) {
-        if (e.target.value.length === 51) {
-            return false;
-            // window.alert("Username shouldn't exceed 10 characters")
-        } else {
-            setinsideKeralaHouseNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' ]/gi, ""));
+        if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9 ]*$") != null)) {
+            setinsideKeralaHouseNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
             if (isPrsentAddress) {
-                setpermntInKeralaAdrHouseNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' ]/gi, ""));
+                setpermntInKeralaAdrHouseNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
             } else {
                 setpermntInKeralaAdrHouseNameEn('');
             }
         }
     }
     function setSelectinsideKeralaHouseNameMl(e) {
-        if (e.target.value.length === 51) {
-            return false;
-            // window.alert("Username shouldn't exceed 10 characters")
-        } else {
-            setinsideKeralaHouseNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' ]/gi, ""));
+        let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$/;
+        if (!(e.target.value.match(pattern))) {
+            e.preventDefault();
+            setinsideKeralaHouseNameMl('');
+        }
+        else {
+            setinsideKeralaHouseNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
             if (isPrsentAddress) {
-                setpermntInKeralaAdrHouseNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' ]/gi, ""));
+                setpermntInKeralaAdrHouseNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
             } else {
                 setpermntInKeralaAdrHouseNameMl('');
             }
@@ -271,13 +306,10 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     }
 
     function setSelectinsideKeralaLocalityNameEn(e) {
-        if (e.target.value.length === 51) {
-            return false;
-            // window.alert("Username shouldn't exceed 10 characters")
-        } else {
-            setinsideKeralaLocalityNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+        if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+            setinsideKeralaLocalityNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
             if (isPrsentAddress) {
-                setpermntInKeralaAdrLocalityNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+                setpermntInKeralaAdrLocalityNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
             } else {
                 setpermntInKeralaAdrLocalityNameEn('');
             }
@@ -285,13 +317,15 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     }
 
     function setSelectinsideKeralaLocalityNameMl(e) {
-        if (e.target.value.length === 51) {
-            return false;
-            // window.alert("Username shouldn't exceed 10 characters")
-        } else {
-            setinsideKeralaLocalityNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+        let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+        if (!(e.target.value.match(pattern))) {
+            e.preventDefault();
+            setinsideKeralaLocalityNameMl('');
+        }
+        else {
+            setinsideKeralaLocalityNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
             if (isPrsentAddress) {
-                setpermntInKeralaAdrLocalityNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+                setpermntInKeralaAdrLocalityNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
             } else {
                 setpermntInKeralaAdrLocalityNameMl('');
             }
@@ -299,13 +333,10 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     }
 
     function setSelectinsideKeralaStreetNameEn(e) {
-        if (e.target.value.length === 51) {
-            return false;
-            // window.alert("Username shouldn't exceed 10 characters")
-        } else {
-            setinsideKeralaStreetNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+        if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+            setinsideKeralaStreetNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
             if (isPrsentAddress) {
-                setpermntInKeralaAdrStreetNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+                setpermntInKeralaAdrStreetNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
             } else {
                 setpermntInKeralaAdrStreetNameEn('');
             }
@@ -313,13 +344,15 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     }
 
     function setSelectinsideKeralaStreetNameMl(e) {
-        if (e.target.value.length === 51) {
-            return false;
-            // window.alert("Username shouldn't exceed 10 characters")
-        } else {
-            setinsideKeralaStreetNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+        let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+        if (!(e.target.value.match(pattern))) {
+            e.preventDefault();
+            setinsideKeralaStreetNameMl('');
+        }
+        else {
+            setinsideKeralaStreetNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
             if (isPrsentAddress) {
-                setpermntInKeralaAdrStreetNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+                setpermntInKeralaAdrStreetNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
             } else {
                 setpermntInKeralaAdrStreetNameMl('');
             }
@@ -334,9 +367,20 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
             setpermntInKeralaWardNo('');
         }
     }
-
+    function setCheckMalayalamInputField(e) {
+        let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
+        if (!(e.key.match(pattern))) {
+            e.preventDefault();
+        }
+    }
+    function setCheckMalayalamInputFieldWithSplChar(e) {
+        let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]/;
+        if (!(e.key.match(pattern))) {
+            e.preventDefault();
+        }
+    }
     const goNext = () => {
-        
+
     };
 
     if (islocalbodiesLoading || isPostOfficeLoading || isDistrictLoading || isTalukLoading || isVillageLoading || isWardLoaded) {
@@ -364,8 +408,8 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                                 option={cmbDistrict}
                                 selected={presentInsideKeralaDistrict}
                                 select={setSelectinsideKeralaDistrict}
+                                disable={isDisableEdit}
                                 placeholder={`${t("CS_COMMON_DISTRICT")}`}
-                            //disable={isDisableStatus}
                             />
                         </div>
 
@@ -391,6 +435,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                                 option={Talukvalues}
                                 selected={presentInsideKeralaTaluk}
                                 select={setSelectinsideKeralaTaluk}
+                                disable={isDisableEdit}
                                 placeholder={`${t("CS_COMMON_TALUK")}`}
                             />
                         </div>
@@ -405,6 +450,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                                 option={Villagevalues}
                                 selected={presentInsideKeralaVillage}
                                 select={setSelectinsideKeralaVillage}
+                                disable={isDisableEdit}
                                 placeholder={`${t("CS_COMMON_VILLAGE")}`}
                             />
                         </div>
@@ -419,7 +465,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                                 option={lbs}
                                 selected={presentInsideKeralaLBName}
                                 select={setSelectinsideKeralaLBName}
-                                // disable={isDisableStatus}
+                                disable={isDisableStatus}
                                 placeholder={`${t("CS_COMMON_LB_NAME")}`}
                             />
                         </div>
@@ -437,6 +483,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                                 selected={presentWardNo}
                                 select={setSelectWard}
                                 placeholder={`${t("CS_COMMON_WARD")}`}
+                                disable={isDisableEdit}
                                 {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
                             />
                         </div>
@@ -451,6 +498,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                                 option={PostOfficevalues}
                                 selected={presentInsideKeralaPostOffice}
                                 select={setSelectinsideKeralaPostOffice}
+                                disable={isDisableEdit}
                                 placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
                             />
                         </div>
@@ -466,7 +514,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                                 name="presentInsideKeralaPincode"
                                 value={presentInsideKeralaPincode}
                                 onChange={setSelectinsideKeralaPincode}
-                                // disable={isDisableStatus}
+                                disable={isDisableStatus}
                                 placeholder={`${t("CS_COMMON_PIN_CODE")}`}
                                 {...(validation = {
                                     pattern: "^[a-zA-Z-.`' ]*$",
@@ -492,6 +540,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                                 name="presentInsideKeralaLocalityNameEn"
                                 value={presentInsideKeralaLocalityNameEn}
                                 onChange={setSelectinsideKeralaLocalityNameEn}
+                                disable={isDisableEdit}
                                 placeholder={`${t("CR_LOCALITY_EN")}`}
                                 {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
                             />
@@ -505,6 +554,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                                 name="presentInsideKeralaStreetNameEn"
                                 value={presentInsideKeralaStreetNameEn}
                                 onChange={setSelectinsideKeralaStreetNameEn}
+                                disable={isDisableEdit}
                                 placeholder={`${t("CR_STREET_NAME_EN")}`}
                                 {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
                             />
@@ -521,6 +571,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                                 name="presentInsideKeralaHouseNameEn"
                                 value={presentInsideKeralaHouseNameEn}
                                 onChange={setSelectinsideKeralaHouseNameEn}
+                                disable={isDisableEdit}
                                 placeholder={`${t("CR_HOUSE_NAME_EN")}`}
                                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
                             />
@@ -540,7 +591,9 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                                 optionKey="i18nKey"
                                 name="presentInsideKeralaLocalityNameMl"
                                 value={presentInsideKeralaLocalityNameMl}
+                                onKeyPress={setCheckMalayalamInputField}
                                 onChange={setSelectinsideKeralaLocalityNameMl}
+                                disable={isDisableEdit}
                                 placeholder={`${t("CR_LOCALITY_ML")}`}
                                 {...(validation = {
                                     pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
@@ -558,7 +611,9 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                                 optionKey="i18nKey"
                                 name="presentInsideKeralaStreetNameMl"
                                 value={presentInsideKeralaStreetNameMl}
+                                onKeyPress={setCheckMalayalamInputField}
                                 onChange={setSelectinsideKeralaStreetNameMl}
+                                disable={isDisableEdit}
                                 placeholder={`${t("CR_STREET_NAME_ML")}`}
                                 {...(validation = {
                                     pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
@@ -579,7 +634,9 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                                 optionKey="i18nKey"
                                 name="presentInsideKeralaHouseNameMl"
                                 value={presentInsideKeralaHouseNameMl}
+                                onKeyPress={setCheckMalayalamInputFieldWithSplChar}
                                 onChange={setSelectinsideKeralaHouseNameMl}
+                                disable={isDisableEdit}
                                 placeholder={`${t("CR_HOUSE_NAME_ML")}`}
                                 {...(validation = {
                                     pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .`' ]*$",

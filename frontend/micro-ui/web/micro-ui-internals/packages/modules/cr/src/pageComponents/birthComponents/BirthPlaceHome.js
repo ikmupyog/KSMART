@@ -7,7 +7,8 @@ import { useTranslation } from "react-i18next";
 const BirthPlaceHome = ({ config, onSelect, userType, formData,
   adrsPincode, adrsHouseNameEn, adrsHouseNameMl, adrsLocalityNameEn, adrsLocalityNameMl, adrsStreetNameEn, adrsStreetNameMl,
   wardNo, setWardNo, adrsPostOffice, setAdrsPostOffice, setAdrsPincode, setAdrsHouseNameEn, setAdrsHouseNameMl, setAdrsLocalityNameEn,
-  setAdrsLocalityNameMl, setAdrsStreetNameEn, setAdrsStreetNameMl, PostOfficevalues, setPostOfficevalues
+  setAdrsLocalityNameMl, setAdrsStreetNameEn, setAdrsStreetNameMl, PostOfficevalues, setPostOfficevalues,
+  isEditBirth
 
 }) => {
   const [pofilter, setPofilter] = useState(false);
@@ -23,9 +24,10 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
   }
   const { data: PostOffice = {}, isPostOfficeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
   const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
-  const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
+  const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "boundary-data");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [cmbFilterPostOffice, setCmbFilterPostOffice] = useState([]);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
   let cmbPostOffice = [];
   let cmbLB = [];
   let currentLB = [];
@@ -73,7 +75,20 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
     }
   }, [localbodies, PostOfficevalues, isInitialRender]);
   const onSkip = () => onSelect();
-
+  if (isEditBirth) {
+    if (formData?.ChildDetails?.adrsPostOffice != null) {
+      if (cmbPostOffice.length > 0 && (adrsPostOffice === undefined || adrsPostOffice === "")) {
+        let pin = cmbPostOffice.filter(cmbPostOffice => cmbPostOffice.code === formData?.ChildDetails?.adrsPostOffice)[0];
+        setAdrsPostOffice(cmbPostOffice.filter(cmbPostOffice => cmbPostOffice.code === formData?.ChildDetails?.adrsPostOffice)[0]);
+        setAdrsPincode(pin.pincode);
+      }
+    }
+    if (formData?.ChildDetails?.wardNo != null) {
+      if (cmbWardNo.length > 0 && (wardNo === undefined || wardNo === "")) {
+        setWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.ChildDetails?.wardNo)[0]);
+      }
+    }
+  }
   function setSelectAdrsPostOffice(value) {
     setAdrsPostOffice(value);
     setAdrsPincode(value.pincode);
@@ -110,63 +125,72 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
       setPostOfficevalues(cmbFilterPostOffice);
       setPofilter(false);
     }
-    setAdrsPincode(e.target.value.length <= 6 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 6));
+    setAdrsPincode(e.target.value.length <= 6 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/gi, '')).substring(0, 6));
     setAdrsPostOffice(PostOfficevalues.filter((postoffice) => parseInt(postoffice.pincode) === parseInt(e.target.value))[0]);
   });
 
   function setSelectAdrsHouseNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setAdrsHouseNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9 ]*$") != null)) {
+      setAdrsHouseNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectAdrsHouseNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setAdrsHouseNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$/;
+    if(!(e.target.value.match(pattern))){
+      e.preventDefault();
+      setAdrsHouseNameMl('');
+    }
+    else{
+      setAdrsHouseNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
   function setSelectAdrsLocalityNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setAdrsLocalityNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setAdrsLocalityNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectAdrsLocalityNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setAdrsLocalityNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if(!(e.target.value.match(pattern))){
+      e.preventDefault();
+      setAdrsLocalityNameMl('');
+    }
+    else{
+      setAdrsLocalityNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
   function setSelectAdrsStreetNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setAdrsStreetNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setAdrsStreetNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectAdrsStreetNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setAdrsStreetNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if(!(e.target.value.match(pattern))){
+      e.preventDefault();
+      setAdrsStreetNameMl('');
+    }
+    else{
+      setAdrsStreetNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectWard(value) {
     console.log(value);
     setWardNo(value);
+  }
+  function setCheckMalayalamInputField(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
+    if(!(e.key.match(pattern))){
+      e.preventDefault();
+    }    
+  }
+  function setCheckMalayalamInputSplChar(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]/;
+    if(!(e.key.match(pattern))) {
+      e.preventDefault();
+    }    
   }
   let validFlag = true;
 
@@ -202,6 +226,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
                 selected={wardNo}
                 select={setSelectWard}
                 placeholder={`${t("CS_COMMON_WARD")}`}
+                disable={isDisableEdit}
                 {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
               />
             </div>
@@ -216,6 +241,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
                 option={PostOfficevalues}
                 selected={adrsPostOffice}
                 select={setSelectAdrsPostOffice}
+                disable={isDisableEdit}
                 placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
               />
             </div>
@@ -231,6 +257,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
                 name="adrsPincode"
                 value={adrsPincode}
                 onChange={setSelectAdrsPincode}
+                disable={isDisableEdit}
                 placeholder={`${t("CS_COMMON_PIN_CODE")}`}
                 {...(validation = {
                   pattern: "^[0-9]{6}$",
@@ -256,6 +283,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
                 name="adrsLocalityNameEn"
                 value={adrsLocalityNameEn}
                 onChange={setSelectAdrsLocalityNameEn}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_LOCALITY_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
               />
@@ -269,6 +297,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
                 name="adrsStreetNameEn"
                 value={adrsStreetNameEn}
                 onChange={setSelectAdrsStreetNameEn}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_STREET_NAME_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
               />
@@ -285,8 +314,9 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
                 name="adrsHouseNameEn"
                 value={adrsHouseNameEn}
                 onChange={setSelectAdrsHouseNameEn}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_HOUSE_NAME_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
+                {...(validation = { pattern: "^[a-zA-Z- 0-9]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
               />
             </div>
           </div>
@@ -304,7 +334,9 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
                 optionKey="i18nKey"
                 name="adrsLocalityNameMl"
                 value={adrsLocalityNameMl}
+                onKeyPress = {setCheckMalayalamInputField}
                 onChange={setSelectAdrsLocalityNameMl}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_LOCALITY_ML")}`}
                 {...(validation = {
                   pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -322,14 +354,10 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
                 optionKey="i18nKey"
                 name="adrsStreetNameMl"
                 value={adrsStreetNameMl}
+                onKeyPress = {setCheckMalayalamInputField}
                 onChange={setSelectAdrsStreetNameMl}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_STREET_NAME_ML")}`}
-                {...(validation = {
-                  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                  isRequired: false,
-                  type: "text",
-                  title: t("CR_INVALID_STREET_NAME_ML"),
-                })}
               />
             </div>
             <div className="col-md-4">
@@ -343,14 +371,11 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
                 optionKey="i18nKey"
                 name="adrsHouseNameMl"
                 value={adrsHouseNameMl}
+                onKeyPress = {setCheckMalayalamInputSplChar}
                 onChange={setSelectAdrsHouseNameMl}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_HOUSE_NAME_ML")}`}
-                {...(validation = {
-                  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                  isRequired: false,
-                  type: "text",
-                  title: t("CR_INVALID_HOUSE_NAME_ML"),
-                })}
+
               />
             </div>
           </div>

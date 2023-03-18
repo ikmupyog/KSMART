@@ -15,9 +15,9 @@ import {
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useHistory, useParams } from "react-router-dom";
-import getPDFData from "../../../utils/getTLAcknowledgementData";
-import TLWFApplicationTimeline from "../../../pageComponents/TLWFApplicationTimeline";
-import TLDocument from "../../../pageComponents/TLDocumets";
+import getPDFData from "../../../utils/getCRBirthAcknowledgementData";
+import CRWFApplicationTimeline from "../../../pageComponents/birthComponents/CRWFApplicationTimeline";
+import CRDocument from "../../../pageComponents/birthComponents/CRDocuments";
 
 const getAddress = (address, t) => {
   return `${address?.doorNo ? `${address?.doorNo}, ` : ""} ${address?.street ? `${address?.street}, ` : ""}${
@@ -26,7 +26,8 @@ const getAddress = (address, t) => {
 } 
 
 
-const TLApplicationDetails = () => {
+const CRCitizenApplicationDetails = () => {
+  
   const { t } = useTranslation();
   const { id } = useParams();
   const { tenantId } = useParams();
@@ -45,10 +46,12 @@ const TLApplicationDetails = () => {
   };
   let multiHeaderStyle = { marginBottom: "10px", marginTop: "10px", color: "#505A5F" };
   //todo: hook should return object to render the data
-  const { isLoading, isError, error, data: application, error: errorApplication } = Digit.Hooks.tl.useTLApplicationDetails({
+  const { isLoading, isError, error, data: application, error: errorApplication } = Digit.Hooks.cr.useCRApplicationDetails({
     tenantId: tenantId,
     applicationNumber: id,
   });
+  
+  
   const { isLoading: PTLoading, isError: isPTError, data: PTData } = Digit.Hooks.pt.usePropertySearch(
     {
       tenantId,
@@ -75,11 +78,11 @@ const TLApplicationDetails = () => {
   const [showOptions, setShowOptions] = useState(false);
   useEffect(() => {}, [application, errorApplication]);
 
-  const businessService= application?.[0]?.businessService;
+  const businessservice= application?.[0]?.businessservice;
   const { isLoading : iswfLoading, data : wfdata } = Digit.Hooks.useWorkflowDetails({
     tenantId: application?.[0]?.tenantId,
     id: id,
-    moduleCode: businessService,
+    moduleCode: businessservice,
   });
 
 let workflowDocs = [];
@@ -153,6 +156,7 @@ if(wfdata)
 
   return (
     <React.Fragment>
+      
       <div className="cardHeaderWithOptions">
         <Header>{t("CS_TITLE_APPLICATION_DETAILS")}</Header>
         <MultiLink
@@ -166,20 +170,74 @@ if(wfdata)
         {application?.map((application, index) => {
           return (
             <div key={index} className="employee-data-table">
+           
+             <CardSectionHeader>{t("CR_CHILD_INFO")}</CardSectionHeader>
               <Row
                 className="employee-data-table"
                 label={t("TL_COMMON_TABLE_COL_APP_NO")}
                 text={application?.applicationNumber}
                 textStyle={{ whiteSpace: "pre", border: "none" }}
               />
-              <Row label={t("TL_APPLICATION_CATEGORY")} text={t("ACTION_TEST_TRADE_LICENSE")} textStyle={{ whiteSpace: "pre" }} />
+               <Row
+                className="employee-data-table"
+                label={t("CR_NAME")} 
+                text={application?.childFirstNameEn}
+                textStyle={{ whiteSpace: "pre", border: "none" }}
+              />
+              <Row
+                className="employee-data-table"
+                label={t("CR_GENDER")}
+                text={application?.gender}
+                textStyle={{ whiteSpace: "pre", border: "none" }}
+              />
+              <Row
+                className="employee-data-table"
+                label={t("CR_BIRTH_DOB_LABEL")}
+                text={application?.childDOB}
+                textStyle={{ whiteSpace: "pre", border: "none" }}
+              />
+              <Row
+                className="employee-data-table"
+                label={t("CR_PLACE_OF_BIRTH")}
+                text={application?.birthPlace}
+                textStyle={{ whiteSpace: "pre", border: "none" }}
+              />
+              
+              <CardSectionHeader>{t("CR_PARENTS_DETAILS")}</CardSectionHeader>
+              <Row
+                className="employee-data-table"
+                label={t("CR_COMMON_MOTHER_NAME")} 
+                text={application?.ParentsDetails?.motherFirstNameEn}
+                textStyle={{ whiteSpace: "pre", border: "none" }}
+              />
+
+               <Row
+                className="employee-data-table"
+                label={t("CR_BIRTH_FATHERNAME_LABEL")}
+                text={application?.ParentsDetails?.fatherFirstNameEn}
+                textStyle={{ whiteSpace: "pre", border: "none" }}
+              />
+              <Row
+                className="employee-data-table"
+                label={t("CR_ADDRESS")}
+                text={application?.AddressBirthDetails?.houseNameNoEnPresent}
+                textStyle={{ whiteSpace: "pre", border: "none" }}
+              />
+               <Row
+                 className="employee-data-table"
+                 label={`${t("UC_SEARCH_MOBILE_NO_LABEL")}`}
+                 text={application?.ParentsDetails?.fatherMobile}
+                 textStyle={{ whiteSpace: "pre", border: "none" }}
+                    />
+             {/* <Row label={t("TL_APPLICATION_CATEGORY")} text={t("ACTION_TEST_TRADE_LICENSE")} textStyle={{ whiteSpace: "pre" }} /> */}
               <Row
                 style={{ border: "none" }}
                 label={t("TL_COMMON_TABLE_COL_STATUS")}
-                text={t(`WF_NEWTL_${application?.status}`)}
-                textStyle={{ whiteSpace: "pre-wrap", width: "70%" }}
+                text={t(`WF_BIRTHHOSP21_${application?.applicationStatus}`)}
+                textStyle={{ whiteSpace: "pre", border: "none" }}
               />
-              <Row
+             
+              {/* <Row
                 style={{ border: "none" }}
                 label={t("TL_COMMON_TABLE_COL_SLA_NAME")}
                 text={`${Math.round(application?.SLA / (1000 * 60 * 60 * 24))} ${t("TL_SLA_DAYS")}`}
@@ -190,8 +248,8 @@ if(wfdata)
                 label={t("TL_COMMON_TABLE_COL_TRD_NAME")}
                 text={application?.tradeName}
                 textStyle={{ whiteSpace: "pre-wrap", width: "70%" }}
-              />
-              <CardSectionHeader>{t("TL_OWNERSHIP_DETAILS_HEADER")}</CardSectionHeader>
+              /> */}
+              {/* <CardSectionHeader>{t("TL_OWNERSHIP_DETAILS_HEADER")}</CardSectionHeader>
               {application?.tradeLicenseDetail.owners.map((ele, index) => {
                 return application?.tradeLicenseDetail?.subOwnerShipCategory.includes("INSTITUTIONAL") ? (
                   <div key={index} style={multiBoxStyle}>
@@ -229,8 +287,8 @@ if(wfdata)
                     <Row label={`${t("TL_RELATIONSHIP_WITH_GUARDIAN_LABEL")}`} text={t(ele.relationship)} textStyle={{ whiteSpace: "pre" }} />
                   </div>
                 );
-              })}
-              <CardSubHeader>{t("TL_TRADE_UNITS_HEADER")}</CardSubHeader>
+              })} */}
+              {/* <CardSubHeader>{t("TL_TRADE_UNITS_HEADER")}</CardSubHeader>
               {application?.tradeLicenseDetail?.tradeUnits?.map((ele, index) => {
                 return (
                   <div key={index} style={multiBoxStyle}>
@@ -309,22 +367,22 @@ if(wfdata)
                   application?.tradeLicenseDetail?.address?.pincode?.trim() ? `,${application?.tradeLicenseDetail?.address?.pincode?.trim()}` : ""
                 }`}
                 textStyle={{ whiteSpace: "pre-wrap", width: "70%" }}
-              />}
-              <CardSubHeader>{t("TL_COMMON_DOCS")}</CardSubHeader>
+              />} */}
+              {/* <CardSubHeader>{t("TL_COMMON_DOCS")}</CardSubHeader>
               <div>
                 {application?.tradeLicenseDetail?.applicationDocuments?.length > 0 ? (
-                  <TLDocument value={{...application}}></TLDocument>
+                  <CRDocument value={{...application}}></CRDocument>
                 ) : (
                   <StatusTable>
                     <Row text={t("TL_NO_DOCUMENTS_MSG")} />
                   </StatusTable>
                 )}
-              </div>
+              </div> */}
               {workflowDocs?.length > 0 && <div>
               <CardSubHeader>{t("TL_TIMELINE_DOCS")}</CardSubHeader>
               <div>
                 {workflowDocs?.length > 0 ? (
-                  <TLDocument value={{"workflowDocs":workflowDocs}}></TLDocument>
+                  <CRDocument value={{"workflowDocs":workflowDocs}}></CRDocument>
                 ) : (
                   <StatusTable>
                     <Row text={t("TL_NO_DOCUMENTS_MSG")} />
@@ -332,8 +390,8 @@ if(wfdata)
                 )}
               </div>
               </div>}
-              <TLWFApplicationTimeline application={application} id={id} />
-              {application?.status === "CITIZENACTIONREQUIRED" ? (
+              <CRWFApplicationTimeline application={application} id={id} />
+              {application?.applicationStatus === "CITIZENACTIONREQUIRED" ? (
                 <Link
                   to={{
                     pathname: `/digit-ui/citizen/tl/tradelicence/edit-application/${application?.applicationNumber}/${application?.tenantId}`,
@@ -344,10 +402,10 @@ if(wfdata)
                 </Link>
               ) : null}
               {/* //TODO: change the actions to be fulfilled from workflow nextactions */}
-              {application?.status === "PENDINGPAYMENT" ? (
+              {application?.applicationStatus === "INITIATED" ? (
                 <Link
                   to={{
-                    pathname: `/digit-ui/citizen/payment/collect/${application?.businessService}/${application?.applicationNumber}`,
+                    pathname: `/digit-ui/citizen/payment/collect/${application?.businessservice}/${application?.applicationNumber}`,
                     state: { bill, tenantId: tenantId },
                   }}
                 >
@@ -362,4 +420,4 @@ if(wfdata)
   );
 };
 
-export default TLApplicationDetails;
+export default CRCitizenApplicationDetails;

@@ -4,8 +4,6 @@ import { FilterAction, Card, DetailsCard, PopUp, SearchAction } from "@egovernme
 import { useTranslation } from "react-i18next";
 import Filter from "./Filter";
 import SearchComplaint from "./search";
-import { LOCALE } from "../../components/constants/Localization";
-
 export const CrCard = ({ data, onFilterChange, onSearch, serviceRequestIdKey, searchParams }) => {
   const { t } = useTranslation();
   const [popup, setPopup] = useState(false);
@@ -32,7 +30,7 @@ export const CrCard = ({ data, onFilterChange, onSearch, serviceRequestIdKey, se
   if (data && data?.length === 0) {
     result = (
       <Card style={{ marginTop: 20 }}>
-        {t(LOCALE.NO_COMPLAINTS_EMPLOYEE)
+        {t("CS_MYAPPLICATIONS_NO_APPLICATION")
           .split("\\n")
           .map((text, index) => (
             <p key={index} style={{ textAlign: "center" }}>
@@ -46,7 +44,7 @@ export const CrCard = ({ data, onFilterChange, onSearch, serviceRequestIdKey, se
   } else {
     result = (
       <Card style={{ marginTop: 20 }}>
-        {t(LOCALE.ERROR_LOADING_RESULTS)
+        {t("CS_COMMON_ERROR_LOADING_RESULTS")
           .split("\\n")
           .map((text, index) => (
             <p key={index} style={{ textAlign: "center" }}>

@@ -2,7 +2,8 @@ import { AppContainer, BackButton, PrivateRoute } from "@egovernments/digit-ui-r
 import React from "react";
 import { Route, Switch, useRouteMatch,useLocation,useHistory } from "react-router-dom";
 import ChildDetails from "../../pageComponents/birthComponents/ChildDetails";
-import ChildDStillBirthChildDetailsetails from "../../pageComponents/stillBirthComponents/StillBirthChildDetails";
+import StillBirthChildDetails from "../../pageComponents/stillBirthComponents/StillBirthChildDetails";
+import BornOutsideChildDetails from "../../pageComponents/bornOutsideIndiaComponents/BornOutsideChildDetails";
 import InformationDeath from "../../pageComponents/deathComponents/InformationDeath";
 import BirthCertificateSearch from "./BirthCertificate";
 import DeathCertificate from "./Certificate/DeathCertificate";
@@ -16,37 +17,52 @@ import CrCitizenFlowApp from "./BirthRegistration";
 const App = () => {
   const { path, url, ...match } = useRouteMatch();
   let isSuccessScreen = window.location.href.includes("acknowledgement");
-  let isCommonPTPropertyScreen = window.location.href.includes("/tl/tradelicence/new-application/property-details");
+  // let isCommonPTPropertyScreen = window.location.href.includes("/tl/tradelicence/new-application/property-details");
+  const ApplicationDetails = Digit.ComponentRegistryService.getComponent("CRCitizenApplicationDetails");
+  const ApplicationDeathDetails = Digit.ComponentRegistryService.getComponent("CRDeathApplicationDetails");
+  
+
 
   const CreateBirthRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateBirthRegistration');
+  const CreateAdoption = Digit?.ComponentRegistryService?.getComponent('CRCreateAdoptions');
   const CreateStillBirthRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateStillBirthRegistration');
+  const CreateBornOutsideRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateBornOutsideRegistration');
   const CreateDeathRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateDeathRegistration');
   const CreateMarriageRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateMarriageRegistration');
+  const MyCRApplications = Digit?.ComponentRegistryService?.getComponent('MyCRApplications');
+  const MyCRDeathApplications = Digit?.ComponentRegistryService?.getComponent('MyCRDeathApplications');
 
 
-  const getBackPageNumber = () => {
-    let goBacktoFromProperty = -1;
-    if (
-      sessionStorage.getItem("VisitedCommonPTSearch") === "true" &&
-      (sessionStorage.getItem("VisitedAccessoriesDetails") === "true" || sessionStorage.getItem("VisitedisAccessories") === "true") &&
-      isCommonPTPropertyScreen
-    ) {
-      goBacktoFromProperty = -4;
-      sessionStorage.removeItem("VisitedCommonPTSearch");
-      return goBacktoFromProperty;
-    }
-    return goBacktoFromProperty;
-  };
+  // const getBackPageNumber = () => {
+  //   let goBacktoFromProperty = -1;
+  //   if (
+  //     sessionStorage.getItem("VisitedCommonPTSearch") === "true" &&
+  //     (sessionStorage.getItem("VisitedAccessoriesDetails") === "true" || sessionStorage.getItem("VisitedisAccessories") === "true") &&
+  //     isCommonPTPropertyScreen
+  //   ) {
+  //     goBacktoFromProperty = -4;
+  //     sessionStorage.removeItem("VisitedCommonPTSearch");
+  //     return goBacktoFromProperty;
+  //   }
+  //   return goBacktoFromProperty;
+  // };
 
 
   return (
-    <span className={"tl-citizen"}>
+    <span className={"cr-citizen"}>
       <Switch>
       <AppContainer>
         <PrivateRoute path={`${path}/cr-birth-creation`} component={CreateBirthRegistration} />
+        <PrivateRoute path={`${path}/cr-adoption`} component={CreateAdoption} />
         <PrivateRoute path={`${path}/cr-stillbirth-creation`} component={CreateStillBirthRegistration} />
+        <PrivateRoute path={`${path}/cr-outsideindiabirth-creation`} component={CreateBornOutsideRegistration} />
         <PrivateRoute path={`${path}/cr-death-creation`} component={CreateDeathRegistration} />
         <PrivateRoute path={`${path}/cr-marriage-creation`} component={CreateMarriageRegistration} />
+        <PrivateRoute path={`${path}/cr/my-application`} component={MyCRApplications} />
+        <PrivateRoute path={`${path}/cr/death/my-application`} component={MyCRDeathApplications} />
+        <PrivateRoute path={`${path}/cr/my-bills`} component={() => <MyCRApplications view="bills" />} />
+        <PrivateRoute path={`${path}/cr/application/:id/:tenantId`} component={ApplicationDetails} />
+        <PrivateRoute path={`${path}/cr/application/:id/:tenantId`} component={ApplicationDeathDetails} />
         <PrivateRoute path={`${path}/create-death-certificate`} component={() => <DeathCertificateSearch parentUrl={path}/>} /> 
         <PrivateRoute parentRoute={path} path={`${path}/create-birth-certificate`} component={() => <BirthCertificateSearch parentUrl={path} />} /> 
        </AppContainer>

@@ -101,8 +101,8 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
   return (
     <React.Fragment>
         <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-      {window.location.href.includes("/citizen") ? <Timeline currentStep={6} /> : null}
-      {window.location.href.includes("/employee") ? <Timeline currentStep={6} /> : null}
+      {window.location.href.includes("/citizen") ? <Timeline currentStep={5} /> : null}
+      {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
       <Card>
         {/* <label style={{ fontSize: "17px", fontWeight: "bold" }}>{t("CR_REG_SUMMARY_HEADING")}</label> */}
         <div className="row">
@@ -283,7 +283,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                       :
-                      {t(ChildDetails.publicPlaceType ? ChildDetails.publicPlaceType : "CR_NOT_RECORDED") +
+                      {t(ChildDetails.publicPlaceType.name ? ChildDetails.publicPlaceType.name : "CR_NOT_RECORDED") +
                         // " , " +
                         // ChildDetails.wardNo +
                         " , " +
@@ -293,7 +293,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                         // " , " +
                         ChildDetails.publicPlaceDecpEn +
                         " / " +
-                        t(ChildDetails.publicPlaceType ? ChildDetails.publicPlaceType : "CR_NOT_RECORDED") +
+                        t(ChildDetails.publicPlaceType.namelocal ? ChildDetails.publicPlaceType.namelocal : "CR_NOT_RECORDED") +
                         // " , " +
                         // ChildDetails.wardNo +
                         " , " +

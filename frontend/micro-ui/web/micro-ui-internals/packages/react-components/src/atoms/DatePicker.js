@@ -6,18 +6,26 @@ const DatePicker = (props) => {
   // const [date, setDate] = useState(() => props.initialDate || null);
   const dateInp = useRef();
 
-  function defaultFormatFunc(date) {
+  function defaultFormatFunc(date) {    
     if (date) {
+      console.log('hi-defaultFormatFunc');
       const operationDate = typeof date === "string" ? new Date(date) : date;
       const years = operationDate?.getFullYear();
-      const month = operationDate?.getMonth() + 1;
-      const _date = operationDate?.getDate();
+      let tempMonth = operationDate?.getMonth() + 1;
+      let tempDate = operationDate?.getDate();
+      // const month = operationDate?.getMonth() + 1;
+      // const _date = operationDate?.getDate();
+      tempDate = tempDate < 10 ? "0" + tempDate : tempDate;
+      tempMonth = tempMonth < 10 ? "0" + tempMonth : tempMonth;
+      const month = tempMonth;
+      const _date = tempDate;
       return _date && month && years ? `${_date}/${month}/${years}` : "";
     }
     return "";
   }
 
   const getDatePrint = () => props?.formattingFn?.(props?.date) || defaultFormatFunc(props?.date);
+ 
   const selectDate = (e) => {
     const date = e.target.value;
     // setDate(date);
