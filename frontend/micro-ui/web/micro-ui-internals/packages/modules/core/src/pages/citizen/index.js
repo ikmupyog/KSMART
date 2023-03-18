@@ -168,7 +168,7 @@ const Home = ({
           Icon: <OBPSIcon />,
           onClick: () => history.push({
             pathname: `${matchPath}/cr/my-application`,
-            state: { module: "cr-death" }
+            state: { module: "cr-birth" }
           }),
         },    
         

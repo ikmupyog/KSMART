@@ -118,7 +118,9 @@ import Response from "./pages/Response";
 import EmployeeApp from "./pages/employee";
 import CitizenApp from "./pages/citizen";
 import CRDocuments from "./pageComponents/birthComponents/CRDocuments";
+import CRDDocuments from "./pageComponents/deathComponents/CRDDocuments";
 import CRWFApplicationTimeline from "./pageComponents/birthComponents/CRWFApplicationTimeline";
+import CRDWFApplicationTimeline from "./pageComponents/deathComponents/CRDWFApplicationTimeline";
 
 
 import CreateMarriageRegistration from "./pages/citizen/MarriageRegistration";
@@ -315,7 +317,9 @@ const componentsToRegister = {
   CRCreateDeathRegistration: CreateDeathRegistration,
   TLResponse: Response,
   CRDocuments,
+  CRDDocuments,
   CRWFApplicationTimeline,
+  CRDWFApplicationTimeline,
   //Marriage
   CRCreateMarriageRegistration: CreateMarriageRegistration,
   GroomDetails,
