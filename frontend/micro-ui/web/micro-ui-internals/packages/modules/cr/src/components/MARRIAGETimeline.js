@@ -9,13 +9,6 @@ const getAction = (flow) => {
     case "STAKEHOLDER": actions = []
       break;
     default: actions = [
-<<<<<<< HEAD
-      'Registration Details',
-      'Institution Details',
-      'Groom Details',
-      'Bride Details',
-      'Summary',
-=======
       'CR_MARRIAGE_REGISTRATION_DETAILS',
       'CR_MARRIAGE_INSTITUTION_DETAILS',
       'CR_MARRIAGE_PUBLICPLACE_DETAILS',
@@ -24,7 +17,6 @@ const getAction = (flow) => {
       'CR_BRIDE_DETAILS',
       'CR_WITNESS_DETAILS',
       'CR_MARRIAGE_SUMMARY',
->>>>>>> e3be759422 (timeline added)
     ]
   }
 }
