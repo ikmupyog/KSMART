@@ -793,9 +793,8 @@ public class FarExtract extends FeatureExtract {
 							}
 
 		// Layer name convention BLK_n_FLR_i_FIRESTAIR_k
-		String fireEscapeStairNamePattern = "BLK_" + block.getNumber() + "_FLR_" + floor.getNumber() + "_FIRESTAIR"
-				+ "_+\\d";
-
+		String fireEscapeStairNamePattern = String.format(layerNames.getLayerName("LAYER_NAME_FIRESTAIR_FLOOR"),
+				block.getNumber(), floor.getNumber(), "+\\d");
 		DXFDocument doc = pl.getDoc();
 		List<String> fireEscapeStairNames = Util.getLayerNamesLike(doc, fireEscapeStairNamePattern);
 
@@ -1004,8 +1003,8 @@ public class FarExtract extends FeatureExtract {
 						}
 
 		// Layer name convention BLK_n_FLR_i_STAIR_k
-		String generalStairNamePattern = "BLK_" + block.getNumber() + "_FLR_" + floor.getNumber() + "_STAIR" + "_+\\d";
-
+		String generalStairNamePattern = String.format(layerNames.getLayerName("LAYER_NAME_STAIR_FLOOR"),
+				block.getNumber(), floor.getNumber(), "+\\d");
 		DXFDocument doc = pl.getDoc();
 
 		List<String> generalStairNames = Util.getLayerNamesLike(doc, generalStairNamePattern);
@@ -1059,7 +1058,7 @@ public class FarExtract extends FeatureExtract {
 					}
 
 					String flightLayerNamePattern = String.format(layerNames.getLayerName("LAYER_NAME_STAIR_FLIGHT"),
-							block.getNumber(), floor.getNumber(), stairNo, "+\\d");
+							block.getNumber(), floor.getNumber(), stairNo);
 
 					addFlight(pl, flightLayerNamePattern, generalStair, highRise);
 

@@ -360,10 +360,11 @@ public class BuildingHeight extends FeatureProcess {
                     }
         if (pl.getCuldeSacRoads() != null)
             for (CulDeSacRoad culdRoad : pl.getCuldeSacRoads())
-                for (BigDecimal shortDistance : culdRoad.getShortestDistanceToRoad())
-                    if (shortDistance.compareTo(maximumDistanceToRoad) > 0) {
-                        maximumDistanceToRoad = shortDistance;
-                    }
+            	if(culdRoad.getShortestDistanceToRoad() != null)
+	                for (BigDecimal shortDistance : culdRoad.getShortestDistanceToRoad())
+	                    if (shortDistance.compareTo(maximumDistanceToRoad) > 0) {
+	                        maximumDistanceToRoad = shortDistance;
+	                    }
         if (pl.getLaneRoads() != null)
             for (Lane lane : pl.getLaneRoads())
                 for (BigDecimal shortDistance : lane.getShortestDistanceToRoad())

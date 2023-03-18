@@ -52,6 +52,24 @@ public class DistanceToRoadExtract extends FeatureExtract {
             pl.getNotifiedRoads().add(road);
 
         }
+        
+        List<DXFLWPolyline> unNotifiedRoads = Util.getPolyLinesByLayer(pl.getDoc(),
+                layerNames.getLayerName("LAYER_NAME_UN_NOTIFIED_ROAD"));
+        for (DXFLWPolyline roadPline : unNotifiedRoads) {
+            Measurement measurement = new MeasurementDetail(roadPline, true);
+            NonNotifiedRoadDetail road = new NonNotifiedRoadDetail();
+            road.setArea(measurement.getArea());
+            road.setColorCode(measurement.getColorCode());
+            road.setHeight(measurement.getHeight());
+            road.setWidth(measurement.getWidth());
+            road.setLength(measurement.getLength());
+            road.setInvalidReason(measurement.getInvalidReason());
+            road.setPresentInDxf(true);
+            road.setPolyLine(roadPline);
+            pl.getNonNotifiedRoads().add(road);
+
+        }
+        
         List<DXFLWPolyline> nonNotifiedRoads = Util.getPolyLinesByLayer(pl.getDoc(),
                 layerNames.getLayerName("LAYER_NAME_NON_NOTIFIED_ROAD"));
         for (DXFLWPolyline roadPline : nonNotifiedRoads) {
@@ -159,25 +177,25 @@ public class DistanceToRoadExtract extends FeatureExtract {
         // road/culdesac/lane road.
         String layerName = layerNames.getLayerName(LAYER_NAME_SHORTEST_DISTANCE_TO_ROAD);
         for (BigDecimal notifyRoadDistnce : notifiedRoadDistance)
-            if (!pl.getNotifiedRoads().isEmpty())
+            if (!pl.getNotifiedRoads().isEmpty() && notifyRoadDistnce != null)
                 if (layerName.equalsIgnoreCase(type))
                     pl.getNotifiedRoads().get(0).addShortestDistanceToRoad(notifyRoadDistnce);
                 else
                     pl.getNotifiedRoads().get(0).addDistancesFromCenterToPlot(notifyRoadDistnce);
         for (BigDecimal nonNotifyRoadDistnce : nonNotifiedRoadDistance)
-            if (!pl.getNonNotifiedRoads().isEmpty())
+            if (!pl.getNonNotifiedRoads().isEmpty() && nonNotifyRoadDistnce != null)
                 if (layerName.equalsIgnoreCase(type))
                     pl.getNonNotifiedRoads().get(0).addShortestDistanceToRoad(nonNotifyRoadDistnce);
                 else
                     pl.getNonNotifiedRoads().get(0).addDistancesFromCenterToPlot(nonNotifyRoadDistnce);
         for (BigDecimal culdesacRdDistance : culdesacRoadDistance)
-            if (!pl.getCuldeSacRoads().isEmpty())
+            if (!pl.getCuldeSacRoads().isEmpty() && culdesacRdDistance != null)
                 if (layerName.equalsIgnoreCase(type))
                     pl.getCuldeSacRoads().get(0).addShortestDistanceToRoad(culdesacRdDistance);
                 else
                     pl.getCuldeSacRoads().get(0).addDistancesFromCenterToPlot(culdesacRdDistance);
         for (BigDecimal laneDistnce : laneDistance)
-            if (!pl.getLaneRoads().isEmpty())
+            if (!pl.getLaneRoads().isEmpty() && laneDistnce != null)
                 if (layerName.equalsIgnoreCase(type))
                     pl.getLaneRoads().get(0).addShortestDistanceToRoad(laneDistnce);
                 else

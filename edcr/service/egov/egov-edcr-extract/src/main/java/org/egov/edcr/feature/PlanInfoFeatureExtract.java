@@ -530,50 +530,52 @@ public class PlanInfoFeatureExtract extends FeatureExtract {
 				pi.setNoOfBeds(BigDecimal.valueOf(Integer.valueOf(noOfBeds)));
 		}
 
-		String roadWidth = planInfoProperties.get(DxfFileConstants.ROAD_WIDTH);
-		if (StringUtils.isNotBlank(roadWidth)) {
-			roadWidth = roadWidth.replaceAll(digitsRegex, "");
-			BigDecimal roadWidthValue = getNumericValue(roadWidth, pl, DxfFileConstants.ROAD_WIDTH);
-			pi.setRoadWidth(roadWidthValue);
-		} else
-			pl.addError(DxfFileConstants.ROAD_WIDTH,
-					getLocaleMessage(OBJECTNOTDEFINED, DxfFileConstants.ROAD_WIDTH + " of PLAN_INFO layer"));
-
-		String roadLength = planInfoProperties.get(DxfFileConstants.ROAD_LENGTH);
-		if (StringUtils.isNotBlank(roadLength)) {
-			roadLength = roadLength.replaceAll(digitsRegex, "");
-			BigDecimal roadLengthValue = getNumericValue(roadLength, pl, DxfFileConstants.ROAD_LENGTH);
-			pi.setRoadLength(roadLengthValue);
-		} /*
+		/*
+		 * String roadWidth = planInfoProperties.get(DxfFileConstants.ROAD_WIDTH); if
+		 * (StringUtils.isNotBlank(roadWidth)) { roadWidth =
+		 * roadWidth.replaceAll(digitsRegex, ""); BigDecimal roadWidthValue =
+		 * getNumericValue(roadWidth, pl, DxfFileConstants.ROAD_WIDTH);
+		 * pi.setRoadWidth(roadWidthValue); } else
+		 * pl.addError(DxfFileConstants.ROAD_WIDTH, getLocaleMessage(OBJECTNOTDEFINED,
+		 * DxfFileConstants.ROAD_WIDTH + " of PLAN_INFO layer"));
+		 * 
+		 * String roadLength = planInfoProperties.get(DxfFileConstants.ROAD_LENGTH); if
+		 * (StringUtils.isNotBlank(roadLength)) { roadLength =
+		 * roadLength.replaceAll(digitsRegex, ""); BigDecimal roadLengthValue =
+		 * getNumericValue(roadLength, pl, DxfFileConstants.ROAD_LENGTH);
+		 * pi.setRoadLength(roadLengthValue); }
+		 */ /*
 			 * else pl.addError(DxfFileConstants.ROAD_LENGTH,
 			 * getLocaleMessage(OBJECTNOTDEFINED, DxfFileConstants.ROAD_LENGTH +
 			 * " of PLAN_INFO layer"));
 			 */
 
-		String areaType = planInfoProperties.get(DxfFileConstants.AREA_TYPE);
-		if (StringUtils.isNotBlank(areaType))
-			pi.setTypeOfArea(areaType);
-		else
-			pl.addError(DxfFileConstants.AREA_TYPE,
-					getLocaleMessage(OBJECTNOTDEFINED, DxfFileConstants.AREA_TYPE + " of PLAN_INFO layer"));
+		/*
+		 * String areaType = planInfoProperties.get(DxfFileConstants.AREA_TYPE); if
+		 * (StringUtils.isNotBlank(areaType)) pi.setTypeOfArea(areaType); else
+		 * pl.addError(DxfFileConstants.AREA_TYPE, getLocaleMessage(OBJECTNOTDEFINED,
+		 * DxfFileConstants.AREA_TYPE + " of PLAN_INFO layer"));
+		 */
 
-		String plotDepth = planInfoProperties.get(DxfFileConstants.AVG_PLOT_DEPTH);
-		if (StringUtils.isNotBlank(plotDepth)) {
-			plotDepth = plotDepth.replaceAll(digitsRegex, "");
-			BigDecimal plotDepthValue = getNumericValue(plotDepth, pl, DxfFileConstants.AVG_PLOT_DEPTH);
-			pi.setDepthOfPlot(plotDepthValue);
-		} else
-			pl.addError(DxfFileConstants.AVG_PLOT_DEPTH,
-					getLocaleMessage(OBJECTNOTDEFINED, DxfFileConstants.AVG_PLOT_DEPTH + " of PLAN_INFO layer"));
-
-		String plotWidth = planInfoProperties.get(DxfFileConstants.AVG_PLOT_WIDTH);
-		if (StringUtils.isNotBlank(plotWidth)) {
-			plotWidth = plotWidth.replaceAll(digitsRegex, "");
-			BigDecimal plotWidthValue = getNumericValue(plotWidth, pl, DxfFileConstants.AVG_PLOT_WIDTH);
-			pi.setWidthOfPlot(plotWidthValue);
-		} else
-			pl.addError(DxfFileConstants.AVG_PLOT_WIDTH,
-					getLocaleMessage(OBJECTNOTDEFINED, DxfFileConstants.AVG_PLOT_WIDTH + " of PLAN_INFO layer"));
+		/*
+		 * String plotDepth = planInfoProperties.get(DxfFileConstants.AVG_PLOT_DEPTH);
+		 * if (StringUtils.isNotBlank(plotDepth)) { plotDepth =
+		 * plotDepth.replaceAll(digitsRegex, ""); BigDecimal plotDepthValue =
+		 * getNumericValue(plotDepth, pl, DxfFileConstants.AVG_PLOT_DEPTH);
+		 * pi.setDepthOfPlot(plotDepthValue); } else
+		 * pl.addError(DxfFileConstants.AVG_PLOT_DEPTH,
+		 * getLocaleMessage(OBJECTNOTDEFINED, DxfFileConstants.AVG_PLOT_DEPTH +
+		 * " of PLAN_INFO layer"));
+		 * 
+		 * String plotWidth = planInfoProperties.get(DxfFileConstants.AVG_PLOT_WIDTH);
+		 * if (StringUtils.isNotBlank(plotWidth)) { plotWidth =
+		 * plotWidth.replaceAll(digitsRegex, ""); BigDecimal plotWidthValue =
+		 * getNumericValue(plotWidth, pl, DxfFileConstants.AVG_PLOT_WIDTH);
+		 * pi.setWidthOfPlot(plotWidthValue); } else
+		 * pl.addError(DxfFileConstants.AVG_PLOT_WIDTH,
+		 * getLocaleMessage(OBJECTNOTDEFINED, DxfFileConstants.AVG_PLOT_WIDTH +
+		 * " of PLAN_INFO layer"));
+		 */
 
 		String nocNearAirport = planInfoProperties.get(DxfFileConstants.NOC_FOR_CONSTRUCTION_NEAR_AIRPORT);
 		if (StringUtils.isNotBlank(nocNearAirport)) {

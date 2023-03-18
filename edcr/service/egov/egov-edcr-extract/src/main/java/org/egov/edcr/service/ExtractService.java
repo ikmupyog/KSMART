@@ -200,6 +200,7 @@ public class ExtractService {
                 try {
                     rule.extract(planDetail);
                 } catch (Exception e) {
+                	LOG.error("Error occured while extracting data {}", e.getMessage());
                     planDetail.addError("msg.error.failed.on.extraction",
                             "Please contact the adminstrator for the further information. The plan is failing while extracting data from plan in the feature "
                                     + rule);
