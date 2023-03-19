@@ -124,7 +124,15 @@ const BillDetails = ({ paymentRules, businessService }) => {
         name: bill.payerName,
         mobileNumber: bill.mobileNumber,
       });
-    } else {
+    } else if (businessService === "CR") {
+      history.push(`/digit-ui/citizen/payment/billDetails/${businessService}/${consumerCode}/${paymentAmount}`, {
+        paymentAmount,
+        tenantId: billDetails.tenantId,
+        name: bill.payerName,
+        mobileNumber: bill.mobileNumber,
+      });
+    }
+    else {
       history.push(`/digit-ui/citizen/payment/collect/${businessService}/${consumerCode}`, { paymentAmount, tenantId: billDetails.tenantId });
     }
   };

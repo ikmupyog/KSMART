@@ -130,6 +130,7 @@ import { useCRSearchApplication, useCRApplicationDetails } from "./cr/useCRSearc
 import { useCRDeathSearchApplication, useCRApplicationDeathDetails } from "./cr/useCRDeathSearchApplication";
 // import useTLPaymentHistory from "./tl/userPaymentHistory";
 import useCRFetchBill from "./cr/useFetchBill";
+import useCRDFetchBill from "./cr/useDeathFetchBill";
 import useCRApplicationDetail from "./cr/useApplicationDetail";
 import useApplicationStillBirthDetail from "./cr/useApplicationStillBirthDetail"; 
 import useApplicationDeathDetail from "./cr/useApplicationDeathDetail"; 
@@ -140,7 +141,6 @@ import useCRGenderMDMS from "./cr/useCRGenderMDMS";
 import useCRInbox from "./cr/useInbox";
 import useCRMDMS from "./cr/useMDMS";
 import useCRSearch from "./cr/useSearch";
-import useCRDeathSearch from "./cr/useSearchDeath";
 import useRegistryDownloadDeath from "./cr/useRegistryDownloadDeath";
 import useResistryDownloadBirth from "./cr/useResistryDownloadBirth"
 import useRegistrySearchBirth from "./cr/useRegistrySearchBirth";
@@ -345,7 +345,6 @@ const cr = {
   useInbox: useCRInbox,
   useMDMS: useCRMDMS,
   useSearch: useCRSearch,
-  useSearchDeath: useCRDeathSearch,
   useRegistrySearchDeath,
   useRegistryDownloadDeath,
   useResistryDownloadBirth,
@@ -357,8 +356,9 @@ const cr = {
   useApplicationActions: useCRApplicationActions,
   useCRStillBirthApplicationActions:useCRStillBirthApplicationActions,
   useCRDeathApplicationActions: useCRDeathApplicationActions,
-  useApplicationDeathDetail: useApplicationDeathDetail,
+  useApplicationDeathDetail,
   useFetchBill: useCRFetchBill,
+  useDeathFetchBill: useCRDFetchBill,
   useCRSearchApplication,
   useCRDeathSearchApplication,
   useCRApplicationDetails,
