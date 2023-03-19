@@ -99,7 +99,11 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
     function setSelectaddressStateName(value) {
         setaddressStateName(value);
         setValue(value.code);
-        setInitialPresentOutsideKeralaRender(true);
+        if (value.code != "kl") {
+            sessionStorage.setItem("presentOutsideKeralaFlag", true);
+        } else {
+            sessionStorage.setItem("presentOutsideKeralaFlag", false);
+        }
         if (isPrsentAddress) {
             setpermtaddressStateName(value);
         } else {
@@ -108,13 +112,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
     }
 
     const goNext = () => {
-        // sessionStorage.setItem("presentaddressCountry", presentaddressCountry.code);
-        // sessionStorage.setItem("presentaddressStateName", presentaddressStateName.code);
-
-        // onSelect(config.key, {
-        //     presentaddressCountry,
-        //     presentaddressStateName,
-        // });
+        
     };
     if (isCountryLoading || isStateLoading || islocalbodiesLoading) {
         return <Loader></Loader>;
