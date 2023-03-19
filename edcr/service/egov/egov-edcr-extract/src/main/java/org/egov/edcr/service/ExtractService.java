@@ -69,6 +69,7 @@ public class ExtractService {
         planDetail.setDoc(doc);
         planDetail.setPlanInformation(pi);
         planDetail.setApplicationDate(scrutinyDate);
+        planDetail.setAsOnDate(scrutinyDate);
         Map<String, String> cityDetails = specificRuleService.getCityDetails();
 
         if (doc.getDXFHeader().getVariable("$INSUNITS") != null) {
@@ -200,7 +201,8 @@ public class ExtractService {
                 try {
                     rule.extract(planDetail);
                 } catch (Exception e) {
-                	LOG.error("Error occured while extracting data {}", e.getMessage());
+                	e.printStackTrace();
+                	LOG.error("Error occured while extracting data {}", e.getLocalizedMessage());
                     planDetail.addError("msg.error.failed.on.extraction",
                             "Please contact the adminstrator for the further information. The plan is failing while extracting data from plan in the feature "
                                     + rule);

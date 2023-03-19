@@ -493,12 +493,20 @@ public class ExitWidth extends FeatureProcess {
 				String typclFloor = typicalFloorValues.get("typicalFloors") != null
 						? (String) typicalFloorValues.get("typicalFloors")
 						: " floor " + floor.getNumber();
-				String occupancyName = Util.getOccupancyByCode(pl, occupancyType).getType().getName();
+				String[] occCodesArr = occupancyType.split(",");
+				StringBuilder sb = new StringBuilder();
+				for(String code : occCodesArr) {
+					System.out.println("Exith width occ code:::"+code);
+					sb.append(Util.getOccupancyByCode(pl, code.trim()).getType().getName());
+					if (!code.equals(occCodesArr[occCodesArr.length - 1])) {
+						sb.append(" , ");
+					}
+				}
 				if (valid) {
-					setReportOutputDetails(pl, subRule, typclFloor, occupancyName, value + DcrConstants.IN_METER,
+					setReportOutputDetails(pl, subRule, typclFloor, String.valueOf(sb), value + DcrConstants.IN_METER,
 							minimumExitWidth + DcrConstants.IN_METER, Result.Accepted.getResultVal());
 				} else {
-					setReportOutputDetails(pl, subRule, typclFloor, occupancyName, value + DcrConstants.IN_METER,
+					setReportOutputDetails(pl, subRule, typclFloor, String.valueOf(sb), value + DcrConstants.IN_METER,
 							minimumExitWidth + DcrConstants.IN_METER, Result.Not_Accepted.getResultVal());
 				}
 			}

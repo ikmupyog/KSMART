@@ -56,11 +56,14 @@ public class ParkingExtract extends FeatureExtract {
             LOGGER.debug("Starting of Parking Extract......");
         for (Block block : pl.getBlocks()) {
             for (Floor floor : block.getBuilding().getFloors()) {
-                String layerRegEx = layerNames.getLayerName("LAYER_NAME_BLOCK_NAME_PREFIX") + block.getNumber() + "_"
-                        + layerNames.getLayerName("LAYER_NAME_FLOOR_NAME_PREFIX") + floor.getNumber() + "_"
-                        + layerNames.getLayerName("LAYER_NAME_UNITFA");
-                List<DXFLWPolyline> occupancyUnits = Util.getPolyLinesByLayer(pl.getDoc(), layerRegEx);
-                extractByLayer(pl, pl.getDoc(), block, floor, occupancyUnits);
+				/*
+				 * String layerRegEx = layerNames.getLayerName("LAYER_NAME_BLOCK_NAME_PREFIX") +
+				 * block.getNumber() + "_" +
+				 * layerNames.getLayerName("LAYER_NAME_FLOOR_NAME_PREFIX") + floor.getNumber() +
+				 * "_" + layerNames.getLayerName("LAYER_NAME_UNITFA"); List<DXFLWPolyline>
+				 * occupancyUnits = Util.getPolyLinesByLayer(pl.getDoc(), layerRegEx);
+				 * extractByLayer(pl, pl.getDoc(), block, floor, occupancyUnits);
+				 */
                 String coveredParkLayer = layerNames.getLayerName("LAYER_NAME_BLOCK_NAME_PREFIX") + block.getNumber()
                         + "_" + layerNames.getLayerName("LAYER_NAME_FLOOR_NAME_PREFIX") + floor.getNumber() + "_"
                         + layerNames.getLayerName("LAYER_NAME_COVERED_PARKING");

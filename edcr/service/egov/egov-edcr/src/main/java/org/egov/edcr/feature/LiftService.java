@@ -137,16 +137,16 @@ public class LiftService extends FeatureProcess {
                      */
                     if (block.getBuilding().getIsHighRise() &&
                             (DxfFileConstants.A_AF
-                                    .equals(plan.getVirtualBuilding().getMostRestrictiveFarHelper().getSubtype()
+                                    .equals(plan.getVirtualBuilding().getMostRestrictiveFarHelper().getType()
                                             .getCode())
                                     || DxfFileConstants.B
-                                            .equals(plan.getVirtualBuilding().getMostRestrictiveFarHelper().getSubtype()
+                                            .equals(plan.getVirtualBuilding().getMostRestrictiveFarHelper().getType()
                                                     .getCode())
                                     || DxfFileConstants.E
-                                            .equals(plan.getVirtualBuilding().getMostRestrictiveFarHelper().getSubtype()
+                                            .equals(plan.getVirtualBuilding().getMostRestrictiveFarHelper().getType()
                                                     .getCode())
                                     || DxfFileConstants.F
-                                            .equals(plan.getVirtualBuilding().getMostRestrictiveFarHelper().getSubtype()
+                                            .equals(plan.getVirtualBuilding().getMostRestrictiveFarHelper().getType()
                                                     .getCode()))) {
                         noOfLiftsRqrd = BigDecimal.valueOf(1);
                         boolean valid = false;

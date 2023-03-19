@@ -37,16 +37,18 @@ public class GeneralStairExtract extends FeatureExtract {
 
 	@Override
 	public PlanDetail extract(PlanDetail pl) {
-		for (Block block : pl.getBlocks())
-			if (block.getBuilding() != null && !block.getBuilding().getFloors().isEmpty()) {
-				boolean highRise = block.getBuilding().getBuildingHeight()
-						.setScale(DcrConstants.DECIMALDIGITS_MEASUREMENTS, DcrConstants.ROUNDMODE_MEASUREMENTS)
-						.compareTo(BigDecimal.valueOf(16).setScale(DcrConstants.DECIMALDIGITS_MEASUREMENTS,
-								DcrConstants.ROUNDMODE_MEASUREMENTS)) > 0;
-
-				for (Floor floor : block.getBuilding().getFloors())
-					addGeneralStairs(pl, block, floor, highRise);
-			}
+		/*
+		 * for (Block block : pl.getBlocks()) if (block.getBuilding() != null &&
+		 * !block.getBuilding().getFloors().isEmpty()) { boolean highRise =
+		 * block.getBuilding().getBuildingHeight()
+		 * .setScale(DcrConstants.DECIMALDIGITS_MEASUREMENTS,
+		 * DcrConstants.ROUNDMODE_MEASUREMENTS)
+		 * .compareTo(BigDecimal.valueOf(16).setScale(DcrConstants.
+		 * DECIMALDIGITS_MEASUREMENTS, DcrConstants.ROUNDMODE_MEASUREMENTS)) > 0;
+		 * 
+		 * for (Floor floor : block.getBuilding().getFloors()) addGeneralStairs(pl,
+		 * block, floor, highRise); }
+		 */
 		return pl;
 	}
 

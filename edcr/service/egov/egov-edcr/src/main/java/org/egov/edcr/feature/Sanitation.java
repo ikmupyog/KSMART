@@ -47,6 +47,29 @@
 
 package org.egov.edcr.feature;
 
+import static org.egov.edcr.constants.DxfFileConstants.A1;
+import static org.egov.edcr.constants.DxfFileConstants.A2;
+import static org.egov.edcr.constants.DxfFileConstants.A3;
+import static org.egov.edcr.constants.DxfFileConstants.A4;
+import static org.egov.edcr.constants.DxfFileConstants.B1;
+import static org.egov.edcr.constants.DxfFileConstants.B2;
+import static org.egov.edcr.constants.DxfFileConstants.B3;
+import static org.egov.edcr.constants.DxfFileConstants.C1;
+import static org.egov.edcr.constants.DxfFileConstants.C2;
+import static org.egov.edcr.constants.DxfFileConstants.C3;
+import static org.egov.edcr.constants.DxfFileConstants.D;
+import static org.egov.edcr.constants.DxfFileConstants.D1;
+import static org.egov.edcr.constants.DxfFileConstants.D2;
+import static org.egov.edcr.constants.DxfFileConstants.E;
+import static org.egov.edcr.constants.DxfFileConstants.F;
+import static org.egov.edcr.constants.DxfFileConstants.F3;
+import static org.egov.edcr.constants.DxfFileConstants.F4;
+import static org.egov.edcr.constants.DxfFileConstants.G1;
+import static org.egov.edcr.constants.DxfFileConstants.G2;
+import static org.egov.edcr.constants.DxfFileConstants.H;
+import static org.egov.edcr.constants.DxfFileConstants.I1;
+import static org.egov.edcr.constants.DxfFileConstants.I2;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -60,9 +83,8 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
-import org.egov.common.entity.dcr.helper.OccupancyHelperDetail;
+import org.apache.logging.log4j.Logger;
 import org.egov.common.entity.edcr.Block;
 import org.egov.common.entity.edcr.Floor;
 import org.egov.common.entity.edcr.Measurement;
@@ -73,7 +95,6 @@ import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.SanityDetails;
 import org.egov.common.entity.edcr.SanityHelper;
 import org.egov.common.entity.edcr.ScrutinyDetail;
-import static org.egov.edcr.constants.DxfFileConstants.*;
 import org.egov.edcr.utility.DcrConstants;
 import org.egov.edcr.utility.Util;
 import org.springframework.stereotype.Service;
@@ -517,8 +538,8 @@ public class Sanitation extends FeatureProcess {
                             helper.urinal += carpetArea * 2 / (4.75 * 3 * 25);
 
                             helper.ruleNo.add("56(3C)");
-                            helper.ruleDescription = SANITY_RULE_DESC + type.getType().getOccupancyTypeVal();
-                            if ((type.getType().equals(F) || type.getType().equals(F4))
+                            helper.ruleDescription = SANITY_RULE_DESC + type.getTypeHelper().getType().getName();
+                            if ((type.getTypeHelper().getType().getCode().equals(F) || type.getTypeHelper().getType().getCode().equals(F4))
                                     && !Util.checkExemptionConditionForSmallPlotAtBlkLevel(pl.getPlot(), b))
                                 processSpecialWaterCloset(b, requiredSpWcMap, providedSpWcMap, failedAreaSpWcMap,
                                         failedDimensionSpWcMap);

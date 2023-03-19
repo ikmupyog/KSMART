@@ -171,7 +171,7 @@ public class FrontYardService extends GeneralRule {
 				scrutinyDetail.addColumnHeading(2, LEVEL);
 				scrutinyDetail.addColumnHeading(3, OCCUPANCY);
 				scrutinyDetail.addColumnHeading(4, FIELDVERIFIED);
-				scrutinyDetail.addColumnHeading(5, PERMISSIBLE);
+				scrutinyDetail.addColumnHeading(5, REQUIRED);
 				scrutinyDetail.addColumnHeading(6, PROVIDED);
 				scrutinyDetail.addColumnHeading(7, STATUS);
 				scrutinyDetail.setHeading(FRONT_YARD_DESC);

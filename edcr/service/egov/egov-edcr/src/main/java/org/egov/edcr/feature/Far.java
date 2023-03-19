@@ -1059,8 +1059,8 @@ public class Far extends FeatureProcess {
 				BigDecimal additonalFee = pl.getPlot().getArea().multiply(new BigDecimal(5000))
 						.multiply(BigDecimal.valueOf(far.getProvidedFar()).subtract(additionFeeLimit));
 
-				String actualResult = getLocaleMessage(RULE_ACTUAL_KEY, far.toString(), additonalFee.toString());
-				String expectedResult = getLocaleMessage(RULE_EXPECTED_KEY, upperLimit.toString(), far.toString(),
+				String actualResult = getLocaleMessage(RULE_ACTUAL_KEY, far.getProvidedFar().toString(), additonalFee.toString());
+				String expectedResult = getLocaleMessage(RULE_EXPECTED_KEY, upperLimit.toString(), far.getProvidedFar().toString(),
 						additionFeeLimit.toString(), pl.getPlot().getArea().toString());
 				if (desc == null)
 					desc = getLocaleMessage(RULE_DESCRIPTION_KEY, upperLimit.toString(), additionFeeLimit.toString());
@@ -1081,8 +1081,8 @@ public class Far extends FeatureProcess {
 					desc = getLocaleMessage(RULE_DESCRIPTION_KEY, upperLimit.toString(), additionFeeLimit.toString());
 				else
 					desc = getLocaleMessage(desc, upperLimit.toString(), additionFeeLimit.toString());
-				String actualResult = far.toString();
-				String expectedResult = getLocaleMessage(RULE_EXPECTED_KEY, upperLimit.toString(), far.toString(),
+				String actualResult = far.getProvidedFar().toString();
+				String expectedResult = getLocaleMessage(RULE_EXPECTED_KEY, upperLimit.toString(), far.getProvidedFar().toString(),
 						additionFeeLimit.toString(), pl.getPlot().getArea().toString());
 
 				Map<String, String> details = new HashMap<>();

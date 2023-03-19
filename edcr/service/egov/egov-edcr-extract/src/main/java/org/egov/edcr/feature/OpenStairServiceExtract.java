@@ -11,6 +11,7 @@ import java.util.Map;
 import org.egov.common.entity.edcr.Block;
 import org.egov.common.entity.edcr.OpenStair;
 import org.egov.edcr.entity.blackbox.PlanDetail;
+import org.egov.edcr.service.LayerNames;
 import org.egov.edcr.utility.Util;
 import org.kabeja.dxf.DXFBlock;
 import org.kabeja.dxf.DXFConstants;
@@ -19,10 +20,14 @@ import org.kabeja.dxf.DXFDocument;
 import org.kabeja.dxf.DXFEntity;
 import org.kabeja.dxf.DXFMText;
 import org.kabeja.dxf.helpers.StyledTextParagraph;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class OpenStairServiceExtract extends FeatureExtract {
+	
+    @Autowired
+    private LayerNames layerNames;
 
     @Override
     public PlanDetail extract(PlanDetail pl) {
@@ -38,7 +43,7 @@ public class OpenStairServiceExtract extends FeatureExtract {
 
     private void extractOpenStairs(DXFDocument doc, Block block, PlanDetail planDetail) {
 
-        String openStairNamePattern = String.format("BLK_%s_OPEN_STAIR", block.getNumber());
+        String openStairNamePattern = String.format(layerNames.getLayerName("LAYER_NAME_OPEN_STAIR"), block.getNumber());
 
         List<String> openStairNames = Util.getLayerNamesLike(doc, openStairNamePattern);
 

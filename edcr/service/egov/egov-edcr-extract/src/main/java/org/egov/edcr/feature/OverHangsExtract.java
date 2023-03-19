@@ -37,14 +37,15 @@ public class OverHangsExtract extends FeatureExtract {
 					.map(flightPolyLine -> new MeasurementDetail(flightPolyLine, true)).collect(Collectors.toList());
 
 			block.setProtectedBalconies(protectedBalconyMeasurements);
-			//TODO: need to cross check layer exp
 			if (block.getBuilding() != null) {
 				String overhang = String.format(layerNames.getLayerName("LAYER_NAME_SHADE_OVERHANG"),
 						block.getNumber());
 				List<DXFLWPolyline> overHangs = Util.getPolyLinesByLayer(planDetail.getDoc(), overhang);
-				MeasurementDetail md = new MeasurementDetail(overHangs.get(0), true);
-				md.setPolyLine(overHangs.get(0));
-				block.getBuilding().setShade(md);
+				if(overHangs != null && !overHangs.isEmpty()) {
+					MeasurementDetail md = new MeasurementDetail(overHangs.get(0), true);
+					md.setPolyLine(overHangs.get(0));
+					block.getBuilding().setShade(md);
+				}
 			}
 		}
 		return planDetail;

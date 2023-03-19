@@ -1,12 +1,16 @@
 package org.egov.edcr.feature;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_011020;
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_081119;
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_NOV19;
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_OCT20;
 import static org.egov.edcr.utility.DcrConstants.OBJECTNOTDEFINED;
 import static org.egov.edcr.utility.DcrConstants.PLOT_AREA;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
@@ -17,7 +21,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-import static org.apache.commons.lang3.StringUtils.isBlank;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.egov.common.entity.bpa.SubOccupancy;
@@ -72,11 +75,6 @@ import org.kabeja.dxf.helpers.Point;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
-
-import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_011020;
-import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_081119;
-import static org.egov.edcr.constants.AmendmentConstants.AMEND_NOV19;
-import static org.egov.edcr.constants.AmendmentConstants.AMEND_OCT20;
 
 @Service
 public class FarExtract extends FeatureExtract {
@@ -648,7 +646,7 @@ public class FarExtract extends FeatureExtract {
         List<FireStair> fireStairs = floor.getFireStairs();
         if (fireStairs != null && !fireStairs.isEmpty())
             for (Stair fireStair : fireStairs) {
-                List<DXFLWPolyline> stairPolylines = ((StairDetail) fireStair).getStairPolylines();
+                List<DXFLWPolyline> stairPolylines = ((FireStairDetail) fireStair).getStairPolylines();
                 if (stairPolylines != null && !stairPolylines.isEmpty())
                     for (DXFLWPolyline stairPolyLine : stairPolylines) {
                         BigDecimal stairArea = Util.getPolyLineArea(stairPolyLine);
@@ -660,10 +658,9 @@ public class FarExtract extends FeatureExtract {
         List<GeneralStair> generalStairs = floor.getGeneralStairs();
         if (generalStairs != null && !generalStairs.isEmpty())
             for (Stair generalStair : generalStairs) {
-                List<DXFLWPolyline> stairPolylines = ((StairDetail) generalStair).getStairPolylines();
-                if (stairPolylines != null && !stairPolylines.isEmpty())
-                    for (DXFLWPolyline stairPolyLine : stairPolylines) {
-                        BigDecimal stairArea = Util.getPolyLineArea(stairPolyLine);
+                if (generalStair != null && !generalStair.getStairMeasurements().isEmpty())
+                    for (Measurement m : generalStair.getStairMeasurements()) {
+                        BigDecimal stairArea = m.getArea();
                         generalStairArea = generalStairArea.add(stairArea)
                                 .setScale(DcrConstants.DECIMALDIGITS_MEASUREMENTS, DcrConstants.ROUNDMODE_MEASUREMENTS);
                     }
@@ -713,7 +710,8 @@ public class FarExtract extends FeatureExtract {
                 Occupancy occupancy = new Occupancy();
                 // this should not be called
                 Util.setOccupancyType(flrUnitPLine, occupancy);
-                specialCaseCheckForOccupancyType(flrUnitPLine, occupancy, floor);
+                occupancy.setTypeHelper(Util.findOccupancyType(flrUnitPLine, pl));
+                specialCaseCheckForOccupancyType(flrUnitPLine, pl, occupancy, floor);
 
                 if (occupancy.getType() != null) {
                     FloorUnitDetail floorUnit = new FloorUnitDetail();
@@ -757,27 +755,26 @@ public class FarExtract extends FeatureExtract {
     }
     
     //TODO: Improve this logic
-    private void specialCaseCheckForOccupancyType(DXFLWPolyline pLine, Occupancy occupancy, Floor floor) {
+    private void specialCaseCheckForOccupancyType(DXFLWPolyline pLine, PlanDetail pl, Occupancy occupancy, Floor floor) {
         if (pLine.getColor() == DxfFileConstants.OCCUPANCY_A2_PARKING_WITHATTACHBATH_COLOR_CODE) {
             occupancy.setWithAttachedBath(true);
-            setOccupancyInSpecialCase(floor, occupancy);
+            setOccupancyInSpecialCase(pLine, pl, floor, occupancy);
         } else if (pLine.getColor() == DxfFileConstants.OCCUPANCY_A2_PARKING_WOATTACHBATH_COLOR_CODE) {
             occupancy.setWithOutAttachedBath(true);
-            setOccupancyInSpecialCase(floor, occupancy);
+            setOccupancyInSpecialCase(pLine, pl, floor, occupancy);
         } else if (pLine.getColor() == DxfFileConstants.OCCUPANCY_A2_PARKING_WITHDINE_COLOR_CODE) {
             occupancy.setWithDinningSpace(true);
-            setOccupancyInSpecialCase(floor, occupancy);
+            setOccupancyInSpecialCase(pLine, pl, floor, occupancy);
         }
     }
 
-    private void setOccupancyInSpecialCase(Floor floor, Occupancy occupancy) {
-        List<OccupancyType> occupancyTypes = floor.getOccupancies().stream().map(Occupancy::getType).collect(Collectors.toList());
-        //TODO: Read occupancy from database and set it.
+    private void setOccupancyInSpecialCase(DXFLWPolyline pLine, PlanDetail pl, Floor floor, Occupancy occupancy) {
+        List<OccupancyTypeHelper> occupancyTypes = floor.getOccupancies().stream().map(Occupancy::getTypeHelper).collect(Collectors.toList());
+        List<String> occupancyCodes = occupancyTypes.stream().map(occ -> occ.getType().getCode()).collect(Collectors.toList());
         if (occupancyTypes.size() == 1) {
-            occupancy.setType(occupancyTypes.get(0));
-        //TODO: need to correct this logic
-        } else if (occupancyTypes.containsAll(Arrays.asList(OccupancyType.OCCUPANCY_A2, OccupancyType.OCCUPANCY_F3))) {
-            occupancy.setType(OccupancyType.OCCUPANCY_F3);
+            occupancy.setTypeHelper(occupancyTypes.get(0));
+        } else if (occupancyCodes.containsAll(Arrays.asList("A2", "F3"))) {
+            occupancy.setTypeHelper(Util.findOccupancyType(pLine, pl));
         }
     }
     
@@ -873,7 +870,7 @@ public class FarExtract extends FeatureExtract {
                     List<DXFLine> fireStairLines = Util.getLinesByLayer(doc, flightLayerNamePattern);
 					fireStair.setLines(fireStairLines);
 					String landingNamePattern = String.format(layerNames.getLayerName("LAYER_NAME_FIRESTAIR_LANDING"),
-							block.getNumber(), floor.getNumber(), stairNo);
+							block.getNumber(), floor.getNumber(), stairNo, "+\\d");
 
 					addStairLanding(pl, landingNamePattern, fireStair);
 
@@ -937,7 +934,7 @@ public class FarExtract extends FeatureExtract {
 
 				String[] flightNo = flightLayer.split("_");
 
-				flight.setNumber(flightNo[7]);
+				flight.setNumber(flightNo[5]);
 
 				List<DXFLWPolyline> fireStairFlightPolyLines = Util.getPolyLinesByLayer(doc, flightLayer);
 
@@ -1085,7 +1082,7 @@ public class FarExtract extends FeatureExtract {
 
 				String[] flightNo = flightLayer.split("_");
 
-				flight.setNumber(flightNo[7]);
+				flight.setNumber(flightNo[5]);
 
 				List<DXFLWPolyline> stairFlightPolyLines = Util.getPolyLinesByLayer(doc, flightLayer);
 
