@@ -24,7 +24,7 @@ const BrideDetails = ({config, onSelect, userType, formData, isEditBride}) => {
   let validation = {};
 
   const { data: Menu, isLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
-  const { data: Profession = {}, isProfessionLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Profession");
+  // const { data: Profession = {}, isProfessionLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Profession");
   const cmbMaritalStatus = [
     { i18nKey: "Married", code: "MARRIED" },
     { i18nKey: "Un Married", code: "UNMARRIED" },
@@ -35,18 +35,18 @@ const BrideDetails = ({config, onSelect, userType, formData, isEditBride}) => {
     { i18nKey: "No", code: "NO" },
   ];
   let menu = [];
-  let cmbProfession = [];
+  // let cmbProfession = [];
   Menu &&
     Menu.map((genderDetails) => {
       menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
     });
 
-  Profession &&
-    Profession["birth-death-service"] &&
-    Profession["birth-death-service"].Profession &&
-    Profession["birth-death-service"].Profession.map((ob) => {
-      cmbProfession.push(ob);
-    });
+  // Profession &&
+  //   Profession["birth-death-service"] &&
+  //   Profession["birth-death-service"].Profession &&
+  //   Profession["birth-death-service"].Profession.map((ob) => {
+  //     cmbProfession.push(ob);
+  //   });
     
     const [isInitialRenderRadioButtons, setisInitialRenderRadioButtons] = useState(true);
     const [selectedValueRadio, setSelectedValue] = useState(formData?.BrideDetails?.selectedValueRadio ? formData?.BrideDetails?.selectedValueRadio : ""
@@ -72,12 +72,12 @@ const BrideDetails = ({config, onSelect, userType, formData, isEditBride}) => {
   const [brideMobile, setbrideMobile] = useState(formData?.BrideDetails?.brideMobile ? formData?.BrideDetails?.brideMobile : "");
   const [brideEmailid, setbrideEmailid] = useState(formData?.BrideDetails?.brideEmailid ? formData?.BrideDetails?.brideEmailid : "");
   const [brideGender, setbrideGender] = useState(formData?.BrideDetails?.brideGender ? formData?.BrideDetails?.brideGender : "");
-  const [brideProfessionEn, setbrideProfessionEn] = useState(
-    formData?.BrideDetails?.brideProfessionEn ? formData?.BrideDetails?.brideProfessionEn : ""
-  );
-  const [brideProfessionMal, setbrideProfessionMal] = useState(
-    formData?.BrideDetails?.brideProfessionMal ? formData?.BrideDetails?.brideProfessionMal : ""
-  );
+  // const [brideProfessionEn, setbrideProfessionEn] = useState(
+  //   formData?.BrideDetails?.brideProfessionEn ? formData?.BrideDetails?.brideProfessionEn : ""
+  // );
+  // const [brideProfessionMal, setbrideProfessionMal] = useState(
+  //   formData?.BrideDetails?.brideProfessionMal ? formData?.BrideDetails?.brideProfessionMal : ""
+  // );
   const [toast, setToast] = useState(false);
   const [brideDOB, setbrideDOB] = useState(formData?.BrideDetails?.brideDOB ? formData?.BrideDetails?.brideDOB : "");
   const [DOBError, setDOBError] = useState(formData?.BrideDetails?.brideDOB ? false : false);
@@ -126,6 +126,7 @@ const BrideDetails = ({config, onSelect, userType, formData, isEditBride}) => {
     formData?.AddressOfDecesed?.selectedOption ? formData?.AddressOfDecesed?.selectedOption : "ILB"
   );
   const [AadharError, setAadharError] = useState(formData?.BrideDetails?.brideAadharNo ? false : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditBride ? isEditBride : false);
   const [file, setFile] = useState();
   function handleChange(e) {
     console.log(e.target.files);
@@ -162,66 +163,104 @@ const BrideDetails = ({config, onSelect, userType, formData, isEditBride}) => {
     { i18nKey: "CR_BRIDE_GUARDIAN", code: "GUARDIAN" },
   ];
   function setSelectbrideFirstnameMal(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setbrideFirstnameMal(
-        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-      );
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      setbrideFirstnameMal('');
     }
+    else {
+      setbrideFirstnameMal(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    }
+ 
+    // if (e.target.value.length === 51) {
+    //   return false;
+    //   // window.alert("Username shouldn't exceed 10 characters")
+    // } else {
+    //   setbrideFirstnameMal(
+    //     e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
+    //   );
+    // }
   }
   function setSelectbrideFirstnameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setbrideFirstnameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setbrideFirstnameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
+    // if (e.target.value.length === 51) {
+    //   return false;
+    //   // window.alert("Username shouldn't exceed 10 characters")
+    // } else {
+    //   setbrideFirstnameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    // }
   }
   function setSelectbrideMiddlenameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setbrideMiddlenameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setbrideMiddlenameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
+    // if (e.target.value.length === 51) {
+
+    //   return false;
+    //   // window.alert("Username shouldn't exceed 10 characters")
+    // } else {
+    //   setbrideMiddlenameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    // }
   }
   function setSelectbrideMiddlenameMal(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setbrideMiddlenameMal(
-        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-      );
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      setMotherFirstNameMl('');
     }
+    else {
+      setbrideMiddlenameMal(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    }
+    // if (e.target.value.length === 51) {
+    //   return false;
+    //   // window.alert("Username shouldn't exceed 10 characters")
+    // } else {
+    //   setbrideMiddlenameMal(
+    //     e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
+    //   );
+    // }
   }
   function setSelectbrideLastnameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setbrideLastnameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setbrideLastnameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
+    // if (e.target.value.length === 51) {
+    //   return false;
+    //   // window.alert("Username shouldn't exceed 10 characters")
+    // } else {
+    //   setbrideLastnameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    // }
   }
   function setSelectbrideLastnameMal(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setbrideLastnameMal(
-        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-      );
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      setbrideLastnameMal('');
     }
+    else {
+      setbrideLastnameMal(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    }
+    // if (e.target.value.length === 51) {
+    //   return false;
+    //   // window.alert("Username shouldn't exceed 10 characters")
+    // } else {
+    //   setbrideLastnameMal(
+    //     e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
+    //   );
+    // }
   }
   function setSelectbrideMobile(e) {
-    if (e.target.value.length === 11) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setbrideMobile(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C a-zA-Z]/gi, ""));
+    if (e.target.value.trim().length != 0) {
+      setbrideMobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
     }
+    // if (e.target.value.length === 11) {
+    //   return false;
+    //   // window.alert("Username shouldn't exceed 10 characters")
+    // } else {
+    //   setbrideMobile(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C a-zA-Z]/gi, ""));
+    // }
   }
   function setSelectbrideGender(value) {
     // console.log("gender" + value);
@@ -234,14 +273,14 @@ const BrideDetails = ({config, onSelect, userType, formData, isEditBride}) => {
   //   cmbProfession.push({ i18nKey: `CR_PROFESSION_EN_'${brideProfessionEnglish.code}`, code: `${brideProfessionEnglish.code}`, value: `${brideProfessionEnglish.code}` });
   //     });
 
-  function setSelectbrideProfessionEn(value) {
-    setbrideProfessionEn(value);
-    console.log("Profession" + cmbProfession);
-  }
-  function setSelectbrideProfessionMal(value) {
-    setbrideProfessionMal(value);
-    console.log("Profession" + cmbProfession);
-  }
+  // function setSelectbrideProfessionEn(value) {
+  //   setbrideProfessionEn(value);
+  //   console.log("Profession" + cmbProfession);
+  // }
+  // function setSelectbrideProfessionMal(value) {
+  //   setbrideProfessionMal(value);
+  //   console.log("Profession" + cmbProfession);
+  // }
   // function setSelectbrideProfessionEn(value) {
   //   setbrideProfessionEn(value);
   // }
@@ -281,177 +320,226 @@ const BrideDetails = ({config, onSelect, userType, formData, isEditBride}) => {
     }
   }
   function setSelectbrideParentGuardian(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setbrideParentGuardian(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' A-Z]/gi, ""));
+    if (e.target.value.trim().length >= 0) {
+      setbrideParentGuardian(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
     }
+    // if (e.target.value.length === 51) {
+    //   return false;
+    //   // window.alert("Username shouldn't exceed 10 characters")
+    // } else {
+    //   setbrideParentGuardian(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' A-Z]/gi, ""));
+    // }
   }
   function setSelectbrideFathernameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setbrideFathernameEn(
-        e.target.value.replace(
-          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
-          ""
-        )
-      );
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setbrideFathernameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
+    // if (e.target.value.length === 51) {
+    //   return false;
+    //   // window.alert("Username shouldn't exceed 10 characters")
+    // } else {
+    //   setbrideFathernameEn(
+    //     e.target.value.replace(
+    //       /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
+    //       ""
+    //     )
+    //   );
+    // }
   }
   function setSelectbrideMothernameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setbrideMothernameEn(
-        e.target.value.replace(
-          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
-          ""
-        )
-      );
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setbrideMothernameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
+    // if (e.target.value.length === 51) {
+    //   return false;
+    //   // window.alert("Username shouldn't exceed 10 characters")
+    // } else {
+    //   setbrideMothernameEn(
+    //     e.target.value.replace(
+    //       /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
+    //       ""
+    //     )
+    //   );
+    // }
   }
   function setSelectbrideMothernameMal(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setbrideMothernameMal(
-        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-      );
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      setbrideMothernameMal('');
     }
+    else {
+      setbrideMothernameMal(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    }
+    // if (e.target.value.length === 51) {
+    //   return false;
+    //   // window.alert("Username shouldn't exceed 10 characters")
+    // } else {
+    //   setbrideMothernameMal(
+    //     e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
+    //   );
+    // }
   }
   function setSelectbrideGuardiannameMal(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setbrideGuardiannameMal(
-        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-      );
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      setMotherFirstNameMl('');
     }
+    else {
+      setbrideGuardiannameMal(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    }
+    // if (e.target.value.length === 51) {
+    //   return false;
+    //   // window.alert("Username shouldn't exceed 10 characters")
+    // } else {
+    //   setbrideGuardiannameMal(
+    //     e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
+    //   );
+    // }
   }
   function setSelectbrideFathernameMal(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setbrideFathernameMal(
-        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-      );
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      setbrideFathernameMal('');
     }
+    else {
+      setbrideFathernameMal(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    }
+    // if (e.target.value.length === 51) {
+    //   return false;
+    //   // window.alert("Username shouldn't exceed 10 characters")
+    // } else {
+    //   setbrideFathernameMal(
+    //     e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
+    //   );
+    // }
   }
   function setSelectbrideFatherAdharNo(e) {
-    if (e.target.value.length != 0) {
-      if (e.target.value.length > 12) {
-        // setChildAadharNo(e.target.value);
-        setAadharError(true);
-        return false;
-        // const limit = 12;
-        // setChildAadharNo(e.target.value.slice(0, limit));
-        // window.alert("Username shouldn't exceed 10 characters")
-      } else if (e.target.value.length < 12) {
-        setAadharError(true);
-        setbrideFatherAdharNo(e.target.value);
-        return false;
-      } else {
-        setAadharError(false);
-        setbrideFatherAdharNo(e.target.value);
-        return true;
-      }
-    } else {
-      setAadharError(false);
-      setbrideFatherAdharNo(e.target.value);
-      return true;
+    
+    if (e.target.value.trim().length >= 0) {
+      setbrideFatherAdharNo(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
     }
+    // if (e.target.value.length != 0) {
+    //   if (e.target.value.length > 12) {
+    //     // setChildAadharNo(e.target.value);
+    //     setAadharError(true);
+    //     return false;
+    //     // const limit = 12;
+    //     // setChildAadharNo(e.target.value.slice(0, limit));
+    //     // window.alert("Username shouldn't exceed 10 characters")
+    //   } else if (e.target.value.length < 12) {
+    //     setAadharError(true);
+    //     setbrideFatherAdharNo(e.target.value);
+    //     return false;
+    //   } else {
+    //     setAadharError(false);
+    //     setbrideFatherAdharNo(e.target.value);
+    //     return true;
+    //   }
+    // } else {
+    //   setAadharError(false);
+    //   setbrideFatherAdharNo(e.target.value);
+    //   return true;
+    // }
   }
   function setSelectbrideAdharNo(e) {
-    if (e.target.value.length != 0) {
-      if (e.target.value.length > 12) {
-        // setChildAadharNo(e.target.value);
-        setAadharError(true);
-        return false;
-        // const limit = 12;
-        // setChildAadharNo(e.target.value.slice(0, limit));
-        // window.alert("Username shouldn't exceed 10 characters")
-      } else if (e.target.value.length < 12) {
-        setAadharError(true);
-        setbrideAdharNo(e.target.value);
-        return false;
-      } else {
-        setAadharError(false);
-        setbrideAdharNo(e.target.value);
-        return true;
-      }
-    } else {
-      setAadharError(false);
-      setbrideAdharNo(e.target.value);
-      return true;
+    if (e.target.value.trim().length >= 0) {
+      setbrideAdharNo(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
     }
+    // if (e.target.value.length != 0) {
+    //   if (e.target.value.length > 12) {
+    //     // setChildAadharNo(e.target.value);
+    //     setAadharError(true);
+    //     return false;
+    //     // const limit = 12;
+    //     // setChildAadharNo(e.target.value.slice(0, limit));
+    //     // window.alert("Username shouldn't exceed 10 characters")
+    //   } else if (e.target.value.length < 12) {
+    //     setAadharError(true);
+    //     setbrideAdharNo(e.target.value);
+    //     return false;
+    //   } else {
+    //     setAadharError(false);
+    //     setbrideAdharNo(e.target.value);
+    //     return true;
+    //   }
+    // } else {
+    //   setAadharError(false);
+    //   setbrideAdharNo(e.target.value);
+    //   return true;
+    // }
   }
   function setSelectbrideMotherAdharNo(e) {
-    if (e.target.value.length != 0) {
-      if (e.target.value.length > 12) {
-        // setChildAadharNo(e.target.value);
-        setAadharError(true);
-        return false;
-        // const limit = 12;
-        // setChildAadharNo(e.target.value.slice(0, limit));
-        // window.alert("Username shouldn't exceed 10 characters")
-      } else if (e.target.value.length < 12) {
-        setAadharError(true);
-        setbrideMotherAdharNo(e.target.value);
-        return false;
-      } else {
-        setAadharError(false);
-        setbrideMotherAdharNo(e.target.value);
-        return true;
-      }
-    } else {
-      setAadharError(false);
-      setbrideMotherAdharNo(e.target.value);
-      return true;
+    if (e.target.value.trim().length >= 0) {
+      setbrideMotherAdharNo(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
     }
+    // if (e.target.value.length != 0) {
+    //   if (e.target.value.length > 12) {
+    //     // setChildAadharNo(e.target.value);
+    //     setAadharError(true);
+    //     return false;
+    //     // const limit = 12;
+    //     // setChildAadharNo(e.target.value.slice(0, limit));
+    //     // window.alert("Username shouldn't exceed 10 characters")
+    //   } else if (e.target.value.length < 12) {
+    //     setAadharError(true);
+    //     setbrideMotherAdharNo(e.target.value);
+    //     return false;
+    //   } else {
+    //     setAadharError(false);
+    //     setbrideMotherAdharNo(e.target.value);
+    //     return true;
+    //   }
+    // } else {
+    //   setAadharError(false);
+    //   setbrideMotherAdharNo(e.target.value);
+    //   return true;
+    // }
   }
   function setSelectbrideGuardianAdhar(e) {
-    if (e.target.value.length != 0) {
-      if (e.target.value.length > 12) {
-        // setChildAadharNo(e.target.value);
-        setAadharError(true);
-        return false;
-        // const limit = 12;
-        // setChildAadharNo(e.target.value.slice(0, limit));
-        // window.alert("Username shouldn't exceed 10 characters")
-      } else if (e.target.value.length < 12) {
-        setAadharError(true);
-        setbrideGuardianAdhar(e.target.value);
-        return false;
-      } else {
-        setAadharError(false);
-        setbrideGuardianAdhar(e.target.value);
-        return true;
-      }
-    } else {
-      setAadharError(false);
-      setbrideGuardianAdhar(e.target.value);
-      return true;
+    if (e.target.value.trim().length >= 0) {
+      setbrideGuardianAdhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
     }
+    // if (e.target.value.length != 0) {
+    //   if (e.target.value.length > 12) {
+    //     // setChildAadharNo(e.target.value);
+    //     setAadharError(true);
+    //     return false;
+    //     // const limit = 12;
+    //     // setChildAadharNo(e.target.value.slice(0, limit));
+    //     // window.alert("Username shouldn't exceed 10 characters")
+    //   } else if (e.target.value.length < 12) {
+    //     setAadharError(true);
+    //     setbrideGuardianAdhar(e.target.value);
+    //     return false;
+    //   } else {
+    //     setAadharError(false);
+    //     setbrideGuardianAdhar(e.target.value);
+    //     return true;
+    //   }
+    // } else {
+    //   setAadharError(false);
+    //   setbrideGuardianAdhar(e.target.value);
+    //   return true;
+    // }
   }
   function setSelectbrideGuardiannameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setbrideGuardiannameEn(
-        e.target.value.replace(
-          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
-          ""
-        )
-      );
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setbrideGuardiannameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
+    // if (e.target.value.length === 51) {
+    //   return false;
+    //   // window.alert("Username shouldn't exceed 10 characters")
+    // } else {
+    //   setbrideGuardiannameEn(
+    //     e.target.value.replace(
+    //       /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
+    //       ""
+    //     )
+    //   );
+    // }
   }
 
   function setSelectbrideMaritalstatusID(value) {
@@ -593,8 +681,8 @@ const BrideDetails = ({config, onSelect, userType, formData, isEditBride}) => {
       sessionStorage.setItem("brideMotherAdharNo", brideMotherAdharNo ? brideMotherAdharNo : null);
 
       sessionStorage.setItem("brideGuardiannameEn", brideGuardiannameEn ? brideGuardiannameEn : null);
-      sessionStorage.setItem("brideProfessionEn", brideProfessionEn ? brideProfessionEn : null);
-      sessionStorage.setItem("brideProfessionMal", brideProfessionMal ? brideProfessionMal : null);
+      // sessionStorage.setItem("brideProfessionEn", brideProfessionEn ? brideProfessionEn : null);
+      // sessionStorage.setItem("brideProfessionMal", brideProfessionMal ? brideProfessionMal : null);
       sessionStorage.setItem("brideMaritalstatusID", brideMaritalstatusID ? brideMaritalstatusID : null);
       sessionStorage.setItem("brideNoOfSpouse", brideNoOfSpouse ? brideNoOfSpouse : null);
       sessionStorage.setItem("brideGuardianAdhar", brideGuardianAdhar ? brideGuardianAdhar : null);
@@ -631,8 +719,8 @@ const BrideDetails = ({config, onSelect, userType, formData, isEditBride}) => {
         brideFathernameMal,
         brideFatherAdharNo,
         brideMotherAdharNo,
-        brideProfessionEn,
-        brideProfessionMal,
+        // brideProfessionEn,
+        // brideProfessionMal,
         brideMaritalstatusID,
         brideSpouseLiving,
         brideNoOfSpouse,
@@ -644,7 +732,7 @@ const BrideDetails = ({config, onSelect, userType, formData, isEditBride}) => {
     }
   };
 
-  if (isLoading || isProfessionLoading) {
+  if (isLoading) {
     return <Loader></Loader>;
   } else
     return (
@@ -680,7 +768,7 @@ const BrideDetails = ({config, onSelect, userType, formData, isEditBride}) => {
         </div> */}
           <div className="row">
           <div className="col-md-12">
-          <div className="col-md-6">
+          <div className="col-md-12">
             <div className="radios">
               <div className="radiobuttons">
                 <LabelFieldPair style={{ display: "flex" }}>
@@ -718,9 +806,11 @@ const BrideDetails = ({config, onSelect, userType, formData, isEditBride}) => {
                   optionKey="i18nKey"
                   name="brideAadharNo"
                   onChange={setSelectbrideAdharNo}
+                  disable={isDisableEdit}
                   // disable={isChildName}
                   placeholder={`${t("CR_ADHAR_NO")}`}
-                  {...(validation = { pattern: "^[0-9]{12}$", type: "number", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                  {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                  // {...(validation = { pattern: "^[0-9]{12}$", type: "number", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                 />
               </div>
               <div className="col-md-4">
@@ -736,6 +826,7 @@ const BrideDetails = ({config, onSelect, userType, formData, isEditBride}) => {
                   name="bridePassportNo"
                   // disable={isChildName}
                   onChange={setSelectbridePassportNo}
+                  disable={isDisableEdit}
                   placeholder={`${t("CR_PASSPORT_NO")}`}
                   {...(validation = { pattern: "^[0-9]{12}$", type: "number", isRequired: false, title: t("CS_COMMON_INVALID_PASSPORT_NO") })}
                 />
@@ -752,7 +843,7 @@ const BrideDetails = ({config, onSelect, userType, formData, isEditBride}) => {
                   type={"text"}
                   optionKey="i18nKey"
                   name="brideSocialSecurityNo"
-                  // disable={isChildName}
+                  disable={isDisableEdit}
                   onChange={setSelectbrideSocialSecurityNo}
                   placeholder={`${t("CR_SOCIAL_SECURITY_NO")}`}
                   {...(validation = { pattern: "^[0-9]{12}$", type: "number", isRequired: false, title: t("CR_INVALID_SOCIAL_SECURITY_NUMBER") })}
@@ -790,8 +881,9 @@ const BrideDetails = ({config, onSelect, userType, formData, isEditBride}) => {
                   value={brideFirstnameEn}
                   onChange={setSelectbrideFirstnameEn}
                   //  onChange={(e,v) => this.updateTextField(e,v)}
-                  // disable={isChildName}
+                  disable={isDisableEdit}
                   placeholder={`${t("CR_BRIDE_FIRST_NAME_EN")}`}
+                  
                   {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
               </div>
@@ -806,8 +898,9 @@ const BrideDetails = ({config, onSelect, userType, formData, isEditBride}) => {
                   name="brideMiddlenameEn"
                   value={brideMiddlenameEn}
                   onChange={setSelectbrideMiddlenameEn}
-                  // disable={isChildName}
+                  disable={isDisableEdit}
                   placeholder={`${t("CR_BRIDE_MIDDLE_NAME_EN")}`}
+                  
                   {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })}
                 />
               </div>
@@ -822,7 +915,7 @@ const BrideDetails = ({config, onSelect, userType, formData, isEditBride}) => {
                   name="brideLastnameEn"
                   value={brideLastnameEn}
                   onChange={setSelectbrideLastnameEn}
-                  // disable={isChildName}
+                  disable={isDisableEdit}
                   placeholder={`${t("CR_BRIDE_LAST_NAME_EN")}`}
                   {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
                 />
@@ -838,7 +931,7 @@ const BrideDetails = ({config, onSelect, userType, formData, isEditBride}) => {
                   name="brideMobile"
                   value={brideMobile}
                   onChange={setSelectbrideMobile}
-                  // disable={isChildName}
+                  disable={isDisableEdit}
                   placeholder={`${t("CR_BRIDE_MOBILE_NO")}`}
                   {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: false, title: t("CR_INVALID_MOBILE_NO") })}
                 />
@@ -861,8 +954,9 @@ const BrideDetails = ({config, onSelect, userType, formData, isEditBride}) => {
                   name="brideFirstnameMal"
                   value={brideFirstnameMal}
                   onChange={setSelectbrideFirstnameMal}
-                  // disable={isChildName}
+                  disable={isDisableEdit}
                   placeholder={`${t("CR_BRIDE_FIRST_NAME_ML")}`}
+                
                   {...(validation = {
                     pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
                     isRequired: true,
@@ -882,7 +976,7 @@ const BrideDetails = ({config, onSelect, userType, formData, isEditBride}) => {
                   name="brideMiddlenameMal"
                   value={brideMiddlenameMal}
                   onChange={setSelectbrideMiddlenameMal}
-                  // disable={isChildName}
+                  disable={isDisableEdit}
                   placeholder={`${t("CR_BRIDE_MIDDLE_NAME_ML")}`}
                   {...(validation = {
                     pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -903,7 +997,7 @@ const BrideDetails = ({config, onSelect, userType, formData, isEditBride}) => {
                   name="brideLastnameMal"
                   value={brideLastnameMal}
                   onChange={setSelectbrideLastnameMal}
-                  // disable={isChildName}
+                  disable={isDisableEdit}
                   placeholder={`${t("CR_BRIDE_LAST_NAME_ML")}`}
                   {...(validation = {
                     pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -924,7 +1018,7 @@ const BrideDetails = ({config, onSelect, userType, formData, isEditBride}) => {
                   name="brideEmailid"
                   value={brideEmailid}
                   onChange={setSelectbrideEmailid}
-                  // disable={isChildName}
+                  disable={isDisableEdit}
                   placeholder={`${t("CR_BRIDE_EMAIL")}`}
                   {...(validation = { isRequired: false, title: t("CR_INVALID_EMAIL") })}
                 />
@@ -950,6 +1044,7 @@ const BrideDetails = ({config, onSelect, userType, formData, isEditBride}) => {
                     option={menu}
                     selected={brideGender}
                     select={setSelectbrideGender}
+                    disable={isDisableEdit}
                     placeholder={`${t("CR_GENDER")}`}
                     {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })}
                   />
@@ -982,12 +1077,60 @@ const BrideDetails = ({config, onSelect, userType, formData, isEditBride}) => {
                     name="brideAge"
                     value={brideAge}
                     onChange={setSelectbrideAge}
-                    // disable={isChildName}
+                    disable={isDisableEdit}
                     placeholder={`${t("CR_AGE")}`}
                   />
                 </div>
               </div>
             </div>
+            <div className="col-md-12">
+              <div className="col-md-4">
+                {" "}
+                <CardLabel>{t("CR_MARIATAL_STATUS'")}</CardLabel>
+                <Dropdown
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  option={cmbMaritalStatus}
+                  selected={brideMaritalstatusID}
+                  select={setSelectbrideMaritalstatusID}
+                  disable={isDisableEdit}
+                  placeholder={t("CR_MARIATAL_STATUS")}
+                />
+              </div>
+              <div className="col-md-4">
+                {" "}
+                <CardLabel>{t("CR_ANY_SPOUSE_IN_LIVING")}</CardLabel>
+                <Dropdown
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  option={cmbYesOrNo}
+                  selected={brideSpouseLiving}
+                  select={setSelectbrideSpouseLiving}
+                  placeholder={t("CR_Y/N")}
+                />
+              </div>
+
+              <div className="col-md-4">
+                {" "}
+                <CardLabel>{t("CR_NO_OF_SPOUSE_LIVING")}</CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="brideNoOfSpouse"
+                  value={brideNoOfSpouse}
+                  onChange={setSelectbrideNoOfSpouse}
+                  disable={isDisableEdit}
+                  placeholder={t("CR_INT1-3")}
+                />
+              </div>
+            </div>
+
             {/* </div> */}
             <div className="row">
               <div className="col-md-12">
@@ -1043,11 +1186,13 @@ const BrideDetails = ({config, onSelect, userType, formData, isEditBride}) => {
                   name="brideFatherAdharNo"
                   value={brideFatherAdharNo}
                   onChange={setSelectbrideFatherAdharNo}
+                  disable={isDisableEdit}
                   placeholder={`${t("CR_BRIDE_FATHER_ADHAR_NO")}`}
                   inputProps={{
                     maxLength: 12,
                   }}
-                  {...(validation = { isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                  {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                  // {...(validation = { isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                 />
               </div>
               <div className="col-md-4">
@@ -1064,7 +1209,9 @@ const BrideDetails = ({config, onSelect, userType, formData, isEditBride}) => {
                   name="brideFathernameEn"
                   value={brideFathernameEn}
                   onChange={setSelectbrideFathernameEn}
+                  disable={isDisableEdit}
                   placeholder={`${t("CR_FATHER_NAME_EN")}`}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FATHER_NAME_EN") })}
                 />
               </div>
               <div className="col-md-4">
@@ -1081,7 +1228,14 @@ const BrideDetails = ({config, onSelect, userType, formData, isEditBride}) => {
                   name="brideFathernameMal"
                   value={brideFathernameMal}
                   onChange={setSelectbrideFathernameMal}
+                  disable={isDisableEdit}
                   placeholder={`${t("CR_BRIDE_FATHER_NAME_MAL")}`}
+                  {...(validation = {
+                    pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                    isRequired: true,
+                    type: "text",
+                    title: t("CR_INVALID_FATHER_NAME_ML"),
+                  })}
                 />
               </div>
             </div>
@@ -1104,11 +1258,13 @@ const BrideDetails = ({config, onSelect, userType, formData, isEditBride}) => {
                   name="brideMotherAdharNo"
                   value={brideMotherAdharNo}
                   onChange={setSelectbrideMotherAdharNo}
+                  disable={isDisableEdit}
                   placeholder={`${t("CR_BRIDE_MOTHER_ADHAR_NO")}`}
                   inputProps={{
                     maxLength: 12,
                   }}
-                  {...(validation = { isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                  {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                  // {...(validation = { isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                 />
               </div>
               <div className="col-md-4">
@@ -1125,7 +1281,9 @@ const BrideDetails = ({config, onSelect, userType, formData, isEditBride}) => {
                   name="brideMothernameEn"
                   value={brideMothernameEn}
                   onChange={setSelectbrideMothernameEn}
+                  disable={isDisableEdit}
                   placeholder={`${t("CR_BRIDE_MOTHER_NAME_EN")}`}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_MOTHER_NAME_EN") })}
                 />
               </div>
               <div className="col-md-4">
@@ -1142,7 +1300,14 @@ const BrideDetails = ({config, onSelect, userType, formData, isEditBride}) => {
                   name="brideMothernameMal"
                   value={brideMothernameMal}
                   onChange={setSelectbrideMothernameMal}
+                  disable={isDisableEdit}
                   placeholder={`${t("CR_BRIDE_MOTHER_NAME_MAL")}`}
+                  {...(validation = {
+                    pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                    isRequired: true,
+                    type: "text",
+                    title: t("CR_INVALID_MOTHER_NAME_ML"),
+                  })}
                 />
               </div>
             </div>
@@ -1165,11 +1330,13 @@ const BrideDetails = ({config, onSelect, userType, formData, isEditBride}) => {
                   name="brideGuardianAdhar"
                   value={brideGuardianAdhar}
                   onChange={setSelectbrideGuardianAdhar}
+                  disable={isDisableEdit}
                   placeholder={`${t("CR_BRIDE_GUARDIAN_ADHAR")}`}
                   inputProps={{
                     maxLength: 12,
                   }}
-                  {...(validation = { isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                  {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                  // {...(validation = { isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                 />
               </div>
               <div className="col-md-4">
@@ -1186,7 +1353,9 @@ const BrideDetails = ({config, onSelect, userType, formData, isEditBride}) => {
                   name="brideGuardiannameEn"
                   value={brideGuardiannameEn}
                   onChange={setSelectbrideGuardiannameEn}
+                  disable={isDisableEdit}
                   placeholder={`${t("CR_BRIDE_GUARDIAN_NAME_EN")}`}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_GUARDIAN_NAME_EN") })}
                 />
               </div>
               <div className="col-md-4">
@@ -1203,18 +1372,25 @@ const BrideDetails = ({config, onSelect, userType, formData, isEditBride}) => {
                   name="brideGuardiannameMal"
                   value={brideGuardiannameMal}
                   onChange={setSelectbrideGuardiannameMal}
+                  disable={isDisableEdit}
                   placeholder={`${t("CR_BRIDE_GUARDIAN_NAME_MAL")}`}
+                  {...(validation = {
+                    pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                    isRequired: true,
+                    type: "text",
+                    title: t("CR_INVALID_GUARDIAN_NAME_ML"),
+                  })}
                 />
               </div>
             </div>
-            <div className="row">
+            {/* <div className="row">
               <div className="col-md-12">
                 <h1 className="headingh1">
                   <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_BRIDE_OTHER_DETAILS")}`}</span>{" "}
                 </h1>
               </div>
-            </div>
-            <div className="col-md-4">
+            </div> */}
+            {/* <div className="col-md-4">
               <CardLabel>{t("CR_OCCUPATION_OR_PROFESSION'")}</CardLabel>
             </div>
             <div className="col-md-12">
@@ -1246,54 +1422,9 @@ const BrideDetails = ({config, onSelect, userType, formData, isEditBride}) => {
                   placeholder={t("CR_PROFESSION_MAL'")}
                 />
               </div>
-            </div>
+            </div> */}
 
-            <div className="col-md-12">
-              <div className="col-md-4">
-                {" "}
-                <CardLabel>{t("CR_MARIATAL_STATUS'")}</CardLabel>
-                <Dropdown
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  option={cmbMaritalStatus}
-                  selected={brideMaritalstatusID}
-                  select={setSelectbrideMaritalstatusID}
-                  placeholder={t("CR_MARIATAL_STATUS")}
-                />
-              </div>
-              <div className="col-md-4">
-                {" "}
-                <CardLabel>{t("CR_ANY_SPOUSE_IN_LIVING")}</CardLabel>
-                <Dropdown
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  option={cmbYesOrNo}
-                  selected={brideSpouseLiving}
-                  select={setSelectbrideSpouseLiving}
-                  placeholder={t("CR_Y/N")}
-                />
-              </div>
-
-              <div className="col-md-4">
-                {" "}
-                <CardLabel>{t("CR_NO_OF_SPOUSE_LIVING")}</CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="brideNoOfSpouse"
-                  value={brideNoOfSpouse}
-                  onChange={setSelectbrideNoOfSpouse}
-                  placeholder={t("CR_INT1-3")}
-                />
-              </div>
-            </div>
-
+            
             {/* <div className="row">
               <div className="col-md-12">
                 <h1 className="headingh1">
