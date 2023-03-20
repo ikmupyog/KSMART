@@ -2,7 +2,7 @@ import { Banner, Card, CardText, LinkButton, Loader, SubmitBar } from "@egovernm
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { convertToStillBirthRegistration } from "../../../utils";
+import { convertToBirthRegistration } from "../../../utils";
 import getPDFData from "../../../utils/getTLAcknowledgementData";
 
 const GetActionMessage = (props) => {
@@ -25,20 +25,20 @@ const BannerPicker = (props) => {
   return (
     <Banner
       message={GetActionMessage(props)}
-      applicationNumber={props.data?.StillBirthChildDetails[0]?.applicationNumber}
+      applicationNumber={props.data?.ChildDetails[0]?.applicationNumber}
       info={props.isSuccess ? props.applicationNumber : ""}
       successful={props.isSuccess}
     />
   );
 };
 
-const StillBirthAcknowledgement = ({ data, onSuccess, userType, isEditStillBirth = false }) => {
+const BirthNACAcknowledgement = ({ data, onSuccess, userType, isEditBirth = false }) => {
   const { t } = useTranslation();
   const [mutationHappened, setMutationHappened, clear] = Digit.Hooks.useSessionStorage("CITIZEN_TL_MUTATION_HAPPENED", false);
   const resubmit = window.location.href.includes("edit-application");
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const isRenewTrade = !window.location.href.includes("renew-trade")
-  const mutation = Digit.Hooks.cr.useCivilRegistrationStillBirthAPI(
+  const mutation = Digit.Hooks.cr.useCivilRegistrationAPI(
     data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
     isRenewTrade
   );
@@ -70,9 +70,9 @@ const StillBirthAcknowledgement = ({ data, onSuccess, userType, isEditStillBirth
         if (!resubmit) {
           // let formdata = !isEditBirth ? convertToDeathRegistration(data) : convertToEditTrade(data, fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter(y => y.module === "CR") : []);
 
-          let formdata = !isEditStillBirth ? convertToStillBirthRegistration(data) : [];
+          let formdata = !isEditBirth ? convertToBirthRegistration(data) : [];
           // formdata.BirthDetails[0].tenantId = formdata?.BirthDetails[0]?.tenantId || tenantId1;
-          if (!isEditStillBirth) {
+          if (!isEditBirth) {
             mutation.mutate(formdata, {
               onSuccess,
             })
@@ -217,4 +217,4 @@ const StillBirthAcknowledgement = ({ data, onSuccess, userType, isEditStillBirth
 
 };
 
-export default StillBirthAcknowledgement;
+export default BirthNACAcknowledgement;

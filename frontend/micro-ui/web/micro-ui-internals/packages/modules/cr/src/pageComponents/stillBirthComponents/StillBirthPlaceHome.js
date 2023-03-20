@@ -8,7 +8,7 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
   adrsPincode, adrsHouseNameEn, adrsHouseNameMl, adrsLocalityNameEn, adrsLocalityNameMl, adrsStreetNameEn, adrsStreetNameMl,
   wardNo, setWardNo, adrsPostOffice, setAdrsPostOffice, setAdrsPincode, setAdrsHouseNameEn, setAdrsHouseNameMl, setAdrsLocalityNameEn,
   setAdrsLocalityNameMl, setAdrsStreetNameEn, setAdrsStreetNameMl, PostOfficevalues, setPostOfficevalues,
-  isEditBirth
+  isEditStillBirth
 
 }) => {
   const [pofilter, setPofilter] = useState(false);
@@ -27,7 +27,7 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
   const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "boundary-data");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [cmbFilterPostOffice, setCmbFilterPostOffice] = useState([]);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditStillBirth ? isEditStillBirth : false);
   let cmbPostOffice = [];
   let cmbLB = [];
   let currentLB = [];
@@ -75,20 +75,20 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
     }
   }, [localbodies, PostOfficevalues, isInitialRender]);
   const onSkip = () => onSelect();
-  // if (isEditBirth) {
-  //   if (formData?.ChildDetails?.adrsPostOffice != null) {
-  //     if (cmbPostOffice.length > 0 && (adrsPostOffice === undefined || adrsPostOffice === "")) {
-  //       let pin = cmbPostOffice.filter(cmbPostOffice => cmbPostOffice.code === formData?.ChildDetails?.adrsPostOffice)[0];
-  //       setAdrsPostOffice(cmbPostOffice.filter(cmbPostOffice => cmbPostOffice.code === formData?.ChildDetails?.adrsPostOffice)[0]);
-  //       setAdrsPincode(pin.pincode);
-  //     }
-  //   }
-  //   if (formData?.ChildDetails?.wardNo != null) {
-  //     if (cmbWardNo.length > 0 && (wardNo === undefined || wardNo === "")) {
-  //       setWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.ChildDetails?.wardNo)[0]);
-  //     }
-  //   }
-  // }
+  if (isEditStillBirth) {
+    if (formData?.StillBirthChildDetails?.adrsPostOffice != null) {
+      if (cmbPostOffice.length > 0 && (adrsPostOffice === undefined || adrsPostOffice === "")) {
+        let pin = cmbPostOffice.filter(cmbPostOffice => cmbPostOffice.code === formData?.StillBirthChildDetails?.adrsPostOffice)[0];
+        setAdrsPostOffice(cmbPostOffice.filter(cmbPostOffice => cmbPostOffice.code === formData?.StillBirthChildDetails?.adrsPostOffice)[0]);
+        setAdrsPincode(pin.pincode);
+      }
+    }
+    if (formData?.StillBirthChildDetails?.wardNo != null) {
+      if (cmbWardNo.length > 0 && (wardNo === undefined || wardNo === "")) {
+        setWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.StillBirthChildDetails?.wardNo)[0]);
+      }
+    }
+  }
   function setSelectAdrsPostOffice(value) {
     setAdrsPostOffice(value);
     setAdrsPincode(value.pincode);

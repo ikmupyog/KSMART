@@ -6,8 +6,9 @@ import { useQueryClient } from "react-query";
 const StillBirthPlaceInstitution = ({ config, onSelect, userType, formData,
   institution, setInstitution, institutionIdMl, setInstitutionIdMl, institutionId, setInstitutionId,
   InstitutionFilterList, setInstitutionFilterList, isInitialRenderInstitutionList, setIsInitialRenderInstitutionList,
-  isEditBirth = false
+  isEditStillBirth = false
 }) => {
+  const [isDisableEdit, setisDisableEdit] = useState(isEditStillBirth ? isEditStillBirth : false);
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -25,21 +26,31 @@ const StillBirthPlaceInstitution = ({ config, onSelect, userType, formData,
     queryClient.removeQueries("CR_INSTITUTION_LIST");
     setTenantboundary(false);
   }
-  // const [Institution, setInstitution] = useState(formData?.BirthPlaceInstitutionDetails?.Institution);
-  // const [InstitutionIdMl, setInstitutionIdMl] = useState(formData?.BirthPlaceInstitutionDetails?.Institution);
-  // const [InstitutionId, setInstitutionId] = useState(formData?.BirthPlaceInstitutionDetails?.InstitutionId);
-  let cmbInstitution = [];
+  let cmbInstitutionType = [];
   let cmbInstitutionList = [];
   institutionType &&
     institutionType["birth-death-service"] && institutionType["birth-death-service"].InstitutionTypePlaceOfEvent &&
     institutionType["birth-death-service"].InstitutionTypePlaceOfEvent.map((ob) => {
-      cmbInstitution.push(ob);
+      cmbInstitutionType.push(ob);
     });
   institutionidList &&
     institutionidList["egov-location"] && institutionidList["egov-location"].institutionList &&
     institutionidList["egov-location"].institutionList.map((ob) => {
       cmbInstitutionList.push(ob);
     });
+  if (isEditStillBirth) {
+    if (formData?.StillBirthChildDetails?.institutionTypeCode != null) {
+      if (cmbInstitutionType.length > 0 && (institution === undefined || institution === "")) {
+        setInstitution(cmbInstitutionType.filter(cmbInstitutionType => cmbInstitutionType.code === formData?.StillBirthChildDetails?.institutionTypeCode)[0]);
+      }
+    }
+    if (formData?.StillBirthChildDetails?.institutionNameCode != null) {      
+      if (cmbInstitutionList.length > 0 && (institutionId === undefined || institutionId === "")) {
+        setInstitutionId(cmbInstitutionList.filter(cmbInstitutionList => cmbInstitutionList.code === formData?.StillBirthChildDetails?.institutionNameCode)[0]);
+        setInstitutionIdMl(cmbInstitutionList.filter(cmbInstitutionList => cmbInstitutionList.code === formData?.StillBirthChildDetails?.institutionNameCode)[0]);
+      }
+    }
+  }
   useEffect(() => {
     if (isInitialRenderInstitutionList) {
       if (institution) {
@@ -85,25 +96,27 @@ const StillBirthPlaceInstitution = ({ config, onSelect, userType, formData,
               <Dropdown
                 t={t}
                 optionKey="name"
-                option={cmbInstitution}
+                option={cmbInstitutionType}
                 selected={institution}
                 select={setselectInstitution}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_INSTITUTION_TYPE")}`}
               />
             </div>
             <div className="col-md-4">
-              <CardLabel>{`${t("CR_INSTITUTION_NAME_EN")}`}</CardLabel>
+              <CardLabel>{`${t("CR_INSTITUTION_NAME_EN")}`}<span className="mandatorycss">*</span></CardLabel>              
               <Dropdown
                 t={t}
                 optionKey="institutionName"
                 option={InstitutionFilterList}
                 selected={institutionId}
                 select={setselectInstitutionId}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_INSTITUTION_NAME_EN")}`}
               />
             </div>
             <div className="col-md-4">
-              <CardLabel>{`${t("CR_INSTITUTION_NAME_ML")}`}</CardLabel>
+              <CardLabel>{`${t("CR_INSTITUTION_NAME_ML")}`}<span className="mandatorycss">*</span></CardLabel> 
               <Dropdown
                 t={t}
                 optionKey="institutionNamelocal"
