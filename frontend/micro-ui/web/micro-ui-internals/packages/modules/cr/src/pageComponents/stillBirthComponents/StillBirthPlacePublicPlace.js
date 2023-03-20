@@ -4,10 +4,10 @@ import { useTranslation } from "react-i18next";
 
 const StillBirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPlaceType, setpublicPlaceType,
   localityNameEn, setlocalityNameEn, localityNameMl, setlocalityNameMl, streetNameEn, setstreetNameEn,
-  streetNameMl, setstreetNameMl, publicPlaceDecpEn, setpublicPlaceDecpEn, setWardNo, wardNo,isEditBirth=false
+  streetNameMl, setstreetNameMl, publicPlaceDecpEn, setpublicPlaceDecpEn, setWardNo, wardNo,isEditStillBirth=false
 }) => {
   const stateId = Digit.ULBService.getStateId();
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditStillBirth ? isEditStillBirth : false);
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
   if (tenantId === "kl") {
@@ -47,15 +47,15 @@ const StillBirthPlacePublicPlace = ({ config, onSelect, userType, formData, publ
     wardmst.namecmb = wardmst.wardno + ' ( ' + wardmst.name + ' )';
     cmbWardNoFinal.push(wardmst);
   });
-  if (isEditBirth) { 
-    if (formData?.ChildDetails?.publicPlaceType != null) {
+  if (isEditStillBirth) { 
+    if (formData?.StillBirthChildDetails?.publicPlaceType != null) {
       if (cmbOtherplace.length > 0 && (publicPlaceType === undefined || publicPlaceType === "")) {
-        setpublicPlaceType(cmbOtherplace.filter(cmbOtherplace => cmbOtherplace.code === formData?.ChildDetails?.publicPlaceType)[0]);
+        setpublicPlaceType(cmbOtherplace.filter(cmbOtherplace => cmbOtherplace.code === formData?.StillBirthChildDetails?.publicPlaceType)[0]);
       }
     }  
-    if (formData?.ChildDetails?.wardNo != null) {
+    if (formData?.StillBirthChildDetails?.wardNo != null) {
       if (cmbWardNo.length > 0 && (wardNo === undefined || wardNo === "")) {
-        setWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.ChildDetails?.wardNo)[0]);
+        setWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.StillBirthChildDetails?.wardNo)[0]);
       }
     }
   }
@@ -255,5 +255,4 @@ const StillBirthPlacePublicPlace = ({ config, onSelect, userType, formData, publ
       </React.Fragment>
     );
 };
-
 export default StillBirthPlacePublicPlace;
