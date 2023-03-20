@@ -1,4 +1,4 @@
-package org.egov.filemgmnt.web.models;
+package org.egov.filemgmnt.web.models.arisingfile;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;

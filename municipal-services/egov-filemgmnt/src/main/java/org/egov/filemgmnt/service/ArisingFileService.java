@@ -9,10 +9,9 @@ import org.egov.filemgmnt.enrichment.ArisingFileEnrichment;
 import org.egov.filemgmnt.kafka.Producer;
 
 import org.egov.filemgmnt.repository.ArisingFileRepository;
-import org.egov.filemgmnt.web.models.ArisingFile;
-import org.egov.filemgmnt.web.models.ArisingFileRequest;
-
-import org.egov.filemgmnt.web.models.ArisingFileSearchCriteria;
+import org.egov.filemgmnt.web.models.arisingfile.ArisingFile;
+import org.egov.filemgmnt.web.models.arisingfile.ArisingFileRequest;
+import org.egov.filemgmnt.web.models.arisingfile.ArisingFileSearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;

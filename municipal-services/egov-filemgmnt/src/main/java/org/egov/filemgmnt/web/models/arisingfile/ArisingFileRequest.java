@@ -1,33 +1,10 @@
-package org.egov.filemgmnt.web.models;
+package org.egov.filemgmnt.web.models.arisingfile;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
-
 import org.egov.common.contract.request.RequestInfo;
-import org.egov.common.contract.response.ResponseInfo;
-import org.egov.filemgmnt.web.models.certificate.CertificateRequest;
-import org.egov.filemgmnt.web.models.communication.CommunicationFile;
-import org.egov.filemgmnt.web.models.communication.CommunicationFileRequest;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.validation.Valid;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
-
-import org.egov.common.contract.request.RequestInfo;
 import org.springframework.validation.annotation.Validated;
-
-
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

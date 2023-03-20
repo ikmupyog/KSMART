@@ -2,8 +2,8 @@ package org.egov.filemgmnt.repository;
 
 import org.egov.filemgmnt.repository.querybuilder.ArisingFileQueryBuilder;
 import org.egov.filemgmnt.repository.rowmapper.ArisingFileRowMapper;
-import org.egov.filemgmnt.web.models.ArisingFile;
-import org.egov.filemgmnt.web.models.ArisingFileSearchCriteria;
+import org.egov.filemgmnt.web.models.arisingfile.ArisingFile;
+import org.egov.filemgmnt.web.models.arisingfile.ArisingFileSearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

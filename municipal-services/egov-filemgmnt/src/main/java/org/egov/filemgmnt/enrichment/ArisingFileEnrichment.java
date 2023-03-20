@@ -3,16 +3,12 @@ import static org.egov.filemgmnt.web.enums.ErrorCodes.IDGEN_ERROR;
 
 import java.util.List;
 import java.util.UUID;
-
+import org.egov.filemgmnt.web.models.arisingfile.ArisingFile;
+import org.egov.filemgmnt.web.models.arisingfile.ArisingFileRequest;
 import org.apache.commons.collections4.CollectionUtils;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.request.User;
 import org.egov.filemgmnt.config.FMConfiguration;
-import org.egov.filemgmnt.web.models.ApplicantFileDetail;
-import org.egov.filemgmnt.web.models.ApplicantPersonal;
-import org.egov.filemgmnt.web.models.ApplicantServiceRequest;
-import org.egov.filemgmnt.web.models.ArisingFile;
-import org.egov.filemgmnt.web.models.ArisingFileRequest;
 import org.egov.filemgmnt.web.models.AuditDetails;
 import org.egov.tracer.model.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
