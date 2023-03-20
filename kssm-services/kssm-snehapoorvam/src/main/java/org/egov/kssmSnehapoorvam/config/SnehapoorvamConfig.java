@@ -20,6 +20,12 @@ public class SnehapoorvamConfig {
     @Value("${persister.update.kssmsnehapoorvamUpdate.topic}")
     private String saveSnehapoorvamUpdateTopic;
 
+    @Value("${persister.save.kssmsnehapoorvamSchoolCreate.topic}")
+    private String saveSnehapoorvamSchoolCreateTopic;
+
+    @Value("${persister.update.kssmsnehapoorvamSchoolUpdate.topic}")
+    private String saveSnehapoorvamSchoolUpdateTopic;
+
 
 
 

@@ -1,0 +1,1 @@
+ALTER SEQUENCE m_schoolmaster_schoolid_seq RESTART WITH 11910;

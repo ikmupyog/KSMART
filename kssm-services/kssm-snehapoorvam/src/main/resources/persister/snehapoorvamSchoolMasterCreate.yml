@@ -1,0 +1,59 @@
+serviceMaps:
+  serviceName: kssm-snehapoorvam
+  mappings:
+  - version: 1.0
+    description: Persists OB  details kssm database, tr_snehapoorvam table
+    fromTopic: save-snehapoorvamSchool-topic
+    isTransaction: true
+    queryMaps:
+    - query: >
+       INSERT INTO m_schoolmaster(school_code, school_name, district_id, revenue_district_name, edu_district_name, sub_district_name, level_type_id, level_type, type_name_id, type_name, institution_type_id, institution_type_name, pincode, school_phone, school_address, school_email, headmaster_name, headmaster_phone, status_id, tny_status)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+      basePath: snehapoorvamschoolmaster.*
+      jsonMaps:
+      - jsonPath: $.snehapoorvamschoolmaster.*.school_code
+      
+      - jsonPath: $.snehapoorvamschoolmaster.*.school_name
+      
+      - jsonPath: $.snehapoorvamschoolmaster.*.district_id
+      
+      - jsonPath: $.snehapoorvamschoolmaster.*.revenue_district_name
+      
+      - jsonPath: $.snehapoorvamschoolmaster.*.edu_district_name
+      
+      - jsonPath: $.snehapoorvamschoolmaster.*.sub_district_name
+      
+      - jsonPath: $.snehapoorvamschoolmaster.*.level_type_id
+      
+      - jsonPath: $.snehapoorvamschoolmaster.*.level_type
+      
+      - jsonPath: $.snehapoorvamschoolmaster.*.type_name_id
+      
+      - jsonPath: $.snehapoorvamschoolmaster.*.type_name
+      
+      - jsonPath: $.snehapoorvamschoolmaster.*.institution_type_id
+      
+      - jsonPath: $.snehapoorvamschoolmaster.*.institution_type_name
+      
+      - jsonPath: $.snehapoorvamschoolmaster.*.pincode
+      
+      - jsonPath: $.snehapoorvamschoolmaster.*.school_phone
+      
+      - jsonPath: $.snehapoorvamschoolmaster.*.school_address
+      
+      - jsonPath: $.snehapoorvamschoolmaster.*.school_email
+      
+      - jsonPath: $.snehapoorvamschoolmaster.*.headmaster_name
+      
+      - jsonPath: $.snehapoorvamschoolmaster.*.headmaster_phone
+      
+      - jsonPath: $.snehapoorvamschoolmaster.*.status_id
+      
+      - jsonPath: $.snehapoorvamschoolmaster.*.tny_status
+
+
+
+      
+
+
+    
