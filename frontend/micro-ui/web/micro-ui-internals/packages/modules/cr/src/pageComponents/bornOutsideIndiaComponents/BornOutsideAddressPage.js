@@ -2,7 +2,12 @@ import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Toast, BackButton, Loader } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/BOBRTimeline";
 import { useTranslation } from "react-i18next";
-// import AddressPresent from "./AddressPresent";
+import BornOutsidePermanent from "./BornOutsidePermanent";
+import BornOutsidePresentOutsideIndia from "./BornOutsidePresentOutsideIndia";
+import BornoutsidePermanentInsideKerala from "./BornoutsidePermanentInsideKerala";
+import BornoutsideSameAsAbove from "./BornoutsideSameAsAbove";
+import BornOutsidePresent from "./BornOutsidePresent";
+
 // import AddressPresentInsideKerala from "./AddressPresentInsideKerala";
 // import AddressPresentOutsideKerala from "./AddressPresentOutsideKerala";
 // import AddressPresentOutsideIndia from "./AddressPresentOutsideIndia";
@@ -76,45 +81,45 @@ const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBi
     //################################### Present Country State ############################################################################################
 
     const [presentaddressCountry, setaddressCountry] = useState(formData?.AddressBirthDetails?.presentaddressCountry?.code ? formData?.AddressBirthDetails?.presentaddressCountry : formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry ? "" : "");
-    const [presentaddressStateName, setaddressStateName] = useState(formData?.AddressBirthDetails?.presentaddressStateName?.code ? formData?.AddressBirthDetails?.presentaddressStateName : formData?.ChildDetails?.AddressBirthDetails?.presentaddressStateName ? "" : "");
+ const [presentaddressStateName, setaddressStateName] = useState(formData?.AddressBirthDetails?.presentaddressStateName?.code ? formData?.AddressBirthDetails?.presentaddressStateName : formData?.ChildDetails?.AddressBirthDetails?.presentaddressStateName ? "" : "");
     const [countryvalue, setCountryValue] = useState(formData?.AddressBirthDetails?.presentaddressCountry?.code ? formData?.AddressBirthDetails?.presentaddressCountry.countrycode : formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry ? "" : "")
     const [value, setValue] = useState(formData?.AddressBirthDetails?.presentaddressStateName?.code ? formData?.AddressBirthDetails?.presentaddressStateName.statecode : formData?.ChildDetails?.AddressBirthDetails?.presentaddressStateName ? "" : "");
 
     //################################# Present Inside Kerala #########################################################################################################
 
-    const [presentWardNo, setPresentWardNo] = useState(formData.AddressBirthDetails?.presentWardNo?.code ? formData.AddressBirthDetails?.presentWardNo : formData?.ChildDetails?.AddressBirthDetails?.presentWardNo ? "" : "");
-    const [presentInsideKeralaDistrict, setinsideKeralaDistrict] = useState(formData?.AddressBirthDetails?.presentInsideKeralaDistrict?.code ? formData?.AddressBirthDetails?.presentInsideKeralaDistrict : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaDistrict ? "" : "");
-    const [presentInsideKeralaLBTypeName, setinsideKeralaLBTypeName] = useState(formData?.AddressBirthDetails?.presentInsideKeralaLBTypeName ? formData?.AddressBirthDetails?.presentInsideKeralaLBTypeName : null);
-    const [presentInsideKeralaLBName, setinsideKeralaLBName] = useState(formData?.AddressBirthDetails?.presentInsideKeralaLBName?.code ? formData?.AddressBirthDetails?.presentInsideKeralaLBName : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaLBName ? "" : "");
-    const [presentInsideKeralaTaluk, setinsideKeralaTaluk] = useState(formData?.AddressBirthDetails?.presentInsideKeralaTaluk?.code ? formData?.AddressBirthDetails?.presentInsideKeralaTaluk : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaTaluk ? "" : "");
-    const [presentInsideKeralaVillage, setinsideKeralaVillage] = useState(formData?.AddressBirthDetails?.presentInsideKeralaVillage?.code ? formData?.AddressBirthDetails?.presentInsideKeralaVillage : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaVillage ? "" : "");
-    const [presentInsideKeralaPostOffice, setinsideKeralaPostOffice] = useState(formData?.AddressBirthDetails?.presentInsideKeralaPostOffice?.code ? formData?.AddressBirthDetails?.presentInsideKeralaPostOffice : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaPostOffice ? "" : "");
-    const [presentInsideKeralaPincode, setinsideKeralaPincode] = useState(formData?.AddressBirthDetails?.presentInsideKeralaPincode ? formData?.AddressBirthDetails?.presentInsideKeralaPincode : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaPincode ? formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaPincode : "");
-    const [presentInsideKeralaHouseNameEn, setinsideKeralaHouseNameEn] = useState(formData?.AddressBirthDetails?.presentInsideKeralaHouseNameEn ? formData?.AddressBirthDetails?.presentInsideKeralaHouseNameEn : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaHouseNameEn ? formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaHouseNameEn : "");
-    const [presentInsideKeralaHouseNameMl, setinsideKeralaHouseNameMl] = useState(formData?.AddressBirthDetails?.presentInsideKeralaHouseNameMl ? formData?.AddressBirthDetails?.presentInsideKeralaHouseNameMl : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaHouseNameMl ? formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaHouseNameMl : "");
-    const [presentInsideKeralaLocalityNameEn, setinsideKeralaLocalityNameEn] = useState(formData?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn ? formData?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn ? formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn : "");
-    const [presentInsideKeralaLocalityNameMl, setinsideKeralaLocalityNameMl] = useState(formData?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl ? formData?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl ? formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl : "");
-    const [presentInsideKeralaStreetNameEn, setinsideKeralaStreetNameEn] = useState(formData?.AddressBirthDetails?.presentInsideKeralaStreetNameEn ? formData?.AddressBirthDetails?.presentInsideKeralaStreetNameEn : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameEn ? formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameEn : "");
-    const [presentInsideKeralaStreetNameMl, setinsideKeralaStreetNameMl] = useState(formData?.AddressBirthDetails?.presentInsideKeralaStreetNameMl ? formData?.AddressBirthDetails?.presentInsideKeralaStreetNameMl : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameMl ? formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameMl : "");
+    // const [presentWardNo, setPresentWardNo] = useState(formData.AddressBirthDetails?.presentWardNo?.code ? formData.AddressBirthDetails?.presentWardNo : formData?.ChildDetails?.AddressBirthDetails?.presentWardNo ? "" : "");
+    // const [presentInsideKeralaDistrict, setinsideKeralaDistrict] = useState(formData?.AddressBirthDetails?.presentInsideKeralaDistrict?.code ? formData?.AddressBirthDetails?.presentInsideKeralaDistrict : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaDistrict ? "" : "");
+    // const [presentInsideKeralaLBTypeName, setinsideKeralaLBTypeName] = useState(formData?.AddressBirthDetails?.presentInsideKeralaLBTypeName ? formData?.AddressBirthDetails?.presentInsideKeralaLBTypeName : null);
+    // const [presentInsideKeralaLBName, setinsideKeralaLBName] = useState(formData?.AddressBirthDetails?.presentInsideKeralaLBName?.code ? formData?.AddressBirthDetails?.presentInsideKeralaLBName : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaLBName ? "" : "");
+    // const [presentInsideKeralaTaluk, setinsideKeralaTaluk] = useState(formData?.AddressBirthDetails?.presentInsideKeralaTaluk?.code ? formData?.AddressBirthDetails?.presentInsideKeralaTaluk : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaTaluk ? "" : "");
+    // const [presentInsideKeralaVillage, setinsideKeralaVillage] = useState(formData?.AddressBirthDetails?.presentInsideKeralaVillage?.code ? formData?.AddressBirthDetails?.presentInsideKeralaVillage : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaVillage ? "" : "");
+    // const [presentInsideKeralaPostOffice, setinsideKeralaPostOffice] = useState(formData?.AddressBirthDetails?.presentInsideKeralaPostOffice?.code ? formData?.AddressBirthDetails?.presentInsideKeralaPostOffice : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaPostOffice ? "" : "");
+    // const [presentInsideKeralaPincode, setinsideKeralaPincode] = useState(formData?.AddressBirthDetails?.presentInsideKeralaPincode ? formData?.AddressBirthDetails?.presentInsideKeralaPincode : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaPincode ? formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaPincode : "");
+    // const [presentInsideKeralaHouseNameEn, setinsideKeralaHouseNameEn] = useState(formData?.AddressBirthDetails?.presentInsideKeralaHouseNameEn ? formData?.AddressBirthDetails?.presentInsideKeralaHouseNameEn : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaHouseNameEn ? formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaHouseNameEn : "");
+    // const [presentInsideKeralaHouseNameMl, setinsideKeralaHouseNameMl] = useState(formData?.AddressBirthDetails?.presentInsideKeralaHouseNameMl ? formData?.AddressBirthDetails?.presentInsideKeralaHouseNameMl : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaHouseNameMl ? formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaHouseNameMl : "");
+    // const [presentInsideKeralaLocalityNameEn, setinsideKeralaLocalityNameEn] = useState(formData?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn ? formData?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn ? formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn : "");
+    // const [presentInsideKeralaLocalityNameMl, setinsideKeralaLocalityNameMl] = useState(formData?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl ? formData?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl ? formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl : "");
+    // const [presentInsideKeralaStreetNameEn, setinsideKeralaStreetNameEn] = useState(formData?.AddressBirthDetails?.presentInsideKeralaStreetNameEn ? formData?.AddressBirthDetails?.presentInsideKeralaStreetNameEn : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameEn ? formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameEn : "");
+    // const [presentInsideKeralaStreetNameMl, setinsideKeralaStreetNameMl] = useState(formData?.AddressBirthDetails?.presentInsideKeralaStreetNameMl ? formData?.AddressBirthDetails?.presentInsideKeralaStreetNameMl : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameMl ? formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameMl : "");
     const [Talukvalues, setLbsTalukvalue] = useState(null);
     const [Villagevalues, setLbsVillagevalue] = useState(null);
     const [PostOfficevalues, setPostOfficevalues] = useState(null);
     //################################# Present Outside Kerala ##########################################################################################################
 
-    const [presentOutsideKeralaDistrict, setoutsideKeralaDistrict] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaDistrict?.code ? formData?.AddressBirthDetails?.presentOutsideKeralaDistrict : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaDistrict ? "" : "");
-    const [presentOutsideKeralaTaluk, setoutsideKeralaTaluk] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaTaluk?.code ? formData?.AddressBirthDetails?.presentOutsideKeralaTaluk : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaTaluk ? "" : "");
-    const [presentOutsideKeralaCityVilgeEn, setoutsideKeralaCityVilgeEn] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaCityVilgeEn ? formData?.AddressBirthDetails?.presentOutsideKeralaCityVilgeEn : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaCityVilgeEn ? formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaCityVilgeEn : "");
-    const [presentOutsideKeralaVillage, setoutsideKeralaVillage] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaVillage?.code ? formData?.AddressBirthDetails?.presentOutsideKeralaVillage : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaVillage ? "" : "");
-    // const [presentOutsideKeralaPostOffice, setoutsideKeralaPostOffice] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaPostOffice);
-    const [presentOutsideKeralaPincode, setoutsideKeralaPincode] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaPincode ? formData?.AddressBirthDetails?.presentOutsideKeralaPincode : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaPincode ? formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaPincode : "");
-    const [presentOutsideKeralaHouseNameEn, setoutsideKeralaHouseNameEn] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaHouseNameEn ? formData?.AddressBirthDetails?.presentOutsideKeralaHouseNameEn : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaHouseNameEn ? formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaHouseNameEn : "");
-    const [presentOutsideKeralaHouseNameMl, setoutsideKeralaHouseNameMl] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaHouseNameMl ? formData?.AddressBirthDetails?.presentOutsideKeralaHouseNameMl : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaHouseNameMl ? formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaHouseNameMl : "");
-    const [presentOutsideKeralaLocalityNameEn, setoutsideKeralaLocalityNameEn] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaLocalityNameEn ? formData?.AddressBirthDetails?.presentOutsideKeralaLocalityNameEn : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaLocalityNameEn ? formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaLocalityNameEn : "");
-    const [presentOutsideKeralaLocalityNameMl, setoutsideKeralaLocalityNameMl] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaLocalityNameMl ? formData?.AddressBirthDetails?.presentOutsideKeralaLocalityNameMl : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaLocalityNameMl ? formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaLocalityNameMl : "");
-    const [presentOutsideKeralaStreetNameEn, setoutsideKeralaStreetNameEn] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaStreetNameEn ? formData?.AddressBirthDetails?.presentOutsideKeralaStreetNameEn : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaStreetNameEn ? formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaStreetNameEn : "");
-    const [presentOutsideKeralaStreetNameMl, setoutsideKeralaStreetNameMl] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaStreetNameMl ? formData?.AddressBirthDetails?.presentOutsideKeralaStreetNameMl : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaStreetNameMl ? formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaStreetNameMl : "");
-    const [presentOutsideKeralaPostOfficeEn, setoutsideKeralaPostOfficeEn] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaPostOfficeEn ? formData?.AddressBirthDetails?.presentOutsideKeralaPostOfficeEn : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaPostOfficeEn ? formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaPostOfficeEn : "");
-    const [presentOutsideKeralaPostOfficeMl, setoutsideKeralaPostOfficeMl] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaPostOfficeMl ? formData?.AddressBirthDetails?.presentOutsideKeralaPostOfficeMl : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaPostOfficeMl ? formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaPostOfficeMl : "");
+    // const [presentOutsideKeralaDistrict, setoutsideKeralaDistrict] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaDistrict?.code ? formData?.AddressBirthDetails?.presentOutsideKeralaDistrict : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaDistrict ? "" : "");
+    // const [presentOutsideKeralaTaluk, setoutsideKeralaTaluk] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaTaluk?.code ? formData?.AddressBirthDetails?.presentOutsideKeralaTaluk : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaTaluk ? "" : "");
+    // const [presentOutsideKeralaCityVilgeEn, setoutsideKeralaCityVilgeEn] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaCityVilgeEn ? formData?.AddressBirthDetails?.presentOutsideKeralaCityVilgeEn : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaCityVilgeEn ? formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaCityVilgeEn : "");
+    // const [presentOutsideKeralaVillage, setoutsideKeralaVillage] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaVillage?.code ? formData?.AddressBirthDetails?.presentOutsideKeralaVillage : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaVillage ? "" : "");
+    // // const [presentOutsideKeralaPostOffice, setoutsideKeralaPostOffice] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaPostOffice);
+    // const [presentOutsideKeralaPincode, setoutsideKeralaPincode] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaPincode ? formData?.AddressBirthDetails?.presentOutsideKeralaPincode : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaPincode ? formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaPincode : "");
+    // const [presentOutsideKeralaHouseNameEn, setoutsideKeralaHouseNameEn] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaHouseNameEn ? formData?.AddressBirthDetails?.presentOutsideKeralaHouseNameEn : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaHouseNameEn ? formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaHouseNameEn : "");
+    // const [presentOutsideKeralaHouseNameMl, setoutsideKeralaHouseNameMl] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaHouseNameMl ? formData?.AddressBirthDetails?.presentOutsideKeralaHouseNameMl : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaHouseNameMl ? formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaHouseNameMl : "");
+    // const [presentOutsideKeralaLocalityNameEn, setoutsideKeralaLocalityNameEn] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaLocalityNameEn ? formData?.AddressBirthDetails?.presentOutsideKeralaLocalityNameEn : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaLocalityNameEn ? formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaLocalityNameEn : "");
+    // const [presentOutsideKeralaLocalityNameMl, setoutsideKeralaLocalityNameMl] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaLocalityNameMl ? formData?.AddressBirthDetails?.presentOutsideKeralaLocalityNameMl : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaLocalityNameMl ? formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaLocalityNameMl : "");
+    // const [presentOutsideKeralaStreetNameEn, setoutsideKeralaStreetNameEn] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaStreetNameEn ? formData?.AddressBirthDetails?.presentOutsideKeralaStreetNameEn : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaStreetNameEn ? formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaStreetNameEn : "");
+    // const [presentOutsideKeralaStreetNameMl, setoutsideKeralaStreetNameMl] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaStreetNameMl ? formData?.AddressBirthDetails?.presentOutsideKeralaStreetNameMl : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaStreetNameMl ? formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaStreetNameMl : "");
+    // const [presentOutsideKeralaPostOfficeEn, setoutsideKeralaPostOfficeEn] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaPostOfficeEn ? formData?.AddressBirthDetails?.presentOutsideKeralaPostOfficeEn : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaPostOfficeEn ? formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaPostOfficeEn : "");
+    // const [presentOutsideKeralaPostOfficeMl, setoutsideKeralaPostOfficeMl] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaPostOfficeMl ? formData?.AddressBirthDetails?.presentOutsideKeralaPostOfficeMl : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaPostOfficeMl ? formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaPostOfficeMl : "");
 
     //############################################### Present Out Side India ###########################################################################################################
 
@@ -127,7 +132,7 @@ const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBi
     const [presentOutSideIndiaadrsVillage, setadrsVillage] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaadrsVillage?.code ? formData?.AddressBirthDetails?.presentOutSideIndiaadrsVillage : formData?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaadrsVillage ? "" : "");
     const [presentOutSideIndiaadrsCityTown, setadrsCityTown] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaadrsCityTown ? formData?.AddressBirthDetails?.presentOutSideIndiaadrsCityTown : formData?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaadrsCityTown ? formData?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaadrsCityTown : "");
     const [presentOutSideIndiaPostCode, setPostCode] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaPostCode ? formData?.AddressBirthDetails?.presentOutSideIndiaPostCode : formData?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaPostCode ? formData?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaPostCode : "");
-    //const [presentOutSideCountry, setOutSideCountry] = useState(formData?.AddressBirthDetails?.presentOutSideCountry ? formData?.AddressBirthDetails?.presentOutSideCountry : null);
+ const [presentOutSideCountry, setOutSideCountry] = useState(formData?.AddressBirthDetails?.presentOutSideCountry ? formData?.AddressBirthDetails?.presentOutSideCountry : null);
 
     //############################################### Same As Above ##################################################################################################
 
@@ -159,20 +164,20 @@ const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBi
 
     //############################################################################### Permanent Outside Kerala ############################################################################
 
-    const [permntOutsideKeralaDistrict, setpermntOutsideKeralaDistrict] = useState(formData?.AddressBirthDetails?.permntOutsideKeralaDistrict?.code ? formData?.AddressBirthDetails?.permntOutsideKeralaDistrict : formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaDistrict ? "" : "");
-    const [permntOutsideKeralaTaluk, setpermntOutsideKeralaTaluk] = useState(formData?.AddressBirthDetails?.permntOutsideKeralaTaluk ? formData?.AddressBirthDetails?.permntOutsideKeralaTaluk : formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaTaluk ? "" : "");
-    const [permntOutsideKeralaCityVilgeEn, setpermntOutsideKeralaCityVilgeEn] = useState(formData?.AddressBirthDetails?.permntOutsideKeralaCityVilgeEn ? formData?.AddressBirthDetails?.permntOutsideKeralaCityVilgeEn : formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaCityVilgeEn ? formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaCityVilgeEn : "");
-    const [permntOutsideKeralaVillage, setpermntOutsideKeralaVillage] = useState(formData?.AddressBirthDetails?.permntOutsideKeralaVillage ? formData?.AddressBirthDetails?.permntOutsideKeralaVillage : formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaVillage ? "" : "");
-    // const [presentOutsideKeralaPostOffice, setoutsideKeralaPostOffice] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaPostOffice);
-    const [permntOutsideKeralaPincode, setpermntOutsideKeralaPincode] = useState(formData?.AddressBirthDetails?.permntOutsideKeralaPincode ? formData?.AddressBirthDetails?.permntOutsideKeralaPincode : formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaPincode ? formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaPincode : "");
-    const [permntOutsideKeralaHouseNameEn, setpermntOutsideKeralaHouseNameEn] = useState(formData?.AddressBirthDetails?.permntOutsideKeralaHouseNameEn ? formData?.AddressBirthDetails?.permntOutsideKeralaHouseNameEn : formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaHouseNameEn ? formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaHouseNameEn : "");
-    const [permntOutsideKeralaHouseNameMl, setpermntOutsideKeralaHouseNameMl] = useState(formData?.AddressBirthDetails?.permntOutsideKeralaHouseNameMl ? formData?.AddressBirthDetails?.permntOutsideKeralaHouseNameMl : formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaHouseNameMl ? formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaHouseNameMl : "");
-    const [permntOutsideKeralaLocalityNameEn, setpermntOutsideKeralaLocalityNameEn] = useState(formData?.AddressBirthDetails?.permntOutsideKeralaLocalityNameEn ? formData?.AddressBirthDetails?.permntOutsideKeralaLocalityNameEn : formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaLocalityNameEn ? formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaLocalityNameEn : "");
-    const [permntOutsideKeralaLocalityNameMl, setpermntOutsideKeralaLocalityNameMl] = useState(formData?.AddressBirthDetails?.permntOutsideKeralaLocalityNameMl ? formData?.AddressBirthDetails?.permntOutsideKeralaLocalityNameMl : formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaLocalityNameMl ? formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaLocalityNameMl : "");
-    const [permntOutsideKeralaStreetNameEn, setpermntOutsideKeralaStreetNameEn] = useState(formData?.AddressBirthDetails?.permntOutsideKeralaStreetNameEn ? formData?.AddressBirthDetails?.permntOutsideKeralaStreetNameEn : formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaStreetNameEn ? formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaStreetNameEn : "");
-    const [permntOutsideKeralaStreetNameMl, setpermntOutsideKeralaStreetNameMl] = useState(formData?.AddressBirthDetails?.permntOutsideKeralaStreetNameMl ? formData?.AddressBirthDetails?.permntOutsideKeralaStreetNameMl : formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaStreetNameMl ? formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaStreetNameMl : "");
-    const [permntOutsideKeralaPostOfficeEn, setpermntoutsideKeralaPostOfficeEn] = useState(formData?.AddressBirthDetails?.permntOutsideKeralaPostOfficeEn ? formData?.AddressBirthDetails?.permntOutsideKeralaPostOfficeEn : formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaPostOfficeEn ? formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaPostOfficeEn : "");
-    const [permntOutsideKeralaPostOfficeMl, setpermntoutsideKeralaPostOfficeMl] = useState(formData?.AddressBirthDetails?.permntOutsideKeralaPostOfficeMl ? formData?.AddressBirthDetails?.permntOutsideKeralaPostOfficeMl : formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaPostOfficeMl ? formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaPostOfficeMl : "");
+    // const [permntOutsideKeralaDistrict, setpermntOutsideKeralaDistrict] = useState(formData?.AddressBirthDetails?.permntOutsideKeralaDistrict?.code ? formData?.AddressBirthDetails?.permntOutsideKeralaDistrict : formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaDistrict ? "" : "");
+    // const [permntOutsideKeralaTaluk, setpermntOutsideKeralaTaluk] = useState(formData?.AddressBirthDetails?.permntOutsideKeralaTaluk ? formData?.AddressBirthDetails?.permntOutsideKeralaTaluk : formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaTaluk ? "" : "");
+    // const [permntOutsideKeralaCityVilgeEn, setpermntOutsideKeralaCityVilgeEn] = useState(formData?.AddressBirthDetails?.permntOutsideKeralaCityVilgeEn ? formData?.AddressBirthDetails?.permntOutsideKeralaCityVilgeEn : formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaCityVilgeEn ? formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaCityVilgeEn : "");
+    // const [permntOutsideKeralaVillage, setpermntOutsideKeralaVillage] = useState(formData?.AddressBirthDetails?.permntOutsideKeralaVillage ? formData?.AddressBirthDetails?.permntOutsideKeralaVillage : formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaVillage ? "" : "");
+    // // const [presentOutsideKeralaPostOffice, setoutsideKeralaPostOffice] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaPostOffice);
+    // const [permntOutsideKeralaPincode, setpermntOutsideKeralaPincode] = useState(formData?.AddressBirthDetails?.permntOutsideKeralaPincode ? formData?.AddressBirthDetails?.permntOutsideKeralaPincode : formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaPincode ? formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaPincode : "");
+    // const [permntOutsideKeralaHouseNameEn, setpermntOutsideKeralaHouseNameEn] = useState(formData?.AddressBirthDetails?.permntOutsideKeralaHouseNameEn ? formData?.AddressBirthDetails?.permntOutsideKeralaHouseNameEn : formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaHouseNameEn ? formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaHouseNameEn : "");
+    // const [permntOutsideKeralaHouseNameMl, setpermntOutsideKeralaHouseNameMl] = useState(formData?.AddressBirthDetails?.permntOutsideKeralaHouseNameMl ? formData?.AddressBirthDetails?.permntOutsideKeralaHouseNameMl : formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaHouseNameMl ? formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaHouseNameMl : "");
+    // const [permntOutsideKeralaLocalityNameEn, setpermntOutsideKeralaLocalityNameEn] = useState(formData?.AddressBirthDetails?.permntOutsideKeralaLocalityNameEn ? formData?.AddressBirthDetails?.permntOutsideKeralaLocalityNameEn : formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaLocalityNameEn ? formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaLocalityNameEn : "");
+    // const [permntOutsideKeralaLocalityNameMl, setpermntOutsideKeralaLocalityNameMl] = useState(formData?.AddressBirthDetails?.permntOutsideKeralaLocalityNameMl ? formData?.AddressBirthDetails?.permntOutsideKeralaLocalityNameMl : formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaLocalityNameMl ? formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaLocalityNameMl : "");
+    // const [permntOutsideKeralaStreetNameEn, setpermntOutsideKeralaStreetNameEn] = useState(formData?.AddressBirthDetails?.permntOutsideKeralaStreetNameEn ? formData?.AddressBirthDetails?.permntOutsideKeralaStreetNameEn : formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaStreetNameEn ? formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaStreetNameEn : "");
+    // const [permntOutsideKeralaStreetNameMl, setpermntOutsideKeralaStreetNameMl] = useState(formData?.AddressBirthDetails?.permntOutsideKeralaStreetNameMl ? formData?.AddressBirthDetails?.permntOutsideKeralaStreetNameMl : formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaStreetNameMl ? formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaStreetNameMl : "");
+    // const [permntOutsideKeralaPostOfficeEn, setpermntoutsideKeralaPostOfficeEn] = useState(formData?.AddressBirthDetails?.permntOutsideKeralaPostOfficeEn ? formData?.AddressBirthDetails?.permntOutsideKeralaPostOfficeEn : formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaPostOfficeEn ? formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaPostOfficeEn : "");
+    // const [permntOutsideKeralaPostOfficeMl, setpermntoutsideKeralaPostOfficeMl] = useState(formData?.AddressBirthDetails?.permntOutsideKeralaPostOfficeMl ? formData?.AddressBirthDetails?.permntOutsideKeralaPostOfficeMl : formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaPostOfficeMl ? formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaPostOfficeMl : "");
 
     //######################################################################## Permanent Ouside Country #############################################################################################
 
@@ -185,7 +190,7 @@ const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBi
     const [permntOutsideIndiaVillage, setadrsPermntOutsideIndiaVillage] = useState(formData?.AddressBirthDetails?.permntOutsideIndiaVillage?.code ? formData?.AddressBirthDetails?.permntOutsideIndiaVillage : formData?.ChildDetails?.AddressBirthDetails?.permntOutsideIndiaVillage ? "" : "");
     const [permntOutsideIndiaCityTown, setadrsPermntOutsideIndiaCityTown] = useState(formData?.AddressBirthDetails?.permntOutsideIndiaCityTown ? formData?.AddressBirthDetails?.permntOutsideIndiaCityTown : formData?.ChildDetails?.AddressBirthDetails?.permntOutsideIndiaCityTown ? formData?.ChildDetails?.AddressBirthDetails?.permntOutsideIndiaCityTown : "");
     const [permanentOutsideIndiaPostCode, setPermantpostCode] = useState(formData?.AddressBirthDetails?.permanentOutsideIndiaPostCode ? formData?.AddressBirthDetails?.permanentOutsideIndiaPostCode : formData?.ChildDetails?.AddressBirthDetails?.permanentOutsideIndiaPostCode ? formData?.ChildDetails?.AddressBirthDetails?.permanentOutsideIndiaPostCode : "");
-    //const [permntOutsideIndiaCountry, setPermntOutsideIndiaCountry] = useState(formData?.AddressBirthDetails?.permntOutsideIndiaCountry ? formData?.AddressBirthDetails?.permntOutsideIndiaCountry : null);
+    const [permntOutsideIndiaCountry, setPermntOutsideIndiaCountry] = useState(formData?.AddressBirthDetails?.permntOutsideIndiaCountry ? formData?.AddressBirthDetails?.permntOutsideIndiaCountry : null);
 
     //############################################################# Error Constants #####################################################################################
 
@@ -227,6 +232,7 @@ const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBi
                 } else {
                     setPresentAddressCountryError(false);
                 }
+            }
                 if (presentaddressStateName == null || presentaddressStateName == undefined) {
                     setPresentAddressStateNameError(true);
                     validFlag = false;
@@ -237,249 +243,249 @@ const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBi
                 } else {
                     setPresentAddressStateNameError(false);
                 }
-                if (presentInsideKeralaDistrict == null || presentInsideKeralaDistrict == undefined) {
-                    setPresentInsideKeralaDistrictError(true);
-                    validFlag = false;
-                    setToast(true);
-                    setTimeout(() => {
-                        setToast(false);
-                    }, 2000);
-                } else {
-                    setPresentInsideKeralaDistrictError(false);
-                }
-                if (presentInsideKeralaTaluk == null || presentInsideKeralaTaluk == undefined) {
-                    setPresentInsideKeralaTalukError(true);
-                    validFlag = false;
-                    setToast(true);
-                    setTimeout(() => {
-                        setToast(false);
-                    }, 2000);
-                } else {
-                    setPresentInsideKeralaTalukError(false);
-                }
-                if (presentInsideKeralaVillage == null || presentInsideKeralaVillage == undefined) {
-                    setPresentInsideKeralaVillageError(true);
-                    validFlag = false;
-                    setToast(true);
-                    setTimeout(() => {
-                        setToast(false);
-                    }, 2000);
-                } else {
-                    setPresentInsideKeralaVillageError(false);
-                }
-                if (presentInsideKeralaLBName == null || presentInsideKeralaLBName == undefined) {
-                    setPresentInsideKeralaLBNameError(true);
-                    validFlag = false;
-                    setToast(true);
-                    setTimeout(() => {
-                        setToast(false);
-                    }, 2000);
-                } else {
-                    setPresentInsideKeralaLBNameError(false);
-                }
-                if (presentWardNo == null || presentWardNo == undefined) {
-                    setPresentInsideKeralaWardNoError(true);
-                    validFlag = false;
-                    setToast(true);
-                    setTimeout(() => {
-                        setToast(false);
-                    }, 2000);
-                } else {
-                    setPresentInsideKeralaWardNoError(false);
-                }
-                if (presentInsideKeralaHouseNameEn == null || presentInsideKeralaHouseNameEn == undefined || presentInsideKeralaHouseNameEn == "") {
-                    setPresentInsideKeralaHouseNameEnError(true);
-                    validFlag = false;
-                    setToast(true);
-                    setTimeout(() => {
-                        setToast(false);
-                    }, 2000);
-                } else {
-                    setPresentInsideKeralaHouseNameEnError(false);
-                }
-                if (presentInsideKeralaHouseNameMl == null || presentInsideKeralaHouseNameMl == undefined || presentInsideKeralaHouseNameMl == "") {
-                    setPresentInsideKeralaHouseNameMlError(true);
-                    validFlag = false;
-                    setToast(true);
-                    setTimeout(() => {
-                        setToast(false);
-                    }, 2000);
-                } else {
-                    setPresentInsideKeralaHouseNameMlError(false);
-                }
-                if (presentInsideKeralaLocalityNameEn == null || presentInsideKeralaLocalityNameEn == undefined || presentInsideKeralaLocalityNameEn == "") {
-                    setPresentInsideKeralaLocalityNameEnError(true);
-                    validFlag = false;
-                    setToast(true);
-                    setTimeout(() => {
-                        setToast(false);
-                    }, 2000);
-                } else {
-                    setPresentInsideKeralaLocalityNameEnError(false);
-                }
-                if (presentInsideKeralaLocalityNameMl == null || presentInsideKeralaLocalityNameMl == undefined || presentInsideKeralaLocalityNameMl == "") {
-                    setPresentInsideKeralaLocalityNameMlError(true);
-                    validFlag = false;
-                    setToast(true);
-                    setTimeout(() => {
-                        setToast(false);
-                    }, 2000);
-                } else {
-                    setPresentInsideKeralaLocalityNameMlError(false);
-                }
-                if (presentInsideKeralaPostOffice == null || presentInsideKeralaPostOffice == undefined) {
-                    setPresentInsideKeralaPostOfficeError(true);
-                    validFlag = false;
-                    setToast(true);
-                    setTimeout(() => {
-                        setToast(false);
-                    }, 2000);
-                } else {
-                    setPresentInsideKeralaPostOfficeError(false);
-                }
-                if (presentInsideKeralaPincode == null || presentInsideKeralaPincode == undefined || presentInsideKeralaPincode == "") {
-                    setPresentInsideKeralaPincodeError(true);
-                    validFlag = false;
-                    setToast(true);
-                    setTimeout(() => {
-                        setToast(false);
-                    }, 2000);
-                } else {
-                    setPresentInsideKeralaPincodeError(false);
-                }
-            }
-            if (countryvalue === "IND" && value != "KL") {
-                if (presentaddressCountry == null || presentaddressCountry == undefined) {
-                    setPresentAddressCountryError(true);
-                    validFlag = false;
-                    setToast(true);
-                    setTimeout(() => {
-                        setToast(false);
-                    }, 2000);
-                } else {
-                    setPresentAddressCountryError(false);
-                }
-                if (presentaddressStateName == null || presentaddressStateName == undefined) {
-                    setPresentAddressStateNameError(true);
-                    validFlag = false;
-                    setToast(true);
-                    setTimeout(() => {
-                        setToast(false);
-                    }, 2000);
-                } else {
-                    setPresentAddressStateNameError(false);
-                }
-                if (presentOutsideKeralaDistrict == null || presentOutsideKeralaDistrict == undefined) {
-                    setPresentInsideKeralaDistrictError(true);
-                    validFlag = false;
-                    setToast(true);
-                    setTimeout(() => {
-                        setToast(false);
-                    }, 2000);
-                } else {
-                    setPresentInsideKeralaDistrictError(false);
-                }
-                if (presentOutsideKeralaTaluk == null || presentOutsideKeralaTaluk == undefined) {
-                    setPresentInsideKeralaTalukError(true);
-                    validFlag = false;
-                    setToast(true);
-                    setTimeout(() => {
-                        setToast(false);
-                    }, 2000);
-                } else {
-                    setPresentInsideKeralaTalukError(false);
-                }
-                if (presentOutsideKeralaVillage == null || presentOutsideKeralaVillage == undefined) {
-                    setPresentInsideKeralaVillageError(true);
-                    validFlag = false;
-                    setToast(true);
-                    setTimeout(() => {
-                        setToast(false);
-                    }, 2000);
-                } else {
-                    setPresentInsideKeralaVillageError(false);
-                }
-                if (presentOutsideKeralaCityVilgeEn == null || presentOutsideKeralaCityVilgeEn == undefined || presentOutsideKeralaCityVilgeEn == "") {
-                    setCityVillageError(true);
-                    validFlag = false;
-                    setToast(true);
-                    setTimeout(() => {
-                        setToast(false);
-                    }, 2000);
-                } else {
-                    setCityVillageError(false);
-                }
-                if (presentOutsideKeralaPincode == null || presentOutsideKeralaPincode == undefined || presentOutsideKeralaPincode == "") {
-                    setPresentInsideKeralaPincodeError(true);
-                    validFlag = false;
-                    setToast(true);
-                    setTimeout(() => {
-                        setToast(false);
-                    }, 2000);
-                } else {
-                    setPresentInsideKeralaPincodeError(false);
-                }
-                if (presentOutsideKeralaPostOfficeEn == null || presentOutsideKeralaPostOfficeEn == undefined || presentOutsideKeralaPostOfficeEn == "") {
-                    setPresentInsideKeralaPostOfficeError(true);
-                    validFlag = false;
-                    setToast(true);
-                    setTimeout(() => {
-                        setToast(false);
-                    }, 2000);
-                } else {
-                    setPresentInsideKeralaPostOfficeError(false);
-                }
-                if (presentOutsideKeralaPostOfficeMl == null || presentOutsideKeralaPostOfficeMl == undefined || presentOutsideKeralaPostOfficeMl == "") {
-                    setPresentInsideKeralaPostOfficeError(true);
-                    validFlag = false;
-                    setToast(true);
-                    setTimeout(() => {
-                        setToast(false);
-                    }, 2000);
-                } else {
-                    setPresentInsideKeralaPostOfficeError(false);
-                }
-                if (presentOutsideKeralaLocalityNameEn == null || presentOutsideKeralaLocalityNameEn == undefined || presentOutsideKeralaLocalityNameEn == "") {
-                    setPresentInsideKeralaLocalityNameEnError(true);
-                    validFlag = false;
-                    setToast(true);
-                    setTimeout(() => {
-                        setToast(false);
-                    }, 2000);
-                } else {
-                    setPresentInsideKeralaLocalityNameEnError(false);
-                }
-                if (presentOutsideKeralaLocalityNameMl == null || presentOutsideKeralaLocalityNameMl == undefined || presentOutsideKeralaLocalityNameMl == "") {
-                    setPresentInsideKeralaLocalityNameMlError(true);
-                    validFlag = false;
-                    setToast(true);
-                    setTimeout(() => {
-                        setToast(false);
-                    }, 2000);
-                } else {
-                    setPresentInsideKeralaLocalityNameMlError(false);
-                }
-                if (presentOutsideKeralaHouseNameEn == null || presentOutsideKeralaHouseNameEn == undefined || presentOutsideKeralaHouseNameEn == "") {
-                    setPresentInsideKeralaHouseNameEnError(true);
-                    validFlag = false;
-                    setToast(true);
-                    setTimeout(() => {
-                        setToast(false);
-                    }, 2000);
-                } else {
-                    setPresentInsideKeralaHouseNameEnError(false);
-                }
-                if (presentOutsideKeralaHouseNameMl == null || presentOutsideKeralaHouseNameMl == undefined || presentOutsideKeralaHouseNameMl == "") {
-                    setPresentInsideKeralaHouseNameMlError(true);
-                    validFlag = false;
-                    setToast(true);
-                    setTimeout(() => {
-                        setToast(false);
-                    }, 2000);
-                } else {
-                    setPresentInsideKeralaHouseNameMlError(false);
-                }
-            }
+            //     if (presentInsideKeralaDistrict == null || presentInsideKeralaDistrict == undefined) {
+            //         setPresentInsideKeralaDistrictError(true);
+            //         validFlag = false;
+            //         setToast(true);
+            //         setTimeout(() => {
+            //             setToast(false);
+            //         }, 2000);
+            //     } else {
+            //         setPresentInsideKeralaDistrictError(false);
+            //     }
+            //     if (presentInsideKeralaTaluk == null || presentInsideKeralaTaluk == undefined) {
+            //         setPresentInsideKeralaTalukError(true);
+            //         validFlag = false;
+            //         setToast(true);
+            //         setTimeout(() => {
+            //             setToast(false);
+            //         }, 2000);
+            //     } else {
+            //         setPresentInsideKeralaTalukError(false);
+            //     }
+            //     if (presentInsideKeralaVillage == null || presentInsideKeralaVillage == undefined) {
+            //         setPresentInsideKeralaVillageError(true);
+            //         validFlag = false;
+            //         setToast(true);
+            //         setTimeout(() => {
+            //             setToast(false);
+            //         }, 2000);
+            //     } else {
+            //         setPresentInsideKeralaVillageError(false);
+            //     }
+            //     if (presentInsideKeralaLBName == null || presentInsideKeralaLBName == undefined) {
+            //         setPresentInsideKeralaLBNameError(true);
+            //         validFlag = false;
+            //         setToast(true);
+            //         setTimeout(() => {
+            //             setToast(false);
+            //         }, 2000);
+            //     } else {
+            //         setPresentInsideKeralaLBNameError(false);
+            //     }
+            //     if (presentWardNo == null || presentWardNo == undefined) {
+            //         setPresentInsideKeralaWardNoError(true);
+            //         validFlag = false;
+            //         setToast(true);
+            //         setTimeout(() => {
+            //             setToast(false);
+            //         }, 2000);
+            //     } else {
+            //         setPresentInsideKeralaWardNoError(false);
+            //     }
+            //     if (presentInsideKeralaHouseNameEn == null || presentInsideKeralaHouseNameEn == undefined || presentInsideKeralaHouseNameEn == "") {
+            //         setPresentInsideKeralaHouseNameEnError(true);
+            //         validFlag = false;
+            //         setToast(true);
+            //         setTimeout(() => {
+            //             setToast(false);
+            //         }, 2000);
+            //     } else {
+            //         setPresentInsideKeralaHouseNameEnError(false);
+            //     }
+            //     if (presentInsideKeralaHouseNameMl == null || presentInsideKeralaHouseNameMl == undefined || presentInsideKeralaHouseNameMl == "") {
+            //         setPresentInsideKeralaHouseNameMlError(true);
+            //         validFlag = false;
+            //         setToast(true);
+            //         setTimeout(() => {
+            //             setToast(false);
+            //         }, 2000);
+            //     } else {
+            //         setPresentInsideKeralaHouseNameMlError(false);
+            //     }
+            //     if (presentInsideKeralaLocalityNameEn == null || presentInsideKeralaLocalityNameEn == undefined || presentInsideKeralaLocalityNameEn == "") {
+            //         setPresentInsideKeralaLocalityNameEnError(true);
+            //         validFlag = false;
+            //         setToast(true);
+            //         setTimeout(() => {
+            //             setToast(false);
+            //         }, 2000);
+            //     } else {
+            //         setPresentInsideKeralaLocalityNameEnError(false);
+            //     }
+            //     if (presentInsideKeralaLocalityNameMl == null || presentInsideKeralaLocalityNameMl == undefined || presentInsideKeralaLocalityNameMl == "") {
+            //         setPresentInsideKeralaLocalityNameMlError(true);
+            //         validFlag = false;
+            //         setToast(true);
+            //         setTimeout(() => {
+            //             setToast(false);
+            //         }, 2000);
+            //     } else {
+            //         setPresentInsideKeralaLocalityNameMlError(false);
+            //     }
+            //     if (presentInsideKeralaPostOffice == null || presentInsideKeralaPostOffice == undefined) {
+            //         setPresentInsideKeralaPostOfficeError(true);
+            //         validFlag = false;
+            //         setToast(true);
+            //         setTimeout(() => {
+            //             setToast(false);
+            //         }, 2000);
+            //     } else {
+            //         setPresentInsideKeralaPostOfficeError(false);
+            //     }
+            //     if (presentInsideKeralaPincode == null || presentInsideKeralaPincode == undefined || presentInsideKeralaPincode == "") {
+            //         setPresentInsideKeralaPincodeError(true);
+            //         validFlag = false;
+            //         setToast(true);
+            //         setTimeout(() => {
+            //             setToast(false);
+            //         }, 2000);
+            //     } else {
+            //         setPresentInsideKeralaPincodeError(false);
+            //     }
+            // }
+            // if (countryvalue === "IND" && value != "KL") {
+            //     if (presentaddressCountry == null || presentaddressCountry == undefined) {
+            //         setPresentAddressCountryError(true);
+            //         validFlag = false;
+            //         setToast(true);
+            //         setTimeout(() => {
+            //             setToast(false);
+            //         }, 2000);
+            //     } else {
+            //         setPresentAddressCountryError(false);
+            //     }
+            //     if (presentaddressStateName == null || presentaddressStateName == undefined) {
+            //         setPresentAddressStateNameError(true);
+            //         validFlag = false;
+            //         setToast(true);
+            //         setTimeout(() => {
+            //             setToast(false);
+            //         }, 2000);
+            //     } else {
+            //         setPresentAddressStateNameError(false);
+            //     }
+            //     if (presentOutsideKeralaDistrict == null || presentOutsideKeralaDistrict == undefined) {
+            //         setPresentInsideKeralaDistrictError(true);
+            //         validFlag = false;
+            //         setToast(true);
+            //         setTimeout(() => {
+            //             setToast(false);
+            //         }, 2000);
+            //     } else {
+            //         setPresentInsideKeralaDistrictError(false);
+            //     }
+            //     if (presentOutsideKeralaTaluk == null || presentOutsideKeralaTaluk == undefined) {
+            //         setPresentInsideKeralaTalukError(true);
+            //         validFlag = false;
+            //         setToast(true);
+            //         setTimeout(() => {
+            //             setToast(false);
+            //         }, 2000);
+            //     } else {
+            //         setPresentInsideKeralaTalukError(false);
+            //     }
+            //     if (presentOutsideKeralaVillage == null || presentOutsideKeralaVillage == undefined) {
+            //         setPresentInsideKeralaVillageError(true);
+            //         validFlag = false;
+            //         setToast(true);
+            //         setTimeout(() => {
+            //             setToast(false);
+            //         }, 2000);
+            //     } else {
+            //         setPresentInsideKeralaVillageError(false);
+            //     }
+            //     if (presentOutsideKeralaCityVilgeEn == null || presentOutsideKeralaCityVilgeEn == undefined || presentOutsideKeralaCityVilgeEn == "") {
+            //         setCityVillageError(true);
+            //         validFlag = false;
+            //         setToast(true);
+            //         setTimeout(() => {
+            //             setToast(false);
+            //         }, 2000);
+            //     } else {
+            //         setCityVillageError(false);
+            //     }
+            //     if (presentOutsideKeralaPincode == null || presentOutsideKeralaPincode == undefined || presentOutsideKeralaPincode == "") {
+            //         setPresentInsideKeralaPincodeError(true);
+            //         validFlag = false;
+            //         setToast(true);
+            //         setTimeout(() => {
+            //             setToast(false);
+            //         }, 2000);
+            //     } else {
+            //         setPresentInsideKeralaPincodeError(false);
+            //     }
+            //     if (presentOutsideKeralaPostOfficeEn == null || presentOutsideKeralaPostOfficeEn == undefined || presentOutsideKeralaPostOfficeEn == "") {
+            //         setPresentInsideKeralaPostOfficeError(true);
+            //         validFlag = false;
+            //         setToast(true);
+            //         setTimeout(() => {
+            //             setToast(false);
+            //         }, 2000);
+            //     } else {
+            //         setPresentInsideKeralaPostOfficeError(false);
+            //     }
+            //     if (presentOutsideKeralaPostOfficeMl == null || presentOutsideKeralaPostOfficeMl == undefined || presentOutsideKeralaPostOfficeMl == "") {
+            //         setPresentInsideKeralaPostOfficeError(true);
+            //         validFlag = false;
+            //         setToast(true);
+            //         setTimeout(() => {
+            //             setToast(false);
+            //         }, 2000);
+            //     } else {
+            //         setPresentInsideKeralaPostOfficeError(false);
+            //     }
+            //     if (presentOutsideKeralaLocalityNameEn == null || presentOutsideKeralaLocalityNameEn == undefined || presentOutsideKeralaLocalityNameEn == "") {
+            //         setPresentInsideKeralaLocalityNameEnError(true);
+            //         validFlag = false;
+            //         setToast(true);
+            //         setTimeout(() => {
+            //             setToast(false);
+            //         }, 2000);
+            //     } else {
+            //         setPresentInsideKeralaLocalityNameEnError(false);
+            //     }
+            //     if (presentOutsideKeralaLocalityNameMl == null || presentOutsideKeralaLocalityNameMl == undefined || presentOutsideKeralaLocalityNameMl == "") {
+            //         setPresentInsideKeralaLocalityNameMlError(true);
+            //         validFlag = false;
+            //         setToast(true);
+            //         setTimeout(() => {
+            //             setToast(false);
+            //         }, 2000);
+            //     } else {
+            //         setPresentInsideKeralaLocalityNameMlError(false);
+            //     }
+            //     if (presentOutsideKeralaHouseNameEn == null || presentOutsideKeralaHouseNameEn == undefined || presentOutsideKeralaHouseNameEn == "") {
+            //         setPresentInsideKeralaHouseNameEnError(true);
+            //         validFlag = false;
+            //         setToast(true);
+            //         setTimeout(() => {
+            //             setToast(false);
+            //         }, 2000);
+            //     } else {
+            //         setPresentInsideKeralaHouseNameEnError(false);
+            //     }
+            //     if (presentOutsideKeralaHouseNameMl == null || presentOutsideKeralaHouseNameMl == undefined || presentOutsideKeralaHouseNameMl == "") {
+            //         setPresentInsideKeralaHouseNameMlError(true);
+            //         validFlag = false;
+            //         setToast(true);
+            //         setTimeout(() => {
+            //             setToast(false);
+            //         }, 2000);
+            //     } else {
+            //         setPresentInsideKeralaHouseNameMlError(false);
+            //     }
+            // }
             if (countryvalue != "IND") {
 
                 if (presentaddressCountry == null || presentaddressCountry == undefined) {
@@ -492,16 +498,16 @@ const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBi
                 } else {
                     setPresentAddressCountryError(false);
                 }
-                // if (presentOutSideCountry == null || presentOutSideCountry == undefined) {
-                //     setPresentAddressCountryError(true);
-                //     validFlag = false;
-                //     setToast(true);
-                //     setTimeout(() => {
-                //         setToast(false);
-                //     }, 2000);
-                // } else {
-                //     setPresentAddressCountryError(false);
-                // }
+                if (presentOutSideCountry == null || presentOutSideCountry == undefined) {
+                    setPresentAddressCountryError(true);
+                    validFlag = false;
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+                } else {
+                    setPresentAddressCountryError(false);
+                }
                 if (presentOutSideIndiaProvinceEn == null || presentOutSideIndiaProvinceEn == undefined || presentOutSideIndiaProvinceEn == "") {
                     setPresentOutSideIndiaProvinceEnError(true);
                     validFlag = false;
@@ -608,37 +614,37 @@ const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBi
         if (validFlag === true) {
             //################################# Present Inside Kerala ############################################################################
 
-            sessionStorage.setItem("presentaddressCountry", presentaddressCountry.code);
-            sessionStorage.setItem("presentaddressStateName", presentaddressStateName.code);
-            sessionStorage.setItem("presentInsideKeralaDistrict", presentInsideKeralaDistrict ? presentInsideKeralaDistrict.code : null);
-            sessionStorage.setItem("presentInsideKeralaTaluk", presentInsideKeralaTaluk ? presentInsideKeralaTaluk.code : null);
-            sessionStorage.setItem("presentInsideKeralaVillage", presentInsideKeralaVillage ? presentInsideKeralaVillage.code : null);
-            sessionStorage.setItem("presentInsideKeralaLBName", presentInsideKeralaLBName ? presentInsideKeralaLBName : null);
-            sessionStorage.setItem("presentWardNo", presentWardNo ? presentWardNo.code : null);
-            sessionStorage.setItem("presentInsideKeralaHouseNameEn", presentInsideKeralaHouseNameEn ? presentInsideKeralaHouseNameEn : null);
-            sessionStorage.setItem("presentInsideKeralaHouseNameMl", presentInsideKeralaHouseNameMl ? presentInsideKeralaHouseNameMl : null);
-            sessionStorage.setItem("presentInsideKeralaLocalityNameEn", presentInsideKeralaLocalityNameEn ? presentInsideKeralaLocalityNameEn : null);
-            sessionStorage.setItem("presentInsideKeralaLocalityNameMl", presentInsideKeralaLocalityNameMl ? presentInsideKeralaLocalityNameMl : null);
-            sessionStorage.setItem("presentInsideKeralaStreetNameEn", presentInsideKeralaStreetNameEn ? presentInsideKeralaStreetNameEn : null);
-            sessionStorage.setItem("presentInsideKeralaStreetNameMl", presentInsideKeralaStreetNameMl ? presentInsideKeralaStreetNameMl : null);
-            sessionStorage.setItem("presentInsideKeralaPostOffice", presentInsideKeralaPostOffice ? presentInsideKeralaPostOffice.code : null);
-            sessionStorage.setItem("presentInsideKeralaPincode", presentInsideKeralaPincode ? presentInsideKeralaPincode.code : null);
+            // sessionStorage.setItem("presentaddressCountry", presentaddressCountry.code);
+            // sessionStorage.setItem("presentaddressStateName", presentaddressStateName.code);
+            // sessionStorage.setItem("presentInsideKeralaDistrict", presentInsideKeralaDistrict ? presentInsideKeralaDistrict.code : null);
+            // sessionStorage.setItem("presentInsideKeralaTaluk", presentInsideKeralaTaluk ? presentInsideKeralaTaluk.code : null);
+            // sessionStorage.setItem("presentInsideKeralaVillage", presentInsideKeralaVillage ? presentInsideKeralaVillage.code : null);
+            // sessionStorage.setItem("presentInsideKeralaLBName", presentInsideKeralaLBName ? presentInsideKeralaLBName : null);
+            // sessionStorage.setItem("presentWardNo", presentWardNo ? presentWardNo.code : null);
+            // sessionStorage.setItem("presentInsideKeralaHouseNameEn", presentInsideKeralaHouseNameEn ? presentInsideKeralaHouseNameEn : null);
+            // sessionStorage.setItem("presentInsideKeralaHouseNameMl", presentInsideKeralaHouseNameMl ? presentInsideKeralaHouseNameMl : null);
+            // sessionStorage.setItem("presentInsideKeralaLocalityNameEn", presentInsideKeralaLocalityNameEn ? presentInsideKeralaLocalityNameEn : null);
+            // sessionStorage.setItem("presentInsideKeralaLocalityNameMl", presentInsideKeralaLocalityNameMl ? presentInsideKeralaLocalityNameMl : null);
+            // sessionStorage.setItem("presentInsideKeralaStreetNameEn", presentInsideKeralaStreetNameEn ? presentInsideKeralaStreetNameEn : null);
+            // sessionStorage.setItem("presentInsideKeralaStreetNameMl", presentInsideKeralaStreetNameMl ? presentInsideKeralaStreetNameMl : null);
+            // sessionStorage.setItem("presentInsideKeralaPostOffice", presentInsideKeralaPostOffice ? presentInsideKeralaPostOffice.code : null);
+            // sessionStorage.setItem("presentInsideKeralaPincode", presentInsideKeralaPincode ? presentInsideKeralaPincode.code : null);
 
             //################################# Present Outside Kerala ############################################################################
 
-            sessionStorage.setItem("presentOutsideKeralaDistrict", presentOutsideKeralaDistrict ? presentOutsideKeralaDistrict.code : null);
-            sessionStorage.setItem("presentOutsideKeralaCityVilgeEn", presentOutsideKeralaCityVilgeEn ? presentOutsideKeralaCityVilgeEn : null);
-            sessionStorage.setItem("presentOutsideKeralaVillage", presentOutsideKeralaVillage ? presentOutsideKeralaVillage.code : null);
-            sessionStorage.setItem("presentOutsideKeralaTaluk", presentOutsideKeralaTaluk ? presentOutsideKeralaTaluk.code : null);
-            sessionStorage.setItem("presentOutsideKeralaPostOfficeEn", presentOutsideKeralaPostOfficeEn ? presentOutsideKeralaPostOfficeEn : null);
-            sessionStorage.setItem("presentOutsideKeralaPostOfficeMl", presentOutsideKeralaPostOfficeMl ? presentOutsideKeralaPostOfficeMl : null);
-            sessionStorage.setItem("presentOutsideKeralaPincode", presentOutsideKeralaPincode ? presentOutsideKeralaPincode : null);
-            sessionStorage.setItem("presentOutsideKeralaHouseNameEn", presentOutsideKeralaHouseNameEn ? presentOutsideKeralaHouseNameEn : null);
-            sessionStorage.setItem("presentOutsideKeralaHouseNameMl", presentOutsideKeralaHouseNameMl ? presentOutsideKeralaHouseNameMl : null);
-            sessionStorage.setItem("presentOutsideKeralaLocalityNameEn", presentOutsideKeralaLocalityNameEn ? presentOutsideKeralaLocalityNameEn : null);
-            sessionStorage.setItem("presentOutsideKeralaLocalityNameMl", presentOutsideKeralaLocalityNameMl ? presentOutsideKeralaLocalityNameMl : null);
-            sessionStorage.setItem("presentOutsideKeralaStreetNameEn", presentOutsideKeralaStreetNameEn ? presentOutsideKeralaStreetNameEn : null);
-            sessionStorage.setItem("presentOutsideKeralaStreetNameMl", presentOutsideKeralaStreetNameMl ? presentOutsideKeralaStreetNameMl : null);
+            // sessionStorage.setItem("presentOutsideKeralaDistrict", presentOutsideKeralaDistrict ? presentOutsideKeralaDistrict.code : null);
+            // sessionStorage.setItem("presentOutsideKeralaCityVilgeEn", presentOutsideKeralaCityVilgeEn ? presentOutsideKeralaCityVilgeEn : null);
+            // sessionStorage.setItem("presentOutsideKeralaVillage", presentOutsideKeralaVillage ? presentOutsideKeralaVillage.code : null);
+            // sessionStorage.setItem("presentOutsideKeralaTaluk", presentOutsideKeralaTaluk ? presentOutsideKeralaTaluk.code : null);
+            // sessionStorage.setItem("presentOutsideKeralaPostOfficeEn", presentOutsideKeralaPostOfficeEn ? presentOutsideKeralaPostOfficeEn : null);
+            // sessionStorage.setItem("presentOutsideKeralaPostOfficeMl", presentOutsideKeralaPostOfficeMl ? presentOutsideKeralaPostOfficeMl : null);
+            // sessionStorage.setItem("presentOutsideKeralaPincode", presentOutsideKeralaPincode ? presentOutsideKeralaPincode : null);
+            // sessionStorage.setItem("presentOutsideKeralaHouseNameEn", presentOutsideKeralaHouseNameEn ? presentOutsideKeralaHouseNameEn : null);
+            // sessionStorage.setItem("presentOutsideKeralaHouseNameMl", presentOutsideKeralaHouseNameMl ? presentOutsideKeralaHouseNameMl : null);
+            // sessionStorage.setItem("presentOutsideKeralaLocalityNameEn", presentOutsideKeralaLocalityNameEn ? presentOutsideKeralaLocalityNameEn : null);
+            // sessionStorage.setItem("presentOutsideKeralaLocalityNameMl", presentOutsideKeralaLocalityNameMl ? presentOutsideKeralaLocalityNameMl : null);
+            // sessionStorage.setItem("presentOutsideKeralaStreetNameEn", presentOutsideKeralaStreetNameEn ? presentOutsideKeralaStreetNameEn : null);
+            // sessionStorage.setItem("presentOutsideKeralaStreetNameMl", presentOutsideKeralaStreetNameMl ? presentOutsideKeralaStreetNameMl : null);
 
             //####################################### Present Outside India ##############################################################
             sessionStorage.setItem("presentOutSideIndiaAdressEn", presentOutSideIndiaAdressEn ? presentOutSideIndiaAdressEn : null);
@@ -649,7 +655,7 @@ const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBi
             sessionStorage.setItem("presentOutSideIndiaProvinceMl", presentOutSideIndiaProvinceMl ? presentOutSideIndiaProvinceMl : null);
             sessionStorage.setItem("presentOutSideIndiaadrsVillage", presentOutSideIndiaadrsVillage ? presentOutSideIndiaadrsVillage.code : null);
             sessionStorage.setItem("presentOutSideIndiaPostCode", presentOutSideIndiaPostCode ? presentOutSideIndiaPostCode : null);
-            // sessionStorage.setItem("presentOutSideCountry", presentOutSideCountry ? presentOutSideCountry.code : null);
+             sessionStorage.setItem("presentOutSideCountry", presentOutSideCountry ? presentOutSideCountry.code : null);
             sessionStorage.setItem("presentOutSideIndiaadrsCityTown", presentOutSideIndiaadrsCityTown ? presentOutSideIndiaadrsCityTown : null);
             sessionStorage.setItem("isPrsentAddress", isPrsentAddress ? isPrsentAddress : true);
 
@@ -689,44 +695,44 @@ const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBi
             sessionStorage.setItem("permntOutsideIndiaVillage", permntOutsideIndiaVillage ? permntOutsideIndiaVillage.code : null);
             sessionStorage.setItem("permntOutsideIndiaCityTown", permntOutsideIndiaCityTown ? permntOutsideIndiaCityTown : null);
             sessionStorage.setItem("permanentOutsideIndiaPostCode", permanentOutsideIndiaPostCode ? permanentOutsideIndiaPostCode : null);
-            // sessionStorage.setItem("permntOutsideIndiaCountry", permntOutsideIndiaCountry ? permntOutsideIndiaCountry.code : null);
+           sessionStorage.setItem("permntOutsideIndiaCountry", permntOutsideIndiaCountry ? permntOutsideIndiaCountry.code : null);
 
             onSelect(config.key, {
                 presentaddressCountry,
                 presentaddressStateName,
-                presentInsideKeralaLBName,
-                presentInsideKeralaDistrict,
-                presentInsideKeralaTaluk,
-                presentInsideKeralaVillage,
-                presentInsideKeralaLocalityNameEn,
-                presentInsideKeralaStreetNameEn,
-                presentInsideKeralaHouseNameEn,
-                presentInsideKeralaLocalityNameMl,
-                presentInsideKeralaStreetNameMl,
-                presentInsideKeralaHouseNameMl,
-                presentInsideKeralaPincode,
-                presentInsideKeralaPostOffice,
-                presentWardNo,
-                presentOutsideKeralaDistrict,
-                presentOutsideKeralaTaluk,
-                presentOutsideKeralaVillage,
-                presentOutsideKeralaCityVilgeEn,
-                presentOutsideKeralaPincode,
-                presentOutsideKeralaPostOfficeEn,
-                presentOutsideKeralaPostOfficeMl,
-                presentOutsideKeralaLocalityNameEn,
-                presentOutsideKeralaStreetNameEn,
-                presentOutsideKeralaHouseNameEn,
-                presentOutsideKeralaLocalityNameMl,
-                presentOutsideKeralaStreetNameMl,
-                presentOutsideKeralaHouseNameMl,
+                // presentInsideKeralaLBName,
+                // presentInsideKeralaDistrict,
+                // presentInsideKeralaTaluk,
+                // presentInsideKeralaVillage,
+                // presentInsideKeralaLocalityNameEn,
+                // presentInsideKeralaStreetNameEn,
+                // presentInsideKeralaHouseNameEn,
+                // presentInsideKeralaLocalityNameMl,
+                // presentInsideKeralaStreetNameMl,
+                // presentInsideKeralaHouseNameMl,
+                // presentInsideKeralaPincode,
+                // presentInsideKeralaPostOffice,
+                // presentWardNo,
+                // presentOutsideKeralaDistrict,
+                // presentOutsideKeralaTaluk,
+                // presentOutsideKeralaVillage,
+                // presentOutsideKeralaCityVilgeEn,
+                // presentOutsideKeralaPincode,
+                // presentOutsideKeralaPostOfficeEn,
+                // presentOutsideKeralaPostOfficeMl,
+                // presentOutsideKeralaLocalityNameEn,
+                // presentOutsideKeralaStreetNameEn,
+                // presentOutsideKeralaHouseNameEn,
+                // presentOutsideKeralaLocalityNameMl,
+                // presentOutsideKeralaStreetNameMl,
+                // presentOutsideKeralaHouseNameMl,
                 presentOutSideIndiaAdressEn,
                 presentOutSideIndiaAdressMl,
                 presentOutSideIndiaAdressEnB,
                 presentOutSideIndiaAdressMlB,
                 presentOutSideIndiaAdressMlB,
                 presentOutSideIndiaProvinceEn,
-                // presentOutSideCountry,
+                presentOutSideCountry,
                 isPrsentAddress,
 
                 permtaddressCountry,
@@ -744,19 +750,19 @@ const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBi
                 permntInKeralaAdrPincode,
                 permntInKeralaAdrPostOffice,
                 permntInKeralaWardNo,
-                permntOutsideKeralaDistrict,
-                permntOutsideKeralaTaluk,
-                permntOutsideKeralaVillage,
-                permntOutsideKeralaCityVilgeEn,
-                permntOutsideKeralaPincode,
-                permntOutsideKeralaLocalityNameEn,
-                permntOutsideKeralaStreetNameEn,
-                permntOutsideKeralaHouseNameEn,
-                permntOutsideKeralaLocalityNameMl,
-                permntOutsideKeralaStreetNameMl,
-                permntOutsideKeralaHouseNameMl,
-                permntOutsideKeralaPostOfficeEn,
-                permntOutsideKeralaPostOfficeMl,
+                // permntOutsideKeralaDistrict,
+                // permntOutsideKeralaTaluk,
+                // permntOutsideKeralaVillage,
+                // permntOutsideKeralaCityVilgeEn,
+                // permntOutsideKeralaPincode,
+                // permntOutsideKeralaLocalityNameEn,
+                // permntOutsideKeralaStreetNameEn,
+                // permntOutsideKeralaHouseNameEn,
+                // permntOutsideKeralaLocalityNameMl,
+                // permntOutsideKeralaStreetNameMl,
+                // permntOutsideKeralaHouseNameMl,
+                // permntOutsideKeralaPostOfficeEn,
+                // permntOutsideKeralaPostOfficeMl,
                 permntOutsideIndiaLineoneEn,
                 permntOutsideIndiaLineoneMl,
                 permntOutsideIndiaLinetwoEn,
@@ -765,7 +771,7 @@ const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBi
                 permntOutsideIndiaVillage,
                 permntOutsideIndiaCityTown,
                 permanentOutsideIndiaPostCode,
-                // permntOutsideIndiaCountry
+               permntOutsideIndiaCountry
             });
         }
     };
@@ -781,30 +787,30 @@ const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBi
                 {window.location.href.includes("/citizen/cr/cr-death-creation/address-death") ? <DRTimeline currentStep={2} /> : null || window.location.href.includes("employee/cr/death-flow") ? <DRTimeline currentStep={2} /> : null} */}
                 <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
 
-                    <div className="accordion-wrapper">
-                        <AddressPresent
+                    {/* <div className="accordion-wrapper">
+                        <BornOutsidePresent
                             presentaddressCountry={presentaddressCountry}
                             setaddressCountry={setaddressCountry}
                             presentaddressStateName={presentaddressStateName}
-                            setaddressStateName={setaddressStateName}
-                            value={value}
-                            setValue={setValue}
+                            // setaddressStateName={setaddressStateName}
+                            // value={value}
+                            // setValue={setValue}
                             countryvalue={countryvalue}
                             setCountryValue={setCountryValue}
-                            Villagevalues={Villagevalues}
-                            setLbsVillagevalue={setLbsVillagevalue}
+                            // Villagevalues={Villagevalues}
+                            // setLbsVillagevalue={setLbsVillagevalue}
                             permtaddressCountry={permtaddressCountry}
                             setpermtaddressCountry={setpermtaddressCountry}
-                            permtaddressStateName={permtaddressStateName}
-                            setpermtaddressStateName={setpermtaddressStateName}
+                            // permtaddressStateName={permtaddressStateName}
+                            // setpermtaddressStateName={setpermtaddressStateName}
                             isPrsentAddress={isPrsentAddress}
                             setIsPrsentAddress={setIsPrsentAddress}
                             isEditBirth={isEditBirth}
                             isEditDeath={isEditDeath}
                             formData={formData}
                         />
-                    </div>
-                    {countryvalue === "IND" && value === "KL" && (
+                    </div> */}
+                    {/* {countryvalue === "IND" && value === "KL" && (
                         <div>
                             <AddressPresentInsideKerala
                                 presentWardNo={presentWardNo}
@@ -876,8 +882,8 @@ const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBi
                                 formData={formData}
                             />
                         </div>
-                    )}
-                    {countryvalue === "IND" && value != "KL" && (
+                    )} */}
+                    {/* {countryvalue === "IND" && value != "KL" && (
                         <div>
                             <AddressPresentOutsideKerala
                                 value={value}
@@ -941,10 +947,10 @@ const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBi
                                 formData={formData}
                             />
                         </div>
-                    )}
+                    )} */}
                     {countryvalue != "IND" && (
                         <div>
-                            <AddressPresentOutsideIndia
+                            <BornOutsidePresentOutsideIndia
                                 presentOutSideIndiaAdressEn={presentOutSideIndiaAdressEn}
                                 setAdressEn={setAdressEn}
                                 presentOutSideIndiaAdressMl={presentOutSideIndiaAdressMl}
@@ -963,50 +969,51 @@ const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBi
                                 setadrsCityTown={setadrsCityTown}
                                 presentOutSideIndiaPostCode={presentOutSideIndiaPostCode}
                                 setPostCode={setPostCode}
-                                // presentOutSideCountry={presentOutSideCountry}
-                                // setOutSideCountry={setOutSideCountry}
+                                presentOutSideCountry={presentOutSideCountry}
+                                setOutSideCountry={setOutSideCountry}
                                 countryvalue={countryvalue}
                                 setCountryValue={setCountryValue}
                                 isPrsentAddress={isPrsentAddress}
                                 setIsPrsentAddress={setIsPrsentAddress}
-                                permntOutsideIndiaLineoneEn={permntOutsideIndiaLineoneEn}
-                                setadrsPermntOutsideIndiaLineoneEn={setadrsPermntOutsideIndiaLineoneEn}
-                                permntOutsideIndiaLineoneMl={permntOutsideIndiaLineoneMl}
-                                setadrsPermntOutsideIndiaLineoneMl={setadrsPermntOutsideIndiaLineoneMl}
-                                permntOutsideIndiaLinetwoEn={permntOutsideIndiaLinetwoEn}
-                                setadrsPermntOutsideIndiaLinetwoEn={setadrsPermntOutsideIndiaLinetwoEn}
-                                permntOutsideIndiaLinetwoMl={permntOutsideIndiaLinetwoMl}
-                                setadrsPermntOutsideIndiaLinetwoMl={setadrsPermntOutsideIndiaLinetwoMl}
-                                permntOutsideIndiaprovinceEn={permntOutsideIndiaprovinceEn}
-                                setPermntOutsideIndiaprovinceEn={setPermntOutsideIndiaprovinceEn}
-                                permntOutsideIndiaprovinceMl={permntOutsideIndiaprovinceMl}
-                                setPermntOutsideIndiaprovinceMl={setPermntOutsideIndiaprovinceMl}
-                                permntOutsideIndiaVillage={permntOutsideIndiaVillage}
-                                setadrsPermntOutsideIndiaVillage={setadrsPermntOutsideIndiaVillage}
-                                permntOutsideIndiaCityTown={permntOutsideIndiaCityTown}
-                                setadrsPermntOutsideIndiaCityTown={setadrsPermntOutsideIndiaCityTown}
-                                permanentOutsideIndiaPostCode={permanentOutsideIndiaPostCode}
-                                setPermantpostCode={setPermantpostCode}
-                                // permntOutsideIndiaCountry={permntOutsideIndiaCountry}
-                                // setPermntOutsideIndiaCountry={setPermntOutsideIndiaCountry}
+                                // permntOutsideIndiaLineoneEn={permntOutsideIndiaLineoneEn}
+                                // setadrsPermntOutsideIndiaLineoneEn={setadrsPermntOutsideIndiaLineoneEn}
+                                // permntOutsideIndiaLineoneMl={permntOutsideIndiaLineoneMl}
+                                // setadrsPermntOutsideIndiaLineoneMl={setadrsPermntOutsideIndiaLineoneMl}
+                                // permntOutsideIndiaLinetwoEn={permntOutsideIndiaLinetwoEn}
+                                // setadrsPermntOutsideIndiaLinetwoEn={setadrsPermntOutsideIndiaLinetwoEn}
+                                // permntOutsideIndiaLinetwoMl={permntOutsideIndiaLinetwoMl}
+                                // setadrsPermntOutsideIndiaLinetwoMl={setadrsPermntOutsideIndiaLinetwoMl}
+                                // permntOutsideIndiaprovinceEn={permntOutsideIndiaprovinceEn}
+                                // setPermntOutsideIndiaprovinceEn={setPermntOutsideIndiaprovinceEn}
+                                // permntOutsideIndiaprovinceMl={permntOutsideIndiaprovinceMl}
+                                // setPermntOutsideIndiaprovinceMl={setPermntOutsideIndiaprovinceMl}
+                                // permntOutsideIndiaVillage={permntOutsideIndiaVillage}
+                                // setadrsPermntOutsideIndiaVillage={setadrsPermntOutsideIndiaVillage}
+                                // permntOutsideIndiaCityTown={permntOutsideIndiaCityTown}
+                                // setadrsPermntOutsideIndiaCityTown={setadrsPermntOutsideIndiaCityTown}
+                                // permanentOutsideIndiaPostCode={permanentOutsideIndiaPostCode}
+                                // setPermantpostCode={setPermantpostCode}
+                                permntOutsideIndiaCountry={permntOutsideIndiaCountry}
+                                setPermntOutsideIndiaCountry={setPermntOutsideIndiaCountry}
                                 isEditBirth={isEditBirth}
                                 isEditDeath={isEditDeath}
                                 formData={formData}
                             />
                         </div>
                     )}
+                    
                     <div>
-                        <AddressSameAsAbove
+                        <BornoutsideSameAsAbove
                             isPrsentAddress={isPrsentAddress}
                             setIsPrsentAddress={setIsPrsentAddress}
-                            isEditBirth={isEditBirth}
-                            isEditDeath={isEditDeath}
-                            formData={formData}
+                            // isEditBirth={isEditBirth}
+                            // isEditDeath={isEditDeath}
+                            // formData={formData}
                         />
                     </div>
                     {isPrsentAddress === false && (
                         <div>
-                            <AddressPermanent
+                            <BornOutsidePermanent
                                 permtaddressCountry={permtaddressCountry}
                                 setpermtaddressCountry={setpermtaddressCountry}
                                 permtaddressStateName={permtaddressStateName}
@@ -1029,7 +1036,7 @@ const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBi
                     )}
                     {countryValuePermanent === "IND" && valuePermanent === "KL" && isPrsentAddress === false && (
                         <div>
-                            <AddressPermanentInsideKerala
+                            <BornoutsidePermanentInsideKerala
                                 permntInKeralaAdrDistrict={permntInKeralaAdrDistrict}
                                 setpermntInKeralaAdrDistrict={setpermntInKeralaAdrDistrict}
                                 permntInKeralaAdrLBName={permntInKeralaAdrLBName}
@@ -1070,7 +1077,7 @@ const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBi
                             />
                         </div>
                     )}
-                    {countryValuePermanent === "IND" && valuePermanent !== "KL" && isPrsentAddress === false && (
+                    {/* {countryValuePermanent === "IND" && valuePermanent !== "KL" && isPrsentAddress === false && (
                         <div>
                             <AddressPermanentOutsideKerala
                                 permntOutsideKeralaDistrict={permntOutsideKeralaDistrict}
@@ -1106,8 +1113,8 @@ const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBi
                                 formData={formData}
                             />
                         </div>
-                    )}
-                    {countryValuePermanent != "IND" && isPrsentAddress === false && (
+                    )} */}
+                    {/* {countryValuePermanent != "IND" && isPrsentAddress === false && (
                         <div>
                             <AddressPermanentOutsideIndia
                                 permntOutsideIndiaLineoneEn={permntOutsideIndiaLineoneEn}
@@ -1128,7 +1135,7 @@ const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBi
                                 setPermantpostCode={setPermantpostCode}
                                 permntOutsideIndiaprovinceMl={permntOutsideIndiaprovinceMl}
                                 setPermntOutsideIndiaprovinceMl={setPermntOutsideIndiaprovinceMl}
-                                // permntOutsideIndiaCountry={permntOutsideIndiaCountry}
+                              permntOutsideIndiaCountry={permntOutsideIndiaCountry}
                                 // setPermntOutsideIndiaCountry={setPermntOutsideIndiaCountry}
                                 countryvalue={countryvalue}
                                 setCountryValue={setCountryValue}
@@ -1137,7 +1144,7 @@ const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBi
                                 formData={formData}
                             />
                         </div>
-                    )}
+                    )} */}
                     {toast && (
                         <Toast
                             error={

@@ -950,15 +950,8 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData }) => {
             !birthPlace ||
             (value === "HOSPITAL" ? !hospitalName || !hospitalNameMl : false) ||
             (value === "INSTITUTION" ? !institution || !institutionId || !institutionIdMl : false) ||
-            (value === "HOME"
-              ? !wardNo ||
-                !adrsPostOffice ||
-                adrsPincode === "" ||
-                adrsLocalityNameEn === "" ||
-                adrsHouseNameEn === "" ||
-                adrsLocalityNameMl === "" ||
-                localityNameEn === ""
-              : false) ||
+            (value === "HOME" ? (!wardNo || !adrsPostOffice || adrsPincode === "" || adrsLocalityNameEn === ""
+            || adrsHouseNameEn === "" || adrsLocalityNameMl === "" || adrsHouseNameMl === "") : false)||
             (value === "PUBLIC_PLACES" ? !publicPlaceType || !wardNo || localityNameEn === "" || localityNameMl === "" : false) ||
             (value === "VEHICLE"
               ? !vehicleType ||

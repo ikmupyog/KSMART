@@ -57,7 +57,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
     formData?.FamilyInformationDeath?.SpouseAadhaar ? formData?.FamilyInformationDeath?.SpouseAadhaar : ""
   );
 
-  const [FatherUnavailable, setFatherUnavailable] = useState(
+  const [FatherUnavailable, setFatherUnavailablechecked] = useState(
     formData?.FamilyInformationDeath?.FatherUnavailable
       ? formData?.FamilyInformationDeath?.FatherUnavailable
       : formData?.FamilyInformationDeath?.FatherUnavailable
@@ -503,7 +503,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
               <CheckBox
                 label={t("CR_MOTHER_UNAVAILABLE")}
                 onChange={() => setMotherUnavailable(!MotherUnavailable)}
-                value={MotherUnavailable}
+                value={MotherUnavailable}setMotherUnavailable
                 checked={MotherUnavailable}
               />
             </div>

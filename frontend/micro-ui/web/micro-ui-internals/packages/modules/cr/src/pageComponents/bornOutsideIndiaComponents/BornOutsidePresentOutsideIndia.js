@@ -7,7 +7,7 @@ const BornOutsidePresentOutsideIndia = ({ config, onSelect, userType, formData, 
   presentOutSideIndiaAdressMl, setAdressMl, presentOutSideIndiaAdressEnB, setAdressEnB, presentOutSideIndiaAdressMlB,
   setAdressMlB, presentOutSideIndiaProvinceEn, setProvinceEn, presentOutSideIndiaProvinceMl, setProvinceMl, presentOutSideIndiaadrsVillage, setadrsVillage,
   presentOutSideIndiaadrsCityTown, setadrsCityTown, presentOutSideIndiaPostCode, setPostCode,
-  //  presentOutSideCountry,  setOutSideCountry, countryvalue, setCountryValue,
+ presentOutSideCountry,  setOutSideCountry, countryvalue, setCountryValue,
   isPrsentAddress, setIsPrsentAddress, permntOutsideIndiaLineoneEn, setadrsPermntOutsideIndiaLineoneEn,
   permntOutsideIndiaLineoneMl, setadrsPermntOutsideIndiaLineoneMl, permntOutsideIndiaLinetwoEn, setadrsPermntOutsideIndiaLinetwoEn,
   permntOutsideIndiaLinetwoMl, setadrsPermntOutsideIndiaLinetwoMl, permntOutsideIndiaprovinceEn, setPermntOutsideIndiaprovinceEn,
@@ -22,6 +22,7 @@ const BornOutsidePresentOutsideIndia = ({ config, onSelect, userType, formData, 
   if (tenantId === "kl") {
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
+  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? isEditDeath : false);
   let validation = {};
   const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
 
@@ -143,17 +144,17 @@ const BornOutsidePresentOutsideIndia = ({ config, onSelect, userType, formData, 
     }
   }
 
-  // function setSelectOutSideCountry(value) {
-  //   setOutSideCountry(value);
-  //   if (isPrsentAddress) {
-  //     setPermntOutsideIndiaCountry(presentOutSideCountry);
-  //   } else {
-  //     setPermntOutsideIndiaCountry('');
-  //   }
-  // }
-  // function setSelectPostCode(e) {
-  //   setPostCode(e.target.value);
-  // }
+  function setSelectOutSideCountry(value) {
+    setOutSideCountry(value);
+    if (isPrsentAddress) {
+      setPermntOutsideIndiaCountry(presentOutSideCountry);
+    } else {
+      setPermntOutsideIndiaCountry('');
+    }
+  }
+  function setSelectPostCode(e) {
+    setPostCode(e.target.value);
+  }
   function setSelectPostCode(e) {
     if (e.target.value.length != 0) {
       if (e.target.value.length > 6) {
@@ -197,7 +198,7 @@ const BornOutsidePresentOutsideIndia = ({ config, onSelect, userType, formData, 
             </div>
           </div>
           <div className="row">
-            {/* <div className="col-md-4">
+            <div className="col-md-4">
             <CardLabel>
               {`${t("CS_COMMON_COUNTRY")}`}
               <span className="mandatorycss">*</span>
@@ -210,7 +211,7 @@ const BornOutsidePresentOutsideIndia = ({ config, onSelect, userType, formData, 
               select={setSelectOutSideCountry}
               placeholder={`${t("CS_COMMON_COUNTRY")}`}
             />
-          </div> */}
+          </div>
             <div className="col-md-6">
               <CardLabel>{t("CR_STATE_REGION_PROVINCE_EN")} <span className="mandatorycss">*</span></CardLabel>
               <TextInput
