@@ -68,9 +68,9 @@ public class MarriageApplicationQueryBuilder extends BaseBirthQuery {
             addOrderByColumns("mrg.tenantid",criteria.getSortOrder(), orderBy);
         else if (criteria.getSortBy() == MarriageApplicationSearchCriteria.SortBy.applicationNumber)
             addOrderByColumns("mrg.applicationno",criteria.getSortOrder(),orderBy);
-        else if (criteria.getSortBy()== MarriageApplicationSearchCriteria.SortBy.registrationNo)
+        else if (criteria.getSortBy() == MarriageApplicationSearchCriteria.SortBy.registrationNo)
             addOrderByColumns("mrg.registrationno",criteria.getSortOrder(),orderBy);
-        else if (criteria.getSortBy()== MarriageApplicationSearchCriteria.SortBy.fileNo)
+        else if (criteria.getSortBy() == MarriageApplicationSearchCriteria.SortBy.fileNo)
             addOrderByColumns("mrg.fileno",criteria.getSortOrder(),orderBy);
         return query.toString();
     }

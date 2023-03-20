@@ -99,4 +99,9 @@ public class PresentAddressDetails {
     @JsonProperty("marriageid")
     private String marriageid;
 
+    @NotNull
+    @Size(max = 64)
+    @JsonProperty("brideGroom")
+    private String brideGroom;
+
 }

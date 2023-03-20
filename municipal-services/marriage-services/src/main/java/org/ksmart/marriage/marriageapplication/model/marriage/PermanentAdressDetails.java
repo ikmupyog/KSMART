@@ -96,6 +96,10 @@ public class PermanentAdressDetails {
     @Size(max = 64)
     @JsonProperty("marriageid")
     private String marriageid;
+    @NotNull
+    @Size(max = 64)
+    @JsonProperty("brideGroom")
+    private String brideGroom;
 
 
 }

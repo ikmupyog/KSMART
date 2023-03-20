@@ -29,6 +29,7 @@ public interface PresentAddressRowMapper {
                 .poid(rs.getString("pes_poid"))
                 .pinno(rs.getString("pes_pinno"))
                 .countryid(rs.getString("pes_countryid"))
-                .marriageid(rs.getString("pes_marriageid"))                .build();
+                .marriageid(rs.getString("pes_marriageid"))
+                .build();
     }
 }
