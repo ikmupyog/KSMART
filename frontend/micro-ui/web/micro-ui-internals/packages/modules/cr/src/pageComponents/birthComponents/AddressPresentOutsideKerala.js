@@ -20,8 +20,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
   setpermntOutsideKeralaLocalityNameMl, permntOutsideKeralaStreetNameEn, setpermntOutsideKeralaStreetNameEn,
   permntOutsideKeralaStreetNameMl, setpermntOutsideKeralaStreetNameMl, permntOutsideKeralaPostOfficeEn,
   setpermntoutsideKeralaPostOfficeEn, permntOutsideKeralaPostOfficeMl, setpermntoutsideKeralaPostOfficeMl,
-  isEditBirth = false, isEditDeath = false,
-  // isInitialRender, setIsInitialRender
+  isEditBirth = false, isEditDeath = false
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
@@ -73,7 +72,6 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
   //   });
 
   useEffect(() => {
-console.log(isInitialRender);
     if (isInitialRender) {
       if (cmbDistrict.length > 0) {
         console.log(cmbDistrict);
@@ -89,10 +87,11 @@ console.log(isInitialRender);
         // cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
         // setLbsVillagevalue(cmbFilterVillage);
         setIsInitialRender(false);
+        setInitialPresentOutsideKeralaRender(false);
       }
     }
   }, [cmbFilterDistrict, isInitialRender]);
-  
+
   if (isEditBirth || isEditDeath) {
     if (formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaDistrict != null) {
       if (cmbDistrict.length > 0 && (presentOutsideKeralaDistrict === undefined || presentOutsideKeralaDistrict === "")) {

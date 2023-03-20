@@ -135,10 +135,10 @@ const BirthAcknowledgement = ({ data, onSuccess, userType, isEditBirth = false }
   };
   let enableLoader = (mutation.isIdle || mutation.isLoading);
   if (enableLoader) { return (<Loader />) }
-  else if (((mutation?.isSuccess == false && mutation?.isIdle == false) || (mutation1?.isSuccess == false && mutation1?.isIdle == false))) {
+  else if (((mutation?.isSuccess == false && mutation?.isIdle == false))) {
     return (
       <Card>
-        <BannerPicker t={t} data={mutation.data || mutation1.data} isSuccess={mutation.isSuccess || mutation1.isSuccess} isLoading={(mutation?.isLoading || mutation1?.isLoading)} />
+        <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation?.isLoading)} />
         {<CardText>{t("CR_BIRTH_CREATION_FAILED_RESPONSE")}</CardText>}
         <Link to={`/digit-ui/citizen`}>
           <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />

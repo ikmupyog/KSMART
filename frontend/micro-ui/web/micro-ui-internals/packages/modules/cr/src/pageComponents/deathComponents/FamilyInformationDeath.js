@@ -96,7 +96,18 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
   const [inputValue, setInputValue] = useState("");
 
   const onSkip = () => onSelect();
-
+// function setFatherUnavailablechecked(e){
+//   if (e.target.checked === true) {
+//     setFatherUnavailable(e.target.checked);("")
+//     setSelectFatherNameEn
+//     setFatherNameMl("");
+//     setFatherAadharNo("");
+//   } else {
+//     setFatherUnavailable(e.target.checked);
+//     setDateOfDeath("");
+//     setDeathTime("");
+//   }
+// }
   function setSelectFatherNameEn(e) {
     if (e.target.value.length === 51) {
       return false;
@@ -413,7 +424,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
             <div className="col-md-6">
               <CheckBox
                 label={t("CR_FATHER_UNAVAILABLE")}
-                onChange={() => setFatherUnavailable(!FatherUnavailable)}
+                onChange={() => setFatherUnavailablechecked(!FatherUnavailable)}
                 value={FatherUnavailable}
                 checked={FatherUnavailable}
               />

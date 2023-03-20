@@ -97,7 +97,7 @@ if(wfdata)
     return <Loader />;
   }
 
-  if (application?.applicationDetails?.length === 0) {
+  if (application?.ChildDetails?.length === 0) {
     history.goBack();
   }
 
