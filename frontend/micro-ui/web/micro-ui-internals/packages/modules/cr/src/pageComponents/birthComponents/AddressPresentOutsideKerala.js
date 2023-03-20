@@ -74,7 +74,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
   useEffect(() => {
     console.log(isInitialRender);
     console.log(sessionStorage.getItem("presentOutsideKeralaFlag"));
-    if (isInitialRender || sessionStorage.getItem("presentOutsideKeralaFlag")) {
+    if (isInitialRender || sessionStorage.getItem("presentOutsideKeralaFlag")===true) {
       if (cmbDistrict.length > 0) {
         console.log(cmbDistrict);
         console.log(value);
