@@ -405,7 +405,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
       } else {
         setMotherProfessionError(false);
       }
-      if (motherAadhar != null || motherAadhar != "" || motherAadhar != undefined) {
+      if (motherAadhar != null) {
         let adharLength = motherAadhar;
         if (adharLength.length < 12 || adharLength.length > 12) {
           validFlag = false;
@@ -464,7 +464,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
       } else {
         setFatherProfError(false);
       }
-      if (fatherAadhar != null || fatherAadhar != "" || fatherAadhar != undefined) {
+      if (fatherAadhar != null) {
         let adharLength = fatherAadhar;
         if (adharLength.length < 12 || adharLength.length > 12) {
           validFlag = false;
@@ -513,7 +513,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
       }
     }
     if (isFatherInfo === false && isMotherInfo === false) {
-      if ((motherAadhar != null || motherAadhar != "" || motherAadhar != undefined) && (fatherAadhar != null || fatherAadhar != "" || fatherAadhar != undefined)) {
+      if (motherAadhar != null && fatherAadhar != null) {
         if (motherAadhar === fatherAadhar) {
           validFlag = false;
           setAdhaarDuplicationError(true);
@@ -752,14 +752,14 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                     <TextInput
                       t={t}
                       isMandatory={false}
-                      type={"number"}
+                      type={"text"}
                       optionKey="i18nKey"
                       name="orderofChildren"
                       value={orderofChildren}
                       onChange={setSelectOrderofChildren}
                       disable={isDisableEdit}
                       placeholder={`${t("CR_ORDER_CURRENT_DELIVERY")}`}
-                      {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "number", title: t("CR_INVALID_ORDER_CURRENT_DELIVERY") })}
+                      {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_ORDER_CURRENT_DELIVERY") })}
                     />
                   </div>
                   <div className="col-md-4">
