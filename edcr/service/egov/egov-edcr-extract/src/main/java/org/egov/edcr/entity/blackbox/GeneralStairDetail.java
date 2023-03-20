@@ -45,22 +45,50 @@
  *  In case of any queries, you can reach eGovernments Foundation at contact@egovernments.org.
  */
 
-package org.egov.common.entity.edcr;
+package org.egov.edcr.entity.blackbox;
 
 import java.util.List;
 
-public class DARoom extends Measurement {
+import org.egov.common.entity.edcr.GeneralStair;
+import org.egov.common.entity.edcr.Measurement;
+import org.kabeja.dxf.DXFLWPolyline;
+import org.kabeja.dxf.DXFLine;
 
-    private static final long serialVersionUID = 29L;
-    
-    private transient List<Measurement> measurements;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-	public List<Measurement> getMeasurements() {
-		return measurements;
-	}
+public class GeneralStairDetail extends GeneralStair {
 
-	public void setMeasurements(List<Measurement> measurements) {
-		this.measurements = measurements;
-	}
+    private static final long serialVersionUID = 35L;
+
+    @JsonIgnore
+    private transient List<DXFLWPolyline> stairPolylines;
+    @JsonIgnore
+    private transient List<Measurement> flightPolyLines;
+    @JsonIgnore
+    private transient List<DXFLine> lines;
+
+	public List<DXFLWPolyline> getStairPolylines() {
+        return stairPolylines;
+    }
+
+    public void setStairPolylines(List<DXFLWPolyline> stairPolylines) {
+        this.stairPolylines = stairPolylines;
+    }
+
+    public List<Measurement> getFlightPolyLines() {
+        return flightPolyLines;
+    }
+
+    public void setFlightPolyLines(List<Measurement> flightPolyLines) {
+        this.flightPolyLines = flightPolyLines;
+    }
+
+    public List<DXFLine> getLines() {
+        return lines;
+    }
+
+    public void setLines(List<DXFLine> lines) {
+        this.lines = lines;
+    }
 
 }

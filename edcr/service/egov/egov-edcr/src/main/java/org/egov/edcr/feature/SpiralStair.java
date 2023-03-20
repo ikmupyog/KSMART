@@ -69,89 +69,99 @@ import org.springframework.stereotype.Service;
 @Service
 public class SpiralStair extends FeatureProcess {
 	private static final Logger LOG = LogManager.getLogger(SpiralStair.class);
-	private static final String FLOOR = "Floor";
-	private static final String EXPECTED_DIAMETER = "1.50";
-	private static final String RULE42_5_IV = "42-5-iv";
-	private static final String DIAMETER_DESCRIPTION = "Minimum diameter for spiral fire stair %s";
+    private static final String FLOOR = "Floor";
+    private static final String EXPECTED_DIAMETER = "1.50";
+    private static final String RULE114_7 = "114(6)";
+    private static final String RULE47_1 = "47(1)";
+    private static final String DIAMETER_DESCRIPTION = "Minimum diameter for spiral fire stair %s";
 
 	@Override
 	public Plan process(Plan plan) {
+    	LOG.info("Processing spiral stair....");
 		blk: for (Block block : plan.getBlocks()) {
 			if (block.getBuilding() != null && !block.getBuilding().getOccupancies().isEmpty()) {
-				/*
-				 * if (Util.checkExemptionConditionForBuildingParts(block) ||
-				 * Util.checkExemptionConditionForSmallPlotAtBlkLevel(planDetail.getPlot(),
-				 * block)) { continue blk; }
-				 */
+
+				if (Util.checkExemptionConditionForBuildingParts(block)
+						|| Util.checkExemptionConditionForSmallPlotAtBlkLevel(plan.getPlot(), block)) {
+					continue blk;
+				}
+				 
 
 				ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
 				scrutinyDetail.addColumnHeading(1, RULE_NO);
 				scrutinyDetail.addColumnHeading(2, FLOOR);
 				scrutinyDetail.addColumnHeading(3, DESCRIPTION);
 				scrutinyDetail.addColumnHeading(4, REQUIRED);
-				scrutinyDetail.addColumnHeading(5, PERMISSIBLE);
+				scrutinyDetail.addColumnHeading(5, PROVIDED);
 				scrutinyDetail.addColumnHeading(6, STATUS);
 				scrutinyDetail.setKey("Block_" + block.getNumber() + "_" + "Spiral Fire Stair");
 
 				List<Floor> floors = block.getBuilding().getFloors();
+                Floor topMostFloor = floors.stream()
+                        .filter(floor -> floor.getTerrace() || floor.getUpperMost())
+                        .findAny()
+                        .orElse(null);
 
 				for (Floor floor : floors) {
+					boolean belowTopMostFloor = topMostFloor != null ? floor.getNumber() == topMostFloor.getNumber() - 1
+							: false;
+					if (!floor.getTerrace() && !floor.getUpperMost() && !belowTopMostFloor) {
+						boolean isTypicalRepititiveFloor = false;
+						Map<String, Object> typicalFloorValues = Util.getTypicalFloorValues(block, floor,
+								isTypicalRepititiveFloor);
 
-					boolean isTypicalRepititiveFloor = false;
-					Map<String, Object> typicalFloorValues = Util.getTypicalFloorValues(block, floor,
-							isTypicalRepititiveFloor);
+						List<org.egov.common.entity.edcr.SpiralStair> spiralStairs = floor.getSpiralStairs();
 
-					List<org.egov.common.entity.edcr.SpiralStair> spiralStairs = floor.getSpiralStairs();
+						if (spiralStairs.size() != 0) {
+							boolean valid = false;
 
-					if (spiralStairs.size() != 0) {
-						boolean valid = false;
+							for (org.egov.common.entity.edcr.SpiralStair spiralStair : spiralStairs) {
+								List<Circle> spiralPolyLines = spiralStair.getCircles();
 
-						for (org.egov.common.entity.edcr.SpiralStair spiralStair : spiralStairs) {
-							List<Circle> spiralPolyLines = spiralStair.getCircles();
+								if (!(Boolean) typicalFloorValues.get("isTypicalRepititiveFloor")) {
+									if (Util.roundOffTwoDecimal(block.getBuilding().getBuildingHeight())
+											.compareTo(Util.roundOffTwoDecimal(BigDecimal.valueOf(10))) > 0
+											&& !spiralPolyLines.isEmpty()) {
+										valid = true;
+									}
+									String value = typicalFloorValues.get("typicalFloors") != null
+											? (String) typicalFloorValues.get("typicalFloors")
+											: " floor " + floor.getNumber();
 
-							if (!(Boolean) typicalFloorValues.get("isTypicalRepititiveFloor")) {
-								if (Util.roundOffTwoDecimal(block.getBuilding().getBuildingHeight())
-										.compareTo(Util.roundOffTwoDecimal(BigDecimal.valueOf(10))) > 0
-										&& !spiralPolyLines.isEmpty()) {
-									valid = true;
-								}
-								String value = typicalFloorValues.get("typicalFloors") != null
-										? (String) typicalFloorValues.get("typicalFloors")
-										: " floor " + floor.getNumber();
+									if (valid) {
+										setReportOutputDetailsFloorStairWise(plan, RULE47_1, value,
+												spiralStair.getNumber(), "",
+												"spiral stair of fire stair not allowed for building with height > 9 for block "
+														+ block.getNumber() + " " + value,
+												Result.Not_Accepted.getResultVal(), scrutinyDetail);
+									} else {
 
-								if (valid) {
-									setReportOutputDetailsFloorStairWise(plan, RULE42_5_IV, value,
-											spiralStair.getNumber(), "",
-											"spiral stair of fire stair not allowed for building with height > 9 for block "
-													+ block.getNumber() + " " + value,
-											Result.Not_Accepted.getResultVal(), scrutinyDetail);
-								} else {
+										if (!spiralPolyLines.isEmpty()) {
+											Circle minSpiralStair = spiralPolyLines.stream()
+													.min(Comparator.comparing(Circle::getRadius)).get();
 
-									if (!spiralPolyLines.isEmpty()) {
-										Circle minSpiralStair = spiralPolyLines.stream()
-												.min(Comparator.comparing(Circle::getRadius)).get();
+											BigDecimal minRadius = minSpiralStair.getRadius();
 
-										BigDecimal minRadius = minSpiralStair.getRadius();
+											BigDecimal radius = Util.roundOffTwoDecimal(minRadius);
+											BigDecimal diameter = Util.roundOffTwoDecimal(
+													radius.multiply(Util.roundOffTwoDecimal(BigDecimal.valueOf(2))));
+											BigDecimal minDiameter = Util.roundOffTwoDecimal(BigDecimal.valueOf(1.50));
 
-										BigDecimal radius = Util.roundOffTwoDecimal(minRadius);
-										BigDecimal diameter = Util.roundOffTwoDecimal(
-												radius.multiply(Util.roundOffTwoDecimal(BigDecimal.valueOf(2))));
-										BigDecimal minDiameter = Util.roundOffTwoDecimal(BigDecimal.valueOf(1.50));
-
-										if (diameter.compareTo(minDiameter) >= 0) {
-											setReportOutputDetailsFloorStairWise(plan, RULE42_5_IV, value,
-													String.format(DIAMETER_DESCRIPTION, spiralStair.getNumber()),
-													EXPECTED_DIAMETER, String.valueOf(diameter),
-													Result.Accepted.getResultVal(), scrutinyDetail);
-										} else {
-											setReportOutputDetailsFloorStairWise(plan, RULE42_5_IV, value,
-													String.format(DIAMETER_DESCRIPTION, spiralStair.getNumber()),
-													EXPECTED_DIAMETER, String.valueOf(diameter),
-													Result.Not_Accepted.getResultVal(), scrutinyDetail);
+											if (diameter.compareTo(minDiameter) >= 0) {
+												setReportOutputDetailsFloorStairWise(plan, RULE114_7, value,
+														String.format(DIAMETER_DESCRIPTION, spiralStair.getNumber()),
+														EXPECTED_DIAMETER, String.valueOf(diameter),
+														Result.Accepted.getResultVal(), scrutinyDetail);
+											} else {
+												setReportOutputDetailsFloorStairWise(plan, RULE114_7, value,
+														String.format(DIAMETER_DESCRIPTION, spiralStair.getNumber()),
+														EXPECTED_DIAMETER, String.valueOf(diameter),
+														Result.Not_Accepted.getResultVal(), scrutinyDetail);
+											}
 										}
 									}
-								}
 
+								}
 							}
 						}
 					}
@@ -168,7 +178,7 @@ public class SpiralStair extends FeatureProcess {
 		details.put(FLOOR, floor);
 		details.put(DESCRIPTION, description);
 		details.put(REQUIRED, expected);
-		details.put(PERMISSIBLE, actual);
+		details.put(PROVIDED, actual);
 		details.put(STATUS, status);
 		scrutinyDetail.getDetail().add(details);
 		pl.getReportOutput().getScrutinyDetails().add(scrutinyDetail);

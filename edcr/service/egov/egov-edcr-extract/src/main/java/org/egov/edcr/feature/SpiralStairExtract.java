@@ -53,9 +53,9 @@ public class SpiralStairExtract extends FeatureExtract {
                     if (!spiralStairNames.isEmpty())
                         for (String spiralStairName : spiralStairNames) {
                             String[] array = spiralStairName.split("_");
-                            if (array[7] != null && !array[7].isEmpty()) {
+                            if (array[5] != null && !array[5].isEmpty()) {
                                 SpiralStair spiralStair = new SpiralStair();
-                                spiralStair.setNumber(array[7]);
+                                spiralStair.setNumber(array[5]);
                                 // extract polylines in BLK_n_FLR_i_SPIRAL_FIRE_STAIR_k
                                 List<DXFCircle> spiralFireEscapeStairPolyLines = Util.getPolyCircleByLayer(planDetail.getDoc(),
                                         String.format(layerNames.getLayerName("LAYER_NAME_FLOOR_SPIRAL_STAIR"), block.getNumber(),

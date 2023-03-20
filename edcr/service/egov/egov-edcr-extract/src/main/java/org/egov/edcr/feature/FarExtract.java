@@ -54,6 +54,7 @@ import org.egov.edcr.constants.DxfFileConstants;
 import org.egov.edcr.entity.blackbox.FireStairDetail;
 import org.egov.edcr.entity.blackbox.FloorDetail;
 import org.egov.edcr.entity.blackbox.FloorUnitDetail;
+import org.egov.edcr.entity.blackbox.GeneralStairDetail;
 import org.egov.edcr.entity.blackbox.LiftDetail;
 import org.egov.edcr.entity.blackbox.MeasurementDetail;
 import org.egov.edcr.entity.blackbox.OccupancyDetail;
@@ -718,6 +719,7 @@ public class FarExtract extends FeatureExtract {
                     floorUnit.setOccupancy(occupancy);
                     floorUnit.setPolyLine(flrUnitPLine);
                     floorUnit.setArea(Util.getPolyLineArea(flrUnitPLine));
+                    floorUnit.setColorCode(flrUnitPLine.getColor());
                     i++;
                     Polygon polygon = Util.getPolygon(flrUnitPLine);
                     BigDecimal deduction = BigDecimal.ZERO;
@@ -1016,7 +1018,7 @@ public class FarExtract extends FeatureExtract {
 				String[] stairName = generalStairName.split("_");
 				String stairNo = stairName[5];
 				if (stairName.length == 6 && stairNo != null && !stairNo.isEmpty()) {
-					GeneralStair generalStair = new GeneralStair();
+					GeneralStairDetail generalStair = new GeneralStairDetail();
 					generalStair.setNumber(stairNo);
 
 					// set polylines in BLK_n_FLR_i_STAIR_k
@@ -1046,7 +1048,7 @@ public class FarExtract extends FeatureExtract {
 					}
 
 					List<DXFLWPolyline> generalStairPolyLines = Util.getPolyLinesByLayer(doc, stairLayerName);
-
+					generalStair.setStairPolylines(generalStairPolyLines);
 					if (!generalStairPolyLines.isEmpty()) {
 						List<Measurement> stairMeasurements = generalStairPolyLines.stream()
 								.map(flightPolyLine -> new MeasurementDetail(flightPolyLine, true))
@@ -1056,7 +1058,8 @@ public class FarExtract extends FeatureExtract {
 
 					String flightLayerNamePattern = String.format(layerNames.getLayerName("LAYER_NAME_STAIR_FLIGHT"),
 							block.getNumber(), floor.getNumber(), stairNo);
-
+					List<DXFLine> generalStairLines = Util.getLinesByLayer(doc, flightLayerNamePattern);
+					  generalStair.setLines(generalStairLines);
 					addFlight(pl, flightLayerNamePattern, generalStair, highRise);
 
 					String landingNamePattern = String.format(layerNames.getLayerName("LAYER_NAME_STAIR_LANDING"),
@@ -1070,7 +1073,7 @@ public class FarExtract extends FeatureExtract {
 			}
 	}
     
-	private void addFlight(PlanDetail pl, String flightLayerNamePattern, GeneralStair generalStair, boolean highRise) {
+	private void addFlight(PlanDetail pl, String flightLayerNamePattern, GeneralStairDetail generalStair, boolean highRise) {
 	    DXFDocument doc = pl.getDoc();
 		List<String> flightLayerNames = Util.getLayerNamesLike(doc, flightLayerNamePattern);
 
@@ -1110,7 +1113,7 @@ public class FarExtract extends FeatureExtract {
 
 				// set number of rises
 				List<DXFLine> fireStairLines = Util.getLinesByLayer(doc, flightLayer);
-				
+				generalStair.setLines(fireStairLines);
 				if (generalStair.getFloorHeight() != null) {
 					BigDecimal height = generalStair.getFloorHeight();
 					BigDecimal noOfRises = height.divide(highRise ? BigDecimal.valueOf(0.19) : BigDecimal.valueOf(0.15),
@@ -1119,15 +1122,10 @@ public class FarExtract extends FeatureExtract {
 					flight.setNoOfRises(noOfRises);
 				}
 
-				flight.setNoOfRises(BigDecimal.valueOf(fireStairLines.size()));
+				//flight.setNoOfRises(BigDecimal.valueOf(fireStairLines.size()));
 				
 
                 // set lines in BLK_n_FLR_i_STAIR_k
-				/*
-				 * List<DXFLine> generalStairLines = Util.getLinesByLayer(doc, flightLayerName);
-				 * generalStair.setLines(generalStairLines);
-				 */
-
 				flights.add(flight);
 
 			}

@@ -216,7 +216,7 @@ public class FireStair extends FeatureProcess {
                     if (fireStairs.size() != 0) {
 
                         for (org.egov.common.entity.edcr.FireStair fireStair : fireStairs) {
-                            List<Measurement> flightPolyLines = ((FireStairDetail) fireStair).getFlightPolyLines();
+                            List<Measurement> flightPolyLines = fireStair.getStairMeasurements();
                             List<List<BigDecimal>> flightLengths = fireStair.getFlights().stream().map(Flight::getLengthOfFlights).collect(Collectors.toList());
                             List<List<BigDecimal>> flightWidths = fireStair.getFlights().stream().map(Flight::getWidthOfFlights).collect(Collectors.toList());
                             // Boolean flightPolyLineClosed = fireStair.getFlightPolyLineClosed();

@@ -161,7 +161,7 @@ public class MeanOfAccess extends FeatureProcess {
             BigDecimal totalFloorAreaOfAllBlocks = pl.getVirtualBuilding().getTotalFloorArea() == null ? BigDecimal.ZERO
                     : pl.getVirtualBuilding().getTotalFloorArea();
             List<Map<String, Object>> listOfOccupancyMinimumAccessWidthMap = new ArrayList<>();
-            if (pl.getVirtualBuilding() != null && !pl.getVirtualBuilding().getOccupancies().isEmpty()) {
+            if (pl.getVirtualBuilding() != null && !pl.getVirtualBuilding().getOccupancyTypes().isEmpty()) {
                 if (pl.getVirtualBuilding().getOccupancyTypes().stream()
                         .anyMatch(occ -> !(occ.getType().getCode().equals(B1)
                                 || occ.getType().getCode().equals(B2)))) {
@@ -312,7 +312,7 @@ public class MeanOfAccess extends FeatureProcess {
                         }
                         occupancyMinimumAccessWidthMap.put("subRule", subRule);
                         occupancyMinimumAccessWidthMap.put("minAccessWidth", minimumAccessWidth);
-                        occupancyMinimumAccessWidthMap.put(OCCUPANCY, occupancy.getType().getCode());
+                        occupancyMinimumAccessWidthMap.put(OCCUPANCY, occupancy.getType().getName());
                         listOfOccupancyMinimumAccessWidthMap.add(occupancyMinimumAccessWidthMap);
                     }
                 } else {
@@ -495,7 +495,7 @@ public class MeanOfAccess extends FeatureProcess {
                 if (pl.getPlanInformation().getAccessWidth()
                         .compareTo((BigDecimal) mapOfFinalAccessWidthValues.get("minAccessWidth")) >= 0)
                     valid = true;
-                String occupancyName = Util.getOccupancyByCode(pl,  mapOfFinalAccessWidthValues.get(OCCUPANCY).toString()).getType().getName();
+                String occupancyName = mapOfFinalAccessWidthValues.get(OCCUPANCY).toString();
                 if (valid) {
                     setReportOutputDetails(pl, (String) mapOfFinalAccessWidthValues.get("subRule"), SUB_RULE_DES,
                     		occupancyName,

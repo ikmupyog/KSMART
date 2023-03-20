@@ -1,5 +1,7 @@
 package org.egov.edcr.feature;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,7 +21,6 @@ import org.egov.edcr.constants.DxfFileConstants;
 import org.egov.edcr.entity.blackbox.MeasurementDetail;
 import org.egov.edcr.entity.blackbox.PlanDetail;
 import org.egov.edcr.service.LayerNames;
-import org.egov.edcr.utility.DcrConstants;
 import org.egov.edcr.utility.Util;
 import org.kabeja.dxf.DXFConstants;
 import org.kabeja.dxf.DXFDocument;
@@ -28,7 +29,6 @@ import org.kabeja.dxf.DXFLayer;
 import org.kabeja.dxf.DXFLine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @Service
 public class GeneralStairExtract extends FeatureExtract {
@@ -38,24 +38,60 @@ public class GeneralStairExtract extends FeatureExtract {
 	@Override
 	public PlanDetail extract(PlanDetail pl) {
 		/*
-		 * for (Block block : pl.getBlocks()) if (block.getBuilding() != null &&
-		 * !block.getBuilding().getFloors().isEmpty()) { boolean highRise =
-		 * block.getBuilding().getBuildingHeight()
-		 * .setScale(DcrConstants.DECIMALDIGITS_MEASUREMENTS,
-		 * DcrConstants.ROUNDMODE_MEASUREMENTS)
-		 * .compareTo(BigDecimal.valueOf(16).setScale(DcrConstants.
-		 * DECIMALDIGITS_MEASUREMENTS, DcrConstants.ROUNDMODE_MEASUREMENTS)) > 0;
-		 * 
-		 * for (Floor floor : block.getBuilding().getFloors()) addGeneralStairs(pl,
-		 * block, floor, highRise); }
+		 * for (Block block : pl.getBlocks()) { if (block.getBuilding() != null &&
+		 * !block.getBuilding().getFloors().isEmpty()) { for (Floor floor :
+		 * block.getBuilding().getFloors()) { List<GeneralStair> generalStairs =
+		 * floor.getGeneralStairs(); if (generalStairs != null &&
+		 * !generalStairs.isEmpty()) { for (GeneralStair fireStair : generalStairs) {
+		 * List<Flight> flightPolyLines = fireStair.getFlights(); if (flightPolyLines !=
+		 * null && !flightPolyLines.isEmpty()) { for(Flight flight : flightPolyLines) {
+		 * validateDimensions(pl, block.getNumber(), floor.getNumber(),
+		 * fireStair.getNumber(), flight.getFlights()); } } } } } } }
 		 */
-		return pl;
-	}
+        return pl;
+    }
+	
+
 
 	@Override
 	public PlanDetail validate(PlanDetail pl) {
-		return pl;
-	}
+        for (Block block : pl.getBlocks()) {
+            if (block.getBuilding() != null && !block.getBuilding().getFloors().isEmpty()) {
+                for (Floor floor : block.getBuilding().getFloors()) {
+                    List<GeneralStair> generalStairs = floor.getGeneralStairs();
+                    if (generalStairs != null && !generalStairs.isEmpty()) {
+                        for (GeneralStair fireStair : generalStairs) {
+                            List<Flight> flightPolyLines = fireStair.getFlights();
+                            if (flightPolyLines != null && !flightPolyLines.isEmpty()) {
+                            	for(Flight flight : flightPolyLines) {
+                                validateDimensions(pl, block.getNumber(), floor.getNumber(), fireStair.getNumber(),
+                                		flight.getFlights());
+                            	}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return pl;
+    }
+	
+    private void validateDimensions(PlanDetail pl, String blockNo, int floorNo, String stairNo,
+            List<Measurement> flightPolyLines) {
+        int count = 0;
+        for (Measurement m : flightPolyLines) {
+            if (m.getInvalidReason() != null && m.getInvalidReason().length() > 0) {
+                count++;
+            }
+        }
+        if (count > 0) {
+        	String flightLayerName = String.format(layerNames.getLayerName("LAYER_NAME_STAIR_FLIGHT"),
+        			blockNo, floorNo, stairNo);
+            pl.addError(String.format(flightLayerName, blockNo, floorNo, stairNo),
+                    count + " number of flight polyline not having only 4 points in layer "
+                            + String.format(flightLayerName, blockNo, floorNo, stairNo));
+        }
+    }
 
 	private void addGeneralStairs(PlanDetail pl, Block block, Floor floor, boolean highRise) {
 		if (!block.getTypicalFloor().isEmpty())
