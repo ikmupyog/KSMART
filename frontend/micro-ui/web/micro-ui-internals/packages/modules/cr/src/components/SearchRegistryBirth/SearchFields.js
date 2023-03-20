@@ -51,7 +51,7 @@ const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
   return (
     <>
       <SearchField>
-        <label>{t("Registry ID")}</label>
+        <label>{t("REGISTRATION_NUMBER")}</label>
         <TextInput name="id" inputRef={register({})} />
       </SearchField>
       <SearchField>
