@@ -16,8 +16,8 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useHistory, useParams } from "react-router-dom";
 import getPDFData from "../../../utils/getCRBirthAcknowledgementData";
-import CRWFApplicationTimeline from "../../../pageComponents/birthComponents/CRWFApplicationTimeline";
-import CRDocument from "../../../pageComponents/birthComponents/CRDocuments";
+import CRDWFApplicationTimeline from "../../../pageComponents/deathComponents/CRDWFApplicationTimeline";
+import CRDDocuments from "../../../pageComponents/deathComponents/CRDDocuments";
 
 const getAddress = (address, t) => {
   return `${address?.doorNo ? `${address?.doorNo}, ` : ""} ${address?.street ? `${address?.street}, ` : ""}${
@@ -48,7 +48,7 @@ const CRDeathApplicationDetails = () => {
   //todo: hook should return object to render the data
   const { isLoading, isError, error, data: application, error: errorApplication } = Digit.Hooks.cr.useCRApplicationDeathDetails({
     tenantId: tenantId,
-    applicationNumber: id,
+    DeathACKNo: id,
   });
   
   
@@ -68,7 +68,7 @@ const CRDeathApplicationDetails = () => {
   useEffect(() => {
     if (application) {
       Digit.PaymentService.fetchBill(tenantId, {
-        consumerCode: application[0]?.applicationNumber,
+        consumerCode: application[0]?.DeathACKNo,
         businessService: application[0]?.businessService,
       }).then((res) => {
         setBill(res?.Bill[0]);
@@ -78,10 +78,10 @@ const CRDeathApplicationDetails = () => {
   const [showOptions, setShowOptions] = useState(false);
   useEffect(() => {}, [application, errorApplication]);
 
-  const businessservice= application?.[0]?.businessservice;
+  const businessservice= application?.deathCertificateDtls?.[0]?.businessService;
   const { isLoading : iswfLoading, data : wfdata } = Digit.Hooks.useWorkflowDetails({
     tenantId: application?.[0]?.tenantId,
-    id: id,
+    DeathACKNo: id,
     moduleCode: businessservice,
   });
 
@@ -171,69 +171,69 @@ if(wfdata)
           return (
             <div key={index} className="employee-data-table">
            
-             <CardSectionHeader>{t("CR_CHILD_INFO")}</CardSectionHeader>
+             <CardSectionHeader>{t("CR_DECEASED_INFO")}</CardSectionHeader>
               <Row
                 className="employee-data-table"
                 label={t("TL_COMMON_TABLE_COL_APP_NO")}
-                text={application?.applicationNumber}
+                text={application?.InformationDeath?.DeathACKNo}
                 textStyle={{ whiteSpace: "pre", border: "none" }}
               />
                <Row
                 className="employee-data-table"
-                label={t("CR_NAME")} 
-                text={application?.childFirstNameEn}
+                label={t("CR_DECEASED_NAME")} 
+                text={application?.InformationDeath?.DeceasedFirstNameEn}
                 textStyle={{ whiteSpace: "pre", border: "none" }}
               />
               <Row
                 className="employee-data-table"
                 label={t("CR_GENDER")}
-                text={application?.gender}
+                text={application?.InformationDeath?.DeceasedGender}
                 textStyle={{ whiteSpace: "pre", border: "none" }}
               />
               <Row
                 className="employee-data-table"
-                label={t("CR_BIRTH_DOB_LABEL")}
-                text={application?.childDOB}
+                label={t("CR_DECEASED_DOD_LABEL")}
+                text={application?.InformationDeath?.DateOfDeath}
                 textStyle={{ whiteSpace: "pre", border: "none" }}
               />
               <Row
                 className="employee-data-table"
-                label={t("CR_PLACE_OF_BIRTH")}
-                text={application?.birthPlace}
+                label={t("CR_PLACE_OF_DEATH")}
+                text={application?.InformationDeath?.DeathPlaceHospitalNameEn}
                 textStyle={{ whiteSpace: "pre", border: "none" }}
               />
               
-              <CardSectionHeader>{t("CR_PARENTS_DETAILS")}</CardSectionHeader>
+              <CardSectionHeader>{t("CR_FAMILY_DETAILS")}</CardSectionHeader>
               <Row
                 className="employee-data-table"
                 label={t("CR_COMMON_MOTHER_NAME")} 
-                text={application?.ParentsDetails?.motherFirstNameEn}
+                text={application?.FamilyInformationDeath?.MotherNameEn}
                 textStyle={{ whiteSpace: "pre", border: "none" }}
               />
 
                <Row
                 className="employee-data-table"
                 label={t("CR_BIRTH_FATHERNAME_LABEL")}
-                text={application?.ParentsDetails?.fatherFirstNameEn}
+                text={application?.FamilyInformationDeath?.FatherNameEn}
                 textStyle={{ whiteSpace: "pre", border: "none" }}
               />
               <Row
                 className="employee-data-table"
                 label={t("CR_ADDRESS")}
-                text={application?.AddressBirthDetails?.houseNameNoEnPresent}
+                text={application?.AddressBirthDetails?.PermanentAddrHoueNameEn}
                 textStyle={{ whiteSpace: "pre", border: "none" }}
               />
                <Row
                  className="employee-data-table"
                  label={`${t("UC_SEARCH_MOBILE_NO_LABEL")}`}
-                 text={application?.ParentsDetails?.fatherMobile}
+                 text={application?.FamilyInformationDeath?.FamilyMobileNo}
                  textStyle={{ whiteSpace: "pre", border: "none" }}
                     />
              {/* <Row label={t("TL_APPLICATION_CATEGORY")} text={t("ACTION_TEST_TRADE_LICENSE")} textStyle={{ whiteSpace: "pre" }} /> */}
               <Row
                 style={{ border: "none" }}
                 label={t("TL_COMMON_TABLE_COL_STATUS")}
-                text={t(`WF_BIRTHHOSP21_${application?.applicationStatus}`)}
+                text={t(`WF_DEATHHOSP_${application?.applicationStatus}`)}
                 textStyle={{ whiteSpace: "pre", border: "none" }}
               />
              
@@ -371,7 +371,7 @@ if(wfdata)
               {/* <CardSubHeader>{t("TL_COMMON_DOCS")}</CardSubHeader>
               <div>
                 {application?.tradeLicenseDetail?.applicationDocuments?.length > 0 ? (
-                  <CRDocument value={{...application}}></CRDocument>
+                  <CRDDocument value={{...application}}></CRDDocument>
                 ) : (
                   <StatusTable>
                     <Row text={t("TL_NO_DOCUMENTS_MSG")} />
@@ -382,7 +382,7 @@ if(wfdata)
               <CardSubHeader>{t("TL_TIMELINE_DOCS")}</CardSubHeader>
               <div>
                 {workflowDocs?.length > 0 ? (
-                  <CRDocument value={{"workflowDocs":workflowDocs}}></CRDocument>
+                  <CRDDocument value={{"workflowDocs":workflowDocs}}></CRDDocument>
                 ) : (
                   <StatusTable>
                     <Row text={t("TL_NO_DOCUMENTS_MSG")} />
@@ -390,11 +390,11 @@ if(wfdata)
                 )}
               </div>
               </div>}
-              <CRWFApplicationTimeline application={application} id={id} />
+              <CRDWFApplicationTimeline application={application} id={id} />
               {application?.applicationStatus === "CITIZENACTIONREQUIRED" ? (
                 <Link
                   to={{
-                    pathname: `/digit-ui/citizen/tl/tradelicence/edit-application/${application?.applicationNumber}/${application?.tenantId}`,
+                    pathname: `/digit-ui/citizen/tl/tradelicence/edit-application/${application?.DeathACKNo}/${application?.tenantId}`,
                     state: {},
                   }}
                 >
@@ -402,10 +402,10 @@ if(wfdata)
                 </Link>
               ) : null}
               {/* //TODO: change the actions to be fulfilled from workflow nextactions */}
-              {application?.applicationStatus === "INITIATED" ? (
+              {application?.applicationStatus === "PENDINGPAYMENT" ? (
                 <Link
                   to={{
-                    pathname: `/digit-ui/citizen/payment/collect/${application?.businessservice}/${application?.applicationNumber}`,
+                    pathname: `/digit-ui/citizen/payment/collect/${application?.businessService}/${application?.InformationDeath?.DeathACKNo}`,
                     state: { bill, tenantId: tenantId },
                   }}
                 >

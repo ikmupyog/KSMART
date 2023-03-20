@@ -394,13 +394,13 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, }) =>
         motherFirstNameMl,
         motherPassportNo,
      
-        motherMaritalStatus,
+  
         motherMarriageAge,
         motherMarriageBirth,
         motherEducation,
         motherProfession,
         motherNationality,
-        orderofChildren,
+       
   
         fatherFirstNameEn,
         fatherFirstNameMl,

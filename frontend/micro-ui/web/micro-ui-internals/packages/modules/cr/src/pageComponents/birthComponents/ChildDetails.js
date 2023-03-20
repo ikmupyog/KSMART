@@ -1484,7 +1484,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
                 />
               </div> */}
               <div className="col-md-3">
-                <CardLabel>{`${t("CR_PREGNANCY_DURATION")}`}</CardLabel>
+                <CardLabel>{`${t("CR_PREGNANCY_DURATION")}`} <span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}

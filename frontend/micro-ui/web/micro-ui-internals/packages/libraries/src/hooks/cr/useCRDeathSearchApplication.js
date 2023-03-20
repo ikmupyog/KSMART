@@ -18,15 +18,16 @@ const combineResponse = (applications, workflowData, totalCount) => {
   }));
 };
 
-const useCRDeathSearch = (params, config) => {
+const useSearchDeath = (params, config) => {
   return async () => {
    // const response = await CRDeathService.CRDeathsearch({ tenantId, filters });
-    const data = await Digit.CRDeathService.CRDeathsearch(params, config);
+   console.log(params);
+    const data = await Digit.CRDeathService.search(params, config);
     console.log(data);
     const tenant = data?.deathCertificateDtls?.[0]?.tenantId;
     console.log(data);
     
-    const businessIds = data?.deathCertificateDtls.map((application) => application.DeathACKNo);
+    const businessIds = data?.deathCertificateDtls.map((application) => application?.InformationDeath?.DeathACKNo);
     const workflowRes = await Digit.WorkflowService.getAllApplication(tenant, { businessIds: businessIds.join() });
     return combineResponse(data?.deathCertificateDtls, workflowRes?.ProcessInstances, data?.Count);
   };
@@ -35,27 +36,29 @@ const useCRDeathSearch = (params, config) => {
 export const useCRDeathSearchApplication = (params, config = {}, t) => {
   const client = useQueryClient();
   let multiownername = "";
-  const result = useQuery(["TL_APPLICATIONS_LIST", params], useCRDeathSearch(params, config), {
+  console.log(params);
+  const result = useQuery(["CR__DEATH_APPLICATIONS_LIST", params], useSearchDeath(params, config), {
     staleTime: Infinity,
     select: (data) => {
      return data.map((i) => ({
        
-        TL_COMMON_TABLE_COL_APP_NO: i.DeathACKNo,
-        CR_FATHER_NAME: i.ParentsDetails?.fatherFirstNameEn,
-        CR_MOTHER_NAME: i.ParentsDetails?.motherFirstNameEn,
-        CR_ADDRESS:i.AddressBirthDetails?.houseNameNoEnPresent,
-        TL_COMMON_CITY_NAME: i.tenantid,
+        TL_COMMON_TABLE_COL_APP_NO: i.InformationDeath?.DeathACKNo,
+        CR_DECEASED_NAME: i.InformationDeath?.DeceasedFirstNameEn,
+        CR_DECEASED_FATHER_NAME: i.FamilyInformationDeath?.FatherNameEn,
+        CR_DECEASED_MOTHER_NAME: i.FamilyInformationDeath?.MotherNameEn,
+        CR_ADDRESS:i.AddressBirthDetails?.PermanentAddrHoueNameEn,
+        TL_COMMON_CITY_NAME: i.InformationDeath?.TenantId,
         
       }));
     },
   });
-  return { ...result, revalidate: () => client.invalidateQueries(["TL_APPLICATIONS_LIST", params]) };
+  return { ...result, revalidate: () => client.invalidateQueries(["CR__DEATH_APPLICATIONS_LIST", params]) };
 };
 
 export const useCRApplicationDeathDetails = (params, config) => {
   const client = useQueryClient();
 
-  const result = useQuery(["TL_APPLICATION_DETAILS", params], useCRDeathSearch(params, config), {
+  const result = useQuery(["TL_APPLICATION_DETAILS", params], useSearchDeath(params, config), {
     staleTime: Infinity,
     // select: (data) => {
     //   return data.map(i => ({

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, Loader } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 
-const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCountry, setaddressCountry,
+const BornOutsidePresent = ({ config, onSelect, userType, formData, presentaddressCountry, setaddressCountry,
     presentaddressStateName, setaddressStateName, value, setValue, countryvalue, setCountryValue,
     permtaddressCountry, setpermtaddressCountry, permtaddressStateName, setpermtaddressStateName, isPrsentAddress,
     setIsPrsentAddress, Villagevalues, setLbsVillagevalue, isEditBirth = false, isEditDeath = false,
@@ -51,40 +51,40 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
     let cmbFilterState = [];
     let cmbFilterVillage = [];
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        if (isInitialRender) {
-            if (cmbLB.length > 0) {
-                currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
-                console.log(currentLB);
-                // setAdrsLBName(currentLB[0]);
-                cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
-                setaddressCountry(cmbFilterCountry[0]);
-                setCountryValue(cmbFilterCountry[0].countrycode)
-                cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
-                setaddressStateName(cmbFilterState[0]);
-                setValue(cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode)[0].statecode);
-                cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
-                setLbsVillagevalue(cmbFilterVillage);
-                setIsInitialRender(false);
-            }
-        }
-    }, [Country, State, localbodies, Villagevalues, isInitialRender]);
+    //     if (isInitialRender) {
+    //         if (cmbLB.length > 0) {
+    //             currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
+    //             console.log(currentLB);
+    //             // setAdrsLBName(currentLB[0]);
+    //             cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
+    //             setaddressCountry(cmbFilterCountry[0]);
+    //             setCountryValue(cmbFilterCountry[0].countrycode)
+    //             cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
+    //             setaddressStateName(cmbFilterState[0]);
+    //             setValue(cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode)[0].statecode);
+    //             cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
+    //             setLbsVillagevalue(cmbFilterVillage);
+    //             setIsInitialRender(false);
+    //         }
+    //     }
+    // }, [Country, State, localbodies, Villagevalues, isInitialRender]);
 
-    if (isEditBirth || isEditDeath) {
-        if (formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry != null) {
-            if (cmbCountry.length > 0 && (presentaddressCountry === undefined || presentaddressCountry === "")) {
-                setaddressCountry(cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry)[0]);
-                setCountryValue(value.formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry);
-            }
-        }
-        if (formData?.ChildDetails?.AddressBirthDetails?.presentaddressStateName != null) {
-            if (cmbState.length > 0 && (presentaddressStateName === undefined || presentaddressStateName === "")) {
-                setaddressStateName(cmbState.filter(cmbState => cmbState.code === formData?.ChildDetails?.AddressBirthDetails?.presentaddressStateName)[0]);
-                setValue(value.formData?.ChildDetails?.AddressBirthDetails?.presentaddressStateName);
-            }
-        }
-    }
+    // if (isEditBirth || isEditDeath) {
+    //     if (formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry != null) {
+    //         if (cmbCountry.length > 0 && (presentaddressCountry === undefined || presentaddressCountry === "")) {
+    //             setaddressCountry(cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry)[0]);
+    //             setCountryValue(value.formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry);
+    //         }
+    //     }
+    //     if (formData?.ChildDetails?.AddressBirthDetails?.presentaddressStateName != null) {
+    //         if (cmbState.length > 0 && (presentaddressStateName === undefined || presentaddressStateName === "")) {
+    //             setaddressStateName(cmbState.filter(cmbState => cmbState.code === formData?.ChildDetails?.AddressBirthDetails?.presentaddressStateName)[0]);
+    //             setValue(value.formData?.ChildDetails?.AddressBirthDetails?.presentaddressStateName);
+    //         }
+    //     }
+    // }
     const onSkip = () => onSelect();
 
     function setSelectaddressCountry(value) {
@@ -99,11 +99,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
     function setSelectaddressStateName(value) {
         setaddressStateName(value);
         setValue(value.code);
-        if (value.code != "kl") {
-            sessionStorage.setItem("presentOutsideKeralaFlag", true);
-        } else {
-            sessionStorage.setItem("presentOutsideKeralaFlag", false);
-        }
+        setIsInitialRender(true);
         if (isPrsentAddress) {
             setpermtaddressStateName(value);
         } else {
@@ -112,7 +108,13 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
     }
 
     const goNext = () => {
-        
+        // sessionStorage.setItem("presentaddressCountry", presentaddressCountry.code);
+        // sessionStorage.setItem("presentaddressStateName", presentaddressStateName.code);
+
+        // onSelect(config.key, {
+        //     presentaddressCountry,
+        //     presentaddressStateName,
+        // });
     };
     if (isCountryLoading || isStateLoading || islocalbodiesLoading) {
         return <Loader></Loader>;
@@ -165,4 +167,4 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
             </React.Fragment>
         );
 };
-export default AddressPresent;
+export default BornOutsidePresent;

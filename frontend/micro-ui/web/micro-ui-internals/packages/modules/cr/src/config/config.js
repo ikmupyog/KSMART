@@ -314,7 +314,7 @@ export const newConfig = [
       },
       {
         route: "born-outside-address",
-        component: "AddressBasePage",
+        component: "BornOutsideAddressPage",
         texts: {
           headerCaption: "",
           header: "",
@@ -323,7 +323,7 @@ export const newConfig = [
           skipText: "",
         },
         withoutLabel: true,
-        key: "AddressBirthDetails",
+        key: "BornOutsideAddressBirthDetails",
         nextStep: "born-outside-static-infn",
         type: "component",
         hideInEmployee: false,

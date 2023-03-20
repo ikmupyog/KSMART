@@ -62,7 +62,7 @@ const App = () => {
         <PrivateRoute path={`${path}/cr/death/my-application`} component={MyCRDeathApplications} />
         <PrivateRoute path={`${path}/cr/my-bills`} component={() => <MyCRApplications view="bills" />} />
         <PrivateRoute path={`${path}/cr/application/:id/:tenantId`} component={ApplicationDetails} />
-        <PrivateRoute path={`${path}/cr/application/:id/:tenantId`} component={ApplicationDeathDetails} />
+        <PrivateRoute path={`${path}/cr/death/application/:id/:tenantId`} component={ApplicationDeathDetails} />
         <PrivateRoute path={`${path}/create-death-certificate`} component={() => <DeathCertificateSearch parentUrl={path}/>} /> 
         <PrivateRoute parentRoute={path} path={`${path}/create-birth-certificate`} component={() => <BirthCertificateSearch parentUrl={path} />} /> 
        </AppContainer>

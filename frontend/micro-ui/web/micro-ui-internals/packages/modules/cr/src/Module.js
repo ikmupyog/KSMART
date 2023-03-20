@@ -56,7 +56,7 @@ import BornOutsidePresentOutsideIndia from "./pageComponents/bornOutsideIndiaCom
 import BornoutsidePermanentInsideKerala from "./pageComponents/bornOutsideIndiaComponents/BornoutsidePermanentInsideKerala";
 import BornoutsideSameAsAbove from "./pageComponents/bornOutsideIndiaComponents/BornoutsideSameAsAbove";
 import BornOutsidePermanent from "./pageComponents/bornOutsideIndiaComponents/BornOutsidePermanent";
-
+import BornOutsidePresent from "./pageComponents/bornOutsideIndiaComponents/BornOutsidePresent";
 // import SearchRegistry from "../src/pageComponents/adoptionComponents/SearchRegistry";
 import AdoptionMotherInformation from "../src/pageComponents/adoptionComponents/AdoptionMotherInformation";
 import AdoptiveParentsDetails from "../src/pageComponents/adoptionComponents/AdoptiveParentsDetails";
@@ -123,7 +123,9 @@ import Response from "./pages/Response";
 import EmployeeApp from "./pages/employee";
 import CitizenApp from "./pages/citizen";
 import CRDocuments from "./pageComponents/birthComponents/CRDocuments";
+import CRDDocuments from "./pageComponents/deathComponents/CRDDocuments";
 import CRWFApplicationTimeline from "./pageComponents/birthComponents/CRWFApplicationTimeline";
+import CRDWFApplicationTimeline from "./pageComponents/deathComponents/CRDWFApplicationTimeline";
 
 
 import CreateMarriageRegistration from "./pages/citizen/MarriageRegistration";
@@ -275,6 +277,7 @@ const componentsToRegister = {
   BornoutsidePermanentInsideKerala,
   BornoutsideSameAsAbove,
   BornOutsidePermanent,
+  BornOutsidePresent,
   //////////////////
   // SearchRegistry,
   AdoptionDetails,
@@ -326,7 +329,9 @@ const componentsToRegister = {
   CRCreateDeathRegistration: CreateDeathRegistration,
   TLResponse: Response,
   CRDocuments,
+  CRDDocuments,
   CRWFApplicationTimeline,
+  CRDWFApplicationTimeline,
   //Marriage
   CRCreateMarriageRegistration: CreateMarriageRegistration,
   GroomDetails,

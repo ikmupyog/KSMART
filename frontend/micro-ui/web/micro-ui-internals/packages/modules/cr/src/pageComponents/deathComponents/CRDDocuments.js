@@ -9,9 +9,9 @@ const PDFSvg = ({ width = 20, height = 20, style }) => (
   </svg>
 );
 
-function CRDocuments({ value = {} }) {
+function CRDDocuments({ value = {} }) {
   const { t } = useTranslation();
-  const { isLoading, isError, error, data } = Digit.Hooks.cr.useCRDocumentSearch(
+  const { isLoading, isError, error, data } = Digit.Hooks.tl.useTLDocumentSearch(
     {
       value,
     },
@@ -54,4 +54,4 @@ function CRDocuments({ value = {} }) {
   );
 }
 
-export default CRDocuments;
+export default CRDDocuments;

@@ -64,7 +64,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
   const [isMotherInfo, setIsMotherInfo] = useState(formData?.ParentsDetails?.isMotherInfo ? formData?.ParentsDetails?.isMotherInfo :
     formData?.ChildDetails?.ParentsDetails?.ismotherInfo ? formData?.ChildDetails?.ParentsDetails?.ismotherInfo : false);
   const [motherAadhar, setMotherAadhar] = useState(formData?.ParentsDetails?.motherAadhar ? formData?.ParentsDetails?.motherAadhar :
-    formData?.ChildDetails?.ParentsDetails?.motherAadhar ? formData?.ChildDetails?.ParentsDetails?.motherAadhar : "");
+    formData?.ChildDetails?.ParentsDetails?.motherAadhar ? formData?.ChildDetails?.ParentsDetails?.motherAadhar : null);
   const [motherFirstNameEn, setMotherFirstNameEn] = useState(formData?.ParentsDetails?.motherFirstNameEn ? formData?.ParentsDetails?.motherFirstNameEn :
     formData?.ChildDetails?.ParentsDetails?.motherFirstNameEn ? formData?.ChildDetails?.ParentsDetails?.motherFirstNameEn : "");
   const [motherFirstNameMl, setMotherFirstNameMl] = useState(formData?.ParentsDetails?.motherFirstNameMl ? formData?.ParentsDetails?.motherFirstNameMl :
@@ -90,7 +90,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
   const [isFatherInfo, setIsFatherInfo] = useState(formData?.ParentsDetails?.isFatherInfo ? formData?.ParentsDetails?.isFatherInfo :
     formData?.ChildDetails?.ParentsDetails?.isfatherInfo ? formData?.ChildDetails?.ParentsDetails?.isfatherInfo : false);
   const [fatherAadhar, setFatherAadhar] = useState(formData?.ParentsDetails?.fatherAadhar ? formData?.ParentsDetails?.fatherAadhar :
-    formData?.ChildDetails?.ParentsDetails?.fatherAadhar ? formData?.ChildDetails?.ParentsDetails?.fatherAadhar : "");
+    formData?.ChildDetails?.ParentsDetails?.fatherAadhar ? formData?.ChildDetails?.ParentsDetails?.fatherAadhar : null);
   const [fatherFirstNameEn, setFatherFirstNameEn] = useState(formData?.ParentsDetails?.fatherFirstNameEn ? formData?.ParentsDetails?.fatherFirstNameEn :
     formData?.ChildDetails?.ParentsDetails?.fatherFirstNameEn ? formData?.ChildDetails?.ParentsDetails?.fatherFirstNameEn : "");
   const [fatherFirstNameMl, setFatherFirstNameMl] = useState(formData?.ParentsDetails?.fatherFirstNameMl ? formData?.ParentsDetails?.fatherFirstNameMl :
@@ -302,7 +302,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
       setIsMotherInfo(e.target.checked);
       setMotherFirstNameEn("");
       setMotherFirstNameMl("");
-      setMotherAadhar("");
+      setMotherAadhar(null);
       setMotherMaritalStatus(null);
       setMotherMarriageAge("");
       setMotherMarriageBirth("");
@@ -319,7 +319,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
   function setFatherInfo(e) {
     if (e.target.checked == true) {
       setIsFatherInfo(e.target.checked);
-      setFatherAadhar("");
+      setFatherAadhar(null);
       setFatherFirstNameEn("");
       setFatherFirstNameMl("");
       // setFatherNationality(null);
@@ -405,7 +405,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
       } else {
         setMotherProfessionError(false);
       }
-      if (motherAadhar != null || motherAadhar != "" || motherAadhar != undefined) {
+      if (motherAadhar != null) {
         let adharLength = motherAadhar;
         if (adharLength.length < 12 || adharLength.length > 12) {
           validFlag = false;
@@ -464,7 +464,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
       } else {
         setFatherProfError(false);
       }
-      if (fatherAadhar != null || fatherAadhar != "" || fatherAadhar != undefined) {
+      if (fatherAadhar != null) {
         let adharLength = fatherAadhar;
         if (adharLength.length < 12 || adharLength.length > 12) {
           validFlag = false;
@@ -513,7 +513,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
       }
     }
     if (isFatherInfo === false && isMotherInfo === false) {
-      if ((motherAadhar != null || motherAadhar != "" || motherAadhar != undefined) && (fatherAadhar != null || fatherAadhar != "" || fatherAadhar != undefined)) {
+      if (motherAadhar != null && fatherAadhar != null) {
         if (motherAadhar === fatherAadhar) {
           validFlag = false;
           setAdhaarDuplicationError(true);
@@ -752,14 +752,14 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                     <TextInput
                       t={t}
                       isMandatory={false}
-                      type={"number"}
+                      type={"text"}
                       optionKey="i18nKey"
                       name="orderofChildren"
                       value={orderofChildren}
                       onChange={setSelectOrderofChildren}
                       disable={isDisableEdit}
                       placeholder={`${t("CR_ORDER_CURRENT_DELIVERY")}`}
-                      {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "number", title: t("CR_INVALID_ORDER_CURRENT_DELIVERY") })}
+                      {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_ORDER_CURRENT_DELIVERY") })}
                     />
                   </div>
                   <div className="col-md-4">

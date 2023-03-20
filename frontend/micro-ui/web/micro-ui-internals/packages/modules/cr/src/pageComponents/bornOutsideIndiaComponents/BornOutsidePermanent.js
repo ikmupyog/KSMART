@@ -14,6 +14,7 @@ const BornOutsidePermanent = ({ config, onSelect, userType, formData, permtaddre
         tenantId = Digit.ULBService.getCitizenCurrentTenant();
     }
     const { t } = useTranslation();
+    const [isDisableStatus, setDisableStatus] = useState(true);
     let validation = {};
     const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
     const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
@@ -108,6 +109,16 @@ const BornOutsidePermanent = ({ config, onSelect, userType, formData, permtaddre
             <React.Fragment>
                 <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
 
+                <div className="row">
+          <div className="col-md-12">
+            <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PERMANENT_ADDRESS")}`}</span>{" "}
+            </h1>
+          </div>
+        </div>
+  
+
+
                     <div className="row">
                         <div className="col-md-6">
                             <CardLabel>
@@ -121,6 +132,7 @@ const BornOutsidePermanent = ({ config, onSelect, userType, formData, permtaddre
                                 option={cmbCountry}
                                 selected={permtaddressCountry}
                                 select={setSelectaddressCountry}
+                                disable={isDisableStatus}
                             />
                         </div>
                         {countryValuePermanent === "IND" && (
@@ -136,6 +148,7 @@ const BornOutsidePermanent = ({ config, onSelect, userType, formData, permtaddre
                                     option={cmbState}
                                     selected={permtaddressStateName}
                                     select={setSelectaddressStateName}
+                                    disable={isDisableStatus}
                                 />
                             </div>
                         )}

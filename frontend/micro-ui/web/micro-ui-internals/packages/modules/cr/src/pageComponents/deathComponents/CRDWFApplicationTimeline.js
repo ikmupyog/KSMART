@@ -3,11 +3,11 @@ import React, { Fragment } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 //TODO : make it a react component
-import CRWFCaption from "./CRWFCaption";
+import CRDWFCaption from "./CRDWFCaption";
 
-const CRWFApplicationTimeline = (props) => {
+const CRDWFApplicationTimeline = (props) => {
   const { t } = useTranslation();
-  const businessService= props.application?.ChildDetails?.businessService;
+  const businessService= props.application?.businessService;
   const { isLoading, data } = Digit.Hooks.useWorkflowDetails({
     tenantId: props.application?.tenantId,
     id: props.id,
@@ -17,18 +17,18 @@ const CRWFApplicationTimeline = (props) => {
   const getTimelineCaptions = (checkpoint) => {
     if (checkpoint.state === "INITIATE") {
       const caption = {
-        date: Digit.DateUtils.ConvertTimestampToDate(props.application?.ChildDetails?.auditDetails?.createdTime),
-        source: props.application?.ChildDetails?.channel || "",
+        date: Digit.DateUtils.ConvertTimestampToDate(props.application?.auditDetails?.createdTime),
+        source: props.application?.deathCertificateDtls?.channel || "",
       };
-      return <CRWFCaption data={caption} />;
+      return <CRDWFCaption data={caption} />;
     }  
     else {
       const caption = {
-        date: Digit.DateUtils.ConvertTimestampToDate(props.application?.ChildDetails?.auditDetails.lastModifiedTime),
+        date: Digit.DateUtils.ConvertTimestampToDate(props.application?.deathCertificateDtls?.auditDetails.lastModifiedTime),
         name: checkpoint?.assigner?.name,
         comment: t(checkpoint?.comment),
       };
-      return <CRWFCaption data={caption} />;
+      return <CRDWFCaption data={caption} />;
     }
   };
 
@@ -75,4 +75,4 @@ const CRWFApplicationTimeline = (props) => {
   );
 };
 
-export default CRWFApplicationTimeline;
+export default CRDWFApplicationTimeline;
