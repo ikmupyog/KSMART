@@ -3,9 +3,10 @@ import Timeline from "../../components/SBRTimeline";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, TextArea, Toast } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 
-const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData }) => {
+const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData ,isEditStillBirth=false }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
+  const [isDisableEdit, setisDisableEdit] = useState(isEditStillBirth ? isEditStillBirth : false);
   let validation = {};
   const {name:name,} =Digit.UserService.getUser().info ; 
   const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(
@@ -77,12 +78,9 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData }) =>
 
   function setSelectinitiatorAadhar(e) {
     if (e.target.value.trim().length >= 0) {
-      setinitiatorAadhar(
-        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
-      );
+      setinitiatorAadhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
     }
   }
-
   function setSelectinitiatorMobile(e) {
     if (e.target.value.trim().length != 0) {
       setinitiatorMobile(
@@ -264,11 +262,12 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData }) =>
               </CardLabel>
               <TextInput
                 t={t}
-                type={"number"}
+                type={"text"}
                 optionKey="i18nKey"
                 name="initiatorAadhar"
                 value={initiatorAadhar}
                 onChange={setSelectinitiatorAadhar}
+                disable={isDisableEdit}
                 placeholder={`${t("CS_COMMON_AADHAAR")}`}
                 {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
               />
@@ -286,6 +285,7 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData }) =>
                 name="initiatorNameEn"
                 value={initiatorNameEn}
                 onChange={setSelectinitiatorNameEn}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_INITIATOR_NAME")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INITIATOR_NAME") })}
               />
