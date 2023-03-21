@@ -756,7 +756,7 @@ export const newConfig = [
         key: "BrideDetails",
         withoutLabel: true,
         hideInEmployee: false,
-        nextStep: "place-of-death",
+        nextStep: "witness-details",
       },
       {
         type: "component",

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton, Loader, Toast, SubmitBar } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown,Card, DatePicker, CheckBox, BackButton, Loader, Toast, SubmitBar } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
@@ -8,6 +8,8 @@ import BirthPlaceInstitution from "../../pageComponents/birthComponents/BirthPla
 import BirthPlaceHome from "../../pageComponents/birthComponents/BirthPlaceHome";
 import BirthPlaceVehicle from "../../pageComponents/birthComponents/BirthPlaceVehicle";
 import BirthPlacePublicPlace from "../../pageComponents/birthComponents/BirthPlacePublicPlace";
+import AdoptionBirthReqSearch from './AdoptionBirthReqSearch'
+import { convertEpochToDateDMY } from  "../../utils";
 
 const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => {
   // console.log(JSON.stringify(formData));  
@@ -144,6 +146,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
   const [birthDateTime, setbirthDateTime] = useState(""); //formData?.AdoptionChildDetails?.birthDateTime ? formData?.AdoptionChildDetails?.birthDateTime :
   const [isChildName, setIsChildName] = useState(formData?.AdoptionChildDetails?.isChildName ? formData?.AdoptionChildDetails?.isChildName : true);
   const [adoptionAgency, setIsAdoptionAgency] = useState(formData?.AdoptionChildDetails?.adoptionAgency ? formData?.AdoptionChildDetails?.adoptionAgency : false);
+  const [birthRegistered, setbirthRegistered] = useState(formData?.AdoptionChildDetails?.birthRegistered ? formData?.AdoptionChildDetails?.birthRegistered : false);
   // const [birthPlace, selectBirthPlace] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined) ? (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.AdoptionChildDetails?.birthPlace)[0]) : formData?.AdoptionChildDetails?.birthPlace);
   const [birthPlace, selectBirthPlace] = useState(formData?.AdoptionChildDetails?.birthPlace?.code ? formData?.AdoptionChildDetails?.birthPlace : formData?.AdoptionChildDetails?.birthPlace ?
     (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.AdoptionChildDetails?.birthPlace)[0]) : "");
@@ -225,6 +228,8 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
   const [DeliveryMethodStError, setDeliveryMethodStError] = useState(formData?.AdoptionChildDetails?.deliveryMethods ? false : false);
   const [PregnancyDurationStError, setPregnancyDurationStError] = useState(formData?.AdoptionChildDetails?.pregnancyDuration ? false : false);
   const [PregnancyDurationInvalidError, setPregnancyDurationInvalidError] = useState(formData?.AdoptionChildDetails?.pregnancyDuration ? false : false);
+  const [AdoptionDecreErr, setAdoptionDecreErr] = useState(formData?.AdoptionChildDetails?.AdoptionDecreErr ? false : false);
+  const [SearchRegId,setSearchRegId] = useState()
   // const [isAdopted, setIsAdopted] = useState(formData?.AdoptionChildDetails?.isAdopted);
   // const [isMultipleBirth, setIsMultipleBirth] = useState(formData?.AdoptionChildDetails?.isMultipleBirth);
   // const [isBornOutSide, setIsBornOutSide] = useState(formData?.AdoptionChildDetails?.isBornOutSide);
@@ -254,6 +259,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
   const [AdoptionDeedNo,setAdoptionDeedNo]= useState(formData?.AdoptionChildDetails?.AdoptionDeedNo ? formData?.AdoptionChildDetails?.AdoptionDeedNo : "")
   const [AdoptionDeedRegDate,setAdoptionDeedRegDate]= useState(formData?.AdoptionChildDetails?.AdoptionDeedRegDate ? formData?.AdoptionChildDetails?.AdoptionDeedRegDate : "")
   const [RegistrationAuthority,setRegistrationAuthority]= useState(formData?.AdoptionChildDetails?.RegistrationAuthority ? formData?.AdoptionChildDetails?.RegistrationAuthority : "")
+  const [BirthRegNo,setBirthRegNo]= useState(formData?.AdoptionChildDetails?.BirthRegNo ? formData?.AdoptionChildDetails?.BirthRegNo : "")
   const onSkip = () => onSelect();
 
   useEffect(() => {
@@ -447,20 +453,30 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
   const setSelectAgencyContactNo =(e)=>{
     setAdoptionContactNo(e.target.value)
   }
+  const setSelectSetBirthRegNo =(e)=>{
+    setBirthRegNo(e.target.value)
+  }
 
   const setSelectDeeOrderNo=(e)=>{
     setAdoptionDecreOrderNo(e.target.value)
+    if(AdoptionDeedNo ===""){
+      setAdoptionDeedRegDate('')
+      setRegistrationAuthority('')
+    }
   }
   const setSelectDeeOrderDate =(value)=>{
-    console.log(value)
-
+    console.log(value);
     setAdoptionDecreOrderDate(value)
   }
   const setSelectIssuingAuthority =(e)=>{
     setIssuingAuthority(e.target.value)
   }
   const setSelectDeedNo =(e)=>{
-    setAdoptionDeedNo(e.target.value)
+    setAdoptionDeedNo(e.target.value) 
+    if(AdoptionDecreOrderNo ==="" ){
+      setIssuingAuthority('')
+      setAdoptionDecreOrderDate('')
+    }
   }
   const setSelectDeedRegDate =(value)=>{
     setAdoptionDeedRegDate(value)
@@ -542,6 +558,18 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
       setAdoptionAgencyAddress("")
       setAdoptionAgencyPersonName("")
       setAdoptionContactNo("")
+    }
+  }
+  function setBirthRegDetails(e) {
+    if (e.target.checked === true) {
+      setbirthRegistered(e.target.checked);
+
+    } else {
+      setbirthRegistered(e.target.checked)
+      // setAdoptionAgentName("")
+      // setAdoptionAgencyAddress("")
+      // setAdoptionAgencyPersonName("")
+      // setAdoptionContactNo("")
     }
   }
   function setSelectDeliveryMethod(value) {
@@ -901,6 +929,22 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
     } else {
       setDeliveryMethodStError(false);
     }
+    // AdoptionDecreOrderNo,
+    // AdoptionDecreOrderDate
+    // IssuingAuthority,
+    // AdoptionDeedNo
+    // AdoptionDeedRegDate
+    // RegistrationAuthority
+    if(AdoptionDecreOrderNo == "" && AdoptionDeedNo == ""){
+      validFlag = false;
+      setAdoptionDecreErr(true)
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    }else{
+      setAdoptionDecreErr(false)
+    }
     if (validFlag == true) {
       sessionStorage.setItem("stateId", stateId ? stateId : null);
       sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
@@ -917,6 +961,8 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
       sessionStorage.setItem("childLastNameMl", childLastNameMl ? childLastNameMl : null);
       sessionStorage.setItem("isChildName", isChildName);
       sessionStorage.setItem("adoptionAgency", adoptionAgency);
+      sessionStorage.setItem("birthRegistered", birthRegistered);
+      sessionStorage.setItem("SearchRegId", SearchRegId);
       sessionStorage.setItem("AdoptionAgencyName", AdoptionAgencyName);
       sessionStorage.setItem("AdoptionAgencyAddress", AdoptionAgencyAddress);
       sessionStorage.setItem("AdoptionContractPersonName", AdoptionContractPersonName);
@@ -971,7 +1017,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
       let IsEditChangeScreen = (isEditBirth ? isEditBirth : false);
       onSelect(config.key, {
         stateId, tenantId, workFlowCode, childDOB, birthDateTime, gender, childAadharNo,
-        isChildName,adoptionAgency,AdoptionAgencyName,AdoptionAgencyAddress,AdoptionContractPersonName,AdoptionContactNo,
+        isChildName,SearchRegId,birthRegistered,adoptionAgency,AdoptionAgencyName,AdoptionAgencyAddress,AdoptionContractPersonName,AdoptionContactNo,
         AdoptionDecreOrderDate,AdoptionDecreOrderNo,IssuingAuthority,AdoptionDeedNo,AdoptionDeedRegDate,RegistrationAuthority, childFirstNameEn, childMiddleNameEn, childLastNameEn, childFirstNameMl, childMiddleNameMl, childLastNameMl,
         birthPlace, hospitalCode, hospitalName, hospitalNameMl,
         institutionTypeCode, institution, institutionNameCode, institutionId, institutionIdMl,
@@ -1032,6 +1078,123 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
           || (value === "VEHICLE" ? (!vehicleType || vehicleRegistrationNo === "" || vehicleHaltPlace === ""
             || !setadmittedHospitalEn || !wardNo || vehicleDesDetailsEn === "") : false)
           || !medicalAttensionSub || !deliveryMethods || birthWeight == null || pregnancyDuration === ""}>
+             <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-6">
+                <CheckBox label={t("CR_BIRTH_REGISTERED")} onChange={setBirthRegDetails} value={birthRegistered} checked={birthRegistered} />
+              </div>
+            </div>
+          </div>
+
+          {birthRegistered == true &&(<React.Fragment>
+         
+            <AdoptionBirthReqSearch BirthRegNo={BirthRegNo} setSelectSetBirthRegNo={setSelectSetBirthRegNo} setSearchRegId={setSearchRegId}/>
+          {birthRegistered == true && BirthRegNo && SearchRegId && (
+               <div className="row">
+               <div className="col-md-12">
+                 <div className="col-md-3">
+                   <CardLabel>
+                     {`${t("CR_BIRTH_RED_ID")}`}
+                   </CardLabel>
+                   <TextInput
+                     t={t}
+                     isMandatory={false}
+                     type={"text"}
+                     optionKey="i18nKey"
+                     name="CR_BIRTH_RED_ID"
+                     value={SearchRegId?.applicationNumber}
+                     // onKeyPress={setCheckMalayalamInputField}
+                    //  onChange={setSelectDeeOrderNo}
+                     disable={true}
+                     placeholder={`${t("CR_BIRTH_RED_ID")}`}
+                     {...(validation = {
+                       // pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                       isRequired: false,
+                       type: "text",
+                       title: t(""),
+                     })}
+                   />
+                 </div>
+                 <div className="col-md-3">
+                   <CardLabel>{`${t("CR_COMMON_COL_MOTHER_NAME")}`}
+                   {AdoptionDeedNo ==="" &&  <span className="mandatorycss">*</span>}
+                   </CardLabel>
+                   <TextInput
+                     t={t}
+                     isMandatory={false}
+                     type={"text"}
+                     optionKey="i18nKey"
+                     name="CR_COMMON_COL_MOTHER_NAME"
+                     value={SearchRegId?.ParentsDetails?.motherFirstNameEn}
+                     onKeyPress={setCheckMalayalamInputField}
+                     onChange={setSelectChildMiddleNameMl}
+                     disable={true}
+                     placeholder={`${t("CR_COMMON_COL_MOTHER_NAME")}`}
+                     {...(validation = {
+                       isRequired: false,
+                       type: "text",
+                       title: t(""),
+                     })}
+                   />
+                      
+                 </div>
+                 <div className="col-md-3">
+                   <CardLabel>{`${t("CR_COMMON_COL_DOB")}`}
+                   {AdoptionDeedNo ==="" &&  <span className="mandatorycss">*</span>}
+                   </CardLabel>
+                   <TextInput
+                     t={t}
+                     isMandatory={false}
+                     type={"text"}
+                     optionKey="i18nKey"
+                     name="adoptissuingauththority"
+                     value={convertEpochToDateDMY(SearchRegId?.childDOB)}
+                     // onKeyPress={setCheckMalayalamInputField}
+                     onChange={setSelectIssuingAuthority}
+                     disable={true}
+                     placeholder={`${t("CR_COMMON_COL_DOB")}`}
+                     {...(validation = {
+                       // pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                       isRequired:false,
+                       type: "text",
+                       title: t(""),
+                     })}
+                   />
+                 </div>
+                 <div className="col-md-3">
+                   <CardLabel>{`${t("CR_COMMON_GENDER")}`}
+                   {AdoptionDeedNo ==="" &&  <span className="mandatorycss">*</span>}
+                   </CardLabel>
+                   <TextInput
+                     t={t}
+                     isMandatory={false}
+                     type={"text"}
+                     optionKey="i18nKey"
+                     name="adoptissuingauththority"
+                     value={SearchRegId?.gender}
+                     // onKeyPress={setCheckMalayalamInputField}
+                    //  onChange={setSelectIssuingAuthority}
+                     disable={true}
+                     placeholder={`${t("CR_COMMON_GENDER")}`}
+                     {...(validation = {
+                      
+                       isRequired:  false,
+                       type: "text",
+                       title: t(""),
+                     })}
+                   />
+                 </div>
+               </div>
+             </div>
+          )
+           }
+           {BirthRegNo && SearchRegId==""&&(
+                <div style={{ marginTop: "24px", marginTop: "24px", marginLeft: "24px", flex:1 }}>
+                <Card style={{ marginTop: 20,display:'flex',justifyContent:"center" }}>{t("CR_INVALID_BIRTH_REG_ID")}</Card>
+              </div>
+           )}
+           </React.Fragment>
+          )}
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-12">
@@ -1260,7 +1423,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
                   <div className="col-md-4">
                     <CardLabel>
                       {`${t("CR_ADOPTION_DECREE")}`}
-                      <span className="mandatorycss">*</span>
+                     {AdoptionDeedNo ==="" &&  <span className="mandatorycss">*</span>}
                     </CardLabel>
                     <TextInput
                       t={t}
@@ -1271,18 +1434,20 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
                       value={AdoptionDecreOrderNo}
                       // onKeyPress={setCheckMalayalamInputField}
                       onChange={setSelectDeeOrderNo}
-                      disable={isDisableEdit}
+                      disable={isDisableEdit || AdoptionDeedNo !==""}
                       placeholder={`${t("CR_ADOPTION_DECREE")}`}
                       {...(validation = {
                         // pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                        isRequired: true,
+                        isRequired: AdoptionDeedNo ===""? true : false,
                         type: "text",
                         title: t("CR_INVALID_ADOPTION_DECREE"),
                       })}
                     />
                   </div>
                   <div className="col-md-4">
-                    <CardLabel>{`${t("CR_ADOPTION_DECREE_ORDER_DATE")}`}</CardLabel>
+                    <CardLabel>{`${t("CR_ADOPTION_DECREE_ORDER_DATE")}`}
+                    {AdoptionDeedNo ==="" &&  <span className="mandatorycss">*</span>}
+                    </CardLabel>
                     {/* <TextInput
                       t={t}
                       isMandatory={false}
@@ -1307,14 +1472,16 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
                           max={convertEpochToDate(new Date())}
                           //min={convertEpochToDate("1900-01-01")}
                           onChange={setSelectDeeOrderDate}
-                          disable={isDisableEdit}
+                          disabled={isDisableEdit || AdoptionDeedNo !==""}
                           //  inputFormat="DD-MM-YYYY"
                           placeholder={`${t("CR_ADOPTION_DECREE_ORDER_DATE")}`}
-                          {...(validation = { isRequired: true, title: t("CR_INVALID_ADOPTION_DECREE_ORDER_DATE") })}
+                          {...(validation = { isRequired: AdoptionDeedNo ===""? true : false, title: t("CR_INVALID_ADOPTION_DECREE_ORDER_DATE") })}
                       />
                   </div>
                   <div className="col-md-4">
-                    <CardLabel>{`${t("CR_ADOPTION_ISSUING_AUTHORITY")}`}</CardLabel>
+                    <CardLabel>{`${t("CR_ISSUING_AUTHORITY")}`}
+                    {AdoptionDeedNo ==="" &&  <span className="mandatorycss">*</span>}
+                    </CardLabel>
                     <TextInput
                       t={t}
                       isMandatory={false}
@@ -1324,24 +1491,25 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
                       value={IssuingAuthority}
                       // onKeyPress={setCheckMalayalamInputField}
                       onChange={setSelectIssuingAuthority}
-                      disable={isDisableEdit}
-                      placeholder={`${t("CR_ADOPTION_ISSUING_AUTHORITY")}`}
+                      disable={isDisableEdit || AdoptionDeedNo !==""}
+                      placeholder={`${t("CR_ISSUING_AUTHORITY")}`}
                       {...(validation = {
                         // pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                        isRequired: false,
+                        isRequired: AdoptionDeedNo ===""? true : false,
                         type: "text",
-                        title: t("CR_INVALID_CR_ADOPTION_ISSUING_AUTHORITY"),
+                        title: t("CR_INVALID_ISSUING_AUTHORITY"),
                       })}
                     />
                   </div>
                 </div>
               </div>
+              
               <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-4">
                     <CardLabel>
                       {`${t("CR_ADOPTION_DEED_NO")}`}
-                      <span className="mandatorycss">*</span>
+                      {AdoptionDecreOrderNo ==="" && <span className="mandatorycss">*</span> }
                     </CardLabel>
                     <TextInput
                       t={t}
@@ -1352,18 +1520,20 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
                       value={AdoptionDeedNo}
                       // onKeyPress={setCheckMalayalamInputField}
                       onChange={setSelectDeedNo}
-                      disable={isDisableEdit}
+                      disable={isDisableEdit ||AdoptionDecreOrderNo !=="" }
                       placeholder={`${t("CR_ADOPTION_DEED_NO")}`}
                       {...(validation = {
                         pattern: "^[0-9`' ]*$",
-                        isRequired: false,
+                        isRequired: AdoptionDecreOrderNo =="" ?true:false,
                         type: "text",
                         title: t("CR_INVALID_ADOPTION_DEED_NO"),
                       })}
                     />
                   </div>
                   <div className="col-md-4">
-                    <CardLabel>{`${t("CR_DEED_REG_DATE")}`}</CardLabel>
+                    <CardLabel>{`${t("CR_DEED_REG_DATE")}`}
+                    {AdoptionDecreOrderNo ==="" && <span className="mandatorycss">*</span> }
+                    </CardLabel>
                     {/* <TextInput
                       t={t}
                       isMandatory={false}
@@ -1388,14 +1558,15 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
                           max={convertEpochToDate(new Date())}
                           //min={convertEpochToDate("1900-01-01")}
                           onChange={setSelectDeedRegDate}
-                          disable={isDisableEdit}
+                          disabled={isDisableEdit  ||AdoptionDecreOrderNo !==""}
                           //  inputFormat="DD-MM-YYYY"
                           placeholder={`${t("CR_DEED_REG_DATE")}`}
-                          {...(validation = { isRequired: true, title: t("CR_INVALID_DEED_REG_DATE") })}
+                          {...(validation = { isRequired: AdoptionDecreOrderNo =="" ?true:false, title: t("CR_INVALID_DEED_REG_DATE") })}
                       />
                   </div>
                   <div className="col-md-4">
-                    <CardLabel>{`${t("CR_REG_AUTHORITY")}`}</CardLabel>
+                    <CardLabel>{`${t("CR_REG_AUTHORITY")}`}
+                    {AdoptionDecreOrderNo ==="" && <span className="mandatorycss">*</span> }</CardLabel>
                     <TextInput
                       t={t}
                       isMandatory={false}
@@ -1405,11 +1576,11 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
                       value={RegistrationAuthority}
                       // onKeyPress={setCheckMalayalamInputField}
                       onChange={setSelectRegistrationAuthority}
-                      disable={isDisableEdit}
+                      disable={isDisableEdit  || AdoptionDecreOrderNo !==""}
                       placeholder={`${t("CR_REG_AUTHORITY")}`}
                       {...(validation = {
                         pattern: "^[a-zA-Z-.`' ]*$",
-                        isRequired: false,
+                        isRequired: AdoptionDecreOrderNo =="" ?true:false,
                         type: "text",
                         title: t("CR_INVALID_REG_AUTHORITY"),
                       })}
@@ -1417,6 +1588,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
                   </div>
                 </div>
               </div>
+
               {ChildAadharHIde === true && (
                 <div className="col-md-3">
                   <CardLabel>{`${t("CS_COMMON_CHILD_AADHAAR")}`}</CardLabel>
@@ -1778,7 +1950,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
                 admittedHospitalEnError || vehiDesDetailsEnError ||
                 placeTypepEnError || localNameEnError || localNameMlError ||
                 MedicalAttensionSubStError || DeliveryMethodStError || BirthWeightError
-                || PregnancyDurationStError || PregnancyDurationInvalidError
+                || PregnancyDurationStError || PregnancyDurationInvalidError || AdoptionDecreErr
 
 
               }
@@ -1797,7 +1969,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
                   admittedHospitalEnError || vehiDesDetailsEnError ||
                   placeTypepEnError || localNameEnError || localNameMlError ||
                   MedicalAttensionSubStError || DeliveryMethodStError || BirthWeightError
-                  || PregnancyDurationStError || PregnancyDurationInvalidError
+                  || PregnancyDurationStError || PregnancyDurationInvalidError || AdoptionDecreErr
                   ?
                   AadharError
                     ? t(`CS_COMMON_INVALID_AADHAR_NO`) : DOBError ? t(`BIRTH_DOB_VALIDATION_MSG`)
@@ -1825,7 +1997,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
                                                               : PregnancyDurationStError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_CHOOSE`)
                                                                 : PregnancyDurationInvalidError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_INVALID_CHOOSE`)
                                                                   : DeliveryMethodStError ? t(`BIRTH_ERROR_DELIVERY_METHOD_CHOOSE`)
-
+                                                                    :AdoptionDecreErr ? t(`choose any one of decree or deed `)
 
                                                                     : setToast(false)
                   : setToast(false)
