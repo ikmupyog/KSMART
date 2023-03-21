@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.egov.kssmSnehapoorvam.repository.querybuilder.SnehapoorvamQueryBuilder;
 import org.egov.kssmSnehapoorvam.repository.rowmapper.SnehapoorvamRowMapper;
-import org.egov.kssmSnehapoorvam.web.models.SchoolSearchCriteria;
-import org.egov.kssmSnehapoorvam.web.models.SnehapoorvamSchoolReg;
+import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.SchoolSearchCriteria;
+import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.SnehapoorvamSchoolReg;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 

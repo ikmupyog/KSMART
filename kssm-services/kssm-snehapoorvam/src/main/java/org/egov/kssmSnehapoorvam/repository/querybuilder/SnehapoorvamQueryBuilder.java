@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
-import org.egov.kssmSnehapoorvam.web.models.SchoolSearchCriteria;
+import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.SchoolSearchCriteria;
 import org.springframework.stereotype.Component;
 
 

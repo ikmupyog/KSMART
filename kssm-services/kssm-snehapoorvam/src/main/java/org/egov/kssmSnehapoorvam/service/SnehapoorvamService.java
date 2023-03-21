@@ -9,10 +9,10 @@ import org.egov.kssmSnehapoorvam.config.SnehapoorvamConfig;
 import org.egov.kssmSnehapoorvam.kafka.Producer;
 import org.egov.kssmSnehapoorvam.repository.SnehapoorvamRepository;
 import org.egov.kssmSnehapoorvam.validators.SnehapoorvamSchoolRegValidator;
-import org.egov.kssmSnehapoorvam.web.models.SchoolSearchCriteria;
 import org.egov.kssmSnehapoorvam.web.models.SnehapoorvamRequest;
-import org.egov.kssmSnehapoorvam.web.models.SnehapoorvamSchoolReg;
 import org.egov.kssmSnehapoorvam.web.models.m_Snehapoorvam;
+import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.SchoolSearchCriteria;
+import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.SnehapoorvamSchoolReg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

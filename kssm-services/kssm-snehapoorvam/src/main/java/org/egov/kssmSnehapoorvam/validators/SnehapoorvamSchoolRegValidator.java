@@ -2,7 +2,8 @@ package org.egov.kssmSnehapoorvam.validators;
 
 import javax.validation.Valid;
 import static org.egov.kssmSnehapoorvam.web.enums.ErrorCodes.INVALID_SEARCH;
-import org.egov.kssmSnehapoorvam.web.models.SchoolSearchCriteria;
+
+import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.SchoolSearchCriteria;
 import org.egov.tracer.model.CustomException;
 import org.springframework.stereotype.Component;
 
