@@ -121,7 +121,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     formData?.BrideDetails?.brideSpouseLiving ? formData?.BrideDetails?.brideSpouseLiving : ""
   );
   const [brideNoOfSpouse, setbrideNoOfSpouse] = useState(formData?.BrideDetails?.brideNoOfSpouse ? formData?.BrideDetails?.brideNoOfSpouse : "");
-  const [valueRad, setValueRad] = useState(formData?.GroomDetails?.selectedValueRadio ? formData?.GroomDetails?.selectedValueRadio : "");
+  const [valueRad, setValueRad] = useState(formData?.BrideDetails?.selectedValueRadio ? formData?.BrideDetails?.selectedValueRadio : "");
   const [access, setAccess] = React.useState(true);
   const [selectedOption, setSelectedOption] = useState(
     formData?.AddressOfDecesed?.selectedOption ? formData?.AddressOfDecesed?.selectedOption : "ILB"
@@ -149,7 +149,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     if (isInitialRenderRadioButtons) {
       setisInitialRenderRadioButtons(false);
       if (selectedValueRadio) {
-        //setIsInitialRenderRadio(false);
+        setIsInitialRenderRadio(false);
         setValueRad(selectedValueRadio.code);
       }
     }
