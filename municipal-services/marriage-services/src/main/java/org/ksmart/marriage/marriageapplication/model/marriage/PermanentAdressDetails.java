@@ -100,6 +100,14 @@ public class PermanentAdressDetails {
     @Size(max = 64)
     @JsonProperty("brideGroom")
     private String brideGroom;
+    @Size(max = 64)
+    @JsonProperty("marriageTenantid")
+    private String tenantid;
+    @Size(max = 64)
+    @JsonProperty("poname_en")
+    private String poname_en;
+
+
 
 
 }
