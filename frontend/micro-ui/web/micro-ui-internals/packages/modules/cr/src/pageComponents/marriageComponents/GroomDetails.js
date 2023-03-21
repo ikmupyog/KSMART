@@ -33,13 +33,13 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     Menu.map((groomGenderDetails) => {
       menu.push({ i18nKey: `CR_COMMON_GENDER_${groomGenderDetails.code}`, code: `${groomGenderDetails.code}`, value: `${groomGenderDetails.code}` });
     });
-    let cmbProfession = [];
-    Profession &&
-        Profession["birth-death-service"] &&
-        Profession["birth-death-service"].Profession.map((ob) => {
-            cmbProfession.push(ob);
-        });
-  const [isInitialRenderRadioButtons, setisInitialRenderRadioButtons] = useState(true);
+    // let cmbProfession = [];
+    // Profession &&
+    //     Profession["birth-death-service"] &&
+    //     Profession["birth-death-service"].Profession.map((ob) => {
+    //         cmbProfession.push(ob);
+    //     });
+    const [isInitialRenderRadioButtons, setisInitialRenderRadioButtons] = useState(true);
   //const [groomProfessionEn, setGroomProfessionEn] = useState(formData?.GroomDetails?.groomProfessionEn ? formData?.GroomDetails?.groomProfessionEn : null);
   //const [groomProfessionMal, setGroomProfessionMal] = useState(formData?.GroomDetails?.groomProfessionMal ? formData?.GroomDetails?.groomProfessionMal : null);
   const [groomGender, selectGroomGender] = useState(formData?.GroomDetails?.groomGender);
@@ -89,7 +89,9 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     formData?.GroomDetails?.groomMiddlenameEn ? formData?.GroomDetails?.groomMiddlenameEn : ""
   );
   const [groomLastnameEn, setGroomLastnameEn] = useState(formData?.GroomDetails?.groomLastnameEn ? formData?.GroomDetails?.groomLastnameEn : "");
-
+  const [selectedOption, setSelectedOption] = useState(
+    formData?.AddressOfDecesed?.selectedOption ? formData?.AddressOfDecesed?.selectedOption : "ILB"
+  );
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
@@ -106,7 +108,9 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
   const [groomEmailid, setGroomEmailid] = useState(formData?.GroomDetails?.groomEmailid ? formData?.GroomDetails?.groomEmailid : "");
   const [groomAge, setGroomAge] = useState(formData?.GroomDetails?.groomAge ? formData?.GroomDetails?.groomAge : "");
   const [groomNoOfSpouse, setGroomNoOfSpouse] = useState(formData?.GroomDetails?.groomNoOfSpouse ? formData?.GroomDetails?.groomNoOfSpouse : "");
-  const [selectedValueRadio, setSelectedValue] = useState(formData?.GroomDetails?.selectedValueRadio ? formData?.GroomDetails?.selectedValueRadio : "");
+  const [selectedValueRadio, setSelectedValue] = useState(
+    formData?.GroomDetails?.selectedValueRadio ? formData?.GroomDetails?.selectedValueRadio : ""
+  );
   const [valueRad, setValueRad] = useState(formData?.GroomDetails?.selectedValueRadio ? formData?.GroomDetails?.selectedValueRadio : "");
   const [access, setAccess] = React.useState(true);
 
@@ -133,7 +137,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     if (isInitialRenderRadioButtons) {
       setisInitialRenderRadioButtons(false);
       if (selectedValueRadio) {
-        setIsInitialRenderRadio(false);
+        // setIsInitialRenderRadio(false);
         setValueRad(selectedValueRadio.code);
       }
     }
@@ -322,7 +326,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
   
     if (validFlag == true) {
       sessionStorage.setItem("groomDOB", groomDOB ? groomDOB : null);
-      sessionStorage.setItem("tripStartTime", tripStartTime ? tripStartTime : null);
+      // sessionStorage.setItem("tripStartTime", tripStartTime ? tripStartTime : null);
       sessionStorage.setItem("groomGender", groomGender ? groomGender.code : null);
       sessionStorage.setItem("groomAdharNo", groomAdharNo ? groomAdharNo : null);
       sessionStorage.setItem("groomPassportNo", groomPassportNo ? groomPassportNo : null);
@@ -348,10 +352,12 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       sessionStorage.setItem("groomNoOfSpouse", groomNoOfSpouse ? groomNoOfSpouse : null);
       sessionStorage.setItem("groomSpouseLiving", groomSpouseLiving ? groomSpouseLiving : null);
       sessionStorage.setItem("groomMaritalstatusID", groomMaritalstatusID ? groomMaritalstatusID : null);
-      sessionStorage.setItem("groomProfessionEn", groomProfessionEn ? groomProfessionEn.code : null);
-      sessionStorage.setItem("groomProfessionMal", groomProfessionMal ? groomProfessionMal.code : null);
+      sessionStorage.setItem("selectedOption", selectedOption ? selectedOption : "ILB");
+      // sessionStorage.setItem("groomProfessionEn", groomProfessionEn ? groomProfessionEn.code : null);
+      // sessionStorage.setItem("groomProfessionMal", groomProfessionMal ? groomProfessionMal.code : null);
       onSelect(config.key, {
         groomDOB,
+        selectedOption,
         groomAdharNo,
         groomGender,
         groomPassportNo,
@@ -374,15 +380,15 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
         groomNoOfSpouse,
         groomSpouseLiving,
         groomMaritalstatusID,
-        groomProfessionEn,
-        groomProfessionMal,
+        // groomProfessionEn,
+        // groomProfessionMal,
         groomGardianAdhar,
         groomGuardiannameEn,
         groomGuardiannameMal
       });
     }
   };
-  if (isLoading || isProfessionLoading) {
+  if (isLoading ) {
     return <Loader></Loader>;
   } else
     return (
@@ -390,7 +396,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
         <BackButton>{t("CS_COMMON_BACK")}</BackButton>
         {window.location.href.includes("/citizen") ? <Timeline /> : null}
         {window.location.href.includes("/employee") ? <Timeline /> : null}
-        <FormStep t={t}>
+        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">

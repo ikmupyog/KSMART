@@ -24,6 +24,7 @@ const App = () => {
 
 
   const CreateBirthRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateBirthRegistration');
+  const CreateBirthNACRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateBirthNACRegistration');
   const CreateAdoption = Digit?.ComponentRegistryService?.getComponent('CRCreateAdoptions');
   const CreateStillBirthRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateStillBirthRegistration');
   const CreateBornOutsideRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateBornOutsideRegistration');
@@ -31,6 +32,7 @@ const App = () => {
   const CreateMarriageRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateMarriageRegistration');
   const MyCRApplications = Digit?.ComponentRegistryService?.getComponent('MyCRApplications');
   const MyCRDeathApplications = Digit?.ComponentRegistryService?.getComponent('MyCRDeathApplications');
+  const CRBirthInclusions = Digit?.ComponentRegistryService?.getComponent('CRBirthInclusions');
 
 
   // const getBackPageNumber = () => {
@@ -53,6 +55,8 @@ const App = () => {
       <Switch>
       <AppContainer>
         <PrivateRoute path={`${path}/cr-birth-creation`} component={CreateBirthRegistration} />
+        <PrivateRoute path={`${path}/cr-name-inclusion`} component={CRBirthInclusions} />
+        <PrivateRoute path={`${path}/cr-birth-nac`} component={CreateBirthNACRegistration} />
         <PrivateRoute path={`${path}/cr-adoption`} component={CreateAdoption} />
         <PrivateRoute path={`${path}/cr-stillbirth-creation`} component={CreateStillBirthRegistration} />
         <PrivateRoute path={`${path}/cr-outsideindiabirth-creation`} component={CreateBornOutsideRegistration} />

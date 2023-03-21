@@ -8,12 +8,16 @@ import AdoptionParentsDetails from "./pageComponents/adoptionComponents/Adoption
 import AdoptionInitiatorDetails from "../src/pageComponents/adoptionComponents/AdoptionInitiatorDetails";
 
 import ChildDetails from "../src/pageComponents/birthComponents/ChildDetails";
+import BirthNACDetails from "../src/pageComponents/birthNACComponents/BirthNACDetails";
 import AddressOne from "./pageComponents/birthComponents/OldAddressOne";
 import AddressInsideIndia from "./pageComponents/birthComponents/OldAddressInsideIndia";
 import AddressSameAsAbove from "../src/pageComponents/birthComponents/AddressSameAsAbove";
 import AddressPermanent from "../src/pageComponents/birthComponents/AddressPermanent";
 import MultipleBirth from "../src/pageComponents/birthComponents/MultipleBirth";
 import CreateBirthRegistration from "./pages/citizen/BirthRegistration";
+import CreateBirthNACRegistration from "./pages/citizen/BirthNACRegistration";
+import BirthInclusion from "./pages/citizen/BirthInclusion";
+
 import CreateAdoptions from "./pages/citizen/Adoption";
 import CreateStillBirthRegistration from "./pages/citizen/StillBirthRegistration";
 import CreateBornOutsideRegistration from "./pages/citizen/BornOutsideReg"
@@ -110,7 +114,9 @@ import CRDeathcorrection from "./pages/employee/DeathCorrection";
 import CustomTimePicker from "./components/CustomTimePicker";
 import AdoptionCheckPage from "./pages/citizen/Adoption/AdoptionCheckPage";
 import BirthCheckPage from "./pages/citizen/BirthRegistration/BirthCheckPage";
+import BirthNACCheckPage from "./pages/citizen/BirthNACRegistration/BirthNACCheckPage";
 import DeathCheckPage from "./pages/citizen/DeathRegistration/DeathCheckPage";
+import BirthNACAcknowledgement from "./pages/citizen/BirthNACRegistration/BirthNACAcknowledgement";
 import MarriageCheckPage from "./pages/citizen/MarriageRegistration/MarriageCheckPage";
 import AdoptionAcknowledgement from "./pages/citizen/Adoption/AdoptionAcknowledgement";
 import BirthAcknowledgement from "./pages/citizen/BirthRegistration/BirthAcknowledgement";
@@ -231,6 +237,7 @@ const componentsToRegister = {
   AdoptionParentsDetails,
   AdoptionInitiatorDetails,
   ChildDetails,
+  BirthNACDetails,
   CRCitizenApplicationDetails,
   CRDeathApplicationDetails,
   CRApplicationDetails,
@@ -240,7 +247,6 @@ const componentsToRegister = {
   SearchCrApplication,
   SearchRegistryDeath,
   SearchDeathApplication,
-  ChildDetails,
   AddressOne,
   AddressInsideIndia,
   AddressSameAsAbove,
@@ -250,7 +256,9 @@ const componentsToRegister = {
   CRCreateAdoptions:CreateAdoptions,
   CRCreateStillBirthRegistration: CreateStillBirthRegistration,
   CRCreateBornOutsideRegistration: CreateBornOutsideRegistration,  
+  CRCreateBirthNACRegistration: CreateBirthNACRegistration,
   ParentsDetails,
+  CRBirthInclusions:BirthInclusion,
   BirthPlaceHospital,
   BirthPlaceInstitution,
   BirthPlaceHome,
@@ -329,8 +337,10 @@ const componentsToRegister = {
   // GeneralRemarks,
   AdoptionCheckPage,
   BirthCheckPage,
+  BirthNACCheckPage,
   DeathCheckPage,
   MarriageCheckPage,
+  BirthNACAcknowledgement,
   AdoptionAcknowledgement,
   BirthAcknowledgement,
   DeathAcknowledgement,

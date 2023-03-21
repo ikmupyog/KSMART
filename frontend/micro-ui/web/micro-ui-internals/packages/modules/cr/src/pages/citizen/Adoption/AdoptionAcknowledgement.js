@@ -22,10 +22,11 @@ const rowContainerStyle = {
 
 const BannerPicker = (props) => {
   // console.log(JSON.stringify(props));
+  // console.log(props.data);
   return (
     <Banner
       message={GetActionMessage(props)}
-      applicationNumber={props.data?.ChildDetails[0]?.applicationNumber}
+      applicationNumber={props.data?.ChildDetailsAdoption?.length>0?ChildDetailsAdoption[0]?.applicationNumber:null}
       info={props.isSuccess ? props.applicationNumber : ""}
       successful={props.isSuccess}
     />

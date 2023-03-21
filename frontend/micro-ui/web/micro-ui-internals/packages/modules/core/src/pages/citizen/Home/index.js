@@ -35,7 +35,7 @@ const Home = () => {
   const allCitizenServicesProps = {
     header: t("DASHBOARD_CITIZEN_SERVICES_LABEL"),
     sideOption: {
-      name: t("DASHBOARD_VIEW_ALL_LABEL"),
+    //  name: t("DASHBOARD_VIEW_ALL_LABEL"),
       onClick: () => history.push("/digit-ui/citizen/all-services"),
     },
     options: [
@@ -100,7 +100,7 @@ const Home = () => {
   const allInfoAndUpdatesProps = {
     header: t("CS_COMMON_DASHBOARD_INFO_UPDATES"),
     sideOption: {
-      name: t("DASHBOARD_VIEW_ALL_LABEL"),
+     // name: t("DASHBOARD_VIEW_ALL_LABEL"),
       onClick: () => {},
     },
     options: [
@@ -133,34 +133,34 @@ const Home = () => {
       //     Icon: <HelpIcon/>
       // }
     ],
-    styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
-  };
-  const allInfoMyProfileProps = {
-    header: t("My Space"),
-    sideOption: {
-      name: t("DASHBOARD_VIEW_ALL_LABEL"),
-      onClick: () => {},
-    },
-    options: [
-      {
-        name: t("My Profile"),
-        Icon: <HomeIcon />,
-      },
-      {
-        name: t("My DashBoard"),
-        Icon: <InboxIcon />,
-        // onClick: () => history.push("/digit-ui/citizen/engagement/events"),
-      },
-      {
-        name: t("My Family"),
-        Icon: <HomeIcon />,
-        // onClick: () => history.push("/digit-ui/citizen/engagement/docs"),
-      },
-      {
-        name: t("My Certificates"),
-        Icon: <DocumentIcon />,
-        // onClick: () => history.push("/digit-ui/citizen/engagement/surveys/list"),
-      },
+  //   styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
+  // };
+  // const allInfoMyProfileProps = {
+   // header: t("My Space"),
+    //sideOption: {
+      //name: t("DASHBOARD_VIEW_ALL_LABEL"),
+    //   onClick: () => {},
+    // },
+    // options: [
+      // {
+      //   name: t("My Profile"),
+      //   Icon: <HomeIcon />,
+      // },
+      // {
+      //   name: t("My DashBoard"),
+      //   Icon: <InboxIcon />,
+      //   // onClick: () => history.push("/digit-ui/citizen/engagement/events"),
+      // },
+      // {
+      //   name: t("My Family"),
+      //   Icon: <HomeIcon />,
+      //   // onClick: () => history.push("/digit-ui/citizen/engagement/docs"),
+      // },
+      // {
+      //   name: t("My Certificates"),
+      //   Icon: <DocumentIcon />,
+      //   // onClick: () => history.push("/digit-ui/citizen/engagement/surveys/list"),
+      // },
       // {
       //   name: t("CS_COMMON_INBOX_BPA"),
       //   Icon: <OBPSIcon />,
@@ -170,7 +170,7 @@ const Home = () => {
       // //     name: t("CS_COMMON_HELP"),
       // //     Icon: <HelpIcon/>
       // // }
-    ],
+    //],
     styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
   };
   return isLoading ? (
@@ -187,7 +187,7 @@ const Home = () => {
       <div className="ServicesSection">
         <CardBasedOptions {...allCitizenServicesProps} />
         <CardBasedOptions {...allInfoAndUpdatesProps} />
-        <CardBasedOptions {...allInfoMyProfileProps} />
+        {/* <CardBasedOptions {...allInfoMyProfileProps} /> */}
       </div>
 
       {conditionsToDisableNotificationCountTrigger() ? (

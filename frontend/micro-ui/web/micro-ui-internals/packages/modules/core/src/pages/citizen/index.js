@@ -34,7 +34,7 @@ const Home = ({
   pathname,
 }) => {
   const queryClient = useQueryClient();
-  queryClient.removeQueries("CR_CREATE_BIRTH_REG");  
+  queryClient.removeQueries("Digit.CR_CREATE_BIRTH_REG");  
   const location = useLocation()
   const classname = Digit.Hooks.fsm.useRouteSubscription(pathname);
   const { t } = useTranslation();
@@ -154,7 +154,7 @@ const Home = ({
           name:t("CR_NAME_INCLUSION_CORRECTION"),
           Icon: <OBPSIcon />,
           onClick: () => history.push({
-            pathname: `${matchPath}/cr-name-inclusiom`,
+            pathname: `${matchPath}/cr-name-inclusion`,
             state: { module: "cr-birth" }
           }),
         },
@@ -243,7 +243,7 @@ const Home = ({
         },       
 
       ],
-      styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
+      styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "200%" },
     };
     const MarriageRegProps = {
       header: t(""),
@@ -254,6 +254,41 @@ const Home = ({
       options: [
         {
           name: t("CR_MARRIAGE_NEW_REGISTRATION"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname: `${matchPath}/cr-marriage-creation`,
+            state: { module: "cr-marriage" }
+          }),
+        },
+        {
+          name: t("CR_MARRIAGE_CORRECTIONS"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname: `${matchPath}/cr-marriage-creation`,
+            state: { module: "cr-marriage" }
+          }),
+        },
+      ],
+        styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
+      };
+      const mrgcertProps = {
+        header: t(""),
+        sideOption: {
+          name: t(""),
+          onClick: () => history.push("/digit-ui/citizen/all-services"),
+        },
+        options: [
+          
+             {
+            name: t("CR_COMMON_CERT_DOWNLOAD"),
+            Icon: <OBPSIcon />,
+            onClick: () => history.push({
+              pathname: `${matchPath}/create-death-certificate`,
+              state: { module: "cr-death" }
+            }),
+          }, 
+        {
+          name: t("TL_MY_APPLICATIONS_HEADER"),
           Icon: <OBPSIcon />,
           onClick: () => history.push({
             pathname: `${matchPath}/cr-marriage-creation`,
@@ -323,6 +358,8 @@ const Home = ({
             </div>
             <div className="ServicesSection" style={{display:"flex",marginTop:"20px"}}>
                 <CardBasedOptions {...MarriageRegProps} />
+                <CardBasedOptions {...mrgcertProps} />
+                
             </div>
           </Route>
         ) :

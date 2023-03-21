@@ -19,7 +19,7 @@ import { useTranslation } from "react-i18next";
 // import BirthCertificate from "./BirthCertificate";
 import BirthCertificate from "../../../components/SearchRegistryBirth";
 
-const BirthCertificateSearch = ({ path }) => {
+const BirthInclusion = ({ path }) => {
   const { variant } = useParams();
   const { t } = useTranslation();
   // const tenantId = Digit.ULBService.getCurrentTenantId();
@@ -80,4 +80,4 @@ const BirthCertificateSearch = ({ path }) => {
   );
 };
 
-export default BirthCertificateSearch;
+export default BirthInclusion;

@@ -125,30 +125,29 @@ const WitnessDetails = ({ config, onSelect, userType, formData }) => {
   const [witness1Mobile, setwitness1Mobile] = useState(formData?.MarriageDetails?.witness1Mobile ? formData?.MarriageDetails?.witness1Mobile : "");
   const [witness2Mobile, setwitness2Mobile] = useState(formData?.MarriageDetails?.witness2Mobile ? formData?.MarriageDetails?.witness2Mobile : "");
 
-//   const [file, setFile] = useState();
-//   const [files, setFiles] = useState();
-//   function handleChange(e) {
-//     console.log(e.target.files);
-//     setFile(URL.createObjectURL(e.target.files[0]));
-//   }
-//   function handleFile2Change(e) {
-//     console.log(e.target.files);
-//     setFiles(URL.createObjectURL(e.target.files[1]));
-//   }
-//   const handleOptionChange = (event) => {
-//     setSelectedOption(event.target.value);
-//   };
-const [file1, setFile1] = useState(null);
-const [file2, setFile2] = useState(null);
+  //   const [file, setFile] = useState();
+  //   const [files, setFiles] = useState();
+  //   function handleChange(e) {
+  //     console.log(e.target.files);
+  //     setFile(URL.createObjectURL(e.target.files[0]));
+  //   }
+  //   function handleFile2Change(e) {
+  //     console.log(e.target.files);
+  //     setFiles(URL.createObjectURL(e.target.files[1]));
+  //   }
+  //   const handleOptionChange = (event) => {
+  //     setSelectedOption(event.target.value);
+  //   };
+  const [file1, setFile1] = useState(null);
+  const [file2, setFile2] = useState(null);
 
-const handleFile1Change = (event) => {
-  setFile1(event.target.files[0]);
-};
+  const handleFile1Change = (event) => {
+    setFile1(event.target.files[0]);
+  };
 
-const handleFile2Change = (event) => {
-  setFile2(event.target.files[0]);
-};
-
+  const handleFile2Change = (event) => {
+    setFile2(event.target.files[0]);
+  };
 
   const onSkip = () => onSelect();
 
@@ -605,19 +604,35 @@ const handleFile2Change = (event) => {
               <img src={files} />
             </div>
           </div> */}
-           <div>
-      <input type="file" onChange={handleFile1Change} />
-      <input type="file" onChange={handleFile2Change} />
+          <div>
+            <div className="col-md-12">
+              <div className="col-md-4">
+                <h2>Add Groom Image :</h2>
+                <input type="file" onChange={handleFile1Change} />
+              </div>
+              <div className="col-md-4">
+                <h2>Add Bride Image :</h2>
+                <input type="file" onChange={handleFile2Change} />
+              </div>
+            </div>
+            {/* <div className="col-md-12">
+            <div className="col-md-4">
+              <h2>Add Groom Image :</h2>
+              <input type="file" onChange={handleChange} />
+              <img src={file} />
+            </div>
+            <div className="col-md-4">
+              <h2>Add Bride Image :</h2>
+              <input type="file" onChange={handleChange} />
+              <img src={file} />
+            </div>
+          </div> */}
+            <div style={{ display: "flex" }}>
+              <div style={{ width: "10%" }}>{file1 && <img src={URL.createObjectURL(file1)} alt="file 1" />}</div>
 
-      <div style={{ display: 'flex' }}>
-        <div style={{ width: '10%' }}>
-          {file1 && <img src={URL.createObjectURL(file1)} alt="file 1" />}
-        </div>
-        <div style={{ width: '10%' }}>
-          {file2 && <img src={URL.createObjectURL(file2)} alt="file 2" />}
-        </div>
-      </div>
-    </div>
+              <div style={{ width: "10%" }}>{file2 && <img src={URL.createObjectURL(file2)} alt="file 2" />}</div>
+            </div>
+          </div>
           {""}
 
           {/* <div><BackButton >{t("CS_COMMON_BACK")}</BackButton></div> */}
