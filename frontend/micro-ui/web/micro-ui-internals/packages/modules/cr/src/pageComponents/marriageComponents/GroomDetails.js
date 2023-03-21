@@ -89,7 +89,9 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     formData?.GroomDetails?.groomMiddlenameEn ? formData?.GroomDetails?.groomMiddlenameEn : ""
   );
   const [groomLastnameEn, setGroomLastnameEn] = useState(formData?.GroomDetails?.groomLastnameEn ? formData?.GroomDetails?.groomLastnameEn : "");
-
+  const [selectedOption, setSelectedOption] = useState(
+    formData?.AddressOfDecesed?.selectedOption ? formData?.AddressOfDecesed?.selectedOption : "ILB"
+  );
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
@@ -135,7 +137,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     if (isInitialRenderRadioButtons) {
       setisInitialRenderRadioButtons(false);
       if (selectedValueRadio) {
-        setIsInitialRenderRadio(false);
+        // setIsInitialRenderRadio(false);
         setValueRad(selectedValueRadio.code);
       }
     }
@@ -324,7 +326,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
   
     if (validFlag == true) {
       sessionStorage.setItem("groomDOB", groomDOB ? groomDOB : null);
-      sessionStorage.setItem("tripStartTime", tripStartTime ? tripStartTime : null);
+      // sessionStorage.setItem("tripStartTime", tripStartTime ? tripStartTime : null);
       sessionStorage.setItem("groomGender", groomGender ? groomGender.code : null);
       sessionStorage.setItem("groomAdharNo", groomAdharNo ? groomAdharNo : null);
       sessionStorage.setItem("groomPassportNo", groomPassportNo ? groomPassportNo : null);
@@ -350,10 +352,12 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       sessionStorage.setItem("groomNoOfSpouse", groomNoOfSpouse ? groomNoOfSpouse : null);
       sessionStorage.setItem("groomSpouseLiving", groomSpouseLiving ? groomSpouseLiving : null);
       sessionStorage.setItem("groomMaritalstatusID", groomMaritalstatusID ? groomMaritalstatusID : null);
+      sessionStorage.setItem("selectedOption", selectedOption ? selectedOption : "ILB");
       // sessionStorage.setItem("groomProfessionEn", groomProfessionEn ? groomProfessionEn.code : null);
       // sessionStorage.setItem("groomProfessionMal", groomProfessionMal ? groomProfessionMal.code : null);
       onSelect(config.key, {
         groomDOB,
+        selectedOption,
         groomAdharNo,
         groomGender,
         groomPassportNo,

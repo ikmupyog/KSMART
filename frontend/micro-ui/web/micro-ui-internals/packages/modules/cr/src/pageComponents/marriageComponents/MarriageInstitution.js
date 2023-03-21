@@ -485,7 +485,7 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                //name="marriageReligiousInstitutionOtherNameEn"
+                name="marriageReligiousInstitutionOtherNameEn"
                 value={marriageReligiousInstitutionOtherNameEn}
                 onChange={setSelectMarriageReligiousInstitutionOtherNameEn}
                 placeholder={`${t("CR_RELIGIOUS_INST_OTHER_NAME_EN")}`}
@@ -499,7 +499,7 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                //name="marriageReligiousInstitutionOtherNameMal"
+                name="marriageReligiousInstitutionOtherNameMal"
                 value={marriageReligiousInstitutionOtherNameMal}
                 onChange={setSelectMarriageReligiousInstitutionOtherNameMal}
                 placeholder={`${t("CR_RELIGIOUS_INST_OTHER_NAME_ML")}`}
