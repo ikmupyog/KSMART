@@ -1,4 +1,4 @@
-package org.egov.kssmSnehapoorvam.web.models;
+package org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster;
 
 
 import java.util.ArrayList;
@@ -7,7 +7,6 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.egov.common.contract.response.ResponseInfo;
-import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.SnehapoorvamSchoolReg;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -3,7 +3,7 @@ package org.egov.kssmSnehapoorvam.web.controller;
 import javax.validation.Valid;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
-import org.egov.kssmSnehapoorvam.service.SnehapoorvamSchoolMasterService.SnehapoorvamSchoolService;
+import org.egov.kssmSnehapoorvam.service.SnehapoorvamSchoolService;
 import org.egov.kssmSnehapoorvam.util.ResponseInfoFactory;
 import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.SnehapoorvamSchoolMasterRequest;
 import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.SnehapoorvamSchoolMasterResponse;

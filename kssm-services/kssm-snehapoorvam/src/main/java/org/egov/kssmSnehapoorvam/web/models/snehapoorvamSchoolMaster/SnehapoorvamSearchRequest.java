@@ -1,4 +1,4 @@
-package org.egov.kssmSnehapoorvam.web.models;
+package org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,15 +23,15 @@ public class SnehapoorvamSearchRequest {
         @JsonProperty("RequestInfo")
         private RequestInfo requestInfo;
     
-        // @JsonProperty("SnehapoorvamSchoolReg")
-        // @Valid
-        // private List<SnehapoorvamSchoolReg> SchoolLogin;
     
       
         // public SnehapoorvamRequest addSchoolLogin(SnehapoorvamSchoolLogin schoollogin) {
     
         //     if (SchoolLogin == null) {
-        //         SchoolLogin = new ArrayList<>();
+        //         
+        // @JsonProperty("SnehapoorvamSchoolReg")
+        // @Valid
+        // private List<SnehapoorvamSchoolReg> SchoolLogin;SchoolLogin = new ArrayList<>();
         //     }
         //     SchoolLogin.add(schoollogin);
         //     return this;

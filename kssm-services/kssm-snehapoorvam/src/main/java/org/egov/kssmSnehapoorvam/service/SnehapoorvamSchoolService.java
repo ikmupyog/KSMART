@@ -1,4 +1,4 @@
-package org.egov.kssmSnehapoorvam.service.SnehapoorvamSchoolMasterService;
+package org.egov.kssmSnehapoorvam.service;
 
 
 import java.util.List;

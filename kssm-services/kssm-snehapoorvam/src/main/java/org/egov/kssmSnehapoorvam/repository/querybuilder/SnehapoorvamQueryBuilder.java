@@ -14,7 +14,7 @@ public class SnehapoorvamQueryBuilder extends BaseQueryBuilder {
 
     private static final String QUERY = new StringBuilder()
             .append(" select school_name,institution_type_name,revenue_district_name,pincode")
-            .append(" ,school_address FROM school_master_login  ")
+            .append(" ,school_address FROM m_schoolmaster  ")
             .toString();
 
     public String getSchoolDatailSearchQuery(@NotNull SchoolSearchCriteria criteria,
