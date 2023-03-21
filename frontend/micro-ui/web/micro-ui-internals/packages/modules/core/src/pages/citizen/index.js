@@ -154,7 +154,7 @@ const Home = ({
           name:t("CR_NAME_INCLUSION_CORRECTION"),
           Icon: <OBPSIcon />,
           onClick: () => history.push({
-            pathname: `${matchPath}/cr-name-inclusiom`,
+            pathname: `${matchPath}/cr-name-inclusion`,
             state: { module: "cr-birth" }
           }),
         },

@@ -16,6 +16,7 @@ import AddressPermanent from "../src/pageComponents/birthComponents/AddressPerma
 import MultipleBirth from "../src/pageComponents/birthComponents/MultipleBirth";
 import CreateBirthRegistration from "./pages/citizen/BirthRegistration";
 import CreateBirthNACRegistration from "./pages/citizen/BirthNACRegistration";
+import BirthInclusion from "./pages/citizen/BirthInclusion";
 
 import CreateAdoptions from "./pages/citizen/Adoption";
 import CreateStillBirthRegistration from "./pages/citizen/StillBirthRegistration";
@@ -246,6 +247,7 @@ const componentsToRegister = {
   CRCreateBornOutsideRegistration: CreateBornOutsideRegistration,  
   CRCreateBirthNACRegistration: CreateBirthNACRegistration,
   ParentsDetails,
+  CRBirthInclusions:BirthInclusion,
   BirthPlaceHospital,
   BirthPlaceInstitution,
   BirthPlaceHome,
