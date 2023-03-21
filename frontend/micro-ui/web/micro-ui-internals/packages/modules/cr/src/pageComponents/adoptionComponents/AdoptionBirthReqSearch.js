@@ -9,7 +9,7 @@ const AdoptionBirthReqSearch = ({ BirthRegNo, setSelectSetBirthRegNo, setSearchR
   let searchParams = {
     applicationNumber: BirthRegNo,
   };
-  const { data: { ChildDetails: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useSearch({
+  const { data: { ChildDetails: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useAdoptionSearch({
     tenantId,
     filters: searchParams,
   });

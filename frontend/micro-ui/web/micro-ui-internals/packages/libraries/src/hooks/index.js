@@ -141,6 +141,7 @@ import useCRGenderMDMS from "./cr/useCRGenderMDMS";
 import useCRInbox from "./cr/useInbox";
 import useCRMDMS from "./cr/useMDMS";
 import useCRSearch from "./cr/useSearch";
+import useAdoptionSearch from "./cr/useAdoptionSearch";
 import useRegistryDownloadDeath from "./cr/useRegistryDownloadDeath";
 import useResistryDownloadBirth from "./cr/useResistryDownloadBirth"
 import useRegistrySearchBirth from "./cr/useRegistrySearchBirth";
@@ -345,6 +346,7 @@ const cr = {
   useInbox: useCRInbox,
   useMDMS: useCRMDMS,
   useSearch: useCRSearch,
+  useAdoptionSearch,
   useRegistrySearchDeath,
   useRegistryDownloadDeath,
   useResistryDownloadBirth,
