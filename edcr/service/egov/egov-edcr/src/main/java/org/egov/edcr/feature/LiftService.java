@@ -47,7 +47,35 @@
 
 package org.egov.edcr.feature;
 
+import static org.egov.edcr.constants.DxfFileConstants.A1;
+import static org.egov.edcr.constants.DxfFileConstants.A2;
+import static org.egov.edcr.constants.DxfFileConstants.A3;
+import static org.egov.edcr.constants.DxfFileConstants.A4;
+import static org.egov.edcr.constants.DxfFileConstants.A5;
+import static org.egov.edcr.constants.DxfFileConstants.B1;
+import static org.egov.edcr.constants.DxfFileConstants.B2;
+import static org.egov.edcr.constants.DxfFileConstants.B3;
+import static org.egov.edcr.constants.DxfFileConstants.C;
+import static org.egov.edcr.constants.DxfFileConstants.C1;
+import static org.egov.edcr.constants.DxfFileConstants.C2;
+import static org.egov.edcr.constants.DxfFileConstants.C3;
+import static org.egov.edcr.constants.DxfFileConstants.D;
+import static org.egov.edcr.constants.DxfFileConstants.D1;
+import static org.egov.edcr.constants.DxfFileConstants.D2;
+import static org.egov.edcr.constants.DxfFileConstants.E;
+import static org.egov.edcr.constants.DxfFileConstants.F;
+import static org.egov.edcr.constants.DxfFileConstants.F1;
+import static org.egov.edcr.constants.DxfFileConstants.F2;
+import static org.egov.edcr.constants.DxfFileConstants.F3;
+import static org.egov.edcr.constants.DxfFileConstants.F4;
+import static org.egov.edcr.constants.DxfFileConstants.G1;
+import static org.egov.edcr.constants.DxfFileConstants.G2;
+import static org.egov.edcr.constants.DxfFileConstants.H;
+import static org.egov.edcr.constants.DxfFileConstants.I1;
+import static org.egov.edcr.constants.DxfFileConstants.I2;
+
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -59,11 +87,12 @@ import org.egov.common.entity.edcr.Block;
 import org.egov.common.entity.edcr.Floor;
 import org.egov.common.entity.edcr.Lift;
 import org.egov.common.entity.edcr.Measurement;
-import org.egov.common.entity.edcr.OccupancyType;
+import org.egov.common.entity.edcr.OccupancyTypeHelper;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.edcr.constants.DxfFileConstants;
+import org.egov.edcr.utility.Util;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -73,37 +102,39 @@ public class LiftService extends FeatureProcess {
     private static final String SUBRULE_48 = "48";
     private static final String REMARKS = "Remarks";
     private static final String SUBRULE_48_DESCRIPTION = "Minimum number of lifts";
-    private static final String SUBRULE_40A_3 = "40A-3";
+    private static final String SUBRULE_40A_3 = "40A(3)";
     private static final String SUBRULE_118 = "118";
     private static final String SUBRULE_118_DESCRIPTION = "Minimum dimension Of lift %s on floor %s";
     private static final String SUBRULE_118_DESC = "Minimum dimension Of lift";
 
     @Override
-    public Plan validate(Plan plan) {
-        for (Block block : plan.getBlocks()) {
+    public Plan validate(Plan pl) {
+        for (Block block : pl.getBlocks()) {
             if (block.getBuilding() != null && !block.getBuilding().getFloors().isEmpty()) {
                 for (Floor floor : block.getBuilding().getFloors()) {
+                	if(!floor.getTerrace()) {
                     List<Lift> lifts = floor.getLifts();
                     if (lifts != null && !lifts.isEmpty()) {
                         for (Lift lift : lifts) {
                             List<Measurement> liftPolyLines = lift.getLifts();
                             if (liftPolyLines != null && !liftPolyLines.isEmpty()) {
-                                validateDimensions(plan, block.getNumber(), floor.getNumber(),
-                                        lift.getNumber().toString(), liftPolyLines);
+                                validateDimensions(pl, block.getNumber(), floor.getNumber(), lift.getNumber().toString(), liftPolyLines);
                             }
+                          }
                         }
                     }
                 }
             }
         }
-        return plan;
+        return pl;
     }
 
     @Override
-    public Plan process(Plan plan) {
-        // validate(plan);
-        if (plan != null && !plan.getBlocks().isEmpty()) {
-            blk: for (Block block : plan.getBlocks()) {
+    public Plan process(Plan pl) {
+        validate(pl);
+        if (pl != null && !pl.getBlocks().isEmpty()) {
+            blk:
+            for (Block block : pl.getBlocks()) {
                 scrutinyDetail = new ScrutinyDetail();
                 scrutinyDetail.addColumnHeading(1, RULE_NO);
                 scrutinyDetail.addColumnHeading(2, DESCRIPTION);
@@ -123,79 +154,127 @@ public class LiftService extends FeatureProcess {
                 scrutinyDetail1.setKey("Block_" + block.getNumber() + "_" + "Lift - Minimum Dimension");
 
                 if (block.getBuilding() != null && !block.getBuilding().getOccupancies().isEmpty()) {
-                    /*
-                     * if (Util.checkExemptionConditionForBuildingParts(block)) { continue blk; }
-                     */
-                    /*
-                     * List<OccupancyType> occupancyTypeList = block.getBuilding().getOccupancies().stream() .map(occupancy ->
-                     * occupancy.getType()).collect(Collectors.toList());
-                     */
+                    if (Util.checkExemptionConditionForBuildingParts(block)) {
+                        continue blk;
+                    }
+                    List<OccupancyTypeHelper> occupancyTypes = block.getBuilding().getOccupancies().stream().map(occupancy -> occupancy.getTypeHelper()).collect(Collectors.toList());
+                    List<String> occupancyTypeList = occupancyTypes.stream().map(occ -> occ.getType().getCode()).collect(Collectors.toList());
                     BigDecimal noOfLiftsRqrd;
-                    /*
-                     * To be added Rule 48 Lift shall be provided for buildings above 15 m. height in case of apartments, group
-                     * housing, commercial, institutional and office buildings
-                     */
-                    if (block.getBuilding().getIsHighRise() &&
-                            (DxfFileConstants.A_AF
-                                    .equals(plan.getVirtualBuilding().getMostRestrictiveFarHelper().getType()
-                                            .getCode())
-                                    || DxfFileConstants.B
-                                            .equals(plan.getVirtualBuilding().getMostRestrictiveFarHelper().getType()
-                                                    .getCode())
-                                    || DxfFileConstants.E
-                                            .equals(plan.getVirtualBuilding().getMostRestrictiveFarHelper().getType()
-                                                    .getCode())
-                                    || DxfFileConstants.F
-                                            .equals(plan.getVirtualBuilding().getMostRestrictiveFarHelper().getType()
-                                                    .getCode()))) {
+                    if ((occupancyTypeList.contains(C) ||
+                            occupancyTypeList.contains(C1) || occupancyTypeList.contains(C2) ||
+                            occupancyTypeList.contains(C3)) && block.getBuilding().getFloorsAboveGround() != null &&
+                            block.getBuilding().getFloorsAboveGround().compareTo(BigDecimal.valueOf(3)) > 0) {
                         noOfLiftsRqrd = BigDecimal.valueOf(1);
+                        if (block.getBuilding().getTotalFloorArea() != null && block.getBuilding().getTotalFloorArea().compareTo(BigDecimal.valueOf(4000)) > 0) {
+                            noOfLiftsRqrd = noOfLiftsRqrd.add(BigDecimal.valueOf(Math.ceil((block.getBuilding().getTotalFloorArea().subtract
+                                    (BigDecimal.valueOf(4000))).divide(BigDecimal.valueOf(2500), 2, RoundingMode.HALF_UP).doubleValue())));
+                        }
                         boolean valid = false;
-                        if (BigDecimal.valueOf(Double.valueOf(block.getNumberOfLifts()))
-                                .compareTo(noOfLiftsRqrd) >= 0) {
+                        if (noOfLiftsRqrd.compareTo(BigDecimal.valueOf(Double.valueOf(block.getNumberOfLifts()))) <= 0) {
                             valid = true;
                         }
                         if (valid) {
-                            setReportOutputDetails(plan, SUBRULE_48, SUBRULE_48_DESCRIPTION,
-                                    noOfLiftsRqrd.toString(), block.getNumberOfLifts(), Result.Accepted.getResultVal(),
-                                    "", scrutinyDetail);
+                            setReportOutputDetails(pl, SUBRULE_48 + ", " + SUBRULE_40A_3, SUBRULE_48_DESCRIPTION, noOfLiftsRqrd.toString(),
+                                    block.getNumberOfLifts(),
+                                    Result.Accepted.getResultVal(), "Medical Occupancy is most restrictive, so number of floors above ground level > 3 is required to have lifts", scrutinyDetail);
                         } else {
-                            setReportOutputDetails(plan, SUBRULE_48, SUBRULE_48_DESCRIPTION, noOfLiftsRqrd.toString(),
-                                    block.getNumberOfLifts(), Result.Not_Accepted.getResultVal(), "", scrutinyDetail);
+                            setReportOutputDetails(pl, SUBRULE_48, SUBRULE_48_DESCRIPTION, noOfLiftsRqrd.toString(),
+                                    block.getNumberOfLifts(),
+                                    Result.Verify.getResultVal(), "Medical Occupancy is most restrictive, so number of floors above ground level > 3 is required to have lifts", scrutinyDetail);
                         }
 
+                    } else if ((!occupancyTypeList.contains(C) &&
+                            !occupancyTypeList.contains(C1) &&
+                            !occupancyTypeList.contains(C2) &&
+                            !occupancyTypeList.contains(C3)) && (occupancyTypeList.contains(A1) ||
+                            occupancyTypeList.contains(A2) || occupancyTypeList.contains(A3) ||
+                            occupancyTypeList.contains(A4) || occupancyTypeList.contains(A5) ||
+                            occupancyTypeList.contains(B1) || occupancyTypeList.contains(B2) ||
+                            occupancyTypeList.contains(B3) || occupancyTypeList.contains(D) ||
+                            occupancyTypeList.contains(D1) ||
+                            occupancyTypeList.contains(D2) ||
+                            occupancyTypeList.contains(E) || occupancyTypeList.contains(F) ||
+                            occupancyTypeList.contains(F1) || occupancyTypeList.contains(F2) ||
+                            occupancyTypeList.contains(F3) || occupancyTypeList.contains(F4) ||
+                            occupancyTypeList.contains(G1) ||
+                            occupancyTypeList.contains(G2) || occupancyTypeList.contains(H) ||
+                            occupancyTypeList.contains(I1) || occupancyTypeList.contains(I2))
+                            && block.getBuilding().getFloorsAboveGround() != null &&
+                            block.getBuilding().getFloorsAboveGround().compareTo(BigDecimal.valueOf(4)) > 0) {
+                        noOfLiftsRqrd = BigDecimal.valueOf(1);
+                        if (block.getBuilding().getTotalFloorArea() != null && block.getBuilding().getTotalFloorArea().compareTo(BigDecimal.valueOf(4000)) > 0) {
+                            noOfLiftsRqrd = noOfLiftsRqrd.add(BigDecimal.valueOf(Math.ceil((block.getBuilding().getTotalFloorArea().subtract
+                                    (BigDecimal.valueOf(4000))).divide(BigDecimal.valueOf(2500), 2, RoundingMode.HALF_UP).doubleValue())));
+                        }
+                        boolean valid = false;
+                        if (noOfLiftsRqrd.compareTo(BigDecimal.valueOf(Double.valueOf(block.getNumberOfLifts()))) <= 0) {
+                            valid = true;
+                        }
+                        if (valid) {
+                            setReportOutputDetails(pl, SUBRULE_48 + ", " + SUBRULE_40A_3, SUBRULE_48_DESCRIPTION, noOfLiftsRqrd.toString(),
+                                    block.getNumberOfLifts(),
+                                    Result.Accepted.getResultVal(), "Occupancies other than Medical are provided,so number of floors above ground level > 4 is required to have lifts", scrutinyDetail);
+
+                        } else {
+                            setReportOutputDetails(pl, SUBRULE_48 + ", " + SUBRULE_40A_3, SUBRULE_48_DESCRIPTION, noOfLiftsRqrd.toString(),
+                                    block.getNumberOfLifts(),
+                                    Result.Verify.getResultVal(), "Occupancies other than Medical are provided,so number of floors above ground level > 4 is required to have lifts", scrutinyDetail);
+                        }
                     }
                 }
 
-                /*
-                 * if (block.getBuilding() != null && block.getBuilding().getBuildingHeight() != null &&
-                 * block.getBuilding().getBuildingHeight().intValue() > 16) { if (!block.getBuilding().getFloors().isEmpty()) {
-                 * Integer floorUnits = 0; for (Floor floor : block.getBuilding().getFloors()) { floorUnits = floorUnits +
-                 * floor.getUnits().size(); } if (floorUnits > 16) { boolean validOutside = false; Map<String, String>
-                 * liftDimensions = new HashMap<>(); flr: for (Floor floor : block.getBuilding().getFloors()) { for (Lift lift :
-                 * floor.getLifts()) { if (lift.getLiftPolyLineClosed()) { for (Measurement measurement : lift.getLiftPolyLines())
-                 * { measurement.setWidth(BigDecimal.valueOf( Math.round(measurement.getWidth().doubleValue() * 100d) / 100d));
-                 * measurement.setHeight(BigDecimal.valueOf( Math.round(measurement.getHeight().doubleValue() * 100d) / 100d)); if
-                 * (measurement.getWidth().compareTo(BigDecimal.valueOf(1.1)) >= 0 &&
-                 * measurement.getHeight().compareTo(BigDecimal.valueOf(2)) >= 0) { validOutside = true;
-                 * liftDimensions.put("width", measurement.getWidth().toString()); liftDimensions.put("length",
-                 * measurement.getHeight().toString()); liftDimensions.put("floor", floor.getNumber().toString());
-                 * liftDimensions.put("lift", lift.getNumber().toString()); break flr; } } } } } if (validOutside) {
-                 * setReportOutputDetails(plan, SUBRULE_118, String.format(SUBRULE_118_DESCRIPTION, liftDimensions.get("lift"),
-                 * liftDimensions.get("floor")), "2.0 m * 1.10 m", liftDimensions.get("length") + " * " +
-                 * liftDimensions.get("width"), Result.Accepted.getResultVal(), "Height of building is greater than 16 m",
-                 * scrutinyDetail1); } else { setReportOutputDetails(plan, SUBRULE_118, SUBRULE_118_DESC, "2.0 m * 1.10 m",
-                 * "None of the lift has minimum dimensions as provided", Result.Not_Accepted.getResultVal(),
-                 * "Height of building is greater than 16 m", scrutinyDetail1); } } } }
-                 */
+                if (block.getBuilding() != null && block.getBuilding().getBuildingHeight() != null && block.getBuilding().getBuildingHeight().intValue() > 16) {
+                    if (!block.getBuilding().getFloors().isEmpty()) {
+                        Integer floorUnits = 0;
+                        for (Floor floor : block.getBuilding().getFloors()) {
+                        	if(!floor.getTerrace()) {
+                            floorUnits = floorUnits + floor.getUnits().size();
+                        	}
+                        }
+                        if (floorUnits > 16) {
+                            boolean validOutside = false;
+                            Map<String, String> liftDimensions = new HashMap<>();
+                            flr:
+                            for (Floor floor : block.getBuilding().getFloors()) {
+                            	if(!floor.getTerrace()) {
+                                for (Lift lift : floor.getLifts()) {
+                                    if (lift.getLiftClosed()) {
+                                        for (Measurement measurement : lift.getLifts()) {
+                                            measurement.setWidth(BigDecimal.valueOf(Math.round(measurement.getWidth().doubleValue() * 100d) / 100d));
+                                            measurement.setHeight(BigDecimal.valueOf(Math.round(measurement.getHeight().doubleValue() * 100d) / 100d));
+                                            if (measurement.getWidth().compareTo(BigDecimal.valueOf(1.1)) >= 0 && measurement.getHeight().compareTo(BigDecimal.valueOf(2)) >= 0) {
+                                                validOutside = true;
+                                                liftDimensions.put("width", measurement.getWidth().toString());
+                                                liftDimensions.put("length", measurement.getHeight().toString());
+                                                liftDimensions.put("floor", floor.getNumber().toString());
+                                                liftDimensions.put("lift", lift.getNumber().toString());
+                                                break flr;
+                                            }
+                                        }
+                                    }
+                                }
+                              } 
+                            }
+                            if (validOutside) {
+                                setReportOutputDetails(pl, SUBRULE_118, String.format(SUBRULE_118_DESCRIPTION, liftDimensions.get("lift"), liftDimensions.get("floor")),
+                                        "2.0 m * 1.10 m", liftDimensions.get("length") + " * " + liftDimensions.get("width"), Result.Accepted.getResultVal(),
+                                        "Height of building is greater than 16 m", scrutinyDetail1);
+                            } else {
+                                setReportOutputDetails(pl, SUBRULE_118, SUBRULE_118_DESC,
+                                        "2.0 m * 1.10 m", "None of the lift has minimum dimensions as provided", Result.Not_Accepted.getResultVal(),
+                                        "Height of building is greater than 16 m", scrutinyDetail1);
+                            }
+                        }
+                    }
+                }
 
             }
         }
 
-        return plan;
+        return pl;
     }
 
-    private void setReportOutputDetails(Plan plan, String ruleNo, String ruleDesc, String expected, String actual,
-            String status, String remarks, ScrutinyDetail scrutinyDetail) {
+    private void setReportOutputDetails(Plan pl, String ruleNo, String ruleDesc, String expected, String actual, String status, String remarks, ScrutinyDetail scrutinyDetail) {
         Map<String, String> details = new HashMap<>();
         details.put(RULE_NO, ruleNo);
         details.put(DESCRIPTION, ruleDesc);
@@ -204,11 +283,10 @@ public class LiftService extends FeatureProcess {
         details.put(STATUS, status);
         details.put(REMARKS, remarks);
         scrutinyDetail.getDetail().add(details);
-        plan.getReportOutput().getScrutinyDetails().add(scrutinyDetail);
+        pl.getReportOutput().getScrutinyDetails().add(scrutinyDetail);
     }
 
-    private void validateDimensions(Plan plan, String blockNo, int floorNo, String liftNo,
-            List<Measurement> liftPolylines) {
+    private void validateDimensions(Plan planDetail, String blockNo, int floorNo, String liftNo, List<Measurement> liftPolylines) {
         int count = 0;
         for (Measurement m : liftPolylines) {
             if (m.getInvalidReason() != null && m.getInvalidReason().length() > 0) {
@@ -216,9 +294,9 @@ public class LiftService extends FeatureProcess {
             }
         }
         if (count > 0) {
-            plan.addError(String.format(DxfFileConstants.LAYER_LIFT_WITH_NO, blockNo, floorNo, liftNo),
-                    count + " number of lift polyline not having only 4 points in layer "
-                            + String.format(DxfFileConstants.LAYER_LIFT_WITH_NO, blockNo, floorNo, liftNo));
+            planDetail.addError(String.format(DxfFileConstants.
+                    LAYER_LIFT_WITH_NO, blockNo, floorNo, liftNo), count + " number of lift polyline not having only 4 points in layer " + String.format(DxfFileConstants.
+                    LAYER_LIFT_WITH_NO, blockNo, floorNo, liftNo));
 
         }
     }

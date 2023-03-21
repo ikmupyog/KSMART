@@ -47,17 +47,21 @@
 
 package org.egov.edcr.feature;
 
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_081119;
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_NOV19;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.egov.common.entity.edcr.AccessoryBlock;
 import org.egov.common.entity.edcr.CulDeSacRoad;
 import org.egov.common.entity.edcr.Lane;
 import org.egov.common.entity.edcr.NonNotifiedRoad;
 import org.egov.common.entity.edcr.NotifiedRoad;
+import org.egov.common.entity.edcr.OccupancyType;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
@@ -71,47 +75,82 @@ public class AccessoryBuildingService extends FeatureProcess{
     private static final String SUBRULE_88_1_DESC = "Maximum area of accessory block %s";
     private static final String SUBRULE_88_3_DESC = "Maximum height of accessory block %s";
 
-    private static final String SUBRULE_88_1 = "88-1";
-    private static final String SUBULE_88_3 = "88-3";
-    private static final String SUBRULE_88_4 = "88-4";
-    private static final String SUBRULE_88_5 = "88-5";
+    private static final String SUBRULE_88_1 = "88(1)";
+    private static final String SUBULE_88_3 = "88(3)";
+    private static final String SUBRULE_88_4 = "88(4)";
+    private static final String SUBRULE_88_5 = "88(5)";
+
+    private static final String SUBRULE_67 = "67";
 
     private static final String MIN_DIS_NOTIFIED_ROAD_FROM_ACC_BLDG = "Minimum distance from accessory block to notified road";
     private static final String MIN_DIS_NON_NOTIFIED_ROAD_FROM_ACC_BLDG = "Minimum distance from accessory building to non notified road";
     private static final String MIN_DIS_CULDESAC_ROAD_FROM_ACC_BLDG = "Minimum distance from accessory building to culdesac road";
     private static final String MIN_DIS_LANE_ROAD_FROM_ACC_BLDG = "Minimum distance from accessory building to lane road";
     private static final String SUBRULE_88_5_DESC = "Minimum distance from accessory block %s to plot boundary";
+    private static final String SUBRULE_ACC_DIST_BLDNG_DESC = "The minimum distance between accessory buildings and other existing or proposed buildings shall be minimum 1.0 m";
+    private static final String ACC_BLK_NOT_A1_ERROR = "The accessory buildings shall be allowed to residential buildings only, accessory buildings with occupancy other than residential to be drawn as separate block";
+
+    private static final String MIN_DIS_UN_NOTIFIED_ROAD_FROM_ACC_BLDG = "Minimum distance from accessory building to un-notified road";
 
     @Override
-    public Plan validate(Plan plan) {/*
-                                      * HashMap<String, String> errors = new HashMap<>(); if (plan != null &&
-                                      * !plan.getAccessoryBlocks().isEmpty()) { for (AccessoryBlock accessoryBlock :
-                                      * plan.getAccessoryBlocks()) { if (accessoryBlock.getAccessoryBuilding() != null &&
-                                      * accessoryBlock.getAccessoryBuilding().getHeight().compareTo(BigDecimal.valueOf(0)) == 0) {
-                                      * errors.put(String.format(DcrConstants.ACCESSORRY_BLK_HGHT, accessoryBlock.getNumber()),
-                                      * edcrMessageSource.getMessage(DcrConstants.OBJECTNOTDEFINED, new
-                                      * String[]{String.format(DcrConstants.ACCESSORRY_BLK_HGHT, accessoryBlock.getNumber())},
-                                      * LocaleContextHolder.getLocale())); plan.addErrors(errors); } } boolean
-                                      * shortestDistanceDefined = false; if (!plan.getNotifiedRoads().isEmpty()) for (NotifiedRoad
-                                      * notifiedRoad : plan.getNotifiedRoads()) { for (BigDecimal shortestDistanceToRoad :
-                                      * notifiedRoad.getDistanceFromAccessoryBlock()) { if
-                                      * (shortestDistanceToRoad.compareTo(BigDecimal.ZERO) > 0) { shortestDistanceDefined = true;
-                                      * break; } } } if (!plan.getNonNotifiedRoads().isEmpty()) for (NonNotifiedRoad
-                                      * nonNotifiedRoad : plan.getNonNotifiedRoads()) { for (BigDecimal shortestDistanceToRoad :
-                                      * nonNotifiedRoad.getDistanceFromAccessoryBlock()) if
-                                      * (shortestDistanceToRoad.compareTo(BigDecimal.ZERO) > 0) { shortestDistanceDefined = true;
-                                      * break; } } if (!plan.getLaneRoads().isEmpty()) for (Lane laneRoad : plan.getLaneRoads()) {
-                                      * for (BigDecimal shortestDistanceToRoad : laneRoad.getDistanceFromAccessoryBlock()) if
-                                      * (shortestDistanceToRoad.compareTo(BigDecimal.ZERO) > 0) { shortestDistanceDefined = true;
-                                      * break; } } if (!plan.getCuldeSacRoads().isEmpty()) for (CulDeSacRoad culdSac :
-                                      * plan.getCuldeSacRoads()) { for (BigDecimal shortestDistanceToRoad :
-                                      * culdSac.getDistanceFromAccessoryBlock()) if
-                                      * (shortestDistanceToRoad.compareTo(BigDecimal.ZERO) > 0) { shortestDistanceDefined = true;
-                                      * break; } } if (!shortestDistanceDefined) { errors.put(DcrConstants.SHORTESTDISTANCETOROAD,
-                                      * DcrConstants.SHORTESTDISTANCETOROAD + " not defined "); plan.addErrors(errors); } }
-                                      * validateMinimumDistanceOfAccBlkToPlotBndry(plan, errors);
-                                      */
-        return plan;
+    public Plan validate(Plan pl) {
+        HashMap<String, String> errors = new HashMap<>();
+        if (pl != null && !pl.getAccessoryBlocks().isEmpty()) {
+            for (AccessoryBlock accessoryBlock : pl.getAccessoryBlocks()) {
+                if (accessoryBlock.getAccessoryBuilding() != null
+                        && accessoryBlock.getAccessoryBuilding().getHeight().compareTo(BigDecimal.valueOf(0)) == 0) {
+                    errors.put(String.format(DcrConstants.ACCESSORRY_BLK_HGHT, accessoryBlock.getNumber()),
+                            edcrMessageSource.getMessage(
+                                    DcrConstants.OBJECTNOTDEFINED, new String[] { String
+                                            .format(DcrConstants.ACCESSORRY_BLK_HGHT, accessoryBlock.getNumber()) },
+                                    LocaleContextHolder.getLocale()));
+                    pl.addErrors(errors);
+
+                }
+            }
+            boolean shortestDistanceDefined = false;
+            if (!pl.getNotifiedRoads().isEmpty())
+                for (NotifiedRoad notifiedRoad : pl.getNotifiedRoads()) {
+                    for (BigDecimal shortestDistanceToRoad : notifiedRoad.getDistanceFromAccessoryBlock()) {
+                        if (shortestDistanceToRoad.compareTo(BigDecimal.ZERO) > 0) {
+                            shortestDistanceDefined = true;
+                            break;
+                        }
+                    }
+                }
+            if (!pl.getNonNotifiedRoads().isEmpty())
+                for (NonNotifiedRoad nonNotifiedRoad : pl.getNonNotifiedRoads()) {
+                    for (BigDecimal shortestDistanceToRoad : nonNotifiedRoad.getDistanceFromAccessoryBlock())
+                        if (shortestDistanceToRoad.compareTo(BigDecimal.ZERO) > 0) {
+                            shortestDistanceDefined = true;
+                            break;
+                        }
+                }
+            if (!pl.getLaneRoads().isEmpty())
+                for (Lane laneRoad : pl.getLaneRoads()) {
+                    for (BigDecimal shortestDistanceToRoad : laneRoad.getDistanceFromAccessoryBlock())
+                        if (shortestDistanceToRoad.compareTo(BigDecimal.ZERO) > 0) {
+                            shortestDistanceDefined = true;
+                            break;
+                        }
+                }
+            if (!pl.getCuldeSacRoads().isEmpty())
+                for (CulDeSacRoad culdSac : pl.getCuldeSacRoads()) {
+                    for (BigDecimal shortestDistanceToRoad : culdSac.getDistanceFromAccessoryBlock())
+                        if (shortestDistanceToRoad.compareTo(BigDecimal.ZERO) > 0) {
+                            shortestDistanceDefined = true;
+                            break;
+                        }
+                }
+
+            if (!shortestDistanceDefined) {
+                errors.put(DcrConstants.SHORTESTDISTANCETOROAD,
+                        getLocaleMessage(DcrConstants.OBJECTNOTDEFINED, DcrConstants.SHORTESTDISTANCETOROAD));
+                pl.addErrors(errors);
+            }
+        }
+        validateMinimumDistanceOfAccBlkToPlotBndry(pl, errors);
+        return pl;
     }
 
     private void validateMinimumDistanceOfAccBlkToPlotBndry(Plan pl, HashMap<String, String> errors) {
@@ -130,16 +169,35 @@ public class AccessoryBuildingService extends FeatureProcess{
 
 
     @Override
-    public Plan process(Plan plan) {/*
-                                     * validate(plan); processAreaOfAccessoryBlock(plan); processHeightOfAccessoryBlock(plan);
-                                     * processShortestDistanceOfAccBlkFromRoad(plan);
-                                     * processShortestDistanceOfAccBlkFromPlotBoundary(plan);
-                                     */
-        return plan;
+    public Plan process(Plan pl) {
+        validate(pl);
+        processAreaOfAccessoryBlock(pl);
+        processHeightOfAccessoryBlock(pl);
+        processShortestDistanceOfAccBlkFromRoad(pl);
+        processShortestDistanceOfAccBlkFromPlotBoundary(pl);
+
+        if (AMEND_NOV19.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))) {
+            processShortestAccBlkDistanceToBldng(pl);
+
+            if (pl != null && !pl.getAccessoryBlocks().isEmpty()) {
+                if (pl.getVirtualBuilding().getOccupancies().size() > 1
+                        || (pl.getVirtualBuilding().getOccupancies().size() == 1
+                                && !pl.getVirtualBuilding().getOccupancies().contains(OccupancyType.OCCUPANCY_A1))) {
+                    pl.addError("ACC_BLDNG_A1_ERROR", ACC_BLK_NOT_A1_ERROR);
+                }
+            }
+
+        }
+
+        return pl;
     }
 
-    private void processShortestDistanceOfAccBlkFromPlotBoundary(Plan plan) {
-        String subRule = SUBRULE_88_5;
+    private void processShortestDistanceOfAccBlkFromPlotBoundary(Plan pl) {
+        String subRule;
+        if (AMEND_NOV19.equals(super.getAmendmentsRefNumber(pl.getAsOnDate())))
+            subRule = SUBRULE_67;
+        else
+            subRule = SUBRULE_88_5;
         ScrutinyDetail scrutinyDetail3 = new ScrutinyDetail();
         scrutinyDetail3.setKey("Common_Accessory Block - Minimum distance from plot boundary");
         scrutinyDetail3.addColumnHeading(1, RULE_NO);
@@ -147,12 +205,15 @@ public class AccessoryBuildingService extends FeatureProcess{
         scrutinyDetail3.addColumnHeading(3, REQUIRED);
         scrutinyDetail3.addColumnHeading(4, PROVIDED);
         scrutinyDetail3.addColumnHeading(5, STATUS);
-        if (plan != null && !plan.getAccessoryBlocks().isEmpty()) {
-            for (AccessoryBlock accessoryBlock : plan.getAccessoryBlocks()) {
+        if (pl != null && !pl.getAccessoryBlocks().isEmpty()) {
+            for (AccessoryBlock accessoryBlock : pl.getAccessoryBlocks()) {
                 boolean valid = false;
-                if (accessoryBlock.getAccessoryBuilding() != null && !accessoryBlock.getAccessoryBuilding().getDistanceFromPlotBoundary().isEmpty()) {
-                    BigDecimal minimumAccBlkDisFromPlotBoundary = accessoryBlock.getAccessoryBuilding().getDistanceFromPlotBoundary().get(0);
-                    for (BigDecimal disOfAccBlkFromPlotBndry : accessoryBlock.getAccessoryBuilding().getDistanceFromPlotBoundary()) {
+                if (accessoryBlock.getAccessoryBuilding() != null
+                        && !accessoryBlock.getAccessoryBuilding().getDistanceFromPlotBoundary().isEmpty()) {
+                    BigDecimal minimumAccBlkDisFromPlotBoundary = accessoryBlock.getAccessoryBuilding()
+                            .getDistanceFromPlotBoundary().get(0);
+                    for (BigDecimal disOfAccBlkFromPlotBndry : accessoryBlock.getAccessoryBuilding()
+                            .getDistanceFromPlotBoundary()) {
                         if (minimumAccBlkDisFromPlotBoundary.compareTo(disOfAccBlkFromPlotBndry) > 0) {
                             minimumAccBlkDisFromPlotBoundary = disOfAccBlkFromPlotBndry;
                         }
@@ -161,19 +222,27 @@ public class AccessoryBuildingService extends FeatureProcess{
                         valid = true;
                     }
                     if (valid) {
-                        setReportOutputDetails(plan, subRule, String.format(SUBRULE_88_5_DESC, accessoryBlock.getNumber()), String.valueOf(1),
-                                minimumAccBlkDisFromPlotBoundary.toString(), Result.Accepted.getResultVal(), scrutinyDetail3);
+                        setReportOutputDetails(pl, subRule,
+                                String.format(SUBRULE_88_5_DESC, accessoryBlock.getNumber()), String.valueOf(1),
+                                minimumAccBlkDisFromPlotBoundary.toString(), Result.Accepted.getResultVal(),
+                                scrutinyDetail3);
                     } else {
-                        setReportOutputDetails(plan, subRule, String.format(SUBRULE_88_5_DESC, accessoryBlock.getNumber()), String.valueOf(1),
-                                minimumAccBlkDisFromPlotBoundary.toString(), Result.Not_Accepted.getResultVal(), scrutinyDetail3);
+                        setReportOutputDetails(pl, subRule,
+                                String.format(SUBRULE_88_5_DESC, accessoryBlock.getNumber()), String.valueOf(1),
+                                minimumAccBlkDisFromPlotBoundary.toString(), Result.Not_Accepted.getResultVal(),
+                                scrutinyDetail3);
                     }
                 }
             }
         }
     }
 
-    private void processShortestDistanceOfAccBlkFromRoad(Plan plan) {
-        String subRule = SUBRULE_88_4;
+    private void processShortestDistanceOfAccBlkFromRoad(Plan pl) {
+        String subRule;
+        if (AMEND_NOV19.equals(super.getAmendmentsRefNumber(pl.getAsOnDate())))
+            subRule = SUBRULE_67;
+        else
+            subRule = SUBRULE_88_4;
         ScrutinyDetail scrutinyDetail2 = new ScrutinyDetail();
         scrutinyDetail2.setKey("Common_Accessory Block - Minimum distance from the boundary abutting the road");
         scrutinyDetail2.addColumnHeading(1, RULE_NO);
@@ -181,26 +250,37 @@ public class AccessoryBuildingService extends FeatureProcess{
         scrutinyDetail2.addColumnHeading(3, REQUIRED);
         scrutinyDetail2.addColumnHeading(4, PROVIDED);
         scrutinyDetail2.addColumnHeading(5, STATUS);
-        if (plan != null && plan.getPlot() != null && plan.getPlot().getArea() != null && plan.getPlot().getArea().compareTo(BigDecimal.valueOf(0)) > 0) {
-            if (plan.getPlot().getArea().compareTo(BigDecimal.valueOf(125)) > 0) {
-                processNotifiedRoads(plan, subRule, scrutinyDetail2);
-                processNonNotifiedRoadsForPlotExceeding125(plan, subRule, scrutinyDetail2);
-                processCuldesacRoad(plan, subRule, scrutinyDetail2);
-                processLaneRoads(plan, subRule, scrutinyDetail2);
-            } else if (plan.getPlot().getArea().compareTo(BigDecimal.valueOf(125)) < 0) {
-                processNotifiedRoads(plan, subRule, scrutinyDetail2);
-                processNonNotifiedRoadsPlotLessThan125(plan, subRule, scrutinyDetail2);
-                processCuldesacRoad(plan, subRule, scrutinyDetail2);
-                processLaneRoads(plan, subRule, scrutinyDetail2);
+        pl.getFeatureAmendments().put("Minimum distance from the boundary abutting the road", AMEND_DATE_081119.toString());
+        if (AMEND_NOV19.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))) {
+            processNotifiedRoads(pl, subRule, scrutinyDetail2);
+            processNonNotifiedRoadsPlotLessThan125(pl, subRule, scrutinyDetail2);
+            processCuldesacRoad(pl, subRule, scrutinyDetail2);
+            processLaneRoads(pl, subRule, scrutinyDetail2);
+        } else {
+            if (pl != null && pl.getPlot() != null && pl.getPlot().getArea() != null
+                    && pl.getPlot().getArea().compareTo(BigDecimal.valueOf(0)) > 0) {
+                if (pl.getPlot().getArea().compareTo(BigDecimal.valueOf(125)) > 0) {
+                    processNotifiedRoads(pl, subRule, scrutinyDetail2);
+                    processNonNotifiedRoadsForPlotExceeding125(pl, subRule, scrutinyDetail2);
+                    processCuldesacRoad(pl, subRule, scrutinyDetail2);
+                    processLaneRoads(pl, subRule, scrutinyDetail2);
+                } else if (pl.getPlot().getArea().compareTo(BigDecimal.valueOf(125)) < 0) {
+                    processNotifiedRoads(pl, subRule, scrutinyDetail2);
+                    processNonNotifiedRoadsPlotLessThan125(pl, subRule, scrutinyDetail2);
+                    processCuldesacRoad(pl, subRule, scrutinyDetail2);
+                    processLaneRoads(pl, subRule, scrutinyDetail2);
+                }
             }
         }
     }
 
-    private void processNonNotifiedRoadsPlotLessThan125(Plan plan, String subRule, ScrutinyDetail scrutinyDetail2) {
-        if (!plan.getNonNotifiedRoads().isEmpty() && !plan.getNonNotifiedRoads().get(0).getDistanceFromAccessoryBlock().isEmpty()) {
+    private void processNonNotifiedRoadsPlotLessThan125(Plan pl, String subRule, ScrutinyDetail scrutinyDetail2) {
+        if (!pl.getNonNotifiedRoads().isEmpty()
+                && !pl.getNonNotifiedRoads().get(0).getDistanceFromAccessoryBlock().isEmpty()) {
             boolean valid = false;
-            BigDecimal minimumDisFmNonNotifiedRoad = plan.getNonNotifiedRoads().get(0).getDistanceFromAccessoryBlock().get(0);
-            for (BigDecimal disFrmAccBldg : plan.getNonNotifiedRoads().get(0).getDistanceFromAccessoryBlock()) {
+            BigDecimal minimumDisFmNonNotifiedRoad = pl.getNonNotifiedRoads().get(0).getDistanceFromAccessoryBlock()
+                    .get(0);
+            for (BigDecimal disFrmAccBldg : pl.getNonNotifiedRoads().get(0).getDistanceFromAccessoryBlock()) {
                 if (disFrmAccBldg.compareTo(minimumDisFmNonNotifiedRoad) < 0) {
                     minimumDisFmNonNotifiedRoad = disFrmAccBldg;
                 }
@@ -208,19 +288,29 @@ public class AccessoryBuildingService extends FeatureProcess{
             if (minimumDisFmNonNotifiedRoad.compareTo(BigDecimal.valueOf(2)) >= 0) {
                 valid = true;
             }
+            String ruleDesc;
+            if (AMEND_NOV19.equals(super.getAmendmentsRefNumber(pl.getAsOnDate())))
+                ruleDesc = MIN_DIS_UN_NOTIFIED_ROAD_FROM_ACC_BLDG;
+            else
+                ruleDesc = MIN_DIS_NON_NOTIFIED_ROAD_FROM_ACC_BLDG;
             if (valid) {
-                setReportOutputDetails(plan, subRule, MIN_DIS_NON_NOTIFIED_ROAD_FROM_ACC_BLDG, String.valueOf(2), minimumDisFmNonNotifiedRoad.toString(), Result.Accepted.getResultVal(), scrutinyDetail2);
+                setReportOutputDetails(pl, subRule, ruleDesc, String.valueOf(2),
+                        minimumDisFmNonNotifiedRoad.toString(), Result.Accepted.getResultVal(), scrutinyDetail2);
             } else {
-                setReportOutputDetails(plan, subRule, MIN_DIS_NON_NOTIFIED_ROAD_FROM_ACC_BLDG, String.valueOf(2), minimumDisFmNonNotifiedRoad.toString(), Result.Not_Accepted.getResultVal(), scrutinyDetail2);
+                setReportOutputDetails(pl, subRule, ruleDesc, String.valueOf(2),
+                        minimumDisFmNonNotifiedRoad.toString(), Result.Not_Accepted.getResultVal(), scrutinyDetail2);
             }
         }
     }
 
-    private void processNonNotifiedRoadsForPlotExceeding125(Plan plan, String subRule, ScrutinyDetail scrutinyDetail2) {
-        if (!plan.getNonNotifiedRoads().isEmpty() && !plan.getNonNotifiedRoads().get(0).getDistanceFromAccessoryBlock().isEmpty()) {
+    private void processNonNotifiedRoadsForPlotExceeding125(Plan pl, String subRule,
+            ScrutinyDetail scrutinyDetail2) {
+        if (!pl.getNonNotifiedRoads().isEmpty()
+                && !pl.getNonNotifiedRoads().get(0).getDistanceFromAccessoryBlock().isEmpty()) {
             boolean valid = false;
-            BigDecimal minimumDisFmNonNotifiedRoad = plan.getNonNotifiedRoads().get(0).getDistanceFromAccessoryBlock().get(0);
-            for (BigDecimal disFrmAccBldg : plan.getNonNotifiedRoads().get(0).getDistanceFromAccessoryBlock()) {
+            BigDecimal minimumDisFmNonNotifiedRoad = pl.getNonNotifiedRoads().get(0).getDistanceFromAccessoryBlock()
+                    .get(0);
+            for (BigDecimal disFrmAccBldg : pl.getNonNotifiedRoads().get(0).getDistanceFromAccessoryBlock()) {
                 if (disFrmAccBldg.compareTo(minimumDisFmNonNotifiedRoad) < 0) {
                     minimumDisFmNonNotifiedRoad = disFrmAccBldg;
                 }
@@ -228,19 +318,26 @@ public class AccessoryBuildingService extends FeatureProcess{
             if (minimumDisFmNonNotifiedRoad.compareTo(BigDecimal.valueOf(3)) >= 0) {
                 valid = true;
             }
+            String ruleDesc;
+            if (AMEND_NOV19.equals(super.getAmendmentsRefNumber(pl.getAsOnDate())))
+                ruleDesc = MIN_DIS_UN_NOTIFIED_ROAD_FROM_ACC_BLDG;
+            else
+                ruleDesc = MIN_DIS_NON_NOTIFIED_ROAD_FROM_ACC_BLDG;
             if (valid) {
-                setReportOutputDetails(plan, subRule, MIN_DIS_NON_NOTIFIED_ROAD_FROM_ACC_BLDG, String.valueOf(3), minimumDisFmNonNotifiedRoad.toString(), Result.Accepted.getResultVal(), scrutinyDetail2);
+                setReportOutputDetails(pl, subRule, ruleDesc, String.valueOf(3),
+                        minimumDisFmNonNotifiedRoad.toString(), Result.Accepted.getResultVal(), scrutinyDetail2);
             } else {
-                setReportOutputDetails(plan, subRule, MIN_DIS_NON_NOTIFIED_ROAD_FROM_ACC_BLDG, String.valueOf(3), minimumDisFmNonNotifiedRoad.toString(), Result.Not_Accepted.getResultVal(), scrutinyDetail2);
+                setReportOutputDetails(pl, subRule, ruleDesc, String.valueOf(3),
+                        minimumDisFmNonNotifiedRoad.toString(), Result.Not_Accepted.getResultVal(), scrutinyDetail2);
             }
         }
     }
 
-    private void processLaneRoads(Plan plan, String subRule, ScrutinyDetail scrutinyDetail2) {
-        if (!plan.getLaneRoads().isEmpty() && !plan.getLaneRoads().get(0).getDistanceFromAccessoryBlock().isEmpty()) {
+    private void processLaneRoads(Plan pl, String subRule, ScrutinyDetail scrutinyDetail2) {
+        if (!pl.getLaneRoads().isEmpty() && !pl.getLaneRoads().get(0).getDistanceFromAccessoryBlock().isEmpty()) {
             boolean valid = false;
-            BigDecimal minimumDisFmLaneRoad = plan.getLaneRoads().get(0).getDistanceFromAccessoryBlock().get(0);
-            for (BigDecimal disFrmAccBldg : plan.getLaneRoads().get(0).getDistanceFromAccessoryBlock()) {
+            BigDecimal minimumDisFmLaneRoad = pl.getLaneRoads().get(0).getDistanceFromAccessoryBlock().get(0);
+            for (BigDecimal disFrmAccBldg : pl.getLaneRoads().get(0).getDistanceFromAccessoryBlock()) {
                 if (disFrmAccBldg.compareTo(minimumDisFmLaneRoad) < 0) {
                     minimumDisFmLaneRoad = disFrmAccBldg;
                 }
@@ -249,15 +346,18 @@ public class AccessoryBuildingService extends FeatureProcess{
                 valid = true;
             }
             if (valid) {
-                setReportOutputDetails(plan, subRule, MIN_DIS_LANE_ROAD_FROM_ACC_BLDG, String.valueOf(1.5), minimumDisFmLaneRoad.toString(), Result.Accepted.getResultVal(), scrutinyDetail2);
+                setReportOutputDetails(pl, subRule, MIN_DIS_LANE_ROAD_FROM_ACC_BLDG, String.valueOf(1.5),
+                        minimumDisFmLaneRoad.toString(), Result.Accepted.getResultVal(), scrutinyDetail2);
             } else {
-                setReportOutputDetails(plan, subRule, MIN_DIS_LANE_ROAD_FROM_ACC_BLDG, String.valueOf(1.5), minimumDisFmLaneRoad.toString(), Result.Not_Accepted.getResultVal(), scrutinyDetail2);
+                setReportOutputDetails(pl, subRule, MIN_DIS_LANE_ROAD_FROM_ACC_BLDG, String.valueOf(1.5),
+                        minimumDisFmLaneRoad.toString(), Result.Not_Accepted.getResultVal(), scrutinyDetail2);
             }
         }
     }
 
     private void processCuldesacRoad(Plan pl, String subRule, ScrutinyDetail scrutinyDetail2) {
-        if (!pl.getCuldeSacRoads().isEmpty() && !pl.getCuldeSacRoads().get(0).getDistanceFromAccessoryBlock().isEmpty()) {
+        if (!pl.getCuldeSacRoads().isEmpty()
+                && !pl.getCuldeSacRoads().get(0).getDistanceFromAccessoryBlock().isEmpty()) {
             boolean valid = false;
             BigDecimal minimumDisFmCuldesacRoad = pl.getCuldeSacRoads().get(0).getDistanceFromAccessoryBlock().get(0);
             for (BigDecimal disFrmAccBldg : pl.getCuldeSacRoads().get(0).getDistanceFromAccessoryBlock()) {
@@ -269,18 +369,21 @@ public class AccessoryBuildingService extends FeatureProcess{
                 valid = true;
             }
             if (valid) {
-                setReportOutputDetails(pl, subRule, MIN_DIS_CULDESAC_ROAD_FROM_ACC_BLDG, String.valueOf(2), minimumDisFmCuldesacRoad.toString(), Result.Accepted.getResultVal(), scrutinyDetail2);
+                setReportOutputDetails(pl, subRule, MIN_DIS_CULDESAC_ROAD_FROM_ACC_BLDG, String.valueOf(2),
+                        minimumDisFmCuldesacRoad.toString(), Result.Accepted.getResultVal(), scrutinyDetail2);
             } else {
-                setReportOutputDetails(pl, subRule, MIN_DIS_CULDESAC_ROAD_FROM_ACC_BLDG, String.valueOf(2), minimumDisFmCuldesacRoad.toString(), Result.Not_Accepted.getResultVal(), scrutinyDetail2);
+                setReportOutputDetails(pl, subRule, MIN_DIS_CULDESAC_ROAD_FROM_ACC_BLDG, String.valueOf(2),
+                        minimumDisFmCuldesacRoad.toString(), Result.Not_Accepted.getResultVal(), scrutinyDetail2);
             }
         }
     }
 
-    private void processNotifiedRoads(Plan plan, String subRule, ScrutinyDetail scrutinyDetail2) {
-        if (!plan.getNotifiedRoads().isEmpty() && !plan.getNotifiedRoads().get(0).getDistanceFromAccessoryBlock().isEmpty()) {
+    private void processNotifiedRoads(Plan pl, String subRule, ScrutinyDetail scrutinyDetail2) {
+        if (!pl.getNotifiedRoads().isEmpty()
+                && !pl.getNotifiedRoads().get(0).getDistanceFromAccessoryBlock().isEmpty()) {
             boolean valid = false;
-            BigDecimal minimumDisFmNotifiedRoad = plan.getNotifiedRoads().get(0).getDistanceFromAccessoryBlock().get(0);
-            for (BigDecimal disFrmAccBldg : plan.getNotifiedRoads().get(0).getDistanceFromAccessoryBlock()) {
+            BigDecimal minimumDisFmNotifiedRoad = pl.getNotifiedRoads().get(0).getDistanceFromAccessoryBlock().get(0);
+            for (BigDecimal disFrmAccBldg : pl.getNotifiedRoads().get(0).getDistanceFromAccessoryBlock()) {
                 if (disFrmAccBldg.compareTo(minimumDisFmNotifiedRoad) < 0) {
                     minimumDisFmNotifiedRoad = disFrmAccBldg;
                 }
@@ -289,14 +392,57 @@ public class AccessoryBuildingService extends FeatureProcess{
                 valid = true;
             }
             if (valid) {
-                setReportOutputDetails(plan, subRule, MIN_DIS_NOTIFIED_ROAD_FROM_ACC_BLDG, String.valueOf(3), minimumDisFmNotifiedRoad.toString(), Result.Accepted.getResultVal(), scrutinyDetail2);
+                setReportOutputDetails(pl, subRule, MIN_DIS_NOTIFIED_ROAD_FROM_ACC_BLDG, String.valueOf(3),
+                        minimumDisFmNotifiedRoad.toString(), Result.Accepted.getResultVal(), scrutinyDetail2);
             } else {
-                setReportOutputDetails(plan, subRule, MIN_DIS_NOTIFIED_ROAD_FROM_ACC_BLDG, String.valueOf(3), minimumDisFmNotifiedRoad.toString(), Result.Not_Accepted.getResultVal(), scrutinyDetail2);
+                setReportOutputDetails(pl, subRule, MIN_DIS_NOTIFIED_ROAD_FROM_ACC_BLDG, String.valueOf(3),
+                        minimumDisFmNotifiedRoad.toString(), Result.Not_Accepted.getResultVal(), scrutinyDetail2);
             }
         }
     }
 
-    private void processHeightOfAccessoryBlock(Plan plan) {
+    private void processShortestAccBlkDistanceToBldng(Plan pl) {
+        String subRule;
+        if (AMEND_NOV19.equals(super.getAmendmentsRefNumber(pl.getAsOnDate())))
+            subRule = SUBRULE_67;
+        else
+            subRule = SUBRULE_88_5;
+        ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
+        scrutinyDetail.setKey(
+                "Common_Accessory Block - Minimum distance between Accessory buildings and other existing or proposed buildings");
+        scrutinyDetail.addColumnHeading(1, RULE_NO);
+        scrutinyDetail.addColumnHeading(2, DESCRIPTION);
+        scrutinyDetail.addColumnHeading(3, REQUIRED);
+        scrutinyDetail.addColumnHeading(4, PROVIDED);
+        scrutinyDetail.addColumnHeading(5, STATUS);
+        pl.getFeatureAmendments().put(
+                "Minimum distance between Accessory buildings and other existing or proposed buildings",
+                AMEND_DATE_081119.toString());
+
+        if (pl != null && !pl.getAccessoryBlocks().isEmpty()) {
+            if (pl.getAccessoryBlockDistances() != null && !pl.getAccessoryBlockDistances().isEmpty()) {
+                Long count = pl.getAccessoryBlockDistances().stream()
+                        .filter(distance -> distance.compareTo(BigDecimal.ONE) < 0).count();
+                if (count > 1) {
+                    setReportOutputDetails(pl, subRule, SUBRULE_ACC_DIST_BLDNG_DESC,
+                            BigDecimal.ONE.toString() + DcrConstants.IN_METER,
+                            count.toString() + " having minimum distance less than 1m",
+                            Result.Not_Accepted.getResultVal(), scrutinyDetail);
+                } else {
+                    setReportOutputDetails(pl, subRule, SUBRULE_ACC_DIST_BLDNG_DESC,
+                            BigDecimal.ONE.toString() + DcrConstants.IN_METER,
+                            count.toString() + " having minimum distance less than 1m", Result.Accepted.getResultVal(),
+                            scrutinyDetail);
+                }
+
+            } else {
+                pl.addError("ACC_BLK_DIST_BLDNG_ERR",
+                        "Minimum distance between accessory buildings and other existing or proposed buildings are not defined.");
+            }
+        }
+    }
+
+    private void processHeightOfAccessoryBlock(Plan pl) {
         ScrutinyDetail scrutinyDetail1 = new ScrutinyDetail();
         scrutinyDetail1.addColumnHeading(1, RULE_NO);
         scrutinyDetail1.addColumnHeading(2, DESCRIPTION);
@@ -305,22 +451,30 @@ public class AccessoryBuildingService extends FeatureProcess{
         scrutinyDetail1.addColumnHeading(5, STATUS);
         scrutinyDetail1.setKey("Common_Accessory Block - Maximum Height");
         String subRuleDesc = SUBRULE_88_3_DESC;
-        String subRule = SUBULE_88_3;
-        if (plan != null && !plan.getAccessoryBlocks().isEmpty()) {
-            for (AccessoryBlock accessoryBlock : plan.getAccessoryBlocks()) {
+        String subRule;
+        if (AMEND_NOV19.equals(super.getAmendmentsRefNumber(pl.getAsOnDate())))
+            subRule = SUBRULE_67;
+        else
+            subRule = SUBULE_88_3;
+        if (pl != null && !pl.getAccessoryBlocks().isEmpty()) {
+            for (AccessoryBlock accessoryBlock : pl.getAccessoryBlocks()) {
                 Boolean valid = false;
-                if (accessoryBlock.getAccessoryBuilding() != null && accessoryBlock.getAccessoryBuilding().getHeight() != null && accessoryBlock.getAccessoryBuilding().getHeight().compareTo(BigDecimal.valueOf(0)) > 0) {
+                if (accessoryBlock.getAccessoryBuilding() != null
+                        && accessoryBlock.getAccessoryBuilding().getHeight() != null
+                        && accessoryBlock.getAccessoryBuilding().getHeight().compareTo(BigDecimal.valueOf(0)) > 0) {
                     if (accessoryBlock.getAccessoryBuilding().getHeight().compareTo(BigDecimal.valueOf(2.5)) <= 0) {
                         valid = true;
                     }
                     if (valid) {
-                       
-                        setReportOutputDetails(plan, subRule, String.format(subRuleDesc, accessoryBlock.getNumber()), BigDecimal.valueOf(2.5) + DcrConstants.IN_METER,
-                                accessoryBlock.getAccessoryBuilding().getHeight() + DcrConstants.IN_METER, Result.Accepted.getResultVal(), scrutinyDetail1);
+                        setReportOutputDetails(pl, subRule, String.format(subRuleDesc, accessoryBlock.getNumber()),
+                                BigDecimal.valueOf(2.5) + DcrConstants.IN_METER,
+                                accessoryBlock.getAccessoryBuilding().getHeight() + DcrConstants.IN_METER,
+                                Result.Accepted.getResultVal(), scrutinyDetail1);
                     } else {
-                        
-                        setReportOutputDetails(plan, subRule, String.format(subRuleDesc, accessoryBlock.getNumber()), BigDecimal.valueOf(2.5) + DcrConstants.IN_METER,
-                                accessoryBlock.getAccessoryBuilding().getHeight() + DcrConstants.IN_METER, Result.Not_Accepted.getResultVal(), scrutinyDetail1);
+                        setReportOutputDetails(pl, subRule, String.format(subRuleDesc, accessoryBlock.getNumber()),
+                                BigDecimal.valueOf(2.5) + DcrConstants.IN_METER,
+                                accessoryBlock.getAccessoryBuilding().getHeight() + DcrConstants.IN_METER,
+                                Result.Not_Accepted.getResultVal(), scrutinyDetail1);
 
                     }
                 }
@@ -328,7 +482,7 @@ public class AccessoryBuildingService extends FeatureProcess{
         }
     }
 
-    private void processAreaOfAccessoryBlock(Plan plan) {
+    private void processAreaOfAccessoryBlock(Plan pl) {
         ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
         scrutinyDetail.addColumnHeading(1, RULE_NO);
         scrutinyDetail.addColumnHeading(2, DESCRIPTION);
@@ -337,37 +491,47 @@ public class AccessoryBuildingService extends FeatureProcess{
         scrutinyDetail.addColumnHeading(5, STATUS);
         scrutinyDetail.setKey("Common_Accessory Block - Maximum Area");
         String subRuleDesc = SUBRULE_88_1_DESC;
-        String subRule = SUBRULE_88_1;
-        if (plan != null && plan.getPlot() != null && plan.getPlot().getArea() != null && plan.getVirtualBuilding() != null && plan.getVirtualBuilding().getTotalCoverageArea() != null
-                && plan.getVirtualBuilding().getTotalCoverageArea().compareTo(BigDecimal.valueOf(0)) > 0) {
-            BigDecimal fifteenPercentOfEmptyArea = (plan.getPlot().getArea().subtract(plan.getVirtualBuilding().getTotalCoverageArea())).multiply(BigDecimal.valueOf(0.15));
-            if (!plan.getAccessoryBlocks().isEmpty()) {
-                for (AccessoryBlock accessoryBlock : plan.getAccessoryBlocks()) {
+        String subRule;
+        if (AMEND_NOV19.equals(super.getAmendmentsRefNumber(pl.getAsOnDate())))
+            subRule = SUBRULE_67;
+        else
+            subRule = SUBRULE_88_1;
+        if (pl != null && pl.getPlot() != null && pl.getPlot().getArea() != null && pl.getVirtualBuilding() != null
+                && pl.getVirtualBuilding().getTotalCoverageArea() != null
+                && pl.getVirtualBuilding().getTotalCoverageArea().compareTo(BigDecimal.valueOf(0)) > 0) {
+            BigDecimal fifteenPercentOfEmptyArea = (pl.getPlot().getArea()
+                    .subtract(pl.getVirtualBuilding().getTotalCoverageArea())).multiply(BigDecimal.valueOf(0.15));
+            if (!pl.getAccessoryBlocks().isEmpty()) {
+                for (AccessoryBlock accessoryBlock : pl.getAccessoryBlocks()) {
                     BigDecimal accessoryBlockArea = BigDecimal.ZERO;
-                    if (accessoryBlock.getAccessoryBuilding() != null && accessoryBlock.getAccessoryBuilding().getArea() != null && accessoryBlock.getAccessoryBuilding().getArea().compareTo(BigDecimal.valueOf(0)) > 0) {
+                    if (accessoryBlock.getAccessoryBuilding() != null
+                            && accessoryBlock.getAccessoryBuilding().getArea() != null
+                            && accessoryBlock.getAccessoryBuilding().getArea().compareTo(BigDecimal.valueOf(0)) > 0) {
                         accessoryBlockArea = accessoryBlock.getAccessoryBuilding().getArea();
                     }
                     Boolean valid = false;
-                    if (fifteenPercentOfEmptyArea != null &&
-                            fifteenPercentOfEmptyArea.compareTo(BigDecimal.ZERO) > 0 && accessoryBlockArea != null &&
-                            accessoryBlockArea.compareTo(BigDecimal.ZERO) > 0) {
+                    if (fifteenPercentOfEmptyArea != null && fifteenPercentOfEmptyArea.compareTo(BigDecimal.ZERO) > 0
+                            && accessoryBlockArea != null && accessoryBlockArea.compareTo(BigDecimal.ZERO) > 0) {
                         if (fifteenPercentOfEmptyArea.compareTo(accessoryBlockArea) >= 0) {
                             valid = true;
                         }
                         if (valid) {
-                           
-                            setReportOutputDetails(plan, subRule, String.format(subRuleDesc, accessoryBlock.getNumber()), fifteenPercentOfEmptyArea + DcrConstants.IN_METER_SQR,
-                                    accessoryBlockArea + DcrConstants.IN_METER_SQR, Result.Accepted.getResultVal(), scrutinyDetail);
+                            setReportOutputDetails(pl, subRule, String.format(subRuleDesc, accessoryBlock.getNumber()),
+                                    fifteenPercentOfEmptyArea + DcrConstants.IN_METER_SQR,
+                                    accessoryBlockArea + DcrConstants.IN_METER_SQR, Result.Accepted.getResultVal(),
+                                    scrutinyDetail);
                         } else {
-                          
-                            setReportOutputDetails(plan, subRule, String.format(subRuleDesc, accessoryBlock.getNumber()), fifteenPercentOfEmptyArea + DcrConstants.IN_METER_SQR,
-                                    accessoryBlockArea + DcrConstants.IN_METER_SQR, Result.Not_Accepted.getResultVal(), scrutinyDetail);
+                            setReportOutputDetails(pl, subRule, String.format(subRuleDesc, accessoryBlock.getNumber()),
+                                    fifteenPercentOfEmptyArea + DcrConstants.IN_METER_SQR,
+                                    accessoryBlockArea + DcrConstants.IN_METER_SQR, Result.Not_Accepted.getResultVal(),
+                                    scrutinyDetail);
                         }
                     }
                 }
             }
         }
     }
+
 
 
     private void setReportOutputDetails(Plan plan, String ruleNo, String ruleDesc, String expected, String actual, String status, ScrutinyDetail scrutinyDetail) {
@@ -383,6 +547,8 @@ public class AccessoryBuildingService extends FeatureProcess{
 
 	@Override
 	public Map<String, Date> getAmendments() {
-		return new LinkedHashMap<>();
-	}
+        Map<String, Date> additionalFeatureAmendments = new ConcurrentHashMap<>();
+        additionalFeatureAmendments.put(AMEND_NOV19, AMEND_DATE_081119);
+        return additionalFeatureAmendments;
+    }
 }

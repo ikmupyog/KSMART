@@ -47,11 +47,14 @@
 
 package org.egov.edcr.feature;
 
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_081119;
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_NOV19;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
@@ -61,8 +64,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class DepthCuttingService extends FeatureProcess {
-	private static final String SUBRULE_11_A_DESC = "Maximum depth of cutting from ground level";
-	private static final String SUBRULE_11_A = "11-A";
+    private static final String SUBRULE_11_A_DESC = "Maximum depth of cutting from ground level";
+    private static final String SUBRULE_11_A = "11(A)";
+    private static final String RULE_AMD19_10 = "10";
 
 	@Override
 	public Plan validate(Plan pl) {
@@ -70,21 +74,37 @@ public class DepthCuttingService extends FeatureProcess {
 	}
 
 	@Override
-    public Plan process(Plan pl) {/*
-                                   * boolean valid = false; scrutinyDetail = new ScrutinyDetail();
-                                   * scrutinyDetail.setKey("Common_Depth Cutting"); scrutinyDetail.addColumnHeading(1, RULE_NO);
-                                   * scrutinyDetail.addColumnHeading(2, DESCRIPTION); scrutinyDetail.addColumnHeading(3,
-                                   * REQUIRED); scrutinyDetail.addColumnHeading(4, PROVIDED); scrutinyDetail.addColumnHeading(5,
-                                   * STATUS); if (pl.getPlanInformation() != null && pl.getPlanInformation().getDepthCutting() !=
-                                   * null) { if (!pl.getPlanInformation().getDepthCutting()) { valid = true; } if (valid) {
-                                   * setReportOutputDetails(pl, SUBRULE_11_A, SUBRULE_11_A_DESC,
-                                   * BigDecimal.valueOf(1.5).toString() + DcrConstants.IN_METER, "Less Than Or Equal To 1.5" +
-                                   * DcrConstants.IN_METER, Result.Accepted.getResultVal()); } else { setReportOutputDetails(pl,
-                                   * SUBRULE_11_A, SUBRULE_11_A_DESC, BigDecimal.valueOf(1.5).toString() + DcrConstants.IN_METER,
-                                   * "More Than 1.5" + DcrConstants.IN_METER, Result.Verify.getResultVal()); } }
-                                   */
-		return pl;
-	}
+    public Plan process(Plan pl) {
+        boolean valid = false;
+        scrutinyDetail = new ScrutinyDetail();
+        scrutinyDetail.setKey("Common_Depth Cutting");
+        scrutinyDetail.addColumnHeading(1, RULE_NO);
+        scrutinyDetail.addColumnHeading(2, DESCRIPTION);
+        scrutinyDetail.addColumnHeading(3, REQUIRED);
+        scrutinyDetail.addColumnHeading(4, PROVIDED);
+        scrutinyDetail.addColumnHeading(5, STATUS);
+        if (pl.getPlanInformation() != null && pl.getPlanInformation().getDepthCutting() != null) {
+            String ruleNo;
+			if (AMEND_NOV19.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))) {
+				ruleNo = RULE_AMD19_10;
+				pl.getFeatureAmendments().put("Depth Cutting", AMEND_DATE_081119.toString());
+			}
+            else
+                ruleNo = SUBRULE_11_A;
+            if (!pl.getPlanInformation().getDepthCutting()) {
+                valid = true;
+            }
+            if (valid) {
+                setReportOutputDetails(pl, ruleNo, SUBRULE_11_A_DESC, BigDecimal.valueOf(1.5).toString() + DcrConstants.IN_METER,
+                        "Less Than Or Equal To 1.5" + DcrConstants.IN_METER, Result.Accepted.getResultVal());
+            } else {
+                setReportOutputDetails(pl, ruleNo, SUBRULE_11_A_DESC, BigDecimal.valueOf(1.5).toString() + DcrConstants.IN_METER,
+                        "More Than 1.5" + DcrConstants.IN_METER, Result.Verify.getResultVal());
+            }
+        }
+
+        return pl;
+    }
 
 	private void setReportOutputDetails(Plan pl, String ruleNo, String ruleDescription, String expected, String actual,
 			String status) {
@@ -100,6 +120,8 @@ public class DepthCuttingService extends FeatureProcess {
 
 	@Override
 	public Map<String, Date> getAmendments() {
-		 return new LinkedHashMap<>();
-	}
+        Map<String, Date> meanofAccessAmendments = new ConcurrentHashMap<>();
+        meanofAccessAmendments.put(AMEND_NOV19, AMEND_DATE_081119);
+        return meanofAccessAmendments;
+    }
 }

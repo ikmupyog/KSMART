@@ -67,6 +67,7 @@ public class Utility extends Measurement {
     private List<Measurement> segregationOfWaste = new ArrayList<>();
     private BigDecimal waterTankCapacity;
     private SupplyLine supplyLine;
+	private List<BioGas> bioGases = new ArrayList<>();
 
     public void setBiometricWasteTreatment(List<BiometricWasteTreatment> biometricWasteTreatment) {
         this.biometricWasteTreatment = biometricWasteTreatment;
@@ -217,5 +218,13 @@ public class Utility extends Measurement {
     public void setSupplyLine(SupplyLine supplyLine) {
         this.supplyLine = supplyLine;
     }
+    
+	public List<BioGas> getBioGases() {
+		return bioGases;
+	}
+
+	public void addBioGas(BioGas bioGas) {
+		bioGases.add(bioGas);
+	}
 
 }

@@ -27,16 +27,21 @@ public class LiftServiceExtract extends FeatureExtract {
 
     @Override
     public PlanDetail extract(PlanDetail pl) {
-        for (Block block : pl.getBlocks())
-            if (block.getBuilding() != null && !block.getBuilding().getFloors().isEmpty()) {
-                Integer noOfLifts = 0;
-                for (Floor floor : block.getBuilding().getFloors()) {
-                    setLifts(pl.getDoc(), block, floor);
-                    if (!floor.getLifts().isEmpty() && floor.getLifts().size() > noOfLifts)
-                        noOfLifts = floor.getLifts().size();
+        if (pl != null && !pl.getBlocks().isEmpty()) {
+            for (Block block : pl.getBlocks()) {
+                if (!block.getBuilding().getFloors().isEmpty()) {
+                    Integer noOfLifts = 0;
+                    for (Floor floor : block.getBuilding().getFloors()) {
+                    	if(!floor.getTerrace()) {
+                        if (!floor.getLifts().isEmpty() && floor.getLifts().size() > noOfLifts) {
+                            noOfLifts = floor.getLifts().size();
+                        }
+                       }
+                    }
+                    block.setNumberOfLifts(String.valueOf(noOfLifts));
                 }
-                block.setNumberOfLifts(String.valueOf(noOfLifts));
             }
+        }
         return pl;
     }
 

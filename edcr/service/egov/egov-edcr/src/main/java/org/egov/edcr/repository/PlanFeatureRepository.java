@@ -57,6 +57,7 @@ import org.egov.edcr.feature.Balcony;
 import org.egov.edcr.feature.Basement;
 import org.egov.edcr.feature.BathRoom;
 import org.egov.edcr.feature.BathRoomWaterClosets;
+import org.egov.edcr.feature.BioGasService;
 import org.egov.edcr.feature.BiometricWasteManagement;
 import org.egov.edcr.feature.BlockDistancesService;
 import org.egov.edcr.feature.BuildingHeight;
@@ -364,7 +365,8 @@ public class PlanFeatureRepository {
 		 * 
 		 * pf = new PlanFeature(InfoCommsTechService.class); features.add(pf);
 		 */
-        
+        pf = new PlanFeature(BioGasService.class);
+        features.add(pf);
         pf = new PlanFeature(DxfToPdfConverter.class);
         features.add(pf);
         

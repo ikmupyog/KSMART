@@ -47,21 +47,45 @@
 
 package org.egov.edcr.feature;
 
-import static org.egov.edcr.constants.DxfFileConstants.A;
+import static org.egov.edcr.constants.DxfFileConstants.A1;
+import static org.egov.edcr.constants.DxfFileConstants.A2;
+import static org.egov.edcr.constants.DxfFileConstants.A4;
+import static org.egov.edcr.constants.DxfFileConstants.B1;
+import static org.egov.edcr.constants.DxfFileConstants.B2;
+import static org.egov.edcr.constants.DxfFileConstants.B3;
+import static org.egov.edcr.constants.DxfFileConstants.C;
+import static org.egov.edcr.constants.DxfFileConstants.C1;
+import static org.egov.edcr.constants.DxfFileConstants.C2;
+import static org.egov.edcr.constants.DxfFileConstants.C3;
+import static org.egov.edcr.constants.DxfFileConstants.D;
+import static org.egov.edcr.constants.DxfFileConstants.D1;
+import static org.egov.edcr.constants.DxfFileConstants.D2;
+import static org.egov.edcr.constants.DxfFileConstants.E;
 import static org.egov.edcr.constants.DxfFileConstants.F;
-import static org.egov.edcr.constants.DxfFileConstants.G;
+import static org.egov.edcr.constants.DxfFileConstants.F1;
+import static org.egov.edcr.constants.DxfFileConstants.F2;
+import static org.egov.edcr.constants.DxfFileConstants.F3;
+import static org.egov.edcr.constants.DxfFileConstants.F4;
+import static org.egov.edcr.constants.DxfFileConstants.G1;
+import static org.egov.edcr.constants.DxfFileConstants.G2;
+import static org.egov.edcr.constants.DxfFileConstants.H;
+import static org.egov.edcr.constants.DxfFileConstants.I1;
+import static org.egov.edcr.constants.DxfFileConstants.I2;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.egov.common.entity.edcr.Block;
 import org.egov.common.entity.edcr.Floor;
-import org.egov.common.entity.edcr.Measurement;
+import org.egov.common.entity.edcr.Occupancy;
 import org.egov.common.entity.edcr.OccupancyTypeHelper;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
@@ -69,31 +93,43 @@ import org.egov.common.entity.edcr.Room;
 import org.egov.common.entity.edcr.RoomHeight;
 import org.egov.common.entity.edcr.ScrutinyDetail;
 import org.egov.edcr.constants.DxfFileConstants;
-import org.egov.edcr.service.ProcessHelper;
 import org.egov.edcr.utility.DcrConstants;
+import org.egov.edcr.utility.Util;
 import org.springframework.stereotype.Service;
 
 @Service
 public class HeightOfRoom extends FeatureProcess {
 
-    private static final String SUBRULE_41_II_A = "41-ii-a";
-    private static final String SUBRULE_41_II_B = "41-ii-b";
+    private static final String SUBRULE_35_2 = "35(2)";
+    private static final String SUBRULE_36 = "36";
+    private static final String SUBRULE_55_3 = "55(3)";
+    private static final String SUBRULE_55_4 = "55(4)";
+    private static final String SUBRULE_55_5 = "55(5)";
+    private static final String SUBRULE_55_6 = "55(6)";
+    private static final String SUBRULE_55_7 = "55(7)";
+    private static final String SUBRULE_55_8 = "55(8)";
+    private static final String SUBRULE_55_9 = "55(9)";
 
-    private static final String SUBRULE_41_II_A_AC_DESC = "Minimum height of ac room";
-    private static final String SUBRULE_41_II_A_REGULAR_DESC = "Minimum height of regular room";
-    private static final String SUBRULE_41_II_B_AREA_DESC = "Total area of rooms";
-    private static final String SUBRULE_41_II_B_TOTAL_WIDTH = "Minimum Width of room";
+    private static final String SUBRULE_35_2_DESC = "Minimum height of head room below mezzanine floor";
+    private static final String SUBRULE_36_DESC_NORMAL_ROOMS = "Minimum height of room under occupancy Educational,Medical/Hospital,Office/Business,Mercantile/Commercial,Storage,Hazardous";
+    private static final String SUBRULE_36_DESC_AC_ROOMS = "Minimum height of AC room under occupancy Educational,Medical/Hospital,Office/Business,Mercantile/Commercial,Storage,Hazardous";
+    private static final String SUBRULE_36_DESC_PARKING_ROOMS = "Minimum height of car and two wheeler parking room";
+    private static final String SUBRULE_55_3_DESC_ASSEMBLY_ROOMS = "Minimum height of room under assembly occupancy";
+    private static final String SUBRULE_55_3_DESC_ASSEMBLY_AC_ROOMS = "Minimum height of AC room under assembly occupancy";
+    private static final String SUBRULE_55_4_DESC = "Minimum height of headroom beneath or above balcony";
+    private static final String SUBRULE_55_5_DESC = "Minimum height of headroom in general ac rooms in assembly occupancy";
+    private static final String SUBRULE_55_6_DESC = "Minimum height of general ac rooms,store rooms,toilets,lamber and cellar rooms";
+    private static final String SUBRULE_55_7_DESC = "Minimum height of work room under occupancy G";
+    private static final String SUBRULE_55_8_DESC = "Minimum height of laboratory,entrance hall,canteen,cloak room";
+    private static final String SUBRULE_55_9_DESC = "Minimum height of store rooms and toilets in industrial buildings";
 
-    public static final BigDecimal MINIMUM_HEIGHT_3_6 = BigDecimal.valueOf(3.6);
+    public static final BigDecimal MINIMUM_HEIGHT_2_2 = BigDecimal.valueOf(2.2);
     public static final BigDecimal MINIMUM_HEIGHT_3 = BigDecimal.valueOf(3);
-    public static final BigDecimal MINIMUM_HEIGHT_2_75 = BigDecimal.valueOf(2.75);
     public static final BigDecimal MINIMUM_HEIGHT_2_4 = BigDecimal.valueOf(2.4);
-    public static final BigDecimal MINIMUM_AREA_9_5 = BigDecimal.valueOf(9.5);
-    public static final BigDecimal MINIMUM_WIDTH_2_4 = BigDecimal.valueOf(2.4);
-    public static final BigDecimal MINIMUM_WIDTH_2_1 = BigDecimal.valueOf(2.1);
+    public static final BigDecimal MINIMUM_HEIGHT_4 = BigDecimal.valueOf(4);
+    public static final BigDecimal MINIMUM_HEIGHT_3_6 = BigDecimal.valueOf(3.6);
     private static final String FLOOR = "Floor";
-    private static final String ROOM_HEIGHT_NOTDEFINED = "Room height is not defined in layer ";
-    private static final String LAYER_ROOM_HEIGHT = "BLK_%s_FLR_%s_%s";
+    private static final String HGHT_OF_ROOM_UNDEFINED = "%s is not defined for block %s floor %s with colour code %s";
 
     @Override
     public Plan validate(Plan pl) {
@@ -102,18 +138,11 @@ public class HeightOfRoom extends FeatureProcess {
 
     @Override
     public Plan process(Plan pl) {
-        Map<String, Integer> heightOfRoomFeaturesColor = pl.getSubFeatureColorCodesMaster().get("HeightOfRoom");
         validate(pl);
         HashMap<String, String> errors = new HashMap<>();
-        if (pl != null && pl.getBlocks() != null) {
-            OccupancyTypeHelper mostRestrictiveOccupancy = pl.getVirtualBuilding() != null
-                    ? pl.getVirtualBuilding().getMostRestrictiveFarHelper()
-                    : null;
-            if (mostRestrictiveOccupancy != null && mostRestrictiveOccupancy.getType() != null
-                    && (A.equalsIgnoreCase(mostRestrictiveOccupancy.getType().getCode()) ||
-                            (G.equalsIgnoreCase(mostRestrictiveOccupancy.getType().getCode())
-                                    || F.equalsIgnoreCase(mostRestrictiveOccupancy.getType().getCode())))) {
-                for (Block block : pl.getBlocks()) {
+        if (pl != null && pl.getBlocks() != null)
+            blk: for (Block block : pl.getBlocks())
+                if (!block.getCompletelyExisting())
                     if (block.getBuilding() != null && !block.getBuilding().getFloors().isEmpty()) {
                         scrutinyDetail = new ScrutinyDetail();
                         scrutinyDetail.addColumnHeading(1, RULE_NO);
@@ -122,165 +151,241 @@ public class HeightOfRoom extends FeatureProcess {
                         scrutinyDetail.addColumnHeading(4, REQUIRED);
                         scrutinyDetail.addColumnHeading(5, PROVIDED);
                         scrutinyDetail.addColumnHeading(6, STATUS);
+                        List<Integer> colorCodesForExemption = getColorCodesListForExemption();
+                        if (pl.getPlot() != null)
+                            if (Util.checkExemptionConditionForSmallPlotAtBlkLevel(pl.getPlot(), block))
+                                continue blk;
+                        scrutinyDetail.setKey("Block_" + block.getNumber() + "_" + "Height Of Room");
+                        for (Floor floor : block.getBuilding().getFloors())
+                            if (!floor.getTerrace())
+                                if (!floor.getHabitableRooms().isEmpty()) {
+                                	List<RoomHeight> roomHghts = new ArrayList<>();
+                                	for(Room hr : floor.getHabitableRooms())
+                                		roomHghts.addAll(hr.getHeights());
+                                    Map<Integer, Long> requirementCountMap = roomHghts.stream()
+                                            .collect(Collectors.groupingBy(RoomHeight::getColorCode, Collectors.counting()));
+                                    for (Integer colorCode : requirementCountMap.keySet()) {
+                                        BigDecimal minimumHeight = BigDecimal.ZERO;
+                                        String subRule = null;
+                                        String subRuleDesc = null;
+                                        List<BigDecimal> distancesList = new ArrayList<>();
+										for (Room room : floor.getHabitableRooms()) {
+											for (RoomHeight height : room.getHeights()) {
+												if (requirementCountMap.containsKey(height.getColorCode())) {
+													if (height
+															.getColorCode() == DxfFileConstants.MEZZANINE_HEAD_ROOM_COLOR_CODE) {
+														minimumHeight = MINIMUM_HEIGHT_2_2;
+														subRule = SUBRULE_35_2;
+														subRuleDesc = SUBRULE_35_2_DESC;
+													} else if (height
+															.getColorCode() == DxfFileConstants.NORMAL_ROOM_BCEFHI_OCCUPANCIES_COLOR_CODE) {
+														minimumHeight = MINIMUM_HEIGHT_3;
+														subRule = SUBRULE_36;
+														subRuleDesc = SUBRULE_36_DESC_NORMAL_ROOMS;
+													} else if (height
+															.getColorCode() == DxfFileConstants.AC_ROOM_BCEFHI_OCCUPANCIES_COLOR_CODE) {
+														minimumHeight = MINIMUM_HEIGHT_2_4;
+														subRule = SUBRULE_36;
+														subRuleDesc = SUBRULE_36_DESC_AC_ROOMS;
+													} else if (height
+															.getColorCode() == DxfFileConstants.CAR_AND_TWO_WHEELER_PARKING_ROOM_COLOR_CODE) {
+														minimumHeight = MINIMUM_HEIGHT_2_2;
+														subRule = SUBRULE_36;
+														subRuleDesc = SUBRULE_36_DESC_PARKING_ROOMS;
+													} else if (height
+															.getColorCode() == DxfFileConstants.ASSEMBLY_ROOM_COLOR_CODE) {
+														minimumHeight = MINIMUM_HEIGHT_4;
+														subRule = SUBRULE_55_3;
+														subRuleDesc = SUBRULE_55_3_DESC_ASSEMBLY_ROOMS;
+													} else if (height
+															.getColorCode() == DxfFileConstants.ASSEMBLY_AC_HALL_COLOR_CODE) {
+														minimumHeight = MINIMUM_HEIGHT_3;
+														subRule = SUBRULE_55_3;
+														subRuleDesc = SUBRULE_55_3_DESC_ASSEMBLY_AC_ROOMS;
+													} else if (height
+															.getColorCode() == DxfFileConstants.HEAD_ROOM_BENEATH_OR_ABOVE_BALCONY_COLOR_CODE) {
+														minimumHeight = MINIMUM_HEIGHT_3;
+														subRule = SUBRULE_55_4;
+														subRuleDesc = SUBRULE_55_4_DESC;
+													} else if (height
+															.getColorCode() == DxfFileConstants.HEAD_ROOM_IN_GENERAL_AC_ROOM_IN_ASSEMBLY_OCCUPANCY_COLOR_CODE) {
+														minimumHeight = MINIMUM_HEIGHT_2_4;
+														subRule = SUBRULE_55_5;
+														subRuleDesc = SUBRULE_55_5_DESC;
+													} else if (height
+															.getColorCode() == DxfFileConstants.GENERALAC_STORE_TOILET_LAMBER_CELLAR_ROOM_COLOR_CODE) {
+														minimumHeight = MINIMUM_HEIGHT_2_4;
+														subRule = SUBRULE_55_6;
+														subRuleDesc = SUBRULE_55_6_DESC;
+													} else if (height
+															.getColorCode() == DxfFileConstants.WORK_ROOM_UNDER_OCCUPANCY_G_COLOR_CODE) {
+														minimumHeight = MINIMUM_HEIGHT_3_6;
+														subRule = SUBRULE_55_7;
+														subRuleDesc = SUBRULE_55_7_DESC;
+													} else if (height
+															.getColorCode() == DxfFileConstants.LAB_ENTRANCE_HALL_CANTEEN_CLOAK_ROOM_COLOR_CODE) {
+														minimumHeight = MINIMUM_HEIGHT_3;
+														subRule = SUBRULE_55_8;
+														subRuleDesc = SUBRULE_55_8_DESC;
+													} else if (height
+															.getColorCode() == DxfFileConstants.STORE_TOILET_ROOM_IN_INDUSTRIES_COLOR_CODE) {
+														minimumHeight = MINIMUM_HEIGHT_2_4;
+														subRule = SUBRULE_55_9;
+														subRuleDesc = SUBRULE_55_9_DESC;
+													}
+													distancesList.add(height.getHeight());
+												}
+												if (colorCodesForExemption.contains(height.getColorCode())
+														&& Util.checkExemptionConditionForBuildingParts(block)) {
+													minimumHeight = BigDecimal.ZERO;
+													subRule = null;
+													subRuleDesc = null;
+												}
+											}
+											BigDecimal minimumHght = distancesList.get(0);
+											for (BigDecimal distance : distancesList)
+												if (distance.compareTo(minimumHght) < 0)
+													minimumHght = distance;
+											boolean valid = false;
+											boolean isTypicalRepititiveFloor = false;
+											Map<String, Object> typicalFloorValues = Util.getTypicalFloorValues(block,
+													floor, isTypicalRepititiveFloor);
+											if (!(Boolean) typicalFloorValues.get("isTypicalRepititiveFloor")
+													&& minimumHeight.compareTo(BigDecimal.valueOf(0)) > 0
+													&& subRule != null && subRuleDesc != null) {
+												if (minimumHeight.compareTo(minimumHght) <= 0)
+													valid = true;
+												String value = typicalFloorValues.get("typicalFloors") != null
+														? (String) typicalFloorValues.get("typicalFloors")
+														: " floor " + floor.getNumber();
+												if (valid) {
+													setReportOutputDetails(pl, subRule, subRuleDesc, value,
+															minimumHeight + DcrConstants.IN_METER,
+															minimumHght + DcrConstants.IN_METER + (colorCode > 0
+																	? "\n\nnumber of rooms : "
+																			+ requirementCountMap.get(colorCode)
+																			+ " nos"
+																	: org.apache.commons.lang.StringUtils.EMPTY),
+															Result.Accepted.getResultVal());
 
-                        scrutinyDetail.setKey("Block_" + block.getNumber() + "_" + "Room");
-
-                        for (Floor floor : block.getBuilding().getFloors()) {
-                            List<BigDecimal> roomAreas = new ArrayList<>();
-                            List<BigDecimal> roomWidths = new ArrayList<>();
-                            BigDecimal minimumHeight = BigDecimal.ZERO;
-                            BigDecimal totalArea = BigDecimal.ZERO;
-                            BigDecimal minWidth = BigDecimal.ZERO;
-                            String subRule = null;
-                            String subRuleDesc = null;
-                            String color = "";
-
-                            if (A.equalsIgnoreCase(mostRestrictiveOccupancy.getType().getCode()))
-                                color = DxfFileConstants.COLOR_RESIDENTIAL_ROOM;
-                            else if(F.equalsIgnoreCase(mostRestrictiveOccupancy.getType().getCode()))
-                                color = DxfFileConstants.COLOR_COMMERCIAL_ROOM;
-                            else if(G.equalsIgnoreCase(mostRestrictiveOccupancy.getType().getCode()))
-                                color = DxfFileConstants.COLOR_INDUSTRIAL_ROOM;
-
-                            if (floor.getAcRooms() != null && floor.getAcRooms().size()>0) {
-                                List<BigDecimal> residentialAcRoomHeights = new ArrayList<>();
-                                
-                                List<RoomHeight> acHeights  = new ArrayList<>();
-                                List<Measurement> acRooms = new ArrayList<>();
-
-                            	 for( Room  room: floor.getAcRooms())
-								{
-									if (room.getHeights() != null)
-										acHeights.addAll(room.getHeights());
-									if (room.getRooms() != null)
-										acRooms.addAll(room.getRooms());
-								}
-                            	
-                                for (RoomHeight roomHeight : acHeights) {
-                                    if (heightOfRoomFeaturesColor.get(color) == roomHeight.getColorCode()) {
-                                        residentialAcRoomHeights.add(roomHeight.getHeight());
+												} else {
+													setReportOutputDetails(pl, subRule, subRuleDesc, value,
+															minimumHeight + DcrConstants.IN_METER,
+															minimumHght + DcrConstants.IN_METER + (colorCode > 0
+																	? "\n\nnumber of rooms : "
+																			+ requirementCountMap.get(colorCode)
+																			+ " nos"
+																	: org.apache.commons.lang.StringUtils.EMPTY),
+															Result.Not_Accepted.getResultVal());
+												}
+											}
+										}
                                     }
-                                }
-
-                                for (Measurement acRoom : acRooms) {
-                                    if (heightOfRoomFeaturesColor.get(color) == acRoom.getColorCode()) {
-                                        roomAreas.add(acRoom.getArea());
-                                        roomWidths.add(acRoom.getWidth());
-                                    }
-                                }
-
-                                if (!residentialAcRoomHeights.isEmpty()) {
-                                    BigDecimal minHeight = residentialAcRoomHeights.stream().reduce(BigDecimal::min).get();
-
-                                    if (!G.equalsIgnoreCase(mostRestrictiveOccupancy.getType().getCode()))
-                                        minimumHeight = MINIMUM_HEIGHT_2_4;
-                                    else
-                                        minimumHeight = MINIMUM_HEIGHT_3;
-
-                                    subRule = SUBRULE_41_II_A;
-                                    subRuleDesc = SUBRULE_41_II_A_AC_DESC;
-                                    
-                                    
-                                    boolean valid = false;
-                                    boolean isTypicalRepititiveFloor = false;
-                                    Map<String, Object> typicalFloorValues = ProcessHelper.getTypicalFloorValues(block, floor,
-                                            isTypicalRepititiveFloor);
-                                    buildResult(pl, floor, minimumHeight, subRule, subRuleDesc, minHeight, valid,
-                                            typicalFloorValues);
+                                    validateRoomHghtMandatory(pl, errors, block, floor, requirementCountMap.keySet());
                                 } else {
-                                    String layerName = String.format(LAYER_ROOM_HEIGHT, block.getNumber(), floor.getNumber(),
-                                            "AC_ROOM");
-                                    errors.put(layerName, ROOM_HEIGHT_NOTDEFINED + layerName);
-                                    pl.addErrors(errors);
+                                    List<OccupancyTypeHelper> occupancies = floor.getOccupancies().stream()
+                                            .map(occupancy -> occupancy.getTypeHelper()).collect(Collectors.toList());
+                                    List<String> occupancyTypes = occupancies.stream().map(occ -> occ.getType().getCode()).collect(Collectors.toList());
+                                    if (occupancyTypes != null && occupancyTypes.size() > 0)
+										if (!(occupancyTypes.contains(A1) || occupancyTypes.contains(A2)
+												|| occupancyTypes.contains(F3) || occupancyTypes.contains(A4))) {
+											errors.put(
+													"HGHT_OF_ROOM for block " + block.getNumber() + " floor "
+															+ floor.getNumber(),
+													"Height of room is not defined for block " + block.getNumber()
+															+ " floor " + floor.getNumber());
+											pl.addErrors(errors);
+										}
                                 }
-
-                            }
-
-                            if (floor.getRegularRooms() != null  && floor.getRegularRooms().size()>0) {
-                            	
-								List<BigDecimal> residentialRoomHeights = new ArrayList<>();
-
-								List<RoomHeight> heights = new ArrayList<>();
-								List<Measurement> rooms = new ArrayList<>();
-
-								for (Room room : floor.getRegularRooms()) {
-									if (room.getHeights() != null)
-										heights.addAll(room.getHeights());
-									if (room.getRooms() != null)
-										rooms.addAll(room.getRooms());
-								}
-
-								for (RoomHeight roomHeight : heights) {
-									if (heightOfRoomFeaturesColor.get(color) == roomHeight.getColorCode()) {
-										residentialRoomHeights.add(roomHeight.getHeight());
-									}
-								}
-
-								for (Measurement room : rooms) {
-									if (heightOfRoomFeaturesColor.get(color) == room.getColorCode()) {
-										roomAreas.add(room.getArea());
-										roomWidths.add(room.getWidth());
-									}
-								}
-
-                                if (!residentialRoomHeights.isEmpty()) {
-                                    BigDecimal minHeight = residentialRoomHeights.stream().reduce(BigDecimal::min).get();
-
-                                    if (!G.equalsIgnoreCase(mostRestrictiveOccupancy.getType().getCode()))
-                                        minimumHeight = MINIMUM_HEIGHT_2_75;
-                                    else
-                                        minimumHeight = MINIMUM_HEIGHT_3_6;
-
-                                    subRule = SUBRULE_41_II_A;
-                                    subRuleDesc = SUBRULE_41_II_A_REGULAR_DESC;
-
-
-                                    boolean valid = false;
-                                    boolean isTypicalRepititiveFloor = false;
-                                    Map<String, Object> typicalFloorValues = ProcessHelper.getTypicalFloorValues(block, floor,
-                                            isTypicalRepititiveFloor);
-                                    buildResult(pl, floor, minimumHeight, subRule, subRuleDesc, minHeight, valid,
-                                            typicalFloorValues);
-                                } else {
-                                    String layerName = String.format(LAYER_ROOM_HEIGHT, block.getNumber(), floor.getNumber(),
-                                            "REGULAR_ROOM");
-                                    errors.put(layerName, ROOM_HEIGHT_NOTDEFINED + layerName);
-                                    pl.addErrors(errors);
-                                }
-
-                            }
-
-                            if (!roomAreas.isEmpty()) {
-                                totalArea = roomAreas.stream().reduce(BigDecimal.ZERO, BigDecimal::add);
-                                BigDecimal minRoomWidth = roomWidths.stream().reduce(BigDecimal::min).get();
-                                if (roomAreas.size() == 1) {
-                                    minimumHeight = MINIMUM_AREA_9_5;
-                                    minWidth = MINIMUM_WIDTH_2_4;
-                                }
-
-                                else if (roomAreas.size() == 2) {
-                                    minimumHeight = MINIMUM_AREA_9_5;
-                                    minWidth = MINIMUM_WIDTH_2_1;
-                                }
-                                subRule = SUBRULE_41_II_B;
-                                subRuleDesc = SUBRULE_41_II_B_AREA_DESC;
-
-                                boolean valid = false;
-                                boolean isTypicalRepititiveFloor = false;
-                                Map<String, Object> typicalFloorValues = ProcessHelper.getTypicalFloorValues(block, floor,
-                                        isTypicalRepititiveFloor);
-                                buildResult(pl, floor, minimumHeight, subRule, subRuleDesc, totalArea, valid, typicalFloorValues);
-
-                                subRuleDesc = SUBRULE_41_II_B_TOTAL_WIDTH;
-                                buildResult(pl, floor, minWidth, subRule, subRuleDesc, minRoomWidth, valid, typicalFloorValues);
-                            }
-                        }
                     }
-                }
-            }
-        }
         return pl;
 
+    }
+    
+    private void validateRoomHghtMandatory(Plan pl, HashMap<String, String> errors, Block block, Floor floor,
+            Set<Integer> coloursUniqueSet) {
+        boolean isPresent = false;
+        List<OccupancyTypeHelper> occupancies = floor.getOccupancies().stream().map(Occupancy::getTypeHelper).collect(Collectors.toList());
+        boolean isAssembly = occupancies.stream().anyMatch(occupancy -> Arrays.asList(D, D1, D2).contains(occupancy.getType().getCode()));
+
+        if (isAssembly) {
+
+            isPresent = coloursUniqueSet.stream()
+                    .anyMatch(colorCode -> colorCode == DxfFileConstants.CAR_AND_TWO_WHEELER_PARKING_ROOM_COLOR_CODE
+                            || colorCode == DxfFileConstants.ASSEMBLY_AC_HALL_COLOR_CODE
+                            || colorCode == DxfFileConstants.ASSEMBLY_ROOM_COLOR_CODE);
+
+            if (!isPresent) {
+                errors.put(
+                        "assembly room height" + block.getNumber() + " floor " + floor.getNumber(),
+                        String.format(HGHT_OF_ROOM_UNDEFINED, "Assembly Ac Hall or parking floor or Assembly room height",
+                                block.getNumber(), floor.getNumber(),
+                                DxfFileConstants.ASSEMBLY_AC_HALL_COLOR_CODE + " or "
+                                        + DxfFileConstants.CAR_AND_TWO_WHEELER_PARKING_ROOM_COLOR_CODE + " or "
+                                        + DxfFileConstants.ASSEMBLY_ROOM_COLOR_CODE));
+                pl.addErrors(errors);
+            }
+        }
+
+        if (floor.getMezzanineFloor() != null && floor.getMezzanineFloor().size() > 0) {
+            isPresent = coloursUniqueSet.stream()
+                    .anyMatch(colorCode -> colorCode == DxfFileConstants.MEZZANINE_HEAD_ROOM_COLOR_CODE);
+
+            if (!isPresent) {
+                errors.put(
+                        DxfFileConstants.MEZZANINE_HEAD_ROOM_COLOR_CODE + block.getNumber() + " floor " + floor.getNumber(),
+                        String.format(HGHT_OF_ROOM_UNDEFINED, "Mezzanine floor room height", block.getNumber(), floor.getNumber(),
+                                DxfFileConstants.MEZZANINE_HEAD_ROOM_COLOR_CODE));
+                pl.addErrors(errors);
+            }
+        }
+
+        boolean isIndustrial = occupancies.stream().anyMatch(occupancy -> Arrays.asList(G1, G2).contains(occupancy.getType().getCode()));
+        if (isIndustrial) {
+            isPresent = coloursUniqueSet.stream()
+                    .anyMatch(colorCode -> colorCode == DxfFileConstants.WORK_ROOM_UNDER_OCCUPANCY_G_COLOR_CODE);
+
+            if (!isPresent) {
+                errors.put(
+                        DxfFileConstants.WORK_ROOM_UNDER_OCCUPANCY_G_COLOR_CODE + block.getNumber() + " floor "
+                                + floor.getNumber(),
+                        String.format(HGHT_OF_ROOM_UNDEFINED, "Work room height", block.getNumber(), floor.getNumber(),
+                                DxfFileConstants.WORK_ROOM_UNDER_OCCUPANCY_G_COLOR_CODE));
+                pl.addErrors(errors);
+            }
+        }
+
+        // For other occupancies, atleast one room required in the plan.
+		boolean isBCDEFHIOccupancies = occupancies.stream()
+				.anyMatch(occupancy -> Arrays.asList(A2, B1, B2, B3, C, C1, C2, C3, E, F, F1, F2, F3, F4, H, I1, I2)
+						.contains(occupancy.getType().getCode()));
+
+        if (isBCDEFHIOccupancies) {
+            isPresent = coloursUniqueSet.stream()
+                    .anyMatch(colorCode -> colorCode == DxfFileConstants.CAR_AND_TWO_WHEELER_PARKING_ROOM_COLOR_CODE
+                            || colorCode == DxfFileConstants.NORMAL_ROOM_BCEFHI_OCCUPANCIES_COLOR_CODE
+                            || colorCode == DxfFileConstants.AC_ROOM_BCEFHI_OCCUPANCIES_COLOR_CODE);
+            if (!isPresent) {
+                errors.put(
+                        "normal or ac rooms for other occupancies of " + block.getNumber() + " floor " + floor.getNumber(),
+                        String.format(HGHT_OF_ROOM_UNDEFINED, "Normal room or ac room height or parking floor", block.getNumber(),
+                                floor.getNumber(),
+                                DxfFileConstants.NORMAL_ROOM_BCEFHI_OCCUPANCIES_COLOR_CODE + " or "
+                                        + DxfFileConstants.AC_ROOM_BCEFHI_OCCUPANCIES_COLOR_CODE + " or "
+                                        + DxfFileConstants.CAR_AND_TWO_WHEELER_PARKING_ROOM_COLOR_CODE));
+                pl.addErrors(errors);
+
+            }
+        }
+    }
+
+    private List<Integer> getColorCodesListForExemption() {
+        List<Integer> colorCodesForExemption = new ArrayList<>();
+        colorCodesForExemption.add(DxfFileConstants.MEZZANINE_HEAD_ROOM_COLOR_CODE);
+        colorCodesForExemption.add(DxfFileConstants.NORMAL_ROOM_BCEFHI_OCCUPANCIES_COLOR_CODE);
+        colorCodesForExemption.add(DxfFileConstants.AC_ROOM_BCEFHI_OCCUPANCIES_COLOR_CODE);
+        colorCodesForExemption.add(DxfFileConstants.CAR_AND_TWO_WHEELER_PARKING_ROOM_COLOR_CODE);
+        return colorCodesForExemption;
     }
 
     private void buildResult(Plan pl, Floor floor, BigDecimal expected, String subRule, String subRuleDesc,

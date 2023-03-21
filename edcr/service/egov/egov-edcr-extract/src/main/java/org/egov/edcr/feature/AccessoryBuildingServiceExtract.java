@@ -94,12 +94,13 @@ public class AccessoryBuildingServiceExtract extends FeatureExtract {
                     pl.getAccessoryBlocks().add(accessoryBlock);
                 }
             }
-        extractDistanceOfAccessoryBlockToRoads(pl, doc);
-        extractDistanceOfAccessoryBlockToPlotBoundary(pl, doc);
+        extractDistanceOfAccessoryBlockToRoads(pl);
+        extractDistanceOfAccessoryBlockToPlotBoundary(pl);
+        extractDistanceOfAccessoryBlockToBldng(pl);
         return pl;
     }
 
-    private void extractDistanceOfAccessoryBlockToPlotBoundary(PlanDetail pl, DXFDocument doc) {
+    private void extractDistanceOfAccessoryBlockToPlotBoundary(PlanDetail pl) {
         if (pl != null && !pl.getAccessoryBlocks().isEmpty())
             for (AccessoryBlock accessoryBlock : pl.getAccessoryBlocks())
                 if (accessoryBlock.getNumber() != null) {
@@ -112,7 +113,7 @@ public class AccessoryBuildingServiceExtract extends FeatureExtract {
                 }
     }
 
-    private void extractDistanceOfAccessoryBlockToRoads(PlanDetail pl, DXFDocument doc) {
+    private void extractDistanceOfAccessoryBlockToRoads(PlanDetail pl) {
         String layerAccShortestDist = layerNames.getLayerName("LAYER_NAME_ACCESSORY_SHORTEST_DISTANCE");
         List<RoadOutput> distancesWithColorCode = extractDistanceWithColourCode(pl, layerAccShortestDist);
         List<BigDecimal> notifiedRoadDistances = new ArrayList<>();
@@ -157,6 +158,14 @@ public class AccessoryBuildingServiceExtract extends FeatureExtract {
         for (BigDecimal laneDistance : laneRoadDistances)
             if (!pl.getLaneRoads().isEmpty())
                 pl.getLaneRoads().get(0).addDistanceFromAccessoryBlock(laneDistance);
+    }
+    
+    private void extractDistanceOfAccessoryBlockToBldng(PlanDetail pl) {
+        String layerAccDistBldng = layerNames.getLayerName("LAYER_NAME_ACCBLDG_DIST_BLDG");
+        List<BigDecimal> dimensionList = Util.getListOfDimensionValueByLayer(pl, layerAccDistBldng);
+        if (dimensionList != null && !dimensionList.isEmpty()) {
+            pl.setAccessoryBlockDistances(dimensionList);
+        }
     }
 
     @Override

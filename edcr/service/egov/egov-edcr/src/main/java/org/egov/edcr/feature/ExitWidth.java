@@ -496,7 +496,6 @@ public class ExitWidth extends FeatureProcess {
 				String[] occCodesArr = occupancyType.split(",");
 				StringBuilder sb = new StringBuilder();
 				for(String code : occCodesArr) {
-					System.out.println("Exith width occ code:::"+code);
 					sb.append(Util.getOccupancyByCode(pl, code.trim()).getType().getName());
 					if (!code.equals(occCodesArr[occCodesArr.length - 1])) {
 						sb.append(" , ");

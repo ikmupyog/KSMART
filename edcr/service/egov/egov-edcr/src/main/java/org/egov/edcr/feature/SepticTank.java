@@ -47,93 +47,112 @@
 
 package org.egov.edcr.feature;
 
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_DATE_081119;
+import static org.egov.edcr.constants.AmendmentConstants.AMEND_NOV19;
+import static org.egov.edcr.constants.DxfFileConstants.A1;
+import static org.egov.edcr.utility.DcrConstants.IN_METER_SQR;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
-import org.egov.common.entity.edcr.Block;
+import org.apache.logging.log4j.Logger;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
-import org.egov.infra.utils.StringUtils;
+import org.egov.edcr.utility.Util;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SepticTank extends FeatureProcess {
 
 	private static final Logger LOG = LogManager.getLogger(SepticTank.class);
-	private static final String RULE_45_E = "45-e";
-	public static final String DISTANCE_FROM_WATERSOURCE = "Distance from watersource";
-	public static final String DISTANCE_FROM_BUILDING = "Distance from Building";
-	public static final String MIN_DISTANCE_FROM_GOVTBUILDING_DESC = "Minimum distance fcrom government building";
-	public static final BigDecimal MIN_DIS_WATERSRC = BigDecimal.valueOf(18);
-	public static final BigDecimal MIN_DIS_BUILDING = BigDecimal.valueOf(6);
+    private static final String SUB_RULE_79_2_DESCRIPTION = "Minimum area of septic tank";
+    private static final String SUB_RULE_79_2 = "79(2)";
+    private static final BigDecimal HUNDRED = BigDecimal.valueOf(100);
+    private static final BigDecimal ONE_POINTFIVE = BigDecimal.valueOf(1.5);
+    private static final String OBJECT_NOT_DEFINED = "msg.error.mandatory.object1.not.defined";
+    private static final String SEPTIC_TANK_AREA_DESC_MULTIPLE = " septic tanks are having minimum area 1.5 m2";
+    private static final String SEPTIC_TANK_AREA_DESC_SINGLE = " septic tank is having minimum area 1.5 m2";
 
 	@Override
 	public Plan validate(Plan pl) {
-		return pl;
-	}
+		List<String> occupancyTypes = pl.getVirtualBuilding().getOccupancyTypes().stream().map(occ -> occ.getType().getCode()).collect(Collectors.toList());
+		if (AMEND_NOV19.equals(super.getAmendmentsRefNumber(pl.getAsOnDate())) && occupancyTypes.size() == 1
+				&& occupancyTypes.contains(A1)) {
+            HashMap<String, String> errors = new HashMap<>();
+            if (pl.getVirtualBuilding().getTotalBuitUpArea() != null
+                    && pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(HUNDRED) > 0
+                    && pl.getSepticTanks().isEmpty()) {
+                errors.put(SUB_RULE_79_2, getLocaleMessage(OBJECT_NOT_DEFINED, "Septic tank"));
+                pl.addErrors(errors);
+            }
+        }
+        return pl;
+    }
 
 	@Override
 	public Plan process(Plan pl) {
+		List<String> occupancyTypes = pl.getVirtualBuilding().getOccupancyTypes().stream().map(occ -> occ.getType().getCode()).collect(Collectors.toList());
+		if (occupancyTypes.size() == 1 && occupancyTypes.contains(A1)
+				&& AMEND_NOV19.equals(super.getAmendmentsRefNumber(pl.getAsOnDate()))) {
+            validate(pl);
+            scrutinyDetail = new ScrutinyDetail();
+            scrutinyDetail.addColumnHeading(1, RULE_NO);
+            scrutinyDetail.addColumnHeading(2, DESCRIPTION);
+            scrutinyDetail.addColumnHeading(3, REQUIRED);
+            scrutinyDetail.addColumnHeading(4, PROVIDED);
+            scrutinyDetail.addColumnHeading(5, STATUS);
+            scrutinyDetail.setKey("Common_Septic Tank");
+            String subRule = SUB_RULE_79_2;
+            String subRuleDesc = SUB_RULE_79_2_DESCRIPTION;
+            pl.getFeatureAmendments().put("Septic Tank", AMEND_DATE_081119.toString());
+            if (pl.getVirtualBuilding().getTotalBuitUpArea() != null
+                    && pl.getVirtualBuilding().getTotalBuitUpArea().compareTo(HUNDRED) > 0
+                    && !pl.getSepticTanks().isEmpty()) {
+                List<BigDecimal> collect = pl.getSepticTanks().stream().filter(
+                        septicTank -> Util.roundOffTwoDecimal(septicTank.getArea()).compareTo(ONE_POINTFIVE) >= 0)
+                        .map(org.egov.common.entity.edcr.SepticTank::getArea).collect(Collectors.toList());
 
-		ScrutinyDetail scrutinyDetail = new ScrutinyDetail();
-		scrutinyDetail.setKey("Common_Septic Tank ");
-		scrutinyDetail.addColumnHeading(1, RULE_NO);
-		scrutinyDetail.addColumnHeading(2, DESCRIPTION);
-		scrutinyDetail.addColumnHeading(3, PERMITTED);
-		scrutinyDetail.addColumnHeading(4, PROVIDED);
-		scrutinyDetail.addColumnHeading(5, STATUS);
-		List<org.egov.common.entity.edcr.SepticTank> septicTanks = pl.getSepticTanks();
+                if (!collect.isEmpty()) {
+                    setReportOutputDetailsWithoutOccupancy(pl, subRule, subRuleDesc,
+                            ONE_POINTFIVE.toString() + IN_METER_SQR,
+                            collect.size() == 1 ? collect.size() + SEPTIC_TANK_AREA_DESC_SINGLE
+                                    : collect.size() + SEPTIC_TANK_AREA_DESC_MULTIPLE,
+                            Result.Accepted.getResultVal());
+                } else {
+                    setReportOutputDetailsWithoutOccupancy(pl, subRule, subRuleDesc,
+                            ONE_POINTFIVE.toString() + IN_METER_SQR, collect.size() + SEPTIC_TANK_AREA_DESC_SINGLE,
+                            Result.Not_Accepted.getResultVal());
+                }
+            }
+        }
 
-		for (org.egov.common.entity.edcr.SepticTank septicTank : septicTanks) {
-			boolean validWaterSrcDistance = false;
-			boolean validBuildingDistance = false;
+        return pl;
+    }
 
-			if (!septicTank.getDistanceFromWaterSource().isEmpty()) {
-				BigDecimal minDistWaterSrc = septicTank.getDistanceFromWaterSource().stream().reduce(BigDecimal::min)
-						.get();
-				if (minDistWaterSrc != null && minDistWaterSrc.compareTo(MIN_DIS_WATERSRC) >= 0) {
-					validWaterSrcDistance = true;
-				}
-				buildResult(pl, scrutinyDetail, validWaterSrcDistance, DISTANCE_FROM_WATERSOURCE, ">= 18",
-						minDistWaterSrc.toString());
-			}
-
-			if (!septicTank.getDistanceFromBuilding().isEmpty()) {
-				BigDecimal minDistBuilding = septicTank.getDistanceFromBuilding().stream().reduce(BigDecimal::min)
-						.get();
-				if (minDistBuilding != null && minDistBuilding.compareTo(MIN_DIS_BUILDING) >= 0) {
-					validBuildingDistance = true;
-				}
-				buildResult(pl, scrutinyDetail, validBuildingDistance, DISTANCE_FROM_BUILDING, ">= 6",
-						minDistBuilding.toString());
-			}
-		}
-
-		return pl;
-	}
-
-	private void buildResult(Plan pl, ScrutinyDetail scrutinyDetail, boolean valid, String description, String permited,
-			String provided) {
-		Map<String, String> details = new HashMap<>();
-		details.put(RULE_NO, RULE_45_E);
-		details.put(DESCRIPTION, description);
-		details.put(PERMITTED, permited);
-		details.put(PROVIDED, provided);
-		details.put(STATUS, valid ? Result.Accepted.getResultVal() : Result.Not_Accepted.getResultVal());
-		scrutinyDetail.getDetail().add(details);
-		pl.getReportOutput().getScrutinyDetails().add(scrutinyDetail);
-	}
+    private void setReportOutputDetailsWithoutOccupancy(Plan pl, String ruleNo, String ruleDesc, String expected,
+            String actual, String status) {
+        Map<String, String> details = new HashMap<>();
+        details.put(RULE_NO, ruleNo);
+        details.put(DESCRIPTION, ruleDesc);
+        details.put(REQUIRED, expected);
+        details.put(PROVIDED, actual);
+        details.put(STATUS, status);
+        scrutinyDetail.getDetail().add(details);
+        pl.getReportOutput().getScrutinyDetails().add(scrutinyDetail);
+    }
 
 	@Override
 	public Map<String, Date> getAmendments() {
-		return new LinkedHashMap<>();
-	}
+        Map<String, Date> septicTankAmend = new ConcurrentHashMap<>();
+        septicTankAmend.put(AMEND_NOV19, AMEND_DATE_081119);
+        return septicTankAmend;
+    }
 
 }
