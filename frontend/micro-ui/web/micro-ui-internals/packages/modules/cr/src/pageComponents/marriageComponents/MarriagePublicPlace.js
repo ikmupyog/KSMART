@@ -304,11 +304,14 @@ const MarriagePublicPlace = ({ config, onSelect, userType, formData }) => {
   } else
     return (
       <React.Fragment>
-        <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+        {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton>
         {window.location.href.includes("/citizen") ? <Timeline /> : null}
         {window.location.href.includes("/employee") ? <Timeline /> : null}
-        <FormStep t={t}>
-          
+        <FormStep t={t}> */}
+        <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+        {window.location.href.includes("/citizen") ? <Timeline currentStep={1} /> : null}
+        {window.location.href.includes("/employee") ? <Timeline currentStep={1} /> : null}
+        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>          
           <div className="row">
             <div className="col-md-12">
             <h1 className="headingh1">
@@ -554,77 +557,7 @@ const MarriagePublicPlace = ({ config, onSelect, userType, formData }) => {
                     </div>
                 </div>
             </div>
-          <div className="row">
-            <div className="col-md-12">
-              <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_MARRIAGE_CUSTOM_AND_CEREMONY_DETAILS")}`}</span>{" "}
-              </h1>
-            </div>
-            </div>
-          <div className="col-md-row">
-            <div className="col-md-12">
-                
-            <div className="col-md-3">
-              <CardLabel>
-                  {`${t("CR_MARRIAGE_TYPE")}`}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <Dropdown
-                t={t}
-                optionKey="i18nKey"
-                isMandatory={false}
-                //option={cmbmarriagetype}
-                selected={marriageType}
-                select={setSelectMarriageType}
-                placeholder={`${t("CR_MARRIAGE_TYPE")}`}
-              />
-            </div>
-              <div className="col-md-3">
-                      <CardLabel>
-                        {t("CR_MARRIAGE_OTHER_SPECIFY")}
-                       
-                      </CardLabel>
-                      <TextInput
-                        t={t}
-                        isMandatory={false}
-                        type={"text"}
-                        optionKey="i18nKey"
-                        //name="marriageOthersSpecify"
-                        value={marriageOthersSpecify}
-                        onChange={setSelectMarriageOthersSpecify}
-                        placeholder={`${t("CR_MARRIAGE_OTHER_SPECIFY")}`}
-                        
-                      />
-                    </div>
-            </div>
-          </div>
-
-          {toast && (
-            <Toast
-              error={
-                AadharError || DOBError
-                // || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
-              }
-              label={
-                AadharError || DOBError
-                  ? //  || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
-                    // InstitutionError || SignedOfficerInstError || signedOfficerDesgInstError
-                    AadharError
-                    ? t(`CS_COMMON_INVALID_AADHAR_NO`)
-                    : DOBError
-                    ? t(`BIRTH_DOB_VALIDATION_MSG`)
-                    : // : signedOfficerError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : mobileError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`) : mobileLengthError ? t(`BIRTH_ERROR_VALID__MOBILE_CHOOSE`)
-                      // : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`) : SignedOfficerInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`)
-
-                      setToast(false)
-                  : setToast(false)
-              }
-              onClose={() => setToast(false)}
-            />
-          )}
-          {""}
-
-          {/* <div><BackButton >{t("CS_COMMON_BACK")}</BackButton></div> */}
+          
         </FormStep>
       </React.Fragment>
     );

@@ -323,8 +323,7 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
         <BackButton>{t("CS_COMMON_BACK")}</BackButton>
         {window.location.href.includes("/citizen") ? <Timeline /> : null}
         {window.location.href.includes("/employee") ? <Timeline /> : null}
-        <FormStep t={t}>
-          
+        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
           <div className="row">
             <div className="col-md-12">
             <h1 className="headingh1">
@@ -590,7 +589,7 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
                     </div>
                 </div>
             </div>
-          <div className="row">
+          {/* <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
                 <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_MARRIAGE_CUSTOM_AND_CEREMONY_DETAILS")}`}</span>{" "}
@@ -633,9 +632,9 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
                       />
                     </div>
             </div>
-          </div>
+          </div> */}
 
-          {toast && (
+          {/* {toast && (
             <Toast
               error={
                 AadharError || DOBError
@@ -658,7 +657,7 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
               onClose={() => setToast(false)}
             />
           )}
-          {""}
+          {""} */}
 
           {/* <div><BackButton >{t("CS_COMMON_BACK")}</BackButton></div> */}
         </FormStep>
