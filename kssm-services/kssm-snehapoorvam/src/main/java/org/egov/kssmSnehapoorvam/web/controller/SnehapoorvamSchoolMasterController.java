@@ -8,9 +8,9 @@ import org.egov.kssmSnehapoorvam.util.ResponseInfoFactory;
 import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.SchoolSearchCriteria;
 import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.SnehapoorvamSchoolMasterRequest;
 import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.SnehapoorvamSchoolMasterResponse;
-import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.SnehapoorvamSchoolReg;
-import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.SnehapoorvamSearchRequest;
-import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.SnehapoorvamSearchResponse;
+import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.m_SnehapoorvamSchoolReg;
+import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.SnehapoorvamSchoolSearchRequest;
+import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.SnehapoorvamSchoolSearchResponse;
 import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.m_SnehapoorvamSchoolMaster;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -81,12 +81,12 @@ public class SnehapoorvamSchoolMasterController {
 
     
     @PostMapping("/SchoolMaster/Search")
-    public ResponseEntity<SnehapoorvamSearchResponse> searchSchoolCode(@RequestBody SnehapoorvamSearchRequest request,
+    public ResponseEntity<SnehapoorvamSchoolSearchResponse> searchSchoolCode(@RequestBody SnehapoorvamSchoolSearchRequest request,
             @Valid @ModelAttribute SchoolSearchCriteria searchCriteria) {
 
-        List<SnehapoorvamSchoolReg> result = schoolService.searchSchoolCode(searchCriteria);
+        List<m_SnehapoorvamSchoolReg> result = schoolService.searchSchoolCode(searchCriteria);
 
-        SnehapoorvamSearchResponse response = SnehapoorvamSearchResponse.builder()
+        SnehapoorvamSchoolSearchResponse response = SnehapoorvamSchoolSearchResponse.builder()
                 .responseInfo(
                         responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))
                 .SchoolDetails(result)

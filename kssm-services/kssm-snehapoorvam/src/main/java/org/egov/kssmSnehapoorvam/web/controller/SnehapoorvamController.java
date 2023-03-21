@@ -7,9 +7,14 @@ import org.egov.kssmSnehapoorvam.service.SnehapoorvamService;
 import org.egov.kssmSnehapoorvam.util.ResponseInfoFactory;
 import org.egov.kssmSnehapoorvam.web.models.snehapoorvam.SnehapoorvamRequest;
 import org.egov.kssmSnehapoorvam.web.models.snehapoorvam.SnehapoorvamResponse;
+import org.egov.kssmSnehapoorvam.web.models.snehapoorvam.SnehapoorvamSearchRequest;
+import org.egov.kssmSnehapoorvam.web.models.snehapoorvam.SnehapoorvamSearchResponse;
 import org.egov.kssmSnehapoorvam.web.models.snehapoorvam.m_Snehapoorvam;
+import org.egov.kssmSnehapoorvam.web.models.snehapoorvam.m_SnehapoorvamSearchResponse;
+import org.egov.kssmSnehapoorvam.web.models.snehapoorvam.snehapoorvamSearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -72,6 +77,20 @@ public class SnehapoorvamController {
         SnehapoorvamResponse response=SnehapoorvamResponse.builder().responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))
                                                                         .m_Snehapoorvams(ob)
                                                                         .build();
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/v1/Search")
+    public ResponseEntity<SnehapoorvamSearchResponse> searchSchoolCode(@RequestBody SnehapoorvamSearchRequest request,
+            @Valid @ModelAttribute snehapoorvamSearchCriteria searchCriteria) {
+
+        List<m_SnehapoorvamSearchResponse> result = obService.Search(searchCriteria);
+
+        SnehapoorvamSearchResponse response = SnehapoorvamSearchResponse.builder()
+                .responseInfo(
+                        responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))
+                .SnehapoorvamDetails(result)
+                .build();
         return ResponseEntity.ok(response);
     }
 

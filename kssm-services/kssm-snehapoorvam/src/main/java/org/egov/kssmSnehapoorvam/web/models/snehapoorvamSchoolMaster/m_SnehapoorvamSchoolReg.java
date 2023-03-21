@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SnehapoorvamSchoolReg {
+public class m_SnehapoorvamSchoolReg {
 
     @JsonProperty("school_name")
     private String school_name;

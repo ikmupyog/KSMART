@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SnehapoorvamSearchRequest {
+public class SnehapoorvamSchoolSearchRequest {
     
     
 

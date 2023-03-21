@@ -5,11 +5,11 @@ import java.util.List;
 
 import org.egov.kssmSnehapoorvam.config.SnehapoorvamConfig;
 import org.egov.kssmSnehapoorvam.kafka.Producer;
-import org.egov.kssmSnehapoorvam.repository.SnehapoorvamRepository;
+import org.egov.kssmSnehapoorvam.repository.SnehapoorvamSchoolRepository;
 import org.egov.kssmSnehapoorvam.validators.SnehapoorvamSchoolRegValidator;
 import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.SchoolSearchCriteria;
 import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.SnehapoorvamSchoolMasterRequest;
-import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.SnehapoorvamSchoolReg;
+import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.m_SnehapoorvamSchoolReg;
 import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.m_SnehapoorvamSchoolMaster;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,17 +17,17 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SnehapoorvamSchoolService {
-    //private final SnehapoorvamSearchValidator validatorService;
+    
 
     private final Producer producer;
     private final SnehapoorvamConfig snehapoorvamConfig;
-    private final SnehapoorvamRepository repository;
+    private final SnehapoorvamSchoolRepository repository;
     private final SnehapoorvamSchoolRegValidator validator;
 
 
 
     @Autowired
-    SnehapoorvamSchoolService(Producer producer, SnehapoorvamConfig obcon,SnehapoorvamRepository repository,SnehapoorvamSchoolRegValidator validator) {
+    SnehapoorvamSchoolService(Producer producer, SnehapoorvamConfig obcon,SnehapoorvamSchoolRepository repository,SnehapoorvamSchoolRegValidator validator) {
         this.producer = producer;
         this.snehapoorvamConfig = obcon;
         this.validator = validator;
@@ -49,11 +49,11 @@ public class SnehapoorvamSchoolService {
     }
 
   
-    public List<SnehapoorvamSchoolReg> searchSchoolCode(@Valid SchoolSearchCriteria searchCriteria) {
+    public List<m_SnehapoorvamSchoolReg> searchSchoolCode(@Valid SchoolSearchCriteria searchCriteria) {
         
-    
         validator.validateSearch( searchCriteria);
-        List<SnehapoorvamSchoolReg> result = repository.getSchoolDetails(searchCriteria);
+        List<m_SnehapoorvamSchoolReg> result = repository.getSchoolDetails(searchCriteria);
         return result;
     }
+       
 }
