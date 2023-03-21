@@ -3,7 +3,7 @@ import { FormStep, CardLabel, TextInput, DatePicker, Dropdown, BackButton, Loade
 import Timeline from "../../components/SBRTimeline";
 import { useTranslation } from "react-i18next";
 
-const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEditBirth = false }) => {
+const StillBirthParentsDetails =({ config, onSelect, userType, formData, isEditStillBirth, isEditStillBirthPageComponents }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -22,7 +22,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
   const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditStillBirth ? isEditStillBirth : false);
   let cmbfilterNation = [];
   const cmbMaritalStatus = [
     { i18nKey: "Married", code: "MARRIED" },
@@ -74,43 +74,121 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
     ReligionList["common-masters"].Religion.map((ob) => {
       cmbReligion.push(ob);
     });
-  const [motherFirstNameEn, setMotherFirstNameEn] = useState(
-    formData?.StillBirthParentsDetails?.motherFirstNameEn ? formData?.StillBirthParentsDetails?.motherFirstNameEn : ""
-  );
-  const [motherFirstNameMl, setMotherFirstNameMl] = useState(
-    formData?.StillBirthParentsDetails?.motherFirstNameMl ? formData?.StillBirthParentsDetails?.motherFirstNameMl : ""
-  );
-  const [motherAadhar, setMotherAadhar] = useState(
-    formData?.StillBirthParentsDetails?.motherAadhar ? formData?.StillBirthParentsDetails?.motherAadhar : ""
-  );
+  // const [motherFirstNameEn, setMotherFirstNameEn] = useState(
+  //   formData?.StillBirthParentsDetails?.motherFirstNameEn ? formData?.StillBirthParentsDetails?.motherFirstNameEn : ""
+  // );
+  // const [motherFirstNameMl, setMotherFirstNameMl] = useState(
+  //   formData?.StillBirthParentsDetails?.motherFirstNameMl ? formData?.StillBirthParentsDetails?.motherFirstNameMl : ""
+  // );
+  const [isMotherInfo, setIsMotherInfo] = useState(formData?.StillBirthParentsDetails?.isMotherInfo ? formData?.StillBirthParentsDetails?.isMotherInfo :
+    formData?.StillBirthChildDetails?.StillBirthParentsDetails?.ismotherInfo ? formData?.StillBirthChildDetails?.StillBirthParentsDetails?.ismotherInfo : false);
+  const [motherAadhar, setMotherAadhar] = useState(formData?.StillBirthParentsDetails?.motherAadhar ? formData?.StillBirthParentsDetails?.motherAadhar :
+    formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherAadhar ? formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherAadhar : null);
+ 
+    const [motherFirstNameEn, setMotherFirstNameEn] = useState(formData?.StillBirthParentsDetails?.motherFirstNameEn ? formData?.StillBirthParentsDetails?.motherFirstNameEn :
+      formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherFirstNameEn ? formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherFirstNameEn : "");
+    const [motherFirstNameMl, setMotherFirstNameMl] = useState(formData?.StillBirthChildDetails?.motherFirstNameMl ? formData?.StillBirthChildDetails?.motherFirstNameMl :
+      formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherFirstNameMl ? formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherFirstNameMl : "");
+    // const [motherAadhar, setMotherAadhar] = useState(
+  //   formData?.StillBirthParentsDetails?.motherAadhar ? formData?.StillBirthParentsDetails?.motherAadhar : ""
+  // );
 
+ 
+  // const [motherMarriageBirth, setMotherMarriageBirth] = useState(
+  //   formData?.StillBirthParentsDetails?.motherMarriageBirth ? formData?.StillBirthParentsDetails?.motherMarriageBirth : ""
+  // );
+  // const [motherEducation, setMotherEducation] = useState(
+  //   formData?.StillBirthParentsDetails?.motherEducation ? formData?.StillBirthParentsDetails?.motherEducation : null
+  // );
+  // const [motherProfession, setMotherProfession] = useState(
+  //   formData?.StillBirthParentsDetails?.motherProfession ? formData?.StillBirthParentsDetails?.motherProfession : null
+  // );
   const [motherEmail, setMotherEmail] = useState(
     formData?.StillBirthParentsDetails?.motherEmail ? formData?.StillBirthParentsDetails?.motherEmail : ""
   );
-  const [motherMarriageBirth, setMotherMarriageBirth] = useState(
-    formData?.StillBirthParentsDetails?.motherMarriageBirth ? formData?.StillBirthParentsDetails?.motherMarriageBirth : ""
-  );
-  const [motherEducation, setMotherEducation] = useState(
-    formData?.StillBirthParentsDetails?.motherEducation ? formData?.StillBirthParentsDetails?.motherEducation : null
-  );
-  const [motherProfession, setMotherProfession] = useState(
-    formData?.StillBirthParentsDetails?.motherProfession ? formData?.StillBirthParentsDetails?.motherProfession : null
-  );
 
-  const [orderofChildren, setOrderofChildren] = useState(
-    formData?.StillBirthParentsDetails?.orderofChildren ? formData?.StillBirthParentsDetails?.orderofChildren : ""
-  );
-  const [motherNationality, setMotherNationality] = useState(
-    formData?.StillBirthParentsDetails?.motherNationality ? formData?.StillBirthParentsDetails?.motherNationality : null
-  );
+  const [motherMarriageBirth, setMotherMarriageBirth] = useState(formData?.StillBirthParentsDetails?.motherMarriageBirth ? formData?.StillBirthParentsDetails?.motherMarriageBirth :
+    formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherMarriageBirth ? formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherMarriageBirth : "");
 
-  const [isMotherInfo, setIsMotherInfo] = useState(
-    formData?.StillBirthParentsDetails?.isMotherInfo ? formData?.StillBirthParentsDetails?.isMotherInfo : false
-  );
+  const [motherEducation, setMotherEducation] = useState(formData?.StillBirthParentsDetails?.motherEducation?.code ? formData?.StillBirthParentsDetails?.motherEducation : formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherEducation ?
+    (cmbQualification.filter(cmbQualification => cmbQualification.code === formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherEducation)[0]) : "");
+  const [motherProfession, setMotherProfession] = useState(formData?.StillBirthParentsDetails?.motherProfession?.code ? formData?.StillBirthParentsDetails?.motherProfession : formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherProfession ?
+    (cmbProfession.filter(cmbProfession => cmbProfession.code === formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherProfession)[0]) : "");
+  const [orderofChildren, setOrderofChildren] = useState(formData?.StillBirthParentsDetails?.orderofChildren ? formData?.StillBirthParentsDetails?.orderofChildren :
+    formData?.StillBirthChildDetails?.StillBirthParentsDetails?.orderofChildren ? formData?.StillBirthChildDetails?.StillBirthParentsDetails?.orderofChildren : "");
+    const [motherNationality, setMotherNationality] = useState(formData?.StillBirthParentsDetails?.motherNationality?.code ? formData?.StillBirthParentsDetails?.motherNationality : formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherNationality ?
+      (cmbNation.filter(cmbNation => cmbNation.code === formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherNationality)[0]) : "");
 
-  const [fatherAadhar, setFatherAadhar] = useState(
-    formData?.StillBirthParentsDetails?.fatherAadhar ? formData?.StillBirthParentsDetails?.fatherAadhar : ""
-  );
+
+  // const [orderofChildren, setOrderofChildren] = useState(
+  //   formData?.StillBirthParentsDetails?.orderofChildren ? formData?.StillBirthParentsDetails?.orderofChildren : ""
+  // );
+  // const [motherNationality, setMotherNationality] = useState(
+  //   formData?.StillBirthParentsDetails?.motherNationality ? formData?.StillBirthParentsDetails?.motherNationality : null
+  // );
+ 
+    
+  // const [isMotherInfo, setIsMotherInfo] = useState(
+  //   formData?.StillBirthParentsDetails?.isMotherInfo ? formData?.StillBirthParentsDetails?.isMotherInfo : false
+  // );
+
+  // const [fatherAadhar, setFatherAadhar] = useState(
+  //   formData?.StillBirthParentsDetails?.fatherAadhar ? formData?.StillBirthParentsDetails?.fatherAadhar : ""
+  // );
+  
+
+  // const [isFatherInfo, setIsFatherInfo] = useState(
+  //   formData?.StillBirthParentsDetails?.isFatherInfo ? formData?.StillBirthParentsDetails?.isFatherInfo : false
+  // );
+  const [isFatherInfo, setIsFatherInfo] = useState(formData?.StillBirthParentsDetails?.isFatherInfo ? formData?.StillBirthParentsDetails?.isFatherInfo :
+    formData?.StillBirthChildDetails?.StillBirthParentsDetails?.isfatherInfo ? formData?.StillBirthChildDetails?.StillBirthParentsDetails?.isfatherInfo : false);
+   
+    const [fatherAadhar, setFatherAadhar] = useState(formData?.StillBirthParentsDetails?.fatherAadhar ? formData?.StillBirthParentsDetails?.fatherAadhar :
+      formData?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherAadhar ? formData?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherAadhar : null);
+
+  const [fatherFirstNameEn, setFatherFirstNameEn] = useState(formData?.StillBirthParentsDetails?.fatherFirstNameEn ? formData?.StillBirthParentsDetails?.fatherFirstNameEn :
+    formData?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherFirstNameEn ? formData?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherFirstNameEn : "");
+  const [fatherFirstNameMl, setFatherFirstNameMl] = useState(formData?.StillBirthParentsDetails?.fatherFirstNameMl ? formData?.StillBirthParentsDetails?.fatherFirstNameMl :
+    formData?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherFirstNameMl ? formData?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherFirstNameMl : "");
+
+    const [fatherNationality, setFatherNationality] = useState(formData?.StillBirthParentsDetails?.fatherNationality?.code ? formData?.StillBirthParentsDetails?.fatherNationality : formData?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherNationality ?
+      (cmbNation.filter(cmbNation => cmbNation.code === formData?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherNationality)[0]) : "");
+    const [fatherEducation, setFatherEducation] = useState(formData?.StillBirthParentsDetails?.fatherEducation?.code ? formData?.StillBirthParentsDetails?.fatherEducation : formData?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherEducation ?
+      (cmbQualification.filter(cmbQualification => cmbQualification.code === formData?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherEducation)[0]) : "");
+    const [fatherProfession, setFatherProfession] = useState(formData?.StillBirthParentsDetails?.fatherProfession?.code ? formData?.StillBirthParentsDetails?.fatherProfession : formData?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherProfession ?
+      (cmbProfession.filter(cmbProfession => cmbProfession.code === formData?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherProfession)[0]) : "");
+      const [Religion, setReligion] = useState(formData?.StillBirthParentsDetails?.Religion?.code ? formData?.StillBirthParentsDetails?.Religion : formData?.StillBirthChildDetails?.StillBirthParentsDetails?.Religion ?
+        (cmbReligion.filter(cmbReligion => cmbReligion.code === formData?.StillBirthChildDetails?.StillBirthParentsDetails?.Religion)[0]) : "");
+      const [fatherEmail, setFatherEmail] = useState(formData?.StillBirthParentsDetails?.fatherEmail ? formData?.StillBirthParentsDetails?.fatherEmail :
+        formData?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherEmail ? formData?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherEmail : "");
+      const [fatherMobile, setFatherMobile] = useState(formData?.StillBirthParentsDetails?.fatherMobile ? formData?.StillBirthParentsDetails?.fatherMobile :
+        formData?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherMobile ? formData?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherMobile : "");
+ 
+ 
+      // const [fatherFirstNameEn, setFatherFirstNameEn] = useState(
+  //   formData?.StillBirthParentsDetails?.fatherFirstNameEn ? formData?.StillBirthParentsDetails?.fatherFirstNameEn : ""
+  // );
+  // const [fatherFirstNameMl, setFatherFirstNameMl] = useState(
+  //   formData?.StillBirthParentsDetails?.fatherFirstNameMl ? formData?.StillBirthParentsDetails?.fatherFirstNameMl : ""
+  // );
+  // const [fatherNationality, setFatherNationality] = useState(
+  //   formData?.StillBirthParentsDetails?.fatherNationality ? formData?.StillBirthParentsDetails?.fatherNationality : null
+  // );
+  // const [fatherEducation, setFatherEducation] = useState(
+  //   formData?.StillBirthParentsDetails?.fatherEducation ? formData?.StillBirthParentsDetails?.fatherEducation : null
+  // );
+  // const [fatherProfession, setFatherProfession] = useState(
+  //   formData?.StillBirthParentsDetails?.fatherProfession ? formData?.StillBirthParentsDetails?.fatherProfession : null
+  // );
+
+ 
+  // const [Religion, setReligion] = useState(formData?.StillBirthParentsDetails?.Religion ? formData?.StillBirthParentsDetails?.Religion : null);
+  // const [fatherEmail, setFatherEmail] = useState(
+  //   formData?.StillBirthParentsDetails?.fatherEmail ? formData?.StillBirthParentsDetails?.fatherEmail : ""
+  // );
+  // const [fatherMobile, setFatherMobile] = useState(
+  //   formData?.StillBirthParentsDetails?.fatherMobile ? formData?.StillBirthParentsDetails?.fatherMobile : ""
+  // );
   const [toast, setToast] = useState(false);
   const [MotherAadharError, setMotherAadharError] = useState(formData?.StillBirthParentsDetails?.motherAadhar ? false : false);
 
@@ -119,34 +197,9 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
   const [MotherProfessionError, setMotherProfessionError] = useState(formData?.StillBirthParentsDetails?.motherProfession ? false : false);
   const [MotherNationalityError, setMotherNationalityError] = useState(formData?.StillBirthParentsDetails?.motherNationality ? false : false);
 
-  const [FatherAadharError, setFatherAadharError] = useState(formData?.StillBirthParentsDetails?.fatherAadhar ? false : false);
-  const [isFatherInfo, setIsFatherInfo] = useState(
-    formData?.StillBirthParentsDetails?.isFatherInfo ? formData?.StillBirthParentsDetails?.isFatherInfo : false
-  );
-  const [fatherFirstNameEn, setFatherFirstNameEn] = useState(
-    formData?.StillBirthParentsDetails?.fatherFirstNameEn ? formData?.StillBirthParentsDetails?.fatherFirstNameEn : ""
-  );
-  const [fatherFirstNameMl, setFatherFirstNameMl] = useState(
-    formData?.StillBirthParentsDetails?.fatherFirstNameMl ? formData?.StillBirthParentsDetails?.fatherFirstNameMl : ""
-  );
-  const [fatherNationality, setFatherNationality] = useState(
-    formData?.StillBirthParentsDetails?.fatherNationality ? formData?.StillBirthParentsDetails?.fatherNationality : null
-  );
-  const [fatherEducation, setFatherEducation] = useState(
-    formData?.StillBirthParentsDetails?.fatherEducation ? formData?.StillBirthParentsDetails?.fatherEducation : null
-  );
-  const [fatherProfession, setFatherProfession] = useState(
-    formData?.StillBirthParentsDetails?.fatherProfession ? formData?.StillBirthParentsDetails?.fatherProfession : null
-  );
-  const [Religion, setReligion] = useState(formData?.StillBirthParentsDetails?.Religion ? formData?.StillBirthParentsDetails?.Religion : null);
-  const [fatherEmail, setFatherEmail] = useState(
-    formData?.StillBirthParentsDetails?.fatherEmail ? formData?.StillBirthParentsDetails?.fatherEmail : ""
-  );
-  const [fatherMobile, setFatherMobile] = useState(
-    formData?.StillBirthParentsDetails?.fatherMobile ? formData?.StillBirthParentsDetails?.fatherMobile : ""
-  );
-
+ 
   const [OrderofChildrenError, setOrderofChildrenError] = useState(formData?.StillBirthParentsDetails?.orderofChildren ? false : false);
+  const [FatherAadharError, setFatherAadharError] = useState(formData?.StillBirthParentsDetails?.fatherAadhar ? false : false);
   const [FatherFirstNmeEnError, setFatherFirstNmeEnError] = useState(formData?.StillBirthParentsDetails?.fatherFirstNameEn ? false : false);
   const [FatherFirstNmeMlError, setFatherFirstNmeMlError] = useState(formData?.StillBirthParentsDetails?.fatherFirstNameMl ? false : false);
   const [FatherMobileError, setFatherMobileError] = useState(formData?.StillBirthParentsDetails?.fatherAadhar ? false : false);
@@ -307,10 +360,56 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
   }
   function setCheckMalayalamInputField(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
-    if (!e.key.match(pattern)) {
+    if (!(e.key.match(pattern))) {
       e.preventDefault();
     }
   }
+  if (isEditStillBirth) {
+
+    if (formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherNationality != null) {
+      if (cmbNation.length > 0 && (motherNationality === undefined || motherNationality === "")) {
+        setMotherNationality(cmbNation.filter(cmbNation => cmbNation.code === formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherNationality)[0]);
+      }
+    }
+    if (formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherMaritalStatus != null) {
+      if (cmbMaritalStatus.length > 0 && (motherMaritalStatus === undefined || motherMaritalStatus === "")) {
+        setMotherMaritalStatus(cmbMaritalStatus.filter(cmbMaritalStatus => cmbMaritalStatus.code === formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherMaritalStatus)[0]);
+      }
+    }
+    if (formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherEducation != null) {
+      if (cmbQualification.length > 0 && (motherEducation === undefined || motherEducation === "")) {
+        setMotherEducation(cmbQualification.filter(cmbQualification => cmbQualification.code === formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherEducation)[0]);
+      }
+    }
+    if (formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherProfession != null) {
+      if (cmbProfession.length > 0 && (motherProfession === undefined || motherProfession === "")) {
+        setMotherProfession(cmbProfession.filter(cmbProfession => cmbProfession.code === formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherProfession)[0]);
+      }
+    }
+    if (formData?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherNationality != null) {
+      if (cmbNation.length > 0 && (fatherNationality === undefined || fatherNationality === "")) {
+        setFatherNationality(cmbNation.filter(cmbNation => cmbNation.code === formData?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherNationality)[0]);
+      }
+    }
+    if (formData?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherEducation != null) {
+      if (cmbQualification.length > 0 && (fatherEducation === undefined || fatherEducation === "")) {
+        setFatherEducation(cmbQualification.filter(cmbQualification => cmbQualification.code === formData?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherEducation)[0]);
+      }
+    }
+    if (formData?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherProfession != null) {
+      if (cmbProfession.length > 0 && (fatherProfession === undefined || fatherProfession === "")) {
+        setFatherProfession(cmbProfession.filter(cmbProfession => cmbProfession.code === formData?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherProfession)[0]);
+      }
+    }
+    if (formData?.StillBirthChildDetails?.StillBirthParentsDetails?.Religion != null) {
+      if (cmbReligion.length > 0 && (Religion === undefined || Religion === "")) {
+        setReligion(cmbReligion.filter(cmbReligion => cmbReligion.code === formData?.StillBirthChildDetails?.StillBirthParentsDetails?.Religion)[0]);
+      }
+    }
+  }
+
+
+
   let validFlag = true;
   const goNext = () => {
     if (isMotherInfo === false) {
