@@ -5,11 +5,16 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.egov.kssmSnehapoorvam.service.SnehapoorvamSchoolService;
 import org.egov.kssmSnehapoorvam.util.ResponseInfoFactory;
+import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.SchoolSearchCriteria;
 import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.SnehapoorvamSchoolMasterRequest;
 import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.SnehapoorvamSchoolMasterResponse;
+import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.SnehapoorvamSchoolReg;
+import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.SnehapoorvamSearchRequest;
+import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.SnehapoorvamSearchResponse;
 import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.m_SnehapoorvamSchoolMaster;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -75,16 +80,20 @@ public class SnehapoorvamSchoolMasterController {
     }
 
     
-   /*  @PostMapping("/_search")
-    public ResponseEntity<SnehappoorvamSearchResponse> search(@RequestBody SnehapoorvamSearchRequest request,
-                                                            @ModelAttribute SearchCriteria criteria) {
+    @PostMapping("/SchoolMaster/Search")
+    public ResponseEntity<SnehapoorvamSearchResponse> searchSchoolCode(@RequestBody SnehapoorvamSearchRequest request,
+            @Valid @ModelAttribute SchoolSearchCriteria searchCriteria) {
 
-        List<SnehapoorvamSchoolRegistration> schools = schoolService.search(criteria);
-        SnehappoorvamSearchResponse response=SnehappoorvamSearchResponse.builder().responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))
-        .SnehapoorvamSchoolRegistration(schools)
-        .build();
+        List<SnehapoorvamSchoolReg> result = schoolService.searchSchoolCode(searchCriteria);
+
+        SnehapoorvamSearchResponse response = SnehapoorvamSearchResponse.builder()
+                .responseInfo(
+                        responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))
+                .SchoolDetails(result)
+                .build();
         return ResponseEntity.ok(response);
-    }*/
+    }
+
 
     
 }

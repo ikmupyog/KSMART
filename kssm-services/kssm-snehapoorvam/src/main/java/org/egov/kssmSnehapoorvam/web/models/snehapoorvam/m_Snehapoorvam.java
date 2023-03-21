@@ -1,4 +1,4 @@
-package org.egov.kssmSnehapoorvam.web.models;
+package org.egov.kssmSnehapoorvam.web.models.snehapoorvam;
 
 
 

@@ -5,16 +5,11 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.egov.kssmSnehapoorvam.service.SnehapoorvamService;
 import org.egov.kssmSnehapoorvam.util.ResponseInfoFactory;
-import org.egov.kssmSnehapoorvam.web.models.SnehapoorvamRequest;
-import org.egov.kssmSnehapoorvam.web.models.SnehapoorvamResponse;
-import org.egov.kssmSnehapoorvam.web.models.m_Snehapoorvam;
-import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.SchoolSearchCriteria;
-import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.SnehapoorvamSchoolReg;
-import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.SnehapoorvamSearchRequest;
-import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.SnehapoorvamSearchResponse;
+import org.egov.kssmSnehapoorvam.web.models.snehapoorvam.SnehapoorvamRequest;
+import org.egov.kssmSnehapoorvam.web.models.snehapoorvam.SnehapoorvamResponse;
+import org.egov.kssmSnehapoorvam.web.models.snehapoorvam.m_Snehapoorvam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -80,19 +75,6 @@ public class SnehapoorvamController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/v1/Search")
-    public ResponseEntity<SnehapoorvamSearchResponse> searchSchoolCode(@RequestBody SnehapoorvamSearchRequest request,
-            @Valid @ModelAttribute SchoolSearchCriteria searchCriteria) {
-
-        List<SnehapoorvamSchoolReg> result = obService.searchSchoolCode(searchCriteria);
-
-        SnehapoorvamSearchResponse response = SnehapoorvamSearchResponse.builder()
-                .responseInfo(
-                        responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))
-                .SchoolDetails(result)
-                .build();
-        return ResponseEntity.ok(response);
-    }
-
+   
     
 }

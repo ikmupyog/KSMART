@@ -1,4 +1,4 @@
-package org.egov.kssmSnehapoorvam.web.models;
+package org.egov.kssmSnehapoorvam.web.models.snehapoorvam;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
