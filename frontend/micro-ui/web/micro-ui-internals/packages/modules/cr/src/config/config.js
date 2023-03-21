@@ -347,6 +347,27 @@ export const newConfig = [
     ],
   },
   {
+    head: "AbandonedBirth Routing",
+    body: [
+      {
+        type: "component",
+        route: "abandoned-child-details",
+        isMandatory: true,
+        component: "AbandonedChildDetails",
+        texts: {
+          headerCaption: "",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+        },
+        key: "AbandonedChildDetails",
+        withoutLabel: true,
+        nextStep: "abandoned-parents-details",
+        hideInEmployee: false,
+      },     
+    ],
+  },
+  {
     head: "Death Routing",
     body: [
       {

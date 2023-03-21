@@ -67,6 +67,8 @@ import BirthParentsAddress from "../src/pageComponents/adoptionComponents/BirthP
 import AdoptionStatisticalInformation from "../src/pageComponents/adoptionComponents/AdoptionStatisticalInformation";
 import AdoptionParentsAddress from "../src/pageComponents/adoptionComponents/AdoptionParentsAddress";
 
+// import AbandonedChildDetails from "../src/pageComponents/abandonedBirthComponents/AbandonedChildDetails";
+
 //@@@@@@DeathComponents@@@@@@@@@@@//
 import InformationDeath from "../src/pageComponents/deathComponents/InformationDeath";
 // import AddressOfDecesed from "./pageComponents/deathComponents/AddressOfDecesed";
@@ -137,6 +139,10 @@ import MarriageRegistration from "./pageComponents/marriageComponents/MarriageRe
 import HouseMarriageRegistration from "./pageComponents/marriageComponents/HouseMarriageRegistration";
 import witnessdetails from "./pageComponents/marriageComponents/witnessdetails";
 
+// import CreateAbandonedBirth from "./pages/employee/Abandoned-birth";
+import AbandonedChildDetails from "./pageComponents/abandonedBirthComponents/AbandonedChildDetails";
+
+
 export const CRModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
 
@@ -174,6 +180,11 @@ export const CRLinks = ({ matchPath, userType }) => {
     {
       link: `${matchPath}/cr-outsideindiabirth-creation`,
       i18nKey: t("CR_OUTSIDEINDIA_BIRTH_REGISTRATION"),
+      section:'birth'
+    },
+    {
+      link: `${matchPath}/cr-abandonedbirth-creation`,
+      i18nKey: t("CR_ABANDONED_BIRTH_REGISTRATION"),
       section:'birth'
     },
     {
@@ -332,6 +343,9 @@ const componentsToRegister = {
   CRDDocuments,
   CRWFApplicationTimeline,
   CRDWFApplicationTimeline,
+
+  // CreateAbandonedBirth,
+  AbandonedChildDetails,
   //Marriage
   CRCreateMarriageRegistration: CreateMarriageRegistration,
   GroomDetails,
@@ -341,6 +355,7 @@ const componentsToRegister = {
   MarriageRegistration,
   HouseMarriageRegistration,
   witnessdetails,
+
 };
 
 export const initCRComponents = () => {
