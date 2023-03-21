@@ -26,7 +26,7 @@ const BannerPicker = (props) => {
   return (
     <Banner
       message={GetActionMessage(props)}
-      applicationNumber={props.data?.ChildDetailsAdoption?.length>0?ChildDetailsAdoption[0]?.applicationNumber:null}
+      applicationNumber={props?.data?.ChildDetailsAdoption?.length>0?props?.data?.ChildDetailsAdoption[0]?.applicationNumber:null}
       info={props.isSuccess ? props.applicationNumber : ""}
       successful={props.isSuccess}
     />
