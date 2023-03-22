@@ -33,6 +33,7 @@ const App = () => {
   const MyCRApplications = Digit?.ComponentRegistryService?.getComponent('MyCRApplications');
   const MyCRDeathApplications = Digit?.ComponentRegistryService?.getComponent('MyCRDeathApplications');
   const CRBirthInclusions = Digit?.ComponentRegistryService?.getComponent('CRBirthInclusions');
+  const CRBirthInclusionEditPage = Digit?.ComponentRegistryService?.getComponent('CRBirthInclusionEditPage');
 
 
   // const getBackPageNumber = () => {
@@ -56,6 +57,7 @@ const App = () => {
       <AppContainer>
         <PrivateRoute path={`${path}/cr-birth-creation`} component={CreateBirthRegistration} />
         <PrivateRoute path={`${path}/cr-name-inclusion`} component={CRBirthInclusions} />
+        <PrivateRoute parentRoute={path} path={`${path}/birth-inclusion-edit`} component={CRBirthInclusionEditPage} />
         <PrivateRoute path={`${path}/cr-birth-nac`} component={CreateBirthNACRegistration} />
         <PrivateRoute path={`${path}/cr-adoption`} component={CreateAdoption} />
         <PrivateRoute path={`${path}/cr-stillbirth-creation`} component={CreateStillBirthRegistration} />
