@@ -319,20 +319,7 @@ const BornOutsidePresentOutsideIndia = ({ config, onSelect, userType, formData, 
             </div>
           </div>
 
-          <div>
-          <div className="row">
-            <div className="col-md-12" >
-              <div className="col-md-12" >
-                <CheckBox label={t("CR_RESIDENT_ADDRESS_AT_TIME_BIRTH_REG")} onChange={setSameAsPresent} value={isPrsentAddress} 
-                checked={isPrsentAddress} 
-                //disable={isDisableEdit}
-               
-                 />
-              </div>
-            </div>
-          </div>
-        </div>
-
+          
         </FormStep>
       </React.Fragment>
     );
