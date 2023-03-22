@@ -1,4 +1,4 @@
-package org.egov.kssmAswasakiranam.web.models;
+package org.egov.kssmAswasakiranam.web.models.Aswasakiranam;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
