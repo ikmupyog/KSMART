@@ -60,18 +60,9 @@ const Initiater = ({ config, onSelect, userType, formData,iseditDeath }) => {
   //   }
   // }
   function setSelectInitiatorAadhaar(e) {
-    if (e.target.value.length != 0) {
-      if (e.target.value.length > 12) {
-        return false;
-      } else if (e.target.value.length < 12) {
-        setInitiatorAadhaar(e.target.value);
-        return false;
-      } else {
-        setInitiatorAadhaar(e.target.value);
-      }
-    } else {
-      setInitiatorAadhaar(e.target.value);
-    }
+    if (e.target.value.trim().length >= 0) {
+      setInitiatorAadhaar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
+    } 
   }
   function setSelectInitiatorName(e) {
     if (e.target.value.length === 51) {
@@ -89,18 +80,9 @@ const Initiater = ({ config, onSelect, userType, formData,iseditDeath }) => {
   }
 
   function setSelectInitiatorMobile(e) {
-    if (e.target.value.length != 0) {
-      if (e.target.value.length > 10) {
-        return false;
-      } else if (e.target.value.length < 10) {
-        setInitiatorMobile(e.target.value);
-        return false;
-      } else {
-        setInitiatorMobile(e.target.value);
-      }
-    } else {
-      setInitiatorMobile(e.target.value);
-    }
+    if (e.target.value.trim().length >= 0) {
+      setInitiatorMobile(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
+    } 
   }
   function setSelectInitiatorAddress(e) {
     if (e.target.value.length === 251) {
@@ -232,8 +214,8 @@ const Initiater = ({ config, onSelect, userType, formData,iseditDeath }) => {
                 value={InitiatorAadhaar}
                 onChange={setSelectInitiatorAadhaar}
                 placeholder={`${t("CS_COMMON_AADHAAR")}`}
-                {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
-              />
+                {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                />
             </div>
 
             <div className="col-md-3">
@@ -269,7 +251,8 @@ const Initiater = ({ config, onSelect, userType, formData,iseditDeath }) => {
                 value={InitiatorMobile}
                 onChange={setSelectInitiatorMobile}
                 placeholder={`${t("CR_MOBILE_NO")}`}
-                {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "number", title: t("CR_INVALID_MOBILE_NO") })}
+                {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CR_INVALID_MOBILE_NO") })}
+
               />
             </div>
           </div>

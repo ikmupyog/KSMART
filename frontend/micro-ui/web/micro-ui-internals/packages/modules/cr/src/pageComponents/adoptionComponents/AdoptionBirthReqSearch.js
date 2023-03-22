@@ -7,13 +7,13 @@ const AdoptionBirthReqSearch = ({ BirthRegNo, setSelectSetBirthRegNo, setSearchR
   let tenantId = Digit.ULBService.getCurrentTenantId();
   let validation = "";
   let searchParams = {
-    applicationNumber: BirthRegNo,
+    applicationNumber: BirthRegNo ? BirthRegNo : "",
   };
-  const { data: { ChildDetails: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useSearch({
+  const { data: { ChildDetails: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useAdoptionSearch({
     tenantId,
     filters: searchParams,
   });
-  // console.log(searchResult);
+  // console.log(searchResult); KL-KOCHI-C-000214-CRBRNR-2023-APPL
   let birthReg = BirthRegNo ? searchResult : [];
   if (birthReg?.length > 0) {
     setSearchRegId(birthReg[0]);
