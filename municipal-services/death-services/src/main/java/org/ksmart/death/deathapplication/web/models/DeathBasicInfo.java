@@ -376,8 +376,8 @@ public class DeathBasicInfo {
    @JsonProperty("BurialDescription")
    private String burialDescription ;
 
-   //@Schema(type = "string", description= "Description of the person")
-   @JsonProperty("DeceasedDescription")
-   private String deceasedDescription ;
+
+
+
     
 }

@@ -36,7 +36,11 @@ public class DeathCorrectionDtls {
     private DeathCorrectionBasicInfo deathCorrectionBasicInfo;
 
    @JsonProperty("AddressBirthDetails")
-   private DeathAddressInfo deathCorrAddressInfo;    
+   private DeathAddressInfo deathCorrAddressInfo;   
+   
+   @JsonProperty("CorrectionDocuments")
+   @Valid
+   private List<DeathDocument> CorrectionDocuments = null;
 
    @JsonProperty("AuditDetails")
    private AuditDetails  deathCorrAuditDetails;
@@ -63,7 +67,7 @@ public class DeathCorrectionDtls {
    private String assignuser;
 
    @Size(max = 128)
-//    @Html
+//  @Html
    private String comment;
 
    @Valid

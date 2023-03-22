@@ -160,8 +160,9 @@ public class DeathApplnService {
                                         .build());
           List<DeathCorrectionDtls> searchResult = repository.getDeathCorrection(criteria,request.getRequestInfo());
          // System.out.println("JasmineSearchResult");
-          // validatorService.validateCorrectionUpdate(request, searchResult);
+           validatorService.validateCorrectionUpdate(request, searchResult);
          // mdmsValidator.validateMDMSData(request,mdmsData);
+
  
           enrichmentService.enrichUpdateCorrection(request);
           workflowIntegrator.callCorrectionWorkFlow(request);
@@ -190,8 +191,7 @@ public class DeathApplnService {
           enrichmentService.setAbandonedPresentAddress(request);
           enrichmentService.setAbandonedPermanentAddress(request);
           enrichmentService.enrichCreateAbandoned(request);
-          enrichmentService.setAbandonedACKNumber(request);         
-             
+          enrichmentService.setAbandonedACKNumber(request);            
           producer.push(deathConfig.getSaveDeathAbandonedTopic(), request);
           workflowIntegrator.callWorkFlowAbandoned(request);
           return request.getDeathAbandonedDtls();

@@ -7,6 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.List;
+
+import javax.validation.Valid;
 import javax.validation.constraints.Size;
 import org.springframework.validation.annotation.Validated;
 //@Schema(name = "Death Registration Request", description = "An Object holds the  data for death registration ")
@@ -388,6 +392,8 @@ public class DeathCorrectionBasicInfo {
    @JsonProperty("PermanentAddrCorrFlag")
    private boolean permanentAddrCorrFlag ;
 
-
+   // @JsonProperty("correctionDocuments")
+   // @Valid
+   // private List<DeathDocument> correctionDocuments = null;
 
 }

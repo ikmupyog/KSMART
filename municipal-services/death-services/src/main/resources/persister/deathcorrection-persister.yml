@@ -324,6 +324,38 @@ serviceMaps:
 
       - jsonPath: $.deathCorrection.*.AddressBirthDetails.isPrsentAddress
 
+    - query: INSERT INTO public.eg_death_document_dtls(  id ,tenantid,death_dtls_id ,document_type  ,
+          filestore_id ,filename ,death_ackno  ,active ,created_by ,createdtime ,lastmodifiedby ,lastmodifiedtime )
+          VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );
+     
+
+      basePath: deathCorrection.*.CorrectionDocuments.*
+      jsonMaps:
+      
+      - jsonPath: $.deathCorrection.*.CorrectionDocuments.*.Id
+
+      - jsonPath: $.deathCorrection.*.CorrectionDocuments.*.TenantId
+
+      - jsonPath: $.deathCorrection.*.CorrectionDocuments.*.Id
+
+      - jsonPath: $.deathCorrection.*.CorrectionDocuments.*.DocumentType
+
+      - jsonPath: $.deathCorrection.*.CorrectionDocuments.*.FileStoreId
+
+      - jsonPath: $.deathCorrection.*.CorrectionDocuments.*.FileName
+
+      - jsonPath: $.deathCorrection.*.CorrectionDocuments.*.DeathACKNo
+
+      - jsonPath: $.deathCorrection.*.CorrectionDocuments.*.Active
+
+      - jsonPath: $.deathCorrection[*][?({Id} in @.CorrectionDocuments[*].Id)].AuditDetails.createdBy
+
+      - jsonPath: $.deathCorrection[*][?({Id} in @.CorrectionDocuments[*].Id)].AuditDetails.createdTime
+
+      - jsonPath: $.deathCorrection[*][?({Id} in @.CorrectionDocuments[*].Id)].AuditDetails.lastModifiedBy
+
+      - jsonPath: $.deathCorrection[*][?({Id} in @.CorrectionDocuments[*].Id)].AuditDetails.lastModifiedTime      
+
   - version: 1.0
     description: Persists death correction form details in eg_death_dtls and eg_death_address_dtls  table by Jasmine ikm on 04.03.2023
     fromTopic: update-deathcorrection-topic

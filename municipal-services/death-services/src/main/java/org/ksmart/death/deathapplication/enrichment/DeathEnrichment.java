@@ -29,6 +29,7 @@ import org.ksmart.death.deathapplication.web.models.DeathBasicInfo;
 import org.ksmart.death.deathapplication.web.models.DeathCorrectionBasicInfo;
 import org.ksmart.death.deathapplication.web.models.DeathCorrectionDtls;
 import org.ksmart.death.deathapplication.web.models.DeathCorrectionRequest;
+import org.ksmart.death.deathapplication.web.models.DeathDocument;
 import org.ksmart.death.deathapplication.web.models.DeathStatisticalInfo;
 import org.ksmart.death.deathapplication.web.models.DeathInformantDtls;
 import org.ksmart.death.deathapplication.web.models.DeathInitiatorDtls;
@@ -504,7 +505,13 @@ public class DeathEnrichment implements BaseEnrichment{
                         deathdtls.getDeathCorrectionBasicInfo().setDeathACKNo(itr.next());
                         deathdtls.getDeathCorrectionBasicInfo().setAckNoID(deathApplnUtil.setSeqId(ackNoDetails));
                         deathdtls.getDeathCorrectionBasicInfo().setApplicationDate(currentTime);
- 
+                        List <DeathDocument> correctiondocument = deathdtls.getCorrectionDocuments();
+                        if (correctiondocument!=null){
+                            correctiondocument
+                            .forEach(document -> {
+                            document.setDeathACKNo(deathdtls.getDeathCorrectionBasicInfo().getDeathACKNo());
+                            });
+                        }
                     });
         }
 
@@ -514,6 +521,7 @@ public class DeathEnrichment implements BaseEnrichment{
             RequestInfo requestInfo = request.getRequestInfo();
             User userInfo = requestInfo.getUserInfo();
             AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
+
             request.getDeathCorrection()
                 .forEach(deathdtls -> {
                     deathdtls.getDeathCorrectionBasicInfo().setId(UUID.randomUUID().toString());
@@ -527,6 +535,17 @@ public class DeathEnrichment implements BaseEnrichment{
                     DeathCorrectionBasicInfo deathBasicEnc =  encryptionDecryptionUtil.encryptObject(deathBasicDtls, "BndDetail", DeathCorrectionBasicInfo.class);
                     deathBasicDtls.setDeceasedAadharNumber(deathBasicEnc.getDeceasedAadharNumber());
                     deathdtls.setDeathCorrAuditDetails(auditDetails);
+                    List <DeathDocument> correctiondocument = deathdtls.getCorrectionDocuments();
+                    if (correctiondocument!=null){
+                    correctiondocument
+                    .forEach(document -> {
+                        document.setId(UUID.randomUUID().toString());
+                        document.setActive(true);
+                        document.setTenantId(deathdtls.getDeathCorrectionBasicInfo().getTenantId());
+                        document.setDeathCorrectionId(deathdtls.getDeathCorrectionBasicInfo().getId());
+                        document.setDeathDocAuditDetails(auditDetails);
+                    });
+                }
                 });
         }  
 
