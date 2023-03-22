@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 public class SnehaswanthanamQueryBuilder extends BaseQueryBuilder {
 	
     private static final String QUERY = new StringBuilder()
-            .append(" select district, application_no, reg_no, application_date,applicant_nameeng")
+            .append(" select numkssmpensionerid ,district, application_no, reg_no, application_date,applicant_nameeng")
             .append( "  FROM tr_snehasanthwanam")
             .toString();
 

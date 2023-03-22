@@ -19,6 +19,7 @@ public class  SnehaswanthanamRowMapper implements ResultSetExtractor<List<m_Sneh
 
         while (rs.next()) {
             result.add(m_Snehaswanthanam.builder()
+                    .numkssmpensionerid(rs.getInt("numkssmpensionerid"))
                     .district(rs.getInt("district"))
                     .application_no(rs.getInt("application_no"))
                     .reg_no(rs.getInt("reg_no"))

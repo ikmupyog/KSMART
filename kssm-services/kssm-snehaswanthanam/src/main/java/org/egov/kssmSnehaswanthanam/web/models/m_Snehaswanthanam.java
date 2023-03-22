@@ -2,8 +2,8 @@ package org.egov.kssmSnehaswanthanam.web.models;
 
 
 
-import javax.validation.constraints.Size;
-import java.time.LocalDate;   
+
+import java.util.Date;
 
 import org.springframework.validation.annotation.Validated;
 
@@ -16,9 +16,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+
 
 @Schema(description = "A Object holds the basic data for Snehaswanthanam")
 @Validated
