@@ -6,13 +6,14 @@ import { convertToAdoptionRegistration } from "../../../utils";
 import getPDFData from "../../../utils/getTLAcknowledgementData";
 
 const GetActionMessage = (props) => {
+  console.log(props,props.isLoading);
   const { t } = useTranslation();
   if (props.isSuccess) {
     return t("CR_CREATE_SUCCESS_MSG");
-  } else if (props.isLoading) {
-    return !window.location.href.includes("renew-trade") || !window.location.href.includes("edit-application") ? t("CS_TRADE_APPLICATION_SUCCESS") : t("CS_TRADE_UPDATE_APPLICATION_PENDING");
-  } else if (!props.isSuccess) {
+  } else if (props.isError) {
     return t("CR_CREATE_APPLICATION_FAILED") ;
+  }else{
+      return t("CR_CREATE_APPLICATION_PENDING");
   }
 };
 const rowContainerStyle = {
@@ -22,12 +23,14 @@ const rowContainerStyle = {
 
 const BannerPicker = (props) => {
   // console.log(JSON.stringify(props));
+  // console.log(props);
   return (
     <Banner
       message={GetActionMessage(props)}
-      applicationNumber={props.data?.ChildDetails[0]?.applicationNumber}
+      applicationNumber={props?.data?.ChildDetailsAdoption?.length>0?props?.data?.ChildDetailsAdoption[0]?.applicationNumber:null}
       info={props.isSuccess ? props.applicationNumber : ""}
       successful={props.isSuccess}
+      error={props.isError}
     />
   );
 };
@@ -42,6 +45,8 @@ const AdoptionAcknowledgement = ({ data, onSuccess,userType,isEditBirth=false })
     data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
     isRenewTrade
   );
+  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_CREATE_ADOPTION_REG", {});
+  // 
   // const mutation = Digit.Hooks.cr.useCivilRegistrationAPI(
   //   data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
   //   isRenewTrade
@@ -61,7 +66,9 @@ const AdoptionAcknowledgement = ({ data, onSuccess,userType,isEditBirth=false })
 //  const { isLoading, data: fydata = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "egf-master", "FinancialYear");
   //let isDirectRenewal = sessionStorage.getItem("isDirectRenewal") ? stringToBoolean(sessionStorage.getItem("isDirectRenewal")) : null;
   const [isInitialRender, setIsInitialRender] = useState(true);
-
+  useEffect(()=>{
+    clearParams()
+  },[mutation?.data])
   useEffect(() => {
     if (isInitialRender) {
     // const onSuccessedit = () => {
@@ -208,10 +215,11 @@ if(mutation.isSuccess && mutation?.isError===null){
     </Card>
   );
 } else {
+  console.log(mutation);
   return(
 
     <Card>
-    <BannerPicker t={t} data={mutation.data } isSuccess={mutation.isSuccess } isLoading={mutation?.isLoading } />
+    <BannerPicker t={t} data={mutation.data } isSuccess={mutation.isSuccess } isLoading={mutation?.isLoading } isError={mutation?.isError}/>
     {/* {<CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>} */}
     <Link to={`/digit-ui/citizen`}>
       <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />

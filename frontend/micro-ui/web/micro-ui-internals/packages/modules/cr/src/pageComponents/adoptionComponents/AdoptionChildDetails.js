@@ -867,74 +867,68 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
         setplaceTypepEnError(false);
       }
     }
-    if (birthWeight != null || birthWeight != "" || birthWeight != undefined) {
-      let BirthWeightCheck = birthWeight;
-      if (BirthWeightCheck < 0.25 || BirthWeightCheck > 10) {
-        validFlag = false;
-        setBirthWeightError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setBirthWeightError(false);
-      }
-    }
-    else {
-      setBirthWeightError(true);
-      validFlag = false;
-      setBirthWeightError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    }
-    if (medicalAttensionSub == null || medicalAttensionSub == "" || medicalAttensionSub == undefined) {
-      validFlag = false;
-      setMedicalAttensionSubStError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      setMedicalAttensionSubStError(false);
-    }
-    if (pregnancyDuration == null || pregnancyDuration == "" || pregnancyDuration == undefined) {
-      validFlag = false;
-      setPregnancyDurationStError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      if (pregnancyDuration < 20 || pregnancyDuration > 44) {
-        validFlag = false;
-        setPregnancyDurationInvalidError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setPregnancyDurationStError(false);
-        setPregnancyDurationInvalidError(false);
-      }
-    }
-    if (deliveryMethods == null || deliveryMethods == "" || deliveryMethods == undefined) {
-      validFlag = false;
-      setDeliveryMethodStError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      setDeliveryMethodStError(false);
-    }
-    // AdoptionDecreOrderNo,
-    // AdoptionDecreOrderDate
-    // IssuingAuthority,
-    // AdoptionDeedNo
-    // AdoptionDeedRegDate
-    // RegistrationAuthority
+    // if (birthWeight != null || birthWeight != "" || birthWeight != undefined) {
+    //   let BirthWeightCheck = birthWeight;
+    //   if (BirthWeightCheck < 0.25 || BirthWeightCheck > 10) {
+    //     validFlag = false;
+    //     setBirthWeightError(true);
+    //     setToast(true);
+    //     setTimeout(() => {
+    //       setToast(false);
+    //     }, 2000);
+    //   } else {
+    //     setBirthWeightError(false);
+    //   }
+    // }
+    // else {
+    //   setBirthWeightError(true);
+    //   validFlag = false;
+    //   setBirthWeightError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 2000);
+    // }
+    // if (medicalAttensionSub == null || medicalAttensionSub == "" || medicalAttensionSub == undefined) {
+    //   validFlag = false;
+    //   setMedicalAttensionSubStError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 2000);
+    // } else {
+    //   setMedicalAttensionSubStError(false);
+    // }
+    // if (pregnancyDuration == null || pregnancyDuration == "" || pregnancyDuration == undefined) {
+    //   validFlag = false;
+    //   setPregnancyDurationStError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 2000);
+    // } else {
+    //   if (pregnancyDuration < 20 || pregnancyDuration > 44) {
+    //     validFlag = false;
+    //     setPregnancyDurationInvalidError(true);
+    //     setToast(true);
+    //     setTimeout(() => {
+    //       setToast(false);
+    //     }, 2000);
+    //   } else {
+    //     setPregnancyDurationStError(false);
+    //     setPregnancyDurationInvalidError(false);
+    //   }
+    // }
+    // if (deliveryMethods == null || deliveryMethods == "" || deliveryMethods == undefined) {
+    //   validFlag = false;
+    //   setDeliveryMethodStError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 2000);
+    // } else {
+    //   setDeliveryMethodStError(false);
+    // }
     if(AdoptionDecreOrderNo == "" && AdoptionDeedNo == ""){
       validFlag = false;
       setAdoptionDecreErr(true)
@@ -1077,7 +1071,8 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
           || (value === "PUBLIC_PLACES" ? (!publicPlaceType || !wardNo || localityNameEn === "" || localityNameMl === "") : false)
           || (value === "VEHICLE" ? (!vehicleType || vehicleRegistrationNo === "" || vehicleHaltPlace === ""
             || !setadmittedHospitalEn || !wardNo || vehicleDesDetailsEn === "") : false)
-          || !medicalAttensionSub || !deliveryMethods || birthWeight == null || pregnancyDuration === ""}>
+          // || !medicalAttensionSub || !deliveryMethods || birthWeight == null || pregnancyDuration === ""
+        }>
              <div className="row">
             <div className="col-md-12">
               <div className="col-md-6">
@@ -1759,7 +1754,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
             <CheckBox label={t("CR_MULTIPLE_BIRTH")} onChange={setMultipleBirth} value={isMultipleBirth} checked={isMultipleBirth} />
           </div>
         </div> */}
-          <div className="row">
+          {/* <div className="row">
             <div className="col-md-12">
               <div className="col-md-12">
                 <h1 className="headingh1">
@@ -1767,8 +1762,8 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
                 </h1>
               </div>
             </div>
-          </div>
-          <div className="row">
+          </div> */}
+          {/* <div className="row">
             <div className="col-md-12">
               <div className="col-md-3">
                 <CardLabel>
@@ -1783,20 +1778,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
                   placeholder={`${t("CR_NATURE_OF_MEDICAL_ATTENTION")}`}
                 />
               </div>
-              {/* <div className="col-md-3">
-                <CardLabel>
-                  {`${t("CR_PREGNANCY_DURATION")}`} <span className="mandatorycss">*</span>
-                </CardLabel>
-                <Dropdown
-                  t={t}
-                  optionKey="i18nKey"
-                  isMandatory={false}
-                  option={cmbPregWeek}
-                  selected={pregnancyDuration}
-                  select={setSelectPregnancyDuration}
-                  placeholder={`${t("CR_PREGNANCY_DURATION")}`}
-                />
-              </div> */}
+            \
               <div className="col-md-3">
                 <CardLabel>{`${t("CR_PREGNANCY_DURATION")}`}</CardLabel>
                 <TextInput
@@ -1847,7 +1829,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
                 />
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-6">
