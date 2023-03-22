@@ -132,7 +132,9 @@ import CRDocuments from "./pageComponents/birthComponents/CRDocuments";
 import CRDDocuments from "./pageComponents/deathComponents/CRDDocuments";
 import CRWFApplicationTimeline from "./pageComponents/birthComponents/CRWFApplicationTimeline";
 import CRDWFApplicationTimeline from "./pageComponents/deathComponents/CRDWFApplicationTimeline";
-
+import DeathInclusion from "./pages/citizen/DeathInclusion";
+import SearchDeathInclusion from "./components/SearchDeathInclusion";
+import DeathInclusionPage from "./pageComponents/deathComponents/DeathInclusionPage";
 
 import CreateMarriageRegistration from "./pages/citizen/MarriageRegistration";
 import GroomDetails from "./pageComponents/marriageComponents/GroomDetails";
@@ -231,7 +233,7 @@ const componentsToRegister = {
   CRDeathApplicationDetails,
   CRApplicationDetails,
   CRApplicationDeathDetails,
-  CRSearch,
+  SearchDeathInclusion,
   CRDeathsearch,
   SearchCrApplication,
   SearchRegistryDeath,
@@ -296,7 +298,7 @@ const componentsToRegister = {
   BirthParentsAddress,
   AdoptionStatisticalInformation,
   AdoptionParentsAddress,
-
+  CRDeathInclusionsPage:DeathInclusionPage,
   //////////////////
   CRDeathcorrection,
   CRSearchdeathcorrection,
@@ -320,6 +322,8 @@ const componentsToRegister = {
   Hospital,
   DeathPublicPlace,
   DeathOutsideJurisdiction,
+  CRDeathInclusions:DeathInclusion,
+  SearchDeathInclusion:
   Informer,
   Initiater,
   // DeathCertificate,
