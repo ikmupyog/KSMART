@@ -354,9 +354,39 @@ public class DeathCorrectionBasicInfo {
     @JsonProperty("DocumentFileStoreId")
     private String documentFileStoreId ;
 
-    
     @JsonProperty("funcionUID")
     private String funcionUID;
+
+    //Jasmine 18.03.2023
+   @JsonProperty("AadharCorrFlag")
+   private boolean aadharCorrFlag;
+
+   @JsonProperty("NameCorrFlag")
+   private boolean nameCorrFlag ;
+
+   @JsonProperty("DeathDateCorrFlag")
+   private boolean deathDateCorrFlag ;
+
+   @JsonProperty("DeathPlaceCorrFlag")
+   private boolean deathPlaceCorrFlag ;
+
+   @JsonProperty("GenderCorrFlag")
+   private boolean genderCorrFlag ;
+
+   @JsonProperty("MotherCorrFlag")
+   private boolean motherCorrFlag ;
+
+   @JsonProperty("FatherCorrFlag")
+   private boolean fatherCorrFlag ;
+
+   @JsonProperty("SpouseCorrFlag")
+   private boolean spouseCorrFlag ;
+
+   @JsonProperty("PresentAddrCorrFlag")
+   private boolean presentAddrCorrFlag ;
+
+   @JsonProperty("PermanentAddrCorrFlag")
+   private boolean permanentAddrCorrFlag ;
 
 
 
