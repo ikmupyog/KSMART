@@ -90,5 +90,15 @@ public class DeathConfiguration {
   
     @Value("${egov.idgen.path}")
     private String idGenPath;
+
+    //Rakhi S on 21.03.2023
+    @Value("${egov.billingservice.host}")
+    private String billingHost;
+
+    @Value("${egov.bill.gen.endpoint}")
+    private String fetchBillEndpoint;
+
+    @Value("${egov.demand.create.endpoint}")
+    private String demandCreateEndpoint;
     
 }

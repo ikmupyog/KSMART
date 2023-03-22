@@ -31,10 +31,14 @@ import org.ksmart.death.deathapplication.web.models.DeathCorrectionDtls;
 import org.ksmart.death.deathapplication.web.models.DeathCorrectionRequest;
 import org.ksmart.death.deathapplication.web.models.DeathDocument;
 import org.ksmart.death.deathapplication.web.models.DeathStatisticalInfo;
+import org.ksmart.death.deathapplication.web.models.Demand.Demand;
+import org.ksmart.death.deathapplication.web.models.Demand.DemandRequest;
+import org.ksmart.death.deathapplication.web.models.Demand.DemandResponse;
 import org.ksmart.death.deathapplication.web.models.DeathInformantDtls;
 import org.ksmart.death.deathapplication.web.models.DeathInitiatorDtls;
 import org.ksmart.death.common.contract.EncryptionDecryptionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.ksmart.death.deathapplication.config.DeathConfiguration; 
 import org.ksmart.death.common.repository.IdGenRepository;
@@ -42,10 +46,7 @@ import org.ksmart.death.deathapplication.util.DeathApplicationUtil;
 //import org.ksmart.death.deathapplication.repository.IdGenRepository;
 //import org.ksmart.death.deathapplication.web.models.idgen.IdResponse;
 
-	
-
-
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
 
 import lombok.extern.slf4j.Slf4j;
@@ -58,9 +59,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 public class DeathEnrichment implements BaseEnrichment{
+
+    //Rakhi S on 21.03.2023
+    @Autowired
+	@Qualifier("objectMapperBnd")
+	private ObjectMapper mapper;
+
     // //Jasmine 16.02.2023
      private IDGenerator idGenerator;
-   //  private DeathApplicationUtil deathApplnUtil;
 
     //Rakhi S on 08.02.2023
     @Autowired
@@ -89,7 +95,6 @@ public class DeathEnrichment implements BaseEnrichment{
     public DeathEnrichment( IDGenerator idGenerator) {
 
         this.idGenerator = idGenerator;
-       // this.deathApplnUtil = deathApplnUtil;
     }
 
     //Rakhi S on 08.02.2023
@@ -798,5 +803,19 @@ public class DeathEnrichment implements BaseEnrichment{
                     deathDtls.setDeathAuditDetails(auditDetails);
                 } );        
         }//UPDATE END
-
+    //RAkhi S on 21.03.2023 Demand Save
+    public List<Demand> saveDemand(RequestInfo requestInfo, List<Demand> demands){
+        StringBuilder url = new StringBuilder(config.getBillingHost());
+        url.append(config.getDemandCreateEndpoint());
+        DemandRequest request = new DemandRequest(requestInfo,demands);
+        Object result = serviceRequestRepository.fetchResult(url,request);
+        DemandResponse response = null;
+        try{
+            response = mapper.convertValue(result,DemandResponse.class);
+        }
+        catch(IllegalArgumentException e){
+            throw new CustomException("PARSING ERROR","Failed to parse response of create demand");
+        }
+        return response.getDemands();
+    }
 }
