@@ -202,14 +202,14 @@ const HouseMarriageRegistration = ({ config, onSelect, userType, formData,isEdit
     console.log("LBType" + cmbLBType);
   }
  
-  function setSelectmarriageLocalityEn(value) {
+  function setSelectmarriageLocalityEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
       setmarriageLocalityEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
     // setmarriageLocalityEn(value);
     // setAgeMariageStatus(value.code);
   }
-  function setSelectmarriageLocalityMal(value) {
+  function setSelectmarriageLocalityMal(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
@@ -220,14 +220,14 @@ const HouseMarriageRegistration = ({ config, onSelect, userType, formData,isEdit
     // setmarriageLocalityMal(value);
     // setAgeMariageStatus(value.code);
   }
-  function setSelectmarriageStreetEn(value) {
+  function setSelectmarriageStreetEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
       setmarriageStreetEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
     // setmarriageStreetEn(value);
     // setAgeMariageStatus(value.code);
   }
-  function setSelectmarriageStreetMal(value) {
+  function setSelectmarriageStreetMal(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
@@ -238,14 +238,14 @@ const HouseMarriageRegistration = ({ config, onSelect, userType, formData,isEdit
     // setmarriageStreetMal(value);
     // setAgeMariageStatus(value.code);
   }
-  function setSelectmarriageHouseNoAndNameEn(value) {
+  function setSelectmarriageHouseNoAndNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
       setmarriageHouseNoAndNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
     // setmarriageHouseNoAndNameEn(value);
     // setAgeMariageStatus(value.code);
   }
-  function setSelectmarriageHouseNoAndNameMal(value) {
+  function setSelectmarriageHouseNoAndNameMal(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
@@ -518,7 +518,7 @@ const HouseMarriageRegistration = ({ config, onSelect, userType, formData,isEdit
             <div className="col-md-3">
               <CardLabel>
                 {`${t("CR_STREET_EN")}`}
-                <span className="mandatorycss">*</span>
+                {/* <span className="mandatorycss">*</span> */}
               </CardLabel>
               <TextInput
                 t={t}
@@ -530,7 +530,7 @@ const HouseMarriageRegistration = ({ config, onSelect, userType, formData,isEdit
                 onChange={setSelectmarriageStreetEn}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_STREET_EN")}`}
-                {...(validation = { isRequired: true, title: t("CS_INVALID_STREET_EN") })}
+                {...(validation = { isRequired: false, title: t("CS_INVALID_STREET_EN") })}
               />
             </div>
             <div className="col-md-3">
@@ -554,7 +554,7 @@ const HouseMarriageRegistration = ({ config, onSelect, userType, formData,isEdit
             <div className="col-md-3">
               <CardLabel>
                 {`${t("CR_LANDMARK")}`}
-                <span className="mandatorycss">*</span>
+                {/* <span className="mandatorycss">*</span> */}
               </CardLabel>
               
               <TextInput
@@ -567,7 +567,7 @@ const HouseMarriageRegistration = ({ config, onSelect, userType, formData,isEdit
                 onChange={setSelectmarriageLandmark}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_LANDMARK")}`}
-                {...(validation = { isRequired: true, title: t("CS_INVALID_LANDMARK") })}
+                {...(validation = { isRequired: false, title: t("CS_INVALID_LANDMARK") })}
               />
             </div>
           </div>
@@ -598,7 +598,7 @@ const HouseMarriageRegistration = ({ config, onSelect, userType, formData,isEdit
             <div className="col-md-3">
               <CardLabel>
                 {`${t("CR_STREET_MAL")}`}
-                <span className="mandatorycss">*</span>
+                {/* <span className="mandatorycss">*</span> */}
               </CardLabel>
               <TextInput
                 t={t}
@@ -612,7 +612,7 @@ const HouseMarriageRegistration = ({ config, onSelect, userType, formData,isEdit
                  isMandatory={false}
                 placeholder={`${t("CR_STREET_MAL")}`}
                 {...(validation = {  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                isRequired: true,
+                isRequired: false,
                 type: "text", title: t("CS_INVALID_STREET_MAL") })}
               />
             </div>

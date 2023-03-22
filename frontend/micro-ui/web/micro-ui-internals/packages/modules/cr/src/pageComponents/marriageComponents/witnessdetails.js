@@ -428,6 +428,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData,isEditWitness }) 
                 t={t}
                 type={"text"}
                 optionKey="i18nKey"
+                isMandatory={false}
                 name="witness1AdharNo"
                 value={witness1AdharNo}
                 onChange={setSelectwitness1AdharNo}
@@ -436,7 +437,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData,isEditWitness }) 
                 inputProps={{
                   maxLength: 12,
                 }}
-                {...(validation = { pattern: "^[0-9]{12}$", isRequired: false, type: "number", title: t("CR_INVALID_WITNESS1_ADHAR_NO") })}
+                {...(validation = { pattern: "^[0-9]{12}$", isRequired: true, type: "number", title: t("CR_INVALID_WITNESS1_ADHAR_NO") })}
               />
             </div>
             <div className="col-md-4">
@@ -448,10 +449,12 @@ const WitnessDetails = ({ config, onSelect, userType, formData,isEditWitness }) 
                 t={t}
                 type={"text"}
                 optionKey="i18nKey"
+                isMandatory={false}
                 name="witness1NameEn"
                 onChange={setSelectwitness1NameEn}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_WITNESS1_NAME")}`}
+                {...(validation = { isRequired: true, title: t("CS_INVALID_NAME") })}
               />
             </div>
             <div className="col-md-4">
@@ -463,10 +466,12 @@ const WitnessDetails = ({ config, onSelect, userType, formData,isEditWitness }) 
                 t={t}
                 type={"text"}
                 optionKey="i18nKey"
+                isMandatory={false}
                 name="witness1Age"
                 onChange={setSelectwitness1Age}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_WITNESS1_AGE")}`}
+                {...(validation = { isRequired: true, title: t("CS_INVALID_AGE") })}
               />
             </div>
           </div>
@@ -480,10 +485,12 @@ const WitnessDetails = ({ config, onSelect, userType, formData,isEditWitness }) 
                 t={t}
                 type={"text"}
                 optionKey="i18nKey"
+                isMandatory={false}
                 name="witness1AddresSEn"
                 onChange={setSelectwitness1AddresSEn}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_WITNESS1_ADDRESS")}`}
+                {...(validation = { isRequired: true, title: t("CS_INVALID_ADDRESS") })}
               />
             </div>
 
@@ -496,11 +503,13 @@ const WitnessDetails = ({ config, onSelect, userType, formData,isEditWitness }) 
                 t={t}
                 type={"text"}
                 optionKey="i18nKey"
+                isMandatory={false}
                 name="witness1Mobile"
                 value={witness1Mobile}
                 onChange={setSelectwitness1Mobile}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_WITNESS1_MOBILE_NO")}`}
+                {...(validation = { isRequired: true, title: t("CS_INVALID_MOBILE_NO") })}
               />
             </div>
           </div>
@@ -520,6 +529,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData,isEditWitness }) 
                
                 type={"number"}
                 optionKey="i18nKey"
+                isMandatory={false}
                 name="witness2AdharNo"
                 value={witness2AdharNo}
                 onChange={setSelectwitness2AdharNo}
@@ -528,7 +538,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData,isEditWitness }) 
                 inputProps={{
                   maxLength: 12,
                 }}
-                {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
               />
             </div>
             <div className="col-md-4">
@@ -540,10 +550,12 @@ const WitnessDetails = ({ config, onSelect, userType, formData,isEditWitness }) 
                 t={t}
                 type={"text"}
                 optionKey="i18nKey"
+                isMandatory={false}
                 name="witness2NameEn"
                 onChange={setSelectwitness2NameEn}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_WITNESS2_NAME")}`}
+                {...(validation = { isRequired: true, title: t("CS_INVALID_NAME") })}
               />
             </div>
             <div className="col-md-4">
@@ -554,11 +566,13 @@ const WitnessDetails = ({ config, onSelect, userType, formData,isEditWitness }) 
               <TextInput
                 t={t}
                 type={"text"}
+                isMandatory={false}
                 optionKey="i18nKey"
                 name="witness2Age"
                 onChange={setSelectwitness2Age}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_WITNESS2_AGE")}`}
+                {...(validation = { isRequired: true, title: t("CS_INVALID_AGE") })}
               />
             </div>
           </div>
@@ -572,10 +586,12 @@ const WitnessDetails = ({ config, onSelect, userType, formData,isEditWitness }) 
                 t={t}
                 type={"text"}
                 optionKey="i18nKey"
+                isMandatory={false}
                 name="witness2AddresSEn"
                 onChange={setSelectwitness2AddresSEn}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_WITNESS2_ADDRESS")}`}
+                {...(validation = { isRequired: true, title: t("CS_INVALID_ADDRESS") })}
               />
             </div>
 
@@ -588,11 +604,13 @@ const WitnessDetails = ({ config, onSelect, userType, formData,isEditWitness }) 
                 t={t}
                 type={"text"}
                 optionKey="i18nKey"
+                isMandatory={false}
                 name="witness2Mobile"
                 value={witness2Mobile}
                 onChange={setSelectwitness2Mobile}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_WITNESS2_MOBILE_NO")}`}
+                {...(validation = { isRequired: true, title: t("CS_INVALID_MOBILE_NO") })}
               />
             </div>
           </div>
