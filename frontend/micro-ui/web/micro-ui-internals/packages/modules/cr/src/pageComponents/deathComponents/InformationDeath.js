@@ -505,14 +505,15 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
       let Difference_In_Time = today.getTime() - deathDate.getTime();
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       Difference_In_DaysRounded = Math.floor(Difference_In_Days);
-    } else {
-      setFromDate(null);
-      setDOBError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 3000);
-    }
+    } 
+    // else {
+    //   setFromDate(null);
+    //   setDOBError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 3000);
+    // }
   }
   function selectToDate(value) {
     setToDate(value);
@@ -533,14 +534,15 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
         let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
         Difference_In_DaysRounded = Math.floor(Difference_In_Days);
       }
-    } else {
-      setToDate(null);
-      setDOBError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 3000);
-    }
+    } 
+    // else {
+    //   setToDate(null);
+    //   setDOBError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 3000);
+    // }
   }
 
   // function selectToDate(value) {
@@ -570,14 +572,16 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
       let Difference_In_Time = today.getTime() - deathDate.getTime();
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       Difference_In_DaysRounded = Math.floor(Difference_In_Days);
-    } else {
-      setDateOfDeath(null);
-      setDOBError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 3000);
-    }
+    } 
+    // else {
+    //   setDateOfDeath(null);
+    //   setDOBError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 3000);
+    // }
+
   }
   function selectReligion(value) {
     setSelectedReligion(value);
@@ -1299,6 +1303,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                     </CardLabel>
                     <DatePicker
                       date={FromDate}
+                      max={convertEpochToDate(new Date())}
                       name="FromDate"
                       onChange={selectFromDate}
                       {...(validation = {
@@ -1321,6 +1326,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                     </CardLabel>
                     <DatePicker
                       date={ToDate}
+                      max={convertEpochToDate(new Date())}
                       name="ToDate"
                       onChange={selectToDate}
                       {...(validation = {
@@ -1349,6 +1355,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                     {/* date={CommencementDate} */}
                     <DatePicker
                       date={DateOfDeath}
+                      max={convertEpochToDate(new Date())}
                       name="DateOfDeath"
                       onChange={selectDeathDate}
                       {...(validation = {

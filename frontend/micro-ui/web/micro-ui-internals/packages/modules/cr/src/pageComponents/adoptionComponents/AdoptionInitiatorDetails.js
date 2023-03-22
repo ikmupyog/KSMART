@@ -10,33 +10,33 @@ const AdoptionInitiatorDetails = ({ config, onSelect, userType, formData,isEditB
   // console.log(Digit.UserService.getUser().info);
   const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
   const {name:name,} =Digit.UserService.getUser().info ; // window.localStorage.getItem("user-info");
-  const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.InitiatorinfoDetails?.isInitiatorDeclaration : formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration : false);
-  const [isCaretaker, setIsCaretaker] = useState(formData?.InitiatorinfoDetails?.isCaretaker ? formData?.InitiatorinfoDetails?.isCaretaker : formData?.ChildDetails?.InitiatorinfoDetails?.isCaretaker ? formData?.ChildDetails?.InitiatorinfoDetails?.isCaretaker : false);
-  const [relation, setrelation] = useState(formData?.InitiatorinfoDetails?.relation ? formData?.InitiatorinfoDetails?.relation : formData?.ChildDetails?.InitiatorinfoDetails?.relation ? formData?.ChildDetails?.InitiatorinfoDetails?.relation : "");
-  const [initiatorNameEn, setinitiatorNameEn] = useState(formData?.InitiatorinfoDetails?.initiatorNameEn ? formData?.InitiatorinfoDetails?.initiatorNameEn : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorNameEn ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorNameEn : name);
-  const [initiatorAadhar, setinitiatorAadhar] = useState(formData?.InitiatorinfoDetails?.initiatorAadhar ? formData?.InitiatorinfoDetails?.initiatorAadhar : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAadhar ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAadhar : "");
-  const [initiatorMobile, setinitiatorMobile] = useState(formData?.InitiatorinfoDetails?.initiatorMobile ? formData?.InitiatorinfoDetails?.initiatorMobile : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorMobile ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorMobile : "");
-  const [initiatorDesi, setinitiatorDesi] = useState(formData?.InitiatorinfoDetails?.initiatorDesi ? formData?.InitiatorinfoDetails?.initiatorDesi : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorDesi ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorDesi : "");
-  const [initiatorAddress, setinitiatorAddress] = useState(formData?.InitiatorinfoDetails?.initiatorAddress ? formData?.InitiatorinfoDetails?.initiatorAddress : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAddress ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAddress : "");
+  const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.AdoptionInitiatorDetails?.isInitiatorDeclaration ? formData?.AdoptionInitiatorDetails?.isInitiatorDeclaration : formData?.ChildDetails?.AdoptionInitiatorDetails?.isInitiatorDeclaration ? formData?.ChildDetails?.AdoptionInitiatorDetails?.isInitiatorDeclaration : false);
+  const [isCaretaker, setIsCaretaker] = useState(formData?.AdoptionInitiatorDetails?.isCaretaker ? formData?.AdoptionInitiatorDetails?.isCaretaker : formData?.ChildDetails?.AdoptionInitiatorDetails?.isCaretaker ? formData?.ChildDetails?.AdoptionInitiatorDetails?.isCaretaker : false);
+  const [relation, setrelation] = useState(formData?.AdoptionInitiatorDetails?.relation ? formData?.AdoptionInitiatorDetails?.relation : formData?.ChildDetails?.AdoptionInitiatorDetails?.relation ? formData?.ChildDetails?.AdoptionInitiatorDetails?.relation : "");
+  const [initiatorNameEn, setinitiatorNameEn] = useState(formData?.AdoptionInitiatorDetails?.initiatorNameEn ? formData?.AdoptionInitiatorDetails?.initiatorNameEn : formData?.ChildDetails?.AdoptionInitiatorDetails?.initiatorNameEn ? formData?.ChildDetails?.AdoptionInitiatorDetails?.initiatorNameEn : name);
+  const [initiatorAadhar, setinitiatorAadhar] = useState(formData?.AdoptionInitiatorDetails?.initiatorAadhar ? formData?.AdoptionInitiatorDetails?.initiatorAadhar : formData?.ChildDetails?.AdoptionInitiatorDetails?.initiatorAadhar ? formData?.ChildDetails?.AdoptionInitiatorDetails?.initiatorAadhar : "");
+  const [initiatorMobile, setinitiatorMobile] = useState(formData?.AdoptionInitiatorDetails?.initiatorMobile ? formData?.AdoptionInitiatorDetails?.initiatorMobile : formData?.ChildDetails?.AdoptionInitiatorDetails?.initiatorMobile ? formData?.ChildDetails?.AdoptionInitiatorDetails?.initiatorMobile : "");
+  const [initiatorDesi, setinitiatorDesi] = useState(formData?.AdoptionInitiatorDetails?.initiatorDesi ? formData?.AdoptionInitiatorDetails?.initiatorDesi : formData?.ChildDetails?.AdoptionInitiatorDetails?.initiatorDesi ? formData?.ChildDetails?.AdoptionInitiatorDetails?.initiatorDesi : "");
+  const [initiatorAddress, setinitiatorAddress] = useState(formData?.AdoptionInitiatorDetails?.initiatorAddress ? formData?.AdoptionInitiatorDetails?.initiatorAddress : formData?.ChildDetails?.AdoptionInitiatorDetails?.initiatorAddress ? formData?.ChildDetails?.AdoptionInitiatorDetails?.initiatorAddress : "");
   const [isInitialRender, setIsInitialRender] = useState(true);
 
   const [toast, setToast] = useState(false);
-  const [infomantFirstNmeEnError, setinfomantFirstNmeEnError] = useState(formData?.InitiatorinfoDetails?.initiatorNameEn ? false : false);
-  const [initiatorAadharError, setinitiatorAadharError] = useState(formData?.InitiatorinfoDetails?.initiatorAadhar ? false : false);
-  const [initiatorMobileError, setinitiatorMobileError] = useState(formData?.InitiatorinfoDetails?.initiatorMobile ? false : false);
-  const [initiatorDesiError, setinitiatorDesiError] = useState(formData?.InitiatorinfoDetails?.initiatorDesi ? false : false);
+  const [infomantFirstNmeEnError, setinfomantFirstNmeEnError] = useState(formData?.AdoptionInitiatorDetails?.initiatorNameEn ? false : false);
+  const [initiatorAadharError, setinitiatorAadharError] = useState(formData?.AdoptionInitiatorDetails?.initiatorAadhar ? false : false);
+  const [initiatorMobileError, setinitiatorMobileError] = useState(formData?.AdoptionInitiatorDetails?.initiatorMobile ? false : false);
+  const [initiatorDesiError, setinitiatorDesiError] = useState(formData?.AdoptionInitiatorDetails?.initiatorDesi ? false : false);
 
   const onSkip = () => onSelect();
 
   useEffect(() => {
     if (isInitialRender) {
-      if (formData?.InitiatorinfoDetails?.isInitiatorDeclaration != null) {
+      if (formData?.AdoptionInitiatorDetails?.isInitiatorDeclaration != null) {
         setIsInitialRender(false);
-        setisInitiatorDeclaration(formData?.InitiatorinfoDetails?.isInitiatorDeclaration);
+        setisInitiatorDeclaration(formData?.AdoptionInitiatorDetails?.isInitiatorDeclaration);
       }
-      if (formData?.InitiatorinfoDetails?.isCaretaker != null) {
+      if (formData?.AdoptionInitiatorDetails?.isCaretaker != null) {
         setIsInitialRender(false);
-        setIsCaretaker(formData?.InitiatorinfoDetails?.isCaretaker);
+        setIsCaretaker(formData?.AdoptionInitiatorDetails?.isCaretaker);
       }
     }
   }, [isInitialRender]);

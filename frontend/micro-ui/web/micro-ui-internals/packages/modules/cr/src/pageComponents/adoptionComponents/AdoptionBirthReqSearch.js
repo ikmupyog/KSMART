@@ -13,7 +13,7 @@ const AdoptionBirthReqSearch = ({ BirthRegNo, setSelectSetBirthRegNo, setSearchR
     tenantId,
     filters: searchParams,
   });
-  // console.log(searchResult);
+  // console.log(searchResult); KL-KOCHI-C-000214-CRBRNR-2023-APPL
   let birthReg = BirthRegNo ? searchResult : [];
   if (birthReg?.length > 0) {
     setSearchRegId(birthReg[0]);

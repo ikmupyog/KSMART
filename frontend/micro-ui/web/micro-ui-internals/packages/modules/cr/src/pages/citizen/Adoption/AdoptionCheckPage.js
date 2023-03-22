@@ -137,17 +137,17 @@ import {
                 <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                   :
                   {/* {t(AdoptionChildDetails.childFirstNameEn ? AdoptionChildDetails.childFirstNameEn : ' CR_NOT_RECORDED')} {t(AdoptionChildDetails.childMiddleNameEn  )} {t(AdoptionChildDetails.childLastNameEn  )} */}
-                  {t(AdoptionChildDetails.childFirstNameEn ? AdoptionChildDetails.childFirstNameEn : " CR_NOT_RECORDED") +
+                  {t(AdoptionChildDetails?.childFirstNameEn ? AdoptionChildDetails?.childFirstNameEn : " CR_NOT_RECORDED") +
                     " " +
-                    AdoptionChildDetails.childMiddleNameEn +
+                    AdoptionChildDetails?.childMiddleNameEn +
                     " " +
-                    AdoptionChildDetails.childLastNameEn +
+                    AdoptionChildDetails?.childLastNameEn +
                     " / " +
-                    t(AdoptionChildDetails.childFirstNameMl) +
+                    t(AdoptionChildDetails?.childFirstNameMl) +
                     " " +
-                    AdoptionChildDetails.childMiddleNameMl +
+                    AdoptionChildDetails?.childMiddleNameMl +
                     " " +
-                    AdoptionChildDetails.childLastNameMl}
+                    AdoptionChildDetails?.childLastNameMl}
                 </CardText>
                 {/* {t(AdoptionChildDetails.institutionId.institutionName) + " / " + t(AdoptionChildDetails.institutionId.institutionNamelocal)}  */}
               </div>
@@ -158,7 +158,7 @@ import {
               </div>
               <div className="col-md-6">
                 <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                  : {t(AdoptionChildDetails.gender.code) + " / " + t(AdoptionChildDetails.gender.code + "_ML")}
+                  : {t(AdoptionChildDetails?.gender.code) + " / " + t(AdoptionChildDetails?.gender.code + "_ML")}
                 </CardText>
               </div>
             </div>
@@ -168,39 +168,39 @@ import {
                 <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_DATE_OF_BIRTH")}`}</CardLabel>
               </div>
               <div className="col-md-6">
-                <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>:{t(convertEpochToDate(AdoptionChildDetails.childDOB) ? convertEpochToDate(AdoptionChildDetails.childDOB) : " CR_NOT_RECORDED")}{" "} </CardText>
+                <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>:{t(convertEpochToDate(AdoptionChildDetails?.childDOB) ? convertEpochToDate(AdoptionChildDetails.childDOB) : " CR_NOT_RECORDED")}{" "} </CardText>
               </div>
             </div>
   
             <div className="row">
               <div className="col-md-12">
-                {AdoptionChildDetails.birthPlace.code === "HOSPITAL" && (
+                {AdoptionChildDetails?.birthPlace.code === "HOSPITAL" && (
                   <div className="row">
                     <div className="col-md-6">
                       <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PLACE_OF_BIRTH")}`}</CardLabel>
                     </div>
                     <div className="col-md-6">
                       <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                        : {t(AdoptionChildDetails.hospitalName.hospitalName) + " / " + t(AdoptionChildDetails.hospitalName.hospitalNamelocal)}
+                        : {t(AdoptionChildDetails?.hospitalName?.hospitalName) + " / " + t(AdoptionChildDetails?.hospitalName?.hospitalNamelocal)}
                       </CardText>
                     </div>
                   </div>
                 )}
   
-                {AdoptionChildDetails.birthPlace.code === "INSTITUTION" && (
+                {AdoptionChildDetails?.birthPlace?.code === "INSTITUTION" && (
                   <div className="row">
                     <div className="col-md-6">
                       <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PLACE_OF_BIRTH")}`}</CardLabel>
                     </div>
                     <div className="col-md-6">
                       <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                        : {t(AdoptionChildDetails.institutionId.institutionName) + " / " + t(AdoptionChildDetails.institutionId.institutionNamelocal)}
+                        : {t(AdoptionChildDetails?.institutionId?.institutionName) + " / " + t(AdoptionChildDetails?.institutionId?.institutionNamelocal)}
                       </CardText>
                     </div>
                   </div>
                 )}
   
-                {AdoptionChildDetails.birthPlace.code === "HOME" && (
+                {AdoptionChildDetails?.birthPlace?.code === "HOME" && (
                   <div className="row">
                     <div className="col-md-6">
                       <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PLACE_OF_BIRTH")}`}</CardLabel>
@@ -208,34 +208,34 @@ import {
                     <div className="col-md-6">
                       <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                         :
-                        {t(AdoptionChildDetails.adrsHouseNameEn ? AdoptionChildDetails.adrsHouseNameEn : "CR_NOT_RECORDED") +
+                        {t(AdoptionChildDetails?.adrsHouseNameEn ? AdoptionChildDetails?.adrsHouseNameEn : "CR_NOT_RECORDED") +
                           " , " +
-                          AdoptionChildDetails.adrsLocalityNameEn +
+                          AdoptionChildDetails?.adrsLocalityNameEn +
                           " , " +
-                          AdoptionChildDetails.adrsStreetNameEn +
+                          AdoptionChildDetails?.adrsStreetNameEn +
                           " , " +
-                          AdoptionChildDetails.wardNo.namecmb +
+                          AdoptionChildDetails?.wardNo.namecmb +
                           " , " +
-                          AdoptionChildDetails.adrsPostOffice.name +
+                          AdoptionChildDetails?.adrsPostOffice.name +
                           " , " +
-                          AdoptionChildDetails.adrsPincode +
+                          AdoptionChildDetails?.adrsPincode +
                           " / " +
-                          t(AdoptionChildDetails.adrsHouseNameMl ? AdoptionChildDetails.adrsHouseNameMl : "CR_NOT_RECORDED") +
+                          t(AdoptionChildDetails?.adrsHouseNameMl ? AdoptionChildDetails?.adrsHouseNameMl : "CR_NOT_RECORDED") +
                           " , " +
-                          AdoptionChildDetails.adrsLocalityNameMl +
+                          AdoptionChildDetails?.adrsLocalityNameMl +
                           " , " +
-                          AdoptionChildDetails.adrsStreetNameMl +
+                          AdoptionChildDetails?.adrsStreetNameMl +
                           " , " +
-                          AdoptionChildDetails.wardNo.namecmb +
+                          AdoptionChildDetails?.wardNo.namecmb +
                           " , " +
-                          AdoptionChildDetails.adrsPostOffice.name +
+                          AdoptionChildDetails?.adrsPostOffice.name +
                           " , " +
-                          AdoptionChildDetails.adrsPincode}
+                          AdoptionChildDetails?.adrsPincode}
                       </CardText>
                     </div>
                   </div>
                 )}
-                {AdoptionChildDetails.birthPlace.code === "VEHICLE" && (
+                {AdoptionChildDetails?.birthPlace?.code === "VEHICLE" && (
                   <div className="row">
                     <div className="col-md-6">
                       <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PLACE_OF_BIRTH")}`}</CardLabel>
@@ -243,13 +243,13 @@ import {
                     <div className="col-md-6">
                       <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                         :
-                        {t(AdoptionChildDetails.vehicleType.name? AdoptionChildDetails.vehicleType.name : "CR_NOT_RECORDED") +
+                        {t(AdoptionChildDetails?.vehicleType?.name? AdoptionChildDetails?.vehicleType.name : "CR_NOT_RECORDED") +
                           " , " +
                           // AdoptionChildDetails.vehicleRegistrationNo +
                           // " , " +
-                          AdoptionChildDetails.vehicleFromEn +
+                          AdoptionChildDetails?.vehicleFromEn +
                           " , " +
-                          AdoptionChildDetails.vehicleToEn 
+                          AdoptionChildDetails?.vehicleToEn 
                           // AdoptionChildDetails.vehicleHaltPlace +
                           // " , " +
                           // AdoptionChildDetails.vehicleDesDetailsEn +
@@ -258,13 +258,13 @@ import {
                           // " , " +
                           // AdoptionChildDetails.wardNo +
                           + " / " +
-                          t(AdoptionChildDetails.vehicleType.namelocal ? AdoptionChildDetails.vehicleType.namelocal : "CR_NOT_RECORDED") +
+                          t(AdoptionChildDetails?.vehicleType?.namelocal ? AdoptionChildDetails.vehicleType.namelocal : "CR_NOT_RECORDED") +
                           " , " +
                           // AdoptionChildDetails.vehicleRegistrationNo +
                           // " , " +
-                          AdoptionChildDetails.vehicleFromMl +
+                          AdoptionChildDetails?.vehicleFromMl +
                           " , " +
-                          AdoptionChildDetails.vehicleToMl
+                          AdoptionChildDetails?.vehicleToMl
                           //  +
                           // " , " +
                           // AdoptionChildDetails.vehicleHaltPlace +
@@ -279,7 +279,7 @@ import {
                     </div>
                   </div>
                 )}
-                {AdoptionChildDetails.birthPlace.code === "PUBLIC_PLACES" && (
+                {AdoptionChildDetails?.birthPlace?.code === "PUBLIC_PLACES" && (
                   <div className="row">
                     <div className="col-md-6">
                       <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PLACE_OF_BIRTH")}`}</CardLabel>
@@ -287,26 +287,26 @@ import {
                     <div className="col-md-6">
                       <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                         :
-                        {t(AdoptionChildDetails.publicPlaceType.name ? AdoptionChildDetails.publicPlaceType.name : "CR_NOT_RECORDED") +
+                        {t(AdoptionChildDetails?.publicPlaceType?.name ? AdoptionChildDetails?.publicPlaceType?.name : "CR_NOT_RECORDED") +
                           // " , " +
                           // AdoptionChildDetails.wardNo +
                           " , " +
-                          AdoptionChildDetails.localityNameEn +
+                          AdoptionChildDetails?.localityNameEn +
                           " , " +
                           // AdoptionChildDetails.streetNameEn +
                           // " , " +
-                          AdoptionChildDetails.publicPlaceDecpEn +
+                          AdoptionChildDetails?.publicPlaceDecpEn +
                           " / " +
-                          t(AdoptionChildDetails.publicPlaceType.namelocal ? AdoptionChildDetails.publicPlaceType.namelocal : "CR_NOT_RECORDED") +
+                          t(AdoptionChildDetails?.publicPlaceType?.namelocal ? AdoptionChildDetails.publicPlaceType.namelocal : "CR_NOT_RECORDED") +
                           // " , " +
                           // AdoptionChildDetails.wardNo +
                           " , " +
-                          AdoptionChildDetails.localityNameMl +
+                          AdoptionChildDetails?.localityNameMl +
                           // " , " +
                           // AdoptionChildDetails.streetNameMl +
                           // " , " +
   
-                          AdoptionChildDetails.publicPlaceDecpEn
+                          AdoptionChildDetails?.publicPlaceDecpEn
                           }
                       </CardText>
                     </div>
@@ -337,9 +337,9 @@ import {
               <div className="col-md-6">
                 <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                   :
-                  {t(AdoptionParentsDetails.fatherFirstNameEn ? AdoptionParentsDetails.fatherFirstNameEn : "CR_NOT_RECORDED") +
+                  {t(AdoptionParentsDetails?.fatherFirstNameEn ? AdoptionParentsDetails.fatherFirstNameEn : "CR_NOT_RECORDED") +
                     " / " +
-                    t(AdoptionParentsDetails.fatherFirstNameMl)}
+                    t(AdoptionParentsDetails?.fatherFirstNameMl)}
                 </CardText>
               </div>
             </div>
@@ -366,45 +366,45 @@ import {
               <div className="col-md-6">
                 <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                   :
-                  {t(AdoptionAddressBasePage.presentInsideKeralaHouseNameEn ? AdoptionAddressBasePage.presentInsideKeralaHouseNameEn : "CR_NOT_RECORDED") +
+                  {t(AdoptionAddressBasePage?.presentInsideKeralaHouseNameEn ? AdoptionAddressBasePage?.presentInsideKeralaHouseNameEn : "CR_NOT_RECORDED") +
                     " , " +
-                   ( AdoptionAddressBasePage.presentInsideKeralaStreetNameEn ? AdoptionAddressBasePage.presentInsideKeralaStreetNameEn : " CR_NOT_RECORDED") +
+                   ( AdoptionAddressBasePage?.presentInsideKeralaStreetNameEn ? AdoptionAddressBasePage?.presentInsideKeralaStreetNameEn : " CR_NOT_RECORDED") +
                     " , " +
-                    AdoptionAddressBasePage.presentInsideKeralaLocalityNameEn +
+                    AdoptionAddressBasePage?.presentInsideKeralaLocalityNameEn +
                     " , " +
-                    AdoptionAddressBasePage.presentInsideKeralaPostOffice.name+
+                    AdoptionAddressBasePage?.presentInsideKeralaPostOffice.name+
                     " , " +
-                    AdoptionAddressBasePage.presentInsideKeralaPincode +
+                    AdoptionAddressBasePage?.presentInsideKeralaPincode +
                     " , " +
-                    AdoptionAddressBasePage.presentInsideKeralaDistrict.name +
+                    AdoptionAddressBasePage?.presentInsideKeralaDistrict.name +
                     " , " +
-                    AdoptionAddressBasePage.presentaddressStateName.name +
+                    AdoptionAddressBasePage?.presentaddressStateName.name +
                     " , " +
-                    AdoptionAddressBasePage.presentaddressCountry.name }
+                    AdoptionAddressBasePage?.presentaddressCountry.name }
                       </CardText>
                        <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                   :
-                  {t(AdoptionAddressBasePage.presentInsideKeralaHouseNameMl ? AdoptionAddressBasePage.presentInsideKeralaHouseNameMl : "CR_NOT_RECORDED") +
+                  {t(AdoptionAddressBasePage?.presentInsideKeralaHouseNameMl ? AdoptionAddressBasePage?.presentInsideKeralaHouseNameMl : "CR_NOT_RECORDED") +
                     " , " +
-                   ( AdoptionAddressBasePage.presentInsideKeralaStreetNameMl ? AdoptionAddressBasePage.presentInsideKeralaStreetNameMl : "CR_NOT_RECORDED") +
+                   ( AdoptionAddressBasePage?.presentInsideKeralaStreetNameMl ? AdoptionAddressBasePage?.presentInsideKeralaStreetNameMl : "CR_NOT_RECORDED") +
                     " , " +
-                    AdoptionAddressBasePage.presentInsideKeralaLocalityNameMl +
+                    AdoptionAddressBasePage?.presentInsideKeralaLocalityNameMl +
                     " , " +
-                    AdoptionAddressBasePage.presentInsideKeralaPostOffice.namelocal+
+                    AdoptionAddressBasePage?.presentInsideKeralaPostOffice.namelocal+
                     " , " +
-                    AdoptionAddressBasePage.presentInsideKeralaPincode +
+                    AdoptionAddressBasePage?.presentInsideKeralaPincode +
                     " , " +
-                    AdoptionAddressBasePage.presentInsideKeralaDistrict.namelocal+
+                    AdoptionAddressBasePage?.presentInsideKeralaDistrict.namelocal+
                     " , " +
-                    AdoptionAddressBasePage.presentaddressStateName.namelocal+
+                    AdoptionAddressBasePage?.presentaddressStateName.namelocal+
                     " , " +
-                    AdoptionAddressBasePage.presentaddressCountry.namelocal}
+                    AdoptionAddressBasePage?.presentaddressCountry.namelocal}
                   ,
                 </CardText>
               </div>
             </div>
           
-            {AdoptionAddressBasePage.isPrsentAddress === true && (
+            {AdoptionAddressBasePage?.isPrsentAddress === true && (
   
             <div className="row">
             
@@ -415,87 +415,87 @@ import {
               <div className="col-md-6">
                 <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                   :
-                  {t(AdoptionAddressBasePage.presentInsideKeralaHouseNameEn ? AdoptionAddressBasePage.presentInsideKeralaHouseNameEn : "CR_NOT_RECORDED") +
+                  {t(AdoptionAddressBasePage?.presentInsideKeralaHouseNameEn ? AdoptionAddressBasePage?.presentInsideKeralaHouseNameEn : "CR_NOT_RECORDED") +
                     " , " +
-                    (AdoptionAddressBasePage.presentInsideKeralaStreetNameEn   ? AdoptionAddressBasePage.presentInsideKeralaStreetNameEn : "CR_NOT_RECORDED")+
+                    (AdoptionAddressBasePage?.presentInsideKeralaStreetNameEn   ? AdoptionAddressBasePage?.presentInsideKeralaStreetNameEn : "CR_NOT_RECORDED")+
                     " , " +
-                    AdoptionAddressBasePage.presentInsideKeralaLocalityNameEn +
+                    AdoptionAddressBasePage?.presentInsideKeralaLocalityNameEn +
                     " , " +
-                    AdoptionAddressBasePage.presentInsideKeralaPostOffice.name+
+                    AdoptionAddressBasePage?.presentInsideKeralaPostOffice.name+
                     " , " +
-                    AdoptionAddressBasePage.presentInsideKeralaPincode +
+                    AdoptionAddressBasePage?.presentInsideKeralaPincode +
                     " , " +
-                    AdoptionAddressBasePage.presentInsideKeralaDistrict.name +
+                    AdoptionAddressBasePage?.presentInsideKeralaDistrict.name +
                     " , " +
-                    AdoptionAddressBasePage.presentaddressStateName.name +
+                    AdoptionAddressBasePage?.presentaddressStateName.name +
                     " , " +
-                    AdoptionAddressBasePage.presentaddressCountry.name }
+                    AdoptionAddressBasePage?.presentaddressCountry.name }
                       </CardText>
                        <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                   :
-                  {t(AdoptionAddressBasePage.presentInsideKeralaHouseNameMl ? AdoptionAddressBasePage.presentInsideKeralaHouseNameMl : "CR_NOT_RECORDED") +
+                  {t(AdoptionAddressBasePage?.presentInsideKeralaHouseNameMl ? AdoptionAddressBasePage?.presentInsideKeralaHouseNameMl : "CR_NOT_RECORDED") +
                     " , " +
-                    (AdoptionAddressBasePage.presentInsideKeralaStreetNameMl ? AdoptionAddressBasePage.presentInsideKeralaStreetNameMl : "CR_NOT_RECORDED")  +
+                    (AdoptionAddressBasePage?.presentInsideKeralaStreetNameMl ? AdoptionAddressBasePage?.presentInsideKeralaStreetNameMl : "CR_NOT_RECORDED")  +
                     " , " +
-                    AdoptionAddressBasePage.presentInsideKeralaLocalityNameMl +
+                    AdoptionAddressBasePage?.presentInsideKeralaLocalityNameMl +
                     " , " +
-                    AdoptionAddressBasePage.presentInsideKeralaPostOffice.namelocal+
+                    AdoptionAddressBasePage?.presentInsideKeralaPostOffice.namelocal+
                     " , " +
-                    AdoptionAddressBasePage.presentInsideKeralaPincode +
+                    AdoptionAddressBasePage?.presentInsideKeralaPincode +
                     " , " +
-                    AdoptionAddressBasePage.presentInsideKeralaDistrict.namelocal+
+                    AdoptionAddressBasePage?.presentInsideKeralaDistrict.namelocal+
                     " , " +
-                    AdoptionAddressBasePage.presentaddressStateName.namelocal+
+                    AdoptionAddressBasePage?.presentaddressStateName.namelocal+
                     " , " +
-                    AdoptionAddressBasePage.presentaddressCountry.namelocal}
+                    AdoptionAddressBasePage?.presentaddressCountry.namelocal}
                   ,
                 </CardText>
   
                 
                 {/* <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                   :
-                  {t(AdoptionAddressBasePage.permntInKeralaAdrHouseNameEn ? AdoptionAddressBasePage.permntInKeralaAdrHouseNameEn : "CR_NOT_RECORDED") +
+                  {t(AdoptionAddressBasePage?.permntInKeralaAdrHouseNameEn ? AdoptionAddressBasePage?.permntInKeralaAdrHouseNameEn : "CR_NOT_RECORDED") +
                     " , " +
-                    AdoptionAddressBasePage.permntInKeralaAdrStreetNameEn +
+                    AdoptionAddressBasePage?.permntInKeralaAdrStreetNameEn +
                     " , " +
-                    AdoptionAddressBasePage.permntInKeralaAdrLocalityNameEn +
+                    AdoptionAddressBasePage?.permntInKeralaAdrLocalityNameEn +
                     " , " +
-                    AdoptionAddressBasePage.permntInKeralaAdrPostOffice.name+
+                    AdoptionAddressBasePage?.permntInKeralaAdrPostOffice.name+
                     " , " +
-                    AdoptionAddressBasePage.permntInKeralaAdrPincode +
+                    AdoptionAddressBasePage?.permntInKeralaAdrPincode +
                     " , " +
-                    AdoptionAddressBasePage.permntInKeralaAdrDistrict.name +
+                    AdoptionAddressBasePage?.permntInKeralaAdrDistrict.name +
                     " , " +
-                    AdoptionAddressBasePage.permtaddressStateName.name +
+                    AdoptionAddressBasePage?.permtaddressStateName.name +
                     " , " +
-                    AdoptionAddressBasePage.permtaddressCountry.name }
+                    AdoptionAddressBasePage?.permtaddressCountry.name }
                    
                     </CardText>
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                :
                {  
-                  t(AdoptionAddressBasePage.permntInKeralaAdrHouseNameMl ? AdoptionAddressBasePage.permntInKeralaAdrHouseNameMl : "CR_NOT_RECORDED") +
+                  t(AdoptionAddressBasePage?.permntInKeralaAdrHouseNameMl ? AdoptionAddressBasePage?.permntInKeralaAdrHouseNameMl : "CR_NOT_RECORDED") +
                     " , " +
-                    AdoptionAddressBasePage.permntInKeralaAdrStreetNameMl +
+                    AdoptionAddressBasePage?.permntInKeralaAdrStreetNameMl +
                     " , " +
-                    AdoptionAddressBasePage.permntInKeralaAdrLocalityNameMl +
+                    AdoptionAddressBasePage?.permntInKeralaAdrLocalityNameMl +
                     " , " +
-                    AdoptionAddressBasePage.permntInKeralaAdrPostOffice.name+
+                    AdoptionAddressBasePage?.permntInKeralaAdrPostOffice.name+
                     " , " +
-                    AdoptionAddressBasePage.permntInKeralaAdrPincode +
+                    AdoptionAddressBasePage?.permntInKeralaAdrPincode +
                     " , " +
-                    AdoptionAddressBasePage.permntInKeralaAdrDistrict.namelocal+
+                    AdoptionAddressBasePage?.permntInKeralaAdrDistrict.namelocal+
                     " , " +
-                    AdoptionAddressBasePage.permtaddressStateName.namelocal+
+                    AdoptionAddressBasePage?.permtaddressStateName.namelocal+
                     " , " +
-                    AdoptionAddressBasePage.permtaddressCountry.namelocal}
+                    AdoptionAddressBasePage?.permtaddressCountry.namelocal}
                   ,
                 </CardText> */}
               </div>
             </div>
             )}
   
-  {AdoptionAddressBasePage.isPrsentAddress === false && (
+  {AdoptionAddressBasePage?.isPrsentAddress === false && (
    <div className="row">
             
    <div className="col-md-6">
@@ -508,41 +508,41 @@ import {
   
      :
      
-       {t(AdoptionAddressBasePage.permntInKeralaAdrHouseNameEn ? AdoptionAddressBasePage.permntInKeralaAdrHouseNameEn : "CR_NOT_RECORDED") +
+       {t(AdoptionAddressBasePage?.permntInKeralaAdrHouseNameEn ? AdoptionAddressBasePage?.permntInKeralaAdrHouseNameEn : "CR_NOT_RECORDED") +
          " , " +
-         (AdoptionAddressBasePage.permntInKeralaAdrStreetNameEn ? AdoptionAddressBasePage.permntInKeralaAdrStreetNameEn : "CR_NOT_RECORDED") + 
+         (AdoptionAddressBasePage?.permntInKeralaAdrStreetNameEn ? AdoptionAddressBasePage?.permntInKeralaAdrStreetNameEn : "CR_NOT_RECORDED") + 
          " , " +
-         AdoptionAddressBasePage.permntInKeralaAdrLocalityNameEn +
+         AdoptionAddressBasePage?.permntInKeralaAdrLocalityNameEn +
          " , " +
-         AdoptionAddressBasePage.permntInKeralaAdrPostOffice.name+
+         AdoptionAddressBasePage?.permntInKeralaAdrPostOffice.name+
          " , " +
-         AdoptionAddressBasePage.permntInKeralaAdrPincode +
+         AdoptionAddressBasePage?.permntInKeralaAdrPincode +
          " , " +
-         AdoptionAddressBasePage.permntInKeralaAdrDistrict.name +
+         AdoptionAddressBasePage?.permntInKeralaAdrDistrict.name +
          " , " +
-         AdoptionAddressBasePage.permtaddressStateName.name +
+         AdoptionAddressBasePage?.permtaddressStateName.name +
          " , " +
-         AdoptionAddressBasePage.permtaddressCountry.name }
+         AdoptionAddressBasePage?.permtaddressCountry.name }
         
          </CardText>
          <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
     :
     {  
-       t(AdoptionAddressBasePage.permntInKeralaAdrHouseNameMl ? AdoptionAddressBasePage.permntInKeralaAdrHouseNameMl : "CR_NOT_RECORDED") +
+       t(AdoptionAddressBasePage?.permntInKeralaAdrHouseNameMl ? AdoptionAddressBasePage?.permntInKeralaAdrHouseNameMl : "CR_NOT_RECORDED") +
          " , " +
-         (AdoptionAddressBasePage.permntInKeralaAdrStreetNameMl ? AdoptionAddressBasePage.permntInKeralaAdrStreetNameMl : "CR_NOT_RECORDED") +
+         (AdoptionAddressBasePage?.permntInKeralaAdrStreetNameMl ? AdoptionAddressBasePage?.permntInKeralaAdrStreetNameMl : "CR_NOT_RECORDED") +
          " , " +
-         AdoptionAddressBasePage.permntInKeralaAdrLocalityNameMl +
+         AdoptionAddressBasePage?.permntInKeralaAdrLocalityNameMl +
          " , " +
-         AdoptionAddressBasePage.permntInKeralaAdrPostOffice.name+
+         AdoptionAddressBasePage?.permntInKeralaAdrPostOffice.name+
          " , " +
-         AdoptionAddressBasePage.permntInKeralaAdrPincode +
+         AdoptionAddressBasePage?.permntInKeralaAdrPincode +
          " , " +
-         AdoptionAddressBasePage.permntInKeralaAdrDistrict.namelocal+
+         AdoptionAddressBasePage?.permntInKeralaAdrDistrict.namelocal+
          " , " +
-         AdoptionAddressBasePage.permtaddressStateName.namelocal+
+         AdoptionAddressBasePage?.permtaddressStateName.namelocal+
          " , " +
-         AdoptionAddressBasePage.permtaddressCountry.namelocal}
+         AdoptionAddressBasePage?.permtaddressCountry.namelocal}
        ,
        </CardText>
    </div>
