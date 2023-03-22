@@ -233,7 +233,7 @@ public class DistanceToRoadExtract extends FeatureExtract {
             for (Map.Entry<Integer, List<BigDecimal>> distanceByColor : distancesWithColor.entrySet()) {
                 if(!distanceByColor.getValue().isEmpty()) {
                     RoadOutput roadOutput = new RoadOutput();
-                    roadOutput.distance = distanceByColor.getValue().get(0);
+                    roadOutput.roadDistainceToPlot = distanceByColor.getValue().get(0);
                     roadOutput.colourCode = String.valueOf(distanceByColor.getKey());
                     clcolourCodeWithDimension.add(roadOutput);
                 }

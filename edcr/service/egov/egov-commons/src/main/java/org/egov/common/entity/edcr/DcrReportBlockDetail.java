@@ -48,7 +48,10 @@
 package org.egov.common.entity.edcr;
 
 import java.math.BigDecimal;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class DcrReportBlockDetail {
 
@@ -61,6 +64,20 @@ public class DcrReportBlockDetail {
     private List<DcrReportFloorDetail> dcrReportFloorDetails;
 
     private BigDecimal constructedArea = BigDecimal.ZERO;
+    
+	private BigDecimal totalUnits = BigDecimal.ZERO;
+
+	private BigDecimal unitsWithAttachBath = BigDecimal.ZERO;
+
+	private BigDecimal unitsWithoutAttachBath = BigDecimal.ZERO;
+
+	private BigDecimal unitsWithDinningRoom = BigDecimal.ZERO;
+
+	// Occupancy, unitDesc, unitCount
+	private Map<String, Map<String, Integer>> units = new ConcurrentHashMap<>();
+	
+	private List<DcrReportFloorUnitDetail> dcrReportFloorUnitDetails = new LinkedList<>();
+	
     
     public String getBlockNo() {
         return blockNo;
@@ -101,5 +118,53 @@ public class DcrReportBlockDetail {
     public void setConstructedArea(BigDecimal constructedArea) {
         this.constructedArea = constructedArea;
     }
+
+	public BigDecimal getTotalUnits() {
+		return totalUnits;
+	}
+
+	public void setTotalUnits(BigDecimal totalUnits) {
+		this.totalUnits = totalUnits;
+	}
+
+	public BigDecimal getUnitsWithAttachBath() {
+		return unitsWithAttachBath;
+	}
+
+	public void setUnitsWithAttachBath(BigDecimal unitsWithAttachBath) {
+		this.unitsWithAttachBath = unitsWithAttachBath;
+	}
+
+	public BigDecimal getUnitsWithoutAttachBath() {
+		return unitsWithoutAttachBath;
+	}
+
+	public void setUnitsWithoutAttachBath(BigDecimal unitsWithoutAttachBath) {
+		this.unitsWithoutAttachBath = unitsWithoutAttachBath;
+	}
+
+	public BigDecimal getUnitsWithDinningRoom() {
+		return unitsWithDinningRoom;
+	}
+
+	public void setUnitsWithDinningRoom(BigDecimal unitsWithDinningRoom) {
+		this.unitsWithDinningRoom = unitsWithDinningRoom;
+	}
+
+	public Map<String, Map<String, Integer>> getUnits() {
+		return units;
+	}
+
+	public void setUnits(Map<String, Map<String, Integer>> units) {
+		this.units = units;
+	}
+
+	public List<DcrReportFloorUnitDetail> getDcrReportFloorUnitDetails() {
+		return dcrReportFloorUnitDetails;
+	}
+
+	public void setDcrReportFloorUnitDetails(List<DcrReportFloorUnitDetail> dcrReportFloorUnitDetails) {
+		this.dcrReportFloorUnitDetails = dcrReportFloorUnitDetails;
+	}
     
 }

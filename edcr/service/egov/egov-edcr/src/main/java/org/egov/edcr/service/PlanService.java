@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -27,6 +27,7 @@ import org.egov.common.entity.edcr.EdcrPdfDetail;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.PlanFeature;
 import org.egov.common.entity.edcr.PlanInformation;
+import org.egov.edcr.constants.AmendmentConstants;
 import org.egov.edcr.constants.DxfFileConstants;
 import org.egov.edcr.contract.ComparisonRequest;
 import org.egov.edcr.contract.EdcrRequest;
@@ -263,6 +264,11 @@ public class PlanService {
         }
 
         try {
+            if(plan.getAsOnDate().compareTo(AmendmentConstants.AMEND_DATE_011020) >= 0)
+                beanName = "PlanReportService_Amend02Oct20";
+            else if(plan.getAsOnDate().compareTo(AmendmentConstants.AMEND_DATE_081119) >= 0)
+                beanName = "PlanReportService_Amend08Nov19";
+            
             beanName = beanName.substring(0, 1).toLowerCase() + beanName.substring(1);
 
             if (amd.getDetails().isEmpty() || index == -1)

@@ -63,6 +63,8 @@ public class DcrReportFloorDetail {
 
     private BigDecimal carpetArea;
 
+    private String parkingDetail;
+    
     public String getFloorNo() {
         return floorNo;
     }
@@ -110,4 +112,13 @@ public class DcrReportFloorDetail {
     public void setBuiltUpDeductionArea(BigDecimal builtUpDeductionArea) {
         this.builtUpDeductionArea = builtUpDeductionArea;
     }
+
+	public String getParkingDetail() {
+		return parkingDetail;
+	}
+
+	public void setParkingDetail(String parkingDetail) {
+		this.parkingDetail = parkingDetail;
+	}
+    
 }

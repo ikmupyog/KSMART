@@ -236,8 +236,8 @@ public class DxfFileConstants {
     public static final int COLOUR_CODE_CULDESAC = 6;
     public static final int COLOUR_CODE_WELLTOBOUNDARY = 7;
     public static final int COLOUR_CODE_WELLTOLEACHPIT = 8;
-    public static final Integer COLOUR_CODE_LEACHPIT_TO_PLOT_BNDRY = 9;
-    public static final Integer COLOUR_CODE_SEPTICTANK_TO_PLOT_BNDRY = 10;
+    public static final int COLOUR_CODE_LEACHPIT_TO_PLOT_BNDRY = 9;
+    public static final int COLOUR_CODE_SEPTICTANK_TO_PLOT_BNDRY = 10;
     public static final int COLOUR_CODE_WELL_TO_SEPTICTANK=11;
     public static final int OCCUPANCY_A1_COLOR_CODE = 25;
     public static final int OCCUPANCY_A2_COLOR_CODE = 3;
