@@ -7,11 +7,14 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.egov.kssmSnehaswanthanam.service.SnehaswanthanamService;
 import org.egov.kssmSnehaswanthanam.util.ResponseInfoFactory;
+import org.egov.kssmSnehaswanthanam.web.models.RequestInfoWrapper;
 import org.egov.kssmSnehaswanthanam.web.models.SnehaswanthanamRequest;
 import org.egov.kssmSnehaswanthanam.web.models.SnehaswanthanamResponse;
+import org.egov.kssmSnehaswanthanam.web.models.SnehaswanthanamSearchCriteria;
 import org.egov.kssmSnehaswanthanam.web.models.m_Snehaswanthanam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -82,6 +85,19 @@ public class SnehaswanthanamController {
                 .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
                         Boolean.TRUE))
                 .m_Snehaswanthanam(newRes).build();
+        return ResponseEntity.ok(response);
+
+    }
+
+    @PostMapping("/v1/Search")
+    public ResponseEntity<SnehaswanthanamResponse> search_snehaswanthanam(@RequestBody RequestInfoWrapper request,
+            @Valid @ModelAttribute SnehaswanthanamSearchCriteria searchCriteria) {
+
+        List<m_Snehaswanthanam> result = obService.searchSnehaswanthanamDetails(searchCriteria);
+        SnehaswanthanamResponse response = SnehaswanthanamResponse.builder()
+                .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+                        Boolean.TRUE))
+                .m_Snehaswanthanam(result).build();
         return ResponseEntity.ok(response);
 
     }
