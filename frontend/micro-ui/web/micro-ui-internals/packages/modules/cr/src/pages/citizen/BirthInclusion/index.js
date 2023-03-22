@@ -13,19 +13,18 @@ import {
   SearchField,
   Dropdown,
 } from "@egovernments/digit-ui-react-components";
-import { useForm, Controller } from "react-hook-form";
-import { useParams } from "react-router-dom";
+import { Route, Switch, useRouteMatch, useLocation, useHistory, Redirect } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import SearchBirthInclusion from "../../../components/SearchBirthInclusion";
+import BirthInclusionEditPage from "../../../pageComponents/birthComponents/BirthInclusionPage";
 // import BirthCertificate from "./BirthCertificate";
-import BirthCertificate from "../../../components/SearchRegistryBirth";
 
-const BirthInclusion = ({ path }) => {
-  const { variant } = useParams();
+const BirthInclusion = () => {
   const { t } = useTranslation();
-  // const tenantId = Digit.ULBService.getCurrentTenantId();
-  const [payload, setPayload] = useState({});
+  const { path } = useRouteMatch();
+  const history = useHistory();
 
-  const Search = Digit.ComponentRegistryService.getComponent(variant === "license" ? "SearchLicense" : "SearchDfmApplication");
+  const [payload, setPayload] = useState({});
 
   function onSubmit(_data) {
     var fromDate = new Date(_data?.fromDate);
@@ -44,38 +43,48 @@ const BirthInclusion = ({ path }) => {
         .reduce((acc, key) => ({ ...acc, [key]: typeof data[key] === "object" ? data[key].code : data[key] }), {})
     );
   }
+  //   const queryClient = useQueryClient();
+  // const tenantId = Digit.ULBService.getCurrentTenantId();
 
- 
   const config = {
     enabled: !!(payload && Object.keys(payload).length > 0),
   };
 
-
- 
   const {
     data: { RegisterBirthDetails: searchReult, Count: count } = {},
     isLoading,
     isSuccess,
-  } = Digit.Hooks.cr.useRegistrySearchBirth({filters: payload, config }); 
-  // console.log(searchReult);
-  let payloadData = { id: isSuccess && searchReult[0]?.id, source: "sms" };
-  let registryPayload = Object.keys(payloadData)
-    .filter((k) => payloadData[k])
-    .reduce((acc, key) => ({ ...acc, [key]: typeof payloadData[key] === "object" ? payloadData[key].code : payloadData[key] }), {});
-  const { data:  { filestoreId: storeId } = {} } = Digit.Hooks.cr.useResistryDownloadBirth({  filters: registryPayload, config });
+  } = Digit.Hooks.cr.useRegistrySearchBirth({ filters: payload, config });
+
+  const gotoEditInclusion = async (data) => {
+    console.log("reached===",data);
+    history.push(`${path}/birth-inclusion-edit`);
+  };
+  // const { data: { filestoreId: storeId } = {} } = Digit.Hooks.cr.useResistryDownloadBirth({ filters: registryPayload, config });
 
   return (
     <React.Fragment>
-       <BackButton>{t("CS_COMMON_BACK2")}</BackButton>
-      <BirthCertificate
-        t={t}
-        onSubmit={onSubmit}
-        data={!isLoading && isSuccess ? (searchReult?.length > 0 ? searchReult : { display: "ES_COMMON_NO_DATA" }) : ""}
-        filestoreId={storeId}
-        isSuccess={isSuccess}
-        isLoading={isLoading}
-        count={count}
-      />
+      <BackButton>{t("CS_COMMON_BACK2")}</BackButton>
+      {/* <Switch>
+        <Route path={`${path}`}> */}
+          <SearchBirthInclusion
+            t={t}
+            onSubmit={onSubmit}
+            data={!isLoading && isSuccess ? (searchReult?.length > 0 ? searchReult : { display: "ES_COMMON_NO_DATA" }) : ""}
+            // filestoreId={storeId}
+            // isSuccess={isSuccess}
+            // isLoading={isLoading}
+            count={count}
+            onInclusionClick={gotoEditInclusion}
+          />
+        {/* </Route> */}
+        {/* <Route path={`${path}/birth-inclusion-edit`}>
+          <BirthInclusionEditPage />
+        </Route> */}
+        {/* <Route>
+          <Redirect to={`${match.path}/${config.indexRoute}`} />
+        </Route> */}
+      {/* </Switch> */}
     </React.Fragment>
   );
 };
