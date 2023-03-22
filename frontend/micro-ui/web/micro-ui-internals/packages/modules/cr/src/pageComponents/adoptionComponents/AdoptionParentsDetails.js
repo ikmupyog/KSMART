@@ -62,8 +62,7 @@ const AdoptionParentsDetails = ({ config, onSelect, userType, formData, isEditBi
     ReligionList["common-masters"].Religion.map((ob) => {
       cmbReligion.push(ob);
     });
-  const [isMotherInfo, setIsMotherInfo] = useState(formData?.AdoptionParentsDetails?.isMotherInfo ? formData?.AdoptionParentsDetails?.isMotherInfo :
-    formData?.ChildDetails?.AdoptionParentsDetails?.ismotherInfo ? formData?.ChildDetails?.AdoptionParentsDetails?.ismotherInfo : false);
+  const [isMotherInfo, setIsMotherInfo] = useState(formData?.AdoptionParentsDetails?.isMotherInfo ? formData?.AdoptionParentsDetails?.isMotherInfo : false);
   const [motherAadhar, setMotherAadhar] = useState(formData?.AdoptionParentsDetails?.motherAadhar ? formData?.AdoptionParentsDetails?.motherAadhar :
     formData?.ChildDetails?.AdoptionParentsDetails?.motherAadhar ? formData?.ChildDetails?.AdoptionParentsDetails?.motherAadhar : "");
   const [motherFirstNameEn, setMotherFirstNameEn] = useState(formData?.AdoptionParentsDetails?.motherFirstNameEn ? formData?.AdoptionParentsDetails?.motherFirstNameEn :
@@ -88,8 +87,7 @@ const AdoptionParentsDetails = ({ config, onSelect, userType, formData, isEditBi
   const [motherProfession, setMotherProfession] = useState(formData?.AdoptionParentsDetails?.motherProfession?.code ? formData?.AdoptionParentsDetails?.motherProfession : formData?.ChildDetails?.AdoptionParentsDetails?.motherProfession ?
     (cmbProfession.filter(cmbProfession => cmbProfession.code === formData?.ChildDetails?.AdoptionParentsDetails?.motherProfession)[0]) : "");
 
-  const [isFatherInfo, setIsFatherInfo] = useState(formData?.AdoptionParentsDetails?.isFatherInfo ? formData?.AdoptionParentsDetails?.isFatherInfo :
-    formData?.ChildDetails?.AdoptionParentsDetails?.isfatherInfo ? formData?.ChildDetails?.AdoptionParentsDetails?.isfatherInfo : false);
+  const [isFatherInfo, setIsFatherInfo] = useState(formData?.AdoptionParentsDetails?.isFatherInfo ? formData?.AdoptionParentsDetails?.isFatherInfo : false);
   const [fatherAadhar, setFatherAadhar] = useState(formData?.AdoptionParentsDetails?.fatherAadhar ? formData?.AdoptionParentsDetails?.fatherAadhar :
     formData?.ChildDetails?.AdoptionParentsDetails?.fatherAadhar ? formData?.ChildDetails?.AdoptionParentsDetails?.fatherAadhar : "");
   const [fatherFirstNameEn, setFatherFirstNameEn] = useState(formData?.AdoptionParentsDetails?.fatherFirstNameEn ? formData?.AdoptionParentsDetails?.fatherFirstNameEn :
