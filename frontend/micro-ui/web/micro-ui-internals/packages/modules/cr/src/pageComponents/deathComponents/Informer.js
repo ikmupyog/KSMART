@@ -66,18 +66,21 @@ const Informer = ({ config, onSelect, userType, formData,iseditDeath }) => {
   //   }
   // }
   function setSelectInformantAadharNo(e) {
-    if (e.target.value.length != 0) {
-      if (e.target.value.length > 12) {
-        return false;
-      } else if (e.target.value.length < 12) {
-        setInformantAadharNo(e.target.value);
-        return false;
-      } else {
-        setInformantAadharNo(e.target.value);
-      }
-    } else {
-      setInformantAadharNo(e.target.value);
+    if (e.target.value.trim().length >= 0) {
+      setInformantAadharNo(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
     }
+    // if (e.target.value.length != 0) {
+    //   if (e.target.value.length > 12) {
+    //     return false;
+    //   } else if (e.target.value.length < 12) {
+    //     setInformantAadharNo(e.target.value);
+    //     return false;
+    //   } else {
+    //     setInformantAadharNo(e.target.value);
+    //   }
+    // } else {
+    //   setInformantAadharNo(e.target.value);
+    // }
   }
   function setSelectInformantNameEn(e) {
     if (e.target.value.length === 51) {
@@ -89,18 +92,21 @@ const Informer = ({ config, onSelect, userType, formData,iseditDeath }) => {
   }
  
   function setSelectInformantMobileNo(e) {
-    if (e.target.value.length != 0) {
-      if (e.target.value.length > 10) {
-        return false;
-      } else if (e.target.value.length < 10) {
-        setInformantMobileNo(e.target.value);
-        return false;
-      } else {
-        setInformantMobileNo(e.target.value);
-      }
-    } else {
-      setInformantMobileNo(e.target.value);
-    }
+    if (e.target.value.trim().length >= 0) {
+      setInformantMobileNo(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
+    } 
+    // if (e.target.value.length != 0) {
+    //   if (e.target.value.length > 10) {
+    //     return false;
+    //   } else if (e.target.value.length < 10) {
+    //     setInformantMobileNo(e.target.value);
+    //     return false;
+    //   } else {
+    //     setInformantMobileNo(e.target.value);
+    //   }
+    // } else {
+    //   setInformantMobileNo(e.target.value);
+    // }
   }
   function setSelectDeathSignedOfficerDesignation(e) {
     if (e.target.value.length === 51) {
