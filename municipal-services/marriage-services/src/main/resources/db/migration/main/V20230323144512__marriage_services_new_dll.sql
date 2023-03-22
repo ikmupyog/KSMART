@@ -45,12 +45,7 @@ CREATE TABLE IF NOT EXISTS public.eg_marriage_details
     CONSTRAINT eg_marriage_place_details_applicationnumber_fkey UNIQUE (applicationnumber),
     CONSTRAINT eg_marriage_place_details_filenumber_fkey UNIQUE (filenumber),
     CONSTRAINT eg_marriage_place_details_registrationno_fkey UNIQUE (registrationno, applicationnumber)
-    )
-
-    TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public.eg_marriage_details
-    OWNER to postgres;
+    );
 -- Index: idx_eg_marriage_details_tenantid
 
 -- DROP INDEX IF EXISTS public.idx_eg_marriage_details_tenantid;
@@ -151,12 +146,7 @@ CREATE TABLE IF NOT EXISTS public.eg_marriage_bride_groom_details
     REFERENCES public.eg_marriage_details (id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION
-    )
-
-    TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public.eg_marriage_bride_groom_details
-    OWNER to postgres;
+    );
 
 -- Table: public.eg_marriage_bride_groom_details_audit
 
@@ -238,12 +228,7 @@ CREATE TABLE IF NOT EXISTS public.eg_marriage_permanent_address_details
     REFERENCES public.eg_marriage_details (id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION
-    )
-
-    TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public.eg_marriage_permanent_address_details
-    OWNER to postgres;
+    );
 
 -- Table: public.eg_marriage_permanent_address_details_audit
 
@@ -317,12 +302,7 @@ CREATE TABLE IF NOT EXISTS public.eg_marriage_present_address_details
     REFERENCES public.eg_marriage_details (id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION
-    )
-
-    TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public.eg_marriage_present_address_details
-    OWNER to postgres;
+    );
 
 -- Table: public.eg_marriage_present_address_details_audit
 
@@ -386,12 +366,7 @@ CREATE TABLE IF NOT EXISTS public.eg_marriage_witness_details
     REFERENCES public.eg_marriage_details (id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION
-    )
-
-    TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public.eg_marriage_witness_details
-    OWNER to postgres;
+    );
 
 CREATE TABLE IF NOT EXISTS public.eg_marriage_witness_details_audit
 (
@@ -437,12 +412,7 @@ CREATE TABLE IF NOT EXISTS public.eg_marriage_document
     lastmodifiedtime bigint,
     CONSTRAINT eg_marriage_document_document_fkey PRIMARY KEY (tenantid, document_type, document_name, marriageid, bride_groom, active),
     CONSTRAINT eg_marriage_document_pkey UNIQUE (id)
-    )
-
-    TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public.eg_marriage_document
-    OWNER to postgres;
+    );
 
 CREATE TABLE IF NOT EXISTS public.eg_marriage_document_audit
 (
@@ -505,12 +475,7 @@ CREATE TABLE IF NOT EXISTS public.eg_register_marriage_details
     migrated_date bigint,
     CONSTRAINT eg_register_marriage_place_details_pkey PRIMARY KEY (id),
     CONSTRAINT eg_register_marriage_place_details_ack_no_fkey UNIQUE (ack_no, tenantid)
-    )
-
-    TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public.eg_register_marriage_details
-    OWNER to postgres;
+    );
 
 CREATE TABLE IF NOT EXISTS public.eg_register_marriage_details_audit
 (
@@ -603,12 +568,7 @@ CREATE TABLE IF NOT EXISTS public.eg_register_marriage_bride_groom_details
     REFERENCES public.eg_register_marriage_details (id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION
-    )
-
-    TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public.eg_register_marriage_bride_groom_details
-    OWNER to postgres;
+    );
 
 CREATE TABLE IF NOT EXISTS public.eg_register_marriage_bride_groom_details_audit
 (
@@ -690,12 +650,7 @@ CREATE TABLE IF NOT EXISTS public.eg_register_marriage_permanent_address_details
     REFERENCES public.eg_register_marriage_details (id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION
-    )
-
-    TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public.eg_register_marriage_permanent_address_details
-    OWNER to postgres;
+    );
 
 CREATE TABLE IF NOT EXISTS public.eg_register_marriage_permanent_address_details_audit
 (
@@ -770,12 +725,7 @@ CREATE TABLE IF NOT EXISTS public.eg_register_marriage_present_address_details
     REFERENCES public.eg_register_marriage_details (id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION
-    )
-
-    TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public.eg_register_marriage_present_address_details
-    OWNER to postgres;
+    );
 
 CREATE TABLE IF NOT EXISTS public.eg_register_marriage_present_address_details_audit
 (
@@ -838,12 +788,7 @@ CREATE TABLE IF NOT EXISTS public.eg_register_marriage_witness_details
     REFERENCES public.eg_register_marriage_details (id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION
-    )
-
-    TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public.eg_register_marriage_witness_details
-    OWNER to postgres;
+    );
 
 CREATE TABLE IF NOT EXISTS public.eg_register_marriage_witness_details_audit
 (
@@ -892,12 +837,7 @@ CREATE TABLE IF NOT EXISTS public.eg_register_marriage_document
     lastmodifiedtime bigint,
     CONSTRAINT eg_register_marriage_document_fkey PRIMARY KEY (tenantid, document_type, document_name, marriageid, bride_groom, active),
     CONSTRAINT eg_register_marriage_document_pkey UNIQUE (id)
-    )
-
-    TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public.eg_register_marriage_document
-    OWNER to postgres;
+    );
 
 CREATE TABLE IF NOT EXISTS public.eg_register_marriage_document_audit
 (
@@ -945,12 +885,7 @@ CREATE TABLE IF NOT EXISTS public.eg_marriage_certificate
     REFERENCES public.eg_register_marriage_details (id) MATCH SIMPLE
     ON UPDATE CASCADE
     ON DELETE CASCADE
-    )
-
-    TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public.eg_marriage_certificate
-    OWNER to postgres;
+    );
 
 CREATE TABLE IF NOT EXISTS public.eg_marriage_certificate_audit
 (
