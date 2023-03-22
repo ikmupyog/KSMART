@@ -83,6 +83,8 @@ public class DeathApplnService {
      public List<DeathDtl> create(DeathDtlRequest request) {
           // Rakhi S IKM validate mdms data on 14.02.2023
           Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getTenantId());
+         //Jasmine 22.03.2023
+          validatorService.validateCommonFields( request);
           mdmsValidator.validateDeathMDMSData(request,mdmsData);
           //Rakhi S ikm on 08.02.2023
           enrichmentService.setPresentAddress(request);
@@ -115,7 +117,7 @@ public class DeathApplnService {
 
      //Jasmine  Update 07.02.2023
      public List<DeathDtl> update(DeathDtlRequest request) {
-          
+          Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getTenantId());
           enrichmentService.setPresentAddress(request);
           enrichmentService.setPermanentAddress(request);
           String ackNumber = request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getDeathACKNo();
@@ -125,17 +127,12 @@ public class DeathApplnService {
 
           List<DeathDtl> searchResult = repository.getDeathApplication(criteria,request.getRequestInfo());
           validatorService.validateUpdate(request, searchResult);
-         // mdmsValidator.validateMDMSData(request,mdmsData);
-
+          mdmsValidator.validateDeathMDMSData(request,mdmsData);
           //Jasmine 09.02.2023                        
           enrichmentService.enrichUpdate(request);
-   
           //Jasmine 13.02.2023
           workflowIntegrator.callWorkFlow(request);
-          producer.push(deathConfig.getUpdateDeathDetailsTopic(), request);
-          
-          // List<DeathDtl> response = new ArrayList<>();
-          
+          producer.push(deathConfig.getUpdateDeathDetailsTopic(), request);          
           DeathDtlRequest result = DeathDtlRequest
                                    .builder()
                                    .requestInfo(request.getRequestInfo())
@@ -145,9 +142,12 @@ public class DeathApplnService {
      } 
      //Jasmine 03.03.2023
      public List<DeathCorrectionDtls> createcorrection(DeathCorrectionRequest request) {
-          //  Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getTenantId());
+            Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCorrection().get(0).getDeathCorrectionBasicInfo().getTenantId());
             enrichmentService.setCorrectionPresentAddress(request);
             enrichmentService.setCorrectionPermanentAddress(request);
+            //Jasmine 22.03.2023
+            validatorService.validateCorrectionCommonFields( request);
+           // mdmsValidator.validateDeathMDMSData(request,mdmsData);
             enrichmentService.enrichCreateCorrection(request);
             enrichmentService.setCorrectionACKNumber(request);                  
             producer.push(deathConfig.getSaveDeathCorrectionTopic(), request);
@@ -157,33 +157,19 @@ public class DeathApplnService {
 
      //Jasmine  Update 07.02.2023
      public List<DeathCorrectionDtls> updateCorrection(DeathCorrectionRequest request) {
-          
+          Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCorrection().get(0).getDeathCorrectionBasicInfo().getTenantId());
           enrichmentService.setCorrectionPresentAddress(request);
           enrichmentService.setCorrectionPermanentAddress(request);
           String ackNumber = request.getDeathCorrection().get(0).getDeathCorrectionBasicInfo().getDeathACKNo();
-         // System.out.println("CorrectionackNumber"+ackNumber);
           DeathSearchCriteria criteria =(DeathSearchCriteria.builder()
                                         .deathACKNo(ackNumber)
                                         .build());
           List<DeathCorrectionDtls> searchResult = repository.getDeathCorrection(criteria,request.getRequestInfo());
-         // System.out.println("JasmineSearchResult");
-           validatorService.validateCorrectionUpdate(request, searchResult);
+          validatorService.validateCorrectionUpdate(request, searchResult);
          // mdmsValidator.validateMDMSData(request,mdmsData);
-
- 
           enrichmentService.enrichUpdateCorrection(request);
           workflowIntegrator.callCorrectionWorkFlow(request);
-
-          // try {
-          //      ObjectMapper mapper = new ObjectMapper();
-          //      Object obj = request;
-          //      mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-          //     System.out.println("CorrectionAddress "+ mapper.writeValueAsString(obj));
-          //         }catch(Exception e) {
-          //         log.error("Exception while fetching from searcher: ",e);
-          //     }
           producer.push(deathConfig.getUpdateDeathCorrectionTopic(), request);
-          // List<DeathCorrectionDtls> response = new ArrayList<>();
           DeathCorrectionRequest result = DeathCorrectionRequest
                                    .builder()
                                    .requestInfo(request.getRequestInfo())

@@ -330,11 +330,11 @@ public class DeathCorrectionBasicInfo {
     private String deathPlaceHomeStreetNameMl  ;
 
     //@Schema(type = "string", description= " " )
-    @JsonProperty("DeathPlaceHomeHosueNameEn")
+    @JsonProperty("DeathPlaceHomeHouseNameEn")
     private String deathPlaceHomeHouseNameEn  ;
 
     //@Schema(type = "string", description= " " )
-    @JsonProperty("DeathPlaceHomeHosueNameMl")
+    @JsonProperty("DeathPlaceHomeHouseNameMl")
     private String deathPlaceHomeHouseNameMl  ;
 
     @JsonProperty("DocumentId")

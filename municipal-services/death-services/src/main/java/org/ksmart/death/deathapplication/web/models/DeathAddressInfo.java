@@ -417,8 +417,6 @@ public class DeathAddressInfo {
     // private String permanentOutsideIndiaPostCode;
 
 
-
-
     ////Db Fields//////
 
 
