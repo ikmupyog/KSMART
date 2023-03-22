@@ -78,6 +78,9 @@ public class FMConfiguration {
     @Value("${persister.save.arisingfiledetails.topic:}")
     private String saveArisingFileTopic;
 
+    @Value("${persister.update.arisingfiledetails.topic:}")
+    private String updateArisingFileTopic;
+
     @Value("${persister.update.communicationfile.topic:}")
     private String updateCommunicationFileTopic;
     

@@ -43,7 +43,19 @@ public class ArisingFileController {
         								.build();
         return ResponseEntity.ok(response);
     }
+    @PostMapping("/applicantservices/_updateArisingFile")
+    public ResponseEntity<ArisingFileResponse> update(@RequestBody ArisingFileRequest request) {
 
+        List<ArisingFile> files = arisingFileService.updateArisingFile(request);
+
+        ArisingFileResponse response = ArisingFileResponse.builder()
+                .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+                        Boolean.TRUE))
+                .arisingFileDetail(files)
+                .build();
+
+        return ResponseEntity.ok(response);
+    }
 
 
 

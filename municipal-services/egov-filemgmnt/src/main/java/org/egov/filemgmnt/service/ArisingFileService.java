@@ -1,6 +1,7 @@
 package org.egov.filemgmnt.service;
-
+import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.filemgmnt.config.FMConfiguration;
@@ -9,6 +10,7 @@ import org.egov.filemgmnt.enrichment.ArisingFileEnrichment;
 import org.egov.filemgmnt.kafka.Producer;
 
 import org.egov.filemgmnt.repository.ArisingFileRepository;
+import org.egov.filemgmnt.validators.ArisingFileValidator;
 import org.egov.filemgmnt.web.models.arisingfile.ArisingFile;
 import org.egov.filemgmnt.web.models.arisingfile.ArisingFileRequest;
 import org.egov.filemgmnt.web.models.arisingfile.ArisingFileSearchCriteria;
@@ -30,8 +32,10 @@ public class ArisingFileService {
 	private final ArisingFileEnrichment fileEnrichment;
 	private final ArisingFileRepository repository;
 
-	ArisingFileService(ArisingFileEnrichment fileEnrichment, @Qualifier("fmProducer") Producer producer, FMConfiguration fmConfig,ArisingFileRepository repository) {
+	private final ArisingFileValidator validator;
 
+	ArisingFileService(ArisingFileValidator validator, ArisingFileEnrichment fileEnrichment, @Qualifier("fmProducer") Producer producer, FMConfiguration fmConfig,ArisingFileRepository repository) {
+		this.validator = validator;
 		this.fileEnrichment = fileEnrichment;
 		this.producer = producer;
 		this.fmConfig = fmConfig;
@@ -44,6 +48,26 @@ public class ArisingFileService {
 		fileEnrichment.enrichAriseFileCreate(request);
 
 		producer.push(fmConfig.getSaveArisingFileTopic(), request);
+		return request.getArisingFileDetail();
+	}
+	public List<ArisingFile> updateArisingFile(ArisingFileRequest request) {
+		List<String> arisingFileCode = request.getArisingFileDetail()
+				.stream()
+				.map(ArisingFile::getFileCode)
+				.collect(Collectors.toCollection(LinkedList::new));
+
+		// search database
+		List<ArisingFile> searchResult = repository.searchArisingFiles(ArisingFileSearchCriteria.builder()
+				.fileCode(arisingFileCode)
+				.build());
+
+		// validate request
+
+		validator.validateArisingFileUpdate(request, searchResult);
+		fileEnrichment.enrichArisingFileUpdate(request);
+
+		producer.push(fmConfig.getUpdateArisingFileTopic(), request);
+
 		return request.getArisingFileDetail();
 	}
 

@@ -37,7 +37,19 @@ public class ArisingFileEnrichment extends BaseEnrichment {
         
 	}
 
-	 private void setFileCodes(final ArisingFileRequest request) {
+	public void enrichArisingFileUpdate(ArisingFileRequest request) {
+
+		RequestInfo requestInfo = request.getRequestInfo();
+		User userInfo = requestInfo.getUserInfo();
+
+		AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
+
+		request.getArisingFileDetail()
+				.forEach(arisingfile -> arisingfile.setAuditDetails(auditDetails));
+	}
+
+
+	private void setFileCodes(final ArisingFileRequest request) {
 	        final RequestInfo requestInfo = request.getRequestInfo();
 	        final List <ArisingFile> files = request.getArisingFileDetail();
 	        String tenantId = null;                
