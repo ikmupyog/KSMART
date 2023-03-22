@@ -290,11 +290,12 @@ const MarriageRegistration = ({ config, onSelect, userType, formData,isEditMarri
                 </CardLabel>
                 <DatePicker
                   date={marriageDOM}
+                  isMandatory={false}
                   name="marriageDOM"
                   onChange={setSelectmarriageDOM}
                   inputFormat="DD-MM-YYYY"
                   placeholder={`${t("CR_DATE_OF_MARRIAGE")}`}
-                  {...(validation = { isRequired: true, title: t("CR_DATE_OF_MARRIAGE") })}
+                  {...(validation = { isRequired: true, title: t("CR_INVALID_DATE_OF_MARRIAGE") })}
                 />
               </div>
             </div>
@@ -315,7 +316,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData,isEditMarri
                 </CardLabel>
                 <Dropdown
                   t={t}
-                  isMandatory={false}
+                  isMandatory={true}
                   optionKey="name"
                   option={cmbDistrict}
                   name="marriageDistrict"
@@ -323,6 +324,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData,isEditMarri
                   select={setSelectmarriageDistrict}
                   selected={marriageDistrict}
                   placeholder={t("CS_COMMON_DISTRICT'")}
+                  {...(validation = { isRequired: true, title: t("CR_COMMON_INVALID_DISTRICT") })}
                 />
               </div>
               <div className="col-md-4">
@@ -332,6 +334,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData,isEditMarri
                 </CardLabel>
                 <Dropdown
                   t={t}
+                  isMandatory={true}
                   optionKey="name"
                   option={cmbTaluk}
                   name="marriageTalukID"
@@ -339,6 +342,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData,isEditMarri
                   select={setSelectmarriageTalukID}
                   selected={marriageTalukID}
                   placeholder={t("CS_COMMON_TALUK'")}
+                  {...(validation = { isRequired: true, title: t("CR_COMMON_INVALID_TALUK") })}
                 />
               </div>
               <div className="col-md-4">
@@ -349,12 +353,14 @@ const MarriageRegistration = ({ config, onSelect, userType, formData,isEditMarri
                 <Dropdown
                   t={t}
                   optionKey="name"
+                  isMandatory={true}
                   option={cmbVillage}
                   name="marriageVillageName"
                   value={marriageVillageName}
                   select={setSelectmarriageVillageName}
                   selected={marriageVillageName}
                   placeholder={t("CS_COMMON_VILLAGE'")}
+                  {...(validation = { isRequired: true, title: t("CR_COMMON_INVALID_VILLAGE") })}
                 />
               </div>
             </div>
@@ -369,29 +375,32 @@ const MarriageRegistration = ({ config, onSelect, userType, formData,isEditMarri
                 <Dropdown
                   t={t}
                   optionKey="name"
+                  isMandatory={true}
                   option={cmbLBType}
                   name="marriageLBtype"
                   value={marriageLBtype}
                   select={setSelectmarriageLBtype}
                   selected={marriageLBtype}
                   placeholder={t("CS_LBTYPE'")}
+                  {...(validation = { isRequired: true, title: t("CR_INVALID_LBTYPE") })}
                 />
               </div>
               <div className="col-md-4">
                 <CardLabel>
                   {`${t("CS_LB")}`}
-                  {/* <span className="mandatorycss">*</span> */}
+                  <span className="mandatorycss">*</span>
                 </CardLabel>
                 <Dropdown
                   t={t}
                   optionKey="code"
-                  isMandatory={false}
+                  isMandatory={true}
                   option={cmbLB}
                   name="marriageTenantid"
                   value={marriageTenantid}
                   selected={marriageTenantid}
                   select={setSelectmarriageTenantid}
                   placeholder={`${t("CS_LB")}`}
+                  {...(validation = { isRequired: true, title: t("CR_INVALID_LB") })}
                 />
               </div>
               <div className="col-md-4">
@@ -402,11 +411,12 @@ const MarriageRegistration = ({ config, onSelect, userType, formData,isEditMarri
                 <Dropdown
                   t={t}
                   optionKey="namecmb"
+                  isMandatory={true}
                   placeholder={t("CS_COMMON_WARD'")}
                   option={cmbWardNoFinal}
                   selected={marriageWardCode}
                   select={setSelectmarriageWardCode}
-                  {...(validation = { isRequired: false, title: t("CS_COMMON_INVALID_WARD") })}
+                  {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
                 />
               </div>
             </div>
@@ -426,7 +436,8 @@ const MarriageRegistration = ({ config, onSelect, userType, formData,isEditMarri
                   selected={marriagePlacetype}
                   select={setSelectmarriagePlacetype}
                   placeholder={t("CR_MARRIAGE_PLACE_TYPE")}
-                  isMandatory={false}
+                  isMandatory={true}
+                  {...(validation = { isRequired: true, title: t("CS_INVALID_MARRIAGE_PLACE_TYPE") })}
                   // option={cmbCountry}
                 />
               </div>
@@ -443,7 +454,8 @@ const MarriageRegistration = ({ config, onSelect, userType, formData,isEditMarri
                   selected={marriagePlacenameEn}
                   select={setSelectmarriagePlacenameEn}
                   placeholder={t("CR_NAME_OF_PLACE_EN")}
-                  isMandatory={false}
+                  isMandatory={true}
+                  {...(validation = { isRequired: true, title: t("CS_INVALID_MARRIAGE_PLACE_EN") })}
                   // option={cmbCountry}
                 />
               </div>
@@ -460,7 +472,8 @@ const MarriageRegistration = ({ config, onSelect, userType, formData,isEditMarri
                   selected={marriagePlacenameMal}
                   select={setSelectmarriagePlacenameMal}
                   placeholder={t("CR_NAME_OF_PLACE_MAL")}
-                  isMandatory={false}
+                  isMandatory={true}
+                  {...(validation = { isRequired: true, title: t("CS_INVALID_MARRIAGE_PLACE_MAL") })}
                   // option={cmbCountry}
                 />
               </div>
@@ -488,7 +501,8 @@ const MarriageRegistration = ({ config, onSelect, userType, formData,isEditMarri
                   selected={marriageType}
                   select={setSelectmarriageType}
                   placeholder={t("CR_MARRIAGE_TYPE")}
-                  isMandatory={false}
+                  isMandatory={true}
+                  {...(validation = { isRequired: true, title: t("CR_INVALID_MARRIAGE_TYPE") })}
                   // option={cmbCountry}
                 />
               </div>
@@ -508,7 +522,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData,isEditMarri
                   disable={isDisableEdit}
                   placeholder={`${t("CR_MARRIAGE_OTHER_SPECIFY")}`}
                   
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", })}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text",title: t("CR_INVALID_MARRIAGE_OTHER") })}
                 />
               </div>
             </div>

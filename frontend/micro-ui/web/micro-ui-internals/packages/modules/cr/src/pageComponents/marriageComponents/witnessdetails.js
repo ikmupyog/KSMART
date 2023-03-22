@@ -11,6 +11,7 @@ import {
   Loader,
   Toast,
   SubmitBar,
+  TextArea,
 } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/MARRIAGETimeline";
 import { useTranslation } from "react-i18next";
@@ -402,8 +403,8 @@ const WitnessDetails = ({ config, onSelect, userType, formData,isEditWitness }) 
     return (
       <React.Fragment>
         <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-        {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
-        {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
+        {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
+        {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
         <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
           <div className="row">
             <div className="col-md-12">
@@ -475,7 +476,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData,isEditWitness }) 
                 {`${t("CR_WITNESS1_ADDRESS")}`}
                 <span className="mandatorycss">*</span>
               </CardLabel>
-              <TextInput
+              <TextArea
                 t={t}
                 type={"text"}
                 optionKey="i18nKey"
@@ -567,7 +568,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData,isEditWitness }) 
                 {`${t("CR_WITNESS2_ADDRESS")}`}
                 <span className="mandatorycss">*</span>
               </CardLabel>
-              <TextInput
+              <TextArea
                 t={t}
                 type={"text"}
                 optionKey="i18nKey"
