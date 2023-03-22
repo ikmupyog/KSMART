@@ -9,7 +9,6 @@ import org.ksmart.marriage.marriageapplication.model.marriage.*;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
 
 @Getter
 @Setter
@@ -149,7 +148,6 @@ public class MarriageApplicationDetail {
     @JsonProperty("placeid")
     private String placeid;
 
-
     @Size(max = 2500)
     @JsonProperty("marriageHouseNoAndNameEn")
     private String marriageHouseNoAndNameEn;
@@ -196,15 +194,14 @@ public class MarriageApplicationDetail {
     @JsonProperty("GroomDetails")
     private GroomDetails groomDetails;
     @JsonProperty("PermanentAddressDetails")
-    private PermanentAdressDetails permanent;
+    private PermanentAdressDetails permanentBride;
     @JsonProperty("PresentAddressDetails")
     private PresentAddressDetails present ;
 
     @JsonProperty("WitnessDetail")
     private WitnessDetails witness;
 
-//    @JsonProperty("WitnessDetails")
-//    private WitnessDetails witness;
+
 
 
 }

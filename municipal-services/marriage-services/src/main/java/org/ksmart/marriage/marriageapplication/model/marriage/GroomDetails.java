@@ -23,8 +23,6 @@ public class GroomDetails {
     @JsonProperty("groomAdharNo")
     private String adharno;
 
-
-
     @Size(max = 1000)
     @JsonProperty("groomPassportNo")
     private String passportno;

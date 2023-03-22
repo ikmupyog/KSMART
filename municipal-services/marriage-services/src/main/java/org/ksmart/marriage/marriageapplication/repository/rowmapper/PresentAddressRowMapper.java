@@ -1,6 +1,5 @@
 package org.ksmart.marriage.marriageapplication.repository.rowmapper;
 
-import org.ksmart.marriage.marriageapplication.model.marriage.PermanentAdressDetails;
 import org.ksmart.marriage.marriageapplication.model.marriage.PresentAddressDetails;
 
 import java.sql.ResultSet;

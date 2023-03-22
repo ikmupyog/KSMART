@@ -9,7 +9,7 @@ public interface WitnessDetailsRowMapper {
     default WitnessDetails getWitnessDetails(ResultSet rs) throws SQLException {
 
         return WitnessDetails.builder()
-                .id(rs.getString("wd_id"))
+//                .id(rs.getString("wd_id"))
                 .adharno(rs.getString("wd_adharno"))
                 .name_en(rs.getString("wd_name_en"))
                 .name_mal(rs.getString("wd_name_mal"))
@@ -17,18 +17,8 @@ public interface WitnessDetailsRowMapper {
                 .address_en(rs.getString("wd_address_en"))
                 .address_mal(rs.getString("wd_address_mal"))
                 .mobile(rs.getString("wd_mobile"))
-                .is_message_received(Boolean.valueOf(rs.getString("wd_is_message_received")))
                 .is_esigned(Boolean.valueOf(rs.getString("wd_is_esigned")))
                 .marriageid(rs.getString("wd_marriageid"))
-                .w2Adharno(rs.getString("wd_w2_adharno"))
-                .w2Age(Integer.valueOf(rs.getString("wd_w2_age")))
-                .w2Name_en(rs.getString("wd_w2_name_en"))
-                .w2Address_mal(rs.getString("wd_w2_name_mal"))
-                .w2Address_en(rs.getString("wd_w2_address_en"))
-                .w2Name_mal(rs.getString("wd_w2_address_mal"))
-                .w2Mobile(rs.getString("wd_w2_mobile"))
-                .w2Is_esigned(Boolean.valueOf(rs.getString("wd_w2_is_esigned")))
-                .w2Is_message_received(Boolean.valueOf(rs.getString("wd_w2_is_message_received")))
                 .build();
     }
 

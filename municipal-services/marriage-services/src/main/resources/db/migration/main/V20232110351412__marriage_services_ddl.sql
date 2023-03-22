@@ -98,6 +98,6 @@ DROP COLUMN w2_is_esigned,
 DROP COLUMN is_message_received;
 
 
-ALTER TABLE public.eg_register_marriage_witness_details
-ADD COLUMN serial_no bigint,
-DROP COLUMN is_message_received;
+--ALTER TABLE public.eg_register_marriage_witness_details
+--ADD COLUMN serial_no bigint,
+--DROP COLUMN is_message_received;

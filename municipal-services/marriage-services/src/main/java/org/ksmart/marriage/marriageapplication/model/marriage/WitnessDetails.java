@@ -14,9 +14,14 @@ public class WitnessDetails {
 
    @NotNull
     @Size(max = 64)
-    @JsonProperty("id")
-    private String id;
-    @Size(max = 15)
+    @JsonProperty("id1")
+    private String id1;
+
+     @NotNull
+     @Size(max = 64)
+     @JsonProperty("id2")
+     private String id2;
+     @Size(max = 15)
     @JsonProperty("witness1AdharNo")
     private String adharno;
 
@@ -45,55 +50,46 @@ public class WitnessDetails {
     @JsonProperty("witness1Mobile")
     private String mobile;
 
-
-    @JsonProperty("witness1ISmessageReceived")
-    private Boolean is_message_received;
-
     @JsonProperty("witness1ISEsigned")
     private     Boolean is_esigned;
 
-
-
-    @Size(max = 15)
-    @JsonProperty("witness2AdharNo")
-    private String w2Adharno;
-
-    @Size(max = 200)
-    @JsonProperty("witness2NameEn")
-    private String w2Name_en;
-
-
-    @Size(max = 200)
-    @JsonProperty("witness2NameMal")
-    private String w2Name_mal;
-
-
-    @JsonProperty("witness2Age")
-    private Integer w2Age;
-
-    @Size(max = 200)
-    @JsonProperty("witness2AddresSEn")
-    private String w2Address_en;
-
-    @Size(max = 200)
-    @JsonProperty("witness2AddressMal")
-    private String w2Address_mal;
-
-    @Size(max = 150)
-    @JsonProperty("witness2Mobile")
-    private String w2Mobile;
-
-
-    @JsonProperty("witness2ISmessageReceived")
-    private Boolean w2Is_message_received;
-
-    @JsonProperty("witness2ISEsigned")
-    private     Boolean w2Is_esigned;
     @NotNull
     @Size(max = 64)
     @JsonProperty("marriageid")
     private String marriageid;
+   @JsonProperty("serial_no1")
+   private Integer serial_no1;
+ @JsonProperty("serial_no2")
+ private Integer serial_no2;
+    @Size(max = 15)
+    @JsonProperty("witness2AdharNo")
+    private String witness2AdharNo;
 
+    @Size(max = 200)
+    @JsonProperty("witness2NameEn")
+    private String witness2NameEn;
+
+    @Size(max = 200)
+    @JsonProperty("witness2NameMal")
+    private String witness2NameMal;
+
+
+    @JsonProperty("witness2Age")
+    private Integer witness2Age;
+
+    @Size(max = 200)
+    @JsonProperty("witness2AddresSEn")
+    private String witness2AddresSEn;
+
+    @Size(max = 200)
+    @JsonProperty("witness2AddressMal")
+    private String witness2AddressMal;
+
+    @Size(max = 150)
+    @JsonProperty("witness2Mobile")
+    private String witness2Mobile;
+    @JsonProperty("witness2ISEsigned")
+    private     Boolean witness2ISEsigned;
 
 
 

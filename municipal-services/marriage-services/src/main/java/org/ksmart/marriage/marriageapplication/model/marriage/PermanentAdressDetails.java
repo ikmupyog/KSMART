@@ -13,101 +13,191 @@ import javax.validation.constraints.Size;
 public class PermanentAdressDetails {
     @NotNull
     @Size(max = 64)
-    @JsonProperty("id")
-    private String id;
+    @JsonProperty("id1")
+    private String id1;
+
     @Size(max = 200)
-    @JsonProperty("permanentHouseNo")
-    private String houseno;
+    @JsonProperty("permanentHouseNoBride")
+    private String housenoBride;
 
     @Size(max = 2500)
-    @JsonProperty("permanentHouseNameEn")
-    private String housename_no_en;
+    @JsonProperty("permanentHouseNameEnBride")
+    private String housename_no_enBride;
 
     @Size(max = 2500)
-    @JsonProperty("permanentHouseNameMal")
-    private String housename_no_ml;
+    @JsonProperty("permanentHouseNameMalBride")
+    private String housename_no_mlBride;
 
     @Size(max = 64)
-    @JsonProperty("permanentVillageId")
-    private String villageid;
+    @JsonProperty("permanentVillageIdBride")
+    private String villageidBride;
 
     @Size(max = 1000)
-    @JsonProperty("permanentVillageName")
-    private String village_name;
+    @JsonProperty("permanentVillageNameBride")
+    private String village_nameBride;
 
     @Size(max = 64)
-    @JsonProperty("permanentTalukID")
-    private String talukid;
+    @JsonProperty("permanentTalukIDBride")
+    private String talukidBride;
 
     @Size(max = 1000)
-    @JsonProperty("permanentTalukName")
-    private String taluk_name;
+    @JsonProperty("permanentTalukNameBride")
+    private String taluk_nameBride;
 
     @Size(max = 64)
-    @JsonProperty("permanentWardCode")
-    private String ward_code;
+    @JsonProperty("permanentWardCodeBride")
+    private String ward_codeBride;
 
-
-
-
-    @JsonProperty("permanentDoorNO")
-    private Integer doorno;
+    @JsonProperty("permanentDoorNOBride")
+    private Integer doornoBride;
 
     @Size(max = 1000)
-    @JsonProperty("permanentLocalityEn")
-    private String locality_en;
+    @JsonProperty("permanentLocalityEnBride")
+    private String locality_enBride;
 
     @Size(max = 1000)
-    @JsonProperty("permanentLocalityMal")
-    private String locality_ml;
+    @JsonProperty("permanentLocalityMalBride")
+    private String locality_mlBride;
 
     @Size(max = 2000)
-    @JsonProperty("permanentStreetNameEn")
-    private String street_name_en;
+    @JsonProperty("permanentStreetNameEnBride")
+    private String street_name_enBride;
 
     @Size(max = 2000)
-    @JsonProperty("permanentStreetNameMal")
-    private String street_name_ml;
+    @JsonProperty("permanentStreetNameMalBride")
+    private String street_name_mlBride;
 
 
     @Size(max = 64)
-    @JsonProperty("permanentDistrictId")
-    private String districtid;
+    @JsonProperty("permanentDistrictIdBride")
+    private String districtidBride;
 
 
 
 
     @Size(max = 64)
-    @JsonProperty("permanentStateId")
-    private String stateid;
+    @JsonProperty("permanentStateIdBride")
+    private String stateidBride;
 
     @Size(max = 64)
-    @JsonProperty("permanentPOid")
-    private String poid;
+    @JsonProperty("permanentPOidBride")
+    private String poidBride;
 
     @Size(max = 10)
-    @JsonProperty("permanentPin")
-    private String pinno;
+    @JsonProperty("permanentPinBride")
+    private String pinnoBride;
 
     @Size(max = 64)
-    @JsonProperty("permanentCountryId")
-    private String countryid;
+    @JsonProperty("permanentCountryIdBride")
+    private String countryidBride;
     @NotNull
     @Size(max = 64)
-    @JsonProperty("marriageid")
-    private String marriageid;
+    @JsonProperty("marriageidBride")
+    private String marriageidBride;
     @NotNull
     @Size(max = 64)
-    @JsonProperty("brideGroom")
-    private String brideGroom;
+    @JsonProperty("brideGroom1")
+    private String brideGroom1;
     @Size(max = 64)
-    @JsonProperty("marriageTenantid")
-    private String tenantid;
+    @JsonProperty("marriageTenantidBride")
+    private String tenantidBride;
     @Size(max = 64)
-    @JsonProperty("poname_en")
-    private String poname_en;
+    @JsonProperty("ponameEnBride")
+    private String poname_enBride;
 
 
 
 
+    @NotNull
+    @Size(max = 64)
+    @JsonProperty("id2")
+    private String id2;
+    @Size(max = 200)
+    @JsonProperty("permanentHouseNoGroom")
+    private String housenoGroom;
+
+    @Size(max = 2500)
+    @JsonProperty("permanentHouseNameEnGroom")
+    private String housename_no_enGroom;
+
+    @Size(max = 2500)
+    @JsonProperty("permanentHouseNameMalGroom")
+    private String housename_no_mlGroom;
+
+    @Size(max = 64)
+    @JsonProperty("permanentVillageIdGroom")
+    private String villageidGroom;
+
+    @Size(max = 1000)
+    @JsonProperty("permanentVillageNameGroom")
+    private String village_nameGroom;
+
+    @Size(max = 64)
+    @JsonProperty("permanentTalukIDGroom")
+    private String talukidGroom;
+
+    @Size(max = 1000)
+    @JsonProperty("permanentTalukNameGroom")
+    private String taluk_nameGroom;
+
+    @Size(max = 64)
+    @JsonProperty("permanentWardCodeGroom")
+    private String ward_codeGroom;
+
+    @JsonProperty("permanentDoorNOGroom")
+    private Integer doornoGroom;
+
+    @Size(max = 1000)
+    @JsonProperty("permanentLocalityEnGroom")
+    private String locality_enGroom;
+
+    @Size(max = 1000)
+    @JsonProperty("permanentLocalityMalGroom")
+    private String locality_mlGroom;
+
+    @Size(max = 2000)
+    @JsonProperty("permanentStreetNameEnGroom")
+    private String street_name_enGroom;
+
+    @Size(max = 2000)
+    @JsonProperty("permanentStreetNameMalGroom")
+    private String street_name_mlGroom;
+
+
+    @Size(max = 64)
+    @JsonProperty("permanentDistrictIdGroom")
+    private String districtidGroom;
+
+
+
+
+    @Size(max = 64)
+    @JsonProperty("permanentStateIdGroom")
+    private String stateidGroom;
+
+    @Size(max = 64)
+    @JsonProperty("permanentPOidGroom")
+    private String poidGroom;
+
+    @Size(max = 10)
+    @JsonProperty("permanentPinGroom")
+    private String pinnoGroom;
+
+    @Size(max = 64)
+    @JsonProperty("permanentCountryIdGroom")
+    private String countryidGroom;
+    @NotNull
+    @Size(max = 64)
+    @JsonProperty("marriageidGroom")
+    private String marriageidGroom;
+    @NotNull
+    @Size(max = 64)
+    @JsonProperty("brideGroom2")
+    private String brideGroom2;
+    @Size(max = 64)
+    @JsonProperty("marriageTenantidGroom")
+    private String tenantidGroom;
+    @Size(max = 64)
+    @JsonProperty("ponameEnGroom")
+    private String poname_enGroom;
 }

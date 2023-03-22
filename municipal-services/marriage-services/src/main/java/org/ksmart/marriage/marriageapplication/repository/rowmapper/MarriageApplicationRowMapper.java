@@ -62,7 +62,7 @@ public class MarriageApplicationRowMapper implements ResultSetExtractor<List<Mar
                             .marriageReligiousInstitutionOtherNameMal(rs.getString("ma_religious_institution_othername_ml"))
                             .brideDetails(getBrideDetails(rs))
                             .groomDetails(getgroomDetails(rs))
-                            .permanent(getPermanentAddress(rs))
+//                            .permanent(getPermanentAddress(rs))
                             .present(getPresentAddress(rs))
                             .witness(getWitnessDetails(rs))
                             .auditDetails(getAuditDetails(rs))

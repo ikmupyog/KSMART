@@ -244,39 +244,39 @@ serviceMaps:
                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
           basePath: MarriageDetails.*.PermanentAddressDetails
           jsonMaps:
-            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.id
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.id1
 
-            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentHouseNameEn
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentHouseNameEnBride
 
-            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentHouseNameMal
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentHouseNameMalBride
 
-            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentVillageId
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentVillageIdBride
 
-            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentVillageName
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentVillageNameBride
 
-            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentTalukID
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentTalukIDBride
 
-            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentTalukName
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentTalukNameBride
 
-            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentWardCode
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentWardCodeBride
 
-            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentLocalityEn
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentLocalityEnBride
 
-            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentLocalityMal
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentLocalityMalBride
 
-            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentStreetNameEn
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentStreetNameEnBride
 
-            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentStreetNameMal
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentStreetNameMalBride
 
-            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentDistrictId
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentDistrictIdBride
 
-            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentStateId
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentStateIdBride
 
-            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentPOid
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentPOidBride
 
-            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentPin
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentPinBride
 
-            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentCountryId
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentCountryIdBride
 
             - jsonPath: $.MarriageDetails.*.id
 
@@ -288,11 +288,72 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.auditDetails.lastModifiedBy
 
-            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.brideGroom
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.brideGroom1
 
-            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.marriageTenantid
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.marriageTenantidBride
 
-            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.poname_en
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.ponameEnBride
+
+
+        - query: INSERT INTO public.eg_marriage_permanent_address_details(
+            id, housename_no_en, housename_no_ml, villageid, village_name, talukid, taluk_name, ward_code, locality_en,
+            locality_ml, street_name_en, street_name_ml, districtid, stateid, poid, pinno, countryid, marriageid, createdtime,
+            createdby, lastmodifiedtime, lastmodifiedby, bride_groom, tenantid , poname_en)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+          basePath: MarriageDetails.*.PermanentAddressDetails
+          jsonMaps:
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.id2
+
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentHouseNameEnGroom
+
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentHouseNameMalGroom
+
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentVillageIdGroom
+
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentVillageNameGroom
+
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentTalukIDGroom
+
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentTalukNameGroom
+
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentWardCodeGroom
+
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentLocalityEnGroom
+
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentLocalityMalGroom
+
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentStreetNameEnGroom
+
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentStreetNameMalGroom
+
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentDistrictIdGroom
+
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentStateIdGroom
+
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentPOidGroom
+
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentPinGroom
+
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.permanentCountryIdGroom
+
+            - jsonPath: $.MarriageDetails.*.id
+
+            - jsonPath: $.MarriageDetails.*.auditDetails.createdTime
+
+            - jsonPath: $.MarriageDetails.*.auditDetails.createdBy
+
+            - jsonPath: $.MarriageDetails.*.auditDetails.lastModifiedTime
+
+            - jsonPath: $.MarriageDetails.*.auditDetails.lastModifiedBy
+
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.brideGroom2
+
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.marriageTenantidGroom
+
+            - jsonPath: $.MarriageDetails.*.PermanentAddressDetails.ponameEnGroom
+
+
+
 
 
         - query: INSERT INTO public.eg_marriage_present_address_details(
@@ -354,11 +415,78 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.PresentAddressDetails.poname_en
 
+        - query: INSERT INTO public.eg_marriage_witness_details(
+                  id, adharno, name_en, name_mal, age, address_en, address_mal, mobile, is_esigned, marriageid, createdtime,
+                  createdby, lastmodifiedtime, lastmodifiedby, serial_no)
+                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+          basePath: MarriageDetails.*.WitnessDetail
+          jsonMaps:
 
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.id1
 
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness1AdharNo
 
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness1NameEn
 
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness1NameMal
 
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness1Age
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness1AddresSEn
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness1AddressMal
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness1Mobile
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness1ISEsigned
+
+            - jsonPath: $.MarriageDetails.*.id
+
+            - jsonPath: $.MarriageDetails.*.auditDetails.createdTime
+
+            - jsonPath: $.MarriageDetails.*.auditDetails.createdBy
+
+            - jsonPath: $.MarriageDetails.*.auditDetails.lastModifiedTime
+
+            - jsonPath: $.MarriageDetails.*.auditDetails.lastModifiedBy
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.serial_no1
+
+        - query: INSERT INTO public.eg_marriage_witness_details(
+            id, adharno, name_en, name_mal, age, address_en, address_mal, mobile, is_esigned, marriageid, createdtime,
+            createdby, lastmodifiedtime, lastmodifiedby, serial_no)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+          basePath: MarriageDetails.*.WitnessDetail
+          jsonMaps:
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.id2
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness2AdharNo
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness2NameEn
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness2NameMal
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness2Age
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness2AddresSEn
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness2AddressMal
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness2Mobile
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness2ISEsigned
+
+            - jsonPath: $.MarriageDetails.*.id
+
+            - jsonPath: $.MarriageDetails.*.auditDetails.createdTime
+
+            - jsonPath: $.MarriageDetails.*.auditDetails.createdBy
+
+            - jsonPath: $.MarriageDetails.*.auditDetails.lastModifiedTime
+
+            - jsonPath: $.MarriageDetails.*.auditDetails.lastModifiedBy
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetail.serial_no2
 
 
 
