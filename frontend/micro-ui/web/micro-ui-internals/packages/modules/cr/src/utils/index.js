@@ -635,6 +635,27 @@ export const convertToBirthRegistration = (data = {}) => {
           isInitiatorDeclaration: data?.InitiatorinfoDetails?.isInitiatorDeclaration,
           isCaretaker: data?.InitiatorinfoDetails?.isCaretaker,
         },
+        "Demands": [
+          {
+              "tenantId": "kl.cochin",
+              "consumerCode": "AK-45-2023-CRBRNR-C-KOCHI-KL",
+              "consumerType": "FEE",
+              "businessService": "CR",
+              "taxPeriodFrom": "1554076800000",
+              "taxPeriodTo": "1901145600000",
+              "demandDetails": [
+                  {
+                      "taxHeadMasterCode": "CRB_FEES",
+                      "taxAmount": 12,
+                      "collectionAmount": 0
+                  }
+              ],
+              "minimumAmountPayable": 12,
+              "additionalDetails": {
+                  "HI": "hi"
+              }
+          }
+      ]
       },
     ],
   };
