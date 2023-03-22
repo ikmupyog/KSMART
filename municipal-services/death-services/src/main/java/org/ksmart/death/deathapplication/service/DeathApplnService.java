@@ -13,6 +13,7 @@ import org.ksmart.death.deathapplication.config.DeathConfiguration;
 import org.ksmart.death.deathapplication.enrichment.DeathEnrichment;
 import org.ksmart.death.deathapplication.kafka.producer.DeathProducer;
 import org.ksmart.death.deathapplication.repository.DeathApplnRepository;
+import org.ksmart.death.deathapplication.util.DeathConstants;
 import org.ksmart.death.deathapplication.util.DeathMdmsUtil;
 import org.ksmart.death.deathapplication.validators.DeathApplnValidator;
 import org.ksmart.death.deathapplication.validators.DeathMDMSValidator;
@@ -23,6 +24,7 @@ import org.ksmart.death.deathapplication.web.models.DeathCorrectionRequest;
 import org.ksmart.death.deathapplication.web.models.DeathDtl;
 import org.ksmart.death.deathapplication.web.models.DeathDtlRequest;
 import org.ksmart.death.deathapplication.web.models.DeathSearchCriteria;
+import org.ksmart.death.deathapplication.web.models.Demand.Demand;
 import org.ksmart.death.workflow.WorkflowIntegrator;
 import org.egov.common.contract.request.RequestInfo;
 
@@ -81,7 +83,7 @@ public class DeathApplnService {
      public List<DeathDtl> create(DeathDtlRequest request) {
           // Rakhi S IKM validate mdms data on 14.02.2023
           Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getTenantId());
-          // mdmsValidator.validateDeathMDMSData(request,mdmsData);
+          mdmsValidator.validateDeathMDMSData(request,mdmsData);
           //Rakhi S ikm on 08.02.2023
           enrichmentService.setPresentAddress(request);
           enrichmentService.setPermanentAddress(request);
@@ -90,6 +92,19 @@ public class DeathApplnService {
          //RAkhi S ikm  on 06.02.2023         
           producer.push(deathConfig.getSaveDeathDetailsTopic(), request);
           workflowIntegrator.callWorkFlow(request);
+
+          //Rakhi S on 21.03.2023
+          request.getDeathCertificateDtls().forEach(death->{
+               if(death.getApplicationStatus() == DeathConstants.STATUS_FOR_PAYMENT){
+                   List<Demand> demands = new ArrayList<>();
+                   Demand demand = new Demand();
+                   demand.setTenantId(death.getDeathBasicInfo().getTenantId());
+                   demand.setConsumerCode(death.getDeathBasicInfo().getDeathACKNo());
+                   demands.add(demand);
+                   enrichmentService.saveDemand(request.getRequestInfo(),demands);
+               }
+           });         
+
           return request.getDeathCertificateDtls();
      }
 
@@ -103,14 +118,6 @@ public class DeathApplnService {
           
           enrichmentService.setPresentAddress(request);
           enrichmentService.setPermanentAddress(request);
-     //      try {
-     //           ObjectMapper mapper = new ObjectMapper();
-     //           Object obj = request;
-     //           mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-     //          System.out.println("AfterUpdate "+ mapper.writeValueAsString(obj));
-     //   }catch(Exception e) {
-     //       log.error("Exception while fetching from searcher: ",e);
-     //   }
           String ackNumber = request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getDeathACKNo();
           DeathSearchCriteria criteria =(DeathSearchCriteria.builder()
                                         .deathACKNo(ackNumber)

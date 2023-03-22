@@ -142,4 +142,7 @@ public class DeathConstants {
 
     public static final String HOSPITAL_DATA="hospitalList";
 
+    //Rakhi S  on 21.03.2023
+    public static final String STATUS_FOR_PAYMENT = "PENDINGPAYMENT";
+
 }
