@@ -99,7 +99,38 @@ public class IdGenerationService {
 
     }
 
-    ;
+    
+
+//    /**
+//     * Description : This method to generate id
+//     *
+//     * @param idRequest
+//     * @param requestInfo
+//     * @return generatedId
+//     * @throws Exception
+//     */
+//    private List generateIdFromIdRequest(IdRequest idRequest, RequestInfo requestInfo) throws Exception {
+//
+//        List<String> generatedId = new LinkedList<>();
+//        String idFormat = null;
+// 
+//        if (!StringUtils.isEmpty(idRequest.getIdName()))
+//        {
+//            // If IDName is specified then check if it is defined in MDMS
+//             idFormat = getIdFormatFinal(idRequest, requestInfo);
+//            if (StringUtils.isEmpty(idFormat))
+//                throw new CustomException("ID_NOT_FOUND",
+//                        "No Format is available in the MDMS for the given name and tenant");
+//            
+//            // If the idname is defined then the format should be used
+//            // else fallback to the format in the request itself
+//            if (!StringUtils.isEmpty(idFormat)){
+//                idRequest.setFormat(idFormat);
+//            }
+//        }
+// 
+//        return getFormattedId(idRequest, requestInfo,idFormat);
+//    }
 
     /**
      * Description : This method to generate id
@@ -113,39 +144,31 @@ public class IdGenerationService {
 
         List<String> generatedId = new LinkedList<>();
         String idFormat = null;
-//        boolean autoCreateNewSeqFlag = false;
+        boolean autoCreateNewSeqFlag = false;
         if (!StringUtils.isEmpty(idRequest.getIdName()))
         {
             // If IDName is specified then check if it is defined in MDMS
              idFormat = getIdFormatFinal(idRequest, requestInfo);
-            if (StringUtils.isEmpty(idFormat))
-                throw new CustomException("ID_NOT_FOUND",
-                        "No Format is available in the MDMS for the given name and tenant");
-            
+
             // If the idname is defined then the format should be used
             // else fallback to the format in the request itself
             if (!StringUtils.isEmpty(idFormat)){
                 idRequest.setFormat(idFormat);
+                autoCreateNewSeqFlag=true;
+            }else if(StringUtils.isEmpty(idFormat)){
+                autoCreateNewSeqFlag=false;
+                throw new CustomException("ID_NOT_FOUND",
+                        "No Format is available in the MDMS for the given name and tenant");
             }
         }
-//            autoCreateNewSeqFlag=false;            
-//            else if(StringUtils.isEmpty(idFormat)){
-//                autoCreateNewSeqFlag=true;
-//            }     
-        
-       
-        
-
+//
 //        if (StringUtils.isEmpty(idRequest.getFormat()))
 //            throw new CustomException("ID_NOT_FOUND",
 //                    "No Format is available in the MDMS for the given name and tenant");
 
-        
-//        return getFormattedId(idRequest, requestInfo,autoCreateNewSeqFlag);
-        return getFormattedId(idRequest, requestInfo,idFormat);
+        return getFormattedId(idRequest, requestInfo,autoCreateNewSeqFlag,idFormat);
     }
-
-
+    
     /**
      * Description : This method to generate Id when format is unknown and select MDMS or DB.
      *
@@ -219,7 +242,7 @@ public class IdGenerationService {
      * @throws Exception
      */
 
-    private List getFormattedId(IdRequest idRequest, RequestInfo requestInfo, String idFormat) throws Exception {
+    private List getFormattedId(IdRequest idRequest, RequestInfo requestInfo,boolean autoCreateNewSeqFlag, String idFormat) throws Exception {
         List<String> idFormatList = new LinkedList();
         
         //changes for seq number from function
@@ -260,14 +283,18 @@ public class IdGenerationService {
        	  
             for (String attributeName : matchList) {
             	 System.out.println("matchListvalue  :"+attributeName);
+            	 System.out.println("sequences  :"+sequences);
                 if (attributeName.substring(0, 3).equalsIgnoreCase("seq")) {
                 	
                     if (!sequences.containsKey(attributeName)) {
-//                        sequences.put(attributeName, generateSequenceNumber(attributeName, requestInfo, idRequest,autoCreateNewSeqFlag));                        
-                  
+                    	if(StringUtils.isEmpty(moduleCode)) {
+                        sequences.put(attributeName, generateSequenceNumber(attributeName, requestInfo, idRequest,autoCreateNewSeqFlag));    
+                    	}
+                    	else {
                     // new changes set sequence number from function 
                     	 sequences.put(attributeName,getNewID(tenantId, Year, moduleCode, fnType));                 	 
                     //End    
+                    	}
                     	 
                     }
 					idFormat = idFormat.replace("[" + attributeName + "]", sequences.get(attributeName).get(i));
@@ -517,46 +544,46 @@ public class IdGenerationService {
      * @param requestInfo
      * @return seqNumbe
      */
-//    private List<String> generateSequenceNumber(String sequenceName, RequestInfo requestInfo, IdRequest idRequest,boolean autoCreateNewSeqFlag) throws Exception {
-//        Integer count = getCount(idRequest);
-//        List<String> sequenceList = new LinkedList<>();
-//        List<String> sequenceLists = new LinkedList<>();
-//         
-//        
-//        String sequenceSql = "SELECT NEXTVAL ('" + sequenceName + "') FROM GENERATE_SERIES(1,?)";
-//        
-//        try {
-//            sequenceList = jdbcTemplate.queryForList(sequenceSql, new Object[]{count}, String.class);
-//            
-//          
-//        } catch (BadSqlGrammarException ex) {
-//            if (ex.getSQLException().getSQLState().equals("42P01")){
-//                try{
-//                    if (sequenceList.isEmpty() && autoCreateNewSeqFlag && autoCreateNewSeq){
-//                    	   
-//                        createSequenceInDb(sequenceName);
-//                        sequenceList = jdbcTemplate.queryForList(sequenceSql, new Object[]{count}, String.class);
-//                        
-//                    }
-//                    else if(sequenceList.isEmpty() && !autoCreateNewSeqFlag)
-//                        throw new CustomException("SEQ_DOES_NOT_EXIST","auto creation of seq is not allowed in DB");
-//                }catch(Exception e) {
-//                    throw new CustomException("ERROR_CREATING_SEQ","Error occurred while auto creating seq in DB");
-//                }
-//            }else{
-//                throw new CustomException("SEQ_NUMBER_ERROR","Error in retrieving seq number from DB");
-//            }
-//        } catch (Exception ex) {
-//            log.error("Error retrieving seq number from DB",ex);
-//            throw new CustomException("SEQ_NUMBER_ERROR","Error retrieving seq number from existing seq in DB");
-//        }
-//        
-//        for (String seqId : sequenceList) {
-//            String seqNumber = String.format("%06d", Integer.parseInt(seqId)).toString();
-//            sequenceLists.add(seqNumber.toString());
-//        }
-//       
-//        return sequenceLists;
-//    }
+    private List<String> generateSequenceNumber(String sequenceName, RequestInfo requestInfo, IdRequest idRequest,boolean autoCreateNewSeqFlag) throws Exception {
+        Integer count = getCount(idRequest);
+        List<String> sequenceList = new LinkedList<>();
+        List<String> sequenceLists = new LinkedList<>();
+         
+        
+        String sequenceSql = "SELECT NEXTVAL ('" + sequenceName + "') FROM GENERATE_SERIES(1,?)";
+        
+        try {
+            sequenceList = jdbcTemplate.queryForList(sequenceSql, new Object[]{count}, String.class);
+            
+          
+        } catch (BadSqlGrammarException ex) {
+            if (ex.getSQLException().getSQLState().equals("42P01")){
+                try{
+                    if (sequenceList.isEmpty() && autoCreateNewSeqFlag && autoCreateNewSeq){
+                    	   
+                        createSequenceInDb(sequenceName);
+                        sequenceList = jdbcTemplate.queryForList(sequenceSql, new Object[]{count}, String.class);
+                        
+                    }
+                    else if(sequenceList.isEmpty() && !autoCreateNewSeqFlag)
+                        throw new CustomException("SEQ_DOES_NOT_EXIST","auto creation of seq is not allowed in DB");
+                }catch(Exception e) {
+                    throw new CustomException("ERROR_CREATING_SEQ","Error occurred while auto creating seq in DB");
+                }
+            }else{
+                throw new CustomException("SEQ_NUMBER_ERROR","Error in retrieving seq number from DB");
+            }
+        } catch (Exception ex) {
+            log.error("Error retrieving seq number from DB",ex);
+            throw new CustomException("SEQ_NUMBER_ERROR","Error retrieving seq number from existing seq in DB");
+        }
+        
+        for (String seqId : sequenceList) {
+            String seqNumber = String.format("%06d", Integer.parseInt(seqId)).toString();
+            sequenceLists.add(seqNumber.toString());
+        }
+       
+        return sequenceLists;
+    }
 
 }
