@@ -274,7 +274,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
       : ""
   );
   const [HospitalNameMl, selectHospitalNameMl] = useState(
-    formData?.ChildDetInformationDeathails?.HospitalNameMl?.code
+    formData?.  InformationDeathails?.HospitalNameMl?.code
       ? formData?.InformationDeath?.HospitalNameMl
       : formData?.InformationDeath?.HospitalNameMl
       ? ""
@@ -505,7 +505,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
       let Difference_In_Time = today.getTime() - deathDate.getTime();
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       Difference_In_DaysRounded = Math.floor(Difference_In_Days);
-    } 
+    }
     // else {
     //   setFromDate(null);
     //   setDOBError(true);
@@ -534,7 +534,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
         let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
         Difference_In_DaysRounded = Math.floor(Difference_In_Days);
       }
-    } 
+    }
     // else {
     //   setToDate(null);
     //   setDOBError(true);
@@ -572,7 +572,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
       let Difference_In_Time = today.getTime() - deathDate.getTime();
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       Difference_In_DaysRounded = Math.floor(Difference_In_Days);
-    } 
+    }
     // else {
     //   setDateOfDeath(null);
     //   setDOBError(true);
@@ -581,7 +581,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
     //     setToast(false);
     //   }, 3000);
     // }
-
   }
   function selectReligion(value) {
     setSelectedReligion(value);
@@ -676,7 +675,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
   //   }
   // }
   function setSelectDeceasedAadharNumber(e) {
-    if (e.target.value.trim().length != 0) {
+    if (e.target.value.trim().length >= 0) {
       setDeceasedAadharNumber(
         e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
       );
@@ -1074,10 +1073,10 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
       sessionStorage.setItem("institutionNameCode", DeathPlaceInstId ? DeathPlaceInstId.code : null);
       sessionStorage.setItem("DeathPlaceInstId", DeathPlaceInstId ? DeathPlaceInstId.code : null);
       // if (validFlag === true) {
-        sessionStorage.setItem("DeceasedIdproofType", DeceasedIdproofType ? DeceasedIdproofType.code : null);
-        sessionStorage.setItem("DeceasedIdproofNo", DeceasedIdproofNo ? DeceasedIdproofNo : null);
-      
-        sessionStorage.setItem("DeceasedAadharNumber", DeceasedAadharNumber ? DeceasedAadharNumber : null);
+      sessionStorage.setItem("DeceasedIdproofType", DeceasedIdproofType ? DeceasedIdproofType.code : null);
+      sessionStorage.setItem("DeceasedIdproofNo", DeceasedIdproofNo ? DeceasedIdproofNo : null);
+
+      sessionStorage.setItem("DeceasedAadharNumber", DeceasedAadharNumber ? DeceasedAadharNumber : null);
 
       if (DeathPlace.code === "HOSPITAL") {
         //  ?sessionStorage.setItem("DeathPlace", DeathPlace.code);

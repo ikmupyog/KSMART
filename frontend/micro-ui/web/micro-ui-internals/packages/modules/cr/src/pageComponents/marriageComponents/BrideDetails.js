@@ -739,9 +739,9 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     return (
       <React.Fragment>
         <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-        {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
-        {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
-        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!brideDOB}>
+        {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
+        {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
+        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
           {/* <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
@@ -821,7 +821,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                   inputProps={{
                     maxLength: 12,
                   }}
-                  {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                  {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                   // {...(validation = { pattern: "^[0-9]{12}$", type: "number", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                 />
               </div>
@@ -829,7 +829,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                 {" "}
                 <CardLabel>
                   {t("CR_PASSPORT_NO")}
-                  <span className="mandatorycss">*</span>
+                  {/* <span className="mandatorycss">*</span> */}
                 </CardLabel>
                 <TextInput
                   t={t}
@@ -851,7 +851,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                 {" "}
                 <CardLabel>
                   {t("CR_SOCIAL_SECURITY_NO")}
-                  <span className="mandatorycss">*</span>
+                  {/* <span className="mandatorycss">*</span> */}
                 </CardLabel>
                 <TextInput
                   t={t}
@@ -938,7 +938,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
               </div>
               <div className="col-md-3">
                 {" "}
-                <CardLabel>{`${t("CR_BRIDE_MOBILE_NO")}`}</CardLabel>
+                <CardLabel>{`${t("CR_BRIDE_MOBILE_NO")}`}  <span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -949,7 +949,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                   onChange={setSelectbrideMobile}
                   disable={isDisableEdit}
                   placeholder={`${t("CR_BRIDE_MOBILE_NO")}`}
-                  {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: false, title: t("CR_INVALID_MOBILE_NO") })}
+                  {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })}
                 />
               </div>
             </div>
@@ -1024,7 +1024,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
               </div>
               <div className="col-md-3">
                 {" "}
-                <CardLabel>{`${t("CR_BRIDE_EMAIL")}`}</CardLabel>
+                <CardLabel>{`${t("CR_BRIDE_EMAIL")}`} <span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -1035,7 +1035,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                   onChange={setSelectbrideEmailid}
                   disable={isDisableEdit}
                   placeholder={`${t("CR_BRIDE_EMAIL")}`}
-                  {...(validation = { isRequired: false, title: t("CR_INVALID_EMAIL") })}
+                  {...(validation = { isRequired: true, title: t("CR_INVALID_EMAIL") })}
                 />
               </div>
             </div>
@@ -1055,7 +1055,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                   <Dropdown
                     t={t}
                     optionKey="code"
-                    isMandatory={true}
+                    isMandatory={false}
                     option={menu}
                     selected={brideGender}
                     select={setSelectbrideGender}
@@ -1094,6 +1094,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                     onChange={setSelectbrideAge}
                     disable={isDisableEdit}
                     placeholder={`${t("CR_AGE")}`}
+                    {...(validation = { isRequired: true, title: t("CR_INVALID_BRIDE_AGE") })}
                   />
                 </div>
               </div>
@@ -1101,7 +1102,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
             <div className="col-md-12">
               <div className="col-md-4">
                 {" "}
-                <CardLabel>{t("CR_MARIATAL_STATUS'")}</CardLabel>
+                <CardLabel>{t("CR_MARIATAL_STATUS'")} <span className="mandatorycss">*</span></CardLabel>
                 <Dropdown
                   t={t}
                   isMandatory={false}
@@ -1112,11 +1113,12 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                   select={setSelectbrideMaritalstatusID}
                   disable={isDisableEdit}
                   placeholder={t("CR_MARIATAL_STATUS")}
+                  {...(validation = { isRequired: true, title: t("CR_INVALID_BRIDE_MARITAL_STATUS") })}
                 />
               </div>
               <div className="col-md-4">
                 {" "}
-                <CardLabel>{t("CR_ANY_SPOUSE_IN_LIVING")}</CardLabel>
+                <CardLabel>{t("CR_ANY_SPOUSE_IN_LIVING")} <span className="mandatorycss">*</span></CardLabel>
                 <Dropdown
                   t={t}
                   isMandatory={false}
@@ -1126,12 +1128,13 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                   selected={brideSpouseLiving}
                   select={setSelectbrideSpouseLiving}
                   placeholder={t("CR_Y/N")}
+                  {...(validation = { isRequired: true, title: t("CR_INVALID_SPOUSE_LIVING") })}
                 />
               </div>
 
               <div className="col-md-4">
                 {" "}
-                <CardLabel>{t("CR_NO_OF_SPOUSE_LIVING")}</CardLabel>
+                <CardLabel>{t("CR_NO_OF_SPOUSE_LIVING")} <span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -1142,6 +1145,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                   onChange={setSelectbrideNoOfSpouse}
                   disable={isDisableEdit}
                   placeholder={t("CR_INT1-3")}
+                  {...(validation = { isRequired: true, title: t("CR_INVALID_NO_OF_SPOUSE_LIVING") })}
                 />
               </div>
             </div>
@@ -1206,7 +1210,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                   inputProps={{
                     maxLength: 12,
                   }}
-                  {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                  {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                   // {...(validation = { isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                 />
               </div>
@@ -1278,7 +1282,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                   inputProps={{
                     maxLength: 12,
                   }}
-                  {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                  {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                   // {...(validation = { isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                 />
               </div>
@@ -1350,7 +1354,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                   inputProps={{
                     maxLength: 12,
                   }}
-                  {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                  {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                   // {...(validation = { isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                 />
               </div>

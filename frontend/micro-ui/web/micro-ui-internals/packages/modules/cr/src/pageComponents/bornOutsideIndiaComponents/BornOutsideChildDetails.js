@@ -27,6 +27,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
   let validation = {};
   const { data: Menu, isLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
   const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
+  const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "WorkFlowBirth");
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
@@ -41,6 +42,12 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
       return null;
     }
   };
+  WorkFlowDetails &&
+    WorkFlowDetails["birth-death-service"] && WorkFlowDetails["birth-death-service"].WorkFlowBirth &&
+    WorkFlowDetails["birth-death-service"].WorkFlowBirth.map((ob) => {
+      workFlowData.push(ob);
+      // console.log(workFlowData);
+    });
   let cmbCountry = [];
   Country &&
     Country["common-masters"] &&
@@ -48,15 +55,19 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
       cmbCountry.push(ob);
     });
   let menu = [];
-
+  let workFlowData = []
   // let workFlowCode = "BIRTHHOSP21";
   Menu &&
     Menu.map((genderDetails) => {
       menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
     });
 
+    const [workFlowCode, setWorkFlowCode] = useState(); 
+
   const [childDOB, setChildDOB] = useState(formData?.BornOutsideChildDetails?.childDOB ? formData?.BornOutsideChildDetails?.childDOB : "");
   const [gender, selectGender] = useState(formData?.BornOutsideChildDetails?.gender);
+
+  
   const [childAadharNo, setChildAadharNo] = useState(
     formData?.BornOutsideChildDetails?.childAadharNo ? formData?.BornOutsideChildDetails?.childAadharNo : ""
   );
@@ -99,7 +110,9 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
   const [AadharError, setAadharError] = useState(formData?.BornOutsideChildDetails?.childAadharNo ? false : false);
   const [ChildPassportError, setChildPassportError] = useState(formData?.BornOutsideChildDetails?.childPassportNo ? false : false);
   const [childArrivalDateError, setchildArrivalDateError] = useState(formData?.BornOutsideChildDetails?.childArrivalDate ? false : false);
-
+  const [ProvinceEnError, setProvinceEnError] = useState(formData?.BornOutsideChildDetails?.ProvinceEnError ? false : false);
+  const [cityTownError, setcityTownError] = useState(formData?.BornOutsideChildDetails?.cityTownError ? false : false);
+  const [outsideBirthPlaceError, setoutsideBirthPlaceError] = useState(formData?.BornOutsideChildDetails?.outsideBirthPlaceError ? false : false);
   const [DOBError, setDOBError] = useState(formData?.BornOutsideChildDetails?.childDOB ? false : false);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
 
@@ -147,114 +160,121 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
         setbirthDateTime(value);
       }
     };
-    function setSelectpostCode(e) {
-          // if (e.target.value.length != 0) {
-          //     if (e.target.value.length > 7) {
-          //         return false;
-          //     } else if (e.target.value.length < 6) {
-          //       setpostCode(e.target.value);
-          //         return false;
-          //     } else {
-                setpostCode(e.target.value);
-                
-          //         return true;
-          //     }
-          // }
+  
+      function setSelectPostCode(e) {
+        if (e.target.value.length != 0) {
+          if (e.target.value.length > 6) {
+            return false;
+          } else if (e.target.value.length < 6) {
+            setpostCode(e.target.value);
+            return false;
+          } else {
+            setpostCode(e.target.value);
+            
+          }
+        }
       }
-
-
-
-  function setselectChildDOB(value) {
-    setChildDOB(value);
-  }
+      function setselectChildDOB(value) {
+        setChildDOB(value);
+        const today = new Date();
+        const birthDate = new Date(value);
+        if (birthDate.getTime() <= today.getTime()) {
+          setDOBError(false);
+          // To calculate the time difference of two dates
+          let Difference_In_Time = today.getTime() - birthDate.getTime();
+          let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+          Difference_In_DaysRounded = (Math.floor(Difference_In_Days));
+          // console.log(Difference_In_DaysRounded);
+         
+        }
+      }
+  // function setselectChildDOB(value) {
+  //   setChildDOB(value);
+  // }
   function setselectchildArrivalDate(value) {
     setchildArrivalDate(value);
   }
+  
   function setSelectChildFirstNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setChildFirstNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setChildFirstNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectChildMiddleNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setChildMiddleNameEn(
-        e.target.value.replace(
-          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,"" )
-      );
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setChildMiddleNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectChildLastNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setChildLastNameEn(
-        e.target.value.replace(
-          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
-          ""
-        )
-      );
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setChildLastNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    }
+    // setChildLastNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+
+  }
+  function setCheckMalayalamInputField(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
+    if (!(e.key.match(pattern))) {
+      e.preventDefault();
     }
   }
   function setSelectChildFirstNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setChildFirstNameMl(
-        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-      );
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      setChildFirstNameMl('');
+    }
+    else {
+      setChildFirstNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectChildMiddleNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setChildMiddleNameMl(
-        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-      );
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      setChildMiddleNameMl('');
+    }
+    else {
+      setChildMiddleNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectChildLastNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setChildLastNameMl(
-        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-      );
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      setChildLastNameMl('');
+    }
+    else {
+      setChildLastNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
-
   function setSelectChildAadharNo(e) {
-    // setContactno(e.target.value.length<=10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
-    if (e.target.value.length != 0) {
-      if (e.target.value.length > 12) {
-        // setChildAadharNo(e.target.value);
-        setAadharError(true);
-        return false;
-      } else if (e.target.value.length < 12) {
-        setAadharError(true);
-        setChildAadharNo(e.target.value);
-        return false;
-      } else {
-        setAadharError(false);
-        setChildAadharNo(e.target.value);
-        return true;
-      }
-    } else {
-      setAadharError(false);
-      setChildAadharNo(e.target.value);
-      return true;
+    if (e.target.value.trim().length >= 0) {
+      setChildAadharNo(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
     }
   }
+  // function setSelectChildAadharNo(e) {
+  //   // setContactno(e.target.value.length<=10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
+  //   if (e.target.value.length != 0) {
+  //     if (e.target.value.length > 12) {
+  //       // setChildAadharNo(e.target.value);
+  //       setAadharError(true);
+  //       return false;
+  //     } else if (e.target.value.length < 12) {
+  //       setAadharError(true);
+  //       setChildAadharNo(e.target.value);
+  //       return false;
+  //     } else {
+  //       setAadharError(false);
+  //       setChildAadharNo(e.target.value);
+  //       return true;
+  //     }
+  //   } else {
+  //     setAadharError(false);
+  //     setChildAadharNo(e.target.value);
+  //     return true;
+  //   }
+  // }
 
   function setSelectPassportNo(e) {
     setchildPassportNo(e.target.value);
@@ -289,7 +309,19 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
     // } else {
     //   setAadharError(false);
     // }
-
+    if (childAadharNo != null) {
+      let adharLength = childAadharNo;
+      if (adharLength.length < 12 || adharLength.length > 12) {
+        validFlag = false;
+        setAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setAadharError(false);
+      }
+    }
     if (ChildPassportError) {
       validFlag = false;
       setChildPassportError(true);
@@ -310,9 +342,42 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
     } else {
       setchildArrivalDateError(false);
     }
+
+    if (provinceEn == null || provinceEn == undefined || provinceEn == "") {
+      setProvinceEnError(true);
+      validFlag = false;
+      setToast(true);
+      setTimeout(() => {
+          setToast(false);
+      }, 2000);
+  } else {
+    setProvinceEnError(false);
+  }
+  if (cityTown == null || cityTown == undefined || cityTown == "") {
+    setcityTownError(true);
+    validFlag = false;
+    setToast(true);
+    setTimeout(() => {
+        setToast(false);
+    }, 2000);
+} else {
+  setcityTownError(false);
+}
+if (outsideBirthPlace == null || outsideBirthPlace == undefined || outsideBirthPlace == "") {
+  setoutsideBirthPlaceError(true);
+  validFlag = false;
+  setToast(true);
+  setTimeout(() => {
+      setToast(false);
+  }, 2000);
+} else {
+  setoutsideBirthPlaceError(false);
+}
+
     if (validFlag == true) {
-      // sessionStorage.setItem("stateId", stateId ? stateId : null);
-      // sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
+      sessionStorage.setItem("stateId", stateId ? stateId : null);
+      sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
+      sessionStorage.setItem("workFlowCode", workFlowCode);
       sessionStorage.setItem("childDOB", childDOB ? childDOB : null);
       sessionStorage.setItem("birthDateTime", birthDateTime ? birthDateTime : null);
       sessionStorage.setItem("gender", gender ? gender.code : null);
@@ -332,8 +397,9 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
       sessionStorage.setItem("country", country  ?  country.code : null);
 
       onSelect(config.key, {
-        // stateId,
-        // tenantId,
+        stateId,
+        tenantId,
+        workFlowCode,
         childDOB,
         birthDateTime,
         gender,
@@ -363,7 +429,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
     }
   };
   
-  if (isLoading || isCountryLoading ){
+  if (isWorkFlowDetailsLoading || isLoading || isCountryLoading ){
     return <Loader></Loader>;
   } else {
     return (
@@ -393,14 +459,17 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
                   name="childAadharNo"
                   value={childAadharNo}
                    disable={isEdit}
-                  onChange={setSelectChildAadharNo}
+                  onChange={setSelectChildAadharNo}            
                   placeholder={`${t("CS_COMMON_CHILD_AADHAAR")}`}
                   inputProps={{
                     maxLength: 12,
                   }}
-                  {...(validation = { isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                  {...(validation = { pattern: "^[0-9]{12}$", type: "test", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                 />
               </div>
+
+             
+
               <div className="col-md-4">
                 {" "}
                 <CardLabel>
@@ -587,6 +656,9 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
                   {...(validation = { isRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
                 />
               </div>
+
+
+              
               <div className="col-md-2">
                 <CardLabel>{t("CR_TIME_OF_BIRTH")}</CardLabel>
                 <CustomTimePicker name="birthDateTime" onChange={(val) => handleTimeChange(val, setbirthDateTime)} value={birthDateTime} />
@@ -671,21 +743,21 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
               optionKey="i18nKey"
               name="postCode"
               value={postCode}
-              onChange={setSelectpostCode}
+              onChange={setSelectPostCode}
               placeholder={`${t("CR_ZIP_CODE")}`}
-              {...(validation = {
+               {...(validation = {
                 pattern: "^[a-zA-Z-.0-9`' ]*$",
                 isRequired: true,
                 type: "number",
-                // max: 6,
-                // min: 6,
+                max: 6,
+                min: 6,
                 title: t("CR_INVALID_ZIP_CODE"),
               })}
             />
           </div>
          
           </div>
-          
+        
           </div> 
           <div className="row">
                 <div className="col-md-12">
@@ -714,9 +786,9 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
 
           {toast && (
             <Toast
-              error={DOBError || ChildPassportError || AadharError || childArrivalDateError}
+              error={DOBError || ChildPassportError || AadharError || childArrivalDateError || ProvinceEnError ||  cityTownError || outsideBirthPlaceError}
               label={
-                DOBError || ChildPassportError || AadharError || childArrivalDateError
+                DOBError || ChildPassportError || AadharError || childArrivalDateError || ProvinceEnError ||  cityTownError || outsideBirthPlaceError
                   ? DOBError
                     ? t(`BIRTH_ERROR_DOB_CHOOSE`)
                     : AadharError
@@ -725,6 +797,12 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
                     ? t(`BIRTH_ERROR_PASSPORT_NO_CHOOSE`)
                     : childArrivalDateError
                     ? t(`BIRTH_ERROR_ARRIVAL_DATE_CHOOSE`)
+                    : ProvinceEnError
+                    ? t(`BIRTH_ERROR_OUTSIDE_STATE_PROV_EN_ERROR`)
+                    : cityTownError
+                    ? t(`BIRTH_ERROR_OUTSIDE_STATE_CITY_TOWN_EN_ERROR`)
+                    : outsideBirthPlaceError
+                    ? t(`BIRTH_ERROR_OUTSIDE_BIRTH_PLACE_EN_ERROR`)
                     : setToast(false)
                   : setToast(false)
               }
