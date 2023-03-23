@@ -71,7 +71,6 @@ import BirthParentsAddress from "../src/pageComponents/adoptionComponents/BirthP
 import AdoptionStatisticalInformation from "../src/pageComponents/adoptionComponents/AdoptionStatisticalInformation";
 import AdoptionParentsAddress from "../src/pageComponents/adoptionComponents/AdoptionParentsAddress";
 
-// import AbandonedChildDetails from "../src/pageComponents/abandonedBirthComponents/AbandonedChildDetails";
 
 //@@@@@@DeathComponents@@@@@@@@@@@//
 import InformationDeath from "../src/pageComponents/deathComponents/InformationDeath";
@@ -147,6 +146,7 @@ import witnessdetails from "./pageComponents/marriageComponents/witnessdetails";
 
 // import CreateAbandonedBirth from "./pages/employee/Abandoned-birth";
 import AbandonedChildDetails from "./pageComponents/abandonedBirthComponents/AbandonedChildDetails";
+import AbandonedBirthInitiatorDetails from "./pageComponents/abandonedBirthComponents/AbandonedBirthInitiatorDetails";
 
 
 export const CRModule = ({ stateCode, userType, tenants }) => {
@@ -356,6 +356,7 @@ const componentsToRegister = {
 
   // CreateAbandonedBirth,
   AbandonedChildDetails,
+  AbandonedBirthInitiatorDetails,
   //Marriage
   CRCreateMarriageRegistration: CreateMarriageRegistration,
   GroomDetails,
