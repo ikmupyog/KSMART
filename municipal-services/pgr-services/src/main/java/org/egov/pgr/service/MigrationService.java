@@ -72,11 +72,11 @@ public class MigrationService {
         }
     };
 
-    @PostConstruct
-    private void setStatusToUUIDMap(){
-        this.statusToUUIDMap = migrationUtils.getStatusToUUIDMap(config.getTenantId());
-        this.serviceCodeToSLA = migrationUtils.getServiceCodeToSLAMap(config.getTenantId());
-    }
+//    @PostConstruct
+//    private void setStatusToUUIDMap(){
+//        this.statusToUUIDMap = migrationUtils.getStatusToUUIDMap(config.getTenantId());
+//        this.serviceCodeToSLA = migrationUtils.getServiceCodeToSLAMap(config.getTenantId());
+//    }
 
 
 
