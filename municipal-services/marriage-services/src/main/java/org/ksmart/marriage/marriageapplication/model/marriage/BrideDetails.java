@@ -2,6 +2,7 @@ package org.ksmart.marriage.marriageapplication.model.marriage;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import org.ksmart.marriage.common.model.AuditDetails;
 
 import javax.validation.constraints.Size;
 @Getter
@@ -12,8 +13,17 @@ import javax.validation.constraints.Size;
 public class BrideDetails {
 
     @Size(max = 64)
-    @JsonProperty("id")
-    private String id;
+    @JsonProperty("brideId")
+    private String brideId;
+
+    @Size(max = 64)
+    @JsonProperty("tenentId")
+    private String tenentId;
+
+    @Size(max = 64)
+    @JsonProperty("marriageid")
+    private String marriageid;
+
     @Size(max = 64)
     @JsonProperty("brideResidentShip")
     private String residentship;
@@ -21,8 +31,6 @@ public class BrideDetails {
     @Size(max = 15)
     @JsonProperty("brideAdharNo")
     private String adharno;
-
-
 
     @Size(max = 1000)
     @JsonProperty("bridePassportNo")
@@ -48,8 +56,6 @@ public class BrideDetails {
     @JsonProperty("brideMiddlenameMal")
     private String middlename_mal;
 
-
-
     @Size(max = 200)
     @JsonProperty("brideLastnameEn")
     private String lastname_en;
@@ -69,12 +75,8 @@ public class BrideDetails {
     @Size(max = 20)
     @JsonProperty("brideGender")
     private String gender;
-
-
     @JsonProperty("brideDOB")
     private long dateofbirth;
-
-
 
     @JsonProperty("brideAge")
     private Integer age;
@@ -107,8 +109,6 @@ public class BrideDetails {
     @JsonProperty("brideMotherAdharNo")
     private String mother_adharno;
 
-
-
     @Size(max = 200)
     @JsonProperty("brideGuardiannameEn")
     private String guardianname_en;
@@ -122,19 +122,17 @@ public class BrideDetails {
     private String guardian_adhar;
 
 
-    @Size(max = 200)
-    @JsonProperty("brideProfessionEn")
-    private String profession_en;
-
-    @Size(max = 200)
-    @JsonProperty("brideProfessionMal")
-    private String profession_mal;
+//    @Size(max = 200)
+//    @JsonProperty("brideProfessionEn")
+//    private String profession_en;
+//
+//    @Size(max = 200)
+//    @JsonProperty("brideProfessionMal")
+//    private String profession_mal;
 
     @Size(max = 64)
     @JsonProperty("brideMaritalstatusID")
     private String maritalstatusid;
-
-
 
     @JsonProperty("brideSpouseLiving")
     private Boolean is_spouse_living;
@@ -143,14 +141,12 @@ public class BrideDetails {
     @JsonProperty("brideNoOfSpouse")
     private Boolean no_of_spouse_living;
 
-
     @Size(max = 150)
     @JsonProperty("bridePhotoUrl")
     private String photo_url;
+    @JsonProperty("auditDetails")
+    private AuditDetails auditDetails;
 
-    @Size(max = 64)
-    @JsonProperty("marriageid")
-    private String marriageid;
 
 
 

@@ -118,9 +118,9 @@ public class MarriageApplicationDetail {
     @JsonProperty("workflowCode")
     private String workflowcode;
 
-    @Size(max = 64)
-    @JsonProperty("fileNo")
-    private String fileno;
+//    @Size(max = 64)
+//    @JsonProperty("fileNo")
+//    private String fileno;
 
 
     @Size(max = 64)
@@ -130,12 +130,12 @@ public class MarriageApplicationDetail {
     @JsonProperty("registration_date")
     private Long registrationDate;
 
-    @JsonProperty("fileDate")
-    private long file_date;
-
-    @Size(max = 64)
-    @JsonProperty("fileStatus")
-    private String file_status;
+//    @JsonProperty("fileDate")
+//    private long file_date;
+//
+//    @Size(max = 64)
+//    @JsonProperty("fileStatus")
+//    private String file_status;
 
     @Size(max = 64)
     @JsonProperty("action")

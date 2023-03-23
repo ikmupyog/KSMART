@@ -7,11 +7,14 @@ serviceMaps:
       isTransaction: true
       queryMaps:
         - query: INSERT INTO public.eg_marriage_details(
-                  id, dateofmarriage, dateofreporting, districtid, lbtype, tenantid, placetype, placeid, placename_en, street_name_en,
-                  street_name_ml, placename_mal, ward_code, talukid, village_name, marriage_type, oth_marriage_type, landmark, locality_en,
-                  locality_ml, applicationtype, businessservice, workflowcode, applicationnumber, registrationno, registration_date, action, status, 
-                  createdtime, createdby, lastmodifiedtime, lastmodifiedby, houseno_and_nameen, houseno_and_nameml)
-                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+                  id, dateofmarriage, dateofreporting, districtid, lbtype, tenantid, placetype, placeid, placename_en, placename_ml, 
+                  houseno_and_name_en, houseno_and_name_ml, street_name_en, street_name_ml, ward_code, talukid, village_name, marriage_type, 
+                  oth_marriage_type, landmark, locality_en, locality_ml, applicationtype, businessservice, workflowcode, applicationnumber, filenumber,
+                  file_date, file_status, registrationno, registration_date, action, status, createdtime, createdby, lastmodifiedtime, lastmodifiedby, 
+                  domcorreflag, placeidcorrflag, groomnamecorreflag, bridenamecorreflag, grromagecorreflag, brideagecorreflag, groomdobcorreflag, 
+                  bridedobcorreflag, groompermanentaddrcorreflag, bridepermanentaddrcorreflag, groommothercorreflag, bridemothercorreflag, groomfathercorreflag,
+                  bridefathercorreflag, groomguardiancorreflag, bridegurdiancorreflag)
+                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
           basePath: MarriageDetails.*
           jsonMaps:
             - jsonPath: $.MarriageDetails.*.id
@@ -32,11 +35,15 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.marriagePlacenameEn
 
+            - jsonPath: $.MarriageDetails.*.marriagePlacenameMal
+
+            - jsonPath: $.MarriageDetails.*.marriageHouseNoAndNameEn
+
+            - jsonPath: $.MarriageDetails.*.marriageHouseNoAndNameMal
+
             - jsonPath: $.MarriageDetails.*.marriageStreetEn
 
             - jsonPath: $.MarriageDetails.*.marriageStreetMal
-
-            - jsonPath: $.MarriageDetails.*.marriagePlacenameMal
 
             - jsonPath: $.MarriageDetails.*.marriageWardCode
 
@@ -78,9 +85,6 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.auditDetails.lastModifiedBy
 
-            - jsonPath: $.MarriageDetails.*.marriageHouseNoAndNameEn
-
-            - jsonPath: $.MarriageDetails.*.marriageHouseNoAndNameMal
 
 
 
@@ -498,14 +502,14 @@ serviceMaps:
 
 
         - query: UPDATE public.eg_marriage_details
-                SET  dateofmarriage=?, dateofreporting=?, districtid=?, lbtype=?, tenantid=?, placetype=?, placeothers=?, placeid=?, placename_en=?,
-                street_name_en=?, street_name_ml=?, placename_mal=?, ward_code=?, talukid=?, village_name=?, marriage_type=?, oth_marriage_type=?, 
-               landmark=?, locality_en=?, locality_ml=?, othersspecify=?, applicationtype=?, businessservice=?, workflowcode=?, fileno=?, file_date=?, 
-               file_status=?, applicationnumber=?, registrationno=?, registration_date=?, action=?, status=?, lastmodifiedtime=?, 
-               lastmodifiedby=?, houseno_and_nameen=?, houseno_and_nameml=?, religious_institution=?, public_or_privateplace=?, 
-               public_or_privateplacennameplace_en=?, public_or_privateplacennameplace_ml=?, religious_institution_other=?,
-               religious_institution_othername_en=?, religious_institution_othername_ml=?
-                 WHERE id=?;
+                SET dateofmarriage=?, dateofreporting=?, districtid=?, lbtype=?, tenantid=?, placetype=?, placeid=?, placename_en=?,
+                placename_ml=?, houseno_and_name_en=?, houseno_and_name_ml=?, street_name_en=?, street_name_ml=?, ward_code=?, talukid=?,
+                village_name=?, marriage_type=?, oth_marriage_type=?, landmark=?, locality_en=?, locality_ml=?, applicationtype=?, businessservice=?,
+                workflowcode=?, applicationnumber=?, filenumber=?, file_date=?, file_status=?, registrationno=?, registration_date=?, action=?, status=?,
+                createdtime=?, createdby=?, lastmodifiedtime=?, lastmodifiedby=?, domcorreflag=?, placeidcorrflag=?, groomnamecorreflag=?, bridenamecorreflag=?,
+                grromagecorreflag=?, brideagecorreflag=?, groomdobcorreflag=?, bridedobcorreflag=?, groompermanentaddrcorreflag=?, bridepermanentaddrcorreflag=?, 
+                groommothercorreflag=?, bridemothercorreflag=?, groomfathercorreflag=?, bridefathercorreflag=?, groomguardiancorreflag=?, bridegurdiancorreflag=?
+                WHERE id=?;
 
           basePath: MarriageDetails.*
           jsonMaps:

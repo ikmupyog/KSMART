@@ -9,7 +9,7 @@ public interface BrideDetailsRowMapper {
     default BrideDetails getBrideDetails (ResultSet rs) throws SQLException{
 
         return BrideDetails.builder()
-                .id(rs.getString("bd_id"))
+                //.id(rs.getString("bd_id"))
                 .residentship(rs.getString("bd_residentship"))
                 .adharno(rs.getString("bd_adharno"))
                 .passportno(rs.getString("bd_passportno"))
@@ -35,8 +35,8 @@ public interface BrideDetailsRowMapper {
                 .guardianname_en(rs.getString("bd_guardianname_en"))
                 .guardianname_mal(rs.getString("bd_guardianname_mal"))
                 .guardian_adhar(rs.getString("bd_guardian_adhar"))
-                .profession_en(rs.getString("bd_profession_en"))
-                .profession_mal(rs.getString("bd_profession_mal"))
+               // .profession_en(rs.getString("bd_profession_en"))
+               // .profession_mal(rs.getString("bd_profession_mal"))
                 .maritalstatusid(rs.getString("bd_maritalstatusid"))
                 .is_spouse_living(Boolean.valueOf(rs.getString("bd_is_spouse_living")))
                 .no_of_spouse_living(Boolean.valueOf(rs.getString("bd_no_of_spouse_living")))

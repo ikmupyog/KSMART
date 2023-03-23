@@ -39,10 +39,10 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 
             marriage.setAuditDetails(auditDetails);
             if(marriage.getBrideDetails()!=null){
-                marriage.getBrideDetails().setId(UUID.randomUUID().toString());
+                marriage.getBrideDetails().setBrideId((UUID.randomUUID().toString()));
             }
             if(marriage.getGroomDetails()!=null){
-                marriage.getGroomDetails().setId(UUID.randomUUID().toString());
+                marriage.getGroomDetails().setGroomId((UUID.randomUUID().toString()));
             }
 
                 marriage.getPermanentBride().setId1(UUID.randomUUID().toString());
@@ -58,8 +58,8 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                 marriage.getPresent().setBrideGroom("GROOM");
             }
             if(marriage.getWitness()!=null){
-                marriage.getWitness().setId1(UUID.randomUUID().toString());
-                marriage.getWitness().setId2(UUID.randomUUID().toString());
+                marriage.getWitness().setWitnessId1(UUID.randomUUID().toString());
+                marriage.getWitness().setWitnessId2(UUID.randomUUID().toString());
 
                 marriage.getWitness().setSerial_no1(1);
                 marriage.getWitness().setSerial_no2(2);
@@ -117,8 +117,8 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
         ListIterator<String> itr = filecodes.listIterator();
         request.getMarriageDetails()
                 .forEach(marriage -> {
-                    marriage.setFileno(itr.next());
-                    marriage.setFile_date(currentTime);
+//                    marriage.setFileno(itr.next());
+//                    marriage.setFile_date(currentTime);
                 });
     }
 
