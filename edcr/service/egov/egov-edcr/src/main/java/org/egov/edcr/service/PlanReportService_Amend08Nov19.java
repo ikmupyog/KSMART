@@ -142,13 +142,13 @@ public class PlanReportService_Amend08Nov19 extends PlanReportService {
             List<ConditionalStyle> listCondStyle = getConditonalStyles();
             FastReportBuilder frb = new FastReportBuilder();
             int size = detail.getColumnHeading().keySet().size();
-            Double byeLawColumnSize = 40d;
+            Double byeLawColumnSize = 60d;
             Double statusColumnSize = 60d;
             Double columnSize = (595d - (byeLawColumnSize + statusColumnSize)) / (size - 2);
             for (Integer s : detail.getColumnHeading().keySet()) {
                 ColumnHeadingDetail columnHeading = detail.getColumnHeading().get(s);
                 int columnWidth = columnSize.intValue();
-                if ("Byelaw".equalsIgnoreCase(columnHeading.name)) {
+                if ("Rule No".equalsIgnoreCase(columnHeading.name)) {
                     columnWidth = byeLawColumnSize.intValue();
                 }
                 if (STATUS.equalsIgnoreCase(columnHeading.name)) {
@@ -253,7 +253,7 @@ public class PlanReportService_Amend08Nov19 extends PlanReportService {
                     }
 
                     AutoText autoText = new AutoText(text.toString(), AutoText.POSITION_FOOTER,
-                            HorizontalBandAlignment.LEFT, 530);
+                            HorizontalBandAlignment.LEFT, 520);
 
                     autoText.setHeight(40);
                     autoText.setStyle(reportService.getTotalNumberStyle());
@@ -279,6 +279,8 @@ public class PlanReportService_Amend08Nov19 extends PlanReportService {
             Style style = new Style();
             style.setStretchWithOverflow(true);
             style.setStreching(RELATIVE_TO_BAND_HEIGHT);
+            style.setHorizontalAlign(HorizontalAlign.CENTER);
+            style.setVerticalAlign(VerticalAlign.MIDDLE);
             sub.setStyle(style);
             if (isProposed) {
                 sub.setDatasource(new DJDataSource("Block No " + dcrReportBlockDetail.getBlockNo(),

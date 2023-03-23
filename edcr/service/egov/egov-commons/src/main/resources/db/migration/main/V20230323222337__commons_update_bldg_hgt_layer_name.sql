@@ -1,0 +1,1 @@
+update state.egdcr_layername set value='BLK_%s_MAX_HEIGHT_CAL' where key='LAYER_NAME_MAX_HEIGHT_CAL';

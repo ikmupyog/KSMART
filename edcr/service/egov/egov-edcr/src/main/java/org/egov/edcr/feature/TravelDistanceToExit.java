@@ -84,9 +84,8 @@ public class TravelDistanceToExit extends FeatureProcess {
 
     @Override
     public Plan process(Plan pl) {
-    	validate(pl);
         Boolean exemption = Boolean.FALSE;
-        if (pl != null && pl.getVirtualBuilding() != null && !pl.getVirtualBuilding().getOccupancies().isEmpty()
+        if (pl != null && pl.getVirtualBuilding() != null && !pl.getVirtualBuilding().getOccupancyTypes().isEmpty()
                 && !pl.getBlocks().isEmpty()) {
             boolean numberofFloorsLessOrEqualToThree = true;
             for (Block block : pl.getBlocks()) {
