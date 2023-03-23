@@ -147,8 +147,8 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
   const [toast, setToast] = useState(false);
   
   const [access, setAccess] = React.useState(true);
-
   const onSkip = () => onSelect();
+  
   const cmbMarriageReligiousInstitution = [
     { i18nKey: "Mandapam", code: "MANDAPAM" },
     { i18nKey: "Hall", code: "HALL" },
@@ -293,7 +293,7 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
       sessionStorage.setItem("marriageStreetEn", marriageStreetEn ? marriageStreetEn : null);
       sessionStorage.setItem("marriageStreetMal", marriageStreetMal ? marriageStreetMal : null);
       sessionStorage.setItem("marriageReligiousInstitutionOtherNameMal", marriageReligiousInstitutionOtherNameMal ? marriageReligiousInstitutionOtherNameMal : null);
-      sessionStorage.setItem("MarriageReligiousInstitutionOtherNameEn", MarriageReligiousInstitutionOtherNameEn ? MarriageReligiousInstitutionOtherNameEn : null);
+      sessionStorage.setItem("marriageReligiousInstitutionOtherNameEn", marriageReligiousInstitutionOtherNameEn ? marriageReligiousInstitutionOtherNameEn : null);
       onSelect(config.key, {
         marriageDOM,
         marriageDistrictid,
@@ -309,7 +309,7 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
         marriageType,
         marriageLandmark,
         marriageReligiousInstitutionOtherNameMal,
-        MarriageReligiousInstitutionOtherNameEn,
+        marriageReligiousInstitutionOtherNameEn,
         marriageStreetEn,
         marriageStreetMal,
       });
@@ -364,8 +364,8 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
                 option={cmbDistrict}
                 selected={marriageDistrictid}
                 select={setSelectmarriageDistrictid}
-                placeholder={`${t("CR_DISTRICT")}`}
-
+                placeholder={`${t("CS_COMMON_DISTRICT")}`}
+                {...(validation = { isRequired: true })}
               />
             </div>
 
@@ -381,7 +381,8 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
                 option={cmbLBType}
                 selected={marriageLBtype}
                 select={setSelectmarriageLBtype}
-                placeholder={`${t("CR_LB_TYPE")}`}
+                placeholder={`${t("CS_LBTYPE")}`}
+                {...(validation = { isRequired: true })}
 
               />
             </div>
@@ -397,8 +398,8 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
                 option={cmbLB}
                 selected={marriageTenantid}
                 select={setselectmarriageTenantid}
-                placeholder={`${t("CR_LB")}`}
-
+                placeholder={`${t("Cs_LB")}`}
+                {...(validation = { isRequired: true })}
               />
             </div>
             </div>
@@ -418,6 +419,7 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
                         selected={marriageVillageName}
                         select={setSelectmarriageVillageName}
                         placeholder={`${t("CS_COMMON_VILLAGE")}`}
+                        {...(validation = { isRequired: true })}
                       />
                     </div>
             <div className="col-md-4">
@@ -433,11 +435,13 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
                           selected={marriageTalukID}
                           select={setSelectmarriageTalukID}
                           placeholder={`${t("CS_COMMON_TALUK")}`}
+                          {...(validation = { isRequired: true })}
                         />
             </div>
             <div className="col-md-4">
                 <CardLabel>
                     {`${t("CS_COMMON_WARD")}`}
+                    <span className="mandatorycss">*</span>
                 </CardLabel>
                   <Dropdown t={t} 
                   optionKey="namecmb" 
@@ -445,15 +449,18 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
                   option={cmbWardNoFinal} 
                   selected={marriageWardCode} 
                   select={setSelectmarriageWardCode}  
-
-                  {...(validation = { isRequired: false, title: t("CS_COMMON_INVALID_WARD") })} />
+                  placeholder={`${t("CS_COMMON_WARD")}`}
+                 />
                 </div>
-                </div>
-                </div>
+              </div>
+            </div>
         <div className="row">
             <div className="col-md-12">
                 <div className="col-md-3">
-                <CardLabel>{t("CR_RELIGIOUS_INSTITUTION")}</CardLabel>{" "}
+                <CardLabel>
+                  {t("CR_RELIGIOUS_INSTITUTION")}
+                  <span className="mandatorycss">*</span>
+                  </CardLabel>{" "}
                 <Dropdown
                   t={t}
                   optionKey="i18nKey"
@@ -462,10 +469,13 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
                   selected={marriageReligiousInstitution}
                   select={setSelectMarriageReligiousInstitution}
                   placeholder={`${t("CR_RELIGIOUS_INSTITUTION")}`}
+                  {...(validation = { isRequired: true })}
                 />
                 </div> 
                 <div className="col-md-3">
-              <CardLabel>{t("CR_RELIGIOUS_INSTITUTION_OTHER")}</CardLabel>
+              <CardLabel>
+                {t("CR_RELIGIOUS_INSTITUTION_OTHER")}
+                </CardLabel>
               <TextInput
                 t={t}
                 isMandatory={false}
@@ -479,7 +489,10 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
               />
             </div> 
             <div className="col-md-3">
-              <CardLabel>{t("CR_RELIGIOUS_INST_OTHER_NAME_EN")}</CardLabel>
+              <CardLabel>
+                {t("CR_RELIGIOUS_INST_OTHER_NAME_EN")}
+                <span className="mandatorycss">*</span>
+                </CardLabel>
               <TextInput
                 t={t}
                 isMandatory={false}
@@ -489,11 +502,14 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
                 value={marriageReligiousInstitutionOtherNameEn}
                 onChange={setSelectMarriageReligiousInstitutionOtherNameEn}
                 placeholder={`${t("CR_RELIGIOUS_INST_OTHER_NAME_EN")}`}
-                
+                {...(validation = { isRequired: true })}
               />
             </div> 
             <div className="col-md-3">
-              <CardLabel>{t("CR_RELIGIOUS_INST_OTHER_NAME_ML")}</CardLabel>
+              <CardLabel>
+                {t("CR_RELIGIOUS_INST_OTHER_NAME_ML")}
+                <span className="mandatorycss">*</span>
+                </CardLabel>
               <TextInput
                 t={t}
                 isMandatory={false}
@@ -503,7 +519,7 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
                 value={marriageReligiousInstitutionOtherNameMal}
                 onChange={setSelectMarriageReligiousInstitutionOtherNameMal}
                 placeholder={`${t("CR_RELIGIOUS_INST_OTHER_NAME_ML")}`}
-               
+                {...(validation = { isRequired: true })}
               />
             </div> 
             </div>
@@ -513,7 +529,7 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
                <div className="col-md-3">
                       <CardLabel>
                         {t("CR_LOCALITY_EN")}
-                       
+                        <span className="mandatorycss">*</span>
                       </CardLabel>
                       <TextInput
                         t={t}
@@ -524,13 +540,13 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
                         value={marriageLocalityEn}
                         onChange={setSelectMarriageLocalityEn}
                         placeholder={`${t("CR_LOCALITY_EN")}`}
-                        
+                        {...(validation = { isRequired: true })}
                       />
                     </div>
                 <div className="col-md-3">
                       <CardLabel>
                         {t("CR_LOCALITY_ML")}
-                       
+                        <span className="mandatorycss">*</span>
                       </CardLabel>
                       <TextInput
                         t={t}
@@ -541,7 +557,7 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
                         value={marriageLocalityMal}
                         onChange={setSelectMarriageLocalityMal}
                         placeholder={`${t("CR_LOCALITY_ML")}`}
-                        
+                        {...(validation = { isRequired: true })}
                       />
                     </div>
             <div className="col-md-3">
@@ -570,10 +586,9 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
               
             />
           </div>
-          <div className="col-md-3">
+                  <div className="col-md-3">
                       <CardLabel>
                         {t("CR_LANDMARK")}
-                       
                       </CardLabel>
                       <TextInput
                         t={t}

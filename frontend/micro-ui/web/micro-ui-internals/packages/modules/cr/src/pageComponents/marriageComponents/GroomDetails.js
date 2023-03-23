@@ -394,8 +394,8 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     return (
       <React.Fragment>
         <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-        {window.location.href.includes("/citizen") ? <Timeline /> : null}
-        {window.location.href.includes("/employee") ? <Timeline /> : null}
+        {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
+        {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
         <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
           <div className="row">
             <div className="col-md-12">
@@ -440,7 +440,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 value={groomAdharNo}
                 onChange={setSelectGroomAadharNo}
                 placeholder={`${t("CR_GROOM_AADHAR_NO")}`}
-               
+                {...(validation = { isRequired: true })}
               />
             </div>
             <div className="col-md-4">
@@ -471,7 +471,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 value={groomSocialSecurityNo}
                 onChange={setSelectGroomSocialSecurityNo}
                 placeholder={`${t("CR_GROOM_SOCIAL_SECURITY_NO")}`}
-                
+                {...(validation = { isRequired: true })}
               />
             </div>
           </div>
@@ -488,7 +488,6 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
             <div className="col-md-3">
               <CardLabel>
                 {t("CR_GROOM_NAME")}
-                <span className="mandatorycss">*</span>
               </CardLabel>
             </div>
           </div>
@@ -496,7 +495,9 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
           <div className="row">
           <div className="col-md-12">
             <div className="col-md-3">
-              <CardLabel>{t("CR_GROOM_FIRST_NAME_EN")}</CardLabel>
+              <CardLabel>{t("CR_GROOM_FIRST_NAME_EN")}
+              <span className="mandatorycss">*</span>
+              </CardLabel>
               <TextInput
                 t={t}
                 isMandatory={false}
@@ -506,7 +507,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 value={groomFirstnameEn}
                 onChange={setSelectGroomFirstnameEn}
                 placeholder={`${t("CR_GROOM_FIRST_NAME_EN")}`}
-                
+                {...(validation = { isRequired: true })}
               />
             </div>
 
@@ -539,7 +540,9 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
               />
             </div>
             <div className="col-md-3">
-              <CardLabel>{t("CR_GROOM_MOBILE_NO")}</CardLabel>
+              <CardLabel>{t("CR_GROOM_MOBILE_NO")}
+              <span className="mandatorycss">*</span>
+              </CardLabel>
               <TextInput
                 t={t}
                 isMandatory={false}
@@ -549,7 +552,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 value={groomMobile}
                 onChange={setSelectGroomMobile}
                 placeholder={`${t("CR_GROOM_MOBILE_NO")}`}
-                
+                {...(validation = { isRequired: true })}
               />
             </div>
           </div>
@@ -557,7 +560,9 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
           <div className="row">
           <div className="col-md-12">
             <div className="col-md-3">
-              <CardLabel>{t("CR_GROOM_FIRST_NAME_ML")}</CardLabel>
+              <CardLabel>{t("CR_GROOM_FIRST_NAME_ML")}
+              <span className="mandatorycss">*</span>
+              </CardLabel>
               <TextInput
                 t={t}
                 isMandatory={false}
@@ -567,7 +572,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 value={groomFirstnameMal}
                 onChange={setSelectGroomFirstnameMal}
                 placeholder={`${t("CR_GROOM_FIRST_NAME_ML")}`}
-                
+                {...(validation = { isRequired: true })}
               />
             </div>
             <div className="col-md-3">
@@ -599,7 +604,9 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
               />
             </div>
             <div className="col-md-3">
-              <CardLabel>{t("CR_GROOM_EMAIL")}</CardLabel>
+              <CardLabel>{t("CR_GROOM_EMAIL")}
+              <span className="mandatorycss">*</span>
+              </CardLabel>
               <TextInput
                 t={t}
                 isMandatory={false}
@@ -609,7 +616,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 value={groomEmailid}
                 onChange={setSelectGroomEmailid}
                 placeholder={`${t("CR_GROOM_EMAIL")}`}
-                
+                {...(validation = { isRequired: true })}
               />
             </div>
           </div>
@@ -629,7 +636,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 selected={groomGender}
                 select={setselectGroomGender}
                 placeholder={`${t("CR_GROOM_GENDER")}`}
-                
+                {...(validation = { isRequired: true })} 
               />
             </div>
             <div className="col-md-4">
@@ -637,11 +644,18 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   {`${t("CR_GROOM_DATE_OF_BIRTH")}`}
                   <span className="mandatorycss">*</span>
                 </CardLabel>
-              <DatePicker date={groomDOB} name="groomDOB" onChange={setselectGroomDOB} placeholder={`${t("CR_GROOM_DATE_OF_BIRTH")}`} />
+              <DatePicker 
+              date={groomDOB} 
+              name="groomDOB" 
+              onChange={setselectGroomDOB} 
+              placeholder={`${t("CR_GROOM_DATE_OF_BIRTH")}`}
+              {...(validation = { isRequired: true })}
+             />
             </div>
             <div className="col-md-4">
               <CardLabel>
                   {`${t("CR_GROOM_AGE")}`}
+                  <span className="mandatorycss">*</span>
                 </CardLabel>
               <TextInput
                 t={t}
@@ -652,7 +666,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 value={groomAge}
                 onChange={setSelectGroomAge}
                 placeholder={`${t("CR_GROOM_AGE")}`}
-               
+                {...(validation = { isRequired: true })}
               />
             </div>
           </div>
@@ -693,7 +707,10 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
         <div className="row">
             <div className="col-md-12">
               <div className="col-md-4">
-                <CardLabel>{t("CR_GROOM_MARITAL_STATUS")}</CardLabel>{" "}
+                <CardLabel>
+                  {t("CR_GROOM_MARITAL_STATUS")}
+                  <span className="mandatorycss">*</span>
+                  </CardLabel>{" "}
                 <Dropdown
                   t={t}
                   optionKey="i18nKey"
@@ -702,10 +719,14 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   selected={groomMaritalstatusID}
                   select={setSelectGroomMaritalstatusID}
                   placeholder={`${t("CR_GROOM_MARITAL_STATUS")}`}
+                  {...(validation = { isRequired: true })}
                 />
               </div>
               <div className="col-md-4">
-                <CardLabel>{t("CR_ANY_SPOUSE_LIVING")}</CardLabel>{" "}
+                <CardLabel>
+                  {t("CR_ANY_SPOUSE_LIVING")}
+                  <span className="mandatorycss">*</span>
+                  </CardLabel>{" "}
                 <Dropdown
                   t={t}
                   optionKey="i18nKey"
@@ -714,6 +735,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   selected={groomSpouseLiving}
                   select={setSelectGroomSpouseLiving}
                   placeholder={`${t("CR_ANY_SPOUSE_LIVING")}`}
+                  {...(validation = { isRequired: true })}
                 />
               </div>
               <div className="col-md-4">
@@ -727,7 +749,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   value={groomNoOfSpouse}
                   onChange={setSelectGroomNoOfSpouse}
                   placeholder={`${t("CR_NUMBER_OF_SPOUSE_LIVING")}`}
-                  {...(validation = { pattern: "^[0-9]{2}$", type: "number", isRequired: true, title: t("CR_INVALID_NUMBER_OF_SPOUSE_LIVING") })}
+                  
                 />
               </div>
             </div>
@@ -744,7 +766,13 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
             <div className="radios">
               <div className="radiobuttons">
                 <LabelFieldPair style={{ display: "flex" }}>
-                  <RadioButtons t={t} optionsKey="i18nKey" options={radiomenu} selectedOption={selectedValueRadio} onSelect={selectRadioButtons} style={{ marginTop: "10px", paddingLeft: "5px", height: "20px", display: "flex" }} />
+                  <RadioButtons 
+                  t={t} 
+                  optionsKey="i18nKey" 
+                  options={radiomenu} 
+                  selectedOption={selectedValueRadio} 
+                  onSelect={selectRadioButtons} 
+                  style={{ marginTop: "10px", paddingLeft: "5px", height: "20px", display: "flex" }} />
                 </LabelFieldPair>
               </div>
             </div>
@@ -753,7 +781,10 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-4">
-                <CardLabel>{t("CR_GROOM_FATHER_AADHAR_NO")}</CardLabel>
+                <CardLabel>
+                  {t("CR_GROOM_FATHER_AADHAR_NO")}
+                  <span className="mandatorycss">*</span>
+                  </CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -763,12 +794,15 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   value={groomFatherAdharNo}
                   onChange={setSelectGroomFatherAdharNo}
                   placeholder={`${t("CR_GROOM_FATHER_AADHAR_NO")}`}
-                  
+                  {...(validation = { isRequired: true })}
                 />
               </div>
               <div className="col-md-4">
                 {" "}
-                <CardLabel>{t("CR_GROOM_FATHER_NAME_EN")}</CardLabel>
+                <CardLabel>
+                  {t("CR_GROOM_FATHER_NAME_EN")}
+                  <span className="mandatorycss">*</span>
+                  </CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -778,12 +812,15 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   value={groomFathernameEn}
                   onChange={setSelectGroomFathernameEn}
                   placeholder={`${t("CR_GROOM_FATHER_NAME_EN")}`}
-                  
+                  {...(validation = { isRequired: true })}
                 />
               </div>
               <div className="col-md-4">
                 {" "}
-                <CardLabel>{t("CR_GROOM_FATHER_NAME_ML")}</CardLabel>
+                <CardLabel>
+                  {t("CR_GROOM_FATHER_NAME_ML")}
+                  <span className="mandatorycss">*</span>
+                  </CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -793,7 +830,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   value={groomFathernameMal}
                   onChange={setSelectGroomFathernameMal}
                   placeholder={`${t("CR_GROOM_FATHER_NAME_ML")}`}
-                 
+                  {...(validation = { isRequired: true })}
                 />
               </div>
             </div>
@@ -802,7 +839,10 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
             <div className="col-md-12">
               <div className="col-md-4">
                 {" "}
-                <CardLabel>{t("CR_GROOM_MOTHER_AADHAR_NO")}</CardLabel>
+                <CardLabel>
+                  {t("CR_GROOM_MOTHER_AADHAR_NO")}
+                  <span className="mandatorycss">*</span>
+                  </CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -812,12 +852,15 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   value={groomMotherAdharNo}
                   onChange={setSelectGroomMotherAdharNo}
                   placeholder={`${t("CR_GROOM_MOTHER_AADHAR_NO")}`}
-                  
+                  {...(validation = { isRequired: true })}
                 />
               </div>
               <div className="col-md-4">
                 {" "}
-                <CardLabel>{t("CR_GROOM_MOTHER_NAME_EN")}</CardLabel>
+                <CardLabel>
+                  {t("CR_GROOM_MOTHER_NAME_EN")}
+                  <span className="mandatorycss">*</span>
+                  </CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -827,12 +870,15 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   value={groomMothernameEn}
                   onChange={setSelectGroomMothernameEn}
                   placeholder={`${t("CR_GROOM_MOTHER_NAME_EN")}`}
-                  
+                  {...(validation = { isRequired: true })}
                 />
               </div>
               <div className="col-md-4">
                 {" "}
-                <CardLabel>{t("CR_GROOM_MOTHER_NAME_ML")}</CardLabel>
+                <CardLabel>
+                  {t("CR_GROOM_MOTHER_NAME_ML")}
+                  <span className="mandatorycss">*</span>
+                  </CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -842,7 +888,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   value={groomMothernameMal}
                   onChange={setSelectGroomMothernameMal}
                   placeholder={`${t("CR_GROOM_MOTHER_NAME_ML")}`}
-                  
+                  {...(validation = { isRequired: true })}
                 />
               </div>
             </div>
@@ -850,7 +896,10 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
           <div className="row">
             <div className="col-md-12">
                 <div className="col-md-4">
-                <CardLabel>{t("CR_GROOM_GUARDIAN_AADHAR_NO")}</CardLabel>
+                <CardLabel>
+                  {t("CR_GROOM_GUARDIAN_AADHAR_NO")}
+                  <span className="mandatorycss">*</span>
+                  </CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -860,12 +909,15 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   value={groomGardianAdhar}
                   onChange={setSelectGroomGardianAdhar}
                   placeholder={`${t("CR_GROOM_GUARDIAN_AADHAR_NO")}`}
-                  
+                  {...(validation = { isRequired: true })}
                 />
               </div>
               <div className="col-md-4">
                 {" "}
-                <CardLabel>{t("CR_GROOM_GUARDIAN_NAME_EN")}</CardLabel>
+                <CardLabel>
+                  {t("CR_GROOM_GUARDIAN_NAME_EN")}
+                  <span className="mandatorycss">*</span>
+                  </CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -875,12 +927,15 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   value={groomGuardiannameEn}
                   onChange={setSelectGroomGuardiannameEn}
                   placeholder={`${t("CR_GROOM_GUARDIAN_NAME_EN")}`}
-                 
+                  {...(validation = { isRequired: true })}
                 />
               </div>
               <div className="col-md-4">
                 {" "}
-                <CardLabel>{t("CR_GROOM_GUARDIAN_NAME_ML")}</CardLabel>
+                <CardLabel>
+                  {t("CR_GROOM_GUARDIAN_NAME_ML")}
+                  <span className="mandatorycss">*</span>
+                  </CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -890,7 +945,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   value={groomGuardiannameMal}
                   onChange={setSelectGroomGuardiannameMal}
                   placeholder={`${t("CR_GROOM_GUARDIAN_NAME_ML")}`}
-                  
+                  {...(validation = { isRequired: true })}
                 />
               </div>
             </div>

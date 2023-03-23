@@ -422,6 +422,7 @@ const MarriagePublicPlace = ({ config, onSelect, userType, formData }) => {
             <div className="col-md-4">
                 <CardLabel>
                     {`${t("CS_COMMON_WARD")}`}
+                    <span className="mandatorycss">*</span>
                 </CardLabel>
                   <Dropdown t={t} 
                   optionKey="namecmb" 
@@ -435,7 +436,10 @@ const MarriagePublicPlace = ({ config, onSelect, userType, formData }) => {
         <div className="row">
             <div className="col-md-12">
                 <div className="col-md-4">
-                <CardLabel>{t("CR_PUBLIC_OR_PRIVATE_PLACE")}</CardLabel>{" "}
+                <CardLabel>
+                  {t("CR_PUBLIC_OR_PRIVATE_PLACE")}
+                  <span className="mandatorycss">*</span>
+                  </CardLabel>{" "}
                 <Dropdown
                   t={t}
                   optionKey="i18nKey"
@@ -447,7 +451,10 @@ const MarriagePublicPlace = ({ config, onSelect, userType, formData }) => {
                 />
                 </div> 
             <div className="col-md-4">
-              <CardLabel>{t("CR_PUBLIC_PRIVATE_PLACE_EN")}</CardLabel>
+              <CardLabel>
+                {t("CR_PUBLIC_PRIVATE_PLACE_EN")}
+                <span className="mandatorycss">*</span>
+                </CardLabel>
               <TextInput
                 t={t}
                 isMandatory={false}
@@ -461,7 +468,10 @@ const MarriagePublicPlace = ({ config, onSelect, userType, formData }) => {
               />
             </div> 
             <div className="col-md-4">
-              <CardLabel>{t("CR_PUBLIC_PRIVATE_PLACE_ML")}</CardLabel>
+              <CardLabel>
+                {t("CR_PUBLIC_PRIVATE_PLACE_ML")}
+                <span className="mandatorycss">*</span>
+                </CardLabel>
               <TextInput
                 t={t}
                 isMandatory={false}
@@ -481,7 +491,7 @@ const MarriagePublicPlace = ({ config, onSelect, userType, formData }) => {
                <div className="col-md-3">
                       <CardLabel>
                         {t("CR_LOCALITY_EN")}
-                       
+                        <span className="mandatorycss">*</span>
                       </CardLabel>
                       <TextInput
                         t={t}
@@ -498,7 +508,7 @@ const MarriagePublicPlace = ({ config, onSelect, userType, formData }) => {
                 <div className="col-md-3">
                       <CardLabel>
                         {t("CR_LOCALITY_ML")}
-                       
+                        <span className="mandatorycss">*</span>
                       </CardLabel>
                       <TextInput
                         t={t}
@@ -541,7 +551,6 @@ const MarriagePublicPlace = ({ config, onSelect, userType, formData }) => {
           <div className="col-md-3">
                       <CardLabel>
                         {t("CR_LANDMARK")}
-                       
                       </CardLabel>
                       <TextInput
                         t={t}
