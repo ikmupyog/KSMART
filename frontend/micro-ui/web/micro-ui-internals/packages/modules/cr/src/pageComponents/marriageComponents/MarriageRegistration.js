@@ -509,7 +509,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData,isEditMarri
               <div className="col-md-4">
                 <CardLabel>
                   {`${t("CR_MARRIAGE_OTHER_SPECIFY")}`}
-                  {/* <span className="mandatorycss">*</span> */}
+                  <span className="mandatorycss">*</span>
                 </CardLabel>
                 <TextInput
                   t={t}
