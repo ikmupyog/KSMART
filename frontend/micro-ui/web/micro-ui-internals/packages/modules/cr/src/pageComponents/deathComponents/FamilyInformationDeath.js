@@ -536,14 +536,13 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
                   <TextInput
                     t={t}
                     isMandatory={false}
-                    type="number"
-                    max="12"
+                    type="text"
                     optionKey="i18nKey"
                     name="MotherNameEn"
                     value={MotherNameEn}
                     onChange={setSelectMotherNameEn}
                     placeholder={`${t("CR_NAME")}`}
-                    {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                    {...(validation = { pattern:  "^[a-zA-Z-.`' ]*$", type: "text", isRequired: true, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                   />
                 </div>
                 <div className="col-md-4">
