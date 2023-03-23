@@ -7,7 +7,7 @@ const AdoptionBirthReqSearch = ({ BirthRegNo, setSelectSetBirthRegNo, setSearchR
   let tenantId = Digit.ULBService.getCurrentTenantId();
   let validation = "";
   let searchParams = {
-    applicationNumber: BirthRegNo,
+    applicationNumber: BirthRegNo ? BirthRegNo : "",
   };
   const { data: { ChildDetails: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useAdoptionSearch({
     tenantId,

@@ -35,9 +35,23 @@ const Error = (props) => {
     </div>
   );
 };
+const Pending = (props) => {
+  const { t } = useTranslation();
+  const user_type = Digit.SessionStorage.get("userType");
+
+  return (
+    <div className={user_type === "citizen" ? "error-wrap pending-wrap" : "emp-error-wrap pending-wrap"} style={props?.props?.style ? props?.props?.style : {}}>
+      <header style={props?.props?.headerStyles ? props?.props?.headerStyles : {}}>{props.props.message}</header>
+      <ErrorSvg />
+      {/* <img src={error} alt="error while submition"/> */}
+      <h2 style={props?.props?.infoStyles ? props?.props?.infoStyles : {}}>{props?.props?.complaintNumber ? t("CS_PGR_COMPLAINT_NUMBER") : props.props.info}</h2>
+      <p style={props?.props?.applicationNumberStyles ? props?.props?.applicationNumberStyles : {}}>{props?.props?.complaintNumber ? props?.props?.complaintNumber : props?.props?.applicationNumber}</p>
+    </div>
+  );
+};
 
 const Banner = (props) => {
-  return props.successful ? <Successful props={props} /> : <Error props={props} />;
+  return props.successful ? <Successful props={props} /> : props.error ? <Error props={props} /> : <Pending props={props}/>;
 };
 
 Banner.propTypes = {

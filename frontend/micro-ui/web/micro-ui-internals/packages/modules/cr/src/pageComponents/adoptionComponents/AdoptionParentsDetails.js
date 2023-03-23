@@ -62,8 +62,7 @@ const AdoptionParentsDetails = ({ config, onSelect, userType, formData, isEditBi
     ReligionList["common-masters"].Religion.map((ob) => {
       cmbReligion.push(ob);
     });
-  const [isMotherInfo, setIsMotherInfo] = useState(formData?.AdoptionParentsDetails?.isMotherInfo ? formData?.AdoptionParentsDetails?.isMotherInfo :
-    formData?.ChildDetails?.AdoptionParentsDetails?.ismotherInfo ? formData?.ChildDetails?.AdoptionParentsDetails?.ismotherInfo : false);
+  const [isMotherInfo, setIsMotherInfo] = useState(formData?.AdoptionParentsDetails?.isMotherInfo ? formData?.AdoptionParentsDetails?.isMotherInfo : false);
   const [motherAadhar, setMotherAadhar] = useState(formData?.AdoptionParentsDetails?.motherAadhar ? formData?.AdoptionParentsDetails?.motherAadhar :
     formData?.ChildDetails?.AdoptionParentsDetails?.motherAadhar ? formData?.ChildDetails?.AdoptionParentsDetails?.motherAadhar : "");
   const [motherFirstNameEn, setMotherFirstNameEn] = useState(formData?.AdoptionParentsDetails?.motherFirstNameEn ? formData?.AdoptionParentsDetails?.motherFirstNameEn :
@@ -88,8 +87,7 @@ const AdoptionParentsDetails = ({ config, onSelect, userType, formData, isEditBi
   const [motherProfession, setMotherProfession] = useState(formData?.AdoptionParentsDetails?.motherProfession?.code ? formData?.AdoptionParentsDetails?.motherProfession : formData?.ChildDetails?.AdoptionParentsDetails?.motherProfession ?
     (cmbProfession.filter(cmbProfession => cmbProfession.code === formData?.ChildDetails?.AdoptionParentsDetails?.motherProfession)[0]) : "");
 
-  const [isFatherInfo, setIsFatherInfo] = useState(formData?.AdoptionParentsDetails?.isFatherInfo ? formData?.AdoptionParentsDetails?.isFatherInfo :
-    formData?.ChildDetails?.AdoptionParentsDetails?.isfatherInfo ? formData?.ChildDetails?.AdoptionParentsDetails?.isfatherInfo : false);
+  const [isFatherInfo, setIsFatherInfo] = useState(formData?.AdoptionParentsDetails?.isFatherInfo ? formData?.AdoptionParentsDetails?.isFatherInfo : false);
   const [fatherAadhar, setFatherAadhar] = useState(formData?.AdoptionParentsDetails?.fatherAadhar ? formData?.AdoptionParentsDetails?.fatherAadhar :
     formData?.ChildDetails?.AdoptionParentsDetails?.fatherAadhar ? formData?.ChildDetails?.AdoptionParentsDetails?.fatherAadhar : "");
   const [fatherFirstNameEn, setFatherFirstNameEn] = useState(formData?.AdoptionParentsDetails?.fatherFirstNameEn ? formData?.AdoptionParentsDetails?.fatherFirstNameEn :
@@ -723,7 +721,7 @@ const AdoptionParentsDetails = ({ config, onSelect, userType, formData, isEditBi
               </div>
               <div className="row">
                 <div className="col-md-12">
-                  <div className="col-md-4">
+                  {/* <div className="col-md-4">
                     <CardLabel>{`${t("CR_ORDER_CURRENT_DELIVERY")}`}<span className="mandatorycss">*</span></CardLabel>
                     <TextInput
                       t={t}
@@ -737,7 +735,7 @@ const AdoptionParentsDetails = ({ config, onSelect, userType, formData, isEditBi
                       placeholder={`${t("CR_ORDER_CURRENT_DELIVERY")}`}
                       {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "number", title: t("CR_INVALID_ORDER_CURRENT_DELIVERY") })}
                     />
-                  </div>
+                  </div> */}
                   <div className="col-md-4">
                     <CardLabel>{`${t("CR_ADOPTION_MOTHER_EDUCATION")}`}<span className="mandatorycss">*</span></CardLabel>
                     <Dropdown

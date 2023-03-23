@@ -199,7 +199,7 @@ const Home = ({
           name: t("CR_DEATH_CORRECTIONS"),
           Icon: <OBPSIcon />,
           onClick: () => history.push({
-            pathname: `${matchPath}/cr/`,
+            pathname: `${matchPath}/cr-death-inclusion`,
             state: { module: "cr-death" }
           }),
           
