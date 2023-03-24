@@ -14,6 +14,7 @@ import { newConfig as newConfigCR } from "../../config/config";
 import CrCitizenFlowApp from "./BirthRegistration";
 // import CreateBirthCertificate from "./Create";
 // import CreateDeathCertificate from "./DeathReg"; 
+import AbandonedChildDetails from "../../pageComponents/abandonedBirthComponents/AbandonedChildDetails";
 
 const App = () => {
   const { path, url, ...match } = useRouteMatch();
@@ -28,6 +29,7 @@ const App = () => {
   const CreateBirthNACRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateBirthNACRegistration');
   const CreateAdoption = Digit?.ComponentRegistryService?.getComponent('CRCreateAdoptions');
   const CreateStillBirthRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateStillBirthRegistration');
+  const CreateAbandonedBirth =  Digit?.ComponentRegistryService?.getComponent('CRCreateAbandonedBirth');
   const CreateBornOutsideRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateBornOutsideRegistration');
   const CreateDeathRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateDeathRegistration');
   const CreateMarriageRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateMarriageRegistration');
@@ -66,6 +68,7 @@ const App = () => {
         <PrivateRoute path={`${path}/cr-adoption`} component={CreateAdoption} />
         <PrivateRoute path={`${path}/cr-stillbirth-creation`} component={CreateStillBirthRegistration} />
         <PrivateRoute path={`${path}/cr-outsideindiabirth-creation`} component={CreateBornOutsideRegistration} />
+        <PrivateRoute path={`${path}/cr-abandonedbirth-creation`} component={CreateAbandonedBirth} />
         <PrivateRoute path={`${path}/cr-death-creation`} component={CreateDeathRegistration} />
         <PrivateRoute path={`${path}/cr-marriage-creation`} component={CreateMarriageRegistration} />
         <PrivateRoute path={`${path}/cr/my-application`} component={MyCRApplications} />

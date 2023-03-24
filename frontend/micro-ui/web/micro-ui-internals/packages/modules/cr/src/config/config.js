@@ -465,9 +465,26 @@ export const newConfig = [
         },
         key: "AbandonedChildDetails",
         withoutLabel: true,
-        nextStep: "abandoned-parents-details",
+        nextStep: "abandoned-birth-initiator-details",
+        hideInEmployee: false,
+      }, 
+      {
+        route: "abandoned-birth-initiator-details",
+        component: "AbandonedBirthInitiatorDetails",
+        texts: {
+          headerCaption: "",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "AbandonedBirthInitiatorDetails",
+        nextStep: null,
+        type: "component",
         hideInEmployee: false,
       },
+     
     ],
   },
   {
@@ -761,7 +778,7 @@ export const newConfig = [
         withoutLabel: true,
         hideInEmployee: false,
         nextStep: "groom-details",
-      },
+      }, 
       {
         type: "component",
         route: "groom-details",
@@ -778,7 +795,7 @@ export const newConfig = [
         withoutLabel: true,
         hideInEmployee: false,
         nextStep: "bride-details",
-      },
+      },     
       {
         type: "component",
         route: "bride-details",

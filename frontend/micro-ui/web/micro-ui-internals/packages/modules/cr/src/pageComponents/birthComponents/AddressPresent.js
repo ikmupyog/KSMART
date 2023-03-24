@@ -5,7 +5,8 @@ import { useTranslation } from "react-i18next";
 const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCountry, setaddressCountry,
     presentaddressStateName, setaddressStateName, value, setValue, countryvalue, setCountryValue,
     permtaddressCountry, setpermtaddressCountry, permtaddressStateName, setpermtaddressStateName, isPrsentAddress,
-    setIsPrsentAddress, Villagevalues, setLbsVillagevalue, isEditBirth = false, isEditDeath = false,
+    setIsPrsentAddress, Villagevalues, setLbsVillagevalue, isEditBirth = false, isEditDeath = false,presentOutsideKeralaDistrict,
+    setoutsideKeralaDistrict
 }) => {
     const stateId = Digit.ULBService.getStateId();
     let tenantId = "";
@@ -100,6 +101,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
         setaddressStateName(value);
         setValue(value.code);
         if (value.code != "kl") {
+            setoutsideKeralaDistrict(null);
             sessionStorage.setItem("presentOutsideKeralaFlag", true);
         } else {
             sessionStorage.setItem("presentOutsideKeralaFlag", false);

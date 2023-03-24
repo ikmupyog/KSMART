@@ -23,6 +23,7 @@ import SearchBirthInclusion from './components/SearchBirthInclusion';
 import CreateAdoptions from "./pages/citizen/Adoption";
 import CreateStillBirthRegistration from "./pages/citizen/StillBirthRegistration";
 import CreateBornOutsideRegistration from "./pages/citizen/BornOutsideReg";
+import CreateAbandonedBirth from "./pages/citizen/AbandonedBirth";
 
 import ParentsDetails from "../src/pageComponents/birthComponents/ParentsDetails";
 import BirthPlaceHospital from "../src/pageComponents/birthComponents/BirthPlaceHospital";
@@ -73,7 +74,7 @@ import BirthParentsAddress from "../src/pageComponents/adoptionComponents/BirthP
 import AdoptionStatisticalInformation from "../src/pageComponents/adoptionComponents/AdoptionStatisticalInformation";
 import AdoptionParentsAddress from "../src/pageComponents/adoptionComponents/AdoptionParentsAddress";
 
-// import AbandonedChildDetails from "../src/pageComponents/abandonedBirthComponents/AbandonedChildDetails";
+
 
 //@@@@@@DeathComponents@@@@@@@@@@@//
 import InformationDeath from "../src/pageComponents/deathComponents/InformationDeath";
@@ -151,6 +152,7 @@ import witnessdetails from "./pageComponents/marriageComponents/witnessdetails";
 
 // import CreateAbandonedBirth from "./pages/employee/Abandoned-birth";
 import AbandonedChildDetails from "./pageComponents/abandonedBirthComponents/AbandonedChildDetails";
+import AbandonedBirthInitiatorDetails from "./pageComponents/abandonedBirthComponents/AbandonedBirthInitiatorDetails";
 
 
 export const CRModule = ({ stateCode, userType, tenants }) => {
@@ -260,6 +262,7 @@ const componentsToRegister = {
   CRCreateAdoptions:CreateAdoptions,
   CRCreateStillBirthRegistration: CreateStillBirthRegistration,
   CRCreateBornOutsideRegistration: CreateBornOutsideRegistration,  
+  CRCreateAbandonedBirth: CreateAbandonedBirth,
   CRCreateBirthNACRegistration: CreateBirthNACRegistration,
   ParentsDetails,
   CRBirthInclusions:BirthInclusion,
@@ -338,7 +341,7 @@ const componentsToRegister = {
   DeathPublicPlace,
   DeathOutsideJurisdiction,
   CRDeathInclusions:DeathInclusion,
-  SearchDeathInclusion:
+  SearchDeathInclusion,
   Informer,
   Initiater,
   // DeathCertificate,
@@ -364,6 +367,7 @@ const componentsToRegister = {
 
   // CreateAbandonedBirth,
   AbandonedChildDetails,
+  AbandonedBirthInitiatorDetails,
   //Marriage
   CRCreateMarriageRegistration: CreateMarriageRegistration,
   GroomDetails,
