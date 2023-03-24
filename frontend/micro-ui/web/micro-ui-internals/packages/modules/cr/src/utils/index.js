@@ -734,7 +734,7 @@ export const convertToBirthRegistration = (data = {}) => {
         Demands: [
           {
             tenantId: "kl.cochin",
-            consumerCode:  data?.ChildDetails?.applicationNumber,
+            consumerCode: data?.ChildDetails?.applicationNumber,
             consumerType: "FEE",
             businessService: "CR",
             taxPeriodFrom: "1554076800000",
