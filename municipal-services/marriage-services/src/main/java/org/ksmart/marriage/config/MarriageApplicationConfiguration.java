@@ -33,4 +33,22 @@ public class MarriageApplicationConfiguration {
     @Value("${egov.idgen.marriagereg.name}")
     private String getMarriageRegisNumberName;
 
+    //Jasmine 24.03.2023
+
+    @Value("${persister.save.marriage.registry.topic}")
+    private String SaveMarriageRegistryTopic;
+
+    @Value("${persister.update.marriage.registry.topic}")
+    private String UpdateMarriageRegistryTopic;
+    
+
+    @Value("${egov.bnd.default.limit}")
+    private Integer defaultBndLimit;
+
+    @Value("${egov.bnd.default.offset}")
+    private Integer defaultOffset;
+
+    @Value("${egov.bnd.max.limit}")
+    private Integer maxSearchLimit;
+
 }
