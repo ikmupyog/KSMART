@@ -56,5 +56,8 @@ public class DraftingChild {
 		@Size(max = 64, message = "status length cannot exceed 64 characters")
 		@JsonProperty("status")
 		private String status;
+
+        @JsonProperty("auditDetails")
+        private AuditDetails auditDetails;
     
 }
