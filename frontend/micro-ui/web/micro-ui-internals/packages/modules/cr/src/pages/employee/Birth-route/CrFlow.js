@@ -24,13 +24,14 @@ const CrFlow = ({ path }) => {
       title: "CR_STILL_BIRTH",
       subTitle: "CR_STILL_BIRTH_REG",
       img: <BankIcon />,
-      // link: `${path}/child-details`,
+      link: `${path}/stillbirth-child-details`,
     },
+   
     {
       title: "CR_BIRTH_BORN_OUTSIDE",
       subTitle: "CR_BIRTH_BORN_OUTSIDE_DESC",
       img: <BankIcon />,
-      // link: `${path}/child-details`,
+      link: `${path}/born-outside-child-details`,
     },
 
     // {
