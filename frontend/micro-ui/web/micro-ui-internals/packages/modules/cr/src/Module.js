@@ -341,7 +341,7 @@ const componentsToRegister = {
   DeathPublicPlace,
   DeathOutsideJurisdiction,
   CRDeathInclusions:DeathInclusion,
-  SearchDeathInclusion:
+  SearchDeathInclusion,
   Informer,
   Initiater,
   // DeathCertificate,
