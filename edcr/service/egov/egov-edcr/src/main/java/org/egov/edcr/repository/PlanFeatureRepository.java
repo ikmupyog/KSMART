@@ -97,6 +97,7 @@ import org.egov.edcr.feature.OverHangs;
 import org.egov.edcr.feature.OverheadElectricalLineService;
 import org.egov.edcr.feature.Parapet;
 import org.egov.edcr.feature.Parking;
+import org.egov.edcr.feature.PassageService;
 import org.egov.edcr.feature.PetrolFillingStation;
 import org.egov.edcr.feature.PlanInfoFeature;
 import org.egov.edcr.feature.Plantation;
@@ -366,6 +367,8 @@ public class PlanFeatureRepository {
 		 * pf = new PlanFeature(InfoCommsTechService.class); features.add(pf);
 		 */
         pf = new PlanFeature(BioGasService.class);
+        features.add(pf);
+        pf = new PlanFeature(PassageService.class);
         features.add(pf);
         pf = new PlanFeature(DxfToPdfConverter.class);
         features.add(pf);

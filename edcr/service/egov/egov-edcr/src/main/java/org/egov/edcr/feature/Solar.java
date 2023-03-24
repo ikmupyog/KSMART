@@ -141,7 +141,7 @@ public class Solar extends FeatureProcess {
 			subRule = SUB_RULE_109_C;
 			subRuleDesc = SUB_RULE_109_C_DESCRIPTION;
 		}
-		if (!pl.getVirtualBuilding().getOccupancies().isEmpty()) {
+		if (!pl.getVirtualBuilding().getOccupancyTypes().isEmpty()) {
 			for (OccupancyTypeHelper occupancyType : pl.getVirtualBuilding().getOccupancyTypes()) {
 				String occCode = occupancyType.getType().getCode();
 				if (occCode.equals(A1) && pl.getVirtualBuilding().getTotalBuitUpArea() != null

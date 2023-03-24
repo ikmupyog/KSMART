@@ -1,0 +1,1 @@
+update state.egdcr_layername set value='SOLAR' where key='LAYER_NAME_SOLAR';

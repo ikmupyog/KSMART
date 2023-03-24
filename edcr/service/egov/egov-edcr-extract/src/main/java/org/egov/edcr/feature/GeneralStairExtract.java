@@ -145,9 +145,6 @@ public class GeneralStairExtract extends FeatureExtract {
 							pl.addError(stairLayerName + "_FLR_HT_M",
 									"Floor height is not defined in layer " + stairLayerName);
 						}
-					} else {
-						pl.addError(stairLayerName + "_FLR_HT_M",
-								"Floor height is not defined in layer " + stairLayerName);
 					}
 
 					List<DXFLWPolyline> generalStairPolyLines = Util.getPolyLinesByLayer(doc, stairLayerName);

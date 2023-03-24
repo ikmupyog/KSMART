@@ -170,7 +170,9 @@ public class FarExtract extends FeatureExtract {
                     floor = (FloorDetail) block.getBuilding().getFloorNumber(floorNo);
                 // find builtup area
                 for (DXFLWPolyline pline : polyLinesByLayer) {
-
+                    if (!pline.isClosed()) {
+                        pl.getErrors().put(pline.getLayerName() + " not closed", pline.getLayerName() + " is not closed ");
+                    }
                     BigDecimal occupancyArea = Util.getPolyLineArea(pline);
                     LOG.error(" occupancyArea *************** " + occupancyArea);
                     OccupancyDetail occupancy = new OccupancyDetail();
@@ -281,6 +283,9 @@ public class FarExtract extends FeatureExtract {
                 } else
                     floor = block.getBuilding().getFloorNumber(floorNo);
                 for (DXFLWPolyline pline : polylines) {
+                    if (!pline.isClosed()) {
+                        pl.getErrors().put(pline.getLayerName() + " not closed", pline.getLayerName() + " is not closed ");
+                    }
                     BigDecimal occupancyArea = Util.getPolyLineArea(pline);
                     OccupancyDetail occupancy = new OccupancyDetail();
                     occupancy.setPolyLine(pline);
@@ -829,9 +834,6 @@ public class FarExtract extends FeatureExtract {
 							pl.addError(fireStairLayerName + "_FLR_HT_M",
 									"Floor height is not defined in layer " + fireStairLayerName);
 						}
-					} else {
-						pl.addError(fireStairLayerName + "_FLR_HT_M",
-								"Floor height is not defined in layer " + fireStairLayerName);
 					}
 
 					List<DXFLWPolyline> fireStairPolyLines = Util.getPolyLinesByLayer(doc, fireStairLayerName);
@@ -1042,9 +1044,6 @@ public class FarExtract extends FeatureExtract {
 							pl.addError(stairLayerName + "_FLR_HT_M",
 									"Floor height is not defined in layer " + stairLayerName);
 						}
-					} else {
-						pl.addError(stairLayerName + "_FLR_HT_M",
-								"Floor height is not defined in layer " + stairLayerName);
 					}
 
 					List<DXFLWPolyline> generalStairPolyLines = Util.getPolyLinesByLayer(doc, stairLayerName);

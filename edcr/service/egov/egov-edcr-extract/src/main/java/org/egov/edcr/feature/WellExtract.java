@@ -53,7 +53,14 @@ public class WellExtract extends FeatureExtract {
             else if (wellPolygon != null && !wellPolygon.isEmpty())
                 for (DXFLWPolyline polygon : wellPolygon) {
                     Measurement measurement = new MeasurementDetail(polygon, true);
-                    WellUtility well = (WellUtility) measurement;
+                    WellUtility well = new WellUtility();
+                    well.setArea(measurement.getArea());
+                    well.setColorCode(measurement.getColorCode());
+                    well.setHeight(measurement.getHeight());
+                    well.setWidth(measurement.getWidth());
+                    well.setLength(measurement.getLength());
+                    well.setInvalidReason(measurement.getInvalidReason());
+                    well.setPresentInDxf(true);
                     well.setColorCode(polygon.getColor());
                     well.setPresentInDxf(true);
                     if (polygon.getColor() == 1)

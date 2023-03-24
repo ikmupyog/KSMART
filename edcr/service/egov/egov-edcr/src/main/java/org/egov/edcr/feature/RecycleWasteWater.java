@@ -102,7 +102,7 @@ public class RecycleWasteWater extends FeatureProcess {
         HashMap<String, String> errors = new HashMap<>();
         if (pl != null && pl.getUtility() != null) {
             // waste water recycle plant defined or not
-            if (!pl.getVirtualBuilding().getOccupancies().isEmpty()) {
+            if (!pl.getVirtualBuilding().getOccupancyTypes().isEmpty()) {
                 for (OccupancyTypeHelper occupancyType : pl.getVirtualBuilding().getOccupancyTypes()) {
                     if (checkOccupancyTypeEqualsToNonConditionalOccupancyTypes(occupancyType)
                             && pl.getUtility().getWasteWaterRecyclePlant().isEmpty()) {
@@ -138,7 +138,7 @@ public class RecycleWasteWater extends FeatureProcess {
         scrutinyDetail.addColumnHeading(4, PROVIDED);
         scrutinyDetail.addColumnHeading(5, STATUS);
         scrutinyDetail.setKey("Common_Waste Water Recycle Plant");
-        if (!pl.getVirtualBuilding().getOccupancies().isEmpty()) {
+        if (!pl.getVirtualBuilding().getOccupancyTypes().isEmpty()) {
             for (OccupancyTypeHelper occupancyType : pl.getVirtualBuilding().getOccupancyTypes()) {
                 if (checkOccupancyTypeEqualsToNonConditionalOccupancyTypes(occupancyType)) {
                     processWasteWaterRecyclePlant(pl);

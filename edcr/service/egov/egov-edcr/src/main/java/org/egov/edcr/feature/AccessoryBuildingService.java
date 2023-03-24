@@ -65,6 +65,7 @@ import org.egov.common.entity.edcr.OccupancyType;
 import org.egov.common.entity.edcr.Plan;
 import org.egov.common.entity.edcr.Result;
 import org.egov.common.entity.edcr.ScrutinyDetail;
+import org.egov.edcr.constants.DxfFileConstants;
 import org.egov.edcr.utility.DcrConstants;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
@@ -180,9 +181,9 @@ public class AccessoryBuildingService extends FeatureProcess{
             processShortestAccBlkDistanceToBldng(pl);
 
             if (pl != null && !pl.getAccessoryBlocks().isEmpty()) {
-                if (pl.getVirtualBuilding().getOccupancies().size() > 1
-                        || (pl.getVirtualBuilding().getOccupancies().size() == 1
-                                && !pl.getVirtualBuilding().getOccupancies().contains(OccupancyType.OCCUPANCY_A1))) {
+                if (pl.getVirtualBuilding().getOccupancyTypes().size() > 1
+                        || (pl.getVirtualBuilding().getOccupancyTypes().size() == 1
+                                && !pl.getVirtualBuilding().containsOccupancy(DxfFileConstants.A1))) {
                     pl.addError("ACC_BLDNG_A1_ERROR", ACC_BLK_NOT_A1_ERROR);
                 }
             }

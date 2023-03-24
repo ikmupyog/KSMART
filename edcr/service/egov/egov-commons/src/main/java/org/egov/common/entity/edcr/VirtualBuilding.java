@@ -51,7 +51,9 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.EnumSet;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class VirtualBuilding implements Serializable {
     private static final long serialVersionUID = 7L;
@@ -236,4 +238,12 @@ public class VirtualBuilding implements Serializable {
 		this.totalParkingArea = totalParkingArea;
 	}
     
+	public boolean containsOccupancy(String occupancyCode) {
+		if(!this.occupancyTypes.isEmpty()) {
+			List<String> occupancyTypeCodes = this.occupancyTypes.stream().map(occ -> occ.getType().getCode()).collect(Collectors.toList());
+			if(occupancyTypeCodes.contains(occupancyCode));
+				return true;
+		}
+		return false;
+	}
 }

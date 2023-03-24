@@ -121,7 +121,7 @@ public class RainWaterHarvesting extends FeatureProcess {
 	public Plan validate(Plan pl) {
 		HashMap<String, String> errors = new HashMap<>();
 		// rain water harvest defined or not
-		if (pl != null && pl.getUtility() != null && !pl.getVirtualBuilding().getOccupancies().isEmpty()) {
+		if (pl != null && pl.getUtility() != null && !pl.getVirtualBuilding().getOccupancyTypes().isEmpty()) {
 			for (OccupancyTypeHelper occupancyType : pl.getVirtualBuilding().getOccupancyTypes()) {
 				String occupCode = occupancyType.getType().getCode();
 				if (checkOccupancyTypeForRWH(occupancyType)) {
@@ -176,7 +176,7 @@ public class RainWaterHarvesting extends FeatureProcess {
 			subRule = SUB_RULE_109_B;
 		String subRuleDesc = SUB_RULE_109_B_DESCRIPTION;
 		BigDecimal expectedTankCapacity = BigDecimal.ZERO;
-		if (!pl.getVirtualBuilding().getOccupancies().isEmpty()) {
+		if (!pl.getVirtualBuilding().getOccupancyTypes().isEmpty()) {
 			for (OccupancyTypeHelper occupancyType : pl.getVirtualBuilding().getOccupancyTypes()) {
 				String occupCode = occupancyType.getType().getCode();
 				if (checkOccupancyTypeForRWH(occupancyType)) {
@@ -211,7 +211,7 @@ public class RainWaterHarvesting extends FeatureProcess {
 		List<Map<String, Object>> listOfMapOfAllOccupanciesAndTankCapacity = new ArrayList<>();
 		if (pl.getUtility() != null && !pl.getUtility().getRainWaterHarvest().isEmpty()
 				&& pl.getUtility().getRainWaterHarvestingTankCapacity() != null) {
-			if (!pl.getVirtualBuilding().getOccupancies().isEmpty()) {
+			if (!pl.getVirtualBuilding().getOccupancyTypes().isEmpty()) {
 				for (OccupancyTypeHelper occupancyType : pl.getVirtualBuilding().getOccupancyTypes()) {
 					String occupCode = occupancyType.getType().getCode();
 					Map<String, Object> mapOfAllOccupancyAndTankCapacity = new HashMap<>();
