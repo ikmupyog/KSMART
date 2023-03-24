@@ -249,6 +249,7 @@ const componentsToRegister = {
   CRApplicationDetails,
   CRApplicationDeathDetails,
   SearchDeathInclusion,
+  CRSearch,
   CRDeathsearch,
   SearchCrApplication,
   SearchRegistryDeath,

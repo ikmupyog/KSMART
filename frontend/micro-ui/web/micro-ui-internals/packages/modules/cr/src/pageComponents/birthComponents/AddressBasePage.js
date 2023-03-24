@@ -351,6 +351,36 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                 } else {
                     setPresentInsideKeralaPincodeError(false);
                 }
+                console.log(presentInsideKeralaStreetNameEn);
+                if (presentInsideKeralaStreetNameEn != null || presentInsideKeralaStreetNameEn != undefined || presentInsideKeralaStreetNameEn != "") {
+                    
+                    if (presentInsideKeralaStreetNameMl == null || presentInsideKeralaStreetNameMl == undefined || presentInsideKeralaStreetNameMl == "") {
+                        setPresentInsideKeralaStreetNameMlError(true);
+                        validFlag = false;
+                        setToast(true);
+                        setTimeout(() => {
+                            setToast(false);
+                        }, 2000);
+                    } else {
+                        setPresentInsideKeralaStreetNameMlError(false);
+                    }
+                } else {
+                    setPresentInsideKeralaStreetNameMlError(false);
+                }
+                if (presentInsideKeralaStreetNameMl != null || presentInsideKeralaStreetNameMl != undefined || presentInsideKeralaStreetNameMl != "") {
+                    if (presentInsideKeralaStreetNameEn == null || presentInsideKeralaStreetNameEn == undefined || presentInsideKeralaStreetNameEn == "") {
+                        setPresentInsideKeralaStreetNameEnError(true);
+                        validFlag = false;
+                        setToast(true);
+                        setTimeout(() => {
+                            setToast(false);
+                        }, 2000);
+                    } else {
+                        setPresentInsideKeralaStreetNameEnError(false);
+                    }
+                } else {
+                    setPresentInsideKeralaStreetNameEnError(false);
+                }
             }
             if (countryvalue === "IND" && value != "KL") {
                 if (presentaddressCountry == null || presentaddressCountry == undefined) {
@@ -462,35 +492,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                     }, 2000);
                 } else {
                     setPresentInsideKeralaLocalityNameMlError(false);
-                }
-                if (presentInsideKeralaStreetNameEn != null || presentInsideKeralaStreetNameEn != undefined || presentInsideKeralaStreetNameEn != "") {
-                    if (presentInsideKeralaStreetNameMl == null || presentInsideKeralaStreetNameMl == undefined || presentInsideKeralaStreetNameMl == "") {
-                        setPresentInsideKeralaStreetNameMlError(true);
-                        validFlag = false;
-                        setToast(true);
-                        setTimeout(() => {
-                            setToast(false);
-                        }, 2000);
-                    } else {
-                        setPresentInsideKeralaStreetNameMlError(false);
-                    }
-                } else {
-                    setPresentInsideKeralaStreetNameMlError(false);
-                }
-                if (presentInsideKeralaStreetNameMl != null || presentInsideKeralaStreetNameMl != undefined || presentInsideKeralaStreetNameMl != "") {
-                    if (presentInsideKeralaStreetNameEn == null || presentInsideKeralaStreetNameEn == undefined || presentInsideKeralaStreetNameEn == "") {
-                        setPresentInsideKeralaStreetNameEnError(true);
-                        validFlag = false;
-                        setToast(true);
-                        setTimeout(() => {
-                            setToast(false);
-                        }, 2000);
-                    } else {
-                        setPresentInsideKeralaStreetNameEnError(false);
-                    }
-                } else {
-                    setPresentInsideKeralaStreetNameEnError(false);
-                }
+                }                
                 if (presentOutsideKeralaHouseNameEn == null || presentOutsideKeralaHouseNameEn == undefined || presentOutsideKeralaHouseNameEn == "") {
                     setPresentInsideKeralaHouseNameEnError(true);
                     validFlag = false;

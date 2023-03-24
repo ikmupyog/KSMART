@@ -327,7 +327,7 @@ export const convertToAdoptionRegistration = (data = {}) => {
         pregnancyDuration: data?.AdoptionChildDetails?.pregnancyDuration ? data?.AdoptionChildDetails?.pregnancyDuration : null,
         medicalAttensionSub: data?.AdoptionChildDetails?.medicalAttensionSub ? data?.AdoptionChildDetails?.medicalAttensionSub.code : null,
         deliveryMethods: data?.AdoptionChildDetails?.deliveryMethods ? data?.AdoptionChildDetails?.deliveryMethods.code : null,
-        action:"INITIATE",
+        action: "INITIATE",
         adoptdeedorderno: data?.AdoptionChildDetails?.AdoptionDeedNo ? data?.AdoptionChildDetails?.AdoptionDeedNo : null,
         adoptdateoforderdeed: data?.AdoptionChildDetails?.AdoptionDeedRegDate ? Date.parse(data?.AdoptionChildDetails?.AdoptionDeedRegDate) : null,
         adoptissuingauththority: data?.AdoptionChildDetails?.IssuingAuthority ? data?.AdoptionChildDetails?.IssuingAuthority : null,
@@ -338,7 +338,7 @@ export const convertToAdoptionRegistration = (data = {}) => {
         adoptagencyaddress: data?.AdoptionChildDetails?.AdoptionAgencyAddress ? data?.AdoptionChildDetails?.AdoptionAgencyAddress : null,
         adoptagencycontactperson: data?.AdoptionChildDetails?.AdoptionContractPersonName ? data?.AdoptionChildDetails?.AdoptionContractPersonName : null,
         adoptagencycontactpersonmobileno: data?.AdoptionChildDetails?.AdoptionContactNo ? data?.AdoptionChildDetails?.AdoptionContactNo : null,
-        oldregistrationno:data?.AdoptionChildDetails?.SearchRegId?.applicationNumber ? data?.AdoptionChildDetails.SearchRegId?.applicationNumber:"",
+        oldregistrationno: data?.AdoptionChildDetails?.SearchRegId?.applicationNumber ? data?.AdoptionChildDetails.SearchRegId?.applicationNumber : "",
         applicationtype: "CRBRNR",
         businessservice: "birth-services",
         workflowcode: data?.AdoptionChildDetails?.workFlowCode,
@@ -348,7 +348,7 @@ export const convertToAdoptionRegistration = (data = {}) => {
           motherAadhar: data?.AdoptionParentsDetails?.motherAadhar,
           motherMarriageAge: data?.AdoptionParentsDetails?.motherMarriageAge,
           motherMarriageBirth: data?.AdoptionParentsDetails?.motherMarriageBirth,
-          motherMaritalStatus:data?.AdoptionParentsDetails?.motherMaritalStatus ? data?.AdoptionParentsDetails?.motherMaritalStatus.code : null,
+          motherMaritalStatus: data?.AdoptionParentsDetails?.motherMaritalStatus ? data?.AdoptionParentsDetails?.motherMaritalStatus.code : null,
           motherEducation: data?.AdoptionParentsDetails?.motherEducation ? data?.AdoptionParentsDetails?.motherEducation.code : null,
           motherProfession: data?.AdoptionParentsDetails?.motherProfession ? data?.AdoptionParentsDetails?.motherProfession.code : null,
           motherNationality: data?.AdoptionParentsDetails?.motherNationality ? data?.AdoptionParentsDetails?.motherNationality.code : null,
@@ -515,7 +515,7 @@ export const convertToBirthRegistration = (data = {}) => {
         pregnancyDuration: data?.ChildDetails?.pregnancyDuration ? data?.ChildDetails?.pregnancyDuration : null,
         medicalAttensionSub: data?.ChildDetails?.medicalAttensionSub ? data?.ChildDetails?.medicalAttensionSub.code : null,
         deliveryMethods: data?.ChildDetails?.deliveryMethods ? data?.ChildDetails?.deliveryMethods.code : null,
-        action:"INITIATE",
+        action: "INITIATE",
         applicationtype: "CRBRNR",
         businessservice: "birth-services",
         workflowcode: data?.ChildDetails?.workFlowCode,
@@ -525,7 +525,7 @@ export const convertToBirthRegistration = (data = {}) => {
           motherAadhar: data?.ParentsDetails?.motherAadhar,
           motherMarriageAge: data?.ParentsDetails?.motherMarriageAge,
           motherMarriageBirth: data?.ParentsDetails?.motherMarriageBirth,
-          motherMaritalStatus:data?.ParentsDetails?.motherMaritalStatus ? data?.ParentsDetails?.motherMaritalStatus.code : null,
+          motherMaritalStatus: data?.ParentsDetails?.motherMaritalStatus ? data?.ParentsDetails?.motherMaritalStatus.code : null,
           motherEducation: data?.ParentsDetails?.motherEducation ? data?.ParentsDetails?.motherEducation.code : null,
           motherProfession: data?.ParentsDetails?.motherProfession ? data?.ParentsDetails?.motherProfession.code : null,
           motherNationality: data?.ParentsDetails?.motherNationality ? data?.ParentsDetails?.motherNationality.code : null,
@@ -635,27 +635,27 @@ export const convertToBirthRegistration = (data = {}) => {
           isInitiatorDeclaration: data?.InitiatorinfoDetails?.isInitiatorDeclaration,
           isCaretaker: data?.InitiatorinfoDetails?.isCaretaker,
         },
-        "Demands": [
+        Demands: [
           {
-              "tenantId": "kl.cochin",
-              "consumerCode": "AK-45-2023-CRBRNR-C-KOCHI-KL",
-              "consumerType": "FEE",
-              "businessService": "CR",
-              "taxPeriodFrom": "1554076800000",
-              "taxPeriodTo": "1901145600000",
-              "demandDetails": [
-                  {
-                      "taxHeadMasterCode": "CRB_FEES",
-                      "taxAmount": 12,
-                      "collectionAmount": 0
-                  }
-              ],
-              "minimumAmountPayable": 12,
-              "additionalDetails": {
-                  "HI": "hi"
+            "tenantId": "kl.cochin",
+            "consumerCode": "AK-45-2023-CRBRNR-C-KOCHI-KL",
+            "consumerType": "FEE",
+            "businessService": "CR",
+            "taxPeriodFrom": "1554076800000",
+            "taxPeriodTo": "1901145600000",
+            "demandDetails": [
+              {
+                "taxHeadMasterCode": "CRB_FEES",
+                "taxAmount": 12,
+                "collectionAmount": 0
               }
+            ],
+            "minimumAmountPayable": 12,
+            "additionalDetails": {
+              "HI": "hi"
+            }
           }
-      ]
+        ]
       },
     ],
   };
@@ -720,7 +720,7 @@ export const convertToEditBirthRegistration = (data = {}) => {
         pregnancyDuration: data?.ChildDetails?.pregnancyDuration ? data?.ChildDetails?.pregnancyDuration : null,
         medicalAttensionSub: data?.ChildDetails?.medicalAttensionSub ? data?.ChildDetails?.medicalAttensionSub.code : null,
         deliveryMethods: data?.ChildDetails?.deliveryMethods ? data?.ChildDetails?.deliveryMethods.code : null,
-        action:"INITIATE",
+        action: "INITIATE",
         applicationtype: "CRBRNR",
         businessservice: "birth-services",
         workflowcode: data?.ChildDetails?.workFlowCode,
@@ -730,7 +730,7 @@ export const convertToEditBirthRegistration = (data = {}) => {
           motherAadhar: data?.ParentsDetails?.motherAadhar,
           motherMarriageAge: data?.ParentsDetails?.motherMarriageAge,
           motherMarriageBirth: data?.ParentsDetails?.motherMarriageBirth,
-          motherMaritalStatus:data?.ParentsDetails?.motherMaritalStatus ? data?.ParentsDetails?.motherMaritalStatus.code : null,
+          motherMaritalStatus: data?.ParentsDetails?.motherMaritalStatus ? data?.ParentsDetails?.motherMaritalStatus.code : null,
           motherEducation: data?.ParentsDetails?.motherEducation ? data?.ParentsDetails?.motherEducation.code : null,
           motherProfession: data?.ParentsDetails?.motherProfession ? data?.ParentsDetails?.motherProfession.code : null,
           motherNationality: data?.ParentsDetails?.motherNationality ? data?.ParentsDetails?.motherNationality.code : null,
@@ -853,8 +853,8 @@ export const convertToStillBirthRegistration = (data = {}) => {
       {
         childDOB: Date.parse(data?.StillBirthChildDetails?.childDOB),
         birthDateTime: parseInt(data?.StillBirthChildDetails?.birthDateTime),
-        gender: data?.StillBirthChildDetails?.gender ? data?.StillBirthChildDetails?.gender.code : null,        
-        tenantid: data?.StillBirthChildDetails?.tenantId,        
+        gender: data?.StillBirthChildDetails?.gender ? data?.StillBirthChildDetails?.gender.code : null,
+        tenantid: data?.StillBirthChildDetails?.tenantId,
         hospitalCode: data?.StillBirthChildDetails?.hospitalName ? data?.StillBirthChildDetails?.hospitalName.code : null,
         birthPlace: data?.StillBirthChildDetails?.birthPlace ? data?.StillBirthChildDetails?.birthPlace.code : null,
         hospitalName: data?.StillBirthChildDetails?.hospitalName ? data?.StillBirthChildDetails?.hospitalName.hospitalName : null,
@@ -896,14 +896,14 @@ export const convertToStillBirthRegistration = (data = {}) => {
         pregnancyDuration: data?.StillBirthChildDetails?.pregnancyDuration ? data?.StillBirthChildDetails?.pregnancyDuration : null,
         medicalAttensionSub: data?.StillBirthChildDetails?.medicalAttensionSub ? data?.StillBirthChildDetails?.medicalAttensionSub.code : null,
         deliveryMethods: data?.StillBirthChildDetails?.deliveryMethods ? data?.StillBirthChildDetails?.deliveryMethods.code : null,
-        action:"INITIATE",
+        action: "INITIATE",
         applicationtype: "CRBRSB",
         businessservice: "birth-services",
         workflowcode: data?.StillBirthChildDetails?.workFlowCode,
         StillBirthParentsDetails: {
           motherFirstNameEn: data?.StillBirthParentsDetails?.motherFirstNameEn,
           motherFirstNameMl: data?.StillBirthParentsDetails?.motherFirstNameMl,
-          motherAadhar: data?.StillBirthParentsDetails?.motherAadhar,          
+          motherAadhar: data?.StillBirthParentsDetails?.motherAadhar,
           motherMarriageBirth: data?.StillBirthParentsDetails?.motherMarriageBirth,
           motherEducation: data?.StillBirthParentsDetails?.motherEducation ? data?.StillBirthParentsDetails?.motherEducation.code : null,
           motherProfession: data?.StillBirthParentsDetails?.motherProfession ? data?.StillBirthParentsDetails?.motherProfession.code : null,
@@ -1121,7 +1121,7 @@ export const convertToDeathRegistration = (data = {}) => {
           DeathPlaceStreetEn: data?.InformationDeath?.DeathPlaceStreetEn,
           DeathPlaceStreetMl: data?.InformationDeath?.DeathPlaceStreetMl,
           GeneralRemarks: data?.InformationDeath?.GeneralRemarks,
-       
+
           DeathPlaceHomeWardId: data?.InformationDeath?.DeathPlaceHomeWardId ? data?.InformationDeath?.DeathPlaceHomeWardId.code : null,
           DeathPlaceHomePostofficeId: data?.InformationDeath?.DeathPlaceHomePostofficeId
             ? data?.InformationDeath.DeathPlaceHomePostofficeId.code
@@ -1293,8 +1293,8 @@ export const convertToDeathRegistration = (data = {}) => {
           InitiatorAadhaar: data?.Initiator?.InitiatorAadhaar,
           InitiatorName: data?.Initiator?.InitiatorName,
           InitiatorMobile: parseInt(data?.Initiator?.InitiatorMobile),
-          InitiatorAddress: data?.Initiator?.InitiatorAddress,  
-          InitiatorDocumentId: null,        
+          InitiatorAddress: data?.Initiator?.InitiatorAddress,
+          InitiatorDocumentId: null,
           InitiatorDocumentTenantId: data?.InformationDeath?.tenantId,
           InitiatorDocumentAckNo: null,
           InitiatorDocumentType: null,
