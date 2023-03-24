@@ -10,7 +10,7 @@ const Hospital = ({
   selectDeathPlaceType,
   HospitalNameMl,
   selectHospitalNameMl,
-  iseditDeath,
+  isEditDeath,
 }) => {
   const { t } = useTranslation();  
   let tenantId = "";
@@ -21,7 +21,7 @@ const Hospital = ({
   const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "hospital");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [tenantboundary, setTenantboundary] = useState(false);
-  const [isDisableEdit, setisDisableEdit] = useState(iseditDeath ? iseditDeath : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
   if (tenantboundary) {
     queryClient.removeQueries("CR_HOSPITALMASTER");
     setTenantboundary(false);
@@ -33,7 +33,7 @@ const Hospital = ({
     hospitalData["egov-location"].hospitalList.map((ob) => {
       cmbhospital.push(ob);
     });
-  if (iseditDeath) {
+  if (isEditDeath) {
     if (formData?.InformationDeath?.DeathPlaceType != null) {
       if (cmbhospital.length > 0 && (DeathPlaceType === undefined || DeathPlaceType === "")) {
         selectDeathPlaceType(cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.InformationDeath?.DeathPlaceType)[0]);

@@ -11,9 +11,9 @@ import DeathPublicPlace from "./DeathPublicPlace";
 import DeathOutsideJurisdiction from "./DeathOutsideJurisdiction ";
 import { useParams } from "react-router-dom";
 
-const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath }) => {
+const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath }) => {
   const [isEditDeathPageComponents, setIsEditDeathPageComponents] = useState(false);
-  const [isDisableEdit, setisDisableEdit] = useState(iseditDeath ? iseditDeath : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
   const stateId = Digit.ULBService.getStateId();
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
   let tenantId = "";
@@ -125,14 +125,14 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
       cmbState.push(ob);
     });
   const [DateOfDeath, setDateOfDeath] = useState(
-    iseditDeath &&
+    isEditDeath &&
       isEditDeathPageComponents === false &&
       (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
       ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath)
       : formData?.InformationDeath?.DateOfDeath
   );
   const [FromDate, setFromDate] = useState(
-    iseditDeath &&
+    isEditDeath &&
       isEditDeathPageComponents === false &&
       (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
       ? convertEpochToDate(formData?.InformationDeath?.FromDate)
@@ -274,7 +274,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
       : ""
   );
   const [HospitalNameMl, selectHospitalNameMl] = useState(
-    formData?.ChildDetInformationDeathails?.HospitalNameMl?.code
+    formData?.  InformationDeathails?.HospitalNameMl?.code
       ? formData?.InformationDeath?.HospitalNameMl
       : formData?.InformationDeath?.HospitalNameMl
       ? ""
@@ -505,7 +505,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
       let Difference_In_Time = today.getTime() - deathDate.getTime();
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       Difference_In_DaysRounded = Math.floor(Difference_In_Days);
-    } 
+    }
     // else {
     //   setFromDate(null);
     //   setDOBError(true);
@@ -534,7 +534,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
         let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
         Difference_In_DaysRounded = Math.floor(Difference_In_Days);
       }
-    } 
+    }
     // else {
     //   setToDate(null);
     //   setDOBError(true);
@@ -572,7 +572,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
       let Difference_In_Time = today.getTime() - deathDate.getTime();
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       Difference_In_DaysRounded = Math.floor(Difference_In_Days);
-    } 
+    }
     // else {
     //   setDateOfDeath(null);
     //   setDOBError(true);
@@ -581,7 +581,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
     //     setToast(false);
     //   }, 3000);
     // }
-
   }
   function selectReligion(value) {
     setSelectedReligion(value);
@@ -676,7 +675,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
   //   }
   // }
   function setSelectDeceasedAadharNumber(e) {
-    if (e.target.value.trim().length != 0) {
+    if (e.target.value.trim().length >= 0) {
       setDeceasedAadharNumber(
         e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
       );
@@ -1074,10 +1073,10 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
       sessionStorage.setItem("institutionNameCode", DeathPlaceInstId ? DeathPlaceInstId.code : null);
       sessionStorage.setItem("DeathPlaceInstId", DeathPlaceInstId ? DeathPlaceInstId.code : null);
       // if (validFlag === true) {
-        sessionStorage.setItem("DeceasedIdproofType", DeceasedIdproofType ? DeceasedIdproofType.code : null);
-        sessionStorage.setItem("DeceasedIdproofNo", DeceasedIdproofNo ? DeceasedIdproofNo : null);
-      
-        sessionStorage.setItem("DeceasedAadharNumber", DeceasedAadharNumber ? DeceasedAadharNumber : null);
+      sessionStorage.setItem("DeceasedIdproofType", DeceasedIdproofType ? DeceasedIdproofType.code : null);
+      sessionStorage.setItem("DeceasedIdproofNo", DeceasedIdproofNo ? DeceasedIdproofNo : null);
+
+      sessionStorage.setItem("DeceasedAadharNumber", DeceasedAadharNumber ? DeceasedAadharNumber : null);
 
       if (DeathPlace.code === "HOSPITAL") {
         //  ?sessionStorage.setItem("DeathPlace", DeathPlace.code);
@@ -1138,7 +1137,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
         sessionStorage.setItem("PlaceOfBurialMl", PlaceOfBurialMl ? PlaceOfBurialMl : null);
         sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
       }
-      let IsEditChangeScreen = iseditDeath ? iseditDeath : false;
+      let IsEditChangeScreen = isEditDeath ? isEditDeath : false;
 
       onSelect(config.key, {
         IsEditChangeScreen,
@@ -1212,7 +1211,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
     }
   };
   if (
-    iseditDeath &&
+    isEditDeath &&
     isEditDeathPageComponents === false &&
     (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
   ) {
@@ -1440,7 +1439,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
             <div>
               <Hospital
                 formData={formData}
-                iseditDeath={iseditDeath}
+                isEditDeath={isEditDeath}
                 selectDeathPlaceType={selectDeathPlaceType}
                 DeathPlaceType={DeathPlaceType}
                 HospitalNameMl={HospitalNameMl}
@@ -1452,6 +1451,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
             <div>
               <Institution
                 formData={formData}
+                isEditDeath={isEditDeath}
                 selectDeathPlaceType={selectDeathPlaceType}
                 DeathPlaceType={DeathPlaceType}
                 DeathPlaceInstId={DeathPlaceInstId}
@@ -1469,6 +1469,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
             <div>
               <DeathPlaceHome
                 formData={formData}
+                isEditDeath={isEditDeath}
                 DeathPlaceWardId={DeathPlaceWardId}
                 setDeathPlaceWardId={setDeathPlaceWardId}
                 DeathPlaceHomePostofficeId={DeathPlaceHomePostofficeId}
@@ -1496,6 +1497,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
             <div>
               <DeathPlaceVehicle
                 formData={formData}
+                isEditDeath={isEditDeath}
                 DeathPlaceType={DeathPlaceType}
                 selectDeathPlaceType={selectDeathPlaceType}
                 VehicleNumber={VehicleNumber}
@@ -1525,6 +1527,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
             <div>
               <DeathPublicPlace
                 formData={formData}
+                isEditDeath={isEditDeath}
                 DeathPlaceType={DeathPlaceType}
                 selectDeathPlaceType={selectDeathPlaceType}
                 DeathPlaceLocalityEn={DeathPlaceLocalityEn}
@@ -1546,6 +1549,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
             <div>
               <DeathOutsideJurisdiction
                 formData={formData}
+                isEditDeath={isEditDeath}
                 DeathPlaceCountry={DeathPlaceCountry}
                 setSelectDeathPlaceCountry={setSelectDeathPlaceCountry}
                 DeathPlaceState={DeathPlaceState}

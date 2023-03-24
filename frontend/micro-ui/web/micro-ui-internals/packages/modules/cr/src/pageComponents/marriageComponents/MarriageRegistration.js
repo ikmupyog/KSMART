@@ -522,7 +522,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData,isEditMarri
                   disable={isDisableEdit}
                   placeholder={`${t("CR_MARRIAGE_OTHER_SPECIFY")}`}
                   
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text",title: t("CR_INVALID_MARRIAGE_OTHER") })}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text",title: t("CR_INVALID_MARRIAGE_OTHER") })}
                 />
               </div>
             </div>

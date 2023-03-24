@@ -27,7 +27,7 @@ const CrAbFlowApp = ({ parentUrl}) => {
   newConfig?.forEach((obj) => {
     config = config.concat(obj.body.filter((a) => !a.hideInCitizen));
   });
-  config.indexRoute = "child-details";
+  config.indexRoute = "abandoned-child-details";
   const goNext = (skipStep, index, isAddMultiple, key, isPTCreateSkip) => {
     let currentPath = pathname.split("/").pop(),
       nextPage;

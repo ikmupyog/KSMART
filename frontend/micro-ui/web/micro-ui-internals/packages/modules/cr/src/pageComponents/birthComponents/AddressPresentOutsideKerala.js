@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, Loader, Toast } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/CRTimeline";
+import { FormStep, CardLabel, TextInput, Dropdown, Loader } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-// import { sleep } from "react-query/types/core/utils";
 
 const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, presentOutsideKeralaDistrict, setoutsideKeralaDistrict,
   presentOutsideKeralaTaluk, setoutsideKeralaTaluk, presentOutsideKeralaCityVilgeEn, setoutsideKeralaCityVilgeEn,
@@ -20,7 +18,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
   setpermntOutsideKeralaLocalityNameMl, permntOutsideKeralaStreetNameEn, setpermntOutsideKeralaStreetNameEn,
   permntOutsideKeralaStreetNameMl, setpermntOutsideKeralaStreetNameMl, permntOutsideKeralaPostOfficeEn,
   setpermntoutsideKeralaPostOfficeEn, permntOutsideKeralaPostOfficeMl, setpermntoutsideKeralaPostOfficeMl,
-  isEditBirth = false, isEditDeath = false
+  isEditBirth = false, isEditDeath = false,
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
@@ -30,13 +28,13 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
   if (tenantId === "kl") {
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
-  const { data: Taluk = {}, isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
+  // const { data: Taluk = {}, isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
   const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
   const { data: District = {}, isDistrictLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
   const [toast, setToast] = useState(false);
   const [isInitialRender, setIsInitialRender] = useState(true);
+  // const [isInitialRenderDistrict, setInitialRenderDistrict] = useState(sessionStorage.getItem("presentOutsideKeralaFlag"));
   const [cmbFilterDistrict, setCmbFilterDistrict] = useState();
-
 
   const cmbUrbanRural = [
     { i18nKey: "Town", code: "TOWN" },
@@ -49,7 +47,6 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
   let districtid = null;
   // let cmbFilterDistrict = [];
   let cmbLB = [];
-  console.log(value);
   // Taluk &&
   //   Taluk["common-masters"] &&
   //   Taluk["common-masters"].Taluk.map((ob) => {
@@ -72,24 +69,18 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
   //   });
 
   useEffect(() => {
-    console.log(isInitialRender);
-    console.log(sessionStorage.getItem("presentOutsideKeralaFlag"));
-    if (isInitialRender || sessionStorage.getItem("presentOutsideKeralaFlag")===true) {
+    if (isInitialRender) {
       if (cmbDistrict.length > 0) {
-        console.log(cmbDistrict);
-        console.log(value);
         // currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
         // setinsideKeralaLBName(currentLB[0]);
-        console.log(cmbDistrict.filter((cmbDistrict) => cmbDistrict.statecode === value));
+        //console.log(cmbDistrict.filter((cmbDistrict) => cmbDistrict.statecode === value));
         setCmbFilterDistrict(cmbDistrict.filter((cmbDistrict) => cmbDistrict.statecode === value));
-        console.log(cmbFilterDistrict);
         // setoutsideKeralaDistrict(cmbFilterDistrict);
         // cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === currentLB[0].city.districtid);
         // setLbsTalukvalue(cmbFilterTaluk);
         // cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
         // setLbsVillagevalue(cmbFilterVillage);
         setIsInitialRender(false);
-        sessionStorage.setItem("presentOutsideKeralaFlag", false);
       }
     }
   }, [cmbFilterDistrict, isInitialRender]);
@@ -114,7 +105,6 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
   const onSkip = () => onSelect();
 
   function setSelectoutsideKeralaDistrict(value) {
-    setoutsideKeralaDistrict(null);
     console.log(value.code);
     setoutsideKeralaDistrict(value);
     districtid = value.districtid;
@@ -280,7 +270,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
 
   };
 
-  if (isDistrictLoading || isTalukLoading || isVillageLoading) {
+  if (isDistrictLoading || isVillageLoading) {
     return <Loader></Loader>;
   }
   else {

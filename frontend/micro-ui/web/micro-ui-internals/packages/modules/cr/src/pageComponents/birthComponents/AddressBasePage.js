@@ -100,7 +100,6 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
     const [Villagevalues, setLbsVillagevalue] = useState(null);
     const [PostOfficevalues, setPostOfficevalues] = useState(null);
     //################################# Present Outside Kerala ##########################################################################################################
-
     const [presentOutsideKeralaDistrict, setoutsideKeralaDistrict] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaDistrict?.code ? formData?.AddressBirthDetails?.presentOutsideKeralaDistrict : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaDistrict ? "" : "");
     const [presentOutsideKeralaTaluk, setoutsideKeralaTaluk] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaTaluk ? formData?.AddressBirthDetails?.presentOutsideKeralaTaluk : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaTaluk ? formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaTaluk : "");
     // const [presentOutsideKeralaTaluk, setoutsideKeralaTaluk] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaTaluk?.code ? formData?.AddressBirthDetails?.presentOutsideKeralaTaluk : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaTaluk ? "" : "");
@@ -201,10 +200,10 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
     const [PresentInsideKeralaHouseNameMlError, setPresentInsideKeralaHouseNameMlError] = useState(formData?.AddressBirthDetails?.PresentInsideKeralaHouseNameMlError ? false : false);
     const [PresentInsideKeralaLocalityNameEnError, setPresentInsideKeralaLocalityNameEnError] = useState(formData?.AddressBirthDetails?.PresentInsideKeralaLocalityNameEnError ? false : false);
     const [PresentInsideKeralaLocalityNameMlError, setPresentInsideKeralaLocalityNameMlError] = useState(formData?.AddressBirthDetails?.PresentInsideKeralaLocalityNameMlError ? false : false);
-    
+
     const [PresentInsideKeralaStreetNameEnError, setPresentInsideKeralaStreetNameEnError] = useState(formData?.AddressBirthDetails?.PresentInsideKeralaStreetNameEnError ? false : false);
     const [PresentInsideKeralaStreetNameMlError, setPresentInsideKeralaStreetNameMlError] = useState(formData?.AddressBirthDetails?.PresentInsideKeralaStreetNameMlError ? false : false);
-    
+
     const [PresentInsideKeralaPostOfficeError, setPresentInsideKeralaPostOfficeError] = useState(formData?.AddressBirthDetails?.PresentInsideKeralaPostOfficeError ? false : false);
     const [PresentInsideKeralaPincodeError, setPresentInsideKeralaPincodeError] = useState(formData?.AddressBirthDetails?.PresentInsideKeralaPincodeError ? false : false);
     const [PresentCityVillageError, setCityVillageError] = useState(formData?.AddressBirthDetails?.PresentCityVillageError ? false : false);
@@ -808,8 +807,6 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
         return (
             <React.Fragment>
                 <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-                {/* {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null} */}
-                {/* {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null} */}
                 {window.location.href.includes("/citizen/cr/cr-birth-creation/address-birth") ? <Timeline currentStep={3} /> : null || window.location.href.includes("employee/cr/cr-flow") ? <Timeline currentStep={3} /> : null}
                 {window.location.href.includes("/citizen/cr/cr-death-creation/address-death") ? <DRTimeline currentStep={2} /> : null || window.location.href.includes("employee/cr/death-flow") ? <DRTimeline currentStep={2} /> : null}
                 <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
@@ -820,6 +817,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                             setaddressCountry={setaddressCountry}
                             presentaddressStateName={presentaddressStateName}
                             setaddressStateName={setaddressStateName}
+                            presentOutsideKeralaDistrict={presentOutsideKeralaDistrict}
+                            setoutsideKeralaDistrict={setoutsideKeralaDistrict}
                             value={value}
                             setValue={setValue}
                             countryvalue={countryvalue}
@@ -1214,9 +1213,9 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                                                                                                     ? t(`BIRTH_ERROR_ADDRESS_LINE_ONE_ML`) : PresentOutSideIndiaLineTwoEnError
                                                                                                                         ? t(`BIRTH_ERROR_ADDRESS_LINE_TWO_ML`) : PresentOutSideIndiaLineTwoMlError
                                                                                                                             ? t(`BIRTH_ERROR_ADDRESS_LINE_TWO_ML`) : PresentInsideKeralaStreetNameEnError
-                                                                                                                            ? t(`BIRTH_ERROR_ADDRESS_PRESENT_STREET_EN`) : PresentInsideKeralaStreetNameMlError
-                                                                                                                            ? t(`BIRTH_ERROR_ADDRESS_PRESENT_STREET_ML`)
-                                                                                                                            : setToast(false)
+                                                                                                                                ? t(`BIRTH_ERROR_ADDRESS_PRESENT_STREET_EN`) : PresentInsideKeralaStreetNameMlError
+                                                                                                                                    ? t(`BIRTH_ERROR_ADDRESS_PRESENT_STREET_ML`)
+                                                                                                                                    : setToast(false)
                                     : setToast(false)
                             }
                             onClose={() => setToast(false)}
