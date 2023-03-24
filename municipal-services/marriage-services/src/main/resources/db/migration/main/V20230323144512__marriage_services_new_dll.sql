@@ -905,3 +905,43 @@ CREATE TABLE IF NOT EXISTS public.eg_marriage_certificate_audit
     createdby character varying(64) COLLATE pg_catalog."default",
     lastmodifiedby character varying(64) COLLATE pg_catalog."default"
     );
+
+    
+CREATE TABLE IF NOT EXISTS public.eg_register_marriage_permanent_address_details
+(
+    id character varying(64) COLLATE pg_catalog."default" NOT NULL,
+    housename_en character varying(2500) COLLATE pg_catalog."default",
+    housename_ml character varying(2500) COLLATE pg_catalog."default",
+    villageid character varying(64) COLLATE pg_catalog."default",
+    village_name character varying(1000) COLLATE pg_catalog."default",
+    talukid character varying(64) COLLATE pg_catalog."default",
+    taluk_name character varying(1000) COLLATE pg_catalog."default",
+    tenantid character varying(64) COLLATE pg_catalog."default",
+    ward_code character varying(64) COLLATE pg_catalog."default",
+    locality_en character varying(1000) COLLATE pg_catalog."default",
+    locality_ml character varying(1000) COLLATE pg_catalog."default",
+    street_name_en character varying(2000) COLLATE pg_catalog."default",
+    street_name_ml character varying(2000) COLLATE pg_catalog."default",
+    districtid character varying(64) COLLATE pg_catalog."default",
+    stateid character varying(64) COLLATE pg_catalog."default",
+    poid character varying(64) COLLATE pg_catalog."default",
+    poname_en character varying(64) COLLATE pg_catalog."default",
+    poname_ml character varying(64) COLLATE pg_catalog."default",
+    pinno character varying(10) COLLATE pg_catalog."default",
+    countryid character varying(64) COLLATE pg_catalog."default",
+    marriageid character varying(64) COLLATE pg_catalog."default" NOT NULL,
+    bride_groom character varying(64) COLLATE pg_catalog."default" NOT NULL,
+    mig_chvackno character varying(64) COLLATE pg_catalog."default",
+    createdtime bigint,
+    createdby character varying(64) COLLATE pg_catalog."default",
+    lastmodifiedtime bigint,
+    lastmodifiedby character varying(64) COLLATE pg_catalog."default",
+    ot_address1_en character varying(2500) COLLATE pg_catalog."default",
+    ot_address1_ml character varying(2500) COLLATE pg_catalog."default",
+    ot_address2_en character varying(2500) COLLATE pg_catalog."default",
+    ot_address2_ml character varying(2500) COLLATE pg_catalog."default",
+    ot_state_region_province_en character varying(2500) COLLATE pg_catalog."default",
+    ot_state_region_province_ml character varying(2500) COLLATE pg_catalog."default",
+    ot_zipcode character varying(10) COLLATE pg_catalog."default",
+    CONSTRAINT eg_register_marriage_permanent_address_details_pkey PRIMARY KEY (id)
+);

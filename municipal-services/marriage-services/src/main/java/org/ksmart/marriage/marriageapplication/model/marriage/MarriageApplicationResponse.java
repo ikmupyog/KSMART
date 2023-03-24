@@ -31,19 +31,16 @@ public class MarriageApplicationResponse {
 
 //    @JsonProperty("BirthCertificate")
 //    @Valid
-   // private BirthCertificate birthCertificate;
-
+//    private BirthCertificate birthCertificate;
 
     @JsonProperty("Count")
     private int count;
 
-    public MarriageApplicationResponse addBirthApplication(MarriageApplicationDetail details) {
+    public MarriageApplicationResponse addMarriageApplication(MarriageApplicationDetail details) {
         if (marriageApplicationDetails == null) {
             marriageApplicationDetails = new ArrayList<>();
         }
         marriageApplicationDetails.add(details);
         return this;
     }
-
-
 }

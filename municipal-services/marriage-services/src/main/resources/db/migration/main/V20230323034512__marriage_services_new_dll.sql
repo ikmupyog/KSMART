@@ -24,10 +24,7 @@ DROP TABLE IF EXISTS public.eg_register_marriage_witness_details;
 DROP TABLE IF EXISTS public.eg_register_marriage_witness_details_audit;
 DROP TABLE IF EXISTS public.eg_register_marriage_document;
 DROP TABLE IF EXISTS public.eg_register_marriage_document_audit;
-
-
-
-
+DROP TABLE IF EXISTS public.eg_register_marriage_permanent_address_details;
 
 
 DROP FUNCTION IF EXISTS public.process_eg_marriage_bride_details_audit();

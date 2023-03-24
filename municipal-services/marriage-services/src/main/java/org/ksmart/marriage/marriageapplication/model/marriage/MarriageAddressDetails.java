@@ -219,6 +219,10 @@ public class MarriageAddressDetails {
     @JsonProperty("villageNamePresent")
     private String villageNamePresent;
 
+    @Size(max = 1000)
+    @JsonProperty("villageIdPresent")
+    private String villageIdPresent;
+
     @Size(max = 10)
     @JsonProperty("poNoPresent")
     private String poNoPresent;
@@ -423,6 +427,10 @@ public class MarriageAddressDetails {
     @Size(max = 1000)
     @JsonProperty("villageNamePermanent")
     private String villageNamePermanent;
+
+    @Size(max = 1000)
+    @JsonProperty("villageIdPermanent")
+    private String villageIdPermanent;
 
     @Size(max = 10)
     @JsonProperty("poNoPermanent")
