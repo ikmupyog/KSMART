@@ -450,6 +450,44 @@ export const newConfig = [
     ],
   },
   {
+    head: "AbandonedBirth Routing",
+    body: [
+      {
+        type: "component",
+        route: "abandoned-child-details",
+        isMandatory: true,
+        component: "AbandonedChildDetails",
+        texts: {
+          headerCaption: "",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+        },
+        key: "AbandonedChildDetails",
+        withoutLabel: true,
+        nextStep: "abandoned-birth-initiator-details",
+        hideInEmployee: false,
+      }, 
+      {
+        route: "abandoned-birth-initiator-details",
+        component: "AbandonedBirthInitiatorDetails",
+        texts: {
+          headerCaption: "",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "AbandonedBirthInitiatorDetails",
+        nextStep: null,
+        type: "component",
+        hideInEmployee: false,
+      },
+     
+    ],
+  },
+  {
     head: "Death Routing",
     body: [
       {
@@ -740,7 +778,24 @@ export const newConfig = [
         withoutLabel: true,
         hideInEmployee: false,
         nextStep: "groom-details",
-      },      
+      }, 
+      {
+        type: "component",
+        route: "groom-details",
+        isMandatory: true,
+        component: "GroomDetails",
+        texts: {
+          headerCaption: "",
+          // header: "CR_LEGAL_INFORMATION",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+        },
+        key: "GroomDetails",
+        withoutLabel: true,
+        hideInEmployee: false,
+        nextStep: "bride-details",
+      },     
       {
         type: "component",
         route: "bride-details",
@@ -756,7 +811,7 @@ export const newConfig = [
         key: "BrideDetails",
         withoutLabel: true,
         hideInEmployee: false,
-        nextStep: "place-of-death",
+        nextStep: "witness-details",
       },
       {
         type: "component",

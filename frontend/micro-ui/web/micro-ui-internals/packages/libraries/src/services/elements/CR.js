@@ -64,6 +64,15 @@ export const CRService = {
       userService: false,
       params: { tenantId, ...filters },
     }),
+  CRAdoptionSearch: ({ tenantId, filters }) =>
+    Request({
+      url: Urls.cr.adoption_search,
+      useCache: false,
+      method: "POST",
+      auth: true,
+      userService: false,
+      params: { tenantId, ...filters },
+    }),
   update: (details, tenantId) =>
     Request({
       url: Urls.cr.update,

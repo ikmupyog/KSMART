@@ -11,13 +11,14 @@ import {
   Loader,
   Toast,
   SubmitBar,
+  TextArea,
 } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/MARRIAGETimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
 // import { TimePicker } from '@material-ui/pickers';
 
-const WitnessDetails = ({ config, onSelect, userType, formData }) => {
+const WitnessDetails = ({ config, onSelect, userType, formData,isEditWitness }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -66,186 +67,204 @@ const WitnessDetails = ({ config, onSelect, userType, formData }) => {
     LBType["common-masters"].LBType.map((ob) => {
       cmbLBType.push(ob);
     });
-  const [marraigeDOM, setmarraigeDOM] = useState(formData?.MarriageDetails?.marraigeDOM ? formData?.MarriageDetails?.marraigeDOM : "");
+  const [marraigeDOM, setmarraigeDOM] = useState(formData?.WitnessDetails?.marraigeDOM ? formData?.WitnessDetails?.marraigeDOM : "");
   const [marriageDistrict, setmarriageDistrict] = useState(
-    formData?.MarriageDetails?.marriageDistrict ? formData?.MarriageDetails?.marriageDistrict : ""
+    formData?.WitnessDetails?.marriageDistrict ? formData?.WitnessDetails?.marriageDistrict : ""
   );
   const [marraigeTalukID, setmarraigeTalukID] = useState(
-    formData?.MarriageDetails?.marraigeTalukID ? formData?.MarriageDetails?.marraigeTalukID : ""
+    formData?.WitnessDetails?.marraigeTalukID ? formData?.WitnessDetails?.marraigeTalukID : ""
   );
   const [marraigeVillageName, setmarraigeVillageName] = useState(
-    formData?.MarriageDetails?.marraigeVillageName ? formData?.MarriageDetails?.marraigeVillageName : ""
+    formData?.WitnessDetails?.marraigeVillageName ? formData?.WitnessDetails?.marraigeVillageName : ""
   );
-  const [marraigeLBtype, setmarraigeLBtype] = useState(formData?.MarriageDetails?.marraigeLBtype ? formData?.MarriageDetails?.marraigeLBtype : "");
+  const [marraigeLBtype, setmarraigeLBtype] = useState(formData?.WitnessDetails?.marraigeLBtype ? formData?.WitnessDetails?.marraigeLBtype : "");
   const [marraigePlacetype, setmarraigePlacetype] = useState(
-    formData?.MarriageDetails?.marraigePlacetype ? formData?.MarriageDetails?.marraigePlacetype : ""
+    formData?.WitnessDetails?.marraigePlacetype ? formData?.WitnessDetails?.marraigePlacetype : ""
   );
   const [marriageLocalityEn, setmarriageLocalityEn] = useState(
-    formData?.MarriageDetails?.marriageLocalityEn ? formData?.MarriageDetails?.marriageLocalityEn : ""
+    formData?.WitnessDetails?.marriageLocalityEn ? formData?.WitnessDetails?.marriageLocalityEn : ""
   );
   const [marriageLocalityMal, setmarriageLocalityMal] = useState(
-    formData?.MarriageDetails?.marriageLocalityMal ? formData?.MarriageDetails?.marriageLocalityMal : ""
+    formData?.WitnessDetails?.marriageLocalityMal ? formData?.WitnessDetails?.marriageLocalityMal : ""
   );
   const [marriageStreetEn, setmarriageStreetEn] = useState(
-    formData?.MarriageDetails?.marriageStreetEn ? formData?.MarriageDetails?.marriageStreetEn : ""
+    formData?.WitnessDetails?.marriageStreetEn ? formData?.WitnessDetails?.marriageStreetEn : ""
   );
   const [marriageStreetMal, setmarriageStreetMal] = useState(
-    formData?.MarriageDetails?.marriageStreetMal ? formData?.MarriageDetails?.marriageStreetMal : ""
+    formData?.WitnessDetails?.marriageStreetMal ? formData?.WitnessDetails?.marriageStreetMal : ""
   );
   const [marriageHouseNoAndNameEn, setmarriageHouseNoAndNameEn] = useState(
-    formData?.MarriageDetails?.marriageHouseNoAndNameEn ? formData?.MarriageDetails?.marriageHouseNoAndNameEn : ""
+    formData?.WitnessDetails?.marriageHouseNoAndNameEn ? formData?.WitnessDetails?.marriageHouseNoAndNameEn : ""
   );
   const [marriageHouseNoAndNameMal, setmarriageHouseNoAndNameMal] = useState(
-    formData?.MarriageDetails?.marriageHouseNoAndNameMal ? formData?.MarriageDetails?.marriageHouseNoAndNameMal : ""
+    formData?.WitnessDetails?.marriageHouseNoAndNameMal ? formData?.WitnessDetails?.marriageHouseNoAndNameMal : ""
   );
   const [marriageLandmark, setmarriageLandmark] = useState(
-    formData?.MarriageDetails?.marriageLandmark ? formData?.MarriageDetails?.marriageLandmark : ""
+    formData?.WitnessDetails?.marriageLandmark ? formData?.WitnessDetails?.marriageLandmark : ""
   );
   const [marraigeOthersSpecify, setmarraigeOthersSpecify] = useState(
-    formData?.MarriageDetails?.marraigeOthersSpecify ? formData?.MarriageDetails?.marraigeOthersSpecify : ""
+    formData?.WitnessDetails?.marraigeOthersSpecify ? formData?.WitnessDetails?.marraigeOthersSpecify : ""
   );
-  const [marraigeType, setmarraigeType] = useState(formData?.MarriageDetails?.marraigeType ? formData?.MarriageDetails?.marraigeType : "");
+  const [marraigeType, setmarraigeType] = useState(formData?.WitnessDetails?.marraigeType ? formData?.WitnessDetails?.marraigeType : "");
 
   const [witness1AdharNo, setwitness1AdharNo] = useState(
-    formData?.MarriageDetails?.witness1AdharNo ? formData?.MarriageDetails?.witness1AdharNo : ""
+    formData?.WitnessDetails?.witness1AdharNo ? formData?.WitnessDetails?.witness1AdharNo : ""
   );
   const [witness2AdharNo, setwitness2AdharNo] = useState(
-    formData?.MarriageDetails?.witness2AdharNo ? formData?.MarriageDetails?.witness2AdharNo : ""
+    formData?.WitnessDetails?.witness2AdharNo ? formData?.WitnessDetails?.witness2AdharNo : ""
   );
-  const [witness2NameEn, setwitness2NameEn] = useState(formData?.MarriageDetails?.witness2NameEn ? formData?.MarriageDetails?.witness2NameEn : "");
-  const [witness1NameEn, setwitness1NameEn] = useState(formData?.MarriageDetails?.witness1NameEn ? formData?.MarriageDetails?.witness1NameEn : "");
-  const [witness1Age, setwitness1Age] = useState(formData?.MarriageDetails?.witness1Age ? formData?.MarriageDetails?.witness1Age : "");
-  const [witness2Age, setwitness2Age] = useState(formData?.MarriageDetails?.witness2Age ? formData?.MarriageDetails?.witness2Age : "");
+  const [witness2NameEn, setwitness2NameEn] = useState(formData?.WitnessDetails?.witness2NameEn ? formData?.WitnessDetails?.witness2NameEn : "");
+  const [witness1NameEn, setwitness1NameEn] = useState(formData?.WitnessDetails?.witness1NameEn ? formData?.WitnessDetails?.witness1NameEn : "");
+  const [witness1Age, setwitness1Age] = useState(formData?.WitnessDetails?.witness1Age ? formData?.WitnessDetails?.witness1Age : "");
+  const [witness2Age, setwitness2Age] = useState(formData?.WitnessDetails?.witness2Age ? formData?.WitnessDetails?.witness2Age : "");
   const [witness1AddresSEn, setwitness1AddresSEn] = useState(
-    formData?.MarriageDetails?.witness1AddresSEn ? formData?.MarriageDetails?.witness1AddresSEn : ""
+    formData?.WitnessDetails?.witness1AddresSEn ? formData?.WitnessDetails?.witness1AddresSEn : ""
   );
   const [witness2AddresSEn, setwitness2AddresSEn] = useState(
-    formData?.MarriageDetails?.witness2AddresSEn ? formData?.MarriageDetails?.witness2AddresSEn : ""
+    formData?.WitnessDetails?.witness2AddresSEn ? formData?.WitnessDetails?.witness2AddresSEn : ""
   );
-  const [witness1Mobile, setwitness1Mobile] = useState(formData?.MarriageDetails?.witness1Mobile ? formData?.MarriageDetails?.witness1Mobile : "");
-  const [witness2Mobile, setwitness2Mobile] = useState(formData?.MarriageDetails?.witness2Mobile ? formData?.MarriageDetails?.witness2Mobile : "");
+  const [AadharError, setAadharError] = useState(formData?.BrideDetails?.brideAdharNo ? false : false);
+  const [witness1Mobile, setwitness1Mobile] = useState(formData?.WitnessDetails?.witness1Mobile ? formData?.WitnessDetails?.witness1Mobile : "");
+  const [witness2Mobile, setwitness2Mobile] = useState(formData?.WitnessDetails?.witness2Mobile ? formData?.WitnessDetails?.witness2Mobile : "");
+  const [isDisableEdit, setisDisableEdit] = useState(isEditWitness ? isEditWitness : false);
+  //   const [file, setFile] = useState();
+  //   const [files, setFiles] = useState();
+  //   function handleChange(e) {
+  //     console.log(e.target.files);
+  //     setFile(URL.createObjectURL(e.target.files[0]));
+  //   }
+  //   function handleFile2Change(e) {
+  //     console.log(e.target.files);
+  //     setFiles(URL.createObjectURL(e.target.files[1]));
+  //   }
+  //   const handleOptionChange = (event) => {
+  //     setSelectedOption(event.target.value);
+  //   };
+  const [file1, setFile1] = useState(null);
+  const [file2, setFile2] = useState(null);
 
-//   const [file, setFile] = useState();
-//   const [files, setFiles] = useState();
-//   function handleChange(e) {
-//     console.log(e.target.files);
-//     setFile(URL.createObjectURL(e.target.files[0]));
-//   }
-//   function handleFile2Change(e) {
-//     console.log(e.target.files);
-//     setFiles(URL.createObjectURL(e.target.files[1]));
-//   }
-//   const handleOptionChange = (event) => {
-//     setSelectedOption(event.target.value);
-//   };
-const [file1, setFile1] = useState(null);
-const [file2, setFile2] = useState(null);
+  const handleFile1Change = (event) => {
+    setFile1(event.target.files[0]);
+  };
 
-const handleFile1Change = (event) => {
-  setFile1(event.target.files[0]);
-};
-
-const handleFile2Change = (event) => {
-  setFile2(event.target.files[0]);
-};
-
+  const handleFile2Change = (event) => {
+    setFile2(event.target.files[0]);
+  };
 
   const onSkip = () => onSelect();
 
-  function setSelectmarraigeDOM(value) {
-    setmarraigeDOM(value);
-    const today = new Date();
-    const birthDate = new Date(value);
-    if (birthDate.getTime() <= today.getTime()) {
-      // To calculate the time difference of two dates
-      let Difference_In_Time = today.getTime() - birthDate.getTime();
-      let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-      let Difference_In_DaysRounded = Math.floor(Difference_In_Days);
-      console.log(Difference_In_DaysRounded);
-    } else {
-      setmarraigeDOM(null);
-      // setDOBError(true);
-      // setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 3000);
-    }
-  }
+  // function setSelectmarraigeDOM(value) {
+  //   setmarraigeDOM(value);
+  //   const today = new Date();
+  //   const birthDate = new Date(value);
+  //   if (birthDate.getTime() <= today.getTime()) {
+  //     // To calculate the time difference of two dates
+  //     let Difference_In_Time = today.getTime() - birthDate.getTime();
+  //     let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+  //     let Difference_In_DaysRounded = Math.floor(Difference_In_Days);
+  //     console.log(Difference_In_DaysRounded);
+  //   } else {
+  //     setmarraigeDOM(null);
+  //     // setDOBError(true);
+  //     // setToast(true);
+  //     setTimeout(() => {
+  //       setToast(false);
+  //     }, 3000);
+  //   }
+  // }
   function setSelectwitness1AdharNo(e) {
-    if (e.target.value.length != 0) {
-      if (e.target.value.length > 12) {
-        // setChildAadharNo(e.target.value);
-        setAadharError(true);
-        return false;
-        // const limit = 12;
-        // setChildAadharNo(e.target.value.slice(0, limit));
-        // window.alert("Username shouldn't exceed 10 characters")
-      } else if (e.target.value.length < 12) {
-        setAadharError(true);
-        setwitness1AdharNo(e.target.value);
-        return false;
-      } else {
-        setAadharError(false);
-        setwitness1AdharNo(e.target.value);
-        return true;
-      }
-    } else {
-      setAadharError(false);
-      setwitness1AdharNo(e.target.value);
-      return true;
+    if (e.target.value.trim().length >= 0) {
+      setwitness1AdharNo(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12));
     }
+    // if (e.target.value.length != 0) {
+    //   if (e.target.value.length > 12) {
+    //     // setChildAadharNo(e.target.value);
+    //     setAadharError(true);
+    //     return false;
+    //     // const limit = 12;
+    //     // setChildAadharNo(e.target.value.slice(0, limit));
+    //     // window.alert("Username shouldn't exceed 10 characters")
+    //   } else if (e.target.value.length < 12) {
+    //     setAadharError(true);
+    //     setwitness1AdharNo(e.target.value);
+    //     return false;
+    //   } else {
+    //     setAadharError(false);
+    //     setwitness1AdharNo(e.target.value);
+    //     return true;
+    //   }
+    // } else {
+    //   setAadharError(false);
+    //   setwitness1AdharNo(e.target.value);
+    //   return true;
+    // }
   }
   function setSelectwitness2AdharNo(e) {
-    if (e.target.value.length != 0) {
-      if (e.target.value.length > 12) {
-        // setChildAadharNo(e.target.value);
-        setAadharError(true);
-        return false;
-        // const limit = 12;
-        // setChildAadharNo(e.target.value.slice(0, limit));
-        // window.alert("Username shouldn't exceed 10 characters")
-      } else if (e.target.value.length < 12) {
-        setAadharError(true);
-        setwitness2AdharNo(e.target.value);
-        return false;
-      } else {
-        setAadharError(false);
-        setwitness2AdharNo(e.target.value);
-        return true;
-      }
-    } else {
-      setAadharError(false);
-      setwitness2AdharNo(e.target.value);
-      return true;
+    if (e.target.value.trim().length >= 0) {
+      setwitness2AdharNo(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12));
     }
+    // i
+    // if (e.target.value.trim().length >= 0) {
+    //   setwitness2AdharNo(
+    //     e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
+    //   );
+    // }
+    // if (e.target.value.length != 0) {
+    //   if (e.target.value.length > 12) {
+    //     // setChildAadharNo(e.target.value);
+    //     setAadharError(true);
+    //     return false;
+    //     // const limit = 12;
+    //     // setChildAadharNo(e.target.value.slice(0, limit));
+    //     // window.alert("Username shouldn't exceed 10 characters")
+    //   } else if (e.target.value.length < 12) {
+    //     setAadharError(true);
+    //     setwitness2AdharNo(e.target.value);
+    //     return false;
+    //   } else {
+    //     setAadharError(false);
+    //     setwitness2AdharNo(e.target.value);
+    //     return true;
+    //   }
+    // } else {
+    //   setAadharError(false);
+    //   setwitness2AdharNo(e.target.value);
+    //   return true;
+    // }
   }
-  function setSelectwitness1NameEn(value) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setwitness1NameEn(
-        e.target.value.replace(
-          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
-          ""
-        )
-      );
+  function setSelectwitness1NameEn(e) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setwitness1NameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
+    // if (e.target.value.length === 51) {
+    //   return false;
+    //   // window.alert("Username shouldn't exceed 10 characters")
+    // } else {
+    //   setwitness1NameEn(
+    //     e.target.value.replace(
+    //       /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
+    //       ""
+    //     )
+    //   );
+    // }
   }
-  function setSelectwitness2NameEn(value) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setwitness2NameEn(
-        e.target.value.replace(
-          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
-          ""
-        )
-      );
+  function setSelectwitness2NameEn(e) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setwitness2NameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
+    // if (e.target.value.length === 51) {
+    //   return false;
+    //   // window.alert("Username shouldn't exceed 10 characters")
+    // } else {
+    //   setwitness2NameEn(
+    //     e.target.value.replace(
+    //       /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
+    //       ""
+    //     )
+    //   );
+    // }
   }
-  function setSelectwitness1Age(value) {
+  function setSelectwitness1Age(e) {
     if (e.target.value.length === 3) {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
@@ -253,7 +272,7 @@ const handleFile2Change = (event) => {
       setwitness1Age(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' a-zA-Z]/gi, ""));
     }
   }
-  function setSelectwitness2Age(value) {
+  function setSelectwitness2Age(e) {
     if (e.target.value.length === 3) {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
@@ -261,47 +280,59 @@ const handleFile2Change = (event) => {
       setwitness2Age(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' a-zA-Z]/gi, ""));
     }
   }
-  function setSelectwitness1AddresSEn(value) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setwitness1AddresSEn(
-        e.target.value.replace(
-          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
-          ""
-        )
-      );
+  function setSelectwitness1AddresSEn(e) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setwitness1AddresSEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
+    // if (e.target.value.length === 51) {
+    //   return false;
+    //   // window.alert("Username shouldn't exceed 10 characters")
+    // } else {
+    //   setwitness1AddresSEn(
+    //     e.target.value.replace(
+    //       /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
+    //       ""
+    //     )
+    //   );
+    // }
   }
-  function setSelectwitness2AddresSEn(value) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setwitness2AddresSEn(
-        e.target.value.replace(
-          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
-          ""
-        )
-      );
+  function setSelectwitness2AddresSEn(e) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setwitness2AddresSEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
+    // if (e.target.value.length === 51) {
+    //   return false;
+    //   // window.alert("Username shouldn't exceed 10 characters")
+    // } else {
+    //   setwitness2AddresSEn(
+    //     e.target.value.replace(
+    //       /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
+    //       ""
+    //     )
+    //   );
+    // }
   }
-  function setSelectwitness1Mobile(value) {
-    if (e.target.value.length === 11) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setwitness1Mobile(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C a-zA-Z]/gi, ""));
+  function setSelectwitness1Mobile(e) {
+    if (e.target.value.trim().length != 0) {
+      setwitness1Mobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 10));
     }
+    // if (e.target.value.length === 11) {
+    //   return false;
+    //   // window.alert("Username shouldn't exceed 10 characters")
+    // } else {
+    //   setwitness1Mobile(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C a-zA-Z]/gi, ""));
+    // }
   }
-  function setSelectwitness2Mobile(value) {
-    if (e.target.value.length === 11) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setwitness2Mobile(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C a-zA-Z]/gi, ""));
+  function setSelectwitness2Mobile(e) {
+    if (e.target.value.trim().length != 0) {
+      setwitness2Mobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 10));
     }
+    // if (e.target.value.length === 11) {
+    //   return false;
+    //   // window.alert("Username shouldn't exceed 10 characters")
+    // } else {
+    //   setwitness2Mobile(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C a-zA-Z]/gi, ""));
+    // }
   }
   function setSelectmarriageLocalityEn(value) {
     setmarriageLocalityEn(value);
@@ -323,13 +354,13 @@ const handleFile2Change = (event) => {
       setAadharError(false);
     }
     if (validFlag == true) {
-      sessionStorage.setItem("marraigeDOM", marraigeDOM ? marraigeDOM : null);
-      sessionStorage.setItem("marriageDistrict", marriageDistrict ? marriageDistrict : null);
-      sessionStorage.setItem("marraigeLBtype", marraigeLBtype ? marraigeLBtype : null);
-      sessionStorage.setItem("marraigeTalukID", marraigeTalukID ? marraigeTalukID : null);
-      sessionStorage.setItem("marraigeVillageName", marraigeVillageName ? marraigeVillageName : null);
-      sessionStorage.setItem("marraigePlacetype", marraigePlacetype ? marraigePlacetype : null);
-      sessionStorage.setItem("marriageLocalityEn", marriageLocalityEn ? marriageLocalityEn : null);
+      // sessionStorage.setItem("marraigeDOM", marraigeDOM ? marraigeDOM : null);
+      // sessionStorage.setItem("marriageDistrict", marriageDistrict ? marriageDistrict : null);
+      // sessionStorage.setItem("marraigeLBtype", marraigeLBtype ? marraigeLBtype : null);
+      // sessionStorage.setItem("marraigeTalukID", marraigeTalukID ? marraigeTalukID : null);
+      // sessionStorage.setItem("marraigeVillageName", marraigeVillageName ? marraigeVillageName : null);
+      // sessionStorage.setItem("marraigePlacetype", marraigePlacetype ? marraigePlacetype : null);
+      // sessionStorage.setItem("marriageLocalityEn", marriageLocalityEn ? marriageLocalityEn : null);
       sessionStorage.setItem("witness1NameEn", witness1NameEn ? witness1NameEn : null);
       sessionStorage.setItem("witness2NameEn", witness2NameEn ? witness2NameEn : null);
       sessionStorage.setItem("witness1Age", witness1Age ? witness1Age : null);
@@ -338,36 +369,19 @@ const handleFile2Change = (event) => {
       sessionStorage.setItem("witness2AddresSEn", witness2AddresSEn ? witness2AddresSEn : null);
       sessionStorage.setItem("witness1Mobile", witness1Mobile ? witness1Mobile : null);
       sessionStorage.setItem("witness2Mobile", witness2Mobile ? witness2Mobile : null);
-      sessionStorage.setItem("marriageStreetMal", marriageStreetMal ? marriageStreetMal : null);
-      sessionStorage.setItem("marriageStreetEn", marriageStreetEn ? marriageStreetEn : null);
-      sessionStorage.setItem("marriageHouseNoAndNameEn", marriageHouseNoAndNameEn ? marriageHouseNoAndNameEn : null);
-      sessionStorage.setItem("marriageHouseNoAndNameMal", marriageHouseNoAndNameMal ? marriageHouseNoAndNameMal : null);
-      sessionStorage.setItem("marriageLocalityMal", marriageLocalityMal ? marriageLocalityMal : null);
-      sessionStorage.setItem("marriageLandmark", marriageLandmark ? marriageLandmark : null);
-      sessionStorage.setItem("marraigeType", marraigeType ? marraigeType : null);
-      sessionStorage.setItem("marraigeOthersSpecify", marraigeOthersSpecify ? marraigeOthersSpecify : null);
-      sessionStorage.setItem("tripStartTime", tripStartTime ? tripStartTime : null);
+      // sessionStorage.setItem("marriageStreetMal", marriageStreetMal ? marriageStreetMal : null);
+      // sessionStorage.setItem("marriageStreetEn", marriageStreetEn ? marriageStreetEn : null);
+      // sessionStorage.setItem("marriageHouseNoAndNameEn", marriageHouseNoAndNameEn ? marriageHouseNoAndNameEn : null);
+      // sessionStorage.setItem("marriageHouseNoAndNameMal", marriageHouseNoAndNameMal ? marriageHouseNoAndNameMal : null);
+      // sessionStorage.setItem("marriageLocalityMal", marriageLocalityMal ? marriageLocalityMal : null);
+      // sessionStorage.setItem("marriageLandmark", marriageLandmark ? marriageLandmark : null);
+      // sessionStorage.setItem("marraigeType", marraigeType ? marraigeType : null);
+      // sessionStorage.setItem("marraigeOthersSpecify", marraigeOthersSpecify ? marraigeOthersSpecify : null);
+      // sessionStorage.setItem("tripStartTime", tripStartTime ? tripStartTime : null);
       sessionStorage.setItem("witness1AdharNo", witness1AdharNo ? witness1AdharNo : null);
       sessionStorage.setItem("witness2AdharNo", witness2AdharNo ? witness2AdharNo : null);
       onSelect(config.key, {
-        marraigeDOM,
-        marriageDistrict,
-        marraigeLBtype,
-        marraigeVillageName,
-        marraigeTalukID,
-        marraigePlacetype,
-        marriageLocalityEn,
-        marriageLocalityMal,
-        marriageLandmark,
-        marriageHouseNoAndNameEn,
-        marriageHouseNoAndNameMal,
-        marriageStreetEn,
-        marriageStreetMal,
-        marraigeType,
-        marraigeOthersSpecify,
-        tripStartTime,
-        selectedOption,
-        Gender,
+       
         witness1AdharNo,
         witness2AdharNo,
         witness1NameEn,
@@ -378,6 +392,7 @@ const handleFile2Change = (event) => {
         witness2AddresSEn,
         witness1Mobile,
         witness2Mobile,
+       handleFile1Change,
       });
     }
   };
@@ -388,9 +403,9 @@ const handleFile2Change = (event) => {
     return (
       <React.Fragment>
         <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-        {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
-        {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
-        <FormStep t={t}>
+        {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
+        {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
+        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
@@ -413,10 +428,16 @@ const handleFile2Change = (event) => {
                 t={t}
                 type={"text"}
                 optionKey="i18nKey"
+                isMandatory={false}
                 name="witness1AdharNo"
+                value={witness1AdharNo}
                 onChange={setSelectwitness1AdharNo}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_WITNESS1_ADHAR_NO")}`}
-                {...(validation = { pattern: "^[0-9]{12}$", isRequired: false, type: "number", title: t("CR_INVALID_WITNESS1_ADHAR_NO") })}
+                inputProps={{
+                  maxLength: 12,
+                }}
+                {...(validation = { pattern: "^[0-9]{12}$", isRequired: true, type: "number", title: t("CR_INVALID_WITNESS1_ADHAR_NO") })}
               />
             </div>
             <div className="col-md-4">
@@ -428,10 +449,12 @@ const handleFile2Change = (event) => {
                 t={t}
                 type={"text"}
                 optionKey="i18nKey"
+                isMandatory={false}
                 name="witness1NameEn"
-                onChange={setSelectwitness2NameEn}
-                // disable={isChildName}
+                onChange={setSelectwitness1NameEn}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_WITNESS1_NAME")}`}
+                {...(validation = { isRequired: true, title: t("CS_INVALID_NAME") })}
               />
             </div>
             <div className="col-md-4">
@@ -443,9 +466,12 @@ const handleFile2Change = (event) => {
                 t={t}
                 type={"text"}
                 optionKey="i18nKey"
+                isMandatory={false}
                 name="witness1Age"
                 onChange={setSelectwitness1Age}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_WITNESS1_AGE")}`}
+                {...(validation = { isRequired: true, title: t("CS_INVALID_AGE") })}
               />
             </div>
           </div>
@@ -455,14 +481,16 @@ const handleFile2Change = (event) => {
                 {`${t("CR_WITNESS1_ADDRESS")}`}
                 <span className="mandatorycss">*</span>
               </CardLabel>
-              <TextInput
+              <TextArea
                 t={t}
                 type={"text"}
                 optionKey="i18nKey"
+                isMandatory={false}
                 name="witness1AddresSEn"
                 onChange={setSelectwitness1AddresSEn}
-                // disable={isChildName}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_WITNESS1_ADDRESS")}`}
+                {...(validation = { isRequired: true, title: t("CS_INVALID_ADDRESS") })}
               />
             </div>
 
@@ -475,10 +503,13 @@ const handleFile2Change = (event) => {
                 t={t}
                 type={"text"}
                 optionKey="i18nKey"
+                isMandatory={false}
                 name="witness1Mobile"
+                value={witness1Mobile}
                 onChange={setSelectwitness1Mobile}
-                // disable={isChildName}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_WITNESS1_MOBILE_NO")}`}
+                {...(validation = { isRequired: true, title: t("CS_INVALID_MOBILE_NO") })}
               />
             </div>
           </div>
@@ -495,12 +526,19 @@ const handleFile2Change = (event) => {
               </CardLabel>
               <TextInput
                 t={t}
-                type={"text"}
+               
+                type={"number"}
                 optionKey="i18nKey"
+                isMandatory={false}
                 name="witness2AdharNo"
+                value={witness2AdharNo}
                 onChange={setSelectwitness2AdharNo}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_WITNESS2_ADHAR_NO")}`}
-                {...(validation = { pattern: "^[0-9]{12}$", isRequired: false, type: "number", title: t("CR_INVALID_WITNESS2_ADHAR_NO") })}
+                inputProps={{
+                  maxLength: 12,
+                }}
+                {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
               />
             </div>
             <div className="col-md-4">
@@ -512,10 +550,12 @@ const handleFile2Change = (event) => {
                 t={t}
                 type={"text"}
                 optionKey="i18nKey"
+                isMandatory={false}
                 name="witness2NameEn"
                 onChange={setSelectwitness2NameEn}
-                // disable={isChildName}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_WITNESS2_NAME")}`}
+                {...(validation = { isRequired: true, title: t("CS_INVALID_NAME") })}
               />
             </div>
             <div className="col-md-4">
@@ -526,11 +566,13 @@ const handleFile2Change = (event) => {
               <TextInput
                 t={t}
                 type={"text"}
+                isMandatory={false}
                 optionKey="i18nKey"
                 name="witness2Age"
                 onChange={setSelectwitness2Age}
-                // disable={isChildName}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_WITNESS2_AGE")}`}
+                {...(validation = { isRequired: true, title: t("CS_INVALID_AGE") })}
               />
             </div>
           </div>
@@ -540,14 +582,16 @@ const handleFile2Change = (event) => {
                 {`${t("CR_WITNESS2_ADDRESS")}`}
                 <span className="mandatorycss">*</span>
               </CardLabel>
-              <TextInput
+              <TextArea
                 t={t}
                 type={"text"}
                 optionKey="i18nKey"
+                isMandatory={false}
                 name="witness2AddresSEn"
                 onChange={setSelectwitness2AddresSEn}
-                // disable={isChildName}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_WITNESS2_ADDRESS")}`}
+                {...(validation = { isRequired: true, title: t("CS_INVALID_ADDRESS") })}
               />
             </div>
 
@@ -560,10 +604,13 @@ const handleFile2Change = (event) => {
                 t={t}
                 type={"text"}
                 optionKey="i18nKey"
+                isMandatory={false}
                 name="witness2Mobile"
+                value={witness2Mobile}
                 onChange={setSelectwitness2Mobile}
-                // disable={isChildName}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_WITNESS2_MOBILE_NO")}`}
+                {...(validation = { isRequired: true, title: t("CS_INVALID_MOBILE_NO") })}
               />
             </div>
           </div>
@@ -605,19 +652,35 @@ const handleFile2Change = (event) => {
               <img src={files} />
             </div>
           </div> */}
-           <div>
-      <input type="file" onChange={handleFile1Change} />
-      <input type="file" onChange={handleFile2Change} />
+          <div>
+            <div className="col-md-12">
+              <div className="col-md-4">
+                <h2>Add Groom Image :</h2>
+                <input type="file" onChange={handleFile1Change} />
+              </div>
+              <div className="col-md-4">
+                <h2>Add Bride Image :</h2>
+                <input type="file" onChange={handleFile2Change} />
+              </div>
+            </div>
+            {/* <div className="col-md-12">
+            <div className="col-md-4">
+              <h2>Add Groom Image :</h2>
+              <input type="file" onChange={handleChange} />
+              <img src={file} />
+            </div>
+            <div className="col-md-4">
+              <h2>Add Bride Image :</h2>
+              <input type="file" onChange={handleChange} />
+              <img src={file} />
+            </div>
+          </div> */}
+            <div style={{ display: "flex" }}>
+              <div style={{ width: "10%" }}>{file1 && <img src={URL.createObjectURL(file1)} alt="file 1" />}</div>
 
-      <div style={{ display: 'flex' }}>
-        <div style={{ width: '10%' }}>
-          {file1 && <img src={URL.createObjectURL(file1)} alt="file 1" />}
-        </div>
-        <div style={{ width: '10%' }}>
-          {file2 && <img src={URL.createObjectURL(file2)} alt="file 2" />}
-        </div>
-      </div>
-    </div>
+              <div style={{ width: "10%" }}>{file2 && <img src={URL.createObjectURL(file2)} alt="file 2" />}</div>
+            </div>
+          </div>
           {""}
 
           {/* <div><BackButton >{t("CS_COMMON_BACK")}</BackButton></div> */}

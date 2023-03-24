@@ -329,16 +329,16 @@ export const convertToAdoptionRegistration = (data = {}) => {
         deliveryMethods: data?.AdoptionChildDetails?.deliveryMethods ? data?.AdoptionChildDetails?.deliveryMethods.code : null,
         action:"INITIATE",
         adoptdeedorderno: data?.AdoptionChildDetails?.AdoptionDeedNo ? data?.AdoptionChildDetails?.AdoptionDeedNo : null,
-        adoptdateoforderdeed: data?.AdoptionChildDetails?.AdoptionDeedRegDate ? data?.AdoptionChildDetails?.AdoptionDeedRegDate : null,
+        adoptdateoforderdeed: data?.AdoptionChildDetails?.AdoptionDeedRegDate ? Date.parse(data?.AdoptionChildDetails?.AdoptionDeedRegDate) : null,
         adoptissuingauththority: data?.AdoptionChildDetails?.IssuingAuthority ? data?.AdoptionChildDetails?.IssuingAuthority : null,
         adoptdecreeorderno: data?.AdoptionChildDetails?.AdoptionDecreOrderNo ? data?.AdoptionChildDetails?.AdoptionDecreOrderNo : null,
-        adoptdateoforderdecree: data?.AdoptionChildDetails?.AdoptionDecreOrderDate ? data?.AdoptionChildDetails?.AdoptionDecreOrderDate : null,
+        adoptdateoforderdecree: data?.AdoptionChildDetails?.AdoptionDecreOrderDate ? Date.parse(data?.AdoptionChildDetails?.AdoptionDecreOrderDate) : null,
         adopthasagency: data?.AdoptionChildDetails?.adoptionAgency ? data?.AdoptionChildDetails?.adoptionAgency : null,
         adoptagencyname: data?.AdoptionChildDetails?.AdoptionAgencyName ? data?.AdoptionChildDetails?.AdoptionAgencyName : null,
         adoptagencyaddress: data?.AdoptionChildDetails?.AdoptionAgencyAddress ? data?.AdoptionChildDetails?.AdoptionAgencyAddress : null,
         adoptagencycontactperson: data?.AdoptionChildDetails?.AdoptionContractPersonName ? data?.AdoptionChildDetails?.AdoptionContractPersonName : null,
         adoptagencycontactpersonmobileno: data?.AdoptionChildDetails?.AdoptionContactNo ? data?.AdoptionChildDetails?.AdoptionContactNo : null,
-        oldregistrationno:"KL-Cochin-C-000007-2023-APPL",
+        oldregistrationno:data?.AdoptionChildDetails?.SearchRegId?.applicationNumber ? data?.AdoptionChildDetails.SearchRegId?.applicationNumber:"",
         applicationtype: "CRBRNR",
         businessservice: "birth-services",
         workflowcode: data?.AdoptionChildDetails?.workFlowCode,
@@ -635,6 +635,27 @@ export const convertToBirthRegistration = (data = {}) => {
           isInitiatorDeclaration: data?.InitiatorinfoDetails?.isInitiatorDeclaration,
           isCaretaker: data?.InitiatorinfoDetails?.isCaretaker,
         },
+        "Demands": [
+          {
+              "tenantId": "kl.cochin",
+              "consumerCode": "AK-45-2023-CRBRNR-C-KOCHI-KL",
+              "consumerType": "FEE",
+              "businessService": "CR",
+              "taxPeriodFrom": "1554076800000",
+              "taxPeriodTo": "1901145600000",
+              "demandDetails": [
+                  {
+                      "taxHeadMasterCode": "CRB_FEES",
+                      "taxAmount": 12,
+                      "collectionAmount": 0
+                  }
+              ],
+              "minimumAmountPayable": 12,
+              "additionalDetails": {
+                  "HI": "hi"
+              }
+          }
+      ]
       },
     ],
   };
@@ -1100,7 +1121,7 @@ export const convertToDeathRegistration = (data = {}) => {
           DeathPlaceStreetEn: data?.InformationDeath?.DeathPlaceStreetEn,
           DeathPlaceStreetMl: data?.InformationDeath?.DeathPlaceStreetMl,
           GeneralRemarks: data?.InformationDeath?.GeneralRemarks,
-        
+       
           DeathPlaceHomeWardId: data?.InformationDeath?.DeathPlaceHomeWardId ? data?.InformationDeath?.DeathPlaceHomeWardId.code : null,
           DeathPlaceHomePostofficeId: data?.InformationDeath?.DeathPlaceHomePostofficeId
             ? data?.InformationDeath.DeathPlaceHomePostofficeId.code
@@ -1273,7 +1294,7 @@ export const convertToDeathRegistration = (data = {}) => {
           InitiatorName: data?.Initiator?.InitiatorName,
           InitiatorMobile: parseInt(data?.Initiator?.InitiatorMobile),
           InitiatorAddress: data?.Initiator?.InitiatorAddress,  
-          InitiatorDocumentId: null,         
+          InitiatorDocumentId: null,        
           InitiatorDocumentTenantId: data?.InformationDeath?.tenantId,
           InitiatorDocumentAckNo: null,
           InitiatorDocumentType: null,

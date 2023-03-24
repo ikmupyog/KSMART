@@ -50,7 +50,6 @@ const DeathCertificateSearch = ({ path }) => {
     enabled: !!(payload && Object.keys(payload).length > 0),
   };
 
-  console.log(Digit.Hooks.cr.useRegistrySearchDeath({ tenantId, filters: payload, config }));
   const { data: { deathCertificateDtls: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useRegistrySearchDeath({ tenantId, filters: payload, config })
 
   console.log(searchResult);

@@ -1,19 +1,15 @@
 import React, { useState } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, Loader } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/CRTimeline";
+import Timeline from "../../components/BOBRTimeline";
 import { useTranslation } from "react-i18next";
 
 const BornOutsidePresentOutsideIndia = ({ config, onSelect, userType, formData, presentOutSideIndiaAdressEn, setAdressEn,
   presentOutSideIndiaAdressMl, setAdressMl, presentOutSideIndiaAdressEnB, setAdressEnB, presentOutSideIndiaAdressMlB,
   setAdressMlB, presentOutSideIndiaProvinceEn, setProvinceEn, presentOutSideIndiaProvinceMl, setProvinceMl, presentOutSideIndiaadrsVillage, setadrsVillage,
   presentOutSideIndiaadrsCityTown, setadrsCityTown, presentOutSideIndiaPostCode, setPostCode,
- presentOutSideCountry,  setOutSideCountry, countryvalue, setCountryValue,
-  isPrsentAddress, setIsPrsentAddress, permntOutsideIndiaLineoneEn, setadrsPermntOutsideIndiaLineoneEn,
-  permntOutsideIndiaLineoneMl, setadrsPermntOutsideIndiaLineoneMl, permntOutsideIndiaLinetwoEn, setadrsPermntOutsideIndiaLinetwoEn,
-  permntOutsideIndiaLinetwoMl, setadrsPermntOutsideIndiaLinetwoMl, permntOutsideIndiaprovinceEn, setPermntOutsideIndiaprovinceEn,
-  permntOutsideIndiaprovinceMl, setPermntOutsideIndiaprovinceMl,
-  permntOutsideIndiaVillage, setadrsPermntOutsideIndiaVillage, permntOutsideIndiaCityTown, setadrsPermntOutsideIndiaCityTown,
-  permanentOutsideIndiaPostCode, setPermantpostCode, permntOutsideIndiaCountry, setPermntOutsideIndiaCountry, isEditBirth = false, isEditDeath = false
+   presentOutSideCountry,  setOutSideCountry, countryvalue, setCountryValue,
+  isPrsentAddress, setIsPrsentAddress, isEditOutsideBirth = false,
+  // isInitialRender, setIsInitialRender
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
@@ -22,7 +18,6 @@ const BornOutsidePresentOutsideIndia = ({ config, onSelect, userType, formData, 
   if (tenantId === "kl") {
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? isEditDeath : false);
   let validation = {};
   const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
 
@@ -37,10 +32,10 @@ const BornOutsidePresentOutsideIndia = ({ config, onSelect, userType, formData, 
     { i18nKey: "Village", code: "VILLAGE" },
   ];
 
-  if (isEditBirth || isEditDeath) {
-    if (formData?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaadrsVillage != null) {
+  if (isEditOutsideBirth ) {
+    if (formData?.BornOutsideChildDetails?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsVillage != null) {
       if (cmbUrbanRural.length > 0 && (presentOutSideIndiaadrsVillage === undefined || presentOutSideIndiaadrsVillage === "")) {
-        setadrsVillage(cmbUrbanRural.filter(cmbUrbanRural => cmbUrbanRural.code === formData?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaadrsVillage)[0]);
+        setadrsVillage(cmbUrbanRural.filter(cmbUrbanRural => cmbUrbanRural.code === formData?.BornOutsideChildDetails?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsVillage)[0]);
       }
     }
   }
@@ -48,42 +43,26 @@ const BornOutsidePresentOutsideIndia = ({ config, onSelect, userType, formData, 
 
   function setSelectadrsVillage(value) {
     setadrsVillage(value);
-    if (isPrsentAddress) {
-      setadrsPermntOutsideIndiaVillage(value);
-    } else {
-      setadrsPermntOutsideIndiaVillage('');
-    }
+  
   }
 
   function setSelectadrsCityTown(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setadrsCityTown(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-      if (isPrsentAddress) {
-        setadrsPermntOutsideIndiaCityTown(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-      } else {
-        setadrsPermntOutsideIndiaCityTown('');
-      }
+     
     }
   }
 
   function setSelectAdressEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setAdressEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-      if (isPrsentAddress) {
-        setadrsPermntOutsideIndiaLineoneEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-      } else {
-        setadrsPermntOutsideIndiaLineoneEn('');
-      }
+    
     }
   }
   function setSelectAdressEnB(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setAdressEnB(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-      if (isPrsentAddress) {
-        setadrsPermntOutsideIndiaLinetwoEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-      } else {
-        setadrsPermntOutsideIndiaLinetwoEn('');
-      }
+    
     }
   }
 
@@ -95,11 +74,7 @@ const BornOutsidePresentOutsideIndia = ({ config, onSelect, userType, formData, 
     }
     else {
       setAdressMlB(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-      if (isPrsentAddress) {
-        setadrsPermntOutsideIndiaLinetwoMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-      } else {
-        setadrsPermntOutsideIndiaLinetwoMl('');
-      }
+     
     }
   }
   function setSelectAdressMl(e) {
@@ -110,22 +85,14 @@ const BornOutsidePresentOutsideIndia = ({ config, onSelect, userType, formData, 
     }
     else {
       setAdressMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-      if (isPrsentAddress) {
-        setadrsPermntOutsideIndiaLineoneMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-      } else {
-        setadrsPermntOutsideIndiaLineoneMl('');
-      }
+      
     }
   }
 
   function setSelectProvinceEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setProvinceEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-      if (isPrsentAddress) {
-        setPermntOutsideIndiaprovinceEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-      } else {
-        setPermntOutsideIndiaprovinceEn('');
-      }
+      
     }
   }
   function setSelectProvinceMl(e) {
@@ -136,25 +103,17 @@ const BornOutsidePresentOutsideIndia = ({ config, onSelect, userType, formData, 
     }
     else {
       setProvinceMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-      if (isPrsentAddress) {
-        setPermntOutsideIndiaprovinceMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-      } else {
-        setPermntOutsideIndiaprovinceMl('');
-      }
+    
     }
   }
 
   function setSelectOutSideCountry(value) {
     setOutSideCountry(value);
-    if (isPrsentAddress) {
-      setPermntOutsideIndiaCountry(presentOutSideCountry);
-    } else {
-      setPermntOutsideIndiaCountry('');
-    }
+    
   }
-  function setSelectPostCode(e) {
-    setPostCode(e.target.value);
-  }
+  // function setSelectPostCode(e) {
+  //   setPostCode(e.target.value);
+  // }
   function setSelectPostCode(e) {
     if (e.target.value.length != 0) {
       if (e.target.value.length > 6) {
@@ -164,11 +123,7 @@ const BornOutsidePresentOutsideIndia = ({ config, onSelect, userType, formData, 
         return false;
       } else {
         setPostCode(e.target.value);
-        if (isPrsentAddress) {
-          setPermantpostCode(e.target.value);
-        } else {
-          setPermantpostCode('');
-        }
+       
       }
     }
   }
@@ -193,10 +148,11 @@ const BornOutsidePresentOutsideIndia = ({ config, onSelect, userType, formData, 
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ADDRESS_TYPE_OUTSIDE_INDIA")}`}</span>
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PARENTS_FOREIGN_ADDRESS")}`}</span>
               </h1>
             </div>
           </div>
+          
           <div className="row">
             <div className="col-md-4">
             <CardLabel>
@@ -212,7 +168,7 @@ const BornOutsidePresentOutsideIndia = ({ config, onSelect, userType, formData, 
               placeholder={`${t("CS_COMMON_COUNTRY")}`}
             />
           </div>
-            <div className="col-md-6">
+            <div className="col-md-4">
               <CardLabel>{t("CR_STATE_REGION_PROVINCE_EN")} <span className="mandatorycss">*</span></CardLabel>
               <TextInput
                 t={t}
@@ -225,7 +181,7 @@ const BornOutsidePresentOutsideIndia = ({ config, onSelect, userType, formData, 
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
               />
             </div>
-            <div className="col-md-6">
+            <div className="col-md-4">
               <CardLabel>{t("CR_STATE_REGION_PROVINCE_ML")} <span className="mandatorycss">*</span></CardLabel>
               <TextInput
                 t={t}
@@ -362,6 +318,8 @@ const BornOutsidePresentOutsideIndia = ({ config, onSelect, userType, formData, 
               />
             </div>
           </div>
+
+          
         </FormStep>
       </React.Fragment>
     );

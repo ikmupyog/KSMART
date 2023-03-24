@@ -66,7 +66,7 @@ const BirthCertificateSearch = ({ path }) => {
 
   return (
     <React.Fragment>
-      <BackButton>{t("CS_COMMON_BACK2")}</BackButton>
+       <BackButton>{t("CS_COMMON_BACK2")}</BackButton>
       <BirthCertificate
         t={t}
         onSubmit={onSubmit}

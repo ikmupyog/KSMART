@@ -12,7 +12,8 @@ const BornoutsidePermanentInsideKerala = ({ config, onSelect, userType, formData
   permntInKeralaAdrHouseNameMl, setpermntInKeralaAdrHouseNameMl, permntInKeralaAdrLocalityNameEn, setpermntInKeralaAdrLocalityNameEn,
   permntInKeralaAdrLocalityNameMl, setpermntInKeralaAdrLocalityNameMl, permntInKeralaAdrStreetNameEn, setpermntInKeralaAdrStreetNameEn,
   permntInKeralaAdrStreetNameMl, setpermntInKeralaAdrStreetNameMl, lbs, setLbs, Talukvalues, setLbsTalukvalue, Villagevalues, setLbsVillagevalue, permntInKeralaWardNo,
-  setpermntInKeralaWardNo, PostOfficevalues, setPostOfficevalues, isEditBirth = false, isEditDeath = false
+  setpermntInKeralaWardNo, PostOfficevalues, setPostOfficevalues, isEditBirth = false, isEditDeath = false,
+  // isInitialRender, setIsInitialRender
 
 }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -39,7 +40,7 @@ const BornoutsidePermanentInsideKerala = ({ config, onSelect, userType, formData
   const { data: District = {}, isDistrictLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
   const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
   const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
-  const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantWard, "cochin/egov-location", "boundary-data");
+  const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantWard, "egov-location", "boundary-data");
   const [toast, setToast] = useState(false);
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isDisableStatus, setDisableStatus] = useState(true);
@@ -360,7 +361,7 @@ const BornoutsidePermanentInsideKerala = ({ config, onSelect, userType, formData
               option={lbs}
               selected={permntInKeralaAdrLBName}
               select={setSelectpermntInKeralaAdrLBName}
-              // disable={isDisableStatus}
+              disable={isDisableStatus}
               placeholder={`${t("CS_COMMON_LB_NAME")}`}
             />
           </div>
