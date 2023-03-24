@@ -50,7 +50,6 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantWard, "egov-location", "boundary-data");
     const [toast, setToast] = useState(false);
     const [isInitialRender, setIsInitialRender] = useState(true);
-    const [isDisableStatus, setDisableStatus] = useState(true);
     const [cmbFilterPostOffice, setCmbFilterPostOffice] = useState([]);
     let cmbLB = [];
     let cmbTaluk = [];
@@ -205,9 +204,9 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     //     setinsideKeralaLBTypeName(value);
     // }
     function setSelectinsideKeralaLBName(value) {
+        setPresentWardNo(null);
         setTenantWard(value.code);
         setinsideKeralaLBName(value);
-        setPresentWardNo(null);
         setTenantboundary(true)
         if (isPrsentAddress) {
             setpermntInKeralaAdrLBName(value);
@@ -465,7 +464,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                                 option={lbs}
                                 selected={presentInsideKeralaLBName}
                                 select={setSelectinsideKeralaLBName}
-                                disable={isDisableStatus}
+                                disable={isDisableEdit}
                                 placeholder={`${t("CS_COMMON_LB_NAME")}`}
                             />
                         </div>
@@ -514,7 +513,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                                 name="presentInsideKeralaPincode"
                                 value={presentInsideKeralaPincode}
                                 onChange={setSelectinsideKeralaPincode}
-                                disable={isDisableStatus}
+                                disable={isDisableEdit}
                                 placeholder={`${t("CS_COMMON_PIN_CODE")}`}
                                 {...(validation = {
                                     pattern: "^[a-zA-Z-.`' ]*$",
