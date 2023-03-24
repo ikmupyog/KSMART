@@ -21,8 +21,8 @@ const DeathCrFlowApp = (props) => {
   const { pathname } = useLocation();
   const history = useHistory();
   const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_DEATH_EDIT", {});
-  const [iseditDeath,setIseditDeath]=useState(Digit.Hooks.useSessionStorage("CR_DEATH_EDIT_FLAG", {})[0]);
-  console.log(iseditDeath);
+  const [isEditDeath,setIseditDeath]=useState(Digit.Hooks.useSessionStorage("CR_DEATH_EDIT_FLAG", {})[0]);
+  console.log(isEditDeath);
   // let params1 = sessionStorage.getItem('CR_DEATH_CORRECTIONS')
   //death-emp-edit
   console.log('para',params);
@@ -221,12 +221,14 @@ const DeathCrFlowApp = (props) => {
     if (nextStep === null) {
       return redirectWithHistory(`${match.path}/check`);
     }
+    console.log("next path",`${match.path}/${nextStep}`);
     nextPage = `${match.path}/${nextStep}`;
     redirectWithHistory(nextPage);
   };
 
   function handleSelect(key, data, skipStep, index, isAddMultiple = false) {
     setParams({ ...params, ...{ [key]: { ...params[key], ...data } } });
+    console.log("reachedd");
     if (key === "isSkip" && data === true) {
       goNext(skipStep, index, isAddMultiple, key, true);
     } else {
@@ -265,7 +267,7 @@ const DeathCrFlowApp = (props) => {
                 formData={params}
                 onAdd={handleMultiple}
                 userType="employee"
-                iseditDeath={iseditDeath}
+                isEditDeath={isEditDeath}
               />
             </Route>
           );

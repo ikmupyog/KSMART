@@ -467,7 +467,7 @@ export const newConfig = [
         withoutLabel: true,
         nextStep: "abandoned-parents-details",
         hideInEmployee: false,
-      },     
+      },
     ],
   },
   {
@@ -761,7 +761,7 @@ export const newConfig = [
         withoutLabel: true,
         hideInEmployee: false,
         nextStep: "groom-details",
-      }, 
+      },
       {
         type: "component",
         route: "groom-details",
@@ -778,7 +778,7 @@ export const newConfig = [
         withoutLabel: true,
         hideInEmployee: false,
         nextStep: "bride-details",
-      },     
+      },
       {
         type: "component",
         route: "bride-details",

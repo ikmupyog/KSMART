@@ -12,7 +12,7 @@ import {
 } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
-const StatisticalInfo = ({ config, onSelect, userType, formData, iseditDeath }) => {
+const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) => {
   // const { DeceasedGender } = props;
 
   const RadioButton = ({ selected, handleChange }) => {
@@ -331,7 +331,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, iseditDeath }) 
 
   //////////////////////
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  if (iseditDeath) {
+  if (isEditDeath) {
     if (formData?.StatisticalInfo?.MedicalAttentionType != null) {
       if (cmbAttention.length > 0 && (MedicalAttentionType === undefined || MedicalAttentionType === "")) {
         setMedicalAttentionType(cmbAttention.filter((cmbAttention) => cmbAttention.code === formData?.StatisticalInfo?.MedicalAttentionType)[0]);

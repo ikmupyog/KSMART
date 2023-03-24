@@ -3,7 +3,7 @@ import { FormStep, CardLabel, TextInput, Dropdown, CheckBox, BackButton,Toast } 
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
-const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDeath }) => {
+const FamilyInformationBirth = ({ config, onSelect, userType, formData, isEditDeath }) => {
   console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
@@ -44,7 +44,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
   //     : null
   // );
   const [SpouseNameEN, setSpouseNameEN] = useState(
-    iseditDeath ? formData?.FamilyInformationDeath?.SpouseNameEN?.formData?.FamilyInformationDeath?.SpouseNameEN : ""
+    isEditDeath ? formData?.FamilyInformationDeath?.SpouseNameEN?.formData?.FamilyInformationDeath?.SpouseNameEN : ""
   );
 
   // const [SpouseNameEN, setSpouseNameEN] = useState(
@@ -300,7 +300,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
     });
   };
 
-  if (iseditDeath) {
+  if (isEditDeath) {
     if (formData?.FamilyInformationDeath?.SpouseType != null) {
       if (cmbspouse.length > 0 && (SpouseType === undefined || SpouseType === "")) {
         setSpouseType(cmbspouse.filter((cmbspouse) => cmbspouse.code === formData?.FamilyInformationDeath?.SpouseType)[0]);
