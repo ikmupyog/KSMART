@@ -58,7 +58,9 @@ const BirthInclusion = () => {
 
   const gotoEditInclusion = async (data) => {
     console.log("reached===",data);
-    history.push(`${path}/birth-inclusion-edit`);
+    history.push(`${path}/birth-inclusion-edit`,{
+      inclusionData:data
+    });
   };
   // const { data: { filestoreId: storeId } = {} } = Digit.Hooks.cr.useResistryDownloadBirth({ filters: registryPayload, config });
 

@@ -6,6 +6,7 @@ import AdoptionChildDetails from "../src/pageComponents/adoptionComponents/Adopt
 import AdoptionAddressBasePage from "../src/pageComponents/adoptionComponents/AdoptionAddressBasePage";
 import AdoptionParentsDetails from "./pageComponents/adoptionComponents/AdoptionParentsDetails";
 import AdoptionInitiatorDetails from "../src/pageComponents/adoptionComponents/AdoptionInitiatorDetails";
+import FormFieldContainer from "../src/components/FormFieldContainer";
 
 import ChildDetails from "../src/pageComponents/birthComponents/ChildDetails";
 import BirthNACDetails from "../src/pageComponents/birthNACComponents/BirthNACDetails";
@@ -234,6 +235,7 @@ const componentsToRegister = {
   MyCRDeathApplications,
   CustomTimePicker,
   CRModule,
+  CRSearch,
   CRLinks,
   CRCard,
   AdoptionChildDetails,
@@ -297,7 +299,6 @@ const componentsToRegister = {
   BornOutsideStaticInfn,
   BornOutsideAddressPage,
   BornOutsideCheckPage,
-  BornOutsideAddressPage,
   BornOutsidePresentOutsideIndia,
   BornoutsidePermanentInsideKerala,
   BornoutsideSameAsAbove,
@@ -373,7 +374,7 @@ const componentsToRegister = {
   MarriageRegistration,
   HouseMarriageRegistration,
   witnessdetails,
-
+  FormFieldContainer
 };
 
 export const initCRComponents = () => {
