@@ -141,10 +141,10 @@ public void validateCommonFields(DeathDtlRequest request) {
                 throw new CustomException("DECEASED RELIGION INVALID", "The deceased  religion " +
                 basicInfo.getReligion()+ " is invalid");
             }
-            if(StringUtils.isEmpty(basicInfo.getOccupation()) ){
-                throw new CustomException("DECEASED PROFESSION INVALID", "The  deceased profession " +
-                basicInfo.getOccupation()+ " is invalid");
-            }
+            // if(StringUtils.isEmpty(basicInfo.getOccupation()) ){
+            //     throw new CustomException("DECEASED PROFESSION INVALID", "The  deceased profession " +
+            //     basicInfo.getOccupation()+ " is invalid");
+            // }
             if(familyInfo.getFamilyMobileNo()<=0){
                 throw new CustomException("CONTACT NUMBER INVALID", "The  family mobile number " +
                 familyInfo.getFamilyMobileNo()+ " is invalid");

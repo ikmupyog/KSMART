@@ -25,19 +25,21 @@ public class DeathApplnRowMapper  implements ResultSetExtractor<List<DeathDtl>>,
      private final DeathAddressRowMapper addressRowMapper;
      private final DeathFamilyInfoRowMapper familyInfoRowMapper;
      private final DeathInformantRowMapper informantRowMapper;
+     private final DeathInitiatorRowMapper initiatorRowMapper;
 
      @Autowired
      DeathApplnRowMapper(DeathStatisticalRowMapper statisticalRowMapper , 
                         DeathBasicInfoRowMapper basicInfoRowMapper ,DeathAddressRowMapper addressRowMapper ,
-                        DeathFamilyInfoRowMapper familyInfoRowMapper , DeathInformantRowMapper informantRowMapper 
-                        ) {
+                        DeathFamilyInfoRowMapper familyInfoRowMapper , DeathInformantRowMapper informantRowMapper, 
+                        DeathInitiatorRowMapper initiatorRowMapper) {
 
          this.statisticalRowMapper = statisticalRowMapper;
          this.basicInfoRowMapper = basicInfoRowMapper;
          this.addressRowMapper = addressRowMapper;
          this.familyInfoRowMapper = familyInfoRowMapper;
          this.informantRowMapper = informantRowMapper;
-     
+         this.initiatorRowMapper = initiatorRowMapper;
+                        
      }
   
      @Override
@@ -58,6 +60,7 @@ public class DeathApplnRowMapper  implements ResultSetExtractor<List<DeathDtl>>,
              .deathFamilyInfo(familyInfoRowMapper.extractData(rs))
              .deathStatisticalInfo(statisticalRowMapper.extractData(rs))
              .deathInformantDtls(informantRowMapper.extractData(rs))
+             .deathInitiatorDtls(initiatorRowMapper.extractData(rs))
              .deathAuditDetails(getAuditDetails(rs))
              .build());
              
