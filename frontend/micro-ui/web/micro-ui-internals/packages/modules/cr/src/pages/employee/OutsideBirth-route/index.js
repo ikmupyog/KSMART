@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { Route, Switch, useRouteMatch,useLocation,useHistory,Redirect } from "react-router-dom";
+import { Route, Switch, useRouteMatch,useLocation,useHistory } from "react-router-dom";
 import { PrivateRoute, BreadCrumb,Component } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
+import OcrFlow from "./OcrFlow";
+import BornOutsideChildDetails from "../../../pageComponents/bornOutsideIndiaComponents/BornOutsideChildDetails";
 import { newConfig as newConfigCR } from "../../../config/config";
-import { useQueryClient } from "react-query";
 
-const CreateDeathRegistration = ({ parentUrl }) => {
+const OcrFlowApp = ({ parentUrl}) => {
   const { t } = useTranslation();
   const { path } = useRouteMatch();
   const match = useRouteMatch();  
   const { pathname } = useLocation();
-  const history = useHistory();
-  const queryClient = useQueryClient();
-  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_CREATE_DEATH_REG", {});
+  const history = useHistory();  
+  const [isEditBornOutsideBirth,setIsEditBornOutsideBirth]=useState(Digit.Hooks.useSessionStorage("CR_BORN_OUTSIDE_BIRTH_EDIT_FLAG", {})[0]);
+  const [params, setParams, clearParams] = isEditStillBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_BORN_OUTSIDE_BIRTH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_BORN_OUTSIDE_BIRTH_REG", {});
 
+  // console.log("params"+JSON.stringify(params));
   const stateId = Digit.ULBService.getStateId();
   // let { data: newConfig, isLoading } = Digit.Hooks.tl.useMDMS.getFormConfig(stateId, {});
   let config = [];
@@ -22,7 +24,7 @@ const CreateDeathRegistration = ({ parentUrl }) => {
   newConfig?.forEach((obj) => {
     config = config.concat(obj.body.filter((a) => !a.hideInCitizen));
   });
-  config.indexRoute = "information-death";
+  config.indexRoute = "born-outside-child-details";
   const goNext = (skipStep, index, isAddMultiple, key, isPTCreateSkip) => {
     let currentPath = pathname.split("/").pop(),
       nextPage;
@@ -91,7 +93,6 @@ const CreateDeathRegistration = ({ parentUrl }) => {
       return redirectWithHistory(`${match.path}/check`);
     }
     nextPage = `${match.path}/${nextStep}`;
-    console.log("nextPage",nextPage);
     redirectWithHistory(nextPage);
   };
 
@@ -99,12 +100,10 @@ const CreateDeathRegistration = ({ parentUrl }) => {
     setParams({ ...params, ...{ [key]: { ...params[key], ...data } } });
     if(key === "isSkip" && data === true)
     {
-      console.log("handle skip==",skipStep, index, isAddMultiple, key);
       goNext(skipStep, index, isAddMultiple, key, true);
     }
     else
     {
-      console.log("handle skip== else",skipStep, index, isAddMultiple, key);
       goNext(skipStep, index, isAddMultiple, key);
     }
   }
@@ -114,13 +113,12 @@ const CreateDeathRegistration = ({ parentUrl }) => {
   
   const onSuccess = () => {
     sessionStorage.removeItem("CurrentFinancialYear");
-    queryClient.invalidateQueries("CR_CREATE_DEATH_REG");
+    queryClient.invalidateQueries("CR_CREATE_BORN_OUTSIDE_BIRTH");
   };
   const handleSkip = () => {};
   const handleMultiple = () => {};
-  const CheckPage = Digit?.ComponentRegistryService?.getComponent("DeathCheckPage");
-  const DeathAcknowledgement = Digit?.ComponentRegistryService?.getComponent("DeathAcknowledgement");
-  console.log("config==",config);
+  const CheckPage = Digit?.ComponentRegistryService?.getComponent("StillBirthCheckPage");
+  const StillBirthAcknowledgement = Digit?.ComponentRegistryService?.getComponent("StillBirthAcknowledgement");
   return (
     
     <React.Fragment>
@@ -137,7 +135,8 @@ const CreateDeathRegistration = ({ parentUrl }) => {
               t={t}
               formData={params}
               onAdd={handleMultiple}
-              userType="citizen"
+              userType="employee"
+              isEditBornOutsideBirth={isEditBornOutsideBirth}
             />
            </Route>  
           
@@ -147,14 +146,16 @@ const CreateDeathRegistration = ({ parentUrl }) => {
         <CheckPage onSubmit={createProperty} value={params} />
       </Route>
       <Route path={`${match.path}/acknowledgement`}>
-        <DeathAcknowledgement data={params} onSuccess={onSuccess} />
+        <BirthAcknowledgement data={params} onSuccess={onSuccess} />
       </Route>
-      <Route>
-        <Redirect to={`${match.path}/${config.indexRoute}`} />
-      </Route>
+      <Route path={`${path}`} exact>
+              <CrFlow  path={path}/>
+             </Route>
+             <PrivateRoute  parentRoute={path} path={`${path}/${config.indexRoute}`} component={() => <BornOutsideChildDetails parentUrl={path}  />} />
+         
       </Switch>
     </React.Fragment>
   );
 };
 
-export default CreateDeathRegistration;
+export default OcrFlowApp;

@@ -24,6 +24,7 @@ import CitizenHomeCard from "./atoms/CitizenHomeCard";
 import CitizenInfoLabel from "./atoms/CitizenInfoLabel";
 import { CheckPoint, ConnectingCheckPoints } from "./atoms/ConnectingCheckPoints";
 import CustomButton from "./atoms/CustomButton";
+import EditButton from "./atoms/EditButton";
 import DatePicker from "./atoms/DatePicker";
 import DateRange from "./molecules/DateRange";
 import DateWrap from "./atoms/DateWrap";
@@ -202,6 +203,7 @@ import ULBHomeCard from "./atoms/ULBHomeCard";
 import NewRadioButton from "./atoms/NewRadioButton";
 
 export {
+  EditButton,
   NewRadioButton,
   Phone,
   Body,

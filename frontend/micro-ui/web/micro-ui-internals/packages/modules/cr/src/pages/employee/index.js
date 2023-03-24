@@ -281,7 +281,7 @@ const SearchCorrection = Digit?.ComponentRegistryService?.getComponent('CRSearch
         <PrivateRoute parentRoute={path} path={`${path}/cr-abflow`} component={() => <CrAbFlow parentUrl={url} />} />
         {/* <PrivateRoute parentRoute={path} path={`${path}/adoption-flow`} component={() => <AdoptionCrFlow parentUrl={url} />} /> */}
         {/* <PrivateRoute path={`${path}/search/:variant`} component={(props) => <Search {...props} parentRoute={path} />} /> */}
-        {/* <PrivateRoute path={`${path}/search-correction/:variant`} component={(props) => <SearchCorrection {...props} parentRoute={path} />} />*/}
+        {/* <PrivateRoute path={`${path}/search-correction/:variant`} component={(props) => <SearchCorrection {...props} parentRoute={path} />} /> */}
 
         <PrivateRoute path={`${path}/application-details/:id`} component={() => <ApplicationDetails parentRoute={path} />} /> 
         <PrivateRoute path={`${path}/application-birthdetails/:id`} component={() => <ApplicationDetails parentRoute={path} />} /> 

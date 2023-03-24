@@ -11,9 +11,9 @@ import DeathPublicPlace from "./DeathPublicPlace";
 import DeathOutsideJurisdiction from "./DeathOutsideJurisdiction ";
 import { useParams } from "react-router-dom";
 
-const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath }) => {
+const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath }) => {
   const [isEditDeathPageComponents, setIsEditDeathPageComponents] = useState(false);
-  const [isDisableEdit, setisDisableEdit] = useState(iseditDeath ? iseditDeath : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
   const stateId = Digit.ULBService.getStateId();
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
   let tenantId = "";
@@ -125,14 +125,14 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
       cmbState.push(ob);
     });
   const [DateOfDeath, setDateOfDeath] = useState(
-    iseditDeath &&
+    isEditDeath &&
       isEditDeathPageComponents === false &&
       (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
       ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath)
       : formData?.InformationDeath?.DateOfDeath
   );
   const [FromDate, setFromDate] = useState(
-    iseditDeath &&
+    isEditDeath &&
       isEditDeathPageComponents === false &&
       (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
       ? convertEpochToDate(formData?.InformationDeath?.FromDate)
@@ -1137,7 +1137,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
         sessionStorage.setItem("PlaceOfBurialMl", PlaceOfBurialMl ? PlaceOfBurialMl : null);
         sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
       }
-      let IsEditChangeScreen = iseditDeath ? iseditDeath : false;
+      let IsEditChangeScreen = isEditDeath ? isEditDeath : false;
 
       onSelect(config.key, {
         IsEditChangeScreen,
@@ -1211,7 +1211,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
     }
   };
   if (
-    iseditDeath &&
+    isEditDeath &&
     isEditDeathPageComponents === false &&
     (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
   ) {
@@ -1439,7 +1439,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
             <div>
               <Hospital
                 formData={formData}
-                iseditDeath={iseditDeath}
+                isEditDeath={isEditDeath}
                 selectDeathPlaceType={selectDeathPlaceType}
                 DeathPlaceType={DeathPlaceType}
                 HospitalNameMl={HospitalNameMl}
@@ -1451,6 +1451,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
             <div>
               <Institution
                 formData={formData}
+                isEditDeath={isEditDeath}
                 selectDeathPlaceType={selectDeathPlaceType}
                 DeathPlaceType={DeathPlaceType}
                 DeathPlaceInstId={DeathPlaceInstId}
@@ -1468,6 +1469,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
             <div>
               <DeathPlaceHome
                 formData={formData}
+                isEditDeath={isEditDeath}
                 DeathPlaceWardId={DeathPlaceWardId}
                 setDeathPlaceWardId={setDeathPlaceWardId}
                 DeathPlaceHomePostofficeId={DeathPlaceHomePostofficeId}
@@ -1495,6 +1497,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
             <div>
               <DeathPlaceVehicle
                 formData={formData}
+                isEditDeath={isEditDeath}
                 DeathPlaceType={DeathPlaceType}
                 selectDeathPlaceType={selectDeathPlaceType}
                 VehicleNumber={VehicleNumber}
@@ -1524,6 +1527,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
             <div>
               <DeathPublicPlace
                 formData={formData}
+                isEditDeath={isEditDeath}
                 DeathPlaceType={DeathPlaceType}
                 selectDeathPlaceType={selectDeathPlaceType}
                 DeathPlaceLocalityEn={DeathPlaceLocalityEn}
@@ -1545,6 +1549,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
             <div>
               <DeathOutsideJurisdiction
                 formData={formData}
+                isEditDeath={isEditDeath}
                 DeathPlaceCountry={DeathPlaceCountry}
                 setSelectDeathPlaceCountry={setSelectDeathPlaceCountry}
                 DeathPlaceState={DeathPlaceState}
