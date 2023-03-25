@@ -2,8 +2,8 @@ package org.egov.kssmSnehaswanthanam.web.models;
 
 
 
+import java.sql.Date;
 
-import java.util.Date;
 
 import org.springframework.validation.annotation.Validated;
 

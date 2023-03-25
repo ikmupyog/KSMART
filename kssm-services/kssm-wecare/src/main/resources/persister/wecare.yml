@@ -1,0 +1,104 @@
+serviceMaps:
+  serviceName: kssm-aswasakiranam
+  mappings:
+  - version: 1.0
+    description: Persists OB  details kssm database, tr_wecare table
+    fromTopic: save-wecare-topic
+    isTransaction: true
+    queryMaps:
+    - query: >
+       INSERT INTO public.tr_wecare(numkssmpensionerid, numkssmefileid, scheme_id, district, application_no, reg_no, application_date, applicant_age, applicant_dob, applicant_genderid, memberbpl, rationcard_no, bplcertificate_no, bplcertificate_date, applicant_bankaccountno, applicant_bank, applicant_bank_branch, applicant_ifsccode, applicant_aadharno, file_status, sourceid, user_id, icdsofficer_id, fieldenquiry_date, icdsremarks, icdseligibility_id, cdporec_date, cdpoeligibility_id, remarks, cdposubmit_date, dtdecision_date, chvreason, penstart_date, verifier_id, verifier_date, verifierremarks, approver_id, approver_date, approverremarks, category_id)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+      basePath: wecare.*
+      jsonMaps:
+        
+        - jsonPath: $.wecare.*.numkssmpensionerid
+
+        - jsonPath: $.wecare.*.numkssmefileid
+
+        - jsonPath: $.wecare.*.scheme_id
+
+        - jsonPath: $.wecare.*.district
+
+        - jsonPath: $.wecare.*.application_no
+
+        - jsonPath: $.wecare.*.reg_no
+
+        - jsonPath: $.wecare.*.application_date
+          type: DATE 
+
+        - jsonPath: $.wecare.*.applicant_age
+
+        - jsonPath: $.wecare.*.applicant_dob
+          type: DATE 
+
+        - jsonPath: $.wecare.*.applicant_genderid
+
+        - jsonPath: $.wecare.*.memberbpl
+
+        - jsonPath: $.wecare.*.rationcard_no
+
+        - jsonPath: $.wecare.*.bplcertificate_no
+
+        - jsonPath: $.wecare.*.bplcertificate_date
+          type: DATE 
+
+        - jsonPath: $.wecare.*.applicant_bankaccountno
+
+        - jsonPath: $.wecare.*.applicant_bank
+
+        - jsonPath: $.wecare.*.applicant_bank_branch
+
+        - jsonPath: $.wecare.*.applicant_ifsccode
+
+        - jsonPath: $.wecare.*.applicant_aadharno
+
+        - jsonPath: $.wecare.*.file_status
+
+        - jsonPath: $.wecare.*.sourceid
+
+
+        - jsonPath: $.wecare.*.user_id
+
+        - jsonPath: $.wecare.*.icdsofficer_id
+
+        - jsonPath: $.wecare.*.fieldenquiry_date
+          type: DATE 
+ 
+        - jsonPath: $.wecare.*.icdsremarks
+
+        - jsonPath: $.wecare.*.icdseligibility_id
+
+        - jsonPath: $.wecare.*.cdporec_date
+          type: DATE 
+ 
+        - jsonPath: $.wecare.*.cdpoeligibility_id
+
+        - jsonPath: $.wecare.*.remarks
+
+        - jsonPath: $.wecare.*.cdposubmit_date
+          type: DATE 
+ 
+        - jsonPath: $.wecare.*.dtdecision_date
+          type: DATE 
+
+        - jsonPath: $.wecare.*.chvreason
+
+        - jsonPath: $.wecare.*.penstart_date
+          type: DATE 
+ 
+        - jsonPath: $.wecare.*.verifier_id
+
+        - jsonPath: $.wecare.*.verifier_date
+          type: DATE 
+ 
+        - jsonPath: $.wecare.*.verifierremarks
+
+        - jsonPath: $.wecare.*.approver_id
+
+        - jsonPath: $.wecare.*.approver_date
+          type: DATE 
+
+        - jsonPath: $.wecare.*.approverremarks
+
+        - jsonPath: $.wecare.*.category_id
+       
