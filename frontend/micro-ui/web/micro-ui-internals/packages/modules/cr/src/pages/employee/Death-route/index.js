@@ -11,6 +11,7 @@ import ApplicationDetails from "../../../../../templates/ApplicationDetails";
 import { newConfig as newConfigCR } from "../../../config/config";
 // import Search from "../Search";
 import SpecifyCorrection from "../SpecifyCorrection";
+import InformationDeathAband from "../../../pageComponents/deathAbandoned/InformationDeathAband";
 
 const DeathCrFlowApp = (props) => {
   console.log(JSON.stringify(props));
@@ -154,6 +155,8 @@ const DeathCrFlowApp = (props) => {
     config = config.concat(obj.body.filter((a) => !a.hideInCitizen));
   });
   config.indexRoute = "information-death";
+  config.indexRouteA = "abandoned-information-death";
+
   const goNext = (skipStep, index, isAddMultiple, key, isPTCreateSkip) => {
     let currentPath = pathname.split("/").pop(),
       nextPage;
@@ -282,6 +285,8 @@ const DeathCrFlowApp = (props) => {
           <DeathCrFlow path={path} />
         </Route>
         <PrivateRoute parentRoute={path} path={`${path}/${config.indexRoute}`} component={() => <InformationDeath parentUrl={path}  />} />
+        <PrivateRoute parentRoute={path} path={`${path}/${config.indexRouteA}`} component={() => <InformationDeathAband parentUrl={path}  />} />
+
         {/* <PrivateRoute  parentRoute={path} path={`${path}/$search-correction/application`} component={() => < parentUrl={path} />} /> */}
         <PrivateRoute path={`${path}/search-correction/:variant`} component={(props) => <SearchCorrection {...props} parentRoute={path} />} />
         <PrivateRoute path={`${path}/death-information`} component={(props) => <DeathCorrection {...props} parentRoute={path} />} />
