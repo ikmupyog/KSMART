@@ -26,7 +26,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 public class m_AswasakiranamSearchResponse {
-    @JsonProperty("intid")
+  @JsonProperty("intid")
   private int intid;
 
   @JsonProperty("numkssmpensionerid")
