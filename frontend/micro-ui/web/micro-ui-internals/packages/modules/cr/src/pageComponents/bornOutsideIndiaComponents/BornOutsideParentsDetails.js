@@ -495,7 +495,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, }) =>
                                 //disable={isFatherInfo} 
                                 placeholder={`${t("CR_PASSPORT_NO")}`}
                                 style={{ textTransform: "uppercase" }}
-                                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, title: t("CR_INVALID_PASSPORT_NO") })}
+                                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, title: t("CR_INVALID_PASSPORT_NO") })}
                             />
                         </div>
                         <div className="col-md-3">
@@ -568,7 +568,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, }) =>
                                 // disable={isFatherInfo}
                                  placeholder={`${t("CR_PASSPORT_NO")}`}
                                 style={{ textTransform: "uppercase" }}
-                                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, title: t("CR_INVALID_PASSPORT_NO") })}
+                                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true,type: "text", title: t("CR_INVALID_PASSPORT_NO") })}
                             />
                         </div>
                   <div className="col-md-3">

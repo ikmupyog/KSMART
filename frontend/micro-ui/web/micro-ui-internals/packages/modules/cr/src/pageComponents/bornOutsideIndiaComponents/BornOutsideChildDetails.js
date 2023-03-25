@@ -25,9 +25,10 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
   }
   const { t } = useTranslation();
   let validation = {};
+  let Difference_In_DaysRounded = "";
   const { data: Menu, isLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
   const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
-  const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "WorkFlowBirth");
+  //const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "WorkFlowBirth");
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
@@ -42,12 +43,12 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
       return null;
     }
   };
-  WorkFlowDetails &&
-    WorkFlowDetails["birth-death-service"] && WorkFlowDetails["birth-death-service"].WorkFlowBirth &&
-    WorkFlowDetails["birth-death-service"].WorkFlowBirth.map((ob) => {
-      workFlowData.push(ob);
-      // console.log(workFlowData);
-    });
+  // WorkFlowDetails &&
+  //   WorkFlowDetails["birth-death-service"] && WorkFlowDetails["birth-death-service"].WorkFlowBirth &&
+  //   WorkFlowDetails["birth-death-service"].WorkFlowBirth.map((ob) => {
+  //     workFlowData.push(ob);
+  //     // console.log(workFlowData);
+  //   });
   let cmbCountry = [];
   Country &&
     Country["common-masters"] &&
@@ -55,14 +56,14 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
       cmbCountry.push(ob);
     });
   let menu = [];
-  let workFlowData = []
+  // let workFlowData = []
   // let workFlowCode = "BIRTHHOSP21";
   Menu &&
     Menu.map((genderDetails) => {
       menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
     });
 
-    const [workFlowCode, setWorkFlowCode] = useState(); 
+    // const [workFlowCode, setWorkFlowCode] = useState(); 
 
   const [childDOB, setChildDOB] = useState(formData?.BornOutsideChildDetails?.childDOB ? formData?.BornOutsideChildDetails?.childDOB : "");
   const [gender, selectGender] = useState(formData?.BornOutsideChildDetails?.gender);
@@ -162,17 +163,20 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
     };
   
       function setSelectPostCode(e) {
-        if (e.target.value.length != 0) {
-          if (e.target.value.length > 6) {
-            return false;
-          } else if (e.target.value.length < 6) {
-            setpostCode(e.target.value);
-            return false;
-          } else {
-            setpostCode(e.target.value);
+        // if (e.target.value.length != 0) {
+        //   if (e.target.value.length > 6) {
+        //     return false;
+        //   } else if (e.target.value.length < 6) {
+        //     setpostCode(e.target.value);
+        //     return false;
+        //   } else {
+        //     setpostCode(e.target.value);
             
-          }
-        }
+        //   }
+        // }
+        if (e.target.value.trim().length >= 0) {
+          setpostCode(e.target.value.length <= 6 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 6));
+        } 
       }
       function setselectChildDOB(value) {
         setChildDOB(value);
@@ -377,7 +381,7 @@ if (outsideBirthPlace == null || outsideBirthPlace == undefined || outsideBirthP
     if (validFlag == true) {
       sessionStorage.setItem("stateId", stateId ? stateId : null);
       sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
-      sessionStorage.setItem("workFlowCode", workFlowCode);
+      // sessionStorage.setItem("workFlowCode", workFlowCode);
       sessionStorage.setItem("childDOB", childDOB ? childDOB : null);
       sessionStorage.setItem("birthDateTime", birthDateTime ? birthDateTime : null);
       sessionStorage.setItem("gender", gender ? gender.code : null);
@@ -399,7 +403,7 @@ if (outsideBirthPlace == null || outsideBirthPlace == undefined || outsideBirthP
       onSelect(config.key, {
         stateId,
         tenantId,
-        workFlowCode,
+        // workFlowCode,
         childDOB,
         birthDateTime,
         gender,
@@ -429,7 +433,7 @@ if (outsideBirthPlace == null || outsideBirthPlace == undefined || outsideBirthP
     }
   };
   
-  if (isWorkFlowDetailsLoading || isLoading || isCountryLoading ){
+  if ( isLoading || isCountryLoading ){
     return <Loader></Loader>;
   } else {
     return (
@@ -749,8 +753,7 @@ if (outsideBirthPlace == null || outsideBirthPlace == undefined || outsideBirthP
                 pattern: "^[a-zA-Z-.0-9`' ]*$",
                 isRequired: true,
                 type: "number",
-                max: 6,
-                min: 6,
+              
                 title: t("CR_INVALID_ZIP_CODE"),
               })}
             />
