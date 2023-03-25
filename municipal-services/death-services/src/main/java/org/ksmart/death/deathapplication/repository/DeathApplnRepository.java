@@ -87,16 +87,17 @@ public class DeathApplnRepository {
 
                 deathFamilyDtls.setMotherAadharNo(deathFamilyDcr.getMotherAadharNo());
                 deathFamilyDtls.setSpouseAadhaar(deathFamilyDcr.getSpouseAadhaar()); 
-                DeathInformantDtls deathInformant =deathDtl.getDeathInformantDtls() ;
-                if (deathInformant!=null){
-                    DeathInformantDtls deathInformantEnc = encryptionDecryptionUtil.decryptObject(deathInformant, "BndDetail", DeathInformantDtls.class,requestInfo);
-                    deathInformant.setInformantAadharNo(deathInformantEnc.getInformantAadharNo());
-                }
-                DeathInitiatorDtls deathInitiator =deathDtl.getDeathInitiatorDtls() ;
-                if (deathInitiator!= null){
-                    DeathInitiatorDtls deathInitiatorEnc = encryptionDecryptionUtil.decryptObject(deathInitiator, "BndDetail", DeathInitiatorDtls.class,requestInfo);
-                    deathInitiator.setInitiatorAadhaar(deathInitiatorEnc.getInitiatorAadhaar());
-                }
+                // DeathInformantDtls deathInformant =deathDtl.getDeathInformantDtls() ;
+                // if (deathInformant!=null){
+                //     DeathInformantDtls deathInformantEnc = encryptionDecryptionUtil.decryptObject(deathInformant, "BndDetail", DeathInformantDtls.class,requestInfo);
+                //     deathInformant.setInformantAadharNo(deathInformantEnc.getInformantAadharNo());
+                // }
+                // DeathInitiatorDtls deathInitiator =deathDtl.getDeathInitiatorDtls() ;
+                // if (deathInitiator!= null){
+                   
+                //     DeathInitiatorDtls deathInitiatorEnc = encryptionDecryptionUtil.decryptObject(deathInitiator, "BndDetail", DeathInitiatorDtls.class,requestInfo);
+                //     deathInitiator.setInitiatorAadhaar(deathInitiatorEnc.getInitiatorAadhaar());
+                // }
                 //Rakhi S on 02.03.2023 Mdms call  
                 if(DeathConstants.DEATH_PLACE_HOSPITAL.toString().equals(deathDtl.getDeathBasicInfo().getDeathPlace())){
                     Object mdmsDataHospital = util.mDMSCallHospital(requestInfo    

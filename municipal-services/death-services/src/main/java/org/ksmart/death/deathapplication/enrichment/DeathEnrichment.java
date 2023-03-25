@@ -138,16 +138,16 @@ public class DeathEnrichment implements BaseEnrichment{
                 deathFamilyDtls.setFatherAadharNo(deathFamilyEnc.getFatherAadharNo());
                 deathFamilyDtls.setMotherAadharNo(deathFamilyEnc.getMotherAadharNo());
                 deathFamilyDtls.setSpouseAadhaar(deathFamilyEnc.getSpouseAadhaar());
-                DeathInformantDtls deathInformant =deathdtls.getDeathInformantDtls() ;
-                if (deathInformant!=null){
-                    DeathInformantDtls deathInformantEnc = encryptionDecryptionUtil.encryptObject(deathInformant, "BndDetail", DeathInformantDtls.class);
-                    deathInformant.setInformantAadharNo(deathInformantEnc.getInformantAadharNo());
-                }
-                DeathInitiatorDtls deathInitiator =deathdtls.getDeathInitiatorDtls() ;
-                if (deathInitiator!=null){
-                        DeathInitiatorDtls deathInitiatorEnc = encryptionDecryptionUtil.encryptObject(deathInitiator, "BndDetail", DeathInitiatorDtls.class);
-                        deathInitiator.setInitiatorAadhaar(deathInitiatorEnc.getInitiatorAadhaar());
-                }
+                // DeathInformantDtls deathInformant =deathdtls.getDeathInformantDtls() ;
+                // if (deathInformant!=null){
+                //     DeathInformantDtls deathInformantEnc = encryptionDecryptionUtil.encryptObject(deathInformant, "BndDetail", DeathInformantDtls.class);
+                //     deathInformant.setInformantAadharNo(deathInformantEnc.getInformantAadharNo());
+                // }
+                // DeathInitiatorDtls deathInitiator =deathdtls.getDeathInitiatorDtls() ;
+                // if (deathInitiator!=null){
+                //         DeathInitiatorDtls deathInitiatorEnc = encryptionDecryptionUtil.encryptObject(deathInitiator, "BndDetail", DeathInitiatorDtls.class);
+                //         deathInitiator.setInitiatorAadhaar(deathInitiatorEnc.getInitiatorAadhaar());
+                // }
             });
         }  
     //Rakhi S on 08.02.2023 ACK no formating
