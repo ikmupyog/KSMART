@@ -396,7 +396,7 @@ export const newConfig = [
         },
         key: "BornOutsideChildDetails",
         withoutLabel: true,
-        nextStep: " born-outside-parents-details",
+        nextStep: "born-outside-parents-details",
         hideInEmployee: false,
       },
       {
