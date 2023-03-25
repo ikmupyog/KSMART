@@ -18,6 +18,10 @@ public class GroomDetails {
     @Size(max = 64)
     @JsonProperty("tenentId")
     private String tenentId;
+    @NotNull
+    @Size(max = 64)
+    @JsonProperty("brideGroom")
+    private String brideGroom;
     @Size(max = 64)
     @JsonProperty("marriageid")
     private String marriageid;
@@ -114,9 +118,6 @@ public class GroomDetails {
     private Boolean is_spouse_living;
     @JsonProperty("groomNoOfSpouse")
     private Boolean no_of_spouse_living;
-    @Size(max = 150)
-    @JsonProperty("groomPhotoUrl")
-    private String photo_url;
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
 

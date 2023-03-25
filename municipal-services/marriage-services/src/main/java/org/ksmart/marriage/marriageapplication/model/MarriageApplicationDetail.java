@@ -90,18 +90,18 @@ public class MarriageApplicationDetail {
     @Size(max = 64)
     @JsonProperty("marriageType")
     private String marriage_type;
-
-    @Size(max = 64)
-    @JsonProperty("marriagePlaceothers")
-    private String placeothers;
+//
+//    @Size(max = 64)
+//    @JsonProperty("marriagePlaceothers")
+//    private String placeothers;
 
     @Size(max = 200)
     @JsonProperty("othMarriageType")
     private String oth_marriage_type;
 
-    @Size(max = 1000)
-    @JsonProperty("marriageOthersSpecify")
-    private String othersspecify;
+//    @Size(max = 1000)
+//    @JsonProperty("marriageOthersSpecify")
+//    private String othersspecify;
 
     @NotNull
     @Size(max = 64)
@@ -193,12 +193,12 @@ public class MarriageApplicationDetail {
 
     @JsonProperty("GroomDetails")
     private GroomDetails groomDetails;
-    @JsonProperty("PermanentAddressDetails")
-    private PermanentAdressDetails permanentBride;
-    @JsonProperty("PresentAddressDetails")
-    private PresentAddressDetails present ;
+//    @JsonProperty("PermanentAddressDetails")
+//    private PermanentAdressDetails permanentBride;
+//    @JsonProperty("PresentAddressDetails")
+//    private PresentAddressDetails present ;
 
-    @JsonProperty("WitnessDetail")
+    @JsonProperty("WitnessDetails")
     private WitnessDetails witness;
 
 

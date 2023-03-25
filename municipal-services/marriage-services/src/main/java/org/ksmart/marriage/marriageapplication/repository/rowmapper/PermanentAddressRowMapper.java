@@ -1,14 +1,13 @@
 package org.ksmart.marriage.marriageapplication.repository.rowmapper;
 
-import org.ksmart.marriage.marriageapplication.model.marriage.PermanentAdressDetails;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public interface PermanentAddressRowMapper {
-    default PermanentAdressDetails getPermanentAddress (ResultSet rs) throws SQLException{
-
-        return PermanentAdressDetails.builder()
+//    default PermanentAdressDetails getPermanentAddress (ResultSet rs) throws SQLException{
+//
+//        return PermanentAdressDetails.builder()
 //                .id(rs.getString("per_id"))
 //                .houseno(rs.getString("per_houseno"))
 //                .housename_no_en(rs.getString("per_housename_no_en"))
@@ -30,8 +29,8 @@ public interface PermanentAddressRowMapper {
 //                .countryid(rs.getString("per_countryid"))
 //                .marriageid(rs.getString("per_marriageid"))
 
-                .build();
+//                .build();
 
 
-    }
+//    }
 }

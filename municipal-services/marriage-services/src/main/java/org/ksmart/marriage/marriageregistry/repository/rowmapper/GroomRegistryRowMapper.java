@@ -41,7 +41,7 @@ public interface GroomRegistryRowMapper {
                 .is_spouse_living(Boolean.valueOf(rs.getString("gd_is_spouse_living")))
                 .no_of_spouse_living(Boolean.valueOf(rs.getString("gd_no_of_spouse_living")))
                 .marriageid(rs.getString("gd_marriageid"))
-                .photo_url(rs.getString("gd_photo_url"))
+               // .photo_url(rs.getString("gd_photo_url"))
 
                 .build();
     }

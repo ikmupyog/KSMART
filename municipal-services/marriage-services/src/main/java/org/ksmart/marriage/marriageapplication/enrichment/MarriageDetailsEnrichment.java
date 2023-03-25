@@ -40,23 +40,27 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
             marriage.setAuditDetails(auditDetails);
             if(marriage.getBrideDetails()!=null){
                 marriage.getBrideDetails().setBrideId((UUID.randomUUID().toString()));
+                marriage.getBrideDetails().setBrideGroom("BRIDE");
+
             }
             if(marriage.getGroomDetails()!=null){
                 marriage.getGroomDetails().setGroomId((UUID.randomUUID().toString()));
+                marriage.getGroomDetails().setBrideGroom("GROOM");
+
             }
 
-                marriage.getPermanentBride().setId1(UUID.randomUUID().toString());
-                 marriage.getPermanentBride().setId2(UUID.randomUUID().toString());
+//                marriage.getPermanentBride().setId1(UUID.randomUUID().toString());
+//                 marriage.getPermanentBride().setId2(UUID.randomUUID().toString());
 
-                 marriage.getPermanentBride().setBrideGroom1("BRIDE");
-                     marriage.getPermanentBride().setBrideGroom2("GROOM");
+//                 marriage.getPermanentBride().setBrideGroom("BRIDE");
+//                     marriage.getPermanentBride().setBrideGroom2("GROOM");
 
 
-            if(marriage.getPresent()!=null){
-                marriage.getPresent().setId(UUID.randomUUID().toString());
-                marriage.getPresent().setBrideGroom("BRIDE");
-                marriage.getPresent().setBrideGroom("GROOM");
-            }
+//            if(marriage.getPresent()!=null){
+//                marriage.getPresent().setId(UUID.randomUUID().toString());
+////                marriage.getPresent().setBrideGroom("BRIDE");
+////                marriage.getPresent().setBrideGroom("GROOM");
+//            }
             if(marriage.getWitness()!=null){
                 marriage.getWitness().setWitnessId1(UUID.randomUUID().toString());
                 marriage.getWitness().setWitnessId2(UUID.randomUUID().toString());
@@ -68,7 +72,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
         });
         setApplicationNumbers(request);
         setFileNumbers(request);
-        setRegistrationNumber(request);
+       // setRegistrationNumber(request);
 
 
     }

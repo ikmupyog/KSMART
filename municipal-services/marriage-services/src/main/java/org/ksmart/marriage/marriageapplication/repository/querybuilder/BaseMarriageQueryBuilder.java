@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class BaseBirthQuery {
+public class BaseMarriageQueryBuilder {
     void addDateRangeFilter(String column, Long startDate, Long endDate, StringBuilder query,
                             List<Object> paramValues) {
 

@@ -5,7 +5,6 @@ import lombok.*;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.response.ResponseInfo;
 import org.ksmart.marriage.marriageapplication.model.MarriageApplicationDetail;
-//import org.ksmart.marriage.marriageregistry.model.BirthCertificate;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
@@ -28,10 +27,6 @@ public class MarriageApplicationResponse {
     @JsonProperty("MarriageDetails")
     @Valid
     private List<MarriageApplicationDetail> marriageApplicationDetails;
-
-//    @JsonProperty("BirthCertificate")
-//    @Valid
-//    private BirthCertificate birthCertificate;
 
     @JsonProperty("Count")
     private int count;

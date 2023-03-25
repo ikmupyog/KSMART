@@ -60,11 +60,10 @@ public class MarriageApplicationRepository {
 
     public List<MarriageApplicationDetail> searchMarriageDetails(MarriageApplicationSearchCriteria criteria) {
         List<Object> preparedStmtValues = new ArrayList<>();
-        String query = marriageQueryBuilder.getBirthApplicationSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
+        String query = marriageQueryBuilder.getMarriageApplicationSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
         List<MarriageApplicationDetail> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriageApplicationRowMapper);
         return result;
     }
 
-    //private final org.ksmart.birth.common.producer.MarriageProducer producer;
 
 }

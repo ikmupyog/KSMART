@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.ksmart.marriage.common.model.AuditDetails;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 @Getter
 @Setter
@@ -15,7 +16,10 @@ public class BrideDetails {
     @Size(max = 64)
     @JsonProperty("brideId")
     private String brideId;
-
+    @NotNull
+    @Size(max = 64)
+    @JsonProperty("brideGroom")
+    private String brideGroom;
     @Size(max = 64)
     @JsonProperty("tenentId")
     private String tenentId;
@@ -134,16 +138,9 @@ public class BrideDetails {
     @JsonProperty("brideMaritalstatusID")
     private String maritalstatusid;
 
-    @JsonProperty("brideSpouseLiving")
-    private Boolean is_spouse_living;
-
-
     @JsonProperty("brideNoOfSpouse")
     private Boolean no_of_spouse_living;
 
-    @Size(max = 150)
-    @JsonProperty("bridePhotoUrl")
-    private String photo_url;
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
 

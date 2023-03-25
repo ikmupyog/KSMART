@@ -10,7 +10,7 @@ import org.springframework.util.StringUtils;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 @Component
-public class MarriageApplicationQueryBuilder extends BaseBirthQuery {
+public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
     @Autowired
     CommonQueryBuilder commonQueryBuilder;
 
@@ -38,7 +38,7 @@ public class MarriageApplicationQueryBuilder extends BaseBirthQuery {
 
 
 
-    public String getBirthApplicationSearchQuery(@NotNull MarriageApplicationSearchCriteria criteria,
+    public String getMarriageApplicationSearchQuery(@NotNull MarriageApplicationSearchCriteria criteria,
                                                  @NotNull List<Object> preparedStmtValues, Boolean isCount) {
         StringBuilder query = new StringBuilder(QUERY);
         query.append(",").append(commonQueryBuilder.getQueryBrideDetails())
