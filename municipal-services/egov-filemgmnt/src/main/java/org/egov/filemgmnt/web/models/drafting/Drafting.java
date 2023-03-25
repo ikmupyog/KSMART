@@ -53,7 +53,7 @@ public class Drafting {
 		
 		@Size(max=64)
         @JsonProperty("fileStoreId")
-        private String fileStoreId = null;
+        private String fileStoreId;
 		
 		@Schema(type = "string", description = "status")
 		@Size(max = 64, message = "status length cannot exceed 64 characters")
