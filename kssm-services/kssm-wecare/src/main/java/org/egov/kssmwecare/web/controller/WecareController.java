@@ -48,24 +48,24 @@ public class WecareController {
     }
 
 
-    // @PostMapping("/v1/Update")
-    // public ResponseEntity <WecareResponse> Update(@Valid @RequestBody WecareRequest request) {
+    @PostMapping("/v1/Update")
+    public ResponseEntity <WecareResponse> Update(@Valid @RequestBody WecareRequest request) {
         
-    //     try {
-    //             ObjectMapper mapper = new ObjectMapper();
-    //             Object obj = request;
-    //             mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        try {
+                ObjectMapper mapper = new ObjectMapper();
+                Object obj = request;
+                mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
                 
-    //         }catch(Exception e) {
-    //             log.error("Exception while fetching from searcher: ",e);
-    //         }
-    //     List<tr_Wecare> ob =obService.Update(request);
+            }catch(Exception e) {
+                log.error("Exception while fetching from searcher: ",e);
+            }
+        List<tr_Wecare> ob =obService.Update(request);
 
-    //     WecareResponse response=WecareResponse.builder().responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))
-    //                                                                     .tr_Wecares(ob)
-    //                                                                     .build();
-    //     return ResponseEntity.ok(response);
-    // }
+        WecareResponse response=WecareResponse.builder().responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))
+                                                                        .tr_Wecares(ob)
+                                                                        .build();
+        return ResponseEntity.ok(response);
+    }
 
     // @PostMapping("/v1/Search")
     // public ResponseEntity<AswasakiranamSearchResponse> searchSchoolCode(@RequestBody AswasakiranamSearchRequest request,

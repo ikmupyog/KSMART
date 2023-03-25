@@ -40,10 +40,10 @@ public class WecareService {
         return request.getTr_Wecares();
     }
 
-    // public List<tr_Wecare> Update(WecareRequest request) {
-    //     producer.push(wecareConfig.getUpdateWecareTopic(),request);
-    //     return request.getTr_Wecares();
-    // }
+    public List<tr_Wecare> Update(WecareRequest request) {
+        producer.push(wecareConfig.getUpdateWecareTopic(),request);
+        return request.getTr_Wecares();
+    }
 
     // public List<m_AswasakiranamSearchResponse> Search(@Valid AswasakiranamSearchCriteria searchCriteria) {
 

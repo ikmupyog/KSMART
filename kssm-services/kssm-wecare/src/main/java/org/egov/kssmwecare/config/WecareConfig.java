@@ -17,8 +17,8 @@ public class WecareConfig {
     @Value("${persister.save.wecare.topic}")
     private String saveWecareTopic;
 
-    // @Value("${persister.update.wecare.topic}")
-    // private String updateWecareTopic;
+    @Value("${persister.update.wecare.topic}")
+    private String updateWecareTopic;
 
 
 
