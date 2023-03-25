@@ -7,14 +7,12 @@ import org.egov.tracer.model.CustomException;
 import org.ksmart.marriage.common.model.AuditDetails;
 import org.ksmart.marriage.common.repository.IdGenRepository;
 import org.ksmart.marriage.config.MarriageApplicationConfiguration;
-import org.ksmart.marriage.marriageapplication.model.MarriageApplicationDetail;
+import org.ksmart.marriage.marriageapplication.model.MarriageApplicationDetails;
 import org.ksmart.marriage.marriageapplication.model.marriage.MarriageDetailsRequest;
 import org.ksmart.marriage.utils.IDGenerator;
-import org.ksmart.marriage.utils.MarriageConstants;
 import org.ksmart.marriage.utils.enums.ErrorCodes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.IdGenerator;
 
 import java.util.List;
 import java.util.ListIterator;
@@ -80,7 +78,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
     private void setRegistrationNumber(MarriageDetailsRequest request) {
 
         RequestInfo requestInfo = request.getRequestInfo();
-        List<MarriageApplicationDetail> marriageDetails = request.getMarriageDetails();
+        List<MarriageApplicationDetails> marriageDetails = request.getMarriageDetails();
         String tenantId = marriageDetails.get(0)
                 .getTenantid();
 
@@ -105,7 +103,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
     private void setFileNumbers(MarriageDetailsRequest request) {
 
         RequestInfo requestInfo = request.getRequestInfo();
-        List<MarriageApplicationDetail> marriageDetails = request.getMarriageDetails();
+        List<MarriageApplicationDetails> marriageDetails = request.getMarriageDetails();
         String tenantId = marriageDetails.get(0)
                 .getTenantid();
         System.out.println(("request"+request));
@@ -128,7 +126,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 
     private void setApplicationNumbers(MarriageDetailsRequest request) {
         RequestInfo requestInfo = request.getRequestInfo();
-        List<MarriageApplicationDetail> marriageDetails = request.getMarriageDetails();
+        List<MarriageApplicationDetails> marriageDetails = request.getMarriageDetails();
         String tenantId = marriageDetails.get(0)
                 .getTenantid();
         List<String> filecodes = getIds(requestInfo,

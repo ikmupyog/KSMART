@@ -2,9 +2,8 @@ package org.ksmart.marriage.marriageapplication.model.marriage;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.response.ResponseInfo;
-import org.ksmart.marriage.marriageapplication.model.MarriageApplicationDetail;
+import org.ksmart.marriage.marriageapplication.model.MarriageApplicationDetails;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
@@ -26,12 +25,12 @@ public class MarriageApplicationResponse {
 
     @JsonProperty("MarriageDetails")
     @Valid
-    private List<MarriageApplicationDetail> marriageApplicationDetails;
+    private List<MarriageApplicationDetails> marriageApplicationDetails;
 
     @JsonProperty("Count")
     private int count;
 
-    public MarriageApplicationResponse addMarriageApplication(MarriageApplicationDetail details) {
+    public MarriageApplicationResponse addMarriageApplication(MarriageApplicationDetails details) {
         if (marriageApplicationDetails == null) {
             marriageApplicationDetails = new ArrayList<>();
         }

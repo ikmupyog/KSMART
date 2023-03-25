@@ -3,7 +3,6 @@ package org.ksmart.marriage.marriageregistry.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.egov.common.contract.request.RequestInfo;
-import org.ksmart.marriage.marriageapplication.model.MarriageApplicationDetail;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import java.util.List;

@@ -39,7 +39,7 @@ public interface BrideDetailsRowMapper {
                // .profession_mal(rs.getString("bd_profession_mal"))
                 .maritalstatusid(rs.getString("bd_maritalstatusid"))
                 //.is_spouse_living(Boolean.valueOf(rs.getString("bd_is_spouse_living")))
-                .no_of_spouse_living(Boolean.valueOf(rs.getString("bd_no_of_spouse_living")))
+             //   .no_of_spouse_living(Boolean.valueOf(rs.getString("bd_no_of_spouse_living")))
               //  .photo_url(rs.getString("bd_photo_url"))
                 .marriageid(rs.getString("bd_marriageid"))
                 .build();

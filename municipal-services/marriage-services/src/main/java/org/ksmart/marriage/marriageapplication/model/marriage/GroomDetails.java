@@ -117,7 +117,7 @@ public class GroomDetails {
     @JsonProperty("groomSpouseLiving")
     private Boolean is_spouse_living;
     @JsonProperty("groomNoOfSpouse")
-    private Boolean no_of_spouse_living;
+    private Integer no_of_spouse_living;
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
 

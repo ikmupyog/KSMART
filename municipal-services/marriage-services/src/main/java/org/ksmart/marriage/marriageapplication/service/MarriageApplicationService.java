@@ -2,7 +2,7 @@ package org.ksmart.marriage.marriageapplication.service;
 
 import lombok.extern.slf4j.Slf4j;
 
-import org.ksmart.marriage.marriageapplication.model.MarriageApplicationDetail;
+import org.ksmart.marriage.marriageapplication.model.MarriageApplicationDetails;
 import org.ksmart.marriage.marriageapplication.model.marriage.MarriageApplicationSearchCriteria;
 import org.ksmart.marriage.marriageapplication.model.marriage.MarriageDetailsRequest;
 import org.ksmart.marriage.marriageapplication.repository.MarriageApplicationRepository;
@@ -22,7 +22,7 @@ public class MarriageApplicationService {
         this.repository = repository;
     }
 
-    public List<MarriageApplicationDetail> saveMarriageDetails(MarriageDetailsRequest request) {
+    public List<MarriageApplicationDetails> saveMarriageDetails(MarriageDetailsRequest request) {
 
 
 
@@ -31,11 +31,11 @@ public class MarriageApplicationService {
         return repository.saveMarriageDetails(request);
     }
 
-    public List<MarriageApplicationDetail> updateMarriageDetails(MarriageDetailsRequest request) {
+    public List<MarriageApplicationDetails> updateMarriageDetails(MarriageDetailsRequest request) {
         return repository.updateMarriageDetails(request);
     }
 
-    public List<MarriageApplicationDetail> searchMarriageDetails(MarriageApplicationSearchCriteria criteria) {
+    public List<MarriageApplicationDetails> searchMarriageDetails(MarriageApplicationSearchCriteria criteria) {
         return repository.searchMarriageDetails(criteria);
     }
 }

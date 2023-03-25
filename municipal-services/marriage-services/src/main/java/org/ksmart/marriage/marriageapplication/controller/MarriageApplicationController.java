@@ -2,7 +2,7 @@ package org.ksmart.marriage.marriageapplication.controller;
 
 
 // import lombok.extern.slf4j.Slf4j;
-import org.ksmart.marriage.marriageapplication.model.MarriageApplicationDetail;
+import org.ksmart.marriage.marriageapplication.model.MarriageApplicationDetails;
 import org.ksmart.marriage.marriageapplication.model.marriage.MarriageApplicationResponse;
 import org.ksmart.marriage.marriageapplication.model.marriage.MarriageApplicationSearchCriteria;
 import org.ksmart.marriage.marriageapplication.model.marriage.MarriageDetailsRequest;
@@ -41,7 +41,7 @@ public class MarriageApplicationController {
 
     @PostMapping(value = {"/_createmarriage"})
     public ResponseEntity<MarriageApplicationResponse> saveMarriageDetails(@RequestBody MarriageDetailsRequest request) {
-        List<MarriageApplicationDetail> marriageDetails=crMarriageService.saveMarriageDetails(request);
+        List<MarriageApplicationDetails> marriageDetails=crMarriageService.saveMarriageDetails(request);
         MarriageApplicationResponse response= MarriageApplicationResponse.builder()
                                                                   .marriageApplicationDetails(marriageDetails)
                                                                   .responseInfo(
@@ -52,14 +52,14 @@ public class MarriageApplicationController {
     }
     @PostMapping(value = { "/_updatemarriage"})
     public ResponseEntity<?> updateMarriageDetails(@RequestBody MarriageDetailsRequest request) {
-        List<MarriageApplicationDetail> marriageDetails = crMarriageService.updateMarriageDetails(request);
+        List<MarriageApplicationDetails> marriageDetails = crMarriageService.updateMarriageDetails(request);
         return new ResponseEntity<>(marriageDetails, HttpStatus.OK);
     }
 
     @PostMapping(value = { "/_searchmarriage"})
     public ResponseEntity<MarriageApplicationResponse> searchMarriageDetails(@RequestBody MarriageDetailsRequest request,
                                                                      @Valid @ModelAttribute MarriageApplicationSearchCriteria criteria) {
-        List<MarriageApplicationDetail> marriageDetails = crMarriageService.searchMarriageDetails(criteria);
+        List<MarriageApplicationDetails> marriageDetails = crMarriageService.searchMarriageDetails(criteria);
         MarriageApplicationResponse response = MarriageApplicationResponse.builder()
                 .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
                         Boolean.TRUE))

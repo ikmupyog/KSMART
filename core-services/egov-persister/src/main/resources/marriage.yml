@@ -242,26 +242,26 @@ serviceMaps:
                   id, adharno, name_en, name_mal, age, address_en, address_mal, mobile, is_esigned, marriageid, createdtime, createdby, 
                   lastmodifiedtime, lastmodifiedby, serial_no)
                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
-          basePath: MarriageDetails.*.WitnessDetail
+          basePath: MarriageDetails.*.WitnessDetails
           jsonMaps:
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witnessId1
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.witnessId1
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness1AdharNo
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.witness1AdharNo
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness1NameEn
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.witness1NameEn
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness1NameMal
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.witness1NameMal
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness1Age
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.witness1Age
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness1AddresSEn
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.witness1AddresSEn
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness1AddressMal
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.witness1AddressMal
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness1Mobile
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.witness1Mobile
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness1ISEsigned
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.witness1ISEsigned
 
             - jsonPath: $.MarriageDetails.*.id
 
@@ -273,31 +273,31 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.auditDetails.lastModifiedBy
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.serial_no1
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.serial_no1
 
         - query: INSERT INTO public.eg_marriage_witness_details(
                 id, adharno, name_en, name_mal, age, address_en, address_mal, mobile, is_esigned, marriageid, createdtime, createdby,
                 lastmodifiedtime, lastmodifiedby, serial_no)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
-          basePath: MarriageDetails.*.WitnessDetail
+          basePath: MarriageDetails.*.WitnessDetails
           jsonMaps:
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witnessId2
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.witnessId2
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness2AdharNo
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.witness2AdharNo
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness2NameEn
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.witness2NameEn
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness2NameMal
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.witness2NameMal
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness2Age
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.witness2Age
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness2AddresSEn
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.witness2AddresSEn
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness2AddressMal
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.witness2AddressMal
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness2Mobile
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.witness2Mobile
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.witness2ISEsigned
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.witness2ISEsigned
 
             - jsonPath: $.MarriageDetails.*.id
 
@@ -309,7 +309,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.auditDetails.lastModifiedBy
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetail.serial_no2
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.serial_no2
 
 
 

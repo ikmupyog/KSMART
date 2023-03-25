@@ -1,7 +1,6 @@
 package org.ksmart.marriage.marriageapplication.repository.rowmapper;
 
-import org.ksmart.marriage.common.model.AuditDetails;
-import org.ksmart.marriage.marriageapplication.model.MarriageApplicationDetail;
+import org.ksmart.marriage.marriageapplication.model.MarriageApplicationDetails;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
@@ -11,13 +10,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 @Component
-public class MarriageApplicationRowMapper implements ResultSetExtractor<List<MarriageApplicationDetail>>, BaseRowMapper,BrideDetailsRowMapper,GroomDetailsRowMapper,PermanentAddressRowMapper,PresentAddressRowMapper,WitnessDetailsRowMapper{
+public class MarriageApplicationRowMapper implements ResultSetExtractor<List<MarriageApplicationDetails>>, BaseRowMapper,BrideDetailsRowMapper,GroomDetailsRowMapper,PermanentAddressRowMapper,PresentAddressRowMapper,WitnessDetailsRowMapper{
 
     @Override
-    public List<MarriageApplicationDetail> extractData(ResultSet rs) throws SQLException, DataAccessException { //how to handle null
-        List<MarriageApplicationDetail> result = new ArrayList<>();
+    public List<MarriageApplicationDetails> extractData(ResultSet rs) throws SQLException, DataAccessException { //how to handle null
+        List<MarriageApplicationDetails> result = new ArrayList<>();
         while (rs.next()) {
-            result.add(MarriageApplicationDetail.builder()
+            result.add(MarriageApplicationDetails.builder()
                             .id(rs.getString("ma_id"))
                             .dateofreporting(rs.getLong("ma_dateofreporting"))
                             .dateofmarriage(rs.getLong("ma_dateofmarriage"))

@@ -6,7 +6,7 @@ package org.ksmart.marriage.marriageapplication.repository;
 import org.ksmart.marriage.common.producer.MarriageProducer;
 import org.ksmart.marriage.config.MarriageApplicationConfiguration;
 import org.ksmart.marriage.marriageapplication.enrichment.MarriageDetailsEnrichment;
-import org.ksmart.marriage.marriageapplication.model.MarriageApplicationDetail;
+import org.ksmart.marriage.marriageapplication.model.MarriageApplicationDetails;
 //import org.ksmart.marriage.common.producer.MarriageProducer;
 import org.ksmart.marriage.marriageapplication.model.marriage.MarriageApplicationSearchCriteria;
 import org.ksmart.marriage.marriageapplication.model.marriage.MarriageDetailsRequest;
@@ -45,23 +45,23 @@ public class MarriageApplicationRepository {
     }
 
 
-    public List<MarriageApplicationDetail> saveMarriageDetails(MarriageDetailsRequest request) {
+    public List<MarriageApplicationDetails> saveMarriageDetails(MarriageDetailsRequest request) {
 
         marriageDetailsEnrichment.enrichCreate(request);
         producer.push(marriageApplicationConfiguration.getSaveMarriageApplicationTopic(), request);
         return request.getMarriageDetails();
     }
 
-    public List<MarriageApplicationDetail> updateMarriageDetails(MarriageDetailsRequest request) {
+    public List<MarriageApplicationDetails> updateMarriageDetails(MarriageDetailsRequest request) {
         marriageDetailsEnrichment.enrichUpdate(request);
         producer.push(marriageApplicationConfiguration.getUpdateMarriageApplicationTopic(), request);
         return request.getMarriageDetails();
     }
 
-    public List<MarriageApplicationDetail> searchMarriageDetails(MarriageApplicationSearchCriteria criteria) {
+    public List<MarriageApplicationDetails> searchMarriageDetails(MarriageApplicationSearchCriteria criteria) {
         List<Object> preparedStmtValues = new ArrayList<>();
         String query = marriageQueryBuilder.getMarriageApplicationSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
-        List<MarriageApplicationDetail> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriageApplicationRowMapper);
+        List<MarriageApplicationDetails> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriageApplicationRowMapper);
         return result;
     }
 

@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MarriageApplicationDetail {
+public class MarriageApplicationDetails {
 
     @NotNull
     @Size(max = 64)
@@ -183,8 +183,8 @@ public class MarriageApplicationDetail {
     private String marriageReligiousInstitutionOtherNameMal;
 
     @Size(max = 64)
-    @JsonProperty("applicationnumber")
-    private String applicationnumber;
+    @JsonProperty("applicationNumber")
+    private String applicationNumber;
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
 
