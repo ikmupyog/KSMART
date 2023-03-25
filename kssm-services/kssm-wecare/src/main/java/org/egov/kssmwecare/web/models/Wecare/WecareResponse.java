@@ -26,9 +26,9 @@ public class WecareResponse {
 
     @JsonProperty("wecare")
     @Valid
-    private List<tr_Wecare> tr_Wecares;
+    private List<m_Wecare> tr_Wecares;
    
-    public WecareResponse addobcredit(tr_Wecare ob) {
+    public WecareResponse addobcredit(m_Wecare ob) {
         if (ob == null) {
             tr_Wecares = new ArrayList<>();
         }

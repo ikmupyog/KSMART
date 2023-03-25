@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.egov.kssmwecare.repository.querybuilder.WecareQueryBuilder;
 import org.egov.kssmwecare.repository.rowmapper.WecareRowMapper;
+import org.egov.kssmwecare.web.models.Wecare.WecareSearchCriteria;
+import org.egov.kssmwecare.web.models.Wecare.m_WecareSearch;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -23,14 +25,15 @@ public class WecareRepository {
         this.rowMapper = rowMapper;
     }
 
-    // public List<m_AswasakiranamSearchResponse> getDetails(AswasakiranamSearchCriteria criteria) {
-    //     List<Object> preparedStmtValues = new ArrayList<>();
+    public List<m_WecareSearch> getDetails(WecareSearchCriteria criteria) {
+        List<Object> preparedStmtValues = new ArrayList<>();
 
-    //     String query = queryBuilder.getAswasakiranamDetailsSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
-    //     List<m_AswasakiranamSearchResponse> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), rowMapper);
-    //     return result; 
+        String query = queryBuilder.getWecareDetailsSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
+        List<m_WecareSearch> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), rowMapper);
+        return result; 
 
-    // }
+    }
+
 
 }
 

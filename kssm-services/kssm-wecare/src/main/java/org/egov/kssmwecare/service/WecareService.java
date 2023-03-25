@@ -11,7 +11,9 @@ import org.egov.kssmwecare.kafka.Producer;
 import org.egov.kssmwecare.repository.WecareRepository;
 import org.egov.kssmwecare.validators.WecareSearchValidator;
 import org.egov.kssmwecare.web.models.Wecare.WecareRequest;
-import org.egov.kssmwecare.web.models.Wecare.tr_Wecare;
+import org.egov.kssmwecare.web.models.Wecare.WecareSearchCriteria;
+import org.egov.kssmwecare.web.models.Wecare.m_Wecare;
+import org.egov.kssmwecare.web.models.Wecare.m_WecareSearch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,20 +37,22 @@ public class WecareService {
         this.validator = validator;
     }
 
-    public List<tr_Wecare> create(WecareRequest request) {
+    public List<m_Wecare> create(WecareRequest request) {
         producer.push(wecareConfig.getSaveWecareTopic(), request);
         return request.getTr_Wecares();
     }
 
-    public List<tr_Wecare> Update(WecareRequest request) {
+    public List<m_Wecare> Update(WecareRequest request) {
         producer.push(wecareConfig.getUpdateWecareTopic(),request);
         return request.getTr_Wecares();
     }
 
-    // public List<m_AswasakiranamSearchResponse> Search(@Valid AswasakiranamSearchCriteria searchCriteria) {
+    public List<m_WecareSearch> Search(@Valid WecareSearchCriteria searchCriteria) {
 
-    //     validator.validateSearch(searchCriteria);
-    //     List<m_AswasakiranamSearchResponse> result = repository.getDetails(searchCriteria);
-    //     return result;
-    // }
+        validator.validateSearch(searchCriteria);
+        List<m_WecareSearch> result = repository.getDetails(searchCriteria);
+        return result;
+    }
+
+   
 }

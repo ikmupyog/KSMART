@@ -28,7 +28,7 @@ public class WecareRequest {
 
     @JsonProperty("wecare")
     @Valid
-    private List<tr_Wecare> tr_Wecares;
+    private List<m_Wecare> tr_Wecares;
 
     // private OpeningBalanceRequest addobcredit (OpeningBalance ob) {
     //     if (ob == null) {

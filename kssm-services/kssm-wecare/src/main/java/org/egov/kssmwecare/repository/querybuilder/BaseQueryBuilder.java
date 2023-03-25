@@ -9,16 +9,16 @@ import org.apache.commons.lang3.StringUtils;
 
 public class BaseQueryBuilder {
 
-    void addFilters(final String column, final List<Integer> schoolcode, final StringBuilder query,
+    void addFilters(final String column, final List<Long> numkssmpensionerid, final StringBuilder query,
             final List<Object> paramValues) {
 
-        if (CollectionUtils.isNotEmpty(schoolcode)) {
+        if (CollectionUtils.isNotEmpty(numkssmpensionerid)) {
             addWhereClause(paramValues, query);
             query.append(column)
                     .append(" IN (")
-                    .append(getStatementParameters(schoolcode.size()))
+                    .append(getStatementParameters(numkssmpensionerid.size()))
                     .append(") ");
-            schoolcode.forEach(paramValues::add);
+            numkssmpensionerid.forEach(paramValues::add);
         }
     }
 

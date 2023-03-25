@@ -23,7 +23,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Builder
 
-public class tr_Wecare {
+public class m_Wecare {
 
 @JsonProperty("intid")
 private	Integer	intid;
