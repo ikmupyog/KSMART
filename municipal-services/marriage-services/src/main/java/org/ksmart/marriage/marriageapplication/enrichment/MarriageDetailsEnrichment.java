@@ -140,7 +140,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
         ListIterator<String> itr = filecodes.listIterator();
         request.getMarriageDetails()
                 .forEach(marriage -> {
-                    marriage.setApplicationnumber(itr.next());
+                    marriage.setApplicationNumber(itr.next());
                 });
     }
 
