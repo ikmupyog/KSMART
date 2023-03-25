@@ -16,11 +16,9 @@ import org.ksmart.marriage.utils.enums.ErrorCodes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.IdGenerator;
-
 import java.util.List;
 import java.util.ListIterator;
 import java.util.UUID;
-
 /**
      * Created by Jasmine
      * on 24.03.2023
@@ -50,17 +48,17 @@ public class MarriageRegistryEnrichment implements BaseEnrichment {
                 marriage.getGroomDetails().setGroomId((UUID.randomUUID().toString()));
             }
 
-            marriage.getPermanentBride().setId1(UUID.randomUUID().toString());
-            marriage.getPermanentBride().setId2(UUID.randomUUID().toString());
+            // marriage.getPermanentBride().setId1(UUID.randomUUID().toString());
+            // marriage.getPermanentBride().setId2(UUID.randomUUID().toString());
 
-            marriage.getPermanentBride().setBrideGroom1("BRIDE");
-            marriage.getPermanentBride().setBrideGroom2("GROOM");
+            // marriage.getPermanentBride().setBrideGroom1("BRIDE");
+            // marriage.getPermanentBride().setBrideGroom2("GROOM");
 
-            if(marriage.getPresent()!=null){
-                marriage.getPresent().setId(UUID.randomUUID().toString());
-                marriage.getPresent().setBrideGroom("BRIDE");
-                marriage.getPresent().setBrideGroom("GROOM");
-            }
+            // if(marriage.getPresent()!=null){
+            //     marriage.getPresent().setId(UUID.randomUUID().toString());
+            //     marriage.getPresent().setBrideGroom("BRIDE");
+            //     marriage.getPresent().setBrideGroom("GROOM");
+            // }
             if(marriage.getWitness()!=null){
                 marriage.getWitness().setWitnessId1(UUID.randomUUID().toString());
                 marriage.getWitness().setWitnessId2(UUID.randomUUID().toString());

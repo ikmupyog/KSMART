@@ -30,7 +30,7 @@ public class MarriageRegistryResponse {
 
     @JsonProperty("MarriageDetails")
     @Valid
-    private List<MarriageApplicationDetail> marriageApplicationDetails;
+    private List<MarriageRegistryDetails> marriageApplicationDetails;
 
 //    @JsonProperty("BirthCertificate")
 //    @Valid
@@ -39,7 +39,7 @@ public class MarriageRegistryResponse {
     @JsonProperty("Count")
     private int count;
 
-    public MarriageRegistryResponse addMarriageApplication(MarriageApplicationDetail details) {
+    public MarriageRegistryResponse addMarriageApplication(MarriageRegistryDetails details) {
         if (marriageApplicationDetails == null) {
             marriageApplicationDetails = new ArrayList<>();
         }

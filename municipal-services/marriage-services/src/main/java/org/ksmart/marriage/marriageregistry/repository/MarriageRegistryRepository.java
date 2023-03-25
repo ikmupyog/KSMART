@@ -54,16 +54,16 @@ public class MarriageRegistryRepository {
         return result.getMarriageDetails();
     }
 
-    public List<MarriageRegistryDetails> updateMarriageRegistry(MarriageRegistryRequest request) {
-        marriageRegistryEnrichment.enrichUpdate(request);
-        producer.push(marriageApplicationConfiguration.getUpdateMarriageRegistryTopic(), request);
-        MarriageRegistryRequest result = MarriageRegistryRequest
-                                        .builder()
-                                        .requestInfo(request.getRequestInfo())
-                                        .marriageDetails(request.getMarriageDetails())
-                                        .build();
-        return result.getMarriageDetails();
-    }
+    // public List<MarriageRegistryDetails> updateMarriageRegistry(MarriageRegistryRequest request) {
+    //     marriageRegistryEnrichment.enrichUpdate(request);
+    //     producer.push(marriageApplicationConfiguration.getUpdateMarriageRegistryTopic(), request);
+    //     MarriageRegistryRequest result = MarriageRegistryRequest
+    //                                     .builder()
+    //                                     .requestInfo(request.getRequestInfo())
+    //                                     .marriageDetails(request.getMarriageDetails())
+    //                                     .build();
+    //     return result.getMarriageDetails();
+    // }
 
     // public List<MarriageRegistryDetails> searchMarriageRegistry(MarriageRegistrySearchCriteria criteria) {
     //     List<Object> preparedStmtValues = new ArrayList<>();

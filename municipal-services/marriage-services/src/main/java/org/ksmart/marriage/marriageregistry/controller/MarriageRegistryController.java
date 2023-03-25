@@ -1,12 +1,12 @@
-package org.ksmart.marriage.marriageapplication.controller;
+package org.ksmart.marriage.marriageregistry.controller;
 
 
 // import lombok.extern.slf4j.Slf4j;
-import org.ksmart.marriage.marriageapplication.model.MarriageApplicationDetail;
-import org.ksmart.marriage.marriageapplication.model.marriage.MarriageApplicationResponse;
-import org.ksmart.marriage.marriageapplication.model.marriage.MarriageApplicationSearchCriteria;
-import org.ksmart.marriage.marriageapplication.model.marriage.MarriageDetailsRequest;
-import org.ksmart.marriage.marriageapplication.service.MarriageApplicationService;
+
+import org.ksmart.marriage.marriageregistry.model.MarriageRegistryDetails;
+import org.ksmart.marriage.marriageregistry.model.MarriageRegistryRequest;
+import org.ksmart.marriage.marriageregistry.model.MarriageRegistryResponse;
+import org.ksmart.marriage.marriageregistry.service.MarriageRegistryService;
 import org.ksmart.marriage.utils.ResponseInfoFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,45 +28,43 @@ import java.util.List;
 @RestController
 @RequestMapping("/v1/marriagedetails")
 
-public class MarriageApplicationController {
-    private final MarriageApplicationService crMarriageService;
+public class MarriageRegistryController {
+    private final MarriageRegistryService marriageService;
     private final ResponseInfoFactory responseInfoFactory;
 
 
-    public MarriageApplicationController( MarriageApplicationService crMarriageService, ResponseInfoFactory responseInfoFactory) {
-        this.crMarriageService = crMarriageService;
+    public MarriageRegistryController( MarriageRegistryService marriageService, ResponseInfoFactory responseInfoFactory) {
+        this.marriageService = marriageService;
         this.responseInfoFactory = responseInfoFactory;
     }
 
-
-    @PostMapping(value = {"/_createmarriage"})
-    public ResponseEntity<MarriageApplicationResponse> saveMarriageDetails(@RequestBody MarriageDetailsRequest request) {
-        List<MarriageApplicationDetail> marriageDetails=crMarriageService.saveMarriageDetails(request);
-        MarriageApplicationResponse response= MarriageApplicationResponse.builder()
+    @PostMapping(value = {"/_createregistry"})
+    public ResponseEntity<MarriageRegistryResponse> saveMarriageDetails(@RequestBody MarriageRegistryRequest request) {
+        List<MarriageRegistryDetails> marriageDetails=marriageService.createRegistry(request);
+        MarriageRegistryResponse response= MarriageRegistryResponse.builder()
                                                                   .marriageApplicationDetails(marriageDetails)
                                                                   .responseInfo(
-                                                                 responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),true))
-
-                                                                 .build();
+                                                                   responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),true))
+                                                                  .build();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-    @PostMapping(value = { "/_updatemarriage"})
-    public ResponseEntity<?> updateMarriageDetails(@RequestBody MarriageDetailsRequest request) {
-        List<MarriageApplicationDetail> marriageDetails = crMarriageService.updateMarriageDetails(request);
-        return new ResponseEntity<>(marriageDetails, HttpStatus.OK);
-    }
+    // @PostMapping(value = { "/_updateregistry"})
+    // public ResponseEntity<?> updateMarriageDetails(@RequestBody MarriageDetailsRequest request) {
+    //     List<MarriageApplicationDetail> marriageDetails = crMarriageService.updateMarriageDetails(request);
+    //     return new ResponseEntity<>(marriageDetails, HttpStatus.OK);
+    // }
 
-    @PostMapping(value = { "/_searchmarriage"})
-    public ResponseEntity<MarriageApplicationResponse> searchMarriageDetails(@RequestBody MarriageDetailsRequest request,
-                                                                     @Valid @ModelAttribute MarriageApplicationSearchCriteria criteria) {
-        List<MarriageApplicationDetail> marriageDetails = crMarriageService.searchMarriageDetails(criteria);
-        MarriageApplicationResponse response = MarriageApplicationResponse.builder()
-                .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
-                        Boolean.TRUE))
-                .marriageApplicationDetails(marriageDetails)
-                .build();
-        return ResponseEntity.ok(response);
-    }
+    // @PostMapping(value = { "/_searchregistry"})
+    // public ResponseEntity<MarriageApplicationResponse> searchMarriageDetails(@RequestBody MarriageDetailsRequest request,
+    //                                                                  @Valid @ModelAttribute MarriageApplicationSearchCriteria criteria) {
+    //     List<MarriageApplicationDetail> marriageDetails = crMarriageService.searchMarriageDetails(criteria);
+    //     MarriageApplicationResponse response = MarriageApplicationResponse.builder()
+    //             .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+    //                     Boolean.TRUE))
+    //             .marriageApplicationDetails(marriageDetails)
+    //             .build();
+    //     return ResponseEntity.ok(response);
+    // }
 //    @PostMapping(value = {"/_update"})
 //    public ResponseEntity<MarriageApplicationResponse> updateBirthDetails(@RequestBody MarriageDetailsRequest request) {
 //        //BirthCertificate birthCertificate = new BirthCertificate();

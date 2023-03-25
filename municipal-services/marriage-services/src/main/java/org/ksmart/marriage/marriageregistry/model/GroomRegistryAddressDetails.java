@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
      * Created by Jasmine
      * on 24.03.2023
      */
-public class MarriageRegistryAddressDetails {
+public class GroomRegistryAddressDetails {
 
     @Size(max = 64)
     @JsonProperty("presentaddressCountry")

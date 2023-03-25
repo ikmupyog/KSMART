@@ -3,12 +3,13 @@ package org.ksmart.marriage.marriageregistry.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.ksmart.marriage.common.model.AuditDetails;
-import org.ksmart.marriage.marriageapplication.model.marriage.*;
+import org.ksmart.marriage.marriageregistry.model.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 //import org.ksmart.marriage.common.model.AuditDetails;
 //import org.ksmart.marriage.common.model.Document;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+
 
 @Getter
 @Setter
@@ -183,26 +184,21 @@ public class MarriageRegistryDetails {
     private String marriageReligiousInstitutionOtherNameMal;
 
     @Size(max = 64)
-    @JsonProperty("applicationnumber")
-    private String applicationnumber;
+    @JsonProperty("applicationNumber")
+    private String applicationNumber;
 
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
 
     @JsonProperty("BrideDetails")
-    private BrideDetails brideDetails;
+    private BrideRegistryDetails brideDetails;
 
     @JsonProperty("GroomDetails")
-    private GroomDetails groomDetails;
+    private GroomRegistryDetails groomDetails;
 
-    @JsonProperty("PermanentAddressDetails")
-    private PermanentAdressDetails permanentBride;
 
-    @JsonProperty("PresentAddressDetails")
-    private PresentAddressDetails present ;
-
-    @JsonProperty("WitnessDetail")
-    private WitnessDetails witness;
+    @JsonProperty("WitnessDetails")
+    private WitnessRegistryDetails witness;
 
     @JsonProperty("modulecode")
     private String modulecode;
