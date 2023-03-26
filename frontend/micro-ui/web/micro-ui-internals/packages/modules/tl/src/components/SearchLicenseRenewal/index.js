@@ -76,7 +76,9 @@ const SearchLicenseRenewal = ({ tenantId, t, onSubmit, data, count, isCancelreq 
     }
 
     isCancelreq ? Digit.SessionStorage.set("TL_CORRECTION_TRADE", finaldata) : Digit.SessionStorage.set("TL_RENEWAL_TRADE", finaldata);
-    isCancelreq ? Digit.SessionStorage.set("TL_CORRECTED_TRADE", "") : "";
+    let tempdata = { "TradeDetails": finaldata }
+
+    isCancelreq ? Digit.SessionStorage.set("TL_CORRECTED_TRADE", tempdata) : "";
     Digit.SessionStorage.set("TL_RENEWAL_ENABLE_TRADE", formdisable);
   }
   //need to get from workflow
