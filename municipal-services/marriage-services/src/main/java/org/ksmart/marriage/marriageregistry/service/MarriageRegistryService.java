@@ -30,7 +30,9 @@ public class MarriageRegistryService {
     //     return repository.updateMarriageRegistry(request);
     // }
 
-    // public List<MarriageRegistryDetails> searchRegistry(MarriageRegistrySearchCriteria criteria) {
-    //     return repository.searchMarriageRegistry(criteria);
-    // }
+    public List<MarriageRegistryDetails> searchRegistry(MarriageRegistrySearchCriteria criteria) {
+        return repository.searchMarriageRegistry(criteria);
+    }
+
+
 }

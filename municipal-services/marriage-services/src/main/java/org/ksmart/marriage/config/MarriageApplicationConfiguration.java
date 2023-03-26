@@ -51,4 +51,6 @@ public class MarriageApplicationConfiguration {
     @Value("${egov.bnd.max.limit}")
     private Integer maxSearchLimit;
 
+    
+
 }

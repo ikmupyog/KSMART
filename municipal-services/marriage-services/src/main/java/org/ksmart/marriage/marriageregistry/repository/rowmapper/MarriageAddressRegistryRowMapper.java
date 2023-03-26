@@ -3,7 +3,8 @@ package org.ksmart.marriage.marriageregistry.repository.rowmapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import org.springframework.stereotype.Component;
+@Component
 public interface MarriageAddressRegistryRowMapper {
 //    default PermanentAdressDetails getPermanentAddress (ResultSet rs) throws SQLException{
 //

@@ -47,27 +47,23 @@ public class MarriageRegistryEnrichment implements BaseEnrichment {
             if(marriage.getGroomDetails()!=null){
                 marriage.getGroomDetails().setGroomId((UUID.randomUUID().toString()));
             }
+            if(marriage.getBrideDetails()!=null){
+                marriage.getBrideDetails().setBrideId((UUID.randomUUID().toString()));
+                marriage.getBrideDetails().setBrideGroom("B");
+            }
+            if(marriage.getGroomDetails()!=null){
+                marriage.getGroomDetails().setGroomId((UUID.randomUUID().toString()));
+                marriage.getGroomDetails().setBrideGroom("G");
 
-            // marriage.getPermanentBride().setId1(UUID.randomUUID().toString());
-            // marriage.getPermanentBride().setId2(UUID.randomUUID().toString());
-
-            // marriage.getPermanentBride().setBrideGroom1("BRIDE");
-            // marriage.getPermanentBride().setBrideGroom2("GROOM");
-
-            // if(marriage.getPresent()!=null){
-            //     marriage.getPresent().setId(UUID.randomUUID().toString());
-            //     marriage.getPresent().setBrideGroom("BRIDE");
-            //     marriage.getPresent().setBrideGroom("GROOM");
-            // }
-            if(marriage.getWitness()!=null){
-                marriage.getWitness().setWitnessId1(UUID.randomUUID().toString());
-                marriage.getWitness().setWitnessId2(UUID.randomUUID().toString());
-                marriage.getWitness().setSerial_no1(1);
-                marriage.getWitness().setSerial_no2(2);
+            }
+            if(marriage.getWitnessDetails()!=null){
+                marriage.getWitnessDetails().setWitnessId1(UUID.randomUUID().toString());
+                marriage.getWitnessDetails().setWitnessId2(UUID.randomUUID().toString());
+                marriage.getWitnessDetails().setSerial_no1(1);
+                marriage.getWitnessDetails().setSerial_no2(2);
             }
         });
         setRegistrationNumber(request);
-
     }
 
     private void setRegistrationNumber(MarriageRegistryRequest request) {

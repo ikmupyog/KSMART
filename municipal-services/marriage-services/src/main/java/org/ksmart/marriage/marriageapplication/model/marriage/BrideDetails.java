@@ -79,6 +79,7 @@ public class BrideDetails {
     @Size(max = 20)
     @JsonProperty("brideGender")
     private String gender;
+
     @JsonProperty("brideDOB")
     private long dateofbirth;
 
@@ -137,6 +138,9 @@ public class BrideDetails {
     @Size(max = 64)
     @JsonProperty("brideMaritalstatusID")
     private String maritalstatusid;
+
+    @JsonProperty("bridelivingSpouse")
+    private boolean is_spouse_living;
 
     @JsonProperty("brideNoOfSpouse")
     private Integer no_of_spouse_living;

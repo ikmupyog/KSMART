@@ -23,7 +23,7 @@ public class MarriageRegistryRepository {
      private final MarriageApplicationConfiguration marriageApplicationConfiguration;
 
      private final MarriageRegistryEnrichment marriageRegistryEnrichment;
-     private final MarriageRegistryQueryBuilder marriageQueryBuilder;
+     private final MarriageRegistryQueryBuilder queryBuilder;
      private final MarriageRegistryRowMapper marriageRegistryRowMapper;
     private final JdbcTemplate jdbcTemplate;
 
@@ -31,13 +31,14 @@ public class MarriageRegistryRepository {
     public MarriageRegistryRepository(MarriageRegistryEnrichment marriageRegistryEnrichment, MarriageProducer producer, 
                                     MarriageApplicationConfiguration marriageApplicationConfiguration, 
                                     JdbcTemplate jdbcTemplate, 
-                                    MarriageRegistryEnrichment marriageDetailsEnrichment, MarriageRegistryQueryBuilder marriageQueryBuilder, 
+                                    MarriageRegistryEnrichment marriageDetailsEnrichment, 
+                                    MarriageRegistryQueryBuilder queryBuilder, 
                                     MarriageRegistryRowMapper marriageRegistryRowMapper) {
         this.producer = producer;
         this.marriageApplicationConfiguration = marriageApplicationConfiguration;
         this.marriageRegistryEnrichment = marriageRegistryEnrichment;
         this.jdbcTemplate = jdbcTemplate;
-        this.marriageQueryBuilder = marriageQueryBuilder;
+        this.queryBuilder = queryBuilder;
         this.marriageRegistryRowMapper = marriageRegistryRowMapper;
     }
 
@@ -53,7 +54,13 @@ public class MarriageRegistryRepository {
                                 .build();
         return result.getMarriageDetails();
     }
-
+    public List<MarriageRegistryDetails> searchMarriageRegistry(MarriageRegistrySearchCriteria criteria) {
+        List<Object> preparedStmtValues = new ArrayList<>();
+        String query = queryBuilder.getMarriageRegistrySearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
+        List<MarriageRegistryDetails> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriageRegistryRowMapper);
+ 
+        return result; 
+    }
     // public List<MarriageRegistryDetails> updateMarriageRegistry(MarriageRegistryRequest request) {
     //     marriageRegistryEnrichment.enrichUpdate(request);
     //     producer.push(marriageApplicationConfiguration.getUpdateMarriageRegistryTopic(), request);

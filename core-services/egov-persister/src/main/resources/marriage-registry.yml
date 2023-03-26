@@ -3,15 +3,15 @@ serviceMaps:
   mappings:
     - version: 1.0
       description: Persists save marriage details in marriage  table
-      fromTopic: save-marriage-application-topic
+      fromTopic: save-marriage-registry-topic
       isTransaction: true
       queryMaps:
-        - query:  INSERT INTO public.eg_marriage_details(
-                  id, dateofmarriage, dateofreporting, districtid, lbtype, tenantid, placetype, placeid, placename_en, placename_ml, houseno_and_name_en, 
-                  houseno_and_name_ml, street_name_en, street_name_ml, ward_code, talukid, village_name, marriage_type, oth_marriage_type, landmark, locality_en,
-                  locality_ml, applicationtype, businessservice, workflowcode, applicationnumber, registrationno, registration_date, action, status, createdtime, createdby,
+        - query:  INSERT INTO public.eg_register_marriage_details(
+                  id, dateofmarriage, dateofreporting, districtid, lbtype, tenantid, placetype, placeid, placename_en, placename_ml, housenameno_en, 
+                  housenameno_ml, street_name_en, street_name_ml, ward_code, talukid, village_name, marriage_type, oth_marriage_type, landmark, locality_en,
+                  locality_ml, applicationnumber, registrationno, registration_date, registration_status, createdtime, createdby,
                   lastmodifiedtime, lastmodifiedby)
-                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );
+                  VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );
           basePath: MarriageDetails.*
           jsonMaps:
             - jsonPath: $.MarriageDetails.*.id
@@ -58,11 +58,11 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.marriageLocalityMal
 
-            - jsonPath: $.MarriageDetails.*.applicationType
+            # - jsonPath: $.MarriageDetails.*.applicationType
 
-            - jsonPath: $.MarriageDetails.*.businessService
+            # - jsonPath: $.MarriageDetails.*.businessService
 
-            - jsonPath: $.MarriageDetails.*.workflowCode
+            # - jsonPath: $.MarriageDetails.*.workflowCode
 
             - jsonPath: $.MarriageDetails.*.applicationnumber
 
@@ -70,7 +70,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.registration_date
 
-            - jsonPath: $.MarriageDetails.*.action
+            # - jsonPath: $.MarriageDetails.*.action
 
             - jsonPath: $.MarriageDetails.*.status
 
@@ -85,10 +85,10 @@ serviceMaps:
 
 
 
-        - query: INSERT INTO public.eg_marriage_bride_groom_details(
-                id, residentship, aadharno, passportno, socialsecurityno, firstname_en, firstname_mal, middlename_en, middlename_mal, lastname_en, lastname_mal, 
-                mobile, emailid, gender, dateofbirth, age, parent_guardian, fathername_en, fathername_mal, mothername_en, mothername_mal, father_aadharno,
-                mother_aadharno, guardianname_en, guardianname_mal, guardian_aadharno, maritalstatusid, no_of_spouse_living, marriageid, bride_groom, createdtime,
+        - query: INSERT INTO public.eg_register_marriage_bride_groom_details(
+                id, residentship, aadharno, passportno, socialsecurityno, firstname_en, firstname_ml, middlename_en, middlename_ml, lastname_en, lastname_ml, 
+                mobile, emailid, gender, dateofbirth, age, parent_guardian, fathername_en, fathername_ml, mothername_en, mothername_ml, father_aadharno,
+                mother_aadharno, guardianname_en, guardianname_ml, guardian_aadharno, maritalstatusid, no_of_spouse_living, marriageid, bride_groom, createdtime,
                 createdby, lastmodifiedtime, lastmodifiedby)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
           basePath: MarriageDetails.*.BrideDetails
@@ -162,10 +162,10 @@ serviceMaps:
             - jsonPath: $.MarriageDetails.*.auditDetails.lastModifiedBy
 
 
-        - query: INSERT INTO public.eg_marriage_bride_groom_details(
-                id, residentship, aadharno, passportno, socialsecurityno, firstname_en, firstname_mal, middlename_en, middlename_mal, lastname_en, lastname_mal,
-                mobile, emailid, gender, dateofbirth, age, parent_guardian, fathername_en, fathername_mal, mothername_en, mothername_mal, father_aadharno,
-                mother_aadharno, guardianname_en, guardianname_mal, guardian_aadharno, maritalstatusid, no_of_spouse_living, marriageid, bride_groom, createdtime,
+        - query: INSERT INTO public.eg_register_marriage_bride_groom_details(
+                id, residentship, aadharno, passportno, socialsecurityno, firstname_en, firstname_ml, middlename_en, middlename_ml, lastname_en, lastname_ml,
+                mobile, emailid, gender, dateofbirth, age, parent_guardian, fathername_en, fathername_ml, mothername_en, mothername_ml, father_aadharno,
+                mother_aadharno, guardianname_en, guardianname_ml, guardian_aadharno, maritalstatusid, no_of_spouse_living, marriageid, bride_groom, createdtime,
                 createdby, lastmodifiedtime, lastmodifiedby)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
           basePath: MarriageDetails.*.GroomDetails
@@ -238,10 +238,10 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.auditDetails.lastModifiedBy
 
-        - query: INSERT INTO public.eg_marriage_witness_details(
-                  id, aadharno, name_en, name_mal, age, address_en, address_mal, mobile, is_esigned, marriageid, createdtime, createdby, 
+        - query: INSERT INTO public.eg_register_marriage_witness_details(
+                  id, aadharno, name_en, name_ml, age, address_en, mobile, is_esigned, marriageid, createdtime, createdby, 
                   lastmodifiedtime, lastmodifiedby, serial_no)
-                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+                  VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
           basePath: MarriageDetails.*.WitnessDetails
           jsonMaps:
 
@@ -257,7 +257,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.WitnessDetails.witness1AddresSEn
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetails.witness1AddressMal
+            # - jsonPath: $.MarriageDetails.*.WitnessDetails.witness1AddressMal
 
             - jsonPath: $.MarriageDetails.*.WitnessDetails.witness1Mobile
 
@@ -275,8 +275,8 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.WitnessDetails.serial_no1
 
-        - query: INSERT INTO public.eg_marriage_witness_details(
-                id, aadharno, name_en, name_mal, age, address_en, address_mal, mobile, is_esigned, marriageid, createdtime, createdby,
+        - query: INSERT INTO public.eg_register_marriage_witness_details(
+                id, aadharno, name_en, name_ml, age, address_en, address_ml, mobile, is_esigned, marriageid, createdtime, createdby,
                 lastmodifiedtime, lastmodifiedby, serial_no)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
           basePath: MarriageDetails.*.WitnessDetails

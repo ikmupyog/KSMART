@@ -1,14 +1,16 @@
 package org.ksmart.marriage.marriageregistry.repository.rowmapper;
 
-import org.ksmart.marriage.marriageapplication.model.marriage.WitnessDetails;
-
+import org.ksmart.marriage.marriageregistry.model.WitnessRegistryDetails;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import org.springframework.stereotype.Component;
 
-public interface WitnessDetailsRowMapper {
-    default WitnessDetails getWitnessDetails(ResultSet rs) throws SQLException {
+    
+@Component
+public interface WitnessRegistryRowMapper {
+    default WitnessRegistryDetails getWitnessDetails(ResultSet rs) throws SQLException {
 
-        return WitnessDetails.builder()
+        return WitnessRegistryDetails.builder()
 //                .id(rs.getString("wd_id"))
                 .adharno(rs.getString("wd_adharno"))
                 .name_en(rs.getString("wd_name_en"))

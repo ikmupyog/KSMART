@@ -30,7 +30,6 @@ public class MarriageRegistryDetails {
     private Long dateofreporting;
 
 
-
     @Size(max = 64)
     @JsonProperty("marriageDistrictid")
     private String districtid;
@@ -131,12 +130,6 @@ public class MarriageRegistryDetails {
     @JsonProperty("registration_date")
     private Long registrationDate;
 
-//    @JsonProperty("fileDate")
-//    private long file_date;
-//
-//    @Size(max = 64)
-//    @JsonProperty("fileStatus")
-//    private String file_status;
 
     @Size(max = 64)
     @JsonProperty("action")
@@ -145,6 +138,7 @@ public class MarriageRegistryDetails {
     @Size(max = 64)
     @JsonProperty("status")
     private String status;
+
     @Size(max = 1000)
     @JsonProperty("placeid")
     private String placeid;
@@ -152,42 +146,45 @@ public class MarriageRegistryDetails {
     @Size(max = 2500)
     @JsonProperty("marriageHouseNoAndNameEn")
     private String marriageHouseNoAndNameEn;
+
     @Size(max = 2500)
     @JsonProperty("marriageHouseNoAndNameMal")
     private String marriageHouseNoAndNameMal;
 
-    @Size(max = 1000)
-    @JsonProperty("marriageReligiousInstitutionOther")
-    private String marriageReligiousInstitutionOther;
+    // @Size(max = 1000)
+    // @JsonProperty("marriageReligiousInstitutionOther")
+    // private String marriageReligiousInstitutionOther;
 
-    @Size(max = 1000)
-    @JsonProperty("marriagePublicOrPrivatePlace")
-    private String marriagePublicOrPrivatePlace;
+    // @Size(max = 1000)
+    // @JsonProperty("marriagePublicOrPrivatePlace")
+    // private String marriagePublicOrPrivatePlace;
 
-    @Size(max = 2500)
-    @JsonProperty("marriagePublicOrPrivateNamePlaceEn")
-    private String marriagePublicOrPrivateNamePlaceEn;
-    @Size(max = 2500)
-    @JsonProperty("marriagePublicOrPrivateNamePlaceMal")
-    private String marriagePublicOrPrivateNamePlaceMal;
+    // @Size(max = 2500)
+    // @JsonProperty("marriagePublicOrPrivateNamePlaceEn")
+    // private String marriagePublicOrPrivateNamePlaceEn;
+    // @Size(max = 2500)
+    // @JsonProperty("marriagePublicOrPrivateNamePlaceMal")
+    // private String marriagePublicOrPrivateNamePlaceMal;
 
+    // @Size(max = 1000)
+    // @JsonProperty("marriageReligiousInstitution")
+    // private String marriageReligiousInstitution;
 
-    @Size(max = 1000)
-    @JsonProperty("marriageReligiousInstitution")
-    private String marriageReligiousInstitution;
-
-    @Size(max = 2500)
-    @JsonProperty("marriageReligiousInstitutionOtherNameEn")
-    private String marriageReligiousInstitutionOtherNameEn;
-    @Size(max = 2500)
-    @JsonProperty("marriageReligiousInstitutionOtherNameMal")
-    private String marriageReligiousInstitutionOtherNameMal;
+    // @Size(max = 2500)
+    // @JsonProperty("marriageReligiousInstitutionOtherNameEn")
+    // private String marriageReligiousInstitutionOtherNameEn;
+    // @Size(max = 2500)
+    // @JsonProperty("marriageReligiousInstitutionOtherNameMal")
+    // private String marriageReligiousInstitutionOtherNameMal;
 
     @Size(max = 64)
     @JsonProperty("applicationNumber")
     private String applicationNumber;
 
-    @JsonProperty("auditDetails")
+    @JsonProperty("modulecode")
+    private String modulecode;
+
+    @JsonProperty("AuditDetails")
     private AuditDetails auditDetails;
 
     @JsonProperty("BrideDetails")
@@ -196,12 +193,10 @@ public class MarriageRegistryDetails {
     @JsonProperty("GroomDetails")
     private GroomRegistryDetails groomDetails;
 
-
     @JsonProperty("WitnessDetails")
-    private WitnessRegistryDetails witness;
+    private WitnessRegistryDetails witnessDetails;
 
-    @JsonProperty("modulecode")
-    private String modulecode;
+
 
 
 

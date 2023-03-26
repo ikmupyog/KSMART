@@ -51,7 +51,7 @@ public class BrideRegistryDetails {
 
     @Size(max = 200)
     @JsonProperty("brideFirstnameMal")
-    private String firstname_mal;
+    private String firstname_ml;
 
     @Size(max = 200)
     @JsonProperty("brideMiddlenameEn")
@@ -59,7 +59,7 @@ public class BrideRegistryDetails {
 
     @Size(max = 200)
     @JsonProperty("brideMiddlenameMal")
-    private String middlename_mal;
+    private String middlename_ml;
 
     @Size(max = 200)
     @JsonProperty("brideLastnameEn")
@@ -67,7 +67,7 @@ public class BrideRegistryDetails {
 
     @Size(max = 200)
     @JsonProperty("brideLastnameMal")
-    private String lastname_mal;
+    private String lastname_ml;
 
     @Size(max = 150)
     @JsonProperty("brideMobile")
@@ -80,6 +80,7 @@ public class BrideRegistryDetails {
     @Size(max = 20)
     @JsonProperty("brideGender")
     private String gender;
+
     @JsonProperty("brideDOB")
     private long dateofbirth;
 
@@ -96,7 +97,7 @@ public class BrideRegistryDetails {
 
     @Size(max = 200)
     @JsonProperty("brideFathernameMal")
-    private String fathername_mal;
+    private String fathername_ml;
 
     @Size(max = 200)
     @JsonProperty("brideMothernameEn")
@@ -104,7 +105,7 @@ public class BrideRegistryDetails {
 
     @Size(max = 200)
     @JsonProperty("brideMothernameMal")
-    private String mothername_mal;
+    private String mothername_ml;
 
     @Size(max = 15)
     @JsonProperty("brideFatherAdharNo")
@@ -120,7 +121,7 @@ public class BrideRegistryDetails {
 
     @Size(max = 200)
     @JsonProperty("brideGuardiannameMal")
-    private String guardianname_mal;
+    private String guardianname_ml;
 
     @Size(max = 15)
     @JsonProperty("brideGardianAdhar")
@@ -144,11 +145,16 @@ public class BrideRegistryDetails {
 
 
     @JsonProperty("brideNoOfSpouse")
-    private Boolean no_of_spouse_living;
+    private Integer no_of_spouse_living;
 
     @Size(max = 150)
     @JsonProperty("bridePhotoUrl")
     private String photo_url;
+
+    @Size(max = 64)
+    @JsonProperty("brideGroom")
+    private String brideGroom;
+    
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
 
