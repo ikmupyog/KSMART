@@ -95,6 +95,7 @@ const BirthCertificate = ({  config, onSelect, userType, formData, onSubmit }) =
 
   return (
     <React.Fragment>
+      
       {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>

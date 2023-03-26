@@ -2,7 +2,7 @@ import { Banner, Card, CardText, LinkButton, Loader, SubmitBar } from "@egovernm
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { convertToBirthRegistration } from "../../../utils";
+import { convertToBirthRegistration,convertToEditBirthRegistration } from "../../../utils";
 import getPDFData from "../../../utils/getTLAcknowledgementData";
 
 const GetActionMessage = (props) => {
@@ -10,7 +10,8 @@ const GetActionMessage = (props) => {
   if (props.isSuccess) {
     return t("CR_CREATE_SUCCESS_MSG");
   } else if (props.isLoading) {
-    return !window.location.href.includes("renew-trade") || !window.location.href.includes("edit-application") ? t("CS_TRADE_APPLICATION_SUCCESS") : t("CS_TRADE_UPDATE_APPLICATION_PENDING");
+    return t("CR_CREATE_APPLICATION_PENDING");
+    // !window.location.href.includes("renew-trade") || !window.location.href.includes("edit-application") ? t("CS_TRADE_APPLICATION_SUCCESS") : t("CS_TRADE_UPDATE_APPLICATION_PENDING");
   } else if (!props.isSuccess) {
     return t("CR_CREATE_APPLICATION_FAILED");
   }
@@ -37,15 +38,13 @@ const BirthAcknowledgement = ({ data, onSuccess, userType, isEditBirth = false }
   const [mutationHappened, setMutationHappened, clear] = Digit.Hooks.useSessionStorage("CITIZEN_TL_MUTATION_HAPPENED", false);
   const resubmit = window.location.href.includes("edit-application");
   const tenantId = Digit.ULBService.getCurrentTenantId();
-  const isRenewTrade = !window.location.href.includes("renew-trade")
-  const mutation = Digit.Hooks.cr.useCivilRegistrationAPI(
-    data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
-    isRenewTrade
-  );
-  // const mutation1 = Digit.Hooks.cr.useCivilRegistrationAPI(
-  //   data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
-  //   false
-  // );
+  
+    const mutation = Digit.Hooks.cr.useCivilRegistrationAPI(      
+      tenantId,isEditBirth ? isEditBirth : false      
+    );
+  
+  
+ 
   // const mutation2 = Digit.Hooks.cr.useCivilRegistrationAPI(
   //   data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
   //   false
@@ -70,9 +69,13 @@ const BirthAcknowledgement = ({ data, onSuccess, userType, isEditBirth = false }
         if (!resubmit) {
           // let formdata = !isEditBirth ? convertToDeathRegistration(data) : convertToEditTrade(data, fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter(y => y.module === "CR") : []);
 
-          let formdata = !isEditBirth ? convertToBirthRegistration(data) : [];
+          let formdata = !isEditBirth ? convertToBirthRegistration(data) : convertToEditBirthRegistration(data);
           // formdata.BirthDetails[0].tenantId = formdata?.BirthDetails[0]?.tenantId || tenantId1;
           if (!isEditBirth) {
+            mutation.mutate(formdata, {
+              onSuccess,
+            })
+          } else {
             mutation.mutate(formdata, {
               onSuccess,
             })
@@ -135,10 +138,10 @@ const BirthAcknowledgement = ({ data, onSuccess, userType, isEditBirth = false }
   };
   let enableLoader = (mutation.isIdle || mutation.isLoading);
   if (enableLoader) { return (<Loader />) }
-  else if (((mutation?.isSuccess == false && mutation?.isIdle == false) || (mutation1?.isSuccess == false && mutation1?.isIdle == false))) {
+  else if (((mutation?.isSuccess == false && mutation?.isIdle == false))) {
     return (
       <Card>
-        <BannerPicker t={t} data={mutation.data || mutation1.data} isSuccess={mutation.isSuccess || mutation1.isSuccess} isLoading={(mutation?.isLoading || mutation1?.isLoading)} />
+        <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation?.isLoading)} />
         {<CardText>{t("CR_BIRTH_CREATION_FAILED_RESPONSE")}</CardText>}
         <Link to={`/digit-ui/citizen`}>
           <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />

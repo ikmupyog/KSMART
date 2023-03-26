@@ -40,7 +40,6 @@ const EmployeeSideBar = () => {
   const NATADMIN = Digit.UserService.hasAccess("NATADMIN");
   const [click, setClick] = useState(false);
   const [first, setfirst] = useState("");
-  console.log("setfirstsetfirstsetfirst", first);
 
   let key = "ACTION_TEST_HOME";
 

@@ -20,18 +20,19 @@ const CrFlow = ({ path }) => {
     //   img: <FileProtected />,
     //   link: `${path}/adoption-details`,
     // },
-    // {
-    //   title: "CR_STILL_BIRTH",
-    //   subTitle: "CR_STILL_BIRTH_REG",
-    //   img: <BankIcon />,
-    //   // link: `${path}/child-details`,
-    // },
-    // {
-    //   title: "CR_BIRTH_BORN_OUTSIDE",
-    //   subTitle: "CR_BIRTH_BORN_OUTSIDE_DESC",
-    //   img: <BankIcon />,
-    //   // link: `${path}/child-details`,
-    // },
+    {
+      title: "CR_STILL_BIRTH",
+      subTitle: "CR_STILL_BIRTH_REG",
+      img: <BankIcon />,
+      link: `${path}/stillbirth-child-details`,
+    },
+   
+    {
+      title: "CR_BIRTH_BORN_OUTSIDE",
+      subTitle: "CR_BIRTH_BORN_OUTSIDE_DESC",
+      img: <BankIcon />,
+      link: `${path}/born-outside-child-details`,
+    },
 
     // {
     //   title: "CR_BIRTH_NAME_INC_CORRECTION",

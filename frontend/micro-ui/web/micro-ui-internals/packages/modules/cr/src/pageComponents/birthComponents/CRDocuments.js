@@ -11,7 +11,7 @@ const PDFSvg = ({ width = 20, height = 20, style }) => (
 
 function CRDocuments({ value = {} }) {
   const { t } = useTranslation();
-  const { isLoading, isError, error, data } = Digit.Hooks.tl.useTLDocumentSearch(
+  const { isLoading, isError, error, data } = Digit.Hooks.cr.useCRDocumentSearch(
     {
       value,
     },

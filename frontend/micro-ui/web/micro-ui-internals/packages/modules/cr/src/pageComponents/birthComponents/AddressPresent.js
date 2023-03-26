@@ -5,7 +5,8 @@ import { useTranslation } from "react-i18next";
 const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCountry, setaddressCountry,
     presentaddressStateName, setaddressStateName, value, setValue, countryvalue, setCountryValue,
     permtaddressCountry, setpermtaddressCountry, permtaddressStateName, setpermtaddressStateName, isPrsentAddress,
-    setIsPrsentAddress, Villagevalues, setLbsVillagevalue, isEditBirth = false, isEditDeath = false,
+    setIsPrsentAddress, Villagevalues, setLbsVillagevalue, isEditBirth = false, isEditDeath = false,presentOutsideKeralaDistrict,
+    setoutsideKeralaDistrict
 }) => {
     const stateId = Digit.ULBService.getStateId();
     let tenantId = "";
@@ -99,7 +100,12 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
     function setSelectaddressStateName(value) {
         setaddressStateName(value);
         setValue(value.code);
-        setIsInitialRender(true);
+        if (value.code != "kl") {
+            setoutsideKeralaDistrict(null);
+            sessionStorage.setItem("presentOutsideKeralaFlag", true);
+        } else {
+            sessionStorage.setItem("presentOutsideKeralaFlag", false);
+        }
         if (isPrsentAddress) {
             setpermtaddressStateName(value);
         } else {
@@ -108,13 +114,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
     }
 
     const goNext = () => {
-        // sessionStorage.setItem("presentaddressCountry", presentaddressCountry.code);
-        // sessionStorage.setItem("presentaddressStateName", presentaddressStateName.code);
-
-        // onSelect(config.key, {
-        //     presentaddressCountry,
-        //     presentaddressStateName,
-        // });
+        
     };
     if (isCountryLoading || isStateLoading || islocalbodiesLoading) {
         return <Loader></Loader>;

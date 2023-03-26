@@ -7,7 +7,7 @@ import CRWFCaption from "./CRWFCaption";
 
 const CRWFApplicationTimeline = (props) => {
   const { t } = useTranslation();
-  const businessService= props.application?.businessService;
+  const businessService= props.application?.ChildDetails?.businessService;
   const { isLoading, data } = Digit.Hooks.useWorkflowDetails({
     tenantId: props.application?.tenantId,
     id: props.id,
@@ -17,7 +17,7 @@ const CRWFApplicationTimeline = (props) => {
   const getTimelineCaptions = (checkpoint) => {
     if (checkpoint.state === "INITIATE") {
       const caption = {
-        date: Digit.DateUtils.ConvertTimestampToDate(props.application?.auditDetails?.createdTime),
+        date: Digit.DateUtils.ConvertTimestampToDate(props.application?.ChildDetails?.auditDetails?.createdTime),
         source: props.application?.ChildDetails?.channel || "",
       };
       return <CRWFCaption data={caption} />;

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, CheckBox, BackButton } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, CheckBox, BackButton,Toast } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
-const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDeath }) => {
+const FamilyInformationBirth = ({ config, onSelect, userType, formData, isEditDeath }) => {
   console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
@@ -44,7 +44,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
   //     : null
   // );
   const [SpouseNameEN, setSpouseNameEN] = useState(
-    iseditDeath ? formData?.FamilyInformationDeath?.SpouseNameEN?.formData?.FamilyInformationDeath?.SpouseNameEN : ""
+    isEditDeath ? formData?.FamilyInformationDeath?.SpouseNameEN?.formData?.FamilyInformationDeath?.SpouseNameEN : ""
   );
 
   // const [SpouseNameEN, setSpouseNameEN] = useState(
@@ -57,7 +57,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
     formData?.FamilyInformationDeath?.SpouseAadhaar ? formData?.FamilyInformationDeath?.SpouseAadhaar : ""
   );
 
-  const [FatherUnavailable, setFatherUnavailable] = useState(
+  const [FatherUnavailable, setFatherUnavailablechecked] = useState(
     formData?.FamilyInformationDeath?.FatherUnavailable
       ? formData?.FamilyInformationDeath?.FatherUnavailable
       : formData?.FamilyInformationDeath?.FatherUnavailable
@@ -94,9 +94,22 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
     formData?.FamilyInformationDeath?.FamilyEmailId ? formData?.FamilyInformationDeath?.FamilyEmailId : ""
   );
   const [inputValue, setInputValue] = useState("");
+  const [toast, setToast] = useState(false);
+  const [AadharError, setAadharError] = useState(formData?.InformationDeath?.DeceasedAadharNumber ? false : false);
 
   const onSkip = () => onSelect();
-
+  // function setFatherUnavailablechecked(e){
+  //   if (e.target.checked === true) {
+  //     setFatherUnavailable(e.target.checked);("")
+  //     setSelectFatherNameEn
+  //     setFatherNameMl("");
+  //     setFatherAadharNo("");
+  //   } else {
+  //     setFatherUnavailable(e.target.checked);
+  //     setDateOfDeath("");
+  //     setDeathTime("");
+  //   }
+  // }
   function setSelectFatherNameEn(e) {
     if (e.target.value.length === 51) {
       return false;
@@ -121,20 +134,19 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
     }
   }
   function setSelectFatherAadharNo(e) {
-    if (e.target.value != null || e.target.value != "") {
-      if (e.target.value.length <= 12) {
-        if (e.target.value < 12) {
-          setFatherAadharNo(e.target.value);
-          // setMotherAgeMarriageError(true);
-          return false;
-        } else {
-          setFatherAadharNo(e.target.value);
-          // setMotherAgeMarriageError(false);
-        }
-      } else {
-        // setMotherAgeMarriageError(true);
-        return false;
-      }
+    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+
+    // Check if the new value is the same as the Mother's Aadhar number
+    if (newValue === MotherAadharNo || newValue === SpouseAadhaar) {
+      // If so, clear the Father's Aadhar number field
+      setFatherAadharNo("");
+      setAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 3000);
+    } else {
+      setFatherAadharNo(newValue);
     }
   }
 
@@ -166,25 +178,26 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
     }
   }
 
-  function setSelectSpouseAadhaar(e) {
-    // setSpouseAdharNo(e.target.value);
-    if (e.target.value != null || e.target.value != "") {
-      if (e.target.value.length <= 12) {
-        if (e.target.value < 12) {
-          setSpouseAadhaar(e.target.value);
-          // setMotherAgeMarriageError(true);
-          return false;
-        } else {
-          setSpouseAadhaar(e.target.value);
-          // setMotherAgeMarriageError(false);
-        }
+    function setSelectSpouseAadhaar(e) {
+      const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+      if (newValue === MotherAadharNo|| newValue === FatherAadharNo) {
+        // If so, clear the Father's Aadhar number field
+        setSpouseAadhaar("");
+        setAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 3000);
       } else {
-        console.log(e.target.value.length);
-        // setMotherAgeMarriageError(true);
-        return false;
+        setSpouseAadhaar(newValue);
       }
+      
     }
-  }
+  // if (e.target.value.trim().length >= 0) {
+    //   setSpouseAadhaar(
+    //     e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
+    //   );
+    // }
 
   function setSelectMotherNameEn(e) {
     if (e.target.value.length === 51) {
@@ -210,21 +223,25 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
     }
   }
   function setSelectMotherAadharNo(e) {
-    if (e.target.value != null || e.target.value != "") {
-      if (e.target.value.length <= 12) {
-        if (e.target.value < 12) {
-          setMotherAadharNo(e.target.value);
-          // setMotherAgeMarriageError(true);
-          return false;
-        } else {
-          setMotherAadharNo(e.target.value);
-          // setMotherAgeMarriageError(false);
-        }
-      } else {
-        // setMotherAgeMarriageError(true);
-        return false;
-      }
+    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+
+    // Check if the new value is the same as the Father's Aadhar number
+    if (newValue === FatherAadharNo || newValue === SpouseAadhaar ) {
+      // If so, clear the Mother's Aadhar number field
+      setMotherAadharNo("");
+      setAadharError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else {
+      setMotherAadharNo(newValue);
     }
+    // if (e.target.value.trim().length >= 0) {
+    //   setMotherAadharNo(
+    //     e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
+    //   );
+    // }
   }
   function setSelectFamilyMobileNo(e) {
     if (e.target.value != null || e.target.value != "") {
@@ -283,7 +300,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
     });
   };
 
-  if (iseditDeath) {
+  if (isEditDeath) {
     if (formData?.FamilyInformationDeath?.SpouseType != null) {
       if (cmbspouse.length > 0 && (SpouseType === undefined || SpouseType === "")) {
         setSpouseType(cmbspouse.filter((cmbspouse) => cmbspouse.code === formData?.FamilyInformationDeath?.SpouseType)[0]);
@@ -291,14 +308,14 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
     }
   }
 
-  const handleBlur = (event) => {
-    const value = event.target.value;
-    if (value.length > 12) {
-      setInputValue(value.slice(0, 12));
-    } else {
-      setInputValue(value);
-    }
-  };
+  // const handleBlur = (event) => {
+  //   const value = event.target.value;
+  //   if (value.length > 12) {
+  //     setInputValue(value.slice(0, 12));
+  //   } else {
+  //     setInputValue(value);
+  //   }
+  // };
   return (
     <React.Fragment>
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
@@ -394,14 +411,13 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
                     t={t}
                     isMandatory={false}
                     type="number"
+                    max="12"
                     optionKey="i18nKey"
                     name="SpouseAadhaar"
                     value={SpouseAadhaar}
-                    defaultValue={inputValue}
-                    onBlur={handleBlur}
                     onChange={setSelectSpouseAadhaar}
                     placeholder={`${t("CS_COMMON_AADHAAR")}`}
-                    {...(validation = { isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                    {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                   />
                 </div>
               </div>
@@ -413,7 +429,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
             <div className="col-md-6">
               <CheckBox
                 label={t("CR_FATHER_UNAVAILABLE")}
-                onChange={() => setFatherUnavailable(!FatherUnavailable)}
+                onChange={() => setFatherUnavailablechecked(!FatherUnavailable)}
                 value={FatherUnavailable}
                 checked={FatherUnavailable}
               />
@@ -473,13 +489,14 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
                   <TextInput
                     t={t}
                     isMandatory={false}
-                    type={"text"}
+                    type="number"
+                    max="12"
                     optionKey="i18nKey"
                     name="FatherAadharNo"
                     value={FatherAadharNo}
                     onChange={setSelectFatherAadharNo}
                     placeholder={`${t("CS_COMMON_AADHAAR")}`}
-                    {...(validation = { pattern: "^[0-9]{12}$", type: "number", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                    {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                   />
                 </div>
               </div>
@@ -493,6 +510,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
                 label={t("CR_MOTHER_UNAVAILABLE")}
                 onChange={() => setMotherUnavailable(!MotherUnavailable)}
                 value={MotherUnavailable}
+                setMotherUnavailable
                 checked={MotherUnavailable}
               />
             </div>
@@ -518,13 +536,13 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
                   <TextInput
                     t={t}
                     isMandatory={false}
-                    type={"text"}
+                    type="text"
                     optionKey="i18nKey"
                     name="MotherNameEn"
                     value={MotherNameEn}
                     onChange={setSelectMotherNameEn}
                     placeholder={`${t("CR_NAME")}`}
-                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_NAME_EN") })}
+                    {...(validation = { pattern:  "^[a-zA-Z-.`' ]*$", type: "text", isRequired: true, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                   />
                 </div>
                 <div className="col-md-4">
@@ -612,6 +630,13 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, iseditDe
             </div>
           </div>
         </div>
+        {toast && (
+          <Toast
+            error={AadharError}
+            label={AadharError ? (AadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`) : setToast(false)) : setToast(false)}
+            onClose={() => setToast(false)}
+          />
+        )}
       </FormStep>
     </React.Fragment>
   );

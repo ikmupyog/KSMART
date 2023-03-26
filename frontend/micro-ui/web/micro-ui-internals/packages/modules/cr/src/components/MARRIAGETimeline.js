@@ -9,11 +9,11 @@ const getAction = (flow) => {
     case "STAKEHOLDER": actions = []
       break;
     default: actions = [
-      'Registration Details',
-      'Institution Details',
-      'Groom Details',
-      'Bride Details',
-      'Summary',
+      'CR_MARRIAGE_REGISTRATION_DETAILS',
+      'CR_GROOM_DETAILS',
+      'CR_BRIDE_DETAILS',
+      'CR_WITNESS_DETAILS',
+      'CR_MARRIAGE_SUMMARY',
     ]
   }
 }

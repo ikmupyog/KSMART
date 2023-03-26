@@ -4,24 +4,22 @@ import {
   CardLabel,
   TextInput,
   Dropdown,
+  CheckBox,
   DatePicker,
   BackButton,
   Loader,
-  Toast,
   LabelFieldPair,
   RadioButtons,
-  SubmitBar,
 } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/MARRIAGETimeline";
 import { useTranslation } from "react-i18next";
-import CustomTimePicker from "../../components/CustomTimePicker";
+
 
 const GroomDetails = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
   const { data: Menu, isLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
-  const { data: Profession = {}, isProfessionLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Profession");
 
   const radiomenu = [
     { i18nKey: "CR_GROOM_PARENTS", code: "PARENT" },
@@ -32,25 +30,15 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     Menu.map((groomGenderDetails) => {
       menu.push({ i18nKey: `CR_COMMON_GENDER_${groomGenderDetails.code}`, code: `${groomGenderDetails.code}`, value: `${groomGenderDetails.code}` });
     });
-  let cmbProfession = [];
-  Profession &&
-    Profession["birth-death-service"] &&
-    Profession["birth-death-service"].Profession.map((ob) => {
-      cmbProfession.push(ob);
-    });
+  const [isParent, setIsParent] = useState(formData?.GroomDetails?.isParent ? formData?.GroomDetails?.isParent : false);
+  const [isGuardian, setIsGuardian] = useState(formData?.GroomDetails?.isGuardian ? formData?.GroomDetails?.isGuardian : false);
+  const [isInitialRender, setIsInitialRender] = useState(true);
   const [isInitialRenderRadioButtons, setisInitialRenderRadioButtons] = useState(true);
-  const [groomProfessionEn, setGroomProfessionEn] = useState(
-    formData?.GroomDetails?.groomProfessionEn ? formData?.GroomDetails?.groomProfessionEn : null
-  );
-  const [groomProfessionMal, setGroomProfessionMal] = useState(
-    formData?.GroomDetails?.groomProfessionMal ? formData?.GroomDetails?.groomProfessionMal : null
-  );
   const [groomGender, selectGroomGender] = useState(formData?.GroomDetails?.groomGender);
   const [groomDOB, setGroomDOB] = useState(formData?.GroomDetails?.groomDOB ? formData?.GroomDetails?.groomDOB : "");
   const [groomFathernameEn, setGroomFathernameEn] = useState(
     formData?.GroomDetails?.groomFathernameEn ? formData?.GroomDetails?.groomFathernameEn : ""
-  );
-  const [groomGuardiannameEn, setGroomGuardiannameEn] = useState(
+  );const [groomGuardiannameEn, setGroomGuardiannameEn] = useState(
     formData?.GroomDetails?.groomGuardiannameEn ? formData?.GroomDetails?.groomGuardiannameEn : ""
   );
   const [groomGuardiannameMal, setGroomGuardiannameMal] = useState(
@@ -79,10 +67,10 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
   const [groomSocialSecurityNo, setGroomSocialSecurityNo] = useState(
     formData?.GroomDetails?.groomSocialSecurityNo ? formData?.GroomDetails?.groomSocialSecurityNo : ""
   );
-
+  
   const [toast, setToast] = useState(false);
   const [DOBError, setDOBError] = useState(formData?.GroomDetails?.groomDOB ? false : false);
-
+  
   const [groomSpouseLiving, setGroomSpouseLiving] = useState(
     formData?.GroomDetails?.groomSpouseLiving ? formData?.GroomDetails?.groomSpouseLiving : null
   );
@@ -93,7 +81,9 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     formData?.GroomDetails?.groomMiddlenameEn ? formData?.GroomDetails?.groomMiddlenameEn : ""
   );
   const [groomLastnameEn, setGroomLastnameEn] = useState(formData?.GroomDetails?.groomLastnameEn ? formData?.GroomDetails?.groomLastnameEn : "");
-
+  const [selectedOption, setSelectedOption] = useState(
+    formData?.GroomDetails?.selectedOption ? formData?.GroomDetails?.selectedOption : "ILB"
+  );
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
@@ -117,6 +107,22 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
   const [access, setAccess] = React.useState(true);
 
   const onSkip = () => onSelect();
+  useEffect(() => {
+    if (isInitialRender) {
+      if (formData?.GroomDetails?.isParent != null) {
+        setIsInitialRender(false);
+        setIsParent(formData?.GroomDetails?.isParent);
+      }
+    }
+  }, [isInitialRender]);
+  useEffect(() => {
+    if (isInitialRender) {
+      if (formData?.GroomDetails?.isGuardian != null) {
+        setIsInitialRender(false);
+        setIsGuardian(formData?.GroomDetails?.isGuardian);
+      }
+    }
+  }, [isInitialRender]);
   const cmbMaritalStatus = [
     { i18nKey: "Unmarried", code: "UNMARRIED" },
     { i18nKey: "Married", code: "MARRIED" },
@@ -139,7 +145,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     if (isInitialRenderRadioButtons) {
       setisInitialRenderRadioButtons(false);
       if (selectedValueRadio) {
-        //setIsInitialRenderRadio(false);
+        // setIsInitialRenderRadio(false);
         setValueRad(selectedValueRadio.code);
       }
     }
@@ -149,13 +155,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     { i18nKey: "CR_NRI", code: "NRI" },
     { i18nKey: "CR_FOREIGN_NATIONAL", code: "FOREIGN" },
   ];
-
-  function setSelectGroomProfessionEn(value) {
-    setGroomProfessionEn(value);
-  }
-  function setSelectGroomProfessionMal(value) {
-    setGroomProfessionMal(value);
-  }
+  
   function setSelectGroomMaritalstatusID(value) {
     setGroomMaritalstatusID(value);
   }
@@ -173,7 +173,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
   }
   function setSelectGroomMobile(e) {
     if (e.target.value.trim().length != 0) {
-      setGroomMobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 10));
+      setGroomMobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
     }
   }
   function setSelectGroomEmailid(e) {
@@ -188,9 +188,14 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     setGroomNoOfSpouse(e.target.value);
   }
   function setSelectGroomAge(e) {
-    setGroomAge(e.target.value);
+    if (e.target.value.trim().length === 3) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setGroomAge(e.target.value);
+    }
   }
-
+  
   function setselectGroomDOB(value) {
     setGroomDOB(value);
     const today = new Date();
@@ -210,182 +215,147 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       }, 3000);
     }
   }
-  function setSelectGroomFirstnameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
+  function setParent(e) {
+    if (e.target.checked === true) {
+      setIsParent(e.target.checked);
+
     } else {
-      setGroomFirstnameEn(
-        e.target.value.replace(
-          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
-          ""
-        )
-      );
+      setIsParent(e.target.checked);
+      setGroomFathernameEn("");
+      setGroomMothernameEn("");
+      setGroomFatherAdharNo("");
+      setGroomMotherAdharNo("");
+      setGroomMothernameMal("");
+      setGroomFathernameMal("");
+    }
+  }
+  function setGuardian(e) {
+    if (e.target.checked === true) {
+      setIsGuardian(e.target.checked);
+
+    } else {
+      setIsGuardian(e.target.checked);
+      setGroomFathernameEn("");
+      setGroomMothernameEn("");
+      setGroomFatherAdharNo("");
+      setGroomMotherAdharNo("");
+      setGroomMothernameMal("");
+      setGroomFathernameMal("");
+    }
+  }
+  function setSelectGroomFirstnameEn(e) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setGroomFirstnameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectGroomLastnameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setGroomLastnameEn(
-        e.target.value.replace(
-          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
-          ""
-        )
-      );
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setGroomLastnameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectGroomMiddlenameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setGroomMiddlenameEn(
-        e.target.value.replace(
-          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
-          ""
-        )
-      );
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+       setGroomMiddlenameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectGroomLastnameMal(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      setGroomLastnameMal('');
     } else {
-      setGroomLastnameMal(
-        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-      );
+      setGroomLastnameMal(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectGroomMiddlenameMal(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      setGroomMiddlenameMal('');
     } else {
-      setGroomMiddlenameMal(
-        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-      );
+      setGroomMiddlenameMal(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectGroomFirstnameMal(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;  
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      setGroomFirstnameMal('');
     } else {
-      setGroomFirstnameMal(
-        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-      );
+      setGroomFirstnameMal(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
-
+  
   function setSelectGroomFathernameMal(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      setGroomFathernameMal('');
     } else {
-      setGroomFathernameMal(
-        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-      );
+      setGroomFathernameMal(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectGroomGuardiannameMal(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      setGroomGuardiannameMal('');
     } else {
-      setGroomGuardiannameMal(
-        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-      );
+      setGroomGuardiannameMal(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
-
+  
   function setSelectGroomFathernameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setGroomFathernameEn(
-        e.target.value.replace(
-          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
-          ""
-        )
-      );
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setGroomFathernameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectGroomGuardiannameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setGroomGuardiannameEn(
-        e.target.value.replace(
-          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
-          ""
-        )
-      );
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setGroomGuardiannameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectGroomMothernameMal(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      setGroomMothernameMal('');
     } else {
-      setGroomMothernameMal(
-        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-      );
+      setGroomMothernameMal(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectGroomMothernameEn(e) {
-    GroomMothernameMal;
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setGroomMothernameEn(
-        e.target.value.replace(
-          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
-          ""
-        )
-      );
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setGroomMothernameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
   function setSelectGroomAadharNo(e) {
     if (e.target.value.trim().length != 0) {
-      setGroomAadharNo(
-        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
-      );
+    setGroomAadharNo(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
     }
   }
   function setSelectGroomFatherAdharNo(e) {
     if (e.target.value.trim().length != 0) {
-      setGroomFatherAdharNo(
-        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
-      );
+    setGroomFatherAdharNo(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
     }
   }
   function setSelectGroomGardianAdhar(e) {
     if (e.target.value.trim().length != 0) {
-      setGroomGardianAdhar(
-        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
-      );
+    setGroomGardianAdhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
     }
   }
   function setSelectGroomMotherAdharNo(e) {
     if (e.target.value.trim().length != 0) {
-      setGroomMotherAdharNo(
-        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
-      );
+    setGroomMotherAdharNo(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
     }
   }
 
   let validFlag = true;
   const goNext = () => {
+  
     if (validFlag == true) {
       sessionStorage.setItem("groomDOB", groomDOB ? groomDOB : null);
-      sessionStorage.setItem("tripStartTime", tripStartTime ? tripStartTime : null);
       sessionStorage.setItem("groomGender", groomGender ? groomGender.code : null);
       sessionStorage.setItem("groomAdharNo", groomAdharNo ? groomAdharNo : null);
       sessionStorage.setItem("groomPassportNo", groomPassportNo ? groomPassportNo : null);
@@ -411,10 +381,10 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       sessionStorage.setItem("groomNoOfSpouse", groomNoOfSpouse ? groomNoOfSpouse : null);
       sessionStorage.setItem("groomSpouseLiving", groomSpouseLiving ? groomSpouseLiving : null);
       sessionStorage.setItem("groomMaritalstatusID", groomMaritalstatusID ? groomMaritalstatusID : null);
-      sessionStorage.setItem("groomProfessionEn", groomProfessionEn ? groomProfessionEn.code : null);
-      sessionStorage.setItem("groomProfessionMal", groomProfessionMal ? groomProfessionMal.code : null);
+      sessionStorage.setItem("selectedOption", selectedOption ? selectedOption : "ILB");
       onSelect(config.key, {
         groomDOB,
+        selectedOption,
         groomAdharNo,
         groomGender,
         groomPassportNo,
@@ -437,102 +407,105 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
         groomNoOfSpouse,
         groomSpouseLiving,
         groomMaritalstatusID,
-        groomProfessionEn,
-        groomProfessionMal,
         groomGardianAdhar,
         groomGuardiannameEn,
-        groomGuardiannameMal,
+        groomGuardiannameMal
       });
     }
   };
-  if (isLoading || isProfessionLoading) {
+  if (isLoading ) {
     return <Loader></Loader>;
   } else
     return (
       <React.Fragment>
         <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-        {window.location.href.includes("/citizen") ? <Timeline /> : null}
-        {window.location.href.includes("/employee") ? <Timeline /> : null}
-        <FormStep t={t}>
+        {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
+        {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
+        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_GROOM_NATIONALITY_AND_RESIDENTSHIP")}`}</span>{" "}
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_GROOM_NATIONALITY_AND_RESIDENTSHIP")}`}</span>{" "}
               </h1>
-            </div>
-          </div>
-
-          <div className="row">
+              </div>
+              </div>
+              
+            <div className="row">
             <div className="col-md-12">
-              <div className="radios">
-                <div className="radiobuttons">
-                  <LabelFieldPair style={{ display: "flex" }}>
-                    <RadioButtons
-                      t={t}
-                      optionsKey="i18nKey"
-                      options={rbmenu}
-                      selectedOption={selectedValueRadio}
-                      onSelect={selectRadioButtons}
-                      style={{ marginTop: "15px", paddingLeft: "5px", height: "20px", display: "flex" }}
-                    />
-                  </LabelFieldPair>
-                </div>
+            <div className="radios">
+              <div className="radiobuttons">
+                <LabelFieldPair style={{ display: "flex" }}>
+                  <RadioButtons 
+                  t={t} 
+                  optionsKey="i18nKey" 
+                  options={rbmenu} 
+                  selectedOption={selectedValueRadio} 
+                  onSelect={selectRadioButtons} 
+                  style={{ marginTop: "15px", paddingLeft: "5px", height: "20px", display: "flex" }} />
+                </LabelFieldPair>
               </div>
             </div>
           </div>
+          </div>
           <div className="row">
             <div className="col-md-12">
-              <h1 className="headingh1">
+            <h1 className="headingh1">
                 <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_GROOM_AADHAR_AND_PASSPORT_NO")}`}</span>{" "}
               </h1>
             </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12">
-              <div className="col-md-3">
-                {" "}
-                <CardLabel>{t("CR_GROOM_AADHAR_NO")}</CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"number"}
-                  optionKey="i18nKey"
-                  name="groomAdharNo"
-                  value={groomAdharNo}
-                  onChange={setSelectGroomAadharNo}
-                  placeholder={`${t("CR_GROOM_AADHAR_NO")}`}
-                />
-              </div>
-              <div className="col-md-3">
-                {" "}
-                <CardLabel>{t("CR_GROOM_PASSPORT_NO")}</CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="groomPassportNo"
-                  value={groomPassportNo}
-                  onChange={setSelectGroomPassportNo}
-                  placeholder={`${t("CR_GROOM_PASSPORT_NO")}`}
-                />
-              </div>
-
-              <div className="col-md-3">
-                {" "}
-                <CardLabel>{t("CR_GROOM_SOCIAL_SECURITY_NO")}</CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="groomSocialSecurityNo"
-                  value={groomSocialSecurityNo}
-                  onChange={setSelectGroomSocialSecurityNo}
-                  placeholder={`${t("CR_GROOM_SOCIAL_SECURITY_NO")}`}
-                />
-              </div>
             </div>
+            <div className="row">
+            <div className="col-md-12">
+            <div className="col-md-4">
+              {" "}
+              <CardLabel>
+              {`${t("CR_GROOM_AADHAR_NO")}`}
+                  <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"number"}
+                optionKey="i18nKey"
+                name="groomAdharNo"
+                value={groomAdharNo}
+                onChange={setSelectGroomAadharNo}
+                placeholder={`${t("CR_GROOM_AADHAR_NO")}`}
+                {...(validation = { isRequired: true })}
+              />
+            </div>
+            <div className="col-md-4">
+              {" "}
+              <CardLabel>{t("CR_GROOM_PASSPORT_NO")}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="groomPassportNo"  
+                value={groomPassportNo}
+                onChange={setSelectGroomPassportNo}
+                placeholder={`${t("CR_GROOM_PASSPORT_NO")}`}
+                
+              />
+            </div>
+
+            <div className="col-md-4">
+              {" "}
+              <CardLabel>{t("CR_GROOM_SOCIAL_SECURITY_NO")}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="groomSocialSecurityNo"
+                value={groomSocialSecurityNo}
+                onChange={setSelectGroomSocialSecurityNo}
+                placeholder={`${t("CR_GROOM_SOCIAL_SECURITY_NO")}`}
+                {...(validation = { isRequired: true })}
+              />
+            </div>
+          </div>
           </div>
           <div className="row">
             <div className="col-md-12">
@@ -543,199 +516,199 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
           </div>
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-3">
-                <CardLabel>
-                  {t("CR_GROOM_NAME")}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-              </div>
+            <div className="col-md-3">
+              <CardLabel>
+                {t("CR_GROOM_NAME")}
+              </CardLabel>
             </div>
           </div>
+          </div>
           <div className="row">
-            <div className="col-md-12">
-              <div className="col-md-3">
-                <CardLabel>{t("CR_GROOM_FIRST_NAME_EN")}</CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="groomFirstnameEn"
-                  value={groomFirstnameEn}
-                  onChange={setSelectGroomFirstnameEn}
-                  placeholder={`${t("CR_GROOM_FIRST_NAME_EN")}`}
-                />
-              </div>
+          <div className="col-md-12">
+            <div className="col-md-3">
+              <CardLabel>{t("CR_GROOM_FIRST_NAME_EN")}
+              <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="groomFirstnameEn"
+                value={groomFirstnameEn}
+                onChange={setSelectGroomFirstnameEn}
+                placeholder={`${t("CR_GROOM_FIRST_NAME_EN")}`}
+                {...(validation = { isRequired: true })}
+              />
+            </div>
 
-              <div className="col-md-3">
-                <CardLabel>{t("CR_GROOM_MIDDLE_NAME_EN")}</CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="groomMiddlenameEn"
-                  value={groomMiddlenameEn}
-                  onChange={setSelectGroomMiddlenameEn}
-                  placeholder={`${t("CR_GROOM_MIDDLE_NAME_EN")}`}
-                />
-              </div>
-              <div className="col-md-3">
-                <CardLabel>{t("CR_GROOM_LAST_NAME_EN")}</CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="groomLastnameEn"
-                  value={groomLastnameEn}
-                  onChange={setSelectGroomLastnameEn}
-                  placeholder={`${t("CR_GROOM_LAST_NAME_EN")}`}
-                />
-              </div>
-              <div className="col-md-3">
-                <CardLabel>{t("CR_GROOM_MOBILE_NO")}</CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"number"}
-                  optionKey="i18nKey"
-                  name="groomMobile"
-                  value={groomMobile}
-                  onChange={setSelectGroomMobile}
-                  placeholder={`${t("CR_GROOM_MOBILE_NO")}`}
-                />
-              </div>
+            <div className="col-md-3">
+              <CardLabel>{t("CR_GROOM_MIDDLE_NAME_EN")}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="groomMiddlenameEn"
+                value={groomMiddlenameEn}
+                onChange={setSelectGroomMiddlenameEn}
+                placeholder={`${t("CR_GROOM_MIDDLE_NAME_EN")}`}
+                
+              />
+            </div>
+            <div className="col-md-3">
+              <CardLabel>{t("CR_GROOM_LAST_NAME_EN")}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="groomLastnameEn"
+                value={groomLastnameEn}
+                onChange={setSelectGroomLastnameEn}
+                placeholder={`${t("CR_GROOM_LAST_NAME_EN")}`}
+                
+              />
+            </div>
+            <div className="col-md-3">
+              <CardLabel>{t("CR_GROOM_MOBILE_NO")}
+              <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"number"}
+                optionKey="i18nKey"
+                name="groomMobile"
+                value={groomMobile}
+                onChange={setSelectGroomMobile}
+                placeholder={`${t("CR_GROOM_MOBILE_NO")}`}
+                {...(validation = { isRequired: true })}
+              />
             </div>
           </div>
-          <div className="row">
-            <div className="col-md-12">
-              <div className="col-md-3">
-                <CardLabel>{t("CR_GROOM_FIRST_NAME_ML")}</CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="groomFirstnameMal"
-                  value={groomFirstnameMal}
-                  onChange={setSelectGroomFirstnameMal}
-                  placeholder={`${t("CR_GROOM_FIRST_NAME_ML")}`}
-                />
-              </div>
-              <div className="col-md-3">
-                <CardLabel>{t("CR_GROOM_MIDDLE_NAME_ML")}</CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="groomMiddlenameMal"
-                  value={groomMiddlenameMal}
-                  onChange={setSelectGroomMiddlenameMal}
-                  placeholder={`${t("CR_GROOM_MIDDLE_NAME_ML")}`}
-                />
-              </div>
-              <div className="col-md-3">
-                <CardLabel>{t("CR_GROOM_LAST_NAME_ML")}</CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="groomLastnameMal"
-                  value={groomLastnameMal}
-                  onChange={setSelectGroomLastnameMal}
-                  placeholder={`${t("CR_GROOM_LAST_NAME_ML")}`}
-                />
-              </div>
-              <div className="col-md-3">
-                <CardLabel>{t("CR_GROOM_EMAIL")}</CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="groomEmailid"
-                  value={groomEmailid}
-                  onChange={setSelectGroomEmailid}
-                  placeholder={`${t("CR_GROOM_EMAIL")}`}
-                />
-              </div>
-            </div>
           </div>
           <div className="row">
-            <div className="col-md-12">
-              <div className="col-md-3">
-                <CardLabel>
+          <div className="col-md-12">
+            <div className="col-md-3">
+              <CardLabel>{t("CR_GROOM_FIRST_NAME_ML")}
+              <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="groomFirstnameMal"
+                value={groomFirstnameMal}
+                onChange={setSelectGroomFirstnameMal}
+                placeholder={`${t("CR_GROOM_FIRST_NAME_ML")}`}
+                {...(validation = { isRequired: true })}
+              />
+            </div>
+            <div className="col-md-3">
+              <CardLabel>{t("CR_GROOM_MIDDLE_NAME_ML")}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="groomMiddlenameMal"
+                value={groomMiddlenameMal}
+                onChange={setSelectGroomMiddlenameMal}
+                placeholder={`${t("CR_GROOM_MIDDLE_NAME_ML")}`}
+                
+              />
+            </div>
+            <div className="col-md-3">
+              <CardLabel>{t("CR_GROOM_LAST_NAME_ML")}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="groomLastnameMal"
+                value={groomLastnameMal}
+                onChange={setSelectGroomLastnameMal}
+                placeholder={`${t("CR_GROOM_LAST_NAME_ML")}`}
+                
+              />
+            </div>
+            <div className="col-md-3">
+              <CardLabel>{t("CR_GROOM_EMAIL")}
+              <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="groomEmailid"
+                value={groomEmailid}
+                onChange={setSelectGroomEmailid}
+                placeholder={`${t("CR_GROOM_EMAIL")}`}
+                {...(validation = { isRequired: true })}
+              />
+            </div>
+          </div>
+          </div>
+          <div className="row">
+          <div className="col-md-12">
+              <div className="col-md-4">
+              <CardLabel>
                   {`${t("CR_GROOM_GENDER")}`}
                   <span className="mandatorycss">*</span>
                 </CardLabel>
                 <Dropdown
-                  t={t}
-                  optionKey="code"
-                  isMandatory={true}
-                  option={menu}
-                  selected={groomGender}
-                  select={setselectGroomGender}
-                  placeholder={`${t("CR_GROOM_GENDER")}`}
-                />
-              </div>
-              <div className="col-md-3">
-                <CardLabel>
+                t={t}
+                optionKey="code"
+                isMandatory={true}
+                option={menu}
+                selected={groomGender}
+                select={setselectGroomGender}
+                placeholder={`${t("CR_GROOM_GENDER")}`}
+                {...(validation = { isRequired: true })} 
+              />
+            </div>
+            <div className="col-md-4">
+             <CardLabel>
                   {`${t("CR_GROOM_DATE_OF_BIRTH")}`}
                   <span className="mandatorycss">*</span>
                 </CardLabel>
-                <DatePicker date={groomDOB} name="groomDOB" onChange={setselectGroomDOB} placeholder={`${t("CR_GROOM_DATE_OF_BIRTH")}`} />
-              </div>
-              <div className="col-md-3">
-                <CardLabel>{`${t("CR_GROOM_AGE")}`}</CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"number"}
-                  optionKey="i18nKey"
-                  name="groomAge"
-                  value={groomAge}
-                  onChange={setSelectGroomAge}
-                  placeholder={`${t("CR_GROOMN_AGE")}`}
-                />
-              </div>
+              <DatePicker 
+              date={groomDOB} 
+              name="groomDOB" 
+              onChange={setselectGroomDOB} 
+              placeholder={`${t("CR_GROOM_DATE_OF_BIRTH")}`}
+              {...(validation = { isRequired: true })}
+             />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>
+                  {`${t("CR_GROOM_AGE")}`}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"number"}
+                optionKey="i18nKey"
+                name="groomAge"
+                value={groomAge}
+                onChange={setSelectGroomAge}
+                placeholder={`${t("CR_GROOM_AGE")}`}
+                {...(validation = { isRequired: true })}
+              />
             </div>
           </div>
-          <div className="row">
+        </div>          
+        <div className="row">
             <div className="col-md-12">
               <div className="col-md-4">
-                <CardLabel>{`${t("CR_GROOM_PROFESSION_EN")}`}</CardLabel>
-                <Dropdown
-                  t={t}
-                  optionKey="name"
-                  isMandatory={false}
-                  option={cmbProfession}
-                  selected={groomProfessionEn}
-                  select={setSelectGroomProfessionEn}
-                  placeholder={`${t("CR_GROOM_PROFESSION_EN")}`}
-                />
-              </div>
-              <div className="col-md-4">
-                <CardLabel>{`${t("CR_GROOM_PROFESSION_ML")}`}</CardLabel>
-                <Dropdown
-                  t={t}
-                  optionKey="namelocal"
-                  isMandatory={false}
-                  option={cmbProfession}
-                  selected={groomProfessionMal}
-                  select={setSelectGroomProfessionMal}
-                  placeholder={`${t("CR_GROOM_PROFESSION_ML")}`}
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col-md-12">
-              <div className="col-md-3">
-                <CardLabel>{t("CR_GROOM_MARITAL_STATUS")}</CardLabel>{" "}
+                <CardLabel>
+                  {t("CR_GROOM_MARITAL_STATUS")}
+                  <span className="mandatorycss">*</span>
+                  </CardLabel>{" "}
                 <Dropdown
                   t={t}
                   optionKey="i18nKey"
@@ -744,10 +717,14 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   selected={groomMaritalstatusID}
                   select={setSelectGroomMaritalstatusID}
                   placeholder={`${t("CR_GROOM_MARITAL_STATUS")}`}
+                  {...(validation = { isRequired: true })}
                 />
               </div>
-              <div className="col-md-3">
-                <CardLabel>{t("CR_ANY_SPOUSE_LIVING")}</CardLabel>{" "}
+              <div className="col-md-4">
+                <CardLabel>
+                  {t("CR_ANY_SPOUSE_LIVING")}
+                  <span className="mandatorycss">*</span>
+                  </CardLabel>{" "}
                 <Dropdown
                   t={t}
                   optionKey="i18nKey"
@@ -756,9 +733,10 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   selected={groomSpouseLiving}
                   select={setSelectGroomSpouseLiving}
                   placeholder={`${t("CR_ANY_SPOUSE_LIVING")}`}
+                  {...(validation = { isRequired: true })}
                 />
               </div>
-              <div className="col-md-3">
+              <div className="col-md-4">
                 <CardLabel>{t("CR_NUMBER_OF_SPOUSE_LIVING")}</CardLabel>{" "}
                 <TextInput
                   t={t}
@@ -769,7 +747,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   value={groomNoOfSpouse}
                   onChange={setSelectGroomNoOfSpouse}
                   placeholder={`${t("CR_NUMBER_OF_SPOUSE_LIVING")}`}
-                  {...(validation = { pattern: "^[0-9]{2}$", type: "number", isRequired: true, title: t("CR_INVALID_NUMBER_OF_SPOUSE_LIVING") })}
+                  
                 />
               </div>
             </div>
@@ -780,29 +758,52 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PARENTS_GUARDIAN_DETILS")}`}</span>{" "}
               </h1>
             </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12">
-              <div className="radios">
-                <div className="radiobuttons">
-                  <LabelFieldPair style={{ display: "flex" }}>
-                    <RadioButtons
-                      t={t}
-                      optionsKey="i18nKey"
-                      options={radiomenu}
-                      selectedOption={selectedValueRadio}
-                      onSelect={selectRadioButtons}
-                      style={{ marginTop: "10px", paddingLeft: "5px", height: "20px", display: "flex" }}
-                    />
-                  </LabelFieldPair>
-                </div>
-              </div>
             </div>
+            <div className="row">
+            <div className="col-md-12">
+            <div className="col-md-6">
+            <LabelFieldPair style={{ display: "flex" }}>
+            <CheckBox
+                label={t("PARENT")}
+                value={isParent} 
+                  checked={isParent}
+                  onChange={setParent}
+                 />
+                 <CheckBox
+                label={t("GUARDIAN")}
+                value={isGuardian} 
+                  checked={isGuardian}
+                  onChange={setGuardian}
+                 />
+              </LabelFieldPair>
+            {/* <div className="radios">
+              <div className="radiobuttons">
+                <LabelFieldPair style={{ display: "flex" }}>
+                  <RadioButtons 
+                  t={t} 
+                  optionsKey="i18nKey" 
+                  options={radiomenu} 
+                  //selectedOption={selectedValueRadio} 
+                  //onSelect={selectRadioButtons} 
+                  value={isParent} 
+                  checked={isParent}
+                  onChange={setParent}
+                  style={{ marginTop: "10px", paddingLeft: "5px", height: "20px", display: "flex" }} />
+                </LabelFieldPair>
+              </div>
+            </div> */}
           </div>
+          </div>
+          </div>
+          {isParent === true && (
+            <div>
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-3">
-                <CardLabel>{t("CR_GROOM_FATHER_AADHAR_NO")}</CardLabel>
+              <div className="col-md-4">
+                <CardLabel>
+                  {t("CR_GROOM_FATHER_AADHAR_NO")}
+                  <span className="mandatorycss">*</span>
+                  </CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -812,11 +813,15 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   value={groomFatherAdharNo}
                   onChange={setSelectGroomFatherAdharNo}
                   placeholder={`${t("CR_GROOM_FATHER_AADHAR_NO")}`}
+                  {...(validation = { isRequired: true })}
                 />
               </div>
-              <div className="col-md-3">
+              <div className="col-md-4">
                 {" "}
-                <CardLabel>{t("CR_GROOM_FATHER_NAME_EN")}</CardLabel>
+                <CardLabel>
+                  {t("CR_GROOM_FATHER_NAME_EN")}
+                  <span className="mandatorycss">*</span>
+                  </CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -826,11 +831,15 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   value={groomFathernameEn}
                   onChange={setSelectGroomFathernameEn}
                   placeholder={`${t("CR_GROOM_FATHER_NAME_EN")}`}
+                  {...(validation = { isRequired: true })}
                 />
               </div>
-              <div className="col-md-3">
+              <div className="col-md-4">
                 {" "}
-                <CardLabel>{t("CR_GROOM_FATHER_NAME_ML")}</CardLabel>
+                <CardLabel>
+                  {t("CR_GROOM_FATHER_NAME_ML")}
+                  <span className="mandatorycss">*</span>
+                  </CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -840,15 +849,19 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   value={groomFathernameMal}
                   onChange={setSelectGroomFathernameMal}
                   placeholder={`${t("CR_GROOM_FATHER_NAME_ML")}`}
+                  {...(validation = { isRequired: true })}
                 />
               </div>
             </div>
           </div>
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-3">
+              <div className="col-md-4">
                 {" "}
-                <CardLabel>{t("CR_GROOM_MOTHER_AADHAR_NO")}</CardLabel>
+                <CardLabel>
+                  {t("CR_GROOM_MOTHER_AADHAR_NO")}
+                  <span className="mandatorycss">*</span>
+                  </CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -858,11 +871,15 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   value={groomMotherAdharNo}
                   onChange={setSelectGroomMotherAdharNo}
                   placeholder={`${t("CR_GROOM_MOTHER_AADHAR_NO")}`}
+                  {...(validation = { isRequired: true })}
                 />
               </div>
-              <div className="col-md-3">
+              <div className="col-md-4">
                 {" "}
-                <CardLabel>{t("CR_GROOM_MOTHER_NAME_EN")}</CardLabel>
+                <CardLabel>
+                  {t("CR_GROOM_MOTHER_NAME_EN")}
+                  <span className="mandatorycss">*</span>
+                  </CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -872,11 +889,15 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   value={groomMothernameEn}
                   onChange={setSelectGroomMothernameEn}
                   placeholder={`${t("CR_GROOM_MOTHER_NAME_EN")}`}
+                  {...(validation = { isRequired: true })}
                 />
               </div>
-              <div className="col-md-3">
+              <div className="col-md-4">
                 {" "}
-                <CardLabel>{t("CR_GROOM_MOTHER_NAME_ML")}</CardLabel>
+                <CardLabel>
+                  {t("CR_GROOM_MOTHER_NAME_ML")}
+                  <span className="mandatorycss">*</span>
+                  </CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -886,14 +907,21 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   value={groomMothernameMal}
                   onChange={setSelectGroomMothernameMal}
                   placeholder={`${t("CR_GROOM_MOTHER_NAME_ML")}`}
+                  {...(validation = { isRequired: true })}
                 />
               </div>
             </div>
           </div>
+          </div>)}
+          {isGuardian === true && (
+            <div>
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-3">
-                <CardLabel>{t("CR_GROOM_GUARDIAN_AADHAR_NO")}</CardLabel>
+                <div className="col-md-4">
+                <CardLabel>
+                  {t("CR_GROOM_GUARDIAN_AADHAR_NO")}
+                  <span className="mandatorycss">*</span>
+                  </CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -903,11 +931,15 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   value={groomGardianAdhar}
                   onChange={setSelectGroomGardianAdhar}
                   placeholder={`${t("CR_GROOM_GUARDIAN_AADHAR_NO")}`}
+                  {...(validation = { isRequired: true })}
                 />
               </div>
-              <div className="col-md-3">
+              <div className="col-md-4">
                 {" "}
-                <CardLabel>{t("CR_GROOM_GUARDIAN_NAME_EN")}</CardLabel>
+                <CardLabel>
+                  {t("CR_GROOM_GUARDIAN_NAME_EN")}
+                  <span className="mandatorycss">*</span>
+                  </CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -917,11 +949,15 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   value={groomGuardiannameEn}
                   onChange={setSelectGroomGuardiannameEn}
                   placeholder={`${t("CR_GROOM_GUARDIAN_NAME_EN")}`}
+                  {...(validation = { isRequired: true })}
                 />
               </div>
-              <div className="col-md-3">
+              <div className="col-md-4">
                 {" "}
-                <CardLabel>{t("CR_GROOM_GUARDIAN_NAME_ML")}</CardLabel>
+                <CardLabel>
+                  {t("CR_GROOM_GUARDIAN_NAME_ML")}
+                  <span className="mandatorycss">*</span>
+                  </CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -931,37 +967,12 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   value={groomGuardiannameMal}
                   onChange={setSelectGroomGuardiannameMal}
                   placeholder={`${t("CR_GROOM_GUARDIAN_NAME_ML")}`}
+                  {...(validation = { isRequired: true })}
                 />
               </div>
             </div>
           </div>
-
-          {toast && (
-            <Toast
-              error={
-                AadharError || DOBError
-                // || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
-              }
-              label={
-                AadharError || DOBError
-                  ? //  || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
-                    // InstitutionError || SignedOfficerInstError || signedOfficerDesgInstError
-                    AadharError
-                    ? t(`CS_COMMON_INVALID_AADHAR_NO`)
-                    : DOBError
-                    ? t(`BIRTH_DOB_VALIDATION_MSG`)
-                    : // : signedOfficerError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : mobileError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`) : mobileLengthError ? t(`BIRTH_ERROR_VALID__MOBILE_CHOOSE`)
-                      // : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`) : SignedOfficerInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`)
-
-                      setToast(false)
-                  : setToast(false)
-              }
-              onClose={() => setToast(false)}
-            />
-          )}
-          {""}
-
-          {/* <div><BackButton >{t("CS_COMMON_BACK")}</BackButton></div> */}
+          </div>)}
         </FormStep>
       </React.Fragment>
     );

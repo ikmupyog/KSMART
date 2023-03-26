@@ -8,7 +8,7 @@ const MyCRDeathApplications = ({view}) => {
 
   const { mobileNumber, tenantId } = Digit.UserService.getUser()?.info || {}
 
-  const { isLoading, isError, data, error, ...rest } = view === "bills" ? Digit.Hooks.cr.useFetchBill(
+  const { isLoading, isError, data, error, ...rest } = view === "bills" ? Digit.Hooks.cr.useDeathFetchBill(
     {
       params: { businessService: "CR", tenantId, mobileNumber },
       config: { enabled: view === "bills" }
@@ -16,7 +16,6 @@ const MyCRDeathApplications = ({view}) => {
   ) : Digit.Hooks.cr.useCRDeathSearchApplication({}, {
     enabled: view !== "bills"
   },t);
-console.log(data);
   if (isLoading) {
     return <Loader />;
   }
@@ -28,11 +27,10 @@ console.log(data);
         return (
           
           <div>
-           
             <Card>
               {Object.keys(application).filter(e => e !== "raw" && application[e] !== null).map(item => <KeyNote keyValue={t(item)} note={t(application[item])} />)}
-               <Link to={`/digit-ui/citizen/cr/cr/application/${application?.appl}/${application?.TL_COMMON_CITY_NAME}`}>
-                <SubmitBar label={t(application?.ChildDetails?.applicationStatus != "INITIATED" ? "TL_VIEW_DETAILS" : "TL_VIEW_DETAILS_PAY")} />
+               <Link to={`/digit-ui/citizen/cr/cr/death/application/${application?.TL_COMMON_TABLE_COL_APP_NO}/${application?.TL_COMMON_CITY_NAME}`}>
+                <SubmitBar label={t(application.deathCertificateDtls?.applicationStatus !="WF_DEATHHOSP_PENDINGPAYMENT" ? "TL_VIEW_DETAILS" : "TL_VIEW_DETAILS_PAY")} />
               </Link>{" "}
             </Card>
           </div>

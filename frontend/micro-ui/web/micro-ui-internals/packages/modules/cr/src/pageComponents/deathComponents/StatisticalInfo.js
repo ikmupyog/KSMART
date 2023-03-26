@@ -12,7 +12,7 @@ import {
 } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
-const StatisticalInfo = ({ config, onSelect, userType, formData, iseditDeath }) => {
+const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) => {
   // const { DeceasedGender } = props;
 
   const RadioButton = ({ selected, handleChange }) => {
@@ -331,7 +331,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, iseditDeath }) 
 
   //////////////////////
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  if (iseditDeath) {
+  if (isEditDeath) {
     if (formData?.StatisticalInfo?.MedicalAttentionType != null) {
       if (cmbAttention.length > 0 && (MedicalAttentionType === undefined || MedicalAttentionType === "")) {
         setMedicalAttentionType(cmbAttention.filter((cmbAttention) => cmbAttention.code === formData?.StatisticalInfo?.MedicalAttentionType)[0]);
@@ -410,7 +410,10 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, iseditDeath }) 
     setDeathCauseMainCustom(e.target.value);
   }
   function selectDeathCauseMainInterval(e) {
-    setDeathCauseMainInterval(e.target.value);
+    if (e.target.value.trim().length >= 0) {
+      setDeathCauseMainInterval(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
+    }
+   
   }
   function selectDeathCauseMainTimeUnit(value) {
     setDeathCauseMainTimeUnit(value);
@@ -422,7 +425,9 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, iseditDeath }) 
     setDeathCauseSubCustom(e.target.value);
   }
   function selectDeathCauseSubInterval(e) {
-    setDeathCauseSubInterval(e.target.value);
+    if (e.target.value.trim().length >= 0) {
+      setDeathCauseSubInterval(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
+    }
   }
   function selectDeathCauseSubTimeUnit(value) {
     setDeathCauseSubTimeUnit(value);
@@ -434,7 +439,9 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, iseditDeath }) 
     setDeathCauseSubCustom2(e.target.value);
   }
   function selectDeathCauseSubInterval2(e) {
-    setDeathCauseSubInterval2(e.target.value);
+    if (e.target.value.trim().length >= 0) {
+      setDeathCauseSubInterval2(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
+    }
   }
   function selectDeathCauseSubTimeUnit2(value) {
     setDeathCauseSubTimeUnit2(value);

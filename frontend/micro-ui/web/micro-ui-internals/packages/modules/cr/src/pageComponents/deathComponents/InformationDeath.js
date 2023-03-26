@@ -11,9 +11,9 @@ import DeathPublicPlace from "./DeathPublicPlace";
 import DeathOutsideJurisdiction from "./DeathOutsideJurisdiction ";
 import { useParams } from "react-router-dom";
 
-const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath }) => {
+const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath }) => {
   const [isEditDeathPageComponents, setIsEditDeathPageComponents] = useState(false);
-  const [isDisableEdit, setisDisableEdit] = useState(iseditDeath ? iseditDeath : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
   const stateId = Digit.ULBService.getStateId();
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
   let tenantId = "";
@@ -125,14 +125,14 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
       cmbState.push(ob);
     });
   const [DateOfDeath, setDateOfDeath] = useState(
-    iseditDeath &&
+    isEditDeath &&
       isEditDeathPageComponents === false &&
       (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
       ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath)
       : formData?.InformationDeath?.DateOfDeath
   );
   const [FromDate, setFromDate] = useState(
-    iseditDeath &&
+    isEditDeath &&
       isEditDeathPageComponents === false &&
       (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
       ? convertEpochToDate(formData?.InformationDeath?.FromDate)
@@ -169,15 +169,15 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
       : formData?.InformationDeath?.ToDate
   );
 
-  const [DeathTime, setDeathTime] = useState("");
-  const [checked, setChecked] = useState(
-    formData?.InformationDeath?.checked
-      ? formData?.InformationDeath?.checked
-      : formData?.InformationDeath?.checked
-      ? formData?.InformationDeath?.checked
+  // const [DeathTime, setDeathTime] = useState("");
+  const [DeathDateUnavailable, setChecked] = useState(
+    formData?.InformationDeath?.DeathDateUnavailable
+      ? formData?.InformationDeath?.DeathDateUnavailable
+      : formData?.InformationDeath?.DeathDateUnavailable
+      ? formData?.InformationDeath?.DeathDateUnavailable
       : false
   );
-  const [TimeOfDeath, setTimeOfDeath] = useState("");
+  const [TimeOfDeath, setDeathTime] = useState("");
   const [DeceasedAadharNotAvailable, setDeceasedAadharNotAvailable] = useState(
     formData?.InformationDeath?.DeceasedAadharNotAvailable ? formData?.InformationDeath?.DeceasedAadharNotAvailable : false
   );
@@ -232,6 +232,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
   const [CommencementDate, setCommencementDate] = useState(
     formData?.InformationDeath?.CommencementDate ? formData?.InformationDeath?.CommencementDate : ""
   );
+  const [cmbAgeUnitFilter, setcmbAgeUnitFilter] = useState();
 
   const [AgeUnit, setSelectedAgeUnit] = useState(
     formData?.InformationDeath?.AgeUnit?.code
@@ -273,7 +274,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
       : ""
   );
   const [HospitalNameMl, selectHospitalNameMl] = useState(
-    formData?.ChildDetInformationDeathails?.HospitalNameMl?.code
+    formData?.  InformationDeathails?.HospitalNameMl?.code
       ? formData?.InformationDeath?.HospitalNameMl
       : formData?.InformationDeath?.HospitalNameMl
       ? ""
@@ -374,12 +375,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
         if (stateId === "kl" && cmbReligion.length > 0) {
           cmbfilterReligion = cmbReligion.filter((cmbReligion) => cmbReligion.name.includes("No Religion"));
           setSelectedReligion(cmbfilterReligion[0]);
-        }
-      }
-      if (AgeUnit == null || AgeUnit == "") {
-        if (stateId === "kl" && cmbAgeUnit.length > 0) {
-          cmbfilterAgeUnit = cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.name.includes("Years"));
-          setSelectedAgeUnit(cmbfilterAgeUnit[0]);
         }
       }
       if (DeathPlaceCountry == null || DeathPlaceCountry == "") {
@@ -510,32 +505,64 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
       let Difference_In_Time = today.getTime() - deathDate.getTime();
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       Difference_In_DaysRounded = Math.floor(Difference_In_Days);
-    } else {
-      setFromDate(null);
-      setDOBError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 3000);
     }
+    // else {
+    //   setFromDate(null);
+    //   setDOBError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 3000);
+    // }
   }
   function selectToDate(value) {
     setToDate(value);
     const today = new Date();
-    const deathDate = new Date(value);
-    if (deathDate.getTime() <= today.getTime()) {
-      let Difference_In_Time = today.getTime() - deathDate.getTime();
-      let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-      Difference_In_DaysRounded = Math.floor(Difference_In_Days);
-    } else {
-      setToDate(null);
-      setDOBError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 3000);
+    const toDate = new Date(value);
+    const fromDate = new Date(FromDate);
+
+    if (toDate.getTime() <= today.getTime()) {
+      if (fromDate && toDate.getTime() < fromDate.getTime()) {
+        setToDate(null);
+        setDOBError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 3000);
+      } else {
+        let Difference_In_Time = today.getTime() - toDate.getTime();
+        let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+        Difference_In_DaysRounded = Math.floor(Difference_In_Days);
+      }
     }
+    // else {
+    //   setToDate(null);
+    //   setDOBError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 3000);
+    // }
   }
+
+  // function selectToDate(value) {
+  //   setToDate(value);
+  //   const today = new Date();
+  //   const deathDate = new Date(value);
+  //   if (deathDate.getTime() <= today.getTime()) {
+  //     let Difference_In_Time = today.getTime() - deathDate.getTime();
+  //     let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+  //     Difference_In_DaysRounded = Math.floor(Difference_In_Days);
+  //   } else {
+  //     setToDate(null);
+  //     setDOBError(true);
+  //     setToast(true);
+  //     setTimeout(() => {
+  //       setToast(false);
+  //     }, 3000);
+  //   }
+
+  // }
   function selectDeathDate(value) {
     // setDeathDate(value);
     setDateOfDeath(value);
@@ -545,14 +572,15 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
       let Difference_In_Time = today.getTime() - deathDate.getTime();
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       Difference_In_DaysRounded = Math.floor(Difference_In_Days);
-    } else {
-      setDateOfDeath(null);
-      setDOBError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 3000);
     }
+    // else {
+    //   setDateOfDeath(null);
+    //   setDOBError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 3000);
+    // }
   }
   function selectReligion(value) {
     setSelectedReligion(value);
@@ -612,6 +640,19 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
         setAge(e.target.value);
       }
     }
+    if (e.target.value <= 11) {
+      setcmbAgeUnitFilter(cmbAgeUnit);
+    } else if (e.target.value > 11 && e.target.value <= 23) {
+      setcmbAgeUnitFilter(
+        cmbAgeUnit.filter(
+          (cmbAgeUnit) => cmbAgeUnit.code === "AGE_UNIT_YEARS" || cmbAgeUnit.code === "AGE_UNIT_DAYS" || cmbAgeUnit.code === "AGE_UNIT_HOURS"
+        )
+      );
+    } else if (e.target.value > 23 && e.target.value <= 29) {
+      setcmbAgeUnitFilter(cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.code === "AGE_UNIT_YEARS" || cmbAgeUnit.code === "AGE_UNIT_DAYS"));
+    } else if (e.target.value > 29 && e.target.value <= 120) {
+      setcmbAgeUnitFilter(cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.code === "AGE_UNIT_YEARS"));
+    }
   }
   // function setSelectDeceasedAadharNumber(e) {
   //   if (e.target.value.length != 0) {
@@ -634,14 +675,16 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
   //   }
   // }
   function setSelectDeceasedAadharNumber(e) {
-    if (e.target.value.trim().length != 0) {
+    if (e.target.value.trim().length >= 0) {
       setDeceasedAadharNumber(
         e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
       );
     }
   }
   function setSelectDeceasedIdproofNo(e) {
-    setDeceasedIdproofNo(e.target.value);
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z-0-9 ]*$") != null) {
+      setDeceasedIdproofNo(e.target.value.length <= 16 ? e.target.value : e.target.value.substring(0, 16));
+    }
   }
   function selectOccupation(value) {
     setSelectedOccupation(value);
@@ -674,6 +717,198 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
         workFlowData.enddateperiod >= Difference_In_DaysRounded
     );
     workFlowCode = currentWorkFlow[0].WorkflowCode;
+    if (value.code === "HOSPITAL") {
+      //Institution
+      setSelectedDeathPlaceInstId(null);
+      setInstitutionIdMl(null);
+      setInstitutionFilterList(null);
+      // setIsInitialRenderInstitutionList
+      //Home
+      setDeathPlaceHomepostofficeId(null);
+      setDeathPlaceHomepincode(null);
+      setDeathPlaceHomehoueNameEn(null);
+      setDeathPlaceHomehoueNameMl(null);
+      setDeathPlaceHomelocalityEn(null);
+      setDeathPlaceHomelocalityMl(null);
+      setDeathPlaceHomestreetNameEn(null);
+      setDeathPlaceHomestreetNameMl(null);
+      setDeathPlaceWardId(null);
+      setPostOfficevalues(null);
+      //Vehicle
+      setVehicleNumber(null);
+      setVehicleFromplaceEn(null);
+      setVehicleToPlaceEn(null);
+      setGeneralRemarks(null);
+      setVehicleFirstHaltEn(null);
+      setVehicleFirstHaltMl(null);
+      setSelectedVehicleHospitalEn(null);
+      setVehicleFromplaceMl(null);
+      setVehicleToPlaceMl(null);
+      //PublicPlace
+      setDeathPlaceLocalityEn(null);
+      setDeathPlaceLocalityMl(null);
+      setDeathPlaceStreetEn(null);
+      setDeathPlaceStreetMl(null);
+      //DeathOutsideJurisdiction
+      setSelectDeathPlaceCountry(null);
+      SelectDeathPlaceState(null);
+      SelectDeathPlaceDistrict(null);
+      SelectDeathPlaceCity(null);
+      SelectDeathPlaceRemarksEn(null);
+      SelectDeathPlaceRemarksMl(null);
+      SelectPlaceOfBurialEn(null);
+      SelectPlaceOfBurialMl(null);
+    } else if (value.code === "INSTITUTION") {
+      //Hospital
+      selectHospitalNameMl(null);
+      //Home
+      setDeathPlaceHomepostofficeId(null);
+      setDeathPlaceHomepincode(null);
+      setDeathPlaceHomehoueNameEn(null);
+      setDeathPlaceHomehoueNameMl(null);
+      setDeathPlaceHomelocalityEn(null);
+      setDeathPlaceHomelocalityMl(null);
+      setDeathPlaceHomestreetNameEn(null);
+      setDeathPlaceHomestreetNameMl(null);
+      setDeathPlaceWardId(null);
+      setPostOfficevalues(null);
+      //Vehicle
+      selectDeathPlaceType(null);
+      setVehicleNumber(null);
+      setVehicleFromplaceEn(null);
+      setVehicleToPlaceEn(null);
+      setGeneralRemarks(null);
+      setVehicleFirstHaltEn(null);
+      setVehicleFirstHaltMl(null);
+      setSelectedVehicleHospitalEn(null);
+      setVehicleFromplaceMl(null);
+      setVehicleToPlaceMl(null);
+      //PublicPlace
+      setDeathPlaceLocalityEn(null);
+      setDeathPlaceLocalityMl(null);
+      setDeathPlaceStreetEn(null);
+      setDeathPlaceStreetMl(null);
+      //DeathOutsideJurisdiction
+      setSelectDeathPlaceCountry(null);
+      SelectDeathPlaceState(null);
+      SelectDeathPlaceDistrict(null);
+      SelectDeathPlaceCity(null);
+      SelectDeathPlaceRemarksEn(null);
+      SelectDeathPlaceRemarksMl(null);
+      SelectPlaceOfBurialEn(null);
+      SelectPlaceOfBurialMl(null);
+    } else if (value.code === "VEHICLE") {
+      //Hospital
+      // selectDeathPlaceType(null);
+      selectHospitalNameMl(null);
+      //Institution
+      selectDeathPlaceType(null);
+      setSelectedDeathPlaceInstId(null);
+      setInstitutionIdMl(null);
+      setInstitutionFilterList(null);
+      //Home
+      setDeathPlaceHomepostofficeId(null);
+      setDeathPlaceHomepincode(null);
+      setDeathPlaceHomehoueNameEn(null);
+      setDeathPlaceHomehoueNameMl(null);
+      setDeathPlaceHomelocalityEn(null);
+      setDeathPlaceHomelocalityMl(null);
+      setDeathPlaceHomestreetNameEn(null);
+      setDeathPlaceHomestreetNameMl(null);
+      setDeathPlaceWardId(null);
+      setPostOfficevalues(null);
+      //PublicPlace
+      setDeathPlaceLocalityEn(null);
+      setDeathPlaceLocalityMl(null);
+      setDeathPlaceStreetEn(null);
+      setDeathPlaceStreetMl(null);
+      setGeneralRemarks(null);
+      //DeathOutsideJurisdiction
+      setSelectDeathPlaceCountry(null);
+      SelectDeathPlaceState(null);
+      SelectDeathPlaceDistrict(null);
+      SelectDeathPlaceCity(null);
+      SelectDeathPlaceRemarksEn(null);
+      SelectDeathPlaceRemarksMl(null);
+      SelectPlaceOfBurialEn(null);
+      SelectPlaceOfBurialMl(null);
+    }
+    if (value.code === "PUBLIC_PLACES") {
+      //Hospital
+      selectDeathPlaceType(null);
+      selectHospitalNameMl(null);
+      //Institution
+      setSelectedDeathPlaceInstId(null);
+      setInstitutionIdMl(null);
+      setInstitutionFilterList(null);
+      // setIsInitialRenderInstitutionList
+      //Home
+      setDeathPlaceHomepostofficeId(null);
+      setDeathPlaceHomepincode(null);
+      setDeathPlaceHomehoueNameEn(null);
+      setDeathPlaceHomehoueNameMl(null);
+      setDeathPlaceHomelocalityEn(null);
+      setDeathPlaceHomelocalityMl(null);
+      setDeathPlaceHomestreetNameEn(null);
+      setDeathPlaceHomestreetNameMl(null);
+      setPostOfficevalues(null);
+      //Vehicle
+      setVehicleNumber(null);
+      setVehicleFromplaceEn(null);
+      setVehicleToPlaceEn(null);
+      setVehicleFirstHaltEn(null);
+      setVehicleFirstHaltMl(null);
+      setSelectedVehicleHospitalEn(null);
+      setVehicleFromplaceMl(null);
+      setVehicleToPlaceMl(null);
+      setDeathPlaceWardId(null);
+      //DeathOutsideJurisdiction
+      setSelectDeathPlaceCountry(null);
+      SelectDeathPlaceState(null);
+      SelectDeathPlaceDistrict(null);
+      SelectDeathPlaceCity(null);
+      SelectDeathPlaceRemarksEn(null);
+      SelectDeathPlaceRemarksMl(null);
+      SelectPlaceOfBurialEn(null);
+      SelectPlaceOfBurialMl(null);
+      setGeneralRemarks(null);
+    }
+    if (value.code === "OUTSIDE_JURISDICTION") {
+      //Hospital
+      // selectDeathPlaceType(null);
+      selectHospitalNameMl(null);
+      //Institution
+      setSelectedDeathPlaceInstId(null);
+      setInstitutionIdMl(null);
+      setInstitutionFilterList(null);
+      // setIsInitialRenderInstitutionList
+      //Home
+      setDeathPlaceHomepostofficeId(null);
+      setDeathPlaceHomepincode(null);
+      setDeathPlaceHomehoueNameEn(null);
+      setDeathPlaceHomehoueNameMl(null);
+      setDeathPlaceHomelocalityEn(null);
+      setDeathPlaceHomelocalityMl(null);
+      setDeathPlaceHomestreetNameEn(null);
+      setDeathPlaceHomestreetNameMl(null);
+      setPostOfficevalues(null);
+      //Vehicle
+      setVehicleNumber(null);
+      setVehicleFromplaceEn(null);
+      setVehicleToPlaceEn(null);
+      setVehicleFirstHaltEn(null);
+      setVehicleFirstHaltMl(null);
+      setSelectedVehicleHospitalEn(null);
+      setVehicleFromplaceMl(null);
+      setVehicleToPlaceMl(null);
+      //PublicPlace
+      setDeathPlaceLocalityEn(null);
+      setDeathPlaceLocalityMl(null);
+      setDeathPlaceStreetEn(null);
+      setDeathPlaceStreetMl(null);
+      setGeneralRemarks(null);
+      setDeathPlaceWardId(null);
+    }
   }
   function selectAgeUnit(value) {
     setSelectedAgeUnit(value);
@@ -682,26 +917,40 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
     setSelectedDeceasedIdproofType(value);
     setIsTextboxEnabled(true);
   }
-
   const handleTimeChange = (value, cb) => {
     if (typeof value === "string") {
       cb(value);
+      console.log(value);
+      let hour = value;
+      let period = hour > 12 ? "PM" : "AM";
+      console.log(period);
+      setDeathTime(value);
     }
   };
 
   function setCheckedAdhar(e) {
     if (e.target.checked === true) {
       setDeceasedAadharNotAvailable(e.target.checked);
-    } else {
-      setDeceasedAadharNotAvailable(e.target.checked);
       setSelectedDeceasedIdproofType("");
       setDeceasedIdproofNo("");
+    } else {
+      // setDeceasedAadharNotAvailable(e.target.checked);
+      setDeceasedAadharNotAvailable(e.target.checked);
       setDeceasedAadharNumber("");
       setAadharError(false);
       setToast(false);
     }
   }
+  // const isTextBoxValid = () => {
 
+  //   // } else if (Age > 23 && Age <= 29) {
+  //   //   return value ===  ["Years", "Days"].includes(AgeUnit);
+  //   // } else if (Age > 29 && Age <= 120) {
+  //   //   return value ===  ["Years"].includes(AgeUnit);
+  //   // } else {
+  //   //   return false;
+  //   // }
+  // };
   const goNext = () => {
     if (Difference_In_DaysRounded <= 21) {
       if (DeathPlace.code == "HOSPITAL") {
@@ -721,19 +970,19 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
     } else {
       setsexError(false);
     }
-    if (DeceasedAadharNumber != null || DeceasedAadharNumber != "" || DeceasedAadharNumber != undefined) {
-      let adharLength = DeceasedAadharNumber;
-      if (adharLength.length < 12 || adharLength.length > 12) {
-        validFlag = false;
-        setAadharError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setAadharError(false);
-      }
-    }
+    // if (DeceasedAadharNumber != null || DeceasedAadharNumber != "" || DeceasedAadharNumber != undefined || DeceasedAadharNotAvailable === false) {
+    //   let adharLength = DeceasedAadharNumber;
+    //   if (adharLength.length < 12 || adharLength.length > 12 ) {
+    //     validFlag = false;
+    //     setAadharError(true);
+    //     setToast(true);
+    //     setTimeout(() => {
+    //       setToast(false);
+    //     }, 2000);
+    //   } else {
+    //     setAadharError(false);
+    //   }
+    // }
     if (Age == null || Age == "" || Age == undefined) {
       validFlag = false;
       setAgeError(true);
@@ -794,14 +1043,14 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
 
     if (validFlag == true) {
       sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
-      sessionStorage.setItem("checked", checked);
+      sessionStorage.setItem("DeathDateUnavailable", DeathDateUnavailable ? DeathDateUnavailable : false);
       sessionStorage.setItem("ToDate", ToDate ? ToDate : null);
       sessionStorage.setItem("FromDate", FromDate ? FromDate : null);
       sessionStorage.setItem("DeathTimeFrom", DeathTimeFrom ? DeathTimeFrom : null);
       sessionStorage.setItem("DeathTimeTo", DeathTimeTo ? DeathTimeTo : null);
 
       sessionStorage.setItem("DateOfDeath", DateOfDeath ? DateOfDeath : null);
-      sessionStorage.setItem("DeathTime", DeathTime ? DeathTime : null);
+      sessionStorage.setItem("TimeOfDeath", TimeOfDeath ? TimeOfDeath : null);
       sessionStorage.setItem("DeceasedFirstNameEn", DeceasedFirstNameEn ? DeceasedFirstNameEn : null);
       sessionStorage.setItem("DeceasedMiddleNameEn", DeceasedMiddleNameEn ? DeceasedMiddleNameEn : null);
       sessionStorage.setItem("DeceasedLastNameEn", DeceasedLastNameEn ? DeceasedLastNameEn : null);
@@ -809,12 +1058,9 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
       sessionStorage.setItem("DeceasedMiddleNameMl", DeceasedMiddleNameMl ? DeceasedMiddleNameMl : null);
       sessionStorage.setItem("DeceasedLastNameMl", DeceasedLastNameMl ? DeceasedLastNameMl : null);
       sessionStorage.setItem("Age", Age ? Age : null);
-      sessionStorage.setItem("DeceasedAadharNumber", DeceasedAadharNumber ? DeceasedAadharNumber : null);
-      sessionStorage.setItem("DeceasedIdproofNo", DeceasedIdproofNo ? DeceasedIdproofNo : null);
       sessionStorage.setItem("Nationality", Nationality ? Nationality.code : null);
       sessionStorage.setItem("Religion", Religion ? Religion.code : null);
       sessionStorage.setItem("DeceasedGender", DeceasedGender ? DeceasedGender.code : null);
-      sessionStorage.setItem("DeceasedIdproofType", DeceasedIdproofType ? DeceasedIdproofType.code : null);
       sessionStorage.setItem("AgeUnit", AgeUnit ? AgeUnit.code : null);
       // sessionStorage.setItem("checked", checked ? checked : false);
       sessionStorage.setItem("DeceasedAadharNotAvailable ", DeceasedAadharNotAvailable ? DeceasedAadharNotAvailable : false);
@@ -827,6 +1073,10 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
       sessionStorage.setItem("institutionNameCode", DeathPlaceInstId ? DeathPlaceInstId.code : null);
       sessionStorage.setItem("DeathPlaceInstId", DeathPlaceInstId ? DeathPlaceInstId.code : null);
       // if (validFlag === true) {
+      sessionStorage.setItem("DeceasedIdproofType", DeceasedIdproofType ? DeceasedIdproofType.code : null);
+      sessionStorage.setItem("DeceasedIdproofNo", DeceasedIdproofNo ? DeceasedIdproofNo : null);
+
+      sessionStorage.setItem("DeceasedAadharNumber", DeceasedAadharNumber ? DeceasedAadharNumber : null);
 
       if (DeathPlace.code === "HOSPITAL") {
         //  ?sessionStorage.setItem("DeathPlace", DeathPlace.code);
@@ -887,18 +1137,18 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
         sessionStorage.setItem("PlaceOfBurialMl", PlaceOfBurialMl ? PlaceOfBurialMl : null);
         sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
       }
-      let IsEditChangeScreen = iseditDeath ? iseditDeath : false;
+      let IsEditChangeScreen = isEditDeath ? isEditDeath : false;
 
       onSelect(config.key, {
         IsEditChangeScreen,
         ToDate,
-        checked,
+        DeathDateUnavailable,
         DeathTimeTo,
         FromDate,
         DeathTimeFrom,
         tenantId,
         DateOfDeath,
-        DeathTime,
+        TimeOfDeath,
         DeceasedFirstNameEn,
         DeceasedMiddleNameEn,
         DeceasedLastNameEn,
@@ -961,7 +1211,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
     }
   };
   if (
-    iseditDeath &&
+    isEditDeath &&
     isEditDeathPageComponents === false &&
     (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
   ) {
@@ -1032,12 +1282,17 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
               <div className="col-md-12">
                 <div className="col-md-6">
                   {/* <CheckBox label={t("CR_EXACT_DEATH_DATE_NOT_AVAILABLE")} onChange={() => setChecked((checked) => !checked)} value={checked} /> */}
-                  <CheckBox label={t("CR_EXACT_DEATH_DATE_NOT_AVAILABLE")} onChange={setCheckedDate} value={checked} checked={checked} />
+                  <CheckBox
+                    label={t("CR_EXACT_DEATH_DATE_NOT_AVAILABLE")}
+                    onChange={setCheckedDate}
+                    value={DeathDateUnavailable}
+                    checked={DeathDateUnavailable}
+                  />
                 </div>
               </div>
             </div>
             {/* {inside && ( */}
-            {checked === true && (
+            {DeathDateUnavailable === true && (
               <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-3">
@@ -1047,6 +1302,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                     </CardLabel>
                     <DatePicker
                       date={FromDate}
+                      max={convertEpochToDate(new Date())}
                       name="FromDate"
                       onChange={selectFromDate}
                       {...(validation = {
@@ -1057,10 +1313,10 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                       })}
                     />
                   </div>
-                  <div className="col-md-3">
+                  {/* <div className="col-md-3">
                     <CardLabel>{t("CR_FROM_TIME")}</CardLabel>
                     <CustomTimePicker name="DeathTimeFrom" onChange={(val) => handleFromTimeChange(val, setDeathTimeFrom)} value={DeathTimeFrom} />
-                  </div>
+                  </div> */}
 
                   <div className="col-md-3">
                     <CardLabel>
@@ -1069,6 +1325,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                     </CardLabel>
                     <DatePicker
                       date={ToDate}
+                      max={convertEpochToDate(new Date())}
                       name="ToDate"
                       onChange={selectToDate}
                       {...(validation = {
@@ -1079,14 +1336,14 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                       })}
                     />
                   </div>
-                  <div className="col-md-3">
+                  {/* <div className="col-md-3">
                     <CardLabel>{t("CR_TO_TIME")}</CardLabel>
                     <CustomTimePicker name="DeathTimeTo" onChange={(val) => handleToTimeChange(val, setDeathTimeTo)} value={DeathTimeTo} />
-                  </div>
+                  </div> */}
                 </div>
               </div>
             )}
-            {checked === false && (
+            {DeathDateUnavailable === false && (
               <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-6">
@@ -1097,6 +1354,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                     {/* date={CommencementDate} */}
                     <DatePicker
                       date={DateOfDeath}
+                      max={convertEpochToDate(new Date())}
                       name="DateOfDeath"
                       onChange={selectDeathDate}
                       {...(validation = {
@@ -1109,7 +1367,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                   </div>
                   <div className="col-md-2">
                     <CardLabel>{t("CR_TIME_OF_DEATH")}</CardLabel>
-                    <CustomTimePicker name="DeathTime" onChange={(val) => handleTimeChange(val, setDeathTime)} value={DeathTime} />
+                    <CustomTimePicker name="TimeOfDeath" onChange={(val) => handleTimeChange(val, setDeathTime)} value={TimeOfDeath} />
                   </div>
                 </div>
               </div>
@@ -1181,7 +1439,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
             <div>
               <Hospital
                 formData={formData}
-                iseditDeath={iseditDeath}
+                isEditDeath={isEditDeath}
                 selectDeathPlaceType={selectDeathPlaceType}
                 DeathPlaceType={DeathPlaceType}
                 HospitalNameMl={HospitalNameMl}
@@ -1193,6 +1451,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
             <div>
               <Institution
                 formData={formData}
+                isEditDeath={isEditDeath}
                 selectDeathPlaceType={selectDeathPlaceType}
                 DeathPlaceType={DeathPlaceType}
                 DeathPlaceInstId={DeathPlaceInstId}
@@ -1210,6 +1469,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
             <div>
               <DeathPlaceHome
                 formData={formData}
+                isEditDeath={isEditDeath}
                 DeathPlaceWardId={DeathPlaceWardId}
                 setDeathPlaceWardId={setDeathPlaceWardId}
                 DeathPlaceHomePostofficeId={DeathPlaceHomePostofficeId}
@@ -1237,6 +1497,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
             <div>
               <DeathPlaceVehicle
                 formData={formData}
+                isEditDeath={isEditDeath}
                 DeathPlaceType={DeathPlaceType}
                 selectDeathPlaceType={selectDeathPlaceType}
                 VehicleNumber={VehicleNumber}
@@ -1266,6 +1527,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
             <div>
               <DeathPublicPlace
                 formData={formData}
+                isEditDeath={isEditDeath}
                 DeathPlaceType={DeathPlaceType}
                 selectDeathPlaceType={selectDeathPlaceType}
                 DeathPlaceLocalityEn={DeathPlaceLocalityEn}
@@ -1287,6 +1549,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
             <div>
               <DeathOutsideJurisdiction
                 formData={formData}
+                isEditDeath={isEditDeath}
                 DeathPlaceCountry={DeathPlaceCountry}
                 setSelectDeathPlaceCountry={setSelectDeathPlaceCountry}
                 DeathPlaceState={DeathPlaceState}
@@ -1503,7 +1766,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
 
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-2">
+              <div className="col-md-1">
                 <CardLabel>
                   {`${t("CR_AGE")}`}
                   <span className="mandatorycss">*</span>{" "}
@@ -1520,7 +1783,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                   {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "number", title: t("CS_COMMON_INVALID_AGE") })}
                 />
               </div>
-              <div className="col-md-1">
+              <div className="col-md-2">
                 <CardLabel>
                   {`${t("CR_AGE_UNIT")}`}
                   <span className="mandatorycss">*</span>{" "}
@@ -1529,13 +1792,15 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                   t={t}
                   optionKey="name"
                   isMandatory={false}
-                  option={cmbAgeUnit}
+                  option={cmbAgeUnitFilter}
                   selected={AgeUnit}
                   select={selectAgeUnit}
                   placeholder={`${t("CR_AGE_UNIT")}`}
                 />
               </div>
-              <div className="col-md-1">
+              {/* {!isTextBoxValid() && <p>Please enter a valid value based on the conditions</p>} */}
+
+              <div className="col-md-2">
                 <CardLabel>
                   {t("CR_GENDER")} <span className="mandatorycss">*</span>{" "}
                 </CardLabel>
@@ -1580,7 +1845,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, iseditDeath })
                   placeholder={`${t("CS_COMMON_RELIGION")}`}
                 />
               </div>
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <CardLabel>{t("CR_PROFESSIONAL")}</CardLabel>
                 <Dropdown
                   t={t}
