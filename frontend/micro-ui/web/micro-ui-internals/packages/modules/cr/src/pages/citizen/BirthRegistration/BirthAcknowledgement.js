@@ -38,9 +38,9 @@ const BirthAcknowledgement = ({ data, onSuccess, userType, isEditBirth = false }
   const [mutationHappened, setMutationHappened, clear] = Digit.Hooks.useSessionStorage("CITIZEN_TL_MUTATION_HAPPENED", false);
   const resubmit = window.location.href.includes("edit-application");
   const tenantId = Digit.ULBService.getCurrentTenantId();
-  
+    console.log("isEditBirth" + isEditBirth);
     const mutation = Digit.Hooks.cr.useCivilRegistrationAPI(      
-      tenantId,isEditBirth ? isEditBirth : false      
+      tenantId,isEditBirth ? false : true      
     );
   
   

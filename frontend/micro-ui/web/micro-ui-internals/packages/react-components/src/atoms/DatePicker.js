@@ -8,7 +8,6 @@ const DatePicker = (props) => {
 
   function defaultFormatFunc(date) {    
     if (date) {
-      console.log('hi-defaultFormatFunc');
       const operationDate = typeof date === "string" ? new Date(date) : date;
       const years = operationDate?.getFullYear();
       let tempMonth = operationDate?.getMonth() + 1;
