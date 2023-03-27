@@ -3,7 +3,7 @@ import { FormStep, CardLabel, TextInput, Dropdown, CheckBox, BackButton,Toast } 
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
-const FamilyInformationBirth = ({ config, onSelect, userType, formData, isEditDeath }) => {
+const FamilyInformationDeath = ({ config, onSelect, userType, formData, isEditDeath }) => {
   console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
@@ -597,7 +597,7 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, isEditDe
             <div className="col-md-4">
               <CardLabel>
                 {`${t("CR_FAMILY_MOBILE_NO")}`}
-                {/* <span className="mandatorycss">*</span> */}
+                <span className="mandatorycss">*</span>
               </CardLabel>
               <TextInput
                 t={t}
@@ -641,4 +641,4 @@ const FamilyInformationBirth = ({ config, onSelect, userType, formData, isEditDe
     </React.Fragment>
   );
 };
-export default FamilyInformationBirth;
+export default FamilyInformationDeath;

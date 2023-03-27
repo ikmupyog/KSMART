@@ -158,7 +158,7 @@ import MarriageInclusionEditPage from "./pageComponents/marriageComponents/Marri
 // import CreateAbandonedBirth from "./pages/employee/Abandoned-birth";
 import AbandonedChildDetails from "./pageComponents/abandonedBirthComponents/AbandonedChildDetails";
 import AbandonedBirthInitiatorDetails from "./pageComponents/abandonedBirthComponents/AbandonedBirthInitiatorDetails";
-
+import InformationDeathAband from "./pageComponents/deathAbandoned/InformationDeathAband";
 
 export const CRModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
@@ -255,6 +255,7 @@ const componentsToRegister = {
   CRApplicationDetails,
   CRApplicationDeathDetails,
   SearchDeathInclusion,
+  CRSearch,
   CRDeathsearch,
   SearchCrApplication,
   SearchRegistryDeath,
@@ -372,7 +373,7 @@ const componentsToRegister = {
   CRDDocuments,
   CRWFApplicationTimeline,
   CRDWFApplicationTimeline,
-
+  InformationDeathAband,
   // CreateAbandonedBirth,
   AbandonedChildDetails,
   AbandonedBirthInitiatorDetails,

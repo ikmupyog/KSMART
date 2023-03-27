@@ -13,6 +13,7 @@ const CreateBirthRegistration = ({ parentUrl, isEditBirth }) => {
   const { pathname } = useLocation();
   const history = useHistory();
   const queryClient = useQueryClient();
+  console.log("isEditBirth" + isEditBirth);
   const [params, setParams, clearParams] = isEditBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_BIRTH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_BIRTH_REG", {});
 
   // console.log("params"+JSON.stringify(params));
