@@ -1,0 +1,70 @@
+{
+  "key": "residential-certificate",
+  "DataConfigs": {
+    "serviceName": "rainmaker-common",
+    "version": "1.0.0",
+    "baseKeyPath": "$.ResidentialCertificate.*",
+    "entityIdPath": "$.id",
+    "isCommonTableBorderRequired": true,
+    "mappings": [
+      {
+        "topic": "common-pdf-generation-3",
+        "mappings": [
+          {
+            "direct": [
+              {
+                "variable": "logoImage",
+                "url": "https://ulb-logos.s3.ap-south-1.amazonaws.com/kerala_logo.jpg",
+                "type": "image"
+              },
+              {
+                "variable": "name",
+                "value": {
+                  "path": "$.name"
+                },
+                "type": "setEmpty"
+              },
+              {
+                "variable": "address",
+                "value": {
+                  "path": "$.address"
+                },
+                "type": "setEmpty"
+              },
+              {
+                "variable": "lbName",
+                "value": {
+                  "path": "$.lbName"
+                },
+                "type": "setEmpty"
+              },
+              {
+                "variable": "tenantName",
+                "value": {
+                  "path": "$.tenantId"
+                },
+                "localisation": {
+                  "required": true,
+                  "prefix": "TENANT_TENANTS",
+                  "module": "rainmaker-common"
+                }
+              },
+              {
+                "variable": "logokerala",
+                "url": "https://ulb-logos.s3.ap-south-1.amazonaws.com/kerala_logo.jpg",
+                "type": "image"
+              },
+              {
+                "variable": "lbAddressWithPinCode",
+                "value": {
+                  "path": "$.lbAddressWithPinCode"
+                },
+                "type": "setEmpty"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
