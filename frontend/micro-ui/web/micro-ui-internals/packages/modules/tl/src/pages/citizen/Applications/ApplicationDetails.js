@@ -49,6 +49,9 @@ const TLApplicationDetails = () => {
     tenantId: tenantId,
     applicationNumber: id,
   });
+
+  const  [application_cert,setApplication_cert] = useState({});
+
   // const { isLoading: PTLoading, isError: isPTError, data: PTData } = Digit.Hooks.pt.usePropertySearch(
   //   {
   //     tenantId,
@@ -70,8 +73,133 @@ const TLApplicationDetails = () => {
       }).then((res) => {
         setBill(res?.Bill[0]);
       });
+      setApplication_cert(rearrangeApplication(application));
     }
-  }, [application]);
+  }, [application_cert]);
+
+  function rearrangeApplication(application){
+    if(application[0].applicationNumber){
+      let tenantIdV = application[0].tenantId;
+      let businessServiceV = application[0].businessService;
+      let licenseTypeV = application[0].licenseType;
+      let applicationTypeV = application[0].applicationType;
+      let licenseNumberV = application[0].licenseNumber;
+      let applicationNumberV = application[0].applicationNumber;
+      let licenseUnitNameV = application[0].licenseUnitName;
+      let applicationDateV = application[0].applicationDate;
+      let issuedDateV = application[0].issuedDate;
+      let financialYearV = application[0].financialYear;
+      let validFromV = application[0].validFrom;
+      let validToV = application[0].validTo;
+      let commencementDateV = application[0].commencementDate;
+      let structureTypeV = application[0].tradeLicenseDetail.structureType;
+      let owners = [];
+      application[0].tradeLicenseDetail.owners.map((owner)=>{
+        owners.name = owner.name;
+        owners.mobileNumber = owner.mobileNumber;
+        owners.emailId = owner.emailId;
+        owners.applicantNameLocal = owner.applicantNameLocal;
+        owners.careOf = owner.careOf;
+        owners.careOfName = owner.careOfName;
+        owners.designation = owner?.designation ? owner?.designation : '';
+        owners.address = owner.houseName  + ","? owner.houseName : '' + 
+        owner.street ? owner.street  + ",": '' + 
+        owner.locality ? owner.locality  + ",": '' +
+        owner.postOffice ? owner.postOffice  + ",": '' + "-" +
+        owner.pincode ? owner.pincode : '' ;
+      });
+      let structureTypeDetails = application[0].tradeLicenseDetail.address.wardNo;
+      if(structureTypeV === "BUILDING"){
+        structureTypeDetails += "/" + application[0].tradeLicenseDetail.address.doorNo;
+      }
+
+      let addressV = structureTypeDetails ? "," : '' + application[0].tradeLicenseDetail.address.buildingName + 
+      application[0].tradeLicenseDetail.address.street ? ", " + application[0].tradeLicenseDetail.address.street : '' +
+      application[0].tradeLicenseDetail.address.locality ? ", " + application[0].tradeLicenseDetail.address.locality : '' +
+      application[0].tradeLicenseDetail.address.landmark ? ", " + application[0].tradeLicenseDetail.address.landmark : '' +
+      application[0].tradeLicenseDetail.address.waterbody ? ", " + application[0].tradeLicenseDetail.address.waterbody : '' +
+      application[0].tradeLicenseDetail.address.serviceArea ? ", " + application[0].tradeLicenseDetail.address.serviceArea : '' +
+      application[0].tradeLicenseDetail.address.localityName ? ", " + application[0].tradeLicenseDetail.address.localityName : '' +
+      application[0].tradeLicenseDetail.address.postOffice ? ", " + application[0].tradeLicenseDetail.address.postOffice  + "-" + application[0].tradeLicenseDetail.address.pincode : '';
+    
+      let tradeUnitsV = application[0].tradeLicenseDetail.tradeUnits;
+      let ownerPhotoV = application[0].tradeLicenseDetail.applicationDocuments.filter((doc)=>{
+        doc.documentType === "OWNERPHOTO"
+        doc?.documentType.includes("OWNERPHOTO")
+      })[0];
+      let structurePlaceV = [];
+
+      if(structureTypeV === "BUILDING" || structureTypeV === "LBBUILDING"){
+        application[0].tradeLicenseDetail.structurePlace.map((strutPlace) => {
+          structurePlaceV.doorNo = strutPlace.doorNo;
+          structurePlaceV.doorNoSub = strutPlace.doorNoSub;
+          structurePlaceV.stallNo= strutPlace.stallNo
+        });
+      } 
+      else if (structureTypeV === "LAND"){
+        structurePlaceV.blockNo = application[0]?.tradeLicenseDetail?.structurePlace[0]?.blockNo;
+        structurePlaceV.surveyNo = application[0]?.tradeLicenseDetail?.structurePlace[0]?.surveyNo;
+        structurePlaceV.subDivisionNo = application[0]?.tradeLicenseDetail?.structurePlace[0]?.subDivisionNo;
+        structurePlaceV.partitionNo = application[0]?.tradeLicenseDetail?.structurePlace[0]?.partitionNo;
+      }
+      else if (structureTypeV === "VEHICLE"){
+        structurePlaceV.vehicleNo = application[0]?.tradeLicenseDetail?.structurePlace[0]?.vehicleNo;
+      }
+      else if (structureTypeV === "WATER"){
+        structurePlaceV.vesselNo = application[0]?.tradeLicenseDetail?.structurePlace[0]?.vesselNo;
+      }
+      let institution = [];
+      if( application[0]?.tradeLicenseDetail?.institution){
+        institution.institutionName = application[0]?.tradeLicenseDetail?.institution?.institutionName;
+        institution.organisationregistrationno = application[0]?.tradeLicenseDetail?.institution?.organisationregistrationno;
+        institution.address = application[0]?.tradeLicenseDetail?.institution?.address;
+        institution.licenseUnitId = application[0]?.tradeLicenseDetail?.institution?.licenseUnitId;
+      }
+      let licenseUnitNameLocalV = application[0]?.licenseUnitNameLocal;
+      let desiredLicensePeriodV = application[0]?.desiredLicensePeriod;
+      let businessSector = application[0]?.desiredLicensePeriod;
+      let capitalInvestment = application[0]?.capitalInvestment;
+      let enterpriseType = application[0]?.enterpriseType;
+      let structurePlaceSubtype = application[0]?.structurePlaceSubtype;
+      let businessActivityDesc = application[0]?.businessActivityDesc;
+      let licenseeType = application[0]?.licenseeType;
+      let ownershipCategory = application[0]?.tradeLicenseDetail?.ownershipCategory;
+      return {"tenantId" : tenantIdV,
+        "businessService" : businessServiceV,
+        "licenseType" : licenseTypeV,
+        "applicationType" : applicationTypeV,
+        "licenseNumber" : licenseNumberV,
+        "applicationNumber" : applicationNumberV,
+        "licenseUnitName" : licenseUnitNameV,
+        "applicationDate" : applicationDateV,
+        "issuedDate" : issuedDateV,
+        "financialYear" : financialYearV,
+        "validFrom" : validFromV,
+        "validTo" : validToV,
+        "commencementDate" : commencementDateV,
+        "tradeLicenseDetail" : {
+          "ownershipCategory" : ownershipCategory,
+          "structureType" : structureTypeV,
+          "owners" : owners,
+          "address" : addressV,
+          "tradeUnits" : tradeUnitsV,
+          "ownerPhoto" : ownerPhotoV,
+          "structurePlace" : structurePlaceV,
+          "businessSector" : businessSector,
+          "capitalInvestment" : capitalInvestment,
+          "enterpriseType" : enterpriseType,
+          "structurePlaceSubtype" : structurePlaceSubtype,
+          "businessActivityDesc" : businessActivityDesc,
+          "licenseeType" : licenseeType,
+          "institution" : institution
+        },
+        "licenseUnitNameLocal" : licenseUnitNameLocalV,
+        "desiredLicensePeriod" : desiredLicensePeriodV,
+        "signedCertificate" : "111111111111"        
+      };
+    }
+  }
+
   const [showOptions, setShowOptions] = useState(false);
   useEffect(() => {}, [application, errorApplication]);
 
@@ -121,7 +249,7 @@ if(wfdata)
   };
 
   const downloadTLcertificate = async () => {
-    const TLcertificatefile = await Digit.PaymentService.generatePdf(tenantId, { Licenses: application }, "tlcertificate");
+    const TLcertificatefile = await Digit.PaymentService.generatePdf(tenantId, { Licenses: application_cert }, "tlcertificate");
     const receiptFile = await Digit.PaymentService.printReciept(tenantId, { fileStoreIds: TLcertificatefile.filestoreIds[0] });
     window.open(receiptFile[TLcertificatefile.filestoreIds[0]], "_blank");
     setShowOptions(false);
