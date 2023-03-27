@@ -129,6 +129,11 @@ const Urls = {
     registry_search: "/death-services/v1/deathregistry/_searchdeath",
     registry_download: "/death-services/v1/deathregistry/_downloaddeath",
   },
+  crmarriage: {
+    create: "/birth-services/cr/createbirth",
+    search:"/birth-services/cr/searchbirth",
+    update:"/birth-services/cr/updatebirth",  
+  },
   dfm: {
     create: "/filemgmnt/v1/applicantservices/_create",
     search: "/filemgmnt/v1/applicantpersonals/_search",
