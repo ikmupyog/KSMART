@@ -5,7 +5,7 @@ const useCvilRegistrationAdoptionApi = (tenantId, type = true) => {
   if(type){
   return useMutation((data) => CRService.createAdoption(data, tenantId));
 } else {
-  return useMutation((data) => CRService.update(data, tenantId));
+  return useMutation((data) => CRService.updateAdoption(data, tenantId));
 }
 };
 
