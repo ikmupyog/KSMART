@@ -25,6 +25,7 @@ import { PTService } from "./services/elements/PT";
 import { WSService } from "./services/elements/WS";
 import { TLService } from "./services/elements/TL";
 import { CRService } from "./services/elements/CR";
+import { CRMarriageService } from "./services/elements/CRMARRIAGE";
 import { CRDeathService } from "./services/elements/CRDEATH";
 import { DFMService } from "./services/elements/DFM";
 import { MCollectService } from "./services/elements/MCollect";
@@ -72,6 +73,7 @@ const initLibraries = () => {
   setupLibraries("PTService", PTService);
   setupLibraries("TLService", TLService);
   setupLibraries("CRService", CRService);
+  setupLibraries("CRMarriageService", CRMarriageService);
   setupLibraries("CRDeathService", CRDeathService);
   setupLibraries("DFMService", DFMService);
   setupLibraries("HRMSService", HrmsService);
