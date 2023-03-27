@@ -24,6 +24,17 @@ export const CRService = {
       params: {},
       auth: true,
     }),
+    updateAdoption: (details, tenantId) =>
+    Request({
+      url: Urls.cr.adoption_update,
+      data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: {},
+      auth: true,
+    }),
   search: (details) =>
     Request({
       url: Urls.cr.search,

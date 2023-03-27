@@ -7,8 +7,8 @@ const mystyle = {
    display:"block"
   };
 
+const SearchFields = ({register, control, reset, tenantId, t,previousPage ,applicationType}) => {
 
-const SearchFields = ({register, control, reset, tenantId, t }) => {
     // const { data: applicationTypes, isLoading: applicationTypesLoading } = Digit.Hooks.cr.useMDMS.applicationTypes("kl")
 // console.log(applicationTypes);
     // const applicationType = useWatch({ control, name: "applicationType" });
@@ -41,8 +41,11 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
     // })
 
     return <>
-        <SearchField>
-            <label>{t("CR_SEARCH_APP_NO_LABEL")}</label>
+    {applicationType?.value &&(
+      <>
+       <SearchField>
+            <label>{t("CR_SEARCH_APP_NO_LABEL")}
+            <span className="mandatorycss">*</span></label>
             <TextInput name="applicationNumber" inputRef={register({})} />
         </SearchField>
         {/* {applicationTypesLoading ? <Loader/> : <SearchField>
@@ -106,9 +109,10 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
             <TextInput  name="tradeName" inputRef={register({})}/>
         </SearchField>
         <SearchField className="submit">
-            <SubmitBar label={t("ES_COMMON_SEARCH")} submit />
+            <SubmitBar label={t("ES_COMMON_SEARCH")} submit disabled={ applicationType?.label?false:true}/>
             <p onClick={() => {
                 reset({ 
+                    searchAppllication:[],
                     applicationNumber: "", 
                     fromDate: "", 
                     toDate: "",
@@ -117,12 +121,14 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
                     tradeName: "",
                     offset: 0,
                     limit: 10,
-                    sortBy: "dateofreport",
+                    sortBy: "dateOfBirth",
                     sortOrder: "DESC"
                 });
                 previousPage();
             }}>{t(`ES_COMMON_CLEAR_ALL`)}</p>
         </SearchField>
+      </>
+      )}   
     </>
 }
 export default SearchFields
