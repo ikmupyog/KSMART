@@ -49,7 +49,7 @@ public class MarriageRegistryRowMapper implements ResultSetExtractor<List<Marria
             .status(rs.getString("MD_registration_status"))
             .brideDetails(getBrideDetails(rs))
             .groomDetails(getGroomDetails(rs))
-          //  .witnessDetails(getWitnessDetails(rs))
+            .witnessDetails(getWitnessDetails(rs))
            .auditDetails(getAuditDetails(rs))
             .build());
         }

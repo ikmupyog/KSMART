@@ -19,11 +19,15 @@ import org.springframework.util.IdGenerator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.UUID;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import lombok.extern.slf4j.Slf4j;
 /**
      * Created by Jasmine
      * on 24.03.2023
      */
 @Component
+@Slf4j
 public class MarriageRegistryEnrichment implements BaseEnrichment {
     @Autowired
     MarriageApplicationConfiguration config;
@@ -37,6 +41,14 @@ public class MarriageRegistryEnrichment implements BaseEnrichment {
         RequestInfo requestInfo = request.getRequestInfo();
         User userInfo = requestInfo.getUserInfo();
         AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
+    // try {
+    //         ObjectMapper mapper = new ObjectMapper();
+    //         Object obj = request;
+    //         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+    //        System.out.println("JasmineRegistryCreation "+ mapper.writeValueAsString(obj));
+    // }catch(Exception e) {
+    //     log.error("Exception while fetching from searcher: ",e);
+    // }
         request.getMarriageDetails().forEach(marriage -> {
 
             marriage.setId(UUID.randomUUID().toString());
@@ -70,24 +82,23 @@ public class MarriageRegistryEnrichment implements BaseEnrichment {
 
         RequestInfo requestInfo = request.getRequestInfo();
         List<MarriageRegistryDetails> marriageDetails = request.getMarriageDetails();
-        String tenantId = marriageDetails.get(0)
-                .getTenantid();
+        String tenantId = marriageDetails.get(0).getTenantid();
 
         List<String> filecodes = getIds(requestInfo,
-                tenantId,
-                config.getGetMarriageRegisNumberName(),
-                request.getMarriageDetails().get(0).getModulecode(),
-                "REG",
+                                tenantId,
+                                config.getGetMarriageRegisNumberName(),
+                                request.getMarriageDetails().get(0).getModulecode(),
+                         "REG",
                 marriageDetails.size());
         validateFileCodes(filecodes, marriageDetails.size());
         Long currentTime = Long.valueOf(System.currentTimeMillis());
         ListIterator<String> itr = filecodes.listIterator();
         request.getMarriageDetails()
                 .forEach(marriage -> {
-                    if((marriage.getStatus().equals("APPROVED"))&&(marriage.getAction().equals("APPROVE"))) {
+                    //if((marriage.getStatus().equals("APPROVED"))&&(marriage.getAction().equals("APPROVE"))) {
                         marriage.setRegistrationno(itr.next());
                         marriage.setRegistrationDate(currentTime);
-                    }
+                  //  }
                 });
             }
 

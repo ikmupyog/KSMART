@@ -355,14 +355,14 @@ CREATE TABLE IF NOT EXISTS public.eg_marriage_witness_details
     age integer,
     address_en character varying(200) COLLATE pg_catalog."default",
     address_ml character varying(200) COLLATE pg_catalog."default",
-    mobile character varying(150) COLLATE pg_catalog."default",
+    mobile bigint,
     is_esigned boolean,
     marriageid character varying(64) COLLATE pg_catalog."default" NOT NULL,
     createdtime bigint,
     createdby character varying(64) COLLATE pg_catalog."default",
     lastmodifiedtime bigint,
     lastmodifiedby character varying(64) COLLATE pg_catalog."default",
-    serial_no bigint,
+    serial_no integer,
     CONSTRAINT eg_marriage_witness_details_pkey PRIMARY KEY (id),
     CONSTRAINT eg_marriage_witness_details_fkey FOREIGN KEY (marriageid)
     REFERENCES public.eg_marriage_details (id) MATCH SIMPLE
@@ -381,14 +381,14 @@ CREATE TABLE IF NOT EXISTS public.eg_marriage_witness_details_audit
     age integer,
     address_en character varying(200) COLLATE pg_catalog."default",
     address_ml character varying(200) COLLATE pg_catalog."default",
-    mobile character varying(150) COLLATE pg_catalog."default",
+    mobile bigint,
     is_esigned boolean,
     marriageid character varying(64) COLLATE pg_catalog."default" NOT NULL,
     createdtime bigint,
     createdby character varying(64) COLLATE pg_catalog."default",
     lastmodifiedtime bigint,
     lastmodifiedby character varying(64) COLLATE pg_catalog."default",
-    serial_no bigint
+    serial_no integer
     );
 -- Table: public.eg_register_marriage_document
 
@@ -489,7 +489,7 @@ CREATE TABLE IF NOT EXISTS public.eg_register_marriage_details_audit
     districtid character varying(64) COLLATE pg_catalog."default",
     lbtype character varying(64) COLLATE pg_catalog."default",
     tenantid character varying(64) COLLATE pg_catalog."default",
-    placetype character varying(64) COLLATE pg_catalog."default",
+    placetype character varying(64) COLLATE pg_catalog."default", 
     placeid character varying(64) COLLATE pg_catalog."default",
     placename_en character varying(1000) COLLATE pg_catalog."default",
     placename_ml character varying(1000) COLLATE pg_catalog."default",
@@ -778,7 +778,7 @@ CREATE TABLE IF NOT EXISTS public.eg_register_marriage_witness_details
     age integer,
     address_en character varying(200) COLLATE pg_catalog."default",
     address_ml character varying(200) COLLATE pg_catalog."default",
-    mobile character varying(150) COLLATE pg_catalog."default",
+    mobile bigint,
     is_esigned boolean,
     marriageid character varying(64) COLLATE pg_catalog."default" NOT NULL,
     mig_chvackno character varying(64) COLLATE pg_catalog."default",
@@ -786,7 +786,7 @@ CREATE TABLE IF NOT EXISTS public.eg_register_marriage_witness_details
     createdby character varying(64) COLLATE pg_catalog."default",
     lastmodifiedtime bigint,
     lastmodifiedby character varying(64) COLLATE pg_catalog."default",
-    serial_no bigint,
+    serial_no integer,
     CONSTRAINT eg_register_marriage_witness_details_pkey PRIMARY KEY (id),
     CONSTRAINT eg_register_marriage_witness_details_fkey FOREIGN KEY (marriageid)
     REFERENCES public.eg_register_marriage_details (id) MATCH SIMPLE
@@ -805,7 +805,7 @@ CREATE TABLE IF NOT EXISTS public.eg_register_marriage_witness_details_audit
     age integer,
     address_en character varying(200) COLLATE pg_catalog."default",
     address_ml character varying(200) COLLATE pg_catalog."default",
-    mobile character varying(150) COLLATE pg_catalog."default",
+    mobile bigint,
     is_esigned boolean,
     marriageid character varying(64) COLLATE pg_catalog."default" NOT NULL,
     mig_chvackno character varying(64) COLLATE pg_catalog."default",
@@ -813,7 +813,7 @@ CREATE TABLE IF NOT EXISTS public.eg_register_marriage_witness_details_audit
     createdby character varying(64) COLLATE pg_catalog."default",
     lastmodifiedtime bigint,
     lastmodifiedby character varying(64) COLLATE pg_catalog."default",
-    serial_no bigint
+    serial_no integer
     );
 
 

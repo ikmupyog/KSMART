@@ -5,6 +5,8 @@ import lombok.*;
 import org.egov.common.contract.request.RequestInfo;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
+
+import java.util.ArrayList;
 import java.util.List;
 /**
      * Created by Jasmine
@@ -26,8 +28,10 @@ public class MarriageRegistryRequest {
 
     public MarriageRegistryRequest addMarriageDetails(MarriageRegistryDetails marriageDetail) {
         if (marriageDetails == null) {
-            marriageDetails = null;
+            marriageDetails =  new ArrayList<>();
         }
+        marriageDetails.add(marriageDetail);
         return this;
     }
+
 }

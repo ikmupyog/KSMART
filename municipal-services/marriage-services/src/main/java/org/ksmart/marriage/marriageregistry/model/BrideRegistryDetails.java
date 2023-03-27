@@ -155,8 +155,8 @@ public class BrideRegistryDetails {
     @JsonProperty("brideGroom")
     private String brideGroom;
     
-    @JsonProperty("auditDetails")
-    private AuditDetails auditDetails;
+    @JsonProperty("AuditDetails")
+    private AuditDetails registryAuditDetails;
 
 
 

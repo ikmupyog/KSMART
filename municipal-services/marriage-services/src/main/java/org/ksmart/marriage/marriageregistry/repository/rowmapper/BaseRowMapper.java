@@ -10,6 +10,7 @@ import java.sql.SQLException;
 interface BaseRowMapper {
 
     default AuditDetails getAuditDetails(ResultSet rs) throws SQLException {
+        
         return AuditDetails.builder()
                 .createdBy(rs.getString("MD_createdby"))
                 .createdTime(Long.valueOf(rs.getLong("MD_createdtime")))
