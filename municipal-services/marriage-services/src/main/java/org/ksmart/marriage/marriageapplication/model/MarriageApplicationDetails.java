@@ -108,6 +108,9 @@ public class MarriageApplicationDetails {
     @JsonProperty("applicationType")
     private String applicationtype;
 
+    @Size(max = 64)
+    @JsonProperty("functionUID")
+    private String functionUID;
     @NotNull
     @Size(max = 64)
     @JsonProperty("businessService")
@@ -193,8 +196,11 @@ public class MarriageApplicationDetails {
 
     @JsonProperty("GroomDetails")
     private GroomDetails groomDetails;
-//    @JsonProperty("PermanentAddressDetails")
-//    private PermanentAdressDetails permanentBride;
+    @JsonProperty("BrideAddressDetails")
+    private BrideAddressDetails brideAddressDetails;
+
+    @JsonProperty("GroomAddressDetails")
+    private GroomAddressDetails groomAddressDetails;
 //    @JsonProperty("PresentAddressDetails")
 //    private PresentAddressDetails present ;
 
