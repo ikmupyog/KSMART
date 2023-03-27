@@ -74,17 +74,24 @@ public class FMConfiguration {
     // Communication file config
     @Value("${persister.save.communicationfile.topic:}")
     private String saveCommunicationFileTopic;
-    
+
+    @Value("${persister.update.communicationfile.topic:}")
+    private String updateCommunicationFileTopic;
+
+    // arising file config
     @Value("${persister.save.arisingfiledetails.topic:}")
     private String saveArisingFileTopic;
 
     @Value("${persister.update.arisingfiledetails.topic:}")
     private String updateArisingFileTopic;
 
-    @Value("${persister.update.communicationfile.topic:}")
-    private String updateCommunicationFileTopic;
-    
-    
+    // drafting config
+    @Value("${persister.save.drafting.topic:}")
+    private String saveDraftingTopic;
+
+    @Value("${persister.save.draftingchild.topic:}")
+    private String saveDraftingChildTopic;
+
 
     // PDF Gen
 

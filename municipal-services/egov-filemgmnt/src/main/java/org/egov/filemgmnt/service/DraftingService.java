@@ -23,8 +23,8 @@ public class DraftingService {
     private final DraftingRepository repository;
 
     DraftingService(DraftingRepository repository,FMConfiguration fmConfig,Producer producer){
-    this.repository = repository;
-    this.fmConfig = fmConfig;
+        this.repository = repository;
+        this.fmConfig = fmConfig;
     }
     public List<Drafting>searchDraft(final RequestInfo requestInfo, final DraftingSearchCriteria searchCriteria){
         final List<Drafting> result = repository.searchDrafting(searchCriteria);

@@ -30,7 +30,6 @@ public class Drafting {
         @JsonProperty("uuid")
         private String uuid;
 		
-		// drafting child table forgin key
 		@NotNull
         @Size(max=256)
         @JsonProperty("draftingChild")
@@ -54,11 +53,14 @@ public class Drafting {
 		
 		@Size(max=64)
         @JsonProperty("fileStoreId")
-        private String fileStoreId = null;
+        private String fileStoreId;
 		
 		@Schema(type = "string", description = "status")
 		@Size(max = 64, message = "status length cannot exceed 64 characters")
 		@JsonProperty("status")
 		private String status;
+
+        @JsonProperty("auditDetails")
+        private AuditDetails auditDetails;
     
 }

@@ -14,8 +14,8 @@ import java.util.List;
 public class DraftingRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    private DraftingQueryBuilder draftingQueryBuilder;
-    private DraftingRowMapper draftingRowMapper;
+    private final DraftingQueryBuilder draftingQueryBuilder;
+    private final DraftingRowMapper draftingRowMapper;
     DraftingRepository(final DraftingQueryBuilder draftingQueryBuilder,final  DraftingRowMapper draftingRowMapper){
         this.draftingQueryBuilder = draftingQueryBuilder;
         this.draftingRowMapper = draftingRowMapper;

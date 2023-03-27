@@ -1,9 +1,14 @@
 package org.egov.filemgmnt.repository.querybuilder;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.egov.filemgmnt.web.models.drafting.DraftingSearchCriteria;
+import org.springframework.stereotype.Component;
+
 import javax.validation.constraints.NotNull;
 import java.util.List;
-
+@Component
+@NoArgsConstructor(access= AccessLevel.PRIVATE)
 public class DraftingQueryBuilder  extends BaseQueryBuilder{
     private static final String QUERY = new StringBuilder().append(" SELECT")
                                                              //Drafting
