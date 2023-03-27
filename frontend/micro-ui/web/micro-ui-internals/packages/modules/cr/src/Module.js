@@ -154,6 +154,8 @@ import witnessdetails from "./pageComponents/marriageComponents/witnessdetails";
 // import CreateAbandonedBirth from "./pages/employee/Abandoned-birth";
 import AbandonedChildDetails from "./pageComponents/abandonedBirthComponents/AbandonedChildDetails";
 import AbandonedBirthInitiatorDetails from "./pageComponents/abandonedBirthComponents/AbandonedBirthInitiatorDetails";
+import BornOutsideAcknowledgement from "./pages/citizen/BornOutsideReg/BornOutsideAcknowledgement";
+
 
 
 export const CRModule = ({ stateCode, userType, tenants }) => {
@@ -378,7 +380,8 @@ const componentsToRegister = {
   MarriageRegistration,
   HouseMarriageRegistration,
   witnessdetails,
-  FormFieldContainer
+  FormFieldContainer,
+  BornOutsideAcknowledgement,
 };
 
 export const initCRComponents = () => {

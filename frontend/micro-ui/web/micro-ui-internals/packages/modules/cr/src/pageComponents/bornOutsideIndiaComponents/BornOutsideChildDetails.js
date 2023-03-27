@@ -14,6 +14,7 @@ import {
 import Timeline from "../../components/BOBRTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
+// import FormStep from "../../../../../react-components/src/molecules/FormStep";
 
 const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
   // console.log(JSON.stringify(formData));
@@ -183,7 +184,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
           // To calculate the time difference of two dates
           let Difference_In_Time = today.getTime() - birthDate.getTime();
           let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-          Difference_In_DaysRounded = (Math.floor(Difference_In_Days));
+          let Difference_In_DaysRounded = (Math.floor(Difference_In_Days));
           // console.log(Difference_In_DaysRounded);
          
         }
@@ -396,6 +397,8 @@ if (outsideBirthPlace == null || outsideBirthPlace == undefined || outsideBirthP
       sessionStorage.setItem("outsideBirthPlace",  outsideBirthPlace ? outsideBirthPlace : null);
       sessionStorage.setItem("country", country  ?  country.code : null);
 
+      console.log("validation flag===",onSelect);
+
       onSelect(config.key, {
         stateId,
         tenantId,
@@ -437,7 +440,7 @@ if (outsideBirthPlace == null || outsideBirthPlace == undefined || outsideBirthP
         <BackButton>{t("CS_COMMON_BACK")}</BackButton>
         {window.location.href.includes("/citizen") ? <Timeline /> : null}
         {window.location.href.includes("/employee") ? <Timeline /> : null}
-        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!childAadharNo}>
+        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-12">
@@ -746,7 +749,7 @@ if (outsideBirthPlace == null || outsideBirthPlace == undefined || outsideBirthP
               onChange={setSelectPostCode}
               placeholder={`${t("CR_ZIP_CODE")}`}
                {...(validation = {
-                pattern: "^[a-zA-Z-.0-9`' ]*$",
+                pattern: "^[a-zA-Z-.0-9`']*$",
                 isRequired: true,
                 type: "number",
                 max: 6,
