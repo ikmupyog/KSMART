@@ -12,6 +12,7 @@ import org.egov.tl.config.TLConfiguration;
 import org.egov.tl.repository.ServiceRequestRepository;
 import org.egov.tl.repository.TLRepository;
 import org.egov.tl.web.models.AuditDetails;
+import org.egov.tl.web.models.CorrectionRequest;
 import org.egov.tl.web.models.TradeLicense;
 import org.egov.tl.web.models.TradeLicenseRequest;
 import org.egov.tracer.model.CustomException;
@@ -120,6 +121,41 @@ public class IDGenerator {
      */
     public StringBuilder getMdmsSearchUrl() {
         return new StringBuilder().append(config.getMdmsHost()).append(config.getMdmsEndPoint());
+    }
+
+    /**
+     * Sets the ApplicationNumber for given TradeLicenseRequest
+     *
+     * @param request TradeLicenseRequest which is to be created
+     */
+    public String setIDGenCorrection(CorrectionRequest request, String moduleCode, String idType) {
+        RequestInfo requestInfo = request.getRequestInfo();
+        int Year = Calendar.getInstance().get(Calendar.YEAR);
+        Long currentTime = Long.valueOf(System.currentTimeMillis());
+        String tenantId = request.getLicenseCorrection().get(0).getTenantId();
+        String nextID = tlrepository.getNewID(tenantId, Year, moduleCode, idType);
+        String idGenerated = null;
+        Long ackNoId = null;
+        // mdms call for tenand idgencode and lbtypecode
+        Object mdmsData = mDMSCallForTenant(request.getRequestInfo(), tenantId);
+
+        Map<String, Object> masterData = getAttributeValues(mdmsData);
+
+        String idgenCode = String.valueOf(masterData.get("idgencode"));
+        String lbType = String.valueOf(masterData.get("lbtypecode"));
+
+        String lbTypeCode = "";
+
+        if (lbType.equals(TLConstants.LB_TYPE_CORPORATION.toString())) {
+            lbTypeCode = TLConstants.LB_TYPE_CORPORATION_CAPTION.toString();
+        } else if (lbType.equals(TLConstants.LB_TYPE_MUNICIPALITY.toString())) {
+            lbTypeCode = TLConstants.LB_TYPE_MUNICIPALITY_CAPTION.toString();
+        }
+
+        idGenerated = idType + "-" + nextID
+                + "-" + String.valueOf(Year) + "-" + moduleCode + "-" + lbTypeCode + "-"
+                + idgenCode + "-" + TLConstants.STATE_CODE.toString();
+        return idGenerated;
     }
 
 }

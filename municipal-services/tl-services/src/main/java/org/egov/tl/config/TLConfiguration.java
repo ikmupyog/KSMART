@@ -104,6 +104,9 @@ public class TLConfiguration {
     @Value("${persister.update.tradelicense.workflow.topic}")
     private String updateWorkflowTopic;
 
+    @Value("${persister.savecorrection.tradelicense.topic}")
+    private String saveCorrectionTopic;
+
     @Value("${persister.update.tradelicense.adhoc.topic}")
     private String updateAdhocTopic;
 

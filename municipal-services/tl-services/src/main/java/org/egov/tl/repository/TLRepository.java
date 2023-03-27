@@ -131,6 +131,15 @@ public class TLRepository {
     }
 
     /**
+     * Pushes the request on save Correction topic
+     *
+     * @param tradeLicenseRequest The tradeLciense create request
+     */
+    public void saveCorrection(CorrectionRequest correctionRequest) {
+        producer.push(config.getSaveCorrectionTopic(), correctionRequest);
+    }
+
+    /**
      * Sorts the child objects by there ids
      * 
      * @param tradeLicenses The list of tradeLicense

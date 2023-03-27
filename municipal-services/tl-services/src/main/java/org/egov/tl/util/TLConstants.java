@@ -427,7 +427,7 @@ public class TLConstants {
 
         public static final String LB_TYPE_MUNICIPALITY_CAPTION = "M";
 
-        public static final String APP_NUMBER_CAPTION = "AP";
+        public static final String APP_NUMBER_CAPTION = "APLN";
 
         public static final String STATE_CODE = "KL";
 
@@ -438,6 +438,8 @@ public class TLConstants {
         public static final String FUN_MODULE_NEWL = "BFIFLN";
 
         public static final String FUN_MODULE_RENEWALL = "BFIFLR";
+
+        public static final String FUN_MODULE_CORRECTION = "BFIFLC";
 
         public TLConstants() {
         }
