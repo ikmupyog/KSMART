@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 const BornOutsidePresent = ({ config, onSelect, userType, formData, presentaddressCountry, setaddressCountry,
     presentaddressStateName, setaddressStateName, value, setValue, countryvalue, setCountryValue,
     permtaddressCountry, setpermtaddressCountry, permtaddressStateName, setpermtaddressStateName, isPrsentAddress,
-    setIsPrsentAddress, Villagevalues, setLbsVillagevalue, isEditBirth = false, isEditDeath = false,
+    setIsPrsentAddress, Villagevalues, setLbsVillagevalue, isEditBirth = false, 
 }) => {
     const stateId = Digit.ULBService.getStateId();
     let tenantId = "";
@@ -20,7 +20,7 @@ const BornOutsidePresent = ({ config, onSelect, userType, formData, presentaddre
     const { data: State = {}, isStateLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
     const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
     const [isInitialRender, setIsInitialRender] = useState(true);
-    const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? isEditDeath : false);
+    const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth :  false);
 
     let cmbLB = [];
     let cmbCountry = [];
