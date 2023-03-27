@@ -51,7 +51,7 @@ public class MarriageRegistryDetails {
     @JsonProperty("marriagePlacenameEn")
     private String placenameEn;
     @Size(max = 1000)
-    @JsonProperty("marriagePlacenameMal")
+    @JsonProperty("marriagePlacenameMl")
     private String placenameMl;
 
     @Size(max = 64)
@@ -64,7 +64,7 @@ public class MarriageRegistryDetails {
     private String street_name_en;
 
     @Size(max = 1000)
-    @JsonProperty("marriageStreetMal")
+    @JsonProperty("marriageStreetMl")
     private String street_name_ml;
 
     @Size(max = 64)
@@ -84,7 +84,7 @@ public class MarriageRegistryDetails {
     private String locality_en;
 
     @Size(max = 1000)
-    @JsonProperty("marriageLocalityMal")
+    @JsonProperty("marriageLocalityMl")
     private String locality_ml;
 
     @Size(max = 64)
@@ -148,8 +148,8 @@ public class MarriageRegistryDetails {
     private String marriageHouseNoAndNameEn;
 
     @Size(max = 2500)
-    @JsonProperty("marriageHouseNoAndNameMal")
-    private String marriageHouseNoAndNameMal;
+    @JsonProperty("marriageHouseNoAndNameMl")
+    private String marriageHouseNoAndNameMl;
 
     // @Size(max = 1000)
     // @JsonProperty("marriageReligiousInstitutionOther")
@@ -163,8 +163,8 @@ public class MarriageRegistryDetails {
     // @JsonProperty("marriagePublicOrPrivateNamePlaceEn")
     // private String marriagePublicOrPrivateNamePlaceEn;
     // @Size(max = 2500)
-    // @JsonProperty("marriagePublicOrPrivateNamePlaceMal")
-    // private String marriagePublicOrPrivateNamePlaceMal;
+    // @JsonProperty("marriagePublicOrPrivateNamePlaceMl")
+    // private String marriagePublicOrPrivateNamePlaceMl;
 
     // @Size(max = 1000)
     // @JsonProperty("marriageReligiousInstitution")
@@ -174,8 +174,8 @@ public class MarriageRegistryDetails {
     // @JsonProperty("marriageReligiousInstitutionOtherNameEn")
     // private String marriageReligiousInstitutionOtherNameEn;
     // @Size(max = 2500)
-    // @JsonProperty("marriageReligiousInstitutionOtherNameMal")
-    // private String marriageReligiousInstitutionOtherNameMal;
+    // @JsonProperty("marriageReligiousInstitutionOtherNameMl")
+    // private String marriageReligiousInstitutionOtherNameMl;
 
     @Size(max = 64)
     @JsonProperty("applicationNumber")

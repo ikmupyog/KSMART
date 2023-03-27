@@ -38,20 +38,20 @@ public class MarriageRegistrySearchCriteria {
     @JsonProperty("groomFirstnameEn")
     private String groomFirstnameEn;
 
-    @JsonProperty("groomFirstnameMal")
-    private String groomFirstnameMal;   
+    @JsonProperty("groomFirstnameMl")
+    private String groomFirstnameMl;   
 
     @JsonProperty("groomMiddlenameEn")
     private String groomMiddlenameEn;
 
-    @JsonProperty("groomMiddlenameMal")
-    private String groomMiddlenameMal;
+    @JsonProperty("groomMiddlenameMl")
+    private String groomMiddlenameMl;
 
     @JsonProperty("groomLastnameEn")
     private String groomLastnameEn;
 
-    @JsonProperty("groomLastnameMal")
-    private String groomLastnameMal;
+    @JsonProperty("groomLastnameMl")
+    private String groomLastnameMl;
 
     @JsonProperty("groomAdharNo")
     private String groomAdharNo;
@@ -63,20 +63,20 @@ public class MarriageRegistrySearchCriteria {
     @JsonProperty("brideFirstnameEn")
     private String brideFirstnameEn;
 
-    @JsonProperty("brideFirstnameMal")
-    private String brideFirstnameMal;
+    @JsonProperty("brideFirstnameMl")
+    private String brideFirstnameMl;
 
     @JsonProperty("brideMiddlenameEn")
     private String brideMiddlenameEn;
 
-    @JsonProperty("brideMiddlenameMal")
-    private String brideMiddlenameMal;
+    @JsonProperty("brideMiddlenameMl")
+    private String brideMiddlenameMl;
 
     @JsonProperty("brideLastnameEn")
     private String brideLastnameEn;
 
-    @JsonProperty("brideLastnameMal")
-    private String brideLastnameMal;
+    @JsonProperty("brideLastnameMl")
+    private String brideLastnameMl;
 
     @JsonProperty("sortBy")
     private SortBy sortBy;
