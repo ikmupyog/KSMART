@@ -5,14 +5,14 @@ import { useTranslation } from "react-i18next";
 import { newConfig as newConfigCR } from "../../../config/config";
 import { useQueryClient } from "react-query";
 
-const CreateDeathRegistration = ({ parentUrl }) => {
+const CreateDeathRegistration = ({ parentUrl,isEditDeath }) => {
   const { t } = useTranslation();
   const { path } = useRouteMatch();
   const match = useRouteMatch();  
   const { pathname } = useLocation();
   const history = useHistory();
   const queryClient = useQueryClient();
-  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_CREATE_DEATH_REG", {});
+  const [params, setParams, clearParams] = isEditDeath ? Digit.Hooks.useSessionStorage("CR_CREATE_DEATH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_DEATH_REG", {});
 
   const stateId = Digit.ULBService.getStateId();
   // let { data: newConfig, isLoading } = Digit.Hooks.tl.useMDMS.getFormConfig(stateId, {});

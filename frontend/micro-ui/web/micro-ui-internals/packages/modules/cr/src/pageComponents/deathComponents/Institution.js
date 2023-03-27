@@ -6,7 +6,8 @@ import { useQueryClient } from "react-query";
 
 
 const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, selectDeathPlaceType, DeathPlaceInstId, setSelectedDeathPlaceInstId,InstitutionIdMl, setInstitutionIdMl,InstitutionFilterList, setInstitutionFilterList,isInitialRenderInstitutionList, setIsInitialRenderInstitutionList
- }) => {
+ ,isEditDeath
+}) => {
 
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
@@ -17,6 +18,7 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
 
   const { t } = useTranslation();
   let validation = {};
+  const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
   const { data: institutionType = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionTypePlaceOfEvent");
   const { data: institutionidList = {}, isinstitutionidLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "institution");
   const [tenantboundary, setTenantboundary] = useState(false);
@@ -42,7 +44,19 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
   institutionidList["egov-location"].institutionList.map((ob) => {
     cmbInstitutionList.push(ob);
   });
-
+  if (isEditDeath) {
+    if (formData?.InformationDeath?.institutionTypeCode != null) {
+      if (cmbinstitutionType.length > 0 && (DeathPlaceType === undefined || DeathPlaceType === "")) {
+        selectDeathPlaceType(cmbinstitutionType.filter(cmbinstitutionType => cmbinstitutionType.code === formData?.InformationDeath?.institutionTypeCode)[0]);
+      }
+    }
+    if (formData?.InformationDeath?.institutionNameCode != null) {      
+      if (cmbInstitutionList.length > 0 && (DeathPlaceInstId === undefined || DeathPlaceInstId === "")) {
+        setSelectedDeathPlaceInstId(cmbInstitutionList.filter(cmbInstitutionList => cmbInstitutionList.code === formData?.InformationDeath?.institutionNameCode)[0]);
+        setInstitutionIdMl(cmbInstitutionList.filter(cmbInstitutionList => cmbInstitutionList.code === formData?.InformationDeath?.institutionNameCode)[0]);
+      }
+    }
+  }
   useEffect(() => {
     if (isInitialRenderInstitutionList) {
       if (DeathPlaceType) {

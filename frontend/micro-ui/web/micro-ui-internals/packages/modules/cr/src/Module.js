@@ -17,10 +17,11 @@ import AddressPermanent from "../src/pageComponents/birthComponents/AddressPerma
 import MultipleBirth from "../src/pageComponents/birthComponents/MultipleBirth";
 import CreateBirthRegistration from "./pages/citizen/BirthRegistration";
 import CreateBirthNACRegistration from "./pages/citizen/BirthNACRegistration";
+import MarriageInclusion from "./pages/citizen/MarriageInclusion";
 import BirthInclusion from "./pages/citizen/BirthInclusion";
 import BirthInclusionEditPage from "./pageComponents/birthComponents/BirthInclusionPage";
 import SearchBirthInclusion from './components/SearchBirthInclusion';
-
+import SearchMarriageInclusion from "./components/SearchMarriageInclusion";
 import CreateAdoptions from "./pages/citizen/Adoption";
 import CreateStillBirthRegistration from "./pages/citizen/StillBirthRegistration";
 import CreateBornOutsideRegistration from "./pages/citizen/BornOutsideReg";
@@ -144,17 +145,23 @@ import DeathInclusionPage from "./pageComponents/deathComponents/DeathInclusionP
 
 import CreateMarriageRegistration from "./pages/citizen/MarriageRegistration";
 import GroomDetails from "./pageComponents/marriageComponents/GroomDetails";
+import GroomCorrectionDetails from "./pageComponents/marriageComponents/GroomCorrectionDetails";
 import BrideDetails from "./pageComponents/marriageComponents/BrideDetails";
+import BrideCorrectionDetails from "./pageComponents/marriageComponents/BrideCorrectionDetails";
 import MarriageInstitution from "./pageComponents/marriageComponents/MarriageInstitution";
 import MarriagePublicPlace from "./pageComponents/marriageComponents/MarriagePublicPlace";
 import MarriageRegistration from "./pageComponents/marriageComponents/MarriageRegistration";
 import HouseMarriageRegistration from "./pageComponents/marriageComponents/HouseMarriageRegistration";
 import witnessdetails from "./pageComponents/marriageComponents/witnessdetails";
+import MarriageInclusionEditPage from "./pageComponents/marriageComponents/MarriageCorrection";
 
 // import CreateAbandonedBirth from "./pages/employee/Abandoned-birth";
 import AbandonedChildDetails from "./pageComponents/abandonedBirthComponents/AbandonedChildDetails";
 import AbandonedBirthInitiatorDetails from "./pageComponents/abandonedBirthComponents/AbandonedBirthInitiatorDetails";
+import BornOutsideAcknowledgement from "./pages/citizen/BornOutsideReg/BornOutsideAcknowledgement";
 
+
+import InformationDeathAband from "./pageComponents/deathAbandoned/InformationDeathAband";
 
 export const CRModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
@@ -251,6 +258,7 @@ const componentsToRegister = {
   CRApplicationDetails,
   CRApplicationDeathDetails,
   SearchDeathInclusion,
+  CRSearch,
   CRDeathsearch,
   SearchCrApplication,
   SearchRegistryDeath,
@@ -268,6 +276,7 @@ const componentsToRegister = {
   CRCreateBirthNACRegistration: CreateBirthNACRegistration,
   ParentsDetails,
   CRBirthInclusions:BirthInclusion,
+  CRMarriageInclusions:MarriageInclusion,
   CRBirthInclusionEditPage: BirthInclusionEditPage,
   SearchBirthInclusion,
   BirthPlaceHospital,
@@ -318,6 +327,7 @@ const componentsToRegister = {
   AdoptionStatisticalInformation,
   AdoptionParentsAddress,
   CRDeathInclusionsPage:DeathInclusionPage,
+  SearchMarriageInclusion,
   //////////////////
   CRDeathcorrection,
   CRSearchdeathcorrection,
@@ -357,6 +367,7 @@ const componentsToRegister = {
   BirthAcknowledgement,
   DeathAcknowledgement,
   MarriageAcknowledgement,
+  MarriageInclusionEditPage,
   StillBirthAcknowledgement,
   BirthCertificate,
   CRCreateDeathRegistration: CreateDeathRegistration,
@@ -365,20 +376,23 @@ const componentsToRegister = {
   CRDDocuments,
   CRWFApplicationTimeline,
   CRDWFApplicationTimeline,
-
+  InformationDeathAband,
   // CreateAbandonedBirth,
   AbandonedChildDetails,
   AbandonedBirthInitiatorDetails,
   //Marriage
   CRCreateMarriageRegistration: CreateMarriageRegistration,
   GroomDetails,
+  GroomCorrectionDetails,
   BrideDetails,
+  BrideCorrectionDetails,
   MarriageInstitution,
   MarriagePublicPlace,
   MarriageRegistration,
   HouseMarriageRegistration,
   witnessdetails,
-  FormFieldContainer
+  FormFieldContainer,
+  BornOutsideAcknowledgement,
 };
 
 export const initCRComponents = () => {
