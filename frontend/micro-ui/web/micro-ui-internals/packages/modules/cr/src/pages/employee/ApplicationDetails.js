@@ -89,28 +89,6 @@ const ApplicationDetails = () => {
     let actions = orderBy(filteredActions, ["action"], ["desc"]);
     if ((!actions || actions?.length == 0) && workflowDetails?.data?.actionState) workflowDetails.data.actionState.nextActions = [];
 
-<<<<<<< Updated upstream
-    workflowDetails?.data?.actionState?.nextActions?.forEach((data) => {
-      // console.log(data);
-      if (applicationDetails?.applicationData?.applicationtype === "CRBRNR") {
-        if (data.action == "EDIT") {
-          // /digit-ui/employee/cr/cr-flow/child-details/${applicationNumber}
-          (data.redirectionUrl = {
-            pathname: `/digit-ui/employee/cr/cr-flow/child-details`,
-            state: applicationDetails,
-          }),
-            (data.tenantId = stateId);
-        }
-      } else if (applicationDetails?.applicationData?.applicationtype === "CRBRSB") {
-        if (data.action == "EDIT") {
-          // /digit-ui/employee/cr/cr-flow/child-details/${applicationNumber}
-          (data.redirectionUrl = {
-            pathname: `/digit-ui/employee/cr/cr-flow/stillbirth-child-details`,
-            state: applicationDetails,
-          }),
-            (data.tenantId = stateId);
-        }
-=======
     workflowDetails?.data?.actionState?.nextActions?.forEach(data => {
       if (data.action == "EDIT") {
         // /digit-ui/employee/cr/cr-flow/child-details/${applicationNumber}
@@ -131,7 +109,6 @@ const ApplicationDetails = () => {
         }
         
         
->>>>>>> Stashed changes
       }
     });
   }
