@@ -677,35 +677,62 @@ serviceMaps:
 
 
   - version: 1.0
-    description: Save draft_main details in egov_filemgmnt database, eg_fm_drafting table
+    description: Save drafting details in egov_filemgmnt database, eg_fm_drafting table
     fromTopic: save_fm_drafting
     isTransaction: true
     queryMaps:
-      - query:INSERT INTO public.eg_fm_drafting(id, draftchildid, businessservice, modulename, workflowcode, filecode, status, createdby, createdtime, lastmodifiedby, lastmodifiedtime)  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
-      - basePath: Drafting.*
+      - query: INSERT INTO public.eg_fm_drafting(id, tenantid, businessservice, modulename, filecode, drafttype, drafttext, assigner, filestoreid, status, createdby, createdtime, lastmodifiedby, lastmodifiedtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        basePath: Drafting.*
         jsonMaps:
 
           - jsonPath: $.Drafting.*.uuid
-          - jsonPath: $.Drafting.*.draftingChild
-          - jsonPath: $.Drafting.*.businessService
-          - jsonPath: $.Drafting.*.workflowCode
-          - jsonPath: $.Drafting.*.draftType
-          - jsonPath: $.Drafting.*.fileStoreId
-          - jsonPath: $.Drafting.*.status
-          - jsonPath: $.Drafting.*.auditDetails
 
+          - jsonPath: $.Drafting.*.tenantId
+
+          - jsonPath: $.Drafting.*.businessService
+
+          - jsonPath: $.Drafting.*.moduleName
+
+          - jsonPath: $.Drafting.*.fileCode
+
+          - jsonPath: $.Drafting.*.draftType
+
+          - jsonPath: $.Drafting.*.draftText
+
+          - jsonPath: $.Drafting.*.assigner
+
+          - jsonPath: $.Drafting.*.fileStoreId
+
+          - jsonPath: $.Drafting.*.status
+
+          - jsonPath: $.Drafting.*.auditDetails.createdBy
+
+          - jsonPath: $.Drafting.*.auditDetails.createdTime
+        
+          - jsonPath: $.Drafting.*.auditDetails.lastModifiedBy
+
+          - jsonPath: $.Drafting.*.auditDetails.lastModifiedTime
+          
   - version: 1.0
-    description: Save draft_child details in egov_filemgmnt database, eg_fm_drafting_child table
-    fromTopic: save_fm_draftingchild
+    description: Update drafting status  in egov_filemgmnt database, eg_fm_drafting
+    fromTopic: update_fm_drafting
     isTransaction: true
     queryMaps:
-      - query:INSERT INTO public.eg_fm_drafting_child(id, businessservice, modulename, workflowcode, filecode, status, createdby, createdtime, lastmodifiedby, lastmodifiedtime)  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
-      - basePath: DraftingChild.*
+      - query: INSERT INTO "public"."eg_fm_drafting_log"  SELECT * FROM "eg_fm_drafting" WHERE ("filecode" = ? AND "drafttype" = ? AND "assigner" = ?);
+        basePath: Drafting.*
         jsonMaps:
-          - jsonPath: $.DraftingChild.*.uuid
-          - jsonPath: $.DraftingChild.*.businessService
-          - jsonPath: $.DraftingChild.*.moduleName
-          - jsonPath: $.DraftingChild.*.workflowCode
-          - jsonPath: $.DraftingChild.*.fileCode
-          - jsonPath: $.DraftingChild.*.status
-          - jsonPath: $.DraftingChild.*.auditDetails
+
+        - jsonPath: $.Drafting.*.fileCode
+
+        - jsonPath: $.Drafting.*.draftType
+
+        - jsonPath: $.Drafting.*.assigner
+
+      - query: UPDATE public.eg_fm_drafting  SET  status=?, lastmodifiedby = ?, lastmodifiedtime = ?  WHERE ("filecode" = ? AND "drafttype" = ? AND "assigner" = ?);
+        basePath: Drafting.*
+        jsonMaps:
+
+        - jsonPath: $.Drafting.*.status
+
+        - jsonPath: $.Drafting.*.auditDetails
+
