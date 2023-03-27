@@ -1,17 +1,26 @@
+// import React from 'react'
+
+// function InformationDeathAband() {
+//   return (
+//     <div>InformationDeathAband</div>
+//   )
+// }
+
+// export default InformationDeathAband
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton, Toast } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
-import Hospital from "./Hospital";
-import Institution from "./Institution";
-import DeathPlaceHome from "./DeathPlaceHome";
-import DeathPlaceVehicle from "./DeathPlaceVehicle";
-import DeathPublicPlace from "./DeathPublicPlace";
-import DeathOutsideJurisdiction from "./DeathOutsideJurisdiction ";
+import Hospital from "../deathComponents/Hospital";
+import Institution from "../deathComponents/Institution";
+import DeathPlaceHome from "../deathComponents/DeathPlaceHome";
+import DeathPlaceVehicle from "../deathComponents/DeathPlaceVehicle";
+import DeathPublicPlace from "../deathComponents/DeathPublicPlace";
+// import DeathOutsideJurisdiction from "../deathComponents/DeathOutsideJurisdiction";
 import { useParams } from "react-router-dom";
 
-const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath }) => {
+const InformationDeathAband = ({ config, onSelect, userType, formData, isEditDeath }) => {
   const [isEditDeathPageComponents, setIsEditDeathPageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
   const stateId = Digit.ULBService.getStateId();
@@ -162,11 +171,11 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
       : formData?.InformationDeath?.setDeathTimeTo
   );
 
-  const [DateOfDeath1, setToDate] = useState(
+  const [ToDate, setToDate] = useState(
     isEditDeathPageComponents === false &&
       (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
-      ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath1)
-      : formData?.InformationDeath?.DateOfDeath1
+      ? convertEpochToDate(formData?.InformationDeath?.ToDate)
+      : formData?.InformationDeath?.ToDate
   );
 
   // const [DeathTime, setDeathTime] = useState("");
@@ -238,7 +247,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
     formData?.InformationDeath?.AgeUnit?.code
       ? formData?.InformationDeath?.AgeUnit
       : formData?.InformationDeath?.AgeUnit
-      ? cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.code === formData?.InformationDeath?.AgeUnit)[0]
+      ? cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.code === formData?.InformationDeath?.DeceasedGender)[0]
       : ""
   );
 
@@ -266,26 +275,24 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
 
   // const [DeathPlace, setselectDeathPlace] = useState(cmbPlace?(cmbPlace.filter(cmbPlace=>cmbPlace.code === formData?.InformationDeath?.DeathPlace)[0]) :formData?.InformationDeath?.DeathPlace) ;
   //Hospital, Intitution, vehicle, Public Place {DeathPlaceType}
- 
+  const [DeathPlaceType, selectDeathPlaceType] = useState(
+    formData?.InformationDeath?.DeathPlaceType?.code
+      ? formData?.InformationDeath?.DeathPlaceType
+      : formData?.InformationDeath?.DeathPlaceType
+      ? ""
+      : ""
+  );
   const [HospitalNameMl, selectHospitalNameMl] = useState(
-    formData?.InformationDeathails?.HospitalNameMl?.code
+    formData?.  InformationDeathails?.HospitalNameMl?.code
       ? formData?.InformationDeath?.HospitalNameMl
       : formData?.InformationDeath?.HospitalNameMl
       ? ""
       : ""
   );
-  const [DeathPlaceType, selectDeathPlaceType] = useState(
-    formData?.InformationDeath?.DeathPlaceType?.code ? formData?.InformationDeath?.DeathPlaceType : formData?.InformationDeath?.institutionTypeCode ? "" : ""
-  );
- 
   const [DeathPlaceInstId, setSelectedDeathPlaceInstId] = useState(
-    formData?.InformationDeath?.DeathPlaceInstId?.code ? formData?.InformationDeath?.DeathPlaceInstId : formData?.InformationDeath?.institutionNameCode ? "" : ""
+    formData?.InformationDeath?.DeathPlaceInstId ? formData?.InformationDeath?.DeathPlaceInstId : null
   );
-
-  const [InstitutionIdMl, setInstitutionIdMl] = useState(
-    formData?.InformationDeath?.InstitutionIdMl?.code ? formData?.InformationDeath?.InstitutionIdMl : formData?.InformationDeath?.institutionNameCode ? "" : ""
-  );
-  
+  const [InstitutionIdMl, setInstitutionIdMl] = useState(formData?.InformationDeath?.DeathPlaceInstId);
   const [InstitutionFilterList, setInstitutionFilterList] = useState(null);
   const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(false);
   // Home
@@ -356,14 +363,14 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isInitialRenderDeathPlace, setIsInitialRenderDeathPlace] = useState(true);
 
-  const [sexError, setsexError] = useState(formData?.InformationDeath?.sexError ? false : false);
-  const [DOBError, setDOBError] = useState(formData?.InformationDeath?.ChildDOB ? false : false);
-  const [AadharError, setAadharError] = useState(formData?.InformationDeath?.DeceasedAadharNumber ? false : false);
-  const [HospitalError, setHospitalError] = useState(formData?.InformationDeath?.DeathPlaceType ? false : false);
-  const [InstitutionError, setInstitutionError] = useState(formData?.InformationDeath?.DeathPlaceType ? false : false);
-  const [InstitutionNameError, setInstitutionNameError] = useState(formData?.InformationDeath?.DeathPlaceInstId ? false : false);
-  const [AgeError, setAgeError] = useState(formData?.InformationDeath?.Age ? false : false);
-  const [WardNameError, setWardNameError] = useState(formData?.InformationDeath?.DeathPlaceWardId ? false : false);
+  // const [sexError, setsexError] = useState(formData?.InformationDeath?.sexError ? false : false);
+  // const [DOBError, setDOBError] = useState(formData?.InformationDeath?.ChildDOB ? false : false);
+  // const [AadharError, setAadharError] = useState(formData?.InformationDeath?.DeceasedAadharNumber ? false : false);
+  // const [HospitalError, setHospitalError] = useState(formData?.InformationDeath?.DeathPlaceType ? false : false);
+  // const [InstitutionError, setInstitutionError] = useState(formData?.InformationDeath?.DeathPlaceType ? false : false);
+  // const [InstitutionNameError, setInstitutionNameError] = useState(formData?.InformationDeath?.DeathPlaceInstId ? false : false);
+  // const [AgeError, setAgeError] = useState(formData?.InformationDeath?.Age ? false : false);
+  // const [WardNameError, setWardNameError] = useState(formData?.InformationDeath?.DeathPlaceWardId ? false : false);
   const onSkip = () => onSelect();
   useEffect(() => {
     if (isInitialRender) {
@@ -482,7 +489,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   function setCheckedDate(e) {
     if (e.target.checked === true) {
       setChecked(e.target.checked);
-      setDateOfDeath("");
+      setFromDate("");
       setToDate("");
     } else {
       setChecked(e.target.checked);
@@ -521,12 +528,12 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
     setToDate(value);
     const today = new Date();
     const toDate = new Date(value);
-    const fromDate = new Date(DateOfDeath);
+    const fromDate = new Date(FromDate);
 
     if (toDate.getTime() <= today.getTime()) {
       if (fromDate && toDate.getTime() < fromDate.getTime()) {
         setToDate(null);
-        setDOBError(true);
+        // setDOBError(true);
         setToast(true);
         setTimeout(() => {
           setToast(false);
@@ -537,35 +544,12 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
         Difference_In_DaysRounded = Math.floor(Difference_In_Days);
       }
     }
-    // else {
-    //   setToDate(null);
-    //   setDOBError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 3000);
-    // }
+   
   }
 
-  // function selectToDate(value) {
-  //   setToDate(value);
-  //   const today = new Date();
-  //   const deathDate = new Date(value);
-  //   if (deathDate.getTime() <= today.getTime()) {
-  //     let Difference_In_Time = today.getTime() - deathDate.getTime();
-  //     let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-  //     Difference_In_DaysRounded = Math.floor(Difference_In_Days);
-  //   } else {
-  //     setToDate(null);
-  //     setDOBError(true);
-  //     setToast(true);
-  //     setTimeout(() => {
-  //       setToast(false);
-  //     }, 3000);
-  //   }
-
-  // }
+ 
   function selectDeathDate(value) {
+    // setDeathDate(value);
     setDateOfDeath(value);
     const today = new Date();
     const deathDate = new Date(value);
@@ -574,14 +558,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       Difference_In_DaysRounded = Math.floor(Difference_In_Days);
     }
-    // else {
-    //   setDateOfDeath(null);
-    //   setDOBError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 3000);
-    // }
+   
   }
   function selectReligion(value) {
     setSelectedReligion(value);
@@ -655,26 +632,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
       setcmbAgeUnitFilter(cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.code === "AGE_UNIT_YEARS"));
     }
   }
-  // function setSelectDeceasedAadharNumber(e) {
-  //   if (e.target.value.length != 0) {
-  //     if (e.target.value.length > 12) {
-  //       setAadharError(true);
-  //       return false;
-  //     } else if (e.target.value.length < 12) {
-  //       setAadharError(true);
-  //       setDeceasedAadharNumber(e.target.value);
-  //       return false;
-  //     } else {
-  //       setAadharError(false);
-  //       setDeceasedAadharNumber(e.target.value);
-  //       return true;
-  //     }
-  //   } else {
-  //     setAadharError(false);
-  //     setDeceasedAadharNumber(e.target.value);
-  //     return true;
-  //   }
-  // }
+ 
   function setSelectDeceasedAadharNumber(e) {
     if (e.target.value.trim().length >= 0) {
       setDeceasedAadharNumber(
@@ -690,23 +648,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   function selectOccupation(value) {
     setSelectedOccupation(value);
   }
-  // function selectDateOfDeath(value) {
-  //   setDateOfDeath(value);
-  //   const today = new Date();
-  //   const deathDate = new Date(value);
-  //   if (deathDate.getTime() <= today.getTime()) {
-  //     let Difference_In_Time = today.getTime() - deathDate.getTime();
-  //     let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-  //     Difference_In_DaysRounded = Math.floor(Difference_In_Days);
-  //   } else {
-  //     setDateOfDeath(null);
-  //     setDOBError(true);
-  //     setToast(true);
-  //     setTimeout(() => {
-  //       setToast(false);
-  //     }, 3000);
-  //   }
-  // }
+  
   function selectDeathPlace(value) {
     setselectDeathPlace(value);
     setValue(value.code);
@@ -938,20 +880,11 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
       // setDeceasedAadharNotAvailable(e.target.checked);
       setDeceasedAadharNotAvailable(e.target.checked);
       setDeceasedAadharNumber("");
-      setAadharError(false);
+      // setAadharError(false);
       setToast(false);
     }
   }
-  // const isTextBoxValid = () => {
-
-  //   // } else if (Age > 23 && Age <= 29) {
-  //   //   return value ===  ["Years", "Days"].includes(AgeUnit);
-  //   // } else if (Age > 29 && Age <= 120) {
-  //   //   return value ===  ["Years"].includes(AgeUnit);
-  //   // } else {
-  //   //   return false;
-  //   // }
-  // };
+ 
   const goNext = () => {
     if (Difference_In_DaysRounded <= 21) {
       if (DeathPlace.code == "HOSPITAL") {
@@ -961,91 +894,11 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
         workFlowCode = "21DEATHHHOME";
       }
     }
-    if (DeceasedGender == null || DeceasedGender == "" || DeceasedGender == undefined) {
-      validFlag = false;
-      setsexError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      setsexError(false);
-    }
-    // if (DeceasedAadharNumber != null || DeceasedAadharNumber != "" || DeceasedAadharNumber != undefined || DeceasedAadharNotAvailable === false) {
-    //   let adharLength = DeceasedAadharNumber;
-    //   if (adharLength.length < 12 || adharLength.length > 12 ) {
-    //     validFlag = false;
-    //     setAadharError(true);
-    //     setToast(true);
-    //     setTimeout(() => {
-    //       setToast(false);
-    //     }, 2000);
-    //   } else {
-    //     setAadharError(false);
-    //   }
-    // }
-    if (Age == null || Age == "" || Age == undefined) {
-      validFlag = false;
-      setAgeError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      setAgeError(false);
-    }
-    // if (DeathPlaceWardId == null || DeathPlaceWardId == "" || DeathPlaceWardId == undefined) {
-    //   validFlag = false;
-    //   setWardNameError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 2000);
-    // } else {
-    //   setWardNameError(false);
-    // }
-
-    if (DeathPlace.code == "HOSPITAL") {
-      if (DeathPlaceType == null) {
-        setHospitalError(true);
-        validFlag = false;
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        DeathPlaceTypecode = DeathPlaceType.code;
-        setHospitalError(false);
-      }
-    } else if (DeathPlace.code === "INSTITUTION") {
-      if (DeathPlaceType == null) {
-        setInstitutionError(true);
-        validFlag = false;
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        DeathPlaceTypecode = DeathPlaceType.code;
-        setInstitutionError(false);
-        if (DeathPlaceInstId === null) {
-          setInstitutionNameError(true);
-          validFlag = false;
-          setToast(true);
-          setTimeout(() => {
-            setToast(false);
-          }, 2000);
-        } else {
-          institutionNameCode = DeathPlaceInstId.code;
-          setInstitutionNameError(false);
-        }
-      }
-    }
 
     if (validFlag == true) {
       sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
       sessionStorage.setItem("DeathDateUnavailable", DeathDateUnavailable ? DeathDateUnavailable : false);
-      sessionStorage.setItem("DateOfDeath1", DateOfDeath1 ? DateOfDeath1 : null);
+      sessionStorage.setItem("ToDate", ToDate ? ToDate : null);
       sessionStorage.setItem("FromDate", FromDate ? FromDate : null);
       sessionStorage.setItem("DeathTimeFrom", DeathTimeFrom ? DeathTimeFrom : null);
       sessionStorage.setItem("DeathTimeTo", DeathTimeTo ? DeathTimeTo : null);
@@ -1142,7 +995,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
 
       onSelect(config.key, {
         IsEditChangeScreen,
-        DateOfDeath1,
+        ToDate,
         DeathDateUnavailable,
         DeathTimeTo,
         FromDate,
@@ -1227,23 +1080,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
         setValue(formData?.InformationDeath?.DeathPlace);
       }
     }
-    // if (formData?.ChildDetails?.medicalAttensionSub != null) {
-    //   if (cmbAttDeliverySub.length > 0 && (medicalAttensionSub === undefined || medicalAttensionSub === "")) {
-    //     setMedicalAttensionSub(cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.ChildDetails?.medicalAttensionSub)[0]);
-    //   }
-    // }
-    // if (formData?.ChildDetails?.pregnancyDuration != null) {
-    //   console.log("pregnancyDuration" + pregnancyDuration);
-    //   if (cmbPregWeek.length > 0 && (pregnancyDuration === undefined || pregnancyDuration === "")) {
-    //     setPregnancyDuration(cmbPregWeek.filter(cmbPregWeek => parseInt(cmbPregWeek.code) === formData?.ChildDetails?.pregnancyDuration)[0]);
-    //   }
-    // }
-    // if (formData?.ChildDetails?.deliveryMethods != null) {
-    //   if (cmbDeliveryMethod.length > 0 && (deliveryMethods === undefined || deliveryMethods === "")) {
-    //     // console.log(cmbDeliveryMethod.filter(cmbDeliveryMethod => parseInt(cmbDeliveryMethod.code) === formData?.ChildDetails?.deliveryMethods)[0]);
-    //     setDeliveryMethod(cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.ChildDetails?.deliveryMethods)[0]);
-    //   }
-    // }
+   
   }
   if (
     isWorkFlowDetailsLoading ||
@@ -1299,16 +1136,14 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
                   <div className="col-md-3">
                     <CardLabel>
                       {t("CR_FROM_DATE")}
-                      <span className="mandatorycss">*</span>
                     </CardLabel>
                     <DatePicker
-                      date={DateOfDeath}
+                      date={FromDate}
                       max={convertEpochToDate(new Date())}
-                      name="DateOfDeath"
-                      onChange={selectDeathDate}
+                      name="FromDate"
+                      onChange={selectFromDate}
                       {...(validation = {
                         pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",
-                        isRequired: true,
                         type: "text",
                         title: t("CR_INVALID_DATE"),
                       })}
@@ -1322,16 +1157,14 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
                   <div className="col-md-3">
                     <CardLabel>
                       {t("CR_TO_DATE")}
-                      <span className="mandatorycss">*</span>
                     </CardLabel>
                     <DatePicker
-                      date={DateOfDeath1}
+                      date={ToDate}
                       max={convertEpochToDate(new Date())}
-                      name="DateOfDeath1"
+                      name="ToDate"
                       onChange={selectToDate}
                       {...(validation = {
                         pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",
-                        isRequired: true,
                         type: "text",
                         title: t("CR_INVALID_DATE"),
                       })}
@@ -1350,7 +1183,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
                   <div className="col-md-6">
                     <CardLabel>
                       {t("CR_DATE_OF_DEATH")}
-                      <span className="mandatorycss">*</span>
                     </CardLabel>
                     {/* date={CommencementDate} */}
                     <DatePicker
@@ -1360,16 +1192,15 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
                       onChange={selectDeathDate}
                       {...(validation = {
                         pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",
-                        isRequired: true,
                         type: "text",
                         title: t("CR_INVALID_DATE"),
                       })}
                     />
                   </div>
-                  <div className="col-md-2">
+                  {/* <div className="col-md-2">
                     <CardLabel>{t("CR_TIME_OF_DEATH")}</CardLabel>
                     <CustomTimePicker name="TimeOfDeath" onChange={(val) => handleTimeChange(val, setDeathTime)} value={TimeOfDeath} />
-                  </div>
+                  </div> */}
                 </div>
               </div>
             )}
@@ -1422,12 +1253,10 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
               <div className="col-md-6">
                 <CardLabel>
                   {t("CR_PLACE_OF_DEATH")}
-                  <span className="mandatorycss">*</span>
                 </CardLabel>
                 <Dropdown
                   t={t}
                   optionKey="name"
-                  isMandatory={false}
                   option={cmbPlace}
                   selected={DeathPlace}
                   select={selectDeathPlace}
@@ -1603,7 +1432,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
                   <Dropdown
                     t={t}
                     optionKey="name"
-                    isMandatory={false}
                     onChange={handleDropdownChange}
                     option={cmbDocumentType}
                     selected={DeceasedIdproofType}
@@ -1616,7 +1444,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
                   <CardLabel>{t("CR_ID_NO")}</CardLabel>
                   <TextInput
                     t={t}
-                    isMandatory={false}
                     type={"text"}
                     optionKey="i18nKey"
                     name="DeceasedIdproofNo"
@@ -1624,7 +1451,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
                     disabled={!isTextboxEnabled}
                     onChange={setSelectDeceasedIdproofNo}
                     placeholder={`${t("CR_ID_NO")}`}
-                    {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "Text", title: t("CR_INVALID_ID") })}
+                    {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$",  type: "Text", title: t("CR_INVALID_ID") })}
                   />
                 </div>
               </div>
@@ -1637,7 +1464,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
                   <CardLabel>{t("CR_AADHAR")}</CardLabel>
                   <TextInput
                     t={t}
-                    isMandatory={false}
                     type="number"
                     max="12"
                     optionKey="i18nKey"
@@ -1645,7 +1471,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
                     value={DeceasedAadharNumber}
                     onChange={setSelectDeceasedAadharNumber}
                     placeholder={`${t("CR_AADHAR")}`}
-                    {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                    {...(validation = { pattern: "^[0-9]{12}$", type: "text",  title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                   />
                 </div>
               </div>
@@ -1656,46 +1482,43 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
             <div className="col-md-12">
               <div className="col-md-4">
                 <CardLabel>
-                  {`${t("CR_FIRST_NAME_EN")}`} <span className="mandatorycss">*</span>
+                  {`${t("CR_FIRST_NAME_EN")}`}
                 </CardLabel>
                 <TextInput
                   t={t}
-                  isMandatory={false}
                   type={"text"}
                   optionKey="i18nKey"
                   name="DeceasedFirstNameEn"
                   value={DeceasedFirstNameEn}
                   onChange={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_FIRST_NAME_EN")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$",  type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
               </div>
               <div className="col-md-4">
                 <CardLabel>{`${t("CR_MIDDLE_NAME_EN")}`}</CardLabel>
                 <TextInput
                   t={t}
-                  isMandatory={false}
                   type={"text"}
                   optionKey="i18nKey"
                   name="DeceasedMiddleNameEn"
                   value={DeceasedMiddleNameEn}
                   onChange={setSelectDeceasedMiddleNameEn}
                   placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$",  type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })}
                 />
               </div>
               <div className="col-md-4">
                 <CardLabel>{`${t("CR_LAST_NAME_EN")}`}</CardLabel>
                 <TextInput
                   t={t}
-                  isMandatory={false}
                   type={"text"}
                   optionKey="i18nKey"
                   name="DeceasedLastNameEn"
                   value={DeceasedLastNameEn}
                   onChange={setSelectDeceasedLastNameEn}
                   placeholder={`${t("CR_LAST_NAME_EN")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$",  type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
                 />
               </div>
             </div>
@@ -1705,11 +1528,9 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
               <div className="col-md-4">
                 <CardLabel>
                   {`${t("CR_FIRST_NAME_ML")}`}
-                  <span className="mandatorycss">*</span>
                 </CardLabel>
                 <TextInput
                   t={t}
-                  isMandatory={false}
                   type={"text"}
                   optionKey="i18nKey"
                   name="DeceasedFirstNameMl"
@@ -1718,7 +1539,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
                   placeholder={`${t("CR_FIRST_NAME_ML")}`}
                   {...(validation = {
                     pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                    isRequired: true,
                     type: "text",
                     title: t("CR_INVALID_FIRST_NAME_ML"),
                   })}
@@ -1728,7 +1548,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
                 <CardLabel>{`${t("CR_MIDDLE_NAME_ML")}`}</CardLabel>
                 <TextInput
                   t={t}
-                  isMandatory={false}
                   type={"text"}
                   optionKey="i18nKey"
                   name="DeceasedMiddleNameMl"
@@ -1737,7 +1556,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
                   placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
                   {...(validation = {
                     pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                    isRequired: false,
                     type: "text",
                     title: t("CR_INVALID_MIDDLE_NAME_ML"),
                   })}
@@ -1747,7 +1565,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
                 <CardLabel>{`${t("CR_LAST_NAME_ML")}`}</CardLabel>
                 <TextInput
                   t={t}
-                  isMandatory={false}
                   type={"text"}
                   optionKey="i18nKey"
                   name="DeceasedLastNameMl"
@@ -1756,7 +1573,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
                   placeholder={`${t("CR_LAST_NAME_ML")}`}
                   {...(validation = {
                     pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                    isRequired: false,
+
                     type: "text",
                     title: t("CR_INVALID_LAST_NAME_ML"),
                   })}
@@ -1770,29 +1587,25 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
               <div className="col-md-1">
                 <CardLabel>
                   {`${t("CR_AGE")}`}
-                  <span className="mandatorycss">*</span>{" "}
                 </CardLabel>
                 <TextInput
                   t={t}
-                  isMandatory={false}
                   type="number"
                   optionKey="i18nKey"
                   name="Age"
                   onChange={setSelectAge}
                   value={Age}
                   placeholder={`${t("CR_AGE")}`}
-                  {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "number", title: t("CS_COMMON_INVALID_AGE") })}
+                  {...(validation = { pattern: "^[.0-9`' ]*$",  type: "number", title: t("CS_COMMON_INVALID_AGE") })}
                 />
               </div>
               <div className="col-md-2">
                 <CardLabel>
                   {`${t("CR_AGE_UNIT")}`}
-                  <span className="mandatorycss">*</span>{" "}
                 </CardLabel>
                 <Dropdown
                   t={t}
                   optionKey="name"
-                  isMandatory={false}
                   option={cmbAgeUnitFilter}
                   selected={AgeUnit}
                   select={selectAgeUnit}
@@ -1803,28 +1616,25 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
 
               <div className="col-md-2">
                 <CardLabel>
-                  {t("CR_GENDER")} <span className="mandatorycss">*</span>{" "}
+                  {t("CR_GENDER")}
                 </CardLabel>
                 <Dropdown
                   t={t}
                   optionKey="code"
-                  isMandatory={true}
                   option={menu}
                   selected={DeceasedGender}
                   select={selectDeceasedGender}
                   placeholder={`${t("CR_GENDER")}`}
-                  {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })}
+                  {...(validation = {  title: t("CR_INVALID_GENDER") })}
                 />
               </div>
               <div className="col-md-2">
                 <CardLabel>
                   {t("CR_NATIONALITY")}
-                  <span className="mandatorycss">*</span>
                 </CardLabel>
                 <Dropdown
                   t={t}
                   optionKey="nationalityname"
-                  isMandatory={true}
                   option={cmbNation}
                   selected={Nationality}
                   select={selectNationality}
@@ -1834,12 +1644,10 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
               <div className="col-md-2">
                 <CardLabel>
                   {t("CS_COMMON_RELIGION")}
-                  <span className="mandatorycss">*</span>
                 </CardLabel>
                 <Dropdown
                   t={t}
                   optionKey="name"
-                  isMandatory={true}
                   option={cmbReligion}
                   selected={Religion}
                   select={selectReligion}
@@ -1851,7 +1659,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
                 <Dropdown
                   t={t}
                   optionKey="name"
-                  isMandatory={false}
                   option={cmbOccupationMain}
                   selected={Occupation}
                   select={selectOccupation}
@@ -1860,38 +1667,9 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
               </div>
             </div>
           </div>
-
-          {toast && (
-            <Toast
-              error={DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || AgeError || sexError || WardNameError}
-              label={
-                DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || AgeError || sexError || WardNameError
-                  ? DOBError
-                    ? t(`CR_INVALID_DATE`)
-                    : sexError
-                    ? t(`DEATH_ERROR_SEX_CHOOSE`)
-                    : AadharError
-                    ? t(`CS_COMMON_INVALID_AADHAR_NO`)
-                    : HospitalError
-                    ? t(`CR_ERROR_HOSPITAL_CHOOSE`)
-                    : InstitutionError
-                    ? t(`CR_ERROR_INSTITUTION_TYPE_CHOOSE`)
-                    : InstitutionNameError
-                    ? t(`CR_ERROR_INSTITUTION_NAME_CHOOSE`)
-                    : AgeError
-                    ? t(`CR_ERROR_AGE_CHOOSE`)
-                    : WardNameError
-                    ? t(`CR_ERROR_WARD_CHOOSE`)
-                    : setToast(false)
-                  : setToast(false)
-              }
-              onClose={() => setToast(false)}
-            />
-          )}
-          {""}
         </FormStep>
       </React.Fragment>
     );
   }
 };
-export default InformationDeath;
+export default InformationDeathAband;

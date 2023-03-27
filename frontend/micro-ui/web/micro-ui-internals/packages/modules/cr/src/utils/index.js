@@ -734,7 +734,7 @@ export const convertToBirthRegistration = (data = {}) => {
         Demands: [
           {
             tenantId: "kl.cochin",
-            consumerCode:  data?.ChildDetails?.applicationNumber,
+            consumerCode: data?.ChildDetails?.applicationNumber,
             consumerType: "FEE",
             businessService: "CR",
             taxPeriodFrom: "1554076800000",
@@ -1270,9 +1270,11 @@ export const convertToDeathRegistration = (data = {}) => {
           Id: null,
           RegistrationUnit: null,
           TenantId: data?.InformationDeath?.tenantId,
+          DeathDateUnavailable: data?.InformationDeath?.DeathDateUnavailable,
           DateOfDeath: Date.parse(data?.InformationDeath?.DateOfDeath),
           TimeOfDeath: parseInt(data?.InformationDeath?.TimeOfDeath),
           TimeOfDeathUnit: "AM",
+          DateOfDeath1: Date.parse(data?.InformationDeath?.DateOfDeath1),
           DeathPlace: data?.InformationDeath?.DeathPlace.code,
           DeathPlaceType: data?.InformationDeath?.DeathPlaceType ? data?.InformationDeath?.DeathPlaceType.code : null,
           DeathPlaceInstId: data?.InformationDeath?.DeathPlaceInstId ? data?.InformationDeath?.DeathPlaceInstId.code : null,
@@ -1298,7 +1300,6 @@ export const convertToDeathRegistration = (data = {}) => {
           DeathPlaceStreetEn: data?.InformationDeath?.DeathPlaceStreetEn,
           DeathPlaceStreetMl: data?.InformationDeath?.DeathPlaceStreetMl,
           GeneralRemarks: data?.InformationDeath?.GeneralRemarks,
-
           DeathPlaceHomeWardId: data?.InformationDeath?.DeathPlaceHomeWardId ? data?.InformationDeath?.DeathPlaceHomeWardId.code : null,
           DeathPlaceHomePostofficeId: data?.InformationDeath?.DeathPlaceHomePostofficeId
             ? data?.InformationDeath.DeathPlaceHomePostofficeId.code
@@ -1498,7 +1499,7 @@ export const convertToDeathRegistration = (data = {}) => {
           DeathSignedOfficerDesignation: data?.InformantDetails?.DeathSignedOfficerDesignation,
           InformantMobileNo: parseInt(data?.InformantDetails?.InformantMobileNo),
           InformantAddress: data?.InformantDetails?.InformantAddress ? data?.InformantDetails?.InformantAddress : null,
-          IsDeclarationInformant: data?.InformantDetails?.IsDeclarationInformant,
+          IsDeclarationInformant: data?.InformantDetails?.IsDeclarationInformer,
           InformantDocumentId: null,
           InformantDocumentDeathDtlId: null,
           InformantDocumentTenantId: data?.InformationDeath?.tenantId,
@@ -1528,7 +1529,6 @@ export const convertToDeathRegistration = (data = {}) => {
           lastModifiedTime: null,
         },
         applicationType: "new",
-        applicationStatus: "Workflow_appl_status",
         businessService: "death-services",
         action: "INITIATE",
         assignee: [],

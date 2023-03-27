@@ -4,23 +4,26 @@ import {
   CardLabel,
   TextInput,
   Dropdown,
-  CheckBox,
   DatePicker,
   BackButton,
   Loader,
+  Toast,
   LabelFieldPair,
   RadioButtons,
+  SubmitBar,
 } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/MARRIAGETimeline";
+import MarriageInclusionTimeline from "../../components/MarriageCorrectionTimeline";
 import { useTranslation } from "react-i18next";
+import CustomTimePicker from "../../components/CustomTimePicker";
 
-
-const GroomDetails = ({ config, onSelect, userType, formData }) => {
+const GroomCorrectionDetails = ({ config, onSelect, userType, formData }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
   const { data: Menu, isLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
+ // const { data: Profession = {}, isProfessionLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Profession");
 
+  
   const radiomenu = [
     { i18nKey: "CR_GROOM_PARENTS", code: "PARENT" },
     { i18nKey: "CR_GROOM_GUARDIAN", code: "GUARDIAN" },
@@ -30,10 +33,15 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     Menu.map((groomGenderDetails) => {
       menu.push({ i18nKey: `CR_COMMON_GENDER_${groomGenderDetails.code}`, code: `${groomGenderDetails.code}`, value: `${groomGenderDetails.code}` });
     });
-  const [isParent, setIsParent] = useState(formData?.GroomDetails?.isParent ? formData?.GroomDetails?.isParent : false);
-  const [isGuardian, setIsGuardian] = useState(formData?.GroomDetails?.isGuardian ? formData?.GroomDetails?.isGuardian : false);
-  const [isInitialRender, setIsInitialRender] = useState(true);
-  const [isInitialRenderRadioButtons, setisInitialRenderRadioButtons] = useState(true);
+    // let cmbProfession = [];
+    // Profession &&
+    //     Profession["birth-death-service"] &&
+    //     Profession["birth-death-service"].Profession.map((ob) => {
+    //         cmbProfession.push(ob);
+    //     });
+    const [isInitialRenderRadioButtons, setisInitialRenderRadioButtons] = useState(true);
+  //const [groomProfessionEn, setGroomProfessionEn] = useState(formData?.GroomDetails?.groomProfessionEn ? formData?.GroomDetails?.groomProfessionEn : null);
+  //const [groomProfessionMal, setGroomProfessionMal] = useState(formData?.GroomDetails?.groomProfessionMal ? formData?.GroomDetails?.groomProfessionMal : null);
   const [groomGender, selectGroomGender] = useState(formData?.GroomDetails?.groomGender);
   const [groomDOB, setGroomDOB] = useState(formData?.GroomDetails?.groomDOB ? formData?.GroomDetails?.groomDOB : "");
   const [groomFathernameEn, setGroomFathernameEn] = useState(
@@ -82,7 +90,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
   );
   const [groomLastnameEn, setGroomLastnameEn] = useState(formData?.GroomDetails?.groomLastnameEn ? formData?.GroomDetails?.groomLastnameEn : "");
   const [selectedOption, setSelectedOption] = useState(
-    formData?.GroomDetails?.selectedOption ? formData?.GroomDetails?.selectedOption : "ILB"
+    formData?.AddressOfDecesed?.selectedOption ? formData?.AddressOfDecesed?.selectedOption : "ILB"
   );
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
@@ -107,22 +115,6 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
   const [access, setAccess] = React.useState(true);
 
   const onSkip = () => onSelect();
-  useEffect(() => {
-    if (isInitialRender) {
-      if (formData?.GroomDetails?.isParent != null) {
-        setIsInitialRender(false);
-        setIsParent(formData?.GroomDetails?.isParent);
-      }
-    }
-  }, [isInitialRender]);
-  useEffect(() => {
-    if (isInitialRender) {
-      if (formData?.GroomDetails?.isGuardian != null) {
-        setIsInitialRender(false);
-        setIsGuardian(formData?.GroomDetails?.isGuardian);
-      }
-    }
-  }, [isInitialRender]);
   const cmbMaritalStatus = [
     { i18nKey: "Unmarried", code: "UNMARRIED" },
     { i18nKey: "Married", code: "MARRIED" },
@@ -156,6 +148,12 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     { i18nKey: "CR_FOREIGN_NATIONAL", code: "FOREIGN" },
   ];
   
+  // function setSelectGroomProfessionEn(value) {  
+  //   setGroomProfessionEn(value);
+  // }
+  // function setSelectGroomProfessionMal(value) {
+  //   setGroomProfessionMal(value);
+  // }
   function setSelectGroomMaritalstatusID(value) {
     setGroomMaritalstatusID(value);
   }
@@ -213,34 +211,6 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       setTimeout(() => {
         setToast(false);
       }, 3000);
-    }
-  }
-  function setParent(e) {
-    if (e.target.checked === true) {
-      setIsParent(e.target.checked);
-
-    } else {
-      setIsParent(e.target.checked);
-      setGroomFathernameEn("");
-      setGroomMothernameEn("");
-      setGroomFatherAdharNo("");
-      setGroomMotherAdharNo("");
-      setGroomMothernameMal("");
-      setGroomFathernameMal("");
-    }
-  }
-  function setGuardian(e) {
-    if (e.target.checked === true) {
-      setIsGuardian(e.target.checked);
-
-    } else {
-      setIsGuardian(e.target.checked);
-      setGroomFathernameEn("");
-      setGroomMothernameEn("");
-      setGroomFatherAdharNo("");
-      setGroomMotherAdharNo("");
-      setGroomMothernameMal("");
-      setGroomFathernameMal("");
     }
   }
   function setSelectGroomFirstnameEn(e) {
@@ -356,6 +326,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
   
     if (validFlag == true) {
       sessionStorage.setItem("groomDOB", groomDOB ? groomDOB : null);
+      // sessionStorage.setItem("tripStartTime", tripStartTime ? tripStartTime : null);
       sessionStorage.setItem("groomGender", groomGender ? groomGender.code : null);
       sessionStorage.setItem("groomAdharNo", groomAdharNo ? groomAdharNo : null);
       sessionStorage.setItem("groomPassportNo", groomPassportNo ? groomPassportNo : null);
@@ -382,6 +353,8 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       sessionStorage.setItem("groomSpouseLiving", groomSpouseLiving ? groomSpouseLiving : null);
       sessionStorage.setItem("groomMaritalstatusID", groomMaritalstatusID ? groomMaritalstatusID : null);
       sessionStorage.setItem("selectedOption", selectedOption ? selectedOption : "ILB");
+      // sessionStorage.setItem("groomProfessionEn", groomProfessionEn ? groomProfessionEn.code : null);
+      // sessionStorage.setItem("groomProfessionMal", groomProfessionMal ? groomProfessionMal.code : null);
       onSelect(config.key, {
         groomDOB,
         selectedOption,
@@ -407,6 +380,8 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
         groomNoOfSpouse,
         groomSpouseLiving,
         groomMaritalstatusID,
+        // groomProfessionEn,
+        // groomProfessionMal,
         groomGardianAdhar,
         groomGuardiannameEn,
         groomGuardiannameMal
@@ -419,8 +394,8 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     return (
       <React.Fragment>
         <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-        {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
-        {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
+        {window.location.href.includes("/citizen") ? <MarriageInclusionTimeline currentStep={2} /> : null}
+        {window.location.href.includes("/employee") ? <MarriageInclusionTimeline currentStep={2} /> : null}
         <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
           <div className="row">
             <div className="col-md-12">
@@ -435,13 +410,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
             <div className="radios">
               <div className="radiobuttons">
                 <LabelFieldPair style={{ display: "flex" }}>
-                  <RadioButtons 
-                  t={t} 
-                  optionsKey="i18nKey" 
-                  options={rbmenu} 
-                  selectedOption={selectedValueRadio} 
-                  onSelect={selectRadioButtons} 
-                  style={{ marginTop: "15px", paddingLeft: "5px", height: "20px", display: "flex" }} />
+                  <RadioButtons t={t} optionsKey="i18nKey" options={rbmenu} selectedOption={selectedValueRadio} onSelect={selectRadioButtons} style={{ marginTop: "15px", paddingLeft: "5px", height: "20px", display: "flex" }} />
                 </LabelFieldPair>
               </div>
             </div>
@@ -701,7 +670,40 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
               />
             </div>
           </div>
-        </div>          
+        </div>
+        {/* <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-4">
+              <CardLabel>
+                  {`${t("CR_GROOM_PROFESSION_EN")}`}
+                </CardLabel>
+                <Dropdown
+                                        t={t}
+                                        optionKey="name"
+                                        isMandatory={false}
+                                        option={cmbProfession}
+                                        selected={groomProfessionEn}
+                                        select={setSelectGroomProfessionEn}
+                                        placeholder={`${t("CR_GROOM_PROFESSION_EN")}`}
+                                    />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>
+                  {`${t("CR_GROOM_PROFESSION_ML")}`}
+                </CardLabel>
+                <Dropdown
+                                        t={t}
+                                        optionKey="namelocal"
+                                        isMandatory={false}
+                                        option={cmbProfession}
+                                        selected={groomProfessionMal}
+                                        select={setSelectGroomProfessionMal}
+                                        placeholder={`${t("CR_GROOM_PROFESSION_ML")}`}
+                                    />
+            </div>
+          </div>
+        </div> */}
+            
         <div className="row">
             <div className="col-md-12">
               <div className="col-md-4">
@@ -761,42 +763,21 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
             </div>
             <div className="row">
             <div className="col-md-12">
-            <div className="col-md-6">
-            <LabelFieldPair style={{ display: "flex" }}>
-            <CheckBox
-                label={t("PARENT")}
-                value={isParent} 
-                  checked={isParent}
-                  onChange={setParent}
-                 />
-                 <CheckBox
-                label={t("GUARDIAN")}
-                value={isGuardian} 
-                  checked={isGuardian}
-                  onChange={setGuardian}
-                 />
-              </LabelFieldPair>
-            {/* <div className="radios">
+            <div className="radios">
               <div className="radiobuttons">
                 <LabelFieldPair style={{ display: "flex" }}>
                   <RadioButtons 
                   t={t} 
                   optionsKey="i18nKey" 
                   options={radiomenu} 
-                  //selectedOption={selectedValueRadio} 
-                  //onSelect={selectRadioButtons} 
-                  value={isParent} 
-                  checked={isParent}
-                  onChange={setParent}
+                  selectedOption={selectedValueRadio} 
+                  onSelect={selectRadioButtons} 
                   style={{ marginTop: "10px", paddingLeft: "5px", height: "20px", display: "flex" }} />
                 </LabelFieldPair>
               </div>
-            </div> */}
+            </div>
           </div>
           </div>
-          </div>
-          {isParent === true && (
-            <div>
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-4">
@@ -912,9 +893,6 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
               </div>
             </div>
           </div>
-          </div>)}
-          {isGuardian === true && (
-            <div>
           <div className="row">
             <div className="col-md-12">
                 <div className="col-md-4">
@@ -972,9 +950,35 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
               </div>
             </div>
           </div>
-          </div>)}
+          
+          {toast && (
+            <Toast
+              error={
+                AadharError || DOBError
+                // || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
+              }
+              label={
+                AadharError || DOBError
+                  ? //  || signedOfficerError || signedOfficerDesgError || mobileError || mobileLengthError ||
+                    // InstitutionError || SignedOfficerInstError || signedOfficerDesgInstError
+                    AadharError
+                    ? t(`CS_COMMON_INVALID_AADHAR_NO`)
+                    : DOBError
+                    ? t(`BIRTH_DOB_VALIDATION_MSG`)
+                    : // : signedOfficerError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`) : mobileError ? t(`BIRTH_ERROR_SIGNED_OFFICER__MOBILE_CHOOSE`) : mobileLengthError ? t(`BIRTH_ERROR_VALID__MOBILE_CHOOSE`)
+                      // : InstitutionError ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`) : SignedOfficerInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER_CHOOSE`) : signedOfficerDesgInstError ? t(`BIRTH_ERROR_SIGNED_OFFICER__DESIG_CHOOSE`)
+
+                      setToast(false)
+                  : setToast(false)
+              }
+              onClose={() => setToast(false)}
+            />
+          )}
+          {""}
+
+          {/* <div><BackButton >{t("CS_COMMON_BACK")}</BackButton></div> */}
         </FormStep>
       </React.Fragment>
     );
 };
-export default GroomDetails;
+export default GroomCorrectionDetails;

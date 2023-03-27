@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import {
   FormStep,
   CardLabel,
+  EditButton,
   TextInput,
   Dropdown,
   DatePicker,
@@ -12,13 +13,12 @@ import {
   Toast,
   SubmitBar,
 } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/MARRIAGETimeline";
+import MarriageInclusionTimeline from "../../components/MarriageCorrectionTimeline";
 import { useTranslation } from "react-i18next";
-import HouseMarriageRegistration from "./HouseMarriageRegistration";
 import CustomTimePicker from "../../components/CustomTimePicker";
 // import { TimePicker } from '@material-ui/pickers';
 
-const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarriage }) => {
+const MarriageInclusionEditPage = ({ config, onSelect, userType, formData,isEditMarriage }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -43,7 +43,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     { i18nKey: "Religious Institution", code: "RELIGIOUSINSTITUTION" },
     { i18nKey: "Public/Pvt Place ", code: "PUBLIC/PVTPLACE " },
     { i18nKey: "House", code: "HOUSE" },
-    { i18nKey: "other", code: "OTHER" },
+   
   ];
 
   let cmbDistrict = [];
@@ -54,9 +54,6 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   let Zonal = [];
   let cmbWardNo = [];
   let cmbWardNoFinal = [];
-  let MarriagePlaceTypeName = "";
-  let workFlowData = [];
-  let naturetype = null;
   boundaryList &&
     boundaryList["egov-location"] &&
     boundaryList["egov-location"].TenantBoundary.map((ob) => {
@@ -107,8 +104,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   const [marriageDistrict, setmarriageDistrict] = useState(
     formData?.MarriageDetails?.marriageDistrict ? formData?.MarriageDetails?.marriageDistrict : ""
   );
-  const [isInitialRender, setIsInitialRender] = useState(true);
-  const [isInitialRenderMarriagePlace, setisInitialRenderMarriagePlace] = useState(true);
+
   const [marriageTalukID, setmarriageTalukID] = useState(
     formData?.MarriageDetails?.marriageTalukID ? formData?.MarriageDetails?.marriageTalukID : ""
   );
@@ -120,56 +116,36 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   const [marriageTenantid, setmarriageTenantid] = useState(
     formData?.MarriageDetails?.marriageTenantid ? formData?.MarriageDetails?.marriageTenantid : null
   );
-  const [value, setValue] = useState(0);
+
   const [marriagePlacetype, setmarriagePlacetype] = useState(
     formData?.MarriageDetails?.marriagePlacetype ? formData?.MarriageDetails?.marriagePlacetype : ""
   );
-  // const [marriagePlacenameEn, setmarriagePlacenameEn] = useState(
-  //   formData?.MarriageDetails?.marriagePlacenameEn?.code
-  //     ? formData?.MarriageDetails?.marriagePlacenameEn
-  //     : formData?.MarriageDetails?.marriagePlacenameEn
-  //     ? cmbPlaceType.filter((cmbPlaceType) => cmbPlaceType.code === formData?.MarriageDetails?.marriagePlacenameEn)[0]
-  //     : ""
-  // );
   const [marriagePlacenameEn, setmarriagePlacenameEn] = useState(
     formData?.MarriageDetails?.marriagePlacenameEn ? formData?.MarriageDetails?.marriagePlacenameEn : ""
   );
   const [marriagePlacenameMal, setmarriagePlacenameMal] = useState(
     formData?.MarriageDetails?.marriagePlacenameMal ? formData?.MarriageDetails?.marriagePlacenameMal : ""
   );
-  // const [marriageOthersSpecify, setmarriageOthersSpecify] = useState(
-  //   formData?.MarriageDetails?.marriageOthersSpecify ? formData?.MarriageDetails?.marriageOthersSpecify : ""
-  // );
+  const [marriageOthersSpecify, setmarriageOthersSpecify] = useState(
+    formData?.MarriageDetails?.marriageOthersSpecify ? formData?.MarriageDetails?.marriageOthersSpecify : ""
+  );
   const [marriageType, setmarriageType] = useState(formData?.MarriageDetails?.marriageType ? formData?.MarriageDetails?.marriageType : "");
   const [marriageWardCode, setmarriageWardCode] = useState(
     formData?.MarriageDetails?.marriageWardCode ? formData?.MarriageDetails?.marriageWardCode : ""
   );
   const [isDisableEdit, setisDisableEdit] = useState(isEditMarriage ? isEditMarriage : false);
-  const [marriageLocalityEn, setmarriageLocalityEn] = useState(
-    formData?.MarriageDetails?.marriageLocalityEn ? formData?.MarriageDetails?.marriageLocalityEn : ""
-  );
-  const [marriageLocalityMal, setmarriageLocalityMal] = useState(
-    formData?.MarriageDetails?.marriageLocalityMal ? formData?.MarriageDetails?.marriageLocalityMal : ""
-  );
-  const [marriageStreetEn, setmarriageStreetEn] = useState(
-    formData?.MarriageDetails?.marriageStreetEn ? formData?.MarriageDetails?.marriageStreetEn : ""
-  );
-  const [marriageStreetMal, setmarriageStreetMal] = useState(
-    formData?.MarriageDetails?.marriageStreetMal ? formData?.MarriageDetails?.marriageStreetMal : ""
-  );
-  const [marriageHouseNoAndNameEn, setmarriageHouseNoAndNameEn] = useState(
-    formData?.MarriageDetails?.marriageHouseNoAndNameEn ? formData?.MarriageDetails?.marriageHouseNoAndNameEn : ""
-  );
-  const [marriageHouseNoAndNameMal, setmarriageHouseNoAndNameMal] = useState(
-    formData?.MarriageDetails?.marriageHouseNoAndNameMal ? formData?.MarriageDetails?.marriageHouseNoAndNameMal : ""
-  );
-  const [marriageLandmark, setmarriageLandmark] = useState(
-    formData?.MarriageDetails?.marriageLandmark ? formData?.MarriageDetails?.marriageLandmark : ""
-  );
   const [file, setFile] = useState();
   function handleChange(e) {
     console.log(e.target.files);
     setFile(URL.createObjectURL(e.target.files[0]));
+  }
+
+  const ButtonContainer = (props) =>{
+    return(
+      <div className="col-md-3">
+        {props.children}
+      </div>
+    )
   }
 
   const handleOptionChange = (event) => {
@@ -183,27 +159,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     setTenantboundary(false);
   }
   const onSkip = () => onSelect();
-  React.useEffect(() => {
-    if (isInitialRenderMarriagePlace) {
-      if (marriagePlacenameEn) {
-        setIsInitialRender(false);
-        naturetype = marriagePlacenameEn.code;
-        setValue(naturetype);
-        if (naturetype === "OTHER") {
-          <HouseMarriageRegistration
-            formData={formData}
-            marriageLocalityEn={marriageLocalityEn}
-            marriageLocalityMal={marriageLocalityMal}
-            marriageStreetEn={marriageStreetEn}
-            marriageStreetMal={marriageStreetMal}
-            marriageHouseNoAndNameEn={marriageHouseNoAndNameEn}
-            marriageHouseNoAndNameMal={marriageHouseNoAndNameMal}
-            marriageLandmark={marriageLandmark}
-          />;
-        }
-      }
-    }
-  });
+
   function setSelectmarriageDOM(value) {
     setmarriageDOM(value);
     const today = new Date();
@@ -245,34 +201,22 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   }
   function setSelectmarriagePlacetype(value) {
     setmarriagePlacetype(value);
-    setValue(value.code);
-    // let currentWorkFlow = workFlowData.filter(
-    //   (workFlowData) =>
-    //     workFlowData.marriagePlacetype === value.code &&
-    //     workFlowData.startdateperiod <= Difference_In_DaysRounded &&
-    //     workFlowData.enddateperiod >= Difference_In_DaysRounded
-    // );
-    // workFlowCode = currentWorkFlow[0].WorkflowCode;
-    // if (value.code === "other") {
-
-    // }
     // setAgeMariageStatus(value.code);
   }
   function setSelectmarriagePlacenameEn(value) {
     setmarriagePlacenameEn(value);
-    setValue(value.code);
     // setAgeMariageStatus(value.code);
   }
   function setSelectmarriagePlacenameMal(value) {
     setmarriagePlacenameMal(value);
     // setAgeMariageStatus(value.code);
   }
-  // function setSelectmarriageOthersSpecify(e) {
-  //   if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-  //     setmarriageOthersSpecify(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-  //   }
-
-  // }
+  function setSelectmarriageOthersSpecify(e) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setmarriageOthersSpecify(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    }
+    
+  }
   function setSelectmarriageType(value) {
     setmarriageType(value);
     // setAgeMariageStatus(value.code);
@@ -307,20 +251,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
       sessionStorage.setItem("marriagePlacenameEn", marriagePlacenameEn ? marriagePlacenameEn : null);
       sessionStorage.setItem("marriagePlacenameMal", marriagePlacenameMal ? marriagePlacenameMal : null);
       sessionStorage.setItem("marriageType", marriageType ? marriageType : null);
-      // sessionStorage.setItem("marriageOthersSpecify", marriageOthersSpecify ? marriageOthersSpecify : null);
-      sessionStorage.setItem("workFlowCode", workFlowCode);
-      if (marriagePlacetype.code === "OTHER") {
-        //  ?sessionStorage.setItem("DeathPlace", DeathPlace.code);
-        // sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
-        sessionStorage.setItem("marriageLocalityEn", marriageLocalityEn ? marriageLocalityEn : null);
-        // sessionStorage.setItem("marriageWardCode", marriageWardCode ? marriageWardCode : null);
-        sessionStorage.setItem("marriageStreetMal", marriageStreetMal ? marriageStreetMal : null);
-        sessionStorage.setItem("marriageStreetEn", marriageStreetEn ? marriageStreetEn : null);
-        sessionStorage.setItem("marriageHouseNoAndNameEn", marriageHouseNoAndNameEn ? marriageHouseNoAndNameEn : null);
-        sessionStorage.setItem("marriageHouseNoAndNameMal", marriageHouseNoAndNameMal ? marriageHouseNoAndNameMal : null);
-        sessionStorage.setItem("marriageLocalityMal", marriageLocalityMal ? marriageLocalityMal : null);
-        sessionStorage.setItem("marriageLandmark", marriageLandmark ? marriageLandmark : null);
-      }
+      sessionStorage.setItem("marriageOthersSpecify", marriageOthersSpecify ? marriageOthersSpecify : null);
       // sessionStorage.setItem("tripStartTime", tripStartTime ? tripStartTime : null);
 
       onSelect(config.key, {
@@ -335,14 +266,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
         marriagePlacenameMal,
         marriageType,
         marriageWardCode,
-        marriageLocalityEn,
-        marriageStreetMal,
-        marriageStreetEn,
-        marriageHouseNoAndNameEn,
-        marriageHouseNoAndNameMal,
-        marriageLocalityMal,
-        marriageLandmark,
-        // marriageOthersSpecify,
+        marriageOthersSpecify,
         // tripStartTime,
         // selectedOption,
         // Gender,
@@ -350,14 +274,14 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     }
   };
 
-  if (isLoading || isTalukLoading || isVillageLoading || isLBTypeLoading || islocalbodiesLoading || isWardLoaded) {
+  if (isLoading || isTalukLoading ||isVillageLoading ||isLBTypeLoading ||islocalbodiesLoading|| isWardLoaded) {
     return <Loader></Loader>;
   } else
     return (
       <React.Fragment>
         <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-        {window.location.href.includes("/citizen") ? <Timeline currentStep={1} /> : null}
-        {window.location.href.includes("/employee") ? <Timeline currentStep={1} /> : null}
+        {window.location.href.includes("/citizen") ? <MarriageInclusionTimeline currentStep={1} /> : null}
+        {window.location.href.includes("/employee") ? <MarriageInclusionTimeline currentStep={1} /> : null}
         <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
           <div className="row">
             <div className="col-md-12">
@@ -368,7 +292,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
           </div>
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-2">
+              <div className="col-md-6">
                 <CardLabel>
                   {`${t("CR_DATE_OF_MARRIAGE")}`}
                   <span className="mandatorycss">*</span>
@@ -382,6 +306,17 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                   placeholder={`${t("CR_DATE_OF_MARRIAGE")}`}
                   {...(validation = { isRequired: true, title: t("CR_INVALID_DATE_OF_MARRIAGE") })}
                 />
+              </div>
+              <div className="col-md-6">
+              <ButtonContainer>
+        <EditButton
+          selected={true}
+          label={"Edit"}
+          onClick={() => {
+            setShowModal(true);
+          }}
+        />
+      </ButtonContainer>
               </div>
             </div>
           </div>
@@ -526,12 +461,6 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                   // option={cmbCountry}
                 />
               </div>
-              </div>
-          </div>
-
-
-              {value === "RELIGIOUSINSTITUTION" && (
-             <div>
               <div className="col-md-4">
                 <CardLabel>
                   {`${t("CR_NAME_OF_PLACE_EN")}`}
@@ -550,8 +479,6 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                   // option={cmbCountry}
                 />
               </div>
-             
-              
               <div className="col-md-4">
                 <CardLabel>
                   {`${t("CR_NAME_OF_PLACE_MAL")}`}
@@ -569,83 +496,11 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                   {...(validation = { isRequired: true, title: t("CS_INVALID_MARRIAGE_PLACE_MAL") })}
                   // option={cmbCountry}
                 />
-              </div>             
-            
-         
-            
-          {value === "OTHER" && (
-                <div>
-                  <HouseMarriageRegistration
-                  formData={formData}
-                    marriageLocalityEn={marriageLocalityEn}
-                    marriageLocalityMal={marriageLocalityMal}
-                    marriageStreetEn={marriageStreetEn}
-                    marriageStreetMal={marriageStreetMal}
-                    marriageHouseNoAndNameEn={marriageHouseNoAndNameEn}
-                    marriageHouseNoAndNameMal={marriageHouseNoAndNameMal}
-                    marriageLandmark={marriageLandmark}
-                    setmarriageLocalityEn={setmarriageLocalityEn}
-                    setmarriageLocalityMal={setmarriageLocalityMal}
-                    setmarriageStreetEn={setmarriageStreetEn}
-                    setmarriageStreetMal={setmarriageStreetMal}
-                    setmarriageHouseNoAndNameEn={setmarriageHouseNoAndNameEn}
-                    setmarriageHouseNoAndNameMal={setmarriageHouseNoAndNameMal}
-                    setmarriageLandmark={setmarriageLandmark}
-                  />
-                  ;
-                </div>
-              )}
-              </div>)}
-          <div className="row">
-            <div className="col-md-12">
-              <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_MARRIAGE_CUSTOM_AND_CEREMONY_FOLLOWED_FOR_SOLEMNIZATION")}`}</span>{" "}
-              </h1>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col_md-12">
-              <div className="col-md-4">
-                <CardLabel>
-                  {`${t("CR_MARRIAGE_TYPE")}`}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <Dropdown
-                  t={t}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  option={cmbPlaceType}
-                  selected={marriageType}
-                  select={setSelectmarriageType}
-                  placeholder={t("CR_MARRIAGE_TYPE")}
-                  isMandatory={true}
-                  {...(validation = { isRequired: true, title: t("CR_INVALID_MARRIAGE_TYPE") })}
-                  // option={cmbCountry}
-                />
               </div>
-              {/* <div className="col-md-4">
-                <CardLabel>
-                  {`${t("CR_MARRIAGE_OTHER_SPECIFY")}`}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="marriageOthersSpecify"
-                  value={marriageOthersSpecify}
-                  onChange={setSelectmarriageOthersSpecify}
-                  disable={isDisableEdit}
-                  placeholder={`${t("CR_MARRIAGE_OTHER_SPECIFY")}`}
-                  
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text",title: t("CR_INVALID_MARRIAGE_OTHER") })}
-                />
-              </div> */}
             </div>
           </div>
         </FormStep>
       </React.Fragment>
     );
 };
-export default MarriageRegistration;
+export default MarriageInclusionEditPage;

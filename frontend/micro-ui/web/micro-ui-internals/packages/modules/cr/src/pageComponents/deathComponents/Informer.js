@@ -93,7 +93,7 @@ const Informer = ({ config, onSelect, userType, formData,isEditDeath }) => {
  
   function setSelectInformantMobileNo(e) {
     if (e.target.value.trim().length >= 0) {
-      setInformantMobileNo(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
+      setInformantMobileNo(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
     } 
     // if (e.target.value.length != 0) {
     //   if (e.target.value.length > 10) {
