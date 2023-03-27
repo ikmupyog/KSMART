@@ -39,9 +39,8 @@ const App = () => {
   const CRDeathInclusions = Digit?.ComponentRegistryService?.getComponent('CRDeathInclusions');
   const CRDeathInclusionsPage = Digit?.ComponentRegistryService?.getComponent('CRDeathInclusionsPage');
   const CRMarriageInclusions = Digit?.ComponentRegistryService?.getComponent('CRMarriageInclusions');
+  const SearchMarriageInclusion = Digit?.ComponentRegistryService?.getComponent('SearchMarriageInclusion');
   const MarriageInclusionEditPage = Digit?.ComponentRegistryService?.getComponent('MarriageInclusionEditPage');
-
-
   const CRBirthInclusionEditPage = Digit?.ComponentRegistryService?.getComponent('CRBirthInclusionEditPage');
 
 
@@ -75,6 +74,7 @@ const App = () => {
         <PrivateRoute path={`${path}/cr-abandonedbirth-creation`} component={CreateAbandonedBirth} />
         <PrivateRoute path={`${path}/cr-death-creation`} component={CreateDeathRegistration} />
         <PrivateRoute path={`${path}/cr-marriage-creation`} component={CreateMarriageRegistration} />
+        <PrivateRoute path={`${path}/cr-marriage-correction-search`} component={SearchMarriageInclusion} />        
         <PrivateRoute path={`${path}/cr/my-application`} component={MyCRApplications} />
         <PrivateRoute path={`${path}/cr/death/my-application`} component={MyCRDeathApplications} />
         <PrivateRoute path={`${path}/cr/my-bills`} component={() => <MyCRApplications view="bills" />} />

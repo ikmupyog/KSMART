@@ -31,6 +31,7 @@ const registyBtnStyle = {
 
 const  SearchMarriageInclusion = ({ tenantId, t, onSubmit, data, count, onInclusionClick }) => {
   // const [FileData, setFileData] = useState([]);
+  
   console.log(data,"data");
   const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
     defaultValues: {
