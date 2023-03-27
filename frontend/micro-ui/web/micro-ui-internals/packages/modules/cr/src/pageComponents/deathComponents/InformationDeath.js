@@ -238,7 +238,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
     formData?.InformationDeath?.AgeUnit?.code
       ? formData?.InformationDeath?.AgeUnit
       : formData?.InformationDeath?.AgeUnit
-      ? cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.code === formData?.InformationDeath?.DeceasedGender)[0]
+      ? cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.code === formData?.InformationDeath?.AgeUnit)[0]
       : ""
   );
 
@@ -266,24 +266,26 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
 
   // const [DeathPlace, setselectDeathPlace] = useState(cmbPlace?(cmbPlace.filter(cmbPlace=>cmbPlace.code === formData?.InformationDeath?.DeathPlace)[0]) :formData?.InformationDeath?.DeathPlace) ;
   //Hospital, Intitution, vehicle, Public Place {DeathPlaceType}
-  const [DeathPlaceType, selectDeathPlaceType] = useState(
-    formData?.InformationDeath?.DeathPlaceType?.code
-      ? formData?.InformationDeath?.DeathPlaceType
-      : formData?.InformationDeath?.DeathPlaceType
-      ? ""
-      : ""
-  );
+ 
   const [HospitalNameMl, selectHospitalNameMl] = useState(
-    formData?.  InformationDeathails?.HospitalNameMl?.code
+    formData?.InformationDeathails?.HospitalNameMl?.code
       ? formData?.InformationDeath?.HospitalNameMl
       : formData?.InformationDeath?.HospitalNameMl
       ? ""
       : ""
   );
-  const [DeathPlaceInstId, setSelectedDeathPlaceInstId] = useState(
-    formData?.InformationDeath?.DeathPlaceInstId ? formData?.InformationDeath?.DeathPlaceInstId : null
+  const [DeathPlaceType, selectDeathPlaceType] = useState(
+    formData?.InformationDeath?.DeathPlaceType?.code ? formData?.InformationDeath?.DeathPlaceType : formData?.InformationDeath?.institutionTypeCode ? "" : ""
   );
-  const [InstitutionIdMl, setInstitutionIdMl] = useState(formData?.InformationDeath?.DeathPlaceInstId);
+ 
+  const [DeathPlaceInstId, setSelectedDeathPlaceInstId] = useState(
+    formData?.InformationDeath?.DeathPlaceInstId?.code ? formData?.InformationDeath?.DeathPlaceInstId : formData?.InformationDeath?.institutionNameCode ? "" : ""
+  );
+
+  const [InstitutionIdMl, setInstitutionIdMl] = useState(
+    formData?.InformationDeath?.InstitutionIdMl?.code ? formData?.InformationDeath?.InstitutionIdMl : formData?.InformationDeath?.institutionNameCode ? "" : ""
+  );
+  
   const [InstitutionFilterList, setInstitutionFilterList] = useState(null);
   const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(false);
   // Home

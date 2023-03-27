@@ -14,6 +14,7 @@ import {
 import Timeline from "../../components/BOBRTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
+// import FormStep from "../../../../../react-components/src/molecules/FormStep";
 
 const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
   // console.log(JSON.stringify(formData));
@@ -190,7 +191,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
       // To calculate the time difference of two dates
       let Difference_In_Time = today.getTime() - birthDate.getTime();
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-      Difference_In_DaysRounded = Math.floor(Difference_In_Days);
+      let Difference_In_DaysRounded = Math.floor(Difference_In_Days);
       // console.log(Difference_In_DaysRounded);
     }
   }
@@ -405,8 +406,8 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
       sessionStorage.setItem("provinceEn", provinceEn ? provinceEn : null);
       sessionStorage.setItem("cityTown", cityTown ? cityTown : null);
       sessionStorage.setItem("postCode", postCode ? postCode : null);
-      sessionStorage.setItem("outsideBirthPlace", outsideBirthPlace ? outsideBirthPlace : null);
-      sessionStorage.setItem("country", country ? country.code : null);
+      sessionStorage.setItem("outsideBirthPlace",  outsideBirthPlace ? outsideBirthPlace : null);
+      sessionStorage.setItem("country", country  ?  country.code : null);
 
       onSelect(config.key, {
         stateId,
@@ -455,7 +456,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
         <BackButton>{t("CS_COMMON_BACK")}</BackButton>
         {window.location.href.includes("/citizen") ? <Timeline /> : null}
         {window.location.href.includes("/employee") ? <Timeline /> : null}
-        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!childFirstNameEn}>
+        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!childAadharNo}>
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-12">
@@ -704,77 +705,75 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
               </div>
             </div>
           </div>
-
-          <div className="row">
-            <div className="col-md-12">
-              <div className="col-md-3">
-                <CardLabel>
-                  {`${t("CS_COMMON_COUNTRY")}`}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <Dropdown
-                  t={t}
-                  optionKey="name"
-                  option={cmbCountry}
-                  selected={country}
-                  select={setSelectcountry}
-                  placeholder={`${t("CS_COMMON_COUNTRY")}`}
-                />
-              </div>
-              <div className="col-md-3">
-                <CardLabel>
-                  {t("CR_STATE_REGION_PROVINCE_EN")} <span className="mandatorycss">*</span>
-                </CardLabel>
-                <TextInput
-                  t={t}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="provinceEn"
-                  value={provinceEn}
-                  onChange={setSelectprovinceEn}
-                  placeholder={`${t("CR_STATE_REGION_PROVINCE_EN")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
-                />
-              </div>
-              <div className="col-md-3">
-                <CardLabel>
-                  {t("CR_CITY_TOWN_EN")} <span className="mandatorycss">*</span>
-                </CardLabel>
-                <TextInput
-                  t={t}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="cityTown"
-                  value={cityTown}
-                  onChange={setSelectcityTown}
-                  placeholder={`${t("CR_CITY_TOWN_EN")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_TOWN_EN") })}
-                />
-              </div>
-              <div className="col-md-3">
-                <CardLabel>
-                  {t("CR_ZIP_CODE")}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <TextInput
-                  t={t}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="postCode"
-                  value={postCode}
-                  onChange={setSelectPostCode}
-                  placeholder={`${t("CR_ZIP_CODE")}`}
-                  {...(validation = {
-                    pattern: "^[a-zA-Z-.0-9`' ]*$",
-                    isRequired: true,
-                    type: "number",
-
-                    title: t("CR_INVALID_ZIP_CODE"),
-                  })}
-                />
-              </div>
-            </div>
+       
+   <div className="row">
+   <div className="col-md-12">
+ <div className="col-md-3">
+            <CardLabel>
+              {`${t("CS_COMMON_COUNTRY")}`}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
+            <Dropdown
+              t={t}
+              optionKey="name"
+              option={cmbCountry}
+              selected={country}
+              select={setSelectcountry}
+              placeholder={`${t("CS_COMMON_COUNTRY")}`}
+            />
           </div>
+          <div className="col-md-3">
+            <CardLabel>{t("CR_STATE_REGION_PROVINCE_EN")} <span className="mandatorycss">*</span></CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="provinceEn"
+              value={provinceEn}
+              onChange={setSelectprovinceEn}
+              placeholder={`${t("CR_STATE_REGION_PROVINCE_EN")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
+            />
+          </div>
+          <div className="col-md-3">
+            <CardLabel>
+              {t("CR_CITY_TOWN_EN")} <span className="mandatorycss">*</span>
+            </CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="cityTown"
+              value={cityTown}
+              onChange={setSelectcityTown}
+              placeholder={`${t("CR_CITY_TOWN_EN")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_TOWN_EN") })}
+            />
+          </div>
+          <div className="col-md-3">
+            <CardLabel>{t("CR_ZIP_CODE")}<span className="mandatorycss">*</span></CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="postCode"
+              value={postCode}
+              onChange={setSelectPostCode}
+              placeholder={`${t("CR_ZIP_CODE")}`}
+               {...(validation = {
+                pattern: "^[a-zA-Z-.0-9`' ]*$",
+                isRequired: true,
+                type: "number",
+                max: 6,
+                min: 6,
+                title: t("CR_INVALID_ZIP_CODE"),
+              })}
+            />
+          </div>
+         
+          </div>
+        
+          </div> 
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-4">
