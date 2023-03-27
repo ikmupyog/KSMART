@@ -1446,6 +1446,8 @@ export const convertToDeathRegistration = (data = {}) => {
             : null,
           permntOutsideIndiaCityTown: data?.AddressBirthDetails?.permntOutsideIndiaCityTown,
           permanentOutsideIndiaPostCode: data?.AddressBirthDetails?.permanentOutsideIndiaPostCode,
+          PresentAddrTypeId: "P",
+          PermanentAddrTypeId: "R",
         },
         FamilyInformationDeath: {
           SpouseUnavailable: data?.FamilyInformationDeath?.SpouseUnavailable,
