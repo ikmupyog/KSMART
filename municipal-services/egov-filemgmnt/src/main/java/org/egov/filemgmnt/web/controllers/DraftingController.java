@@ -30,7 +30,7 @@ public class DraftingController {
         this.responseInfoFactory = responseInfoFactory;
    }
 
-   @PostMapping("/applicantservices/_createDraftOnSelect")
+   @PostMapping("/applicantservices/_createDraftingMain")
     public ResponseEntity<DraftingResponse> createDraftingMain(@RequestBody final DraftingRequest request) {
         if (log.isDebugEnabled()) {
             log.debug("Drafting main-create:  \n{}", FMUtils.toJson(request));
@@ -46,19 +46,4 @@ public class DraftingController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/applicantservices/_createDraftOnSelect")
-    public ResponseEntity<DraftingResponse> createDraftingMain(@RequestBody final DraftingRequest request) {
-        if (log.isDebugEnabled()) {
-            log.debug("Drafting main-create:  \n{}", FMUtils.toJson(request));
-        }
-        List<Drafting> draftingDetails = draftingService.createDraftingMain(request);
-       
-        
-        DraftingResponse response = DraftingResponse.builder()
-        								.responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
-        																						Boolean.TRUE))
-        								.drafting(draftingDetails)
-        								.build();
-        return ResponseEntity.ok(response);
-    }
 }

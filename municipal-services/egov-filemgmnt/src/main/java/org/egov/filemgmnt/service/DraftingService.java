@@ -33,9 +33,10 @@ public class DraftingService {
 
     public List<Drafting> createDraftingMain(DraftingRequest request) {
 
-        draftingEnrichment.enrichAriseFileCreate(request);
+        draftingEnrichment.enrichcreateDraftingMain(request);
         producer.push(fmConfig.getSaveDraftingTopic(), request);
 
         return request.getDrafting();
     }
+
 }
