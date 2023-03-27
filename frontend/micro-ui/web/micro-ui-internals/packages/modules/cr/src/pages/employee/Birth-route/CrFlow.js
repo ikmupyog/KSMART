@@ -34,6 +34,13 @@ const CrFlow = ({ path }) => {
       link: `${path}/born-outside-child-details`,
     },
 
+    {
+      title: "CR_ABANDONED_BIRTH_REGISTRATION",
+      subTitle: "CR_ABANDONED_BIRTH_NEW_REGISTRATION",
+      img: <BankIcon />,
+      link: `${path}/abandoned-child-details`,
+    },
+
     // {
     //   title: "CR_BIRTH_NAME_INC_CORRECTION",
     //   subTitle: "CR_BIRTH_NAME_INC_CORRECTION_DESC",
@@ -49,6 +56,7 @@ const CrFlow = ({ path }) => {
      'CR_BIRTH_ADOPTION':  'crfileadoption', 
      'CR_STILL_BIRTH':  'crstillbirthfile',
      'CR_BIRTH_BORN_OUTSIDE':  'crfile',
+     'CR_ABANDONED_BIRTH_REGISTRATION':  'crfileabandoned',
      'CR_BIRTH_NAME_INC_CORRECTION':  'crfilecorrection',    
     };
   return (

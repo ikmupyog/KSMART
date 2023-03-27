@@ -2,19 +2,19 @@ import React, { useState, useEffect } from "react";
 import { Route, Switch, useRouteMatch, useLocation, useHistory, Redirect } from "react-router-dom";
 import { PrivateRoute, BreadCrumb, Component } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-import ChildDetails from "../../../pageComponents/birthComponents/ChildDetails";
-// import AbandonedChildDetails from "../../../pageComponents/abandonedBirthComponents/AbandonedChildDetails";
+// import ChildDetails from "../../../pageComponents/birthComponents/ChildDetails";
+import AbandonedChildDetails from "../../../pageComponents/abandonedBirthComponents/AbandonedChildDetails";
 import { newConfig as newConfigCR } from "../../../config/config";
 import { useQueryClient } from "react-query";
 
-const CreateAbandonedBirth = ({ parentUrl, isEditBirth }) => {
+const CreateAbandonedBirth = ({ parentUrl, isEditAbandonedBirth }) => {
   const { t } = useTranslation();
   const { path } = useRouteMatch();
   const match = useRouteMatch();
   const { pathname } = useLocation();
   const history = useHistory();
   const queryClient = useQueryClient();
-  const [params, setParams, clearParams] = isEditBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_ADOPTION_REG", {});
+  const [params, setParams, clearParams] = isEditAbandonedBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_ADOPTION_REG", {});
 
   // console.log("params"+JSON.stringify(params));
   const stateId = Digit.ULBService.getStateId();
@@ -112,7 +112,7 @@ const CreateAbandonedBirth = ({ parentUrl, isEditBirth }) => {
 
   const onSuccess = () => {
     sessionStorage.removeItem("CurrentFinancialYear");
-    queryClient.invalidateQueries("CR_CREATE_BIRTH_REG");
+    queryClient.invalidateQueries("CR_CREATE_ABANDONEDBIRTH_REG");
   };
   const handleSkip = () => { };
   const handleMultiple = () => { };
