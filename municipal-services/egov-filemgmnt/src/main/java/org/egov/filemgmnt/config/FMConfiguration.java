@@ -89,8 +89,9 @@ public class FMConfiguration {
     @Value("${persister.save.drafting.topic:}")
     private String saveDraftingTopic;
 
-    @Value("${persister.save.draftingchild.topic:}")
-    private String saveDraftingChildTopic;
+    @Value("${persister.update.drafting.topic:}")
+    private String updateDraftingTopic;
+
 
 
     // PDF Gen
