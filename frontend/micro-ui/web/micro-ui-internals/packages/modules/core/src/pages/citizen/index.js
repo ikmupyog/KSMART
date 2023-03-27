@@ -264,7 +264,7 @@ const Home = ({
           name: t("CR_MARRIAGE_CORRECTIONS"),
           Icon: <OBPSIcon />,
           onClick: () => history.push({
-            pathname: `${matchPath}/cr-marriage-creation`,
+            pathname: `${matchPath}/cr-marriage-inclusion`,
             state: { module: "cr-marriage" }
           }),
         },
