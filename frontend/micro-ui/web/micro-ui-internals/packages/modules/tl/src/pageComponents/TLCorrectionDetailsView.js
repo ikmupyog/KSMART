@@ -20,6 +20,8 @@ const CloseBtn = (props) => {
   );
 };
 const TLCorrectionDetailsView = ({ t, config, onSelect, formData,onEditSelect ,formDataEdit}) => {
+console.log("formDataEdit Main"+JSON.stringify(formDataEdit));
+console.log("formData Main"+JSON.stringify(formData));
   const history = useHistory();
   const match = useRouteMatch();
   console.log("main firing main firing main firng");
@@ -101,7 +103,7 @@ const TLCorrectionDetailsView = ({ t, config, onSelect, formData,onEditSelect ,f
 
 
 
-           <TLCorrectionActivity t={t} config={config} onSelect={onSelect} formData={formData}></TLCorrectionActivity>
+           <TLCorrectionActivity t={t} config={config} onSelect={onSelect} formData={formData}  onEditSelect={onEditSelect} formDataEdit={formDataEdit}></TLCorrectionActivity>
 
           <TLCorrectionPlaceOfActivity t={t} config={config} onSelect={onSelect} formData={formData}></TLCorrectionPlaceOfActivity> 
           <TLCorrectionApplicant t={t} config={config} onSelect={onSelect} formData={formData} onEditSelect={onEditSelect} formDataEdit={formDataEdit}></TLCorrectionApplicant>
