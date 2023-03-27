@@ -5,7 +5,6 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.egov.filemgmnt.web.models.arisingfile.ArisingFileSearchCriteria;
 import org.springframework.stereotype.Component;
-
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
