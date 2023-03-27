@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton, Loader, Toast, SubmitBar,TextArea  } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/CRTimeline";
+import Timeline from "../../components/CRABTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
 import AbandonedBirthPlaceHospital from "../../pageComponents/abandonedBirthComponents/AbandonedBirthPlaceHospital";
@@ -589,21 +589,21 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData, isEditBir
   }
   let validFlag = true;
   const goNext = () => {
-    if (childAadharNo != null) {
-      let adharLength = childAadharNo;
-      if (adharLength.length < 12 || adharLength.length > 12) {
-        validFlag = false;
-        setAadharError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setAadharError(false);
-      }
-    } else {
-      setAadharError(false);
-    }
+    // if (childAadharNo != null) {
+    //   let adharLength = childAadharNo;
+    //   if (adharLength.length < 12 || adharLength.length > 12) {
+    //     validFlag = false;
+    //     setAadharError(true);
+    //     setToast(true);
+    //     setTimeout(() => {
+    //       setToast(false);
+    //     }, 2000);
+    //   } else {
+    //     setAadharError(false);
+    //   }
+    // } else {
+    //   setAadharError(false);
+    // }
     if (birthPlace.code === "HOSPITAL") {
       if (hospitalName == null || hospitalNameMl === null) {
         setHospitalError(true);
@@ -852,68 +852,68 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData, isEditBir
         setplaceTypepEnError(false);
       }
     }
-    if (birthWeight != null || birthWeight != "" || birthWeight != undefined) {
-      let BirthWeightCheck = birthWeight;
-      if (BirthWeightCheck < 0.25 || BirthWeightCheck > 10) {
-        validFlag = false;
-        setBirthWeightError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setBirthWeightError(false);
-      }
-    }
-    else {
-      setBirthWeightError(true);
-      validFlag = false;
-      setBirthWeightError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    }
-    if (medicalAttensionSub == null || medicalAttensionSub == "" || medicalAttensionSub == undefined) {
-      validFlag = false;
-      setMedicalAttensionSubStError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      setMedicalAttensionSubStError(false);
-    }
-    if (pregnancyDuration == null || pregnancyDuration == "" || pregnancyDuration == undefined) {
-      validFlag = false;
-      setPregnancyDurationStError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      if (pregnancyDuration < 20 || pregnancyDuration > 44) {
-        validFlag = false;
-        setPregnancyDurationInvalidError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 2000);
-      } else {
-        setPregnancyDurationStError(false);
-        setPregnancyDurationInvalidError(false);
-      }
-    }
-    if (deliveryMethods == null || deliveryMethods == "" || deliveryMethods == undefined) {
-      validFlag = false;
-      setDeliveryMethodStError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      setDeliveryMethodStError(false);
-    }
+    // if (birthWeight != null || birthWeight != "" || birthWeight != undefined) {
+    //   let BirthWeightCheck = birthWeight;
+    //   if (BirthWeightCheck < 0.25 || BirthWeightCheck > 10) {
+    //     validFlag = false;
+    //     setBirthWeightError(true);
+    //     setToast(true);
+    //     setTimeout(() => {
+    //       setToast(false);
+    //     }, 2000);
+    //   } else {
+    //     setBirthWeightError(false);
+    //   }
+    // }
+    // else {
+    //   setBirthWeightError(true);
+    //   validFlag = false;
+    //   setBirthWeightError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 2000);
+    // }
+    // if (medicalAttensionSub == null || medicalAttensionSub == "" || medicalAttensionSub == undefined) {
+    //   validFlag = false;
+    //   setMedicalAttensionSubStError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 2000);
+    // } else {
+    //   setMedicalAttensionSubStError(false);
+    // }
+    // if (pregnancyDuration == null || pregnancyDuration == "" || pregnancyDuration == undefined) {
+    //   validFlag = false;
+    //   setPregnancyDurationStError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 2000);
+    // } else {
+    //   if (pregnancyDuration < 20 || pregnancyDuration > 44) {
+    //     validFlag = false;
+    //     setPregnancyDurationInvalidError(true);
+    //     setToast(true);
+    //     setTimeout(() => {
+    //       setToast(false);
+    //     }, 2000);
+    //   } else {
+    //     setPregnancyDurationStError(false);
+    //     setPregnancyDurationInvalidError(false);
+    //   }
+    // }
+    // if (deliveryMethods == null || deliveryMethods == "" || deliveryMethods == undefined) {
+    //   validFlag = false;
+    //   setDeliveryMethodStError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 2000);
+    // } else {
+    //   setDeliveryMethodStError(false);
+    // }
     if (validFlag == true) {
       sessionStorage.setItem("stateId", stateId ? stateId : null);
       sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
