@@ -162,11 +162,11 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
       : formData?.InformationDeath?.setDeathTimeTo
   );
 
-  const [ToDate, setToDate] = useState(
+  const [DateOfDeath1, setToDate] = useState(
     isEditDeathPageComponents === false &&
       (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
-      ? convertEpochToDate(formData?.InformationDeath?.ToDate)
-      : formData?.InformationDeath?.ToDate
+      ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath1)
+      : formData?.InformationDeath?.DateOfDeath1
   );
 
   // const [DeathTime, setDeathTime] = useState("");
@@ -480,7 +480,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   function setCheckedDate(e) {
     if (e.target.checked === true) {
       setChecked(e.target.checked);
-      setFromDate("");
+      setDateOfDeath("");
       setToDate("");
     } else {
       setChecked(e.target.checked);
@@ -519,7 +519,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
     setToDate(value);
     const today = new Date();
     const toDate = new Date(value);
-    const fromDate = new Date(FromDate);
+    const fromDate = new Date(DateOfDeath);
 
     if (toDate.getTime() <= today.getTime()) {
       if (fromDate && toDate.getTime() < fromDate.getTime()) {
@@ -564,7 +564,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
 
   // }
   function selectDeathDate(value) {
-    // setDeathDate(value);
     setDateOfDeath(value);
     const today = new Date();
     const deathDate = new Date(value);
@@ -1044,7 +1043,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
     if (validFlag == true) {
       sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
       sessionStorage.setItem("DeathDateUnavailable", DeathDateUnavailable ? DeathDateUnavailable : false);
-      sessionStorage.setItem("ToDate", ToDate ? ToDate : null);
+      sessionStorage.setItem("DateOfDeath1", DateOfDeath1 ? DateOfDeath1 : null);
       sessionStorage.setItem("FromDate", FromDate ? FromDate : null);
       sessionStorage.setItem("DeathTimeFrom", DeathTimeFrom ? DeathTimeFrom : null);
       sessionStorage.setItem("DeathTimeTo", DeathTimeTo ? DeathTimeTo : null);
@@ -1141,7 +1140,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
 
       onSelect(config.key, {
         IsEditChangeScreen,
-        ToDate,
+        DateOfDeath1,
         DeathDateUnavailable,
         DeathTimeTo,
         FromDate,
@@ -1301,10 +1300,10 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
                       <span className="mandatorycss">*</span>
                     </CardLabel>
                     <DatePicker
-                      date={FromDate}
+                      date={DateOfDeath}
                       max={convertEpochToDate(new Date())}
-                      name="FromDate"
-                      onChange={selectFromDate}
+                      name="DateOfDeath"
+                      onChange={selectDeathDate}
                       {...(validation = {
                         pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",
                         isRequired: true,
@@ -1324,9 +1323,9 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
                       <span className="mandatorycss">*</span>
                     </CardLabel>
                     <DatePicker
-                      date={ToDate}
+                      date={DateOfDeath1}
                       max={convertEpochToDate(new Date())}
-                      name="ToDate"
+                      name="DateOfDeath1"
                       onChange={selectToDate}
                       {...(validation = {
                         pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",

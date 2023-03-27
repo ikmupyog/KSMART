@@ -565,7 +565,7 @@ const AdoptionParentsDetails = ({ config, onSelect, userType, formData, isEditBi
         <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}
           isDisabled={!fatherMobile ||
             (isMotherInfo === false ? (motherFirstNameEn === "" || motherFirstNameMl === "" || !motherNationality
-              || !motherMaritalStatus || motherMarriageBirth === "" || orderofChildren === ""
+              || !motherMaritalStatus || motherMarriageBirth === "" 
               || !motherEducation || !motherProfession) : false)
             || (isFatherInfo === false ? (fatherFirstNameEn === "" || fatherFirstNameMl === "" || !fatherNationality || !fatherEducation || !fatherProfession
             ) : false)

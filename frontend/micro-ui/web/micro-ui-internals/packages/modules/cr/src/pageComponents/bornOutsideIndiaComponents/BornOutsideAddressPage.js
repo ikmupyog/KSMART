@@ -5,11 +5,11 @@ import { useTranslation } from "react-i18next";
 import BornOutsidePresentOutsideIndia from "./BornOutsidePresentOutsideIndia";
 import BornoutsidePermanentInsideKerala from "./BornoutsidePermanentInsideKerala";
 import BornoutsideSameAsAbove from "./BornoutsideSameAsAbove";
-import BornOutsidePresent from "./BornOutsidePresent";
+// import BornOutsidePresent from "./BornOutsidePresent";
 import BornOutsidePermanent from "./BornOutsidePermanent";
 
 
-const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBirth = false, isEditDeath = false }) => {
+const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBirth = false }) => {
     console.log(formData);
     const stateId = Digit.ULBService.getStateId();
     let tenantId = "";
@@ -367,7 +367,7 @@ const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBi
                                 setIsPrsentAddress={setIsPrsentAddress}
                            
                                 isEditBirth={isEditBirth}
-                                isEditDeath={isEditDeath}
+                               
                                 formData={formData}
                             />
                         </div>
@@ -377,7 +377,7 @@ const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBi
                             isPrsentAddress={isPrsentAddress}
                             setIsPrsentAddress={setIsPrsentAddress}
                             isEditBirth={isEditBirth}
-                            isEditDeath={isEditDeath}
+                         
                             formData={formData}
                         />
                     </div>
@@ -399,7 +399,7 @@ const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBi
                                 valuePermanent={valuePermanent}
                                 setValuePermanent={setValuePermanent}
                                 isEditBirth={isEditBirth}
-                                isEditDeath={isEditDeath}
+                               
                                 formData={formData}
                             />
                         </div>
@@ -442,79 +442,13 @@ const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBi
                                 PostOfficevalues={PostOfficevalues}
                                 setPostOfficevalues={setPostOfficevalues}
                                 isEditBirth={isEditBirth}
-                                isEditDeath={isEditDeath}
+                              
                                 formData={formData}
                             />
                         </div>
                     )}
-                    {/* {countryValuePermanent === "IND" && valuePermanent !== "KL" && isPrsentAddress === false && (
-                        <div>
-                            <AddressPermanentOutsideKerala
-                                permntOutsideKeralaDistrict={permntOutsideKeralaDistrict}
-                                setpermntOutsideKeralaDistrict={setpermntOutsideKeralaDistrict}
-                                permntOutsideKeralaTaluk={permntOutsideKeralaTaluk}
-                                setpermntOutsideKeralaTaluk={setpermntOutsideKeralaTaluk}
-                                permntOutsideKeralaCityVilgeEn={permntOutsideKeralaCityVilgeEn}
-                                setpermntOutsideKeralaCityVilgeEn={setpermntOutsideKeralaCityVilgeEn}
-                                permntOutsideKeralaVillage={permntOutsideKeralaVillage}
-                                setpermntOutsideKeralaVillage={setpermntOutsideKeralaVillage}
-                                permntOutsideKeralaPincode={permntOutsideKeralaPincode}
-                                setpermntOutsideKeralaPincode={setpermntOutsideKeralaPincode}
-                                permntOutsideKeralaHouseNameEn={permntOutsideKeralaHouseNameEn}
-                                setpermntOutsideKeralaHouseNameEn={setpermntOutsideKeralaHouseNameEn}
-                                permntOutsideKeralaHouseNameMl={permntOutsideKeralaHouseNameMl}
-                                setpermntOutsideKeralaHouseNameMl={setpermntOutsideKeralaHouseNameMl}
-                                permntOutsideKeralaLocalityNameEn={permntOutsideKeralaLocalityNameEn}
-                                setpermntOutsideKeralaLocalityNameEn={setpermntOutsideKeralaLocalityNameEn}
-                                permntOutsideKeralaLocalityNameMl={permntOutsideKeralaLocalityNameMl}
-                                setpermntOutsideKeralaLocalityNameMl={setpermntOutsideKeralaLocalityNameMl}
-                                permntOutsideKeralaStreetNameEn={permntOutsideKeralaStreetNameEn}
-                                setpermntOutsideKeralaStreetNameEn={setpermntOutsideKeralaStreetNameEn}
-                                permntOutsideKeralaStreetNameMl={permntOutsideKeralaStreetNameMl}
-                                setpermntOutsideKeralaStreetNameMl={setpermntOutsideKeralaStreetNameMl}
-                                permntOutsideKeralaPostOfficeEn={permntOutsideKeralaPostOfficeEn}
-                                setpermntoutsideKeralaPostOfficeEn={setpermntoutsideKeralaPostOfficeEn}
-                                permntOutsideKeralaPostOfficeMl={permntOutsideKeralaPostOfficeMl}
-                                setpermntoutsideKeralaPostOfficeMl={setpermntoutsideKeralaPostOfficeMl}
-                                value={value}
-                                setValue={setValue}
-                                isEditBirth={isEditBirth}
-                                isEditDeath={isEditDeath}
-                                formData={formData}
-                            />
-                        </div>
-                    )} */}
-                    {/* {countryValuePermanent != "IND" && isPrsentAddress === false && (
-                        <div>
-                            <AddressPermanentOutsideIndia
-                                permntOutsideIndiaLineoneEn={permntOutsideIndiaLineoneEn}
-                                setadrsPermntOutsideIndiaLineoneEn={setadrsPermntOutsideIndiaLineoneEn}
-                                permntOutsideIndiaLineoneMl={permntOutsideIndiaLineoneMl}
-                                setadrsPermntOutsideIndiaLineoneMl={setadrsPermntOutsideIndiaLineoneMl}
-                                permntOutsideIndiaLinetwoEn={permntOutsideIndiaLinetwoEn}
-                                setadrsPermntOutsideIndiaLinetwoEn={setadrsPermntOutsideIndiaLinetwoEn}
-                                permntOutsideIndiaLinetwoMl={permntOutsideIndiaLinetwoMl}
-                                setadrsPermntOutsideIndiaLinetwoMl={setadrsPermntOutsideIndiaLinetwoMl}
-                                permntOutsideIndiaprovinceEn={permntOutsideIndiaprovinceEn}
-                                setPermntOutsideIndiaprovinceEn={setPermntOutsideIndiaprovinceEn}
-                                permntOutsideIndiaVillage={permntOutsideIndiaVillage}
-                                setadrsPermntOutsideIndiaVillage={setadrsPermntOutsideIndiaVillage}
-                                permntOutsideIndiaCityTown={permntOutsideIndiaCityTown}
-                                setadrsPermntOutsideIndiaCityTown={setadrsPermntOutsideIndiaCityTown}
-                                permanentOutsideIndiaPostCode={permanentOutsideIndiaPostCode}
-                                setPermantpostCode={setPermantpostCode}
-                                permntOutsideIndiaprovinceMl={permntOutsideIndiaprovinceMl}
-                                setPermntOutsideIndiaprovinceMl={setPermntOutsideIndiaprovinceMl}
-                                // permntOutsideIndiaCountry={permntOutsideIndiaCountry}
-                                // setPermntOutsideIndiaCountry={setPermntOutsideIndiaCountry}
-                                countryvalue={countryvalue}
-                                setCountryValue={setCountryValue}
-                                isEditBirth={isEditBirth}
-                                isEditDeath={isEditDeath}
-                                formData={formData}
-                            />
-                        </div>
-                    )} */}
+                  
+                    
                     {toast && (
                         <Toast
                             error={
