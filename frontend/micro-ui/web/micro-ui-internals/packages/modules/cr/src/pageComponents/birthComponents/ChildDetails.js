@@ -80,7 +80,6 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
     WorkFlowDetails["birth-death-service"] && WorkFlowDetails["birth-death-service"].WorkFlowBirth &&
     WorkFlowDetails["birth-death-service"].WorkFlowBirth.map((ob) => {
       workFlowData.push(ob);
-      console.log(workFlowData);
     });
   Menu &&
     Menu.map((genderDetails) => {
