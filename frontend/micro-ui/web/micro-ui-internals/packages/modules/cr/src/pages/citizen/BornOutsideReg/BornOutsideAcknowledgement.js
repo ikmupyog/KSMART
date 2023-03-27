@@ -72,7 +72,8 @@ const BornOutsideAcknowledgement = ({ data, onSuccess,userType }) => {
       if (!resubmit) {
         // let formdata = !isEdit ? convertToDeathRegistration(data) : convertToEditTrade(data, fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter(y => y.module === "CR") : []);
 
-        let formdata = !isEdit ? convertToBornOutsideRegistration(data):[] ;
+        // let formdata = !isEdit ? convertToBornOutsideRegistration(data):[] ;
+        let formData = [];
         console.log(formdata);
         // formdata.BirthDetails[0].tenantId = formdata?.BirthDetails[0]?.tenantId || tenantId1;
         if(!isEdit)
@@ -260,4 +261,4 @@ if(mutation.isSuccess && mutation?.isError===null){
 
 };
 
-export default BornOutsideBirthAcknowledgement;
+export default BornOutsideAcknowledgement;

@@ -41,12 +41,15 @@ const CreateBornOutsideRegistration =({ parentUrl }) => {
     if (nextStep === null) {
       return redirectWithHistory(`${match.path}/check`);
     }
+    console.log("next page==",`${match.path}/${nextStep}`);
     nextPage = `${match.path}/${nextStep}`;
     redirectWithHistory(nextPage);
   };
 
   function handleSelect(key, data, skipStep, index, isAddMultiple = false) {
+    console.log("navigation key",key);
     setParams({ ...params, ...{ [key]: { ...params[key], ...data } } });
+    
     if (key === "isSkip" && data === true) {
       goNext(skipStep, index, isAddMultiple, key, true);
     }

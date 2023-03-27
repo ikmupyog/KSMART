@@ -6,7 +6,7 @@ import ChildDetails from "../../../pageComponents/birthComponents/ChildDetails";
 import { newConfig as newConfigCR } from "../../../config/config";
 import { useQueryClient } from "react-query";
 
-const CreateBirthRegistration = ({ parentUrl, isEditBirth }) => {
+const CreateBirthRegistration = ({ parentUrl, isEditBirth=false }) => {
   const { t } = useTranslation();
   const { path } = useRouteMatch();
   const match = useRouteMatch();
