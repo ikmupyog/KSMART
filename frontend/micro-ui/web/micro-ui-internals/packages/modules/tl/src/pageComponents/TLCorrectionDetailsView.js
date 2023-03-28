@@ -84,7 +84,8 @@ console.log("formData Main"+JSON.stringify(formData));
     setShowModal(false);
   };
   const goNext = async (data) => {
-    console.log("ya firing amin"+JSON.stringify(data));
+   // console.log("ya firing amin"+JSON.stringify(data));
+   onSelect("", "");
   }
   const onSkip = () => onSelect();
   function submit(data) {
@@ -105,7 +106,7 @@ console.log("formData Main"+JSON.stringify(formData));
 
            <TLCorrectionActivity t={t} config={config} onSelect={onSelect} formData={formData}  onEditSelect={onEditSelect} formDataEdit={formDataEdit}></TLCorrectionActivity>
 
-          <TLCorrectionPlaceOfActivity t={t} config={config} onSelect={onSelect} formData={formData}></TLCorrectionPlaceOfActivity> 
+          <TLCorrectionPlaceOfActivity t={t} config={config} onSelect={onSelect} formData={formData} onEditSelect={onEditSelect} formDataEdit={formDataEdit}></TLCorrectionPlaceOfActivity> 
           <TLCorrectionApplicant t={t} config={config} onSelect={onSelect} formData={formData} onEditSelect={onEditSelect} formDataEdit={formDataEdit}></TLCorrectionApplicant>
 
           <TLCorrectionOwner t={t} config={config} onSelect={onSelect} formData={formData}></TLCorrectionOwner>
