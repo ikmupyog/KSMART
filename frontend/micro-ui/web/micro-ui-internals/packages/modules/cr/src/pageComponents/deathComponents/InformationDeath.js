@@ -1274,6 +1274,12 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
         setValue(formData?.InformationDeath?.DeathPlace);
       }
     }
+    if (formData?.InformationDeath?.Occupation != null) {
+      if (cmbOccupationMain.length > 0 && (Occupation === undefined || Occupation === "")) {
+        setSelectedOccupation(cmbOccupationMain.filter((cmbOccupationMain) => cmbOccupationMain.code === formData?.InformationDeath?.Occupation)[0]);
+        setValue(formData?.InformationDeath?.Occupation);
+      }
+    }
     
     // if (formData?.ChildDetails?.medicalAttensionSub != null) {
     //   if (cmbAttDeliverySub.length > 0 && (medicalAttensionSub === undefined || medicalAttensionSub === "")) {
