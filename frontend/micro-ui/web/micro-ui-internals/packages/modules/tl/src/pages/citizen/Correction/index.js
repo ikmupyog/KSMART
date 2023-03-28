@@ -87,9 +87,10 @@ const CorrectionTradeLicence = ({ parentRoute,isRenewal }) => {
   };
 
   function handleSelect(key, data, skipStep, index, isAddMultiple = false) {
-    console.log("first time firing");
+    if(key!==""){
     setParams({ ...params, ...{ [key]: { ...params[key], ...data } } });
     setParamcorrected({ ...paramscorrected, ...{ [key]: { ...paramscorrected[key], ...data } } });
+    }
     if(key === "isSkip" && data === true)
     {
       goNext(skipStep, index, isAddMultiple, key, true);

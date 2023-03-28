@@ -11,6 +11,7 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
   // isInitialRender, setIsInitialRender
   //  permntOutsideIndiaCountry,  setPermntOutsideIndiaCountry, countryvalue, setCountryValue,
 }) => {
+  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : false);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let tenantId = "";
