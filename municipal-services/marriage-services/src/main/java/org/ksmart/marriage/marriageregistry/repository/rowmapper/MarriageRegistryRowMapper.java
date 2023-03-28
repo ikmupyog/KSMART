@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MarriageRegistryRowMapper implements ResultSetExtractor<List<MarriageRegistryDetails>>, 
                         BaseRowMapper,BrideRegistryRowMapper,
-                        GroomRegistryRowMapper,MarriageAddressRegistryRowMapper,
+                        GroomRegistryRowMapper,GroomRegistryAddressRowMapper,BrideRegistryAddressRowMapper,
                         WitnessRegistryRowMapper{
 
     @Override
@@ -48,13 +48,13 @@ public class MarriageRegistryRowMapper implements ResultSetExtractor<List<Marria
             .registrationno(rs.getString("MD_registrationno"))
             .status(rs.getString("MD_registration_status"))
             .brideDetails(getBrideDetails(rs))
+            .brideAddressDetails(getBrideAddressDetails(rs))
             .groomDetails(getGroomDetails(rs))
+            .groomAddressDetails(getGroomAddressDetails(rs))
             .witnessDetails(getWitnessDetails(rs))
-           .auditDetails(getAuditDetails(rs))
+            .auditDetails(getAuditDetails(rs))
             .build());
         }
-
-
         return result;
     }
 
