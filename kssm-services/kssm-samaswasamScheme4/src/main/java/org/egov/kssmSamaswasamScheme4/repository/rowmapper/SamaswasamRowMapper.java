@@ -1,17 +1,17 @@
-package org.egov.kssmSamaswasamScheme1.repository.rowmapper;
+package org.egov.kssmSamaswasamScheme4.repository.rowmapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.egov.kssmSamaswasamScheme1.web.models.Aswasakiranam.m_SamaswasamSearchResponse;
+import org.egov.kssmSamaswasamScheme4.web.models.Samaswasam4.m_SamaswasamSearchResponse;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AswasakiranamRowMapper implements ResultSetExtractor<List<m_SamaswasamSearchResponse>> {
+public class SamaswasamRowMapper implements ResultSetExtractor<List<m_SamaswasamSearchResponse>> {
 
     @Override
     public List<m_SamaswasamSearchResponse> extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -20,7 +20,7 @@ public class AswasakiranamRowMapper implements ResultSetExtractor<List<m_Samaswa
         while (rs.next()) {
             result.add(m_SamaswasamSearchResponse.builder()
             .intid(rs.getInt("intid"))
-            .numkssmpensionerid(rs.getInt("numkssmpensionerid"))
+            .numkssmpensionerid(rs.getLong("numkssmpensionerid"))
             .scheme_id(rs.getInt("scheme_id"))
             .district(rs.getInt("district"))
             .application_no(rs.getInt("application_no"))

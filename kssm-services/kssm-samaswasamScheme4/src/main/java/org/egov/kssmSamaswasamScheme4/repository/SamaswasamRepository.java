@@ -1,12 +1,12 @@
-package org.egov.kssmSamaswasamScheme1.repository;
+package org.egov.kssmSamaswasamScheme4.repository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.egov.kssmSamaswasamScheme1.repository.querybuilder.SamaswasamQueryBuilder;
-import org.egov.kssmSamaswasamScheme1.repository.rowmapper.SamaswasamRowMapper;
-import org.egov.kssmSamaswasamScheme1.web.models.Samaswasam.SamaswasamSearchCriteria;
-import org.egov.kssmSamaswasamScheme1.web.models.Samaswasam.m_SamaswasamSearchResponse;
+import org.egov.kssmSamaswasamScheme4.repository.querybuilder.SamaswasamQueryBuilder;
+import org.egov.kssmSamaswasamScheme4.repository.rowmapper.SamaswasamRowMapper;
+import org.egov.kssmSamaswasamScheme4.web.models.Samaswasam4.SamaswasamSearchCriteria;
+import org.egov.kssmSamaswasamScheme4.web.models.Samaswasam4.m_SamaswasamSearchResponse;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 

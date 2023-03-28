@@ -1,10 +1,10 @@
-package org.egov.kssmSamaswasamScheme1.validators;
+package org.egov.kssmSamaswasamScheme4.validators;
 
-import static org.egov.kssmSamaswasamScheme1.web.enums.ErrorCodes.INVALID_SEARCH;
+import static org.egov.kssmSamaswasamScheme4.web.enums.ErrorCodes.INVALID_SEARCH;
 
 import javax.validation.Valid;
 
-import org.egov.kssmSamaswasamScheme1.web.models.Samaswasam.SamaswasamSearchCriteria;
+import org.egov.kssmSamaswasamScheme4.web.models.Samaswasam4.SamaswasamSearchCriteria;
 import org.egov.tracer.model.CustomException;
 import org.springframework.stereotype.Component;
 

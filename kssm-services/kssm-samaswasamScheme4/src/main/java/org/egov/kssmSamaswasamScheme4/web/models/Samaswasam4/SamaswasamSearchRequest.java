@@ -1,4 +1,4 @@
-package org.egov.kssmSamaswasamScheme1.web.models.Aswasakiranam;
+package org.egov.kssmSamaswasamScheme4.web.models.Samaswasam4;
 
 import org.egov.common.contract.request.RequestInfo;
 

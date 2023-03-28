@@ -1,4 +1,4 @@
-package org.egov.kssmSamaswasamScheme1.web.models.Aswasakiranam;
+package org.egov.kssmSamaswasamScheme4.web.models.Samaswasam4;
 
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class SamaswasamSearchResponse
     @JsonProperty("ResponseInfo")
     private ResponseInfo responseInfo;
 
-    @JsonProperty("SamaswasamResponse")
+    @JsonProperty("Samaswasam4Response")
     @Valid
     private List<m_SamaswasamSearchResponse> SamaswasamDetails;
 

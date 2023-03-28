@@ -1,17 +1,17 @@
-package org.egov.kssmSamaswasamScheme1.service;
+package org.egov.kssmSamaswasamScheme4.service;
 
 
 import java.util.List;
 import javax.validation.Valid;
 
-import org.egov.kssmSamaswasamScheme1.config.SamaswasamConfig;
-import org.egov.kssmSamaswasamScheme1.kafka.Producer;
-import org.egov.kssmSamaswasamScheme1.repository.SamaswasamRepository;
-import org.egov.kssmSamaswasamScheme1.validators.SamaswasamSearchValidator;
-import org.egov.kssmSamaswasamScheme1.web.models.Samaswasam.SamaswasamRequest;
-import org.egov.kssmSamaswasamScheme1.web.models.Samaswasam.SamaswasamSearchCriteria;
-import org.egov.kssmSamaswasamScheme1.web.models.Samaswasam.m_Samaswasam;
-import org.egov.kssmSamaswasamScheme1.web.models.Samaswasam.m_SamaswasamSearchResponse;
+import org.egov.kssmSamaswasamScheme4.config.SamaswasamConfig;
+import org.egov.kssmSamaswasamScheme4.kafka.Producer;
+import org.egov.kssmSamaswasamScheme4.repository.SamaswasamRepository;
+import org.egov.kssmSamaswasamScheme4.validators.SamaswasamSearchValidator;
+import org.egov.kssmSamaswasamScheme4.web.models.Samaswasam4.SamaswasamRequest;
+import org.egov.kssmSamaswasamScheme4.web.models.Samaswasam4.SamaswasamSearchCriteria;
+import org.egov.kssmSamaswasamScheme4.web.models.Samaswasam4.m_Samaswasam;
+import org.egov.kssmSamaswasamScheme4.web.models.Samaswasam4.m_SamaswasamSearchResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

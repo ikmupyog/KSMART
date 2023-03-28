@@ -1,18 +1,18 @@
-package org.egov.kssmSamaswasamScheme1.web.controller;
+package org.egov.kssmSamaswasamScheme4.web.controller;
 
 
 import javax.validation.Valid;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
-import org.egov.kssmSamaswasamScheme1.service.SamaswasamService;
-import org.egov.kssmSamaswasamScheme1.util.ResponseInfoFactory;
-import org.egov.kssmSamaswasamScheme1.web.models.Samaswasam.SamaswasamRequest;
-import org.egov.kssmSamaswasamScheme1.web.models.Samaswasam.SamaswasamResponse;
-import org.egov.kssmSamaswasamScheme1.web.models.Samaswasam.SamaswasamSearchCriteria;
-import org.egov.kssmSamaswasamScheme1.web.models.Samaswasam.SamaswasamSearchRequest;
-import org.egov.kssmSamaswasamScheme1.web.models.Samaswasam.SamaswasamSearchResponse;
-import org.egov.kssmSamaswasamScheme1.web.models.Samaswasam.m_Samaswasam;
-import org.egov.kssmSamaswasamScheme1.web.models.Samaswasam.m_SamaswasamSearchResponse;
+import org.egov.kssmSamaswasamScheme4.service.SamaswasamService;
+import org.egov.kssmSamaswasamScheme4.util.ResponseInfoFactory;
+import org.egov.kssmSamaswasamScheme4.web.models.Samaswasam4.SamaswasamRequest;
+import org.egov.kssmSamaswasamScheme4.web.models.Samaswasam4.SamaswasamResponse;
+import org.egov.kssmSamaswasamScheme4.web.models.Samaswasam4.SamaswasamSearchCriteria;
+import org.egov.kssmSamaswasamScheme4.web.models.Samaswasam4.SamaswasamSearchRequest;
+import org.egov.kssmSamaswasamScheme4.web.models.Samaswasam4.SamaswasamSearchResponse;
+import org.egov.kssmSamaswasamScheme4.web.models.Samaswasam4.m_Samaswasam;
+import org.egov.kssmSamaswasamScheme4.web.models.Samaswasam4.m_SamaswasamSearchResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestBody;
 @Slf4j
 @RestController
-@RequestMapping("/Samaswasam")
+@RequestMapping("/Samaswasam4")
 @Validated
 public class SamaswasamController {
 

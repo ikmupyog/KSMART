@@ -1,4 +1,4 @@
-package org.egov.kssmSamaswasamScheme1.web.models.Aswasakiranam;
+package org.egov.kssmSamaswasamScheme1.web.models.Samaswasam;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
