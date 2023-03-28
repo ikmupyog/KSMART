@@ -712,7 +712,7 @@ serviceMaps:
           - jsonPath: $.Drafting.*.auditDetails.lastModifiedBy
 
           - jsonPath: $.Drafting.*.auditDetails.lastModifiedTime
-
+          
   - version: 1.0
     description: Update draft Text  in egov_filemgmnt database, eg_fm_drafting
     fromTopic: update_fm_drafting
@@ -739,8 +739,6 @@ serviceMaps:
       - query: UPDATE public.eg_fm_drafting  SET  status=?   WHERE filecode =? AND drafttype = ? AND assigner = ? ;
         basePath: Drafting.*
         jsonMaps:
-
-
           - jsonPath: $.Drafting.*.status
 
           - jsonPath: $.Drafting.*.fileCode
@@ -748,5 +746,7 @@ serviceMaps:
           - jsonPath: $.Drafting.*.draftType
 
           - jsonPath: $.Drafting.*.assigner
+
+   
 
 
