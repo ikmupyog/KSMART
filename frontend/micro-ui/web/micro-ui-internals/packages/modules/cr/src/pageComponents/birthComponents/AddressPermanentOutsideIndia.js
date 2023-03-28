@@ -34,10 +34,16 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
     { i18nKey: "Village", code: "VILLAGE" },
   ];
 
-  if (isEditBirth || isEditDeath) {
+  if (isEditBirth) {
     if (formData?.ChildDetails?.AddressBirthDetails?.permntOutsideIndiaVillage != null) {
       if (cmbVillage.length > 0 && (permntOutsideIndiaVillage === undefined || permntOutsideIndiaVillage === "")) {
         setadrsVillage(cmbVillage.filter(cmbVillage => cmbVillage.code === formData?.ChildDetails?.AddressBirthDetails?.permntOutsideIndiaVillage)[0]);
+      }
+    }
+  } else if (isEditDeath) {
+    if (formData?.AddressBirthDetails?.permntOutsideIndiaVillage != null) {
+      if (cmbVillage.length > 0 && (permntOutsideIndiaVillage === undefined || permntOutsideIndiaVillage === "")) {
+        setadrsVillage(cmbVillage.filter(cmbVillage => cmbVillage.code === formData?.AddressBirthDetails?.permntOutsideIndiaVillage)[0]);
       }
     }
   }
