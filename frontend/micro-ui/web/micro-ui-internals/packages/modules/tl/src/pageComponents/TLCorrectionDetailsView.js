@@ -84,7 +84,8 @@ console.log("formData Main"+JSON.stringify(formData));
     setShowModal(false);
   };
   const goNext = async (data) => {
-    console.log("ya firing amin"+JSON.stringify(data));
+   // console.log("ya firing amin"+JSON.stringify(data));
+   onSelect("", "");
   }
   const onSkip = () => onSelect();
   function submit(data) {
