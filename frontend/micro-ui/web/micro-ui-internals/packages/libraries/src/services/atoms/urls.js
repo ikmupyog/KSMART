@@ -110,6 +110,7 @@ const Urls = {
     create: "/birth-services/cr/createbirth",
     search:"/birth-services/cr/searchbirth",
     adoption_search:'/birth-services/cr/searchadoption',
+    adoption_update:'/birth-services/cr/updateadoption',
     update:"/birth-services/cr/updatebirth",   
     download_pdf: "/egov-pdf/download/CR/",
     registry_download: "/birth-services/cr/registry/_download", 
