@@ -17,14 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import javax.validation.Valid;
 import java.util.List;
-//import org.ksmart.marriage.marriageregistry.model.BirthCertificate;
-//import org.ksmart.marriage.marriageregistry.model.RegisterBirthDetail;
-//import org.ksmart.marriage.marriageregistry.model.RegisterBirthDetailsRequest;
-//import org.ksmart.marriage.marriageregistry.model.RegisterBirthSearchCriteria;
-//import org.ksmart.marriage.marriageregistry.service.RegisterBirthService;
-//import org.ksmart.marriage.utils.ResponseInfoFactory;
 
-//v1/marriagedetails/_createregistry
 @Slf4j
 @RestController
 @RequestMapping("/v1/marriagedetails")

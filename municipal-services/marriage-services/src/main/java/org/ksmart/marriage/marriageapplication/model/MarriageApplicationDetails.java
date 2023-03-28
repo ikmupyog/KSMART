@@ -9,6 +9,11 @@ import org.ksmart.marriage.marriageapplication.model.marriage.*;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
+import javax.swing.text.Document;
+import javax.validation.Valid;
+
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -103,23 +108,7 @@ public class MarriageApplicationDetails {
 //    @JsonProperty("marriageOthersSpecify")
 //    private String othersspecify;
 
-    @NotNull
-    @Size(max = 64)
-    @JsonProperty("applicationType")
-    private String applicationtype;
 
-    @JsonProperty("modulecode")
-    private String modulecode;
-
-    @NotNull
-    @Size(max = 64)
-    @JsonProperty("businessService")
-    private String businessservice;
-
-    @NotNull
-    @Size(max = 64)
-    @JsonProperty("workflowCode")
-    private String workflowcode;
 
 //    @Size(max = 64)
 //    @JsonProperty("fileNo")
@@ -140,13 +129,7 @@ public class MarriageApplicationDetails {
 //    @JsonProperty("fileStatus")
 //    private String file_status;
 
-    @Size(max = 64)
-    @JsonProperty("action")
-    private String action;
 
-    @Size(max = 64)
-    @JsonProperty("status")
-    private String status;
     @Size(max = 1000)
     @JsonProperty("placeid")
     private String placeid;
@@ -203,11 +186,53 @@ public class MarriageApplicationDetails {
 
     @JsonProperty("GroomAddressDetails")
     private GroomAddressDetails groomAddressDetails;
-//    @JsonProperty("PresentAddressDetails")
-//    private PresentAddressDetails present ;
 
     @JsonProperty("WitnessDetails")
     private WitnessDetails witnessDetails;
+
+    //Workflow 29/03.2023 Jasmine
+    @Size(max = 64)
+    @JsonProperty("action")
+    private String action;
+
+    @Size(max = 64)
+    @JsonProperty("status")
+    private String status;
+
+    @JsonProperty("assignee")
+    private List<String> assignees;
+
+    
+    @NotNull
+    @Size(max = 64)
+    @JsonProperty("applicationType")
+    private String applicationtype;
+
+    @JsonProperty("modulecode")
+    private String modulecode;
+
+    @NotNull
+    @Size(max = 64)
+    @JsonProperty("businessService")
+    private String businessservice;
+
+    @NotNull
+    @Size(max = 64)
+    @JsonProperty("workflowCode")
+    private String workflowcode;
+
+    private String assignuser;
+
+    @Size(max = 128)
+    // @Html
+    private String comment;
+
+    @Valid
+    @JsonProperty("wfDocuments")
+    private List<Document> wfDocuments;
+
+    // public void setStatus(String s) {
+    // }
 
 
 

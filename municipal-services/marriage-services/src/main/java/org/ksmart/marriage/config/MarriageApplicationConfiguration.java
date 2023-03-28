@@ -51,6 +51,14 @@ public class MarriageApplicationConfiguration {
     @Value("${egov.bnd.max.limit}")
     private Integer maxSearchLimit;
 
+    //Workflow
+
+    @Value("${egov.workflow.host}")
+    private String wfHost;
+
+    @Value("${egov.workflow.path}")
+    private String wfTransitionPath;
+
     
 
 }
