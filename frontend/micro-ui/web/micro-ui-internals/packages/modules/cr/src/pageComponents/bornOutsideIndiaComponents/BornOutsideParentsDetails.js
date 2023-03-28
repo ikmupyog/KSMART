@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 
 const BornOutsideParentsDetails = ({ config, onSelect, userType, formData }) => {
   // console.log(JSON.stringify(formData));
+  console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};

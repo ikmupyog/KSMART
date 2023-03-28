@@ -120,6 +120,10 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
 
   const [access, setAccess] = React.useState(true);
 
+  const filteredCountries = cmbCountry.filter(country=>country.name!== "India")
+
+  console.log({filteredCountries});
+
   const onSkip = () => onSelect();
 
   function setselectGender(value) {
@@ -456,7 +460,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
         <BackButton>{t("CS_COMMON_BACK")}</BackButton>
         {window.location.href.includes("/citizen") ? <Timeline /> : null}
         {window.location.href.includes("/employee") ? <Timeline /> : null}
-        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!childAadharNo}>
+        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!childPassportNo }>
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-12">
@@ -716,7 +720,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
             <Dropdown
               t={t}
               optionKey="name"
-              option={cmbCountry}
+              option={filteredCountries}
               selected={country}
               select={setSelectcountry}
               placeholder={`${t("CS_COMMON_COUNTRY")}`}
@@ -763,7 +767,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
                {...(validation = {
                 pattern: "^[a-zA-Z-.0-9`' ]*$",
                 isRequired: true,
-                type: "number",
+                type: "text",
                 max: 6,
                 min: 6,
                 title: t("CR_INVALID_ZIP_CODE"),
