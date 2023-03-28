@@ -192,7 +192,7 @@ const UploadDoc = (props) => {
   const showHint = props?.showHint || false;
 
   return (
-    <Fragment>
+    <div style={{width: "20rem", height: "10rem", marginTop: "5rem"}}>
       {showHint && <p className="cell-text">{t(props?.hintText)}</p>}
       <div className={`upload-file ${props.disabled ? " disabled" : ""}`} style={extraStyles?.uploadFile ? extraStyles?.uploadFile : {}}>
         <div style= {extraStyles ? extraStyles?.containerStyles : null}>
@@ -243,7 +243,7 @@ const UploadDoc = (props) => {
       </div>
       {props.iserror && <p style={{color: "red"}}>{props.iserror}</p>}
       {props?.showHintBelow && <p className="cell-text">{t(props?.hintText)}</p>}
-    </Fragment>
+    </div>
   );
 };
 

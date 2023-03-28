@@ -9,11 +9,11 @@ import BirthPlaceHome from "../../pageComponents/birthComponents/BirthPlaceHome"
 import BirthPlaceVehicle from "../../pageComponents/birthComponents/BirthPlaceVehicle";
 import BirthPlacePublicPlace from "../../pageComponents/birthComponents/BirthPlacePublicPlace";
 import AdoptionBirthReqSearch from './AdoptionBirthReqSearch'
+import BirthReqSearch from './BirthReqSearch'
 import { convertEpochToDateDMY } from  "../../utils";
 
-const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => {
+const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirth, isEditFlag =false}) => {
   // console.log(JSON.stringify(formData));  
-  console.log(formData);
   const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
   const [workFlowCode, setWorkFlowCode] = useState();
@@ -270,6 +270,13 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
       }
     }
   }, [isInitialRender]);
+
+  useState(()=>{
+    if(isEditBirth){
+      formData.AdoptionDetails.pop()
+    }
+
+  },[formData])
 
   React.useEffect(() => {
     if (isInitialRenderPlace) {
@@ -1082,8 +1089,12 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
           </div>
 
           {birthRegistered == true &&(<React.Fragment>
-         
-            <AdoptionBirthReqSearch BirthRegNo={BirthRegNo} setSelectSetBirthRegNo={setSelectSetBirthRegNo} setSearchRegId={setSearchRegId}/>
+            {isEditFlag?(
+              <AdoptionBirthReqSearch BirthRegNo={BirthRegNo} setSelectSetBirthRegNo={setSelectSetBirthRegNo} setSearchRegId={setSearchRegId}/>
+            ):(
+              <BirthReqSearch BirthRegNo={BirthRegNo} setSelectSetBirthRegNo={setSelectSetBirthRegNo} setSearchRegId={setSearchRegId}/>
+            )}
+            
           {birthRegistered == true && BirthRegNo && SearchRegId && (
                <div className="row">
                <div className="col-md-12">

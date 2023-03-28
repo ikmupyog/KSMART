@@ -121,6 +121,7 @@ import useTenantsCR from "./cr/useTenants";
 import useCivilRegistrationMDMS from "./cr/useCivilRegistrationMDMS";
 // import useTLDocumentSearch from "./tl/useTLDocumentSearch";
 import useCivilRegistrationAPI from "./cr/useCivilRegistrationAPI";
+import useCivilRegistrationMarriageAPI from "./cr/useCivilRegistrationMarriageAPI";
 import useCvilRegistrationAdoptionApi from "./cr/useCvilRegistrationAdoptionApi";
 import useCivilRegistrationStillBirthAPI from "./cr/useCivilRegistrationStillBirthAPI";
 
@@ -132,6 +133,7 @@ import { useCRDeathSearchApplication, useCRApplicationDeathDetails } from "./cr/
 import useCRFetchBill from "./cr/useFetchBill";
 import useCRDFetchBill from "./cr/useDeathFetchBill";
 import useCRApplicationDetail from "./cr/useApplicationDetail";
+import useApplicationMarriageDetail from "./cr/useApplicationMarriageDetail";
 import useApplicationStillBirthDetail from "./cr/useApplicationStillBirthDetail"; 
 import useApplicationDeathDetail from "./cr/useApplicationDeathDetail"; 
 import useCRApplicationActions from "./cr/useApplicationActions";
@@ -146,6 +148,7 @@ import useRegistryDownloadDeath from "./cr/useRegistryDownloadDeath";
 import useResistryDownloadBirth from "./cr/useResistryDownloadBirth"
 import useRegistrySearchBirth from "./cr/useRegistrySearchBirth";
 import useRegistrySearchDeath from "./cr/useRegistrySearchDeath";
+import useSearchMarriage from "./cr/useSearchMarriage";
 
 import useSearchDeath  from "./cr/useSearchDeath";
 import useSearchStillBirth  from "./cr/useSearchStillBirth";
@@ -339,6 +342,7 @@ const cr = {
   useTenants: useTenantsCR,
   useCivilRegistrationMDMS,
   useCivilRegistrationAPI,
+  useCivilRegistrationMarriageAPI,
   useCvilRegistrationAdoptionApi,
   useCivilRegistrationStillBirthAPI,
   useCivilRegistrationDeathAPI,
@@ -346,6 +350,7 @@ const cr = {
   useInbox: useCRInbox,
   useMDMS: useCRMDMS,
   useSearch: useCRSearch,
+  useSearchMarriage,
   useAdoptionSearch,
   useRegistrySearchDeath,
   useRegistryDownloadDeath,
@@ -354,6 +359,7 @@ const cr = {
   useSearchDeath ,
   useSearchStillBirth,
   useApplicationDetail: useCRApplicationDetail,
+  useApplicationMarriageDetail,
   useApplicationStillBirthDetail:useApplicationStillBirthDetail,
   useApplicationActions: useCRApplicationActions,
   useCRStillBirthApplicationActions:useCRStillBirthApplicationActions,

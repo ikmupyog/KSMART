@@ -131,13 +131,13 @@ const CheckPage = ({ onSubmit, value }) => {
                 </div>
                 <div className="col-md-2">
                 {/* {TradeDetails?.tradeLicenseDetail?.tradeUnits?.businesscategory?.i18nKey} */}
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{t(TradeDetails?.tradeLicenseDetail?.tradeUnits?.businesscategory?.i18nKey)}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{t(TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessCategory?.i18nKey)}</CardText>
                 </div>
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_NEW_TRADE_DETAILS_TRADE_TYPE_LABEL")}`}</CardText>
                 </div>
                 <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{t(TradeDetails?.tradeLicenseDetail?.tradeUnits?.businesstype?.i18nKey)}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{t(TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessType?.i18nKey)}</CardText>
                 </div>
               </div>
             </div>
@@ -147,7 +147,7 @@ const CheckPage = ({ onSubmit, value }) => {
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_NEW_TRADE_DETAILS_TRADE_SUBTYPE_LABEL")}`}</CardText>
                 </div>
                 <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{t(TradeDetails?.tradeLicenseDetail?.tradeUnits?.businesssubtype?.i18nKey)}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{t(TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessSubtype?.i18nKey)}</CardText>
                 </div>
               </div>
             </div>
@@ -215,7 +215,7 @@ const CheckPage = ({ onSubmit, value }) => {
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_CONTACT_NO")}`}</CardText>
                 </div>
                 <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.tradeLicenseDetail?.address?.contactno}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetails?.tradeLicenseDetail?.address?.contactNo}</CardText>
                 </div>
               </div>
             </div>

@@ -110,6 +110,7 @@ const Urls = {
     create: "/birth-services/cr/createbirth",
     search:"/birth-services/cr/searchbirth",
     adoption_search:'/birth-services/cr/searchadoption',
+    adoption_update:'/birth-services/cr/updateadoption',
     update:"/birth-services/cr/updatebirth",   
     download_pdf: "/egov-pdf/download/CR/",
     registry_download: "/birth-services/cr/registry/_download", 
@@ -128,6 +129,11 @@ const Urls = {
     update: "/death-services/v1/deathdetails/_updatedeath",
     registry_search: "/death-services/v1/deathregistry/_searchdeath",
     registry_download: "/death-services/v1/deathregistry/_downloaddeath",
+  },
+  crmarriage: {
+    create: "/birth-services/cr/createbirth",
+    search:"/birth-services/cr/searchbirth",
+    update:"/birth-services/cr/updatebirth",  
   },
   dfm: {
     create: "/filemgmnt/v1/applicantservices/_create",

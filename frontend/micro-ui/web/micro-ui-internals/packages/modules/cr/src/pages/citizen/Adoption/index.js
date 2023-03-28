@@ -13,7 +13,9 @@ const CreateAdoption = ({ parentUrl, isEditBirth }) => {
   const { pathname } = useLocation();
   const history = useHistory();
   const queryClient = useQueryClient();
-  const [params, setParams, clearParams] = isEditBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_ADOPTION_REG", {});
+  const [editFlag, setEditFlag, clearParams1] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false);
+  const [params, setParams, clearParams] = editFlag ? Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_ADOPTION_REG", {});
+
 
   // console.log("params"+JSON.stringify(params));
   const stateId = Digit.ULBService.getStateId();
