@@ -43,7 +43,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantWard, "egov-location", "boundary-data");
   const [toast, setToast] = useState(false);
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [isDisableStatus, setDisableStatus] = useState(true);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : false);
 
   let cmbLB = [];
   let cmbTaluk = [];
