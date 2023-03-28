@@ -70,7 +70,7 @@ export const CRDeathsearch = {
       asSectionHeader: true,
       values: [
         {
-          title: "PDF_BIRTH_CHILD_NAME",
+          title: "PDF_DECEASED_NAME",
           value:
             response?.InformationDeath?.DeceasedFirstNameEn +
               " " +
@@ -86,9 +86,10 @@ export const CRDeathsearch = {
         },
 
         { title: "PDF_BIRTH_CHILD_SEX", value: response?.InformationDeath?.DeceasedGender || "NA" },
-        { title: "PDF_CR_DEATH_OF_DATE", value: response?.InformationDeath ? convertEpochToDate(response?.DateOfDeath) : "NA" },
-        // { title: "PDF_PLACE_OF_DEATH", value: response?.InformationDeath?.DeathPlaceType.hospitalName || "NA" },
-
+        {
+          title: "PDF_CR_DEATH_OF_DATE",
+          value: response?.InformationDeath?.DateOfDeath ? convertEpochToDate(response?.InformationDeath?.DateOfDeath) : "NA",
+        },
         {
           title: "CR_ADDRESS",
           value:
@@ -108,7 +109,7 @@ export const CRDeathsearch = {
           title: "PDF_BIRTH_NAME_OF_MOTHER",
           value: response?.FamilyInformationDeath?.MotherNameEn + " / " + response?.FamilyInformationDeath?.MotherNameMl || "NA",
         },
-        { title: "PDF_PLACE_OF_DEATH", value: response?.InformationDeath?.DeathPlaceType + "/" + response?.InformationDeath?.DeathPlaceType || "NA" },
+        { title: "PDF_PLACE_OF_DEATH", value: response?.InformationDeath?.DeathPlaceHospitalNameEn + "/" + response?.InformationDeath?.DeathPlaceHospitalNameMl || "NA" },
 
         // ...(InformationDeath.DeathPlace.code === "HOSPITAL" && {
 
