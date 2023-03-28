@@ -40,7 +40,22 @@ const getPath = (path, params) => {
     });
   return path;
 };
-const CorrectionCheckPage = ({ onSubmit, value }) => {
+const customestyle = {
+  color: 'blue',
+  lineHeight: 10,
+  padding: '1.5em',
+}
+
+const custometable = {
+  border: '1px solid #9acd32',
+  // padding:'0px 10px'
+  
+}
+
+const CorrectionCheckPage = ({ onSubmit, value, valuenew }) => {
+
+  console.log(JSON.stringify(value));
+  console.log(JSON.stringify(valuenew));
   let isEdit = window.location.href.includes("renew-trade");
   const { t } = useTranslation();
   const history = useHistory();
@@ -57,9 +72,71 @@ const CorrectionCheckPage = ({ onSubmit, value }) => {
     routeLink = `${getPath(match.path, match.params)}`;
     routeLink = routeLink.replace("/check", "");
   }
- 
+
   return (
-    <div>Hai</div>
+    <div>
+      <div className="row">
+        <div className="col-md-6" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_OLD_DET_LABEL")}`}</span></h1>
+        </div>
+        <div className="col-md-6" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_NEW_DET_LABEL")}`}</span></h1>
+        </div>
+      </div>
+      <div className="row">
+      <div className="col-md-6"  style={custometable}>
+          <div className="row">
+          <div className="col-md-3">
+          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_DISTRICT")}`}</CardText>
+          </div>
+          <div className="col-md-9">
+            hai
+          </div>
+          </div>
+          <div className="row">
+          <div className="col-md-3">
+          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LB_NAME_LABEL")}`}</CardText>
+          </div>
+          <div className="col-md-9">
+            hai
+          </div>
+          </div>
+          <div className="row">
+          <div className="col-md-3">
+          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LB_TYPE_LABEL")}`}</CardText>
+          </div>
+          <div className="col-md-9">
+            hai
+          </div>
+          </div>
+      
+      </div>
+      <div className="col-md-6"  style={custometable}>
+          <div className="row">
+          <div className="col-md-3">
+          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_DISTRICT")}`}</CardText>
+          </div>
+          <div className="col-md-9">
+            hai
+          </div>
+          </div>
+          <div className="row">
+          <div className="col-md-3">
+          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LB_NAME_LABEL")}`}</CardText>
+          </div>
+          <div className="col-md-9">
+            hai
+          </div>
+          </div>
+          <div className="row">
+          <div className="col-md-3">
+          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_LB_TYPE_LABEL")}`}</CardText>
+          </div>
+          <div className="col-md-9">
+            hai
+          </div>
+          </div>
+        </div>
+        </div>
+    </div>
   )
 };
 
