@@ -7,6 +7,7 @@ import getPDFData from "../../../utils/getTLAcknowledgementData";
 
 const GetActionMessage = (props) => {
   // console.log(props,props.isLoading);
+  console.log(props.isSuccess,props);
   const { t } = useTranslation();
   if (props.isSuccess) {
     return t("CR_CREATE_SUCCESS_MSG");
@@ -175,9 +176,12 @@ else if (((mutation?.isSuccess == false && mutation?.isIdle == false))) {
 // if(mutation.isSuccess && mutation?.isError===null){
   return(
     <Card>
-      <BannerPicker t={t} data={mutation.data} isSuccess={"success"} isLoading={(mutation.isIdle || mutation.isLoading)} />
+      <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess }  isError={mutation?.isError} isLoading={(mutation.isIdle || mutation.isLoading)} />
        {/* <CardText>{!isDirectRenewal?t("Application Submitted Successfully"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText>
      */}
+     <Link to={editFlag?`/digit-ui/employee`:`/digit-ui/citizen`}>
+      <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
+    </Link>
         <LinkButton
           label={
             <div className="response-download-button">
