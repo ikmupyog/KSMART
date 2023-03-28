@@ -86,17 +86,10 @@ serviceMaps:
 
 
         - query: INSERT INTO public.eg_marriage_bride_groom_details(
-<<<<<<< HEAD
-                id, residentship, aadharno, passportno, socialsecurityno, firstname_en, firstname_mal, middlename_en, middlename_mal, lastname_en, lastname_mal, 
-                mobile, emailid, gender, dateofbirth, age, parent_guardian, fathername_en, fathername_mal, mothername_en, mothername_mal, father_aadharno,
-                mother_aadharno, guardianname_en, guardianname_mal, guardian_aadharno, maritalstatusid, no_of_spouse_living, marriageid, bride_groom, createdtime,
-                createdby, lastmodifiedtime, lastmodifiedby)
-=======
                 id, residentship, adharno, passportno, socialsecurityno, firstname_en, firstname_ml, middlename_en, middlename_ml, lastname_en,
                 lastname_ml, mobile, emailid, gender, dateofbirth, age, parent_guardian, fathername_en, fathername_ml, mothername_en, mothername_ml,
                 father_adharno, mother_adharno, guardianname_en, guardianname_ml, guardian_adhar, maritalstatusid, marriageid, bride_groom, createdtime,
                 createdby, lastmodifiedtime, lastmodifiedby, no_of_spouse_living)
->>>>>>> 52c781b876 (CREATE)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
           basePath: MarriageDetails.*.BrideDetails
           jsonMaps:
@@ -170,18 +163,11 @@ serviceMaps:
 
 
         - query: INSERT INTO public.eg_marriage_bride_groom_details(
-<<<<<<< HEAD
-                id, residentship, aadharno, passportno, socialsecurityno, firstname_en, firstname_mal, middlename_en, middlename_mal, lastname_en, lastname_mal,
-                mobile, emailid, gender, dateofbirth, age, parent_guardian, fathername_en, fathername_mal, mothername_en, mothername_mal, father_aadharno,
-                mother_aadharno, guardianname_en, guardianname_mal, guardian_aadharno, maritalstatusid, no_of_spouse_living, marriageid, bride_groom, createdtime,
-                createdby, lastmodifiedtime, lastmodifiedby)
-=======
                 id, residentship, adharno, passportno, socialsecurityno, firstname_en, firstname_ml, middlename_en, middlename_ml, lastname_en, 
                 lastname_ml, mobile, emailid, gender, dateofbirth, age, parent_guardian, fathername_en, fathername_ml, mothername_en, mothername_ml,
                 father_adharno, mother_adharno, guardianname_en, guardianname_ml, guardian_adhar, maritalstatusid, marriageid, bride_groom, createdtime, 
                 createdby, lastmodifiedtime, lastmodifiedby, no_of_spouse_living)
->>>>>>> 52c781b876 (CREATE)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+                VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
           basePath: MarriageDetails.*.GroomDetails
           jsonMaps:
             - jsonPath: $.MarriageDetails.*.GroomDetails.groomId

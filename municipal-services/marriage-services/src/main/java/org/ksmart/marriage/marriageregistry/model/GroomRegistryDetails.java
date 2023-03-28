@@ -140,11 +140,11 @@ public class GroomRegistryDetails {
     @JsonProperty("groomMaritalstatusID")
     private String maritalstatusid;
 
-    @JsonProperty("groomSpouseLiving")
+    @JsonProperty("groomIsSpouseLiving")
     private Boolean groomIsSpouseLiving;
 
     @JsonProperty("groomNoOfSpouse")
-    private Integer groomlivingSpouseNo;
+    private Integer groomNoOfSpouse;
 
     @Size(max = 150)
     @JsonProperty("groomPhotoUrl")

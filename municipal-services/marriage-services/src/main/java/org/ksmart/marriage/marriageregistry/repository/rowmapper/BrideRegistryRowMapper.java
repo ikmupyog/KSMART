@@ -41,8 +41,8 @@ public interface BrideRegistryRowMapper {
       .guardianname_ml(rs.getString("BD_guardianname_ml"))
       .guardian_aadharno(rs.getString("BD_guardian_aadharno"))
       .maritalstatusid(rs.getString("BD_maritalstatusid"))
-      .brideIsSpouseLiving(Boolean.valueOf(rs.getString("BD_is_spouse_living")))
-      .bridelivingSpouseNo(Integer.valueOf(rs.getString("BD_livingspouseNo")))
+    //  .brideIsSpouseLiving(Boolean.valueOf(rs.getString("BD_is_spouse_living")))
+      .brideNoOfSpouse(Integer.valueOf(rs.getString("BD_livingspouseNo")))
       //.photo_url(rs.getString("BD_photo_url"))
     //  .marriageid(rs.getString("BD_marriageid"))
       .build();
