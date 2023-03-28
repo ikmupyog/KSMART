@@ -1517,7 +1517,7 @@ export const convertToDeathRegistration = (data = {}) => {
           DeathPlaceHomeStreetNameMl: data?.InformationDeath?.DeathPlaceHomeStreetNameMl ? data?.InformationDeath?.DeathPlaceHomeStreetNameMl : null,
           DeathPlaceHomeHoueNameEn: data?.InformationDeath?.DeathPlaceHomeHoueNameEn ? data?.InformationDeath?.DeathPlaceHomeHoueNameEn : null,
           DeathPlaceHomeHoueNameMl: data?.InformationDeath?.DeathPlaceHomeHoueNameMl ? data?.InformationDeath?.DeathPlaceHomeHoueNameMl : null,
-          DeceasedAadharNotAvailable: data?.InformationDeath?.DeceasedAadharNotAvailable,
+          DeceasedAadharNotAvailable: data?.InformationDeath?.DeceasedAadharNotAvailable ? data?.InformationDeath?.DeceasedAadharNotAvailable : false ,
           DeceasedAadharNumber: data?.InformationDeath?.DeceasedAadharNumber,
           DeceasedIdproofType: data?.InformationDeath?.DeceasedIdproofType ? data?.InformationDeath.DeceasedIdproofType.code : null,
           DeceasedIdproofNo: data?.InformationDeath?.DeceasedIdproofNo,
