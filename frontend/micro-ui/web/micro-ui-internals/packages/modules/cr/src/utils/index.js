@@ -1746,7 +1746,7 @@ export const convertToDeathRegistration = (data = {}) => {
           DeathSignedOfficerDesignation: data?.InformantDetails?.DeathSignedOfficerDesignation,
           InformantMobileNo: parseInt(data?.InformantDetails?.InformantMobileNo),
           InformantAddress: data?.InformantDetails?.InformantAddress ? data?.InformantDetails?.InformantAddress : null,
-          IsDeclarationInformant: data?.InformantDetails?.IsDeclarationInformer,
+          IsDeclarationInformant: data?.InformantDetails?.IsDeclarationInformant,
           InformantDocumentId: null,
           InformantDocumentDeathDtlId: null,
           InformantDocumentTenantId: data?.InformationDeath?.tenantId,
