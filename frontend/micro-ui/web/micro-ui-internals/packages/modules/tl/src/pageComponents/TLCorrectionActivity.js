@@ -1,11 +1,10 @@
 import React, { useCallback, useState, useReducer, useEffect } from "react";
-import { CardLabel, TextInput, Dropdown, LinkButton, RadioButtons, CardText, DatePicker } from "@egovernments/digit-ui-react-components";
+import { CardLabel, TextInput, Dropdown, LinkButton, RadioButtons, CardText, DatePicker, MultiSelectDropdown } from "@egovernments/digit-ui-react-components";
 import { sortDropdownNames } from "../utils/index";
 import { convertEpochToDate } from '../utils/index';
 import { isUndefined } from "lodash";
 
 const TLCorrectionActivity = ({ t, config,formData,onEditSelect,formDataEdit}) => { 
-  console.log("formDataEdit"+JSON.stringify(formDataEdit));
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isEdit,setIsEdit]=useState(true);
   const stateId = Digit.ULBService.getStateId();
@@ -31,8 +30,8 @@ const TLCorrectionActivity = ({ t, config,formData,onEditSelect,formDataEdit}) =
   // const [commencementDate, setCommencementDate] = useState(formDataEdit?.commencementDate? convertEpochToDate(formDataEdit?.commencementDate) : formData?.commencementDate ? convertEpochToDate(formData?.commencementDate) : null);
   // const [desiredLicensePeriod, setDesiredLicensePeriod] = useState(formDataEdit?.desiredLicensePeriod ? LicensePeriod.filter((period) => period?.code.includes(formDataEdit?.desiredLicensePeriod))[0] : formData?.desiredLicensePeriod ? LicensePeriod.filter((period) => period?.code.includes(formData?.desiredLicensePeriod))[0] : "");
   //const [businessSector, setBusinessSector] = useState(formDataEdit?.TradeDetails?.tradeLicenseDetail?.businessSector ? menusector.filter((sec) => sec?.code.includes(formDataEdit?.tradeLicenseDetail?.businessSector))[0]  : "");
-  const [fields, setFeilds] = useState(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits ? formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits  :[{ businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null }]);
-  console.log("fields :" + JSON.stringify(fields));
+  // const [fields, setFeilds] = useState(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits ? formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits  :[{ businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null }]);
+  const [fields, setFeilds] = useState([{ businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null }]);
   const [noOfEmployees, setNoOfEmployees] = useState(formDataEdit?.TradeDetails?.tradeLicenseDetail?.noOfEmployees ? formDataEdit?.TradeDetails?.tradeLicenseDetail?.noOfEmployees  : "");
   const [capitalInvestment, setCapitalInvestment] = useState(formDataEdit?.TradeDetails?.tradeLicenseDetail?.capitalInvestment ? formDataEdit?.TradeDetails?.tradeLicenseDetail?.capitalInvestment : "" );
   const [commencementDate, setCommencementDate] = useState(formDataEdit?.TradeDetails?.commencementDate? convertEpochToDate(formDataEdit?.TradeDetails?.commencementDate) : null);
@@ -64,7 +63,6 @@ const TLCorrectionActivity = ({ t, config,formData,onEditSelect,formDataEdit}) =
     Data &&
       Data.TradeLicense &&
       Data.TradeLicense.TradeType.map((ob) => {
-        console.log("ob"+JSON.stringify( ob));
         if (
             ob.code.split(".")[0] === BusinessCategory.code &&
           !BusinessTypeMenu.some((BusinessTypeMenu) => BusinessTypeMenu.code === `${ob.code.split(".")[0] + "." + ob.code.split(".")[1]}`)
@@ -87,30 +85,27 @@ const TLCorrectionActivity = ({ t, config,formData,onEditSelect,formDataEdit}) =
       });
     return BusinessSubTypeMenu;
   }
-//  if (formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory && BusinessCategoryMenu.length > 0) {
-//     let category = BusinessCategoryMenu.filter((category) => category?.code.includes(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory))[0];
-//     console.log("category"+JSON.stringify(category));
-//     let bustype = null;
-//     let bussubtyp = null;
-//       bustype = getBusinessTypeMenu(category).filter((type) => type?.code.includes(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessType))[0];
-//       bussubtyp = getBusinessSubTypeMenu(bustype).filter((type) => type?.code.includes(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessSubtype))[0];
-
+ if (formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory && (fields[0].businessCategory === undefined || fields[0].businessCategory === "") && BusinessCategoryMenu.length > 0) {
+    let category = BusinessCategoryMenu.filter((category) => category?.code.includes(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory))[0];
+    let bustype = null;
+    let bussubtyp = null;
+    bustype = getBusinessTypeMenu(category).filter((type) => type?.code.includes(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessType))[0];
+    bussubtyp = getBusinessSubTypeMenu(bustype).filter((type) => type?.code.includes(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessSubtype))[0];
+    setFeilds( [
+      {
+        businessCategory: category,
+        businessType: bustype,
+        businessSubtype: bussubtyp, unit: null, uom: null
+      }
+    ] );
     
-//     setFeilds( [
-//       {
-//         businessCategory: category,
-//         businessType: bustype,
-//         businessSubtype: bussubtyp, unit: null, uom: null
-//       }
-//     ] );
-//   }
+  }
   const selectBusinessSector = (value => {
     setBusinessSector(value);
     setIsInitialRender(true);
   });
   const selectBusinessCategory = (i, value) => {
     let units = [...fields];
-    console.log(value);
     units[i].businessCategory = value;
     selectBusinessType(i, null);
     selectBusinessSubType(i, null);
@@ -126,7 +121,6 @@ const TLCorrectionActivity = ({ t, config,formData,onEditSelect,formDataEdit}) =
     let units = [...fields];
     units[i].businessSubtype = value;
     setFeilds(units);
-    Digit.SessionStorage.set("activityedit", true);
   }
   const changesetCapitalInvestment = (e => {
     setCapitalInvestment(e.target.value.length<=12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
@@ -148,12 +142,71 @@ const TLCorrectionActivity = ({ t, config,formData,onEditSelect,formDataEdit}) =
   })
 
  useEffect(()=>{
-  console.log(Digit.SessionStorage.get("activityedit"));
   if(Digit.SessionStorage.get("activityedit")){
     Digit.SessionStorage.set("activityedit", false);
     let units = fields;
-    let tradeLicenseDetail = { capitalInvestment, commencementDate, noOfEmployees,  units}
-    onEditSelect(config.key,{ tradeLicenseDetail,desiredLicensePeriod:desiredLicensePeriod.code});
+    let tradeUnits = fields;
+    let address = {
+      "doorNo": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.doorNo,
+      "localityName": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.locality,
+      "street": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.street,
+      "landmark": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.landmark,
+      "buildingName": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.buildingName,
+      "zonalId": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.zonalId,
+      "wardId": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.wardId,
+      "wardno": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.wardno,
+      "postOffice": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.postOffice,
+      "pincode": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.pincode,
+      "contactno": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.contactno,
+      "email": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.email,
+      "waterbody": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.waterbody,
+      "serviceArea": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.serviceArea
+    };
+    if(units[0]?.businessCategory?.code){
+      tradeUnits =[
+        {
+          "businessCategory" :  units[0].businessCategory.code,
+          "businessType" :  null,
+          "businessSubtype" :  null
+        }
+      ]
+    }
+    if(units[0]?.businessType?.code){
+      tradeUnits =[
+        {
+          "businessCategory" :  units[0].businessCategory.code,
+          "businessType" :  units[0].businessType.code,
+          "businessSubtype" :  null
+        }
+      ]
+    }
+    if(units[0]?.businessSubtype?.code){
+      tradeUnits =[
+        {
+          "businessCategory" :  units[0].businessCategory.code,
+          "businessType" :  units[0].businessType.code,
+          "businessSubtype" :  units[0].businessSubtype.code,
+        }
+      ]
+    }
+    
+    let tenantId = formDataEdit?.TradeDetails?.tenantId;
+    let structurePlace = formDataEdit?.TradeDetails?.tradeLicenseDetail?.structurePlace;
+    let owners = formDataEdit?.TradeDetails?.tradeLicenseDetail?.owners;
+    let ownerspremise = formDataEdit?.TradeDetails?.tradeLicenseDetail?.ownerspremise;
+    let institution = formDataEdit?.TradeDetails?.tradeLicenseDetail?.institution;
+    let licenseeType = formDataEdit?.TradeDetails?.tradeLicenseDetail?.licenseeType;
+    let businessSector = formDataEdit?.TradeDetails?.tradeLicenseDetail?.businessSector;
+    let structureType = formDataEdit?.TradeDetails?.tradeLicenseDetail?.structureType;
+    let structurePlaceSubtype = formDataEdit?.TradeDetails?.tradeLicenseDetail?.structurePlaceSubtype;
+    let businessActivityDesc = formDataEdit?.TradeDetails?.tradeLicenseDetail?.businessActivityDesc;
+    let ownershipCategory = formDataEdit?.TradeDetails?.tradeLicenseDetail?.ownershipCategory;
+    let enterpriseType = formDataEdit?.TradeDetails?.tradeLicenseDetail?.enterpriseType;
+
+    let tradeLicenseDetail = { tenantId, licenseeType, owners, ownerspremise, institution, businessSector, capitalInvestment, enterpriseType,
+        structureType,structurePlaceSubtype, businessActivityDesc, noOfEmployees,
+        ownershipCategory, address, tradeUnits, structurePlace }
+    onEditSelect(config.key,{tradeLicenseDetail,desiredLicensePeriod:desiredLicensePeriod.code});
   }
 });
 
@@ -196,13 +249,25 @@ const TLCorrectionActivity = ({ t, config,formData,onEditSelect,formDataEdit}) =
             </div>
             <div className="col-md-4" >
               <CardLabel>{`${t("TL_NEW_TRADE_DETAILS_TRADE_SUBTYPE_LABEL")}`}<span className="mandatorycss">*</span></CardLabel>
-              <Dropdown t={t} optionKey="i18nKey" isMandatory={config.isMandatory} option={sortDropdownNames(getBusinessSubTypeMenu(field?.businessType), "i18nKey", t)} selected={field?.businessType} select={(e) => selectBusinessSubType(index, e)} placeholder="Bussiness Sub Type" {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_SUB_BUSINESS_TYPE"), })} />
+              <Dropdown t={t} optionKey="i18nKey" isMandatory={config.isMandatory} option={sortDropdownNames(getBusinessSubTypeMenu(field?.businessType), "i18nKey", t)} selected={field?.businessSubtype} select={(e) => selectBusinessSubType(index, e)} placeholder="Bussiness Sub Type" {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_SUB_BUSINESS_TYPE"), })} />
+              {/* <MultiSelectDropdown
+              className="form-field"
+              isMandatory={true}
+              defaultUnit="Selected"
+            //  selected ={field?.businessSubtype}
+            selected={sortDropdownNames(getBusinessSubTypeMenu(field?.businessType), "i18nKey", t)}
+              options={sortDropdownNames(getBusinessSubTypeMenu(field?.businessType), "i18nKey", t) && sortDropdownNames(getBusinessSubTypeMenu(field?.businessType), "i18nKey", t)}
+          //    onSelect={(e) => selectBusinessSubType(index, e)}
+              optionsKey="name"
+              t={t}
+              placeholder={`${t("TL_INVALID_SUB_BUSINESS_TYPE")}`}
+            /> */}
             </div>
           </div>
         )
       }
       )}
-      <div className="row">
+      {/* <div className="row">
         <div className="col-md-3" ><CardLabel>{`${t("TL_LOCALIZATION_CAPITAL_AMOUNT")}`}&nbsp;(<svg style={{ display: "inline-block" }} class="icon icon-tabler icon-tabler-currency-rupee" width="15" height="15" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> <path stroke="none" d="M0 0h24v24H0z" fill="none" /> <path d="M18 5h-11h3a4 4 0 0 1 0 8h-3l6 6" /> <line x1="7" y1="9" x2="18" y2="9" /> </svg>)<span className="mandatorycss">*</span></CardLabel>
           <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="capitalInvestment" value={capitalInvestment} onChange={changesetCapitalInvestment} placeholder="Capital Investment Range" {...(validation = { isRequired: true, title: t("TL_INVALID_CAPITAL_AMOUNT") })} />
         </div>
@@ -218,7 +283,7 @@ const TLCorrectionActivity = ({ t, config,formData,onEditSelect,formDataEdit}) =
           <CardLabel>{`${t("TL_NEW_NUMBER_OF_EMPLOYEES_LABEL")}`}<span className="mandatorycss">*</span></CardLabel>
           <TextInput t={t} type={"text"} isMandatory={config.isMandatory} optionKey="i18nKey" name="noOfEmployees" value={noOfEmployees} onChange={changesetNoofEmployees} placeholder="No. of Employees" {...(validation = { pattern: "^[0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_NO_EMPLOYEES"), })} />
         </div>
-      </div>
+      </div> */}
     </div>
 
   );

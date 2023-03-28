@@ -43,7 +43,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantWard, "egov-location", "boundary-data");
   const [toast, setToast] = useState(false);
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [isDisableStatus, setDisableStatus] = useState(true);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : false);
 
   let cmbLB = [];
   let cmbTaluk = [];
@@ -307,7 +307,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
               selected={permntInKeralaAdrDistrict}
               select={setSelectpermntInKeralaAdrDistrict}
               placeholder={`${t("CS_COMMON_DISTRICT")}`}
-            // disable={isDisableStatus}
+              disable={isDisableStatus}
             />
           </div>
 
@@ -334,6 +334,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
               selected={permntInKeralaAdrTaluk}
               select={setSelectpermntInKeralaAdrTaluk}
               placeholder={`${t("CS_COMMON_TALUK")}`}
+              disable={isDisableEdit} 
             />
           </div>
           <div className="col-md-3">
@@ -348,6 +349,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
               selected={permntInKeralaAdrVillage}
               select={setSelectpermntInKeralaAdrVillage}
               placeholder={`${t("CS_COMMON_VILLAGE")}`}
+              disable={isDisableEdit} 
             />
           </div>
           <div className="col-md-3">
@@ -361,8 +363,8 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
               option={lbs}
               selected={permntInKeralaAdrLBName}
               select={setSelectpermntInKeralaAdrLBName}
-              // disable={isDisableStatus}
               placeholder={`${t("CS_COMMON_LB_NAME")}`}
+              disable={isDisableEdit} 
             />
           </div>
         </div>
@@ -379,6 +381,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
               selected={permntInKeralaWardNo}
               select={setSelectWard}
               placeholder={`${t("CS_COMMON_WARD")}`}
+              disable={isDisableEdit} 
               {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
             />
           </div>
@@ -394,6 +397,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
               selected={permntInKeralaAdrPostOffice}
               select={setSelectpermntInKeralaAdrPostOffice}
               placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
+              disable={isDisableEdit} 
             />
           </div>
           <div className="col-md-4">
@@ -436,6 +440,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
               value={permntInKeralaAdrLocalityNameEn}
               onChange={setSelectpermntInKeralaAdrLocalityNameEn}
               placeholder={`${t("CR_LOCALITY_EN")}`}
+              disable={isDisableEdit} 
               {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
             />
           </div>
@@ -449,6 +454,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
               value={permntInKeralaAdrStreetNameEn}
               onChange={setSelectpermntInKeralaAdrStreetNameEn}
               placeholder={`${t("CR_STREET_NAME_EN")}`}
+              disable={isDisableEdit} 
               {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
             />
           </div>
@@ -465,13 +471,12 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
               value={permntInKeralaAdrHouseNameEn}
               onChange={setSelectpermntInKeralaAdrHouseNameEn}
               placeholder={`${t("CR_HOUSE_NAME_EN")}`}
+              disable={isDisableEdit} 
               {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
             />
           </div>
         </div>
         <div className="row">
-
-
           <div className="col-md-4">
             <CardLabel>
               {t("CR_LOCALITY_ML")}
@@ -485,6 +490,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
               value={permntInKeralaAdrLocalityNameMl}
               onKeyPress={setCheckMalayalamInputField}
               onChange={setSelectpermntInKeralaAdrLocalityNameMl}
+              disable={isDisableEdit} 
               placeholder={`${t("CR_LOCALITY_ML")}`}
               {...(validation = {
                 pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
@@ -505,6 +511,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
               onKeyPress={setCheckMalayalamInputField}
               onChange={setSelectpermntInKeralaAdrStreetNameMl}
               placeholder={`${t("CR_STREET_NAME_ML")}`}
+              disable={isDisableEdit} 
               {...(validation = {
                 pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
                 isRequired: false,
@@ -527,6 +534,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
               onKeyPress={setCheckMalayalamInputField}
               onChange={setSelectpermntInKeralaAdrHouseNameMl}
               placeholder={`${t("CR_HOUSE_NAME_ML")}`}
+              disable={isDisableEdit} 
               {...(validation = {
                 pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
                 isRequired: true,

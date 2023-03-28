@@ -289,9 +289,9 @@ export const convertToTrade = (data = {}) => {
   });
   //structurePlace.isResurveyed = data?.TradeDetails?.tradeLicenseDetail?.structurePlace?.isResurveyed?.code === "YES" ? true : false;
   let tradeUnits = [{
-    "businessCategory": data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businesscategory?.code,
-    "businessType": data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businesstype?.code,
-    "businessSubtype": data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businesssubtype?.code
+    "businessCategory": data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessCategory?.code,
+    "businessType": data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessType?.code,
+    "businessSubtype": data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessSubtype?.code
   }];
   const formdata = {
     Licenses: [

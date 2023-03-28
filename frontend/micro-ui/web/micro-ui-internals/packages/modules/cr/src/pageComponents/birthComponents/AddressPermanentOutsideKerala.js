@@ -35,15 +35,12 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
 
   const [toast, setToast] = useState(false);
   const [isInitialRender, setIsInitialRender] = useState(true);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : false);
 
   const cmbUrbanRural = [
     { i18nKey: "Town", code: "TOWN" },
     { i18nKey: "Village", code: "VILLAGE" },
   ];
-  let cmbfilterCountry = [];
-  let cmbCountry = [];
-  let cmbState = [];
-  let cmbPlace = [];
   let cmbTaluk = [];
   let cmbVillage = [];
   let cmbDistrict = [];
@@ -231,6 +228,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
               option={cmbDistrict}
               selected={permntOutsideKeralaDistrict}
               select={setSelectpermntOutsideKeralaDistrict}
+              disable={isDisableEdit} 
               placeholder={`${t("CS_COMMON_DISTRICT")}`}
             />
           </div>
@@ -245,6 +243,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
               option={cmbTaluk}
               selected={permntOutsideKeralaTaluk}
               select={setSelectpermntOutsideKeralaTaluk}
+              disable={isDisableEdit} 
               placeholder={`${t("CR_TALUK_TEHSIL")}`}
             />
           </div>
@@ -259,6 +258,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
               option={cmbUrbanRural}
               selected={permntOutsideKeralaVillage}
               select={setSelectpermntOutsideKeralaVillage}
+              disable={isDisableEdit}
               placeholder={`${t("CR_TOWN_VILLAGE_EN")}`}
             />
           </div>
@@ -274,6 +274,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
               name="permntOutsideKeralaCityVilgeEn"
               value={permntOutsideKeralaCityVilgeEn}
               onChange={setSelectpermntOutsideKeralaCityVilgeEn}
+              disable={isDisableEdit}
               placeholder={`${t("CR_CITY_VILLAGE_NAME_EN")}`}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_VILLAGE_NAME_EN") })}
             />
@@ -292,6 +293,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
               name="permntOutsideKeralaPincode"
               value={permntOutsideKeralaPincode}
               onChange={setSelectpermntOutsideKeralaPincode}
+              disable={isDisableEdit}
               placeholder={`${t("CS_COMMON_PIN_CODE")}`}
               {...(validation = {
                 pattern: "^[a-zA-Z-.`' ]*$",
@@ -329,6 +331,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
               name="permntOutsideKeralaPostOfficeEn"
               value={permntOutsideKeralaPostOfficeEn}
               onChange={setSelectoutsideKeralaPostOfficeEn}
+              disable={isDisableEdit} 
               placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_VILLAGE_NAME_EN") })}
             />
@@ -363,6 +366,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
               name="permntOutsideKeralaLocalityNameEn"
               value={permntOutsideKeralaLocalityNameEn}
               onChange={setSelectpermntOutsideKeralaLocalityNameEn}
+              disable={isDisableEdit} 
               placeholder={`${t("CR_LOCALITY_EN")}`}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
             />
@@ -380,6 +384,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
               value={permntOutsideKeralaLocalityNameMl}
               onKeyPress = {setCheckMalayalamInputField}
               onChange={setSelectpermntOutsideKeralaLocalityNameMl}
+              disable={isDisableEdit} 
               placeholder={`${t("CR_LOCALITY_ML")}`}
               {...(validation = {
                 pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
@@ -400,6 +405,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
               name="permntOutsideKeralaStreetNameEn"
               value={permntOutsideKeralaStreetNameEn}
               onChange={setSelectpermntOutsideKeralaStreetNameEn}
+              disable={isDisableEdit} 
               placeholder={`${t("CR_STREET_NAME_EN")}`}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
             />
@@ -414,6 +420,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
               value={permntOutsideKeralaStreetNameMl}
               onKeyPress = {setCheckMalayalamInputField}
               onChange={setSelectpermntOutsideKeralaStreetNameMl}
+              disable={isDisableEdit} 
               placeholder={`${t("CR_STREET_NAME_ML")}`}
               {...(validation = {
                 pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
@@ -437,6 +444,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
               name="permntOutsideKeralaHouseNameEn"
               value={permntOutsideKeralaHouseNameEn}
               onChange={setSelectpermntOutsideKeralaHouseNameEn}
+              disable={isDisableEdit} 
               placeholder={`${t("CR_HOUSE_NAME_EN")}`}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
             />
@@ -454,6 +462,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
               value={permntOutsideKeralaHouseNameMl}
               onKeyPress = {setCheckMalayalamInputField}
               onChange={setSelectpermntOutsideKeralaHouseNameMl}
+              disable={isDisableEdit} 
               placeholder={`${t("CR_HOUSE_NAME_ML")}`}
               {...(validation = {
                 pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
