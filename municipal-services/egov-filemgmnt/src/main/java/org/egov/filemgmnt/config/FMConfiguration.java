@@ -92,6 +92,9 @@ public class FMConfiguration {
     @Value("${persister.update.drafting.topic:}")
     private String updateDraftingTopic;
 
+    @Value("${persister.update.draftingstatus.topic:}")
+    private String updateDraftingStatusTopic;
+
 
 
     // PDF Gen
