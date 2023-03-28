@@ -89,7 +89,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
     }
   }, [cmbFilterDistrict, isInitialRender]);
   
-  if (isEditBirth || isEditDeath) {
+  if (isEditBirth) {
     if (formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaDistrict != null) {
       if (cmbDistrict.length > 0 && (permntOutsideKeralaDistrict === undefined || permntOutsideKeralaDistrict === "")) {
         setpermntOutsideKeralaDistrict(cmbDistrict.filter(cmbDistrict => cmbDistrict.code === formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaDistrict)[0]);
@@ -103,6 +103,22 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
     if (formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaVillage != null) {
       if (cmbVillage.length > 0 && (permntOutsideKeralaVillage === undefined || permntOutsideKeralaVillage === "")) {
         setpermntOutsideKeralaVillage(cmbVillage.filter(cmbVillage => cmbVillage.code === formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaVillage)[0]);
+      }
+    }
+  } else if (isEditDeath) {
+    if (formData?.AddressBirthDetails?.permntOutsideKeralaDistrict != null) {
+      if (cmbDistrict.length > 0 && (permntOutsideKeralaDistrict === undefined || permntOutsideKeralaDistrict === "")) {
+        setpermntOutsideKeralaDistrict(cmbDistrict.filter(cmbDistrict => cmbDistrict.code === formData?.AddressBirthDetails?.permntOutsideKeralaDistrict)[0]);
+      }
+    }
+    if (formData?.AddressBirthDetails?.permntOutsideKeralaTaluk != null) {
+      if (cmbTaluk.length > 0 && (permntOutsideKeralaTaluk === undefined || permntOutsideKeralaTaluk === "")) {
+        setpermntOutsideKeralaTaluk(cmbTaluk.filter(cmbTaluk => cmbTaluk.code === formData?.AddressBirthDetails?.permntOutsideKeralaTaluk)[0]);
+      }
+    }
+    if (formData?.AddressBirthDetails?.permntOutsideKeralaVillage != null) {
+      if (cmbVillage.length > 0 && (permntOutsideKeralaVillage === undefined || permntOutsideKeralaVillage === "")) {
+        setpermntOutsideKeralaVillage(cmbVillage.filter(cmbVillage => cmbVillage.code === formData?.AddressBirthDetails?.permntOutsideKeralaVillage)[0]);
       }
     }
   }

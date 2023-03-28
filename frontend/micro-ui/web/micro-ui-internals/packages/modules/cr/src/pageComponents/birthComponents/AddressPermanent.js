@@ -74,7 +74,7 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
             }
         }
     }, [Country, State, localbodies, isInitialRender]);
-    if (isEditBirth || isEditDeath) {
+    if (isEditBirth) {
         if (formData?.ChildDetails?.AddressBirthDetails?.permtaddressCountry != null) {
             if (cmbCountry.length > 0 && (permtaddressCountry === undefined || permtaddressCountry === "")) {
                 setpermtaddressCountry(cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.ChildDetails?.AddressBirthDetails?.permtaddressCountry)[0]);
@@ -85,6 +85,19 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
             if (cmbState.length > 0 && (permtaddressStateName === undefined || permtaddressStateName === "")) {
                 setpermtaddressStateName(cmbState.filter(cmbState => cmbState.code === formData?.ChildDetails?.AddressBirthDetails?.permtaddressStateName)[0]);
                 setValuePermanent(value.formData?.ChildDetails?.AddressBirthDetails?.permtaddressStateName);
+            }
+        }
+    } else if (isEditDeath) {
+        if (formData?.AddressBirthDetails?.permtaddressCountry != null) {
+            if (cmbCountry.length > 0 && (permtaddressCountry === undefined || permtaddressCountry === "")) {
+                setpermtaddressCountry(cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.AddressBirthDetails?.permtaddressCountry)[0]);
+                setCountryValuePermanent(value.formData?.AddressBirthDetails?.permtaddressCountry);
+            }
+        }
+        if (formData?.AddressBirthDetails?.permtaddressStateName != null) {
+            if (cmbState.length > 0 && (permtaddressStateName === undefined || permtaddressStateName === "")) {
+                setpermtaddressStateName(cmbState.filter(cmbState => cmbState.code === formData?.AddressBirthDetails?.permtaddressStateName)[0]);
+                setValuePermanent(value.formData?.AddressBirthDetails?.permtaddressStateName);
             }
         }
     }
