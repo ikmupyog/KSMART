@@ -21,8 +21,8 @@ public class MarriageRegistrySearchCriteria {
     @JsonProperty("id")
     private String id;
 
-    @JsonProperty("applicationNo")
-    private String applicationNo;
+    @JsonProperty("applicationNumber")
+    private String applicationNumber;
 
     @JsonProperty("registrationNo")
     private String registrationNo;
@@ -38,45 +38,45 @@ public class MarriageRegistrySearchCriteria {
     @JsonProperty("groomFirstnameEn")
     private String groomFirstnameEn;
 
-    @JsonProperty("groomFirstnameMl")
-    private String groomFirstnameMl;   
+    // @JsonProperty("groomFirstnameMl")
+    // private String groomFirstnameMl;   
 
-    @JsonProperty("groomMiddlenameEn")
-    private String groomMiddlenameEn;
+    // @JsonProperty("groomMiddlenameEn")
+    // private String groomMiddlenameEn;
 
-    @JsonProperty("groomMiddlenameMl")
-    private String groomMiddlenameMl;
+    // @JsonProperty("groomMiddlenameMl")
+    // private String groomMiddlenameMl;
 
-    @JsonProperty("groomLastnameEn")
-    private String groomLastnameEn;
+    // @JsonProperty("groomLastnameEn")
+    // private String groomLastnameEn;
 
-    @JsonProperty("groomLastnameMl")
-    private String groomLastnameMl;
+    // @JsonProperty("groomLastnameMl")
+    // private String groomLastnameMl;
 
-    @JsonProperty("groomAdharNo")
+    @JsonProperty("groomAadharNo")
     private String groomAdharNo;
 
     //BRIDE
-    @JsonProperty("brideAdharNo")
+    @JsonProperty("brideAadharNo")
     private String brideAdharNo;
 
     @JsonProperty("brideFirstnameEn")
     private String brideFirstnameEn;
 
-    @JsonProperty("brideFirstnameMl")
-    private String brideFirstnameMl;
+    // @JsonProperty("brideFirstnameMl")
+    // private String brideFirstnameMl;
 
-    @JsonProperty("brideMiddlenameEn")
-    private String brideMiddlenameEn;
+    // @JsonProperty("brideMiddlenameEn")
+    // private String brideMiddlenameEn;
 
-    @JsonProperty("brideMiddlenameMl")
-    private String brideMiddlenameMl;
+    // @JsonProperty("brideMiddlenameMl")
+    // private String brideMiddlenameMl;
 
-    @JsonProperty("brideLastnameEn")
-    private String brideLastnameEn;
+    // @JsonProperty("brideLastnameEn")
+    // private String brideLastnameEn;
 
-    @JsonProperty("brideLastnameMl")
-    private String brideLastnameMl;
+    // @JsonProperty("brideLastnameMl")
+    // private String brideLastnameMl;
 
     @JsonProperty("sortBy")
     private SortBy sortBy;

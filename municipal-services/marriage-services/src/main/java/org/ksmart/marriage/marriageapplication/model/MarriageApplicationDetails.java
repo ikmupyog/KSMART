@@ -188,6 +188,7 @@ public class MarriageApplicationDetails {
     @Size(max = 64)
     @JsonProperty("applicationNumber")
     private String applicationNumber;
+    
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
 

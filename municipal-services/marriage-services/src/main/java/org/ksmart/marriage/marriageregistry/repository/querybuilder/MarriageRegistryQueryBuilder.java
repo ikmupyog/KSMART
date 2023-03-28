@@ -117,17 +117,17 @@ public class MarriageRegistryQueryBuilder extends BaseMarriageQuery {
     StringBuilder orderBy = new StringBuilder();
           addFilter("MD_id", criteria.getId(), query, preparedStmtValues);
           addFilter("MD_tenantid", criteria.getTenantId(), query, preparedStmtValues);
-          addFilter("MD_applicationnumber", criteria.getApplicationNo(), query, preparedStmtValues);  
+          addFilter("MD_applicationnumber", criteria.getApplicationNumber(), query, preparedStmtValues);  
           addFilter("MD_registrationno", criteria.getRegistrationNo(), query, preparedStmtValues);  
          // addFilter("MD_certificateno", criteria.getCertificateNo(), query, preparedStmtValues); 
           addFilter("BD_aadharno", criteria.getBrideAdharNo(), query, preparedStmtValues); 
           addFilter("BD_firstname_en", criteria.getBrideFirstnameEn(), query, preparedStmtValues); 
-          addFilter("BD_middlename_en", criteria.getBrideMiddlenameEn(), query, preparedStmtValues); 
-          addFilter("BD_lastname_en", criteria.getBrideLastnameEn(), query, preparedStmtValues); 
+          //addFilter("BD_middlename_en", criteria.getBrideMiddlenameEn(), query, preparedStmtValues); 
+         // addFilter("BD_lastname_en", criteria.getBrideLastnameEn(), query, preparedStmtValues); 
           addFilter("GD_aadharno", criteria.getGroomAdharNo(), query, preparedStmtValues); 
           addFilter("GD_firstname_en", criteria.getGroomFirstnameEn(), query, preparedStmtValues); 
-          addFilter("GD_middlename_en", criteria.getGroomMiddlenameEn(), query, preparedStmtValues); 
-          addFilter("GD_lastname_en", criteria.getGroomLastnameEn(), query, preparedStmtValues); 
+          //addFilter("GD_middlename_en", criteria.getGroomMiddlenameEn(), query, preparedStmtValues); 
+          //addFilter("GD_lastname_en", criteria.getGroomLastnameEn(), query, preparedStmtValues); 
         //  addFilter("MD_dateofmarriage", criteria.getMarriageDOM(), query, preparedStmtValues);
           addDateRangeFilter("MD_dateofmarriage",
           criteria.getFromDate(),
@@ -135,19 +135,19 @@ public class MarriageRegistryQueryBuilder extends BaseMarriageQuery {
           query,
           preparedStmtValues);
 
-        // if(criteria.getSortOrder() == null){
-        //   criteria.setSortOrder(MarriageRegistrySearchCriteria.SortOrder.ASC);
-        // }
-        //   if (StringUtils.isEmpty(criteria.getSortBy()))
-        //   addOrderByColumns("MD_createdtime","ASC", orderBy);
-        //   else if (criteria.getSortBy() == MarriageRegistrySearchCriteria.SortBy.dateofmarriage)
-        //   addOrderByColumns("MD_dateofmarriage",criteria.getSortOrder().toString(), orderBy);
-        //   else if (criteria.getSortBy() == MarriageRegistrySearchCriteria.SortBy.applicationNumber)
-        //   addOrderByColumns("MD_applicationnumber",criteria.getSortOrder().toString(),orderBy);
-        //   else if (criteria.getSortBy() == MarriageRegistrySearchCriteria.SortBy.tenantId)
-        //   addOrderByColumns("MD_tenantid",criteria.getSortOrder().toString(), orderBy);
-        //   addOrderToQuery(orderBy, query);
-        //   //addLimitAndOffset(criteria.getOffset(),criteria.getLimit(), query, preparedStmtValues);
+        if(criteria.getSortOrder() == null){
+          criteria.setSortOrder(MarriageRegistrySearchCriteria.SortOrder.ASC);
+        }
+          if (StringUtils.isEmpty(criteria.getSortBy()))
+          addOrderByColumns("MD_createdtime","ASC", orderBy);
+          else if (criteria.getSortBy() == MarriageRegistrySearchCriteria.SortBy.dateofmarriage)
+          addOrderByColumns("MD_dateofmarriage",criteria.getSortOrder().toString(), orderBy);
+          else if (criteria.getSortBy() == MarriageRegistrySearchCriteria.SortBy.applicationNumber)
+          addOrderByColumns("MD_applicationnumber",criteria.getSortOrder().toString(),orderBy);
+          else if (criteria.getSortBy() == MarriageRegistrySearchCriteria.SortBy.tenantId)
+          addOrderByColumns("MD_tenantid",criteria.getSortOrder().toString(), orderBy);
+          addOrderToQuery(orderBy, query);
+          addLimitAndOffset(criteria.getOffset(),criteria.getLimit(), query, preparedStmtValues);
 
           return query.toString();
 
