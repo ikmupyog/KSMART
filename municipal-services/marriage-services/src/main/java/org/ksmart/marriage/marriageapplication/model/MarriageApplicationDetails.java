@@ -51,7 +51,7 @@ public class MarriageApplicationDetails {
     @JsonProperty("marriagePlacenameEn")
     private String placenameEn;
     @Size(max = 1000)
-    @JsonProperty("marriagePlacenameMal")
+    @JsonProperty("marriagePlacenameMl")
     private String placenameMl;
 
     @Size(max = 64)
@@ -64,7 +64,7 @@ public class MarriageApplicationDetails {
     private String street_name_en;
 
     @Size(max = 1000)
-    @JsonProperty("marriageStreetMal")
+    @JsonProperty("marriageStreetMl")
     private String street_name_ml;
 
     @Size(max = 64)
@@ -84,7 +84,7 @@ public class MarriageApplicationDetails {
     private String locality_en;
 
     @Size(max = 1000)
-    @JsonProperty("marriageLocalityMal")
+    @JsonProperty("marriageLocalityMl")
     private String locality_ml;
 
     @Size(max = 64)
@@ -108,9 +108,9 @@ public class MarriageApplicationDetails {
     @JsonProperty("applicationType")
     private String applicationtype;
 
-    @Size(max = 64)
-    @JsonProperty("functionUID")
-    private String functionUID;
+    @JsonProperty("modulecode")
+    private String modulecode;
+
     @NotNull
     @Size(max = 64)
     @JsonProperty("businessService")
@@ -155,8 +155,8 @@ public class MarriageApplicationDetails {
     @JsonProperty("marriageHouseNoAndNameEn")
     private String marriageHouseNoAndNameEn;
     @Size(max = 2500)
-    @JsonProperty("marriageHouseNoAndNameMal")
-    private String marriageHouseNoAndNameMal;
+    @JsonProperty("marriageHouseNoAndNameMl")
+    private String marriageHouseNoAndNameMl;
 
     @Size(max = 1000)
     @JsonProperty("marriageReligiousInstitutionOther")
@@ -170,8 +170,8 @@ public class MarriageApplicationDetails {
     @JsonProperty("marriagePublicOrPrivateNamePlaceEn")
     private String marriagePublicOrPrivateNamePlaceEn;
     @Size(max = 2500)
-    @JsonProperty("marriagePublicOrPrivateNamePlaceMal")
-    private String marriagePublicOrPrivateNamePlaceMal;
+    @JsonProperty("marriagePublicOrPrivateNamePlaceMl")
+    private String marriagePublicOrPrivateNamePlaceMl;
 
 
     @Size(max = 1000)
@@ -182,8 +182,8 @@ public class MarriageApplicationDetails {
     @JsonProperty("marriageReligiousInstitutionOtherNameEn")
     private String marriageReligiousInstitutionOtherNameEn;
     @Size(max = 2500)
-    @JsonProperty("marriageReligiousInstitutionOtherNameMal")
-    private String marriageReligiousInstitutionOtherNameMal;
+    @JsonProperty("marriageReligiousInstitutionOtherNameMl")
+    private String marriageReligiousInstitutionOtherNameMl;
 
     @Size(max = 64)
     @JsonProperty("applicationNumber")
@@ -205,7 +205,7 @@ public class MarriageApplicationDetails {
 //    private PresentAddressDetails present ;
 
     @JsonProperty("WitnessDetails")
-    private WitnessDetails witness;
+    private WitnessDetails witnessDetails;
 
 
 
