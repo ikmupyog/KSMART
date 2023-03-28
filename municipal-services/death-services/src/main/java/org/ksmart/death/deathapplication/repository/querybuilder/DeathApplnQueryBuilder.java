@@ -174,6 +174,7 @@ public class DeathApplnQueryBuilder extends BaseQueryBuilder {
          .append(" ,presentaddress.addr_sameas_present as  P_addr_sameas_present")
          .append(" ,permanentAddress.addr_lb_name as  R_addr_lb_name")
          .append(" ,presentaddress.addr_lb_name as  P_addr_lb_name")
+         .append(" ,dt.deceased_aadhar_unavailable")
          
          //commented on 15/12/2023
         //  .append(" ,initiatorAddress.death_dtl_id  as I_death_dtl_id") 

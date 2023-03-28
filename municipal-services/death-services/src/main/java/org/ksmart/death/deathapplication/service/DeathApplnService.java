@@ -23,6 +23,8 @@ import org.ksmart.death.deathapplication.web.models.DeathCorrectionDtls;
 import org.ksmart.death.deathapplication.web.models.DeathCorrectionRequest;
 import org.ksmart.death.deathapplication.web.models.DeathDtl;
 import org.ksmart.death.deathapplication.web.models.DeathDtlRequest;
+import org.ksmart.death.deathapplication.web.models.DeathNACDtls;
+import org.ksmart.death.deathapplication.web.models.DeathNACRequest;
 import org.ksmart.death.deathapplication.web.models.DeathSearchCriteria;
 import org.ksmart.death.deathapplication.web.models.Demand.Demand;
 import org.ksmart.death.workflow.WorkflowIntegrator;
@@ -200,14 +202,11 @@ public class DeathApplnService {
                                         .build());
 
           List<DeathAbandonedDtls> searchResult = repository.getDeathAbandoned(criteria,request.getRequestInfo());
-          //// System.out.println("searchresult:"+searchResult);
           validatorService.validateAbandonedUpdate(request, searchResult);                   
           enrichmentService.enrichAbandonedUpdate(request);
           workflowIntegrator.callWorkFlowAbandoned(request);
           producer.push(deathConfig.getUpdateDeathAbandonedTopic(), request);
-
-          // List<DeathAbandonedDtls> response = new ArrayList<>();
-          
+         
           DeathAbandonedRequest result = DeathAbandonedRequest
                                    .builder()
                                    .requestInfo(request.getRequestInfo())
@@ -215,7 +214,17 @@ public class DeathApplnService {
                                    .build();
           return result.getDeathAbandonedDtls();
      } 
+     // //RAkhi S ikm  on 27.03.2023 - Service to create NAC request
+      public List<DeathNACDtls> createNAC(DeathNACRequest request) {
 
+          enrichmentService.setNACPresentAddress(request);
+          enrichmentService.setNACPermanentAddress(request);
+          enrichmentService.enrichCreateNAC(request);
+          enrichmentService.setNACACKNumber(request);            
+          producer.push(deathConfig.getSaveDeathNACTopic(), request);
+          // workflowIntegrator.callWorkFlowAbandoned(request);
+          return request.getDeathNACDtls();
+     }
   /********************************************* */
 
 //   try {

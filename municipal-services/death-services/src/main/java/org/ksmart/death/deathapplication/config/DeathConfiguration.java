@@ -100,5 +100,9 @@ public class DeathConfiguration {
 
     @Value("${egov.demand.create.endpoint}")
     private String demandCreateEndpoint;
+
+    //Persister NAC Save - Rakhi S on 27.03.2023
+    @Value("${persister.save.deathnac.topic}")
+    private String saveDeathNACTopic;
     
 }

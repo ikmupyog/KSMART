@@ -16,6 +16,9 @@ import org.ksmart.death.deathapplication.web.models.DeathCorrectionResponse;
 import org.ksmart.death.deathapplication.web.models.DeathDtl;
 import org.ksmart.death.deathapplication.web.models.DeathDtlRequest;
 import org.ksmart.death.deathapplication.web.models.DeathDtlResponse;
+import org.ksmart.death.deathapplication.web.models.DeathNACDtls;
+import org.ksmart.death.deathapplication.web.models.DeathNACRequest;
+import org.ksmart.death.deathapplication.web.models.DeathNACResponse;
 import org.ksmart.death.deathapplication.web.models.DeathSearchCriteria;
 import org.ksmart.death.deathregistry.service.DeathRegistryService;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryCorrectionDtls;
@@ -51,20 +54,15 @@ public class DeathApplnController {
     //Rakhi S on 06.02.2023
     @Autowired
     private ResponseInfoFactory responseInfoFactory;
-
     private final DeathApplnService deathService;
-
     private final DeathRegistryRequestService deathRegistryRequestService;
-
     private final DeathRegistryService deathRegistryService;
 
     @Autowired
     public DeathApplnController(DeathApplnService deathService,DeathRegistryRequestService deathRegistryRequestService ,  DeathRegistryService deathRegistryService) {
       
         this.deathService = deathService;
-
         this.deathRegistryRequestService = deathRegistryRequestService;
-
         this.deathRegistryService = deathRegistryService;
     }
 
@@ -114,29 +112,19 @@ public class DeathApplnController {
         return ResponseEntity.ok(response);
     }
     
-    //Jasmine on 07.02.2023
-    
+    //Jasmine on 07.02.2023    
     @PostMapping("/deathdetails/_updatedeath")
 
     public ResponseEntity<DeathDtlResponse> update(@RequestBody DeathDtlRequest request) {
  
         List<DeathDtl> deathDetails = deathService.update(request);
-
         String status=request.getDeathCertificateDtls().get(0).getApplicationStatus();
+        String applicationType =request.getDeathCertificateDtls().get(0).getApplicationType();    
 
-        String applicationType =request.getDeathCertificateDtls().get(0).getApplicationType();
-
-        //System.out.println("status and applicationType"+status +" "+applicationType);
-
-        if (status.equals(DeathConstants.WORKFLOW_STATUS_APPROVED) &&  request.getDeathCertificateDtls().get(0).getApplicationType().equals(DeathConstants.APPLICATION_NEW)){
-         
+        if (status.equals(DeathConstants.WORKFLOW_STATUS_APPROVED) &&  request.getDeathCertificateDtls().get(0).getApplicationType().equals(DeathConstants.APPLICATION_NEW)){         
             DeathRegistryRequest registryRequest = deathRegistryRequestService.createRegistryRequest(request);
-
             List<DeathRegistryDtl> registryDeathDetails =  deathRegistryService.create(registryRequest);
-
-
         }
-
     //    if((status.equals(DeathConstants.WORKFLOW_STATUS_APPROVED))&&  (applicationType.equals(DeathConstants.APPLICATION_CORRECTION))){
 
     //         DeathRegistryRequest registryRequest = deathRegistryRequestService.createRegistryRequest(request);
@@ -144,33 +132,16 @@ public class DeathApplnController {
     //         List<DeathRegistryDtl> registryDeathDetails =  deathRegistryService.update(registryRequest);                   
        
     //     }
-
         DeathDtlResponse response = DeathDtlResponse
                                         .builder()
                                         .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))
                                         .deathCertificateDtls(deathDetails)
                                         .build();
-        return ResponseEntity.ok(response);
-
-    
+        return ResponseEntity.ok(response);    
 }
     //Jasmine 03.03.2023- Death Create Correction Controller 
-
     @PostMapping("/deathdetails/_createdeathcorrection")
-    public ResponseEntity<DeathCorrectionResponse> create(@Valid @RequestBody DeathCorrectionRequest request) {
-             // System.out.println("hai");
-           /********************************************* */
-
-    //        try {
-    //         ObjectMapper mapper = new ObjectMapper();
-    //         Object obj = request;
-    //         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-    //        System.out.println("JasmineCorrection "+ mapper.writeValueAsString(obj));
-    // }catch(Exception e) {
-    //     log.error("Exception while fetching from searcher: ",e);
-    // }
-
-    
+    public ResponseEntity<DeathCorrectionResponse> create(@Valid @RequestBody DeathCorrectionRequest request) {    
         List<DeathCorrectionDtls> deathCorrDetails = deathService.createcorrection(request);
 
         DeathCorrectionResponse response = DeathCorrectionResponse
@@ -179,27 +150,16 @@ public class DeathApplnController {
                                         .deathCorrection(deathCorrDetails)
                                         .build();
         return ResponseEntity.ok(response);
-    }
-//Jasmine
-        
+    }//Jasmine        
     @PostMapping("/deathdetails/_updatedeathcorrection")
     public ResponseEntity<DeathCorrectionResponse> update(@RequestBody DeathCorrectionRequest request) {
 
         List<DeathCorrectionDtls> deathDetails = deathService.updateCorrection(request);
-
         String status=request.getDeathCorrection().get(0).getApplicationStatus();
-
         String applicationType =request.getDeathCorrection().get(0).getApplicationType();
-
-        //System.out.println("statusApprove"+status +" "+applicationType);
-
         if (status.equals(DeathConstants.WORKFLOW_STATUS_APPROVED) &&  request.getDeathCorrection().get(0).getApplicationType().equals(DeathConstants.APPLICATION_CORRECTION)){
-         
-          //  System.out.println("statusApproved"+status +" "+applicationType);
             DeathRegistryCorrectionRequest registryRequest = deathRegistryRequestService.createRegistrycorrectionRequest(request);
-
             List<DeathRegistryCorrectionDtls> registryDeathDetails =  deathRegistryService.update(registryRequest);
-
         }
 
         DeathCorrectionResponse response = DeathCorrectionResponse
@@ -207,9 +167,7 @@ public class DeathApplnController {
                                         .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))
                                         .deathCorrection(deathDetails)
                                         .build();
-        return ResponseEntity.ok(response);
-
-    
+        return ResponseEntity.ok(response);    
 }
 
     //Rakhi S on 06.03.2023 - Death Abandoned Create Controller 
@@ -246,5 +204,17 @@ public class DeathApplnController {
                                         .build();
         return ResponseEntity.ok(response);    
     }
+    //Rakhi S on 25.03.2023 - Death NAC Create Controller 
+    @PostMapping("/deathdetails/_createdeathnac")
+    public ResponseEntity<DeathNACResponse> create(@Valid @RequestBody DeathNACRequest request) {
+       
+        List<DeathNACDtls> deathNACDetails = deathService.createNAC(request);
 
+        DeathNACResponse response = DeathNACResponse
+                                        .builder()
+                                        .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
+                                        .deathNACDtls(deathNACDetails)
+                                        .build();
+        return ResponseEntity.ok(response);
+    }
 }

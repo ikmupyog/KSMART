@@ -376,8 +376,44 @@ public class DeathBasicInfo {
    @JsonProperty("BurialDescription")
    private String burialDescription ;
 
+   @JsonProperty("DeathPlaceGeoReferenceLocation")
+   private String deathPlaceGeoReferenceLocation ;  
 
+   //Details for NAC only Rakhi S on 27.03.2023
+   @JsonProperty("SpouseType")
+   private String spouseType ;
 
+   @JsonProperty("SpouseNameEn")
+   private String spouseNameEn ;
 
-    
+   @JsonProperty("SpouseNameML")
+   private String spouseNameML ;
+
+   @JsonProperty("FatherNameEn")
+   private String fatherNameEn ;
+
+   @JsonProperty("FatherNameMl")
+   private String fatherNameMl ;
+   
+   @JsonProperty("MotherNameEn")
+   private String motherNameEn;   
+   
+   @JsonProperty("MotherNameMl")
+   private String motherNameMl;
+
+   @Size(max = 12)
+   @JsonProperty("SpouseAadhaar")
+   private String spouseAadhaar;
+   
+   @Size(max = 12)
+   @JsonProperty("FatherAadharNo")
+   private String fatherAadharNo;
+
+   @Size(max = 12)
+   @JsonProperty("MotherAadharNo")
+   private String motherAadharNo;
+   
+   @JsonProperty("SpouseUnavailable")
+   private boolean spouseUnavailable ;
+
 }
