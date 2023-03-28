@@ -93,13 +93,14 @@ export const CRDeathsearch = {
         {
           title: "CR_ADDRESS",
           value:
-            response?.AddressBirthDetails?.presentInsideKeralaStreetNameEn +
-              response?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn +
-              response?.AddressBirthDetails?.presentInsideKeralaHouseNameEn || "NA",
+          response?.AddressBirthDetails?.presentInsideKeralaHouseNameEn + "," +
+            response?.AddressBirthDetails?.presentInsideKeralaStreetNameEn + "," +
+              response?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn 
+               || "NA",
         },
         {
           title: "PDF_CR_NAME_WIFE_HUSBAND",
-          value: response?.FamilyInformationDeath?.SpouseNameEn + " / " + response?.FamilyInformationDeath?.SpouseNameML || "NA",
+          value: response?.FamilyInformationDeath?.SpouseNameEn + " / " + response?.FamilyInformationDeath?.SpouseNameML || "NA ",
         },
         {
           title: "PDF_BIRTH_NAME_OF_FATHER",
