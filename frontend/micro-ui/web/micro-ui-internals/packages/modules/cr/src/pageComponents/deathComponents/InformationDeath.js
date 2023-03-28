@@ -97,6 +97,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
     AgeUnitvalue["birth-death-service"].AgeUnit.map((ob) => {
       cmbAgeUnit.push(ob);
     });
+  console.log(cmbAgeUnit);
   Nation &&
     Nation["common-masters"] &&
     Nation["common-masters"].Country &&
@@ -140,12 +141,12 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   // );
   const [DateOfDeath, setDateOfDeath] = useState(
     isEditDeath &&
-    isEditDeathPageComponents === false &&
+      isEditDeathPageComponents === false &&
       (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
       ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath)
       : formData?.InformationDeath?.DateOfDeath
-  ); 
-  // const [DateOfDeath, setDateOfDeath] = useState(  
+  );
+  // const [DateOfDeath, setDateOfDeath] = useState(
   //   isEditDeath &&
   //     isEditDeathPageComponents === false &&
   //     (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
@@ -1262,12 +1263,18 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
         setselectedDeceasedGender(menu.filter((menu) => menu.code === formData?.InformationDeath?.DeceasedGender)[0]);
       }
     }
+    if (formData?.InformationDeath?.AgeUnit != null) {
+      if (cmbAgeUnit.length > 0 && (AgeUnit === undefined || AgeUnit === "")) {
+        setSelectedAgeUnit(cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.code === formData?.InformationDeath?.AgeUnit)[0]);
+      }
+    }
     if (formData?.InformationDeath?.DeathPlace != null) {
       if (cmbPlace.length > 0 && (DeathPlace === undefined || DeathPlace === "")) {
         setselectDeathPlace(cmbPlace.filter((cmbPlace) => cmbPlace.code === formData?.InformationDeath?.DeathPlace)[0]);
         setValue(formData?.InformationDeath?.DeathPlace);
       }
     }
+    
     // if (formData?.ChildDetails?.medicalAttensionSub != null) {
     //   if (cmbAttDeliverySub.length > 0 && (medicalAttensionSub === undefined || medicalAttensionSub === "")) {
     //     setMedicalAttensionSub(cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.ChildDetails?.medicalAttensionSub)[0]);

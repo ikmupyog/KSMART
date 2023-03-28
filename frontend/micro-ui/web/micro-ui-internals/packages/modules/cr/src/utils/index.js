@@ -1702,7 +1702,7 @@ export const convertToDeathRegistration = (data = {}) => {
           SpouseType: data?.FamilyInformationDeath?.SpouseType ? data?.FamilyInformationDeath?.SpouseType.code : null,
           SpouseNameEn: data?.FamilyInformationDeath?.SpouseNameEN ? data?.FamilyInformationDeath?.SpouseNameEN : null,
           SpouseNameML: data?.FamilyInformationDeath?.SpouseNameMl ? data?.FamilyInformationDeath?.SpouseNameMl : null,
-          FatherUnavailable: data?.FamilyInformationDeath?.SpouseUnavailable,
+          FatherUnavailable: data?.FamilyInformationDeath?.FatherUnavailable,
           FatherNameEn: data?.FamilyInformationDeath?.FatherNameEn,
           FatherNameMl: data?.FamilyInformationDeath?.FatherNameMl,
           MotherUnavailable: data?.FamilyInformationDeath?.MotherUnavailable,
