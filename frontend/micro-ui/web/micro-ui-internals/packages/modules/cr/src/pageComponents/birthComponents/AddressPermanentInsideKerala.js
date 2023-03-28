@@ -307,7 +307,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
               selected={permntInKeralaAdrDistrict}
               select={setSelectpermntInKeralaAdrDistrict}
               placeholder={`${t("CS_COMMON_DISTRICT")}`}
-              disable={isDisableStatus}
+              disable={isDisableEdit}
             />
           </div>
 
@@ -412,7 +412,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
               name="permntInKeralaAdrPincode"
               value={permntInKeralaAdrPincode}
               onChange={setSelectpermntInKeralaAdrPincode}
-              disable={isDisableStatus}
+              disable={isDisableEdit}
               placeholder={`${t("CS_COMMON_PIN_CODE")}`}
               {...(validation = {
                 pattern: "^[a-zA-Z-.`' ]*$",
