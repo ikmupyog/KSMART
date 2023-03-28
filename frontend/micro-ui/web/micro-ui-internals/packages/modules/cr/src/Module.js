@@ -157,7 +157,7 @@ import MarriageInclusionEditPage from "./pageComponents/marriageComponents/Marri
 
 // import CreateAbandonedBirth from "./pages/employee/Abandoned-birth";
 import AbandonedChildDetails from "./pageComponents/abandonedBirthComponents/AbandonedChildDetails";
-import AbandonedBirthInitiatorDetails from "./pageComponents/abandonedBirthComponents/AbandonedBirthInitiatorDetails";
+import AbandonedBirthInformarDetails from "./pageComponents/abandonedBirthComponents/AbandonedBirthInformarDetails";
 import BornOutsideAcknowledgement from "./pages/citizen/BornOutsideReg/BornOutsideAcknowledgement";
 
 
@@ -379,7 +379,7 @@ const componentsToRegister = {
   InformationDeathAband,
   // CreateAbandonedBirth,
   AbandonedChildDetails,
-  AbandonedBirthInitiatorDetails,
+  AbandonedBirthInformarDetails,
   //Marriage
   CRCreateMarriageRegistration: CreateMarriageRegistration,
   GroomDetails,

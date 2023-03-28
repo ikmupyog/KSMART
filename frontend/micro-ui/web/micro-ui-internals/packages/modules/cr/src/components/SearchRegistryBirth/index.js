@@ -38,7 +38,7 @@ const SearchRegistryBirth = ({  onSubmit, data, filestoreId, isSuccess, isLoadin
     defaultValues: {
       offset: 0,
       limit: 10,
-      sortBy: "commencementDate",
+      // sortBy: "dateOfBirth",
       sortOrder: "DESC",
     },
   });
@@ -47,7 +47,7 @@ const SearchRegistryBirth = ({  onSubmit, data, filestoreId, isSuccess, isLoadin
   useEffect(() => {
     register("offset", 0);
     register("limit", 10);
-    register("sortBy", "commencementDate");
+    //register("sortBy", "dateOfBirth");
     register("sortOrder", "DESC");
   }, [register]);
 

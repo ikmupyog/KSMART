@@ -145,7 +145,7 @@ const AdoptionParentsDetails = ({ config, onSelect, userType, formData, isEditBi
 
     if (formData?.AdoptionParentsDetails?.isfatherInfo != null) {
       setIsInitialRender(false);
-      setIsfatherInfo(formData?.AdoptionParentsDetails?.isfatherInfo);
+      setIsFatherInfo(formData?.AdoptionParentsDetails?.isfatherInfo);
     }
 
   }, [isInitialRender]);
