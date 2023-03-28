@@ -7,7 +7,7 @@ import getPDFData from "../../../utils/getTLAcknowledgementData";
 
 const GetActionMessage = (props) => {
   // console.log(props,props.isLoading);
-  console.log(props.isSuccess,props);
+  // console.log(props.isSuccess,props);
   const { t } = useTranslation();
   if (props.isSuccess) {
     return t("CR_CREATE_SUCCESS_MSG");
