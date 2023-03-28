@@ -184,9 +184,6 @@ public class MarriageRegistryDetails {
     @JsonProperty("modulecode")
     private String modulecode;
 
-    @JsonProperty("AuditDetails")
-    private AuditDetails auditDetails;
-
     @JsonProperty("BrideDetails")
     private BrideRegistryDetails brideDetails;
 
@@ -195,6 +192,15 @@ public class MarriageRegistryDetails {
 
     @JsonProperty("WitnessDetails")
     private WitnessRegistryDetails witnessDetails;
+
+    @JsonProperty("BrideAddressDetails")
+    private BrideRegistryAddressDetails brideAddressDetails;
+
+    @JsonProperty("GroomAddressDetails")
+    private GroomRegistryAddressDetails groomAddressDetails;
+
+    @JsonProperty("AuditDetails")
+    private AuditDetails auditDetails;
 
 
 

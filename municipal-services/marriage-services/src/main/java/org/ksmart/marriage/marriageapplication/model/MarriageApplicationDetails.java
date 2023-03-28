@@ -197,6 +197,7 @@ public class MarriageApplicationDetails {
 
     @JsonProperty("GroomDetails")
     private GroomDetails groomDetails;
+    
     @JsonProperty("BrideAddressDetails")
     private BrideAddressDetails brideAddressDetails;
 
