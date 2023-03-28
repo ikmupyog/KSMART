@@ -40,6 +40,7 @@ public interface GroomDetailsRowMapper {
                 .maritalstatusid(rs.getString("GD_maritalstatusid"))
                 //.groomIsSpouseLiving(Boolean.valueOf(rs.getString("GD_is_spouse_living")))
                 .groomNoOfSpouse(Integer.valueOf(rs.getString("GD_livingspouseNo")))
+                .brideGroom(rs.getString("GD_bride_groom"))
                 // .marriageid(rs.getString("GD_marriageid"))
                 // .photo_url(rs.getString("GD_photo_url"))
 

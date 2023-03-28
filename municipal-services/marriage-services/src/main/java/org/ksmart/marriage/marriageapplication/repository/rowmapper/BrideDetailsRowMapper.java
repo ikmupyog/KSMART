@@ -9,6 +9,7 @@ public interface BrideDetailsRowMapper {
     default BrideDetails getBrideDetails (ResultSet rs) throws SQLException{
 
         return BrideDetails.builder()
+                .brideId(rs.getString("BD_id"))
                 .residentship(rs.getString("BD_residentship"))
                 .aadharno(rs.getString("BD_aadharno"))
                 .passportno(rs.getString("BD_passportno"))
@@ -37,6 +38,7 @@ public interface BrideDetailsRowMapper {
                 .maritalstatusid(rs.getString("BD_maritalstatusid"))
                 //.brideIsSpouseLiving(Boolean.valueOf(rs.getString("BD_is_spouse_living")))
                 .brideNoOfSpouse(Integer.valueOf(rs.getString("BD_livingspouseNo")))
+                .brideGroom(rs.getString("BD_bride_groom"))
                 .build();
 
 
