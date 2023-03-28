@@ -12,7 +12,7 @@ const GetActionMessage = (props) => {
     return t("CR_CREATE_SUCCESS_MSG");
   } else if (props.isError) {
     return t("CR_CREATE_APPLICATION_FAILED") ;
-  }else{
+  }else {
       return t("CR_CREATE_APPLICATION_PENDING");
   }
 };
@@ -169,7 +169,10 @@ const AdoptionAcknowledgement = ({ data, onSuccess,userType,isEditBirth=false })
   // }
   // else
 // console.log(JSON.stringify(mutation));
-if(mutation.isSuccess && mutation?.isError===null){
+let enableLoader = (mutation.isIdle || mutation.isLoading);
+if (enableLoader) { return (<Loader />) }
+else if (((mutation?.isSuccess == false && mutation?.isIdle == false))) {
+// if(mutation.isSuccess && mutation?.isError===null){
   return(
     <Card>
       <BannerPicker t={t} data={mutation.data} isSuccess={"success"} isLoading={(mutation.isIdle || mutation.isLoading)} />

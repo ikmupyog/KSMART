@@ -573,10 +573,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
 
     } else {
       setbirthRegistered(e.target.checked)
-      // setAdoptionAgentName("")
-      // setAdoptionAgencyAddress("")
-      // setAdoptionAgencyPersonName("")
-      // setAdoptionContactNo("")
+      setBirthRegNo('')
     }
   }
   function setSelectDeliveryMethod(value) {
