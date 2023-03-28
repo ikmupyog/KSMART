@@ -1,0 +1,64 @@
+{
+  "ResponseInfo" : null,
+  "MdmsRes" : {
+    "FileManagement" : {
+      "FileServiceSubtype" : [ {
+        "name" : "Agricultural Labour Pension",
+        "code" : "PN001.ALP",
+        "localName" : "കാർഷിക തൊഴിലാളി പെൻഷൻ",
+        "applicationDocument" : "Application,Adhar Card,Pan Card",
+        "active" : true,
+        "type" : "FM",
+        "validityPeriod" : null
+      }, {
+        "name" : "Indira Gandhi National Old Age Pension Scheme",
+        "code" : "PN001.IGNOAPS",
+        "localName" : "ഇന്ദിരാഗാന്ധി ദേശീയ വാർദ്ധക്യ പെൻഷൻ പദ്ധതി",
+        "applicationDocument" : "Pan Card,Voters Card,Birth Certificate",
+        "active" : true,
+        "type" : "FM",
+        "validityPeriod" : null
+      }, {
+        "name" : "Pension for the Mentally challenged",
+        "code" : "PN001.MCP",
+        "localName" : "മാനസിക വെല്ലുവിളി നേരിടുന്നവർക്കുള്ള പെൻഷൻ",
+        "applicationDocument" : "Application,Ration Card,Birth Certificate",
+        "active" : true,
+        "type" : "FM",
+        "validityPeriod" : null
+      }, {
+        "name" : "Pension for the Physically challenged",
+        "code" : "PN001.PHP",
+        "localName" : "ശാരീരിക വൈകല്യമുള്ളവർക്കുള്ള പെൻഷൻ",
+        "applicationDocument" : "Application,Ration Card,Birth Certificate",
+        "active" : true,
+        "type" : "FM",
+        "validityPeriod" : null
+      }, {
+        "name" : "Pension for the  Unmarried Women above 50 years",
+        "code" : "PN001.UMWP",
+        "localName" : "50 വയസ്സിന് മുകളിലുള്ള അവിവാഹിതരായ സ്ത്രീകൾക്ക് പെൻഷൻ",
+        "applicationDocument" : "Application,Ration Card,Birth Certificate",
+        "active" : true,
+        "type" : "FM",
+        "validityPeriod" : null
+      }, {
+        "name" : "Indira Gandhi National Widow Pension Scheme",
+        "code" : "PN001.IGNWPS",
+        "localName" : "ഇന്ദിരാഗാന്ധി ദേശീയ വിധവാ പെൻഷൻ പദ്ധതി",
+        "applicationDocument" : "Application,Ration Card,Birth Certificate",
+        "active" : true,
+        "type" : "FM",
+        "validityPeriod" : null
+      }, {
+        "name" : "Indira Gandhi National Widow Pension Scheme",
+        "code" : "PN001.IGNWPS",
+        "localName" : "ഇന്ദിരാഗാന്ധി ദേശീയ വിധവാ പെൻഷൻ പദ്ധതി",
+        "applicationDocument" : "Application,Ration Card,Birth Certificate",
+        "active" : true,
+        "type" : "FM",
+        "validityPeriod" : null
+      } ]
+    }
+  }
+} 

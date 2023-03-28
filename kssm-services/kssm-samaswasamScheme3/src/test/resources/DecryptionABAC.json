@@ -1,0 +1,91 @@
+{
+  "key": "FMDetail",
+  "roleAttributeAccessList": [
+    {
+      "roleCode": "CITIZEN",
+      "attributeAccessList": [
+        {
+          "attribute": {
+            "jsonPath": "*/mobileNumber",
+            "maskingTechnique": "mobile"
+          },
+          "accessType": "PLAIN"
+        },
+        {
+          "attribute": {
+            "jsonPath": "*/emailId"
+          },
+          "accessType": "PLAIN"
+        },
+        {
+          "attribute": {
+            "jsonPath": "*/aadhaarNumber"
+          },
+          "accessType": "PLAIN"
+        },
+        {
+          "attribute": {
+            "jsonPath": "*/applicant/mobileNumber",
+            "maskingTechnique": "mobile"
+          },
+          "accessType": "PLAIN"
+        },
+        {
+          "attribute": {
+            "jsonPath": "*/applicant/emailId"
+          },
+          "accessType": "PLAIN"
+        },
+        {
+          "attribute": {
+            "jsonPath": "*/applicant/aadhaarNumber"
+          },
+          "accessType": "PLAIN"
+        }
+      ]
+    },
+    {
+      "roleCode": "EMPLOYEE",
+      "attributeAccessList": [
+        {
+          "attribute": {
+            "jsonPath": "*/mobileNumber",
+            "maskingTechnique": "mobile"
+          },
+          "accessType": "PLAIN"
+        },
+        {
+          "attribute": {
+            "jsonPath": "*/emailId"
+          },
+          "accessType": "PLAIN"
+        },
+        {
+          "attribute": {
+            "jsonPath": "*/aadhaarNumber"
+          },
+          "accessType": "PLAIN"
+        },
+        {
+          "attribute": {
+            "jsonPath": "*/applicant/mobileNumber",
+            "maskingTechnique": "mobile"
+          },
+          "accessType": "PLAIN"
+        },
+        {
+          "attribute": {
+            "jsonPath": "*/applicant/emailId"
+          },
+          "accessType": "PLAIN"
+        },
+        {
+          "attribute": {
+            "jsonPath": "*/applicant/aadhaarNumber"
+          },
+          "accessType": "PLAIN"
+        }
+      ]
+    }
+  ]
+}

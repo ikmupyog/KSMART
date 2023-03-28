@@ -1,0 +1,179 @@
+serviceMaps:
+  serviceName: kssm-aswasakiranam
+  mappings:
+  - version: 1.0
+    description: Persists OB  details kssm database, tr_efile_samaswasam2 table
+    fromTopic: save-samaswasam3-topic
+    isTransaction: true
+    queryMaps: 
+    - query: >
+       INSERT INTO public.tr_live_samaswasam3(numkssmpensionerid, scheme_id, district, application_no, reg_no, application_date, office_typeid, office_nameid, applicant_nameeng, applicant_namemal, applicant_houseno, applicant_wardno, applicant_housenameeng, applicant_housenamemal, applicant_streetnameeng, applicant_streetnamemal, applicant_mainplacenameeng, applicant_mainplacenamemal, applicant_postofficeid, applicant_pincode, applicant_district_id, applicant_lbid, applicant_blockid, village_id_applicant, taluk_id_applicant, applicantlandphone_no, applicantmobile_no, applicant_age, applicant_dob, applicant_genderid, applicant_heamo_center_eng, applicant_heamo_center_mal, applicant_heamo_doctor_eng, applicant_heamo_doctor_mal, applicant_bankaccountno, applicant_bank, applicant_bank_branch, applicant_ifsccode, applicant_aadharno, applicant_eidno, file_status, sourceid, user_id, icdsofficer_id, fieldenquiry_date, icdsremarks, icdseligibility_id, cdporec_date, cdpoeligibility_id, remarks, cdposubmit_date, dtdecision_date, chvreason, penstart_date, verifier_id, verifierremarks, approver_id, approverremarks, numkssmefileid)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+      basePath: samaswasam.*
+      jsonMaps:
+       
+       
+        
+        - jsonPath: $.samaswasam.*.numkssmpensionerid
+        
+        - jsonPath: $.samaswasam.*.scheme_id
+        
+        - jsonPath: $.samaswasam.*.district
+        
+        - jsonPath: $.samaswasam.*.application_no
+        
+        - jsonPath: $.samaswasam.*.reg_no
+        
+        - jsonPath: $.samaswasam.*.application_date
+          type : DATE
+        
+        
+        - jsonPath: $.samaswasam.*.office_typeid
+        
+        - jsonPath: $.samaswasam.*.office_nameid
+        
+        - jsonPath: $.samaswasam.*.applicant_nameeng
+        
+        - jsonPath: $.samaswasam.*.applicant_namemal
+        
+        - jsonPath: $.samaswasam.*.applicant_houseno
+        
+        - jsonPath: $.samaswasam.*.applicant_wardno
+        
+        - jsonPath: $.samaswasam.*.applicant_housenameeng
+        
+        - jsonPath: $.samaswasam.*.applicant_housenamemal
+        
+        - jsonPath: $.samaswasam.*.applicant_streetnameeng
+        
+        - jsonPath: $.samaswasam.*.applicant_streetnamemal
+        
+        - jsonPath: $.samaswasam.*.applicant_mainplacenameeng
+        
+        - jsonPath: $.samaswasam.*.applicant_mainplacenamemal
+        
+        - jsonPath: $.samaswasam.*.applicant_postofficeid
+        
+        - jsonPath: $.samaswasam.*.applicant_pincode
+        
+        - jsonPath: $.samaswasam.*.applicant_district_id
+        
+        - jsonPath: $.samaswasam.*.applicant_lbid
+        
+        - jsonPath: $.samaswasam.*.applicant_blockid
+        
+        - jsonPath: $.samaswasam.*.village_id_applicant
+        
+        - jsonPath: $.samaswasam.*.taluk_id_applicant
+        
+        - jsonPath: $.samaswasam.*.applicantlandphone_no
+        
+        - jsonPath: $.samaswasam.*.applicantmobile_no
+        
+        - jsonPath: $.samaswasam.*.applicant_age
+        
+        - jsonPath: $.samaswasam.*.applicant_dob
+          type: DATE
+
+        
+        - jsonPath: $.samaswasam.*.applicant_genderid
+        
+        - jsonPath: $.samaswasam.*.applicant_heamo_center_eng
+        
+        - jsonPath: $.samaswasam.*.applicant_heamo_center_mal
+        
+        - jsonPath: $.samaswasam.*.applicant_heamo_doctor_eng
+        
+        - jsonPath: $.samaswasam.*.applicant_heamo_doctor_mal
+        
+        - jsonPath: $.samaswasam.*.applicant_bankaccountno
+        
+        - jsonPath: $.samaswasam.*.applicant_bank
+        
+        - jsonPath: $.samaswasam.*.applicant_bank_branch
+        
+        - jsonPath: $.samaswasam.*.applicant_ifsccode
+        
+        - jsonPath: $.samaswasam.*.applicant_aadharno
+        
+        - jsonPath: $.samaswasam.*.applicant_eidno
+        
+        - jsonPath: $.samaswasam.*.file_status
+        
+        - jsonPath: $.samaswasam.*.sourceid
+        
+        - jsonPath: $.samaswasam.*.user_id
+        
+        - jsonPath: $.samaswasam.*.icdsofficer_id
+        
+        - jsonPath: $.samaswasam.*.fieldenquiry_date
+          type : DATE
+        
+        
+        - jsonPath: $.samaswasam.*.icdsremarks
+        
+        - jsonPath: $.samaswasam.*.icdseligibility_id
+        
+        - jsonPath: $.samaswasam.*.cdporec_date
+          type : DATE
+        
+        
+        - jsonPath: $.samaswasam.*.cdpoeligibility_id
+        
+        - jsonPath: $.samaswasam.*.remarks
+        
+        - jsonPath: $.samaswasam.*.cdposubmit_date
+          type : DATE
+        
+        
+        - jsonPath: $.samaswasam.*.dtdecision_date
+          type : DATE
+        
+        
+        - jsonPath: $.samaswasam.*.chvreason
+        
+        - jsonPath: $.samaswasam.*.penstart_date
+          type : DATE
+        
+        
+        - jsonPath: $.samaswasam.*.verifier_id
+        
+        - jsonPath: $.samaswasam.*.verifierremarks
+        
+        - jsonPath: $.samaswasam.*.approver_id
+        
+        - jsonPath: $.samaswasam.*.approverremarks
+        
+        - jsonPath: $.samaswasam.*.numkssmefileid
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
