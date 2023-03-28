@@ -723,11 +723,11 @@ export const newConfig = [
         key: "InformationDeathAband",
         withoutLabel: true,
         hideInEmployee: false,
-        nextStep: "family-information",
+        nextStep: "address-death",
       },
       {
         route: "address-death",
-        component: "AddressBasePage",
+        component: "AddressDeath",
         texts: {
           headerCaption: "",
           header: "",
@@ -743,7 +743,7 @@ export const newConfig = [
       },
       {
         route: "family-information",
-        component: "FamilyInformationDeath",
+        component: "FamilyAbandonedDeath",
         texts: {
           headerCaption: "",
           // header: "CR_FAMILY_INFO",
@@ -753,7 +753,7 @@ export const newConfig = [
           skipText: "",
         },
         withoutLabel: true,
-        key: "FamilyInformationDeath",
+        key: "FamilyAbandonedDeath",
         nextStep: "statistical-info",
 
         // nextStep: "statistical-info",

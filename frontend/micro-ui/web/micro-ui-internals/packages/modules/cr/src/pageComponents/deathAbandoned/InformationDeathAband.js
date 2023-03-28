@@ -31,7 +31,9 @@ const InformationDeathAband = ({ config, onSelect, userType, formData, isEditDea
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
   const { t } = useTranslation();
-  let validation = {};
+  let validation = {
+
+  };
 
   const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
     stateId,
@@ -363,7 +365,7 @@ const InformationDeathAband = ({ config, onSelect, userType, formData, isEditDea
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isInitialRenderDeathPlace, setIsInitialRenderDeathPlace] = useState(true);
 
-  // const [sexError, setsexError] = useState(formData?.InformationDeath?.sexError ? false : false);
+  const [sexError, setsexError] = useState(formData?.InformationDeath?.sexError ? false : false);
   // const [DOBError, setDOBError] = useState(formData?.InformationDeath?.ChildDOB ? false : false);
   // const [AadharError, setAadharError] = useState(formData?.InformationDeath?.DeceasedAadharNumber ? false : false);
   // const [HospitalError, setHospitalError] = useState(formData?.InformationDeath?.DeathPlaceType ? false : false);
@@ -894,7 +896,16 @@ const InformationDeathAband = ({ config, onSelect, userType, formData, isEditDea
         workFlowCode = "21DEATHHHOME";
       }
     }
-
+ if (DeceasedGender == null || DeceasedGender == "" || DeceasedGender == undefined) {
+      validFlag = false;
+      setsexError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setsexError(false);
+    }
     if (validFlag == true) {
       sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
       sessionStorage.setItem("DeathDateUnavailable", DeathDateUnavailable ? DeathDateUnavailable : false);
@@ -1403,7 +1414,16 @@ const InformationDeathAband = ({ config, onSelect, userType, formData, isEditDea
               />
             </div>
           )}
+          {/* PLACE OF BURIAL */}
+          <div className="row">
+            <div className="col-md-12">
+              <h1 className="headingh1">
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PLACE_OF_BURIAL")}`}</span>
+              </h1>
+            </div>
+          </div>
 
+          {/* END OF PLACE OF BURIAL */}
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
@@ -1615,9 +1635,10 @@ const InformationDeathAband = ({ config, onSelect, userType, formData, isEditDea
               {/* {!isTextBoxValid() && <p>Please enter a valid value based on the conditions</p>} */}
 
               <div className="col-md-2">
-                <CardLabel>
+               <CardLabel>
                   {t("CR_GENDER")}
-                </CardLabel>
+                  <span className="mandatorycss">*</span>
+                </CardLabel> 
                 <Dropdown
                   t={t}
                   optionKey="code"
@@ -1667,6 +1688,19 @@ const InformationDeathAband = ({ config, onSelect, userType, formData, isEditDea
               </div>
             </div>
           </div>
+          {toast && (
+            <Toast
+              error={sexError}
+              label={
+               sexError
+                  ?  sexError
+                    ? t(`DEATH_ERROR_SEX_CHOOSE`)
+                    : setToast(false)
+                  : setToast(false)
+              }
+              onClose={() => setToast(false)}
+            />
+          )}
         </FormStep>
       </React.Fragment>
     );

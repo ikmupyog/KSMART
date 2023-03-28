@@ -155,6 +155,9 @@ import witnessdetails from "./pageComponents/marriageComponents/witnessdetails";
 import AbandonedChildDetails from "./pageComponents/abandonedBirthComponents/AbandonedChildDetails";
 import AbandonedBirthInitiatorDetails from "./pageComponents/abandonedBirthComponents/AbandonedBirthInitiatorDetails";
 import InformationDeathAband from "./pageComponents/deathAbandoned/InformationDeathAband";
+import AddressDeath from "./pageComponents/deathAbandoned/AddressDeath";
+import FamilyAbandonedDeath from "./pageComponents/deathAbandoned/FamilyAbandonedDeath";
+// FamilyAbandonedDeath
 
 export const CRModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
@@ -379,7 +382,8 @@ const componentsToRegister = {
   MarriageRegistration,
   HouseMarriageRegistration,
   witnessdetails,
-  FormFieldContainer
+  FormFieldContainer,
+  AddressDeath
 };
 
 export const initCRComponents = () => {
