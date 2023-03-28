@@ -1004,7 +1004,7 @@ export const convertToBirthRegistration = (data = {}) => {
   return formdata;
 };
 export const convertToEditBirthRegistration = (data = {}) => {
-  console.log(data);
+  console.log(data?.ChildDetails.workflowcode);
   const formdata = {
     ChildDetails: [
       {
@@ -1064,7 +1064,7 @@ export const convertToEditBirthRegistration = (data = {}) => {
         action: "INITIATE",
         applicationtype: "CRBRNR",
         businessservice: "birth-services",
-        workflowcode: data?.ChildDetails?.workFlowCode ? data?.ChildDetails.workFlowCode : null,
+        workflowcode: data?.ChildDetails.workflowcode,
         id:data?.ChildDetails?.id,
         applicationNumber:data?.ChildDetails?.applicationNumber,
         ParentsDetails: {
