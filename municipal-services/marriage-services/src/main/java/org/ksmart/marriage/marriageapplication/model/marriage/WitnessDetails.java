@@ -18,48 +18,48 @@ public class WitnessDetails {
     @JsonProperty("witnessId1")
     private String witnessId1;
 
-     @NotNull
-     @Size(max = 64)
-     @JsonProperty("witnessId2")
-     private String witnessId2;
+    @NotNull
+    @Size(max = 64)
+    @JsonProperty("witnessId2")
+    private String witnessId2;
 
-     @Size(max = 64)
-     @JsonProperty("tenentId")
-     private String tenentId;
+    @Size(max = 64)
+    @JsonProperty("tenentId")
+    private String tenentId;
 
-     @Size(max = 64)
-     @JsonProperty("marriageid")
-     private String marriageid;
+    @Size(max = 64)
+    @JsonProperty("marriageid")
+    private String marriageid;
 
-     @Size(max = 15)
-     @JsonProperty("witness1AdharNo")
-     private String adharno;
+    @Size(max = 15)
+    @JsonProperty("witness1AadharNo")
+    private String witness1AadharNo;
 
-     @Size(max = 200)
-     @JsonProperty("witness1NameEn")
-     private String name_en;
+    @Size(max = 200)
+    @JsonProperty("witness1NameEn")
+    private String witness1NameEn;
 
-     @Size(max = 200)
-     @JsonProperty("witness1NameMal")
-     private String name_mal;
+    @Size(max = 200)
+    @JsonProperty("witness1NameMl")
+    private String witness1NameMl;
 
-     @JsonProperty("witness1Age")
-     private Integer age;
+    @JsonProperty("witness1Age")
+    private Integer witness1Age;
 
-     @Size(max = 500)
-     @JsonProperty("witness1AddresSEn")
-     private String address_en;
+    @Size(max = 500)
+    @JsonProperty("witness1AddresSEn")
+    private String witness1AddresSEn;
 
-     @Size(max = 500)
-     @JsonProperty("witness1AddressMal")
-     private String address_mal;
+    @Size(max = 500)
+    @JsonProperty("witness1AddressMl")
+    private String witness1AddressMl;
 
-     @Size(max = 150)
-     @JsonProperty("witness1Mobile")
-     private String mobile;
+    @Size(max = 150)
+    @JsonProperty("witness1Mobile")
+    private Long witness1Mobile;
 
-    @JsonProperty("witness1ISEsigned")
-    private Boolean is_esigned;
+    @JsonProperty("witness1Esigned")
+    private Boolean witness1Esigned;
 
     @JsonProperty("serial_no1")
     private Integer serial_no1;
@@ -68,16 +68,16 @@ public class WitnessDetails {
     private Integer serial_no2;
 
     @Size(max = 15)
-    @JsonProperty("witness2AdharNo")
-    private String witness2AdharNo;
+    @JsonProperty("witness2AadharNo")
+    private String witness2AadharNo;
 
     @Size(max = 200)
     @JsonProperty("witness2NameEn")
     private String witness2NameEn;
 
     @Size(max = 200)
-    @JsonProperty("witness2NameMal")
-    private String witness2NameMal;
+    @JsonProperty("witness2NameMl")
+    private String witness2NameMl;
 
     @JsonProperty("witness2Age")
     private Integer witness2Age;
@@ -87,18 +87,18 @@ public class WitnessDetails {
     private String witness2AddresSEn;
 
     @Size(max = 200)
-    @JsonProperty("witness2AddressMal")
-    private String witness2AddressMal;
+    @JsonProperty("witness2AddressMl")
+    private String witness2AddressMl;
 
     @Size(max = 150)
     @JsonProperty("witness2Mobile")
-    private String witness2Mobile;
+    private Long witness2Mobile;
 
-    @JsonProperty("witness2ISEsigned")
-    private  Boolean witness2ISEsigned;
-    
-   @JsonProperty("auditDetails")
-   private AuditDetails auditDetails;
+    @JsonProperty("witness2Esigned")
+    private  Boolean witness2Esigned;
+
+    @JsonProperty("AuditDetails")
+    private AuditDetails auditDetails;
 
 
 }

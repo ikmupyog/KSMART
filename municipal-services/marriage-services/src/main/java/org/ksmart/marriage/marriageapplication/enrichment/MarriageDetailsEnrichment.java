@@ -39,12 +39,12 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
             marriage.setAuditDetails(auditDetails);
             if(marriage.getBrideDetails()!=null){
                 marriage.getBrideDetails().setBrideId((UUID.randomUUID().toString()));
-                marriage.getBrideDetails().setBrideGroom("BRIDE");
+                marriage.getBrideDetails().setBrideGroom("B");
 
             }
             if(marriage.getGroomDetails()!=null){
                 marriage.getGroomDetails().setGroomId((UUID.randomUUID().toString()));
-                marriage.getGroomDetails().setBrideGroom("GROOM");
+                marriage.getGroomDetails().setBrideGroom("G");
 
             }
 
@@ -60,12 +60,12 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 ////                marriage.getPresent().setBrideGroom("BRIDE");
 ////                marriage.getPresent().setBrideGroom("GROOM");
 //            }
-            if(marriage.getWitness()!=null){
-                marriage.getWitness().setWitnessId1(UUID.randomUUID().toString());
-                marriage.getWitness().setWitnessId2(UUID.randomUUID().toString());
+            if(marriage.getWitnessDetails()!=null){
+                marriage.getWitnessDetails().setWitnessId1(UUID.randomUUID().toString());
+                marriage.getWitnessDetails().setWitnessId2(UUID.randomUUID().toString());
 
-                marriage.getWitness().setSerial_no1(1);
-                marriage.getWitness().setSerial_no2(2);
+                marriage.getWitnessDetails().setSerial_no1(1);
+                marriage.getWitnessDetails().setSerial_no2(2);
 
             }
         });
@@ -539,7 +539,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
         List<String> filecodes = getIds(requestInfo,
                 tenantId,
                 config.getMarriageApplNumberIdName(),
-                request.getMarriageDetails().get(0).getFunctionUID(),
+                request.getMarriageDetails().get(0).getModulecode(),
                 "APPL",
                 marriageDetails.size());
         validateFileCodes(filecodes, marriageDetails.size());

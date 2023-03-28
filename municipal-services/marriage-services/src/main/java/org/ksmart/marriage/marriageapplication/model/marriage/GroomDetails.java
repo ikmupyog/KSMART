@@ -29,8 +29,8 @@ public class GroomDetails {
     @JsonProperty("groomResidentShip")
     private String residentship;
     @Size(max = 15)
-    @JsonProperty("groomAdharNo")
-    private String adharno;
+    @JsonProperty("groomAadharNo")
+    private String aadharno;
     @Size(max = 1000)
     @JsonProperty("groomPassportNo")
     private String passportno;
@@ -41,21 +41,21 @@ public class GroomDetails {
     @JsonProperty("groomFirstnameEn")
     private String firstname_en;
     @Size(max = 200)
-    @JsonProperty("groomFirstnameMal")
-    private String firstname_mal;
+    @JsonProperty("groomFirstnameMl")
+    private String firstname_ml;
     @Size(max = 200)
     @JsonProperty("groomMiddlenameEn")
     private String middlename_en;
     @Size(max = 200)
-    @JsonProperty("groomMiddlenameMal")
-    private String middlename_mal;
+    @JsonProperty("groomMiddlenameMl")
+    private String middlename_ml;
 
     @Size(max = 200)
     @JsonProperty("groomLastnameEn")
     private String lastname_en;
     @Size(max = 200)
-    @JsonProperty("groomLastnameMal")
-    private String lastname_mal;
+    @JsonProperty("groomLastnameMl")
+    private String lastname_ml;
     @Size(max = 150)
     @JsonProperty("groomMobile")
     private String mobile;
@@ -77,30 +77,30 @@ public class GroomDetails {
     private String fathername_en;
 
     @Size(max = 200)
-    @JsonProperty("groomFathernameMal")
-    private String fathername_mal;
+    @JsonProperty("groomFathernameMl")
+    private String fathername_ml;
     @Size(max = 200)
     @JsonProperty("groomMothernameEn")
     private String mothername_en;
     @Size(max = 200)
-    @JsonProperty("groomMothernameMal")
-    private String mothername_mal;
+    @JsonProperty("groomMothernameMl")
+    private String mothername_ml;
 
     @Size(max = 15)
-    @JsonProperty("groomFatherAdharNo")
-    private String father_adharno;
+    @JsonProperty("groomFatherAadharNo")
+    private String father_aadharno;
     @Size(max = 15)
-    @JsonProperty("groomMotherAdharNo")
-    private String mother_adharno;
+    @JsonProperty("groomMotherAadharNo")
+    private String mother_aadharno;
     @Size(max = 200)
     @JsonProperty("groomGuardiannameEn")
     private String guardianname_en;
     @Size(max = 200)
-    @JsonProperty("groomGuardiannameMal")
-    private String guardianname_mal;
+    @JsonProperty("groomGuardiannameMl")
+    private String guardianname_ml;
     @Size(max = 15)
-    @JsonProperty("groomGardianAdhar")
-    private String guardian_adhar;
+    @JsonProperty("groomGuardianAadharNo")
+    private String guardian_aadharno;
 
 //    @Size(max = 200)
 //    @JsonProperty("groomProfessionEn")
@@ -114,10 +114,10 @@ public class GroomDetails {
     @Size(max = 64)
     @JsonProperty("groomMaritalstatusID")
     private String maritalstatusid;
-    @JsonProperty("groomSpouseLiving")
-    private Boolean is_spouse_living;
+    @JsonProperty("groomIsSpouseLiving")
+    private Boolean groomIsSpouseLiving;
     @JsonProperty("groomNoOfSpouse")
-    private Integer no_of_spouse_living;
+    private Integer groomNoOfSpouse;
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
 

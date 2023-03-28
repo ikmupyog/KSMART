@@ -33,8 +33,8 @@ public class BrideDetails {
     private String residentship;
 
     @Size(max = 15)
-    @JsonProperty("brideAdharNo")
-    private String adharno;
+    @JsonProperty("brideAadharNo")
+    private String aadharno;
 
     @Size(max = 1000)
     @JsonProperty("bridePassportNo")
@@ -49,24 +49,24 @@ public class BrideDetails {
     private String firstname_en;
 
     @Size(max = 200)
-    @JsonProperty("brideFirstnameMal")
-    private String firstname_mal;
+    @JsonProperty("brideFirstnameMl")
+    private String firstname_ml;
 
     @Size(max = 200)
     @JsonProperty("brideMiddlenameEn")
     private String middlename_en;
 
     @Size(max = 200)
-    @JsonProperty("brideMiddlenameMal")
-    private String middlename_mal;
+    @JsonProperty("brideMiddlenameMl")
+    private String middlename_ml;
 
     @Size(max = 200)
     @JsonProperty("brideLastnameEn")
     private String lastname_en;
 
     @Size(max = 200)
-    @JsonProperty("brideLastnameMal")
-    private String lastname_mal;
+    @JsonProperty("brideLastnameMl")
+    private String lastname_ml;
 
     @Size(max = 150)
     @JsonProperty("brideMobile")
@@ -95,36 +95,36 @@ public class BrideDetails {
     private String fathername_en;
 
     @Size(max = 200)
-    @JsonProperty("brideFathernameMal")
-    private String fathername_mal;
+    @JsonProperty("brideFathernameMl")
+    private String fathername_ml;
 
     @Size(max = 200)
     @JsonProperty("brideMothernameEn")
     private String mothername_en;
 
     @Size(max = 200)
-    @JsonProperty("brideMothernameMal")
-    private String mothername_mal;
+    @JsonProperty("brideMothernameMl")
+    private String mothername_ml;
 
     @Size(max = 15)
-    @JsonProperty("brideFatherAdharNo")
-    private String father_adharno;
+    @JsonProperty("brideFatherAadharNo")
+    private String father_aadharno;
 
     @Size(max = 15)
-    @JsonProperty("brideMotherAdharNo")
-    private String mother_adharno;
+    @JsonProperty("brideMotherAadharNo")
+    private String mother_aadharno;
 
     @Size(max = 200)
     @JsonProperty("brideGuardiannameEn")
     private String guardianname_en;
 
     @Size(max = 200)
-    @JsonProperty("brideGuardiannameMal")
-    private String guardianname_mal;
+    @JsonProperty("brideGuardiannameMl")
+    private String guardianname_ml;
 
     @Size(max = 15)
-    @JsonProperty("brideGardianAdhar")
-    private String guardian_adhar;
+    @JsonProperty("brideGuardianAadharNo")
+    private String guardian_aadharno;
 
 
 //    @Size(max = 200)
@@ -139,11 +139,11 @@ public class BrideDetails {
     @JsonProperty("brideMaritalstatusID")
     private String maritalstatusid;
 
-    @JsonProperty("bridelivingSpouse")
-    private boolean is_spouse_living;
+    @JsonProperty("brideIsSpouseLiving")
+    private boolean brideIsSpouseLiving;
 
     @JsonProperty("brideNoOfSpouse")
-    private Integer no_of_spouse_living;
+    private Integer brideNoOfSpouse;
 
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
