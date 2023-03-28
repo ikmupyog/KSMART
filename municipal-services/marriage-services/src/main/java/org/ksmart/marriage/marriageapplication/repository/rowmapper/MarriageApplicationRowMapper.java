@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 @Component
-public class MarriageApplicationRowMapper implements ResultSetExtractor<List<MarriageApplicationDetails>>, BaseRowMapper,BrideDetailsRowMapper,GroomDetailsRowMapper,PermanentAddressRowMapper,PresentAddressRowMapper,WitnessDetailsRowMapper{
+public class MarriageApplicationRowMapper implements ResultSetExtractor<List<MarriageApplicationDetails>>, BaseRowMapper,BrideDetailsRowMapper,GroomDetailsRowMapper, BrideAddressDetailsRowMapper, GroomAddressDetailsRowMapper,WitnessDetailsRowMapper{
 
     @Override
     public List<MarriageApplicationDetails> extractData(ResultSet rs) throws SQLException, DataAccessException { //how to handle null
@@ -25,6 +25,8 @@ public class MarriageApplicationRowMapper implements ResultSetExtractor<List<Mar
                     .tenantid(rs.getString("MD_tenantid"))
                     .placetype(rs.getString("MD_placetype"))
                     .placeid(rs.getString("MD_placeid"))
+                    .marriageHouseNoAndNameEn(rs.getString("MD_housenameno_en"))
+                    .marriageHouseNoAndNameMl(rs.getString("MD_housenameno_ml"))
                     .placenameEn(rs.getString("MD_placename_en"))
                     .placenameMl(rs.getString("MD_placename_ml"))
                     .street_name_en(rs.getString("MD_street_name_en"))
@@ -39,10 +41,12 @@ public class MarriageApplicationRowMapper implements ResultSetExtractor<List<Mar
                     .applicationNumber(rs.getString("MD_applicationnumber"))
                     .registrationDate(rs.getLong("MD_registration_date"))
                     .registrationno(rs.getString("MD_registrationno"))
-                    .status(rs.getString("MD_registration_status"))
+                    //.status(rs.getString("MD_registration_status"))
                     .brideDetails(getBrideDetails(rs))
                     .groomDetails(getGroomDetails(rs))
                     .witnessDetails(getWitnessDetails(rs))
+                    .brideAddressDetails(getBrideAddressDetails(rs))
+                    .groomAddressDetails(getGroomAddressDetailsRowMapper(rs))
                     .auditDetails(getAuditDetails(rs))
 
                     .build());
