@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Route, Switch, useRouteMatch,useLocation,useHistory } from "react-router-dom";
 import { PrivateRoute, BreadCrumb,Component } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-import CrAbFlow from "./CrAbFlow";
+// import CrAbFlow from "./CrAbFlow";
+import CrFlow from "../Birth-route/CrFlow";
 import AbandonedChildDetails from "../../../pageComponents/abandonedBirthComponents/AbandonedChildDetails";
 import { newConfig as newConfigCR } from "../../../config/config";
 
-// import CrFlow from "./CrAbFlow";
+
 // import ChildDetails from "../../../pageComponents/birthComponents/ChildDetails";
 
 const CrAbFlowApp = ({ parentUrl}) => {
@@ -152,7 +153,7 @@ const CrAbFlowApp = ({ parentUrl}) => {
         <AbandonedBirthAcknowledgement data={params} onSuccess={onSuccess} />
       </Route>
       <Route path={`${path}`} exact>
-              <CrAbFlow  path={path}/>
+              <CrFlow  path={path}/>
              </Route>
              <PrivateRoute  parentRoute={path} path={`${path}/${config.indexRoute}`} component={() => <AbandonedChildDetails parentUrl={path}  />} />
          
