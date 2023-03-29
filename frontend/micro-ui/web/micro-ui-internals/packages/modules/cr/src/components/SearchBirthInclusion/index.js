@@ -96,12 +96,8 @@ const SearchBirthInclusion = ({  onSubmit, data, count, onInclusionClick }) => {
         Cell: ({ row }) => {
           return (
             <div>
-              <span className="link">
-                <Link to={`/digit-ui/citizen/cr/birth-inclusion-edit`}
-                      onClick={() => onInclusionClick(row.original)}
-                      >
+              <span className="link"  onClick={() => onInclusionClick(row.original)}>
                     {row.original.ack_no}
-                </Link>
               </span>
             </div>
           );
@@ -122,11 +118,6 @@ const SearchBirthInclusion = ({  onSubmit, data, count, onInclusionClick }) => {
         disableSortBy: true,
         accessor: (row) => GetCell(row.dateofbirth ? convertEpochToDateDMY(row.dateofbirth) : "-"),
       },
-      // {
-      //     Header: t("TL_APPLICATION_TYPE_LABEL"),
-      //     disableSortBy: true,
-      //     accessor: (row) => GetCell(t(`TL_LOCALIZATION_APPLICATIONTYPE_${row.applicationType}`)),
-      // },
       {
         Header: t("CR_COMMON_MOTHER_NAME"),
         disableSortBy: true,
@@ -137,53 +128,11 @@ const SearchBirthInclusion = ({  onSubmit, data, count, onInclusionClick }) => {
         disableSortBy: true,
         accessor: (row) => GetCell(row.gender || "-"),
       },
-      // {
-      //   Header: t("Download Certificate"),
-      //   disableSortBy: true,
-      //   Cell: ({ row }) => {
-      //     // console.log('row',row?.original);
-      //     return (
-      //       <div>
-      //         {row.original?.filestoreId && row.original?.isSuccess === true ? (
-      //           <span className="link" onClick={() => downloadDocument(row?.original?.filestoreId)}>
-      //             Download
-      //           </span>
-      //         ) : (
-      //           <Loader />
-      //         )}
-      //       </div>
-      //     );
-      //   },
-      // },
-      // {
-      //   Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),
-      //   disableSortBy: true,
-      //   accessor: (row) => GetCell(row.tradeName || ""),
-      // },
-      // {
-      //   Header: t("TL_LOCALIZATION_TRADE_OWNER_NAME"),
-      //   accessor: (row) => GetCell(row.tradeLicenseDetail.owners.map( o => o.name ). join(",") || ""),
-      //   disableSortBy: true,
-      // },
-      // {
-      //   Header: t("TL_COMMON_TABLE_COL_STATUS"),
-      //   accessor: (row) =>GetCell(t( row?.workflowCode&&row?.status&&`WF_${row?.workflowCode?.toUpperCase()}_${row.status}`|| "NA") ),
-      //   disableSortBy: true,
-      // }
     ],
     []
   );
 
   let tmpData = data;
- 
-  // useEffect(() => {
-  //   if (filestoreId && isSuccess === true) {
-  //     tmpData[0] = { ...data[0], filestoreId, isSuccess };
-  //   }
-    
-  //   setFileData(tmpData);
-  //   console.log("filedata===",FileData);
-  // }, [filestoreId]);
 
   return (
     <React.Fragment>
@@ -196,9 +145,6 @@ const SearchBirthInclusion = ({  onSubmit, data, count, onInclusionClick }) => {
       {
         data !== "" && (
           <React.Fragment>
-            {/* {(filestoreId && isSuccess === true )? <div style={registyBtnStyle}>
-        <SubmitBar label={t("Download Certificate")} onSubmit={() => downloadDocument(filestoreId)} />
-       </div>:<Loader/>} */}
             <Table
               t={t}
               data={data}
