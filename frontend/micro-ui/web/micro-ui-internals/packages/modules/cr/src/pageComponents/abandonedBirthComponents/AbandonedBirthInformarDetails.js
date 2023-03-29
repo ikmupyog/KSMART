@@ -22,7 +22,9 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
   const [infomantAadhar, setinfomantAadhar] = useState(formData?.AbandonedBirthInformarDetails?.infomantAadhar ? formData?.AbandonedBirthInformarDetails?.infomantAadhar : formData?.ChildDetails?.AbandonedBirthInformarDetails?.infomantAadhar ? formData?.ChildDetails?.AbandonedBirthInformarDetails?.infomantAadhar : "");
   const [infomantFirstNameEn, setinfomantFirstNameEn] = useState(formData?.AbandonedBirthInformarDetails?.infomantFirstNameEn ? formData?.AbandonedBirthInformarDetails?.infomantFirstNameEn : formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.infomantFirstNameEn ? formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.infomantFirstNameEn : "");
   const [infomantMobile, setinfomantMobile] = useState(formData?.AbandonedBirthInformarDetails?.infomantMobile ? formData?.AbandonedBirthInformarDetails?.infomantMobile : formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.infomantMobile ? formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.infomantMobile : "");
+  const [informerAddress, setinformerAddress] = useState(formData?.AbandonedBirthInformarDetails?.informerAddress ? formData?.AbandonedBirthInformarDetails?.informerAddress : formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.informerAddress ? formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.informerAddress : "");
 
+  
    
   
   
@@ -74,7 +76,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setcaretakerAddress(e.target.value.length <= 250 ? e.target.value : (e.target.value).substring(0, 250));
     }
-  }  
+  }   
   function setSelectinfomantinstitution(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
       setinfomantinstitution(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
@@ -101,7 +103,12 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
       setinfomantMobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
     }
   }   
- 
+  function setSelectinformerAddress(e) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setinformerAddress(e.target.value.length <= 250 ? e.target.value : (e.target.value).substring(0, 250));
+    }
+  } 
+   
  
 
   
@@ -195,6 +202,9 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
       sessionStorage.setItem("infomantAadhar", infomantAadhar ? infomantAadhar : null);
       sessionStorage.setItem("infomantFirstNameEn", infomantFirstNameEn ? infomantFirstNameEn : null);
       sessionStorage.setItem("infomantMobile", infomantMobile ? infomantMobile : null);
+      sessionStorage.setItem("informerAddress", informerAddress ? informerAddress : null);
+
+      
 
       
 
@@ -215,7 +225,8 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
         informerDesi,
         infomantAadhar, 
         infomantFirstNameEn, 
-        infomantMobile,    
+        infomantMobile,  
+        informerAddress,  
       
 
         
@@ -405,7 +416,10 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                 {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
               />
             </div>
-            
+            </div>
+            </div>
+            <div className="row">
+            <div className="col-md-12"> 
             <div className="col-md-4" >
               <CardLabel>{`${t("CR_INFORMANT_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
               <TextInput 
@@ -420,7 +434,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
             </div>
           
 
-            <div className="col-md-6">
+            <div className="col-md-4">
               <CardLabel>
                 {`${t("CR_MOBILE_NO")}`}
                 <span className="mandatorycss">*</span>
@@ -437,19 +451,19 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                 {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
               />
             </div>
-            {/* <div className="col-md-6">
+            <div className="col-md-4">
               <CardLabel>{`${t("CR_INFORMER_ADDRESS")}`}</CardLabel>
               <TextArea
                 t={t}
                 type={"text"}
                 optionKey="i18nKey"
-                name="initiatorAddress"
-                value={initiatorAddress}
-                onChange={setSelectinitiatorAddress}
+                name="informerAddress"
+                value={informerAddress}
+                onChange={setSelectinformerAddress}
                 placeholder={`${t("CR_INFORMER_ADDRESS")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
               />
-            </div> */}
+            </div>
           </div>
         </div>
         {/* <div className="row">

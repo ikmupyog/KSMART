@@ -100,7 +100,7 @@ const ApplicationDetails = () => {
           },
 
             data.tenantId = stateId
-        }else if((window.location.href.includes("/application-birthdetails"))){
+        }else if((window.location.href.includes("/application-details"))){
           data.redirectionUrl = {
             pathname: `/digit-ui/employee/cr/cr-flow/child-details`,
             state: applicationDetails,

@@ -33,11 +33,12 @@ const BannerPicker = (props) => {
   );
 };
 
-const BirthAcknowledgement = ({ data, onSuccess, userType, isEditBirth = false }) => {
+const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
   const { t } = useTranslation();
   const [mutationHappened, setMutationHappened, clear] = Digit.Hooks.useSessionStorage("CITIZEN_TL_MUTATION_HAPPENED", false);
   const resubmit = window.location.href.includes("edit-application");
   const tenantId = Digit.ULBService.getCurrentTenantId();
+  const [isEditBirth,setIsEditBirth]=useState(Digit.Hooks.useSessionStorage("CR_BIRTH_EDIT_FLAG", {})[0]);  
     console.log("isEditBirth" + isEditBirth);
     const mutation = Digit.Hooks.cr.useCivilRegistrationAPI(      
       tenantId,isEditBirth ? false : true      
@@ -67,19 +68,17 @@ const BirthAcknowledgement = ({ data, onSuccess, userType, isEditBirth = false }
         let tenantId1 = data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId;
         data.tenantId = tenantId1;
         if (!resubmit) {
-          // let formdata = !isEditBirth ? convertToDeathRegistration(data) : convertToEditTrade(data, fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter(y => y.module === "CR") : []);
-
           let formdata = !isEditBirth ? convertToBirthRegistration(data) : convertToEditBirthRegistration(data);
           // formdata.BirthDetails[0].tenantId = formdata?.BirthDetails[0]?.tenantId || tenantId1;
-          if (!isEditBirth) {
+          // if (!isEditBirth) {
+          //   mutation.mutate(formdata, {
+          //     onSuccess,
+          //   })
+          // } else {
             mutation.mutate(formdata, {
               onSuccess,
             })
-          } else {
-            mutation.mutate(formdata, {
-              onSuccess,
-            })
-          }
+          // }
           // else{
           //   if((fydata["egf-master"] && fydata["egf-master"].FinancialYear.length > 0 && isDirectRenewal))
           //   {

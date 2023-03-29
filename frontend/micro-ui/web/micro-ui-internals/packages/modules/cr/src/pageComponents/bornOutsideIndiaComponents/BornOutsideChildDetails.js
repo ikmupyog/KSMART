@@ -764,8 +764,8 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
                 pattern: "^[a-zA-Z-.0-9`' ]*$",
                 isRequired: true,
                 type: "number",
-                max: 6,
-                min: 6,
+                // max: 6,
+                // min: 6,
                 title: t("CR_INVALID_ZIP_CODE"),
               })}
             />

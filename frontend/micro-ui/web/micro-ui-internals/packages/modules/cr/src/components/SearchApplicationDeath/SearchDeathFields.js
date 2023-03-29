@@ -59,19 +59,19 @@ const SearchDeathFields = ({register, control, reset, tenantId, t }) => {
                     />
         </SearchField>} */}
         <SearchField>
-            <label  style={mystyle}>{t("CR_SEARCH_FROM_DATE")}</label>
+            <label  style={mystyle}>{t("CR_FROM_DATE")}</label>
             <Controller
            
                 render={(props) => <DatePicker  date={props.value} onChange={props.onChange} />}
-                name="fromDate"
+                name="DateOfDeath"
                 control={control}
                 />
         </SearchField>
         <SearchField>
-            <label style={mystyle}>{t("CR_SEARCH_TO_DATE")}</label>
+            <label style={mystyle}>{t("CR_TO_DATE")}</label>
             <Controller
                 render={(props) => <DatePicker   date={props.value} onChange={props.onChange} />}
-                name="toDate"
+                name="DateOfDeath1"
                 control={control}
                 />
         </SearchField>
@@ -97,8 +97,8 @@ const SearchDeathFields = ({register, control, reset, tenantId, t }) => {
             />
         </SearchField>} */}
         <SearchField>
-            <label>{t("CR_SEARCH_MOTHER_NAME")}</label>
-            <TextInput  name="tradeName" inputRef={register({})}/>
+            <label>{t("CR_SEARCH_DECEASED_NAME")}</label>
+            <TextInput  name="DeceasedFirstNameEn" inputRef={register({})}/>
         </SearchField>
         <SearchField className="submit">
             <SubmitBar label={t("ES_COMMON_SEARCH")} submit />
@@ -106,11 +106,10 @@ const SearchDeathFields = ({register, control, reset, tenantId, t }) => {
                 reset({ 
                     DeathACKNo:"",
                     // applicationType: "", 
-                    fromDate: "", 
-                    toDate: "",
-                    licenseNumbers: "",
+                    DateOfDeath: "", 
+                    DateOfDeath1: "",
                     status: "",
-                    tradeName: "",
+                    DeceasedFirstNameEn: "",
                     offset: 0,
                     limit: 10,
                     sortBy: "dateofreport",
