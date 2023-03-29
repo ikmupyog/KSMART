@@ -22,7 +22,7 @@ import BirthInclusionEditPage from "../../../pageComponents/birthComponents/Birt
 const BirthInclusion = () => {
   const { t } = useTranslation();
   const { path } = useRouteMatch();
-  const history = useHistory();
+  let history = useHistory();
 
   const [payload, setPayload] = useState({});
 
@@ -56,10 +56,11 @@ const BirthInclusion = () => {
     isSuccess,
   } = Digit.Hooks.cr.useRegistrySearchBirth({ filters: payload, config });
 
+
   const gotoEditInclusion = async (data) => {
-    console.log("reached===",data);
-    history.push(`${path}/birth-inclusion-edit`,{
-      inclusionData:data
+    history.push({
+      pathname: `/digit-ui/citizen/cr/birth-inclusion-edit`,
+      state: { inclusionData:data }
     });
   };
   // const { data: { filestoreId: storeId } = {} } = Digit.Hooks.cr.useResistryDownloadBirth({ filters: registryPayload, config });

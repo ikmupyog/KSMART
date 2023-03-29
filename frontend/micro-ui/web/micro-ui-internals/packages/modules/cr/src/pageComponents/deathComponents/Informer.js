@@ -9,8 +9,8 @@ const Informer = ({ config, onSelect, userType, formData,isEditDeath }) => {
   let validation = {};
 
 
-  const [IsDeclarationInformer, setIsDeclarationInformer] = useState(
-    formData?.InformantDetails?.IsDeclarationInformer ? formData?.InformantDetails?.IsDeclarationInformer : false
+  const [IsDeclarationInformant, setIsDeclarationInformant] = useState(
+    formData?.InformantDetails?.IsDeclarationInformant ? formData?.InformantDetails?.IsDeclarationInformant : false
   );
   // const [isDeclarationInfotwo, setIsDeclarationInfotwo] = useState(
   //   formData?.InformantDetails?.isDeclarationInfotwo ? formData?.InformantDetails?.isDeclarationInfotwo : false
@@ -40,9 +40,9 @@ const Informer = ({ config, onSelect, userType, formData,isEditDeath }) => {
 
   useEffect(() => {
     if (isInitialRender) {
-      if (formData?.Informer?.IsDeclarationInformer != null) {
+      if (formData?.Informer?.IsDeclarationInformant != null) {
         setIsInitialRender(false);
-        se(formData?.Informer?.IsDeclarationInformer);
+        se(formData?.Informer?.IsDeclarationInformant);
       }
       // if (formData?.Informer?.isDeclarationInfotwo != null) {
       //   setIsInitialRender(false);
@@ -53,9 +53,9 @@ const Informer = ({ config, onSelect, userType, formData,isEditDeath }) => {
  
   function setDeclarationInfo(e) {
     if (e.target.checked == true) {
-      setIsDeclarationInformer(e.target.checked);
+      setIsDeclarationInformant(e.target.checked);
     } else {
-      setIsDeclarationInformer(e.target.checked);
+      setIsDeclarationInformant(e.target.checked);
     }
   }
   // function setDeclarationInfotwo(e) {
@@ -93,7 +93,7 @@ const Informer = ({ config, onSelect, userType, formData,isEditDeath }) => {
  
   function setSelectInformantMobileNo(e) {
     if (e.target.value.trim().length >= 0) {
-      setInformantMobileNo(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
+      setInformantMobileNo(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
     } 
     // if (e.target.value.length != 0) {
     //   if (e.target.value.length > 10) {
@@ -168,7 +168,7 @@ const Informer = ({ config, onSelect, userType, formData,isEditDeath }) => {
     }
 
     if (validFlag == true) {
-      sessionStorage.setItem("IsDeclarationInformer", IsDeclarationInformer ? IsDeclarationInformer : null);
+      sessionStorage.setItem("IsDeclarationInformant", IsDeclarationInformant ? IsDeclarationInformant : null);
       // sessionStorage.setItem("isDeclarationInfotwo", isDeclarationInfotwo ? isDeclarationInfotwo : null);
       sessionStorage.setItem("InformantNameEn", InformantNameEn ? InformantNameEn : null);
       sessionStorage.setItem("InformantAadharNo", InformantAadharNo ? InformantAadharNo : null);
@@ -177,7 +177,7 @@ const Informer = ({ config, onSelect, userType, formData,isEditDeath }) => {
       sessionStorage.setItem("DeathSignedOfficerDesignation", DeathSignedOfficerDesignation ? DeathSignedOfficerDesignation : null);
       sessionStorage.setItem("InformantAddress", InformantAddress ? InformantAddress : null);   
       onSelect(config.key, {
-        IsDeclarationInformer,
+        IsDeclarationInformant,
         // isDeclarationInfotwo,
         InformantNameEn,
         InformantAadharNo,
@@ -192,7 +192,7 @@ const Informer = ({ config, onSelect, userType, formData,isEditDeath }) => {
       <BackButton >{t("CS_COMMON_BACK")}</BackButton>
       {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
       
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!IsDeclarationInformer}>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!IsDeclarationInformant}>
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -203,7 +203,7 @@ const Informer = ({ config, onSelect, userType, formData,isEditDeath }) => {
 
         <div className="row">
           <div className="col-md-12">
-            <CheckBox label={t("CR_INFORMER_DECLARATION_STATEMENT")} onChange={setDeclarationInfo} value={IsDeclarationInformer} checked={IsDeclarationInformer} />
+            <CheckBox label={t("CR_INFORMER_DECLARATION_STATEMENT")} onChange={setDeclarationInfo} value={IsDeclarationInformant} checked={IsDeclarationInformant} />
           </div>
         </div>
         

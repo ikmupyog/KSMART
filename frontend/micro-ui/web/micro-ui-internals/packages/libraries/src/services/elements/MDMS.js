@@ -1342,6 +1342,23 @@ const getCRMaleDependentlist = (tenantId, moduleCode) => ({
     ],
   },
 });
+const getBirthCorrectionDocumentslist = (tenantId, moduleCode) => {
+  return ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "BirthCorrectionDocuments"
+          },
+        ],
+      },
+    ],
+  },
+});
+}
 const getCRTitleList = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -2471,6 +2488,9 @@ export const MdmsService = {
   getCRMaleDependent: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRMaleDependentlist(tenantId, moduleCode), moduleCode);
   },
+  GetBirthCorrectionDocuments: (tenantId, moduleCode, type) => {
+    return MdmsService.getDataByCriteria(tenantId, getBirthCorrectionDocumentslist(tenantId, moduleCode), moduleCode);
+  },
   /////////crmdms
   getServiceDefs: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getModuleServiceDefsCriteria(tenantId, moduleCode), moduleCode);
@@ -2531,6 +2551,7 @@ export const MdmsService = {
   GetTradeOwnerShipCategory: (tenantId, moduleCode, type) => {
     return MdmsService.getDataByCriteria(tenantId, getTradeOwnerShipCategoryCriteria(tenantId, moduleCode, type), moduleCode);
   },
+
 
   getPropertyOwnerType: (tenantId, moduleCode, type) => {
     return MdmsService.getDataByCriteria(tenantId, getPropertyOwnerTypeCriteria(tenantId, moduleCode, type), moduleCode);
