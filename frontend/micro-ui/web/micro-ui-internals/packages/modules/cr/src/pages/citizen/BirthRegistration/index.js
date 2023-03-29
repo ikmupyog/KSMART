@@ -13,7 +13,7 @@ const CreateBirthRegistration = ({ parentUrl }) => {
   const { pathname } = useLocation();
   const history = useHistory();
   const queryClient = useQueryClient();
-  const [isEditBirth,setIsEditBirth]=useState(Digit.Hooks.useSessionStorage("CR_BIRTH_EDIT_FLAG", {})[0]);  
+  const [isEditBirth,setIsEditBirth]=useState(Digit.Hooks.useSessionStorage("CR_BIRTH_EDIT_FLAG", {})[0].value ? true : false);  
   console.log("isEditBirth" + isEditBirth);
   const [params, setParams, clearParams] = isEditBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_BIRTH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_BIRTH_REG", {});
 
