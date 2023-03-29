@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useEffect } from "react"
 import { useForm, Controller } from "react-hook-form";
-import { SearchForm, Table, Card, Header } from "@egovernments/digit-ui-react-components";
+import { SearchForm, Table, Card, Header ,SearchField,Dropdown} from "@egovernments/digit-ui-react-components";
 import { Link } from "react-router-dom";
 import { convertEpochToDateDMY } from  "../../utils";
 import SearchFields from "./SearchFields";
@@ -22,8 +22,14 @@ const mystyle = {
   lineHieght:"1.5rem"
 
  };
+ const selectedSearch=[
+  {label:"Adoption Search", value:"adoptionsearch"},
+  {label:"Birth Search", value:"birthsearch"}
+]
+let  validation =''
 
-const SearchApplication = ({tenantId, t, onSubmit, data, count }) => {
+const SearchApplication = ({tenantId, t, onSubmit, data, count,applicationType, setApplicationType }) => {
+
     const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
         defaultValues: {
             offset: 0,
@@ -58,6 +64,23 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count }) => {
     function previousPage () {
         setValue("offset", getValues("offset") - getValues("limit") )
         handleSubmit(onSubmit)()
+    }
+    const setSelectSearch =(value)=>{
+      setApplicationType(value)
+      reset({ 
+        searchAppllication:[],
+        applicationNumber: "", 
+        fromDate: "", 
+        toDate: "",
+        licenseNumbers: "",
+        status: "",
+        tradeName: "",
+        offset: 0,
+        limit: 10,
+        sortBy: "dateOfBirth",
+        sortOrder: "DESC"
+    });
+    previousPage();
     }
 
     const isMobile = window.Digit.Utils.browser.isMobile();
@@ -136,55 +159,133 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count }) => {
         //   disableSortBy: true,
         // }
       ]), [] )
+      const AdoptionColumns = useMemo( () => ([
+        {
+          Header: t("CR_COMMON_COL_APP_NO"),
+          accessor: "applicationNumber",
+          disableSortBy: true,
+          Cell: ({ row }) => {
+            return (
+              <div>
+                  <span className="link">
+                  <Link onClick={event => handleLinkClick(row.original)} to={`/digit-ui/employee/cr/application-Adoptiondetails/${row.original.applicationNumber}`}>
+                    {/* {row.original.applicationNumber} */}
+                    {row.original.applicationNumber}
+                  </Link>
+                </span> 
+              </div>
+            );
+          },
+        },
+        {
+          Header: t("CR_COMMON_COL_APP_DATE"),
+          disableSortBy: true,
+          accessor: (row) => GetCell(row.auditDetails.createdTime ? convertEpochToDateDMY(row.auditDetails.createdTime) : ""),
+        },
+        {
+            Header: t("CR_COMMON_COL_DOB"),
+            disableSortBy: true,            
+            accessor: (row) => GetCell(row.childDOB ? convertEpochToDateDMY(row.childDOB) : ""),
+        },
+        // {
+        //     Header: t("TL_APPLICATION_TYPE_LABEL"),
+        //     disableSortBy: true,
+        //     accessor: (row) => GetCell(t(`TL_LOCALIZATION_APPLICATIONTYPE_${row.applicationType}`)),
+        // },
+        {
+          Header: t("CR_COMMON_COL_MOTHER_NAME"),
+          disableSortBy: true,
+          accessor: (row) => GetCell(row.ParentsDetails["motherFirstNameEn"]  || "-"),
+        
+        },
+        {
+            Header: t("CR_COMMON_COL_FATHER_NAME"),
+            disableSortBy: true,
+            accessor: (row) => GetCell(row.ParentsDetails["fatherFirstNameEn"]  || "-"),
+        },
+        
+        // {
+        //   Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),
+        //   disableSortBy: true,
+        //   accessor: (row) => GetCell(row.tradeName || ""),
+        // },
+        // {
+        //   Header: t("TL_LOCALIZATION_TRADE_OWNER_NAME"),
+        //   accessor: (row) => GetCell(row.tradeLicenseDetail.owners.map( o => o.name ). join(",") || ""),
+        //   disableSortBy: true,
+        // },
+        // {
+        //   Header: t("TL_COMMON_TABLE_COL_STATUS"),
+        //   accessor: (row) =>GetCell(t( row?.workflowCode&&row?.status&&`WF_${row?.workflowCode?.toUpperCase()}_${row.status}`|| "NA") ),
+        //   disableSortBy: true,
+        // }
+      ]), [] )
 
-    return <React.Fragment>
-                
-                <div style={mystyle}>
-                <h1 style={hstyle}>{t("TL_SEARCH_APPLICATIONS")}</h1>
-                  <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
-                  <SearchFields {...{register, control, reset, tenantId, t}} />
+    return (
+      <React.Fragment>
+        <div style={mystyle}>
+          <h1 style={hstyle}>{t("TL_SEARCH_APPLICATIONS")}</h1>
+          <SearchField>
+            <label>
+              {t("Application Type")}
+              <span className="mandatorycss">*</span>
+            </label>
+            <Dropdown
+              t={t}
+              optionKey="label"
+              isMandatory={true}
+              option={selectedSearch}
+              selected={applicationType}
+              select={setSelectSearch}
+              // disable={}
+              placeholder={`${t("applicationType")}`}
+              {...(validation = { isRequired: true, title: t("applicationType") })}
+            />
+          </SearchField>
+          <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
+            <SearchFields {...{ register, control, reset, tenantId, t, previousPage, applicationType }} />
+          </SearchForm>
+        </div>
 
-                  
-
-                </SearchForm>
-
-                </div>
-                  
-            {data?.display ? <Card style={{ marginTop: 20 }}>
-                {
-                t(data.display)
-                    .split("\\n")
-                    .map((text, index) => (
-                    <p key={index} style={{ textAlign: "center" }}>
-                        {text}
-                    </p>
-                    ))
-                }
-            </Card>
-            : data !== "" && <Table
-                t={t}
-                data={data}
-                totalRecords={count}
-                columns={columns}
-                getCellProps={(cellInfo) => {
+        {data?.display ? (
+          <Card style={{ marginTop: 20 }}>
+            {t(data.display)
+              .split("\\n")
+              .map((text, index) => (
+                <p key={index} style={{ textAlign: "center" }}>
+                  {text}
+                </p>
+              ))}
+          </Card>
+        ) : (
+          data !== "" && (
+            <Table
+              t={t}
+              data={data}
+              totalRecords={count}
+              columns={applicationType?.value =="adoptionsearch"?AdoptionColumns:applicationType?.value =="birthsearch"?columns:[]}
+              getCellProps={(cellInfo) => {
                 return {
-                    style: {
+                  style: {
                     minWidth: cellInfo.column.Header === t("ES_INBOX_APPLICATION_NO") ? "180px" : "",
                     padding: "20px 18px",
-                    fontSize: "16px"
+                    fontSize: "16px",
                   },
                 };
-                }}
-                onPageSizeChange={onPageSizeChange}
-                currentPage={getValues("offset")/getValues("limit")}
-                onNextPage={nextPage}
-                onPrevPage={previousPage}
-                pageSizeLimit={getValues("limit")}
-                onSort={onSort}
-                disableSort={false}
-                sortParams={[{id: getValues("sortBy"), desc: getValues("sortOrder") === "DESC" ? true : false}]}
-            />}
-        </React.Fragment>
+              }}
+              onPageSizeChange={onPageSizeChange}
+              currentPage={getValues("offset") / getValues("limit")}
+              onNextPage={nextPage}
+              onPrevPage={previousPage}
+              pageSizeLimit={getValues("limit")}
+              onSort={onSort}
+              disableSort={false}
+              sortParams={[{ id: getValues("sortBy"), desc: getValues("sortOrder") === "DESC" ? true : false }]}
+            />
+          )
+        )}
+      </React.Fragment>
+    );
 }
 
 export default SearchApplication

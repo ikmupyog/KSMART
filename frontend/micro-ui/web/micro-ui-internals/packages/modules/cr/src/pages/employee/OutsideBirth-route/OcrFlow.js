@@ -5,14 +5,14 @@ import { ReactComponent as BankIcon } from "../Img/BankIcon.svg";
 import { ReactComponent as FileProtected } from "../Img/FileProtected.svg";
 import { useTranslation } from "react-i18next";
 
-const CrAbFlow = ({ path }) => {
+const OcrFlow = ({ path }) => {
   const { t } = useTranslation();
   const cardMenuData = [
     {
-      title: "CR_ABANDONED_BIRTH_REGISTRATION",
-      subTitle: "CR_ABANDONED_BIRTH_NEW_REGISTRATION",
+      title: "CR_OUTSIDE_BIRTH_REGISTRATION",
+      subTitle: "CR_OUTSIDE_BIRTH_NEW_REGISTRATION",
       img: <BankIcon />,
-      link: `${path}/abandoned-child-details`,
+      link: `${path}/born-outside-child-details`,
     },
     // {
     //   title: "CR_BIRTH_ADOPTION",
@@ -43,9 +43,7 @@ const CrAbFlow = ({ path }) => {
   ];
   const ClassList = 
     {
-     'CR_ABANDONED_BIRTH_REGISTRATION':  'crfileabandoned',
-     'CR_BIRTH_REGISTRATION':  'crfilename',
-    //  'CR_BIRTH_NEW_REG':  'crfilename',
+     'CR_BIRTH_NEW_REG':  'crfilename',
      'CR_BIRTH_ADOPTION':  'crfileadoption', 
      'CR_STILL_BIRTH':  'crstillbirthfile',
      'CR_BIRTH_BORN_OUTSIDE':  'crfile',
@@ -91,4 +89,4 @@ const CrAbFlow = ({ path }) => {
   );
 };
 
-export default CrAbFlow;
+export default OcrFlow;

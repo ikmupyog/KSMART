@@ -30,7 +30,9 @@ const FormStep = ({
     defaultValues: _defaultValues,
   });
 
+
   const goNext = (data) => {
+    console.log("ONSELECT reached==",data);
     onSelect(data);
   };
 
