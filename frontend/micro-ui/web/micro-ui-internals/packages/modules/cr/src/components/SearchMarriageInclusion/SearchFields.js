@@ -1,4 +1,4 @@
-import React, { Fragment } from "react"
+import React, { Fragment, useState } from "react"
 import { Controller, useWatch } from "react-hook-form";
 import { TextInput, SubmitBar, DatePicker, SearchField, Dropdown, Loader, ButtonSelector } from "@egovernments/digit-ui-react-components";
 
@@ -13,11 +13,11 @@ const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) =>
     const { data: applicationTypes, isLoading: applicationTypesLoading } = Digit.Hooks.cr.useMDMS.applicationTypes(tenantId)
     const { data: Menu, isLoading: genderLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
     const { data: hospitalData = {}, isLoading:hospitalLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "hospital");
-    const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PlaceMasterDeath");
+    const { data: place, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "MarriagePlaceType");
 
-  
+  console.log("search marriage json===",Menu);
     const applicationType = useWatch({ control, name: "applicationType" });
-
+    const [value, setValue] = useState(0);
     let businessServices = [];
     if (applicationType && applicationType?.code === "RENEWAL")
         businessServices = ["EDITRENEWAL", "DIRECTRENEWAL"]
@@ -38,24 +38,41 @@ const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) =>
         let found = applicationStatuses.length > 0 ? applicationStatuses?.some(el => el?.code === status.applicationStatus) : false;
         if (!found) applicationStatuses.push({ code: status?.applicationStatus, i18nKey: `WF_NEWTL_${(status?.applicationStatus)}` })
     })
+
     let GenderOptions = [];
     Menu &&
       Menu.map((genderDetails) => {
         GenderOptions.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
       });
-      let cmbPlace = [];
+      let cmbPlaceType = [];
+      console.log("search place json===",place);
       place &&
-    place["common-masters"] &&
-    place["common-masters"].PlaceMasterDeath &&
-    place["common-masters"].PlaceMasterDeath.map((ob) => {
-      cmbPlace.push(ob);
-    });
+       place["birth-death-service"]?.MarriagePlaceType?.map((placeDetails) => {
+        cmbPlaceType.push({ i18nKey: `CR_COMMON_GENDER_${placeDetails.code}`, code: `${placeDetails.code}`, value: `${placeDetails.code}` });
+      });
+    //   place &&
+    // place["birth-death-service"] &&
+    // place["birth-death-service"].MarriagePlaceType &&
+    // place["birth-death-service"].MarriagePlaceType.map((ob) => {
+    //     cmbPlaceType.push(ob);
+    // });
+    // const cmbPlaceType = [
+    //     { i18nKey: "Religious Institution", code: "RELIGIOUSINSTITUTION" },
+    //     { i18nKey: "Public/Pvt Place ", code: "PUBLIC/PVTPLACE " },
+    //     { i18nKey: "House", code: "HOUSE" },
+    //    ];
       let cmbhospital = [];
       hospitalData &&
         hospitalData["egov-location"] &&
         hospitalData["egov-location"].hospitalList.map((ob) => {
           cmbhospital.push(ob);
         });
+
+        function setSelectmarriagePlacetype(value) {
+            // setmarriagePlacenameEn(value);
+            setValue(value.code);
+            // setAgeMariageStatus(value.code);
+          }
 
     return <>
         <SearchField>
@@ -92,9 +109,9 @@ const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) =>
                 render={(props) => (
                     <Dropdown
                         selected={props.value}
-                        select={props.onChange}
+                        select={setSelectmarriagePlacetype}
                         onBlur={props.onBlur}
-                        option={cmbPlace}
+                        option={cmbPlaceType}
                         optionKey="code"
                         t={t}
                         placeholder={`${t("PLACE_OF_MARRIAGE")}`}
@@ -103,28 +120,73 @@ const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) =>
                 )}
             />
         </SearchField>
-        <SearchField>
-            <label>
-                {/* <span className="mandatorycss">*</span> */}
-                {t("DC_GENDER")}</label>
-            <Controller
-                control={control}
-                name="deceasedGender"
-                render={(props) => (
-                    <Dropdown
-                        selected={props.value}
-                        select={props.onChange}
-                        onBlur={props.onBlur}
-                        option={GenderOptions}
-                        optionKey="code"
-                        t={t}
-                        placeholder={`${t("DC_GENDER")}`}
-                        {...(validation = { isRequired: false, title: t("DC_INVALID_GENDER") })}
-                    />
-                )}
-            />
-        </SearchField>
-        <SearchField>
+        {/* {value === "RELIGIOUSINSTITUTION" && (
+             <div>
+              <SearchField>
+                <CardLabel>
+                  {`${t("CR_NAME_OF_PLACE_EN")}`}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <Dropdown
+                  t={t}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  option={cmbPlaceType}
+                  selected={marriagePlacenameEn}
+                  select={setSelectmarriagePlacenameEn}
+                  placeholder={t("CR_NAME_OF_PLACE_EN")}
+                  isMandatory={true}
+                  {...(validation = { isRequired: true, title: t("CS_INVALID_MARRIAGE_PLACE_EN") })}
+                  // option={cmbCountry}
+                />
+              </SearchField>
+             
+              
+              <SearchField>
+                <CardLabel>
+                  {`${t("CR_NAME_OF_PLACE_MAL")}`}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <Dropdown
+                  t={t}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  option={cmbPlaceType}
+                  selected={marriagePlacenameMal}
+                  select={setSelectmarriagePlacenameMal}
+                  placeholder={t("CR_NAME_OF_PLACE_MAL")}
+                  isMandatory={true}
+                  {...(validation = { isRequired: true, title: t("CS_INVALID_MARRIAGE_PLACE_MAL") })}
+                  // option={cmbCountry}
+                />
+              </SearchField>             
+            
+         
+            
+          {value === "OTHER" && (
+                <div>
+                  <HouseMarriageRegistration
+                  formData={formData}
+                    marriageLocalityEn={marriageLocalityEn}
+                    marriageLocalityMal={marriageLocalityMal}
+                    marriageStreetEn={marriageStreetEn}
+                    marriageStreetMal={marriageStreetMal}
+                    marriageHouseNoAndNameEn={marriageHouseNoAndNameEn}
+                    marriageHouseNoAndNameMal={marriageHouseNoAndNameMal}
+                    marriageLandmark={marriageLandmark}
+                    setmarriageLocalityEn={setmarriageLocalityEn}
+                    setmarriageLocalityMal={setmarriageLocalityMal}
+                    setmarriageStreetEn={setmarriageStreetEn}
+                    setmarriageStreetMal={setmarriageStreetMal}
+                    setmarriageHouseNoAndNameEn={setmarriageHouseNoAndNameEn}
+                    setmarriageHouseNoAndNameMal={setmarriageHouseNoAndNameMal}
+                    setmarriageLandmark={setmarriageLandmark}
+                  />
+                  ;
+                </div>
+              )}
+              </div>)} */}
+        {/* <SearchField>
             <label> {t("DC_DECEASED_FATHER_NAME")}</label>
             <TextInput name="deceasedFatherName" inputRef={register({})} placeholder={`${t("DC_DECEASED_FATHER_NAME")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_DECEASED_FATHER_NAME") })} />
@@ -159,7 +221,7 @@ const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) =>
                     />
                 )}
             />
-        </SearchField>
+        </SearchField> */}
         {/* <SearchField>
             <label>  {t("DC_REGISTRATION_NUMBER")}</label>
             <TextInput name="RegistrationNumber" inputRef={register({})}
@@ -225,10 +287,18 @@ const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) =>
             <TextInput  name="tradeName" inputRef={register({})}/>
         </SearchField>
        */}
+       <SearchField>
+       <div className="row">
+            <div className="col-md-12">
+              <h1 className="headingh1">
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PARTNER_DETAILS")}`}</span>{" "}
+              </h1>
+            </div>
+          </div>
+       </SearchField>
         <SearchField className="submit">
             <SubmitBar label={t("ES_COMMON_SEARCH")} submit />
-            <p onClick={() => {
-                
+            <p onClick={() => {             
                 reset({ 
                     id: "", 
                     DeceasedName: "", 

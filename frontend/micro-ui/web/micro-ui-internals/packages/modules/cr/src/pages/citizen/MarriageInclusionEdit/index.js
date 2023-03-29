@@ -20,8 +20,7 @@ import SearchMarriageInclusion from "../../../components/SearchMarriageInclusion
 import { newConfig as newConfigCR } from "../../../config/config";
 import { useQueryClient } from "react-query";
 
-const MarriageInclusion = () => {
-  // const [enableFlag, setEnableFlag] = useState(false);
+const MarriageInclusionEdit = () => {
   const { t } = useTranslation();
   const { path } = useRouteMatch();
   const match = useRouteMatch();
@@ -36,10 +35,14 @@ const MarriageInclusion = () => {
   let config = [];
   let { data: newConfig, isLoading } = true;
   newConfig = newConfigCR;
-  newConfig?.forEach((obj) => {
-    config = config.concat(obj.body.filter((a) => !a.hideInCitizen));
-  });
-  // config.indexRoute = "marriage-registration";
+  
+  const marriageConfig = newConfig?.find((obj) => obj.head === "Marriage Correction Routing");
+  config = config.concat(marriageConfig.body.filter((a) => !a.hideInCitizen));
+  console.log("marriageConfig",marriageConfig,config);
+
+  config.indexRoute = "marriage-registration-correction";
+
+
   const goNext = (skipStep, index, isAddMultiple, key, isPTCreateSkip) => {
     let currentPath = pathname.split("/").pop(),
       nextPage;
@@ -98,25 +101,17 @@ const MarriageInclusion = () => {
     );
   }
 
-  const configTemp = {
-    enabled: !!(payload && Object.keys(payload).length > 0),
-  };
+  // const configTemp = {
+  //   enabled: !!(payload && Object.keys(payload).length > 0),
+  // };
 
-  const { data: { deathCertificateDtls: searchResult, Count: count } = {}, isLoadingData, isSuccess } = Digit.Hooks.cr.useRegistrySearchDeath({
-    filters: payload,
-    configTemp,
-    // enableFlag: ,
-  });
-  useEffect(() => {
-    console.log("searchResult", searchResult);
-  }, [searchResult, isLoadingData]);
-
-  const gotoEditInclusion = async (data) => {
-    console.log("reached===",data);
-    history.push(`${path}/marriage-correction-edit/marriage-registration`,{
-      inclusionData:data
-    });
-  };
+  // const { data: { deathCertificateDtls: searchResult, Count: count } = {}, isLoadingData, isSuccess } = Digit.Hooks.cr.useRegistrySearchDeath({
+  //   filters: payload,
+  //   configTemp,
+  // });
+  // useEffect(() => {
+  //   console.log("searchResult", searchResult);
+  // }, [searchResult, isLoadingData]);
   //   let payloadData = { id: isSuccess && searchResult[0]?.id, source: "sms" };
   //   let registryPayload = Object.keys(payloadData)
   //     .filter((k) => payloadData[k])
@@ -125,10 +120,11 @@ const MarriageInclusion = () => {
 
   return (
     <React.Fragment>
-      <BackButton>{t("CS_COMMON_BACK2")}</BackButton>
-      {/* <Switch> */}
-        {/* {config.map((routeObj, index) => {
+      <Switch>
+        {config.map((routeObj, index) => {
+         
           const { component, texts, inputs, key, isSkipEnabled } = routeObj;
+          console.log("route path",`${match.path}/${routeObj.route}`,Digit.ComponentRegistryService.getComponent(component));
           const Component = typeof component === "string" ? Digit.ComponentRegistryService.getComponent(component) : component;
           return (
             <Route path={`${match.path}/${routeObj.route}`} key={index}>
@@ -140,24 +136,14 @@ const MarriageInclusion = () => {
                 formData={params}
                 onAdd={handleMultiple}
                 userType="citizen"
-                onInclusionClick={gotoEditInclusion}
               />
             </Route>
           );
-        })} */}
-        <SearchMarriageInclusion
-          t={t}
-          onSubmit={onSubmit}
-          data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : { display: "ES_COMMON_NO_DATA" }) : ""}
-          // filestoreId={storeId}
-          // isSuccess={isSuccess}
-          // isLoading={isLoading}
-          count={count}
-          // onClick={handleClick}
-        />
-      {/* </Switch> */}
+        })}
+       
+      </Switch>
     </React.Fragment>
   );
 };
 
-export default MarriageInclusion;
+export default MarriageInclusionEdit;

@@ -88,7 +88,7 @@ const  SearchMarriageInclusion = ({ tenantId, t, onSubmit, data, count, onInclus
           return (
             <div>
               <span className="link">
-                <Link to={`/digit-ui/citizen/cr/marriage-correction-edit`}
+                <Link to={`/digit-ui/citizen/cr/marriage-correction-edit/marriage-registration-correction`}
                 //  onClick={() => onInclusionClick(row.original)}
                 >
                 {row.original.InformationDeath.DeathACKNo}

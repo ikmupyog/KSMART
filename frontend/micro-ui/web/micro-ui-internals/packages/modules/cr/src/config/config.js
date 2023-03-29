@@ -1362,23 +1362,7 @@ export const newConfig = [
     body: [
       {
         type: "component",
-        route: "cr-marriage-correction-search",
-        isMandatory: true,
-        component: "SearchMarriageInclusion",
-        texts: {
-          headerCaption: "",
-          header: "",
-          cardText: "",
-          submitBarLabel: "CS_COMMON_NEXT",
-        },
-        key: "MarriageInclusionEditPage",
-        withoutLabel: true,
-        nextStep: " groom-details",
-        hideInEmployee: false,
-      },
-      {
-        type: "component",
-        route: "registration-details",
+        route: "marriage-registration-correction",
         isMandatory: true,
         component: "MarriageInclusionEditPage",
         texts: {
@@ -1389,7 +1373,7 @@ export const newConfig = [
         },
         key: "MarriageInclusionEditPage",
         withoutLabel: true,
-        nextStep: " groom-details",
+        nextStep: "groom-details",
         hideInEmployee: false,
       },
       {

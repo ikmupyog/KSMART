@@ -154,6 +154,7 @@ import MarriageRegistration from "./pageComponents/marriageComponents/MarriageRe
 import HouseMarriageRegistration from "./pageComponents/marriageComponents/HouseMarriageRegistration";
 import witnessdetails from "./pageComponents/marriageComponents/witnessdetails";
 import MarriageInclusionEditPage from "./pageComponents/marriageComponents/MarriageCorrection";
+import MarriageCorrectionEditPage from "./pages/citizen/MarriageInclusionEdit";
 
 // import CreateAbandonedBirth from "./pages/employee/Abandoned-birth";
 import AbandonedChildDetails from "./pageComponents/abandonedBirthComponents/AbandonedChildDetails";
@@ -365,6 +366,7 @@ const componentsToRegister = {
   DeathAcknowledgement,
   MarriageAcknowledgement,
   MarriageInclusionEditPage,
+  MarriageCorrectionEditPage,
   StillBirthAcknowledgement,
   BirthCertificate,
   CRCreateDeathRegistration: CreateDeathRegistration,

@@ -16,9 +16,10 @@ import {
 import MarriageInclusionTimeline from "../../components/MarriageCorrectionTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
-// import { TimePicker } from '@material-ui/pickers';
+import InclusionModal from "../../components/InclusionModal";
 
 const MarriageInclusionEditPage = ({ config, onSelect, userType, formData,isEditMarriage }) => {
+  const [showModal, setShowModal] = useState(false);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -57,8 +58,6 @@ const MarriageInclusionEditPage = ({ config, onSelect, userType, formData,isEdit
   boundaryList &&
     boundaryList["egov-location"] &&
     boundaryList["egov-location"].TenantBoundary.map((ob) => {
-      // console.log(ob);
-      // if(ob?.boundary){
       Zonal.push(...ob.boundary.children);
       ob.boundary.children.map((obward) => {
         cmbWardNo.push(...obward.children);
@@ -136,7 +135,6 @@ const MarriageInclusionEditPage = ({ config, onSelect, userType, formData,isEdit
   const [isDisableEdit, setisDisableEdit] = useState(isEditMarriage ? isEditMarriage : false);
   const [file, setFile] = useState();
   function handleChange(e) {
-    console.log(e.target.files);
     setFile(URL.createObjectURL(e.target.files[0]));
   }
 
@@ -169,7 +167,6 @@ const MarriageInclusionEditPage = ({ config, onSelect, userType, formData,isEdit
       let Difference_In_Time = today.getTime() - birthDate.getTime();
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       let Difference_In_DaysRounded = Math.floor(Difference_In_Days);
-      console.log(Difference_In_DaysRounded);
     } else {
       setmarriageDOM(null);
       // setDOBError(true);
@@ -181,23 +178,18 @@ const MarriageInclusionEditPage = ({ config, onSelect, userType, formData,isEdit
   }
   function setSelectmarriageDistrict(value) {
     setmarriageDistrict(value);
-    console.log("District" + cmbDistrict);
   }
   function setSelectmarriageTalukID(value) {
     setmarriageTalukID(value);
-    console.log("Taluk" + cmbTaluk);
   }
   function setSelectmarriageVillageName(value) {
     setmarriageVillageName(value);
-    console.log("Village" + cmbVillage);
   }
   function setSelectmarriageLBtype(value) {
     setmarriageLBtype(value);
-    console.log("LBType" + cmbLBType);
   }
   function setSelectmarriageTenantid(value) {
     setmarriageTenantid(value);
-    console.log("LBType" + cmbLB);
   }
   function setSelectmarriagePlacetype(value) {
     setmarriagePlacetype(value);
@@ -282,224 +274,37 @@ const MarriageInclusionEditPage = ({ config, onSelect, userType, formData,isEdit
         <BackButton>{t("CS_COMMON_BACK")}</BackButton>
         {window.location.href.includes("/citizen") ? <MarriageInclusionTimeline currentStep={1} /> : null}
         {window.location.href.includes("/employee") ? <MarriageInclusionTimeline currentStep={1} /> : null}
-        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
-          <div className="row">
-            <div className="col-md-12">
-              <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DATE_OF_MARRIAGE")}`}</span>{" "}
-              </h1>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12">
-              <div className="col-md-6">
-                <CardLabel>
-                  {`${t("CR_DATE_OF_MARRIAGE")}`}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <DatePicker
-                  date={marriageDOM}
-                  isMandatory={false}
-                  name="marriageDOM"
-                  onChange={setSelectmarriageDOM}
-                  inputFormat="DD-MM-YYYY"
-                  placeholder={`${t("CR_DATE_OF_MARRIAGE")}`}
-                  {...(validation = { isRequired: true, title: t("CR_INVALID_DATE_OF_MARRIAGE") })}
-                />
-              </div>
-              <div className="col-md-6">
-              <ButtonContainer>
-        <EditButton
-          selected={true}
-          label={"Edit"}
-          onClick={() => {
-            setShowModal(true);
-          }}
-        />
-      </ButtonContainer>
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12">
-              <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PLACE_OF_MARRIAGE")}`}</span>{" "}
-              </h1>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col_md-12">
-              <div className="col-md-4">
-                <CardLabel>
-                  {`${t("CS_COMMON_DISTRICT")}`}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <Dropdown
-                  t={t}
-                  isMandatory={true}
-                  optionKey="name"
-                  option={cmbDistrict}
-                  name="marriageDistrict"
-                  value={marriageDistrict}
-                  select={setSelectmarriageDistrict}
-                  selected={marriageDistrict}
-                  placeholder={t("CS_COMMON_DISTRICT'")}
-                  {...(validation = { isRequired: true, title: t("CR_COMMON_INVALID_DISTRICT") })}
-                />
-              </div>
-              <div className="col-md-4">
-                <CardLabel>
-                  {`${t("CS_COMMON_TALUK")}`}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <Dropdown
-                  t={t}
-                  isMandatory={true}
-                  optionKey="name"
-                  option={cmbTaluk}
-                  name="marriageTalukID"
-                  value={marriageTalukID}
-                  select={setSelectmarriageTalukID}
-                  selected={marriageTalukID}
-                  placeholder={t("CS_COMMON_TALUK'")}
-                  {...(validation = { isRequired: true, title: t("CR_COMMON_INVALID_TALUK") })}
-                />
-              </div>
-              <div className="col-md-4">
-                <CardLabel>
-                  {`${t("CS_COMMON_VILLAGE")}`}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <Dropdown
-                  t={t}
-                  optionKey="name"
-                  isMandatory={true}
-                  option={cmbVillage}
-                  name="marriageVillageName"
-                  value={marriageVillageName}
-                  select={setSelectmarriageVillageName}
-                  selected={marriageVillageName}
-                  placeholder={t("CS_COMMON_VILLAGE'")}
-                  {...(validation = { isRequired: true, title: t("CR_COMMON_INVALID_VILLAGE") })}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col_md-12">
-              <div className="col-md-4">
-                <CardLabel>
-                  {`${t("CS_LBTYPE")}`}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <Dropdown
-                  t={t}
-                  optionKey="name"
-                  isMandatory={true}
-                  option={cmbLBType}
-                  name="marriageLBtype"
-                  value={marriageLBtype}
-                  select={setSelectmarriageLBtype}
-                  selected={marriageLBtype}
-                  placeholder={t("CS_LBTYPE'")}
-                  {...(validation = { isRequired: true, title: t("CR_INVALID_LBTYPE") })}
-                />
-              </div>
-              <div className="col-md-4">
-                <CardLabel>
-                  {`${t("CS_LB")}`}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <Dropdown
-                  t={t}
-                  optionKey="code"
-                  isMandatory={true}
-                  option={cmbLB}
-                  name="marriageTenantid"
-                  value={marriageTenantid}
-                  selected={marriageTenantid}
-                  select={setSelectmarriageTenantid}
-                  placeholder={`${t("CS_LB")}`}
-                  {...(validation = { isRequired: true, title: t("CR_INVALID_LB") })}
-                />
-              </div>
-              <div className="col-md-4">
-                <CardLabel>
-                  {`${t("CS_COMMON_WARD")}`}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <Dropdown
-                  t={t}
-                  optionKey="namecmb"
-                  isMandatory={true}
-                  placeholder={t("CS_COMMON_WARD'")}
-                  option={cmbWardNoFinal}
-                  selected={marriageWardCode}
-                  select={setSelectmarriageWardCode}
-                  {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col_md-12">
-              <div className="col-md-4">
-                <CardLabel>
-                  {`${t("CR_MARRIAGE_PLACE_TYPE")}`}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <Dropdown
-                  t={t}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  option={cmbPlaceType}
-                  selected={marriagePlacetype}
-                  select={setSelectmarriagePlacetype}
-                  placeholder={t("CR_MARRIAGE_PLACE_TYPE")}
-                  isMandatory={true}
-                  {...(validation = { isRequired: true, title: t("CS_INVALID_MARRIAGE_PLACE_TYPE") })}
-                  // option={cmbCountry}
-                />
-              </div>
-              <div className="col-md-4">
-                <CardLabel>
-                  {`${t("CR_NAME_OF_PLACE_EN")}`}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <Dropdown
-                  t={t}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  option={cmbPlaceType}
-                  selected={marriagePlacenameEn}
-                  select={setSelectmarriagePlacenameEn}
-                  placeholder={t("CR_NAME_OF_PLACE_EN")}
-                  isMandatory={true}
-                  {...(validation = { isRequired: true, title: t("CS_INVALID_MARRIAGE_PLACE_EN") })}
-                  // option={cmbCountry}
-                />
-              </div>
-              <div className="col-md-4">
-                <CardLabel>
-                  {`${t("CR_NAME_OF_PLACE_MAL")}`}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <Dropdown
-                  t={t}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  option={cmbPlaceType}
-                  selected={marriagePlacenameMal}
-                  select={setSelectmarriagePlacenameMal}
-                  placeholder={t("CR_NAME_OF_PLACE_MAL")}
-                  isMandatory={true}
-                  {...(validation = { isRequired: true, title: t("CS_INVALID_MARRIAGE_PLACE_MAL") })}
-                  // option={cmbCountry}
-                />
-              </div>
-            </div>
-          </div>
+        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisable={false}>
+        <FormFieldContainer>
+      <FieldComponentContainer>
+        <div className="col-md-5">
+          <CardLabel>
+            {t("CR_AADHAR")}
+          </CardLabel>
+          <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type="number"
+                    max="12"
+                    optionKey="i18nKey"
+                    name="DeceasedAadharNumber"
+                    value={DeceasedAadharNumber}
+                    onChange={setSelectDeceasedAadharNumber}
+                    placeholder={`${t("CR_AADHAR")}`}
+                    {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                  />
+                </div>
+      </FieldComponentContainer>
+      <div style={{ marginTop: "2.8rem" }}> 
+         <LinkButton
+              label={<EditIcon selected={true} label={"Edit"}  />}
+              style={{ width: "100px", display: "inline" }}
+              onClick={() => { setShowModal(true); }}
+            />
+         </div>
+    </FormFieldContainer>
         </FormStep>
+        <InclusionModal showModal={showModal} hideModal={()=> {return false}} />
       </React.Fragment>
     );
 };
