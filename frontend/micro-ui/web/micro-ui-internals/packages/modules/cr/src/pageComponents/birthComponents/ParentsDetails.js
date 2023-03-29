@@ -887,6 +887,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                       selected={fatherNationality}
                       select={setSelectFatherNationality}
                       disable={isDisableEdit}
+                      placeholder={`${t("CR_NATIONALITY")}`}
                     />
                   </div>
                   <div className="col-md-4">
@@ -899,6 +900,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                       selected={fatherEducation}
                       select={setSelectFatherEducation}
                       disable={isDisableEdit}
+                      placeholder={`${t("CR_EDUCATION")}`}
                     />
                   </div>
                   <div className="col-md-4">
@@ -911,6 +913,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                       selected={fatherProfession}
                       select={setSelectFatherProfession}
                       disable={isDisableEdit}
+                      placeholder={`${t("CR_PROFESSIONAL")}`}
                     />
                   </div>
                 </div>

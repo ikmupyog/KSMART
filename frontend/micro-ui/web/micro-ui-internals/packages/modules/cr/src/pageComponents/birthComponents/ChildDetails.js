@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {  CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton, Loader, Toast, SubmitBar } from "@egovernments/digit-ui-react-components";
+import { CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton, Loader, Toast, SubmitBar } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
@@ -321,24 +321,28 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
   function setselectChildDOB(value) {
     setChildDOB(value);
     const today = new Date();
-    today.setHours(0,0,0,0);
-    console.log(today);
+    today.setHours(0, 0, 0, 0);
     const birthDate = new Date(value);
-    birthDate.setHours(0,0,0,0);
-    console.log(birthDate);
-
+    birthDate.setHours(0, 0, 0, 0);
+    if (birthPlace) {
+      let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
+      // console.log(currentWorgFlow);
+      if (currentWorgFlow.length > 0) {
+        // console.log(currentWorgFlow[0].WorkflowCode);
+        setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+      }
+    }
     if (birthDate.getTime() <= today.getTime()) {
+      
       setDOBError(false);
       // To calculate the time difference of two dates
       let Difference_In_Time = today.getTime() - birthDate.getTime();
-      console.log("Difference_In_Time" + Difference_In_Time);
-      setDifferenceInTime(today.getTime() - birthDate.getTime()/1000);
+      // console.log("Difference_In_Time" + Difference_In_Time);
+      setDifferenceInTime(today.getTime() - birthDate.getTime());
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-      console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
-      // DifferenceInDaysRounded = (Math.floor(Difference_In_Days));
-      // setDifferenceInDaysRounded((Math.floor(Difference_In_Days)));
+      // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
       setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
-      
+
       if (Difference_In_Days >= 365) {
         setChildAadharHIde(true);
       } else {
@@ -486,19 +490,18 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
     setDeliveryMethod(value);
   }
   function setselectBirthPlace(value) {
-    console.log(workFlowData);
-    console.log("DifferenceInDaysRounded" + DifferenceInDaysRounded);
-    // console.log("DifferenceInTime" + DifferenceInTime);
+    // console.log(workFlowData);
+    // console.log("DifferenceInDaysRounded" + DifferenceInDaysRounded);
+    // console.log("DifferenceInTimeJEtheesh" + DifferenceInTime);
 
     selectBirthPlace(value);
     setValue(value.code);
-    // workFlowData.BirtPlace === value.code && 
-    let currentWorgFlow = workFlowData.filter(workFlowData => (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
-    console.log(currentWorgFlow);    
-    //console.log(currentWorgFlow[0].WorkflowCode);
-    // workFlowCode=currentWorgFlow[0].WorkflowCode;
-    //(currentWorgFlow[0].WorkflowCode);
-    
+    let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === value.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
+    // console.log(currentWorgFlow);
+    if (currentWorgFlow.length > 0) {
+      // console.log(currentWorgFlow[0].WorkflowCode);
+      setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+    }
   }
   function setSelectBirthWeight(e) {
     if (e.target.value.length === 5) {
