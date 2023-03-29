@@ -79,8 +79,8 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
   let Difference_In_DaysRounded = "";
   // let workFlowCode = "BIRTHHOSP21";
   WorkFlowDetails &&
-    WorkFlowDetails["birth-death-service"] && WorkFlowDetails["birth-death-service"].WorkFlowBirth &&
-    WorkFlowDetails["birth-death-service"].WorkFlowBirth.map((ob) => {
+    WorkFlowDetails["birth-death-service"] && WorkFlowDetails["birth-death-service"].WorkFlowAdoption&&
+    WorkFlowDetails["birth-death-service"].WorkFlowAdoption.map((ob) => {
       workFlowData.push(ob);
       // console.log(workFlowData);
     });
@@ -357,7 +357,6 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
   }
 
   function setselectChildDOB(value) {
-    console.log(value);
     setChildDOB(value);
     const today = new Date();
     const birthDate = new Date(value);
@@ -472,7 +471,6 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
     }
   }
   const setSelectDeeOrderDate =(value)=>{
-    console.log(value);
     setAdoptionDecreOrderDate(value)
   }
   const setSelectIssuingAuthority =(e)=>{
@@ -534,10 +532,8 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
   const handleTimeChange = (value, cb) => {
     if (typeof value === "string") {
       cb(value);
-      console.log(value);
       let hour = value;
       let period = hour > 12 ? "PM" : "AM";
-      console.log(period);
       setbirthDateTime(value);
     }
   };
