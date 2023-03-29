@@ -23,7 +23,7 @@ public class  SnehaswanthanamRowMapper implements ResultSetExtractor<List<m_Sneh
                     .district(rs.getInt("district"))
                     .application_no(rs.getInt("application_no"))
                     .reg_no(rs.getInt("reg_no"))
-                    .application_date(rs.getDate("application_date"))
+                    .application_date(rs.getString("application_date"))
                     .applicant_nameeng(rs.getString("applicant_nameeng"))
                     .build());
 

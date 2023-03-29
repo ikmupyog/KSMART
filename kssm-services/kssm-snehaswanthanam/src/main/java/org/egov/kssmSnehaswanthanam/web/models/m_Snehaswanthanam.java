@@ -50,7 +50,7 @@ public class m_Snehaswanthanam {
     
     @JsonFormat(pattern="dd/MM/yyyy")
     @JsonProperty("application_date")
-    private Date  application_date;
+    private String  application_date;
     
     @JsonProperty("office_typeid")
     private int  office_typeid;
@@ -120,7 +120,7 @@ public class m_Snehaswanthanam {
     
     @JsonFormat(pattern="dd/MM/yyyy")
     @JsonProperty("applicant_dob")
-    private Date  applicant_dob;
+    private String  applicant_dob;
     
     @JsonProperty("applicant_genderid")
     private int  applicant_genderid;
@@ -136,7 +136,7 @@ public class m_Snehaswanthanam {
     
     @JsonFormat(pattern="dd/MM/yyyy")
     @JsonProperty("bplcertificate_date")
-    private Date  bplcertificate_date;
+    private String  bplcertificate_date;
     
     @JsonProperty("applicant_bankaccountno")
     private String  applicant_bankaccountno;
@@ -170,7 +170,7 @@ public class m_Snehaswanthanam {
     
     @JsonFormat(pattern="dd/MM/yyyy")
     @JsonProperty("fieldenquiry_date")
-    private Date fieldenquiry_date;
+    private String fieldenquiry_date;
     
     @JsonProperty("icdsremarks")
     private String  icdsremarks;
@@ -180,7 +180,7 @@ public class m_Snehaswanthanam {
     
     @JsonFormat(pattern="dd/MM/yyyy")
     @JsonProperty("cdporec_date")
-    private Date  cdporec_date;
+    private String  cdporec_date;
     
     @JsonProperty("cdpoeligibility_id")
     private int  cdpoeligibility_id;
@@ -190,25 +190,25 @@ public class m_Snehaswanthanam {
     
     @JsonFormat(pattern="dd/MM/yyyy")
     @JsonProperty("cdposubmit_date")
-    private Date  cdposubmit_date;
+    private String  cdposubmit_date;
     
     @JsonFormat(pattern="dd/MM/yyyy")
     @JsonProperty("dtdecision_date")
-    private Date  dtdecision_date;
+    private String  dtdecision_date;
     
     @JsonProperty("chvreason")
     private String  chvreason;
     
     @JsonFormat(pattern="dd/MM/yyyy")
     @JsonProperty("penstart_date")
-    private Date  penstart_date;
+    private String  penstart_date;
     
     @JsonProperty("verifier_id")
     private int  verifier_id;
     
     @JsonFormat(pattern="dd/MM/yyyy")
     @JsonProperty("verifier_date")
-    private Date  verifier_date;
+    private String  verifier_date;
     
     @JsonProperty("verifierremarks")
     private String  verifierremarks;
@@ -218,7 +218,7 @@ public class m_Snehaswanthanam {
     
     @JsonFormat(pattern="dd/MM/yyyy")
     @JsonProperty("approver_date")
-    private Date  approver_date;
+    private String  approver_date;
     
     @JsonProperty("approverremarks")
     private String  approverremarks;

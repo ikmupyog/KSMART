@@ -5,7 +5,7 @@
 CREATE TABLE IF NOT EXISTS public.tr_snehasanthwanam  
 (
     intid  bigserial,
-    numkssmpensionerid numeric NOT NULL,
+    numkssmpensionerid numeric UNIQUE NOT NULL,
     numkssmefileid numeric,
     scheme_id integer,
     district integer,
