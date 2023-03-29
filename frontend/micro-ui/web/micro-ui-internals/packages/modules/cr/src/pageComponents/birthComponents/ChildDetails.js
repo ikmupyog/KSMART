@@ -11,6 +11,8 @@ import BirthPlacePublicPlace from "../../pageComponents/birthComponents/BirthPla
 import FormStep from "../../../../../react-components/src/molecules/FormStep";
 
 const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => {
+  // console.log(JSON.stringify(formData));  
+  // console.log(formData);
   const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
   const [workFlowCode, setWorkFlowCode] = useState();
@@ -31,6 +33,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
   const [InstitutionFilterList, setInstitutionFilterList] = useState(null);
   const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(false);
+  const [DifferenceInDaysRounded, setDifferenceInDaysRounded] = useState();
+  const [DifferenceInTime, setDifferenceInTime] = useState();
 
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
@@ -73,7 +77,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
   let wardNameEn = "";
   let wardNameMl = "";
   let wardNumber = "";
-  let Difference_In_DaysRounded = "";
+  // let DifferenceInDaysRounded = "";
   // let workFlowCode = "BIRTHHOSP21";
   WorkFlowDetails &&
     WorkFlowDetails["birth-death-service"] && WorkFlowDetails["birth-death-service"].WorkFlowBirth &&
@@ -322,10 +326,14 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
       setDOBError(false);
       // To calculate the time difference of two dates
       let Difference_In_Time = today.getTime() - birthDate.getTime();
+      console.log(Difference_In_Time);
+      setDifferenceInTime(today.getTime() - birthDate.getTime()/1000);
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-      Difference_In_DaysRounded = (Math.floor(Difference_In_Days));
-      // console.log(Difference_In_DaysRounded);
-      if (Difference_In_DaysRounded >= 365) {
+      // DifferenceInDaysRounded = (Math.floor(Difference_In_Days));
+      // setDifferenceInDaysRounded((Math.floor(Difference_In_Days)));
+      setDifferenceInDaysRounded(Math.round(Difference_In_Days * 24 * 60 * 60 * 1000));
+      
+      if (DifferenceInDaysRounded >= 365) {
         setChildAadharHIde(true);
       } else {
         setChildAadharHIde(false);
@@ -472,10 +480,13 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
     setDeliveryMethod(value);
   }
   function setselectBirthPlace(value) {
-    console.log("jetheesh");
+    console.log(workFlowData);
+    console.log("DifferenceInDaysRounded" + DifferenceInDaysRounded);
+    console.log("DifferenceInTime" + DifferenceInTime);
+
     selectBirthPlace(value);
     setValue(value.code);
-    let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === value.code && (workFlowData.startdateperiod <= Difference_In_DaysRounded && workFlowData.enddateperiod >= Difference_In_DaysRounded));
+    let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === value.code && (workFlowData.startdateperiod <= DifferenceInDaysRounded && workFlowData.enddateperiod >= DifferenceInDaysRounded));
     console.log(currentWorgFlow[0].WorkflowCode);
     // workFlowCode=currentWorgFlow[0].WorkflowCode;
     setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
