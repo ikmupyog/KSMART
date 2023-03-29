@@ -25,7 +25,8 @@ import SearchMarriageInclusion from "./components/SearchMarriageInclusion";
 import CreateAdoptions from "./pages/citizen/Adoption";
 import CreateStillBirthRegistration from "./pages/citizen/StillBirthRegistration";
 import CreateBornOutsideRegistration from "./pages/citizen/BornOutsideReg";
-import CreateAbandonedBirth from "./pages/citizen/AbandonedBirth";
+// import CreateAbandonedBirth from "./pages/citizen/AbandonedBirth";
+import CreateAbandonedBirth from "./pages/employee/Abandoned-birth-route";
 
 import ParentsDetails from "../src/pageComponents/birthComponents/ParentsDetails";
 import BirthPlaceHospital from "../src/pageComponents/birthComponents/BirthPlaceHospital";

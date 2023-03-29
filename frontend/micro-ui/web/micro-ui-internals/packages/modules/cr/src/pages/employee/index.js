@@ -12,7 +12,6 @@ import CrFlow from "./Birth-route";
 import DeathCrFlow from "./Death-route";
 import SearchFlow from "./Search-route";
 import SearchInbox from './Inbox-route';
-import CrAbFlow from  "./Abandoned-birth-route";
 // import CrAdoptionFlow from './Adoption-birth'
 //import ReNewApplication from "./ReNewApplication";
 
@@ -42,7 +41,6 @@ const CRBreadCrumb = ({ location }) => {
   const isChildDetails = location?.pathname?.includes("child-details");
   const isDeathFlow = location?.pathname?.includes("death-flow");
   const isDeathDetails = location?.pathname?.includes("information-death");
-  const isCrAbFlow = location?.pathname?.includes("cr-abflow");
   const isAbandonedChildDetails = location?.pathname?.includes("abandoned-child-details");
   const isSearchRegistry = location?.pathname?.includes("search-registry");
   
@@ -134,11 +132,11 @@ const CRBreadCrumb = ({ location }) => {
       content: t("Child Details"),
       show: breadCrumbUrls.includes("child-details") || isChildDetails
     },
-    {
-      path: "/digit-ui/employee/cr/cr-abflow",
-      content: t("Abandoned Birth Registration"),
-      show: breadCrumbUrls.includes("cr-abflow") || isCrAbFlow
-    },
+    // {
+    //   path: "/digit-ui/employee/cr/cr-abflow",
+    //   content: t("Abandoned Birth Registration"),
+    //   show: breadCrumbUrls.includes("cr-abflow") || isCrAbFlow
+    // },
     {
       path: "/digit-ui/employee/abandoned-child-details",
       content: t("Abandoned Child Details"),
