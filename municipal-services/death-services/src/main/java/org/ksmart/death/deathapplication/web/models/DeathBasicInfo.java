@@ -416,4 +416,10 @@ public class DeathBasicInfo {
    @JsonProperty("SpouseUnavailable")
    private boolean spouseUnavailable ;
 
+   @JsonProperty("FatherUnavailable")
+   private boolean fatherUnavailable ;
+
+   @JsonProperty("MotherUnavailable")
+   private boolean motherUnavailable;
+
 }

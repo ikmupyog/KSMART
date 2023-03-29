@@ -8,8 +8,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
+import org.ksmart.death.deathapplication.web.models.Demand.Demand;
 // import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.validation.annotation.Validated;
+
+import java.math.BigDecimal;
 // import org.ksmart.death.crdeath.constraints.Html;
 import java.util.List;
 import javax.swing.text.Document;
@@ -54,6 +58,10 @@ public class DeathDtl {
 
     @JsonProperty("AuditDetails")
     private AuditDetails  deathAuditDetails;
+
+    @JsonProperty("Demands")
+    private List<Demand> demands;
+
 
 //Jasmine 11.02.2023
     @Size(max = 64)
@@ -101,5 +109,7 @@ public class DeathDtl {
     @Size(max = 64)
     @JsonProperty("timeOfDeathUnit1")
     private String timeOfDeathUnit1 ;
+
+
 
 }

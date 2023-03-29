@@ -1,6 +1,7 @@
 package org.ksmart.death.deathapplication.service;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ import org.ksmart.death.deathapplication.web.models.DeathNACDtls;
 import org.ksmart.death.deathapplication.web.models.DeathNACRequest;
 import org.ksmart.death.deathapplication.web.models.DeathSearchCriteria;
 import org.ksmart.death.deathapplication.web.models.Demand.Demand;
+import org.ksmart.death.deathapplication.web.models.Demand.DemandDetail;
 import org.ksmart.death.workflow.WorkflowIntegrator;
 import org.egov.common.contract.request.RequestInfo;
 
@@ -64,12 +66,14 @@ public class DeathApplnService {
      //RAkhi S on 14.02.2023
       private final DeathMDMSValidator mdmsValidator;
 
+      private final DemandService demandService;
+
      //Rakhi S ikm on 08.02.2023
 
      DeathApplnService(DeathApplnRepository repository ,DeathProducer producer
                          ,DeathEnrichment enrichmentService,DeathApplnValidator validatorService,DeathConfiguration deathConfig
                          ,WorkflowIntegrator workflowIntegrator,DeathMdmsUtil util
-                         ,DeathMDMSValidator mdmsValidator){
+                         ,DeathMDMSValidator mdmsValidator,DemandService demandService){
 
          this.mdmsValidator = mdmsValidator;
          this.validatorService = validatorService;
@@ -79,6 +83,7 @@ public class DeathApplnService {
          this.repository = repository;
          this.workflowIntegrator = workflowIntegrator;
          this.util = util;
+         this.demandService = demandService;
      }
 
      //RAkhi S ikm  on 06.02.2023
@@ -96,19 +101,19 @@ public class DeathApplnService {
          //RAkhi S ikm  on 06.02.2023         
           producer.push(deathConfig.getSaveDeathDetailsTopic(), request);
           workflowIntegrator.callWorkFlow(request);
-
           //Rakhi S on 21.03.2023
           request.getDeathCertificateDtls().forEach(death->{
-               if(death.getApplicationStatus() == DeathConstants.STATUS_FOR_PAYMENT){
+               if(death.getApplicationStatus().equals(DeathConstants.STATUS_FOR_PAYMENT)){    
+                    System.out.println("PaymentGateway");               
                    List<Demand> demands = new ArrayList<>();
                    Demand demand = new Demand();
                    demand.setTenantId(death.getDeathBasicInfo().getTenantId());
                    demand.setConsumerCode(death.getDeathBasicInfo().getDeathACKNo());
                    demands.add(demand);
-                   enrichmentService.saveDemand(request.getRequestInfo(),demands);
+                   death.setDemands(demandService.saveDemandDetails(demands,request.getRequestInfo()));
                }
            });         
-
+ 
           return request.getDeathCertificateDtls();
      }
 

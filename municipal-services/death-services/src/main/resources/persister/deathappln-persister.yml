@@ -2087,8 +2087,11 @@ serviceMaps:
           vehicle_fromplace_ml, vehicle_fromplace_en, vehicle_toplace_ml, vehicle_toplace_en, vehicle_number, vehicle_first_halt,
           vehicle_first_halt_ml, death_place_ward_id, death_place_locality_en, death_place_locality_ml,
           death_place_street_en, death_place_street_ml,death_home_locality_en, death_home_locality_ml, 
-          death_home_street_en, death_home_street_ml)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+          death_home_street_en, death_home_street_ml, death_home_housename_en, death_home_housename_ml, death_home_postoffice_id,
+          death_home_pincode, death_home_ward,deceased_aadhar_unavailable,place_of_burial_en,male_dependent_name_en,male_dependent_name_ml,
+          male_dependent_unavailable, male_dependent_aadharno, female_dependent_name_en, female_dependent_name_ml, female_dependent_aadharno,
+          female_dependent_unavailable, spouse_unavailable, spouse_type, spouse_name_en, spouse_name_ml)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
       basePath: deathNACDtls.*
       jsonMaps:
@@ -2153,3 +2156,41 @@ serviceMaps:
       - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceHomeStreetNameEn
 
       - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceHomeStreetNameMl
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceHomeHoueNameEn
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceHomeHoueNameMl
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceHomePostofficeId
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceHomePincode
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceHomeWardId
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeceasedAadharNotAvailable
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.PlaceOfBurialEn
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.FatherNameEn
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.FatherNameMl
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.FatherUnavailable
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.FatherAadharNo
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.MotherNameEn
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.MotherNameMl
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.MotherAadharNo
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.MotherUnavailable
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.SpouseUnavailable
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.SpouseType
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.SpouseNameEn
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.SpouseNameML
