@@ -1018,7 +1018,7 @@ export const newConfig = [
         isCreateEnabled: true,
         withoutLabel: true,
         hideInEmployee: true,
-        nextStep: "",
+        nextStep: null,
       },
       // {
       //   //if want to input index in url just pul @0 after route name owner-ship-details@0

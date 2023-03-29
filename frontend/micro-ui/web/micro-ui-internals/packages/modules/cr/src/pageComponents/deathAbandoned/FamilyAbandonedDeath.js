@@ -355,9 +355,9 @@ const FamilyAbandonedDeath = ({ config, onSelect, userType, formData, isEditDeat
             <div className="row">
               <div className="col-md-12">
                 <div className="col-md-3">
-                  <CardLabel>
+                  {/* <CardLabel>
                     {`${t("CR_SPOUSE_TYPE_EN")}`} <span className="mandatorycss">*</span>
-                  </CardLabel>
+                  </CardLabel> */}
                   <Dropdown
                     t={t}
                     optionKey="name"
@@ -369,9 +369,9 @@ const FamilyAbandonedDeath = ({ config, onSelect, userType, formData, isEditDeat
                   />
                 </div>
                 <div className="col-md-3">
-                  <CardLabel>
+                  {/* <CardLabel>
                     {`${t("CR_NAME")}`} <span className="mandatorycss">*</span>
-                  </CardLabel>
+                  </CardLabel> */}
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -385,9 +385,9 @@ const FamilyAbandonedDeath = ({ config, onSelect, userType, formData, isEditDeat
                   />
                 </div>
                 <div className="col-md-3">
-                  <CardLabel>
+                  {/* <CardLabel>
                     {`${t("CR_NAME_ML")}`} <span className="mandatorycss">*</span>
-                  </CardLabel>
+                  </CardLabel> */}
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -448,9 +448,9 @@ const FamilyAbandonedDeath = ({ config, onSelect, userType, formData, isEditDeat
             <div className="row">
               <div className="col-md-12">
                 <div className="col-md-4">
-                  <CardLabel>
+                  {/* <CardLabel>
                     {`${t("CR_NAME")}`} <span className="mandatorycss">*</span>
-                  </CardLabel>
+                  </CardLabel> */}
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -464,9 +464,9 @@ const FamilyAbandonedDeath = ({ config, onSelect, userType, formData, isEditDeat
                   />
                 </div>
                 <div className="col-md-4">
-                  <CardLabel>
+                  {/* <CardLabel>
                     {`${t("CR_NAME_ML")}`} <span className="mandatorycss">*</span>
-                  </CardLabel>
+                  </CardLabel> */}
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -529,10 +529,10 @@ const FamilyAbandonedDeath = ({ config, onSelect, userType, formData, isEditDeat
             <div className="row">
               <div className="col-md-12">
                 <div className="col-md-4">
-                  <CardLabel>
+                  {/* <CardLabel>
                     {`${t("CR_NAME")}`}
                     <span className="mandatorycss">*</span>
-                  </CardLabel>
+                  </CardLabel> */}
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -546,10 +546,10 @@ const FamilyAbandonedDeath = ({ config, onSelect, userType, formData, isEditDeat
                   />
                 </div>
                 <div className="col-md-4">
-                  <CardLabel>
+                  {/* <CardLabel>
                     {`${t("CR_NAME_ML")}`}
                     <span className="mandatorycss">*</span>
-                  </CardLabel>
+                  </CardLabel> */}
                   <TextInput
                     t={t}
                     isMandatory={false}

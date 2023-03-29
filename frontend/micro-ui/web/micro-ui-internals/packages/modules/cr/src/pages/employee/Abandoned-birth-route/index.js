@@ -4,10 +4,10 @@ import { PrivateRoute, BreadCrumb,Component } from "@egovernments/digit-ui-react
 import { useTranslation } from "react-i18next";
 import CrAbFlow from "./CrAbFlow";
 import AbandonedChildDetails from "../../../pageComponents/abandonedBirthComponents/AbandonedChildDetails";
+import { newConfig as newConfigCR } from "../../../config/config";
 
 // import CrFlow from "./CrAbFlow";
 // import ChildDetails from "../../../pageComponents/birthComponents/ChildDetails";
-import { newConfig as newConfigCR } from "../../../config/config";
 
 const CrAbFlowApp = ({ parentUrl}) => {
   const { t } = useTranslation();
@@ -15,8 +15,8 @@ const CrAbFlowApp = ({ parentUrl}) => {
   const match = useRouteMatch();  
   const { pathname } = useLocation();
   const history = useHistory();  
-  const [isEditBirth,setIsEditBirth]=useState(Digit.Hooks.useSessionStorage("CR_BIRTH_EDIT_FLAG", {})[0]);
-  const [params, setParams, clearParams] = isEditBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_BIRTH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_BIRTH_REG", {});
+  const [isEditAbandonedBirth,setIsEditAbandonedBirth]=useState(Digit.Hooks.useSessionStorage("CR_ABANDONEDBIRTH_EDIT_FLAG", {})[0]);
+  const [params, setParams, clearParams] = isEditAbandonedBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_ABANDONEDBIRTH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_ABANDONEDBIRTH_REG", {});
 
   // console.log("params"+JSON.stringify(params));
   const stateId = Digit.ULBService.getStateId();
@@ -116,12 +116,12 @@ const CrAbFlowApp = ({ parentUrl}) => {
   
   const onSuccess = () => {
     sessionStorage.removeItem("CurrentFinancialYear");
-    queryClient.invalidateQueries("CR_CREATE_BIRTH");
+    queryClient.invalidateQueries("CR_CREATE_ABANDONEDBIRTH");
   };
   const handleSkip = () => {};
   const handleMultiple = () => {};
   const CheckPage = Digit?.ComponentRegistryService?.getComponent("AbandonedBirthCheckPage");
-  const BirthAcknowledgement = Digit?.ComponentRegistryService?.getComponent("AbandonedBirthAcknowledgement");
+  const AbandonedBirthAcknowledgement = Digit?.ComponentRegistryService?.getComponent("AbandonedBirthAcknowledgement");
   return (
     
     <React.Fragment>
@@ -139,7 +139,7 @@ const CrAbFlowApp = ({ parentUrl}) => {
               formData={params}
               onAdd={handleMultiple}
               userType="employee"
-              isEditBirth={isEditBirth}
+              isEditAbandonedBirth={isEditAbandonedBirth}
             />
            </Route>  
           
@@ -149,7 +149,7 @@ const CrAbFlowApp = ({ parentUrl}) => {
         <CheckPage onSubmit={createProperty} value={params} />
       </Route>
       <Route path={`${match.path}/acknowledgement`}>
-        <BirthAcknowledgement data={params} onSuccess={onSuccess} />
+        <AbandonedBirthAcknowledgement data={params} onSuccess={onSuccess} />
       </Route>
       <Route path={`${path}`} exact>
               <CrAbFlow  path={path}/>

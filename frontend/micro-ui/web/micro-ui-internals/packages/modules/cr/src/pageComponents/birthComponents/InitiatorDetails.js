@@ -222,15 +222,15 @@ const InitiatorDetails = ({ config, onSelect, userType, formData,isEditBirth=fal
       }, 2000);
     }
     if (validFlag == true) {
-      sessionStorage.setItem("relation", relation ? relation : null);
-      sessionStorage.setItem("initiatorNameEn", initiatorNameEn ? initiatorNameEn : null);
-      sessionStorage.setItem("initiatorAadhar", initiatorAadhar ? initiatorAadhar : null);
+      // sessionStorage.setItem("relation", relation ? relation : null);
+      // sessionStorage.setItem("initiatorNameEn", initiatorNameEn ? initiatorNameEn : null);
+      // sessionStorage.setItem("initiatorAadhar", initiatorAadhar ? initiatorAadhar : null);
 
-      sessionStorage.setItem("initiatorMobile", initiatorMobile ? initiatorMobile : null);
-      sessionStorage.setItem("initiatorDesi", initiatorDesi ? initiatorDesi : null);
-      sessionStorage.setItem("initiatorAddress", initiatorAddress ? initiatorAddress : null);
-      sessionStorage.setItem("isInitiatorDeclaration", isInitiatorDeclaration ? isInitiatorDeclaration : null);
-      sessionStorage.setItem("isCaretaker", isCaretaker ? isCaretaker : null);
+      // sessionStorage.setItem("initiatorMobile", initiatorMobile ? initiatorMobile : null);
+      // sessionStorage.setItem("initiatorDesi", initiatorDesi ? initiatorDesi : null);
+      // sessionStorage.setItem("initiatorAddress", initiatorAddress ? initiatorAddress : null);
+      // sessionStorage.setItem("isInitiatorDeclaration", isInitiatorDeclaration ? isInitiatorDeclaration : null);
+      // sessionStorage.setItem("isCaretaker", isCaretaker ? isCaretaker : null);
 
       onSelect(config.key, {
         relation,

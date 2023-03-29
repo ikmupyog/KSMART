@@ -2,11 +2,11 @@ import { Banner, Card, CardText, LinkButton, Loader, SubmitBar } from "@egovernm
 import React, { useEffect,useState  } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { convertToAdoptionRegistration } from "../../../utils";
+import { convertToAdoptionRegistration,convertToAdoptionUpdation } from "../../../utils";
 import getPDFData from "../../../utils/getTLAcknowledgementData";
 
 const GetActionMessage = (props) => {
-  console.log(props,props.isLoading);
+  // console.log(props,props.isLoading);
   const { t } = useTranslation();
   if (props.isSuccess) {
     return t("CR_CREATE_SUCCESS_MSG");
@@ -38,14 +38,18 @@ const BannerPicker = (props) => {
 const AdoptionAcknowledgement = ({ data, onSuccess,userType,isEditBirth=false }) => {
   const { t } = useTranslation();
   const [mutationHappened, setMutationHappened, clear] = Digit.Hooks.useSessionStorage("CITIZEN_TL_MUTATION_HAPPENED", false);
+  const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false) 
   const resubmit = window.location.href.includes("edit-application");
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const isRenewTrade = !window.location.href.includes("renew-trade")
   const mutation = Digit.Hooks.cr.useCvilRegistrationAdoptionApi(
     data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
-    isRenewTrade
+    !editFlag
   );
+  
   const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_CREATE_ADOPTION_REG", {});
+  const [editParams, seEditParams, clearEditParams] = Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_REG", {});
+  // console.log(editFlag);
   // 
   // const mutation = Digit.Hooks.cr.useCivilRegistrationAPI(
   //   data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
@@ -68,6 +72,7 @@ const AdoptionAcknowledgement = ({ data, onSuccess,userType,isEditBirth=false })
   const [isInitialRender, setIsInitialRender] = useState(true);
   useEffect(()=>{
     clearParams()
+    clearEditParams()
   },[mutation?.data])
   useEffect(() => {
     if (isInitialRender) {
@@ -81,7 +86,7 @@ const AdoptionAcknowledgement = ({ data, onSuccess,userType,isEditBirth=false })
       if (!resubmit) {
         // let formdata = !isEditBirth ? convertToDeathRegistration(data) : convertToEditTrade(data, fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter(y => y.module === "CR") : []);
 
-        let formdata = !isEditBirth ? convertToAdoptionRegistration(data):[] ;
+        let formdata = !editFlag ? convertToAdoptionRegistration(data):convertToAdoptionUpdation(data) ;
         // formdata.BirthDetails[0].tenantId = formdata?.BirthDetails[0]?.tenantId || tenantId1;
         if(!isEditBirth)
         {
@@ -215,13 +220,13 @@ if(mutation.isSuccess && mutation?.isError===null){
     </Card>
   );
 } else {
-  console.log(mutation);
+  // console.log(mutation);
   return(
 
     <Card>
     <BannerPicker t={t} data={mutation.data } isSuccess={mutation.isSuccess } isLoading={mutation?.isLoading } isError={mutation?.isError}/>
     {/* {<CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>} */}
-    <Link to={`/digit-ui/citizen`}>
+    <Link to={editFlag?`/digit-ui/employee`:`/digit-ui/citizen`}>
       <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
     </Link>
   </Card>

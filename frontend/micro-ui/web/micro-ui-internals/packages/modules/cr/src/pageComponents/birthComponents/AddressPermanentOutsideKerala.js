@@ -35,6 +35,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
 
   const [toast, setToast] = useState(false);
   const [isInitialRender, setIsInitialRender] = useState(true);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : false);
 
   const cmbUrbanRural = [
     { i18nKey: "Town", code: "TOWN" },

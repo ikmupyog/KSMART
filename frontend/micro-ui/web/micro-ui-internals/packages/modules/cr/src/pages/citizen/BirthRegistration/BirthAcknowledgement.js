@@ -33,20 +33,19 @@ const BannerPicker = (props) => {
   );
 };
 
-const BirthAcknowledgement = ({ data, onSuccess, userType, isEditBirth = false }) => {
+const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
   const { t } = useTranslation();
   const [mutationHappened, setMutationHappened, clear] = Digit.Hooks.useSessionStorage("CITIZEN_TL_MUTATION_HAPPENED", false);
   const resubmit = window.location.href.includes("edit-application");
   const tenantId = Digit.ULBService.getCurrentTenantId();
-  const isRenewTrade = !window.location.href.includes("renew-trade")
-  const mutation = Digit.Hooks.cr.useCivilRegistrationAPI(
-    data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
-    isRenewTrade
-  );
-  // const mutation1 = Digit.Hooks.cr.useCivilRegistrationAPI(
-  //   data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
-  //   false
-  // );
+  const [isEditBirth,setIsEditBirth]=useState(Digit.Hooks.useSessionStorage("CR_BIRTH_EDIT_FLAG", {})[0]);  
+    console.log("isEditBirth" + isEditBirth);
+    const mutation = Digit.Hooks.cr.useCivilRegistrationAPI(      
+      tenantId,isEditBirth ? false : true      
+    );
+  
+  
+ 
   // const mutation2 = Digit.Hooks.cr.useCivilRegistrationAPI(
   //   data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
   //   false

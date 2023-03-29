@@ -12,17 +12,20 @@ import { newConfig as newConfigCR } from "../../../config/config";
 // import Search from "../Search";
 import SpecifyCorrection from "../SpecifyCorrection";
 import InformationDeathAband from "../../../pageComponents/deathAbandoned/InformationDeathAband";
+// const CrFlowApp = ({ parentUrl, isEditBirth}) => {
 
-const DeathCrFlowApp = (props) => {
+const DeathCrFlowApp = ({ parentUrl,  props, }) => {
   console.log(JSON.stringify(props));
-  console.log(window.location.href.includes("editdeath"));
+  console.log(window.location.href.includes("isEditDeath"));
   const { t } = useTranslation();
   const { path } = useRouteMatch();
   const match = useRouteMatch();
   const { pathname } = useLocation();
   const history = useHistory();
-  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_DEATH_EDIT", {});
+  // const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_DEATH_EDIT", {});
   const [isEditDeath,setIseditDeath]=useState(Digit.Hooks.useSessionStorage("CR_DEATH_EDIT_FLAG", {})[0]);
+  const [params, setParams, clearParams] = isEditDeath ? Digit.Hooks.useSessionStorage("CR_DEATH_EDIT", {}) : Digit.Hooks.useSessionStorage("CR_DEATH_EDIT", {});
+
   console.log(isEditDeath);
   // let params1 = sessionStorage.getItem('CR_DEATH_CORRECTIONS')
   //death-emp-edit

@@ -12,6 +12,7 @@ import DeathOutsideJurisdiction from "./DeathOutsideJurisdiction ";
 import { useParams } from "react-router-dom";
 
 const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath }) => {
+  console.log(formData);
   const [isEditDeathPageComponents, setIsEditDeathPageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
   const stateId = Digit.ULBService.getStateId();
@@ -40,16 +41,22 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   const convertEpochToDate = (dateEpoch) => {
     if (dateEpoch) {
       const dateFromApi = new Date(dateEpoch);
+      console.log(dateFromApi);
       let month = dateFromApi.getMonth() + 1;
+      console.log(month);
       let day = dateFromApi.getDate();
+      console.log(day);
       let year = dateFromApi.getFullYear();
+      console.log(year);
       month = (month > 9 ? "" : "0") + month;
       day = (day > 9 ? "" : "0") + day;
       return `${year}-${month}-${day}`;
+      //  return `${day}-${month}-${year}`;
     } else {
       return null;
     }
   };
+
   let workFlowData = [];
   let cmbAgeUnit = [];
   let cmbPlace = [];
@@ -124,7 +131,29 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
     State["common-masters"].State.map((ob) => {
       cmbState.push(ob);
     });
+  // const [DateOfDeath, setDateOfDeath] = useState(
+  //   isEditDeath &&
+  //     isEditDeathPageComponents === false &&
+  //     (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
+  //     ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath)
+  //     : convertEpochToDate(formData?.InformationDeath?.DateOfDeath)
+  // );
   const [DateOfDeath, setDateOfDeath] = useState(
+    isEditDeath &&
+    isEditDeathPageComponents === false &&
+      (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
+      ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath)
+      : formData?.InformationDeath?.DateOfDeath
+  ); 
+  // const [DateOfDeath, setDateOfDeath] = useState(  
+  //   isEditDeath &&
+  //     isEditDeathPageComponents === false &&
+  //     (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
+  //     ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath)
+  //     : convertEpochToDate(formData?.InformationDeath?.DateOfDeath)
+  // );
+
+  console.log(
     isEditDeath &&
       isEditDeathPageComponents === false &&
       (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
@@ -136,7 +165,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
       isEditDeathPageComponents === false &&
       (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
       ? convertEpochToDate(formData?.InformationDeath?.FromDate)
-      : formData?.InformationDeath?.FromDate
+      : convertEpochToDate(formData?.InformationDeath?.FromDate)
   );
   const handleFromTimeChange = (value, cb) => {
     if (typeof value === "string") {
@@ -162,11 +191,11 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
       : formData?.InformationDeath?.setDeathTimeTo
   );
 
-  const [ToDate, setToDate] = useState(
+  const [DateOfDeath1, setToDate] = useState(
     isEditDeathPageComponents === false &&
       (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
-      ? convertEpochToDate(formData?.InformationDeath?.ToDate)
-      : formData?.InformationDeath?.ToDate
+      ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath1)
+      : formData?.InformationDeath?.DateOfDeath1
   );
 
   // const [DeathTime, setDeathTime] = useState("");
@@ -238,7 +267,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
     formData?.InformationDeath?.AgeUnit?.code
       ? formData?.InformationDeath?.AgeUnit
       : formData?.InformationDeath?.AgeUnit
-      ? cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.code === formData?.InformationDeath?.DeceasedGender)[0]
+      ? cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.code === formData?.InformationDeath?.AgeUnit)[0]
       : ""
   );
 
@@ -266,24 +295,38 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
 
   // const [DeathPlace, setselectDeathPlace] = useState(cmbPlace?(cmbPlace.filter(cmbPlace=>cmbPlace.code === formData?.InformationDeath?.DeathPlace)[0]) :formData?.InformationDeath?.DeathPlace) ;
   //Hospital, Intitution, vehicle, Public Place {DeathPlaceType}
-  const [DeathPlaceType, selectDeathPlaceType] = useState(
-    formData?.InformationDeath?.DeathPlaceType?.code
-      ? formData?.InformationDeath?.DeathPlaceType
-      : formData?.InformationDeath?.DeathPlaceType
-      ? ""
-      : ""
-  );
+
   const [HospitalNameMl, selectHospitalNameMl] = useState(
-    formData?.  InformationDeathails?.HospitalNameMl?.code
+    formData?.InformationDeathails?.HospitalNameMl?.code
       ? formData?.InformationDeath?.HospitalNameMl
       : formData?.InformationDeath?.HospitalNameMl
       ? ""
       : ""
   );
-  const [DeathPlaceInstId, setSelectedDeathPlaceInstId] = useState(
-    formData?.InformationDeath?.DeathPlaceInstId ? formData?.InformationDeath?.DeathPlaceInstId : null
+  const [DeathPlaceType, selectDeathPlaceType] = useState(
+    formData?.InformationDeath?.DeathPlaceType?.code
+      ? formData?.InformationDeath?.DeathPlaceType
+      : formData?.InformationDeath?.institutionTypeCode
+      ? ""
+      : ""
   );
-  const [InstitutionIdMl, setInstitutionIdMl] = useState(formData?.InformationDeath?.DeathPlaceInstId);
+
+  const [DeathPlaceInstId, setSelectedDeathPlaceInstId] = useState(
+    formData?.InformationDeath?.DeathPlaceInstId?.code
+      ? formData?.InformationDeath?.DeathPlaceInstId
+      : formData?.InformationDeath?.institutionNameCode
+      ? ""
+      : ""
+  );
+
+  const [InstitutionIdMl, setInstitutionIdMl] = useState(
+    formData?.InformationDeath?.InstitutionIdMl?.code
+      ? formData?.InformationDeath?.InstitutionIdMl
+      : formData?.InformationDeath?.institutionNameCode
+      ? ""
+      : ""
+  );
+
   const [InstitutionFilterList, setInstitutionFilterList] = useState(null);
   const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(false);
   // Home
@@ -480,7 +523,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   function setCheckedDate(e) {
     if (e.target.checked === true) {
       setChecked(e.target.checked);
-      setFromDate("");
+      setDateOfDeath("");
       setToDate("");
     } else {
       setChecked(e.target.checked);
@@ -519,7 +562,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
     setToDate(value);
     const today = new Date();
     const toDate = new Date(value);
-    const fromDate = new Date(FromDate);
+    const fromDate = new Date(DateOfDeath);
 
     if (toDate.getTime() <= today.getTime()) {
       if (fromDate && toDate.getTime() < fromDate.getTime()) {
@@ -564,7 +607,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
 
   // }
   function selectDeathDate(value) {
-    // setDeathDate(value);
     setDateOfDeath(value);
     const today = new Date();
     const deathDate = new Date(value);
@@ -1044,7 +1086,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
     if (validFlag == true) {
       sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
       sessionStorage.setItem("DeathDateUnavailable", DeathDateUnavailable ? DeathDateUnavailable : false);
-      sessionStorage.setItem("ToDate", ToDate ? ToDate : null);
+      sessionStorage.setItem("DateOfDeath1", DateOfDeath1 ? DateOfDeath1 : null);
       sessionStorage.setItem("FromDate", FromDate ? FromDate : null);
       sessionStorage.setItem("DeathTimeFrom", DeathTimeFrom ? DeathTimeFrom : null);
       sessionStorage.setItem("DeathTimeTo", DeathTimeTo ? DeathTimeTo : null);
@@ -1141,7 +1183,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
 
       onSelect(config.key, {
         IsEditChangeScreen,
-        ToDate,
+        DateOfDeath1,
         DeathDateUnavailable,
         DeathTimeTo,
         FromDate,
@@ -1301,10 +1343,10 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
                       <span className="mandatorycss">*</span>
                     </CardLabel>
                     <DatePicker
-                      date={FromDate}
+                      date={DateOfDeath}
                       max={convertEpochToDate(new Date())}
-                      name="FromDate"
-                      onChange={selectFromDate}
+                      name="DateOfDeath"
+                      onChange={selectDeathDate}
                       {...(validation = {
                         pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",
                         isRequired: true,
@@ -1324,9 +1366,9 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
                       <span className="mandatorycss">*</span>
                     </CardLabel>
                     <DatePicker
-                      date={ToDate}
+                      date={DateOfDeath1}
                       max={convertEpochToDate(new Date())}
-                      name="ToDate"
+                      name="DateOfDeath1"
                       onChange={selectToDate}
                       {...(validation = {
                         pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",
