@@ -1,5 +1,6 @@
 package org.ksmart.marriage.marriageapplication.enrichment;
 
+import com.google.common.primitives.ImmutableDoubleArray;
 import org.apache.commons.collections4.CollectionUtils;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.request.User;
@@ -75,6 +76,21 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
        // setRegistrationNumber(request);
 
 
+    }
+    public void enrichUpdate(MarriageDetailsRequest request) {
+
+        RequestInfo requestInfo = request.getRequestInfo();
+        User userInfo = requestInfo.getUserInfo();
+        AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
+
+        request.getMarriageDetails()
+                .forEach(marriage -> marriage.setAuditDetails(auditDetails));
+
+
+        setBridePermanentAddress(request);
+        setBridePresentAddress(request);
+        setGroomPermanentAddress(request);
+        setGroomPresentAddress(request);
     }
 
     private void setGroomPresentAddress(MarriageDetailsRequest request) {
@@ -572,15 +588,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 
 
 
-    public void enrichUpdate(MarriageDetailsRequest request) {
 
-        RequestInfo requestInfo = request.getRequestInfo();
-        User userInfo = requestInfo.getUserInfo();
-        AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
-
-        request.getMarriageDetails()
-                .forEach(marriage -> marriage.setAuditDetails(auditDetails));
-    }
 
     private List<String> getIds(RequestInfo requestInfo, String tenantId, String idName, String moduleCode, String fnType, int count) {
         return idGenRepository.getIdList(requestInfo, tenantId, idName, moduleCode, fnType, count);
