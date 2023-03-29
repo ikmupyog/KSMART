@@ -344,7 +344,7 @@ export const convertToAdoptionRegistration = (data = {}) => {
         oldregistrationno: data?.AdoptionChildDetails?.SearchRegId?.applicationNumber
           ? data?.AdoptionChildDetails.SearchRegId?.applicationNumber
           : "",
-        applicationtype: "CRBRNR",
+        applicationtype: "CRBRAD",
         businessservice: "birth-services",
         workflowcode: data?.AdoptionChildDetails?.workFlowCode,
         ParentsDetails: {
@@ -587,7 +587,7 @@ export const convertToAdoptionUpdation = (data = {}) => {
         oldregistrationno: data?.AdoptionChildDetails?.SearchRegId?.applicationNumber
           ? data?.AdoptionChildDetails.SearchRegId?.applicationNumber
           : "",
-        applicationtype: "CRBRNR",
+        applicationtype: "CRBRAD",
         businessservice: "birth-services",
         workflowcode: data?.AdoptionChildDetails?.workFlowCode,
         applicationnumber: data?.AdoptionChildDetails?.applicationNumber ? data?.AdoptionChildDetails?.applicationNumber : "",
