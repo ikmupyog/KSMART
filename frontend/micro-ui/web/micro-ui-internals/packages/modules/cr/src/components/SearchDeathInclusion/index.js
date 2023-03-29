@@ -29,7 +29,7 @@ const registyBtnStyle = {
   marginBottom: "15px",
 };
 
-const  SearchDeathInclusion = ({ tenantId, t, onSubmit, data, count, onInclusionClick }) => {
+const  SearchDeathInclusion = ({ tenantId, t, onSubmit, data, count, onCorrectionClick }) => {
   // const [FileData, setFileData] = useState([]);
   console.log(data,"data");
   const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
@@ -86,13 +86,12 @@ const  SearchDeathInclusion = ({ tenantId, t, onSubmit, data, count, onInclusion
         Cell: ({ row }) => {
           return (
             <div>
-              <span className="link">
-                <Link to={`/digit-ui/citizen/cr/death-inclusion-edit`}
-                //  onClick={() => onInclusionClick(row.original)}
-              >
-                {row.original.InformationDeath.DeathACKNo}
-                  </Link>
-              
+              <span className="link"  onClick={() => onCorrectionClick(row.original)}>
+                {/* <Link to={`/digit-ui/citizen/cr/birth-inclusion-edit`}
+                      onClick={() => onInclusionClick(row.original)}
+                      > */}
+                   {row.original.InformationDeath.DeathACKNo}
+                {/* </Link> */}
               </span>
             </div>
           );
@@ -170,7 +169,7 @@ const  SearchDeathInclusion = ({ tenantId, t, onSubmit, data, count, onInclusion
   return (
     <React.Fragment>
       <div style={mystyle}>
-        <h1 style={hstyle}>{t("DEATH CERTIFICATE")}</h1>
+        <h1 style={hstyle}>{t("DEATH INCLUSION")}</h1>
         <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
           <SearchFields {...{ register, control, reset, tenantId, previousPage, t }} />
         </SearchForm>

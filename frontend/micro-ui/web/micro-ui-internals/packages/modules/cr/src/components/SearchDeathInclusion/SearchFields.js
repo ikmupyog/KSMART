@@ -49,12 +49,12 @@ const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) =>
           cmbhospital.push(ob);
         });
     return <>
-        <SearchField>
+        {/* <SearchField>
             <label><span className="mandatorycss">*</span> {t("Registry ID")}</label>
             <TextInput name="id" inputRef={register({})} 
              placeholder={`${t("Registry ID")}`} 
              {...(validation = { isRequired: false, type: "text", title: t("DC_INVALID_REGISTRY_ID") })}/>
-        </SearchField>
+        </SearchField> */}
         <SearchField>
             <label>
                  {/* <span className="mandatorycss">*</span>  */}
@@ -66,7 +66,7 @@ const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) =>
         <SearchField>
             <label> 
                 {/* <span className="mandatorycss">*</span> */}
-            {t(" DC_NAME_DECEASED")}</label>
+            {t("DC_NAME_DECEASED")}</label>
             <TextInput name="deceasedFirstNameEn" inputRef={register({})} 
              placeholder={`${t("DC_NAME_DECEASED")}`}
                   {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_NAME_DECEASED") })}/>
@@ -74,9 +74,9 @@ const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) =>
         <SearchField>
             <label> 
                 {/* <span className="mandatorycss">*</span> */}
-                {t("DC_DATE_DEATH")}</label>
+                {t("CR_DATE_OF_DEATH")}</label>
             <Controller
-                render={(props) => <DatePicker date={props.value} onChange={props.onChange}  {...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: false, title: t("CR_INVALID_DATE") })} />}
+                render={(props) => <DatePicker date={props.value} onChange={props.onChange}  {...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: false, title: t("CR_DATE_OF_DEATH") })} />}
                 name="DeathDate"
                 control={control}
             />
@@ -84,7 +84,7 @@ const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) =>
         <SearchField>
             <label>
                 {/* <span className="mandatorycss">*</span> */}
-                {t("DC_GENDER")}</label>
+                {t("CR_GENDER")}</label>
             <Controller
                 control={control}
                 name="deceasedGender"
@@ -96,8 +96,8 @@ const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) =>
                         option={GenderOptions}
                         optionKey="code"
                         t={t}
-                        placeholder={`${t("DC_GENDER")}`}
-                        {...(validation = { isRequired: false, title: t("DC_INVALID_GENDER") })}
+                        placeholder={`${t("CR_GENDER")}`}
+                        {...(validation = { isRequired: false, title: t("CR_INVALID_GENDER") })}
                     />
                 )}
             />
@@ -138,71 +138,6 @@ const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) =>
                 )}
             />
         </SearchField>
-        {/* <SearchField>
-            <label>  {t("DC_REGISTRATION_NUMBER")}</label>
-            <TextInput name="RegistrationNumber" inputRef={register({})}
-                placeholder={`${t("DC_REGISTRATION_NUMBER")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_REGISTRATION_NUMBER") })} />
-        </SearchField> */}
-        
-
-        {/* {applicationTypesLoading ? <Loader/> : <SearchField> 
-            <label>{t("CR_SEARCH_APPLICATION_TYPE")}</label>
-            <Controller
-           
-                    control={control}
-                    name="applicationType"
-                    render={(props) => (
-                        <Dropdown
-                        selected={props.value}
-                        select={props.onChange}
-                        onBlur={props.onBlur}
-                        option={applicationTypes}
-                        optionKey="i18nKey"
-                        t={t}
-                        />
-                    )}
-                    />
-        </SearchField>}
-        <SearchField>
-            <label  style={mystyle}>{t("CR_SEARCH_FROM_DATE")}</label>
-            <Controller
-           
-                render={(props) => <DatePicker  date={props.value} onChange={props.onChange} />}
-                name="fromDate"
-                control={control}
-                />
-        </SearchField>
-        <SearchField>
-            <label style={mystyle}>{t("CR_SEARCH_TO_DATE")}</label>
-            <Controller
-                render={(props) => <DatePicker   date={props.value} onChange={props.onChange} />}
-                name="toDate"
-                control={control}
-                />
-        </SearchField>
-        { isLoading ? <Loader/> : <SearchField>
-            <label>{t("CR_SEARCH_RESULTS_APP_STATUS_LABEL")}</label>
-            <Controller
-                    control={control}
-                    name="status"
-                    render={(props) => (
-                        <Dropdown
-                        selected={props.value}
-                        select={props.onChange}
-                        onBlur={props.onBlur}
-                        option={applicationStatuses}
-                        optionKey="i18nKey"
-                        t={t}
-                        />
-                    )}
-            />
-        </SearchField>}
-        <SearchField>
-            <label>{t("CR_SEARCH_MOTHER_NAME")}</label>
-            <TextInput  name="tradeName" inputRef={register({})}/>
-        </SearchField>
-       */}
         <SearchField className="submit">
             <SubmitBar label={t("ES_COMMON_SEARCH")} submit />
             <p onClick={() => {

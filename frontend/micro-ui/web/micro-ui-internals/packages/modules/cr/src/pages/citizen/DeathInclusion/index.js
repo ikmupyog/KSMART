@@ -22,7 +22,7 @@ import SearchDeathInclusion from "../../../components/SearchDeathInclusion";
 const DeathInclusion = () => {
   const { t } = useTranslation();
   const { path } = useRouteMatch()
-
+  const history = useHistory();
   const [payload, setPayload] = useState({});
 
   function onSubmit(_data) {
@@ -43,6 +43,13 @@ const DeathInclusion = () => {
     );
   }
 
+  const gotoEditCorrection = async (data) => {
+    console.log("passed data",data);
+    history.push({
+      pathname: `/digit-ui/citizen/cr/death-correction-edit`,
+      state: { correctionData:data }
+    });
+  };
  
   const config = {
     enabled: !!(payload && Object.keys(payload).length > 0),
@@ -75,7 +82,7 @@ const DeathInclusion = () => {
         // isSuccess={isSuccess}
         // isLoading={isLoading}
         count={count}
-        // onClick={handleClick}
+        onCorrectionClick={gotoEditCorrection}
       />
   
   </React.Fragment>
