@@ -49,7 +49,7 @@ public class m_Aswasakiranam {
 
   @JsonFormat(pattern = "dd/MM/yyyy")
   @JsonProperty("application_date")
-  private Date application_date;
+  private String application_date;
 
   @JsonProperty("office_typeid")
   private int office_typeid;
@@ -122,7 +122,7 @@ public class m_Aswasakiranam {
 
   @JsonFormat(pattern = "dd/MM/yyyy")
   @JsonProperty("applicant_dob")
-  private Date applicant_dob;
+  private String applicant_dob;
 
   @JsonProperty("pensioner_namemal")
   private String pensioner_namemal;
@@ -180,7 +180,7 @@ public class m_Aswasakiranam {
 
   @JsonFormat(pattern = "dd/MM/yyyy")
   @JsonProperty("pensioner_dob")
-  private Date pensioner_dob;
+  private String pensioner_dob;
 
   @JsonProperty("relationship_pensioner")
   private int relationship_pensioner;
@@ -202,7 +202,7 @@ public class m_Aswasakiranam {
 
   @JsonFormat(pattern = "dd/MM/yyyy")
   @JsonProperty("incomecertificate_date")
-  private Date incomecertificate_date;
+  private String incomecertificate_date;
 
   @JsonProperty("rationcard_no")
   private String rationcard_no;
@@ -212,7 +212,7 @@ public class m_Aswasakiranam {
 
   @JsonFormat(pattern = "dd/MM/yyyy")
   @JsonProperty("bplcertificate_date")
-  private Date bplcertificate_date;
+  private String bplcertificate_date;
 
   @JsonProperty("categoryremarksmal")
   private String categoryremarksmal;
@@ -300,7 +300,7 @@ public class m_Aswasakiranam {
 
   @JsonFormat(pattern = "dd/MM/yyyy")
   @JsonProperty("fieldenquiry_date")
-  private Date fieldenquiry_date;
+  private String fieldenquiry_date;
 
   @JsonProperty("icdsremarks")
   private String icdsremarks;
@@ -310,7 +310,7 @@ public class m_Aswasakiranam {
 
   @JsonFormat(pattern = "dd/MM/yyyy")
   @JsonProperty("cdporec_date")
-  private Date cdporec_date;
+  private String cdporec_date;
 
   @JsonProperty("cdpoeligibility_id")
   private int cdpoeligibility_id;
@@ -320,18 +320,18 @@ public class m_Aswasakiranam {
 
   @JsonFormat(pattern = "dd/MM/yyyy")
   @JsonProperty("cdposubmit_date")
-  private Date cdposubmit_date;
+  private String cdposubmit_date;
 
   @JsonFormat(pattern = "dd/MM/yyyy")
   @JsonProperty("dtdecision_date")
-  private Date dtdecision_date;
+  private String dtdecision_date;
 
   @JsonProperty("chvreason")
   private String chvreason;
 
   @JsonFormat(pattern = "dd/MM/yyyy")
   @JsonProperty("penstart_date")
-  private Date penstart_date;
+  private String penstart_date;
 
   @JsonProperty("verifierremarks")
   private String verifierremarks;

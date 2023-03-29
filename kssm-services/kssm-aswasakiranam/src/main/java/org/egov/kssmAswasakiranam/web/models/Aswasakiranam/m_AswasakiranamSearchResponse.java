@@ -46,7 +46,7 @@ public class m_AswasakiranamSearchResponse {
 
   @JsonFormat(pattern = "dd/MM/yyyy")
   @JsonProperty("application_date")
-  private Date application_date;
+  private String application_date;
 
   @JsonProperty("office_typeid")
   private int office_typeid;
