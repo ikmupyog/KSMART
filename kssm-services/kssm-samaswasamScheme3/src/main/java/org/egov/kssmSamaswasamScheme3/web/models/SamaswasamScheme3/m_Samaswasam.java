@@ -53,7 +53,7 @@ private	Integer	reg_no;
 
 @JsonFormat(pattern = "dd/MM/yyyy")
 @JsonProperty("application_date")
-private	Date	application_date	;
+private	String	application_date	;
 
 @JsonProperty("office_typeid")
 private	Integer	office_typeid	;
@@ -123,7 +123,7 @@ private	Integer	applicant_age	;
 
 @JsonFormat(pattern = "dd/MM/yyyy")
 @JsonProperty("applicant_dob")
-private	Date	applicant_dob	;
+private	String	applicant_dob	;
 
 @JsonProperty("applicant_genderid")
 private	Integer	applicant_genderid	;
@@ -172,7 +172,7 @@ private	Integer	icdsofficer_id	;
 
 @JsonFormat(pattern = "dd/MM/yyyy")
 @JsonProperty("fieldenquiry_date")
-private	Date	fieldenquiry_date	;
+private	String	fieldenquiry_date	;
 
 @JsonProperty("icdsremarks")
 private	String	icdsremarks	;
@@ -182,7 +182,7 @@ private	Integer	icdseligibility_id	;
 
 @JsonFormat(pattern = "dd/MM/yyyy")
 @JsonProperty("cdporec_date")
-private	Date	cdporec_date	;
+private	String	cdporec_date	;
 
 @JsonProperty("cdpoeligibility_id")
 private	Integer	cdpoeligibility_id	;
@@ -192,18 +192,18 @@ private	String	remarks	;
 
 @JsonFormat(pattern = "dd/MM/yyyy")
 @JsonProperty("cdposubmit_date")
-private	Date	cdposubmit_date	;
+private	String	cdposubmit_date	;
 
 @JsonFormat(pattern = "dd/MM/yyyy")
 @JsonProperty("dtdecision_date")
-private	Timestamp	dtdecision_date	;
+private	String	dtdecision_date	;
 
 @JsonProperty("chvreason")
 private	String	chvreason	;
 
 @JsonFormat(pattern = "dd/MM/yyyy")
 @JsonProperty("penstart_date")
-private	Date	penstart_date	;
+private	String	penstart_date	;
 
 @JsonProperty("verifier_id")
 private	Integer	verifier_id	;

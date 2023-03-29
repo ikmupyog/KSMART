@@ -47,7 +47,7 @@ private	Integer	reg_no;
 
 @JsonFormat(pattern = "dd/MM/yyyy")
 @JsonProperty("application_date")
-private	Date	application_date	;
+private	String	application_date	;
 
 @JsonProperty("office_typeid")
 private	Integer	office_typeid	;
@@ -60,5 +60,10 @@ private	String	applicant_nameeng	;
 
 @JsonProperty("applicant_namemal")
 private	String	applicant_namemal	;
+
+
+@JsonFormat(pattern = "dd/MM/yyyy")
+@JsonProperty("dtdecision_date")
+private	String	dtdecision_date	;
 
 }
