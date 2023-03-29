@@ -101,8 +101,6 @@ public class MarriageRegistrySearchCriteria {
   	@Valid
 	  private Integer limit;
 
-
-
       @JsonProperty("fromDate")
       private Long fromDate;
   

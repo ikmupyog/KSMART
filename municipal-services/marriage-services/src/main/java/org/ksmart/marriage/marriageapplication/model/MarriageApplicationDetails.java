@@ -44,6 +44,7 @@ public class MarriageApplicationDetails {
     private String lbtype;
 
 
+
     @Size(max = 64)
     @JsonProperty("marriageTenantid")
     private String tenantid;
@@ -230,6 +231,10 @@ public class MarriageApplicationDetails {
     @Valid
     @JsonProperty("wfDocuments")
     private List<Document> wfDocuments;
+
+    @JsonProperty("MarriageDocuments")
+    @Valid
+    private List<MarriageDocument> MarriageDocuments = null;
 
     // public void setStatus(String s) {
     // }

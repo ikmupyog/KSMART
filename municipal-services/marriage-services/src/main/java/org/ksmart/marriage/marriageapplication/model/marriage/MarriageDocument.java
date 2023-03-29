@@ -30,30 +30,30 @@ public class MarriageDocument {
     private Boolean active;
 
     @JsonProperty("marriageTenantid")
-    private String marriageTenantid = null;
+    private String tenantid = null;
 
     @JsonProperty("documentType")
     private String documentType = null;
 
+    @JsonProperty("documentName")
+    private String documentName = null;
+
     @JsonProperty("fileStoreId")
     private String fileStoreId = null;
 
-    @JsonProperty("fileName")
-    private String fileName = null;
-
     @JsonProperty("marriageId")
     private String marriageId = null;
-
-    @JsonProperty("documentOwner")
+//bride or groom
+    @JsonProperty("documentOwner") 
     private String documentOwner = null;
 
-    @JsonProperty("documentUid")
-    private String documentUid;
+    // @JsonProperty("documentUid")
+    // private String documentUid;
 
     @JsonProperty("applicationNumber")
-    private String deathACKNo = null;
+    private String applicationNumber = null;
 
     @JsonProperty("AuditDetails")
-    private AuditDetails deathDocAuditDetails = null;
+    private AuditDetails marriageDocAuditDetails = null;
     
 }

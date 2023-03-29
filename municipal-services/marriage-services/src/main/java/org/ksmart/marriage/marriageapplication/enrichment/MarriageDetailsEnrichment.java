@@ -9,6 +9,7 @@ import org.ksmart.marriage.common.repository.IdGenRepository;
 import org.ksmart.marriage.config.MarriageApplicationConfiguration;
 import org.ksmart.marriage.marriageapplication.model.MarriageApplicationDetails;
 import org.ksmart.marriage.marriageapplication.model.marriage.MarriageDetailsRequest;
+import org.ksmart.marriage.marriageapplication.model.marriage.MarriageDocument;
 import org.ksmart.marriage.utils.IDGenerator;
 import org.ksmart.marriage.utils.MarriageConstants;
 import org.ksmart.marriage.utils.enums.ErrorCodes;
@@ -47,27 +48,23 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                 marriage.getGroomDetails().setBrideGroom("G");
 
             }
-
-//                marriage.getPermanentBride().setId1(UUID.randomUUID().toString());
-//                 marriage.getPermanentBride().setId2(UUID.randomUUID().toString());
-
-//                 marriage.getPermanentBride().setBrideGroom("BRIDE");
-//                     marriage.getPermanentBride().setBrideGroom2("GROOM");
-
-
-//            if(marriage.getPresent()!=null){
-//                marriage.getPresent().setId(UUID.randomUUID().toString());
-////                marriage.getPresent().setBrideGroom("BRIDE");
-////                marriage.getPresent().setBrideGroom("GROOM");
-//            }
             if(marriage.getWitnessDetails()!=null){
                 marriage.getWitnessDetails().setWitnessId1(UUID.randomUUID().toString());
                 marriage.getWitnessDetails().setWitnessId2(UUID.randomUUID().toString());
 
                 marriage.getWitnessDetails().setSerial_no1(1);
                 marriage.getWitnessDetails().setSerial_no2(2);
-
             }
+            List <MarriageDocument> marriagedocument = marriage.getMarriageDocuments();
+            if (marriagedocument!=null){
+                marriagedocument.forEach(document -> {
+                document.setId(UUID.randomUUID().toString());
+                document.setActive(true);
+                document.setTenantid(marriage.getTenantid());
+                document.setMarriageId(marriage.getId());
+                document.setMarriageDocAuditDetails(auditDetails);
+            });
+        }
         });
         setApplicationNumbers(request);
       //  setFileNumbers(request);
@@ -548,6 +545,14 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
         request.getMarriageDetails()
                 .forEach(marriage -> {
                     marriage.setApplicationNumber(itr.next());
+                    List <MarriageDocument> marriagedocument = marriage.getMarriageDocuments();
+                        if (marriagedocument!=null){
+                            marriagedocument
+                            .forEach(document -> {
+                            document.setApplicationNumber(marriage.getApplicationNumber());
+                            });
+                        }
+                    
                 });
     }
 
