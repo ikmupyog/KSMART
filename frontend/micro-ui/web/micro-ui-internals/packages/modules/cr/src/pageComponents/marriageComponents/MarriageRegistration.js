@@ -14,9 +14,9 @@ import {
 } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/MARRIAGETimeline";
 import { useTranslation } from "react-i18next";
+import HouseMarriageRegistration from "./HouseMarriageRegistration";
 import CustomTimePicker from "../../components/CustomTimePicker";
 import MarriageInstitution from "./MarriageInstitution";
-import HouseMarriageRegistration from "./HouseMarriageRegistration";
 import MarriagePublicPlace from "./MarriagePublicPlace";
 import { useQueryClient } from "react-query";
 // import { TimePicker } from '@material-ui/pickers';
@@ -33,8 +33,6 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   }
 
   console.log({ tenantId });
-
-  const [isInitialRender, setIsInitialRender] = useState(true);
   const [tenantWard, setTenantWard] = useState(tenantId);
   const [lbs, setLbs] = useState([]);
   const [Talukvalues, setLbsTalukvalue] = useState(null);
@@ -163,6 +161,9 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   let cmbWardNoFinal = [];
   let cmbFilterTaluk = [];
   let cmbFilterVillage = [];
+  let MarriagePlaceTypeName = "";
+  let workFlowData = [];
+  let naturetype = null;
   boundaryList &&
     boundaryList["egov-location"] &&
     boundaryList["egov-location"].TenantBoundary.map((ob) => {
@@ -213,7 +214,8 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   const [marriageDistrict, setmarriageDistrict] = useState(
     formData?.MarriageDetails?.marriageDistrict ? formData?.MarriageDetails?.marriageDistrict : ""
   );
-
+  const [isInitialRender, setIsInitialRender] = useState(true);
+  const [isInitialRenderMarriagePlace, setisInitialRenderMarriagePlace] = useState(true);
   const [marriageTalukID, setmarriageTalukID] = useState(
     formData?.MarriageDetails?.marriageTalukID ? formData?.MarriageDetails?.marriageTalukID : ""
   );
@@ -225,24 +227,52 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   const [marriageTenantid, setmarriageTenantid] = useState(
     formData?.MarriageDetails?.marriageTenantid ? formData?.MarriageDetails?.marriageTenantid : null
   );
-
+  const [value, setValue] = useState(0);
   const [marriagePlacetype, setmarriagePlacetype] = useState(
     formData?.MarriageDetails?.marriagePlacetype ? formData?.MarriageDetails?.marriagePlacetype : ""
   );
+  // const [marriagePlacenameEn, setmarriagePlacenameEn] = useState(
+  //   formData?.MarriageDetails?.marriagePlacenameEn?.code
+  //     ? formData?.MarriageDetails?.marriagePlacenameEn
+  //     : formData?.MarriageDetails?.marriagePlacenameEn
+  //     ? cmbPlaceType.filter((cmbPlaceType) => cmbPlaceType.code === formData?.MarriageDetails?.marriagePlacenameEn)[0]
+  //     : ""
+  // );
   const [marriagePlacenameEn, setmarriagePlacenameEn] = useState(
     formData?.MarriageDetails?.marriagePlacenameEn ? formData?.MarriageDetails?.marriagePlacenameEn : ""
   );
   const [marriagePlacenameMal, setmarriagePlacenameMal] = useState(
     formData?.MarriageDetails?.marriagePlacenameMal ? formData?.MarriageDetails?.marriagePlacenameMal : ""
   );
-  const [marriageOthersSpecify, setmarriageOthersSpecify] = useState(
-    formData?.MarriageDetails?.marriageOthersSpecify ? formData?.MarriageDetails?.marriageOthersSpecify : ""
-  );
+  // const [marriageOthersSpecify, setmarriageOthersSpecify] = useState(
+  //   formData?.MarriageDetails?.marriageOthersSpecify ? formData?.MarriageDetails?.marriageOthersSpecify : ""
+  // );
   const [marriageType, setmarriageType] = useState(formData?.MarriageDetails?.marriageType ? formData?.MarriageDetails?.marriageType : "");
   const [marriageWardCode, setmarriageWardCode] = useState(
     formData?.MarriageDetails?.marriageWardCode ? formData?.MarriageDetails?.marriageWardCode : ""
   );
   const [isDisableEdit, setisDisableEdit] = useState(isEditMarriage ? isEditMarriage : false);
+  const [marriageLocalityEn, setmarriageLocalityEn] = useState(
+    formData?.MarriageDetails?.marriageLocalityEn ? formData?.MarriageDetails?.marriageLocalityEn : ""
+  );
+  const [marriageLocalityMal, setmarriageLocalityMal] = useState(
+    formData?.MarriageDetails?.marriageLocalityMal ? formData?.MarriageDetails?.marriageLocalityMal : ""
+  );
+  const [marriageStreetEn, setmarriageStreetEn] = useState(
+    formData?.MarriageDetails?.marriageStreetEn ? formData?.MarriageDetails?.marriageStreetEn : ""
+  );
+  const [marriageStreetMal, setmarriageStreetMal] = useState(
+    formData?.MarriageDetails?.marriageStreetMal ? formData?.MarriageDetails?.marriageStreetMal : ""
+  );
+  const [marriageHouseNoAndNameEn, setmarriageHouseNoAndNameEn] = useState(
+    formData?.MarriageDetails?.marriageHouseNoAndNameEn ? formData?.MarriageDetails?.marriageHouseNoAndNameEn : ""
+  );
+  const [marriageHouseNoAndNameMal, setmarriageHouseNoAndNameMal] = useState(
+    formData?.MarriageDetails?.marriageHouseNoAndNameMal ? formData?.MarriageDetails?.marriageHouseNoAndNameMal : ""
+  );
+  const [marriageLandmark, setmarriageLandmark] = useState(
+    formData?.MarriageDetails?.marriageLandmark ? formData?.MarriageDetails?.marriageLandmark : ""
+  );
   const [file, setFile] = useState();
 
   const stateDist = cmbDistrict?.filter((dist) => dist.statecode == "kl");
@@ -266,7 +296,27 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   };
 
   const onSkip = () => onSelect();
-
+  React.useEffect(() => {
+    if (isInitialRenderMarriagePlace) {
+      if (marriagePlacenameEn) {
+        setIsInitialRender(false);
+        naturetype = marriagePlacenameEn.code;
+        setValue(naturetype);
+        if (naturetype === "OTHER") {
+          <HouseMarriageRegistration
+            formData={formData}
+            marriageLocalityEn={marriageLocalityEn}
+            marriageLocalityMal={marriageLocalityMal}
+            marriageStreetEn={marriageStreetEn}
+            marriageStreetMal={marriageStreetMal}
+            marriageHouseNoAndNameEn={marriageHouseNoAndNameEn}
+            marriageHouseNoAndNameMal={marriageHouseNoAndNameMal}
+            marriageLandmark={marriageLandmark}
+          />;
+        }
+      }
+    }
+  });
   function setSelectmarriageDOM(value) {
     setmarriageDOM(value);
     const today = new Date();
@@ -323,6 +373,17 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   }
   function setSelectmarriagePlacetype(value) {
     setmarriagePlacetype(value);
+    setValue(value.code);
+    // let currentWorkFlow = workFlowData.filter(
+    //   (workFlowData) =>
+    //     workFlowData.marriagePlacetype === value.code &&
+    //     workFlowData.startdateperiod <= Difference_In_DaysRounded &&
+    //     workFlowData.enddateperiod >= Difference_In_DaysRounded
+    // );
+    // workFlowCode = currentWorkFlow[0].WorkflowCode;
+    // if (value.code === "other") {
+
+    // }
     // setAgeMariageStatus(value.code);
   }
   function setSelectmarriagePlacenameEn(value) {
@@ -395,7 +456,20 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
       sessionStorage.setItem("marriagePlacenameEn", marriagePlacenameEn ? marriagePlacenameEn : null);
       sessionStorage.setItem("marriagePlacenameMal", marriagePlacenameMal ? marriagePlacenameMal : null);
       sessionStorage.setItem("marriageType", marriageType ? marriageType : null);
-      sessionStorage.setItem("marriageOthersSpecify", marriageOthersSpecify ? marriageOthersSpecify : null);
+      // sessionStorage.setItem("marriageOthersSpecify", marriageOthersSpecify ? marriageOthersSpecify : null);
+      // sessionStorage.setItem("workFlowCode", workFlowCode);
+      if (marriagePlacetype.code === "OTHER") {
+        //  ?sessionStorage.setItem("DeathPlace", DeathPlace.code);
+        // sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
+        sessionStorage.setItem("marriageLocalityEn", marriageLocalityEn ? marriageLocalityEn : null);
+        // sessionStorage.setItem("marriageWardCode", marriageWardCode ? marriageWardCode : null);
+        sessionStorage.setItem("marriageStreetMal", marriageStreetMal ? marriageStreetMal : null);
+        sessionStorage.setItem("marriageStreetEn", marriageStreetEn ? marriageStreetEn : null);
+        sessionStorage.setItem("marriageHouseNoAndNameEn", marriageHouseNoAndNameEn ? marriageHouseNoAndNameEn : null);
+        sessionStorage.setItem("marriageHouseNoAndNameMal", marriageHouseNoAndNameMal ? marriageHouseNoAndNameMal : null);
+        sessionStorage.setItem("marriageLocalityMal", marriageLocalityMal ? marriageLocalityMal : null);
+        sessionStorage.setItem("marriageLandmark", marriageLandmark ? marriageLandmark : null);
+      }
       // sessionStorage.setItem("tripStartTime", tripStartTime ? tripStartTime : null);
 
       onSelect(config.key, {
@@ -410,7 +484,14 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
         marriagePlacenameMal,
         marriageType,
         marriageWardCode,
-        marriageOthersSpecify,
+        marriageLocalityEn,
+        marriageStreetMal,
+        marriageStreetEn,
+        marriageHouseNoAndNameEn,
+        marriageHouseNoAndNameMal,
+        marriageLocalityMal,
+        marriageLandmark,
+        // marriageOthersSpecify,
         // tripStartTime,
         // selectedOption,
         // Gender,

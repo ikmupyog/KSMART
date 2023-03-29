@@ -13,6 +13,14 @@ const CrFlowApp = ({ parentUrl}) => {
   const { pathname } = useLocation();
   const history = useHistory();  
   const [isEditBirth,setIsEditBirth]=useState(Digit.Hooks.useSessionStorage("CR_BIRTH_EDIT_FLAG", {})[0]);
+  console.log("testdata" + Digit.Hooks.useSessionStorage("CR_BIRTH_EDIT_FLAG", {})[0]);
+
+  // if(Digit.Hooks.useSessionStorage("CR_BIRTH_EDIT_FLAG", {})[0] === true){
+  //   isEditBirth = true;
+  //   console.log("jet" + isEditBirth);
+  // } else {
+  //   isEditBirth = false;
+  // }
   const [params, setParams, clearParams] = isEditBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_BIRTH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_BIRTH_REG", {});
 
   // console.log("params"+JSON.stringify(params));
@@ -113,7 +121,7 @@ const CrFlowApp = ({ parentUrl}) => {
   
   const onSuccess = () => {
     sessionStorage.removeItem("CurrentFinancialYear");
-    queryClient.invalidateQueries("CR_CREATE_BIRTH");
+    queryClient.invalidateQueries("CR_CREATE_BIRTH_REG");
   };
   const handleSkip = () => {};
   const handleMultiple = () => {};
