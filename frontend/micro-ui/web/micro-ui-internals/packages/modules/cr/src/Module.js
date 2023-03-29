@@ -149,7 +149,7 @@ import MarriageInstitution from "./pageComponents/marriageComponents/MarriageIns
 import MarriagePublicPlace from "./pageComponents/marriageComponents/MarriagePublicPlace";
 import MarriageRegistration from "./pageComponents/marriageComponents/MarriageRegistration";
 import HouseMarriageRegistration from "./pageComponents/marriageComponents/HouseMarriageRegistration";
-import witnessdetails from "./pageComponents/marriageComponents/witnessdetails";
+import Witnessdetails from "./pageComponents/marriageComponents/Witnessdetails";
 
 // import CreateAbandonedBirth from "./pages/employee/Abandoned-birth";
 import AbandonedChildDetails from "./pageComponents/abandonedBirthComponents/AbandonedChildDetails";
@@ -377,7 +377,7 @@ const componentsToRegister = {
   MarriagePublicPlace,
   MarriageRegistration,
   HouseMarriageRegistration,
-  witnessdetails,
+  Witnessdetails,
   FormFieldContainer
 };
 
