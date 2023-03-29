@@ -14,7 +14,7 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
     CommonQueryBuilder commonQueryBuilder;
 
     private static final String QUERY = new StringBuilder()
-            .append(" SELECT MD.id as MD_id , MD.dateofmarriage as MD_dateofmarriage ,MD.dateofreporting as MD_dateofreporting , MD.districtid as MD_districtid , ")
+            .append("SELECT MD.id as MD_id , MD.dateofmarriage as MD_dateofmarriage ,MD.dateofreporting as MD_dateofreporting , MD.districtid as MD_districtid , ")
             .append("MD.lbtype as MD_lbtype , MD.tenantid as MD_tenantid ,  MD.placetype as MD_placetype , MD.placeid as MD_placeid ,")
             .append("MD.placename_en as MD_placename_en , MD.placename_ml as MD_placename_ml ,  MD.houseno_and_name_en as MD_housenameno_en , MD.houseno_and_name_ml as MD_housenameno_ml ,")
             .append("MD.locality_en as MD_locality_en , MD.locality_ml as MD_locality_ml  , MD.street_name_en as MD_street_name_en ,  MD.street_name_ml as MD_street_name_ml , ")
@@ -113,7 +113,7 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
 
         StringBuilder query = new StringBuilder(QUERY);
         StringBuilder orderBy = new StringBuilder();
-        //addFilter("MD_id", criteria.getId(), query, preparedStmtValues);
+       // addFilter("MD_id", criteria.getId(), query, preparedStmtValues);
         addFilter("MD_tenantid", criteria.getTenantId(), query, preparedStmtValues);
         addFilter("MD_applicationnumber", criteria.getApplicationNo(), query, preparedStmtValues);
         addFilter("MD_registrationno", criteria.getRegistrationNo(), query, preparedStmtValues);
