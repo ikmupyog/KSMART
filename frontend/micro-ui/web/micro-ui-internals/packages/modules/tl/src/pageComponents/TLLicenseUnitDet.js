@@ -90,7 +90,17 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
   const { data: sector = {}, isSectorLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "EnterpriseType");
   const { data: place = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "PlaceOfActivity");
   const { data: dataitem = {}, isstructuretypeLoading } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "TradeStructureSubtype");
-
+  BoundaryList &&
+    BoundaryList["egov-location"] &&
+    BoundaryList["egov-location"].TenantBoundary.map((ob) => {
+      if (ob?.hierarchyType.code === "REVENUE") {
+        Boundary.push(...ob.boundary);
+        Zonal.push(...ob.boundary.children);
+        ob.boundary.children.map((obward) => {
+          cmbWardNo.push(...obward.children);
+        });
+      }
+    });
   const [value2, setValue2] = useState();
   const [value3, setValue3] = useState(formDataPage?.tradeLicenseDetail?.structurePlace?.isResurveyed === false ?  "NO" : "YES");
   const [isInitialPageRender, setIsInitialPageRender] = useState();
@@ -122,7 +132,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
   const [structureType, setStructureType] = useState(formDataPage?.tradeLicenseDetail?.structureType ? cmbStructure.filter((structure) => structure?.code.includes(formDataPage?.tradeLicenseDetail?.structureType))[0] : "");
   const [structurePlaceSubtype, setStructurePlaceSubtype] = useState(formDataPage?.tradeLicenseDetail?.structurePlaceSubtype ? cmbPlace.filter((place) => place?.code.includes(formDataPage?.tradeLicenseDetail?.structurePlaceSubtype))[0] : "");
   const [filteredPlaceSubtype, setFilteredPlaceSubtype] = useState([]);
-  const [ownershipCategory, setOwnershipCategory] = useState(formDataPage?.tradeLicenseDetail?.ownershipCategory ? ownershipCategoryMenumain.filter((category) => category?.code.includes(formDataPage?.tradeLicenseDetail?.ownershipCategory))[0] : "");
+  const [ownershipCategory, setOwnershipCategory] = useState(formDataPage?.tradeLicenseDetail?.ownershipCategory ? ownershipCategoryMenumain.filter((category) => category?.code.includes(formDataPage?.tradeLicenseDetail?.ownershipCategory.code))[0] : "");
   const [isResurveyed, setIsResurveyed] = useState(formDataPage?.tradeLicenseDetail?.structurePlace?.isResurveyed === true ? menu.filter((menu) => menu?.code.includes(formDataPage?.tradeLicenseDetail?.structurePlace?.isResurveyed))[0] : "");
   const [blockNo, setBlockNo] = useState(formDataPage?.tradeLicenseDetail?.structurePlace?.blockNo ? formDataPage?.tradeLicenseDetail?.structurePlace?.blockNo : "");
   const [surveyNo, setSurveyNo] = useState(formDataPage?.tradeLicenseDetail?.structurePlace?.setSurveyNo ? formDataPage?.tradeLicenseDetail?.structurePlace?.setSurveyNo : "");
@@ -196,17 +206,7 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
       LBs.push(ob);
     });
 
-  BoundaryList &&
-    BoundaryList["egov-location"] &&
-    BoundaryList["egov-location"].TenantBoundary.map((ob) => {
-      if (ob?.hierarchyType.code === "REVENUE") {
-        Boundary.push(...ob.boundary);
-        Zonal.push(...ob.boundary.children);
-        ob.boundary.children.map((obward) => {
-          cmbWardNo.push(...obward.children);
-        });
-      }
-    });
+
 
   cmbWardNo.map((wardmst) => {
     wardmst.localnamecmb = wardmst.wardno + ' ( ' + wardmst.localname + ' )';
