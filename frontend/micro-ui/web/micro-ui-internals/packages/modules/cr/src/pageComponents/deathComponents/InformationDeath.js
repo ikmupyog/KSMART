@@ -13,6 +13,7 @@ import { useParams } from "react-router-dom";
 
 const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath }) => {
   console.log(formData);
+  console.log(isEditDeath);
   const [isEditDeathPageComponents, setIsEditDeathPageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
   const stateId = Digit.ULBService.getStateId();
@@ -42,14 +43,10 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   const convertEpochToDate = (dateEpoch) => {
     if (dateEpoch) {
       const dateFromApi = new Date(dateEpoch);
-      console.log(dateFromApi);
       let month = dateFromApi.getMonth() + 1;
-      console.log(month);
       let day = dateFromApi.getDate();
-      console.log(day);
       let year = dateFromApi.getFullYear();
-      console.log(year);
-      month = (month > 9 ? "" : "0") + month;
+        month = (month > 9 ? "" : "0") + month;
       day = (day > 9 ? "" : "0") + day;
       return `${year}-${month}-${day}`;
       //  return `${day}-${month}-${year}`;
@@ -98,7 +95,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
     AgeUnitvalue["birth-death-service"].AgeUnit.map((ob) => {
       cmbAgeUnit.push(ob);
     });
-  console.log(cmbAgeUnit);
   Nation &&
     Nation["common-masters"] &&
     Nation["common-masters"].Country &&
@@ -155,13 +151,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   //     : convertEpochToDate(formData?.InformationDeath?.DateOfDeath)
   // );
 
-  console.log(
-    isEditDeath &&
-      isEditDeathPageComponents === false &&
-      (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
-      ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath)
-      : formData?.InformationDeath?.DateOfDeath
-  );
+ 
   const [FromDate, setFromDate] = useState(
     isEditDeath &&
       isEditDeathPageComponents === false &&
@@ -633,7 +623,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
     setSelectedNationality(value);
   }
   function selectDeceasedGender(value) {
-    // console.log("gender" + value);
     setselectedDeceasedGender(value);
   }
   function setSelectDeceasedLastNameMl(e) {
@@ -760,7 +749,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
         workFlowData.startdateperiod <= Difference_In_DaysRounded &&
         workFlowData.enddateperiod >= Difference_In_DaysRounded
     );
-    console.log(currentWorgFlow[0].WorkflowCode);
+    // console.log(currentWorgFlow[0].WorkflowCode);
     // workFlowCode=currentWorgFlow[0].WorkflowCode;
     setWorkFlowCode(currentWorgFlow[0].WorkflowCode); 
     if (value.code === "HOSPITAL") {
@@ -966,10 +955,10 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   const handleTimeChange = (value, cb) => {
     if (typeof value === "string") {
       cb(value);
-      console.log(value);
+      // console.log(value);
       let hour = value;
       let period = hour > 12 ? "PM" : "AM";
-      console.log(period);
+      // console.log(period);
       setDeathTime(value);
     }
   };
