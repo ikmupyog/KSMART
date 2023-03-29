@@ -94,9 +94,9 @@ public void validateCommonFields(DeathDtlRequest request) {
         DeathInformantDtls  informantDtls = deathdtls.getDeathInformantDtls();
         DeathInitiatorDtls  initiatorDtls = deathdtls.getDeathInitiatorDtls();
 //Common validation for all cases
-            if((basicInfo.getDateOfDeath()<=0) || (basicInfo.getTimeOfDeath()<=0)) { 
-                    throw new CustomException("DEATH DATE INVALID", "The date and time can't be null");
-            }
+            // if((basicInfo.getDateOfDeath()<=0) || (basicInfo.getTimeOfDeath()<=0)) { 
+            //         throw new CustomException("DEATH DATE INVALID", "The date and time can't be null");
+            // }
 
             if(StringUtils.isEmpty(basicInfo.getDeceasedGender()) ){
                 throw new CustomException("DECEASED GENDER INVALID", "The deceased  gender" +
