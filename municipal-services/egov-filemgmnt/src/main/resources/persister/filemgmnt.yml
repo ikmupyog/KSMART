@@ -746,7 +746,40 @@ serviceMaps:
           - jsonPath: $.Drafting.*.draftType
 
           - jsonPath: $.Drafting.*.assigner
+  - version: 1.0
+    description: Save Enquiry  in egov_filemgmnt database, eg_fm_enquiry
+    fromTopic: save_fm_enquiry
+    isTransaction: true
+    queryMaps:
+      - query: INSERT INTO public.eg_fm_enquiry(id, tenantid, businessservice, modulename, filecode, latitude, longitude, assigner, status, imagefilestoreid, createdby, createdtime, lastmodifiedby, lastmodifiedtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        basePath: Enquiry.*
+        jsonMaps:
+          - jsonPath: $.Enquiry.*.uuid
 
-   
+          - jsonPath: $.Enquiry.*.tenantId
+
+          - jsonPath: $.Enquiry.*.businessService
+
+          - jsonPath: $.Enquiry.*.moduleName
+
+          - jsonPath: $.Enquiry.*.fileCode
+
+          - jsonPath: $.Enquiry.*.latitude
+
+          - jsonPath: $.Enquiry.*.longitude
+
+          - jsonPath: $.Enquiry.*.assigner
+
+          - jsonPath: $.Enquiry.*.status
+
+          - jsonPath: $.Enquiry.*.imageFileStoreId
+
+          - jsonPath: $.Enquiry.*.auditDetails.createdBy
+
+          - jsonPath: $.Enquiry.*.auditDetails.createdTime
+
+          - jsonPath: $.Enquiry.*.auditDetails.lastModifiedBy
+
+          - jsonPath: $.Enquiry.*.auditDetails.lastModifiedTime
 
 

@@ -95,6 +95,11 @@ public class FMConfiguration {
     @Value("${persister.update.draftingstatus.topic:}")
     private String updateDraftingStatusTopic;
 
+    //enquiry config
+
+    @Value("${persister.save.enquiry.topic:}")
+    private  String saveEnquiryTopic;
+
 
 
     // PDF Gen
