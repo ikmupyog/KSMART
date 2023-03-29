@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { convertEpochToDateDMY } from "../../utils";
 import SearchFields from "./SearchFields";
 import MobileSearchApplication from "./MobileSearchApplication";
-import { downloadDocument } from "../../utils/uploadedDocuments";
 
 const mystyle = {
   bgOpacity: "1",
@@ -30,6 +29,10 @@ const registyBtnStyle = {
 };
 
 const  SearchMarriageInclusion = ({ tenantId, t, onSubmit, data, count, onInclusionClick }) => {
+
+
+  const stateId = Digit.ULBService.getStateId();
+  // let { data: newConfig, isLoading } = Digit.Hooks.tl.useMDMS.getFormConfig(stateId, {});
   // const [FileData, setFileData] = useState([]);
   
   console.log(data,"data");

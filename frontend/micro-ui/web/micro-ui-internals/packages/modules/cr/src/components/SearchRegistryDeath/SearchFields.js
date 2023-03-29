@@ -51,7 +51,7 @@ const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) =>
     return <>
         <SearchField>
             <label><span className="mandatorycss">*</span> {t("Registry ID")}</label>
-            <TextInput name="id" inputRef={register({})} 
+            <TextInput name="Id" inputRef={register({})} 
              placeholder={`${t("Registry ID")}`} 
              {...(validation = { isRequired: false, type: "text", title: t("DC_INVALID_REGISTRY_ID") })}/>
         </SearchField>
@@ -59,7 +59,7 @@ const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) =>
             <label>
                  {/* <span className="mandatorycss">*</span>  */}
             {t("Aknowledgement Number")}</label>
-            <TextInput name="deathACKNo" inputRef={register({})}
+            <TextInput name="DeathACKNo" inputRef={register({})}
                 placeholder={`${t("DC_DEATH_AKNOWLEDGEMENT_NUMBER")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_REGISTRATION_NUMBER") })} />
         </SearchField>
@@ -77,7 +77,7 @@ const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) =>
                 {t("DC_DATE_DEATH")}</label>
             <Controller
                 render={(props) => <DatePicker date={props.value} onChange={props.onChange}  {...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: false, title: t("CR_INVALID_DATE") })} />}
-                name="DeathDate"
+                name="DateOfDeath"
                 control={control}
             />
         </SearchField>
@@ -87,7 +87,7 @@ const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) =>
                 {t("DC_GENDER")}</label>
             <Controller
                 control={control}
-                name="deceasedGender"
+                name="DeceasedGender"
                 render={(props) => (
                     <Dropdown
                         selected={props.value}
@@ -104,18 +104,18 @@ const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) =>
         </SearchField>
         <SearchField>
             <label> {t("DC_DECEASED_FATHER_NAME")}</label>
-            <TextInput name="deceasedFatherName" inputRef={register({})} placeholder={`${t("DC_DECEASED_FATHER_NAME")}`}
+            <TextInput name="FatherNameEn" inputRef={register({})} placeholder={`${t("DC_DECEASED_FATHER_NAME")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_DECEASED_FATHER_NAME") })} />
         </SearchField>
         <SearchField>
             <label> {t("DC_DECEASED_MOTHER_NAME")}</label>
-            <TextInput name="deceasedMotherName" inputRef={register({})} placeholder={`${t("DC_DECEASED_MOTHER_NAME")}`}
+            <TextInput name="MotherNameEn" inputRef={register({})} placeholder={`${t("DC_DECEASED_MOTHER_NAME")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_NAME_MOTHER_NAME") })} />
         </SearchField>
 
         <SearchField>
             <label>{t("DC_HUSBAND_OR_WIFE_NAME")}</label>
-            <TextInput name="deceasedHusbandWifeName" inputRef={register({})}
+            <TextInput name="SpouseNameEn" inputRef={register({})}
                 placeholder={`${t("DC_HUSBAND_OR_WIFE_NAME")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_HUSBAND_OR_WIFE_NAME") })} />
         </SearchField>
@@ -131,7 +131,7 @@ const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) =>
                         select={props.onChange}
                         onBlur={props.onBlur}
                         option={cmbhospital}
-                        optionKey="hospitalName"
+                        optionKey="DeathPlaceType"
                         t={t}
                         placeholder={`${t("CD_HOSPITAL")}`}
                     />
@@ -207,14 +207,13 @@ const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) =>
             <SubmitBar label={t("ES_COMMON_SEARCH")} submit />
             <p onClick={() => {
                 reset({ 
-                    id: "", 
-                    DeceasedName: "", 
-                    DeathDate: "",
-                    Gender: "",
-                    WifeorMotherName: "",
-                    HusbandorfatherName: "",
-                    HospitalName:"",
-                    RegistrationNumber:"",
+                    Id: "", 
+                    DeathACKNo:"",
+                    DeceasedFirstNameEn: "", 
+                    DateOfDeath: "",
+                    DeceasedGender: "",
+                    SpouseNameEn: "",
+                    DeathPlaceType:"",
                     offset: 0,
                     limit: 10,
                     sortBy: "dateofreport",

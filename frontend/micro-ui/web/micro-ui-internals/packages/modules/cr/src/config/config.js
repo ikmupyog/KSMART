@@ -447,6 +447,7 @@ export const newConfig = [
         type: "component",
         hideInEmployee: false,
       },
+     
     ],
   },
   {
@@ -465,12 +466,12 @@ export const newConfig = [
         },
         key: "AbandonedChildDetails",
         withoutLabel: true,
-        nextStep: "abandoned-birth-initiator-details",
+        nextStep: "abandoned-birth-informar-details",
         hideInEmployee: false,
       }, 
       {
-        route: "abandoned-birth-initiator-details",
-        component: "AbandonedBirthInitiatorDetails",
+        route: "abandoned-birth-informar-details",
+        component: "AbandonedBirthInformarDetails",
         texts: {
           headerCaption: "",
           header: "",
@@ -479,7 +480,7 @@ export const newConfig = [
           skipText: "",
         },
         withoutLabel: true,
-        key: "AbandonedBirthInitiatorDetails",
+        key: "AbandonedBirthInformarDetails",
         nextStep: null,
         type: "component",
         hideInEmployee: false,
@@ -1287,76 +1288,7 @@ export const newConfig = [
       },
     ],
   },
-   {
-    head: "BornOutsideIndia Routing",
-    body: [
-      {
-        type: "component",
-        route: "born-outside-child-details",
-        isMandatory: true,
-        component: "BornOutsideChildDetails",
-        texts: {
-          headerCaption: "",
-          header: "",
-          cardText: "",
-          submitBarLabel: "CS_COMMON_NEXT",
-        },
-        key: "BornOutsideChildDetails",
-        withoutLabel: true,
-        nextStep: " born-outside-parents-details",
-        hideInEmployee: false,
-      },
-      {
-        route: "born-outside-parents-details",
-        component: "BornOutsideParentsDetails",
-        texts: {
-          headerCaption: "",
-          header: "",
-          cardText: "",
-          submitBarLabel: "CS_COMMON_NEXT",
-          skipText: "",
-        },
-        withoutLabel: true,
-        key: "BornOutsideParentsDetails",
-        nextStep: "born-outside-address",
-        type: "component",
-        hideInEmployee: false,
-      },
-      {
-        route: "born-outside-address",
-        component: "BornOutsideAddressPage",
-        texts: {
-          headerCaption: "",
-          header: "",
-          cardText: "",
-          submitBarLabel: "CS_COMMON_NEXT",
-          skipText: "",
-        },
-        withoutLabel: true,
-        key: "BornOutsideAddressBirthDetails",
-        nextStep: "born-outside-static-infn",
-        type: "component",
-        hideInEmployee: false,
-      },
-      {
-        route: "born-outside-static-infn",
-        component: "BornOutsideStaticInfn",
-        texts: {
-          headerCaption: "",
-          header: "",
-          cardText: "",
-          submitBarLabel: "CS_COMMON_NEXT",
-          skipText: "",
-        },
-        withoutLabel: true,
-        key: "BornOutsideStaticInfn",
-        nextStep: null,
-        type: "component",
-        hideInEmployee: false,
-      },
-    ],
-  },
-
+ 
   {
     head: "Marriage Correction Routing",
     body: [

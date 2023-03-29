@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, Fragment } from "react";
-import ButtonSelector from "./ButtonSelector";
+// import ButtonSelector from "./ButtonSelector";
 import { Close } from "./svgindex";
 import { useTranslation } from "react-i18next";
 import RemoveableTag from "./RemoveableTag";
@@ -185,6 +185,31 @@ const UploadDoc = (props) => {
     setHasFile(false);
   }
 
+
+const ButtonSelector = (props) => {
+  let theme = "selector-button-primary";
+  switch (props.theme) {
+    case "border":
+      theme = "selector-button-border";
+      break;
+    default:
+      theme = "selector-button-primary";
+      break;
+  }
+  return (
+    <button
+      className={props.isDisabled ? "selector-button-primary-disabled" : theme}
+      type={props.type || "submit"}
+      form={props.formId}
+      onClick={props.onSubmit}
+      disabled={props.isDisabled}
+      style={props.style ? props.style : null}
+    >
+      <h2 style={{ ...props?.textStyles, ...{ width: "100%" } }}>{props.label}</h2>
+    </button>
+  );
+};
+
   useEffect(() => handleEmpty(), [inpRef?.current?.files])
 
   useEffect(() => handleChange(), [props.message]);
@@ -192,7 +217,7 @@ const UploadDoc = (props) => {
   const showHint = props?.showHint || false;
 
   return (
-    <div style={{width: "20rem", height: "10rem", marginTop: "5rem"}}>
+    <div style={{padding:"1rem"}}>
       {showHint && <p className="cell-text">{t(props?.hintText)}</p>}
       <div className={`upload-file ${props.disabled ? " disabled" : ""}`} style={extraStyles?.uploadFile ? extraStyles?.uploadFile : {}}>
         <div style= {extraStyles ? extraStyles?.containerStyles : null}>

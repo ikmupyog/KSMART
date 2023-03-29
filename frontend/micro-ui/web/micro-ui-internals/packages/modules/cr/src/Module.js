@@ -21,11 +21,14 @@ import MarriageInclusion from "./pages/citizen/MarriageInclusion";
 import BirthInclusion from "./pages/citizen/BirthInclusion";
 import BirthInclusionEditPage from "./pageComponents/birthComponents/BirthInclusionPage";
 import SearchBirthInclusion from './components/SearchBirthInclusion';
+import BirthInclusionModal from './components/BirthInclusionModal';
+
 import SearchMarriageInclusion from "./components/SearchMarriageInclusion";
 import CreateAdoptions from "./pages/citizen/Adoption";
 import CreateStillBirthRegistration from "./pages/citizen/StillBirthRegistration";
 import CreateBornOutsideRegistration from "./pages/citizen/BornOutsideReg";
-import CreateAbandonedBirth from "./pages/citizen/AbandonedBirth";
+// import CreateAbandonedBirth from "./pages/citizen/AbandonedBirth";
+import CreateAbandonedBirth from "./pages/employee/Abandoned-birth-route";
 
 import ParentsDetails from "../src/pageComponents/birthComponents/ParentsDetails";
 import BirthPlaceHospital from "../src/pageComponents/birthComponents/BirthPlaceHospital";
@@ -158,7 +161,10 @@ import MarriageCorrectionEditPage from "./pages/citizen/MarriageInclusionEdit";
 
 // import CreateAbandonedBirth from "./pages/employee/Abandoned-birth";
 import AbandonedChildDetails from "./pageComponents/abandonedBirthComponents/AbandonedChildDetails";
-import AbandonedBirthInitiatorDetails from "./pageComponents/abandonedBirthComponents/AbandonedBirthInitiatorDetails";
+import AbandonedBirthInformarDetails from "./pageComponents/abandonedBirthComponents/AbandonedBirthInformarDetails";
+import BornOutsideAcknowledgement from "./pages/citizen/BornOutsideReg/BornOutsideAcknowledgement";
+
+
 import InformationDeathAband from "./pageComponents/deathAbandoned/InformationDeathAband";
 
 export const CRModule = ({ stateCode, userType, tenants }) => {
@@ -277,6 +283,7 @@ const componentsToRegister = {
   CRMarriageInclusions:MarriageInclusion,
   CRBirthInclusionEditPage: BirthInclusionEditPage,
   SearchBirthInclusion,
+  BirthInclusionModal,
   BirthPlaceHospital,
   BirthPlaceInstitution,
   BirthPlaceHome,
@@ -378,7 +385,7 @@ const componentsToRegister = {
   InformationDeathAband,
   // CreateAbandonedBirth,
   AbandonedChildDetails,
-  AbandonedBirthInitiatorDetails,
+  AbandonedBirthInformarDetails,
   //Marriage
   CRCreateMarriageRegistration: CreateMarriageRegistration,
   GroomDetails,
@@ -390,7 +397,8 @@ const componentsToRegister = {
   MarriageRegistration,
   HouseMarriageRegistration,
   witnessdetails,
-  FormFieldContainer
+  FormFieldContainer,
+  BornOutsideAcknowledgement,
 };
 
 export const initCRComponents = () => {

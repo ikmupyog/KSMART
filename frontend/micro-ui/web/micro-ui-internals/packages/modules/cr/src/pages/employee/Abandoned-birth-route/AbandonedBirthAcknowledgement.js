@@ -2,7 +2,7 @@ import { Banner, Card, CardText, LinkButton, Loader, SubmitBar } from "@egovernm
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { convertToBirthRegistration } from "../../../utils";
+import { convertToAbandonedBirthRegistration } from "../../../utils";
 import getPDFData from "../../../utils/getTLAcknowledgementData";
 
 const GetActionMessage = (props) => {
@@ -25,7 +25,7 @@ const BannerPicker = (props) => {
   return (
     <Banner
       message={GetActionMessage(props)}
-      applicationNumber={props.data?.ChildDetails[0]?.applicationNumber}
+      applicationNumber={props.data?.AbandonedChildDetails[0]?.applicationNumber}
       info={props.isSuccess ? props.applicationNumber : ""}
       successful={props.isSuccess}
     />
@@ -42,6 +42,8 @@ const AbandonedBirthAcknowledgement = ({ data, onSuccess, userType, isEditBirth 
     data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
     isRenewTrade
   );
+  
+  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_CREATE_ABANDONEDBIRTH_REG", {});
   // const mutation1 = Digit.Hooks.cr.useCivilRegistrationAPI(
   //   data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
   //   false
@@ -70,7 +72,7 @@ const AbandonedBirthAcknowledgement = ({ data, onSuccess, userType, isEditBirth 
         if (!resubmit) {
           // let formdata = !isEditBirth ? convertToDeathRegistration(data) : convertToEditTrade(data, fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter(y => y.module === "CR") : []);
 
-          let formdata = !isEditBirth ? convertToBirthRegistration(data) : [];
+          let formdata = !isEditBirth ? convertToAbandonedBirthRegistration(data) : [];
           // formdata.BirthDetails[0].tenantId = formdata?.BirthDetails[0]?.tenantId || tenantId1;
           if (!isEditBirth) {
             mutation.mutate(formdata, {

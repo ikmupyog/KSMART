@@ -11,7 +11,7 @@ const AddressSameAsAbove = ({ config, onSelect, userType, formData, isPrsentAddr
   const { t } = useTranslation();
   let validation = {};
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? isEditDeath : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : false);
 
   // const [isPrsentAddress, setIsPrsentAddress] = useState(formData?.AddressSameAsAboveDetails?.isPrsentAddress);
 
@@ -81,7 +81,8 @@ const AddressSameAsAbove = ({ config, onSelect, userType, formData, isPrsentAddr
               <div className="col-md-12" >
                 <CheckBox label={t("CR_SAME_AS_ABOVE")} onChange={setSameAsPresent} value={isPrsentAddress} 
                 checked={isPrsentAddress} 
-                disable={isDisableEdit} />
+                disable={isDisableEdit} 
+                />
               </div>
             </div>
           </div>

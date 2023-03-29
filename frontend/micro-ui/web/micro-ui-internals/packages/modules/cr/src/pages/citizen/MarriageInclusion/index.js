@@ -126,25 +126,6 @@ const MarriageInclusion = () => {
   return (
     <React.Fragment>
       <BackButton>{t("CS_COMMON_BACK2")}</BackButton>
-      {/* <Switch> */}
-        {/* {config.map((routeObj, index) => {
-          const { component, texts, inputs, key, isSkipEnabled } = routeObj;
-          const Component = typeof component === "string" ? Digit.ComponentRegistryService.getComponent(component) : component;
-          return (
-            <Route path={`${match.path}/${routeObj.route}`} key={index}>
-              <Component
-                config={{ texts, inputs, key, isSkipEnabled }}
-                onSelect={handleSelect}
-                onSkip={handleSkip}
-                t={t}
-                formData={params}
-                onAdd={handleMultiple}
-                userType="citizen"
-                onInclusionClick={gotoEditInclusion}
-              />
-            </Route>
-          );
-        })} */}
         <SearchMarriageInclusion
           t={t}
           onSubmit={onSubmit}
@@ -155,7 +136,6 @@ const MarriageInclusion = () => {
           count={count}
           // onClick={handleClick}
         />
-      {/* </Switch> */}
     </React.Fragment>
   );
 };

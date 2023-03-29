@@ -35,7 +35,7 @@ const SearchRegistryDeath = ({ tenantId, t, onSubmit, data, filestoreId, isSucce
     defaultValues: {
       offset: 0,
       limit: 10,
-      sortBy: "DateOfDeath",
+      // sortBy: "DateOfDeath",
       sortOrder: "DESC",
     },
   });
@@ -43,7 +43,7 @@ const SearchRegistryDeath = ({ tenantId, t, onSubmit, data, filestoreId, isSucce
   useEffect(() => {
     register("offset", 0);
     register("limit", 10);
-    register("sortBy", "DateOfDeath");
+    // register("sortBy", "DateOfDeath");
     register("sortOrder", "DESC");
   }, [register]);
 
@@ -80,7 +80,7 @@ const SearchRegistryDeath = ({ tenantId, t, onSubmit, data, filestoreId, isSucce
     () => [
       {
         Header: t("CR_COMMON_COL_APP_NO"),
-        accessor: "deathApplicationNo",
+        accessor: "DeathACKNo",
         disableSortBy: true,
         Cell: ({ row }) => {
           return (
@@ -89,7 +89,7 @@ const SearchRegistryDeath = ({ tenantId, t, onSubmit, data, filestoreId, isSucce
                 {/* <Link to={`/digit-ui/employee/cr/application-deathdetails/${row.original.deathApplicationNo}`}>
                     {row.original.deathApplicationNo} "188e3dc8-17c8-4ce3-80bf-fb7b8b6df944",
                   </Link> */}
-                {row.original.DeathACKNo}
+                {row.original?.InformationDeath?.DeathACKNo}
               </span>
             </div>
           );
@@ -131,7 +131,7 @@ const SearchRegistryDeath = ({ tenantId, t, onSubmit, data, filestoreId, isSucce
                 <span className="link" onClick={() => downloadDocument(row?.original?.filestoreId)}>
                   Download
                 </span>
-              ) : (
+              ) : ( 
                 <Loader />
               )}
             </div>
@@ -188,9 +188,9 @@ const SearchRegistryDeath = ({ tenantId, t, onSubmit, data, filestoreId, isSucce
       ) : (
         FileData !== "" && (
           <React.Fragment>
-            {/* {(filestoreId && isSuccess === true )? <div style={registyBtnStyle}>
+            {(filestoreId && isSuccess === true )? <div style={registyBtnStyle}>
         <SubmitBar label={t("Download Certificate")} onSubmit={() => downloadDocument(filestoreId)} />
-       </div>:<Loader/>} */}
+       </div>:<Loader/>}
             <Table
               t={t}
               data={FileData ? FileData : data}
