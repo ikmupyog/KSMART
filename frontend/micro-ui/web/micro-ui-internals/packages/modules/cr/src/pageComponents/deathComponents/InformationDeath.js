@@ -762,7 +762,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
     );
     console.log(currentWorgFlow[0].WorkflowCode);
     // workFlowCode=currentWorgFlow[0].WorkflowCode;
-    setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+    setWorkFlowCode(currentWorgFlow[0].WorkflowCode); 
     if (value.code === "HOSPITAL") {
       //Institution
       setSelectedDeathPlaceInstId(null);

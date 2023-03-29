@@ -52,7 +52,7 @@ const DeathCertificateSearch = ({ path }) => {
 
   const { data: { deathCertificateDtls: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useRegistrySearchDeath({ tenantId, filters: payload, config })
 
-  console.log(searchResult);
+  console.log("searchResult",searchResult);
   let payloadData = { id: isSuccess && searchResult[0]?.id, source: "sms" };
   let registryPayload = Object.keys(payloadData).filter((k) => payloadData[k]).reduce((acc, key) => ({ ...acc, [key]: typeof payloadData[key] === "object" ? payloadData[key].code : payloadData[key] }), {});
   const { data: { filestoreId: storeId } = {} } = Digit.Hooks.cr.useRegistryDownloadDeath({ tenantId, filters: registryPayload, config });

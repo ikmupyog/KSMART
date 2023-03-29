@@ -22,6 +22,7 @@ const CreateBirthRegistration = ({ parentUrl }) => {
   // let { data: newConfig, isLoading } = Digit.Hooks.tl.useMDMS.getFormConfig(stateId, {});
   let config = [];
   let { data: newConfig, isLoading } = true;
+  
   newConfig = newConfigCR;
   newConfig?.forEach((obj) => {
     config = config.concat(obj.body.filter((a) => !a.hideInCitizen));
