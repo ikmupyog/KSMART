@@ -106,7 +106,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData,isEditBirth=fal
   //   }
   // }
   function setSelectinitiatorMobile(e) {
-    if (e.target.value.trim().length != 0) {
+    if (e.target.value.trim().length >= 0) {
       setinitiatorMobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
     }
   }

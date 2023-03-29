@@ -12,15 +12,9 @@ const CrFlowApp = ({ parentUrl}) => {
   const match = useRouteMatch();  
   const { pathname } = useLocation();
   const history = useHistory();  
-  const [isEditBirth,setIsEditBirth]=useState(Digit.Hooks.useSessionStorage("CR_BIRTH_EDIT_FLAG", {})[0]);
-  console.log("testdata" + Digit.Hooks.useSessionStorage("CR_BIRTH_EDIT_FLAG", {})[0]);
+  const [isEditBirth,setIsEditBirth]=useState(Digit.Hooks.useSessionStorage("CR_BIRTH_EDIT_FLAG", {})[0] ? true : false);
+  //console.log(Digit.Hooks.useSessionStorage("CR_BIRTH_EDIT_FLAG", {})[0].value ? Digit.Hooks.useSessionStorage("CR_BIRTH_EDIT_FLAG", {})[0] : false);
 
-  // if(Digit.Hooks.useSessionStorage("CR_BIRTH_EDIT_FLAG", {})[0] === true){
-  //   isEditBirth = true;
-  //   console.log("jet" + isEditBirth);
-  // } else {
-  //   isEditBirth = false;
-  // }
   const [params, setParams, clearParams] = isEditBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_BIRTH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_BIRTH_REG", {});
 
   // console.log("params"+JSON.stringify(params));

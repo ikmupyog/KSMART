@@ -68,19 +68,17 @@ const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
         let tenantId1 = data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId;
         data.tenantId = tenantId1;
         if (!resubmit) {
-          // let formdata = !isEditBirth ? convertToDeathRegistration(data) : convertToEditTrade(data, fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter(y => y.module === "CR") : []);
-
           let formdata = !isEditBirth ? convertToBirthRegistration(data) : convertToEditBirthRegistration(data);
           // formdata.BirthDetails[0].tenantId = formdata?.BirthDetails[0]?.tenantId || tenantId1;
-          if (!isEditBirth) {
+          // if (!isEditBirth) {
+          //   mutation.mutate(formdata, {
+          //     onSuccess,
+          //   })
+          // } else {
             mutation.mutate(formdata, {
               onSuccess,
             })
-          } else {
-            mutation.mutate(formdata, {
-              onSuccess,
-            })
-          }
+          // }
           // else{
           //   if((fydata["egf-master"] && fydata["egf-master"].FinancialYear.length > 0 && isDirectRenewal))
           //   {

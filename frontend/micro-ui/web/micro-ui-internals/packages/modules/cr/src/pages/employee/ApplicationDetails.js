@@ -13,7 +13,7 @@ const ApplicationDetails = () => {
   const { id: applicationNumber } = useParams();
   const [showToast, setShowToast] = useState(null);
   // const [callUpdateService, setCallUpdateValve] = useState(false);
-  const [businessService, setBusinessService] = useState("BIRTHHOSP21"); //DIRECTRENEWAL
+  const [businessService, setBusinessService] = useState(""); //DIRECTRENEWAL BIRTHHOSP21
   const [numberOfApplications, setNumberOfApplications] = useState([]);
   const [allowedToNextYear, setAllowedToNextYear] = useState(false);
   sessionStorage.setItem("applicationNumber", applicationNumber);
@@ -21,7 +21,6 @@ const ApplicationDetails = () => {
   const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDetail(t, tenantId, applicationNumber);
   const [params, setParams, clearParams] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_REG", {}) 
   const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false) 
-  console.log('p',applicationDetails);
   const stateId = Digit.ULBService.getStateId();
 
   const {
@@ -33,7 +32,18 @@ const ApplicationDetails = () => {
   } = Digit.Hooks.cr.useApplicationActions(tenantId);
 
   // let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
-  console.log(applicationDetails?.applicationData?.applicationtype);
+  // console.log(applicationDetails?.applicationData?.applicationtype);
+
+  useEffect(()=>{
+    if(applicationDetails?.applicationData?.workflowcode && window.location.href.includes("/application-Adoptiondetails")){
+      setBusinessService(applicationDetails?.applicationData?.workflowcode)
+    }else if(window.location.href.includes("/application-details")){
+      setBusinessService("BIRTHHOSP21")
+    }else{
+      setBusinessService("")
+    }
+  },[applicationDetails])
+
   let workflowDetails = Digit.Hooks.useWorkflowDetails({
     tenantId: applicationDetails?.applicationData.tenantid || tenantId,
     id: applicationDetails?.applicationData?.applicationNumber,
