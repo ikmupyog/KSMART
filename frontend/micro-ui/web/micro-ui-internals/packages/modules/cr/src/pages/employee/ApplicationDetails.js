@@ -19,7 +19,9 @@ const ApplicationDetails = () => {
   sessionStorage.setItem("applicationNumber", applicationNumber);
   // const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
   const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDetail(t, tenantId, applicationNumber);
-
+  const [params, setParams, clearParams] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_REG", {}) 
+  const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false) 
+  console.log('p',applicationDetails);
   const stateId = Digit.ULBService.getStateId();
 
   const {
@@ -63,32 +65,50 @@ const ApplicationDetails = () => {
       setBusinessService(workflowDetails?.data?.applicationBusinessService);
     }
   }, [workflowDetails.data]);
+
+  useEffect(()=>{
+    if(window.location.href.includes("/application-Adoptiondetails")){
+      let appData ={}
+      appData.AdoptionChildDetails =applicationDetails?.applicationData,
+      appData.AdoptionParentsDetails =applicationDetails?.applicationData?.ParentsDetails,
+      appData.AdoptionAddressBasePage =applicationDetails?.applicationData?.AddressBirthDetails,
+      appData.AdoptionInitiatorDetails =applicationDetails?.applicationData?.InitiatorinfoDetails,
+      setParams(appData)
+      let tmp =applicationDetails
+      tmp?.applicationDetails?.splice(0,1,{title : "CR_ADOPTION_SUMMARY_DETAILS",asSectionHeader:  true })
+      setFlag(true)
+    }else{
+      let tmp =applicationDetails
+      tmp?.applicationDetails?.splice(0,1,{asSectionHeader:  true ,title : "CR_BIRTH_SUMMARY_DETAILS"})
+      setFlag(false)
+    }
+  },[applicationDetails])
   if (workflowDetails?.data?.processInstances?.length > 0) {
     let filteredActions = [];
     filteredActions = get(workflowDetails?.data?.processInstances[0], "nextActions", [])?.filter((item) => item.action != "ADHOC");
     let actions = orderBy(filteredActions, ["action"], ["desc"]);
     if ((!actions || actions?.length == 0) && workflowDetails?.data?.actionState) workflowDetails.data.actionState.nextActions = [];
 
-    workflowDetails?.data?.actionState?.nextActions?.forEach((data) => {
-      // console.log(data);
-      if (applicationDetails?.applicationData?.applicationtype === "CRBRNR") {
-        if (data.action == "EDIT") {
-          // /digit-ui/employee/cr/cr-flow/child-details/${applicationNumber}
-          (data.redirectionUrl = {
+    workflowDetails?.data?.actionState?.nextActions?.forEach(data => {
+      if (data.action == "EDIT") {
+        // /digit-ui/employee/cr/cr-flow/child-details/${applicationNumber}
+        if(window.location.href.includes("/application-Adoptiondetails")){
+         
+          data.redirectionUrl = {
+            pathname: `/digit-ui/employee/cr/cr-adoptionflow`,
+            state: {applicationDetails,isEdit:true}
+          },
+
+            data.tenantId = stateId
+        }else if((window.location.href.includes("/application-birthdetails"))){
+          data.redirectionUrl = {
             pathname: `/digit-ui/employee/cr/cr-flow/child-details`,
             state: applicationDetails,
-          }),
-            (data.tenantId = stateId);
+          },
+            data.tenantId = stateId
         }
-      } else if (applicationDetails?.applicationData?.applicationtype === "CRBRSB") {
-        if (data.action == "EDIT") {
-          // /digit-ui/employee/cr/cr-flow/child-details/${applicationNumber}
-          (data.redirectionUrl = {
-            pathname: `/digit-ui/employee/cr/cr-flow/stillbirth-child-details`,
-            state: applicationDetails,
-          }),
-            (data.tenantId = stateId);
-        }
+        
+        
       }
     });
   }
@@ -190,7 +210,7 @@ const ApplicationDetails = () => {
         {/* <label style={{ fontSize: "19px", fontWeight: "bold",marginLeft:"15px" }}>{`${t("Birth Application Summary Details")}`}</label> */}
       </div>
       <ApplicationDetailsTemplate
-        header={"Birth Application Summary Details"}
+        header={"CR_BIRTH_SUMMARY_DETAILS"}
         applicationDetails={applicationDetails}
         isLoading={isLoading}
         isDataLoading={isLoading}

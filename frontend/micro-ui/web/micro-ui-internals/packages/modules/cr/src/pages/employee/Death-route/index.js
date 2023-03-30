@@ -14,7 +14,7 @@ import SpecifyCorrection from "../SpecifyCorrection";
 import InformationDeathAband from "../../../pageComponents/deathAbandoned/InformationDeathAband";
 // const CrFlowApp = ({ parentUrl, isEditBirth}) => {
 
-const DeathCrFlowApp = ({ parentUrl,  props, isEditDeath=false}) => {
+const DeathCrFlowApp = ({ parentUrl,  props, }) => {
   console.log(JSON.stringify(props));
   console.log(window.location.href.includes("isEditDeath"));
   const { t } = useTranslation();
@@ -23,7 +23,7 @@ const DeathCrFlowApp = ({ parentUrl,  props, isEditDeath=false}) => {
   const { pathname } = useLocation();
   const history = useHistory();
   // const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_DEATH_EDIT", {});
-  // const [isEditDeath,setIseditDeath]=useState(Digit.Hooks.useSessionStorage("CR_DEATH_EDIT_FLAG", {})[0]);
+  const [isEditDeath,setIseditDeath]=useState(Digit.Hooks.useSessionStorage("CR_DEATH_EDIT_FLAG", {})[0]);
   const [params, setParams, clearParams] = isEditDeath ? Digit.Hooks.useSessionStorage("CR_DEATH_EDIT", {}) : Digit.Hooks.useSessionStorage("CR_DEATH_EDIT", {});
 
   console.log(isEditDeath);

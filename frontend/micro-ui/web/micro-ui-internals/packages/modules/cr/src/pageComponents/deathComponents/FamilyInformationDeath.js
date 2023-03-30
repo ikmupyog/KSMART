@@ -44,12 +44,14 @@ const FamilyInformationDeath = ({ config, onSelect, userType, formData, isEditDe
   //     : null
   // );
   const [SpouseNameEN, setSpouseNameEN] = useState(
-    isEditDeath ? formData?.FamilyInformationDeath?.SpouseNameEN?.formData?.FamilyInformationDeath?.SpouseNameEN : ""
-  );
+   formData?.FamilyInformationDeath?.SpouseNameEN ? formData?.FamilyInformationDeath?.SpouseNameEN : ""
 
+  );
+  
   // const [SpouseNameEN, setSpouseNameEN] = useState(
   //   formData?.FamilyInformationDeath?.SpouseNameEN ? formData?.FamilyInformationDeath?.SpouseNameEN : ""
   // );
+
   const [SpouseNameMl, setSpouseNameMl] = useState(
     formData?.FamilyInformationDeath?.SpouseNameMl ? formData?.FamilyInformationDeath?.SpouseNameMl : ""
   );
