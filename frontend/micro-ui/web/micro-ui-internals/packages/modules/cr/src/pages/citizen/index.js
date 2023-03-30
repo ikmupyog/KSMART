@@ -67,7 +67,7 @@ const App = () => {
       <AppContainer>
         <PrivateRoute path={`${path}/cr-birth-creation`} component={CreateBirthRegistration} />
         <PrivateRoute path={`${path}/cr-name-inclusion`} component={CRBirthInclusions} />
-        <PrivateRoute parentRoute={path} path={`${path}/birth-inclusion-edit/marriage-re`} component={CRBirthInclusionEditPage} />
+        <PrivateRoute parentRoute={path} path={`${path}/birth-inclusion-edit`} component={CRBirthInclusionEditPage} />
         <PrivateRoute path={`${path}/marriage-correction-edit`} component={MarriageCorrectionEditPage} />
         <PrivateRoute path={`${path}/cr-birth-nac`} component={CreateBirthNACRegistration} />
         <PrivateRoute path={`${path}/cr-adoption`} component={CreateAdoption} />

@@ -149,6 +149,7 @@ import useResistryDownloadBirth from "./cr/useResistryDownloadBirth"
 import useRegistrySearchBirth from "./cr/useRegistrySearchBirth";
 import useRegistrySearchDeath from "./cr/useRegistrySearchDeath";
 import useSearchMarriage from "./cr/useSearchMarriage";
+import useRegistrySearchMarriage from "./cr/useRegistrySearchMarriage";
 
 import useSearchDeath  from "./cr/useSearchDeath";
 import useSearchStillBirth  from "./cr/useSearchStillBirth";
@@ -356,6 +357,7 @@ const cr = {
   useRegistryDownloadDeath,
   useResistryDownloadBirth,
   useRegistrySearchBirth,
+  useRegistrySearchMarriage,
   useSearchDeath ,
   useSearchStillBirth,
   useApplicationDetail: useCRApplicationDetail,

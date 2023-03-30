@@ -40,16 +40,16 @@ const  SearchMarriageInclusion = ({ tenantId, t, onSubmit, data, count, onInclus
     defaultValues: {
       offset: 0,
       limit: 10,
-      sortBy: "DateOfDeath",
+      sortBy: "dateofmarriage",
       sortOrder: "DESC",
     },
   });
 
   useEffect(() => {
-    register("offset", 0);
-    register("limit", 10);
-    register("sortBy", "DateOfDeath");
-    register("sortOrder", "DESC");
+    // register("offset", 0);
+    // register("limit", 10);
+    // register("sortBy", "dateofmarriage");
+    // register("sortOrder", "DESC");
   }, [register]);
 
   const onSort = useCallback((args) => {
@@ -102,31 +102,31 @@ const  SearchMarriageInclusion = ({ tenantId, t, onSubmit, data, count, onInclus
           );
         },
       },
-      {
-        Header: t("CR_COMMON_COL_APP_DATE"),
-        disableSortBy: true,
-        accessor: (row) => GetCell(row.AuditDetails.createdTime ? convertEpochToDateDMY(row.AuditDetails.createdTime) : ""),
-      },
-      {
-        Header: t("CR_COMMON_COL_DOD"),
-        disableSortBy: true,
-        accessor: (row) => GetCell(row.InformationDeath.DateOfDeath ? convertEpochToDateDMY(row.InformationDeath.DateOfDeath) : ""),
-      },
-      {
-          Header: t("TL_APPLICATION_TYPE_LABEL"),
-          disableSortBy: true,
-          accessor: (row) => GetCell(t(`TL_LOCALIZATION_APPLICATIONTYPE_${row.StatisticalInfo.applicationType}`)),
-      },
-      {
-        Header: t("CR_COMMON_DECEASED_NAME"),
-        disableSortBy: true,
-        accessor: (row) => GetCell(row.InformationDeath.DeceasedFirstNameEn + row.InformationDeath.DeceasedMiddleNameEn + row.InformationDeath.DeceasedLastNameEn || "-"),
-      },
-      {
-        Header: t("CR_COMMON_DEATH_PLACE"),
-        disableSortBy: true,
-        accessor: (row) => GetCell(row.InformationDeath.DeathPlace || "-"),
-      },
+      // {
+      //   Header: t("CR_COMMON_COL_APP_DATE"),
+      //   disableSortBy: true,
+      //   accessor: (row) => GetCell(row.AuditDetails.createdTime ? convertEpochToDateDMY(row.AuditDetails.createdTime) : ""),
+      // },
+      // {
+      //   Header: t("CR_COMMON_COL_DOD"),
+      //   disableSortBy: true,
+      //   accessor: (row) => GetCell(row.InformationDeath.DateOfDeath ? convertEpochToDateDMY(row.InformationDeath.DateOfDeath) : ""),
+      // },
+      // {
+      //     Header: t("TL_APPLICATION_TYPE_LABEL"),
+      //     disableSortBy: true,
+      //     accessor: (row) => GetCell(t(`TL_LOCALIZATION_APPLICATIONTYPE_${row.StatisticalInfo.applicationType}`)),
+      // },
+      // {
+      //   Header: t("CR_COMMON_DECEASED_NAME"),
+      //   disableSortBy: true,
+      //   accessor: (row) => GetCell(row.InformationDeath.DeceasedFirstNameEn + row.InformationDeath.DeceasedMiddleNameEn + row.InformationDeath.DeceasedLastNameEn || "-"),
+      // },
+      // {
+      //   Header: t("CR_COMMON_DEATH_PLACE"),
+      //   disableSortBy: true,
+      //   accessor: (row) => GetCell(row.InformationDeath.DeathPlace || "-"),
+      // },
       // {
       //   Header: t("Download Certificate"),
       //   disableSortBy: true,
@@ -171,6 +171,7 @@ const  SearchMarriageInclusion = ({ tenantId, t, onSubmit, data, count, onInclus
   //   }
   //   setFileData(tmpData);
   // }, [filestoreId]);
+
   return (
     <React.Fragment>
       <div style={mystyle}>

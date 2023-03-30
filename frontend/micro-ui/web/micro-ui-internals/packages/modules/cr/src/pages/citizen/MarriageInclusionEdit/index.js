@@ -101,14 +101,15 @@ const MarriageInclusionEdit = () => {
     );
   }
 
-  // const configTemp = {
-  //   enabled: !!(payload && Object.keys(payload).length > 0),
-  // };
+  const configTemp = {
+    enabled: !!(payload && Object.keys(payload).length > 0),
+  };
 
-  // const { data: { deathCertificateDtls: searchResult, Count: count } = {}, isLoadingData, isSuccess } = Digit.Hooks.cr.useRegistrySearchDeath({
-  //   filters: payload,
-  //   configTemp,
-  // });
+  const { data: { deathCertificateDtls: searchResult, Count: count } = {}, isLoadingData, isSuccess } = Digit.Hooks.cr.useSearchMarriage({
+    filters: payload,
+    configTemp,
+  });
+  console.log(searchResult);
   // useEffect(() => {
   //   console.log("searchResult", searchResult);
   // }, [searchResult, isLoadingData]);
