@@ -13,6 +13,7 @@ import FormStep from "../../../../../react-components/src/molecules/FormStep";
 const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => {
   // console.log(JSON.stringify(formData));  
   // console.log(formData);
+  // console.log(isEditBirth);
   const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
   const [workFlowCode, setWorkFlowCode] = useState();
@@ -35,7 +36,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
   const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(false);
   const [DifferenceInDaysRounded, setDifferenceInDaysRounded] = useState();
   const [DifferenceInTime, setDifferenceInTime] = useState();
-
+  const {uuid:uuid,} =Digit.UserService.getUser().info ; 
+  // console.log(Digit.UserService.getUser().info);
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
@@ -915,7 +917,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
         vehicleType, vehicleHaltPlace, vehicleRegistrationNo, vehicleFromEn, vehicleToEn, vehicleFromMl,
         vehicleToMl, setadmittedHospitalEn, vehicleDesDetailsEn,
         publicPlaceType, localityNameEn, localityNameMl, streetNameEn, streetNameMl, publicPlaceDecpEn,
-        birthWeight, pregnancyDuration, medicalAttensionSub, deliveryMethods, IsEditChangeScreen
+        birthWeight, pregnancyDuration, medicalAttensionSub, deliveryMethods, IsEditChangeScreen,
+        uuid
       });
     }
   };
