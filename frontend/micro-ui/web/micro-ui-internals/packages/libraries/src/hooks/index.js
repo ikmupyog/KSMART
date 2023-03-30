@@ -110,6 +110,7 @@ import useTLPaymentHistory from "./tl/userPaymentHistory";
 import useTLApplicationDetail from "./tl/useApplicationDetail";
 import useTLApplicationActions from "./tl/useApplicationActions";
 import useTLFetchBill from "./tl/useFetchBill";
+import useTradeLicenseCorrectionAPI from "./tl/useTradeLicenseCorrectionAPI";
 
 import useTLGenderMDMS from "./tl/useTLGenderMDMS";
 import useTLInbox from "./tl/useInbox";
@@ -339,7 +340,8 @@ const tl = {
   useFetchBill: useTLFetchBill,
   useTLApplicationDetails,
   useTradeLicensePdeAPI,
-  useSearchPde
+  useSearchPde,
+  useTradeLicenseCorrectionAPI
 };
 const cr = {
   useTenants: useTenantsCR,

@@ -81,6 +81,7 @@ import TLCorrectionActivity from "./pageComponents/TLCorrectionActivity";
 import TLCorrectionPlaceOfActivity from "./pageComponents/TLCorrectionPlaceOfActivity";
 import CorrectionCheckPage from "./pages/citizen/Correction/CorrectionCheckPage"
 import TLCorrectionDetailsView from "./pageComponents/TLCorrectionDetailsView"
+import TLCorrectionAcknowledgement from "./pages/citizen/Correction/TLCorrectionAcknowledgement"
 export const TLModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
 
@@ -206,7 +207,8 @@ const componentsToRegister = {
   TLCorrectionActivity,
   TLCorrectionPlaceOfActivity,
   CorrectionCheckPage,
-  TLCorrectionDetailsView
+  TLCorrectionDetailsView,
+  TLCorrectionAcknowledgement
 };
 export const initTLComponents = () => {
   Object.entries(componentsToRegister).forEach(([key, value]) => {
