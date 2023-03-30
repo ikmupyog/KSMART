@@ -1,10 +1,10 @@
 import Urls from "../atoms/urls";
 import { Request } from "../atoms/Utils/Request";
 
-export const CRStillBirthService = {
+export const CRBornOutSideIndiaBirthService = {
   create: (details, tenantId) =>
     Request({
-      url: Urls.crstillbirth.create,
+      url: Urls.crbornoutsideindiabirth.create,
       data: details,
       useCache: false,
       setTimeParam: false,
@@ -15,7 +15,7 @@ export const CRStillBirthService = {
     }),
   search: (details) =>
     Request({
-      url: Urls.crstillbirth.search,
+      url: Urls.crbornoutsideindiabirth.search,
       useCache: false,
       setTimeParam: false,
       userService: true,
@@ -25,7 +25,7 @@ export const CRStillBirthService = {
     }),
   CRRegistrySearchBirth: ({ filters }) =>
     Request({
-      url: Urls.crstillbirth.registry_search_birth,
+      url: Urls.crbornoutsideindiabirth.registry_search_birth,
       useCache: false,
       method: "POST",
       auth: true,
@@ -34,7 +34,7 @@ export const CRStillBirthService = {
     }),
   CRResistryDownloadBirth: (id, source) =>
     Request({
-      url: Urls.crstillbirth.registry_download,
+      url: Urls.crbornoutsideindiabirth.registry_download,
       data: {},
       useCache: false,
       method: "POST",
@@ -44,9 +44,9 @@ export const CRStillBirthService = {
       userInfo: true,
       userDownloadInfo: true,
     }),
-  CRStillBirthsearch: ({ tenantId, filters }) =>
+  CRBornOutsideIndiasearch: ({ tenantId, filters }) =>
     Request({
-      url: Urls.crstillbirth.search,
+      url: Urls.crbornoutsideindiabirth.search,
       useCache: false,
       method: "POST",
       auth: true,
@@ -55,7 +55,7 @@ export const CRStillBirthService = {
     }),
   update: (details, tenantId) =>
     Request({
-      url: Urls.crstillbirth.update,
+      url: Urls.crbornoutsideindiabirth.update,
       data: details,
       useCache: false,
       setTimeParam: false,

@@ -18,6 +18,7 @@ import AbandonedChildDetails from "../../pageComponents/abandonedBirthComponents
 
 const App = () => {
   const { path, url, ...match } = useRouteMatch();
+  const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false) 
   let isSuccessScreen = window.location.href.includes("acknowledgement");
   // let isCommonPTPropertyScreen = window.location.href.includes("/tl/tradelicence/new-application/property-details");
   const ApplicationDetails = Digit.ComponentRegistryService.getComponent("CRCitizenApplicationDetails");
@@ -43,7 +44,9 @@ const App = () => {
   const MarriageInclusionEditPage = Digit?.ComponentRegistryService?.getComponent('MarriageInclusionEditPage');
   const CRBirthInclusionEditPage = Digit?.ComponentRegistryService?.getComponent('CRBirthInclusionEditPage');
 
-
+React.useEffect(()=>{
+  setFlag(false)
+},[])
   // const getBackPageNumber = () => {
   //   let goBacktoFromProperty = -1;
   //   if (

@@ -104,7 +104,8 @@ const Urls = {
     createpde:"/tl-services/pde/_create",
     searchpde:"/tl-services/pde/_search",
     updatepde:"/tl-services/pde/_update",
-    updatepdewf: "/tl-services/pde/_updatewf"
+    updatepdewf: "/tl-services/pde/_updatewf",
+    createcorrection: "/tl-services/correction/_create",
   },
   cr: {
     create: "/birth-services/cr/createbirth",
@@ -118,6 +119,11 @@ const Urls = {
     create_adoption:'/birth-services/cr/createadoption'    
   },
   crstillbirth: {
+    create: "/birth-services/cr/createstillbirth",
+    search:"/birth-services/cr/searchstillbirth",
+    update:"/birth-services/cr/updatestillbirth",  
+  },
+  crbornoutsideindiabirth: {
     create: "/birth-services/cr/createstillbirth",
     search:"/birth-services/cr/searchstillbirth",
     update:"/birth-services/cr/updatestillbirth",  

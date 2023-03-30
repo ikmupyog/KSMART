@@ -110,6 +110,7 @@ import useTLPaymentHistory from "./tl/userPaymentHistory";
 import useTLApplicationDetail from "./tl/useApplicationDetail";
 import useTLApplicationActions from "./tl/useApplicationActions";
 import useTLFetchBill from "./tl/useFetchBill";
+import useTradeLicenseCorrectionAPI from "./tl/useTradeLicenseCorrectionAPI";
 
 import useTLGenderMDMS from "./tl/useTLGenderMDMS";
 import useTLInbox from "./tl/useInbox";
@@ -124,6 +125,8 @@ import useCivilRegistrationAPI from "./cr/useCivilRegistrationAPI";
 import useCivilRegistrationMarriageAPI from "./cr/useCivilRegistrationMarriageAPI";
 import useCvilRegistrationAdoptionApi from "./cr/useCvilRegistrationAdoptionApi";
 import useCivilRegistrationStillBirthAPI from "./cr/useCivilRegistrationStillBirthAPI";
+import useCivilRegistrationBornOutsideIndiaBirthAPI from "./cr/useCivilRegistrationBornOutsideIndiaBirthAPI";
+import useApplicationBornOutsideIndiaBirthDetail from "./cr/useApplicationBornOutsideIndiaBirthDetail"; 
 
 import useCivilRegistrationDeathAPI from "./cr/useCivilRegistrationDeathAPI";
 // import useTradeLicenseSearch from "./tl/useTradeLicenseSearch";
@@ -138,6 +141,7 @@ import useApplicationStillBirthDetail from "./cr/useApplicationStillBirthDetail"
 import useApplicationDeathDetail from "./cr/useApplicationDeathDetail"; 
 import useCRApplicationActions from "./cr/useApplicationActions";
 import useCRStillBirthApplicationActions from "./cr/useApplicationStillBirthActions";
+import useApplicationBornOutsideIndiaBirthActions from "./cr/useApplicationBornOutsideIndiaBirthActions";
 import useCRDeathApplicationActions from "./cr/useApplicationDeathActions";
 import useCRGenderMDMS from "./cr/useCRGenderMDMS";
 import useCRInbox from "./cr/useInbox";
@@ -336,7 +340,8 @@ const tl = {
   useFetchBill: useTLFetchBill,
   useTLApplicationDetails,
   useTradeLicensePdeAPI,
-  useSearchPde
+  useSearchPde,
+  useTradeLicenseCorrectionAPI
 };
 const cr = {
   useTenants: useTenantsCR,
@@ -345,6 +350,7 @@ const cr = {
   useCivilRegistrationMarriageAPI,
   useCvilRegistrationAdoptionApi,
   useCivilRegistrationStillBirthAPI,
+  useCivilRegistrationBornOutsideIndiaBirthAPI,
   useCivilRegistrationDeathAPI,
   useCRGenderMDMS,
   useInbox: useCRInbox,
@@ -361,8 +367,10 @@ const cr = {
   useApplicationDetail: useCRApplicationDetail,
   useApplicationMarriageDetail,
   useApplicationStillBirthDetail:useApplicationStillBirthDetail,
+  useApplicationBornOutsideIndiaBirthDetail,
   useApplicationActions: useCRApplicationActions,
   useCRStillBirthApplicationActions:useCRStillBirthApplicationActions,
+  useApplicationBornOutsideIndiaBirthActions,
   useCRDeathApplicationActions: useCRDeathApplicationActions,
   useApplicationDeathDetail,
   useFetchBill: useCRFetchBill,
