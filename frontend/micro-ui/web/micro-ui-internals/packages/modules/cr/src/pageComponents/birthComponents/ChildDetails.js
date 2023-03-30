@@ -13,7 +13,7 @@ import FormStep from "../../../../../react-components/src/molecules/FormStep";
 const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false }) => {
   // console.log(JSON.stringify(formData));  
   // console.log(formData);
-  console.log(isEditBirth);
+  // console.log(isEditBirth);
   const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
   const [workFlowCode, setWorkFlowCode] = useState();
