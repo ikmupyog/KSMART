@@ -428,7 +428,7 @@ serviceMaps:
 
                 - jsonPath: $.MarriageDetails.*.BrideAddressDetails.stateIdPermanent
 
-                - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntInsideKeralaPostOffice
+                - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntInKeralaAdrPostOffice
 
                 - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntInKeralaAdrPincode
 
@@ -446,7 +446,7 @@ serviceMaps:
 
                 - jsonPath: $.MarriageDetails.*.BrideAddressDetails.brideGroomPermanent
 
-                - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntInsideKeralaLBName
+                - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntInKeralaAdrLBName
 
                 - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutsideKeralaPostOfficeEn
 
@@ -583,7 +583,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.stateIdPermanent
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntInsideKeralaPostOffice
+            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntInKeralaAdrPostOffice
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntInKeralaAdrPincode
 
@@ -601,7 +601,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.brideGroomPermanent
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntInsideKeralaLBName
+            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntInKeralaAdrLBName
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOutsideKeralaPostOfficeEn
 
@@ -1130,7 +1130,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.stateIdPermanent
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntInsideKeralaPostOffice
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.PermntInKeralaAdrPostOffice
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntInKeralaAdrPincode
 
@@ -1160,7 +1160,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.id
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntInsideKeralaLBName
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntInKeralaAdrLBName
 
 
         -  query : UPDATE public.eg_marriage_permanent_address_details
@@ -1201,7 +1201,7 @@ serviceMaps:
 
              - jsonPath: $.MarriageDetails.*.GroomAddressDetails.stateIdPermanent
 
-             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntInsideKeralaPostOffice
+             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.PermntInKeralaAdrPostOffice
 
              - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntInKeralaAdrPincode
 
@@ -1231,5 +1231,5 @@ serviceMaps:
 
              - jsonPath: $.MarriageDetails.*.id
 
-             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntInsideKeralaLBName
+             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntInKeralaAdrLBName
 
