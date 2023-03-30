@@ -7,6 +7,7 @@ import org.egov.filemgmnt.util.FMConstants;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -20,8 +21,8 @@ public class DraftingSearchCriteria {
     @JsonProperty("tenantId")
     private String tenantId;
 
-    @JsonProperty("id")
-    private String id;// Drafting id
+    @JsonProperty("uuid")
+    private String uuid;// Drafting id
     @JsonProperty("businessService")
     private String businessService;
     @JsonProperty("moduleName")
@@ -33,4 +34,9 @@ public class DraftingSearchCriteria {
     @JsonProperty("status")
     private String status;
 
+    @JsonProperty("assigner")
+    public String assigner;
+
+    @JsonProperty("RequestInfo")
+    private String requestInfo;
 }

@@ -18,6 +18,10 @@ public class DraftingRowMapper implements ResultSetExtractor<List<Drafting>>,Bas
             result.add(Drafting.builder()
                     .businessService(rs.getString("businessService"))
                             .draftType(rs.getString("draftType"))
+                            .moduleName(rs.getString("moduleName"))
+                            .fileCode(rs.getString("fileCode"))
+                            .status(rs.getString("status"))
+                            .uuid(rs.getString(("assigner")))
 
 
                     .build());

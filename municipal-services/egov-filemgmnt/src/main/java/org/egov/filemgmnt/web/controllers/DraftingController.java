@@ -49,8 +49,35 @@ public class DraftingController {
         return ResponseEntity.ok(response);
     }
 
-    
-    @PostMapping("/applicantservice/_searchDrafting")
+    @PostMapping("/applicantservices/_updateDrafting")
+    public ResponseEntity<DraftingResponse> updateDrafting(@RequestBody DraftingRequest request) {
+
+        List<Drafting> files = draftingService.updateDrafting(request);
+
+        DraftingResponse response = DraftingResponse.builder()
+                .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+                        Boolean.TRUE))
+                .drafting(files)
+                .build();
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/applicantservices/_updateDraftingStatus")
+    public ResponseEntity<DraftingResponse> updateDraftingStatus(@RequestBody DraftingRequest request) {
+
+        List<Drafting> drfiles = draftingService.updateDraftingStatus(request);
+
+        DraftingResponse response = DraftingResponse.builder()
+                .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+                        Boolean.TRUE))
+                .drafting(drfiles)
+                .build();
+        return ResponseEntity.ok(response);
+    }
+
+
+
+    @PostMapping("/applicantservices/_searchDrafting")
     public ResponseEntity<DraftingSearchResponse>searchDraft(@RequestBody final RequestInfoWrapper request,
                                                              @ModelAttribute DraftingSearchCriteria searchCriteria){
         if (log.isDebugEnabled()) {

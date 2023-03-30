@@ -26,41 +26,59 @@ import lombok.Setter;
 @Builder
 public class Drafting {
 
-    @Size(max=256)
-        @JsonProperty("uuid")
-        private String uuid;
-		
-		@NotNull
-        @Size(max=256)
-        @JsonProperty("draftingChild")
-        private String draftingChild;
-	
-		@NotNull
-        @Size(max=256)
-        @JsonProperty("businessService")
-        private String businessService;
-		
-		@Schema(type = "string", description = "Workflow code")
-     // @NotBlank(message = "Workflow code is required")
-		@Size(max = 64, message = "Workflow code length cannot exceed 64 characters")
-		@JsonProperty("workflowCode")
-		private String workflowCode;
-		
-		@Schema(type = "string", description = "Draft Type")
-		@Size(max = 64, message = "Draft Type length cannot exceed 64 characters")
-		@JsonProperty("draftType")
-		private String draftType;
-		
-		@Size(max=64)
-        @JsonProperty("fileStoreId")
-        private String fileStoreId;
-		
-		@Schema(type = "string", description = "status")
-		@Size(max = 64, message = "status length cannot exceed 64 characters")
-		@JsonProperty("status")
-		private String status;
+	@Schema(type = "string", description = "drafting id")
+	@Size(max=256)
+	@JsonProperty("uuid")
+	private String uuid;
 
-        @JsonProperty("auditDetails")
-        private AuditDetails auditDetails;
+
+	@Schema(type = "string", description = "Tenant identification number", example = 		"kl.cochin")
+	@Size(max = 64)
+	@JsonProperty("tenantId")
+	private String tenantId;
+
+
+	@NotNull
+	@Size(max=256)
+	@JsonProperty("businessService")
+	private String businessService;
+
+	@NotNull
+	@Size(max=256)
+	@JsonProperty("moduleName")
+	private String moduleName;
+
+
+	@Size(max=64)
+	@JsonProperty("fileCode")
+	private String fileCode;
+
+	@Schema(type = "string", description = "Draft Type")
+	@Size(max = 64, message = "Draft Type length cannot exceed 64 characters")
+	@JsonProperty("draftType")
+	private String draftType;
+
+	@Schema(type = "string", description = "Storing the Draft Content")
+	@Size(max = 1024)
+	@JsonProperty("draftText")
+	private String draftText;
+
+
+	@Schema(type = "string", description = " draft created user")
+	@Size(max=64)
+	@JsonProperty("assigner")
+	private String assigner;
+
+	@Size(max=64)
+	@JsonProperty("fileStoreId")
+	private String fileStoreId;
+
+	@Schema(type = "string", description = "status")
+	@Size(max = 64, message = "status length cannot exceed 64 characters")
+	@JsonProperty("status")
+	private String status;
+
+	@JsonProperty("auditDetails")
+	private AuditDetails auditDetails;
     
 }

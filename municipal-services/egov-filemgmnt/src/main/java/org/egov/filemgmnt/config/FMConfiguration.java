@@ -89,8 +89,17 @@ public class FMConfiguration {
     @Value("${persister.save.drafting.topic:}")
     private String saveDraftingTopic;
 
-    @Value("${persister.save.draftingchild.topic:}")
-    private String saveDraftingChildTopic;
+    @Value("${persister.update.drafting.topic:}")
+    private String updateDraftingTopic;
+
+    @Value("${persister.update.draftingstatus.topic:}")
+    private String updateDraftingStatusTopic;
+
+    //enquiry config
+
+    @Value("${persister.save.enquiry.topic:}")
+    private  String saveEnquiryTopic;
+
 
     @Value("${persister.save.draftprocessinstance.topic:}")
     private String saveDraftProcessInstance;

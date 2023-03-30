@@ -25,7 +25,7 @@ import lombok.Setter;
 
 public class DraftingRequest {
 
-    @JsonProperty("RequestInfo")
+    	@JsonProperty("RequestInfo")
 	    private RequestInfo requestInfo;
 
 	    @JsonProperty("Drafting")
