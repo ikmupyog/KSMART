@@ -4,15 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.egov.filemgmnt.service.EnquiryService;
 import org.egov.filemgmnt.util.FMUtils;
 import org.egov.filemgmnt.util.ResponseInfoFactory;
-import org.egov.filemgmnt.web.models.Enquiry.Enquiry;
-import org.egov.filemgmnt.web.models.Enquiry.EnquiryRequest;
-import org.egov.filemgmnt.web.models.Enquiry.EnquiryResponse;
+import org.egov.filemgmnt.web.models.Enquiry.*;
+import org.egov.filemgmnt.web.models.RequestInfoWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.egov.filemgmnt.web.models.Enquiry.EnquirySearchCriteria;
 
 import java.util.List;
 
@@ -22,12 +19,14 @@ import java.util.List;
 public class EnquiryController {
     @Autowired
     private final ResponseInfoFactory responseInfoFactory;
-    @Autowired
     private final EnquiryService enquiryService;
+
+
 
     public EnquiryController(ResponseInfoFactory responseInfoFactory, EnquiryService enquiryService) {
         this.responseInfoFactory = responseInfoFactory;
         this.enquiryService = enquiryService;
+
     }
 
     @PostMapping("/applicantservices/_saveEnquiry")
@@ -42,6 +41,21 @@ public class EnquiryController {
                 .enquiryList(enquiryDetails)
                 .build();
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/applicantservices/_searchEnquiry")
+    public ResponseEntity<EnquirySearchResponse> SearchEnquiry(@RequestBody final RequestInfoWrapper request,
+                                                                        @ModelAttribute EnquirySearchCriteria enquirySearchCriteria) {
+        if (log.isDebugEnabled()) {
+            log.debug("Enquiry-search:  \n{}", FMUtils.toJson(enquirySearchCriteria));
+        }
+        final List<Enquiry> result = enquiryService.SearchEnquiry(request.getRequestInfo(), enquirySearchCriteria);
+        return ResponseEntity.ok(EnquirySearchResponse.builder()
+                .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+                        Boolean.TRUE))
+                .enquiries(result)
+                .build());
 
     }
 }
+
