@@ -32,7 +32,6 @@ const FormStep = ({
 
 
   const goNext = (data) => {
-    console.log("ONSELECT reached==",data);
     onSelect(data);
   };
 

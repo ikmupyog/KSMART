@@ -1,5 +1,5 @@
 import cloneDeep from "lodash/cloneDeep";
-import { CRService } from "../../elements/CR";
+import { CRBornOutSideIndiaBirthService } from "../../elements/CRBORNOUTSIDEINDIABIRTH";
 // import { convertEpochToDateDMY } from  "../../utils";
 
 const stringReplaceAll = (str = "", searcher = "", replaceWith = "") => {
@@ -32,25 +32,25 @@ const convertEpochToDate = (dateEpoch) => {
 //     address?.pincode && t(address?.pincode) ? `, ${address.pincode}` : " "
 //   }`;
 // };
-export const CRsearch = {
+export const CRBornOutsideIndiasearch = {
   all: async (tenantId, filters = {}) => {
-    const response = await CRService.CRsearch({ tenantId, filters });
+    const response = await CRBornOutSideIndiaBirthService.CRBornOutsideIndiasearch({ tenantId, filters });
     return response;
   },
   application: async (tenantId, filters = {}) => {
-    const response = await CRService.CRsearch({ tenantId, filters });
+    const response = await CRBornOutSideIndiaBirthService.CRBornOutsideIndiasearch({ tenantId, filters });
     return response.ChildDetails[0];
   },
 
   numberOfApplications: async (tenantId, filters = {}) => {
-    const response = await CRService.CRsearch({ tenantId, filters });
+    const response = await CRBornOutSideIndiaBirthService.CRStillBirthsearch({ tenantId, filters });
     return response.ChildDetails;
   },
 
   applicationDetails: async (t, tenantId, applicationNumber, userType) => {
     // console.log("applicationNumber" + applicationNumber);
     const filter = { applicationNumber };
-    const response = await CRsearch.application(tenantId, filter);
+    const response = await CRStillBirthsearch.application(tenantId, filter);
     // console.log(response);
     // const propertyDetails =
     //   response?.tradeLicenseDetail?.additionalDetail?.propertyId &&
@@ -59,7 +59,7 @@ export const CRsearch = {
     if (response?.licenseNumber) {
       const birthNumbers = response?.applicationNumber;
       const filters = { birthNumbers, offset: 0 };
-      numOfApplications = await CRsearch.numberOfApplications(tenantId, filters);
+      numOfApplications = await CRBornOutsideIndiasearch.numberOfApplications(tenantId, filters);
     }
     let employeeResponse = [];
     const Birthdetails = {

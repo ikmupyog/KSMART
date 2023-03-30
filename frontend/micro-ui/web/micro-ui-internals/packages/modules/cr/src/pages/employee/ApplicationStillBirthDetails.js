@@ -7,7 +7,7 @@ import { Header, CardHeader } from "@egovernments/digit-ui-react-components";
 import get from "lodash/get";
 import orderBy from "lodash/orderBy";
 
-const ApplicationDetails = () => {
+const ApplicationStillBirthDetails = () => {
   const { t } = useTranslation();
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const { id: applicationNumber } = useParams();
@@ -19,8 +19,8 @@ const ApplicationDetails = () => {
   sessionStorage.setItem("applicationNumber", applicationNumber);
   // const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
   const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDetail(t, tenantId, applicationNumber);
-  const [params, setParams, clearParams] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_REG", {}) 
-  const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false) 
+  const [params, setParams, clearParams] =  Digit.Hooks.useSessionStorage("CR_EDIT_STILLBIRTH_REG", {}) 
+  const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_EDIT_STILLBIRTH_FLAG", false) 
   const stateId = Digit.ULBService.getStateId();
 
   const {
@@ -76,7 +76,7 @@ const ApplicationDetails = () => {
       if (data.action == "EDIT") {
         // /digit-ui/employee/cr/cr-flow/child-details/${applicationNumber}      
           data.redirectionUrl = {
-            pathname: `/digit-ui/employee/cr/cr-flow/child-details`,
+            pathname: `/digit-ui/employee/cr/cr-flow/stillbirth-child-details`,
             state: applicationDetails,
           },
             data.tenantId = stateId
@@ -182,7 +182,7 @@ const ApplicationDetails = () => {
         {/* <label style={{ fontSize: "19px", fontWeight: "bold",marginLeft:"15px" }}>{`${t("Birth Application Summary Details")}`}</label> */}
       </div>
       <ApplicationDetailsTemplate
-        header={"CR_BIRTH_SUMMARY_DETAILS"}
+        header={"CR_STILLBIRTH_SUMMARY_DETAILS"}
         applicationDetails={applicationDetails}
         isLoading={isLoading}
         isDataLoading={isLoading}
@@ -200,4 +200,6 @@ const ApplicationDetails = () => {
   );
 };
 
-export default ApplicationDetails;
+
+
+export default ApplicationStillBirthDetails;
