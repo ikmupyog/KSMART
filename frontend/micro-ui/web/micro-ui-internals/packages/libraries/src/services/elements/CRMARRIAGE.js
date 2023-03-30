@@ -13,15 +13,23 @@ export const CRMarriageService = {
       params: {},
       auth: true,
     }),
-  search: (details) =>
+  search: ({ tenantId, filters }) =>
     Request({
       url: Urls.crmarriage.search,
       useCache: false,
-      setTimeParam: false,
-      userService: true,
+      userService: false,
       method: "POST",
-      params: details,
+      params: { tenantId, ...filters },
       auth: true,
+    }),
+    CRRegistrySearchMarriage: ({ filters }) =>
+    Request({
+      url: Urls.crmarriage.registry_search_marriage,
+      useCache: false,
+      method: "POST",
+      auth: true,
+      userService: false,
+      params: { ...filters },
     }),
   update: (details, tenantId) =>
     Request({
