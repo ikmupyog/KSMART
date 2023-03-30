@@ -1,5 +1,6 @@
 package org.egov.kssmSamaswasamScheme3.web.models.SamaswasamScheme3;
 
+import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 
 import java.sql.Timestamp;
@@ -194,16 +195,18 @@ private	String	remarks	;
 @JsonProperty("cdposubmit_date")
 private	String	cdposubmit_date	;
 
+@PastOrPresent
 @JsonFormat(pattern = "dd/MM/yyyy")
 @JsonProperty("dtdecision_date")
-private	String	dtdecision_date	;
+private	Date	dtdecision_date	;
 
 @JsonProperty("chvreason")
 private	String	chvreason	;
 
+@PastOrPresent
 @JsonFormat(pattern = "dd/MM/yyyy")
 @JsonProperty("penstart_date")
-private	String	penstart_date	;
+private	Date	penstart_date	;
 
 @JsonProperty("verifier_id")
 private	Integer	verifier_id	;
