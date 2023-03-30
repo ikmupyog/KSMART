@@ -122,6 +122,11 @@ const Urls = {
     search:"/birth-services/cr/searchstillbirth",
     update:"/birth-services/cr/updatestillbirth",  
   },
+  crbornoutsideindiabirth: {
+    create: "/birth-services/cr/createstillbirth",
+    search:"/birth-services/cr/searchstillbirth",
+    update:"/birth-services/cr/updatestillbirth",  
+  },
   crdeath: {
     create: "/death-services/v1/deathdetails/_createdeath ",
     search: "/death-services/v1/deathdetails/_searchdeath",
