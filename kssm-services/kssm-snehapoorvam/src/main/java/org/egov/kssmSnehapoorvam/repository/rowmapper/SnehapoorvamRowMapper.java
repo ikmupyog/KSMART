@@ -1,4 +1,5 @@
 package org.egov.kssmSnehapoorvam.repository.rowmapper;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class SnehapoorvamRowMapper implements ResultSetExtractor<List<m_Snehapoo
                     .scheme_id(rs.getInt("scheme_id"))
                     .district(rs.getInt("district"))
                     .application_no(rs.getInt("application_no"))
-                    .application_date(rs.getDate("application_date"))
+                    .application_date(rs.getString("application_date"))
                     .office_typeid(rs.getInt("office_typeid"))
                     .office_nameid(rs.getString("office_nameid"))
                     .applicant_namemal(rs.getString("applicant_namemal"))
@@ -33,4 +34,3 @@ public class SnehapoorvamRowMapper implements ResultSetExtractor<List<m_Snehapoo
         return result;
     }
 }
-

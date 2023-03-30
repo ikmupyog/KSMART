@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.web.bind.annotation.RequestBody;
+
 @Slf4j
 @RestController
 @RequestMapping("/snehapoorvam")
@@ -41,42 +42,46 @@ public class SnehapoorvamController {
 
         this.obService = obService;
     }
-    @PostMapping("/v1/Create")
-    public ResponseEntity <SnehapoorvamResponse> create(@Valid @RequestBody SnehapoorvamRequest request) {
-        
-        try {
-                ObjectMapper mapper = new ObjectMapper();
-                Object obj = request;
-                mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-                
-            }catch(Exception e) {
-                log.error("Exception while fetching from searcher: ",e);
-            }
-        List<m_Snehapoorvam> ob =obService.create(request);
 
-        SnehapoorvamResponse response=SnehapoorvamResponse.builder().responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))
-                                                                        .m_Snehapoorvams(ob)
-                                                                        .build();
+    @PostMapping("/v1/Create")
+    public ResponseEntity<SnehapoorvamResponse> create(@Valid @RequestBody SnehapoorvamRequest request) {
+
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            Object obj = request;
+            mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+
+        } catch (Exception e) {
+            log.error("Exception while fetching from searcher: ", e);
+        }
+        List<m_Snehapoorvam> ob = obService.create(request);
+
+        SnehapoorvamResponse response = SnehapoorvamResponse.builder()
+                .responseInfo(
+                        responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))
+                .m_Snehapoorvams(ob)
+                .build();
         return ResponseEntity.ok(response);
     }
 
-
     @PostMapping("/v1/Update")
-    public ResponseEntity <SnehapoorvamResponse> Update(@Valid @RequestBody SnehapoorvamRequest request) {
-        
-        try {
-                ObjectMapper mapper = new ObjectMapper();
-                Object obj = request;
-                mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-                
-            }catch(Exception e) {
-                log.error("Exception while fetching from searcher: ",e);
-            }
-        List<m_Snehapoorvam> ob =obService.Update1(request);
+    public ResponseEntity<SnehapoorvamResponse> Update(@Valid @RequestBody SnehapoorvamRequest request) {
 
-        SnehapoorvamResponse response=SnehapoorvamResponse.builder().responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))
-                                                                        .m_Snehapoorvams(ob)
-                                                                        .build();
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            Object obj = request;
+            mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+
+        } catch (Exception e) {
+            log.error("Exception while fetching from searcher: ", e);
+        }
+        List<m_Snehapoorvam> ob = obService.Update1(request);
+
+        SnehapoorvamResponse response = SnehapoorvamResponse.builder()
+                .responseInfo(
+                        responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))
+                .m_Snehapoorvams(ob)
+                .build();
         return ResponseEntity.ok(response);
     }
 
@@ -94,6 +99,4 @@ public class SnehapoorvamController {
         return ResponseEntity.ok(response);
     }
 
-   
-    
 }

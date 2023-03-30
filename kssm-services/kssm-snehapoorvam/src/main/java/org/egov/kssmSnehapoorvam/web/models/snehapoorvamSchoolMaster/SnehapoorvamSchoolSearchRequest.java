@@ -17,25 +17,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SnehapoorvamSchoolSearchRequest {
-    
-    
 
-        @JsonProperty("RequestInfo")
-        private RequestInfo requestInfo;
-    
-    
-      
-        // public SnehapoorvamRequest addSchoolLogin(SnehapoorvamSchoolLogin schoollogin) {
-    
-        //     if (SchoolLogin == null) {
-        //         
-        // @JsonProperty("SnehapoorvamSchoolReg")
-        // @Valid
-        // private List<SnehapoorvamSchoolReg> SchoolLogin;SchoolLogin = new ArrayList<>();
-        //     }
-        //     SchoolLogin.add(schoollogin);
-        //     return this;
-    
-      //  }
-    
+  @JsonProperty("RequestInfo")
+  private RequestInfo requestInfo;
+
 }

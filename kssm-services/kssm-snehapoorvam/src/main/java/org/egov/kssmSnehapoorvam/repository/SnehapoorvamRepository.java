@@ -28,7 +28,7 @@ public class SnehapoorvamRepository {
 
         String query = queryBuilder.getKssmpensionerIdSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
         List<m_SnehapoorvamSearchResponse> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), rowMapper);
-        return result; // NOPMD
+        return result; 
 
     }
 }

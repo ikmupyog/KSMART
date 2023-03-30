@@ -2,6 +2,7 @@ package org.egov.kssmSnehapoorvam.web.models.snehapoorvam;
 
 
 
+import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;   
 
@@ -48,7 +49,8 @@ public class m_Snehapoorvam {
     @JsonProperty("application_no")
     private int application_no;
 
-
+    
+    @PastOrPresent
     @JsonFormat(pattern="dd/MM/yyyy")
     @JsonProperty("application_date")
     private Date application_date;
@@ -151,10 +153,12 @@ public class m_Snehapoorvam {
     private int intalivestatusid_mother;
 
     
+    @PastOrPresent
     @JsonFormat(pattern="dd/MM/yyyy")
     @JsonProperty("father_death_date")
     private Date father_death_date;
 
+    @PastOrPresent
     @JsonFormat(pattern="dd/MM/yyyy")
     @JsonProperty("mother_date_date")
     private Date mother_date_date;
@@ -231,6 +235,7 @@ public class m_Snehapoorvam {
     private int applicant_age;
 
 
+    @PastOrPresent
     @JsonFormat(pattern="dd/MM/yyyy")
     @JsonProperty("applicant_dob")
     private Date applicant_dob;
@@ -338,6 +343,7 @@ public class m_Snehapoorvam {
     @JsonProperty("ref_no")
     private int ref_no;
 
+    @PastOrPresent
     @JsonFormat(pattern="dd/MM/yyyy")
     @JsonProperty("ref_date")
     private Date ref_date;
@@ -348,6 +354,7 @@ public class m_Snehapoorvam {
     private String chvdeathcertificate_no_father;
 
 
+    @PastOrPresent
     @JsonFormat(pattern="dd/MM/yyyy")
     @JsonProperty("chvdeathcertificate_date_father")
     private Date chvdeathcertificate_date_father;
@@ -363,6 +370,7 @@ public class m_Snehapoorvam {
     
     
     
+    @PastOrPresent
     @JsonFormat(pattern="dd/MM/yyyy")
     @JsonProperty("chvdeathcertificate_date_mother")
     private Date chvdeathcertificate_date_mother;
@@ -379,6 +387,7 @@ public class m_Snehapoorvam {
     @JsonProperty("chvchildwelfare_certificateno")
     private String chvchildwelfare_certificateno;
 
+    @PastOrPresent
     @JsonFormat(pattern="dd/MM/yyyy")
     @JsonProperty("chvchildwelfare_certificatedate")
     private Date chvchildwelfare_certificatedate;
@@ -396,6 +405,7 @@ public class m_Snehapoorvam {
     private String chvfamily_bpl_idno;
 
 
+    @PastOrPresent
     @JsonFormat(pattern="dd/MM/yyyy")
     @JsonProperty("chvfamily_bpl_date")
     private Date chvfamily_bpl_date;
@@ -404,6 +414,7 @@ public class m_Snehapoorvam {
     @JsonProperty("chvfamily_bplcert_issuauthority")
     private String chvfamily_bplcert_issuauthority;
     
+    @PastOrPresent
     @JsonFormat(pattern="dd/MM/yyyy")
     @JsonProperty("dtcoursestarted_date")
     private Date dtcoursestarted_date;
@@ -412,6 +423,7 @@ public class m_Snehapoorvam {
     @JsonProperty("bpl_certi_no")
     private String bpl_certi_no;
 
+    @PastOrPresent
     @JsonFormat(pattern="dd/MM/yyyy")
     @JsonProperty("bpl_certi_date")
     private Date bpl_certi_date;
@@ -424,20 +436,24 @@ public class m_Snehapoorvam {
     private int intinstitutionid;
 
 
+    @PastOrPresent
     @JsonFormat(pattern="dd/MM/yyyy")
     @JsonProperty("approval_date")
     private Date approval_date;
 
 
+    @PastOrPresent
     @JsonFormat(pattern="dd/MM/yyyy")
     @JsonProperty("verify_date")
     private Date verify_date;
 
+    @PastOrPresent
     @JsonFormat(pattern="dd/MM/yyyy")
     @JsonProperty("reject_date")
     private Date reject_date;
 
 
+    @PastOrPresent
     @JsonFormat(pattern="dd/MM/yyyy")
     @JsonProperty("apply_date")
     private Date apply_date;
@@ -477,6 +493,7 @@ public class m_Snehapoorvam {
     @JsonProperty("chvincome_certificate_no")
     private String chvincome_certificate_no;
     
+    @PastOrPresent
     @JsonFormat(pattern="dd/MM/yyyy")
     @JsonProperty("dtincome_certificate_date")
     private Date dtincome_certificate_date;
@@ -488,36 +505,6 @@ public class m_Snehapoorvam {
     @JsonProperty("intstudentclasstype")
     private int intstudentclasstype;
 
-
-
-    
-
-    
-
-
-
-
-
-
-
-   /*  @Size(max = 64)
-    @JsonProperty("numkssmpensionerid")
-    private String numkssmpensionerid;
-
-    @Size(max = 64)
-    @JsonProperty("kssmpensionerid")
-    private String kssmpensionerid;
-
-    @Size(max = 64)
-    @JsonProperty("tenantId")
-    private String tenantId;
-
-    @Size(max = 64)
-    @JsonProperty("referenceId")
-    private String lastName;
-
-    @JsonProperty("auditDetails")
-    private AuditDetails auditDetails;*/
 }
 
 

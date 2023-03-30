@@ -20,9 +20,6 @@ import lombok.Setter;
 @Builder
 public class m_SnehapoorvamSchoolMaster {
 
-   // @JsonProperty("schoolid")
-   // private  int schoolid;
-
    @JsonProperty("school_code")
    private  int school_code;
    

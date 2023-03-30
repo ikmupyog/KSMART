@@ -27,14 +27,5 @@ public class SnehapoorvamSchoolMasterRequest {
     @JsonProperty("snehapoorvamschoolmaster")
     @Valid
     private List<m_SnehapoorvamSchoolMaster> m_snehapoorvamSchoolMaster;
-
-    // private OpeningBalanceRequest addobcredit (OpeningBalance ob) {
-    //     if (ob == null) {
-    //         OpeningBalances = new ArrayList<>();
-    //     }
-    //     OpeningBalances.add(ob);
-
-    //     return this;
-    // }
     
 }

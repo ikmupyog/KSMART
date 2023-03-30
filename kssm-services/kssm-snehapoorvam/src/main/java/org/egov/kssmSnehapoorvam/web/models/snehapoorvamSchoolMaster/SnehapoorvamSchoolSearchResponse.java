@@ -32,8 +32,6 @@ public class SnehapoorvamSchoolSearchResponse
     @Valid
     private List<m_SnehapoorvamSchoolReg> SchoolDetails;
 
-    // @JsonProperty("Count")
-    // private int count;
 
     public SnehapoorvamSchoolSearchResponse addSchoolDetails(m_SnehapoorvamSchoolReg schooldetail) {
 

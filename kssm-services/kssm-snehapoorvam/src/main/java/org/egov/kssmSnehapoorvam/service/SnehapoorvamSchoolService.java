@@ -14,29 +14,22 @@ import org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster.m_Snehapoor
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class SnehapoorvamSchoolService {
-    
 
     private final Producer producer;
     private final SnehapoorvamConfig snehapoorvamConfig;
     private final SnehapoorvamSchoolRepository repository;
     private final SnehapoorvamSchoolRegValidator validator;
 
-
-
     @Autowired
-    SnehapoorvamSchoolService(Producer producer, SnehapoorvamConfig obcon,SnehapoorvamSchoolRepository repository,SnehapoorvamSchoolRegValidator validator) {
+    SnehapoorvamSchoolService(Producer producer, SnehapoorvamConfig obcon, SnehapoorvamSchoolRepository repository,
+            SnehapoorvamSchoolRegValidator validator) {
         this.producer = producer;
         this.snehapoorvamConfig = obcon;
         this.validator = validator;
-        this.repository=repository;
+        this.repository = repository;
     }
-
-    
-
-    
 
     public List<m_SnehapoorvamSchoolMaster> create(SnehapoorvamSchoolMasterRequest request) {
         producer.push(snehapoorvamConfig.getSaveSnehapoorvamSchoolCreateTopic(), request);
@@ -44,16 +37,15 @@ public class SnehapoorvamSchoolService {
     }
 
     public List<m_SnehapoorvamSchoolMaster> Update(SnehapoorvamSchoolMasterRequest request) {
-        producer.push(snehapoorvamConfig.getSaveSnehapoorvamSchoolUpdateTopic(),request);
+        producer.push(snehapoorvamConfig.getSaveSnehapoorvamSchoolUpdateTopic(), request);
         return request.getM_snehapoorvamSchoolMaster();
     }
 
-  
     public List<m_SnehapoorvamSchoolReg> searchSchoolCode(@Valid SchoolSearchCriteria searchCriteria) {
-        
-        validator.validateSearch( searchCriteria);
+
+        validator.validateSearch(searchCriteria);
         List<m_SnehapoorvamSchoolReg> result = repository.getSchoolDetails(searchCriteria);
         return result;
     }
-       
+
 }

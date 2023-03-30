@@ -30,7 +30,7 @@ public class SnehapoorvamSchoolRepository {
 
         String query = queryBuilder.getSchoolDatailSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
         List<m_SnehapoorvamSchoolReg> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), rowMapper);
-        return result; // NOPMD
+        return result;
 
     }
 
