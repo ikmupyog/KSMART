@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.egov.filemgmnt.web.models.AuditDetails;
 import org.egov.filemgmnt.web.models.drafting.DraftingRequest;
+import org.egov.filemgmnt.web.models.drafting.ProcessInstanceRequest;
 import org.apache.commons.collections4.CollectionUtils;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.request.User;
@@ -21,7 +22,7 @@ public class DraftingEnrichment extends BaseEnrichment {
     @Autowired
 	 private FMConfiguration fmConfig;
 
-    public void enrichAriseFileCreate(DraftingRequest request) {
+    public void enrichcreateDraftingMain(DraftingRequest request) {
 
         RequestInfo requestInfo = request.getRequestInfo();
         User userInfo = requestInfo.getUserInfo();
@@ -33,10 +34,25 @@ public class DraftingEnrichment extends BaseEnrichment {
                 drafting.setUuid(UUID.randomUUID()
                                            .toString());
                                            drafting.setAuditDetails(auditDetails);
-            	  // arisingfile.setFileCode(null);
             	   
                });
 
+    }
+
+    public void enrichcreateDraftProcessInstance(ProcessInstanceRequest request) {
+
+        RequestInfo requestInfo = request.getRequestInfo();
+        User userInfo = requestInfo.getUserInfo();
+
+        AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
+
+        request.getProcessInstances()
+               .forEach(processInstances -> {
+                processInstances.setId(UUID.randomUUID()
+                                           .toString());
+                                           processInstances.setAuditDetails(auditDetails);
+            	   
+               });
     }
     
 

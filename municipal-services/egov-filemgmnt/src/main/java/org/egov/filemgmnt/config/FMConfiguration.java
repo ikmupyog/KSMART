@@ -92,7 +92,9 @@ public class FMConfiguration {
     @Value("${persister.save.draftingchild.topic:}")
     private String saveDraftingChildTopic;
 
-
+    @Value("${persister.save.draftprocessinstance.topic:}")
+    private String saveDraftProcessInstance;
+    
     // PDF Gen
 
     @Value("${egov.pdfservice.host}")

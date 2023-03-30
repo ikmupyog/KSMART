@@ -11,6 +11,9 @@ import org.egov.filemgmnt.web.models.drafting.DraftingRequest;
 import org.egov.filemgmnt.web.models.drafting.DraftingResponse;
 import org.egov.filemgmnt.web.models.drafting.DraftingSearchCriteria;
 import org.egov.filemgmnt.web.models.drafting.DraftingSearchResponse;
+import org.egov.filemgmnt.web.models.drafting.ProcessInstance;
+import org.egov.filemgmnt.web.models.drafting.ProcessInstanceRequest;
+import org.egov.filemgmnt.web.models.drafting.ProcessInstanceResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -60,4 +63,24 @@ public class DraftingController {
                 .draftings(result)
                 .build());
     }
+
+    /////////////////////// Draft Save on Process Instance //////////////////////////
+
+    @PostMapping("/applicantservices/_createDraftProcessInstance")
+    public ResponseEntity<ProcessInstanceResponse> createDraftProcessInstance(@RequestBody final ProcessInstanceRequest request) {
+        if (log.isDebugEnabled()) {
+            log.debug("Drafting main-create:  \n{}", FMUtils.toJson(request));
+        }
+        List<ProcessInstance> draftProcessInstanceObj = draftingService.createDraftProcessInstance(request);
+       
+        
+        ProcessInstanceResponse response = ProcessInstanceResponse.builder()
+        								.responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+        																						Boolean.TRUE))
+        								.processInstances(draftProcessInstanceObj)
+        								.build();
+        return ResponseEntity.ok(response);
+    }
+
+
 }

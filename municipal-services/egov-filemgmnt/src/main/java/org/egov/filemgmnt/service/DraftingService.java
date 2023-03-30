@@ -9,6 +9,8 @@ import org.egov.filemgmnt.repository.DraftingRepository;
 import org.egov.filemgmnt.web.models.drafting.Drafting;
 import org.egov.filemgmnt.web.models.drafting.DraftingRequest;
 import org.egov.filemgmnt.web.models.drafting.DraftingSearchCriteria;
+import org.egov.filemgmnt.web.models.drafting.ProcessInstance;
+import org.egov.filemgmnt.web.models.drafting.ProcessInstanceRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -45,5 +47,13 @@ public class DraftingService {
         final List<Drafting> result = repository.searchDrafting(searchCriteria);
         return (result);
     }
+
+	public List<ProcessInstance> createDraftProcessInstance(ProcessInstanceRequest request) {
+		
+        draftingEnrichment.enrichcreateDraftProcessInstance(request);
+        producer.push(fmConfig.getSaveDraftProcessInstance(), request);
+
+        return request.getProcessInstances();
+	}
 }
 
