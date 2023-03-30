@@ -140,6 +140,7 @@ import useApplicationMarriageDetail from "./cr/useApplicationMarriageDetail";
 import useApplicationStillBirthDetail from "./cr/useApplicationStillBirthDetail"; 
 import useApplicationDeathDetail from "./cr/useApplicationDeathDetail"; 
 import useCRApplicationActions from "./cr/useApplicationActions";
+import useCRAdoptionApplicationActions from "./cr/useAdoptionApplActions";
 import useCRStillBirthApplicationActions from "./cr/useApplicationStillBirthActions";
 import useApplicationBornOutsideIndiaBirthActions from "./cr/useApplicationBornOutsideIndiaBirthActions";
 import useCRDeathApplicationActions from "./cr/useApplicationDeathActions";
@@ -371,6 +372,7 @@ const cr = {
   useApplicationStillBirthDetail:useApplicationStillBirthDetail,
   useApplicationBornOutsideIndiaBirthDetail,
   useApplicationActions: useCRApplicationActions,
+  useAdoptionApplActions:useCRAdoptionApplicationActions,
   useCRStillBirthApplicationActions:useCRStillBirthApplicationActions,
   useApplicationBornOutsideIndiaBirthActions,
   useCRDeathApplicationActions: useCRDeathApplicationActions,

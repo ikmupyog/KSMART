@@ -29,7 +29,7 @@ const ApplicationAdoptionDetails = () => {
     data: updateResponse,
     error: updateError,
     mutate,
-  } = Digit.Hooks.cr.useApplicationActions(tenantId);
+  } = Digit.Hooks.cr.useAdoptionApplActions(tenantId);
 
   // let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
   // console.log(applicationDetails?.applicationData?.applicationtype);
