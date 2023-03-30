@@ -99,8 +99,8 @@ const ApplicationAdoptionDetails = () => {
     if ((!actions || actions?.length == 0) && workflowDetails?.data?.actionState) workflowDetails.data.actionState.nextActions = [];
 
     workflowDetails?.data?.actionState?.nextActions?.forEach(data => {
-      if (data.action == "EDIT") {
-        // /digit-ui/employee/cr/cr-flow/child-details/${applicationNumber}
+      if (data.action == "RETURN") {
+        // /digit-ui/employee/cr/cr-flow/child-details/${applicationNumber}EDIT
         if(window.location.href.includes("/application-Adoptiondetails")){
          
           data.redirectionUrl = {
