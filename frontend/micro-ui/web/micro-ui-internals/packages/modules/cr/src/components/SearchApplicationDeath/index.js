@@ -67,7 +67,9 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count }) => {
     return <MobileSearchApplication {...{ Controller, register, control, t, reset, previousPage, handleSubmit, tenantId, data, onSubmit }} />;
   }
   const handleLinkClick = (finaldata) => {
-    Digit.SessionStorage.set("CR_DEATH_EDIT", finaldata);
+    let temp={};
+    temp.deathCertificateDtls=finaldata;
+    Digit.SessionStorage.set("CR_DEATH_EDIT", temp);
     Digit.SessionStorage.set("CR_DEATH_EDIT_FLAG", true);
   }
   //need to get from workflow

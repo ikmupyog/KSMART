@@ -5,8 +5,8 @@ import { useTranslation } from "react-i18next";
 
 const DeathCrFlow = ({ path }) => {
   const { t } = useTranslation();
+  sessionStorage.removeItem("Digit.CR_DEATH_EDIT_FLAG");
   sessionStorage.removeItem("Digit.CR_DEATH_EDIT");
-  sessionStorage.removeItem("Digit.CR_CREATE_DEATH");
 
   
   const cardMenuData = [
