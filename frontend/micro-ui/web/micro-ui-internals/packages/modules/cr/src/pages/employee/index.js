@@ -7,12 +7,13 @@ import Inbox from "./Inbox";
 import Search from "./Search";
 // import Response from "../Response";
 import ApplicationDetails from "./ApplicationDetails";
+import ApplicationAdoptionDetails from './ApplicationAdoptionDetails'
 import ApplicationDeathDetails from "./ApplicationDeathDetails";
+import ApplicationStillBirthDetails from "./ApplicationStillBirthDetails";
 import CrFlow from "./Birth-route";
 import DeathCrFlow from "./Death-route";
 import SearchFlow from "./Search-route";
 import SearchInbox from './Inbox-route';
-import CrAbFlow from  "./Abandoned-birth-route";
 // import CrAdoptionFlow from './Adoption-birth'
 //import ReNewApplication from "./ReNewApplication";
 
@@ -31,6 +32,7 @@ const CRBreadCrumb = ({ location }) => {
   const isApplicationDeathDetails = location?.pathname?.includes("cr/application-deathdetails");
   const isApplicationBirthDetails = location?.pathname?.includes("cr/application-birthdetails");
   const isApplicationAdoptionDetails = location?.pathname?.includes("cr/application-Adoptiondetails");
+  const isApplicationStillBirthDetails = location?.pathname?.includes("cr/application-stillbirth");
   const isNewApplication = location?.pathname?.includes("tl/new-application");
   const isResponse = location?.pathname?.includes("tl/response");
   const isMobile = window.Digit.Utils.browser.isMobile();
@@ -42,7 +44,6 @@ const CRBreadCrumb = ({ location }) => {
   const isChildDetails = location?.pathname?.includes("child-details");
   const isDeathFlow = location?.pathname?.includes("death-flow");
   const isDeathDetails = location?.pathname?.includes("information-death");
-  const isCrAbFlow = location?.pathname?.includes("cr-abflow");
   const isAbandonedChildDetails = location?.pathname?.includes("abandoned-child-details");
   const isSearchRegistry = location?.pathname?.includes("search-registry");
   
@@ -134,11 +135,11 @@ const CRBreadCrumb = ({ location }) => {
       content: t("Child Details"),
       show: breadCrumbUrls.includes("child-details") || isChildDetails
     },
-    {
-      path: "/digit-ui/employee/cr/cr-abflow",
-      content: t("Abandoned Birth Registration"),
-      show: breadCrumbUrls.includes("cr-abflow") || isCrAbFlow
-    },
+    // {
+    //   path: "/digit-ui/employee/cr/cr-abflow",
+    //   content: t("Abandoned Birth Registration"),
+    //   show: breadCrumbUrls.includes("cr-abflow") || isCrAbFlow
+    // },
     {
       path: "/digit-ui/employee/abandoned-child-details",
       content: t("Abandoned Child Details"),
@@ -191,6 +192,12 @@ const CRBreadCrumb = ({ location }) => {
       content: t("Adoption Application Details"),
       show: isApplicationAdoptionDetails ||
       breadCrumbUrls.includes("home/application-Adoptiondetails") 
+    },
+    {
+      path: sessionStorage.getItem("applicationno") ? `/digit-ui/employee/cr/application-stillbirth/${sessionStorage.getItem("birthApplicationNo")}` : "",
+      content: t("Still Birth Application Details"),
+      show: isApplicationStillBirthDetails ||
+      breadCrumbUrls.includes("home/application-stillbirth") 
     },
     {
       path: "/digit-ui/employee/cr/death-flow/specify-correction",
@@ -294,8 +301,8 @@ const EditAdoption = Digit?.ComponentRegistryService?.getComponent('CRCreateAdop
         {/* <PrivateRoute path={`${path}/search-correction/:variant`} component={(props) => <SearchCorrection {...props} parentRoute={path} />} /> */}
 
         <PrivateRoute path={`${path}/application-details/:id`} component={() => <ApplicationDetails parentRoute={path} />} /> 
-        <PrivateRoute path={`${path}/application-birthdetails/:id`} component={() => <ApplicationDetails parentRoute={path} />} /> 
-        <PrivateRoute path={`${path}/application-Adoptiondetails/:id`} component={() => <ApplicationDetails parentRoute={path} />} /> 
+        <PrivateRoute path={`${path}/application-stillbirth/:id`} component={() => <ApplicationStillBirthDetails parentRoute={path} />} /> 
+        <PrivateRoute path={`${path}/application-Adoptiondetails/:id`} component={() => <ApplicationAdoptionDetails parentRoute={path} />} />        
         <PrivateRoute path={`${path}/application-deathdetails/:id`} component={() => <ApplicationDeathDetails parentRoute={path} />} /> 
       </div>
     </React.Fragment>

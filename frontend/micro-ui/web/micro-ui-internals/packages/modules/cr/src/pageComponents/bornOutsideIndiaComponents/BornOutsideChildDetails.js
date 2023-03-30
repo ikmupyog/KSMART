@@ -70,7 +70,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
   const [gender, selectGender] = useState(formData?.BornOutsideChildDetails?.gender);
 
   const [childAadharNo, setChildAadharNo] = useState(
-    formData?.BornOutsideChildDetails?.childAadharNo ? formData?.BornOutsideChildDetails?.childAadharNo : ""
+    formData?.BornOutsideChildDetails?.childAadharNo ? formData?.BornOutsideChildDetails?.childAadharNo : null
   );
   const [childFirstNameEn, setChildFirstNameEn] = useState(
     formData?.BornOutsideChildDetails?.childFirstNameEn ? formData?.BornOutsideChildDetails?.childFirstNameEn : ""
@@ -117,8 +117,11 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
   const [outsideBirthPlaceError, setoutsideBirthPlaceError] = useState(formData?.BornOutsideChildDetails?.outsideBirthPlaceError ? false : false);
   const [DOBError, setDOBError] = useState(formData?.BornOutsideChildDetails?.childDOB ? false : false);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
+  const [isChildName, setIsChildName] = useState(formData?.ChildDetails?.isChildName ? formData?.ChildDetails?.isChildName : false);
 
   const [access, setAccess] = React.useState(true);
+
+  const filteredCountries = cmbCountry.filter(country=>country.name !== "India ")
 
   const onSkip = () => onSelect();
 
@@ -139,6 +142,20 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
           ""
         )
       );
+    }
+  }
+  function setChildName(e) {
+    if (e.target.checked === true) {
+      setIsChildName(e.target.checked);
+
+    } else {
+      setIsChildName(e.target.checked);
+      setChildFirstNameEn("");
+      setChildMiddleNameEn("");
+      setChildLastNameEn("");
+      setChildFirstNameMl("");
+      setChildMiddleNameMl("");
+      setChildLastNameMl("");
     }
   }
   // function setSelectpostCode(e) {
@@ -258,6 +275,8 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
       );
     }
   }
+
+
   // function setSelectChildAadharNo(e) {
   //   // setContactno(e.target.value.length<=10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
   //   if (e.target.value.length != 0) {
@@ -282,7 +301,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
   // }
 
   function setSelectPassportNo(e) {
-    setchildPassportNo(e.target.value);
+    setchildPassportNo(e.target.value.length<=8 ? e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '') : (e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '').substring(0, 8)))
   }
 
   function setSelectprovinceEn(e) {
@@ -334,6 +353,9 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
       } else {
         setAadharError(false);
       }
+    }
+    else{
+      setAadharError(false);
     }
     if (ChildPassportError) {
       validFlag = false;
@@ -456,7 +478,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
         <BackButton>{t("CS_COMMON_BACK")}</BackButton>
         {window.location.href.includes("/citizen") ? <Timeline /> : null}
         {window.location.href.includes("/employee") ? <Timeline /> : null}
-        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!childAadharNo}>
+        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!childPassportNo }>
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-12">
@@ -483,7 +505,8 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
                   inputProps={{
                     maxLength: 12,
                   }}
-                  {...(validation = { pattern: "^[0-9]{12}$", type: "test", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                  {...(validation = { pattern: "^[0-9]{12}$",
+                  isRequired:false, type: "test", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                 />
               </div>
 
@@ -534,6 +557,16 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
               </div>
             </div>
           </div>
+          <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-6">
+                <CheckBox label={t("CR_WANT_TO_ENTER_CHILD_NAME")} onChange={setChildName}
+                  value={isChildName} checked={isChildName} />
+              </div>
+            </div>
+          </div>
+          {isChildName === true && (
+            <div>
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-4">
@@ -654,7 +687,8 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
                 />
               </div>
             </div>
-          </div>
+            </div>
+          </div>)}
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-3">
@@ -716,7 +750,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
             <Dropdown
               t={t}
               optionKey="name"
-              option={cmbCountry}
+              option={filteredCountries}
               selected={country}
               select={setSelectcountry}
               placeholder={`${t("CS_COMMON_COUNTRY")}`}
@@ -763,7 +797,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
                {...(validation = {
                 pattern: "^[a-zA-Z-.0-9`' ]*$",
                 isRequired: true,
-                type: "number",
+                type: "text",
                 max: 6,
                 min: 6,
                 title: t("CR_INVALID_ZIP_CODE"),

@@ -6,14 +6,14 @@ import ChildDetails from "../../../pageComponents/birthComponents/ChildDetails";
 import { newConfig as newConfigCR } from "../../../config/config";
 import { useQueryClient } from "react-query";
 
-const CreateBirthRegistration = ({ parentUrl, isEditBirth=false }) => {
+const CreateBirthRegistration = ({ parentUrl }) => {
   const { t } = useTranslation();
   const { path } = useRouteMatch();
   const match = useRouteMatch();
   const { pathname } = useLocation();
   const history = useHistory();
   const queryClient = useQueryClient();
-  console.log("isEditBirth" + isEditBirth);
+  const [isEditBirth, setIsEditBirth] = useState(Object.keys(Digit.Hooks.useSessionStorage("CR_BIRTH_EDIT_FLAG", {})).length > 0 ? true : false);
   const [params, setParams, clearParams] = isEditBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_BIRTH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_BIRTH_REG", {});
 
   // console.log("params"+JSON.stringify(params));
@@ -21,6 +21,7 @@ const CreateBirthRegistration = ({ parentUrl, isEditBirth=false }) => {
   // let { data: newConfig, isLoading } = Digit.Hooks.tl.useMDMS.getFormConfig(stateId, {});
   let config = [];
   let { data: newConfig, isLoading } = true;
+
   newConfig = newConfigCR;
   newConfig?.forEach((obj) => {
     config = config.concat(obj.body.filter((a) => !a.hideInCitizen));
