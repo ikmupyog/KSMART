@@ -73,6 +73,7 @@ public class MarriageRegistryEnrichment implements BaseEnrichment {
                 marriage.getWitnessDetails().setWitnessId2(UUID.randomUUID().toString());
                 marriage.getWitnessDetails().setSerial_no1(1);
                 marriage.getWitnessDetails().setSerial_no2(2);
+                marriage.getWitnessDetails().setWitnessAuditDetails(auditDetails);
             }
         });
         setRegistrationNumber(request);
