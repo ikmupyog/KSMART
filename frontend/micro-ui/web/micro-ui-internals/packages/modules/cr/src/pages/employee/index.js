@@ -7,6 +7,7 @@ import Inbox from "./Inbox";
 import Search from "./Search";
 // import Response from "../Response";
 import ApplicationDetails from "./ApplicationDetails";
+import ApplicationAdoptionDetails from './ApplicationAdoptionDetails'
 import ApplicationDeathDetails from "./ApplicationDeathDetails";
 import CrFlow from "./Birth-route";
 import DeathCrFlow from "./Death-route";
@@ -293,7 +294,7 @@ const EditAdoption = Digit?.ComponentRegistryService?.getComponent('CRCreateAdop
 
         <PrivateRoute path={`${path}/application-details/:id`} component={() => <ApplicationDetails parentRoute={path} />} /> 
         <PrivateRoute path={`${path}/application-birthdetails/:id`} component={() => <ApplicationDetails parentRoute={path} />} /> 
-        <PrivateRoute path={`${path}/application-Adoptiondetails/:id`} component={() => <ApplicationDetails parentRoute={path} />} /> 
+        <PrivateRoute path={`${path}/application-Adoptiondetails/:id`} component={() => <ApplicationAdoptionDetails parentRoute={path} />} /> 
         <PrivateRoute path={`${path}/application-deathdetails/:id`} component={() => <ApplicationDeathDetails parentRoute={path} />} /> 
       </div>
     </React.Fragment>
