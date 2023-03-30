@@ -27,3 +27,9 @@ ALTER TABLE public.eg_marriage_details
 ALTER TABLE public.eg_marriage_details_audit
      ADD COLUMN IF NOT EXISTS villageid character varying(64) COLLATE pg_catalog."default",
       ADD COLUMN IF NOT EXISTS  taluk_name character varying(1000) COLLATE pg_catalog."default";
+
+ALTER TABLE public.eg_marriage_details
+    RENAME COLUMN bridegurdiancorreflag TO brideguardiancorreflag;
+
+ALTER TABLE public.eg_marriage_details_audit
+    RENAME COLUMN bridegurdiancorreflag TO brideguardiancorreflag;
