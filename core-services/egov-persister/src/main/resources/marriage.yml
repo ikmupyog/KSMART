@@ -640,19 +640,19 @@ serviceMaps:
       isTransaction: true
       queryMaps:
 
-#        - query: INSERT INTO public.eg_marriage_details_audit SELECT * FROM  public.eg_marriage_details WHERE id = ? and  tenantid=?;
-#
-#          basePath: MarriageDetails.*
-#          jsonMaps:
-#            - jsonPath: $.MarriageDetails.*.id
-#
-#            - jsonPath: $.MarriageDetails.*.marriageTenantid
+        - query: INSERT INTO public.eg_marriage_details_audit SELECT * FROM  public.eg_marriage_details WHERE id =? and  tenantid=?;
+
+          basePath: MarriageDetails.*
+          jsonMaps:
+            - jsonPath: $.MarriageDetails.*.id
+
+            - jsonPath: $.MarriageDetails.*.marriageTenantid
 
         - query: UPDATE public.eg_marriage_details
                 SET  dateofmarriage=?, dateofreporting=?, districtid=?, lbtype=?, placetype=?, placeid=?, placename_en=?, 
                 placename_ml=?, houseno_and_name_en=?, houseno_and_name_ml=?, street_name_en=?, street_name_ml=?, ward_code=?, talukid=?, village_name=?,
                 marriage_type=?, oth_marriage_type=?, landmark=?, locality_en=?, locality_ml=?, applicationtype=?, businessservice=?, workflowcode=?, 
-                 registrationno=?, registration_date=?, action=?, status=?, createdtime=?, createdby=?, lastmodifiedtime=?, lastmodifiedby=?
+                 registrationno=?, registration_date=?, action=?, status=?, lastmodifiedtime=?, lastmodifiedby=?
                  WHERE id=? and applicationnumber=? and  tenantid=?;
           basePath: MarriageDetails.*
           jsonMaps:
@@ -711,10 +711,6 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.status
 
-            - jsonPath: $.MarriageDetails.*.auditDetails.createdTime
-
-            - jsonPath: $.MarriageDetails.*.auditDetails.createdBy
-
             - jsonPath: $.MarriageDetails.*.auditDetails.lastModifiedTime
 
             - jsonPath: $.MarriageDetails.*.auditDetails.lastModifiedBy
@@ -726,13 +722,13 @@ serviceMaps:
             - jsonPath: $.MarriageDetails.*.marriageTenantid
 
 
-#        - query: INSERT INTO public.eg_marriage_bride_groom_details_audit SELECT * FROM  public.eg_marriage_bride_groom_details WHERE marriageid = ? and  tenantid=?  and bride_groom= 'B';
-#
-#          basePath: MarriageDetails.*
-#          jsonMaps:
-#            - jsonPath: $.MarriageDetails.*.id
-#
-#            - jsonPath: $.MarriageDetails.*.marriageTenantid
+        - query: INSERT INTO public.eg_marriage_bride_groom_details_audit SELECT * FROM  public.eg_marriage_bride_groom_details WHERE marriageid = ? and  tenantid=?  and bride_groom= 'B';
+
+          basePath: MarriageDetails.*
+          jsonMaps:
+            - jsonPath: $.MarriageDetails.*.id
+
+            - jsonPath: $.MarriageDetails.*.marriageTenantid
 
         - query : UPDATE public.eg_marriage_bride_groom_details
                   SET  residentship=?, aadharno=?, passportno=?, socialsecurityno=?, firstname_en=?, firstname_ml=?, middlename_en=?, 
@@ -809,13 +805,13 @@ serviceMaps:
             - jsonPath: $.MarriageDetails.*.marriageTenantid
 
 
-#        - query: INSERT INTO public.eg_marriage_bride_groom_details_audit SELECT * FROM  public.eg_marriage_bride_groom_details WHERE marriageid = ? and  tenantid=?  and bride_groom= 'G';
-#
-#          basePath: MarriageDetails.*
-#          jsonMaps:
-#            - jsonPath: $.MarriageDetails.*.id
-#
-#            - jsonPath: $.MarriageDetails.*.marriageTenantid
+        - query: INSERT INTO public.eg_marriage_bride_groom_details_audit SELECT * FROM  public.eg_marriage_bride_groom_details WHERE marriageid = ? and  tenantid=?  and bride_groom= 'G';
+
+          basePath: MarriageDetails.*
+          jsonMaps:
+            - jsonPath: $.MarriageDetails.*.id
+
+            - jsonPath: $.MarriageDetails.*.marriageTenantid
 
         - query: UPDATE public.eg_marriage_bride_groom_details
             SET  residentship=?, aadharno=?, passportno=?, socialsecurityno=?, firstname_en=?, firstname_ml=?, middlename_en=?,
@@ -892,13 +888,13 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.marriageTenantid
 
-#        - query: INSERT INTO public.eg_marriage_witness_details_audit SELECT * FROM  public.eg_marriage_witness_details WHERE marriageid = ? and  tenantid=?  and serial_no= '1';
-#
-#          basePath: MarriageDetails.*
-#          jsonMaps:
-#            - jsonPath: $.MarriageDetails.*.id
-#
-#            - jsonPath: $.MarriageDetails.*.marriageTenantid
+        - query: INSERT INTO public.eg_marriage_witness_details_audit SELECT * FROM  public.eg_marriage_witness_details WHERE marriageid = ? and  tenantid=?  and serial_no= '1';
+
+          basePath: MarriageDetails.*
+          jsonMaps:
+            - jsonPath: $.MarriageDetails.*.id
+
+            - jsonPath: $.MarriageDetails.*.marriageTenantid
 
         - query : UPDATE public.eg_marriage_witness_details
                   SET  aadharno=?, name_en=?, name_ml=?, age=?, address_en=?, address_ml=?, mobile=?, is_esigned=?, 
@@ -934,13 +930,13 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.marriageTenantid
 
-#        - query: INSERT INTO public.eg_marriage_witness_details_audit SELECT * FROM  public.eg_marriage_witness_details WHERE marriageid = ? and  tenantid=?  and serial_no= '2';
-#
-#          basePath: MarriageDetails.*
-#          jsonMaps:
-#            - jsonPath: $.MarriageDetails.*.id
-#
-#            - jsonPath: $.MarriageDetails.*.marriageTenantid
+        - query: INSERT INTO public.eg_marriage_witness_details_audit SELECT * FROM  public.eg_marriage_witness_details WHERE marriageid = ? and  tenantid=?  and serial_no= '2';
+
+          basePath: MarriageDetails.*
+          jsonMaps:
+            - jsonPath: $.MarriageDetails.*.id
+
+            - jsonPath: $.MarriageDetails.*.marriageTenantid
 
         - query: UPDATE public.eg_marriage_witness_details
             SET  aadharno=?, name_en=?, name_ml=?, age=?, address_en=?, address_ml=?, mobile=?, is_esigned=?,
@@ -975,13 +971,13 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.marriageTenantid
 
-#        - query: INSERT INTO public.eg_marriage_present_address_details_audit SELECT * FROM  public.eg_marriage_present_address_details WHERE marriageid = ? and  tenantid=?  and bride_groom='B';
-#
-#          basePath: MarriageDetails.*
-#          jsonMaps:
-#            - jsonPath: $.MarriageDetails.*.id
-#
-#            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.presentInsideKeralaLBName
+        - query: INSERT INTO public.eg_marriage_present_address_details_audit SELECT * FROM  public.eg_marriage_present_address_details WHERE marriageid = ? and  tenantid=?  and bride_groom='B';
+
+          basePath: MarriageDetails.*
+          jsonMaps:
+            - jsonPath: $.MarriageDetails.*.id
+
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.presentInsideKeralaLBName
 
 
         - query : UPDATE public.eg_marriage_present_address_details
@@ -1057,14 +1053,14 @@ serviceMaps:
 
 
 
-#        - query: INSERT INTO public.eg_marriage_present_address_details_audit SELECT * FROM  public.eg_marriage_present_address_details WHERE marriageid = ? and  tenantid=?  and bride_groom='G';
-#
-#          basePath: MarriageDetails.*
-#          jsonMaps:
-#            - jsonPath: $.MarriageDetails.*.id
-#
-#            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentInsideKeralaLBName
-#
+        - query: INSERT INTO public.eg_marriage_present_address_details_audit SELECT * FROM  public.eg_marriage_present_address_details WHERE marriageid = ? and  tenantid=?  and bride_groom='G';
+
+          basePath: MarriageDetails.*
+          jsonMaps:
+            - jsonPath: $.MarriageDetails.*.id
+
+            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentInsideKeralaLBName
+
 
         - query : UPDATE public.eg_marriage_present_address_details
             SET housename_no_en=?, housename_no_ml=?, villageid=?, village_name=?, talukid=?, taluk_name=?, ward_code=?, locality_en=?,
@@ -1137,13 +1133,13 @@ serviceMaps:
 
 
 
-#        - query: INSERT INTO public.eg_marriage_permanent_address_details_audit SELECT * FROM  public.eg_marriage_permanent_address_details WHERE marriageid = ? and  tenantid=?  and bride_groom='B';
-#
-#          basePath: MarriageDetails.*
-#          jsonMaps:
-#            - jsonPath: $.MarriageDetails.*.id
-#
-#            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntInKeralaAdrLBName
+        - query: INSERT INTO public.eg_marriage_permanent_address_details_audit SELECT * FROM  public.eg_marriage_permanent_address_details WHERE marriageid = ? and  tenantid=?  and bride_groom='B';
+
+          basePath: MarriageDetails.*
+          jsonMaps:
+            - jsonPath: $.MarriageDetails.*.id
+
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntInKeralaAdrLBName
 
         - query: UPDATE public.eg_marriage_permanent_address_details
                   SET  housename_no_en=?, housename_no_ml=?, villageid=?, village_name=?, talukid=?, taluk_name=?,
@@ -1213,13 +1209,13 @@ serviceMaps:
 
 
 
-#        - query: INSERT INTO public.eg_marriage_permanent_address_details_audit SELECT * FROM  public.eg_marriage_permanent_address_details WHERE marriageid = ? and  tenantid=?  and bride_groom='G';
-#
-#          basePath: MarriageDetails.*
-#          jsonMaps:
-#            - jsonPath: $.MarriageDetails.*.id
-#
-#            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntInKeralaAdrLBName
+        - query: INSERT INTO public.eg_marriage_permanent_address_details_audit SELECT * FROM  public.eg_marriage_permanent_address_details WHERE marriageid = ? and  tenantid=?  and bride_groom='G';
+
+          basePath: MarriageDetails.*
+          jsonMaps:
+            - jsonPath: $.MarriageDetails.*.id
+
+            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntInKeralaAdrLBName
 
         -  query : UPDATE public.eg_marriage_permanent_address_details
              SET  housename_no_en=?, housename_no_ml=?, villageid=?, village_name=?, talukid=?, taluk_name=?,
