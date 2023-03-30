@@ -56,12 +56,12 @@ class LearningTests {
                                                                                                        .build()))
                                                  .build();
 
-        ApplicantPersonal usr2 = usr.toBuilder()
+        ApplicantPersonal usrCopy = usr.toBuilder()
                                     .build();
-        usr2.getAddress()
+        usrCopy.getAddress()
             .setHouseName("Tower2 (16E)");
 
-        log.info("*** Builder.toBuilder:: \nusr={} \nusr2={}", FMUtils.toJson(usr), FMUtils.toJson(usr2));
+        log.info("*** Builder.toBuilder:: \nusr={} \nusr2={}", FMUtils.toJson(usr), FMUtils.toJson(usrCopy));
     }
 
     @Data

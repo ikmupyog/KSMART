@@ -647,4 +647,3 @@ serviceMaps:
        - jsonPath: $.ArisingFile.*.auditDetails.lastModifiedBy
 
        - jsonPath: $.ArisingFile.*.auditDetails.lastModifiedTime      
-  	
