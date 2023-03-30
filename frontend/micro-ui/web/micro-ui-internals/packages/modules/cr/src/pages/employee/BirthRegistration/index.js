@@ -6,7 +6,7 @@ import CrFlow from "./CrFlow";
 import ChildDetails from "../../../pageComponents/birthComponents/ChildDetails";
 import { newConfig as newConfigCR } from "../../../config/config";
 
-const CrFlowApp = ({ parentUrl}) => {
+const CreateBirthEmp = ({ parentUrl}) => {
   const { t } = useTranslation();
   const { path } = useRouteMatch();
   const match = useRouteMatch();  
@@ -159,4 +159,4 @@ const CrFlowApp = ({ parentUrl}) => {
   );
 };
 
-export default CrFlowApp;
+export default CreateBirthEmp;
