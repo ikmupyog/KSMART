@@ -20,8 +20,6 @@ import org.egov.filemgmnt.web.models.ApplicantSearchCriteria;
 import org.egov.filemgmnt.web.models.ApplicantServiceDetail;
 import org.egov.filemgmnt.web.models.ApplicantServiceRequest;
 import org.egov.filemgmnt.web.models.ApplicantServiceSearchCriteria;
-import org.egov.filemgmnt.web.models.ArisingFile;
-import org.egov.filemgmnt.web.models.ArisingFileRequest;
 import org.egov.filemgmnt.web.models.certificate.CertificateDetails;
 import org.egov.filemgmnt.web.models.certificate.CertificateRequest;
 import org.egov.filemgmnt.workflow.WorkflowIntegrator;
@@ -211,10 +209,6 @@ public class FileManagementService extends AbstractFileManagementService {
         return request.getCertificateDetails();
     }
 
-	public ArisingFile createArisingFile(ArisingFileRequest request) {
-		producer.push(fmConfig.getSaveArisingFileTopic(), request);
-		return request.getArisingFileDetail();
-	}
-
+	
 	
 }

@@ -152,6 +152,13 @@
             <artifactId>commons-collections4</artifactId>
             <version>4.4</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-core</artifactId>
+            <version>1.5.18</version>
+            </dependency>
+
     </dependencies>
     <repositories>
         <repository>
