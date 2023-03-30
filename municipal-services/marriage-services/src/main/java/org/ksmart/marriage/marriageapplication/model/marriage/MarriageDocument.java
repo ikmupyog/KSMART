@@ -23,10 +23,10 @@ import javax.validation.constraints.*;
 @EqualsAndHashCode
 public class MarriageDocument {
 
-    @JsonProperty("Id")
+    @JsonProperty("id")
     private String id;
 
-    @JsonProperty("Active")
+    @JsonProperty("active")
     private Boolean active;
 
     @JsonProperty("marriageTenantid")
@@ -47,8 +47,8 @@ public class MarriageDocument {
     @JsonProperty("documentOwner") 
     private String documentOwner = null;
 
-    // @JsonProperty("documentUid")
-    // private String documentUid;
+     @JsonProperty("documentlink")
+     private String documentlink;
 
     @JsonProperty("applicationNumber")
     private String applicationNumber = null;

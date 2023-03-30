@@ -621,6 +621,41 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOutsideKeralaPostOfficeMl
 
+        - query: INSERT INTO public.eg_death_document_dtls( id ,tenantid ,document_name ,document_type ,filestoreid ,
+            document_link ,marriageid ,bride_groom ,active ,createdby ,createdtime,lastmodifiedby , lastmodifiedtime  )
+           VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?  ,?);
+     
+
+      basePath: MarriageDetails.*.MarriageDocuments.*
+      jsonMaps:
+      
+      - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.id
+
+      - jsonPath: $.MarriageDetails.*.MarriageDocuments.tenantId
+
+      - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.documentName
+
+      - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.documentType
+
+      - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.fileStoreId
+
+      - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.documentlink
+
+      - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.marriageId
+
+      - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.documentOwner
+
+      - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.active
+
+      # - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.applicationNumber
+
+      - jsonPath: $.MarriageDetails[*][?({Id} in @.MarriageDocuments[*].Id)].AuditDetails.createdBy
+
+      - jsonPath: $.MarriageDetails[*][?({Id} in @.MarriageDocuments[*].Id)].AuditDetails.createdTime
+
+      - jsonPath: $.MarriageDetails[*][?({Id} in @.MarriageDocuments[*].Id)].AuditDetails.lastModifiedBy
+
+      - jsonPath: $.MarriageDetails[*][?({Id} in @.MarriageDocuments[*].Id)].AuditDetails.lastModifiedTime  
 
 
     - version: 1.0
@@ -989,10 +1024,6 @@ serviceMaps:
             - jsonPath: $.MarriageDetails.*.id
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.presentInsideKeralaLBName
-
-
-
-
 
 
 
