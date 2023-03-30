@@ -1,5 +1,5 @@
 ALTER TABLE public.eg_marriage_bride_groom_details
-  DROP COLUMN no_of_spouse_living,
+--  DROP COLUMN no_of_spouse_living,
   ADD COLUMN IF NOT EXISTS no_of_spouse_living bigint;
 
 ALTER TABLE public.eg_register_marriage_details
