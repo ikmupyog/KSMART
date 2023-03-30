@@ -126,23 +126,14 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData, isEditBir
     { i18nKey: "42", code: "42" },
   ];
   const [childDOB, setChildDOB] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.AbandonedChildDetails?.IsEditChangeScreen === false || formData?.AbandonedChildDetails?.IsEditChangeScreen === undefined) ? convertEpochToDate(formData?.AbandonedChildDetails?.childDOB) : formData?.AbandonedChildDetails?.childDOB); //formData?.AbandonedChildDetails?.childDOB
-  // const [gender, selectGender] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.AbandonedChildDetails?.IsEditChangeScreen === false || formData?.AbandonedChildDetails?.IsEditChangeScreen === undefined) ? (menu.filter(menu => menu.code === formData?.AbandonedChildDetails?.gender)[0]) : formData?.AbandonedChildDetails?.gender);
   const [gender, selectGender] = useState(formData?.AbandonedChildDetails?.gender?.code ? formData?.AbandonedChildDetails?.gender : formData?.AbandonedChildDetails?.gender ?
     (menu.filter(menu => menu.code === formData?.AbandonedChildDetails?.gender)[0]) : "");
 
   const [childAadharNo, setChildAadharNo] = useState(formData?.AbandonedChildDetails?.childAadharNo ? formData?.AbandonedChildDetails?.childAadharNo : null);
-  // const [childFirstNameEn, setChildFirstNameEn] = useState(formData?.AbandonedChildDetails?.childFirstNameEn ? formData?.AbandonedChildDetails?.childFirstNameEn : "");
-  // const [childMiddleNameEn, setChildMiddleNameEn] = useState(formData?.AbandonedChildDetails?.childMiddleNameEn ? formData?.AbandonedChildDetails?.childMiddleNameEn : "");
-  // const [childLastNameEn, setChildLastNameEn] = useState(formData?.AbandonedChildDetails?.childLastNameEn ? formData?.AbandonedChildDetails?.childLastNameEn : "");
-  // const [childFirstNameMl, setChildFirstNameMl] = useState(formData?.AbandonedChildDetails?.childFirstNameMl ? formData?.AbandonedChildDetails?.childFirstNameMl : "");
-  // const [childMiddleNameMl, setChildMiddleNameMl] = useState(formData?.AbandonedChildDetails?.childMiddleNameMl ? formData?.AbandonedChildDetails?.childMiddleNameMl : "");
-  // const [childLastNameMl, setChildLastNameMl] = useState(formData?.AbandonedChildDetails?.childLastNameMl ? formData?.AbandonedChildDetails?.childLastNameMl : "");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isInitialRenderPlace, setIsInitialRenderPlace] = useState(true);
   const [isInitialRenderFormData, setisInitialRenderFormData] = useState(false);
   const [birthDateTime, setbirthDateTime] = useState(""); //formData?.AbandonedChildDetails?.birthDateTime ? formData?.AbandonedChildDetails?.birthDateTime :
-  // const [isChildName, setIsChildName] = useState(formData?.AbandonedChildDetails?.isChildName ? formData?.AbandonedChildDetails?.isChildName : false);
-  // const [birthPlace, selectBirthPlace] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.AbandonedChildDetails?.IsEditChangeScreen === false || formData?.AbandonedChildDetails?.IsEditChangeScreen === undefined) ? (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPAbandonedChildDetailslaceMaster.code === formData?.AbandonedChildDetails?.birthPlace)[0]) : formData?.AbandonedChildDetails?.birthPlace);
   const [birthPlace, selectBirthPlace] = useState(formData?.AbandonedChildDetails?.birthPlace?.code ? formData?.AbandonedChildDetails?.birthPlace : formData?.AbandonedChildDetails?.birthPlace ?
     (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.AbandonedChildDetails?.birthPlace)[0]) : "");
   const [value, setValue] = useState();
@@ -155,7 +146,6 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData, isEditBir
 
 
   const [adrsPostOffice, setAdrsPostOffice] = useState(formData?.AbandonedChildDetails?.adrsPostOffice?.code ? formData?.AbandonedChildDetails?.adrsPostOffice : formData?.AbandonedChildDetails?.adrsPostOffice ? "" : "");
-  // const [adrsPostOffice, setAdrsPostOffice] = useState(formData?.AbandonedChildDetails?.adrsPostOffice ? formData?.AbandonedChildDetails?.adrsPostOffice : null);
   const [adrsPincode, setAdrsPincode] = useState(formData?.AbandonedChildDetails?.adrsPincode ? formData?.AbandonedChildDetails?.adrsPincode : null);
   const [adrsHouseNameEn, setAdrsHouseNameEn] = useState(formData?.AbandonedChildDetails?.adrsHouseNameEn ? formData?.AbandonedChildDetails?.adrsHouseNameEn : "");
   const [adrsHouseNameMl, setAdrsHouseNameMl] = useState(formData?.AbandonedChildDetails?.adrsHouseNameMl ? formData?.AbandonedChildDetails?.adrsHouseNameMl : "");
@@ -171,7 +161,6 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData, isEditBir
   const [vehicleToEn, setvehicleToEn] = useState(formData?.AbandonedChildDetails?.vehicleToEn ? formData?.AbandonedChildDetails?.vehicleToEn : "");
   const [vehicleFromMl, setvehicleFromMl] = useState(formData?.AbandonedChildDetails?.vehicleFromMl ? formData?.AbandonedChildDetails?.vehicleFromMl : "");
   const [vehicleHaltPlace, setvehicleHaltPlace] = useState(formData?.AbandonedChildDetails?.vehicleHaltPlace ? formData?.AbandonedChildDetails?.vehicleHaltPlace : "");
-  //const [vehicleHaltPlaceMl, setvehicleHaltPlaceMl] = useState(formData?.AbandonedChildDetails?.vehicleHaltPlaceMl ? formData?.AbandonedChildDetails?.vehicleHaltPlaceMl : "");
   const [vehicleToMl, setvehicleToMl] = useState(formData?.AbandonedChildDetails?.vehicleToMl ? formData?.AbandonedChildDetails?.vehicleToMl : "");
   const [vehicleDesDetailsEn, setvehicleDesDetailsEn] = useState(formData?.AbandonedChildDetails?.vehicleDesDetailsEn ? formData?.AbandonedChildDetails?.vehicleDesDetailsEn : "");
   const [setadmittedHospitalEn, setSelectedadmittedHospitalEn] = useState(formData?.AbandonedChildDetails?.setadmittedHospitalEn?.code ? formData?.AbandonedChildDetails?.setadmittedHospitalEn : formData?.AbandonedChildDetails?.setadmittedHospitalEn ? "" : "");
@@ -183,7 +172,6 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData, isEditBir
   const [streetNameMl, setstreetNameMl] = useState(formData?.AbandonedChildDetails?.streetNameMl ? formData?.AbandonedChildDetails?.streetNameMl : "");
   const [publicPlaceDecpEn, setpublicPlaceDecpEn] = useState(formData?.AbandonedChildDetails?.publicPlaceDecpEn ? formData?.AbandonedChildDetails?.publicPlaceDecpEn : "");
 
-  // const [pregnancyDuration, setPregnancyDuration] = useState(isEditBirth ? (cmbPregWeek.filter(cmbPregWeek => cmbPregWeek.code === formData?.AbandonedChildDetails?.pregnancyDuration)[0]) : formData?.AbandonedChildDetails?.pregnancyDuration);
   const [isMotherInfo, setIsMotherInfo] = useState(formData?.AbandonedChildDetails?.isMotherInfo ? formData?.AbandonedChildDetails?.isMotherInfo  : false);
   const [motherAadhar, setMotherAadhar] = useState(formData?.AbandonedChildDetails?.motherAadhar ? formData?.AbandonedChildDetails?.motherAadhar : null);
   const [motherFirstNameEn, setMotherFirstNameEn] = useState(formData?.AbandonedChildDetails?.motherFirstNameEn ? formData?.AbandonedChildDetails?.motherFirstNameEn : "");
@@ -193,10 +181,8 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData, isEditBir
   const [pregnancyDuration, setPregnancyDuration] = useState(formData?.AbandonedChildDetails?.pregnancyDuration ? formData?.AbandonedChildDetails?.pregnancyDuration : "");
   const [medicalAttensionSub, setMedicalAttensionSub] = useState(formData?.AbandonedChildDetails?.medicalAttensionSub?.code ? formData?.AbandonedChildDetails?.medicalAttensionSub : formData?.AbandonedChildDetails?.medicalAttensionSub ?
     (cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.AbandonedChildDetails?.medicalAttensionSub)[0]) : "");
-  // const [medicalAttensionSub, setMedicalAttensionSub] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.AbandonedChildDetails?.IsEditChangeScreen === false || formData?.AbandonedChildDetails?.IsEditChangeScreen === undefined) ? (cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.AbandonedChildDetails?.medicalAttensionSub)[0]) : formData?.AbandonedChildDetails?.medicalAttensionSub);
   const [deliveryMethods, setDeliveryMethod] = useState(formData?.AbandonedChildDetails?.deliveryMethods?.code ? formData?.AbandonedChildDetails?.deliveryMethods : formData?.AbandonedChildDetails?.deliveryMethods ?
     (cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.AbandonedChildDetails?.deliveryMethods)[0]) : "");
-  //  const [deliveryMethods, setDeliveryMethod] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.AbandonedChildDetails?.IsEditChangeScreen === false || formData?.AbandonedChildDetails?.IsEditChangeScreen === undefined) ? (cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.AbandonedChildDetails?.deliveryMethods)[0]) : formData?.AbandonedChildDetails?.deliveryMethods);
   const [birthWeight, setBirthWeight] = useState(formData?.AbandonedChildDetails?.birthWeight ? formData?.AbandonedChildDetails?.birthWeight : null);
 
   const [toast, setToast] = useState(false);
@@ -216,18 +202,17 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData, isEditBir
   const [vehicleRegiNoError, setvehicleRegiNoError] = useState(formData?.AbandonedChildDetails?.VehicleRegistrationNo ? false : false);
   const [vehiTypeError, setvehiTypeError] = useState(formData?.AbandonedChildDetails?.vehicleType ? false : false);
   const [vehicleHaltPlaceError, setvehicleHaltPlaceError] = useState(formData?.AbandonedChildDetails?.vehicleHaltPlace ? false : false);
-  // const [vehiHaltPlaceMlError, setvehiHaltPlaceMlError] = useState(formData?.AbandonedChildDetails?.vehicleHaltPlaceMl ? false : false);
   const [admittedHospitalEnError, setadmittedHospitalEnError] = useState(formData?.AbandonedChildDetails?.setadmittedHospitalEn ? false : false);
   const [vehiDesDetailsEnError, setvehiDesDetailsEnError] = useState(formData?.AbandonedChildDetails?.vehicleDesDetailsEn ? false : false);
   const [placeTypepEnError, setplaceTypepEnError] = useState(formData?.AbandonedChildDetails?.publicPlaceType ? false : false);
   const [localNameEnError, setlocalNameEnError] = useState(formData?.AbandonedChildDetails?.localityNameEn ? false : false);
   const [localNameMlError, setlocalNameMlError] = useState(formData?.AbandonedChildDetails?.localityNameMl ? false : false);
+ 
+ 
+ 
   const [BirthWeightError, setBirthWeightError] = useState(formData?.AbandonedChildDetails?.birthWeight ? false : false);
   const [MedicalAttensionSubStError, setMedicalAttensionSubStError] = useState(formData?.AbandonedChildDetails?.medicalAttensionSub ? false : false);
-
-
-  
-    const [DeliveryMethodStError, setDeliveryMethodStError] = useState(formData?.AbandonedChildDetails?.deliveryMethods ? false : false);
+  const [DeliveryMethodStError, setDeliveryMethodStError] = useState(formData?.AbandonedChildDetails?.deliveryMethods ? false : false);
   const [PregnancyDurationStError, setPregnancyDurationStError] = useState(formData?.AbandonedChildDetails?.pregnancyDuration ? false : false);
   const [PregnancyDurationInvalidError, setPregnancyDurationInvalidError] = useState(formData?.AbandonedChildDetails?.pregnancyDuration ? false : false);
 
@@ -917,7 +902,7 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData, isEditBir
     if (validFlag == true) {
       sessionStorage.setItem("stateId", stateId ? stateId : null);
       sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
-      sessionStorage.setItem("workFlowCode", workFlowCode);
+      // sessionStorage.setItem("workFlowCode", workFlowCode);
       sessionStorage.setItem("childDOB", childDOB ? childDOB : null);
       sessionStorage.setItem("birthDateTime", birthDateTime ? birthDateTime : null);
       sessionStorage.setItem("gender", gender ? gender.code : null);

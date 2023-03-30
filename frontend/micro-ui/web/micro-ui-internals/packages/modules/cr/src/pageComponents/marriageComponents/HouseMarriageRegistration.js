@@ -357,23 +357,19 @@ const HouseMarriageRegistration = ({
     }
   };
 
-  // if (isLoading ) {
+  // if (isLoading) {
   //   return <Loader></Loader>;
   // } else
   return (
     <React.Fragment>
-      {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-      {window.location.href.includes("/citizen") ? <Timeline currentStep={1} /> : null}
-      {window.location.href.includes("/employee") ? <Timeline currentStep={1} /> : null} */}
-      <FormStep t={t} >
-        <div className="row">
-          <div className="col-md-12">
-            {/* <h1 className="headingh1">
+      <div className="row">
+        <div className="col-md-12">
+          {/* <h1 className="headingh1">
                 <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DATE_OF_MARRIAGE")}`}</span>{" "}
               </h1> */}
-          </div>
         </div>
-        {/* <div className="col-md-2">
+      </div>
+      {/* <div className="col-md-2">
             <CardLabel>
               {`${t("CR_DATE_OF_MARRIAGE")}`}
               <span className="mandatorycss">*</span>
@@ -387,14 +383,14 @@ const HouseMarriageRegistration = ({
               {...(validation = { isRequired: true, title: t("CR_DATE_OF_MARRIAGE") })}
             />
           </div> */}
-        {/* <div className="row">
+      {/* <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
                 <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PLACE_OF_MARRIAGE")}`}</span>{" "}
               </h1>
             </div>
             </div> */}
-        {/* <div className="col_md-12">
+      {/* <div className="col_md-12">
               <div className="col-md-4">
                 <CardLabel>
                   {`${t("CS_COMMON_DISTRICT")}`}
@@ -515,154 +511,154 @@ const HouseMarriageRegistration = ({
             </div>
           */}
 
-        <div className="col_md-12">
-          <div className="col-md-3">
-            <CardLabel>
-              {`${t("CR_LOCALITY_EN")}`}
-              <span className="mandatorycss">*</span>
-            </CardLabel>
-            <TextInput
-              t={t}
-              type={"text"}
-              optionKey="i18nKey"
-              name="marriageLocalityEn"
-              value={marriageLocalityEn}
-              onChange={setSelectmarriageLocalityEn}
-              isMandatory={false}
-              disable={isDisableEdit}
-              placeholder={`${t("CR_LOCALITY_EN")}`}
-              {...(validation = { isRequired: true, title: t("CS_INVALID_LOCALITY_EN") })}
-            />
-          </div>
-          <div className="col-md-3">
-            <CardLabel>
-              {`${t("CR_STREET_EN")}`}
-              {/* <span className="mandatorycss">*</span> */}
-            </CardLabel>
-            <TextInput
-              t={t}
-              type={"text"}
-              optionKey="i18nKey"
-              isMandatory={false}
-              name="marriageStreetEn"
-              value={marriageStreetEn}
-              onChange={setSelectmarriageStreetEn}
-              disable={isDisableEdit}
-              placeholder={`${t("CR_STREET_EN")}`}
-              {...(validation = { isRequired: false, title: t("CS_INVALID_STREET_EN") })}
-            />
-          </div>
-          <div className="col-md-3">
-            <CardLabel>
-              {`${t("CR_HOUSE_NO_AND_NAME_EN")}`}
-              <span className="mandatorycss">*</span>
-            </CardLabel>
-            <TextInput
-              t={t}
-              type={"text"}
-              optionKey="i18nKey"
-              isMandatory={false}
-              name="marriageHouseNoAndNameEn"
-              value={marriageHouseNoAndNameEn}
-              onChange={setSelectmarriageHouseNoAndNameEn}
-              disable={isDisableEdit}
-              placeholder={`${t("CR_HOUSE_NO_AND_NAME_EN")}`}
-              {...(validation = { isRequired: true, title: t("CS_INVALID_HOUSENO_NAME") })}
-            />
-          </div>
-          <div className="col-md-3">
-            <CardLabel>
-              {`${t("CR_LANDMARK")}`}
-              {/* <span className="mandatorycss">*</span> */}
-            </CardLabel>
-
-            <TextInput
-              t={t}
-              type={"text"}
-              optionKey="i18nKey"
-              isMandatory={false}
-              name="marriageLandmark"
-              value={marriageLandmark}
-              onChange={setSelectmarriageLandmark}
-              disable={isDisableEdit}
-              placeholder={`${t("CR_LANDMARK")}`}
-              {...(validation = { isRequired: false, title: t("CS_INVALID_LANDMARK") })}
-            />
-          </div>
+      <div className="col_md-12">
+        <div className="col-md-3">
+          <CardLabel>
+            {`${t("CR_LOCALITY_EN")}`}
+            <span className="mandatorycss">*</span>
+          </CardLabel>
+          <TextInput
+            t={t}
+            type={"text"}
+            optionKey="i18nKey"
+            name="marriageLocalityEn"
+            value={marriageLocalityEn}
+            onChange={setSelectmarriageLocalityEn}
+            isMandatory={false}
+            disable={isDisableEdit}
+            placeholder={`${t("CR_LOCALITY_EN")}`}
+            {...(validation = { isRequired: true, title: t("CS_INVALID_LOCALITY_EN") })}
+          />
         </div>
-
-        <div className="col_md-12">
-          <div className="col-md-3">
-            <CardLabel>
-              {`${t("CR_LOCALITY_MAL")}`}
-              <span className="mandatorycss">*</span>
-            </CardLabel>
-            <TextInput
-              t={t}
-              type={"text"}
-              optionKey="i18nKey"
-              name="marriageLocalityMal"
-              value={marriageLocalityMal}
-              onChange={setSelectmarriageLocalityMal}
-              isMandatory={false}
-              disable={isDisableEdit}
-              placeholder={`${t("CR_LOCALITY_MAL")}`}
-              {...(validation = {
-                pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                isRequired: true,
-                type: "text",
-                title: t("CS_INVALID_LOCALITY_MAL"),
-              })}
-            />
-          </div>
-          <div className="col-md-3">
-            <CardLabel>
-              {`${t("CR_STREET_MAL")}`}
-              {/* <span className="mandatorycss">*</span> */}
-            </CardLabel>
-            <TextInput
-              t={t}
-              type={"text"}
-              optionKey="i18nKey"
-              name="marriageStreetMal"
-              value={marriageStreetMal}
-              onChange={setSelectmarriageStreetMal}
-              disable={isDisableEdit}
-              isMandatory={false}
-              placeholder={`${t("CR_STREET_MAL")}`}
-              {...(validation = {
-                pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                isRequired: false,
-                type: "text",
-                title: t("CS_INVALID_STREET_MAL"),
-              })}
-            />
-          </div>
-          <div className="col-md-3">
-            <CardLabel>
-              {`${t("CR_HOUSE_NO_AND_NAME_MAL")}`}
-              <span className="mandatorycss">*</span>
-            </CardLabel>
-            <TextInput
-              t={t}
-              type={"text"}
-              optionKey="i18nKey"
-              name="marriageHouseNoAndNameMal"
-              value={marriageHouseNoAndNameMal}
-              onChange={setSelectmarriageHouseNoAndNameMal}
-              disable={isDisableEdit}
-              isMandatory={false}
-              placeholder={`${t("CR_HOUSE_NO_AND_NAME_MAL")}`}
-              {...(validation = {
-                pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                isRequired: true,
-                type: "text",
-                title: t("CS_INVALID_HOUSENO_NAME"),
-              })}
-            />
-          </div>
+        <div className="col-md-3">
+          <CardLabel>
+            {`${t("CR_STREET_EN")}`}
+            {/* <span className="mandatorycss">*</span> */}
+          </CardLabel>
+          <TextInput
+            t={t}
+            type={"text"}
+            optionKey="i18nKey"
+            isMandatory={false}
+            name="marriageStreetEn"
+            value={marriageStreetEn}
+            onChange={setSelectmarriageStreetEn}
+            disable={isDisableEdit}
+            placeholder={`${t("CR_STREET_EN")}`}
+            {...(validation = { isRequired: false, title: t("CS_INVALID_STREET_EN") })}
+          />
         </div>
-        {/* <div className="row">
+        <div className="col-md-3">
+          <CardLabel>
+            {`${t("CR_HOUSE_NO_AND_NAME_EN")}`}
+            <span className="mandatorycss">*</span>
+          </CardLabel>
+          <TextInput
+            t={t}
+            type={"text"}
+            optionKey="i18nKey"
+            isMandatory={false}
+            name="marriageHouseNoAndNameEn"
+            value={marriageHouseNoAndNameEn}
+            onChange={setSelectmarriageHouseNoAndNameEn}
+            disable={isDisableEdit}
+            placeholder={`${t("CR_HOUSE_NO_AND_NAME_EN")}`}
+            {...(validation = { isRequired: true, title: t("CS_INVALID_HOUSENO_NAME") })}
+          />
+        </div>
+        <div className="col-md-3">
+          <CardLabel>
+            {`${t("CR_LANDMARK")}`}
+            {/* <span className="mandatorycss">*</span> */}
+          </CardLabel>
+
+          <TextInput
+            t={t}
+            type={"text"}
+            optionKey="i18nKey"
+            isMandatory={false}
+            name="marriageLandmark"
+            value={marriageLandmark}
+            onChange={setSelectmarriageLandmark}
+            disable={isDisableEdit}
+            placeholder={`${t("CR_LANDMARK")}`}
+            {...(validation = { isRequired: false, title: t("CS_INVALID_LANDMARK") })}
+          />
+        </div>
+      </div>
+
+      <div className="col_md-12">
+        <div className="col-md-3">
+          <CardLabel>
+            {`${t("CR_LOCALITY_MAL")}`}
+            <span className="mandatorycss">*</span>
+          </CardLabel>
+          <TextInput
+            t={t}
+            type={"text"}
+            optionKey="i18nKey"
+            name="marriageLocalityMal"
+            value={marriageLocalityMal}
+            onChange={setSelectmarriageLocalityMal}
+            isMandatory={false}
+            disable={isDisableEdit}
+            placeholder={`${t("CR_LOCALITY_MAL")}`}
+            {...(validation = {
+              pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+              isRequired: true,
+              type: "text",
+              title: t("CS_INVALID_LOCALITY_MAL"),
+            })}
+          />
+        </div>
+        <div className="col-md-3">
+          <CardLabel>
+            {`${t("CR_STREET_MAL")}`}
+            {/* <span className="mandatorycss">*</span> */}
+          </CardLabel>
+          <TextInput
+            t={t}
+            type={"text"}
+            optionKey="i18nKey"
+            name="marriageStreetMal"
+            value={marriageStreetMal}
+            onChange={setSelectmarriageStreetMal}
+            disable={isDisableEdit}
+            isMandatory={false}
+            placeholder={`${t("CR_STREET_MAL")}`}
+            {...(validation = {
+              pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+              isRequired: false,
+              type: "text",
+              title: t("CS_INVALID_STREET_MAL"),
+            })}
+          />
+        </div>
+        <div className="col-md-3">
+          <CardLabel>
+            {`${t("CR_HOUSE_NO_AND_NAME_MAL")}`}
+            <span className="mandatorycss">*</span>
+          </CardLabel>
+          <TextInput
+            t={t}
+            type={"text"}
+            optionKey="i18nKey"
+            name="marriageHouseNoAndNameMal"
+            value={marriageHouseNoAndNameMal}
+            onChange={setSelectmarriageHouseNoAndNameMal}
+            disable={isDisableEdit}
+            isMandatory={false}
+            placeholder={`${t("CR_HOUSE_NO_AND_NAME_MAL")}`}
+            {...(validation = {
+              pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+              isRequired: true,
+              type: "text",
+              title: t("CS_INVALID_HOUSENO_NAME"),
+            })}
+          />
+        </div>
+      </div>
+      {/* <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
               <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_MARRIAGE_CUSTOM_AND_CEREMONY_FOLLOWED_FOR_SOLEMNIZATION")}`}</span>{" "}
@@ -710,18 +706,13 @@ const HouseMarriageRegistration = ({
             </div>
           </div> */}
 
-        <div className="row">
-          <div className="col-md-12">
-            <h1 className="">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("")}`}</span>{" "}
-            </h1>
-          </div>
+      <div className="row">
+        <div className="col-md-12">
+          <h1 className="">
+            <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("")}`}</span>{" "}
+          </h1>
         </div>
-
-        {""}
-
-        {/* <div><BackButton >{t("CS_COMMON_BACK")}</BackButton></div> */}
-      </FormStep>
+      </div>
     </React.Fragment>
   );
 };

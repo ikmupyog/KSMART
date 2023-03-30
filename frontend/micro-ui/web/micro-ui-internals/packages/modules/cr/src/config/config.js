@@ -447,7 +447,6 @@ export const newConfig = [
         type: "component",
         hideInEmployee: false,
       },
-     
     ],
   },
   {
@@ -468,7 +467,7 @@ export const newConfig = [
         withoutLabel: true,
         nextStep: "abandoned-birth-informar-details",
         hideInEmployee: false,
-      }, 
+      },
       {
         route: "abandoned-birth-informar-details",
         component: "AbandonedBirthInformarDetails",
@@ -485,7 +484,6 @@ export const newConfig = [
         type: "component",
         hideInEmployee: false,
       },
-     
     ],
   },
   {
@@ -941,62 +939,11 @@ export const newConfig = [
           cardText: "",
           submitBarLabel: "CS_COMMON_NEXT",
         },
-        key: "MarriageDetails",
+        key: "MarriageKeyRegistration",
         withoutLabel: true,
         hideInEmployee: false,
         nextStep: "groom-details",
       },
-      // {
-      //   type: "component",
-      //   route: "marriage-institution",
-      //   isMandatory: true,
-      //   component: "MarriageInstitution",
-      //   texts: {
-      //     headerCaption: "",
-      //     // header: "CR_LEGAL_INFORMATION",
-      //     header: "",
-      //     cardText: "",
-      //     submitBarLabel: "CS_COMMON_NEXT",
-      //   },
-      //   key: "MarriageInstitution",
-      //   withoutLabel: true,
-      //   hideInEmployee: false,
-      //   nextStep: "marriage-publicplace",
-      // },
-      // {
-      //   type: "component",
-      //   route: "marriage-publicplace",
-      //   isMandatory: true,
-      //   component: "MarriagePublicPlace",
-      //   texts: {
-      //     headerCaption: "",
-      //     // header: "CR_LEGAL_INFORMATION",
-      //     header: "",
-      //     cardText: "",
-      //     submitBarLabel: "CS_COMMON_NEXT",
-      //   },
-      //   key: "MarriagePublicPlace",
-      //   withoutLabel: true,
-      //   hideInEmployee: false,
-      //   nextStep: "house-registration",
-      // },
-      // {
-      //   type: "component",
-      //   route: "house-registration",
-      //   isMandatory: true,
-      //   component: "HouseMarriageRegistration",
-      //   texts: {
-      //     headerCaption: "",
-      //     // header: "CR_LEGAL_INFORMATION",
-      //     header: "",
-      //     cardText: "",
-      //     submitBarLabel: "CS_COMMON_NEXT",
-      //   },
-      //   key: "HouseMarriageRegistration",
-      //   withoutLabel: true,
-      //   hideInEmployee: false,
-      //   nextStep: "groom-details",
-      // }, 
       {
         type: "component",
         route: "groom-details",
@@ -1012,8 +959,8 @@ export const newConfig = [
         key: "GroomDetails",
         withoutLabel: true,
         hideInEmployee: false,
-        nextStep: "address-groom",
-      },     
+        nextStep: "bride-details",
+      },
       {
         type: "component",
         route: "address-groom",
@@ -1288,7 +1235,7 @@ export const newConfig = [
       },
     ],
   },
- 
+
   {
     head: "Marriage Correction Routing",
     body: [

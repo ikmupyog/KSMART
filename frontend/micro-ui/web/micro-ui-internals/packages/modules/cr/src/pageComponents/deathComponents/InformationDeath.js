@@ -17,6 +17,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
   const stateId = Digit.ULBService.getStateId();
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
+  const [workFlowCode, setWorkFlowCode] = useState();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
   if (tenantId === "kl") {
@@ -28,7 +29,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
     stateId,
     "birth-death-service",
-    "WorkFlowDeath"
+    "WorkFlowBirth"
   );
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const { data: Menu, isGenderLoad } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
@@ -70,7 +71,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   let institutionNameCode = "";
   let naturetypecmbvalue = null;
   const maxDate = new Date();
-  let workFlowCode = "";
+  // let workFlowCode = "";
   let Difference_In_DaysRounded = "";
   let cmbfilterNation = [];
   let cmbfilterReligion = [];
@@ -81,8 +82,8 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   let validFlag = true;
   WorkFlowDetails &&
     WorkFlowDetails["birth-death-service"] &&
-    WorkFlowDetails["birth-death-service"].WorkFlowDeath &&
-    WorkFlowDetails["birth-death-service"].WorkFlowDeath.map((ob) => {
+    WorkFlowDetails["birth-death-service"].WorkFlowBirth &&
+    WorkFlowDetails["birth-death-service"].WorkFlowBirth.map((ob) => {
       workFlowData.push(ob);
     });
   place &&
@@ -753,13 +754,15 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
     setselectDeathPlace(value);
     setValue(value.code);
 
-    let currentWorkFlow = workFlowData.filter(
+    let currentWorgFlow = workFlowData.filter(
       (workFlowData) =>
-        workFlowData.DeathPlace === value.code &&
+        workFlowData.BirtPlace === value.code &&
         workFlowData.startdateperiod <= Difference_In_DaysRounded &&
         workFlowData.enddateperiod >= Difference_In_DaysRounded
     );
-    workFlowCode = currentWorkFlow[0].WorkflowCode;
+    console.log(currentWorgFlow[0].WorkflowCode);
+    // workFlowCode=currentWorgFlow[0].WorkflowCode;
+    setWorkFlowCode(currentWorgFlow[0].WorkflowCode); 
     if (value.code === "HOSPITAL") {
       //Institution
       setSelectedDeathPlaceInstId(null);
@@ -995,14 +998,14 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   //   // }
   // };
   const goNext = () => {
-    if (Difference_In_DaysRounded <= 21) {
-      if (DeathPlace.code == "HOSPITAL") {
-        workFlowCode = "DEATHHOSP";
-        console.log(workFlowCode);
-      } else {
-        workFlowCode = "21DEATHHHOME";
-      }
-    }
+    // if (Difference_In_DaysRounded <= 21) {
+    //   if (DeathPlace.code == "HOSPITAL") {
+    //     workFlowCode = "DEATHHOSP";
+    //     console.log(workFlowCode);
+    //   } else {
+    //     workFlowCode = "21DEATHHHOME";
+    //   }
+    // }
     if (DeceasedGender == null || DeceasedGender == "" || DeceasedGender == undefined) {
       validFlag = false;
       setsexError(true);
@@ -1280,7 +1283,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
         setValue(formData?.InformationDeath?.Occupation);
       }
     }
-    
+
     // if (formData?.ChildDetails?.medicalAttensionSub != null) {
     //   if (cmbAttDeliverySub.length > 0 && (medicalAttensionSub === undefined || medicalAttensionSub === "")) {
     //     setMedicalAttensionSub(cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.ChildDetails?.medicalAttensionSub)[0]);

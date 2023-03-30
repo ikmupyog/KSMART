@@ -34,7 +34,10 @@ const Home = ({
   pathname,
 }) => {
   const queryClient = useQueryClient();
-  queryClient.removeQueries("CR_CREATE_BIRTH_REG");  
+  // queryClient.removeQueries("CR_CREATE_BIRTH_REG");  
+  sessionStorage.removeItem("Digit.CR_CREATE_BIRTH_REG");
+  sessionStorage.removeItem("Digit.CR_BIRTH_EDIT_FLAG");
+  sessionStorage.removeItem("Digit.CR_EDIT_BIRTH_REG");
   const location = useLocation()
   const classname = Digit.Hooks.fsm.useRouteSubscription(pathname);
   const { t } = useTranslation();
