@@ -301,7 +301,7 @@ const EditAdoption = Digit?.ComponentRegistryService?.getComponent('CRCreateAdop
         {/* <PrivateRoute path={`${path}/search-correction/:variant`} component={(props) => <SearchCorrection {...props} parentRoute={path} />} /> */}
 
         <PrivateRoute path={`${path}/application-details/:id`} component={() => <ApplicationDetails parentRoute={path} />} /> 
-        <PrivateRoute path={`${path}application-stillbirth/:id`} component={() => <ApplicationStillBirthDetails parentRoute={path} />} /> 
+        <PrivateRoute path={`${path}/application-stillbirth/:id`} component={() => <ApplicationStillBirthDetails parentRoute={path} />} /> 
         <PrivateRoute path={`${path}/application-Adoptiondetails/:id`} component={() => <ApplicationAdoptionDetails parentRoute={path} />} />        
         <PrivateRoute path={`${path}/application-deathdetails/:id`} component={() => <ApplicationDeathDetails parentRoute={path} />} /> 
       </div>
