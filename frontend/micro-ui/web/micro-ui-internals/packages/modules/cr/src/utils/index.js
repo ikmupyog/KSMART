@@ -1004,7 +1004,7 @@ export const convertToBirthRegistration = (data = {}) => {
   return formdata;
 };
 export const convertToEditBirthRegistration = (data = {}) => {
-  console.log(data?.ChildDetails.workflowcode);
+  console.log(data?.ChildDetails?.ParentsDetails?.fatherEducation);
   const formdata = {
     ChildDetails: [
       {
@@ -1024,12 +1024,12 @@ export const convertToEditBirthRegistration = (data = {}) => {
         birthPlace: data?.ChildDetails?.birthPlace ? data?.ChildDetails?.birthPlace.code : null,
         hospitalName: data?.ChildDetails?.hospitalName ? data?.ChildDetails?.hospitalName.hospitalName : null,
         hospitalNameMl: data?.ChildDetails?.hospitalName ? data?.ChildDetails?.hospitalName.hospitalNamelocal : null,
-        institutionTypeCode: data?.ChildDetails?.institution ? data?.ChildDetails?.institution.code : null,
+        institutionTypeCode: data?.ChildDetails?.institution ? data?.ChildDetails?.institution : null,
         institution: data?.ChildDetails?.institution ? data?.ChildDetails?.institution.name : null,
-        institutionNameCode: data?.ChildDetails?.institutionId ? data?.ChildDetails?.institutionId.code : null,
+        institutionNameCode: data?.ChildDetails?.institutionId ? data?.ChildDetails?.institutionId : null,
         institutionId: data?.ChildDetails?.institutionId ? data?.ChildDetails?.institutionId.institutionName : null,
         institutionIdMl: data?.ChildDetails?.institutionIdMl ? data?.ChildDetails?.institutionIdMl.institutionNamelocal : null,
-        wardNo: data?.ChildDetails?.wardNo ? data?.ChildDetails?.wardNo.code : null,
+        wardNo: data?.ChildDetails?.wardNo ? data?.ChildDetails?.wardNo : null,
         wardNameEn: data?.ChildDetails?.wardNameEn ? data?.ChildDetails?.wardNameEn : null,
         wardNameMl: data?.ChildDetails?.wardNameMl ? data?.ChildDetails?.wardNameMl : null,
         wardNumber: data?.ChildDetails?.wardNumber ? data?.ChildDetails?.wardNumber : null,
@@ -1039,9 +1039,9 @@ export const convertToEditBirthRegistration = (data = {}) => {
         adrsLocalityNameMl: data?.ChildDetails?.adrsLocalityNameMl,
         adrsStreetNameEn: data?.ChildDetails?.adrsStreetNameEn,
         adrsStreetNameMl: data?.ChildDetails?.adrsStreetNameMl,
-        adrsPostOffice: data?.ChildDetails?.adrsPostOffice ? data?.ChildDetails?.adrsPostOffice.code : null,
-        adrsPincode: data?.ChildDetails?.adrsPincode ? data?.ChildDetails?.adrsPincode.code : null,
-        vehicleType: data?.ChildDetails?.vehicleType ? data?.ChildDetails?.vehicleType.code : null,
+        adrsPostOffice: data?.ChildDetails?.adrsPostOffice ? data?.ChildDetails?.adrsPostOffice : null,
+        adrsPincode: data?.ChildDetails?.adrsPincode ? data?.ChildDetails?.adrsPincode : null,
+        vehicleType: data?.ChildDetails?.vehicleType ? data?.ChildDetails?.vehicleType : null,
         vehicleHaltPlace: data?.ChildDetails?.vehicleHaltPlace,
         vehicleHaltPlaceMl: data?.ChildDetails?.vehicleHaltPlaceMl,
         vehicleRegistrationNo: data?.ChildDetails?.vehicleRegistrationNo,
@@ -1049,9 +1049,9 @@ export const convertToEditBirthRegistration = (data = {}) => {
         vehicleToEn: data?.ChildDetails?.vehicleToEn,
         vehicleFromMl: data?.ChildDetails?.vehicleFromMl,
         vehicleToMl: data?.ChildDetails?.vehicleToMl,
-        setadmittedHospitalEn: data?.ChildDetails?.setadmittedHospitalEn ? data?.ChildDetails?.setadmittedHospitalEn.code : null,
+        setadmittedHospitalEn: data?.ChildDetails?.setadmittedHospitalEn ? data?.ChildDetails?.setadmittedHospitalEn : null,
         vehicleDesDetailsEn: data?.ChildDetails?.vehicleDesDetailsEn ? data?.ChildDetails?.vehicleDesDetailsEn : null,
-        publicPlaceType: data?.ChildDetails?.publicPlaceType ? data?.ChildDetails?.publicPlaceType.code : null,
+        publicPlaceType: data?.ChildDetails?.publicPlaceType ? data?.ChildDetails?.publicPlaceType : null,
         localityNameEn: data?.ChildDetails?.localityNameEn,
         localityNameMl: data?.ChildDetails?.localityNameMl,
         streetNameEn: data?.ChildDetails?.streetNameEn,
@@ -1067,12 +1067,9 @@ export const convertToEditBirthRegistration = (data = {}) => {
         workflowcode: data?.ChildDetails.workflowcode,
         id: data?.ChildDetails?.id,
         applicationNumber: data?.ChildDetails?.applicationNumber,
-        assignee:
-          [
-            {
-              uuid: data?.ChildDetails?.uuid,
-            }
-          ],
+        assignee: [
+          data?.ChildDetails?.uuid,
+        ],
         ParentsDetails: {
           motherFirstNameEn: data?.ChildDetails?.ParentsDetails?.motherFirstNameEn,
           motherFirstNameMl: data?.ChildDetails?.ParentsDetails?.motherFirstNameMl,
@@ -1080,12 +1077,12 @@ export const convertToEditBirthRegistration = (data = {}) => {
           motherMarriageAge: data?.ChildDetails?.ParentsDetails?.motherMarriageAge,
           motherMarriageBirth: data?.ChildDetails?.ParentsDetails?.motherMarriageBirth,
           motherMaritalStatus: data?.ChildDetails?.ParentsDetails?.motherMaritalStatus
-            ? data?.ChildDetails?.ParentsDetails?.motherMaritalStatus.code
+            ? data?.ChildDetails?.ParentsDetails?.motherMaritalStatus
             : null,
-          motherEducation: data?.ChildDetails?.ParentsDetails?.motherEducation ? data?.ChildDetails?.ParentsDetails?.motherEducation.code : null,
-          motherProfession: data?.ChildDetails?.ParentsDetails?.motherProfession ? data?.ChildDetails?.ParentsDetails?.motherProfession.code : null,
+          motherEducation: data?.ChildDetails?.ParentsDetails?.motherEducation ? data?.ChildDetails?.ParentsDetails?.motherEducation : null,
+          motherProfession: data?.ChildDetails?.ParentsDetails?.motherProfession ? data?.ChildDetails?.ParentsDetails?.motherProfession : null,
           motherNationality: data?.ChildDetails?.ParentsDetails?.motherNationality
-            ? data?.ChildDetails?.ParentsDetails?.motherNationality.code
+            ? data?.ChildDetails?.ParentsDetails?.motherNationality
             : null,
           orderofChildren: data?.ChildDetails?.ParentsDetails?.orderofChildren,
           fatherAadhar: data?.ChildDetails?.ParentsDetails?.fatherAadhar,
@@ -1094,32 +1091,32 @@ export const convertToEditBirthRegistration = (data = {}) => {
           fatherFirstNameEn: data?.ChildDetails?.ParentsDetails?.fatherFirstNameEn,
           fatherFirstNameMl: data?.ChildDetails?.ParentsDetails?.fatherFirstNameMl,
           fatherNationality: data?.ChildDetails?.ParentsDetails?.fatherNationality
-            ? data?.ChildDetails?.ParentsDetails?.fatherNationality.code
+            ? data?.ChildDetails?.ParentsDetails?.fatherNationality
             : null,
-          fatherEducation: data?.ChildDetails?.ParentsDetails?.fatherEducation ? data?.ChildDetails?.ParentsDetails?.fatherEducation.code : null,
-          fatherProfession: data?.ChildDetails?.ParentsDetails?.fatherProfession ? data?.ParentsDetails?.ChildDetails?.fatherProfession.code : null,
-          Religion: data?.ChildDetails?.ParentsDetails?.Religion ? data?.ChildDetails?.ParentsDetails?.Religion.code : null,
+          fatherEducation: data?.ChildDetails?.ParentsDetails?.fatherEducation ? data?.ChildDetails?.ParentsDetails?.fatherEducation : null,
+          fatherProfession: data?.ChildDetails?.ParentsDetails?.fatherProfession ? data?.ParentsDetails?.ChildDetails?.fatherProfession : null,
+          Religion: data?.ChildDetails?.ParentsDetails?.Religion ? data?.ChildDetails?.ParentsDetails?.Religion : null,
           fatherMobile: data?.ChildDetails?.ParentsDetails?.fatherMobile,
           fatherEmail: data?.ChildDetails?.ParentsDetails?.fatherEmail,
         },
         AddressBirthDetails: {
           presentaddressCountry: data?.ChildDetails?.AddressBirthDetails?.presentaddressCountry
-            ? data?.ChildDetails?.AddressBirthDetails?.presentaddressCountry.code
+            ? data?.ChildDetails?.AddressBirthDetails?.presentaddressCountry
             : null,
           presentaddressStateName: data?.ChildDetails?.AddressBirthDetails?.presentaddressStateName
-            ? data?.ChildDetails?.AddressBirthDetails?.presentaddressStateName.code
+            ? data?.ChildDetails?.AddressBirthDetails?.presentaddressStateName
             : null,
           presentInsideKeralaLBName: data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaLBName
             ? data?.AddressBirthDetails?.presentInsideKeralaLBName.code
             : null,
           presentInsideKeralaDistrict: data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaDistrict
-            ? data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaDistrict.code
+            ? data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaDistrict
             : null,
           presentInsideKeralaTaluk: data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaTaluk
-            ? data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaTaluk.code
+            ? data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaTaluk
             : null,
           presentInsideKeralaVillage: data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaVillage
-            ? data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaVillage.code
+            ? data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaVillage
             : null,
           presentInsideKeralaLocalityNameEn: data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn,
           presentInsideKeralaStreetNameEn: data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameEn,
@@ -1128,24 +1125,24 @@ export const convertToEditBirthRegistration = (data = {}) => {
           presentInsideKeralaStreetNameMl: data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameMl,
           presentInsideKeralaHouseNameMl: data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaHouseNameMl,
           presentInsideKeralaPincode: data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaPincode
-            ? data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaPincode.code
+            ? data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaPincode
             : null,
           presentInsideKeralaPostOffice: data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaPostOffice
-            ? data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaPostOffice.code
+            ? data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaPostOffice
             : null,
-          presentWardNo: data?.ChildDetails?.AddressBirthDetails?.presentWardNo ? data?.ChildDetails?.AddressBirthDetails?.presentWardNo.code : null,
+          presentWardNo: data?.ChildDetails?.AddressBirthDetails?.presentWardNo ? data?.ChildDetails?.AddressBirthDetails?.presentWardNo : null,
           presentOutsideKeralaDistrict: data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaDistrict
-            ? data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaDistrict.code
+            ? data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaDistrict
             : null,
           presentOutsideKeralaTaluk: data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaTaluk
             ? data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaTaluk
             : null,
           presentOutsideKeralaVillage: data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaVillage
-            ? data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaVillage.code
+            ? data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaVillage
             : null,
           presentOutsideKeralaCityVilgeEn: data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaCityVilgeEn,
           presentOutsideKeralaPincode: data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaPincode
-            ? data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaPincode.code
+            ? data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaPincode
             : null,
           presentOutsideKeralaPostOfficeEn: data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaPostOfficeEn,
           presentOutsideKeralaPostOfficeMl: data?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaPostOfficeMl,
@@ -1161,30 +1158,30 @@ export const convertToEditBirthRegistration = (data = {}) => {
           presentOutSideIndiaAdressMlB: data?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaAdressMlB,
           presentOutSideIndiaProvinceEn: data?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaProvinceEn,
           presentOutSideCountry: data?.ChildDetails?.AddressBirthDetails?.presentOutSideCountry
-            ? data?.ChildDetails?.AddressBirthDetails?.presentOutSideCountry.code
+            ? data?.ChildDetails?.AddressBirthDetails?.presentOutSideCountry
             : null,
           presentOutSideIndiaadrsVillage: data?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaadrsVillage
-            ? data?.AddressBirthDetails?.presentOutSideIndiaadrsVillage.code
+            ? data?.AddressBirthDetails?.presentOutSideIndiaadrsVillage
             : null,
           presentOutSideIndiaadrsCityTown: data?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaadrsCityTown,
           isPrsentAddress: data?.ChildDetails?.AddressBirthDetails?.isPrsentAddress,
           permtaddressCountry: data?.ChildDetails?.AddressBirthDetails?.permtaddressCountry
-            ? data?.ChildDetails?.AddressBirthDetails?.permtaddressCountry.code
+            ? data?.ChildDetails?.AddressBirthDetails?.permtaddressCountry
             : null,
           permtaddressStateName: data?.ChildDetails?.AddressBirthDetails?.permtaddressStateName
-            ? data?.ChildDetails?.AddressBirthDetails?.permtaddressStateName.code
+            ? data?.ChildDetails?.AddressBirthDetails?.permtaddressStateName
             : null,
           permntInKeralaAdrLBName: data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrLBName
-            ? data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrLBName.code
+            ? data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrLBName
             : null,
           permntInKeralaAdrDistrict: data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrDistrict
-            ? data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrDistrict.code
+            ? data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrDistrict
             : null,
           permntInKeralaAdrTaluk: data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrTaluk
-            ? data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrTaluk.code
+            ? data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrTaluk
             : null,
           permntInKeralaAdrVillage: data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrVillage
-            ? data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrVillage.code
+            ? data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrVillage
             : null,
           permntInKeralaAdrLocalityNameEn: data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrLocalityNameEn,
           permntInKeralaAdrStreetNameEn: data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrStreetNameEn,
@@ -1193,22 +1190,22 @@ export const convertToEditBirthRegistration = (data = {}) => {
           permntInKeralaAdrStreetNameMl: data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrStreetNameMl,
           permntInKeralaAdrHouseNameMl: data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrHouseNameMl,
           permntInKeralaAdrPincode: data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrPincode
-            ? data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrPincode.code
+            ? data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrPincode
             : null,
           permntInKeralaAdrPostOffice: data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrPostOffice
-            ? data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrPostOffice.code
+            ? data?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrPostOffice
             : null,
           permntInKeralaWardNo: data?.ChildDetails?.AddressBirthDetails?.permntInKeralaWardNo
-            ? data?.ChildDetails?.AddressBirthDetails?.permntInKeralaWardNo.code
+            ? data?.ChildDetails?.AddressBirthDetails?.permntInKeralaWardNo
             : null,
           permntOutsideKeralaDistrict: data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaDistrict
-            ? data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaDistrict.code
+            ? data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaDistrict
             : null,
           permntOutsideKeralaTaluk: data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaTaluk
-            ? data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaTaluk.code
+            ? data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaTaluk
             : null,
           permntOutsideKeralaVillage: data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaVillage
-            ? data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaVillage.code
+            ? data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaVillage
             : null,
           permntOutsideKeralaCityVilgeEn: data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaCityVilgeEn,
           permntOutsideKeralaPincode: data?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaPincode,
@@ -1226,7 +1223,7 @@ export const convertToEditBirthRegistration = (data = {}) => {
           permntOutsideIndiaLinetwoMl: data?.ChildDetails?.AddressBirthDetails?.permntOutsideIndiaLinetwoMl,
           permntOutsideIndiaprovinceEn: data?.ChildDetails?.AddressBirthDetails?.permntOutsideIndiaprovinceEn,
           permntOutsideIndiaVillage: data?.ChildDetails?.AddressBirthDetails?.permntOutsideIndiaVillage
-            ? data?.ChildDetails?.AddressBirthDetails?.permntOutsideIndiaVillage.code
+            ? data?.ChildDetails?.AddressBirthDetails?.permntOutsideIndiaVillage
             : null,
           permntOutsideIndiaCityTown: data?.ChildDetails?.AddressBirthDetails?.permntOutsideIndiaCityTown,
           permanentOutsideIndiaPostCode: data?.ChildDetails?.AddressBirthDetails?.permanentOutsideIndiaPostCode,
