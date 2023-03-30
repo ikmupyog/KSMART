@@ -29,7 +29,6 @@ public class MarriageRegistryDetails {
     @JsonProperty("marriageDOR")
     private Long dateofreporting;
 
-
     @Size(max = 64)
     @JsonProperty("marriageDistrictid")
     private String districtid;
@@ -37,7 +36,6 @@ public class MarriageRegistryDetails {
     @Size(max = 64)
     @JsonProperty("marriageLBtype")
     private String lbtype;
-
 
     @Size(max = 64)
     @JsonProperty("marriageTenantid")

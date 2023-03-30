@@ -55,13 +55,15 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 
                 marriage.getWitnessDetails().setSerial_no1(1);
                 marriage.getWitnessDetails().setSerial_no2(2);
+
+                marriage.getWitnessDetails().setWitnessAuditDetails(auditDetails);
             }
             List <MarriageDocument> marriagedocument = marriage.getMarriageDocuments();
             if (marriagedocument!=null){
                 marriagedocument.forEach(document -> {
                 document.setId(UUID.randomUUID().toString());
                 document.setActive(true);
-                document.setTenantid(marriage.getTenantid());
+               // document.setTenantid(marriage.getTenantid());
                 document.setMarriageId(marriage.getId());
                 document.setMarriageDocAuditDetails(auditDetails);
             });

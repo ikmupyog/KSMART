@@ -30,7 +30,7 @@ public class MarriageDocument {
     private Boolean active;
 
     @JsonProperty("marriageTenantid")
-    private String tenantid = null;
+    private String tenantid ;
 
     @JsonProperty("documentType")
     private String documentType = null;

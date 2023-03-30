@@ -97,8 +97,8 @@ public class WitnessDetails {
     @JsonProperty("witness2Esigned")
     private  Boolean witness2Esigned;
 
-    @JsonProperty("AuditDetails")
-    private AuditDetails auditDetails;
+    @JsonProperty("auditDetails")
+    private AuditDetails witnessAuditDetails;
 
 
 }
