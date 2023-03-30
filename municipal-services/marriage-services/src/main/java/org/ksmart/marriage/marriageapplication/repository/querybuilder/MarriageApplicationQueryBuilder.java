@@ -21,7 +21,7 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
             .append("MD.ward_code as MD_ward_code ,  MD.talukid as MD_talukid ,  MD.village_name as MD_village_name ,  MD.marriage_type as MD_marriage_type ,")
             .append("MD.landmark as MD_landmark ,  MD.registrationno as MD_registrationno ,  MD.registration_date  as MD_registration_date ,")
             .append("MD.createdtime  as MD_createdtime ,   MD.createdby as MD_createdby ,  MD.lastmodifiedtime  as MD_lastmodifiedtime ,   MD.lastmodifiedby as MD_lastmodifiedby ,")
-            .append("MD.applicationnumber as MD_applicationnumber ,")
+            .append("MD.applicationNumber as MD_applicationnumber ,")
 
             .append("GD.id  as  GD_id  , GD.residentship   as GD_residentship , GD.aadharno   as GD_aadharno ,  GD.passportno   as GD_passportno ,")
             .append("GD.socialsecurityno   as GD_socialsecurityno ,  GD.firstname_en   as GD_firstname_en , GD.middlename_en   as GD_middlename_en , GD.lastname_en   as GD_lastname_en ,")
@@ -113,21 +113,21 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
 
         StringBuilder query = new StringBuilder(QUERY);
         StringBuilder orderBy = new StringBuilder();
-       // addFilter("MD_id", criteria.getId(), query, preparedStmtValues);
+        addFilter("MD.id", criteria.getId(), query, preparedStmtValues);
         addFilter("MD_tenantid", criteria.getTenantId(), query, preparedStmtValues);
-        addFilter("MD_applicationnumber", criteria.getApplicationNo(), query, preparedStmtValues);
+        addFilter("MD.applicationNumber", criteria.getApplicationNo(), query, preparedStmtValues);
         addFilter("MD_registrationno", criteria.getRegistrationNo(), query, preparedStmtValues);
         // addFilter("MD_certificateno", criteria.getCertificateNo(), query, preparedStmtValues);
-        addFilter("BD_aadharno", criteria.getBrideAdharNo(), query, preparedStmtValues);
-        addFilter("BD_firstname_en", criteria.getBrideFirstnameEn(), query, preparedStmtValues);
-        addFilter("BD_middlename_en", criteria.getBrideMiddlenameEn(), query, preparedStmtValues);
-        addFilter("BD_lastname_en", criteria.getBrideLastnameEn(), query, preparedStmtValues);
-        addFilter("GD_aadharno", criteria.getGroomAdharNo(), query, preparedStmtValues);
-        addFilter("GD_firstname_en", criteria.getGroomFirstnameEn(), query, preparedStmtValues);
-        addFilter("GD_middlename_en", criteria.getGroomMiddlenameEn(), query, preparedStmtValues);
-        addFilter("GD_lastname_en", criteria.getGroomLastnameEn(), query, preparedStmtValues);
+        addFilter("BD.aadharno", criteria.getBrideAdharNo(), query, preparedStmtValues);
+        addFilter("BD.firstname_en", criteria.getBrideFirstnameEn(), query, preparedStmtValues);
+        addFilter("BD.middlename_en", criteria.getBrideMiddlenameEn(), query, preparedStmtValues);
+        addFilter("BD.lastname_en", criteria.getBrideLastnameEn(), query, preparedStmtValues);
+        addFilter("GD.aadharno", criteria.getGroomAdharNo(), query, preparedStmtValues);
+        addFilter("GD.firstname_en", criteria.getGroomFirstnameEn(), query, preparedStmtValues);
+        addFilter("GD.middlename_en", criteria.getGroomMiddlenameEn(), query, preparedStmtValues);
+        addFilter("GD.lastname_en", criteria.getGroomLastnameEn(), query, preparedStmtValues);
         //  addFilter("MD_dateofmarriage", criteria.getMarriageDOM(), query, preparedStmtValues);
-        addDateRangeFilter("MD_dateofmarriage",
+        addDateRangeFilter("MD.dateofmarriage",
                 criteria.getFromDate(),
                 criteria.getToDate(),
                 query,
