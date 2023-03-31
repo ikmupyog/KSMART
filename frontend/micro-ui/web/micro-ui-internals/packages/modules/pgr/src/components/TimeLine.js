@@ -1,5 +1,5 @@
 import { Card, CardSubHeader, CheckPoint, ConnectingCheckPoints, GreyOutText, Loader, DisplayPhotos } from "@egovernments/digit-ui-react-components";
-import React, {Fragment, useEffect, useMemo } from "react";
+import React, { Fragment, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { LOCALIZATION_KEY } from "../constants/Localization";
 import PendingAtLME from "./timelineInstances/pendingAtLme";
@@ -10,7 +10,7 @@ import Resolved from "./timelineInstances/resolved";
 import Rejected from "./timelineInstances/rejected";
 import StarRated from "./timelineInstances/StarRated";
 
-const TLCaption = ({ data , comments}) => {
+const TLCaption = ({ data, comments }) => {
   const { t } = useTranslation()
   return (
     <div>
@@ -25,16 +25,15 @@ const TLCaption = ({ data , comments}) => {
 const TimeLine = ({ isLoading, data, serviceRequestId, complaintWorkflow, rating, zoomImage, complaintDetails }) => {
   const { t } = useTranslation();
 
-  function zoomImageWrapper(imageSource, index,thumbnailsToShow){
-    let newIndex=thumbnailsToShow.thumbs?.findIndex(link=>link===imageSource);
-    zoomImage((newIndex>-1&&thumbnailsToShow?.fullImage?.[newIndex])||imageSource);
+  function zoomImageWrapper(imageSource, index, thumbnailsToShow) {
+    let newIndex = thumbnailsToShow.thumbs?.findIndex(link => link === imageSource);
+    zoomImage((newIndex > -1 && thumbnailsToShow?.fullImage?.[newIndex]) || imageSource);
   }
-console.log(data);
   let { timeline } = data;
-  const totalTimelineLength = useMemo(()=> timeline?.length ,[timeline])
+  const totalTimelineLength = useMemo(() => timeline?.length, [timeline])
 
   useEffect(() => {
-    const [{auditDetails}] = timeline?.filter((status, index, array) => {
+    const [{ auditDetails }] = timeline?.filter((status, index, array) => {
       if (index === array.length - 1 && status.status === "PENDINGFORASSIGNMENT") {
         return true;
       } else {
@@ -51,7 +50,7 @@ console.log(data);
     // });
   }, [timeline]);
 
-  const getCommentsInCustomChildComponent = ({comment, thumbnailsToShow, auditDetails, assigner, status}) => {
+  const getCommentsInCustomChildComponent = ({ comment, thumbnailsToShow, auditDetails, assigner, status }) => {
     const captionDetails = {
       date: auditDetails?.lastModified,
       name: assigner?.name,
@@ -59,17 +58,17 @@ console.log(data);
       source: status == "COMPLAINT_FILED" ? complaintDetails?.audit.source : ""
     }
     return <>
-    {comment ? <div>{comment?.map( e => 
-      <div className="TLComments">
-        <h3>{t("WF_COMMON_COMMENTS")}</h3>
-        <p>{e}</p>
-      </div>
-    )}</div> : null}
-    {thumbnailsToShow?.thumbs?.length > 0 ? <div className="TLComments">
-      <h3>{t("CS_COMMON_ATTACHMENTS")}</h3>
-      <DisplayPhotos srcs={thumbnailsToShow.thumbs} onClick={(src, index) => {zoomImageWrapper(src, index,thumbnailsToShow)}} />
-    </div> : null}
-    {captionDetails?.date ? <TLCaption data={captionDetails} comments={comment}/> : null}
+      {comment ? <div>{comment?.map(e =>
+        <div className="TLComments">
+          <h3>{t("WF_COMMON_COMMENTS")}</h3>
+          <p>{e}</p>
+        </div>
+      )}</div> : null}
+      {thumbnailsToShow?.thumbs?.length > 0 ? <div className="TLComments">
+        <h3>{t("CS_COMMON_ATTACHMENTS")}</h3>
+        <DisplayPhotos srcs={thumbnailsToShow.thumbs} onClick={(src, index) => { zoomImageWrapper(src, index, thumbnailsToShow) }} />
+      </div> : null}
+      {captionDetails?.date ? <TLCaption data={captionDetails} comments={comment} /> : null}
     </>
   }
 
@@ -77,19 +76,19 @@ console.log(data);
     const isCurrent = 0 === index;
     switch (status) {
       case "PENDINGFORREASSIGNMENT":
-        return <CheckPoint isCompleted={isCurrent} key={index} label={t(`CS_COMMON_${status}`)} customChild={getCommentsInCustomChildComponent({comment, thumbnailsToShow, auditDetails, assigner})} />;
+        return <CheckPoint isCompleted={isCurrent} key={index} label={t(`CS_COMMON_${status}`)} customChild={getCommentsInCustomChildComponent({ comment, thumbnailsToShow, auditDetails, assigner })} />;
 
       // case "PENDINGFORASSIGNMENT":
       //   const isFirstPendingForAssignment = totalTimelineLength - (index + 1) === 0 ? true : false
       //   return <PendingForAssignment key={index} isCompleted={isCurrent} text={t(`CS_COMMON_${status}`)} customChild={getCommentsInCustomChildComponent({comment, ...isFirstPendingForAssignment ? {auditDetails} : {thumbnailsToShow, auditDetails} })} />;
 
       case "PENDINGFORASSIGNMENT_AFTERREOPEN":
-        return <PendingForAssignment isCompleted={isCurrent} key={index} text={t(`CS_COMMON_${status}`)} customChild={getCommentsInCustomChildComponent({comment, thumbnailsToShow, auditDetails, assigner})} />;
+        return <PendingForAssignment isCompleted={isCurrent} key={index} text={t(`CS_COMMON_${status}`)} customChild={getCommentsInCustomChildComponent({ comment, thumbnailsToShow, auditDetails, assigner })} />;
 
       case "PENDINGATLME":
         let { name, mobileNumber } = caption && caption.length > 0 ? caption[0] : { name: "", mobileNumber: "" };
         const assignedTo = `${t(`CS_COMMON_${status}`)}`;
-        return <PendingAtLME isCompleted={isCurrent} key={index} name={name} mobile={mobileNumber} text={assignedTo} customChild={getCommentsInCustomChildComponent({comment, thumbnailsToShow, auditDetails, assigner})} />;
+        return <PendingAtLME isCompleted={isCurrent} key={index} name={name} mobile={mobileNumber} text={assignedTo} customChild={getCommentsInCustomChildComponent({ comment, thumbnailsToShow, auditDetails, assigner })} />;
 
       case "RESOLVED":
         return (
@@ -101,7 +100,7 @@ console.log(data);
             //rating={index <= 1 && rating}
             serviceRequestId={serviceRequestId}
             reopenDate={Digit.DateUtils.ConvertTimestampToDate(auditDetails.lastModifiedTime)}
-            customChild={getCommentsInCustomChildComponent({comment, thumbnailsToShow, auditDetails, assigner})}
+            customChild={getCommentsInCustomChildComponent({ comment, thumbnailsToShow, auditDetails, assigner })}
           />
         );
       case "REJECTED":
@@ -114,11 +113,11 @@ console.log(data);
             //rating={index <= 1 && rating}
             serviceRequestId={serviceRequestId}
             reopenDate={Digit.DateUtils.ConvertTimestampToDate(auditDetails.lastModifiedTime)}
-            customChild={getCommentsInCustomChildComponent({comment, thumbnailsToShow, auditDetails, assigner})}
+            customChild={getCommentsInCustomChildComponent({ comment, thumbnailsToShow, auditDetails, assigner })}
           />
         );
       case "CLOSEDAFTERRESOLUTION":
-        return <CheckPoint isCompleted={isCurrent} key={index} label={t(`CS_COMMON_${`CS_COMMON_${status}`}`)} customChild={<div>{getCommentsInCustomChildComponent({comment, thumbnailsToShow, auditDetails, assigner})}{rating ? <StarRated text={t("CS_ADDCOMPLAINT_YOU_RATED")} rating={rating} /> : null}</div>} />;
+        return <CheckPoint isCompleted={isCurrent} key={index} label={t(`CS_COMMON_${`CS_COMMON_${status}`}`)} customChild={<div>{getCommentsInCustomChildComponent({ comment, thumbnailsToShow, auditDetails, assigner })}{rating ? <StarRated text={t("CS_ADDCOMPLAINT_YOU_RATED")} rating={rating} /> : null}</div>} />;
 
       // case "RESOLVE":
       // return (
@@ -131,10 +130,10 @@ console.log(data);
       //   />
       // );
       case "COMPLAINT_FILED":
-        return <CheckPoint isCompleted={isCurrent} key={index} label={t("CS_COMMON_COMPLAINT_FILED")} customChild={getCommentsInCustomChildComponent({comment, auditDetails, assigner, status})} />;
+        return <CheckPoint isCompleted={isCurrent} key={index} label={t("CS_COMMON_COMPLAINT_FILED")} customChild={getCommentsInCustomChildComponent({ comment, auditDetails, assigner, status })} />;
 
       default:
-        return <CheckPoint isCompleted={isCurrent} key={index} label={t(`CS_COMMON_${status}`)} customChild={getCommentsInCustomChildComponent({comment, thumbnailsToShow, auditDetails, assigner, status})} />;
+        return <CheckPoint isCompleted={isCurrent} key={index} label={t(`CS_COMMON_${status}`)} customChild={getCommentsInCustomChildComponent({ comment, thumbnailsToShow, auditDetails, assigner, status })} />;
     }
   };
 

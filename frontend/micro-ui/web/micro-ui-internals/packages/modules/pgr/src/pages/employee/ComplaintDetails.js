@@ -34,6 +34,7 @@ import { Close } from "../../Icons";
 import { useTranslation } from "react-i18next";
 import { isError, useQueryClient } from "react-query";
 import StarRated from "../../components/timelineInstances/StarRated";
+import TimeLine from "../../components/TimeLine";
 
 const MapView = (props) => {
   return (
@@ -82,6 +83,29 @@ const TLCaption = ({ data, comments }) => {
   );
 };
 
+const WorkflowComponent = ({ complaintDetails, id, zoomImage }) => {
+  const tenantId = complaintDetails.service.tenantId;
+  const workFlowDetails = Digit.Hooks.useWorkflowDetails({ tenantId: tenantId, id, moduleCode: "PGR" });
+
+  useEffect(() => {
+    workFlowDetails.revalidate();
+  }, []);
+
+  return (
+    !workFlowDetails.isLoading && (
+      <TimeLine
+        // isLoading={workFlowDetails.isLoading}
+        data={workFlowDetails.data}
+        serviceRequestId={id}
+        complaintWorkflow={complaintDetails.workflow}
+        rating={complaintDetails.audit.rating}
+        zoomImage={zoomImage}
+        complaintDetails={complaintDetails}
+      />
+    )
+  );
+};
+
 const ComplaintDetailsModal = ({ workflowDetails, complaintDetails, close, popup, selectedAction, onAssign, tenantId, t }) => {
   // RAIN-5692 PGR : GRO is assigning complaint, Selecting employee and assign. Its not getting assigned.
   // Fix for next action  assignee dropdown issue
@@ -94,8 +118,8 @@ const ComplaintDetailsModal = ({ workflowDetails, complaintDetails, close, popup
   );
   const employeeData = useEmployeeData
     ? useEmployeeData.map((departmentData) => {
-        return { heading: departmentData.department, options: departmentData.employees };
-      })
+      return { heading: departmentData.department, options: departmentData.employees };
+    })
     : null;
 
   const [selectedEmployee, setSelectedEmployee] = useState(null);
@@ -158,12 +182,12 @@ const ComplaintDetailsModal = ({ workflowDetails, complaintDetails, close, popup
             selectedAction === "ASSIGN" || selectedAction === "REASSIGN"
               ? t("CS_ACTION_ASSIGN")
               : selectedAction === "VERIFY"
-              ? t("CS_ACTION_VERIFY")
-              : selectedAction === "REJECT"
-              ? t("CS_ACTION_REJECT")
-              : selectedAction === "REOPEN"
-              ? t("CS_COMMON_REOPEN")
-              : t("CS_COMMON_RESOLVE")
+                ? t("CS_ACTION_VERIFY")
+                : selectedAction === "REJECT"
+                  ? t("CS_ACTION_REJECT")
+                  : selectedAction === "REOPEN"
+                    ? t("CS_COMMON_REOPEN")
+                    : t("CS_COMMON_RESOLVE")
           }
         />
       }
@@ -174,12 +198,12 @@ const ComplaintDetailsModal = ({ workflowDetails, complaintDetails, close, popup
         selectedAction === "ASSIGN" || selectedAction === "REASSIGN"
           ? t("CS_COMMON_ASSIGN")
           : selectedAction === "VERIFY"
-          ? t("CS_ACTION_VERIFY")
-          : selectedAction === "REJECT"
-          ? t("CS_COMMON_REJECT")
-          : selectedAction === "REOPEN"
-          ? t("CS_COMMON_REOPEN")
-          : t("CS_COMMON_RESOLVE")
+            ? t("CS_ACTION_VERIFY")
+            : selectedAction === "REJECT"
+              ? t("CS_COMMON_REJECT")
+              : selectedAction === "REOPEN"
+                ? t("CS_COMMON_REOPEN")
+                : t("CS_COMMON_RESOLVE")
       }
       actionSaveOnSubmit={() => {
         onAssign(selectedEmployee, comments, uploadedFile);
@@ -390,8 +414,8 @@ export const ComplaintDetails = (props) => {
       mobileNumber: checkpoint?.assigner?.mobileNumber,
       ...(checkpoint.status === "COMPLAINT_FILED" && complaintDetails?.audit
         ? {
-            source: complaintDetails.audit.source,
-          }
+          source: complaintDetails.audit.source,
+        }
         : {}),
     };
     const isFirstPendingForAssignment = arr.length - (index + 1) === 1 ? true : false;
@@ -496,31 +520,8 @@ export const ComplaintDetails = (props) => {
           {/* <div style={borderStyle}></div> */}
           {/* <BreakLine /> */}
           <div style={timelineWidth}>
-            {workflowDetails?.isLoading && <Loader />}
-            {!workflowDetails?.isLoading && (
-              <React.Fragment>
-                <CardSubHeader>{t(`CS_COMPLAINT_DETAILS_COMPLAINT_TIMELINE`)}</CardSubHeader>
-
-                {workflowDetails?.data?.timeline && workflowDetails?.data?.timeline?.length === 1 ? (
-                  <CheckPoint isCompleted={true} label={t("CS_COMMON_" + workflowDetails?.data?.timeline[0]?.status)} />
-                ) : (
-                  <ConnectingCheckPoints>
-                    {workflowDetails?.data?.timeline &&
-                      workflowDetails?.data?.timeline.map((checkpoint, index, arr) => {
-                        return (
-                          <React.Fragment key={index}>
-                            <CheckPoint
-                              keyValue={index}
-                              isCompleted={index === 0}
-                              label={t("CS_COMMON_" + checkpoint.status)}
-                              customChild={getTimelineCaptions(checkpoint, index, arr)}
-                            />
-                          </React.Fragment>
-                        );
-                      })}
-                  </ConnectingCheckPoints>
-                )}
-              </React.Fragment>
+            {complaintDetails?.service && (
+              <WorkflowComponent complaintDetails={complaintDetails} id={id} zoomImage={zoomImage} />
             )}
           </div>
         </Card>
