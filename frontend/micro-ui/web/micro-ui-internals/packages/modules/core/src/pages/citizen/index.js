@@ -39,6 +39,10 @@ const Home = ({
   // Digit.sessionStorage.removeItem("CR_BIRTH_EDIT_FLAG");
   sessionStorage.removeItem("CR_BIRTH_EDIT_FLAG");
   sessionStorage.removeItem("CR_EDIT_BIRTH_REG");
+
+  sessionStorage.removeItem("CR_DEATH_EDIT_FLAG");
+  sessionStorage.removeItem("Digit.CR_DEATH_EDIT");
+  
   const location = useLocation()
   const classname = Digit.Hooks.fsm.useRouteSubscription(pathname);
   const { t } = useTranslation();

@@ -71,7 +71,8 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count }) => {
     temp.deathCertificateDtls=finaldata;
     console.log(finaldata);
     Digit.SessionStorage.set("CR_DEATH_EDIT", temp);
-    Digit.SessionStorage.set("CR_DEATH_EDIT_FLAG", true);
+    sessionStorage.setItem("CR_DEATH_EDIT_FLAG", true);
+
   }
   //need to get from workflow
   const GetCell = (value) => <span className="cell-text">{value}</span>;

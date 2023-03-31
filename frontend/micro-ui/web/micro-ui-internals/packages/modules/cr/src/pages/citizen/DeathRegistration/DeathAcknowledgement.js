@@ -50,10 +50,8 @@ const DeathAcknowledgement = ({ data, onSuccess, userType }) => {
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const isRenewTrade = !window.location.href.includes("renew-trade");
 
-  // const [isEditDeath, setIsEditDeath] = useState(Digit.Hooks.useSessionStorage("CR_DEATH_EDIT_FLAG", {})[0] ? true :false
-  // );
-  const [isEditDeath, setIsEditBirth] = useState(Object.keys(Digit.Hooks.useSessionStorage("CR_DEATH_EDIT_FLAG", {})[0]).length > 0 ? true : false);
-
+  const [isEditDeath, setIsEditDeath] = useState(sessionStorage.getItem("CR_DEATH_EDIT_FLAG")? true : false);
+ 
   console.log("isEditDeath" + isEditDeath);
   const mutation = Digit.Hooks.cr.useCivilRegistrationDeathAPI(tenantId, isEditDeath ? false : true );
   // console.log("isEditDeath" + isEditDeath);
@@ -87,19 +85,10 @@ const DeathAcknowledgement = ({ data, onSuccess, userType }) => {
           // let formdata = !isEdit ? convertToDeathRegistration(data) : convertToEditTrade(data, fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter(y => y.module === "CR") : []);
           let formdata = !isEditDeath ? convertToDeathRegistration(data) : convertToEditDeathRegistration(data);
           // let formdata = !isEdit ? convertToDeathRegistration(data):[] ;
-          console.log(formdata);
-          // formdata.BirthDetails[0].tenantId = formdata?.BirthDetails[0]?.tenantId || tenantId1;
-          if (!isEditDeath) {
-            console.log("@@@@@@" + isEditDeath);
-
             mutation.mutate(formdata, {
               onSuccess,
             });
-          } else {
-            mutation.mutate(formdata, {
-              onSuccess,
-            });
-          }
+        
           // else{
           //   if((fydata["egf-master"] && fydata["egf-master"].FinancialYear.length > 0 && isDirectRenewal))
           //   {
