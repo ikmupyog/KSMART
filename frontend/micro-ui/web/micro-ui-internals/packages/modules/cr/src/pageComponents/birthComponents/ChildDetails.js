@@ -10,9 +10,10 @@ import BirthPlaceVehicle from "../../pageComponents/birthComponents/BirthPlaceVe
 import BirthPlacePublicPlace from "../../pageComponents/birthComponents/BirthPlacePublicPlace";
 import FormStep from "../../../../../react-components/src/molecules/FormStep";
 
-const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => {
+const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false }) => {
   // console.log(JSON.stringify(formData));  
   // console.log(formData);
+  // console.log(isEditBirth);
   const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
   const [workFlowCode, setWorkFlowCode] = useState();
@@ -34,8 +35,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
   const [InstitutionFilterList, setInstitutionFilterList] = useState(null);
   const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(false);
   const [DifferenceInDaysRounded, setDifferenceInDaysRounded] = useState();
-  const [DifferenceInTime, setDifferenceInTime] = useState();
-
+  const {uuid:uuid,} =Digit.UserService.getUser().info ; 
+  // console.log(Digit.UserService.getUser().info);
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
@@ -196,6 +197,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
     (cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.ChildDetails?.deliveryMethods)[0]) : "");
   //  const [deliveryMethods, setDeliveryMethod] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? (cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.ChildDetails?.deliveryMethods)[0]) : formData?.ChildDetails?.deliveryMethods);
   const [birthWeight, setBirthWeight] = useState(formData?.ChildDetails?.birthWeight ? formData?.ChildDetails?.birthWeight : null);
+  const [DifferenceInTime, setDifferenceInTime] = useState(formData?.ChildDetails?.DifferenceInTime);
 
   const [toast, setToast] = useState(false);
   const [AadharError, setAadharError] = useState(formData?.ChildDetails?.childAadharNo ? false : false);
@@ -324,14 +326,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
     today.setHours(0, 0, 0, 0);
     const birthDate = new Date(value);
     birthDate.setHours(0, 0, 0, 0);
-    if (birthPlace) {
-      let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
-      // console.log(currentWorgFlow);
-      if (currentWorgFlow.length > 0) {
-        // console.log(currentWorgFlow[0].WorkflowCode);
-        setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
-      }
-    }
+    
     if (birthDate.getTime() <= today.getTime()) {
       
       setDOBError(false);
@@ -342,7 +337,14 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
       setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
-
+      if (birthPlace) {
+        let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
+        console.log("currentWorgFlowDOB" + currentWorgFlow);
+        if (currentWorgFlow.length > 0) {
+          // console.log(currentWorgFlow[0].WorkflowCode);
+          setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+        }
+      }
       if (Difference_In_Days >= 365) {
         setChildAadharHIde(true);
       } else {
@@ -492,7 +494,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
   function setselectBirthPlace(value) {
     // console.log(workFlowData);
     // console.log("DifferenceInDaysRounded" + DifferenceInDaysRounded);
-    // console.log("DifferenceInTimeJEtheesh" + DifferenceInTime);
+    console.log("DifferenceInTimeJEtheesh" + DifferenceInTime);
 
     selectBirthPlace(value);
     setValue(value.code);
@@ -915,7 +917,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
         vehicleType, vehicleHaltPlace, vehicleRegistrationNo, vehicleFromEn, vehicleToEn, vehicleFromMl,
         vehicleToMl, setadmittedHospitalEn, vehicleDesDetailsEn,
         publicPlaceType, localityNameEn, localityNameMl, streetNameEn, streetNameMl, publicPlaceDecpEn,
-        birthWeight, pregnancyDuration, medicalAttensionSub, deliveryMethods, IsEditChangeScreen
+        birthWeight, pregnancyDuration, medicalAttensionSub, deliveryMethods, IsEditChangeScreen,
+        uuid,DifferenceInTime
       });
     }
   };

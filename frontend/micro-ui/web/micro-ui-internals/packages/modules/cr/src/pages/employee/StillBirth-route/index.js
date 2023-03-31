@@ -136,7 +136,7 @@ const ScrFlowApp = ({ parentUrl}) => {
               formData={params}
               onAdd={handleMultiple}
               userType="employee"
-              isEditBirth={isEditBirth}
+              isEditStillBirth={isEditStillBirth}
             />
            </Route>  
           
@@ -146,7 +146,7 @@ const ScrFlowApp = ({ parentUrl}) => {
         <CheckPage onSubmit={createProperty} value={params} />
       </Route>
       <Route path={`${match.path}/acknowledgement`}>
-        <BirthAcknowledgement data={params} onSuccess={onSuccess} />
+        <StillBirthAcknowledgement data={params} onSuccess={onSuccess} />
       </Route>
       <Route path={`${path}`} exact>
               <CrFlow  path={path}/>

@@ -9,6 +9,7 @@ import Search from "./Search";
 import ApplicationDetails from "./ApplicationDetails";
 import ApplicationAdoptionDetails from './ApplicationAdoptionDetails'
 import ApplicationDeathDetails from "./ApplicationDeathDetails";
+import ApplicationStillBirthDetails from "./ApplicationStillBirthDetails";
 import CrFlow from "./Birth-route";
 import DeathCrFlow from "./Death-route";
 import SearchFlow from "./Search-route";
@@ -31,6 +32,7 @@ const CRBreadCrumb = ({ location }) => {
   const isApplicationDeathDetails = location?.pathname?.includes("cr/application-deathdetails");
   const isApplicationBirthDetails = location?.pathname?.includes("cr/application-birthdetails");
   const isApplicationAdoptionDetails = location?.pathname?.includes("cr/application-Adoptiondetails");
+  const isApplicationStillBirthDetails = location?.pathname?.includes("cr/application-stillbirth");
   const isNewApplication = location?.pathname?.includes("tl/new-application");
   const isResponse = location?.pathname?.includes("tl/response");
   const isMobile = window.Digit.Utils.browser.isMobile();
@@ -192,6 +194,12 @@ const CRBreadCrumb = ({ location }) => {
       breadCrumbUrls.includes("home/application-Adoptiondetails") 
     },
     {
+      path: sessionStorage.getItem("applicationno") ? `/digit-ui/employee/cr/application-stillbirth/${sessionStorage.getItem("birthApplicationNo")}` : "",
+      content: t("Still Birth Application Details"),
+      show: isApplicationStillBirthDetails ||
+      breadCrumbUrls.includes("home/application-stillbirth") 
+    },
+    {
       path: "/digit-ui/employee/cr/death-flow/specify-correction",
       content: t("Specify Correction"),
       show: isSpecifyCorrectSearch ||
@@ -293,8 +301,8 @@ const EditAdoption = Digit?.ComponentRegistryService?.getComponent('CRCreateAdop
         {/* <PrivateRoute path={`${path}/search-correction/:variant`} component={(props) => <SearchCorrection {...props} parentRoute={path} />} /> */}
 
         <PrivateRoute path={`${path}/application-details/:id`} component={() => <ApplicationDetails parentRoute={path} />} /> 
-        <PrivateRoute path={`${path}/application-birthdetails/:id`} component={() => <ApplicationDetails parentRoute={path} />} /> 
-        <PrivateRoute path={`${path}/application-Adoptiondetails/:id`} component={() => <ApplicationAdoptionDetails parentRoute={path} />} /> 
+        <PrivateRoute path={`${path}/application-stillbirth/:id`} component={() => <ApplicationStillBirthDetails parentRoute={path} />} /> 
+        <PrivateRoute path={`${path}/application-Adoptiondetails/:id`} component={() => <ApplicationAdoptionDetails parentRoute={path} />} />        
         <PrivateRoute path={`${path}/application-deathdetails/:id`} component={() => <ApplicationDeathDetails parentRoute={path} />} /> 
       </div>
     </React.Fragment>

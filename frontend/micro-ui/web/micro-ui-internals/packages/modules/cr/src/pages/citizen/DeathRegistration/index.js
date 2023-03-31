@@ -12,7 +12,7 @@ const CreateDeathRegistration = ({ parentUrl }) => {
   const { pathname } = useLocation();
   const history = useHistory();
   const queryClient = useQueryClient();
-  const [isEditDeath,setIsEditDeath]=useState(Digit.Hooks.useSessionStorage("CR_DEATH_EDIT_FLAG", {})[0] ? true : false);  
+  const [isEditDeath, setIsEditDeath] = useState(Object.keys(Digit.Hooks.useSessionStorage("CR_DEATH_EDIT_FLAG", {})[0]).length > 0 ? true : false);
 
   
   const [params, setParams, clearParams] = isEditDeath ? Digit.Hooks.useSessionStorage("CR_DEATH_EDIT", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_DEATH", {});

@@ -24,7 +24,8 @@ const mystyle = {
  };
  const selectedSearch=[
   {label:"Adoption Search", value:"adoptionsearch"},
-  {label:"Birth Search", value:"birthsearch"}
+  {label:"Birth Search", value:"birthsearch"},
+  { label: "Still Birth", value: "stillbirthsearch" },
 ]
 let  validation =''
 
@@ -92,8 +93,8 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count,applicationType, 
       //console.log(finaldata);
       let temp={};
       temp.ChildDetails=finaldata;
-       Digit.SessionStorage.set("CR_EDIT_BIRTH_REG", temp);      
-       Digit.SessionStorage.set("CR_BIRTH_EDIT_FLAG", true); 
+       Digit.SessionStorage.set("CR_EDIT_BIRTH_REG", temp);   
+       sessionStorage.setItem("CR_BIRTH_EDIT_FLAG", true);
     }
 
     //need to get from workflow
@@ -221,6 +222,79 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count,applicationType, 
         // }
       ]), [] )
 
+      const handlesLinkClick = (finaldata) => {  
+        console.log(finaldata);
+        let temp={};
+        temp.StillBirthChildDetails =finaldata;
+         Digit.SessionStorage.set("CR_EDIT_STILLBIRTH_REG", temp);      
+         Digit.SessionStorage.set("CR_STILLBIRTH_EDIT_FLAG", true); 
+      }
+      const StillBirthColumns = useMemo(
+        () => [
+          {
+            Header: t("CR_COMMON_COL_APP_NO"),
+            accessor: "applicationNumber",
+            disableSortBy: true,
+            Cell: ({ row }) => {
+              return (
+                <div>
+                  <span className="link">
+                    <Link
+                      onClick={(event) => handlesLinkClick(row.original)}
+                      to={`/digit-ui/employee/cr/application-stillbirth/${row.original.applicationNumber}`}
+                    >
+                      {/* {row.original.applicationNumber} */}
+                      {row.original.applicationNumber}
+                    </Link>
+                  </span>
+                </div>
+              );
+            },
+          },
+          {
+            Header: t("CR_COMMON_COL_APP_DATE"),
+            disableSortBy: true,
+            accessor: (row) => GetCell(row.auditDetails.createdTime ? convertEpochToDateDMY(row.auditDetails.createdTime) : ""),
+          },
+          {
+            Header: t("CR_COMMON_COL_DOB"),
+            disableSortBy: true,
+            accessor: (row) => GetCell(row.childDOB ? convertEpochToDateDMY(row.childDOB) : ""),
+          },
+          // {
+          //     Header: t("TL_APPLICATION_TYPE_LABEL"),
+          //     disableSortBy: true,
+          //     accessor: (row) => GetCell(t(`TL_LOCALIZATION_APPLICATIONTYPE_${row.applicationType}`)),
+          // },
+          {
+            Header: t("CR_COMMON_COL_MOTHER_NAME"),
+            disableSortBy: true,
+            accessor: (row) => GetCell(row.StillBirthParentsDetails["motherFirstNameEn"] || "-"),
+          },
+          {
+            Header: t("CR_COMMON_COL_FATHER_NAME"),
+            disableSortBy: true,
+            accessor: (row) => GetCell(row.StillBirthParentsDetails["fatherFirstNameEn"] || "-"),
+          },
+    
+          // {
+          //   Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),
+          //   disableSortBy: true,
+          //   accessor: (row) => GetCell(row.tradeName || ""),
+          // },
+          // {
+          //   Header: t("TL_LOCALIZATION_TRADE_OWNER_NAME"),
+          //   accessor: (row) => GetCell(row.tradeLicenseDetail.owners.map( o => o.name ). join(",") || ""),
+          //   disableSortBy: true,
+          // },
+          // {
+          //   Header: t("TL_COMMON_TABLE_COL_STATUS"),
+          //   accessor: (row) =>GetCell(t( row?.workflowCode&&row?.status&&`WF_${row?.workflowCode?.toUpperCase()}_${row.status}`|| "NA") ),
+          //   disableSortBy: true,
+          // }
+        ],
+        []
+      );
     return (
       <React.Fragment>
         <div style={mystyle}>
@@ -263,7 +337,8 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count,applicationType, 
               t={t}
               data={data}
               totalRecords={count}
-              columns={applicationType?.value =="adoptionsearch"?AdoptionColumns:applicationType?.value =="birthsearch"?columns:[]}
+              // columns={applicationType?.value =="adoptionsearch"?AdoptionColumns:applicationType?.value =="birthsearch"?columns:[]}
+              columns={applicationType?.value == "adoptionsearch" ? AdoptionColumns : applicationType?.value == "stillbirthsearch" ? StillBirthColumns : applicationType?.value == "birthsearch" ? columns : []}
               getCellProps={(cellInfo) => {
                 return {
                   style: {

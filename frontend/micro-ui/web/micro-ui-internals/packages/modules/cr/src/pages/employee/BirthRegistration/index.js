@@ -2,18 +2,19 @@ import React, { useState, useEffect } from "react";
 import { Route, Switch, useRouteMatch,useLocation,useHistory } from "react-router-dom";
 import { PrivateRoute, BreadCrumb,Component } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-import OcrFlow from "./OcrFlow";
-import BornOutsideChildDetails from "../../../pageComponents/bornOutsideIndiaComponents/BornOutsideChildDetails";
+import CrFlow from "./CrFlow";
+import ChildDetails from "../../../pageComponents/birthComponents/ChildDetails";
 import { newConfig as newConfigCR } from "../../../config/config";
 
-const OcrFlowApp = ({ parentUrl}) => {
+const CreateBirthEmp = ({ parentUrl}) => {
   const { t } = useTranslation();
   const { path } = useRouteMatch();
   const match = useRouteMatch();  
   const { pathname } = useLocation();
   const history = useHistory();  
-  const [isEditBornOutsideBirth,setIsEditBornOutsideBirth]=useState(Digit.Hooks.useSessionStorage("CR_BORN_OUTSIDE_BIRTH_EDIT_FLAG", {})[0]);
-  const [params, setParams, clearParams] = isEditStillBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_BORN_OUTSIDE_BIRTH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_BORN_OUTSIDE_BIRTH_REG", {});
+  console.log(Object.keys(Digit.Hooks.useSessionStorage("CR_BIRTH_EDIT_FLAG", {})[0]).length);
+  const [isEditBirth, setIsEditBirth] = useState(Object.keys(Digit.Hooks.useSessionStorage("CR_BIRTH_EDIT_FLAG", {})[0]).length > 0 ? true : false);
+  const [params, setParams, clearParams] = isEditBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_BIRTH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_BIRTH_REG", {});
 
   // console.log("params"+JSON.stringify(params));
   const stateId = Digit.ULBService.getStateId();
@@ -24,7 +25,7 @@ const OcrFlowApp = ({ parentUrl}) => {
   newConfig?.forEach((obj) => {
     config = config.concat(obj.body.filter((a) => !a.hideInCitizen));
   });
-  config.indexRoute = "born-outside-child-details";
+  config.indexRoute = "child-details";
   const goNext = (skipStep, index, isAddMultiple, key, isPTCreateSkip) => {
     let currentPath = pathname.split("/").pop(),
       nextPage;
@@ -113,12 +114,12 @@ const OcrFlowApp = ({ parentUrl}) => {
   
   const onSuccess = () => {
     sessionStorage.removeItem("CurrentFinancialYear");
-    queryClient.invalidateQueries("CR_CREATE_BORN_OUTSIDE_BIRTH");
+    queryClient.invalidateQueries("CR_CREATE_BIRTH_REG");
   };
   const handleSkip = () => {};
   const handleMultiple = () => {};
-  const CheckPage = Digit?.ComponentRegistryService?.getComponent("StillBirthCheckPage");
-  const StillBirthAcknowledgement = Digit?.ComponentRegistryService?.getComponent("StillBirthAcknowledgement");
+  const CheckPage = Digit?.ComponentRegistryService?.getComponent("BirthCheckPage");
+  const BirthAcknowledgement = Digit?.ComponentRegistryService?.getComponent("BirthAcknowledgement");
   return (
     
     <React.Fragment>
@@ -136,7 +137,7 @@ const OcrFlowApp = ({ parentUrl}) => {
               formData={params}
               onAdd={handleMultiple}
               userType="employee"
-              isEditBornOutsideBirth={isEditBornOutsideBirth}
+              isEditBirth={isEditBirth}
             />
            </Route>  
           
@@ -151,11 +152,11 @@ const OcrFlowApp = ({ parentUrl}) => {
       <Route path={`${path}`} exact>
               <CrFlow  path={path}/>
              </Route>
-             <PrivateRoute  parentRoute={path} path={`${path}/${config.indexRoute}`} component={() => <BornOutsideChildDetails parentUrl={path}  />} />
+             <PrivateRoute  parentRoute={path} path={`${path}/${config.indexRoute}`} component={() => <ChildDetails parentUrl={path}  />} />
          
       </Switch>
     </React.Fragment>
   );
 };
 
-export default OcrFlowApp;
+export default CreateBirthEmp;
