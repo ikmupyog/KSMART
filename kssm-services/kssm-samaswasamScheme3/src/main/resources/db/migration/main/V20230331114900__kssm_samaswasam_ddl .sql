@@ -1,0 +1,1 @@
+ALTER TABLE public.tr_live_samaswasam3 ALTER COLUMN dtdecision_date TYPE timestamp with time zone;

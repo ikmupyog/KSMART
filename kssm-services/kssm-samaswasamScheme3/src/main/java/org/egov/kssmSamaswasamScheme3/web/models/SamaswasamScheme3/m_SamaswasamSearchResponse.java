@@ -62,7 +62,7 @@ private	String	applicant_nameeng	;
 private	String	applicant_namemal	;
 
 
-@JsonFormat(pattern = "dd/MM/yyyy")
+@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
 @JsonProperty("dtdecision_date")
 private	String	dtdecision_date	;
 
