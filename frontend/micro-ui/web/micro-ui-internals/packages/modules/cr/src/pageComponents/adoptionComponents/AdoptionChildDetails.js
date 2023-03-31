@@ -133,7 +133,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
   const [childDOB, setChildDOB] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined) ? convertEpochToDate(formData?.AdoptionChildDetails?.childDOB)  : convertEpochToDate(formData?.AdoptionChildDetails?.childDOB)); //formData?.AdoptionChildDetails?.childDOB
   // const [gender, selectGender] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined) ? (menu.filter(menu => menu.code === formData?.AdoptionChildDetails?.gender)[0]) : formData?.AdoptionChildDetails?.gender);
   const [gender, selectGender] = useState(formData?.AdoptionChildDetails?.gender?.code ? formData?.AdoptionChildDetails?.gender : formData?.AdoptionChildDetails?.gender ?
-    (menu.filter(menu => menu.code === formData?.AdoptionChildDetails?.gender)[0]) : {});
+    (menu.filter(menu => menu.code === formData?.AdoptionChildDetails?.gender)[0]) : "");
 
   const [childAadharNo, setChildAadharNo] = useState(formData?.AdoptionChildDetails?.childAadharNo ? formData?.AdoptionChildDetails?.childAadharNo  :null);
   const [childFirstNameEn, setChildFirstNameEn] = useState(formData?.AdoptionChildDetails?.childFirstNameEn ? formData?.AdoptionChildDetails?.childFirstNameEn : "");
