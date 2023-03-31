@@ -22,8 +22,8 @@ import StillBirthPlacePublicPlace from "../../pageComponents/stillBirthComponent
 
 const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditStillBirth }) => {
     // console.log(JSON.stringify(formData));  
-    // console.log(formData);
-    // console.log(isEditStillBirth);
+    console.log(formData);
+    console.log(isEditStillBirth);
     const [isEditStillBirthPageComponents, setIsEditStillBirthPageComponents] = useState(false);
     const [isDisableEdit, setisDisableEdit] = useState(isEditStillBirth ? isEditStillBirth : false);
     const [workFlowCode, setWorkFlowCode] = useState();
