@@ -15,20 +15,21 @@ import InformationDeathAband from "../../../pageComponents/deathAbandoned/Inform
 // const CrFlowApp = ({ parentUrl, isEditBirth}) => {
 
 const DeathCrFlowApp = ({ parentUrl,  props, }) => {
-  console.log(JSON.stringify(props));
-  console.log(window.location.href.includes("isEditDeath"));
+  // console.log(JSON.stringify(props));
+  // console.log(window.location.href.includes("isEditDeath"));
   const { t } = useTranslation();
   const { path } = useRouteMatch();
   const match = useRouteMatch();
   const { pathname } = useLocation();
   const history = useHistory();
   const [isEditDeath, setIsEditDeath] = useState(sessionStorage.getItem("CR_DEATH_EDIT_FLAG")? true : false);
+  console.log(sessionStorage.getItem("CR_DEATH_EDIT_FLAG"));
   const [params, setParams, clearParams] = isEditDeath ? Digit.Hooks.useSessionStorage("CR_DEATH_EDIT", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_DEATH", {});
 
-  console.log(isEditDeath);
+  // console.log(isEditDeath);
   // let params1 = sessionStorage.getItem('CR_DEATH_CORRECTIONS')
   //death-emp-edit
-  console.log('para',params);
+  // console.log('para',params);
  
   const stateId = Digit.ULBService.getStateId();
   // let { data: newConfig, isLoading } = Digit.Hooks.tl.useMDMS.getFormConfig(stateId, {});
@@ -108,21 +109,21 @@ const DeathCrFlowApp = ({ parentUrl,  props, }) => {
     if (nextStep === null) {
       return redirectWithHistory(`${match.path}/check`);
     }
-    console.log("next path",`${match.path}/${nextStep}`);
+    // console.log("next path",`${match.path}/${nextStep}`);
     nextPage = `${match.path}/${nextStep}`;
     redirectWithHistory(nextPage);
   };
 
   function handleSelect(key, data, skipStep, index, isAddMultiple = false) {
     setParams({ ...params, ...{ [key]: { ...params[key], ...data } } });
-    console.log("reachedd");
+    // console.log("reachedd");
     if (key === "isSkip" && data === true) {
       goNext(skipStep, index, isAddMultiple, key, true);
     } else {
       goNext(skipStep, index, isAddMultiple, key);
     }
   }
-  console.log("match.path" + match.path);
+  // console.log("match.path" + match.path);
   const createProperty = async () => {
     history.push(`${match.path}/acknowledgement`);
   };

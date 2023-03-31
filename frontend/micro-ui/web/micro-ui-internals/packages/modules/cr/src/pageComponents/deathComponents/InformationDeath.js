@@ -11,8 +11,8 @@ import DeathPublicPlace from "./DeathPublicPlace";
 import DeathOutsideJurisdiction from "./DeathOutsideJurisdiction ";
 import { useParams } from "react-router-dom";
 
-const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath=false }) => {
-  console.log(formData);
+const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath }) => {
+  console.log(formData?.InformationDeath);
   console.log(isEditDeath);
   const [isEditDeathPageComponents, setIsEditDeathPageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
