@@ -978,7 +978,7 @@ export const convertToBirthRegistration = (data = {}) => {
         },
         Demands: [
           {
-            tenantId: "kl.cochin",
+            tenantId: data?.ChildDetails?.tenantId,
             consumerCode: data?.ChildDetails?.applicationNumber,
             consumerType: "FEE",
             businessService: "CR",
