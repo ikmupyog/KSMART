@@ -1,4 +1,11 @@
 // import SelectAddress from "../../../pageComponents/Steps/SelectAddress";
+// import SelectComplaintType from "../../../pageComponents/Steps/SelectComplaintType";
+// import SelectDetails from "../../../pageComponents/Steps/SelectDetails";
+// import SelectImages from "../../../pageComponents/Steps/SelectImages";
+// import SelectLandmark from "../../../pageComponents/Steps/SelectLandmark";
+// import SelectPincode from "../../../pageComponents/Steps/SelectPincode";
+// import SelectSubType from "../../../pageComponents/Steps/SelectSubType";
+// import SelectGeolocation from "../../../pageComponents/Steps/SelectGeolocation";
 
 export const config = {
   routes: {
@@ -19,63 +26,19 @@ export const config = {
         cardText: "CS_COMPLAINT_SUBTYPE_TEXT",
         submitBarLabel: "CS_COMMON_NEXT",
       },
-      nextStep: "map",
-    },
-    map: {
-      component: "SelectGeolocation",
-      nextStep: "pincode",
-    },
-    pincode: {
-      component: "SelectPincode",
-      texts: {
-        headerCaption: "CS_ADDCOMPLAINT_COMPLAINT_LOCATION",
-        header: "CS_FILE_APPLICATION_PINCODE_LABEL",
-        cardText: "CS_ADDCOMPLAINT_CHANGE_PINCODE_TEXT",
-        submitBarLabel: "CS_COMMON_NEXT",
-        skipText: "CORE_COMMON_SKIP_CONTINUE",
-      },
-      inputs: [
-        {
-          label: "CORE_COMMON_PINCODE",
-          type: "text",
-          name: "pincode",
-          validation: {
-            minLength: 6,
-            maxLength: 7,
-          },
-          error: "CORE_COMMON_PINCODE_INVALID",
-        },
-      ],
       nextStep: "address",
     },
     address: {
-      component: "SelectAddress",
+      component: "SelectLandmark",
       texts: {
-        headerCaption: "CS_ADDCOMPLAINT_COMPLAINT_LOCATION",
+        headerCaption: "CS_ADDCOMPLAINT_PROVIDE_COMPLAINT_ADDRESS",
         header: "CS_ADDCOMPLAINT_PROVIDE_COMPLAINT_ADDRESS",
         cardText: "CS_ADDCOMPLAINT_CITY_MOHALLA_TEXT",
         submitBarLabel: "CS_COMMON_NEXT",
       },
       nextStep: "upload-photos",
     },
-    // landmark: {
-    //   component: SelectLandmark,
-    //   texts: {
-    //     headerCaption: "CS_ADDCOMPLAINT_COMPLAINT_LOCATION",
-    //     header: "CS_FILE_APPLICATION_PROPERTY_LOCATION_PROVIDE_LANDMARK_TITLE",
-    //     cardText: "CS_FILE_APPLICATION_PROPERTY_LOCATION_PROVIDE_LANDMARK_TITLE_TEXT",
-    //     submitBarLabel: "CS_COMMON_NEXT",
-    //     skipText: "CORE_COMMON_SKIP_CONTINUE",
-    //   },
-    //   inputs: [
-    //     {
-    //       label: "CS_ADDCOMPLAINT_LANDMARK",
-    //       type: "textarea",
-    //       name: "landmark",
-    //     },
-    //   ],
-    //   nextStep: "upload-photos",
-    // },
+
     "upload-photos": {
       component: "SelectImages",
       texts: {
@@ -83,6 +46,15 @@ export const config = {
         cardText: "CS_ADDCOMPLAINT_UPLOAD_PHOTO_TEXT",
         submitBarLabel: "CS_COMMON_NEXT",
         skipText: "CORE_COMMON_SKIP_CONTINUE",
+      },
+      nextStep: "informer-details",
+    },
+    "informer-details": {
+      component: "Informer",
+      texts: {
+        header: "CS_ADDCOMPLAINT_INFORMER",
+        cardText: "CS_ADDCOMPLAINT_INFORMER_TEXT",
+        submitBarLabel: "CS_COMMON_NEXT",
       },
       nextStep: "additional-details",
     },

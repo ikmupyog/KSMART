@@ -10,9 +10,10 @@ const ScrFlowApp = ({ parentUrl }) => {
   const match = useRouteMatch();
   const { pathname } = useLocation();
   const history = useHistory();
-  const [isEditStillBirth, setIsEditStillBirth] = useState(Digit.Hooks.useSessionStorage("CR_STILLBIRTH_EDIT_FLAG", {})[0]);
-  const [params, setParams, clearParams] = isEditStillBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_STILLBIRTH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_STILLBIRTH_REG", {});
-
+  console.log(sessionStorage.getItem("CR_STILLBIRTH_EDIT_FLAG"));
+  const [isEditStillBirth, setIsEditStillBirth] = useState(sessionStorage.getItem("CR_STILLBIRTH_EDIT_FLAG")? true : false);  
+  const [params, setParams, clearParams] = isEditBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_STILLBIRTH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_STILLBIRTH_REG", {});
+   console.log("isEditStillBirth" + isEditStillBirth);
   // console.log("params"+JSON.stringify(params));
   const stateId = Digit.ULBService.getStateId();
   // let { data: newConfig, isLoading } = Digit.Hooks.tl.useMDMS.getFormConfig(stateId, {});
@@ -22,7 +23,7 @@ const ScrFlowApp = ({ parentUrl }) => {
   // newConfig?.forEach((obj) => {
   //   config = config.concat(obj.body.filter((a) => !a.hideInCitizen));
   // });
-  
+
   newConfig = newConfigCR;
   const stillbirthConfig = newConfig.find((item)=> item.head === "StillBirth Routing");
   config = config.concat(stillbirthConfig.body.filter((a) => !a.hideInCitizen));

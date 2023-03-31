@@ -1,8 +1,8 @@
 import { Banner, Card, CardText, LinkButton, Loader, SubmitBar } from "@egovernments/digit-ui-react-components";
-import React, { useEffect,useState  } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { convertToDeathRegistration,convertToEditTrade, convertToResubmitTrade, convertToTrade, convertToUpdateTrade, stringToBoolean } from "../../../utils";
+import { convertToDeathRegistration, convertToEditDeathRegistration } from "../../../utils";
 import getPDFData from "../../../utils/getTLAcknowledgementData";
 
 const GetActionMessage = (props) => {
@@ -11,9 +11,11 @@ const GetActionMessage = (props) => {
     console.log(props.isSuccess);
     return t("CR_CREATE_SUCCESS_MSG");
   } else if (props.isLoading) {
-    return !window.location.href.includes("renew-trade") || !window.location.href.includes("edit-application") ? t("CR_APPLICATION_SUCCESS") : t("CR_UPDATE_APPLICATION_SUCCESS");
+    return !window.location.href.includes("renew-trade") || !window.location.href.includes("edit-application")
+      ? t("CR_APPLICATION_SUCCESS")
+      : t("CR_UPDATE_APPLICATION_SUCCESS");
   } else if (!props.isSuccess) {
-    return t("CR_CREATE_APPLICATION_FAILED") ;
+    return t("CR_CREATE_APPLICATION_FAILED");
   }
 };
 
@@ -22,9 +24,9 @@ const rowContainerStyle = {
   justifyContent: "space-between",
 };
 
-const BannerPicker = (props) => { 
+const BannerPicker = (props) => {
   // console.log(JSON.stringify(props));
-  
+
   return (
     // <Banner
     //   message={GetActionMessage(props)}
@@ -32,25 +34,28 @@ const BannerPicker = (props) => {
     //   info={props.isSuccess ? props.t("AK-16-2023-CRDRNR-C-KOCHI-KL") : ""}
     //   successful={props.isSuccess}
     // />
-    
+
     <Banner
-    message={GetActionMessage(props)}
-    applicationNumber={props.data?.deathCertificateDtls[0]?.InformationDeath?.DeathACKNo}   
-    info={props.isSuccess ? props.applicationNumber : ""}
-    successful={props.isSuccess}
-  />
+      message={GetActionMessage(props)}
+      applicationNumber={props.data?.deathCertificateDtls[0]?.InformationDeath?.DeathACKNo}
+      info={props.isSuccess ? props.applicationNumber : ""}
+      successful={props.isSuccess}
+    />
   );
-};  
-const DeathAcknowledgement = ({ data, onSuccess,userType }) => {
+};
+const DeathAcknowledgement = ({ data, onSuccess, userType }) => {
   const { t } = useTranslation();
   const [mutationHappened, setMutationHappened, clear] = Digit.Hooks.useSessionStorage("CITIZEN_TL_MUTATION_HAPPENED", false);
   const resubmit = window.location.href.includes("edit-application");
   const tenantId = Digit.ULBService.getCurrentTenantId();
-  const isRenewTrade = !window.location.href.includes("renew-trade")
-  const mutation = Digit.Hooks.cr.useCivilRegistrationDeathAPI(
-    data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
-    isRenewTrade
-  );
+  const isRenewTrade = !window.location.href.includes("renew-trade");
+
+  const [isEditDeath, setIsEditDeath] = useState(sessionStorage.getItem("CR_DEATH_EDIT_FLAG")? true : false);
+ 
+  console.log("isEditDeath" + isEditDeath);
+  const mutation = Digit.Hooks.cr.useCivilRegistrationDeathAPI(tenantId, isEditDeath ? false : true );
+  // console.log("isEditDeath" + isEditDeath);
+
   // const mutation1 = Digit.Hooks.cr.useCivilRegistrationDeathAPI(
   //   data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
   //   false
@@ -68,59 +73,53 @@ const DeathAcknowledgement = ({ data, onSuccess,userType }) => {
   const [isInitialRender, setIsInitialRender] = useState(true);
 
   useEffect(() => {
-    if (isInitialRender) {      
-    // const onSuccessedit = () => {
-    //   setMutationHappened(true);
-    // };
-    try {
-      setIsInitialRender(false);
-      let tenantId1 = data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId;
-      data.tenantId = tenantId1;
-      if (!resubmit) {
-        // let formdata = !isEdit ? convertToDeathRegistration(data) : convertToEditTrade(data, fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter(y => y.module === "CR") : []);
+    if (isInitialRender) {
+      // const onSuccessedit = () => {
+      //   setMutationHappened(true);
+      // };
+      try {
+        setIsInitialRender(false);
+        let tenantId1 = data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId;
+        data.tenantId = tenantId1;
+        if (!resubmit) {
+          // let formdata = !isEdit ? convertToDeathRegistration(data) : convertToEditTrade(data, fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter(y => y.module === "CR") : []);
+          let formdata = !isEditDeath ? convertToDeathRegistration(data) : convertToEditDeathRegistration(data);
+          // let formdata = !isEdit ? convertToDeathRegistration(data):[] ;
+            mutation.mutate(formdata, {
+              onSuccess,
+            });
+        
+          // else{
+          //   if((fydata["egf-master"] && fydata["egf-master"].FinancialYear.length > 0 && isDirectRenewal))
+          //   {
+          //     mutation2.mutate(formdata, {
+          //       onSuccess,
+          //     })
+          //   }
+          //   else
+          //   {
+          //     mutation1.mutate(formdata, {
+          //       onSuccess,
+          //     })
+          //   }
+          // }
 
-        let formdata = !isEdit ? convertToDeathRegistration(data):[] ;
-        console.log(formdata);
-        // formdata.BirthDetails[0].tenantId = formdata?.BirthDetails[0]?.tenantId || tenantId1;
-        if(!isEdit)
-        {
-          mutation.mutate(formdata, {
-            onSuccess,
-          })
+          // !isEdit ? mutation.mutate(formdata, {
+          //   onSuccess,
+          // }) : (fydata["egf-master"] && fydata["egf-master"].FinancialYear.length > 0 && isDirectRenewal ? mutation2.mutate(formdata, {
+          //   onSuccess,
+          // }) :mutation1.mutate(formdata, {
+          //   onSuccess,
+          // }));
+        } else {
+          // let formdata = convertToResubmitTrade(data);
+          // formdata.Licenses[0].tenantId = formdata?.Licenses[0]?.tenantId || tenantId1;
+          // !mutation2.isLoading && !mutation2.isSuccess &&!mutationHappened && mutation2.mutate(formdata, {
+          //   onSuccessedit,
+          // })
         }
-        // else{
-        //   if((fydata["egf-master"] && fydata["egf-master"].FinancialYear.length > 0 && isDirectRenewal))
-        //   {
-        //     mutation2.mutate(formdata, {
-        //       onSuccess,
-        //     })
-        //   }
-        //   else
-        //   {
-        //     mutation1.mutate(formdata, {
-        //       onSuccess,
-        //     })
-        //   }
-        // }
-
-        // !isEdit ? mutation.mutate(formdata, {
-        //   onSuccess,
-        // }) : (fydata["egf-master"] && fydata["egf-master"].FinancialYear.length > 0 && isDirectRenewal ? mutation2.mutate(formdata, {
-        //   onSuccess,
-        // }) :mutation1.mutate(formdata, {
-        //   onSuccess,
-        // }));
-      } else {
-        // let formdata = convertToResubmitTrade(data);
-        // formdata.Licenses[0].tenantId = formdata?.Licenses[0]?.tenantId || tenantId1;
-        // !mutation2.isLoading && !mutation2.isSuccess &&!mutationHappened && mutation2.mutate(formdata, {
-        //   onSuccessedit,
-        // })
-
-      }
-    } catch (err) {
+      } catch (err) {}
     }
-  }
   }, [mutation]);
 
   // useEffect(() => {
@@ -137,7 +136,7 @@ const DeathAcknowledgement = ({ data, onSuccess,userType }) => {
   // }, [mutation.isSuccess, mutation1.isSuccess]);
 
   const handleDownloadPdf = async () => {
-    const { Licenses = [] } = mutation.data
+    const { Licenses = [] } = mutation.data;
     const License = (Licenses && Licenses[0]) || {};
     const tenantInfo = tenants.find((tenant) => tenant.code === License.tenantId);
     let res = License;
@@ -162,12 +161,12 @@ const DeathAcknowledgement = ({ data, onSuccess,userType }) => {
   //   return (<Loader />)
   // }
   // else
-  if(mutation.isSuccess && mutation?.isError===null){
-  return(
-    <Card>
-      <BannerPicker t={t} data={mutation.data} isSuccess={"success"} isLoading={(mutation.isIdle || mutation.isLoading)} />
-       {/* <CardText>{!isDirectRenewal?t("Application Submitted Successfully"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText> */}
-    
+  if (mutation.isSuccess && mutation?.isError === null) {
+    return (
+      <Card>
+        <BannerPicker t={t} data={mutation.data} isSuccess={"success"} isLoading={mutation.isIdle || mutation.isLoading} />
+        {/* <CardText>{!isDirectRenewal?t("Application Submitted Successfully"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText> */}
+
         <LinkButton
           label={
             <div className="response-download-button">
@@ -182,7 +181,7 @@ const DeathAcknowledgement = ({ data, onSuccess,userType }) => {
           //style={{ width: "100px" }}
           onClick={handleDownloadPdf}
         />
-      {/* <BannerPicker t={t} data={mutation2.data} isSuccess={mutation2.isSuccess} isLoading={(mutation2.isIdle || mutation2.isLoading)} />
+        {/* <BannerPicker t={t} data={mutation2.data} isSuccess={mutation2.isSuccess} isLoading={(mutation2.isIdle || mutation2.isLoading)} />
       {(mutation2.isSuccess) && <CardText>{!isDirectRenewal?t("TL_FILE_TRADE_RESPONSE"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText>}
       {(!mutation2.isSuccess) && <CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>}
       {!isEdit && mutation2.isSuccess && <SubmitBar label={t("TL_DOWNLOAD_ACK_FORM")} onSubmit={handleDownloadPdf} />}
@@ -210,22 +209,19 @@ const DeathAcknowledgement = ({ data, onSuccess,userType }) => {
       <Link to={`/digit-ui/citizen`}>
         <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
       </Link> */}
-    </Card>
-  );
-} else {
-  return(
-
-    <Card>
-    <BannerPicker t={t} data={mutation.data } isSuccess={mutation.isSuccess } isLoading={mutation?.isLoading } />
-    {/* {<CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>} */}
-    <Link to={`/digit-ui/citizen`}>
-      <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
-    </Link>
-  </Card>
-  );
-}
-
+      </Card>
+    );
+  } else {
+    return (
+      <Card>
+        <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={mutation?.isLoading} />
+        {/* {<CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>} */}
+        <Link to={`/digit-ui/citizen`}>
+          <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
+        </Link>
+      </Card>
+    );
+  }
 };
-
 
 export default DeathAcknowledgement;
