@@ -179,7 +179,7 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData, }) => {
   const [motherFirstNameMl, setMotherFirstNameMl] = useState(formData?.AbandonedChildDetails?.motherFirstNameMl ? formData?.AbandonedChildDetails?.motherFirstNameMl : "");
   const [addressOfMother, setmotherAddress] = useState(formData?.AbandonedChildDetails?.addressOfMother ? formData?.AbandonedChildDetails?.addressOfMother: "");
 
-  const [pregnancyDuration, setPregnancyDuration] = useState(formData?.AbandonedChildDetails?.pregnancyDuration ? formData?.AbandonedChildDetails?.pregnancyDuration : "");
+  const [pregnancyDuration, setPregnancyDuration] = useState(formData?.AbandonedChildDetails?.pregnancyDuration ? formData?.AbandonedChildDetails?.pregnancyDuration : null);
   const [medicalAttensionSub, setMedicalAttensionSub] = useState(formData?.AbandonedChildDetails?.medicalAttensionSub?.code ? formData?.AbandonedChildDetails?.medicalAttensionSub : formData?.AbandonedChildDetails?.medicalAttensionSub ?
     (cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.AbandonedChildDetails?.medicalAttensionSub)[0]) : "");
   const [deliveryMethods, setDeliveryMethod] = useState(formData?.AbandonedChildDetails?.deliveryMethods?.code ? formData?.AbandonedChildDetails?.deliveryMethods : formData?.AbandonedChildDetails?.deliveryMethods ?
@@ -763,144 +763,99 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData, }) => {
         setplaceTypepEnError(false);
       }
     }
+    if (pregnancyDuration != null) {      
+      if (pregnancyDuration < 20 || pregnancyDuration > 44) {
+        validFlag = false;
+        setPregnancyDurationInvalidError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {       
+        setPregnancyDurationInvalidError(false);
+      }
+    } else {
+      setPregnancyDurationInvalidError(false);     
+    }
+
+
+
+
+
+
     // if (pregnancyDuration == null || pregnancyDuration == "" || pregnancyDuration == undefined) {
     //   // validFlag = true;
     //           console.log("pregnancyDuration" + pregnancyDuration);
     //           // setPregnancyDurationInvalidError(false);
     
     // } else 
-    if (pregnancyDuration < 20 || pregnancyDuration > 44) {
-              console.log("pregnancyDuration" + pregnancyDuration);
-          validFlag = false;
-          setPregnancyDurationInvalidError(true);
-          setToast(true);
-          setTimeout(() => {
-            setToast(false);
-          }, 2000);
-        } else {
-          // setPregnancyDurationStError(false);
-          setPregnancyDurationInvalidError(false);
-          console.log("pregnancyDuration msg" + pregnancyDuration);
-        }
-     
+    // if (pregnancyDuration < 20 || pregnancyDuration > 44) {
+    //           console.log("pregnancyDuration" + pregnancyDuration);
+    //       validFlag = false;
+    //       setPregnancyDurationInvalidError(true);
+    //       setToast(true);
+    //       setTimeout(() => {
+    //         setToast(false);
+    //       }, 2000);
+    //     } else {
+    //       // setPregnancyDurationStError(false);
+    //       setPregnancyDurationInvalidError(false);
+    //       console.log("pregnancyDuration msg" + pregnancyDuration);
+    //     }
 
-
-
-    // if (birthWeight != null || birthWeight != "" || birthWeight != undefined) {
-    //   let BirthWeightCheck = birthWeight;
-    //   if (BirthWeightCheck < 0.25 || BirthWeightCheck > 10) {
-    //     validFlag = false;
-    //     setBirthWeightError(true);
-    //     setToast(true);
-    //     setTimeout(() => {
-    //       setToast(false);
-    //     }, 2000);
-    //   } else {
-    //     setBirthWeightError(false);
-    //   }
-    // }
-    // else {
-    //   setBirthWeightError(true);
-    //   validFlag = false;
-    //   setBirthWeightError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 2000);
-    // }
-    // if (medicalAttensionSub == null || medicalAttensionSub == "" || medicalAttensionSub == undefined) {
-    //   validFlag = false;
-    //   setMedicalAttensionSubStError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 2000);
-    // } else {
-    //   setMedicalAttensionSubStError(false);
-    // }
-    // if (pregnancyDuration == null || pregnancyDuration == "" || pregnancyDuration == undefined) {
-    //   validFlag = false;
-    //   setPregnancyDurationStError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 2000);
-    // } else {
-    //   if (pregnancyDuration < 20 || pregnancyDuration > 44) {
-    //     validFlag = false;
-    //     setPregnancyDurationInvalidError(true);
-    //     setToast(true);
-    //     setTimeout(() => {
-    //       setToast(false);
-    //     }, 2000);
-    //   } else {
-    //     setPregnancyDurationStError(false);
-    //     setPregnancyDurationInvalidError(false);
-    //   }
-    // }
-    // if (deliveryMethods == null || deliveryMethods == "" || deliveryMethods == undefined) {
-    //   validFlag = false;
-    //   setDeliveryMethodStError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 2000);
-    // } else {
-    //   setDeliveryMethodStError(false);
-    // }
     if (validFlag == true) {
-      sessionStorage.setItem("stateId", stateId ? stateId : null);
-      sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
-      // sessionStorage.setItem("workFlowCode", workFlowCode);
-      sessionStorage.setItem("childDOB", childDOB ? childDOB : null);
-      sessionStorage.setItem("birthDateTime", birthDateTime ? birthDateTime : null);
-      sessionStorage.setItem("gender", gender ? gender.code : null);
-      sessionStorage.setItem("childAadharNo", childAadharNo ? childAadharNo : null);      
-      sessionStorage.setItem("birthPlace", birthPlace.code);
-      sessionStorage.setItem("hospitalCode", hospitalName ? hospitalName.code : null);
-      sessionStorage.setItem("hospitalName", hospitalName ? hospitalName.hospitalName : null);
-      sessionStorage.setItem("hospitalNameMl", hospitalName ? hospitalNameMl.hospitalNamelocal : null);
-      sessionStorage.setItem("institutionTypeCode", institution ? institution.code : null);
-      sessionStorage.setItem("institution", institution ? institution.name : null);
-      sessionStorage.setItem("institutionNameCode", institutionId ? institutionId.code : null);
-      sessionStorage.setItem("institutionId", institutionId ? institutionId.institutionName : null);
-      sessionStorage.setItem("institutionIdMl", institutionIdMl ? institutionIdMl.institutionNamelocal : null);
-      sessionStorage.setItem("adrsHouseNameEn", adrsHouseNameEn ? adrsHouseNameEn : null);
-      sessionStorage.setItem("adrsHouseNameMl", adrsHouseNameMl ? adrsHouseNameMl : null);
-      sessionStorage.setItem("adrsLocalityNameEn", adrsLocalityNameEn ? adrsLocalityNameEn : null);
-      sessionStorage.setItem("adrsLocalityNameMl", adrsLocalityNameMl ? adrsLocalityNameMl : null);
-      sessionStorage.setItem("adrsStreetNameEn", adrsStreetNameEn ? adrsStreetNameEn : null);
-      sessionStorage.setItem("adrsStreetNameMl", adrsStreetNameMl ? adrsStreetNameMl : null);
-      sessionStorage.setItem("adrsPostOffice", adrsPostOffice ? adrsPostOffice.code : null);
-      sessionStorage.setItem("adrsPincode", adrsPincode ? adrsPincode.code : null);
-      sessionStorage.setItem("wardNo", wardNo ? wardNo.code : null);
-      sessionStorage.setItem("wardNameEn", wardNo ? wardNo.name : null);
-      sessionStorage.setItem("wardNameMl", wardNo ? wardNo.localname : null);
-      sessionStorage.setItem("wardNumber", wardNo ? wardNo.wardno : null);
-      sessionStorage.setItem("vehicleType", vehicleType ? vehicleType : null);
-      sessionStorage.setItem("vehicleRegistrationNo", vehicleRegistrationNo ? vehicleRegistrationNo : null);
-      sessionStorage.setItem("vehicleFromEn", vehicleFromEn ? vehicleFromEn : null);
-      sessionStorage.setItem("vehicleToEn", vehicleToEn ? vehicleToEn : null);
-      sessionStorage.setItem("vehicleFromMl", vehicleFromMl ? vehicleFromMl : null);
-      sessionStorage.setItem("vehicleToMl", vehicleToMl ? vehicleToMl : null);
-      sessionStorage.setItem("vehicleHaltPlace", vehicleHaltPlace ? vehicleHaltPlace : null);
-      // sessionStorage.setItem("vehicleHaltPlaceMl", vehicleHaltPlaceMl ? vehicleHaltPlaceMl : null);
-      sessionStorage.setItem("setadmittedHospitalEn", setadmittedHospitalEn ? setadmittedHospitalEn.code : null);
-      sessionStorage.setItem("vehicleDesDetailsEn", vehicleDesDetailsEn ? vehicleDesDetailsEn : null);
-      sessionStorage.setItem("publicPlaceType", publicPlaceType ? publicPlaceType.code : null);
-      sessionStorage.setItem("localityNameEn", localityNameEn ? localityNameEn : null);
-      sessionStorage.setItem("localityNameMl", localityNameMl ? localityNameMl : null);
-      sessionStorage.setItem("streetNameEn", streetNameEn ? streetNameEn : null);
-      sessionStorage.setItem("streetNameMl", streetNameMl ? streetNameMl : null);
-      sessionStorage.setItem("publicPlaceDecpEn", publicPlaceDecpEn ? publicPlaceDecpEn : null);
-      sessionStorage.setItem("birthWeight", birthWeight ? birthWeight : null);
-      sessionStorage.setItem("pregnancyDuration", pregnancyDuration ? pregnancyDuration.code : null);
-      sessionStorage.setItem("medicalAttensionSub", medicalAttensionSub ? medicalAttensionSub.code : null);
-      sessionStorage.setItem("deliveryMethods", deliveryMethods ? deliveryMethods.code : null);
-      sessionStorage.setItem("motherFirstNameEn", motherFirstNameEn ? motherFirstNameEn : null);
-      sessionStorage.setItem("motherFirstNameMl", motherFirstNameMl ? motherFirstNameMl : null);
-      sessionStorage.setItem("motherAadhar", motherAadhar ? motherAadhar : null);
-      sessionStorage.setItem("addressOfMother", addressOfMother ? addressOfMother : null);
+      // sessionStorage.setItem("stateId", stateId ? stateId : null);
+      // sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
+      // // sessionStorage.setItem("workFlowCode", workFlowCode);
+      // sessionStorage.setItem("childDOB", childDOB ? childDOB : null);
+      // sessionStorage.setItem("birthDateTime", birthDateTime ? birthDateTime : null);
+      // sessionStorage.setItem("gender", gender ? gender.code : null);
+      // sessionStorage.setItem("childAadharNo", childAadharNo ? childAadharNo : null);      
+      // sessionStorage.setItem("birthPlace", birthPlace.code);
+      // sessionStorage.setItem("hospitalCode", hospitalName ? hospitalName.code : null);
+      // sessionStorage.setItem("hospitalName", hospitalName ? hospitalName.hospitalName : null);
+      // sessionStorage.setItem("hospitalNameMl", hospitalName ? hospitalNameMl.hospitalNamelocal : null);
+      // sessionStorage.setItem("institutionTypeCode", institution ? institution.code : null);
+      // sessionStorage.setItem("institution", institution ? institution.name : null);
+      // sessionStorage.setItem("institutionNameCode", institutionId ? institutionId.code : null);
+      // sessionStorage.setItem("institutionId", institutionId ? institutionId.institutionName : null);
+      // sessionStorage.setItem("institutionIdMl", institutionIdMl ? institutionIdMl.institutionNamelocal : null);
+      // sessionStorage.setItem("adrsHouseNameEn", adrsHouseNameEn ? adrsHouseNameEn : null);
+      // sessionStorage.setItem("adrsHouseNameMl", adrsHouseNameMl ? adrsHouseNameMl : null);
+      // sessionStorage.setItem("adrsLocalityNameEn", adrsLocalityNameEn ? adrsLocalityNameEn : null);
+      // sessionStorage.setItem("adrsLocalityNameMl", adrsLocalityNameMl ? adrsLocalityNameMl : null);
+      // sessionStorage.setItem("adrsStreetNameEn", adrsStreetNameEn ? adrsStreetNameEn : null);
+      // sessionStorage.setItem("adrsStreetNameMl", adrsStreetNameMl ? adrsStreetNameMl : null);
+      // sessionStorage.setItem("adrsPostOffice", adrsPostOffice ? adrsPostOffice.code : null);
+      // sessionStorage.setItem("adrsPincode", adrsPincode ? adrsPincode.code : null);
+      // sessionStorage.setItem("wardNo", wardNo ? wardNo.code : null);
+      // sessionStorage.setItem("wardNameEn", wardNo ? wardNo.name : null);
+      // sessionStorage.setItem("wardNameMl", wardNo ? wardNo.localname : null);
+      // sessionStorage.setItem("wardNumber", wardNo ? wardNo.wardno : null);
+      // sessionStorage.setItem("vehicleType", vehicleType ? vehicleType : null);
+      // sessionStorage.setItem("vehicleRegistrationNo", vehicleRegistrationNo ? vehicleRegistrationNo : null);
+      // sessionStorage.setItem("vehicleFromEn", vehicleFromEn ? vehicleFromEn : null);
+      // sessionStorage.setItem("vehicleToEn", vehicleToEn ? vehicleToEn : null);
+      // sessionStorage.setItem("vehicleFromMl", vehicleFromMl ? vehicleFromMl : null);
+      // sessionStorage.setItem("vehicleToMl", vehicleToMl ? vehicleToMl : null);
+      // sessionStorage.setItem("vehicleHaltPlace", vehicleHaltPlace ? vehicleHaltPlace : null);
+      // // sessionStorage.setItem("vehicleHaltPlaceMl", vehicleHaltPlaceMl ? vehicleHaltPlaceMl : null);
+      // sessionStorage.setItem("setadmittedHospitalEn", setadmittedHospitalEn ? setadmittedHospitalEn.code : null);
+      // sessionStorage.setItem("vehicleDesDetailsEn", vehicleDesDetailsEn ? vehicleDesDetailsEn : null);
+      // sessionStorage.setItem("publicPlaceType", publicPlaceType ? publicPlaceType.code : null);
+      // sessionStorage.setItem("localityNameEn", localityNameEn ? localityNameEn : null);
+      // sessionStorage.setItem("localityNameMl", localityNameMl ? localityNameMl : null);
+      // sessionStorage.setItem("streetNameEn", streetNameEn ? streetNameEn : null);
+      // sessionStorage.setItem("streetNameMl", streetNameMl ? streetNameMl : null);
+      // sessionStorage.setItem("publicPlaceDecpEn", publicPlaceDecpEn ? publicPlaceDecpEn : null);
+      // sessionStorage.setItem("birthWeight", birthWeight ? birthWeight : null);
+      // sessionStorage.setItem("pregnancyDuration", pregnancyDuration ? pregnancyDuration.code : null);
+      // sessionStorage.setItem("medicalAttensionSub", medicalAttensionSub ? medicalAttensionSub.code : null);
+      // sessionStorage.setItem("deliveryMethods", deliveryMethods ? deliveryMethods.code : null);
+      // sessionStorage.setItem("motherFirstNameEn", motherFirstNameEn ? motherFirstNameEn : null);
+      // sessionStorage.setItem("motherFirstNameMl", motherFirstNameMl ? motherFirstNameMl : null);
+      // sessionStorage.setItem("motherAadhar", motherAadhar ? motherAadhar : null);
+      // sessionStorage.setItem("addressOfMother", addressOfMother ? addressOfMother : null);
       
       // let IsEditChangeScreen = (isEditBirth ? isEditBirth : false);
       onSelect(config.key, {
@@ -911,41 +866,40 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData, }) => {
         vehicleType, vehicleHaltPlace, vehicleRegistrationNo, vehicleFromEn, vehicleToEn, vehicleFromMl,
         vehicleToMl, setadmittedHospitalEn, vehicleDesDetailsEn,
         publicPlaceType, localityNameEn, localityNameMl, streetNameEn, streetNameMl, publicPlaceDecpEn,
-        birthWeight, pregnancyDuration, medicalAttensionSub, deliveryMethods,motherFirstNameEn,motherFirstNameMl,motherAadhar,addressOfMother,
+        birthWeight, pregnancyDuration, medicalAttensionSub, deliveryMethods,motherFirstNameEn,motherFirstNameMl,motherAadhar,addressOfMother,isMotherInfo,
         //  IsEditChangeScreen
       });
     }
   };
   // if (isEditBirth && isEditBirthPageComponents === false && (formData?.AbandonedChildDetails?.IsEditChangeScreen === false || formData?.AbandonedChildDetails?.IsEditChangeScreen === undefined)) {
 
-    if (formData?.AbandonedChildDetails?.gender != null) {
-      if (menu.length > 0 && (gender === undefined || gender === "")) {
-        selectGender(menu.filter(menu => menu.code === formData?.AbandonedChildDetails?.gender)[0]);
-      }
-    }
-    if (formData?.AbandonedChildDetails?.birthPlace != null) {
-      if (cmbPlaceMaster.length > 0 && (birthPlace === undefined || birthPlace === "")) {
-        selectBirthPlace(cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.AbandonedChildDetails?.birthPlace)[0]);
-        setValue(formData?.AbandonedChildDetails?.birthPlace);
-      }
-    }
-    if (formData?.AbandonedChildDetails?.medicalAttensionSub != null) {
-      if (cmbAttDeliverySub.length > 0 && (medicalAttensionSub === undefined || medicalAttensionSub === "")) {
-        setMedicalAttensionSub(cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.AbandonedChildDetails?.medicalAttensionSub)[0]);
-      }
-    // }
-    // if (formData?.AbandonedChildDetails?.pregnancyDuration != null) {
-    //   console.log("pregnancyDuration" + pregnancyDuration);
-    //   if (cmbPregWeek.length > 0 && (pregnancyDuration === undefined || pregnancyDuration === "")) {
-    //     setPregnancyDuration(cmbPregWeek.filter(cmbPregWeek => parseInt(cmbPregWeek.code) === formData?.AbandonedChildDetails?.pregnancyDuration)[0]);
+    // if (formData?.AbandonedChildDetails?.gender != null) {
+    //   if (menu.length > 0 && (gender === undefined || gender === "")) {
+    //     selectGender(menu.filter(menu => menu.code === formData?.AbandonedChildDetails?.gender)[0]);
     //   }
     // }
-    if (formData?.AbandonedChildDetails?.deliveryMethods != null) {
-      if (cmbDeliveryMethod.length > 0 && (deliveryMethods === undefined || deliveryMethods === "")) {
-        setDeliveryMethod(cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.AbandonedChildDetails?.deliveryMethods)[0]);
-      }
-    }
-  }
+    // if (formData?.AbandonedChildDetails?.birthPlace != null) {
+    //   if (cmbPlaceMaster.length > 0 && (birthPlace === undefined || birthPlace === "")) {
+    //     selectBirthPlace(cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.AbandonedChildDetails?.birthPlace)[0]);
+    //     setValue(formData?.AbandonedChildDetails?.birthPlace);
+    //   }
+    // }
+    // if (formData?.AbandonedChildDetails?.medicalAttensionSub != null) {
+    //   if (cmbAttDeliverySub.length > 0 && (medicalAttensionSub === undefined || medicalAttensionSub === "")) {
+    //     setMedicalAttensionSub(cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.AbandonedChildDetails?.medicalAttensionSub)[0]);
+    //   }
+    // }
+    // // if (formData?.AbandonedChildDetails?.pregnancyDuration != null) {
+    // //   console.log("pregnancyDuration" + pregnancyDuration);
+    // //   if (cmbPregWeek.length > 0 && (pregnancyDuration === undefined || pregnancyDuration === "")) {
+    // //     setPregnancyDuration(cmbPregWeek.filter(cmbPregWeek => parseInt(cmbPregWeek.code) === formData?.AbandonedChildDetails?.pregnancyDuration)[0]);
+    // //   }
+    // // }
+    // if (formData?.AbandonedChildDetails?.deliveryMethods != null) {
+    //   if (cmbDeliveryMethod.length > 0 && (deliveryMethods === undefined || deliveryMethods === "")) {
+    //     setDeliveryMethod(cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.AbandonedChildDetails?.deliveryMethods)[0]);
+    //   }
+    // } 
 
   if (
     // isWorkFlowDetailsLoading || 
