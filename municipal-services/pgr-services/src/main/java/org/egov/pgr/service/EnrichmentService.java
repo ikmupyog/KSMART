@@ -64,6 +64,10 @@ public class EnrichmentService {
         service.getAddress().setId(UUID.randomUUID().toString());
         service.getAddress().setTenantId(tenantId);
         service.setActive(true);
+        if(!StringUtils.isEmpty(service.getInformer())) {
+	        service.getInformer().setId(UUID.randomUUID().toString());
+	        service.getInformer().setTenantId(tenantId);
+        }
 
         if(workflow.getVerificationDocuments()!=null){
             workflow.getVerificationDocuments().forEach(document -> {
@@ -72,7 +76,13 @@ public class EnrichmentService {
         }
 
         if(StringUtils.isEmpty(service.getAccountId()))
-            service.setAccountId(service.getCitizen().getUuid());
+        	if(!StringUtils.isEmpty(service.getCitizen())) {
+        		service.setAccountId(service.getCitizen().getUuid());
+        	}
+        	else if(!StringUtils.isEmpty(service.getInformer())) {
+        		 service.setAccountId(service.getInformer().getId());
+        	}
+        	
 
         List<String> customIds = getIdList(requestInfo,tenantId,config.getServiceRequestIdGenName(),config.getServiceRequestIdGenFormat(),1);
 

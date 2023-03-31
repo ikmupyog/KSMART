@@ -94,7 +94,7 @@ public class ServiceRequestValidator {
         }*/
 
         if(requestInfo.getUserInfo().getType().equalsIgnoreCase(USERTYPE_EMPLOYEE)){
-            User citizen = request.getService().getCitizen();
+            Informer citizen = request.getService().getInformer();
             if(citizen == null)
                 errorMap.put("INVALID_REQUEST","Citizen object cannot be null");
             else if(citizen.getMobileNumber()==null || citizen.getName()==null)

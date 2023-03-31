@@ -88,6 +88,10 @@ public class Service   {
         @NotNull
         @JsonProperty("address")
         private Address address = null;
+        
+        @Valid        
+        @JsonProperty("informer")
+        private Informer informer = null;
 
         @JsonProperty("auditDetails")
         private AuditDetails auditDetails = null;

@@ -79,6 +79,11 @@ public class Address   {
         @SafeHtml
         @JsonProperty("street")
         private String street = null;
+        
+        @SafeHtml
+        @JsonProperty("wardCode")
+        private String wardCode = null;
+        
 
         @Valid
         @JsonProperty("locality")

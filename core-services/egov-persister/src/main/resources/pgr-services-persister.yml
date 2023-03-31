@@ -40,7 +40,7 @@ serviceMaps:
 
       - jsonPath: $.service.auditDetails.lastModifiedTime
 
-    - query: INSERT INTO eg_pgr_address_v2(id, tenantid, parentid, doorno, plotno, buildingname, street, landmark, city, pincode, locality, district, region, state, country, latitude, longitude, additionaldetails, createdby, createdtime, lastmodifiedby, lastmodifiedtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+    - query: INSERT INTO eg_pgr_address_v2(id, tenantid, parentid, doorno, plotno, buildingname, street, landmark, city, pincode, locality, district, region, state, country, latitude, longitude, additionaldetails, createdby, createdtime, lastmodifiedby, lastmodifiedtime,ward_code) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
       basePath: service.address
       jsonMaps:
       - jsonPath: $.service.address.id
@@ -75,8 +75,8 @@ serviceMaps:
 
       - jsonPath: $.service.address.geoLocation.latitude
 
-      - jsonPath: $.service.address.geoLocation.longitude
-
+      - jsonPath: $.service.address.geoLocation.longitude      
+      
       - jsonPath: $.service.address.additionDetails
         type: JSON
         dbType: JSONB
@@ -88,6 +88,31 @@ serviceMaps:
       - jsonPath: $.service.auditDetails.lastModifiedBy
 
       - jsonPath: $.service.auditDetails.lastModifiedTime
+      
+      - jsonPath: $.service.address.wardCode
+            
+    - query: INSERT INTO eg_pgr_informer_v2(id, tenantid, parentid, informername, informeraddress, mobno, createdby, createdtime, lastmodifiedby, lastmodifiedtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+      basePath: service.informer
+      jsonMaps:
+      - jsonPath: $.service.informer.id
+
+      - jsonPath: $.service.tenantId
+
+      - jsonPath: $.service.id
+
+      - jsonPath: $.service.informer.name
+
+      - jsonPath: $.service.informer.address
+
+      - jsonPath: $.service.informer.mobileNumber
+      
+      - jsonPath: $.service.auditDetails.createdBy
+
+      - jsonPath: $.service.auditDetails.createdTime
+
+      - jsonPath: $.service.auditDetails.lastModifiedBy
+
+      - jsonPath: $.service.auditDetails.lastModifiedTime    
 
 
 
@@ -125,7 +150,7 @@ serviceMaps:
       - jsonPath: $.service.id
 
 
-    - query: UPDATE eg_pgr_address_v2 SET doorno=?, plotno=?, buildingname=?, street=?, landmark=?, city=?, pincode=?, locality=?, district=?, region=?, state=?, country=?, latitude=?, longitude=?,additionaldetails=?, lastmodifiedby=?, lastmodifiedtime=? WHERE id=?;
+    - query: UPDATE eg_pgr_address_v2 SET doorno=?, plotno=?, buildingname=?, street=?, landmark=?, city=?, pincode=?, locality=?, district=?, region=?, state=?, country=?, latitude=?, longitude=?,additionaldetails=?, lastmodifiedby=?, lastmodifiedtime=?, ward_code=? WHERE id=?;
       basePath: service.address
       jsonMaps:
 
@@ -164,5 +189,23 @@ serviceMaps:
       - jsonPath: $.service.auditDetails.lastModifiedBy
 
       - jsonPath: $.service.auditDetails.lastModifiedTime
+      
+      - jsonPath: $.service.address.wardCode
 
       - jsonPath: $.service.address.id
+      
+    - query: UPDATE eg_pgr_informer_v2 SET informername=?, informeraddress=?, mobno=?, lastmodifiedby=?, lastmodifiedtime=? WHERE id=?;
+      basePath: service.address
+      jsonMaps:
+
+      - jsonPath: $.service.informer.name
+
+      - jsonPath: $.service.informer.address
+
+      - jsonPath: $.service.informer.mobileNumber      
+
+      - jsonPath: $.service.auditDetails.lastModifiedBy
+
+      - jsonPath: $.service.auditDetails.lastModifiedTime
+
+      - jsonPath: $.service.informer.id

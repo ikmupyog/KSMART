@@ -13,8 +13,10 @@ public class PGRConstants {
 
 
     public static final String PGR_BUSINESSSERVICE = "PGR";
-    public static final String PGR_BUSINESSSERVICE_ENGG = "PGR_ENGG";
-    public static final String PGR_BUSINESSSERVICE_HEALTH = "PGR_HEALTH";
+    public static final String PGR_BUSINESSSERVICE_ENGG = "PGR_EnggDept";
+//    		"PGR_ENGG";
+    public static final String PGR_BUSINESSSERVICE_HEALTH = "PGR_HealthDept";
+//    		"PGR_HEALTH";
    
 
     public static final String PGR_SERVICE_ENGG_DEPT = "PWD";
@@ -86,6 +88,8 @@ public class PGRConstants {
     public static final String MDMS_DATA_SERVICE_CODE_KEYWORD = "serviceCode";
 
     public static final String MDMS_DATA_SLA_KEYWORD = "slaHours";
+    
+    public static final String PATTERN_MOBILE = "^[1-9][0-9]{9,14}$";
 
 
 }
