@@ -3,6 +3,7 @@ package org.egov.kssmSnehapoorvam.web.models.snehapoorvam;
 
 
 import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;   
 
@@ -41,7 +42,7 @@ public class m_Snehapoorvam {
     @JsonProperty("scheme_id")
     private int scheme_id;
 
-
+    
     @JsonProperty("district")
     private int district;
 
@@ -106,7 +107,10 @@ public class m_Snehapoorvam {
     @JsonProperty("applicantlandphone_no")
     private String applicantlandphone_no;
 
-    @Size(max = 10)
+
+    //@Pattern(regexp = "^(?:\\+?[0-9]{1,3})?[ -]?([0-9]{3}[ -]?){2}[0-9]{4}$", message = "Invalid mobile number")
+    @Pattern(regexp = "^(\\+91[\\-\\s]?)?[0]?(91)?[6789]\\d{9}$")  //Indian Number only
+    @Size(max = 14)
     @JsonProperty("applicantmobile_no")
     private String applicantmobile_no;
 
@@ -205,7 +209,8 @@ public class m_Snehapoorvam {
     @JsonProperty("guardian_landphoneno")
     private String guardian_landphoneno;
 
-    @Size(max = 10)
+    @Pattern(regexp = "^(\\+91[\\-\\s]?)?[0]?(91)?[6789]\\d{9}$")
+    @Size(max = 14)
     @JsonProperty("guardian_mobileno")
     private String guardian_mobileno;
 

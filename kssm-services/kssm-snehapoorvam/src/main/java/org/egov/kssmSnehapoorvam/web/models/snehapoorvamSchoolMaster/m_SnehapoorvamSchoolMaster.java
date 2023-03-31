@@ -1,5 +1,7 @@
 package org.egov.kssmSnehapoorvam.web.models.snehapoorvamSchoolMaster;
 
+import javax.validation.constraints.Email;
+
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -65,6 +67,7 @@ public class m_SnehapoorvamSchoolMaster {
    @JsonProperty("school_address")
    private  String school_address;
    
+   @Email(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")
    @JsonProperty("school_email")
    private  String school_email;
    
