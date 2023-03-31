@@ -13,8 +13,9 @@ const CreateBirthRegistration = ({ parentUrl }) => {
   const { pathname } = useLocation();
   const history = useHistory();
   const queryClient = useQueryClient();
-  const [isEditBirth,setIsEditBirth]=useState(Digit.Hooks.useSessionStorage("CR_BIRTH_EDIT_FLAG", {})[0].value ? true : false);  
-  console.log("isEditBirth" + isEditBirth);
+  //console.log(sessionStorage.getItem("CR_BIRTH_EDIT_FLAG"));
+  // const [isEditBirth, setIsEditBirth] = useState(Object.keys(Digit.Hooks.useSessionStorage("CR_BIRTH_EDIT_FLAG", {})[0]).length > 0 ? true : false);
+  const [isEditBirth, setIsEditBirth] = useState(sessionStorage.getItem("CR_BIRTH_EDIT_FLAG")? true : false);
   const [params, setParams, clearParams] = isEditBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_BIRTH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_BIRTH_REG", {});
 
   // console.log("params"+JSON.stringify(params));
@@ -22,7 +23,7 @@ const CreateBirthRegistration = ({ parentUrl }) => {
   // let { data: newConfig, isLoading } = Digit.Hooks.tl.useMDMS.getFormConfig(stateId, {});
   let config = [];
   let { data: newConfig, isLoading } = true;
-  
+
   newConfig = newConfigCR;
   newConfig?.forEach((obj) => {
     config = config.concat(obj.body.filter((a) => !a.hideInCitizen));

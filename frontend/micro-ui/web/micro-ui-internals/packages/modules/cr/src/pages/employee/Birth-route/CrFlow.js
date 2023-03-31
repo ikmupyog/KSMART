@@ -7,15 +7,16 @@ import { useTranslation } from "react-i18next";
 
 const CrFlow = ({ path }) => {
   const { t } = useTranslation();
+  console.log("path iss==",path);
   //New Registration
-  sessionStorage.removeItem("Digit.CR_BIRTH_EDIT_FLAG");
+  sessionStorage.removeItem("CR_BIRTH_EDIT_FLAG");
   sessionStorage.removeItem("Digit.CR_EDIT_BIRTH_REG");
   const cardMenuData = [
     {
       title: "CR_BIRTH_REGISTRATION",
       subTitle: "CR_BIRTH_NEW_REGISTRATION",
       img: <BankIcon />,
-      link: `${path}/child-details`,
+      link: `/digit-ui/employee/cr/create-birth/child-details`,
     },
     // {
     //   title: "CR_BIRTH_ADOPTION",
@@ -27,7 +28,7 @@ const CrFlow = ({ path }) => {
       title: "CR_STILL_BIRTH",
       subTitle: "CR_STILL_BIRTH_REG",
       img: <BankIcon />,
-      link: `${path}/stillbirth-child-details`,
+      link: `/digit-ui/employee/cr/create-stillbirth/stillbirth-child-details`,
     },
     {
       title: "CR_BIRTH_BORN_OUTSIDE",
@@ -39,7 +40,7 @@ const CrFlow = ({ path }) => {
       title: "CR_ABANDONED_BIRTH_REGISTRATION",
       subTitle: "CR_ABANDONED_BIRTH_NEW_REGISTRATION",
       img: <BankIcon />,
-      link: `${path}/abandoned-child-details`,
+      link: `/digit-ui/employee/cr/create-abandonedbirth/abandoned-child-details`,
     },
 
     // {

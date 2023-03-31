@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, TextArea, Toast } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-import Timeline from "../../components/CRTimeline";
+import Timeline from "../../components/AdoptionTimeline";
 
 const AdoptionInitiatorDetails = ({ config, onSelect, userType, formData,isEditBirth=false }) => {
   const stateId = Digit.ULBService.getStateId();

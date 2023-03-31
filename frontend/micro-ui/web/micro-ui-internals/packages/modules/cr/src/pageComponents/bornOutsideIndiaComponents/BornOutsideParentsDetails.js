@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 
 const BornOutsideParentsDetails = ({ config, onSelect, userType, formData }) => {
   // console.log(JSON.stringify(formData));
+  console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -182,7 +183,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData }) => 
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setmotherPassportNo(e.target.value);
+      setmotherPassportNo(e.target.value.length<=8 ? e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '') : (e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '').substring(0, 8)));
     }
   }
   function setSelectfatherPassportNo(e) {
@@ -190,7 +191,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData }) => 
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setfatherPassportNo(e.target.value);
+      setfatherPassportNo(e.target.value.length<=8 ? e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '') : (e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '').substring(0, 8)));
     }
   }
 

@@ -7,6 +7,7 @@ import {
     LinkButton,
     Row,
     StatusTable,
+    CheckBox,
     SubmitBar,
     BackButton,
   } from "@egovernments/digit-ui-react-components";
@@ -43,6 +44,7 @@ import {
   
   const AdoptionCheckPage = ({ onSubmit, value, userType }) => {
     let isEdit = window.location.href.includes("renew-trade");
+    const [isInitiatorDeclaration, setisInitiatorDeclaration] = React.useState( false);
     const { t } = useTranslation();
     const history = useHistory();
     const match = useRouteMatch();
@@ -70,6 +72,13 @@ import {
       return `${
         new Date(newdate).getDate().toString() + "/" + (new Date(newdate).getMonth() + 1).toString() + "/" + new Date(newdate).getFullYear().toString()
       }`;
+    }
+    function setDeclarationInfo(e) {
+      if (e.target.checked == false) {
+        setisInitiatorDeclaration(e.target.checked);
+      } else {
+        setisInitiatorDeclaration(e.target.checked);
+      }
     }
     // const typeOfApplication = !isEditProperty ? `new-application` : `renew-trade`;
     let routeLink = "";
@@ -549,6 +558,26 @@ import {
   </div>
   )}
           </div>
+          <div className="row">
+          <div className="col-md-12">
+            <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
+            </h1>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-12">
+              <CheckBox
+                label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
+                onChange={setDeclarationInfo}
+                value={isInitiatorDeclaration}
+                checked={isInitiatorDeclaration}
+                // disable={isDisableEdit}
+              />
+            </div>
+          </div>
+        </div>
   
           <div className="row">
             <div className="col-md-12">
@@ -556,7 +585,7 @@ import {
                   </span> */}</h1>
             </div>
           </div>
-          <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} />
+          <SubmitBar disabled={!isInitiatorDeclaration} label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} />
         </Card>
       </React.Fragment>
     );

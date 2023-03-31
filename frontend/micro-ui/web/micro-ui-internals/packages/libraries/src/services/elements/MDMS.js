@@ -94,6 +94,21 @@ const getWorkFlowDeathMasterList = (tenantId, moduleCode) => ({
     ],
   },
 });
+const getWorkFlowAdoptionMasterList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "WorkFlowAdoption",
+          },
+        ],
+      },
+    ],
+  },
+});
 const getLocalBodyMasterList = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -1001,6 +1016,22 @@ const getDeathPlaceTypelist = (tenantId, moduleCode) => ({
         masterDetails: [
           {
             name: "PlaceMasterDeath",
+          },
+        ],
+      },
+    ],
+  },
+});
+
+const getMarriagePlaceTypelist = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "MarriagePlaceType",
           },
         ],
       },
@@ -2322,6 +2353,9 @@ export const MdmsService = {
   getWorkFlowDeathMaster: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getWorkFlowDeathMasterList(tenantId, moduleCode), moduleCode);
   },
+  getWorkFlowAdoptionMaster: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getWorkFlowAdoptionMasterList(tenantId, moduleCode), moduleCode);
+  },
   getLocalBodyMaster: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getLocalBodyMasterList(tenantId, moduleCode), moduleCode);
   },
@@ -2403,6 +2437,9 @@ export const MdmsService = {
   },
   getDeathPlaceType: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getDeathPlaceTypelist(tenantId, moduleCode), moduleCode);
+  },
+  getMarriagePlaceType: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getMarriagePlaceTypelist(tenantId, moduleCode), moduleCode);
   },
   getCRcauseOfSpouseType: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRcauseOfSpouseTypelist(tenantId, moduleCode), moduleCode);
