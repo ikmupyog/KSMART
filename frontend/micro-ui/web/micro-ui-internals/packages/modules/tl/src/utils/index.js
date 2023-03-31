@@ -1,4 +1,4 @@
-import { isArray, isEmpty } from "lodash";
+import { isArray, isEmpty, isSet } from "lodash";
 import get from "lodash/get";
 import set from "lodash/set";
 
@@ -742,24 +742,64 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
       }
     })
   })
-
-  data?.tradeLicenseDetail?.structurePlace.map((placeOld) => {
-    dataCorr?.tradeLicenseDetail?.structurePlace.map((placeNew) => {
+  dataCorr?.tradeLicenseDetail?.structurePlace.map((placeNew) => {
+    data?.tradeLicenseDetail?.structurePlace.map((placeOld) => {
       if (placeOld.id === placeNew.id) {
         if ((placeOld.doorNo !== placeNew.doorNo)||(placeOld.doorNoSub !== placeNew.doorNoSub)||(placeOld.blockNo !== placeNew.blockNo)
         ||(placeOld.surveyNo !== placeNew.surveyNo)||(placeOld.subDivisionNo !== placeNew.subDivisionNo)||(placeOld.partitionNo !== placeNew.partitionNo)
         ||(placeOld.vehicleNo !== placeNew.vehicleNo)||(placeOld.vesselNo !== placeNew.vesselNo)||(placeOld.isResurveyed !== placeNew.isResurveyed)||(placeOld.stallNo !== placeNew.stallNo)){
-          structurePlaceCorr = dataCorr?.tradeLicenseDetail?.structurePlace;
-          structurePlaceHistory = data?.tradeLicenseDetail?.structurePlace;
+          structurePlaceHistory.push(data?.tradeLicenseDetail?.structurePlace);
+          structurePlaceCorr.push({
+            id : placeNew?.id ? placeNew?.id : null,
+            tenantId : dataCorr.tenantId,
+            blockNo : placeNew?.blockNo ? placeNew?.blockNo : "",
+            surveyNo : placeNew?.surveyNo ? placeNew?.surveyNo : "",
+            subDivisionNo : placeNew?.subDivisionNo ? placeNew?.subDivisionNo : "",
+            partitionNo : placeNew?.partitionNo ? placeNew?.partitionNo : "",
+            doorNo : placeNew?.doorNo ? placeNew?.doorNo : null,
+            doorNoSub : placeNew?.doorNoSub ? placeNew?.doorNoSub : "",
+            buildingId : null,
+            vehicleNo : placeNew?.vehicleNo ? placeNew?.vehicleNo : "",
+            vesselNo : placeNew?.vesselNo ? placeNew?.vesselNo : "",
+            active : true,
+            auditDetails : null,
+            isResurveyed : placeNew?.isResurveyed ? placeNew?.isResurveyed : false,
+            stallNo : placeNew?.stallNo ? placeNew?.stallNo : "",
+          });
+
           isEdit = true;
         }
       }
+      else if(placeNew.hasOwnProperty('id') === false) {
+        structurePlaceCorr.push({
+          id : null,
+          tenantId : dataCorr.tenantId,
+          blockNo : placeNew?.blockNo ? placeNew?.blockNo : "",
+          surveyNo : placeNew?.surveyNo ? placeNew?.surveyNo : "",
+          subDivisionNo : placeNew?.subDivisionNo ? placeNew?.subDivisionNo : "",
+          partitionNo : placeNew?.partitionNo ? placeNew?.partitionNo : "",
+          doorNo : placeNew?.doorNo ? placeNew?.doorNo : null,
+          doorNoSub : placeNew?.doorNoSub ? placeNew?.doorNoSub : "",
+          buildingId : null,
+          vehicleNo : placeNew?.vehicleNo ? placeNew?.vehicleNo : "",
+          vesselNo : placeNew?.vesselNo ? placeNew?.vesselNo : "",
+          active : true,
+          auditDetails : null,
+          isResurveyed : placeNew?.isResurveyed ? placeNew?.isResurveyed : false,
+          stallNo : placeNew?.stallNo ? placeNew?.stallNo : ""
+        });
+        isEdit = true;
+      }
     })
   })
-
+  data?.tradeLicenseDetail?.structurePlace.map((placeOld) => {
+    if(!placeOld.id.includes(dataCorr?.tradeLicenseDetail?.structurePlace.id) ){
+      structurePlaceCorr.push({id : placeOld.id, active : false});
+      isEdit = true;
+    } 
+  })
 
   applicationDocuments = dataCorr?.tradeLicenseDetail?.applicationDocuments;
- 
 
   if((data?.tradeName !== dataCorr?.tradeName)||(data?.licenseUnitNameLocal !== dataCorr?.licenseUnitNameLocal)){
     tradeNameCorr = dataCorr?.tradeName;

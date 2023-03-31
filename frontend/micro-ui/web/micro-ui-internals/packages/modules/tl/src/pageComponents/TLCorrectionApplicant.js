@@ -219,7 +219,7 @@ const TLCorrectionApplicant = ({ t, config,formData,onEditSelect,formDataEdit })
                 <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="pincode" value={field.pincode} onChange={e => handleAppInputField(index, e.target.value.replace(/[^0-9]/ig, ''), "pincode", 6)} {...(validation = { isRequired: false, title: t("TL_INVALID_PIN") })} />
               </div>
 
-              {/* {LicenseeType.code === "JOINT_PARTNERSHIP" && (
+               {formDataEdit?.TradeDetails?.tradeLicenseDetail?.licenseeType === "JOINT_PARTNERSHIP" && (
                 <div>
                   {appState.length === (index + 1) && (
                     <div className="col-md-1">
@@ -247,7 +247,7 @@ const TLCorrectionApplicant = ({ t, config,formData,onEditSelect,formDataEdit })
                   )}
 
                 </div>
-              )} */}
+              )}
 
             </div>
           </div>
