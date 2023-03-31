@@ -1,8 +1,13 @@
 package org.egov.filemgmnt.enrichment;
 
+import java.util.List;
 import java.util.UUID;
+
+import javax.swing.text.Document;
+
 import org.egov.filemgmnt.web.models.AuditDetails;
 import org.egov.filemgmnt.web.models.drafting.DraftingRequest;
+import org.egov.filemgmnt.web.models.drafting.ProcessInstance;
 import org.egov.filemgmnt.web.models.drafting.ProcessInstanceRequest;
 import org.apache.commons.collections4.CollectionUtils;
 import org.egov.common.contract.request.RequestInfo;
@@ -10,6 +15,7 @@ import org.egov.common.contract.request.User;
 import org.egov.filemgmnt.config.FMConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 
 @Component
 public class DraftingEnrichment extends BaseEnrichment {
@@ -61,6 +67,25 @@ public class DraftingEnrichment extends BaseEnrichment {
                     draftingfile.setAuditDetails(auditDetails);
                     draftingfile.getDraftText();
                 });
+    }
+
+    public void enrichCreateDraftProcessDocument(ProcessInstanceRequest request) {
+
+        RequestInfo requestInfo = request.getRequestInfo();
+        User userInfo = requestInfo.getUserInfo();
+
+        AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
+
+        for(ProcessInstance proc : request.getProcessInstances()){
+            for(org.egov.filemgmnt.web.models.Document doc : proc.getDocuments()){
+                doc.setId(UUID.randomUUID()
+                              .toString()); 
+                              doc.setAuditDetails(auditDetails);
+
+            }
+        }
+
+
     }
 
 }

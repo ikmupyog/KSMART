@@ -16,15 +16,14 @@ public class DraftingRowMapper implements ResultSetExtractor<List<Drafting>>,Bas
         List<Drafting> result = new ArrayList<>();
         while (rs.next()) {
             result.add(Drafting.builder()
-                    .businessService(rs.getString("businessService"))
-                            .draftType(rs.getString("draftType"))
+                            .businessService(rs.getString("businessService"))
                             .moduleName(rs.getString("moduleName"))
                             .fileCode(rs.getString("fileCode"))
+                            .draftType(rs.getString("draftType"))
+                            .draftText(rs.getString("draftText"))
                             .status(rs.getString("status"))
-                            .uuid(rs.getString(("assigner")))
-
-
-                    .build());
+                            .assigner(rs.getString("assigner"))
+                            .build());
         }
         return result;
     }
