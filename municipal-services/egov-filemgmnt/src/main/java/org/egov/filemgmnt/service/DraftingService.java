@@ -120,6 +120,8 @@ public class DraftingService {
 	public List<ProcessInstance> createDraftProcessInstance(ProcessInstanceRequest request) {
 		
         draftingEnrichment.enrichcreateDraftProcessInstance(request);
+        draftingEnrichment.enrichCreateDraftProcessDocument(request);
+        
         producer.push(fmConfig.getSaveDraftProcessInstance(), request);
 
         return request.getProcessInstances();
