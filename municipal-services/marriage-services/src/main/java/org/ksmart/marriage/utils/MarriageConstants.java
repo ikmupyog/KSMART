@@ -133,5 +133,8 @@ public class MarriageConstants {
    
        public static final String TRIGGER_NOWORKFLOW = "NOWORKFLOW";
 
+       public static final String WORKFLOW_STATUS_APPROVED = "APPROVED";
+       public static final String APPLICATION_NEW = "new";
+
 
 }

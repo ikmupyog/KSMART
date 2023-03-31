@@ -91,7 +91,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
         request.getMarriageDetails()
                 .forEach(marriage -> marriage.setAuditDetails(auditDetails));
 
-        setApplicationNumbers(request);
+//        setApplicationNumbers(request);
          setRegistrationNumber(request);
         setBridePermanentAddress(request);
         setBridePresentAddress(request);
