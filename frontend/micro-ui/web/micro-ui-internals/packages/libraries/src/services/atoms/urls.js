@@ -123,6 +123,11 @@ const Urls = {
     search:"/birth-services/cr/searchstillbirth",
     update:"/birth-services/cr/updatestillbirth",  
   },
+  crbornoutsideindiabirth: {
+    create: "/birth-services/cr/createstillbirth",
+    search:"/birth-services/cr/searchstillbirth",
+    update:"/birth-services/cr/updatestillbirth",  
+  },
   crdeath: {
     create: "/death-services/v1/deathdetails/_createdeath ",
     search: "/death-services/v1/deathdetails/_searchdeath",
@@ -133,8 +138,9 @@ const Urls = {
   },
   crmarriage: {
     create: "/birth-services/cr/createbirth",
-    search:"/birth-services/cr/searchbirth",
+    search:"/marriage-services/v1/marriagedetails/search",
     update:"/birth-services/cr/updatebirth",  
+    registry_search_marriage:"/marriage-services/v1/marriagedetails/_searchregistry",
   },
   dfm: {
     create: "/filemgmnt/v1/applicantservices/_create",

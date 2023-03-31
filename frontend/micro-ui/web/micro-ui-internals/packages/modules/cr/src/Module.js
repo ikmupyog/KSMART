@@ -104,7 +104,7 @@ import MyCRDeathApplications from "./pages/citizen/Applications/ApplicationDeath
 // import DeathCertificate from "./pageComponents/deathComponents/DeathCertificate";
 // import GeneralRemarks from "./pageComponents/deathComponents/GeneralRemarks";
 import CRSearch from "./pages/employee/Search";
-import CRDeathsearch from "./pages/employee/Search";
+// import CRDeathsearch from "./pages/employee/Search";
 import SearchCrApplication from "./components/SearchApplication";
 import SearchRegistryDeath from "./components/SearchRegistryDeath";
 import CRCitizenApplicationDetails from "./pages/citizen/Applications/ApplicationDetails";
@@ -152,8 +152,9 @@ import MarriageInstitution from "./pageComponents/marriageComponents/MarriageIns
 import MarriagePublicPlace from "./pageComponents/marriageComponents/MarriagePublicPlace";
 import MarriageRegistration from "./pageComponents/marriageComponents/MarriageRegistration";
 import HouseMarriageRegistration from "./pageComponents/marriageComponents/HouseMarriageRegistration";
-import Witnessdetails from "./pageComponents/marriageComponents/witnessdetails"
+import Witnessdetails from "./pageComponents/marriageComponents/Witnessdetails"
 import MarriageInclusionEditPage from "./pageComponents/marriageComponents/MarriageCorrection";
+import MarriageCorrectionEditPage from "./pages/citizen/MarriageInclusionEdit";
 
 // import CreateAbandonedBirth from "./pages/employee/Abandoned-birth";
 import AbandonedChildDetails from "./pageComponents/abandonedBirthComponents/AbandonedChildDetails";
@@ -256,8 +257,7 @@ const componentsToRegister = {
   CRApplicationDetails,
   CRApplicationDeathDetails,
   SearchDeathInclusion,
-  CRSearch,
-  CRDeathsearch,
+  // CRDeathsearch,
   SearchCrApplication,
   SearchRegistryDeath,
   SearchDeathApplication,
@@ -367,6 +367,7 @@ const componentsToRegister = {
   DeathAcknowledgement,
   MarriageAcknowledgement,
   MarriageInclusionEditPage,
+  MarriageCorrectionEditPage,
   StillBirthAcknowledgement,
   BirthCertificate,
   CRCreateDeathRegistration: CreateDeathRegistration,

@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 const CrFlow = ({ path }) => {
   const { t } = useTranslation();
   //New Registration
-  sessionStorage.removeItem("Digit.CR_BIRTH_EDIT_FLAG");
+  sessionStorage.removeItem("CR_BIRTH_EDIT_FLAG");
   sessionStorage.removeItem("Digit.CR_EDIT_BIRTH_REG");
   const cardMenuData = [
     {
