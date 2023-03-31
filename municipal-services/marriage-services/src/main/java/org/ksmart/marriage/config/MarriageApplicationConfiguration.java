@@ -59,6 +59,26 @@ public class MarriageApplicationConfiguration {
     @Value("${egov.workflow.path}")
     private String wfTransitionPath;
 
+    //Demand
+  
+        @Value("${egov.billingservice.host}")
+        private String billingHost;
     
+        @Value("${egov.bill.gen.endpoint}")
+        private String fetchBillEndpoint;
+    
+        @Value("${egov.demand.create.endpoint}")
+        private String demandCreateEndpoint;
+
+         //MDMS
+         @Value("${egov.mdms.host}")
+         private String mdmsHost;
+     
+         @Value("${egov.mdms.search.endpoint}")
+         private String mdmsEndPoint;
+
+         @Value("${egov.state.level.tenant.id}")
+         private String egovStateLevelTenant;
+     
 
 }

@@ -21,14 +21,14 @@ import java.util.Map;
 @Slf4j
 public class IDGenerator {
 
-    private final MdmsUtil mdmsUtil;
+    private final MarriageMdmsUtil mdmsUtil;
     private final MdmsTenantService mdmsTenantService;
     private final JdbcTemplate jdbcTemplate;
     private final MarriageApplicationQueryBuilder queryBuilder;
 
 
     @Autowired
-    public IDGenerator(MdmsUtil mdmsUtil, MdmsTenantService mdmsTenantService,
+    public IDGenerator(MarriageMdmsUtil mdmsUtil, MdmsTenantService mdmsTenantService,
                        JdbcTemplate jdbcTemplate, MarriageApplicationQueryBuilder queryBuilder) {
         this.mdmsTenantService = mdmsTenantService;
         this.mdmsUtil = mdmsUtil;

@@ -23,10 +23,6 @@ public class MarriageApplicationService {
     }
 
     public List<MarriageApplicationDetails> saveMarriageDetails(MarriageDetailsRequest request) {
-
-
-
-
         //  workflowIntegrator.callWorkFlow(request);
         return repository.saveMarriageDetails(request);
     }

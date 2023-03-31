@@ -1,7 +1,19 @@
 package org.ksmart.marriage.utils;
 
 public class MarriageConstants {
+    public static final String TENANTS = "tenants";
+    public static final String TENANT_MODULE_NAME = "tenant";    
 
+    public static final String GENDERTYPE = "GenderType";
+    public static final String COMMON_MASTER_MODULE_NAME = "common-masters";
+     //mdms path codes
+     public static final String COMMON_MASTER_JSONPATH = "$.MdmsRes.common-masters";
+     public static final String TENANT_JSONPATH = "$.MdmsRes.tenant";
+     public static final String BND_LIST_JSONPATH = "$.MdmsRes.birth-death-service";
+   //error constants
+    public static final String INVALID_TENANT_ID_MDMS_KEY = "INVALID TENANTID";
+    public static final String INVALID_TENANT_ID_MDMS_MSG = "No data found for this tenantID";
+    //mdms tenantId
 //    public static final String CR_MDMS_TENANT = "kl";
 //    public static final String  CR_MDMS_MODULE = "birth-death-service";
 //    public static final String  COMMON_MDMS_MODULE = "common-masters";
@@ -132,6 +144,35 @@ public class MarriageConstants {
        public static final String STATUSJSONKEY = "$.state.applicationStatus";
    
        public static final String TRIGGER_NOWORKFLOW = "NOWORKFLOW";
+
+       public static final String STATUS_FOR_PAYMENT = "PENDINGPAYMENT";
+//MDMS Fields  Common
+       public static final String DISTRICT = "District";
+
+       public static final String STATE = "State";
+   
+       public static final String COUNTRY = "Country";
+   
+       public static final String RELIGION = "Religion";
+
+       public static final String TALUK = "Taluk";
+
+       public static final String LBTYPE = "LBType";
+ 
+       public static final String VILLAGE = "Village";
+
+       public static final String POSTOFFICE = "PostOffice";
+
+       
+
+
+       
+
+
+       
+
+
+       
 
 
 }

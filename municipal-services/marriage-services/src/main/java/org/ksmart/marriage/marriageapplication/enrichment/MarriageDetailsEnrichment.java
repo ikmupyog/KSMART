@@ -1,5 +1,6 @@
 package org.ksmart.marriage.marriageapplication.enrichment;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.primitives.ImmutableDoubleArray;
 import org.apache.commons.collections4.CollectionUtils;
 import org.egov.common.contract.request.RequestInfo;
@@ -7,14 +8,19 @@ import org.egov.common.contract.request.User;
 import org.egov.tracer.model.CustomException;
 import org.ksmart.marriage.common.model.AuditDetails;
 import org.ksmart.marriage.common.repository.IdGenRepository;
+import org.ksmart.marriage.common.repository.ServiceRequestRepository;
 import org.ksmart.marriage.config.MarriageApplicationConfiguration;
 import org.ksmart.marriage.marriageapplication.model.MarriageApplicationDetails;
+import org.ksmart.marriage.marriageapplication.model.Demand.Demand;
+import org.ksmart.marriage.marriageapplication.model.Demand.DemandRequest;
+import org.ksmart.marriage.marriageapplication.model.Demand.DemandResponse;
 import org.ksmart.marriage.marriageapplication.model.marriage.MarriageDetailsRequest;
 import org.ksmart.marriage.marriageapplication.model.marriage.MarriageDocument;
 import org.ksmart.marriage.utils.IDGenerator;
 import org.ksmart.marriage.utils.MarriageConstants;
 import org.ksmart.marriage.utils.enums.ErrorCodes;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -22,46 +28,50 @@ import java.util.ListIterator;
 import java.util.UUID;
 @Component
 public class MarriageDetailsEnrichment implements BaseEnrichment {
+    
     @Autowired
     MarriageApplicationConfiguration config;
+
     @Autowired
     IdGenRepository idGenRepository;
+
     @Autowired
     IDGenerator idGenerator;
 
+    @Autowired
+    ServiceRequestRepository serviceRequestRepository;
+
+    @Autowired
+	@Qualifier("objectMapperBnd")
+	private ObjectMapper mapper;
+
     public void enrichCreate(MarriageDetailsRequest request) {
+
+
 
         RequestInfo requestInfo = request.getRequestInfo();
         User userInfo = requestInfo.getUserInfo();
         AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
         request.getMarriageDetails().forEach(marriage -> {
-
             marriage.setId(UUID.randomUUID().toString());
-
             marriage.setAuditDetails(auditDetails);
             if(marriage.getBrideDetails()!=null){
                 marriage.getBrideDetails().setBrideId((UUID.randomUUID().toString()));
                 marriage.getBrideDetails().setBrideGroom("B");
-
             }
             if(marriage.getGroomDetails()!=null){
                 marriage.getGroomDetails().setGroomId((UUID.randomUUID().toString()));
                 marriage.getGroomDetails().setBrideGroom("G");
-
             }
             if(marriage.getWitnessDetails()!=null){
                 marriage.getWitnessDetails().setWitnessId1(UUID.randomUUID().toString());
                 marriage.getWitnessDetails().setWitnessId2(UUID.randomUUID().toString());
-
                 marriage.getWitnessDetails().setSerial_no1(1);
                 marriage.getWitnessDetails().setSerial_no2(2);
-
                 marriage.getWitnessDetails().setWitnessAuditDetails(auditDetails);
             }
-            System.out.println("HiDocument");
             List <MarriageDocument> marriagedocument = marriage.getMarriageDocuments();
             if (marriagedocument!=null){
-                System.out.println("HiDocument1");
                 marriagedocument.forEach(document -> {
                 document.setId(UUID.randomUUID().toString());
                 document.setActive(true);
@@ -69,18 +79,14 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                 document.setMarriageId(marriage.getId());
                 document.setMarriageDocAuditDetails(auditDetails);
                
-            });
-        }
+                });
+            }
         });
         setApplicationNumbers(request);
-      //  setFileNumbers(request);
         setBridePermanentAddress(request);
         setBridePresentAddress(request);
         setGroomPermanentAddress(request);
         setGroomPresentAddress(request);
-       // setRegistrationNumber(request);
-
-
     }
     public void enrichUpdate(MarriageDetailsRequest request) {
 
@@ -188,9 +194,6 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 
                                     marriage.getGroomAddressDetails().setPresentOthrIndiaProvinceEn(marriage.getGroomAddressDetails().getPresentOutSideIndiaProvinceEn());
                                     marriage.getGroomAddressDetails().setPresentOthrIndiaProvinceMl(marriage.getGroomAddressDetails().getPresentOutSideIndiaProvinceMl());
-
-
-
 
                                 }
                             }
@@ -578,7 +581,21 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
     }
 
 
-
+//Jasmine 30.03.2023
+    public List<Demand> saveDemand(RequestInfo requestInfo, List<Demand> demands){
+        StringBuilder url = new StringBuilder(config.getBillingHost());
+        url.append(config.getDemandCreateEndpoint());
+        DemandRequest request = new DemandRequest(requestInfo,demands);
+        Object result = serviceRequestRepository.fetchResult(url,request);
+        DemandResponse response = null;
+        try{
+            response = mapper.convertValue(result,DemandResponse.class);
+        }
+        catch(IllegalArgumentException e){
+            throw new CustomException("PARSING ERROR","Failed to parse response of create demand");
+        }
+        return response.getDemands();
+    }
 
 //        private void setApplicationNumbers(MarriageDetailsRequest request) {
 //            Long currentTime = Long.valueOf(System.currentTimeMillis());
