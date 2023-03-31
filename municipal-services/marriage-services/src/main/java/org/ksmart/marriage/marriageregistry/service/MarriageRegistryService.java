@@ -25,6 +25,7 @@ public class MarriageRegistryService {
         return repository.createMarriageRegistry(request);
     }
 
+
     // public List<MarriageRegistryDetails> updateRegistry(MarriageRegistryRequest request) {
 
     //     return repository.updateMarriageRegistry(request);

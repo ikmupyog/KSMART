@@ -61,6 +61,7 @@ public class MarriageRegistryRepository {
  
         return result; 
     }
+
     // public List<MarriageRegistryDetails> updateMarriageRegistry(MarriageRegistryRequest request) {
     //     marriageRegistryEnrichment.enrichUpdate(request);
     //     producer.push(marriageApplicationConfiguration.getUpdateMarriageRegistryTopic(), request);
