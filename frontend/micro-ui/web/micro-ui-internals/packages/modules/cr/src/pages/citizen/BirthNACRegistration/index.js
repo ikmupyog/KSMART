@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Route, Switch, useRouteMatch, useLocation, useHistory, Redirect } from "react-router-dom";
 import { PrivateRoute, BreadCrumb, Component } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-import ChildDetails from "../../../pageComponents/birthComponents/ChildDetails";
 import { newConfig as newConfigCR } from "../../../config/config";
 import { useQueryClient } from "react-query";
 
@@ -21,10 +20,11 @@ const CreateBirthNACRegistration = ({ parentUrl, isEditBirth }) => {
   let config = [];
   let { data: newConfig, isLoading } = true;
   newConfig = newConfigCR;
-  newConfig?.forEach((obj) => {
-    config = config.concat(obj.body.filter((a) => !a.hideInCitizen));
-  });
-  config.indexRoute = "birthnac-details";
+  const newNacBirthConfig = newConfig.find((item)=> item.head === "Birth-NAC Routing")
+ 
+    config = config.concat(newNacBirthConfig.body.filter((a) => !a.hideInCitizen));
+    
+  config.indexRoute = "nac-download-details";
   const goNext = (skipStep, index, isAddMultiple, key, isPTCreateSkip) => {
     let currentPath = pathname.split("/").pop(),
       nextPage;
@@ -90,7 +90,7 @@ const CreateBirthNACRegistration = ({ parentUrl, isEditBirth }) => {
       nextStep = key;
     }
     if (nextStep === null) {
-      return redirectWithHistory(`${match.path}/check`);
+      return redirectWithHistory(`${match.path}/nac-birth-summary`);
     }
     nextPage = `${match.path}/${nextStep}`;
     redirectWithHistory(nextPage);
@@ -122,10 +122,12 @@ const CreateBirthNACRegistration = ({ parentUrl, isEditBirth }) => {
     <React.Fragment>
       <Switch>
         {config.map((routeObj, index) => {
+          console.log("routeObj",routeObj.route);
           const { component, texts, inputs, key, isSkipEnabled } = routeObj;
           const Component = typeof component === "string" ? Digit.ComponentRegistryService.getComponent(component) : component;
           return (
             <Route path={`${match.path}/${routeObj.route}`} key={index}>
+              
               <Component
                 config={{ texts, inputs, key, isSkipEnabled }}
                 onSelect={handleSelect}
@@ -139,7 +141,7 @@ const CreateBirthNACRegistration = ({ parentUrl, isEditBirth }) => {
 
           );
         })}
-        <Route path={`${match.path}/check`}>
+        <Route path={`${match.path}/nac-birth-summary`}>
           <CheckPage onSubmit={createProperty} value={params} />
         </Route>
         <Route path={`${match.path}/acknowledgement`}>

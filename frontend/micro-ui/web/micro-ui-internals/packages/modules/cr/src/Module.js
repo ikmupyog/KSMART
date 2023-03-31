@@ -9,7 +9,10 @@ import AdoptionInitiatorDetails from "../src/pageComponents/adoptionComponents/A
 import FormFieldContainer from "../src/components/FormFieldContainer";
 
 import ChildDetails from "../src/pageComponents/birthComponents/ChildDetails";
-import BirthNACDetails from "../src/pageComponents/birthNACComponents/BirthNACDetails";
+import BirthNACDetails from "./pageComponents/birthNACComponents/BirthNACDetails";
+import BirthNACParentsDetails from "./pageComponents/birthNACComponents/BirthNACParentsDetails";
+import BirthNACAddressPage from "./pageComponents/birthNACComponents/BirthNACAddressPage";
+import BirthNACInitiator from "./pageComponents/birthNACComponents/BirthNACInitiator";
 import AddressOne from "./pageComponents/birthComponents/OldAddressOne";
 import AddressInsideIndia from "./pageComponents/birthComponents/OldAddressInsideIndia";
 import AddressSameAsAbove from "../src/pageComponents/birthComponents/AddressSameAsAbove";
@@ -17,6 +20,7 @@ import AddressPermanent from "../src/pageComponents/birthComponents/AddressPerma
 import MultipleBirth from "../src/pageComponents/birthComponents/MultipleBirth";
 import CreateBirthRegistration from "./pages/citizen/BirthRegistration";
 import CreateBirthNACRegistration from "./pages/citizen/BirthNACRegistration";
+import BirthNACDownloadPage from "./pageComponents/birthNACComponents/BirthNACDownloadPage";
 import BirthInclusion from "./pages/citizen/BirthInclusion";
 import BirthInclusionEditPage from "./pageComponents/birthComponents/BirthInclusionPage";
 import SearchBirthInclusion from './components/SearchBirthInclusion';
@@ -155,7 +159,12 @@ import witnessdetails from "./pageComponents/marriageComponents/witnessdetails";
 import AbandonedChildDetails from "./pageComponents/abandonedBirthComponents/AbandonedChildDetails";
 import AbandonedBirthInitiatorDetails from "./pageComponents/abandonedBirthComponents/AbandonedBirthInitiatorDetails";
 
-
+import CreateDeathNACRegistration from "./pages/citizen/DeathNACRegistration";
+import DeathNACDetails from "./pageComponents/DeathNACComponents/DeathNACDetails";
+import DeathNACAddressPage from "./pageComponents/DeathNACComponents/DeathNACAddressPage";
+import DeathNACParentsDetails from "./pageComponents/DeathNACComponents/DeathNACParentsDetails";
+import DeathNACInitiator from "./pageComponents/DeathNACComponents/DeathNACInitiator";
+import DeathNACDownloadPage from "./pageComponents/DeathNACComponents/DeathNACDownloadPage";
 export const CRModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
 
@@ -245,7 +254,6 @@ const componentsToRegister = {
   AdoptionParentsDetails,
   AdoptionInitiatorDetails,
   ChildDetails,
-  BirthNACDetails,
   CRCitizenApplicationDetails,
   CRDeathApplicationDetails,
   CRApplicationDetails,
@@ -266,7 +274,18 @@ const componentsToRegister = {
   CRCreateBornOutsideRegistration: CreateBornOutsideRegistration,  
   CRCreateAbandonedBirth: CreateAbandonedBirth,
   CRCreateBirthNACRegistration: CreateBirthNACRegistration,
+  CRCreateDeathNACRegistration: CreateDeathNACRegistration,
+  DeathNACDownloadPage,
+  DeathNACDetails,
+  BirthNACParentsDetails,
+  BirthNACDetails,
+  DeathNACAddressPage,
+  DeathNACParentsDetails,
+  BirthNACDownloadPage,
+  DeathNACInitiator,
   ParentsDetails,
+  BirthNACAddressPage,
+  BirthNACInitiator,
   CRBirthInclusions:BirthInclusion,
   CRBirthInclusionEditPage: BirthInclusionEditPage,
   SearchBirthInclusion,

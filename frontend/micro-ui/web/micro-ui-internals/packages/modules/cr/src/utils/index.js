@@ -1257,6 +1257,209 @@ export const convertToTrade = (data = {}) => {
   };
   return formdata;
 };
+export const convertToNACRegistration = (data = {}) => {
+  const formdata = {
+    NACChildDetails: [
+      {
+        childDOB: Date.parse(data?.NACChildDetails?.childDOB),
+        birthDateTime: parseInt(data?.NACChildDetails?.birthDateTime),
+        gender: data?.NACChildDetails?.gender ? data?.NACChildDetails?.gender.code : null,
+        childAadharNo: data?.NACChildDetails?.childAadharNo,
+        orderofBirth: data?.NACChildDetails?.orderofBirth,
+        isChildName: data?.NACChildDetails?.isChildName ? data?.NACChildDetails?.isChildName : false,
+        tenantid: data?.NACChildDetails?.tenantId,
+        childFirstNameEn: data?.NACChildDetails?.childFirstNameEn,
+        childFirstNameMl: data?.NACChildDetails?.childFirstNameMl,
+        childMiddleNameEn: data?.NACChildDetails?.childMiddleNameEn,
+        childMiddleNameMl: data?.NACChildDetails?.childMiddleNameMl,
+        childLastNameEn: data?.NACChildDetails?.childLastNameEn,
+        childLastNameMl: data?.NACChildDetails?.childLastNameMl,
+        hospitalCode: data?.ChildDetails?.hospitalName ? data?.ChildDetails?.hospitalName.code : null,
+        birthPlace: data?.ChildDetails?.birthPlace ? data?.ChildDetails?.birthPlace.code : null,
+        hospitalName: data?.ChildDetails?.hospitalName ? data?.ChildDetails?.hospitalName.hospitalName : null,
+        hospitalNameMl: data?.ChildDetails?.hospitalName ? data?.ChildDetails?.hospitalName.hospitalNamelocal : null,
+        institutionTypeCode: data?.ChildDetails?.institution ? data?.ChildDetails?.institution.code : null,
+        institution: data?.ChildDetails?.institution ? data?.ChildDetails?.institution.name : null,
+        institutionNameCode: data?.ChildDetails?.institutionId ? data?.ChildDetails?.institutionId.code : null,
+        institutionId: data?.ChildDetails?.institutionId ? data?.ChildDetails?.institutionId.institutionName : null,
+        institutionIdMl: data?.ChildDetails?.institutionIdMl ? data?.ChildDetails?.institutionIdMl.institutionNamelocal : null,
+        wardNo: data?.ChildDetails?.wardNo ? data?.ChildDetails?.wardNo.code : null,
+        wardNameEn: data?.ChildDetails?.wardNameEn ? data?.ChildDetails?.wardNameEn : null,
+        wardNameMl: data?.ChildDetails?.wardNameMl ? data?.ChildDetails?.wardNameMl : null,
+        wardNumber: data?.ChildDetails?.wardNumber ? data?.ChildDetails?.wardNumber : null,
+        adrsHouseNameEn: data?.ChildDetails?.adrsHouseNameEn,
+        adrsHouseNameMl: data?.ChildDetails?.adrsHouseNameMl,
+        adrsLocalityNameEn: data?.ChildDetails?.adrsLocalityNameEn,
+        adrsLocalityNameMl: data?.ChildDetails?.adrsLocalityNameMl,
+        adrsStreetNameEn: data?.ChildDetails?.adrsStreetNameEn,
+        adrsStreetNameMl: data?.ChildDetails?.adrsStreetNameMl,
+        adrsPostOffice: data?.ChildDetails?.adrsPostOffice ? data?.ChildDetails?.adrsPostOffice.code : null,
+        adrsPincode: data?.ChildDetails?.adrsPincode ? data?.ChildDetails?.adrsPincode.code : null,
+        vehicleType: data?.ChildDetails?.vehicleType ? data?.ChildDetails?.vehicleType.code : null,
+        vehicleHaltPlace: data?.ChildDetails?.vehicleHaltPlace,
+        vehicleHaltPlaceMl: data?.ChildDetails?.vehicleHaltPlaceMl,
+        vehicleRegistrationNo: data?.ChildDetails?.vehicleRegistrationNo,
+        vehicleFromEn: data?.ChildDetails?.vehicleFromEn,
+        vehicleToEn: data?.ChildDetails?.vehicleToEn,
+        vehicleFromMl: data?.ChildDetails?.vehicleFromMl,
+        vehicleToMl: data?.ChildDetails?.vehicleToMl,
+        setadmittedHospitalEn: data?.ChildDetails?.setadmittedHospitalEn ? data?.ChildDetails?.setadmittedHospitalEn.code : null,
+        vehicleDesDetailsEn: data?.ChildDetails?.vehicleDesDetailsEn ? data?.ChildDetails?.vehicleDesDetailsEn : null,
+        publicPlaceType: data?.ChildDetails?.publicPlaceType ? data?.ChildDetails?.publicPlaceType.code : null,
+        localityNameEn: data?.ChildDetails?.localityNameEn,
+        localityNameMl: data?.ChildDetails?.localityNameMl,
+        streetNameEn: data?.ChildDetails?.streetNameEn,
+        streetNameMl: data?.ChildDetails?.streetNameMl,
+        ParentsDetails: {
+          motherFirstNameEn: data?.NACChildDetails?.motherFirstNameEn,
+          motherFirstNameMl: data?.NACChildDetails?.motherFirstNameMl,
+          motherAadhar: data?.NACChildDetails?.motherAadhar,
+          motherMarriageAge: data?.NACChildDetails?.motherMarriageAge,
+          fatherAadhar: data?.NACChildDetails?.fatherAadhar,
+          fatherFirstNameEn: data?.NACChildDetails?.fatherFirstNameEn,
+          fatherFirstNameMl: data?.NACChildDetails?.fatherFirstNameMl,
+        },
+        AddressBirthDetails: {
+          presentaddressCountry: data?.AdoptionAddressBasePage?.presentaddressCountry
+            ? data?.AdoptionAddressBasePage?.presentaddressCountry.code
+            : null,
+          presentaddressStateName: data?.AdoptionAddressBasePage?.presentaddressStateName
+            ? data?.AdoptionAddressBasePage?.presentaddressStateName.code
+            : null,
+          presentInsideKeralaLBName: data?.AdoptionAddressBasePage?.presentInsideKeralaLBName
+            ? data?.AdoptionAddressBasePage?.presentInsideKeralaLBName.code
+            : null,
+          presentInsideKeralaDistrict: data?.AdoptionAddressBasePage?.presentInsideKeralaDistrict
+            ? data?.AdoptionAddressBasePage?.presentInsideKeralaDistrict.code
+            : null,
+          presentInsideKeralaTaluk: data?.AdoptionAddressBasePage?.presentInsideKeralaTaluk
+            ? data?.AdoptionAddressBasePage?.presentInsideKeralaTaluk.code
+            : null,
+          presentInsideKeralaVillage: data?.AdoptionAddressBasePage?.presentInsideKeralaVillage
+            ? data?.AdoptionAddressBasePage?.presentInsideKeralaVillage.code
+            : null,
+          presentInsideKeralaLocalityNameEn: data?.AdoptionAddressBasePage?.presentInsideKeralaLocalityNameEn,
+          presentInsideKeralaStreetNameEn: data?.AdoptionAddressBasePage?.presentInsideKeralaStreetNameEn,
+          presentInsideKeralaHouseNameEn: data?.AdoptionAddressBasePage?.presentInsideKeralaHouseNameEn,
+          presentInsideKeralaLocalityNameMl: data?.AdoptionAddressBasePage?.presentInsideKeralaLocalityNameMl,
+          presentInsideKeralaStreetNameMl: data?.AdoptionAddressBasePage?.presentInsideKeralaStreetNameMl,
+          presentInsideKeralaHouseNameMl: data?.AdoptionAddressBasePage?.presentInsideKeralaHouseNameMl,
+          presentInsideKeralaPincode: data?.AdoptionAddressBasePage?.presentInsideKeralaPincode
+            ? data?.AdoptionAddressBasePage?.presentInsideKeralaPincode.code
+            : null,
+          presentInsideKeralaPostOffice: data?.AdoptionAddressBasePage?.presentInsideKeralaPostOffice
+            ? data?.AdoptionAddressBasePage?.presentInsideKeralaPostOffice.code
+            : null,
+          presentWardNo: data?.AdoptionAddressBasePage?.presentWardNo ? data?.AdoptionAddressBasePage?.presentWardNo.code : null,
+          presentOutsideKeralaDistrict: data?.AdoptionAddressBasePage?.presentOutsideKeralaDistrict
+            ? data?.AdoptionAddressBasePage?.presentOutsideKeralaDistrict.code
+            : null,
+          presentOutsideKeralaTaluk: data?.AdoptionAddressBasePage?.presentOutsideKeralaTaluk
+            ? data?.AdoptionAddressBasePage?.presentOutsideKeralaTaluk
+            : null,
+          presentOutsideKeralaVillage: data?.AdoptionAddressBasePage?.presentOutsideKeralaVillage
+            ? data?.AdoptionAddressBasePage?.presentOutsideKeralaVillage.code
+            : null,
+          presentOutsideKeralaCityVilgeEn: data?.AdoptionAddressBasePage?.presentOutsideKeralaCityVilgeEn,
+          presentOutsideKeralaPincode: data?.AdoptionAddressBasePage?.presentOutsideKeralaPincode
+            ? data?.AdoptionAddressBasePage?.presentOutsideKeralaPincode.code
+            : null,
+          presentOutsideKeralaPostOfficeEn: data?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeEn,
+          presentOutsideKeralaPostOfficeMl: data?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl,
+          presentOutsideKeralaLocalityNameEn: data?.AdoptionAddressBasePage?.presentOutsideKeralaLocalityNameEn,
+          presentOutsideKeralaStreetNameEn: data?.AdoptionAddressBasePage?.presentOutsideKeralaStreetNameEn,
+          presentOutsideKeralaHouseNameEn: data?.AdoptionAddressBasePage?.presentOutsideKeralaHouseNameEn,
+          presentOutsideKeralaLocalityNameMl: data?.AdoptionAddressBasePage?.presentOutsideKeralaLocalityNameMl,
+          presentOutsideKeralaStreetNameMl: data?.AdoptionAddressBasePage?.presentOutsideKeralaStreetNameMl,
+          presentOutsideKeralaHouseNameMl: data?.AdoptionAddressBasePage?.presentOutsideKeralaHouseNameMl,
+          presentOutSideIndiaAdressEn: data?.AdoptionAddressBasePage?.presentOutSideIndiaAdressEn,
+          presentOutSideIndiaAdressMl: data?.AdoptionAddressBasePage?.presentOutSideIndiaAdressMl,
+          presentOutSideIndiaAdressEnB: data?.AdoptionAddressBasePage?.presentOutSideIndiaAdressEnB,
+          presentOutSideIndiaAdressMlB: data?.AdoptionAddressBasePage?.presentOutSideIndiaAdressMlB,
+          presentOutSideIndiaProvinceEn: data?.AdoptionAddressBasePage?.presentOutSideIndiaProvinceEn,
+          presentOutSideCountry: data?.AdoptionAddressBasePage?.presentOutSideCountry
+            ? data?.AdoptionAddressBasePage?.presentOutSideCountry.code
+            : null,
+          presentOutSideIndiaadrsVillage: data?.AdoptionAddressBasePage?.presentOutSideIndiaadrsVillage
+            ? data?.AdoptionAddressBasePage?.presentOutSideIndiaadrsVillage.code
+            : null,
+          presentOutSideIndiaadrsCityTown: data?.AdoptionAddressBasePage?.presentOutSideIndiaadrsCityTown,
+          isPrsentAddress: data?.AdoptionAddressBasePage?.isPrsentAddress,
+          permtaddressCountry: data?.AdoptionAddressBasePage?.permtaddressCountry ? data?.AdoptionAddressBasePage?.permtaddressCountry.code : null,
+          permtaddressStateName: data?.AdoptionAddressBasePage?.permtaddressStateName
+            ? data?.AdoptionAddressBasePage?.permtaddressStateName.code
+            : null,
+          permntInKeralaAdrLBName: data?.AdoptionAddressBasePage?.permntInKeralaAdrLBName
+            ? data?.AdoptionAddressBasePage?.permntInKeralaAdrLBName.code
+            : null,
+          permntInKeralaAdrDistrict: data?.AdoptionAddressBasePage?.permntInKeralaAdrDistrict
+            ? data?.AdoptionAddressBasePage?.permntInKeralaAdrDistrict.code
+            : null,
+          permntInKeralaAdrTaluk: data?.AdoptionAddressBasePage?.permntInKeralaAdrTaluk
+            ? data?.AdoptionAddressBasePage?.permntInKeralaAdrTaluk.code
+            : null,
+          permntInKeralaAdrVillage: data?.AdoptionAddressBasePage?.permntInKeralaAdrVillage
+            ? data?.AdoptionAddressBasePage?.permntInKeralaAdrVillage.code
+            : null,
+          permntInKeralaAdrLocalityNameEn: data?.AdoptionAddressBasePage?.permntInKeralaAdrLocalityNameEn,
+          permntInKeralaAdrStreetNameEn: data?.AdoptionAddressBasePage?.permntInKeralaAdrStreetNameEn,
+          permntInKeralaAdrHouseNameEn: data?.AdoptionAddressBasePage?.permntInKeralaAdrHouseNameEn,
+          permntInKeralaAdrLocalityNameMl: data?.AdoptionAddressBasePage?.permntInKeralaAdrLocalityNameMl,
+          permntInKeralaAdrStreetNameMl: data?.AdoptionAddressBasePage?.permntInKeralaAdrStreetNameMl,
+          permntInKeralaAdrHouseNameMl: data?.AdoptionAddressBasePage?.permntInKeralaAdrHouseNameMl,
+          permntInKeralaAdrPincode: data?.AdoptionAddressBasePage?.permntInKeralaAdrPincode
+            ? data?.AdoptionAddressBasePage?.permntInKeralaAdrPincode.code
+            : null,
+          permntInKeralaAdrPostOffice: data?.AdoptionAddressBasePage?.permntInKeralaAdrPostOffice
+            ? data?.AdoptionAddressBasePage?.permntInKeralaAdrPostOffice.code
+            : null,
+          permntInKeralaWardNo: data?.AdoptionAddressBasePage?.permntInKeralaWardNo ? data?.AdoptionAddressBasePage?.permntInKeralaWardNo.code : null,
+          permntOutsideKeralaDistrict: data?.AdoptionAddressBasePage?.permntOutsideKeralaDistrict
+            ? data?.AdoptionAddressBasePage?.permntOutsideKeralaDistrict.code
+            : null,
+          permntOutsideKeralaTaluk: data?.AdoptionAddressBasePage?.permntOutsideKeralaTaluk
+            ? data?.AdoptionAddressBasePage?.permntOutsideKeralaTaluk.code
+            : null,
+          permntOutsideKeralaVillage: data?.AdoptionAddressBasePage?.permntOutsideKeralaVillage
+            ? data?.AdoptionAddressBasePage?.permntOutsideKeralaVillage.code
+            : null,
+          permntOutsideKeralaCityVilgeEn: data?.AdoptionAddressBasePage?.permntOutsideKeralaCityVilgeEn,
+          permntOutsideKeralaPincode: data?.AdoptionAddressBasePage?.permntOutsideKeralaPincode,
+          permntOutsideKeralaLocalityNameEn: data?.AdoptionAddressBasePage?.permntOutsideKeralaLocalityNameEn,
+          permntOutsideKeralaStreetNameEn: data?.AdoptionAddressBasePage?.permntOutsideKeralaStreetNameEn,
+          permntOutsideKeralaHouseNameEn: data?.AdoptionAddressBasePage?.permntOutsideKeralaHouseNameEn,
+          permntOutsideKeralaLocalityNameMl: data?.AdoptionAddressBasePage?.permntOutsideKeralaLocalityNameMl,
+          permntOutsideKeralaStreetNameMl: data?.AdoptionAddressBasePage?.permntOutsideKeralaStreetNameMl,
+          permntOutsideKeralaHouseNameMl: data?.AdoptionAddressBasePage?.permntOutsideKeralaHouseNameMl,
+          permntOutsideKeralaPostOfficeEn: data?.AdoptionAddressBasePage?.permntOutsideKeralaPostOfficeEn,
+          permntOutsideKeralaPostOfficeMl: data?.AdoptionAddressBasePage?.permntOutsideKeralaPostOfficeMl,
+          permntOutsideIndiaLineoneEn: data?.AdoptionAddressBasePage?.permntOutsideIndiaLineoneEn,
+          permntOutsideIndiaLineoneMl: data?.AdoptionAddressBasePage?.permntOutsideIndiaLineoneMl,
+          permntOutsideIndiaLinetwoEn: data?.AdoptionAddressBasePage?.permntOutsideIndiaLinetwoEn,
+          permntOutsideIndiaLinetwoMl: data?.AdoptionAddressBasePage?.permntOutsideIndiaLinetwoMl,
+          permntOutsideIndiaprovinceEn: data?.AdoptionAddressBasePage?.permntOutsideIndiaprovinceEn,
+          permntOutsideIndiaVillage: data?.AdoptionAddressBasePage?.permntOutsideIndiaVillage
+            ? data?.AdoptionAddressBasePage?.permntOutsideIndiaVillage.code
+            : null,
+          permntOutsideIndiaCityTown: data?.AdoptionAddressBasePage?.permntOutsideIndiaCityTown,
+          permanentOutsideIndiaPostCode: data?.AdoptionAddressBasePage?.permanentOutsideIndiaPostCode,
+        },
+        InformarHosInstDetails: {},
+        InitiatorinfoDetails: {
+          relation: data?.InitiatorinfoDetails?.relation,
+          initiatorNameEn: data?.InitiatorinfoDetails?.initiatorNameEn,
+          initiatorAadhar: data?.InitiatorinfoDetails?.initiatorAadhar,
+          initiatorMobile: data?.InitiatorinfoDetails?.initiatorMobile,
+          initiatorDesi: data?.InitiatorinfoDetails?.initiatorDesi,
+          initiatorAddress: data?.InitiatorinfoDetails?.initiatorAddress,
+          isInitiatorDeclaration: data?.InitiatorinfoDetails?.isInitiatorDeclaration,
+        },
+      },
+    ],
+  };
+
+  return formdata;
+};
 /////////////////////////////////@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 export const convertToDeathRegistration = (data = {}) => {
   // let Financialyear = sessionStorage.getItem("CurrentFinancialYear");
