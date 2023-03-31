@@ -18,8 +18,7 @@ CREATE TABLE IF NOT EXISTS public.eg_pgr_informer_v2
 
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS public.eg_pgr_informer_v2
-    OWNER to postgres;
+
 -- Index: index_eg_pgr_informer_v2_informername
 
 -- DROP INDEX IF EXISTS public.index_eg_pgr_informer_v2_informername;
