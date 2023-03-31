@@ -5,6 +5,7 @@ const AdoptionAppUpdateAction = async (applicationData, tenantId) => {
   let tmpApplnData = applicationData
   tmpApplnData['AdoptionDetails'] = [tmpApplnData['Property']];
   delete tmpApplnData['Property'];
+  delete tmpApplnData['action']
   // console.log('tmp',tmpApplnData);
   try {
     const response = await CRService.updateAdoption(tmpApplnData, tenantId);
