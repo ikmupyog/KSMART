@@ -136,7 +136,7 @@ const ScrFlowApp = ({ parentUrl}) => {
               formData={params}
               onAdd={handleMultiple}
               userType="employee"
-              isEditBirth={isEditBirth}
+              isEditStillBirth={isEditStillBirth}
             />
            </Route>  
           
