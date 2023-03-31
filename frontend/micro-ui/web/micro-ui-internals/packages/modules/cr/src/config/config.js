@@ -573,7 +573,8 @@ export const newConfig = [
         key: "Initiator",
         nextStep: "informer",
         type: "component",
-        hideInEmployee: false,
+        hideInEmployee: true,
+        hideInCitizen: false,
       },
       {
         route: "informer",
@@ -592,6 +593,7 @@ export const newConfig = [
         nextStep: null,
         type: "component",
         hideInEmployee: false,
+        hideInCitizen: true,
       },
       ////////////////////Death-Stop////////////////////////
       ////////////////////Death-Child-Pages-Stop////////////////////////
