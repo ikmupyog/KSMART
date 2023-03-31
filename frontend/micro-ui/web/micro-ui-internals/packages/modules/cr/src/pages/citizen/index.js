@@ -18,6 +18,7 @@ import AbandonedChildDetails from "../../pageComponents/abandonedBirthComponents
 
 const App = () => {
   const { path, url, ...match } = useRouteMatch();
+  const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false) 
   let isSuccessScreen = window.location.href.includes("acknowledgement");
   // let isCommonPTPropertyScreen = window.location.href.includes("/tl/tradelicence/new-application/property-details");
   const ApplicationDetails = Digit.ComponentRegistryService.getComponent("CRCitizenApplicationDetails");
@@ -39,10 +40,16 @@ const App = () => {
   const CRBirthInclusions = Digit?.ComponentRegistryService?.getComponent('CRBirthInclusions');
   const CRDeathInclusions = Digit?.ComponentRegistryService?.getComponent('CRDeathInclusions');
   const CRDeathInclusionsPage = Digit?.ComponentRegistryService?.getComponent('CRDeathInclusionsPage');
-
+  const CRMarriageInclusions = Digit?.ComponentRegistryService?.getComponent('CRMarriageInclusions');
+  const SearchMarriageInclusion = Digit?.ComponentRegistryService?.getComponent('SearchMarriageInclusion');
+  const MarriageInclusionEditPage = Digit?.ComponentRegistryService?.getComponent('MarriageInclusionEditPage');
+  const MarriageCorrectionEditPage = Digit?.ComponentRegistryService?.getComponent('MarriageCorrectionEditPage');
+  
   const CRBirthInclusionEditPage = Digit?.ComponentRegistryService?.getComponent('CRBirthInclusionEditPage');
 
-
+React.useEffect(()=>{
+  setFlag(false)
+},[])
   // const getBackPageNumber = () => {
   //   let goBacktoFromProperty = -1;
   //   if (
@@ -65,6 +72,7 @@ const App = () => {
         <PrivateRoute path={`${path}/cr-birth-creation`} component={CreateBirthRegistration} />
         <PrivateRoute path={`${path}/cr-name-inclusion`} component={CRBirthInclusions} />
         <PrivateRoute parentRoute={path} path={`${path}/birth-inclusion-edit`} component={CRBirthInclusionEditPage} />
+        <PrivateRoute path={`${path}/marriage-correction-edit`} component={MarriageCorrectionEditPage} />
         <PrivateRoute path={`${path}/cr-birth-nac`} component={CreateBirthNACRegistration} />
         <PrivateRoute path={`${path}/cr-death-nac`} component={CRCreateDeathNACRegistration} />
         <PrivateRoute path={`${path}/cr-adoption`} component={CreateAdoption} />
@@ -73,15 +81,18 @@ const App = () => {
         <PrivateRoute path={`${path}/cr-abandonedbirth-creation`} component={CreateAbandonedBirth} />
         <PrivateRoute path={`${path}/cr-death-creation`} component={CreateDeathRegistration} />
         <PrivateRoute path={`${path}/cr-marriage-creation`} component={CreateMarriageRegistration} />
+        <PrivateRoute path={`${path}/cr-marriage-correction-search`} component={SearchMarriageInclusion} />        
         <PrivateRoute path={`${path}/cr/my-application`} component={MyCRApplications} />
         <PrivateRoute path={`${path}/cr/death/my-application`} component={MyCRDeathApplications} />
         <PrivateRoute path={`${path}/cr/my-bills`} component={() => <MyCRApplications view="bills" />} />
         <PrivateRoute path={`${path}/cr/application/:id/:tenantId`} component={ApplicationDetails} />
         <PrivateRoute path={`${path}/cr/death/application/:id/:tenantId`} component={ApplicationDeathDetails} />
         <PrivateRoute path={`${path}/cr-death-inclusion`} component={CRDeathInclusions} />
+        <PrivateRoute path={`${path}/cr-marriage-inclusion`} component={CRMarriageInclusions} />
         <PrivateRoute path={`${path}/create-death-certificate`} component={() => <DeathCertificateSearch parentUrl={path}/>} /> 
         <PrivateRoute parentRoute={path} path={`${path}/create-birth-certificate`} component={() => <BirthCertificateSearch parentUrl={path} />} /> 
-        <PrivateRoute parentRoute={path} path={`${path}/death-inclusion-edit`} component={CRDeathInclusionsPage} /> 
+        <PrivateRoute parentRoute={path} path={`${path}/death-inclusion-edit`} component={CRDeathInclusionsPage} />
+        <PrivateRoute parentRoute={path} path={`${path}/marriage-inclusion-edit`} component={CRDeathInclusionsPage} /> 
        </AppContainer>
       </Switch>
     </span>

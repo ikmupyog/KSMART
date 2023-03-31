@@ -20,6 +20,8 @@ const CloseBtn = (props) => {
   );
 };
 const TLCorrectionDetailsView = ({ t, config, onSelect, formData,onEditSelect ,formDataEdit}) => {
+console.log("formDataEdit Main"+JSON.stringify(formDataEdit));
+console.log("formData Main"+JSON.stringify(formData));
   const history = useHistory();
   const match = useRouteMatch();
   console.log("main firing main firing main firng");
@@ -82,7 +84,8 @@ const TLCorrectionDetailsView = ({ t, config, onSelect, formData,onEditSelect ,f
     setShowModal(false);
   };
   const goNext = async (data) => {
-    console.log("ya firing amin"+JSON.stringify(data));
+   // console.log("ya firing amin"+JSON.stringify(data));
+   onSelect("", "");
   }
   const onSkip = () => onSelect();
   function submit(data) {
@@ -98,17 +101,10 @@ const TLCorrectionDetailsView = ({ t, config, onSelect, formData,onEditSelect ,f
      
       <FormStep  config={config} onSelect={goNext} onSkip={onSkip} t={t}  >
         <div style={{ borderRadius: "5px", borderColor: "#f3f3f3", background: "white", display: "flow-root", }} >
-
-
-
-           <TLCorrectionActivity t={t} config={config} onSelect={onSelect} formData={formData}></TLCorrectionActivity>
-
-          <TLCorrectionPlaceOfActivity t={t} config={config} onSelect={onSelect} formData={formData}></TLCorrectionPlaceOfActivity> 
+          <TLCorrectionActivity t={t} config={config} onSelect={onSelect} formData={formData}  onEditSelect={onEditSelect} formDataEdit={formDataEdit}></TLCorrectionActivity>
+          <TLCorrectionPlaceOfActivity t={t} config={config} onSelect={onSelect} formData={formData} onEditSelect={onEditSelect} formDataEdit={formDataEdit}></TLCorrectionPlaceOfActivity> 
           <TLCorrectionApplicant t={t} config={config} onSelect={onSelect} formData={formData} onEditSelect={onEditSelect} formDataEdit={formDataEdit}></TLCorrectionApplicant>
-
           <TLCorrectionOwner t={t} config={config} onSelect={onSelect} formData={formData}></TLCorrectionOwner>
-
-
         </div>
       </FormStep>
     </React.Fragment>

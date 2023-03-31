@@ -9,6 +9,7 @@ const Search = ({ path }) => {
     const { t } = useTranslation();
     const tenantId = Digit.ULBService.getCurrentTenantId();
     const [payload, setPayload] = useState({})
+    const [applicationType, setApplicationType] = React.useState([])
     // const Search = Digit.ComponentRegistryService.getComponent( variant === "death-correction" ? "DeathCorrection" : "SearchCrApplication" )
 
     const Search = Digit.ComponentRegistryService.getComponent('SearchCrApplication')
@@ -31,14 +32,28 @@ const Search = ({ path }) => {
     const config = {
         enabled: !!(payload && Object.keys(payload).length > 0)
     }
-    if (window.location.href.includes("/birthsearch") == true) {
+    if (window.location.href.includes("/birthsearch") == true && applicationType?.value == "birthsearch") {
         const { data: { ChildDetails: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useSearch({ tenantId, filters: payload, config })
-        // console.log(searchResult);
-        return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
-    } else {
+        //console.log(searchResult);
+        return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} setApplicationType={setApplicationType} applicationType={applicationType} data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
+
+    } else if (window.location.href.includes("/birthsearch") == true && applicationType?.value == "adoptionsearch") {
+        const { data: { ChildDetails: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useAdoptionSearch({ tenantId, filters: payload, config })
+        return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} setApplicationType={setApplicationType} applicationType={applicationType} data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
+    }
+    else if (window.location.href.includes("/deathsearch") == true) {
+    } 
+    else if(window.location.href.includes("/birthsearch") == true && applicationType?.value == "stillbirthsearch"){
+        const { data: { StillBirthChildDetails: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useSearchStillBirth({ tenantId, filters: payload, config })
+        return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} setApplicationType={setApplicationType} applicationType={applicationType} data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
+    } 
+    else if(window.location.href.includes("/deathsearch") == true ) {
         const { data: { deathCertificateDtls: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useSearchDeath({ tenantId, filters: payload, config })
-        console.log(searchResult);
+
         return <SearchDeath t={t} tenantId={tenantId} onSubmit={onSubmit} data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
+    } else {
+        const { data: { ChildDetails: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useSearch({ tenantId, filters: payload, config })
+        return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} setApplicationType={setApplicationType} applicationType={applicationType} data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
     }
 
 

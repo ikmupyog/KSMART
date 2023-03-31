@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCountry, setaddressCountry,
     presentaddressStateName, setaddressStateName, value, setValue, countryvalue, setCountryValue,
     permtaddressCountry, setpermtaddressCountry, permtaddressStateName, setpermtaddressStateName, isPrsentAddress,
-    setIsPrsentAddress, Villagevalues, setLbsVillagevalue, isEditBirth = false, isEditDeath = false,presentOutsideKeralaDistrict,
+    setIsPrsentAddress, Villagevalues, setLbsVillagevalue, isEditBirth = false, isEditDeath = false, presentOutsideKeralaDistrict,
     setoutsideKeralaDistrict
 }) => {
     const stateId = Digit.ULBService.getStateId();
@@ -21,7 +21,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
     const { data: State = {}, isStateLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
     const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
     const [isInitialRender, setIsInitialRender] = useState(true);
-    const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? isEditDeath : false);
+    const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : false);
 
     let cmbLB = [];
     let cmbCountry = [];
@@ -57,7 +57,6 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
         if (isInitialRender) {
             if (cmbLB.length > 0) {
                 currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
-                console.log(currentLB);
                 // setAdrsLBName(currentLB[0]);
                 cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
                 setaddressCountry(cmbFilterCountry[0]);
@@ -72,7 +71,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
         }
     }, [Country, State, localbodies, Villagevalues, isInitialRender]);
 
-    if (isEditBirth || isEditDeath) {
+    if (isEditBirth) {
         if (formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry != null) {
             if (cmbCountry.length > 0 && (presentaddressCountry === undefined || presentaddressCountry === "")) {
                 setaddressCountry(cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry)[0]);
@@ -83,6 +82,19 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
             if (cmbState.length > 0 && (presentaddressStateName === undefined || presentaddressStateName === "")) {
                 setaddressStateName(cmbState.filter(cmbState => cmbState.code === formData?.ChildDetails?.AddressBirthDetails?.presentaddressStateName)[0]);
                 setValue(value.formData?.ChildDetails?.AddressBirthDetails?.presentaddressStateName);
+            }
+        }
+    } else if (isEditDeath) {
+        if (formData?.AddressBirthDetails?.presentaddressCountry != null) {
+            if (cmbCountry.length > 0 && (presentaddressCountry === undefined || presentaddressCountry === "")) {
+                setaddressCountry(cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.AddressBirthDetails?.presentaddressCountry)[0]);
+                setCountryValue(value.formData?.AddressBirthDetails?.presentaddressCountry);
+            }
+        }
+        if (formData?.AddressBirthDetails?.presentaddressStateName != null) {
+            if (cmbState.length > 0 && (presentaddressStateName === undefined || presentaddressStateName === "")) {
+                setaddressStateName(cmbState.filter(cmbState => cmbState.code === formData?.AddressBirthDetails?.presentaddressStateName)[0]);
+                setValue(value.formData?.AddressBirthDetails?.presentaddressStateName);
             }
         }
     }
@@ -114,7 +126,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
     }
 
     const goNext = () => {
-        
+
     };
     if (isCountryLoading || isStateLoading || islocalbodiesLoading) {
         return <Loader></Loader>;

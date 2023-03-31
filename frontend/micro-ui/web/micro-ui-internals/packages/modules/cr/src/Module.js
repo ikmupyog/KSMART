@@ -20,15 +20,19 @@ import AddressPermanent from "../src/pageComponents/birthComponents/AddressPerma
 import MultipleBirth from "../src/pageComponents/birthComponents/MultipleBirth";
 import CreateBirthRegistration from "./pages/citizen/BirthRegistration";
 import CreateBirthNACRegistration from "./pages/citizen/BirthNACRegistration";
+import MarriageInclusion from "./pages/citizen/MarriageInclusion";
 import BirthNACDownloadPage from "./pageComponents/birthNACComponents/BirthNACDownloadPage";
 import BirthInclusion from "./pages/citizen/BirthInclusion";
 import BirthInclusionEditPage from "./pageComponents/birthComponents/BirthInclusionPage";
-import SearchBirthInclusion from './components/SearchBirthInclusion';
+import SearchBirthInclusion from "./components/SearchBirthInclusion";
+import BirthInclusionModal from "./components/BirthInclusionModal";
 
+import SearchMarriageInclusion from "./components/SearchMarriageInclusion";
 import CreateAdoptions from "./pages/citizen/Adoption";
 import CreateStillBirthRegistration from "./pages/citizen/StillBirthRegistration";
 import CreateBornOutsideRegistration from "./pages/citizen/BornOutsideReg";
-import CreateAbandonedBirth from "./pages/citizen/AbandonedBirth";
+// import CreateAbandonedBirth from "./pages/citizen/AbandonedBirth";
+import CreateAbandonedBirth from "./pages/employee/Abandoned-birth-route";
 
 import ParentsDetails from "../src/pageComponents/birthComponents/ParentsDetails";
 import BirthPlaceHospital from "../src/pageComponents/birthComponents/BirthPlaceHospital";
@@ -58,7 +62,6 @@ import StillBirthInitiatorDetails from "../src/pageComponents/stillBirthComponen
 import StillBirthInformarDetails from "./pageComponents/stillBirthComponents/StillBirthInformarDetails";
 import StillBirthCheckPage from "./pages/citizen/StillBirthRegistration/StillBirthCheckPage";
 
-
 import BornOutsideChildDetails from "../src/pageComponents/bornOutsideIndiaComponents/BornOutsideChildDetails";
 import BornOutsideParentsDetails from "../src/pageComponents/bornOutsideIndiaComponents/BornOutsideParentsDetails";
 import BornOutsideStaticInfn from "./pageComponents/bornOutsideIndiaComponents/BornOutsideStaticInfn";
@@ -78,8 +81,6 @@ import BirthFatherInformation from "../src/pageComponents/adoptionComponents/Bir
 import BirthParentsAddress from "../src/pageComponents/adoptionComponents/BirthParentsAddress";
 import AdoptionStatisticalInformation from "../src/pageComponents/adoptionComponents/AdoptionStatisticalInformation";
 import AdoptionParentsAddress from "../src/pageComponents/adoptionComponents/AdoptionParentsAddress";
-
-
 
 //@@@@@@DeathComponents@@@@@@@@@@@//
 import InformationDeath from "../src/pageComponents/deathComponents/InformationDeath";
@@ -148,17 +149,23 @@ import DeathInclusionPage from "./pageComponents/deathComponents/DeathInclusionP
 
 import CreateMarriageRegistration from "./pages/citizen/MarriageRegistration";
 import GroomDetails from "./pageComponents/marriageComponents/GroomDetails";
+import GroomCorrectionDetails from "./pageComponents/marriageComponents/GroomCorrectionDetails";
 import BrideDetails from "./pageComponents/marriageComponents/BrideDetails";
+import BrideCorrectionDetails from "./pageComponents/marriageComponents/BrideCorrectionDetails";
 import MarriageInstitution from "./pageComponents/marriageComponents/MarriageInstitution";
 import MarriagePublicPlace from "./pageComponents/marriageComponents/MarriagePublicPlace";
 import MarriageRegistration from "./pageComponents/marriageComponents/MarriageRegistration";
 import HouseMarriageRegistration from "./pageComponents/marriageComponents/HouseMarriageRegistration";
-import witnessdetails from "./pageComponents/marriageComponents/witnessdetails";
+import Witnessdetails from "./pageComponents/marriageComponents/witnessdetails"
+import MarriageInclusionEditPage from "./pageComponents/marriageComponents/MarriageCorrection";
+import MarriageCorrectionEditPage from "./pages/citizen/MarriageInclusionEdit";
 
 // import CreateAbandonedBirth from "./pages/employee/Abandoned-birth";
 import AbandonedChildDetails from "./pageComponents/abandonedBirthComponents/AbandonedChildDetails";
-import AbandonedBirthInitiatorDetails from "./pageComponents/abandonedBirthComponents/AbandonedBirthInitiatorDetails";
+import AbandonedBirthInformarDetails from "./pageComponents/abandonedBirthComponents/AbandonedBirthInformarDetails";
+import BornOutsideAcknowledgement from "./pages/citizen/BornOutsideReg/BornOutsideAcknowledgement";
 
+import InformationDeathAband from "./pageComponents/deathAbandoned/InformationDeathAband";
 import CreateDeathNACRegistration from "./pages/citizen/DeathNACRegistration";
 import DeathNACDetails from "./pageComponents/DeathNACComponents/DeathNACDetails";
 import DeathNACAddressPage from "./pageComponents/DeathNACComponents/DeathNACAddressPage";
@@ -192,43 +199,42 @@ export const CRLinks = ({ matchPath, userType }) => {
     {
       link: `${matchPath}/cr-birth-creation`,
       i18nKey: t("CR_BIRTH_REGISTRATION"),
-      section:'birth'
+      section: "birth",
     },
     {
       link: `${matchPath}/cr-stillbirth-creation`,
       i18nKey: t("CR_STILL_BIRTH_REGISTRATION"),
-      section:'birth'
+      section: "birth",
     },
     {
       link: `${matchPath}/cr-outsideindiabirth-creation`,
       i18nKey: t("CR_OUTSIDEINDIA_BIRTH_REGISTRATION"),
-      section:'birth'
+      section: "birth",
     },
     {
       link: `${matchPath}/cr-abandonedbirth-creation`,
       i18nKey: t("CR_ABANDONED_BIRTH_REGISTRATION"),
-      section:'birth'
+      section: "birth",
     },
     {
       link: `${matchPath}/create-birth-certificate`,
       i18nKey: t("CR_BIRTH_CERTIFICATE"),
-      section:'birth'
+      section: "birth",
     },
     {
       link: `${matchPath}/cr-death-creation`,
       i18nKey: t("CR_DEATH_REGISTRATION"),
-      section:'death'
+      section: "death",
     },
     {
       link: `${matchPath}/create-death-certificate`,
       i18nKey: t("CR_DEATH_CERTIFICATE"),
-      section:'death'
+      section: "death",
     },
     // {
     //   link: `${matchPath}/cr-marriage-creation`,
     //   i18nKey: t("CR_MARRIAGE_REGISTRATION"),
     // },
-    
   ];
 
   return (
@@ -259,6 +265,7 @@ const componentsToRegister = {
   CRApplicationDetails,
   CRApplicationDeathDetails,
   SearchDeathInclusion,
+  CRSearch,
   CRDeathsearch,
   SearchCrApplication,
   SearchRegistryDeath,
@@ -269,9 +276,9 @@ const componentsToRegister = {
   AddressPermanent,
   MultipleBirth,
   CRCreateBirthRegistration: CreateBirthRegistration,
-  CRCreateAdoptions:CreateAdoptions,
+  CRCreateAdoptions: CreateAdoptions,
   CRCreateStillBirthRegistration: CreateStillBirthRegistration,
-  CRCreateBornOutsideRegistration: CreateBornOutsideRegistration,  
+  CRCreateBornOutsideRegistration: CreateBornOutsideRegistration,
   CRCreateAbandonedBirth: CreateAbandonedBirth,
   CRCreateBirthNACRegistration: CreateBirthNACRegistration,
   CRCreateDeathNACRegistration: CreateDeathNACRegistration,
@@ -286,9 +293,11 @@ const componentsToRegister = {
   ParentsDetails,
   BirthNACAddressPage,
   BirthNACInitiator,
-  CRBirthInclusions:BirthInclusion,
+  CRBirthInclusions: BirthInclusion,
+  CRMarriageInclusions: MarriageInclusion,
   CRBirthInclusionEditPage: BirthInclusionEditPage,
   SearchBirthInclusion,
+  BirthInclusionModal,
   BirthPlaceHospital,
   BirthPlaceInstitution,
   BirthPlaceHome,
@@ -336,7 +345,8 @@ const componentsToRegister = {
   BirthParentsAddress,
   AdoptionStatisticalInformation,
   AdoptionParentsAddress,
-  CRDeathInclusionsPage:DeathInclusionPage,
+  CRDeathInclusionsPage: DeathInclusionPage,
+  SearchMarriageInclusion,
   //////////////////
   CRDeathcorrection,
   CRSearchdeathcorrection,
@@ -360,7 +370,7 @@ const componentsToRegister = {
   Hospital,
   DeathPublicPlace,
   DeathOutsideJurisdiction,
-  CRDeathInclusions:DeathInclusion,
+  CRDeathInclusions: DeathInclusion,
   SearchDeathInclusion,
   Informer,
   Initiater,
@@ -376,6 +386,8 @@ const componentsToRegister = {
   BirthAcknowledgement,
   DeathAcknowledgement,
   MarriageAcknowledgement,
+  MarriageInclusionEditPage,
+  MarriageCorrectionEditPage,
   StillBirthAcknowledgement,
   BirthCertificate,
   CRCreateDeathRegistration: CreateDeathRegistration,
@@ -384,20 +396,23 @@ const componentsToRegister = {
   CRDDocuments,
   CRWFApplicationTimeline,
   CRDWFApplicationTimeline,
-
+  InformationDeathAband,
   // CreateAbandonedBirth,
   AbandonedChildDetails,
-  AbandonedBirthInitiatorDetails,
+  AbandonedBirthInformarDetails,
   //Marriage
   CRCreateMarriageRegistration: CreateMarriageRegistration,
   GroomDetails,
+  GroomCorrectionDetails,
   BrideDetails,
+  BrideCorrectionDetails,
   MarriageInstitution,
   MarriagePublicPlace,
   MarriageRegistration,
   HouseMarriageRegistration,
-  witnessdetails,
-  FormFieldContainer
+  Witnessdetails,
+  FormFieldContainer,
+  BornOutsideAcknowledgement,
 };
 
 export const initCRComponents = () => {

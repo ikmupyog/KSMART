@@ -451,55 +451,8 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
     }
   }
 
-  function setSelectChildFirstNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z]*$") != null) {
-      setChildFirstNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
-    }
-  }
-  function setSelectChildMiddleNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z]*$") != null) {
-      setChildMiddleNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
-    }
-  }
-  function setSelectChildLastNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z]*$") != null) {
-      setChildLastNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
-    }
-    // setChildLastNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
-  }
-  function setCheckMalayalamInputField(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
-    if (!e.key.match(pattern)) {
-      e.preventDefault();
-    }
-  }
-  function setSelectChildFirstNameMl(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
-    if (!e.target.value.match(pattern)) {
-      e.preventDefault();
-      setChildFirstNameMl("");
-    } else {
-      setChildFirstNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
-    }
-  }
-  function setSelectChildMiddleNameMl(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
-    if (!e.target.value.match(pattern)) {
-      e.preventDefault();
-      setChildMiddleNameMl("");
-    } else {
-      setChildMiddleNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
-    }
-  }
-  function setSelectChildLastNameMl(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
-    if (!e.target.value.match(pattern)) {
-      e.preventDefault();
-      setChildLastNameMl("");
-    } else {
-      setChildLastNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
-    }
-  }
+
+
   function setSelectPregnancyDuration(e) {
     setPregnancyDuration(
       e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 2)
@@ -1232,15 +1185,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
               />
             </div>
           )}
-          <div className="row">
-            <div className="col-md-12">
-              <div className="col-md-12">
-                <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_CHILD_INFO")}`}</span>{" "}
-                </h1>
-              </div>
-            </div>
-          </div>
+         
 
           <div className="row">
             <div className="col-md-12">

@@ -41,6 +41,8 @@ const BornOutsidePresentOutsideIndia = ({ config, onSelect, userType, formData, 
   }
   const onSkip = () => onSelect();
 
+  const filteredCountries = cmbCountry.filter(country=>country.name !== "India ")
+
   function setSelectadrsVillage(value) {
     setadrsVillage(value);
   
@@ -162,7 +164,7 @@ const BornOutsidePresentOutsideIndia = ({ config, onSelect, userType, formData, 
             <Dropdown
               t={t}
               optionKey="name"
-              option={cmbCountry}
+              option={filteredCountries}
               selected={presentOutSideCountry}
               select={setSelectOutSideCountry}
               placeholder={`${t("CS_COMMON_COUNTRY")}`}
@@ -264,7 +266,7 @@ const BornOutsidePresentOutsideIndia = ({ config, onSelect, userType, formData, 
               />
             </div>
             <div className="col-md-6">
-              <CardLabel>{t("CR_ADDRES_LINE_TWO_EN")}</CardLabel>
+              <CardLabel>{t("CR_ADDRES_LINE_TWO_EN")}<span className="mandatorycss">*</span></CardLabel>
               <TextInput
                 t={t}
                 type={"text"}

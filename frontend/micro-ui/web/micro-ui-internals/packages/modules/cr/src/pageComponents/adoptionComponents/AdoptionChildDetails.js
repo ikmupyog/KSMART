@@ -9,11 +9,11 @@ import BirthPlaceHome from "../../pageComponents/birthComponents/BirthPlaceHome"
 import BirthPlaceVehicle from "../../pageComponents/birthComponents/BirthPlaceVehicle";
 import BirthPlacePublicPlace from "../../pageComponents/birthComponents/BirthPlacePublicPlace";
 import AdoptionBirthReqSearch from './AdoptionBirthReqSearch'
+import BirthReqSearch from './BirthReqSearch'
 import { convertEpochToDateDMY } from  "../../utils";
 
-const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => {
+const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirth, isEditFlag =false}) => {
   // console.log(JSON.stringify(formData));  
-  console.log(formData);
   const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
   const [workFlowCode, setWorkFlowCode] = useState();
@@ -26,14 +26,16 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
   }
   const { t } = useTranslation();
   let validation = {};
-  const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "WorkFlowBirth");
+  const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "WorkFlowAdoption");
   const { data: Menu, isLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
   const { data: AttentionOfDelivery = {}, isAttentionOfDeliveryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "AttentionOfDelivery");
   const { data: DeliveryMethodList = {}, isDeliveryMethodListLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeliveryMethod");
   const { data: PlaeceMaster = {}, isPlaceMasterLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "PlaceMaster");
+  const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false) 
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
   const [InstitutionFilterList, setInstitutionFilterList] = useState(null);
   const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(false);
+  const [SearchRegId,setSearchRegId] = useState()
 
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
@@ -79,8 +81,8 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
   let Difference_In_DaysRounded = "";
   // let workFlowCode = "BIRTHHOSP21";
   WorkFlowDetails &&
-    WorkFlowDetails["birth-death-service"] && WorkFlowDetails["birth-death-service"].WorkFlowBirth &&
-    WorkFlowDetails["birth-death-service"].WorkFlowBirth.map((ob) => {
+    WorkFlowDetails["birth-death-service"] && WorkFlowDetails["birth-death-service"].WorkFlowAdoption&&
+    WorkFlowDetails["birth-death-service"].WorkFlowAdoption.map((ob) => {
       workFlowData.push(ob);
       // console.log(workFlowData);
     });
@@ -128,21 +130,22 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
     { i18nKey: "41", code: "41" },
     { i18nKey: "42", code: "42" },
   ];
-  const [childDOB, setChildDOB] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined) ? convertEpochToDate(formData?.AdoptionChildDetails?.childDOB) : formData?.AdoptionChildDetails?.childDOB); //formData?.AdoptionChildDetails?.childDOB
+  const [childDOB, setChildDOB] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined) ? convertEpochToDate(formData?.AdoptionChildDetails?.childDOB)  : formData?.AdoptionChildDetails?.childDOB); //formData?.AdoptionChildDetails?.childDOB
   // const [gender, selectGender] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined) ? (menu.filter(menu => menu.code === formData?.AdoptionChildDetails?.gender)[0]) : formData?.AdoptionChildDetails?.gender);
   const [gender, selectGender] = useState(formData?.AdoptionChildDetails?.gender?.code ? formData?.AdoptionChildDetails?.gender : formData?.AdoptionChildDetails?.gender ?
     (menu.filter(menu => menu.code === formData?.AdoptionChildDetails?.gender)[0]) : "");
 
-  const [childAadharNo, setChildAadharNo] = useState(formData?.AdoptionChildDetails?.childAadharNo ? formData?.AdoptionChildDetails?.childAadharNo : null);
+  const [childAadharNo, setChildAadharNo] = useState(formData?.AdoptionChildDetails?.childAadharNo ? formData?.AdoptionChildDetails?.childAadharNo  :null);
   const [childFirstNameEn, setChildFirstNameEn] = useState(formData?.AdoptionChildDetails?.childFirstNameEn ? formData?.AdoptionChildDetails?.childFirstNameEn : "");
   const [childMiddleNameEn, setChildMiddleNameEn] = useState(formData?.AdoptionChildDetails?.childMiddleNameEn ? formData?.AdoptionChildDetails?.childMiddleNameEn : "");
   const [childLastNameEn, setChildLastNameEn] = useState(formData?.AdoptionChildDetails?.childLastNameEn ? formData?.AdoptionChildDetails?.childLastNameEn : "");
-  const [childFirstNameMl, setChildFirstNameMl] = useState(formData?.AdoptionChildDetails?.childFirstNameMl ? formData?.AdoptionChildDetails?.childFirstNameMl : "");
+  const [childFirstNameMl, setChildFirstNameMl] = useState(formData?.AdoptionChildDetails?.childFirstNameMl ? formData?.AdoptionChildDetails?.childFirstNameMl  : "");
   const [childMiddleNameMl, setChildMiddleNameMl] = useState(formData?.AdoptionChildDetails?.childMiddleNameMl ? formData?.AdoptionChildDetails?.childMiddleNameMl : "");
   const [childLastNameMl, setChildLastNameMl] = useState(formData?.AdoptionChildDetails?.childLastNameMl ? formData?.AdoptionChildDetails?.childLastNameMl : "");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isInitialRenderPlace, setIsInitialRenderPlace] = useState(true);
   const [isInitialRenderFormData, setisInitialRenderFormData] = useState(false);
+
   const [birthDateTime, setbirthDateTime] = useState(""); //formData?.AdoptionChildDetails?.birthDateTime ? formData?.AdoptionChildDetails?.birthDateTime :
   const [isChildName, setIsChildName] = useState(formData?.AdoptionChildDetails?.isChildName ? formData?.AdoptionChildDetails?.isChildName : true);
   const [adoptionAgency, setIsAdoptionAgency] = useState(formData?.AdoptionChildDetails?.adoptionAgency ? formData?.AdoptionChildDetails?.adoptionAgency : false);
@@ -229,7 +232,6 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
   const [PregnancyDurationStError, setPregnancyDurationStError] = useState(formData?.AdoptionChildDetails?.pregnancyDuration ? false : false);
   const [PregnancyDurationInvalidError, setPregnancyDurationInvalidError] = useState(formData?.AdoptionChildDetails?.pregnancyDuration ? false : false);
   const [AdoptionDecreErr, setAdoptionDecreErr] = useState(formData?.AdoptionChildDetails?.AdoptionDecreErr ? false : false);
-  const [SearchRegId,setSearchRegId] = useState()
   // const [isAdopted, setIsAdopted] = useState(formData?.AdoptionChildDetails?.isAdopted);
   // const [isMultipleBirth, setIsMultipleBirth] = useState(formData?.AdoptionChildDetails?.isMultipleBirth);
   // const [isBornOutSide, setIsBornOutSide] = useState(formData?.AdoptionChildDetails?.isBornOutSide);
@@ -270,6 +272,27 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
       }
     }
   }, [isInitialRender]);
+
+  useState(()=>{
+    if(isEditBirth){
+      formData.AdoptionDetails.pop()
+    }
+
+  },[formData])
+  useEffect(()=>{
+    if(SearchRegId){
+        SearchRegId?.childDOB ? setChildDOB(convertEpochToDate(SearchRegId?.childDOB)):setChildDOB(null)
+        SearchRegId?.gender ? selectGender((menu.filter(menu => menu.code === SearchRegId?.gender)[0])):selectGender('')
+        SearchRegId?.childAadharNo ? setChildAadharNo(SearchRegId.childAadharNo):setChildAadharNo(null)
+        SearchRegId?.childFirstNameEn ? setChildFirstNameEn(SearchRegId.childFirstNameEn) :setChildFirstNameEn('')
+        SearchRegId?.childMiddleNameEn ? setChildMiddleNameEn(SearchRegId.childMiddleNameEn):setChildMiddleNameEn('')
+        SearchRegId?.childLastNameEn ? setChildLastNameEn(SearchRegId.childLastNameEn):setChildLastNameEn('')
+        SearchRegId?.childFirstNameMl ? setChildFirstNameMl(SearchRegId.childFirstNameMl):setChildFirstNameMl('')
+        SearchRegId?.childMiddleNameMl ? setChildMiddleNameMl(SearchRegId.childMiddleNameMl):setChildMiddleNameMl('')
+        SearchRegId?.childLastNameMl ? setChildLastNameMl(SearchRegId.childLastNameMl):setChildLastNameMl('')
+    }
+   
+  },[SearchRegId])
 
   React.useEffect(() => {
     if (isInitialRenderPlace) {
@@ -350,7 +373,6 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
   }
 
   function setselectChildDOB(value) {
-    console.log(value);
     setChildDOB(value);
     const today = new Date();
     const birthDate = new Date(value);
@@ -465,7 +487,6 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
     }
   }
   const setSelectDeeOrderDate =(value)=>{
-    console.log(value);
     setAdoptionDecreOrderDate(value)
   }
   const setSelectIssuingAuthority =(e)=>{
@@ -527,10 +548,8 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
   const handleTimeChange = (value, cb) => {
     if (typeof value === "string") {
       cb(value);
-      console.log(value);
       let hour = value;
       let period = hour > 12 ? "PM" : "AM";
-      console.log(period);
       setbirthDateTime(value);
     }
   };
@@ -566,10 +585,16 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
 
     } else {
       setbirthRegistered(e.target.checked)
-      // setAdoptionAgentName("")
-      // setAdoptionAgencyAddress("")
-      // setAdoptionAgencyPersonName("")
-      // setAdoptionContactNo("")
+      setBirthRegNo('')
+      setChildDOB(null)
+      selectGender('')
+      setChildAadharNo(null)
+      setChildFirstNameEn('')
+      setChildMiddleNameEn('')
+      setChildLastNameEn('')
+      setChildFirstNameMl('')
+      setChildMiddleNameMl('')
+      setChildLastNameMl('')
     }
   }
   function setSelectDeliveryMethod(value) {
@@ -1073,17 +1098,25 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
             || !setadmittedHospitalEn || !wardNo || vehicleDesDetailsEn === "") : false)
           // || !medicalAttensionSub || !deliveryMethods || birthWeight == null || pregnancyDuration === ""
         }>
+          {!editFlag&&(
              <div className="row">
-            <div className="col-md-12">
-              <div className="col-md-6">
-                <CheckBox label={t("CR_BIRTH_REGISTERED")} onChange={setBirthRegDetails} value={birthRegistered} checked={birthRegistered} />
-              </div>
-            </div>
-          </div>
+             <div className="col-md-12">
+               <div className="col-md-6">
+                 <CheckBox label={t("CR_BIRTH_REGISTERED")} onChange={setBirthRegDetails} value={birthRegistered} checked={birthRegistered} />
+               </div>
+             </div>
+           </div>
+          )}
+            
 
-          {birthRegistered == true &&(<React.Fragment>
-         
-            <AdoptionBirthReqSearch BirthRegNo={BirthRegNo} setSelectSetBirthRegNo={setSelectSetBirthRegNo} setSearchRegId={setSearchRegId}/>
+          {!editFlag && birthRegistered == true &&(<React.Fragment>
+            {/* {isEditFlag?(
+              <AdoptionBirthReqSearch BirthRegNo={BirthRegNo} setSelectSetBirthRegNo={setSelectSetBirthRegNo} setSearchRegId={setSearchRegId}/>
+            ):
+            ( */}
+              <BirthReqSearch BirthRegNo={BirthRegNo} setSelectSetBirthRegNo={setSelectSetBirthRegNo} setSearchRegId={setSearchRegId}/>
+            
+            
           {birthRegistered == true && BirthRegNo && SearchRegId && (
                <div className="row">
                <div className="col-md-12">
@@ -1110,7 +1143,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
                      })}
                    />
                  </div>
-                 <div className="col-md-3">
+                 {/* <div className="col-md-3">
                    <CardLabel>{`${t("CR_COMMON_COL_MOTHER_NAME")}`}
                    {AdoptionDeedNo ==="" &&  <span className="mandatorycss">*</span>}
                    </CardLabel>
@@ -1132,7 +1165,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
                      })}
                    />
                       
-                 </div>
+                 </div> */}
                  <div className="col-md-3">
                    <CardLabel>{`${t("CR_COMMON_COL_DOB")}`}
                    {AdoptionDeedNo ==="" &&  <span className="mandatorycss">*</span>}

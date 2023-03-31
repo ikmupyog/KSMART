@@ -34,7 +34,11 @@ const Home = ({
   pathname,
 }) => {
   const queryClient = useQueryClient();
-  queryClient.removeQueries("Digit.CR_CREATE_BIRTH_REG");  
+  // queryClient.removeQueries("CR_CREATE_BIRTH_REG");  
+  // Digit.sessionStorage.removeItem("CR_CREATE_BIRTH_REG");
+  // Digit.sessionStorage.removeItem("CR_BIRTH_EDIT_FLAG");
+  sessionStorage.removeItem("CR_BIRTH_EDIT_FLAG");
+  sessionStorage.removeItem("CR_EDIT_BIRTH_REG");
   const location = useLocation()
   const classname = Digit.Hooks.fsm.useRouteSubscription(pathname);
   const { t } = useTranslation();
@@ -277,7 +281,7 @@ const Home = ({
           name: t("CR_MARRIAGE_CORRECTIONS"),
           Icon: <OBPSIcon />,
           onClick: () => history.push({
-            pathname: `${matchPath}/cr-marriage-creation`,
+            pathname: `${matchPath}/cr-marriage-inclusion`,
             state: { module: "cr-marriage" }
           }),
         },

@@ -7,15 +7,16 @@ const InitiatorDetails = ({ config, onSelect, userType, formData,isEditBirth=fal
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
-  // console.log(Digit.UserService.getUser().info);
+  console.log(Digit.UserService.getUser().info);
   const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
   const {name:name,} =Digit.UserService.getUser().info ; // window.localStorage.getItem("user-info");
+  const {mobileNumber:mobileNumber,} =Digit.UserService.getUser().info ; // window.localStorage.getItem("user-info");
   const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.InitiatorinfoDetails?.isInitiatorDeclaration : formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration : false);
   const [isCaretaker, setIsCaretaker] = useState(formData?.InitiatorinfoDetails?.isCaretaker ? formData?.InitiatorinfoDetails?.isCaretaker : formData?.ChildDetails?.InitiatorinfoDetails?.isCaretaker ? formData?.ChildDetails?.InitiatorinfoDetails?.isCaretaker : false);
   const [relation, setrelation] = useState(formData?.InitiatorinfoDetails?.relation ? formData?.InitiatorinfoDetails?.relation : formData?.ChildDetails?.InitiatorinfoDetails?.relation ? formData?.ChildDetails?.InitiatorinfoDetails?.relation : "");
   const [initiatorNameEn, setinitiatorNameEn] = useState(formData?.InitiatorinfoDetails?.initiatorNameEn ? formData?.InitiatorinfoDetails?.initiatorNameEn : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorNameEn ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorNameEn : name);
   const [initiatorAadhar, setinitiatorAadhar] = useState(formData?.InitiatorinfoDetails?.initiatorAadhar ? formData?.InitiatorinfoDetails?.initiatorAadhar : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAadhar ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAadhar : "");
-  const [initiatorMobile, setinitiatorMobile] = useState(formData?.InitiatorinfoDetails?.initiatorMobile ? formData?.InitiatorinfoDetails?.initiatorMobile : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorMobile ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorMobile : "");
+  const [initiatorMobile, setinitiatorMobile] = useState(formData?.InitiatorinfoDetails?.initiatorMobile ? formData?.InitiatorinfoDetails?.initiatorMobile : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorMobile ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorMobile : mobileNumber);
   const [initiatorDesi, setinitiatorDesi] = useState(formData?.InitiatorinfoDetails?.initiatorDesi ? formData?.InitiatorinfoDetails?.initiatorDesi : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorDesi ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorDesi : "");
   const [initiatorAddress, setinitiatorAddress] = useState(formData?.InitiatorinfoDetails?.initiatorAddress ? formData?.InitiatorinfoDetails?.initiatorAddress : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAddress ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAddress : "");
   const [isInitialRender, setIsInitialRender] = useState(true);
@@ -43,7 +44,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData,isEditBirth=fal
 
 
   function setSelectrelation(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setrelation(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
@@ -105,7 +106,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData,isEditBirth=fal
   //   }
   // }
   function setSelectinitiatorMobile(e) {
-    if (e.target.value.trim().length != 0) {
+    if (e.target.value.trim().length >= 0) {
       setinitiatorMobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
     }
   }
@@ -221,15 +222,15 @@ const InitiatorDetails = ({ config, onSelect, userType, formData,isEditBirth=fal
       }, 2000);
     }
     if (validFlag == true) {
-      sessionStorage.setItem("relation", relation ? relation : null);
-      sessionStorage.setItem("initiatorNameEn", initiatorNameEn ? initiatorNameEn : null);
-      sessionStorage.setItem("initiatorAadhar", initiatorAadhar ? initiatorAadhar : null);
+      // sessionStorage.setItem("relation", relation ? relation : null);
+      // sessionStorage.setItem("initiatorNameEn", initiatorNameEn ? initiatorNameEn : null);
+      // sessionStorage.setItem("initiatorAadhar", initiatorAadhar ? initiatorAadhar : null);
 
-      sessionStorage.setItem("initiatorMobile", initiatorMobile ? initiatorMobile : null);
-      sessionStorage.setItem("initiatorDesi", initiatorDesi ? initiatorDesi : null);
-      sessionStorage.setItem("initiatorAddress", initiatorAddress ? initiatorAddress : null);
-      sessionStorage.setItem("isInitiatorDeclaration", isInitiatorDeclaration ? isInitiatorDeclaration : null);
-      sessionStorage.setItem("isCaretaker", isCaretaker ? isCaretaker : null);
+      // sessionStorage.setItem("initiatorMobile", initiatorMobile ? initiatorMobile : null);
+      // sessionStorage.setItem("initiatorDesi", initiatorDesi ? initiatorDesi : null);
+      // sessionStorage.setItem("initiatorAddress", initiatorAddress ? initiatorAddress : null);
+      // sessionStorage.setItem("isInitiatorDeclaration", isInitiatorDeclaration ? isInitiatorDeclaration : null);
+      // sessionStorage.setItem("isCaretaker", isCaretaker ? isCaretaker : null);
 
       onSelect(config.key, {
         relation,

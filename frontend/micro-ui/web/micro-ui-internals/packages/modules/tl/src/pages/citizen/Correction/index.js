@@ -87,9 +87,10 @@ const CorrectionTradeLicence = ({ parentRoute,isRenewal }) => {
   };
 
   function handleSelect(key, data, skipStep, index, isAddMultiple = false) {
-    console.log("first time firing");
+    if(key!==""){
     setParams({ ...params, ...{ [key]: { ...params[key], ...data } } });
     setParamcorrected({ ...paramscorrected, ...{ [key]: { ...paramscorrected[key], ...data } } });
+    }
     if(key === "isSkip" && data === true)
     {
       goNext(skipStep, index, isAddMultiple, key, true);
@@ -104,14 +105,14 @@ const CorrectionTradeLicence = ({ parentRoute,isRenewal }) => {
 
     setParamcorrected({ ...paramscorrected, ...{ [key]: { ...paramscorrected[key], ...data } } });
    // setParams({ ...params, ...{ [key]: { ...params[key], ...data } } });
-    if(key === "isSkip" && data === true)
-    {
-      goNext(skipStep, index, isAddMultiple, key, true);
-    }
-    else
-    {
-      goNext(skipStep, index, isAddMultiple, key);
-    }
+    // if(key === "isSkip" && data === true)
+    // {
+    //   goNext(skipStep, index, isAddMultiple, key, true);
+    // }
+    // else
+    // {
+    //   goNext(skipStep, index, isAddMultiple, key);
+    // }
   }
  
   const handleSkip = () => {};
@@ -134,7 +135,7 @@ const CorrectionTradeLicence = ({ parentRoute,isRenewal }) => {
   sessionStorage.setItem("skipenabled",skipenabled);
   config.indexRoute ="license-correction-root";
   const CheckPage = Digit?.ComponentRegistryService?.getComponent("CorrectionCheckPage");
-  const TLAcknowledgement = Digit?.ComponentRegistryService?.getComponent("TLAcknowledgement");
+  const TLAcknowledgement = Digit?.ComponentRegistryService?.getComponent("TLCorrectionAcknowledgement");
   return (
     <Switch>
       {config.map((routeObj, index) => {
@@ -157,10 +158,10 @@ const CorrectionTradeLicence = ({ parentRoute,isRenewal }) => {
         );
       })}
       <Route path={`${match.path}/check`}>
-        <CheckPage onSubmit={createProperty} value={params} />
+        <CheckPage onSubmit={createProperty} value={params} valuenew={paramscorrected} />
       </Route>
       <Route path={`${match.path}/acknowledgement`}>
-        <TLAcknowledgement data={params} onSuccess={onSuccess} />
+        <TLAcknowledgement data={params} datanew={paramscorrected} onSuccess={onSuccess} />
       </Route>
       <Route>
         <Redirect to={`${match.path}/${config.indexRoute}`} />

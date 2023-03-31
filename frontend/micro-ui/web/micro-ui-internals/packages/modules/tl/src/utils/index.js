@@ -1,3 +1,4 @@
+import { isArray, isEmpty } from "lodash";
 import get from "lodash/get";
 import set from "lodash/set";
 
@@ -289,9 +290,9 @@ export const convertToTrade = (data = {}) => {
   });
   //structurePlace.isResurveyed = data?.TradeDetails?.tradeLicenseDetail?.structurePlace?.isResurveyed?.code === "YES" ? true : false;
   let tradeUnits = [{
-    "businessCategory": data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businesscategory?.code,
-    "businessType": data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businesstype?.code,
-    "businessSubtype": data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businesssubtype?.code
+    "businessCategory": data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessCategory?.code,
+    "businessType": data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessType?.code,
+    "businessSubtype": data?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessSubtype?.code
   }];
   const formdata = {
     Licenses: [
@@ -688,6 +689,119 @@ export const convertToResubmitTrade = (data) => {
   }
   return formdata;
 }
+export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
+  console.log("Anju dataCorr" + JSON.stringify(dataCorr));
+  console.log("Anju data" + JSON.stringify(data));
+  let tradeUnitCorr = [];
+  let tradeUnitHistory = [];
+  let ownersCorr = [];
+  let ownersHistory = [];
+  let structurePlaceCorr = [];
+  let structurePlaceHistory = [];
+  let applicationDocuments = [];
+  let tradeNameCorr = data?.tradeName;
+  let licenseUnitNameLocalCorr = data?.licenseUnitNameLocal;
+  let tradeNameHistory = data?.tradeName;
+  let licenseUnitNameLocalHistory = data?.licenseUnitNameLocal;
+  
+  let wardNoCorr = data?.tradeLicenseDetail?.address?.wardNo;
+  let wardIdCorr = data?.tradeLicenseDetail?.address?.wardId;
+  let wardNoHistory = data?.tradeLicenseDetail?.address?.wardNo;
+  let wardIdHistory = data?.tradeLicenseDetail?.address?.wardId;
+  let isEdit = false;
+
+  if(data?.tradeLicenseDetail?.address?.wardId !== dataCorr?.tradeLicenseDetail?.address?.wardId){
+    wardNoCorr = dataCorr?.tradeLicenseDetail?.address?.wardNo;
+    wardIdCorr = dataCorr?.tradeLicenseDetail?.address?.wardId;
+    wardNoHistory = data?.tradeLicenseDetail?.address?.wardNo;
+    wardIdHistory = data?.tradeLicenseDetail?.address?.wardId;
+    isEdit = true;
+  }
+
+  data?.tradeLicenseDetail?.tradeUnits.map((unitOld) => {
+    dataCorr?.tradeLicenseDetail?.tradeUnits.map((unitNew) => {
+      if (unitOld.id === unitNew.id) {
+        if ((unitOld.businessType !== unitNew.businessType)||(unitOld.businessSubtype !== unitNew.businessSubtype)){
+          tradeUnitCorr = dataCorr?.tradeLicenseDetail?.tradeUnits;
+          tradeUnitHistory = data?.tradeLicenseDetail?.tradeUnits;
+          isEdit = true;
+        }
+      }
+    })
+  })
+  data?.tradeLicenseDetail?.owners.map((ownerOld) => {
+    dataCorr?.tradeLicenseDetail?.owners.map((ownerNew) => {
+      if (ownerOld.id === ownerNew.id) {
+        if ((ownerOld.name !== ownerNew.name)||(ownerOld.careOf !== ownerNew.careOf)||(ownerOld.careOfName !== ownerNew.careOfName)
+        ||(ownerOld.designation !== ownerNew.designation)||(ownerOld.houseName !== ownerNew.houseName)||(ownerOld.street !== ownerNew.street)
+        ||(ownerOld.locality !== ownerNew.locality)||(ownerOld.postOffice !== ownerNew.postOffice)||(ownerOld.pincode !== ownerNew.pincode)){
+          ownersCorr = dataCorr?.tradeLicenseDetail?.owners;
+          ownersHistory = data?.tradeLicenseDetail?.owners;
+          isEdit = true;
+        }
+      }
+    })
+  })
+
+  data?.tradeLicenseDetail?.structurePlace.map((placeOld) => {
+    dataCorr?.tradeLicenseDetail?.structurePlace.map((placeNew) => {
+      if (placeOld.id === placeNew.id) {
+        if ((placeOld.doorNo !== placeNew.doorNo)||(placeOld.doorNoSub !== placeNew.doorNoSub)||(placeOld.blockNo !== placeNew.blockNo)
+        ||(placeOld.surveyNo !== placeNew.surveyNo)||(placeOld.subDivisionNo !== placeNew.subDivisionNo)||(placeOld.partitionNo !== placeNew.partitionNo)
+        ||(placeOld.vehicleNo !== placeNew.vehicleNo)||(placeOld.vesselNo !== placeNew.vesselNo)||(placeOld.isResurveyed !== placeNew.isResurveyed)||(placeOld.stallNo !== placeNew.stallNo)){
+          structurePlaceCorr = dataCorr?.tradeLicenseDetail?.structurePlace;
+          structurePlaceHistory = data?.tradeLicenseDetail?.structurePlace;
+          isEdit = true;
+        }
+      }
+    })
+  })
+
+
+  applicationDocuments = dataCorr?.tradeLicenseDetail?.applicationDocuments;
+ 
+
+  if((data?.tradeName !== dataCorr?.tradeName)||(data?.licenseUnitNameLocal !== dataCorr?.licenseUnitNameLocal)){
+    tradeNameCorr = dataCorr?.tradeName;
+    licenseUnitNameLocalCorr = dataCorr?.licenseUnitNameLocal;
+    tradeNameHistory = data?.tradeName;
+    licenseUnitNameLocalHistory = data?.licenseUnitNameLocal;
+    isEdit = true;
+  }
+
+  const formdata = {
+    LicenseCorrection: [
+      {
+        tenantId: data.tenantId,
+        tradeLicenseId : data.id,
+        tradeLicenseDetailId : data.tradeLicenseDetail.id,
+        licenseNumber : data.licenseNumber,
+        correction : {
+          tradeUnits : tradeUnitCorr,
+          applicationDocuments : applicationDocuments,
+          structurePlace : structurePlaceCorr,
+          owners : ownersCorr,
+          tradeName : tradeNameCorr,
+          licenseUnitNameLocal : licenseUnitNameLocalCorr,
+          wardId : wardIdCorr,
+          wardNo : wardNoCorr
+        },
+        history : {
+          tradeUnits : tradeUnitHistory,
+          structurePlace : structurePlaceHistory,
+          owners : ownersHistory,
+          tradeName : tradeNameHistory,
+          licenseUnitNameLocal : licenseUnitNameLocalHistory,
+          wardId : wardIdHistory,
+          wardNo : wardNoHistory
+        },
+        status: "INITIATED"
+      }
+    ]
+  };
+  console.log("Anju " + JSON.stringify(formdata));
+  return formdata;
+};
 
 /*   method to check value  if not returns NA*/
 
@@ -968,3 +1082,18 @@ export const convertEpochToDateDMY = (dateEpoch) => {
   day = (day > 9 ? "" : "0") + day;
   return `${day}/${month}/${year}`;
 };
+// export const compareAttributes = (oldValues,newValues) => {
+//   const isEditRenew = window.location.href.includes("renew-trade");
+//   oldValues.map(([keyOld,oldValue]) => {
+//     newValues.map(([keynew,newValue]) => {
+//       if (oldValue.id === newValue.id) {
+//         if (newValue.keyNew !== oldValue.keyOld){
+//           return true;
+//         }
+//         else {
+//           return false;
+//         }
+//       }
+//     })
+//   })
+// }

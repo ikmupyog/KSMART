@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 
 const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isEditBirthPageComponents }) => {
   // console.log(JSON.stringify(formData));
+  console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -527,29 +528,29 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
       }
     }
     if (validFlag == true) {
-      sessionStorage.setItem("motherFirstNameEn", motherFirstNameEn ? motherFirstNameEn : null);
-      sessionStorage.setItem("motherFirstNameMl", motherFirstNameMl ? motherFirstNameMl : null);
-      sessionStorage.setItem("motherAadhar", motherAadhar ? motherAadhar : null);
-      sessionStorage.setItem("motherMarriageAge", motherMarriageAge ? motherMarriageAge : null);
-      sessionStorage.setItem("motherMarriageBirth", motherMarriageBirth ? motherMarriageBirth : null);
-      sessionStorage.setItem("motherEducation", motherEducation ? motherEducation.code : null);
-      sessionStorage.setItem("motherProfession", motherProfession ? motherProfession.code : null);
-      sessionStorage.setItem("motherNationality", motherNationality ? motherNationality.code : null);
-      sessionStorage.setItem("motherMaritalStatus", motherMaritalStatus ? motherMaritalStatus : null);
-      // sessionStorage.setItem("MotherAgeMarriage", MotherAgeMarriage ? MotherAgeMarriage : null);
+      // sessionStorage.setItem("motherFirstNameEn", motherFirstNameEn ? motherFirstNameEn : null);
+      // sessionStorage.setItem("motherFirstNameMl", motherFirstNameMl ? motherFirstNameMl : null);
+      // sessionStorage.setItem("motherAadhar", motherAadhar ? motherAadhar : null);
+      // sessionStorage.setItem("motherMarriageAge", motherMarriageAge ? motherMarriageAge : null);
+      // sessionStorage.setItem("motherMarriageBirth", motherMarriageBirth ? motherMarriageBirth : null);
+      // sessionStorage.setItem("motherEducation", motherEducation ? motherEducation.code : null);
+      // sessionStorage.setItem("motherProfession", motherProfession ? motherProfession.code : null);
+      // sessionStorage.setItem("motherNationality", motherNationality ? motherNationality.code : null);
+      // sessionStorage.setItem("motherMaritalStatus", motherMaritalStatus ? motherMaritalStatus : null);
+      // // sessionStorage.setItem("MotherAgeMarriage", MotherAgeMarriage ? MotherAgeMarriage : null);
 
-      sessionStorage.setItem("orderofChildren", orderofChildren ? orderofChildren : null);
-      sessionStorage.setItem("isMotherInfo", isMotherInfo ? isMotherInfo : null);
-      sessionStorage.setItem("isFatherInfo", isFatherInfo ? isFatherInfo : null);
-      sessionStorage.setItem("fatherAadhar", fatherAadhar ? fatherAadhar : null);
-      sessionStorage.setItem("fatherFirstNameEn", fatherFirstNameEn ? fatherFirstNameEn : null);
-      sessionStorage.setItem("fatherFirstNameMl", fatherFirstNameMl ? fatherFirstNameMl : null);
-      sessionStorage.setItem("fatherNationality", fatherNationality ? fatherNationality.code : null);
-      sessionStorage.setItem("fatherEducation", fatherEducation ? fatherEducation.code : null);
-      sessionStorage.setItem("fatherProfession", fatherProfession ? fatherProfession.code : null);
-      sessionStorage.setItem("Religion", Religion ? Religion.code : null);
-      sessionStorage.setItem("fatherEmail", fatherEmail ? fatherEmail : null);
-      sessionStorage.setItem("fatherMobile", fatherMobile ? fatherMobile : null);
+      // sessionStorage.setItem("orderofChildren", orderofChildren ? orderofChildren : null);
+      // sessionStorage.setItem("isMotherInfo", isMotherInfo ? isMotherInfo : null);
+      // sessionStorage.setItem("isFatherInfo", isFatherInfo ? isFatherInfo : null);
+      // sessionStorage.setItem("fatherAadhar", fatherAadhar ? fatherAadhar : null);
+      // sessionStorage.setItem("fatherFirstNameEn", fatherFirstNameEn ? fatherFirstNameEn : null);
+      // sessionStorage.setItem("fatherFirstNameMl", fatherFirstNameMl ? fatherFirstNameMl : null);
+      // sessionStorage.setItem("fatherNationality", fatherNationality ? fatherNationality.code : null);
+      // sessionStorage.setItem("fatherEducation", fatherEducation ? fatherEducation.code : null);
+      // sessionStorage.setItem("fatherProfession", fatherProfession ? fatherProfession.code : null);
+      // sessionStorage.setItem("Religion", Religion ? Religion.code : null);
+      // sessionStorage.setItem("fatherEmail", fatherEmail ? fatherEmail : null);
+      // sessionStorage.setItem("fatherMobile", fatherMobile ? fatherMobile : null);
 
       onSelect(config.key, {
         motherFirstNameEn,
@@ -886,6 +887,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                       selected={fatherNationality}
                       select={setSelectFatherNationality}
                       disable={isDisableEdit}
+                      placeholder={`${t("CR_NATIONALITY")}`}
                     />
                   </div>
                   <div className="col-md-4">
@@ -898,6 +900,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                       selected={fatherEducation}
                       select={setSelectFatherEducation}
                       disable={isDisableEdit}
+                      placeholder={`${t("CR_EDUCATION")}`}
                     />
                   </div>
                   <div className="col-md-4">
@@ -910,6 +913,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                       selected={fatherProfession}
                       select={setSelectFatherProfession}
                       disable={isDisableEdit}
+                      placeholder={`${t("CR_PROFESSIONAL")}`}
                     />
                   </div>
                 </div>
