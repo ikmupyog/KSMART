@@ -69,6 +69,7 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count }) => {
   const handleLinkClick = (finaldata) => {
     let temp={};
     temp.deathCertificateDtls=finaldata;
+    console.log(finaldata);
     Digit.SessionStorage.set("CR_DEATH_EDIT", temp);
     Digit.SessionStorage.set("CR_DEATH_EDIT_FLAG", true);
   }

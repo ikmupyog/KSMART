@@ -35,15 +35,16 @@ const Home = ({
 }) => {
   const queryClient = useQueryClient();
   queryClient.removeQueries("CR_CREATE_BIRTH_REG");  
-<<<<<<< HEAD
-  queryClient.removeQueries("CR_CREATE_DEATH");  
-
-  
-=======
   sessionStorage.removeItem("Digit.CR_CREATE_BIRTH_REG");
   sessionStorage.removeItem("Digit.CR_BIRTH_EDIT_FLAG");
   sessionStorage.removeItem("Digit.CR_EDIT_BIRTH_REG");
->>>>>>> 6720e9da97113bb84de9c87d690855e8ca8bada5
+  
+  queryClient.removeQueries("CR_CREATE_DEATH"); 
+  sessionStorage.removeItem("Digit.CR_CREATE_DEATH");
+  sessionStorage.removeItem("Digit.CR_DEATH_EDIT_FLAG");
+  sessionStorage.removeItem("Digit.CR_DEATH_EDIT");
+
+
   const location = useLocation()
   const classname = Digit.Hooks.fsm.useRouteSubscription(pathname);
   const { t } = useTranslation();
