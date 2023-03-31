@@ -2,11 +2,12 @@ import { CRService } from "../../elements/CR";
 
 const AdoptionAppUpdateAction = async (applicationData, tenantId) => {
   console.log(applicationData); 
+  
   let tmpApplnData = applicationData
+  delete tmpApplnData.Property['action']
   tmpApplnData['AdoptionDetails'] = [tmpApplnData['Property']];
   delete tmpApplnData['Property'];
-  delete tmpApplnData['action']
-  // console.log('tmp',tmpApplnData);
+//  console.log('tmp',tmpApplnData); 
   try {
     const response = await CRService.updateAdoption(tmpApplnData, tenantId);
     return response;
