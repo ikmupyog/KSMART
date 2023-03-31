@@ -104,7 +104,7 @@ public class DeathApplnService {
           //Rakhi S on 21.03.2023
           request.getDeathCertificateDtls().forEach(death->{
                if(death.getApplicationStatus().equals(DeathConstants.STATUS_FOR_PAYMENT)){    
-                    System.out.println("PaymentGateway");               
+                    // System.out.println("PaymentGateway");               
                    List<Demand> demands = new ArrayList<>();
                    Demand demand = new Demand();
                    demand.setTenantId(death.getDeathBasicInfo().getTenantId());
@@ -227,9 +227,34 @@ public class DeathApplnService {
           enrichmentService.enrichCreateNAC(request);
           enrichmentService.setNACACKNumber(request);            
           producer.push(deathConfig.getSaveDeathNACTopic(), request);
-          // workflowIntegrator.callWorkFlowAbandoned(request);
+          workflowIntegrator.callWorkFlowNAC(request);
           return request.getDeathNACDtls();
      }
+
+      // //RAkhi S ikm  on 30.03.2023 - Service to update NAC request
+      public List<DeathNACDtls> updateNAC(DeathNACRequest request) {
+
+          enrichmentService.setNACPresentAddress(request);
+          enrichmentService.setNACPermanentAddress(request);
+          String ackNumber = request.getDeathNACDtls().get(0).getDeathBasicInfo().getDeathACKNo();
+          DeathSearchCriteria criteria =(DeathSearchCriteria.builder()
+                                        .deathACKNo(ackNumber)
+                                        .build());
+
+          List<DeathNACDtls> searchResult = repository.getDeathNACDetails(criteria,request.getRequestInfo());
+          validatorService.validateNACUpdate(request, searchResult);    
+          workflowIntegrator.callWorkFlowNAC(request);
+          producer.push(deathConfig.getUpdateDeathNACTopic(), request);
+
+          DeathNACRequest result = DeathNACRequest
+                                        .builder()
+                                        .requestInfo(request.getRequestInfo())
+                                        .deathNACDtls(request.getDeathNACDtls())
+                                        .build();
+
+          return result.getDeathNACDtls();
+     }
+
   /********************************************* */
 
 //   try {

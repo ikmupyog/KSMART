@@ -22,6 +22,8 @@ import org.ksmart.death.deathapplication.web.models.DeathDtlRequest;
 import org.ksmart.death.deathapplication.web.models.DeathFamilyInfo;
 import org.ksmart.death.deathapplication.web.models.DeathInformantDtls;
 import org.ksmart.death.deathapplication.web.models.DeathInitiatorDtls;
+import org.ksmart.death.deathapplication.web.models.DeathNACDtls;
+import org.ksmart.death.deathapplication.web.models.DeathNACRequest;
 import org.ksmart.death.deathapplication.web.models.DeathStatisticalInfo;
 import org.ksmart.death.deathapplication.web.models.DeathBasicInfo;
 import org.ksmart.death.deathapplication.web.models.DeathCorrectionBasicInfo;
@@ -130,7 +132,7 @@ public void validateCommonFields(DeathDtlRequest request) {
                 basicInfo.getDeceasedFirstNameEn()+ " is invalid");
             }
             if(StringUtils.isEmpty(basicInfo.getDeceasedFirstNameMl()) ){
-                throw new CustomException("DECEASED AGEUNIT INVALID", "The deceased name in malayalam" +
+                throw new CustomException("DECEASED NAME INVALID", "The deceased name in malayalam" +
                 basicInfo.getDeceasedFirstNameMl()+ " is invalid");
             }
             if(StringUtils.isEmpty(basicInfo.getNationality()) ){
@@ -213,7 +215,7 @@ public void validateCommonFields(DeathDtlRequest request) {
                     basicInfo.getDeathPlaceHomePostofficeId()+ " is invalid");  
                 } 
                 if(StringUtils.isEmpty(basicInfo.getDeathPlaceHomePincode())){
-                    throw new CustomException("DEATHPLACE POSTOFFICE IS INVALID", "The postoffice name " +
+                    throw new CustomException("DEATHPLACE POSTOFFICE PINCODE IS INVALID", "The postoffice pincode " +
                     basicInfo.getDeathPlaceHomePincode()+ " is invalid");  
                 } 
                 if(StringUtils.isEmpty(basicInfo.getDeathPlaceHomeLocalityEn())) {
@@ -324,10 +326,10 @@ public void validateCommonFields(DeathDtlRequest request) {
                     throw new CustomException("BURIAL WARD IS INVALID", "The ward name  of burial  " + 
                     basicInfo.getDeathPlaceWardId()+ " is invalid");  
                 } 
-                if(StringUtils.isEmpty(basicInfo.getGeneralRemarks())){
-                    throw new CustomException("DESCRIPTION IS INVALID", "The discription  " + 
-                    basicInfo.getGeneralRemarks()+ " is invalid");  
-                } 
+                // if(StringUtils.isEmpty(basicInfo.getGeneralRemarks())){
+                //     throw new CustomException("DESCRIPTION IS INVALID", "The discription  " + 
+                //     basicInfo.getGeneralRemarks()+ " is invalid");  
+                // } 
                
             } 
         });
@@ -994,6 +996,25 @@ public void validateAbandonedUpdate(DeathAbandonedRequest request, List<DeathAba
     if (deathdetails.size() != searchResult.size()) {
         throw new CustomException(DEATH_REG_INVALID_UPDATE.getCode(),
                 "Death registration(s) not found in database.");
+    }
+}
+
+//Rakhi S on 30.03.2023
+public void validateNACUpdate(DeathNACRequest request, List<DeathNACDtls> searchResult) {
+    List<DeathNACDtls> deathdetails = request.getDeathNACDtls();
+
+    if (CollectionUtils.isEmpty(deathdetails)) {
+        throw new CustomException(DEATH_REG_REQUIRED.getCode(), "Death NAC is required.");
+    }
+
+    if (deathdetails.size() > 1) { // NOPMD
+        throw new CustomException(DEATH_REG_INVALID_UPDATE.getCode(),
+                "Supports only single Death NAC update request.");
+    }
+
+    if (deathdetails.size() != searchResult.size()) {
+        throw new CustomException(DEATH_REG_INVALID_UPDATE.getCode(),
+                "Death NAC registration(s) not found in database.");
     }
 }
     

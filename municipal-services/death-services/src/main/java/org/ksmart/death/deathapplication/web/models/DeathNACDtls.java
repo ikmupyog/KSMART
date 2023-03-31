@@ -1,6 +1,9 @@
 package org.ksmart.death.deathapplication.web.models;
 import java.util.List;
 
+import javax.swing.text.Document;
+import javax.validation.Valid;
+
 import org.springframework.validation.annotation.Validated;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -56,5 +59,12 @@ public class DeathNACDtls {
     private String assignuser;
 
     private String comment;
+
+    @Valid
+    @JsonProperty("wfDocuments")
+    private List<Document> wfDocuments;
+ 
+    public void setStatus(String s) {
+    }
 
 }

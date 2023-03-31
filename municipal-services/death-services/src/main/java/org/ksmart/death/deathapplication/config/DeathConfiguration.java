@@ -104,5 +104,9 @@ public class DeathConfiguration {
     //Persister NAC Save - Rakhi S on 27.03.2023
     @Value("${persister.save.deathnac.topic}")
     private String saveDeathNACTopic;
+
+    //Persister NAC Save - Rakhi S on 30.03.2023
+    @Value("${persister.update.deathnac.topic}")
+    private String updateDeathNACTopic;
     
 }

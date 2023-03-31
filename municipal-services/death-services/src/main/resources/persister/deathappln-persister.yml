@@ -2090,8 +2090,11 @@ serviceMaps:
           death_home_street_en, death_home_street_ml, death_home_housename_en, death_home_housename_ml, death_home_postoffice_id,
           death_home_pincode, death_home_ward,deceased_aadhar_unavailable,place_of_burial_en,male_dependent_name_en,male_dependent_name_ml,
           male_dependent_unavailable, male_dependent_aadharno, female_dependent_name_en, female_dependent_name_ml, female_dependent_aadharno,
-          female_dependent_unavailable, spouse_unavailable, spouse_type, spouse_name_en, spouse_name_ml)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+          female_dependent_unavailable, spouse_unavailable, spouse_type, spouse_name_en, spouse_name_ml, spouse_aadhaar,
+          initiator_name, initiator_aadhar_submitted, initiator_aadhar_no, initiator_relation, initiator_address, initiator_mobile_no, 
+          initiator_email, status, created_by, createdtime, lastmodifiedby, lastmodifiedtime, workflowcode,
+          businessservice, action, comment, assignee, appl_type, ack_no, ack_no_id, application_date, funcion_uid)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
       basePath: deathNACDtls.*
       jsonMaps:
@@ -2194,3 +2197,318 @@ serviceMaps:
       - jsonPath: $.deathNACDtls.*.InformationDeath.SpouseNameEn
 
       - jsonPath: $.deathNACDtls.*.InformationDeath.SpouseNameML
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.SpouseAadhaar
+
+      - jsonPath: $.deathNACDtls.*.DeathApplicantDtls.ApplicantName
+
+      - jsonPath: $.deathNACDtls.*.DeathApplicantDtls.ApplicantAadhaarSubmitted
+
+      - jsonPath: $.deathNACDtls.*.DeathApplicantDtls.ApplicantAadhaarNo
+
+      - jsonPath: $.deathNACDtls.*.DeathApplicantDtls.ApplicantRelation
+
+      - jsonPath: $.deathNACDtls.*.DeathApplicantDtls.ApplicantAddress
+
+      - jsonPath: $.deathNACDtls.*.DeathApplicantDtls.ApplicantMobileNo
+
+      - jsonPath: $.deathNACDtls.*.DeathApplicantDtls.ApplicantEmail
+
+      - jsonPath: $.deathNACDtls.*.applicationStatus
+
+      - jsonPath: $.deathNACDtls.*.AuditDetails.createdBy
+      
+      - jsonPath: $.deathNACDtls.*.AuditDetails.createdTime
+
+      - jsonPath: $.deathNACDtls.*.AuditDetails.lastModifiedBy
+
+      - jsonPath: $.deathNACDtls.*.AuditDetails.lastModifiedTime
+
+      - jsonPath: $.deathNACDtls.*.workflowcode
+
+      - jsonPath: $.deathNACDtls.*.businessService
+
+      - jsonPath: $.deathNACDtls.*.action
+
+      - jsonPath: $.deathNACDtls.*.comment
+
+      - jsonPath: $.deathNACDtls.*.assignuser
+
+      - jsonPath: $.deathNACDtls.*.applicationType
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathACKNo
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.ackNoID
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.ApplicationDate
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.funcionUID
+
+    - query: INSERT INTO public.eg_death_address_dtls(id, death_dtl_id, tenantid, addr_typeid, streetname_en, streetname_ml, locality_en, locality_ml, ward_id, taluk_id, village_id, postoffice_id, pincode, district_id, state_id, country_id, createdby, createdtime, lastmodifiedby, lastmodifiedtime, location_type, housename_ml, housename_en, lbtype, postal_code, province_name_en, province_name_ml, city_town_village, city_en, addr_lb_name, addr_sameas_present)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+     
+
+      basePath: deathNACDtls.*
+      jsonMaps:
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrId
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.Id
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.TenantId
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrTypeId
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrStreetNameEn
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrStreetNameMl
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrLocalityEn
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrLocalityMl
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrWardId
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrTalukId
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrVillageId
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrPostofficeId
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrPincode
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrDistrictId
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrStateId
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrCountryId
+
+      - jsonPath: $.deathNACDtls.*.AuditDetails.createdBy
+      
+      - jsonPath: $.deathNACDtls.*.AuditDetails.createdTime
+
+      - jsonPath: $.deathNACDtls.*.AuditDetails.lastModifiedBy
+
+      - jsonPath: $.deathNACDtls.*.AuditDetails.lastModifiedTime
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrLocationType
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrHoueNameMl
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrHoueNameEn
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrLbType
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrPostalCode
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.presentOutSideIndiaProvinceEn
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.presentOutSideIndiaProvinceMl
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrTownOrVillage
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrCityOrVillageEn
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.presentInsideKeralaLBName
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.isPrsentAddress
+
+    - query: INSERT INTO public.eg_death_address_dtls(id, death_dtl_id, tenantid, addr_typeid, streetname_en, streetname_ml, locality_en, locality_ml, ward_id, taluk_id, village_id, postoffice_id, pincode, district_id, state_id, country_id, createdby, createdtime, lastmodifiedby, lastmodifiedtime, location_type, housename_ml, housename_en, lbtype, postal_code, province_name_en, province_name_ml, city_town_village, city_en, addr_lb_name, addr_sameas_present)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+     
+
+      basePath: deathNACDtls.*
+      jsonMaps:
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrId
+      
+      - jsonPath: $.deathNACDtls.*.InformationDeath.Id
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.TenantId
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrTypeId
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrStreetNameEn
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrStreetNameMl
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrLocalityEn
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrLocalityMl
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrWardId
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrTalukId
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrVillageId
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrPostofficeId
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrPincode
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrDistrictId
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrStateId
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrCountryId
+
+      - jsonPath: $.deathNACDtls.*.AuditDetails.createdBy
+      
+      - jsonPath: $.deathNACDtls.*.AuditDetails.createdTime
+
+      - jsonPath: $.deathNACDtls.*.AuditDetails.lastModifiedBy
+
+      - jsonPath: $.deathNACDtls.*.AuditDetails.lastModifiedTime
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrLocationType
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrHoueNameMl
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrHoueNameEn
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrLbType
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrPostalCode
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermntOutsideIndiaprovinceEn
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermntOutsideIndiaprovinceMl
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrTownOrVillage
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrCityOrVillageEn
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.permntInKeralaAdrLBName
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.isPrsentAddress
+
+           # UPDATE DEATH NAC  Rakhi S on 30.03.2023 
+  - version: 1.0
+    description: Persists death reporting form details in eg_death_dtls,eg_death_address_dtls  table
+    fromTopic: update-deathnac-topic
+    isTransaction: true
+    queryMaps:
+
+    - query: INSERT INTO public.eg_death_dtls_log SELECT * FROM eg_death_dtls WHERE id = ?;
+     
+      basePath: deathNACDtls.*
+      jsonMaps:
+      - jsonPath: $.deathNACDtls.*.id
+
+    - query: UPDATE  public.eg_death_dtls  SET 
+         dateofdeath  = ? , death_place = ?  , death_place_inst_type = ? , death_place_inst_id = ? ,
+         deceased_firstname_en = ? , deceased_firstname_ml = ? , deceased_middlename_en = ? ,
+         deceased_middlename_ml = ? , deceased_lastname_en = ? , deceased_lastname_ml = ? ,
+         deceased_aadhar_unavailable = ? , deceased_aadhar_number = ? , deceased_gender = ? ,
+         lastmodifiedby = ? , lastmodifiedtime = ? ,
+         male_dependent_name_en = ? , male_dependent_name_ml = ? , male_dependent_aadharno = ? ,
+         female_dependent_name_en = ? , female_dependent_name_ml = ? , female_dependent_aadharno = ? ,
+         vehicle_hospital_en = ? , vehicle_fromplace_ml = ? , vehicle_fromplace_en = ? ,
+         vehicle_toplace_ml = ? , vehicle_toplace_en = ? , vehicle_number = ? ,
+         death_place_ward_id = ? , vehicle_first_halt = ? , vehicle_first_halt_ml = ? ,
+         spouse_name_en = ? , spouse_name_ml = ? , spouse_aadhaar = ? , spouse_type = ? , funcion_uid = ? ,
+         death_place_locality_en = ? ,   death_place_locality_ml = ? , death_place_street_en = ? ,
+         death_place_street_ml = ? , death_place_country = ? , place_of_burial_en = ? ,
+         action = ? , status = ?  , initiator_name = ? , initiator_aadhar_no = ? , initiator_mobile_no = ? ,
+         initiator_relation = ? , initiator_address = ? , initiator_email = ? 
+         WHERE  tenantid = ? AND ack_no = ?
+
+      basePath: deathNACDtls.*
+      jsonMaps:
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DateOfDeath      
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlace
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceType
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceInstId
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeceasedFirstNameEn
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeceasedFirstNameMl
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeceasedMiddleNameEn
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeceasedMiddleNameMl 
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeceasedLastNameEn
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeceasedLastNameMl
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeceasedAadharNotAvailable
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeceasedAadharNumber
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeceasedGender
+
+      - jsonPath: $.deathNACDtls.*.AuditDetails.lastModifiedBy
+
+      - jsonPath: $.deathNACDtls.*.AuditDetails.lastModifiedTime
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.FatherNameEn
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.FatherNameMl
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.FatherAadharNo
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.MotherNameEn
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.MotherNameMl
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.MotherAadharNo 
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.VehicleHospitalEn
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.VehicleFromplaceMl
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.VehicleFromplaceEn
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.VehicleToPlaceMl
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.VehicleToPlaceEn
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.VehicleNumber
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceWardId
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.VehicleFirstHaltEn
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.VehicleFirstHaltMl
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.SpouseNameEn
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.SpouseNameML
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.SpouseAadhaar
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.SpouseType
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.funcionUID
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceLocalityEn
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceLocalityMl
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceStreetEn
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceStreetMl
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceCountry 
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.PlaceOfBurialEn
+
+      - jsonPath: $.deathNACDtls.*.action
+
+      - jsonPath: $.deathNACDtls.*.applicationStatus
+
+      - jsonPath: $.deathNACDtls.*.DeathApplicantDtls.ApplicantName
+
+      - jsonPath: $.deathNACDtls.*.DeathApplicantDtls.ApplicantAadhaarNo
+
+      - jsonPath: $.deathNACDtls.*.DeathApplicantDtls.ApplicantMobileNo
+
+      - jsonPath: $.deathNACDtls.*.DeathApplicantDtls.ApplicantEmail
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.TenantId
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathACKNo
+    

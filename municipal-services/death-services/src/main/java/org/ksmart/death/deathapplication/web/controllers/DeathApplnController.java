@@ -217,4 +217,25 @@ public class DeathApplnController {
                                         .build();
         return ResponseEntity.ok(response);
     }
+
+       //Rakhi S on 30.03.2023 - Death NAC Update  
+       @PostMapping("/deathdetails/_updatedeathnac")
+       public ResponseEntity<DeathNACResponse> update(@RequestBody DeathNACRequest request) {
+    
+           List<DeathNACDtls> deathDetails = deathService.updateNAC(request);
+        //    String status=request.getDeathNACDtls().get(0).getApplicationStatus();
+        //    String applicationType =request.getDeathNACDtls().get(0).getApplicationType();
+   
+        //    if (status.equals(DeathConstants.WORKFLOW_STATUS_APPROVED) &&  request.getDeathNACDtls().get(0).getApplicationType().equals(DeathConstants.APPLICATION_NEW)){         
+        //        DeathRegistryRequest registryRequest = deathRegistryRequestService.createRegistryAbandonedRequest(request);
+        //        List<DeathRegistryDtl> registryDeathDetails =  deathRegistryService.create(registryRequest);
+        //    }  
+   
+        DeathNACResponse response = DeathNACResponse
+                            .builder()
+                            .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
+                            .deathNACDtls(deathDetails)
+                            .build();
+            return ResponseEntity.ok(response);
+        }
 }
