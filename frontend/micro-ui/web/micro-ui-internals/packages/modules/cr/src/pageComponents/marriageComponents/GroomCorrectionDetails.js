@@ -128,7 +128,6 @@ const GroomCorrectionDetails = ({ config, onSelect, userType, formData }) => {
     { i18nKey: "No", code: "NO" },
   ];
   function selectRadioButtons(value) {
-    console.log(value);
     setSelectedValue(value);
     setValueRad(value.code);
     setisInitialRenderRadioButtons(true);
@@ -203,7 +202,6 @@ const GroomCorrectionDetails = ({ config, onSelect, userType, formData }) => {
       let Difference_In_Time = today.getTime() - birthDate.getTime();
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       let Difference_In_DaysRounded = Math.floor(Difference_In_Days);
-      console.log(Difference_In_DaysRounded);
     } else {
       setGroomDOB(null);
       setDOBError(true);
@@ -400,97 +398,9 @@ const GroomCorrectionDetails = ({ config, onSelect, userType, formData }) => {
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_GROOM_NATIONALITY_AND_RESIDENTSHIP")}`}</span>{" "}
-              </h1>
-              </div>
-              </div>
-              
-            <div className="row">
-            <div className="col-md-12">
-            <div className="radios">
-              <div className="radiobuttons">
-                <LabelFieldPair style={{ display: "flex" }}>
-                  <RadioButtons t={t} optionsKey="i18nKey" options={rbmenu} selectedOption={selectedValueRadio} onSelect={selectRadioButtons} style={{ marginTop: "15px", paddingLeft: "5px", height: "20px", display: "flex" }} />
-                </LabelFieldPair>
-              </div>
-            </div>
-          </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12">
-            <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_GROOM_AADHAR_AND_PASSPORT_NO")}`}</span>{" "}
-              </h1>
-            </div>
-            </div>
-            <div className="row">
-            <div className="col-md-12">
-            <div className="col-md-4">
-              {" "}
-              <CardLabel>
-              {`${t("CR_GROOM_AADHAR_NO")}`}
-                  <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={false}
-                type={"number"}
-                optionKey="i18nKey"
-                name="groomAdharNo"
-                value={groomAdharNo}
-                onChange={setSelectGroomAadharNo}
-                placeholder={`${t("CR_GROOM_AADHAR_NO")}`}
-                {...(validation = { isRequired: true })}
-              />
-            </div>
-            <div className="col-md-4">
-              {" "}
-              <CardLabel>{t("CR_GROOM_PASSPORT_NO")}</CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={false}
-                type={"text"}
-                optionKey="i18nKey"
-                name="groomPassportNo"  
-                value={groomPassportNo}
-                onChange={setSelectGroomPassportNo}
-                placeholder={`${t("CR_GROOM_PASSPORT_NO")}`}
-                
-              />
-            </div>
-
-            <div className="col-md-4">
-              {" "}
-              <CardLabel>{t("CR_GROOM_SOCIAL_SECURITY_NO")}</CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={false}
-                type={"text"}
-                optionKey="i18nKey"
-                name="groomSocialSecurityNo"
-                value={groomSocialSecurityNo}
-                onChange={setSelectGroomSocialSecurityNo}
-                placeholder={`${t("CR_GROOM_SOCIAL_SECURITY_NO")}`}
-                {...(validation = { isRequired: true })}
-              />
-            </div>
-          </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12">
-              <h1 className="headingh1">
                 <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_GROOM_DETAILS")}`}</span>{" "}
               </h1>
             </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12">
-            <div className="col-md-3">
-              <CardLabel>
-                {t("CR_GROOM_NAME")}
-              </CardLabel>
-            </div>
-          </div>
           </div>
           <div className="row">
           <div className="col-md-12">
@@ -620,6 +530,13 @@ const GroomCorrectionDetails = ({ config, onSelect, userType, formData }) => {
               />
             </div>
           </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+              <h1 className="headingh1">
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_GROOM_DATE_OF_BIRTH")}`}</span>{" "}
+              </h1>
+            </div>
           </div>
           <div className="row">
           <div className="col-md-12">

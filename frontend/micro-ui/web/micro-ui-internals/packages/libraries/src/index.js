@@ -25,6 +25,8 @@ import { PTService } from "./services/elements/PT";
 import { WSService } from "./services/elements/WS";
 import { TLService } from "./services/elements/TL";
 import { CRService } from "./services/elements/CR";
+import { CRBornOutSideIndiaBirthService } from "./services/elements/CRBORNOUTSIDEINDIABIRTH";
+import { CRStillBirthService } from "./services/elements/CRSTILLBIRTH";
 import { CRMarriageService } from "./services/elements/CRMARRIAGE";
 import { CRDeathService } from "./services/elements/CRDEATH";
 import { DFMService } from "./services/elements/DFM";
@@ -73,6 +75,8 @@ const initLibraries = () => {
   setupLibraries("PTService", PTService);
   setupLibraries("TLService", TLService);
   setupLibraries("CRService", CRService);
+  setupLibraries("CRBornOutSideIndiaBirthService", CRBornOutSideIndiaBirthService);
+  setupLibraries("CRStillBirthService", CRStillBirthService);
   setupLibraries("CRMarriageService", CRMarriageService);
   setupLibraries("CRDeathService", CRDeathService);
   setupLibraries("DFMService", DFMService);

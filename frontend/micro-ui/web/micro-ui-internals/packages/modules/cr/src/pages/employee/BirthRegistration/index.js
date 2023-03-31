@@ -6,18 +6,15 @@ import CrFlow from "./CrFlow";
 import ChildDetails from "../../../pageComponents/birthComponents/ChildDetails";
 import { newConfig as newConfigCR } from "../../../config/config";
 
-const CrFlowApp = ({ parentUrl}) => {
+const CreateBirthEmp = ({ parentUrl}) => {
   const { t } = useTranslation();
   const { path } = useRouteMatch();
   const match = useRouteMatch();  
   const { pathname } = useLocation();
   const history = useHistory();  
-  console.log(sessionStorage.getItem("CR_BIRTH_EDIT_FLAG"));
-  // const [isEditBirth, setIsEditBirth] = useState(Object.keys(Digit.Hooks.useSessionStorage("CR_BIRTH_EDIT_FLAG", {})[0]).length > 0 ? true : false);
-  const [isEditBirth, setIsEditBirth] = useState(sessionStorage.getItem("CR_BIRTH_EDIT_FLAG")? true : false);
-  
+  console.log(Object.keys(Digit.Hooks.useSessionStorage("CR_BIRTH_EDIT_FLAG", {})[0]).length);
+  const [isEditBirth, setIsEditBirth] = useState(Object.keys(Digit.Hooks.useSessionStorage("CR_BIRTH_EDIT_FLAG", {})[0]).length > 0 ? true : false);
   const [params, setParams, clearParams] = isEditBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_BIRTH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_BIRTH_REG", {});
-  console.log("isEditBirth" + isEditBirth);
 
   // console.log("params"+JSON.stringify(params));
   const stateId = Digit.ULBService.getStateId();
@@ -162,4 +159,4 @@ const CrFlowApp = ({ parentUrl}) => {
   );
 };
 
-export default CrFlowApp;
+export default CreateBirthEmp;

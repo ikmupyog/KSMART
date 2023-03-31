@@ -85,6 +85,12 @@ const TLCorrectionActivity = ({ t, config,formData,onEditSelect,formDataEdit}) =
       });
     return BusinessSubTypeMenu;
   }
+//   console.log("B1");
+//   console.log("B1" + JSON.stringify(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessCategory));
+//  // console.log("B2" + JSON.stringify(fields[0].businessCategory));
+//   //console.log("B3" + JSON.stringify(BusinessCategoryMenu));
+//   // console.log("B4" + JSON.stringify(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory));
+
  if (formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory && (fields[0].businessCategory === undefined || fields[0].businessCategory === "") && BusinessCategoryMenu.length > 0) {
     let category = BusinessCategoryMenu.filter((category) => category?.code.includes(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory))[0];
     let bustype = null;
@@ -100,10 +106,7 @@ const TLCorrectionActivity = ({ t, config,formData,onEditSelect,formDataEdit}) =
     ] );
     
   }
-  const selectBusinessSector = (value => {
-    setBusinessSector(value);
-    setIsInitialRender(true);
-  });
+
   const selectBusinessCategory = (i, value) => {
     let units = [...fields];
     units[i].businessCategory = value;
@@ -146,22 +149,8 @@ const TLCorrectionActivity = ({ t, config,formData,onEditSelect,formDataEdit}) =
     Digit.SessionStorage.set("activityedit", false);
     let units = fields;
     let tradeUnits = fields;
-    let address = {
-      "doorNo": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.doorNo,
-      "localityName": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.locality,
-      "street": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.street,
-      "landmark": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.landmark,
-      "buildingName": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.buildingName,
-      "zonalId": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.zonalId,
-      "wardId": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.wardId,
-      "wardno": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.wardno,
-      "postOffice": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.postOffice,
-      "pincode": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.pincode,
-      "contactno": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.contactno,
-      "email": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.email,
-      "waterbody": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.waterbody,
-      "serviceArea": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.serviceArea
-    };
+    let address = formDataEdit?.TradeDetails?.tradeLicenseDetail?.address
+ 
     if(units[0]?.businessCategory?.code){
       tradeUnits =[
         {

@@ -116,15 +116,29 @@ const TLCorrectionApplicant = ({ t, config,formData,onEditSelect,formDataEdit })
   console.log(Digit.SessionStorage.get("owneredit"))
 
   useEffect(()=>{
-    console.log("set starting useeffect");
-   // console.log(formDataEdit?.TradeDetails?.owneredit);
- //   console.log(JSON.stringify(appState));
- console.log("appdata"+JSON.stringify(appState));
     if(Digit.SessionStorage.get("owneredit")){
       Digit.SessionStorage.set("owneredit", false);
       let owners = appState;
-      let tradeLicenseDetail = {owners};
-      onEditSelect(config.key, { tradeLicenseDetail });
+      let address = formDataEdit?.TradeDetails?.tradeLicenseDetail?.address;
+      let tenantId = formDataEdit?.TradeDetails?.tenantId;
+      let structurePlace = formDataEdit?.TradeDetails?.tradeLicenseDetail?.structurePlace;
+      let ownerspremise = formDataEdit?.TradeDetails?.tradeLicenseDetail?.ownerspremise;
+      let institution = formDataEdit?.TradeDetails?.tradeLicenseDetail?.institution;
+      let licenseeType = formDataEdit?.TradeDetails?.tradeLicenseDetail?.licenseeType;
+      let businessSector = formDataEdit?.TradeDetails?.tradeLicenseDetail?.businessSector;
+      let structureType = formDataEdit?.TradeDetails?.tradeLicenseDetail?.structureType;
+      let structurePlaceSubtype = formDataEdit?.TradeDetails?.tradeLicenseDetail?.structurePlaceSubtype;
+      let businessActivityDesc = formDataEdit?.TradeDetails?.tradeLicenseDetail?.businessActivityDesc;
+      let ownershipCategory = formDataEdit?.TradeDetails?.tradeLicenseDetail?.ownershipCategory;
+      let enterpriseType = formDataEdit?.TradeDetails?.tradeLicenseDetail?.enterpriseType;
+      let capitalInvestment = formDataEdit?.TradeDetails?.tradeLicenseDetail?.capitalInvestment ;
+      let noOfEmployees = formDataEdit?.TradeDetails?.tradeLicenseDetail?.noOfEmployees;
+      let tradeUnits = formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits;
+  
+      let tradeLicenseDetail = { tenantId, licenseeType, owners, ownerspremise, institution, businessSector, capitalInvestment, enterpriseType,
+          structureType,structurePlaceSubtype, businessActivityDesc, noOfEmployees,
+          ownershipCategory, address, tradeUnits, structurePlace }
+      onEditSelect(config.key,{tradeLicenseDetail});
       setIsEdit(false);
     }
 
@@ -145,6 +159,10 @@ const TLCorrectionApplicant = ({ t, config,formData,onEditSelect,formDataEdit })
             borderColor: "#f3f3f3",
             background: "#FAFAFA",
           }} className="col-md-12">
+            <div className="row">
+              <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_OWNER_DETAILS_HEADER")}`}</span> </h1>
+              </div>
+            </div>
             <div className="row">
               <div className="col-md-3">
                 <CardLabel>{`${t("TL_LICENSEE_AADHAR_NO")}`}<span className="mandatorycss">*</span></CardLabel>

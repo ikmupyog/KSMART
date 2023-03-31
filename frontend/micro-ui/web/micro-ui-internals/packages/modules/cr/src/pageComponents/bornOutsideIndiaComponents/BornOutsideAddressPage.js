@@ -338,7 +338,7 @@ const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBi
                   
                     </div>
 
-                
+                    {/* {isPrsentAddress === false && ( */}
                         <div>
                             <BornOutsidePresentOutsideIndia
                                 presentOutSideIndiaAdressEn={presentOutSideIndiaAdressEn}
@@ -371,7 +371,7 @@ const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBi
                                 formData={formData}
                             />
                         </div>
-               
+                    {/* )} */}
                     <div>
                         <BornoutsideSameAsAbove
                             isPrsentAddress={isPrsentAddress}
@@ -381,7 +381,7 @@ const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBi
                             formData={formData}
                         />
                     </div>
-                    {isPrsentAddress === false && (
+                    {/* {isPrsentAddress === false && ( */}
                         <div>
                             <BornOutsidePermanent
                                 permtaddressCountry={permtaddressCountry}
@@ -403,8 +403,8 @@ const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBi
                                 formData={formData}
                             />
                         </div>
-                    )}
-                    {countryValuePermanent === "IND" && valuePermanent === "KL" && isPrsentAddress === false && (
+                    {/* )} */}
+                    {countryValuePermanent === "IND" && valuePermanent === "KL" &&  (
                         <div>
                             <BornoutsidePermanentInsideKerala
                                 permntInKeralaAdrDistrict={permntInKeralaAdrDistrict}

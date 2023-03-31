@@ -34,7 +34,7 @@ const Search = ({ path }) => {
     }
     if (window.location.href.includes("/birthsearch") == true && applicationType?.value == "birthsearch") {
         const { data: { ChildDetails: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useSearch({ tenantId, filters: payload, config })
-        console.log(searchResult);
+        //console.log(searchResult);
         return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} setApplicationType={setApplicationType} applicationType={applicationType} data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
 
     } else if (window.location.href.includes("/birthsearch") == true && applicationType?.value == "adoptionsearch") {
