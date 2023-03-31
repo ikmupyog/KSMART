@@ -92,7 +92,7 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
   }, [file]);
 
   function submit(data) {
-    let workflow = { action: action?.action, comments: data?.comments, businessService, moduleName: moduleCode };
+    // let workflow = { action: action?.action, comments: data?.comments, businessService, moduleName: moduleCode };
     applicationData = {
       ...applicationData,
       action: action?.action,
