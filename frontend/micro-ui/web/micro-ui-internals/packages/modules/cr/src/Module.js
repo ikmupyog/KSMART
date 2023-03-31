@@ -152,7 +152,7 @@ import MarriageInstitution from "./pageComponents/marriageComponents/MarriageIns
 import MarriagePublicPlace from "./pageComponents/marriageComponents/MarriagePublicPlace";
 import MarriageRegistration from "./pageComponents/marriageComponents/MarriageRegistration";
 import HouseMarriageRegistration from "./pageComponents/marriageComponents/HouseMarriageRegistration";
-import Witnessdetails from "./pageComponents/marriageComponents/witnessdetails"
+import Witnessdetails from "./pageComponents/marriageComponents/Witnessdetails"
 import MarriageInclusionEditPage from "./pageComponents/marriageComponents/MarriageCorrection";
 import MarriageCorrectionEditPage from "./pages/citizen/MarriageInclusionEdit";
 
