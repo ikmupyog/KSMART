@@ -14,8 +14,8 @@ const CreateStillBirthRegistration =({ parentUrl }) => {
   const { pathname } = useLocation();
   const history = useHistory();
   const queryClient = useQueryClient();
-  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_CREATE_STILLBIRTH_REG", {});
-
+  const [isEditStillBirth, setIsEditStillBirth] = useState(Object.keys(Digit.Hooks.useSessionStorage("CR_STILLBIRTH_EDIT_FLAG", {})).length > 0 ? true : false);
+  const [params, setParams, clearParams] = isEditStillBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_STILLBIRTH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_STILLBIRTH_REG", {});
   // console.log("params"+JSON.stringify(params));
   const stateId = Digit.ULBService.getStateId();
   // let { data: newConfig, isLoading } = Digit.Hooks.tl.useMDMS.getFormConfig(stateId, {});
