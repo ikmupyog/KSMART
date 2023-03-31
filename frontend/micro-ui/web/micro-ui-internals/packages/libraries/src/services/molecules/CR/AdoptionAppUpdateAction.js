@@ -4,6 +4,12 @@ const AdoptionAppUpdateAction = async (applicationData, tenantId) => {
   console.log(applicationData); 
   
   let tmpApplnData = applicationData
+  tmpApplnData.Property.action = tmpApplnData.Property.workflow.action
+  tmpApplnData.Property.assignes = tmpApplnData.Property.workflow.assignes
+  tmpApplnData.Property.businessService = tmpApplnData.Property.workflow.businessService
+  tmpApplnData.Property.comments = tmpApplnData.Property.workflow.comments
+  tmpApplnData.Property.moduleName = tmpApplnData.Property.workflow.moduleName
+  delete tmpApplnData.Property['workflow']
   delete tmpApplnData.Property['action']
   tmpApplnData['AdoptionDetails'] = [tmpApplnData['Property']];
   delete tmpApplnData['Property'];
