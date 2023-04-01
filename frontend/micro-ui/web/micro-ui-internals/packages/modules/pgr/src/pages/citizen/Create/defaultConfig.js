@@ -1,16 +1,9 @@
-import SelectAddress from "./Steps/SelectAddress";
-import SelectComplaintType from "./Steps/SelectComplaintType";
-import SelectDetails from "./Steps/SelectDetails";
-import SelectImages from "./Steps/SelectImages";
-import SelectLandmark from "./Steps/SelectLandmark";
-import SelectPincode from "./Steps/SelectPincode";
-import SelectSubType from "./Steps/SelectSubType";
-import SelectGeolocation from "./Steps/SelectGeolocation";
+// import SelectAddress from "../../../pageComponents/Steps/SelectAddress";
 
 export const config = {
   routes: {
     "complaint-type": {
-      component: SelectComplaintType,
+      component: "SelectComplaintType",
       texts: {
         headerCaption: "",
         header: "CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER",
@@ -20,7 +13,7 @@ export const config = {
       nextStep: "sub-type",
     },
     "sub-type": {
-      component: SelectSubType,
+      component: "SelectSubType",
       texts: {
         header: "CS_ADDCOMPLAINT_COMPLAINT_SUBTYPE_PLACEHOLDER",
         cardText: "CS_COMPLAINT_SUBTYPE_TEXT",
@@ -29,11 +22,11 @@ export const config = {
       nextStep: "map",
     },
     map: {
-      component: SelectGeolocation,
+      component: "SelectGeolocation",
       nextStep: "pincode",
     },
     pincode: {
-      component: SelectPincode,
+      component: "SelectPincode",
       texts: {
         headerCaption: "CS_ADDCOMPLAINT_COMPLAINT_LOCATION",
         header: "CS_FILE_APPLICATION_PINCODE_LABEL",
@@ -56,35 +49,35 @@ export const config = {
       nextStep: "address",
     },
     address: {
-      component: SelectAddress,
+      component: "SelectAddress",
       texts: {
         headerCaption: "CS_ADDCOMPLAINT_COMPLAINT_LOCATION",
         header: "CS_ADDCOMPLAINT_PROVIDE_COMPLAINT_ADDRESS",
         cardText: "CS_ADDCOMPLAINT_CITY_MOHALLA_TEXT",
         submitBarLabel: "CS_COMMON_NEXT",
       },
-      nextStep: "landmark",
-    },
-    landmark: {
-      component: SelectLandmark,
-      texts: {
-        headerCaption: "CS_ADDCOMPLAINT_COMPLAINT_LOCATION",
-        header: "CS_FILE_APPLICATION_PROPERTY_LOCATION_PROVIDE_LANDMARK_TITLE",
-        cardText: "CS_FILE_APPLICATION_PROPERTY_LOCATION_PROVIDE_LANDMARK_TITLE_TEXT",
-        submitBarLabel: "CS_COMMON_NEXT",
-        skipText: "CORE_COMMON_SKIP_CONTINUE",
-      },
-      inputs: [
-        {
-          label: "CS_ADDCOMPLAINT_LANDMARK",
-          type: "textarea",
-          name: "landmark",
-        },
-      ],
       nextStep: "upload-photos",
     },
+    // landmark: {
+    //   component: SelectLandmark,
+    //   texts: {
+    //     headerCaption: "CS_ADDCOMPLAINT_COMPLAINT_LOCATION",
+    //     header: "CS_FILE_APPLICATION_PROPERTY_LOCATION_PROVIDE_LANDMARK_TITLE",
+    //     cardText: "CS_FILE_APPLICATION_PROPERTY_LOCATION_PROVIDE_LANDMARK_TITLE_TEXT",
+    //     submitBarLabel: "CS_COMMON_NEXT",
+    //     skipText: "CORE_COMMON_SKIP_CONTINUE",
+    //   },
+    //   inputs: [
+    //     {
+    //       label: "CS_ADDCOMPLAINT_LANDMARK",
+    //       type: "textarea",
+    //       name: "landmark",
+    //     },
+    //   ],
+    //   nextStep: "upload-photos",
+    // },
     "upload-photos": {
-      component: SelectImages,
+      component: "SelectImages",
       texts: {
         header: "CS_ADDCOMPLAINT_UPLOAD_PHOTO",
         cardText: "CS_ADDCOMPLAINT_UPLOAD_PHOTO_TEXT",
@@ -94,15 +87,15 @@ export const config = {
       nextStep: "additional-details",
     },
     "additional-details": {
-      component: SelectDetails,
+      component: "SelectDetails",
       texts: {
         header: "CS_ADDCOMPLAINT_PROVIDE_ADDITIONAL_DETAILS",
-        cardText: "CS_ADDCOMPLAINT_ADDITIONAL_DETAILS_TEXT",
-        submitBarLabel: "CS_COMMON_NEXT",
+        cardText: "CS_ADDCOMPLAINT_DETAILS_TEXT",
+        submitBarLabel: "CS_COMMON_SUBMIT",
       },
       inputs: [
         {
-          label: "CS_ADDCOMPLAINT_ADDITIONAL_DETAILS",
+          label: "CS_ADDCOMPLAINT_DETAILS",
           type: "textarea",
           name: "details",
         },

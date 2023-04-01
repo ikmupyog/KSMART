@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Toast, BackButton, Loader } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/CRTimeline";
+import Timeline from "../../components/AdoptionTimeline";
 import DRTimeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 import AddressPresent from "../birthComponents/AddressPresent";
@@ -248,7 +248,7 @@ const AdoptionAddressBasePage = ({ config, onSelect, userType, formData, isEditB
                 } else {
                     setPresentInsideKeralaDistrictError(false);
                 }
-                if (presentInsideKeralaTaluk == null || presentInsideKeralaTaluk == undefined) {
+                if (presentInsideKeralaTaluk == null || presentInsideKeralaTaluk == undefined || presentInsideKeralaTaluk == "") {
                     setPresentInsideKeralaTalukError(true);
                     validFlag = false;
                     setToast(true);
@@ -258,7 +258,7 @@ const AdoptionAddressBasePage = ({ config, onSelect, userType, formData, isEditB
                 } else {
                     setPresentInsideKeralaTalukError(false);
                 }
-                if (presentInsideKeralaVillage == null || presentInsideKeralaVillage == undefined) {
+                if (presentInsideKeralaVillage == null || presentInsideKeralaVillage == undefined || presentInsideKeralaVillage == "") {
                     setPresentInsideKeralaVillageError(true);
                     validFlag = false;
                     setToast(true);
@@ -278,7 +278,7 @@ const AdoptionAddressBasePage = ({ config, onSelect, userType, formData, isEditB
                 } else {
                     setPresentInsideKeralaLBNameError(false);
                 }
-                if (presentWardNo == null || presentWardNo == undefined) {
+                if (presentWardNo == null || presentWardNo == undefined || presentWardNo === "") {
                     setPresentInsideKeralaWardNoError(true);
                     validFlag = false;
                     setToast(true);

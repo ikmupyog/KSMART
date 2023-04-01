@@ -5,14 +5,15 @@ import { useTranslation } from "react-i18next";
 import { newConfig as newConfigCR } from "../../../config/config";
 import { useQueryClient } from "react-query";
 
-const CreateDeathRegistration = ({ parentUrl,isEditDeath }) => {
+const CreateDeathRegistration = ({ parentUrl }) => {
   const { t } = useTranslation();
   const { path } = useRouteMatch();
   const match = useRouteMatch();  
   const { pathname } = useLocation();
   const history = useHistory();
   const queryClient = useQueryClient();
-  const [params, setParams, clearParams] = isEditDeath ? Digit.Hooks.useSessionStorage("CR_CREATE_DEATH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_DEATH_REG", {});
+  const [isEditDeath, setIsEditDeath] = useState(sessionStorage.getItem("CR_DEATH_EDIT_FLAG")? true : false);
+  const [params, setParams, clearParams] = isEditDeath ? Digit.Hooks.useSessionStorage("CR_DEATH_EDIT", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_DEATH", {});
 
   const stateId = Digit.ULBService.getStateId();
   // let { data: newConfig, isLoading } = Digit.Hooks.tl.useMDMS.getFormConfig(stateId, {});
@@ -114,7 +115,7 @@ const CreateDeathRegistration = ({ parentUrl,isEditDeath }) => {
   
   const onSuccess = () => {
     sessionStorage.removeItem("CurrentFinancialYear");
-    queryClient.invalidateQueries("CR_CREATE_DEATH_REG");
+    queryClient.invalidateQueries("CR_CREATE_DEATH");
   };
   const handleSkip = () => {};
   const handleMultiple = () => {};

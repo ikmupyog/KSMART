@@ -32,7 +32,6 @@ const FormStep = ({
 
 
   const goNext = (data) => {
-    console.log("ONSELECT reached==",data);
     onSelect(data);
   };
 
@@ -42,7 +41,6 @@ const FormStep = ({
   };
 
   const inputs = config.inputs?.map((input, index) => {
-    // console.log(config,input);
     if (input.type === "text") {
       return (
         <React.Fragment key={index}>

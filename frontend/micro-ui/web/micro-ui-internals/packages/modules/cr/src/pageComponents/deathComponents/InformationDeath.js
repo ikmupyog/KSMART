@@ -12,7 +12,8 @@ import DeathOutsideJurisdiction from "./DeathOutsideJurisdiction ";
 import { useParams } from "react-router-dom";
 
 const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath }) => {
-  console.log(formData);
+  console.log(formData?.InformationDeath);
+  console.log(isEditDeath);
   const [isEditDeathPageComponents, setIsEditDeathPageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
   const stateId = Digit.ULBService.getStateId();
@@ -29,7 +30,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
     stateId,
     "birth-death-service",
-    "WorkFlowBirth"
+    "WorkFlowDeath"
   );
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const { data: Menu, isGenderLoad } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
@@ -42,14 +43,10 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   const convertEpochToDate = (dateEpoch) => {
     if (dateEpoch) {
       const dateFromApi = new Date(dateEpoch);
-      console.log(dateFromApi);
       let month = dateFromApi.getMonth() + 1;
-      console.log(month);
       let day = dateFromApi.getDate();
-      console.log(day);
       let year = dateFromApi.getFullYear();
-      console.log(year);
-      month = (month > 9 ? "" : "0") + month;
+        month = (month > 9 ? "" : "0") + month;
       day = (day > 9 ? "" : "0") + day;
       return `${year}-${month}-${day}`;
       //  return `${day}-${month}-${year}`;
@@ -82,8 +79,8 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   let validFlag = true;
   WorkFlowDetails &&
     WorkFlowDetails["birth-death-service"] &&
-    WorkFlowDetails["birth-death-service"].WorkFlowBirth &&
-    WorkFlowDetails["birth-death-service"].WorkFlowBirth.map((ob) => {
+    WorkFlowDetails["birth-death-service"].WorkFlowDeath &&
+    WorkFlowDetails["birth-death-service"].WorkFlowDeath.map((ob) => {
       workFlowData.push(ob);
     });
   place &&
@@ -98,7 +95,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
     AgeUnitvalue["birth-death-service"].AgeUnit.map((ob) => {
       cmbAgeUnit.push(ob);
     });
-  console.log(cmbAgeUnit);
   Nation &&
     Nation["common-masters"] &&
     Nation["common-masters"].Country &&
@@ -155,13 +151,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   //     : convertEpochToDate(formData?.InformationDeath?.DateOfDeath)
   // );
 
-  console.log(
-    isEditDeath &&
-      isEditDeathPageComponents === false &&
-      (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
-      ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath)
-      : formData?.InformationDeath?.DateOfDeath
-  );
+ 
   const [FromDate, setFromDate] = useState(
     isEditDeath &&
       isEditDeathPageComponents === false &&
@@ -419,7 +409,8 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
       if (Religion == null || Religion == "") {
         if (stateId === "kl" && cmbReligion.length > 0) {
           cmbfilterReligion = cmbReligion.filter((cmbReligion) => cmbReligion.name.includes("No Religion"));
-          setSelectedReligion(cmbfilterReligion[0]);
+          
+          (cmbfilterReligion[0]);
         }
       }
       if (DeathPlaceCountry == null || DeathPlaceCountry == "") {
@@ -634,7 +625,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
     setSelectedNationality(value);
   }
   function selectDeceasedGender(value) {
-    // console.log("gender" + value);
     setselectedDeceasedGender(value);
   }
   function setSelectDeceasedLastNameMl(e) {
@@ -761,9 +751,9 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
         workFlowData.startdateperiod <= Difference_In_DaysRounded &&
         workFlowData.enddateperiod >= Difference_In_DaysRounded
     );
-    console.log(currentWorgFlow[0].WorkflowCode);
+    // console.log(currentWorgFlow[0].WorkflowCode);
     // workFlowCode=currentWorgFlow[0].WorkflowCode;
-    setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+    setWorkFlowCode(currentWorgFlow[0].WorkflowCode); 
     if (value.code === "HOSPITAL") {
       //Institution
       setSelectedDeathPlaceInstId(null);
@@ -967,10 +957,10 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   const handleTimeChange = (value, cb) => {
     if (typeof value === "string") {
       cb(value);
-      console.log(value);
+      // console.log(value);
       let hour = value;
       let period = hour > 12 ? "PM" : "AM";
-      console.log(period);
+      // console.log(period);
       setDeathTime(value);
     }
   };
@@ -1089,101 +1079,101 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
     }
 
     if (validFlag == true) {
-      sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
-      sessionStorage.setItem("DeathDateUnavailable", DeathDateUnavailable ? DeathDateUnavailable : false);
-      sessionStorage.setItem("DateOfDeath1", DateOfDeath1 ? DateOfDeath1 : null);
-      sessionStorage.setItem("FromDate", FromDate ? FromDate : null);
-      sessionStorage.setItem("DeathTimeFrom", DeathTimeFrom ? DeathTimeFrom : null);
-      sessionStorage.setItem("DeathTimeTo", DeathTimeTo ? DeathTimeTo : null);
+      // // sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
+      // // sessionStorage.setItem("DeathDateUnavailable", DeathDateUnavailable ? DeathDateUnavailable : false);
+      // // sessionStorage.setItem("DateOfDeath1", DateOfDeath1 ? DateOfDeath1 : null);
+      // // sessionStorage.setItem("FromDate", FromDate ? FromDate : null);
+      // // sessionStorage.setItem("DeathTimeFrom", DeathTimeFrom ? DeathTimeFrom : null);
+      // // sessionStorage.setItem("DeathTimeTo", DeathTimeTo ? DeathTimeTo : null);
 
-      sessionStorage.setItem("DateOfDeath", DateOfDeath ? DateOfDeath : null);
-      sessionStorage.setItem("TimeOfDeath", TimeOfDeath ? TimeOfDeath : null);
-      sessionStorage.setItem("DeceasedFirstNameEn", DeceasedFirstNameEn ? DeceasedFirstNameEn : null);
-      sessionStorage.setItem("DeceasedMiddleNameEn", DeceasedMiddleNameEn ? DeceasedMiddleNameEn : null);
-      sessionStorage.setItem("DeceasedLastNameEn", DeceasedLastNameEn ? DeceasedLastNameEn : null);
-      sessionStorage.setItem("DeceasedFirstNameMl", DeceasedFirstNameMl ? DeceasedFirstNameMl : null);
-      sessionStorage.setItem("DeceasedMiddleNameMl", DeceasedMiddleNameMl ? DeceasedMiddleNameMl : null);
-      sessionStorage.setItem("DeceasedLastNameMl", DeceasedLastNameMl ? DeceasedLastNameMl : null);
-      sessionStorage.setItem("Age", Age ? Age : null);
-      sessionStorage.setItem("Nationality", Nationality ? Nationality.code : null);
-      sessionStorage.setItem("Religion", Religion ? Religion.code : null);
-      sessionStorage.setItem("DeceasedGender", DeceasedGender ? DeceasedGender.code : null);
-      sessionStorage.setItem("AgeUnit", AgeUnit ? AgeUnit.code : null);
-      // sessionStorage.setItem("checked", checked ? checked : false);
-      sessionStorage.setItem("DeceasedAadharNotAvailable ", DeceasedAadharNotAvailable ? DeceasedAadharNotAvailable : false);
-      sessionStorage.setItem("Occupation", Occupation ? Occupation.code : null);
-      sessionStorage.setItem("DeathPlace", DeathPlace ? DeathPlace.code : null);
+      // // sessionStorage.setItem("DateOfDeath", DateOfDeath ? DateOfDeath : null);
+      // // sessionStorage.setItem("TimeOfDeath", TimeOfDeath ? TimeOfDeath : null);
+      // // sessionStorage.setItem("DeceasedFirstNameEn", DeceasedFirstNameEn ? DeceasedFirstNameEn : null);
+      // // sessionStorage.setItem("DeceasedMiddleNameEn", DeceasedMiddleNameEn ? DeceasedMiddleNameEn : null);
+      // // sessionStorage.setItem("DeceasedLastNameEn", DeceasedLastNameEn ? DeceasedLastNameEn : null);
+      // // sessionStorage.setItem("DeceasedFirstNameMl", DeceasedFirstNameMl ? DeceasedFirstNameMl : null);
+      // // sessionStorage.setItem("DeceasedMiddleNameMl", DeceasedMiddleNameMl ? DeceasedMiddleNameMl : null);
+      // // sessionStorage.setItem("DeceasedLastNameMl", DeceasedLastNameMl ? DeceasedLastNameMl : null);
+      // // sessionStorage.setItem("Age", Age ? Age : null);
+      // // sessionStorage.setItem("Nationality", Nationality ? Nationality.code : null);
+      // // sessionStorage.setItem("Religion", Religion ? Religion.code : null);
+      // // sessionStorage.setItem("DeceasedGender", DeceasedGender ? DeceasedGender.code : null);
+      // // sessionStorage.setItem("AgeUnit", AgeUnit ? AgeUnit.code : null);
+      // // // sessionStorage.setItem("checked", checked ? checked : false);
+      // // sessionStorage.setItem("DeceasedAadharNotAvailable ", DeceasedAadharNotAvailable ? DeceasedAadharNotAvailable : false);
+      // // sessionStorage.setItem("Occupation", Occupation ? Occupation.code : null);
+      // // sessionStorage.setItem("DeathPlace", DeathPlace ? DeathPlace.code : null);
 
-      sessionStorage.setItem("workFlowCode", workFlowCode);
+      // // sessionStorage.setItem("workFlowCode", workFlowCode);
 
-      sessionStorage.setItem("DeathPlaceTypecode", DeathPlaceType ? DeathPlaceType.code : null);
-      sessionStorage.setItem("institutionNameCode", DeathPlaceInstId ? DeathPlaceInstId.code : null);
-      sessionStorage.setItem("DeathPlaceInstId", DeathPlaceInstId ? DeathPlaceInstId.code : null);
-      // if (validFlag === true) {
-      sessionStorage.setItem("DeceasedIdproofType", DeceasedIdproofType ? DeceasedIdproofType.code : null);
-      sessionStorage.setItem("DeceasedIdproofNo", DeceasedIdproofNo ? DeceasedIdproofNo : null);
+      // // sessionStorage.setItem("DeathPlaceTypecode", DeathPlaceType ? DeathPlaceType.code : null);
+      // // sessionStorage.setItem("institutionNameCode", DeathPlaceInstId ? DeathPlaceInstId.code : null);
+      // // sessionStorage.setItem("DeathPlaceInstId", DeathPlaceInstId ? DeathPlaceInstId.code : null);
+      // // // if (validFlag === true) {
+      // // sessionStorage.setItem("DeceasedIdproofType", DeceasedIdproofType ? DeceasedIdproofType.code : null);
+      // // sessionStorage.setItem("DeceasedIdproofNo", DeceasedIdproofNo ? DeceasedIdproofNo : null);
 
-      sessionStorage.setItem("DeceasedAadharNumber", DeceasedAadharNumber ? DeceasedAadharNumber : null);
+      // // sessionStorage.setItem("DeceasedAadharNumber", DeceasedAadharNumber ? DeceasedAadharNumber : null);
 
-      if (DeathPlace.code === "HOSPITAL") {
-        //  ?sessionStorage.setItem("DeathPlace", DeathPlace.code);
-        // sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
-        sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
-        sessionStorage.setItem("HospitalNameMl", HospitalNameMl ? HospitalNameMl.code : null);
-        sessionStorage.removeItem("DeathPlaceInstId");
-      }
-      if (DeathPlace.code === "INSTITUTION") {
-        //  ?sessionStorage.setItem("DeathPlace", DeathPlace.code);
-        sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
-        sessionStorage.setItem("DeathPlaceInstId", DeathPlaceInstId ? DeathPlaceInstId.code : null);
-        sessionStorage.setItem("InstitutionIdMl", InstitutionIdMl ? InstitutionIdMl.InstitutionIdMl : null);
-      }
-      if (DeathPlace.code === "HOME") {
-        sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code : null);
-        sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
-        sessionStorage.setItem("DeathPlaceHomeHoueNameEn", DeathPlaceHomeHoueNameEn ? DeathPlaceHomeHoueNameEn : null);
-        sessionStorage.setItem("DeathPlaceHomeHoueNameMl", DeathPlaceHomeHoueNameMl ? DeathPlaceHomeHoueNameMl : null);
-        sessionStorage.setItem("DeathPlaceHomeLocalityEn", DeathPlaceHomeLocalityEn ? DeathPlaceHomeLocalityEn : null);
-        sessionStorage.setItem("DeathPlaceHomeLocalityMl", DeathPlaceHomeLocalityMl ? DeathPlaceHomeLocalityMl : null);
-        sessionStorage.setItem("DeathPlaceHomeStreetNameEn", DeathPlaceHomeStreetNameEn ? DeathPlaceHomeStreetNameEn : null);
-        sessionStorage.setItem("DeathPlaceHomeStreetNameMl", DeathPlaceHomeStreetNameMl ? DeathPlaceHomeStreetNameMl : null);
-        sessionStorage.setItem("DeathPlaceHomePostofficeId", DeathPlaceHomePostofficeId ? DeathPlaceHomePostofficeId.code : null);
-        sessionStorage.setItem("DeathPlaceHomepincode", DeathPlaceHomepincode ? DeathPlaceHomepincode.code : null);
-      }
-      if (DeathPlace.code === "VEHICLE") {
-        sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
-        sessionStorage.setItem("VehicleNumber", VehicleNumber ? VehicleNumber : null);
-        sessionStorage.setItem("VehicleFromplaceEn", VehicleFromplaceEn ? VehicleFromplaceEn : null);
-        sessionStorage.setItem("VehicleToPlaceEn", VehicleToPlaceEn ? VehicleToPlaceEn : null);
-        sessionStorage.setItem("VehicleFromplaceMl", VehicleFromplaceMl ? VehicleFromplaceMl : null);
-        sessionStorage.setItem("VehicleToPlaceMl", VehicleToPlaceMl ? VehicleToPlaceMl : null);
-        sessionStorage.setItem("VehicleFirstHaltEn", VehicleFirstHaltEn ? VehicleFirstHaltEn : null);
-        sessionStorage.setItem("VehicleFirstHaltMl", VehicleFirstHaltMl ? VehicleFirstHaltMl : null);
-        sessionStorage.setItem("VehicleHospitalEn", VehicleHospitalEn ? VehicleHospitalEn.code : null);
-        sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
-        sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code : null);
-      }
-      if (DeathPlace.code === "PUBLIC_PLACES") {
-        sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
-        sessionStorage.setItem("DeathPlaceLocalityEn", DeathPlaceLocalityEn ? DeathPlaceLocalityEn : null);
-        sessionStorage.setItem("DeathPlaceLocalityMl", DeathPlaceLocalityMl ? DeathPlaceLocalityMl : null);
-        sessionStorage.setItem("DeathPlaceStreetEn", DeathPlaceStreetEn ? DeathPlaceStreetEn : null);
-        sessionStorage.setItem("DeathPlaceStreetMl", DeathPlaceStreetMl ? DeathPlaceStreetMl : null);
-        sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
-        sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId : null);
-      }
-      if (DeathPlace.code === "OUTSIDE_JURISDICTION") {
-        sessionStorage.setItem("DeathPlaceCountry", DeathPlaceCountry ? DeathPlaceCountry.code : null);
-        sessionStorage.setItem("DeathPlaceState", DeathPlaceState ? DeathPlaceState.code : null);
-        sessionStorage.setItem("DeathPlaceDistrict", DeathPlaceDistrict ? DeathPlaceDistrict.code : null);
-        sessionStorage.setItem("DeathPlaceCity", DeathPlaceCity ? DeathPlaceCity : null);
-        sessionStorage.setItem("DeathPlaceRemarksEn", DeathPlaceRemarksEn ? DeathPlaceRemarksEn : null);
-        sessionStorage.setItem("DeathPlaceRemarksMl", DeathPlaceRemarksMl ? DeathPlaceRemarksMl : null);
-        sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code : null);
-        sessionStorage.setItem("PlaceOfBurialEn", PlaceOfBurialEn ? PlaceOfBurialEn : null);
-        sessionStorage.setItem("PlaceOfBurialMl", PlaceOfBurialMl ? PlaceOfBurialMl : null);
-        sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
-      }
+      // // if (DeathPlace.code === "HOSPITAL") {
+      // //   //  ?sessionStorage.setItem("DeathPlace", DeathPlace.code);
+      // //   // sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
+      // //   sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
+      // //   sessionStorage.setItem("HospitalNameMl", HospitalNameMl ? HospitalNameMl.code : null);
+      // //   sessionStorage.removeItem("DeathPlaceInstId");
+      // // }
+      // // if (DeathPlace.code === "INSTITUTION") {
+      // //   //  ?sessionStorage.setItem("DeathPlace", DeathPlace.code);
+      // //   sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
+      // //   sessionStorage.setItem("DeathPlaceInstId", DeathPlaceInstId ? DeathPlaceInstId.code : null);
+      // //   sessionStorage.setItem("InstitutionIdMl", InstitutionIdMl ? InstitutionIdMl.InstitutionIdMl : null);
+      // // }
+      // // if (DeathPlace.code === "HOME") {
+      // //   sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code : null);
+      // //   sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
+      // //   sessionStorage.setItem("DeathPlaceHomeHoueNameEn", DeathPlaceHomeHoueNameEn ? DeathPlaceHomeHoueNameEn : null);
+      // //   sessionStorage.setItem("DeathPlaceHomeHoueNameMl", DeathPlaceHomeHoueNameMl ? DeathPlaceHomeHoueNameMl : null);
+      // //   sessionStorage.setItem("DeathPlaceHomeLocalityEn", DeathPlaceHomeLocalityEn ? DeathPlaceHomeLocalityEn : null);
+      // //   sessionStorage.setItem("DeathPlaceHomeLocalityMl", DeathPlaceHomeLocalityMl ? DeathPlaceHomeLocalityMl : null);
+      // //   sessionStorage.setItem("DeathPlaceHomeStreetNameEn", DeathPlaceHomeStreetNameEn ? DeathPlaceHomeStreetNameEn : null);
+      // //   sessionStorage.setItem("DeathPlaceHomeStreetNameMl", DeathPlaceHomeStreetNameMl ? DeathPlaceHomeStreetNameMl : null);
+      // //   sessionStorage.setItem("DeathPlaceHomePostofficeId", DeathPlaceHomePostofficeId ? DeathPlaceHomePostofficeId.code : null);
+      // //   sessionStorage.setItem("DeathPlaceHomepincode", DeathPlaceHomepincode ? DeathPlaceHomepincode.code : null);
+      // // }
+      // // if (DeathPlace.code === "VEHICLE") {
+      // //   sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
+      // //   sessionStorage.setItem("VehicleNumber", VehicleNumber ? VehicleNumber : null);
+      // //   sessionStorage.setItem("VehicleFromplaceEn", VehicleFromplaceEn ? VehicleFromplaceEn : null);
+      // //   sessionStorage.setItem("VehicleToPlaceEn", VehicleToPlaceEn ? VehicleToPlaceEn : null);
+      // //   sessionStorage.setItem("VehicleFromplaceMl", VehicleFromplaceMl ? VehicleFromplaceMl : null);
+      // //   sessionStorage.setItem("VehicleToPlaceMl", VehicleToPlaceMl ? VehicleToPlaceMl : null);
+      // //   sessionStorage.setItem("VehicleFirstHaltEn", VehicleFirstHaltEn ? VehicleFirstHaltEn : null);
+      // //   sessionStorage.setItem("VehicleFirstHaltMl", VehicleFirstHaltMl ? VehicleFirstHaltMl : null);
+      // //   sessionStorage.setItem("VehicleHospitalEn", VehicleHospitalEn ? VehicleHospitalEn.code : null);
+      // //   sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
+      // //   sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code : null);
+      // // }
+      // // if (DeathPlace.code === "PUBLIC_PLACES") {
+      // //   sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
+      // //   sessionStorage.setItem("DeathPlaceLocalityEn", DeathPlaceLocalityEn ? DeathPlaceLocalityEn : null);
+      // //   sessionStorage.setItem("DeathPlaceLocalityMl", DeathPlaceLocalityMl ? DeathPlaceLocalityMl : null);
+      // //   sessionStorage.setItem("DeathPlaceStreetEn", DeathPlaceStreetEn ? DeathPlaceStreetEn : null);
+      // //   sessionStorage.setItem("DeathPlaceStreetMl", DeathPlaceStreetMl ? DeathPlaceStreetMl : null);
+      // //   sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
+      // //   sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId : null);
+      // // }
+      // // if (DeathPlace.code === "OUTSIDE_JURISDICTION") {
+      // //   sessionStorage.setItem("DeathPlaceCountry", DeathPlaceCountry ? DeathPlaceCountry.code : null);
+      // //   sessionStorage.setItem("DeathPlaceState", DeathPlaceState ? DeathPlaceState.code : null);
+      // //   sessionStorage.setItem("DeathPlaceDistrict", DeathPlaceDistrict ? DeathPlaceDistrict.code : null);
+      // //   sessionStorage.setItem("DeathPlaceCity", DeathPlaceCity ? DeathPlaceCity : null);
+      // //   sessionStorage.setItem("DeathPlaceRemarksEn", DeathPlaceRemarksEn ? DeathPlaceRemarksEn : null);
+      // //   sessionStorage.setItem("DeathPlaceRemarksMl", DeathPlaceRemarksMl ? DeathPlaceRemarksMl : null);
+      // //   sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId.code : null);
+      // //   sessionStorage.setItem("PlaceOfBurialEn", PlaceOfBurialEn ? PlaceOfBurialEn : null);
+      // //   sessionStorage.setItem("PlaceOfBurialMl", PlaceOfBurialMl ? PlaceOfBurialMl : null);
+      // //   sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
+      // }
       let IsEditChangeScreen = isEditDeath ? isEditDeath : false;
 
       onSelect(config.key, {

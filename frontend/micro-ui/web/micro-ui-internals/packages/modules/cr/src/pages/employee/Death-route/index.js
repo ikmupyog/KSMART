@@ -16,140 +16,22 @@ import AddressDeath from "../../../pageComponents/deathAbandoned/AddressDeath";
 // const CrFlowApp = ({ parentUrl, isEditBirth}) => {
 
 const DeathCrFlowApp = ({ parentUrl,  props, }) => {
-  console.log(JSON.stringify(props));
-  console.log(window.location.href.includes("isEditDeath"));
+  // console.log(JSON.stringify(props));
+  // console.log(window.location.href.includes("isEditDeath"));
   const { t } = useTranslation();
   const { path } = useRouteMatch();
   const match = useRouteMatch();
   const { pathname } = useLocation();
   const history = useHistory();
-  // const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_DEATH_EDIT", {});
-  const [isEditDeath,setIseditDeath]=useState(Digit.Hooks.useSessionStorage("CR_DEATH_EDIT_FLAG", {})[0]);
-  const [params, setParams, clearParams] = isEditDeath ? Digit.Hooks.useSessionStorage("CR_DEATH_EDIT", {}) : Digit.Hooks.useSessionStorage("CR_DEATH_EDIT", {});
+  const [isEditDeath, setIsEditDeath] = useState(sessionStorage.getItem("CR_DEATH_EDIT_FLAG")? true : false);
+  console.log(sessionStorage.getItem("CR_DEATH_EDIT_FLAG"));
+  const [params, setParams, clearParams] = isEditDeath ? Digit.Hooks.useSessionStorage("CR_DEATH_EDIT", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_DEATH", {});
 
-  console.log(isEditDeath);
+  // console.log(isEditDeath);
   // let params1 = sessionStorage.getItem('CR_DEATH_CORRECTIONS')
   //death-emp-edit
-  console.log('para',params);
-  // useEffect(()=>{
-  //   let InformationDeath ={
-  //     "setIdCombo": {
-  //         "name": "GST Registration Number",
-  //         "namelocal": "‍‍‍ജി എസ്സ് ടി രെജിസ്ട്രേഷന്‍ നമ്പര്‍",
-  //         "id": 11,
-  //         "code": "MIDPROOF_GST_REGISTRATION_NUMBER",
-  //         "active": true,
-  //         "type": "COMMON"
-  //     },
-  //     "DeathDate": "2023-01-01",
-  //     "DeathTime": "10:11",
-  //     "FirstName": "dash",
-  //     "MiddleName": "",
-  //     "LastName": "",
-  //     "MLFirstName": "മലയാളം",
-  //     "MlMiddleName": "",
-  //     "MlLastName": "",
-  //     "Ageofbirth": "fdf",
-  //     "AdharNo": "",
-  //     "IdNo": "",
-  //     "FromDate": "",
-  //     "ToDate": "",
-  //     "CommencementDate": "",
-  //     "Gender": {
-  //         "i18nKey": "CR_COMMON_GENDER_MALE",
-  //         "code": "MALE",
-  //         "value": "MALE"
-  //     },
-  //     "DeathTimeFrom": "",
-  //     "DeathTimeTo": "",
-  //     "setAgeUnit": {
-  //         "name": "Years",
-  //         "namelocal": "വർഷം",
-  //         "code": "AGE_UNIT_YEARS",
-  //         "id": 1,
-  //         "active": true,
-  //         "type": "BND"
-  //     },
-  //     "InformationDeath": {
-  //         "setIdCombo": {
-  //             "name": "GST Registration Number",
-  //             "namelocal": "‍‍‍ജി എസ്സ് ടി രെജിസ്ട്രേഷന്‍ നമ്പര്‍",
-  //             "id": 11,
-  //             "code": "MIDPROOF_GST_REGISTRATION_NUMBER",
-  //             "active": true,
-  //             "type": "COMMON"
-  //         },
-  //         "DeathDate": "2023-01-01",
-  //         "DeathTime": "10:11",
-  //         "FirstName": "dash",
-  //         "MiddleName": "ds",
-  //         "LastName": "dsd",
-  //         "MLFirstName": "മലയാളം",
-  //         "MlMiddleName": "മലയാളം",
-  //         "MlLastName": "മലയാളം",
-  //         "Ageofbirth": 0,
-  //         "AdharNo": "123456789012",
-  //         "IdNo": "2323",
-  //         "FromDate": "2023-01-03",
-  //         "ToDate": "2023-01-02",
-  //         "CommencementDate": "2023-01-16",
-  //         "Gender": {
-  //             "i18nKey": "CR_COMMON_GENDER_MALE",
-  //             "code": "MALE",
-  //             "value": "MALE"
-  //         },
-  //         "DeathTimeFrom": "11:11",
-  //         "DeathTimeTo": "02:22",
-  //         "setAgeUnit": {
-  //             "name": "Years",
-  //             "namelocal": "വർഷം",
-  //             "code": "AGE_UNIT_YEARS",
-  //             "id": 1,
-  //             "active": true,
-  //             "type": "BND"
-  //         },
-  //         "setTitle": {
-  //             "name": "Smt.",
-  //             "namelocal": "ശ്രീമതി",
-  //             "code": "TITLE_SMT.",
-  //             "id": 4,
-  //             "titlecode": "F",
-  //             "active": true,
-  //             "type": "COMMON"
-  //         },
-  //         "setTitleB": {
-  //             "name": "Shri.",
-  //             "namelocal": "ശ്രീ",
-  //             "code": "TITLE_SHRI.",
-  //             "id": 3,
-  //             "titlecode": "M",
-  //             "active": true,
-  //             "type": "COMMON"
-  //         },
-  //         "setNationality": {
-  //             "name": "India ",
-  //             "namelocal": "ഇന്‍ഡ്യ",
-  //             "countrycode": "IND",
-  //             "code": "COUNTRY_INDIA",
-  //             "id": 77,
-  //             "active": true,
-  //             "type": "COMMON",
-  //             "nationalityname": "Indian",
-  //             "nationalitynamelocal": null
-  //         },
-  //         "setReligion": {
-  //             "name": "Christian",
-  //             "namelocal": "ക്രിസ്ത്യൻ",
-  //             "migrationId": 2,
-  //             "id": 2,
-  //             "code": "RELIGION_CHRISTIAN",
-  //             "active": true,
-  //             "type": "COMMON"
-  //         }
-  //     }
-  // }
-  // setParams({ ...params, ...{ ["InformationDeath"]: { ...params["InformationDeath"], ...InformationDeath } } });
-  // },[])
+  // console.log('para',params);
+ 
   const stateId = Digit.ULBService.getStateId();
   // let { data: newConfig, isLoading } = Digit.Hooks.tl.useMDMS.getFormConfig(stateId, {});
   let config = [];
@@ -232,21 +114,21 @@ config = config.concat(abandonedDeathConfig.body.filter((a) => !a. hideInEmploye
     if (nextStep === null) {
       return redirectWithHistory(`${match.path}/check`);
     }
-    console.log("next path",`${match.path}/${nextStep}`);
+    // console.log("next path",`${match.path}/${nextStep}`);
     nextPage = `${match.path}/${nextStep}`;
     redirectWithHistory(nextPage);
   };
 
   function handleSelect(key, data, skipStep, index, isAddMultiple = false) {
     setParams({ ...params, ...{ [key]: { ...params[key], ...data } } });
-    console.log("reachedd");
+    // console.log("reachedd");
     if (key === "isSkip" && data === true) {
       goNext(skipStep, index, isAddMultiple, key, true);
     } else {
       goNext(skipStep, index, isAddMultiple, key);
     }
   }
-  console.log("match.path" + match.path);
+  // console.log("match.path" + match.path);
   const createProperty = async () => {
     history.push(`${match.path}/acknowledgement`);
   };

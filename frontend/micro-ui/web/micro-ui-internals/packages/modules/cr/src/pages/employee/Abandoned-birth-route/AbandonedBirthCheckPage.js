@@ -44,6 +44,7 @@ const getPath = (path, params) => {
 
 const AbandonedBirthCheckPage = ({ onSubmit, value, userType }) => {
   let isEdit = window.location.href.includes("renew-trade");
+  console.log("checkpage");
   const { t } = useTranslation();
   const history = useHistory();
   const match = useRouteMatch();
@@ -210,7 +211,7 @@ const AbandonedBirthCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                 </div>
               )}
-              {ChildDeAbandonedChildDetailstails.birthPlace.code === "VEHICLE" && (
+              {AbandonedChildDetails.birthPlace.code === "VEHICLE" && (
                 <div className="row">
                   <div className="col-md-6">
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PLACE_OF_BIRTH")}`}</CardLabel>

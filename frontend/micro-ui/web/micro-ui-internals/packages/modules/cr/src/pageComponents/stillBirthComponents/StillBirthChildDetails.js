@@ -20,7 +20,10 @@ import StillBirthPlaceHome from "../../pageComponents/stillBirthComponents/Still
 import StillBirthPlaceVehicle from "../../pageComponents/stillBirthComponents/StillBirthPlaceVehicle";
 import StillBirthPlacePublicPlace from "../../pageComponents/stillBirthComponents/StillBirthPlacePublicPlace";
 
-const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditStillBirth  }) => {
+const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditStillBirth }) => {
+  // console.log(JSON.stringify(formData));  
+  console.log(formData);
+  console.log(isEditStillBirth);
   const [isEditStillBirthPageComponents, setIsEditStillBirthPageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditStillBirth ? isEditStillBirth : false);
   const [workFlowCode, setWorkFlowCode] = useState();
@@ -31,7 +34,11 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
   if (tenantId === "kl") {
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
+
   const { t } = useTranslation();
+
+
+ 
   let validation = {};
   const { data: Menu, isLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
   const { data: AttentionOfDelivery = {}, isAttentionOfDeliveryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
@@ -147,24 +154,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
   const [childAadharNo, setChildAadharNo] = useState(
     formData?.StillBirthChildDetails?.childAadharNo ? formData?.StillBirthChildDetails?.childAadharNo : ""
   );
-  const [childFirstNameEn, setChildFirstNameEn] = useState(
-    formData?.StillBirthChildDetails?.childFirstNameEn ? formData?.StillBirthChildDetails?.childFirstNameEn : ""
-  );
-  const [childMiddleNameEn, setChildMiddleNameEn] = useState(
-    formData?.StillBirthChildDetails?.childMiddleNameEn ? formData?.StillBirthChildDetails?.childMiddleNameEn : ""
-  );
-  const [childLastNameEn, setChildLastNameEn] = useState(
-    formData?.StillBirthChildDetails?.childLastNameEn ? formData?.StillBirthChildDetails?.childLastNameEn : ""
-  );
-  const [childFirstNameMl, setChildFirstNameMl] = useState(
-    formData?.StillBirthChildDetails?.childFirstNameMl ? formData?.StillBirthChildDetails?.childFirstNameMl : ""
-  );
-  const [childMiddleNameMl, setChildMiddleNameMl] = useState(
-    formData?.StillBirthChildDetails?.childMiddleNameMl ? formData?.StillBirthChildDetails?.childMiddleNameMl : ""
-  );
-  const [childLastNameMl, setChildLastNameMl] = useState(
-    formData?.StillBirthChildDetails?.childLastNameMl ? formData?.StillBirthChildDetails?.childLastNameMl : ""
-  );
+  
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isInitialRenderPlace, setIsInitialRenderPlace] = useState(true);
   const [birthDateTime, setbirthDateTime] = useState(
@@ -210,38 +200,14 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
   const [adrsStreetNameMl, setAdrsStreetNameMl] = useState(formData?.StillBirthChildDetails?.adrsStreetNameMl ? formData?.StillBirthChildDetails?.adrsStreetNameMl : "");
   const [wardNo, setWardNo] = useState(formData.StillBirthChildDetails?.wardNo?.code ? formData.StillBirthChildDetails?.wardNo : formData?.StillBirthChildDetails?.wardNo ? "" : "");
 
-  // const [adrsPostOffice, setAdrsPostOffice] = useState(
-  //   formData?.StillBirthChildDetails?.adrsPostOffice ? formData?.StillBirthChildDetails?.adrsPostOffice : null
-  // );
-  // const [adrsPincode, setAdrsPincode] = useState(
-  //   formData?.StillBirthChildDetails?.adrsPincode ? formData?.StillBirthChildDetails?.adrsPincode : null
-  // );
-  // const [adrsHouseNameEn, setAdrsHouseNameEn] = useState(
-  //   formData?.StillBirthChildDetails?.adrsHouseNameEn ? formData?.StillBirthChildDetails?.adrsHouseNameEn : ""
-  // );
-  // const [adrsHouseNameMl, setAdrsHouseNameMl] = useState(
-  //   formData?.StillBirthChildDetails?.adrsHouseNameMl ? formData?.StillBirthChildDetails?.adrsHouseNameMl : ""
-  // );
-  // const [adrsLocalityNameEn, setAdrsLocalityNameEn] = useState(
-  //   formData?.StillBirthChildDetails?.adrsLocalityNameEn ? formData?.StillBirthChildDetails?.adrsLocalityNameEn : ""
-  // );
-  // const [adrsLocalityNameMl, setAdrsLocalityNameMl] = useState(
-  //   formData?.StillBirthChildDetails?.adrsLocalityNameMl ? formData?.StillBirthChildDetails?.adrsLocalityNameMl : ""
-  // );
-  // const [adrsStreetNameEn, setAdrsStreetNameEn] = useState(
-  //   formData?.StillBirthChildDetails?.adrsStreetNameEn ? formData?.StillBirthChildDetails?.adrsStreetNameEn : ""
-  // );
-  // const [adrsStreetNameMl, setAdrsStreetNameMl] = useState(
-  //   formData?.StillBirthChildDetails?.adrsStreetNameMl ? formData?.StillBirthChildDetails?.adrsStreetNameMl : ""
-  // );
-  // const [wardNo, setWardNo] = useState(formData.StillBirthChildDetails?.wardNo ? formData.StillBirthChildDetails?.wardNo : null);
+
   const [vehicleType, setvehicleType] = useState(formData?.StillBirthChildDetails?.vehicleType?.code ? formData?.StillBirthChildDetails?.vehicleType : formData?.StillBirthChildDetails?.vehicleType ? "" : "");
   const [vehicleRegistrationNo, setvehicleRegistrationNo] = useState(formData?.StillBirthChildDetails?.vehicleRegistrationNo ? formData?.StillBirthChildDetails?.vehicleRegistrationNo : "");
   const [vehicleFromEn, setvehicleFromEn] = useState(formData?.StillBirthChildDetails?.vehicleFromEn ? formData?.StillBirthChildDetails?.vehicleFromEn : "");
   const [vehicleToEn, setvehicleToEn] = useState(formData?.StillBirthChildDetails?.vehicleToEn ? formData?.StillBirthChildDetails?.vehicleToEn : "");
   const [vehicleFromMl, setvehicleFromMl] = useState(formData?.StillBirthChildDetails?.vehicleFromMl ? formData?.StillBirthChildDetails?.vehicleFromMl : "");
   const [vehicleHaltPlace, setvehicleHaltPlace] = useState(formData?.StillBirthChildDetails?.vehicleHaltPlace ? formData?.StillBirthChildDetails?.vehicleHaltPlace : "");
-  //const [vehicleHaltPlaceMl, setvehicleHaltPlaceMl] = useState(formData?.ChildDetails?.vehicleHaltPlaceMl ? formData?.ChildDetails?.vehicleHaltPlaceMl : "");
+ 
   const [vehicleToMl, setvehicleToMl] = useState(formData?.StillBirthChildDetails?.vehicleToMl ? formData?.StillBirthChildDetails?.vehicleToMl : "");
   const [vehicleDesDetailsEn, setvehicleDesDetailsEn] = useState(formData?.StillBirthChildDetails?.vehicleDesDetailsEn ? formData?.StillBirthChildDetails?.vehicleDesDetailsEn : "");
   const [setadmittedHospitalEn, setSelectedadmittedHospitalEn] = useState(formData?.StillBirthChildDetails?.setadmittedHospitalEn?.code ? formData?.StillBirthChildDetails?.setadmittedHospitalEn : formData?.StillBirthChildDetails?.setadmittedHospitalEn ? "" : "");
@@ -364,7 +330,9 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
         setValue(placeOfBirth);
 
         if (placeOfBirth === "HOSPITAL") {
-          <StillBirthPlaceHospital hospitalName={hospitalName} hospitalNameMl={hospitalNameMl} />;
+          <StillBirthPlaceHospital
+           hospitalName={hospitalName} 
+           hospitalNameMl={hospitalNameMl} />;
         }
         if (placeOfBirth === "INSTITUTION") {
           setIsInitialRenderInstitutionList(true);
@@ -904,12 +872,12 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
         setMedicalAttensionSub(cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.StillBirthChildDetails?.medicalAttensionSub)[0]);
       }
     }
-    // if (formData?.ChildDetails?.pregnancyDuration != null) {
-    //   console.log("pregnancyDuration" + pregnancyDuration);
-    //   if (cmbPregWeek.length > 0 && (pregnancyDuration === undefined || pregnancyDuration === "")) {
-    //     setPregnancyDuration(cmbPregWeek.filter(cmbPregWeek => parseInt(cmbPregWeek.code) === formData?.ChildDetails?.pregnancyDuration)[0]);
-    //   }
-    // }
+    if (formData?.ChildDetails?.pregnancyDuration != null) {
+      console.log("pregnancyDuration" + pregnancyDuration);
+      if (cmbPregWeek.length > 0 && (pregnancyDuration === undefined || pregnancyDuration === "")) {
+        setPregnancyDuration(cmbPregWeek.filter(cmbPregWeek => parseInt(cmbPregWeek.code) === formData?.ChildDetails?.pregnancyDuration)[0]);
+      }
+    }
     if (formData?.ChildDetails?.deliveryMethods != null) {
       if (cmbDeliveryMethod.length > 0 && (deliveryMethods === undefined || deliveryMethods === "")) {
         // console.log(cmbDeliveryMethod.filter(cmbDeliveryMethod => parseInt(cmbDeliveryMethod.code) === formData?.ChildDetails?.deliveryMethods)[0]);
@@ -918,39 +886,39 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
     }
   }
 
-  // // if (isEditBirth) {
-  // if (formData?.StillBirthChildDetails?.gender != null) {
-  //   if (menu.length > 0 && (gender === undefined || gender === "")) {
-  //     selectGender(menu.filter((menu) => menu.code === formData?.StillBirthChildDetails?.gender)[0]);
-  //     setisInitialRenderFormData(true);
-  //   }
-  // }
-  // if (formData?.StillBirthChildDetails?.birthPlace != null) {
-  //   if (cmbPlaceMaster.length > 0 && (birthPlace === undefined || birthPlace === "")) {
-  //     selectBirthPlace(cmbPlaceMaster.filter((cmbPlaceMaster) => cmbPlaceMaster.code === formData?.StillBirthChildDetails?.birthPlace)[0]);
-  //     setValue(formData?.StillBirthChildDetails?.birthPlace);
-  //     setisInitialRenderFormData(true);
-  //   }
-  // }
-  // if (formData?.StillBirthChildDetails?.medicalAttensionSub != null) {
-  //   if (cmbAttDeliverySub.length > 0 && (medicalAttensionSub === undefined || medicalAttensionSub === "")) {
-  //     setMedicalAttensionSub(
-  //       cmbAttDeliverySub.filter((cmbAttDeliverySub) => cmbAttDeliverySub.code === formData?.StillBirthChildDetails?.medicalAttensionSub)[0]
-  //     );
-  //     setisInitialRenderFormData(true);
-  //   }
-  // }
+  // if (isEditBirth) {
+  if (formData?.StillBirthChildDetails?.gender != null) {
+    if (menu.length > 0 && (gender === undefined || gender === "")) {
+      selectGender(menu.filter((menu) => menu.code === formData?.StillBirthChildDetails?.gender)[0]);
+      setisInitialRenderFormData(true);
+    }
+  }
+  if (formData?.StillBirthChildDetails?.birthPlace != null) {
+    if (cmbPlaceMaster.length > 0 && (birthPlace === undefined || birthPlace === "")) {
+      selectBirthPlace(cmbPlaceMaster.filter((cmbPlaceMaster) => cmbPlaceMaster.code === formData?.StillBirthChildDetails?.birthPlace)[0]);
+      setValue(formData?.StillBirthChildDetails?.birthPlace);
+      setisInitialRenderFormData(true);
+    }
+  }
+  if (formData?.StillBirthChildDetails?.medicalAttensionSub != null) {
+    if (cmbAttDeliverySub.length > 0 && (medicalAttensionSub === undefined || medicalAttensionSub === "")) {
+      setMedicalAttensionSub(
+        cmbAttDeliverySub.filter((cmbAttDeliverySub) => cmbAttDeliverySub.code === formData?.StillBirthChildDetails?.medicalAttensionSub)[0]
+      );
+      setisInitialRenderFormData(true);
+    }
+  }
 
-  // if (formData?.StillBirthChildDetails?.deliveryMethods != null) {
-  //   if (cmbDeliveryMethod.length > 0 && (deliveryMethods === undefined || deliveryMethods === "")) {
-  //     // console.log(cmbDeliveryMethod.filter(cmbDeliveryMethod => parseInt(cmbDeliveryMethod.code) === formData?.StillBirthChildDetails?.deliveryMethods)[0]);
-  //     setDeliveryMethod(
-  //       cmbDeliveryMethod.filter((cmbDeliveryMethod) => cmbDeliveryMethod.code === formData?.StillBirthChildDetails?.deliveryMethods)[0]
-  //     );
-  //     setisInitialRenderFormData(true);
-  //   }
+  if (formData?.StillBirthChildDetails?.deliveryMethods != null) {
+    if (cmbDeliveryMethod.length > 0 && (deliveryMethods === undefined || deliveryMethods === "")) {
+      // console.log(cmbDeliveryMethod.filter(cmbDeliveryMethod => parseInt(cmbDeliveryMethod.code) === formData?.StillBirthChildDetails?.deliveryMethods)[0]);
+      setDeliveryMethod(
+        cmbDeliveryMethod.filter((cmbDeliveryMethod) => cmbDeliveryMethod.code === formData?.StillBirthChildDetails?.deliveryMethods)[0]
+      );
+      setisInitialRenderFormData(true);
+    }
+  }
   // }
-  // // }
 
   if (
     isWorkFlowDetailsLoading ||
