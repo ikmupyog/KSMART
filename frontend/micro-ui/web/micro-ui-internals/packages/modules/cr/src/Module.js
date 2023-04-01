@@ -19,7 +19,8 @@ import CreateBirthRegistration from "./pages/citizen/BirthRegistration";
 import CreateBirthNACRegistration from "./pages/citizen/BirthNACRegistration";
 import MarriageInclusion from "./pages/citizen/MarriageInclusion";
 import BirthInclusion from "./pages/citizen/BirthInclusion";
-import BirthInclusionEditPage from "./pageComponents/birthComponents/BirthInclusionPage";
+import BirthInclusionEditPage from "./pageComponents/birthComponents/BirthInclusionPage/BirthInclusionEditPage";
+import BirthInclusionPage from "./pageComponents/birthComponents/BirthInclusionPage/index";
 import SearchBirthInclusion from './components/SearchBirthInclusion';
 import BirthInclusionModal from './components/BirthInclusionModal';
 
@@ -281,6 +282,7 @@ const componentsToRegister = {
   CRBirthInclusions:BirthInclusion,
   CRMarriageInclusions:MarriageInclusion,
   CRBirthInclusionEditPage: BirthInclusionEditPage,
+  CRBirthInclusionPage:BirthInclusionPage, 
   SearchBirthInclusion,
   BirthInclusionModal,
   BirthPlaceHospital,

@@ -15,144 +15,85 @@ import {
 } from "@egovernments/digit-ui-react-components";
 // import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
-import CustomTimePicker from "../../components/CustomTimePicker";
-import FormFieldContainer from "../../components/FormFieldContainer";
-import BirthInclusionModal from "../../components/BirthInclusionModal";
-import { BIRTH_INCLUSION } from "../../config/constants";
-import { getBirthInclusionObject } from "../../config/globalObject";
+import CustomTimePicker from "../../../components/CustomTimePicker";
+import FormFieldContainer from "../../../components/FormFieldContainer";
+import BirthInclusionModal from "../../../components/BirthInclusionModal";
+import { BIRTH_INCLUSION } from "../../../config/constants";
+import { initializeBirthInclusionObject } from "../../../config/globalObject";
 import { useParams, useHistory, useRouteMatch, useLocation } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
-import { getFormattedBirthInclusionData } from "../../config/utils";
-
-const BirthInclusionEditPage = () => {
-  const { t } = useTranslation();
+import moment from 'moment';
+let birthInclusionFormData = {};
+const BirthInclusionEditPage = ({cmbNation, menu, cmbPlace ,BirthCorrectionDocuments,navigationData}) => {
+  
   let formData = {};
   let validation = {};
+  // let birthInclusionFormData = {};
+  const { t } = useTranslation();
   const stateId = Digit.ULBService.getStateId();
+  const tenantId = Digit.ULBService.getCurrentTenantId();
   const [showModal, setShowModal] = useState(false);
-  const [uploadStatus, setUploadStatus] = useState({
-    hospitalCorrectionLetter: false,
-  });
-  const [value, setValue1] = useState(0);
+  // const [isDisabled,setDisabled] = useState(false);
+  // const [uploadStatus, setUploadStatus] = useState({
+  //   hospitalCorrectionLetter: false,
+  // });
+  const [value, setValue] = useState(0);
   const [selectedInclusionItem, setSelectedInclusionItem] = useState([]);
-  let location = useLocation();
-  let navigationData = location?.state?.inclusionData;
+  // let location = useLocation();
+  // let navigationData = location?.state?.inclusionData;
+  
 
-  const { data: correctionsData = {}, isSuccess, isError, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
-    stateId,
-    "birth-death-service",
-    "BirthCorrectionDocuments",
-  );
-  const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PlaceMasterDeath");
-  const { data: Menu, isGenderLoad } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
-  const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
+  useEffect(async()=>{
+     birthInclusionFormData = await initializeBirthInclusionObject(BirthCorrectionDocuments,navigationData);
+    console.log("birthInclusionFormData==",birthInclusionFormData);
+  },[navigationData,BirthCorrectionDocuments])
 
-  let cmbPlace = [];
-  let menu = [];
-  let cmbNation = [];
-  let cmbState = [];
-  let cmbfilterNation = [];
-  let cmbfilterNationI = [];
-
-    place &&
-    place["common-masters"] &&
-    place["common-masters"].PlaceMasterDeath &&
-    place["common-masters"].PlaceMasterDeath.map((ob) => {
-      cmbPlace.push(ob);
-    });
-
-  Menu &&
-    Menu.map((genderDetails) => {
-      menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
-    });
-
-  Nation &&
-    Nation["common-masters"] &&
-    Nation["common-masters"].Country &&
-    Nation["common-masters"].Country.map((ob) => {
-      cmbNation.push(ob);
-    });
-
-  const [DeathPlaceType, selectDeathPlaceType] = useState(
-    formData?.InformationDeath?.DeathPlaceType?.code
-      ? formData?.InformationDeath?.DeathPlaceType
-      : formData?.InformationDeath?.DeathPlaceType
-      ? ""
-      : ""
-  );
-  const [HospitalNameMl, selectHospitalNameMl] = useState(
-    formData?.InformationDeathails?.HospitalNameMl?.code
-      ? formData?.InformationDeath?.HospitalNameMl
-      : formData?.InformationDeath?.HospitalNameMl
-      ? ""
-      : ""
-  );
-
-  const [DeathPlace, setselectDeathPlace] = useState(
-    formData?.InformationDeath?.DeathPlace?.code
-      ? formData?.InformationDeath?.DeathPlace
-      : formData?.InformationDeath?.DeathPlace
-      ? cmbPlace.filter((cmbPlace) => cmbPlace.code === formData?.ChildDetails?.DeathPlace)[0]
-      : ""
-  );
-
-  const [DeceasedGender, setselectedDeceasedGender] = useState(
-    formData?.InformationDeath?.DeceasedGender?.code
-      ? formData?.InformationDeath?.DeceasedGender
-      : formData?.InformationDeath?.DeceasedGender
-      ? menu.filter((menu) => menu.code === formData?.InformationDeath?.DeceasedGender)[0]
-      : ""
-  );
-  const [DeceasedAadharNumber, setDeceasedAadharNumber] = useState(
-    formData?.InformationDeath?.DeceasedAadharNumber ? formData?.InformationDeath?.DeceasedAadharNumber : ""
-  );
-  const [DeathPlaceInstId, setSelectedDeathPlaceInstId] = useState(
-    formData?.InformationDeath?.DeathPlaceInstId ? formData?.InformationDeath?.DeathPlaceInstId : null
-  );
-  const [InstitutionIdMl, setInstitutionIdMl] = useState(formData?.InformationDeath?.DeathPlaceInstId);
-  const [InstitutionFilterList, setInstitutionFilterList] = useState(null);
-  const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(false);
-  const [Nationality, setSelectedNationality] = useState(
-    formData?.InformationDeath?.Nationality?.code
-      ? formData?.InformationDeath?.Nationality
-      : formData?.InformationDeath?.Nationality
-      ? cmbNation.filter((cmbNation) => cmbNation.code === formData?.InformationDeath?.Nationality)[0]
-      : ""
-  );
-
- 
+console.log("navigationData",navigationData);
 
   const setBirthInclusionFilterQuery = (fieldId) => {
-    const birthInclusionData = correctionsData["birth-death-service"]?.BirthCorrectionDocuments;
-    let selectedData = getFormattedBirthInclusionData(fieldId,navigationData,birthInclusionData );
-    setSelectedInclusionItem(selectedData);
+    console.log("birthInclusionFormData--------",birthInclusionFormData,fieldId);
+    let selectedBirthInclusionData = birthInclusionFormData[fieldId];
+    console.log("birthInclusionData",selectedBirthInclusionData);
+    setSelectedInclusionItem(selectedBirthInclusionData);
     setShowModal(true);
   };
 
+  const FieldComponentContainer = ({children}) => {
+    return <div className="col-md-9">{children}</div>;
+  };
+
+  const ButtonContainer = ({children}) => {
+    return <div className="col-md-3">{children}</div>;
+  };
+
+ 
+
+  const onUploadDocSubmit = async(fileData) =>{
+    
+   console.log("upload response==",fileData);
+  }
+
+  const { register,control, handleSubmit, reset, getValues, watch,setFocus , errors } = useForm({
+    reValidateMode: "onSubmit",
+    mode: "all",
+    defaultValues: {
+      childDob: "22/03/1993",
+      DeceasedAadharNumber: "",
+      limit: 10,
+      sortBy: "DateOfDeath",
+      sortOrder: "DESC",
+    },
+  });
 
   const _hideModal = () => {
     setShowModal(false);
   };
 
-  const FieldComponentContainer = (props) => {
-    return <div className="col-md-9">{props.children}</div>;
-  };
-
-  const ButtonContainer = (props) => {
-    return <div className="col-md-3">{props.children}</div>;
-  };
-
-  const onSubmit = data => console.log(data);
-
-  const { register, handleSubmit, reset, setValue, getValues, watch, errors } = useForm({
-    reValidateMode: "onSubmit",
-    mode: "all",
-  });
-
+  const onSubmit = data =>{ console.log(data) };
 
   return (
     <React.Fragment>
-      <FormStep>
+      <FormStep >
       <div className="row">
         <div className="col-md-12">
           <div className="col-md-12">
@@ -170,22 +111,33 @@ const BirthInclusionEditPage = () => {
               {t("CR_DATE_OF_BIRTH_TIME")}
               <span className="mandatorycss">*</span>
             </CardLabel>
-            <DatePicker
-              // date={childDOB}
-              name="childDOB"
-              // max={convertEpochToDate(new Date())}
-              //min={convertEpochToDate("1900-01-01")}
-              // onChange={setselectChildDOB}
-              // disable={isDisableEdit}
-              //  inputFormat="DD-MM-YYYY"
-              placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
-              {...(validation = { isRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
-            />
+             <DatePicker
+                  // {...register('childDOB')}
+                  datePickerRef ={register}
+                  name="childDOB"
+                  // disabled={isDisabled}
+                  // date={moment().format('YYYY-MM-DD')}
+                  // max={convertEpochToDate(new Date())}
+                  //min={convertEpochToDate("1900-01-01")}
+                  // onChange={setselectChildDOB}
+                  // disable={true}
+                  //  inputFormat="DD-MM-YYYY"
+                  // inputRef={register}
+                  // date={props.value} 
+                  // onChange={props.onChange}
+                  placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
+                  {...(validation = { isRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
+                />
+           {/* }
+                name="MarriageDate"
+                control={control}
+            /> */}
+             
           </div>
         </FieldComponentContainer>
         <div style={{ marginTop: "2.8rem" }}>
           <ButtonContainer>
-            <span onClick={()=> setBirthInclusionFilterQuery(BIRTH_INCLUSION.childDob)}>
+            <span  onClick={()=> setBirthInclusionFilterQuery(BIRTH_INCLUSION["CHILD_DOB"])}>
             <EditIcon
               selected={true}
               label={"Edit"}
@@ -204,11 +156,12 @@ const BirthInclusionEditPage = () => {
             <TextInput
               t={t}
               isMandatory={false}
-              type="number"
+              // type="number"
+              inputRef={register}
               max="12"
               optionKey="i18nKey"
-              name="DeceasedAadharNumber"
-              value={DeceasedAadharNumber}
+              name="AadharNumber"
+              // value={DeceasedAadharNumber}
               // onChange={setSelectDeceasedAadharNumber}
               placeholder={`${t("CR_AADHAR")}`}
               {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
@@ -220,9 +173,6 @@ const BirthInclusionEditPage = () => {
             <EditIcon
               selected={true}
               label={"Edit"}
-              onClick={() => {
-                setShowModal(true);
-              }}
             />
           </ButtonContainer>
         </div>
@@ -280,9 +230,7 @@ const BirthInclusionEditPage = () => {
             <EditIcon
               selected={true}
               label={"Edit"}
-              onClick={() => {
-                setShowModal(true);
-              }}
+              onClick={() => ()=> setBirthInclusionFilterQuery(BIRTH_INCLUSION.childDob)}
             />
           </ButtonContainer>
         </div>
@@ -340,36 +288,17 @@ const BirthInclusionEditPage = () => {
             <EditIcon
               selected={true}
               label={"Edit"}
-              onClick={() => {
-                setShowModal(true);
-              }}
+              onClick={() => ()=> setBirthInclusionFilterQuery(BIRTH_INCLUSION.childDob)}
             />
           </ButtonContainer>
         </div>
       </FormFieldContainer>
+     
       <FormFieldContainer>
         <FieldComponentContainer>
           <div className="col-md-4">
             <CardLabel>
-              {t("CR_DATE_OF_DEATH")}
-              <span className="mandatorycss">*</span>
-            </CardLabel>
-            <DatePicker
-              // date={DateOfDeath}
-              // max={convertEpochToDate(new Date())}
-              name="DateOfDeath"
-              // onChange={selectDeathDate}
-              // {...(validation = {
-              //   pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",
-              //   isRequired: true,
-              //   type: "text",
-              //   title: t("CR_INVALID_DATE"),
-              // })}
-            />
-          </div>
-          <div className="col-md-4">
-            <CardLabel>
-              {t("CR_PLACE_OF_DEATH")}
+              {t("CR_PLACE_OF_BIRTH")}
               <span className="mandatorycss">*</span>
             </CardLabel>
             <Dropdown
@@ -377,25 +306,9 @@ const BirthInclusionEditPage = () => {
               optionKey="name"
               isMandatory={false}
               option={cmbPlace}
-              selected={DeathPlace}
+              // selected={DeathPlace}
               // select={selectDeathPlace}
-              placeholder={`${t("CR_PLACE_OF_DEATH")}`}
-            />
-          </div>
-
-          <div className="col-md-4">
-            <CardLabel>
-              {t("CR_GENDER")} <span className="mandatorycss">*</span>{" "}
-            </CardLabel>
-            <Dropdown
-              t={t}
-              optionKey="code"
-              isMandatory={true}
-              option={menu}
-              selected={DeceasedGender}
-              // select={selectDeceasedGender}
-              placeholder={`${t("CR_GENDER")}`}
-              // {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })}
+              placeholder={`${t("CR_PLACE_OF_BIRTH")}`}
             />
           </div>
         </FieldComponentContainer>
@@ -404,9 +317,7 @@ const BirthInclusionEditPage = () => {
             <EditIcon
               selected={true}
               label={"Edit"}
-              onClick={() => {
-                setShowModal(true);
-              }}
+              onClick={() => ()=> setBirthInclusionFilterQuery(BIRTH_INCLUSION.childDob)}
             />
           </ButtonContainer>
         </div>
@@ -571,6 +482,7 @@ const BirthInclusionEditPage = () => {
             <CardLabel>{`${t("CR_MOTHER_NAME_ML")}`}</CardLabel>
             <TextInput
               t={t}
+              ref={register()}
               // isMandatory={false}
               type={"text"}
               // optionKey="i18nKey"
@@ -588,9 +500,7 @@ const BirthInclusionEditPage = () => {
             <EditIcon
               selected={true}
               label={"Edit"}
-              onClick={() => {
-                setShowModal(true);
-              }}
+              onClick={() => ()=> setBirthInclusionFilterQuery(BIRTH_INCLUSION.childDob)}
             />
           </ButtonContainer>
         </div>
@@ -634,9 +544,7 @@ const BirthInclusionEditPage = () => {
             <EditIcon
               selected={true}
               label={"Edit"}
-              onClick={() => {
-                setShowModal(true);
-              }}
+              onClick={() => ()=> setBirthInclusionFilterQuery(BIRTH_INCLUSION.childDob)}
             />
           </ButtonContainer>
         </div>
@@ -680,9 +588,7 @@ const BirthInclusionEditPage = () => {
             <EditIcon
               selected={true}
               label={"Edit"}
-              onClick={() => {
-                setShowModal(true);
-              }}
+              onClick={() => ()=> setBirthInclusionFilterQuery(BIRTH_INCLUSION.childDob)}
             />
           </ButtonContainer>
         </div>
@@ -784,14 +690,12 @@ const BirthInclusionEditPage = () => {
             <EditButton
               selected={true}
               label={"Edit"}
-              onClick={() => {
-                setShowModal(true);
-              }}
+              onClick={() => ()=> setBirthInclusionFilterQuery(BIRTH_INCLUSION.childDob)}
             />
           </ButtonContainer>
         </div>
       </FormFieldContainer>
-      <FormFieldContainer>
+      {/* <FormFieldContainer>
         <FieldComponentContainer>
           <div className="col-md-3">
             <CardLabel>{`${t("CS_COMMON_COUNTRY")}`}</CardLabel>
@@ -864,9 +768,9 @@ const BirthInclusionEditPage = () => {
             />
           </div>
         </FieldComponentContainer>
-      </FormFieldContainer>
+      </FormFieldContainer> */}
       </form>
-      <BirthInclusionModal showModal={showModal} selectedConfig={selectedInclusionItem} hideModal={_hideModal} />
+      <BirthInclusionModal showModal={showModal} selectedConfig={selectedInclusionItem} onSubmit={onUploadDocSubmit} hideModal={_hideModal} />
       </FormStep>
     </React.Fragment>
   );
