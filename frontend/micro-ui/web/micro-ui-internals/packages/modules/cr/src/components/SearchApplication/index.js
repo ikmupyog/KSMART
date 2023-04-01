@@ -222,12 +222,12 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count,applicationType, 
         // }
       ]), [] )
 
-      const handlesLinkClick = (finaldata) => {  
+      const handleStillBirthLinkClick = (finaldata) => {  
         console.log(finaldata);
         let temp={};
         temp.StillBirthChildDetails =finaldata;
          Digit.SessionStorage.set("CR_EDIT_STILLBIRTH_REG", temp);      
-         Digit.SessionStorage.set("CR_STILLBIRTH_EDIT_FLAG", true); 
+         sessionStorage.setItem("CR_STILLBIRTH_EDIT_FLAG", true);
       }
       const StillBirthColumns = useMemo(
         () => [
@@ -240,7 +240,7 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count,applicationType, 
                 <div>
                   <span className="link">
                     <Link
-                      onClick={(event) => handlesLinkClick(row.original)}
+                      onClick={(event) => handleStillBirthLinkClick(row.original)}
                       to={`/digit-ui/employee/cr/application-stillbirth/${row.original.applicationNumber}`}
                     >
                       {/* {row.original.applicationNumber} */}
