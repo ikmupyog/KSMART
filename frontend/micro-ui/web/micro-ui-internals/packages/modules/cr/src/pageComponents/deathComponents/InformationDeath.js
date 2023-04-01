@@ -12,13 +12,14 @@ import DeathOutsideJurisdiction from "./DeathOutsideJurisdiction ";
 import { useParams } from "react-router-dom";
 
 const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath }) => {
-  console.log(formData?.InformationDeath);
+  console.log(formData);
   console.log(isEditDeath);
   const [isEditDeathPageComponents, setIsEditDeathPageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
   const stateId = Digit.ULBService.getStateId();
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
   const [workFlowCode, setWorkFlowCode] = useState();
+  const {uuid:uuid,} =Digit.UserService.getUser().info ; 
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
   if (tenantId === "kl") {
@@ -46,7 +47,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
       let month = dateFromApi.getMonth() + 1;
       let day = dateFromApi.getDate();
       let year = dateFromApi.getFullYear();
-        month = (month > 9 ? "" : "0") + month;
+      month = (month > 9 ? "" : "0") + month;
       day = (day > 9 ? "" : "0") + day;
       return `${year}-${month}-${day}`;
       //  return `${day}-${month}-${year}`;
@@ -151,7 +152,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   //     : convertEpochToDate(formData?.InformationDeath?.DateOfDeath)
   // );
 
- 
   const [FromDate, setFromDate] = useState(
     isEditDeath &&
       isEditDeathPageComponents === false &&
@@ -244,10 +244,15 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   );
   const [Religion, setSelectedReligion] = useState(
     formData?.InformationDeath?.Religion?.code
-      ? formData?.InformationDeath?.Religion
-      : formData?.InformationDeath?.Religion
-      ? cmbReligion.filter((cmbReligion) => cmbReligion.code === formData?.InformationDeath?.Religion)[0]
-      : ""
+    ? formData?.InformationDeath?.Religion
+    : formData?.InformationDeath?.Religion
+    ? cmbReligion.filter((cmbReligion) => cmbReligion.code === formData?.InformationDeath?.Religion)[0]
+    : ""
+    // formData?.InformationDeath?.Religion?.code
+    //   ? formData?.InformationDeath?.Religion
+    //   : formData?.InformationDeath?.Religion
+    //   ? cmbReligion.filter((cmbReligion) => cmbReligion.code === formData?.InformationDeath?.Religion)[0]
+    //   : ""
   );
 
   const [CommencementDate, setCommencementDate] = useState(
@@ -406,13 +411,15 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
           setSelectedNationality(cmbfilterNation[0]);
         }
       }
-      if (Religion == null || Religion == "") {
-        if (stateId === "kl" && cmbReligion.length > 0) {
-          cmbfilterReligion = cmbReligion.filter((cmbReligion) => cmbReligion.name.includes("No Religion"));
-          
-          (cmbfilterReligion[0]);
+      if (!isEditDeath) {
+        if (Religion == null || Religion == "") {
+          if (stateId === "kl" && cmbReligion.length > 0) {
+            cmbfilterReligion = cmbReligion.filter((cmbReligion) => cmbReligion.name.includes("No Religion"));
+            setSelectedReligion(cmbfilterReligion[0]);
+          }
         }
       }
+
       if (DeathPlaceCountry == null || DeathPlaceCountry == "") {
         if (stateId === "kl" && cmbNation.length > 0) {
           cmbfilterNationI = cmbNation.filter((cmbNation) => cmbNation.name.includes("India"));
@@ -752,7 +759,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
     );
     // console.log(currentWorgFlow[0].WorkflowCode);
     // workFlowCode=currentWorgFlow[0].WorkflowCode;
-    setWorkFlowCode(currentWorgFlow[0].WorkflowCode); 
+    setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
     if (value.code === "HOSPITAL") {
       //Institution
       setSelectedDeathPlaceInstId(null);
@@ -1176,6 +1183,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
       let IsEditChangeScreen = isEditDeath ? isEditDeath : false;
 
       onSelect(config.key, {
+        uuid,
         IsEditChangeScreen,
         DateOfDeath1,
         DeathDateUnavailable,

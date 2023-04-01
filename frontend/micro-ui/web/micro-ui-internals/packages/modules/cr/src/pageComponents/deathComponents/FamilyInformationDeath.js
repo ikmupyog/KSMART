@@ -267,21 +267,21 @@ const FamilyInformationDeath = ({ config, onSelect, userType, formData, isEditDe
   }
 
   const goNext = () => {
-    sessionStorage.setItem("SpouseType", SpouseType ? SpouseType.code : null);
-    sessionStorage.setItem("SpouseNameEN", SpouseNameEN ? SpouseNameEN : null);
-    sessionStorage.setItem("SpouseNameMl", SpouseNameMl ? SpouseNameMl : null);
-    sessionStorage.setItem("SpouseAadhaar", SpouseAadhaar ? SpouseAadhaar : null);
-    sessionStorage.setItem("FatherNameEn", FatherNameEn ? FatherNameEn : null);
-    sessionStorage.setItem("FatherNameMl", FatherNameMl ? FatherNameMl : null);
-    sessionStorage.setItem("FatherAadharNo", FatherAadharNo ? FatherAadharNo : null);
-    sessionStorage.setItem("MotherNameEn", MotherNameEn ? MotherNameEn : null);
-    sessionStorage.setItem("MotherNameMl", MotherNameMl ? MotherNameMl : null);
-    sessionStorage.setItem("MotherAadharNo", MotherAadharNo ? MotherAadharNo : null);
-    sessionStorage.setItem("FatherUnavailable", FatherUnavailable);
-    sessionStorage.setItem("MotherUnavailable", MotherUnavailable);
-    sessionStorage.setItem("SpouseUnavailable", SpouseUnavailable);
-    sessionStorage.setItem("FamilyMobileNo", FamilyMobileNo);
-    sessionStorage.setItem("FamilyEmailId", FamilyEmailId);
+    // sessionStorage.setItem("SpouseType", SpouseType ? SpouseType.code : null);
+    // sessionStorage.setItem("SpouseNameEN", SpouseNameEN ? SpouseNameEN : null);
+    // sessionStorage.setItem("SpouseNameMl", SpouseNameMl ? SpouseNameMl : null);
+    // sessionStorage.setItem("SpouseAadhaar", SpouseAadhaar ? SpouseAadhaar : null);
+    // sessionStorage.setItem("FatherNameEn", FatherNameEn ? FatherNameEn : null);
+    // sessionStorage.setItem("FatherNameMl", FatherNameMl ? FatherNameMl : null);
+    // sessionStorage.setItem("FatherAadharNo", FatherAadharNo ? FatherAadharNo : null);
+    // sessionStorage.setItem("MotherNameEn", MotherNameEn ? MotherNameEn : null);
+    // sessionStorage.setItem("MotherNameMl", MotherNameMl ? MotherNameMl : null);
+    // sessionStorage.setItem("MotherAadharNo", MotherAadharNo ? MotherAadharNo : null);
+    // sessionStorage.setItem("FatherUnavailable", FatherUnavailable);
+    // sessionStorage.setItem("MotherUnavailable", MotherUnavailable);
+    // sessionStorage.setItem("SpouseUnavailable", SpouseUnavailable);
+    // sessionStorage.setItem("FamilyMobileNo", FamilyMobileNo);
+    // sessionStorage.setItem("FamilyEmailId", FamilyEmailId);
 
     onSelect(config.key, {
       SpouseType,
@@ -512,7 +512,6 @@ const FamilyInformationDeath = ({ config, onSelect, userType, formData, isEditDe
                 label={t("CR_MOTHER_UNAVAILABLE")}
                 onChange={() => setMotherUnavailable(!MotherUnavailable)}
                 value={MotherUnavailable}
-                setMotherUnavailable
                 checked={MotherUnavailable}
               />
             </div>
