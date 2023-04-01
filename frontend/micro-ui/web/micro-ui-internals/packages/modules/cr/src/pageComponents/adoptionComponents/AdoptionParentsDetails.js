@@ -414,18 +414,18 @@ const AdoptionParentsDetails = ({ config, onSelect, userType, formData, isEditBi
       } else {
         setMotherMaritalStatusError(false);
       }
-      if (motherMarriageAge == null || motherMarriageAge == '' || motherMarriageAge == undefined) {
-        if (MotherMarriageageError) {
-          validFlag = false;
-          setMotherMarriageageError(true);
-          setToast(true);
-          setTimeout(() => {
-            setToast(false);
-          }, 2000);
-        } else {
-          setMotherMarriageageError(false);
-        }
-      }
+      // if (motherMarriageAge == null || motherMarriageAge == '' || motherMarriageAge == undefined) {
+      //   if (MotherMarriageageError) {
+      //     validFlag = false;
+      //     setMotherMarriageageError(true);
+      //     setToast(true);
+      //     setTimeout(() => {
+      //       setToast(false);
+      //     }, 2000);
+      //   } else {
+      //     setMotherMarriageageError(false);
+      //   }
+      // }
 
     }
     if (isFatherInfo === false) {
@@ -565,7 +565,7 @@ const AdoptionParentsDetails = ({ config, onSelect, userType, formData, isEditBi
         <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}
           isDisabled={!fatherMobile ||
             (isMotherInfo === false ? (motherFirstNameEn === "" || motherFirstNameMl === "" || !motherNationality
-              || !motherMaritalStatus || motherMarriageBirth === "" 
+              || !motherMaritalStatus 
               || !motherEducation || !motherProfession) : false)
             || (isFatherInfo === false ? (fatherFirstNameEn === "" || fatherFirstNameMl === "" || !fatherNationality || !fatherEducation || !fatherProfession
             ) : false)
@@ -681,7 +681,7 @@ const AdoptionParentsDetails = ({ config, onSelect, userType, formData, isEditBi
                   </div>
                 </div>
               </div>
-              <div className="row">
+              {/* <div className="row">
                 <div className="col-md-12">
                   {ageMariageStatusHide === "MARRIED" && (
 
@@ -718,7 +718,7 @@ const AdoptionParentsDetails = ({ config, onSelect, userType, formData, isEditBi
                     />
                   </div>
                 </div>
-              </div>
+              </div> */}
               <div className="row">
                 <div className="col-md-12">
                   {/* <div className="col-md-4">
