@@ -12,6 +12,7 @@ import {
   Toast,
   SubmitBar,
   TextArea,
+  PopUp,
 } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/MARRIAGETimeline";
 import { useTranslation } from "react-i18next";
@@ -32,12 +33,10 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   //   { i18nKey: "Un Married", code: "UNMARRIED" },
   //   { i18nKey: "Not Applicable", code: "NOT Applicable" },
   // ];
-  // const cmbPlaceType = [
-  //   { i18nKey: "Mandapam", code: "MANDAPAM" },
-  //   { i18nKey: "Hall", code: "HALL" },
-  //   { i18nKey: "Auditorium", code: "AUDITORIUM" },
-  //   { i18nKey: "Convention Centre", code: "CONVENTION CENTRE" },
-  // ];
+  const cmbExpirationType = [
+    { i18nKey: "Alive", code: "ALIVE" },
+    { i18nKey: "Expired", code: "EXPIRED" },
+  ];
 
   let cmbDistrict = [];
   let cmbTaluk = [];
@@ -105,7 +104,9 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   );
   const [marraigeType, setmarraigeType] = useState(formData?.WitnessDetails?.marraigeType ? formData?.WitnessDetails?.marraigeType : "");
 
-  const [witness1AdharNo, setwitness1AdharNo] = useState(formData?.WitnessDetails?.witness1AdharNo ? formData?.WitnessDetails?.witness1AdharNo : "");
+  const [witness1AadharNo, setwitness1AadharNo] = useState(
+    formData?.WitnessDetails?.witness1AadharNo ? formData?.WitnessDetails?.witness1AadharNo : ""
+  );
   const [witness2AdharNo, setwitness2AdharNo] = useState(formData?.WitnessDetails?.witness2AdharNo ? formData?.WitnessDetails?.witness2AdharNo : "");
   const [witness2NameEn, setwitness2NameEn] = useState(formData?.WitnessDetails?.witness2NameEn ? formData?.WitnessDetails?.witness2NameEn : "");
   const [witness1NameEn, setwitness1NameEn] = useState(formData?.WitnessDetails?.witness1NameEn ? formData?.WitnessDetails?.witness1NameEn : "");
@@ -138,6 +139,44 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   const [brideImage, setBrideImage] = useState(null);
   const [previewGroomImage, setPreviewGroomImage] = useState(null);
   const [previewBrideImage, setPreviewBrideImage] = useState(null);
+  const [expirationType, setExpirationType] = useState(null);
+  const [expirationTypeHusband, setExpirationTypeHusband] = useState(null);
+  const [isExpiredHusband, setIsExpiredHusband] = useState(false);
+  const [expirationTypeWife, setExpirationTypeWife] = useState(null);
+  const [isExpiredWife, setIsExpiredWife] = useState(false);
+
+  console.log({ expirationTypeHusband });
+  console.log({ isExpiredHusband });
+  console.log({ expirationTypeWife });
+  console.log({ isExpiredWife });
+
+  const getUserType = () => Digit.UserService.getType();
+
+  const EsignVerificationWitness1 = async () => {
+    const data = {
+      ...witness1Mobile,
+      tenantId: stateCode,
+      userType: getUserType(),
+    };
+
+    sendOtp({ otp: { ...data, ...{ type: "register" } } });
+  };
+
+  const sendOtp = async (data) => {
+    console.log("sendOtp");
+
+    try {
+      console.log("try reached==", data);
+
+      const res = await Digit.UserService.sendOtp(data, 32);
+
+      return [res, null];
+    } catch (err) {
+      console.log("catch reached==", err);
+
+      return [null, err];
+    }
+  };
 
   const handleGroomImage = (event) => {
     if (!event.target.files || event.target.files.length === 0) {
@@ -156,6 +195,20 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   };
 
   const onSkip = () => onSelect();
+
+  function setSelectExpirationTypeHusband(value) {
+    if (value) {
+      setIsExpiredHusband(true);
+      setExpirationType(value.code);
+    }
+  }
+
+  function setSelectExpirationTypeWife(value) {
+    if (value) {
+      setIsExpiredWife(true);
+      setExpirationType(value.code);
+    }
+  }
 
   // function setSelectmarraigeDOM(value) {
   //   setmarraigeDOM(value);
@@ -176,9 +229,9 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   //     }, 3000);
   //   }
   // }
-  function setSelectwitness1AdharNo(e) {
+  function setSelectwitness1AadharNo(e) {
     if (e.target.value.trim().length >= 0) {
-      setwitness1AdharNo(
+      setwitness1AadharNo(
         e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
       );
     }
@@ -192,16 +245,16 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     //     // window.alert("Username shouldn't exceed 10 characters")
     //   } else if (e.target.value.length < 12) {
     //     setAadharError(true);
-    //     setwitness1AdharNo(e.target.value);
+    //     setwitness1AadharNo(e.target.value);
     //     return false;
     //   } else {
     //     setAadharError(false);
-    //     setwitness1AdharNo(e.target.value);
+    //     setwitness1AadharNo(e.target.value);
     //     return true;
     //   }
     // } else {
     //   setAadharError(false);
-    //   setwitness1AdharNo(e.target.value);
+    //   setwitness1AadharNo(e.target.value);
     //   return true;
     // }
   }
@@ -321,11 +374,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     // }
   }
   function setSelectwitness1Mobile(e) {
-    if (e.target.value.trim().length != 0) {
-      setwitness1Mobile(
-        e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 10)
-      );
-    }
+    setwitness1Mobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 10));
     // if (e.target.value.length === 11) {
     //   return false;
     //   // window.alert("Username shouldn't exceed 10 characters")
@@ -334,11 +383,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     // }
   }
   function setSelectwitness2Mobile(e) {
-    if (e.target.value.trim().length != 0) {
-      setwitness2Mobile(
-        e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 10)
-      );
-    }
+    setwitness2Mobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 10));
     // if (e.target.value.length === 11) {
     //   return false;
     //   // window.alert("Username shouldn't exceed 10 characters")
@@ -375,14 +420,14 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
       // sessionStorage.setItem("marraigeVillageName", marraigeVillageName ? marraigeVillageName : null);
       // sessionStorage.setItem("marraigePlacetype", marraigePlacetype ? marraigePlacetype : null);
       // sessionStorage.setItem("marriageLocalityEn", marriageLocalityEn ? marriageLocalityEn : null);
-      sessionStorage.setItem("witness1NameEn", witness1NameEn ? witness1NameEn : null);
-      sessionStorage.setItem("witness2NameEn", witness2NameEn ? witness2NameEn : null);
-      sessionStorage.setItem("witness1Age", witness1Age ? witness1Age : null);
-      sessionStorage.setItem("witness2Age", witness2Age ? witness2Age : null);
-      sessionStorage.setItem("witness1AddresSEn", witness1AddresSEn ? witness1AddresSEn : null);
-      sessionStorage.setItem("witness2AddresSEn", witness2AddresSEn ? witness2AddresSEn : null);
-      sessionStorage.setItem("witness1Mobile", witness1Mobile ? witness1Mobile : null);
-      sessionStorage.setItem("witness2Mobile", witness2Mobile ? witness2Mobile : null);
+      // sessionStorage.setItem("witness1NameEn", witness1NameEn ? witness1NameEn : null);
+      // sessionStorage.setItem("witness2NameEn", witness2NameEn ? witness2NameEn : null);
+      // sessionStorage.setItem("witness1Age", witness1Age ? witness1Age : null);
+      // sessionStorage.setItem("witness2Age", witness2Age ? witness2Age : null);
+      // sessionStorage.setItem("witness1AddresSEn", witness1AddresSEn ? witness1AddresSEn : null);
+      // sessionStorage.setItem("witness2AddresSEn", witness2AddresSEn ? witness2AddresSEn : null);
+      // sessionStorage.setItem("witness1Mobile", witness1Mobile ? witness1Mobile : null);
+      // sessionStorage.setItem("witness2Mobile", witness2Mobile ? witness2Mobile : null);
       // sessionStorage.setItem("marriageStreetMal", marriageStreetMal ? marriageStreetMal : null);
       // sessionStorage.setItem("marriageStreetEn", marriageStreetEn ? marriageStreetEn : null);
       // sessionStorage.setItem("marriageHouseNoAndNameEn", marriageHouseNoAndNameEn ? marriageHouseNoAndNameEn : null);
@@ -392,10 +437,10 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
       // sessionStorage.setItem("marraigeType", marraigeType ? marraigeType : null);
       // sessionStorage.setItem("marraigeOthersSpecify", marraigeOthersSpecify ? marraigeOthersSpecify : null);
       // sessionStorage.setItem("tripStartTime", tripStartTime ? tripStartTime : null);
-      sessionStorage.setItem("witness1AdharNo", witness1AdharNo ? witness1AdharNo : null);
-      sessionStorage.setItem("witness2AdharNo", witness2AdharNo ? witness2AdharNo : null);
+      // sessionStorage.setItem("witness1AadharNo", witness1AadharNo ? witness1AadharNo : null);
+      // sessionStorage.setItem("witness2AdharNo", witness2AdharNo ? witness2AdharNo : null);
       onSelect(config.key, {
-        witness1AdharNo,
+        witness1AadharNo,
         witness2AdharNo,
         witness1NameEn,
         witness2NameEn,
@@ -405,7 +450,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
         witness2AddresSEn,
         witness1Mobile,
         witness2Mobile,
-        handleFile1Change,
       });
     }
   };
@@ -470,9 +514,9 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                         type={"text"}
                         optionKey="i18nKey"
                         isMandatory={false}
-                        name="witness1AdharNo"
-                        value={witness1AdharNo}
-                        onChange={setSelectwitness1AdharNo}
+                        name="witness1AadharNo"
+                        value={witness1AadharNo}
+                        onChange={setSelectwitness1AadharNo}
                         disable={isDisableEdit}
                         placeholder={`${t("CR_WITNESS1_ADHAR_NO")}`}
                         inputProps={{
@@ -566,12 +610,13 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                           color: "#fff",
                           marginTop: "40px",
                           padding: "5px 10px",
+                          cursor: "pointer",
                         }}
                         name="eSign"
                         value="E-sign"
                         onChange={setSelectwitness1Mobile}
                         disable={isDisableEdit}
-                        {...(validation = { isRequired: true, title: t("CS_INVALID_MOBILE_NO") })}
+                        // {...(validation = { isRequired: true })}
                       />
                     </div>
                   </div>
@@ -688,12 +733,13 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                           color: "#fff",
                           marginTop: "40px",
                           padding: "5px 10px",
+                          cursor: "pointer",
                         }}
                         name="eSign"
                         value="E-sign"
                         onChange={setSelectwitness1Mobile}
                         disable={isDisableEdit}
-                        {...(validation = { isRequired: true, title: t("CS_INVALID_MOBILE_NO") })}
+                        // {...(validation = { isRequired: true })}
                       />
                     </div>
                   </div>
@@ -703,27 +749,70 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                         <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_LIVE_STATUS_OF_OF_PARTIES_TO_LIVE")}`}</span>{" "}
                       </h1>
                     </div>
-                    <div className="col-md-12">
-                      <h1 className="headingh1">
-                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_HUSBAND")}`}</span>{" "}
-                      </h1>
+                  </div>
+                  <div className="col-md-12">
+                    <div className="col-md-4">
+                      <CardLabel>{t("CR_HUSBAND_NAME")}</CardLabel>
+                      <TextInput
+                        t={t}
+                        isMandatory={false}
+                        type={"text"}
+                        optionKey="i18nKey"
+                        name="husbandname"
+                        placeholder={t("CR_HUSBAND_NAME")}
+                        {...(validation = { isRequired: true })}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <CardLabel>
+                        {`${t("CR_EXPIRATION")}`}
+                        <span className="mandatorycss">*</span>
+                      </CardLabel>
+                      <Dropdown
+                        t={t}
+                        type={"text"}
+                        optionKey="i18nKey"
+                        option={cmbExpirationType}
+                        // selected={}
+                        select={setSelectExpirationTypeHusband}
+                        placeholder={t("CR_EXPIRATION_TYPE")}
+                        isMandatory={true}
+                        {...(validation = { isRequired: true })}
+                        // option={cmbCountry}
+                      />
                     </div>
                   </div>
-                  <div className="col-md-4">
-                    {" "}
-                    <CardLabel>
-                      {t("CR_GROOM_NAME")}
-                      <span className="mandatorycss">*</span>
-                    </CardLabel>
-                    <TextInput
-                      t={t}
-                      isMandatory={false}
-                      type={"text"}
-                      optionKey="i18nKey"
-                      name="groomname"
-                      placeholder={`${t("CR_GROOM_NAME")}`}
-                      {...(validation = { isRequired: true })}
-                    />
+                  <div className="col-md-12">
+                    <div className="col-md-4">
+                      <CardLabel>{t("CR_WIFE_NAME")}</CardLabel>
+                      <TextInput
+                        t={t}
+                        isMandatory={false}
+                        type={"text"}
+                        optionKey="i18nKey"
+                        name="wifename"
+                        placeholder={t("CR_WIFE_NAME")}
+                        {...(validation = { isRequired: true })}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <CardLabel>
+                        {`${t("CR_EXPIRATION")}`}
+                        <span className="mandatorycss">*</span>
+                      </CardLabel>
+                      <Dropdown
+                        t={t}
+                        type={"text"}
+                        optionKey="i18nKey"
+                        option={cmbExpirationType}
+                        // selected={}
+                        select={setSelectExpirationTypeWife}
+                        placeholder={t("CR_EXPIRATION_TYPE")}
+                        isMandatory={true}
+                        {...(validation = { isRequired: true })}
+                        // option={cmbCountry}
+                      />
+                    </div>
                   </div>
                   <div className="row">
                     <div className="col-md-12">
@@ -797,6 +886,47 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
             </FormStep>
           </div>
         </div>
+        {(isExpiredHusband || isExpiredWife) && (
+          <PopUp>
+            <div className="popup-module" style={{ borderRadius: "8px" }}>
+              <div style={{ margin: "20px", padding: "20px", border: "1px solid grey", borderRadius: "8px" }}>
+                <div style={{ fontSize: "18px", margin: "10px" }}>Do you want to Continue?</div>
+                <div style={{ display: "flex", justifyContent: "flex-end", columnGap: "8px" }}>
+                  <button
+                    style={{
+                      backgroundColor: "orange",
+                      padding: "4px 16px",
+                      color: "white",
+                      borderRadius: "8px",
+                    }}
+                    onClick={() => {
+                      if (isExpiredHusband) {
+                        setExpirationTypeHusband(expirationType);
+                        setIsExpiredHusband(false);
+                        setIsExpiredWife(false);
+                      } else {
+                        setExpirationTypeWife(expirationType);
+                        setIsExpiredHusband(false);
+                        setIsExpiredWife(false);
+                      }
+                    }}
+                  >
+                    Yes
+                  </button>
+                  <button
+                    style={{ border: "1px solid grey", padding: "4px 16px", borderRadius: "8px" }}
+                    onClick={() => {
+                      setIsExpiredHusband(false);
+                      setIsExpiredWife(false);
+                    }}
+                  >
+                    No
+                  </button>
+                </div>
+              </div>
+            </div>
+          </PopUp>
+        )}
       </React.Fragment>
     );
 };
