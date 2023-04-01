@@ -6,9 +6,9 @@ import { useQueryClient } from "react-query";
 const StillBirthPlaceInstitution = ({ config, onSelect, userType, formData,
   institution, setInstitution, institutionIdMl, setInstitutionIdMl, institutionId, setInstitutionId,
   InstitutionFilterList, setInstitutionFilterList, isInitialRenderInstitutionList, setIsInitialRenderInstitutionList,
-  isEditBirth = false
+  isEditStillBirth = false
 }) => {
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditStillBirth ? isEditStillBirth : false);
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -38,16 +38,16 @@ const StillBirthPlaceInstitution = ({ config, onSelect, userType, formData,
     institutionidList["egov-location"].institutionList.map((ob) => {
       cmbInstitutionList.push(ob);
     });
-  if (isEditBirth) {
-    if (formData?.ChildDetails?.institutionTypeCode != null) {
+  if (isEditStillBirth) {
+    if (formData?.StillBirthChildDetails?.institutionTypeCode != null) {
       if (cmbInstitutionType.length > 0 && (institution === undefined || institution === "")) {
-        setInstitution(cmbInstitutionType.filter(cmbInstitutionType => cmbInstitutionType.code === formData?.ChildDetails?.institutionTypeCode)[0]);
+        setInstitution(cmbInstitutionType.filter(cmbInstitutionType => cmbInstitutionType.code === formData?.StillBirthChildDetails?.institutionTypeCode)[0]);
       }
     }
-    if (formData?.ChildDetails?.institutionNameCode != null) {      
+    if (formData?.StillBirthChildDetails?.institutionNameCode != null) {      
       if (cmbInstitutionList.length > 0 && (institutionId === undefined || institutionId === "")) {
-        setInstitutionId(cmbInstitutionList.filter(cmbInstitutionList => cmbInstitutionList.code === formData?.ChildDetails?.institutionNameCode)[0]);
-        setInstitutionIdMl(cmbInstitutionList.filter(cmbInstitutionList => cmbInstitutionList.code === formData?.ChildDetails?.institutionNameCode)[0]);
+        setInstitutionId(cmbInstitutionList.filter(cmbInstitutionList => cmbInstitutionList.code === formData?.StillBirthChildDetails?.institutionNameCode)[0]);
+        setInstitutionIdMl(cmbInstitutionList.filter(cmbInstitutionList => cmbInstitutionList.code === formData?.StillBirthChildDetails?.institutionNameCode)[0]);
       }
     }
   }
