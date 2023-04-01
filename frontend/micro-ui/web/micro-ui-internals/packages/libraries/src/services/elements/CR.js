@@ -77,7 +77,7 @@ export const CRService = {
     }),
   CRAdoptionSearch: ({ tenantId, filters }) =>
     Request({
-      url: Urls.cr.adoption_search,
+      url: Urls.cr.adoption_search, 
       useCache: false,
       method: "POST",
       auth: true,

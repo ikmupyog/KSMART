@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown,Card, DatePicker, CheckBox, BackButton, Loader, Toast, SubmitBar } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/CRTimeline";
+import Timeline from "../../components/AdoptionTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
 import BirthPlaceHospital from "../../pageComponents/birthComponents/BirthPlaceHospital";
@@ -130,7 +130,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
     { i18nKey: "41", code: "41" },
     { i18nKey: "42", code: "42" },
   ];
-  const [childDOB, setChildDOB] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined) ? convertEpochToDate(formData?.AdoptionChildDetails?.childDOB)  : formData?.AdoptionChildDetails?.childDOB); //formData?.AdoptionChildDetails?.childDOB
+  const [childDOB, setChildDOB] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined) ? convertEpochToDate(formData?.AdoptionChildDetails?.childDOB)  : convertEpochToDate(formData?.AdoptionChildDetails?.childDOB)); //formData?.AdoptionChildDetails?.childDOB
   // const [gender, selectGender] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined) ? (menu.filter(menu => menu.code === formData?.AdoptionChildDetails?.gender)[0]) : formData?.AdoptionChildDetails?.gender);
   const [gender, selectGender] = useState(formData?.AdoptionChildDetails?.gender?.code ? formData?.AdoptionChildDetails?.gender : formData?.AdoptionChildDetails?.gender ?
     (menu.filter(menu => menu.code === formData?.AdoptionChildDetails?.gender)[0]) : "");
@@ -147,7 +147,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
   const [isInitialRenderFormData, setisInitialRenderFormData] = useState(false);
 
   const [birthDateTime, setbirthDateTime] = useState(""); //formData?.AdoptionChildDetails?.birthDateTime ? formData?.AdoptionChildDetails?.birthDateTime :
-  const [isChildName, setIsChildName] = useState(formData?.AdoptionChildDetails?.isChildName ? formData?.AdoptionChildDetails?.isChildName : true);
+  const [isChildName, setIsChildName] = useState(true);
   const [adoptionAgency, setIsAdoptionAgency] = useState(formData?.AdoptionChildDetails?.adoptionAgency ? formData?.AdoptionChildDetails?.adoptionAgency : false);
   const [birthRegistered, setbirthRegistered] = useState(formData?.AdoptionChildDetails?.birthRegistered ? formData?.AdoptionChildDetails?.birthRegistered : false);
   // const [birthPlace, selectBirthPlace] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined) ? (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.AdoptionChildDetails?.birthPlace)[0]) : formData?.AdoptionChildDetails?.birthPlace);
@@ -264,14 +264,15 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
   const [BirthRegNo,setBirthRegNo]= useState(formData?.AdoptionChildDetails?.BirthRegNo ? formData?.AdoptionChildDetails?.BirthRegNo : "")
   const onSkip = () => onSelect();
 
-  useEffect(() => {
-    if (isInitialRender) {
-      if (formData?.AdoptionChildDetails?.isChildName != null) {
-        setIsInitialRender(false);
-        setIsChildName(formData?.AdoptionChildDetails?.isChildName);
-      }
-    }
-  }, [isInitialRender]);
+  // useEffect(() => {
+  //   if (isInitialRender) {
+  //     if (formData?.AdoptionChildDetails.gender != "") {
+  //       setIsInitialRender(false);
+  //       selectGender((menu?.filter(menu => menu.code === ormData?.AdoptionChildDetails?.gender)[0]))
+  //       // setIsChildName(formData?.AdoptionChildDetails?.isChildName);
+  //     }
+  //   }
+  // }, [isInitialRender]);
 
   useState(()=>{
     if(isEditBirth){

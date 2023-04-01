@@ -43,7 +43,7 @@ const Complaint = () => {
 
   let location = useLocation().pathname;
 
-  const CreateComplaint = Digit?.ComponentRegistryService?.getComponent('PGRCreateComplaintEmp');
+  const PGRCreateComplaintEmp = Digit?.ComponentRegistryService?.getComponent('PGRCreateComplaintEmp');
   const ComplaintDetails = Digit?.ComponentRegistryService?.getComponent('PGRComplaintDetails');
   const Inbox = Digit?.ComponentRegistryService?.getComponent('PGRInbox');
   const Response = Digit?.ComponentRegistryService?.getComponent('PGRResponseEmp');
@@ -72,7 +72,7 @@ const Complaint = () => {
           </Switch>
         )}
         <Switch>
-          <Route path={match.url + Employee.CreateComplaint} component={() => <CreateComplaint parentUrl={match.url} />} />
+          <Route path={match.url + Employee.CreateComplaint} component={() => <PGRCreateComplaintEmp parentUrl={match.url} />} />
           <Route path={match.url + Employee.ComplaintDetails + ":id*"} component={() => <ComplaintDetails />} />
           <Route path={match.url + Employee.Inbox} component={Inbox} />
           <Route path={match.url + Employee.Response} component={Response} />

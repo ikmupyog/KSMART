@@ -1037,6 +1037,22 @@ const getDeathPlaceTypelist = (tenantId, moduleCode) => ({
     ],
   },
 });
+
+const getMarriagePlaceTypelist = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "MarriagePlaceType",
+          },
+        ],
+      },
+    ],
+  },
+});
 const getCROtherDeathPlacelist = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -2436,6 +2452,9 @@ export const MdmsService = {
   },
   getDeathPlaceType: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getDeathPlaceTypelist(tenantId, moduleCode), moduleCode);
+  },
+  getMarriagePlaceType: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getMarriagePlaceTypelist(tenantId, moduleCode), moduleCode);
   },
   getCRcauseOfSpouseType: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRcauseOfSpouseTypelist(tenantId, moduleCode), moduleCode);

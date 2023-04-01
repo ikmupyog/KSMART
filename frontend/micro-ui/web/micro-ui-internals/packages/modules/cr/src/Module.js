@@ -16,6 +16,7 @@ import AddressSameAsAbove from "../src/pageComponents/birthComponents/AddressSam
 import AddressPermanent from "../src/pageComponents/birthComponents/AddressPermanent";
 import MultipleBirth from "../src/pageComponents/birthComponents/MultipleBirth";
 import CreateBirthRegistration from "./pages/citizen/BirthRegistration";
+import CreateBirthEmp from "./pages/employee/BirthRegistration";
 import CreateBirthNACRegistration from "./pages/citizen/BirthNACRegistration";
 import MarriageInclusion from "./pages/citizen/MarriageInclusion";
 import BirthInclusion from "./pages/citizen/BirthInclusion";
@@ -27,8 +28,10 @@ import SearchMarriageInclusion from "./components/SearchMarriageInclusion";
 import CreateAdoptions from "./pages/citizen/Adoption";
 import CreateStillBirthRegistration from "./pages/citizen/StillBirthRegistration";
 import CreateBornOutsideRegistration from "./pages/citizen/BornOutsideReg";
-// import CreateAbandonedBirth from "./pages/citizen/AbandonedBirth";
 import CreateAbandonedBirth from "./pages/employee/Abandoned-birth-route";
+import CrFlowApp from "./pages/employee/Birth-route";
+import ScrFlowApp from "./pages/employee/StillBirth-route";
+import CreateBornOutsideEmp from "./pages/employee/OutsideIndiaBirth-route";
 
 import ParentsDetails from "../src/pageComponents/birthComponents/ParentsDetails";
 import BirthPlaceHospital from "../src/pageComponents/birthComponents/BirthPlaceHospital";
@@ -104,7 +107,7 @@ import MyCRDeathApplications from "./pages/citizen/Applications/ApplicationDeath
 // import DeathCertificate from "./pageComponents/deathComponents/DeathCertificate";
 // import GeneralRemarks from "./pageComponents/deathComponents/GeneralRemarks";
 import CRSearch from "./pages/employee/Search";
-import CRDeathsearch from "./pages/employee/Search";
+// import CRDeathsearch from "./pages/employee/Search";
 import SearchCrApplication from "./components/SearchApplication";
 import SearchRegistryDeath from "./components/SearchRegistryDeath";
 import CRCitizenApplicationDetails from "./pages/citizen/Applications/ApplicationDetails";
@@ -152,12 +155,15 @@ import MarriageInstitution from "./pageComponents/marriageComponents/MarriageIns
 import MarriagePublicPlace from "./pageComponents/marriageComponents/MarriagePublicPlace";
 import MarriageRegistration from "./pageComponents/marriageComponents/MarriageRegistration";
 import HouseMarriageRegistration from "./pageComponents/marriageComponents/HouseMarriageRegistration";
-import Witnessdetails from "./pageComponents/marriageComponents/witnessdetails"
+import Witnessdetails from "./pageComponents/marriageComponents/Witnessdetails"
 import MarriageInclusionEditPage from "./pageComponents/marriageComponents/MarriageCorrection";
+import MarriageCorrectionEditPage from "./pages/citizen/MarriageInclusionEdit";
 
-// import CreateAbandonedBirth from "./pages/employee/Abandoned-birth";
 import AbandonedChildDetails from "./pageComponents/abandonedBirthComponents/AbandonedChildDetails";
 import AbandonedBirthInformarDetails from "./pageComponents/abandonedBirthComponents/AbandonedBirthInformarDetails";
+import AbandonedBirthAcknowledgement from "./pages/employee/Abandoned-birth-route/AbandonedBirthAcknowledgement";
+import AbandonedBirthCheckPage from "./pages/employee/Abandoned-birth-route/AbandonedBirthCheckPage";
+
 import BornOutsideAcknowledgement from "./pages/citizen/BornOutsideReg/BornOutsideAcknowledgement";
 
 import InformationDeathAband from "./pageComponents/deathAbandoned/InformationDeathAband";
@@ -238,6 +244,9 @@ export const CRLinks = ({ matchPath, userType }) => {
 };
 
 const componentsToRegister = {
+  CrFlowApp,
+  ScrFlowApp,
+  CreateBornOutsideEmp,
   MyCRApplications,
   MyCRDeathApplications,
   CustomTimePicker,
@@ -256,8 +265,7 @@ const componentsToRegister = {
   CRApplicationDetails,
   CRApplicationDeathDetails,
   SearchDeathInclusion,
-  CRSearch,
-  CRDeathsearch,
+  // CRDeathsearch,
   SearchCrApplication,
   SearchRegistryDeath,
   SearchDeathApplication,
@@ -267,10 +275,11 @@ const componentsToRegister = {
   AddressPermanent,
   MultipleBirth,
   CRCreateBirthRegistration: CreateBirthRegistration,
+  CreateBirthEmp,
   CRCreateAdoptions: CreateAdoptions,
   CRCreateStillBirthRegistration: CreateStillBirthRegistration,
   CRCreateBornOutsideRegistration: CreateBornOutsideRegistration,
-  CRCreateAbandonedBirth: CreateAbandonedBirth,
+  CreateAbandonedBirth,
   CRCreateBirthNACRegistration: CreateBirthNACRegistration,
   ParentsDetails,
   CRBirthInclusions: BirthInclusion,
@@ -367,6 +376,7 @@ const componentsToRegister = {
   DeathAcknowledgement,
   MarriageAcknowledgement,
   MarriageInclusionEditPage,
+  MarriageCorrectionEditPage,
   StillBirthAcknowledgement,
   BirthCertificate,
   CRCreateDeathRegistration: CreateDeathRegistration,
@@ -376,7 +386,6 @@ const componentsToRegister = {
   CRWFApplicationTimeline,
   CRDWFApplicationTimeline,
   InformationDeathAband,
-  // CreateAbandonedBirth,
   AbandonedChildDetails,
   AbandonedBirthInformarDetails,
   //Marriage
@@ -392,6 +401,8 @@ const componentsToRegister = {
   Witnessdetails,
   FormFieldContainer,
   BornOutsideAcknowledgement,
+  AbandonedBirthAcknowledgement,
+  AbandonedBirthCheckPage
 };
 
 export const initCRComponents = () => {
