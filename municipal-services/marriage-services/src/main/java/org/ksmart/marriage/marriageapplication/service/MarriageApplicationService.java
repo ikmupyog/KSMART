@@ -2,6 +2,8 @@ package org.ksmart.marriage.marriageapplication.service;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.ksmart.marriage.common.producer.MarriageProducer;
+import org.ksmart.marriage.config.MarriageApplicationConfiguration;
 import org.ksmart.marriage.marriageapplication.enrichment.MarriageDetailsEnrichment;
 import org.ksmart.marriage.marriageapplication.model.MarriageApplicationDetails;
 import org.ksmart.marriage.marriageapplication.model.Demand.Demand;
@@ -20,33 +22,69 @@ import java.util.List;
 @Slf4j
 @Service
 public class MarriageApplicationService {
+    private final MarriageProducer producer;
     private final MarriageApplicationRepository repository;
     private final WorkflowIntegrator workflowIntegrator;
     private final MarriageDetailsEnrichment marriageDetailsEnrichment;
     private final MarriageMdmsUtil util;
     private final MarriageMDMSValidator mdmsValidator;
+    private final MarriageApplicationConfiguration marriageApplicationConfiguration;
     
 
-    public MarriageApplicationService(MarriageApplicationRepository repository , 
+    public MarriageApplicationService(MarriageProducer producer,MarriageApplicationRepository repository , 
                                     WorkflowIntegrator workflowIntegrator,
                                     MarriageDetailsEnrichment marriageDetailsEnrichment,     
                                     MarriageMdmsUtil util,
-                                    MarriageMDMSValidator mdmsValidator) {
+                                    MarriageMDMSValidator mdmsValidator,
+                                    MarriageApplicationConfiguration marriageApplicationConfiguration) {
         this.repository = repository;
         this.workflowIntegrator = workflowIntegrator;
         this. marriageDetailsEnrichment= marriageDetailsEnrichment;
         this.util = util;
         this.mdmsValidator=mdmsValidator;
+        this.producer = producer;
+        this.marriageApplicationConfiguration = marriageApplicationConfiguration;
     }
+
+
+    // private final MarriageProducer producer;
+    // private final MarriageApplicationConfiguration marriageApplicationConfiguration;
+    // private final MarriageDetailsEnrichment marriageDetailsEnrichment;
+    // private final MarriageApplicationQueryBuilder marriageQueryBuilder;
+    // private final MarriageApplicationRowMapper marriageApplicationRowMapper;
+    // private final JdbcTemplate jdbcTemplate;
+    // private final WorkflowIntegrator workflowIntegrator;
+    // private final MarriageMdmsUtil util;
+    // private final MarriageMDMSValidator mdmsValidator;
+
+    // @Autowired
+    // public MarriageApplicationRepository(MarriageProducer producer, MarriageApplicationConfiguration marriageApplicationConfiguration, 
+    // JdbcTemplate jdbcTemplate, MarriageDetailsEnrichment marriageDetailsEnrichment, MarriageApplicationQueryBuilder marriageQueryBuilder, 
+    // MarriageApplicationRowMapper marriageApplicationRowMapper,
+    //  WorkflowIntegrator workflowIntegrator,
+    // MarriageMdmsUtil util,
+    // MarriageMDMSValidator mdmsValidator) {
+    //     this.producer = producer;
+    //     this.marriageApplicationConfiguration = marriageApplicationConfiguration;
+    //     this.marriageDetailsEnrichment = marriageDetailsEnrichment;
+    //     this.jdbcTemplate = jdbcTemplate;
+    //     this.marriageQueryBuilder = marriageQueryBuilder;
+    //     this.marriageApplicationRowMapper = marriageApplicationRowMapper;
+    //     this.workflowIntegrator = workflowIntegrator;
+    //     this.util = util;
+    //     this.mdmsValidator=mdmsValidator;
+    // }
 
     public List<MarriageApplicationDetails> saveMarriageDetails(MarriageDetailsRequest request) {
         // validatorService.validateCommonFields( request);
         Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getMarriageDetails().get(0).getTenantid());
         mdmsValidator.validateMarriageMDMSData(request,mdmsData);
         marriageDetailsEnrichment.enrichCreate(request);
-        List<MarriageApplicationDetails>  marriageApplicationDetails = repository.saveMarriageDetails(request);
+
+        producer.push(marriageApplicationConfiguration.getSaveMarriageApplicationTopic(), request);
+       // List<MarriageApplicationDetails>  marriageApplicationDetails = repository.saveMarriageDetails(request);
        // workflowIntegrator.callWorkFlow(request);
-        marriageApplicationDetails.forEach(marriage->{
+       request.getMarriageDetails().forEach(marriage->{
             if(marriage.getStatus() == MarriageConstants.STATUS_FOR_PAYMENT){
                 List<Demand> demands = new ArrayList<>();
                 Demand demand = new Demand();
@@ -56,7 +94,7 @@ public class MarriageApplicationService {
                 marriageDetailsEnrichment.saveDemand(request.getRequestInfo(),demands);
             }
         }); 
-        return marriageApplicationDetails;
+        return request.getMarriageDetails();
 
     }
 
@@ -66,9 +104,9 @@ public class MarriageApplicationService {
         mdmsValidator.validateMarriageMDMSData(request,mdmsData);
         marriageDetailsEnrichment.enrichUpdate(request);
         // workflowIntegrator.callWorkFlow(request);
-        List<MarriageApplicationDetails>  marriageApplicationDetails =repository.updateMarriageDetails(request);
-
-        marriageApplicationDetails.forEach(marriage->{
+       // List<MarriageApplicationDetails>  marriageApplicationDetails =repository.updateMarriageDetails(request);
+        producer.push(marriageApplicationConfiguration.getUpdateMarriageApplicationTopic(), request);
+        request.getMarriageDetails().forEach(marriage->{
             if(marriage.getStatus() == MarriageConstants.STATUS_FOR_PAYMENT){
                 List<Demand> demands = new ArrayList<>();
                 Demand demand = new Demand();
@@ -78,7 +116,7 @@ public class MarriageApplicationService {
                 marriageDetailsEnrichment.saveDemand(request.getRequestInfo(),demands);
             }
         }); 
-        return marriageApplicationDetails;
+        return request.getMarriageDetails();
 
     }
 

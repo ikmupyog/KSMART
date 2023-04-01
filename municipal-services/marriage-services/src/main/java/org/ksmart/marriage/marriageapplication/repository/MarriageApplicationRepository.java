@@ -56,19 +56,19 @@ public class MarriageApplicationRepository {
         this.util = util;
         this.mdmsValidator=mdmsValidator;
     }
-    public List<MarriageApplicationDetails> saveMarriageDetails(MarriageDetailsRequest request) {
+    // public List<MarriageApplicationDetails> saveMarriageDetails(MarriageDetailsRequest request) {
 
-       // marriageDetailsEnrichment.enrichCreate(request);
-        producer.push(marriageApplicationConfiguration.getSaveMarriageApplicationTopic(), request);
-        return request.getMarriageDetails();
-    }
+    //    // marriageDetailsEnrichment.enrichCreate(request);
+    //     producer.push(marriageApplicationConfiguration.getSaveMarriageApplicationTopic(), request);
+    //     return request.getMarriageDetails();
+    // }
 
-    public List<MarriageApplicationDetails> updateMarriageDetails(MarriageDetailsRequest request) {
+    // public List<MarriageApplicationDetails> updateMarriageDetails(MarriageDetailsRequest request) {
        
-       // workflowIntegrator.callWorkFlow(request);
-        producer.push(marriageApplicationConfiguration.getUpdateMarriageApplicationTopic(), request);
-        return request.getMarriageDetails();
-    }
+    //    // workflowIntegrator.callWorkFlow(request);
+    //     producer.push(marriageApplicationConfiguration.getUpdateMarriageApplicationTopic(), request);
+    //     return request.getMarriageDetails();
+    // }
     //Jasmine 31.03.2023
     // public List<MarriageDetailsRequest> saveMarriageDetails(MarriageDetailsRequest request) {
 
