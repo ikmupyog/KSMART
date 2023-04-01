@@ -5,6 +5,8 @@ package org.egov.kssmSnehapoorvam.web.models.snehapoorvam;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import java.math.BigInteger;
 import java.time.LocalDate;   
 
 import org.springframework.validation.annotation.Validated;
@@ -103,6 +105,7 @@ public class m_Snehapoorvam {
     @JsonProperty("applicant_mainplacenameeng")
     private String applicant_mainplacenameeng;
 
+    @Pattern(regexp ="^((0|\\+91)?\\d{2,4}|)\\d{6,8}$")
     @Size(max = 11)
     @JsonProperty("applicantlandphone_no")
     private String applicantlandphone_no;
@@ -307,12 +310,15 @@ public class m_Snehapoorvam {
     private int applicant_bank_branch;
 
 
-    @Size(max = 100)
+    @Pattern(regexp ="^[A-Z]{4}0[A-Z0-9]{6}$")
+    @Size(max = 11)
     @JsonProperty("applicant_ifsccode")
     private String applicant_ifsccode;
 
+    @Pattern(regexp = "^[2-9]{1}[0-9]{3}[0-9]{4}[0-9]{4}$")
+    @Size(max=12)
     @JsonProperty("applicant_aadharno")
-    private int applicant_aadharno;
+    private String applicant_aadharno;
 
 
     @Size(max = 1000)
@@ -383,7 +389,7 @@ public class m_Snehapoorvam {
     @Size(max = 1000)
     @JsonProperty("chvdeathcertificate_issuingauthority_mother")
     private String chvdeathcertificate_issuingauthority_mother;
-
+   
 
     @JsonProperty("intclass_id")
     private int intclass_id;
