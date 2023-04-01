@@ -7,6 +7,7 @@ import org.egov.encryption.config.EncryptionConfiguration;
 import org.egov.tracer.config.TracerConfiguration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
@@ -14,13 +15,14 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import springfox.documentation.builders.RequestHandlerSelectors;
-import springfox.documentation.spi.DocumentationType;
-import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+ import springfox.documentation.builders.RequestHandlerSelectors;
+ import springfox.documentation.spi.DocumentationType;
+ import springfox.documentation.spring.web.plugins.Docket;
+ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication(scanBasePackages = "org.ksmart.marriage")
-@EnableSwagger2
+ @EnableSwagger2
+@EnableAutoConfiguration
 @Import({TracerConfiguration.class,EncryptionConfiguration.class})
 public class MarriageApplication {
 

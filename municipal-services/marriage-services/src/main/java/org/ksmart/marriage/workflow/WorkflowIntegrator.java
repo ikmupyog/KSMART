@@ -5,34 +5,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Collections;
 import org.apache.commons.collections4.CollectionUtils;
-
-// import org.ksmart.death.deathapplication.config.DeathConfiguration;
-// import org.ksmart.death.deathapplication.repository.DeathApplnRepository;
-// import org.ksmart.death.deathapplication.web.models.DeathDtlRequest;
-// import org.ksmart.death.deathapplication.web.models.DeathSearchCriteria;
-// import org.ksmart.death.deathapplication.util.DeathConstants;
-
 import org.egov.tracer.model.CustomException;
 import org.ksmart.marriage.config.MarriageApplicationConfiguration;
 import org.ksmart.marriage.marriageapplication.model.MarriageApplicationDetails;
 import org.ksmart.marriage.marriageapplication.model.marriage.MarriageDetailsRequest;
-import org.ksmart.marriage.marriageapplication.repository.MarriageApplicationRepository;
+//import org.ksmart.marriage.marriageapplication.repository.MarriageApplicationRepository;
 import org.ksmart.marriage.utils.MarriageConstants;
-// import org.ksmart.death.deathapplication.web.models.DeathCorrectionDtls;
-// import org.ksmart.death.deathapplication.web.models.DeathCorrectionRequest;
-// import org.ksmart.death.deathapplication.web.models.DeathAbandonedDtls;
-// import org.ksmart.death.deathapplication.web.models.DeathAbandonedRequest;
-// import org.ksmart.death.deathapplication.web.models.DeathDtl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.PathNotFoundException;
-
 import lombok.extern.slf4j.Slf4j;
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
@@ -44,16 +29,16 @@ import net.minidev.json.JSONObject;
 @Slf4j
 public class WorkflowIntegrator {
 
-
-
     private   final MarriageApplicationConfiguration bndConfig;
     private   final RestTemplate restTemplate;
-    private final MarriageApplicationRepository repository;
+   // private final MarriageApplicationRepository repository;
     @Autowired
-    public WorkflowIntegrator(RestTemplate restTemplate, MarriageApplicationConfiguration bndConfig ,MarriageApplicationRepository repository) {
+    public WorkflowIntegrator(RestTemplate restTemplate, MarriageApplicationConfiguration bndConfig ) {
+   // MarriageApplicationRepository repository
+  
         this.restTemplate = restTemplate;
         this.bndConfig = bndConfig; 
-        this.repository=repository;
+       // this.repository=repository;
 
     }
 
@@ -163,7 +148,7 @@ public class WorkflowIntegrator {
         }
 
     }
-//Jasmine 08.03.2023
+// //Jasmine 08.03.2023
 
    
 

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -53,7 +54,7 @@ public class MarriageMdmsUtil {
     private MdmsCriteriaReq getMDMSRequest(RequestInfo requestInfo, String tenantId) {
         ModuleDetail tenantIdRequest = getTenantIdRequest(tenantId);
         ModuleDetail commomMasterRequest = getCommonMastersRequest();
-        List<ModuleDetail> BNDListRequest = getBNDListRequest();
+        List<ModuleDetail> BNDListRequest = getMarriageListRequest();
 
         List<ModuleDetail> moduleDetails = new LinkedList<>();
         moduleDetails.add(tenantIdRequest);
@@ -129,29 +130,24 @@ public class MarriageMdmsUtil {
        
         return marriageModuleDtls;
     }
-    private List<ModuleDetail> getBNDListRequest() {
+    private List<ModuleDetail> getMarriageListRequest() {
 
-        List<MasterDetail> crDeathMasterDetails = new ArrayList<>();
-        final String filterCodeDeathCauseMain = "$.[?(@.active==true)].code";
-         crDeathMasterDetails
-                    .add(MasterDetail.builder().name(MarriageConstants.DEATH_CAUSE_MAIN).filter(filterCodeDeathCauseMain).build());
+        List<MasterDetail> marriageMasterDetails = new ArrayList<>();
+        final String filterCodeMaritalStatus = "$.[?(@.active==true)].code";
+        marriageMasterDetails
+                    .add(MasterDetail.builder().name(MarriageConstants.MARITAL_STATUS).filter(filterCodeMaritalStatus).build());
                     
-        final String filterCodeDeathCauseSub = "$.[?(@.active==true)].code";
-                    crDeathMasterDetails
-                               .add(MasterDetail.builder().name(MarriageConstants.DEATH_CAUSE_SUB).filter(filterCodeDeathCauseSub).build());        
+        final String filterCodeMarriagePlaceType = "$.[?(@.active==true)].code";
+        marriageMasterDetails
+                    .add(MasterDetail.builder().name(MarriageConstants.MARRIAGE_PLACE_TYPE).filter(filterCodeMarriagePlaceType).build());        
 
-        final String filterCodeAgeUnit = "$.[?(@.active==true)].code";
-                                          crDeathMasterDetails
-                                                     .add(MasterDetail.builder().name(DeathConstants.AGE_UNIT).filter(filterCodeAgeUnit).build());
+        final String filterCodeMarriageType = "$.[?(@.active==true)].code";
+        marriageMasterDetails
+                    .add(MasterDetail.builder().name(MarriageConstants.MARRIAGE_TYPE).filter(filterCodeMarriageType).build());
 
-        final String filterCodeMedicalAttention = "$.[?(@.active==true)].code";
-                                           crDeathMasterDetails
-                                                     .add(MasterDetail.builder().name(DeathConstants.MEDICAL_ATTENTION_TYPE).filter(filterCodeMedicalAttention).build());
-       
-        ModuleDetail marriageModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
-                .moduleName(DeathConstants.BND_MODULE_NAME).build();
-
-               
+        ModuleDetail marriageModuleDtls = ModuleDetail.builder().masterDetails(marriageMasterDetails)
+                .moduleName(MarriageConstants.BND_MODULE_NAME).build();
+             
          return Arrays.asList(marriageModuleDtls);
     }
     public Object mdmsCall(RequestInfo requestInfo) {

@@ -25,12 +25,15 @@ public class MarriageMDMSValidator {
         String[] masterArray = {MarriageConstants.TENANTS,MarriageConstants.GENDERTYPE};
                             // ,DeathConstants.DEATH_PLACE_LIST,DeathConstants.DEATH_CAUSE_MAIN
                             // ,DeathConstants.DEATH_CAUSE_SUB};
+                            System.out.println("JasminemasterArray"+masterArray);
         validateIfMasterPresent(masterArray,masterData);
 
         if(!masterData.get(MarriageConstants.TENANTS)
                 .contains(request.getMarriageDetails().get(0).getTenantid()))
         errorMap.put("INVALID TENAND ID", "The tenand id  "+ request.getMarriageDetails().get(0).getTenantid() +
                     " does not exists");
+//System.out.println("JasminemasterData"+masterData);
+
 
         // if(request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getDeceasedGender() != null) {   
         //     if(!masterData.get(DeathConstants.GENDERTYPE)

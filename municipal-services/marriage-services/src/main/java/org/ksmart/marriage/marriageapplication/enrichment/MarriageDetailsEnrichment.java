@@ -47,8 +47,6 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 
     public void enrichCreate(MarriageDetailsRequest request) {
 
-
-
         RequestInfo requestInfo = request.getRequestInfo();
         User userInfo = requestInfo.getUserInfo();
         AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
@@ -97,7 +95,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
         request.getMarriageDetails()
                 .forEach(marriage -> marriage.setAuditDetails(auditDetails));
 
-        setApplicationNumbers(request);
+//        setApplicationNumbers(request);
          setRegistrationNumber(request);
         setBridePermanentAddress(request);
         setBridePresentAddress(request);
