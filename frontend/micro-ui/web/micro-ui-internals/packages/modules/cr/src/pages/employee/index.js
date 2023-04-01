@@ -10,13 +10,9 @@ import ApplicationDetails from "./ApplicationDetails";
 import ApplicationAdoptionDetails from './ApplicationAdoptionDetails'
 import ApplicationDeathDetails from "./ApplicationDeathDetails";
 import ApplicationStillBirthDetails from "./ApplicationStillBirthDetails";
-import CrFlow from "./Birth-route";
 import DeathCrFlow from "./Death-route";
 import SearchFlow from "./Search-route";
 import SearchInbox from './Inbox-route';
-// import CrAdoptionFlow from './Adoption-birth'
-//import ReNewApplication from "./ReNewApplication";
-
 const CRBreadCrumb = ({ location }) => {
   const { t } = useTranslation();
   const isSearch = location?.pathname?.includes("search");
@@ -100,18 +96,11 @@ const CRBreadCrumb = ({ location }) => {
       content: t("Child Details"),
       show: breadCrumbUrls.includes("create-birth/child-details") || isChildDetails
     },
-    // {
-    //   path: "/digit-ui/employee/cr/cr-abflow",
-    //   content: t("Abandoned Birth Registration"),
-    //   show: breadCrumbUrls.includes("cr-abflow") || isCrAbFlow
-    // },
     {
       path: "/digit-ui/employee/abandoned-child-details",
       content: t("Abandoned Child Details"),
       show: breadCrumbUrls.includes("abandoned-child-details") || isAbandonedChildDetails
     },
-
-
     {
       path: "/digit-ui/employee/cr/death-flow",
       content: t("Death Registration"),
@@ -177,19 +166,6 @@ const CRBreadCrumb = ({ location }) => {
         breadCrumbUrls.includes("home/specify-correction/search-correction/application")
     },
 
-
-    // {
-    //   path: "/digit-ui/employee/cr/cr-flow/trade-lisense",
-    //   // path: "/digit-ui/employee/dfm/trade-lisense",
-    //   content: t("Trade Lisense"),
-    //   show: breadCrumbUrls.includes("cr-flow/trade-lisense") || isTradeLisense
-    // },
-    // {
-    //   path: "/digit-ui/employee/tl/inbox",
-    //   content: t("ES_TITLE_INBOX"),
-    //   show: breadCrumbUrls.includes("inbox") || isInbox
-    // },
-
     {
       path: "/digit-ui/employee/cr/search/death-correction",
       content: t("TL_SEARCH_TRADE_HEADER"),
@@ -198,36 +174,6 @@ const CRBreadCrumb = ({ location }) => {
         breadCrumbUrls.includes("inbox/death-correction")
     },
 
-    // {
-    //   path: "/digit-ui/employee/tl/new-application",
-    //   content: t("TL_HOME_SEARCH_RESULTS_NEW_APP_BUTTON"),
-    //   show: isNewApplication || 
-    //   breadCrumbUrls.includes("home/newApp") || 
-    //   breadCrumbUrls.includes("inbox/newApp")
-    // },
-    // {
-    //   content: t("ES_TITLE_RENEW_TRADE_LICESE_APPLICATION"),
-    //   show: isRenewalApplication  ||
-    //   breadCrumbUrls.includes("inbox/appDetails/renew") || 
-    //   breadCrumbUrls.includes("home/license/appDetails/renew") || 
-    //   breadCrumbUrls.includes("inbox/license/appDetails/renew") || 
-    //   breadCrumbUrls.includes("home/search/appDetails/renew") || 
-    //   breadCrumbUrls.includes("inbox/search/appDetails/renew")
-    // },
-    // {
-    //   content: t("ES_TITLE_RE_NEW_TRADE_LICESE_APPLICATION"),
-    //   show: isEditApplication || 
-    //   breadCrumbUrls.includes("inbox/appDetails/edit") || 
-    //   breadCrumbUrls.includes("home/license/appDetails/edit") || 
-    //   breadCrumbUrls.includes("inbox/license/appDetails/edit") || 
-    //   breadCrumbUrls.includes("home/search/appDetails/edit") || 
-    //   breadCrumbUrls.includes("inbox/search/appDetails/edit")
-    // },
-    // {
-    //   path: "/digit-ui/employee/tl/inbox",
-    //   content: t("ACTION_TEST_RESPONSE"),
-    //   show: isResponse
-    // }
   ];
 
   return <BreadCrumb style={isMobile ? { display: "flex" } : {}} spanStyle={{ maxWidth: "min-content" }} crumbs={crumbs} />;
@@ -241,10 +187,6 @@ const EmployeeApp = ({ path, url, userType }) => {
 
   const locationCheck = window.location.href.includes("employee/cr/new-application") || window.location.href.includes("employee/cr/response") || window.location.href.includes("employee/cr/edit-application-details") || window.location.href.includes("employee/cr/renew-application-details");
 
-  // const NewApplication = Digit?.ComponentRegistryService?.getComponent('TLNewApplication');
-  // const ReNewApplication = Digit?.ComponentRegistryService?.getComponent('TLReNewApplication');
-  // const Response = Digit?.ComponentRegistryService?.getComponent('TLResponse');
-  // const Search = Digit?.ComponentRegistryService?.getComponent('TLSearch');
   const Search = Digit?.ComponentRegistryService?.getComponent('CRSearch');
   const SearchCorrection = Digit?.ComponentRegistryService?.getComponent('CRSearchdeathcorrection');
   const EditAdoption = Digit?.ComponentRegistryService?.getComponent('CRCreateAdoptions');
@@ -252,6 +194,8 @@ const EmployeeApp = ({ path, url, userType }) => {
   const CrFlowApp = Digit?.ComponentRegistryService?.getComponent('CrFlowApp');
   const ScrFlowApp = Digit?.ComponentRegistryService?.getComponent('ScrFlowApp');
   const CreateAbandonedBirth = Digit?.ComponentRegistryService?.getComponent('CreateAbandonedBirth');
+  const CreateBornOutsideEmp = Digit?.ComponentRegistryService?.getComponent('CreateBornOutsideEmp');
+
   return (
     <Switch>
       <React.Fragment>
@@ -267,8 +211,9 @@ const EmployeeApp = ({ path, url, userType }) => {
           <PrivateRoute parentRoute={path} path={`${path}/cr-adoptionflow`} component={() => <EditAdoption parentUrl={url} />} />
         
           <PrivateRoute path={`${path}/create-birth`} component={CreateBirthEmp} />
-          <PrivateRoute path={`${path}/create-stillbirth`} component={CreateAbandonedBirth} />
+          <PrivateRoute path={`${path}/create-stillbirth`} component={ScrFlowApp} />
           <PrivateRoute path={`${path}/create-abandonedbirth`} component={CreateAbandonedBirth} />
+          <PrivateRoute path={`${path}/create-bornoutsidebirth`} component={CreateBornOutsideEmp} />
          
           <PrivateRoute path={`${path}/application-details/:id`} component={() => <ApplicationDetails parentRoute={path} />} />
           <PrivateRoute path={`${path}/application-stillbirth/:id`} component={() => <ApplicationStillBirthDetails parentRoute={path} />} />

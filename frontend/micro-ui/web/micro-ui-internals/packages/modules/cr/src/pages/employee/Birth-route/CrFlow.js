@@ -7,10 +7,13 @@ import { useTranslation } from "react-i18next";
 
 const CrFlow = ({ path }) => {
   const { t } = useTranslation();
-  console.log("path iss==",path);
   //New Registration
   sessionStorage.removeItem("CR_BIRTH_EDIT_FLAG");
   sessionStorage.removeItem("Digit.CR_EDIT_BIRTH_REG");
+  sessionStorage.removeItem("CR_STILLBIRTH_EDIT_FLAG");
+  sessionStorage.removeItem("Digit.CR_EDIT_STILLBIRTH_REG");
+  sessionStorage.removeItem("CR_BORNOUTSIDEBIRTH_EDIT_FLAG");
+  sessionStorage.removeItem("Digit.CR_EDIT_BORNOUTSIDEBIRTH_REG");
   const cardMenuData = [
     {
       title: "CR_BIRTH_REGISTRATION",
@@ -34,7 +37,7 @@ const CrFlow = ({ path }) => {
       title: "CR_BIRTH_BORN_OUTSIDE",
       subTitle: "CR_BIRTH_BORN_OUTSIDE_DESC",
       img: <BankIcon />,
-      link: `${path}/born-outside-child-details`,
+      link: `/digit-ui/employee/cr/create-bornoutsidebirth/born-outside-child-details`,
     },
     {
       title: "CR_ABANDONED_BIRTH_REGISTRATION",

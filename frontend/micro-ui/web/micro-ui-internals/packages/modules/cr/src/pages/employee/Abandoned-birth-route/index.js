@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Route, Switch, useRouteMatch, useLocation, useHistory, Redirect } from "react-router-dom";
-import { PrivateRoute, BreadCrumb, Component } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-// import ChildDetails from "../../../pageComponents/birthComponents/ChildDetails";
-import AbandonedChildDetails from "../../../pageComponents/abandonedBirthComponents/AbandonedChildDetails";
 import { newConfig as newConfigCR } from "../../../config/config";
 import { useQueryClient } from "react-query";
 

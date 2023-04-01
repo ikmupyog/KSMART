@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Route, Switch, useRouteMatch, useLocation, useHistory, Redirect } from "react-router-dom";
-import { PrivateRoute, BreadCrumb, Component } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import { newConfig as newConfigCR } from "../../../config/config";
 
@@ -12,7 +11,7 @@ const ScrFlowApp = ({ parentUrl }) => {
   const history = useHistory();
   console.log(sessionStorage.getItem("CR_STILLBIRTH_EDIT_FLAG"));
   const [isEditStillBirth, setIsEditStillBirth] = useState(sessionStorage.getItem("CR_STILLBIRTH_EDIT_FLAG")? true : false);  
-  const [params, setParams, clearParams] = isEditBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_STILLBIRTH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_STILLBIRTH_REG", {});
+  const [params, setParams, clearParams] = isEditStillBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_STILLBIRTH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_STILLBIRTH_REG", {});
    console.log("isEditStillBirth" + isEditStillBirth);
   // console.log("params"+JSON.stringify(params));
   const stateId = Digit.ULBService.getStateId();

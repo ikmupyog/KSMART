@@ -15,7 +15,7 @@ import {
   import { useTranslation } from "react-i18next";
   import { useHistory, useRouteMatch } from "react-router-dom";
   //import TLDocument from "../../../pageComponents/TLDocumets";
-  import Timeline from "../../../components/CRTimeline";
+  import Timeline from "../../../components/AdoptionTimeline";
   
   const ActionButton = ({ jumpTo }) => {
     const { t } = useTranslation();
@@ -114,8 +114,8 @@ import {
     return (
       <React.Fragment>
           <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-        {window.location.href.includes("/citizen") ? <Timeline currentStep={5} /> : null}
-        {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
+        {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
+        {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
         <Card>
           {/* <label style={{ fontSize: "17px", fontWeight: "bold" }}>{t("CR_REG_SUMMARY_HEADING")}</label> */}
           <div className="row">

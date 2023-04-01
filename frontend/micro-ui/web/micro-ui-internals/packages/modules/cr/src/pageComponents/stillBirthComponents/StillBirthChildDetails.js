@@ -330,7 +330,9 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
         setValue(placeOfBirth);
 
         if (placeOfBirth === "HOSPITAL") {
-          <StillBirthPlaceHospital hospitalName={hospitalName} hospitalNameMl={hospitalNameMl} />;
+          <StillBirthPlaceHospital
+           hospitalName={hospitalName} 
+           hospitalNameMl={hospitalNameMl} />;
         }
         if (placeOfBirth === "INSTITUTION") {
           setIsInitialRenderInstitutionList(true);

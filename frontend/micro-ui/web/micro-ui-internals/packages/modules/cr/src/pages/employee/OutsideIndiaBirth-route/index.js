@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Route, Switch, useRouteMatch, useLocation, useHistory } from "react-router-dom";
-import { PrivateRoute, BreadCrumb, Component } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-import OcrFlow from "./OcrFlow";
-// import StillBirthChildDetails from "../../../pageComponents/stillBirthComponents/StillBirthChildDetails";
-import BornOutsideChildDetails from "../../../pageComponents/bornOutsideIndiaComponents/BornOutsideChildDetails";
 import { newConfig as newConfigCR } from "../../../config/config";
 
-const OcrFlowApp = ({ parentUrl }) => {
+const CreateBornOutsideEmp = ({ parentUrl }) => {
   const { t } = useTranslation();
   const { path } = useRouteMatch();
   const match = useRouteMatch();
@@ -101,4 +97,4 @@ const OcrFlowApp = ({ parentUrl }) => {
   );
 };
 
-export default ScrFlowApp;
+export default CreateBornOutsideEmp;
