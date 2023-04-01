@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, Loader } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 
-const MarriageAddressPermanentMarriageAddressPermanent = ({
+const MarriageAddressPermanent = ({
   config,
   onSelect,
   userType,

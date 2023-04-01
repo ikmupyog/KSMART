@@ -3,15 +3,15 @@ import { FormStep, CardLabel, TextInput, Toast, BackButton, Loader } from "@egov
 import Timeline from "../../components/CRTimeline";
 import DRTimeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
-import AddressPresent from "./AddressPresent";
-import AddressPresentInsideKerala from "./AddressPresentInsideKerala";
-import AddressPresentOutsideKerala from "./AddressPresentOutsideKerala";
-import AddressPresentOutsideIndia from "./AddressPresentOutsideIndia";
-import AddressSameAsAbove from "./AddressSameAsAbove";
-import AddressPermanent from "./AddressPermanent";
-import AddressPermanentInsideKerala from "./AddressPermanentInsideKerala";
-import AddressPermanentOutsideKerala from "./AddressPermanentOutsideKerala";
-import AddressPermanentOutsideIndia from "./AddressPermanentOutsideIndia";
+import MarriageAddressPresent from "./MarriageAddressPresent";
+import MarriageAddressPresentInsideKerala from "./MarriageAddressPresentInsideKerala";
+import MarriageAddressPresentOutsideKerala from "./MarriageAddressPresentOutsideKerala";
+import MarriageAddressPresentOutsideIndia from "./MarriageAddressPresentOutsideIndia";
+import MarriageAddressSameAsAbove from "./MarriageAddressSameAsAbove";
+import MarriageAddressPermanent from "./MarriageAddressPermanent";
+import MarriageAddressPermanentInsideKerala from "./MarriageAddressPermanentInsideKerala";
+import MarriageAddressPermanentOutsideKerala from "./MarriageAddressPermanentOutsideKerala";
+import MarriageAddressPermanentOutsideIndia from "./MarriageAddressPermanentOutsideIndia";
 
 const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = false, isEditDeath = false }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -709,7 +709,7 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
     formData?.AddressBirthDetails?.PresentOutSideIndiaLineTwoMlError ? false : false
   );
 
-  console.log(window.location.href());
+  console.log(window.location.href);
 
   const onSkip = () => onSelect();
   let validFlag = true;
@@ -1332,7 +1332,7 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
         ) : null}
         <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
           <div className="accordion-wrapper">
-            <AddressPresent
+            <MarriageAddressPresent
               presentaddressCountry={presentaddressCountry}
               setaddressCountry={setaddressCountry}
               presentaddressStateName={presentaddressStateName}
@@ -1358,7 +1358,7 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
           </div>
           {countryvalue === "IND" && value === "KL" && (
             <div>
-              <AddressPresentInsideKerala
+              <MarriageAddressPresentInsideKerala
                 presentWardNo={presentWardNo}
                 setPresentWardNo={setPresentWardNo}
                 presentInsideKeralaDistrict={presentInsideKeralaDistrict}
@@ -1431,7 +1431,7 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
           )}
           {countryvalue === "IND" && value != "KL" && (
             <div>
-              <AddressPresentOutsideKerala
+              <MarriageAddressPresentOutsideKerala
                 value={value}
                 setValue={setValue}
                 presentOutsideKeralaDistrict={presentOutsideKeralaDistrict}
@@ -1496,7 +1496,7 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
           )}
           {countryvalue != "IND" && (
             <div>
-              <AddressPresentOutsideIndia
+              <MarriageAddressPresentOutsideIndia
                 presentOutSideIndiaAdressEn={presentOutSideIndiaAdressEn}
                 setAdressEn={setAdressEn}
                 presentOutSideIndiaAdressMl={presentOutSideIndiaAdressMl}
@@ -1548,7 +1548,7 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
             </div>
           )}
           <div>
-            <AddressSameAsAbove
+            <MarriageAddressSameAsAbove
               isPrsentAddress={isPrsentAddress}
               setIsPrsentAddress={setIsPrsentAddress}
               isEditBirth={isEditBirth}
@@ -1558,7 +1558,7 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
           </div>
           {isPrsentAddress === false && (
             <div>
-              <AddressPermanent
+              <MarriageAddressPermanent
                 permtaddressCountry={permtaddressCountry}
                 setpermtaddressCountry={setpermtaddressCountry}
                 permtaddressStateName={permtaddressStateName}
@@ -1581,7 +1581,7 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
           )}
           {countryValuePermanent === "IND" && valuePermanent === "KL" && isPrsentAddress === false && (
             <div>
-              <AddressPermanentInsideKerala
+              <MarriageAddressPermanentInsideKerala
                 permntInKeralaAdrDistrict={permntInKeralaAdrDistrict}
                 setpermntInKeralaAdrDistrict={setpermntInKeralaAdrDistrict}
                 permntInKeralaAdrLBName={permntInKeralaAdrLBName}
@@ -1624,7 +1624,7 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
           )}
           {countryValuePermanent === "IND" && valuePermanent !== "KL" && isPrsentAddress === false && (
             <div>
-              <AddressPermanentOutsideKerala
+              <MarriageAddressPermanentOutsideKerala
                 permntOutsideKeralaDistrict={permntOutsideKeralaDistrict}
                 setpermntOutsideKeralaDistrict={setpermntOutsideKeralaDistrict}
                 permntOutsideKeralaTaluk={permntOutsideKeralaTaluk}
@@ -1661,7 +1661,7 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
           )}
           {countryValuePermanent != "IND" && isPrsentAddress === false && (
             <div>
-              <AddressPermanentOutsideIndia
+              <MarriageAddressPermanentOutsideIndia
                 permntOutsideIndiaLineoneEn={permntOutsideIndiaLineoneEn}
                 setadrsPermntOutsideIndiaLineoneEn={setadrsPermntOutsideIndiaLineoneEn}
                 permntOutsideIndiaLineoneMl={permntOutsideIndiaLineoneMl}
