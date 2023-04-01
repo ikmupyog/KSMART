@@ -23,9 +23,10 @@ const CreateAbandonedBirth = ({ parentUrl, isEditAbandonedBirth }) => {
   let config = [];
   let { data: newConfig, isLoading } = true;
   newConfig = newConfigCR;
-  newConfig?.forEach((obj) => {
-    config = config.concat(obj.body.filter((a) => !a.hideInCitizen));
-  });
+  const abandonedConfig = newConfig.find((obj)=> obj.head === "Abandoned-Death Routing")
+  
+  config = config.concat(abandonedConfig.body.filter((a) => !a.hideInCitizen));
+  
   config.indexRoute = "abandoned-child-details";
   const goNext = (skipStep, index, isAddMultiple, key, isPTCreateSkip) => {
     let currentPath = pathname.split("/").pop(),

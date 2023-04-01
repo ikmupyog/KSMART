@@ -743,27 +743,26 @@ export const newConfig = [
         hideInEmployee: false,
       },
       {
-        route: "family-information",
-        component: "FamilyAbandonedDeath",
-        texts: {
-          headerCaption: "",
-          // header: "CR_FAMILY_INFO",
-          header: "",
-          cardText: "",
-          submitBarLabel: "CS_COMMON_NEXT",
-          skipText: "",
-        },
-        withoutLabel: true,
-        key: "FamilyAbandonedDeath",
-        nextStep: "statistical-info",
-
-        // nextStep: "statistical-info",
-        type: "component",
-        hideInEmployee: false,
-      },
+        // 
+            route: "family-information",
+            component: "FamilyAbandonedDeath",
+            texts: {
+             headerCaption: "",
+             // header: "CR_FAMILY_INFO",
+             header: "",
+             cardText: "",
+             submitBarLabel: "CS_COMMON_NEXT",
+             skipText: "",
+            },
+            withoutLabel: true,
+            key: "FamilyInformationDeath",
+            nextStep: "statistical-info",
+            type: "component",
+            hideInEmployee: false,
+         },
       {
         route: "statistical-info",
-        component: "StatisticalInfo",
+        component: "StatisticalInfoAbandoned",
         texts: {
           headerCaption: "",
           // header: "CR_STATISTICAL_INFORMATION_CONTINUE",
@@ -814,6 +813,24 @@ export const newConfig = [
         type: "component",
         hideInEmployee: false,
       },
+      // {
+      //   route: "check",
+      //   isMandatory: true,
+      //   component: "DeathCheckPage",
+      //   texts: {
+      //     headerCaption: "",
+      //     // header: "CR_PLACE_OF_DEATH",
+      //     header: "",
+      //     cardText: "",
+      //     submitBarLabel: "CS_COMMON_NEXT",
+      //     skipText: "",
+      //   },
+      //   withoutLabel: true,
+      //   key: "check",
+      //   nextStep:null,
+      //   type: "component",
+      //   hideInEmployee: false,
+      // },
       ////////////////////Death-Stop////////////////////////
       ////////////////////Death-Child-Pages-Stop////////////////////////
       {

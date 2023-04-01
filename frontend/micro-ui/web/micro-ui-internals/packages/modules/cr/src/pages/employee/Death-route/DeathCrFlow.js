@@ -2,9 +2,12 @@ import React from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker,TextArea } from "@egovernments/digit-ui-react-components";
 import { Switch, useLocation, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { convertToAbandonedDeathRegistration } from "../../../utils";
 
-const DeathCrFlow = ({ path }) => {
+
+const DeathCrFlow = ({ data, path }) => {
   const { t } = useTranslation();
+  const isEdit = window.location.href.includes("renew-trade");
   const cardMenuData = [
     {
       title: "New Registration",
@@ -18,6 +21,7 @@ const DeathCrFlow = ({ path }) => {
       // img: <BankIcon />,
       link: `${path}/abandoned-information-death`,
     },
+  
     // {
     //   title: "Name Inclusion",
     //   subTitle: "Inbox",
@@ -55,6 +59,17 @@ const DeathCrFlow = ({ path }) => {
    'Correction':  'crfilecorrection', 
    'Cancellation':  'crfileadoption', 
   };
+  
+  let formdata = !isEdit ? convertToAbandonedDeathRegistration(data):[] ;
+  console.log(formdata);
+  // formdata.BirthDetails[0].tenantId = formdata?.BirthDetails[0]?.tenantId || tenantId1;
+  if(!isEdit)
+  {
+    console.log("data",formdata)
+    // mutation.mutate(formdata, {
+    //   onSuccess,
+    // })
+  }
   return (
     <div>
       <div className="fileText">

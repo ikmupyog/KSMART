@@ -3,15 +3,15 @@ import { FormStep, CardLabel, TextInput, Toast, BackButton, Loader } from "@egov
 import Timeline from "../../components/CRTimeline";
 import DRTimeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
-import AddressPresent from "../birthComponents/AddressPresent";
-import AddressPresentInsideKerala from "../birthComponents/AddressPresentInsideKerala";
-import AddressPresentOutsideKerala from "../birthComponents/AddressPresentOutsideKerala";
-import AddressPresentOutsideIndia from "../birthComponents/AddressPresentOutsideIndia";
-import AddressSameAsAbove from "../birthComponents/AddressSameAsAbove";
-import AddressPermanent from "../birthComponents/AddressPermanent";
-import AddressPermanentInsideKerala from "../birthComponents/AddressPermanentInsideKerala";
-import AddressPermanentOutsideKerala from "../birthComponents/AddressPermanentOutsideKerala";
-import AddressPermanentOutsideIndia from "../birthComponents/AddressPermanentOutsideIndia";
+import AddressPresent from "./AddressPresent";
+import AddressPresentInsideKerala from "./AddressPresentInsideKerala";
+import AddressPresentOutsideKerala from "./AddressPresentOutsideKerala";
+import AddressPresentOutsideIndia from "./AddressPresentOutsideIndia";
+import AddressSameAsAbove from "./AddressSameAsAbove";
+import AddressPermanent from "./AddressPermanent";
+import AddressPermanentInsideKerala from "./AddressPermanentInsideKerala";
+import AddressPermanentOutsideKerala from "./AddressPermanentOutsideKerala";
+import AddressPermanentOutsideIndia from "./AddressPermanentOutsideIndia";
 
 const AddressDeath = ({ config, onSelect, userType, formData, isEditBirth = false, isEditDeath = false }) => {
     console.log(formData);

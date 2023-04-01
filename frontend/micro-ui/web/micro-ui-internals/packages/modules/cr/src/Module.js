@@ -165,7 +165,10 @@ import BornOutsideAcknowledgement from "./pages/citizen/BornOutsideReg/BornOutsi
 import InformationDeathAband from "./pageComponents/deathAbandoned/InformationDeathAband";
 import AddressDeath from "./pageComponents/deathAbandoned/AddressDeath";
 import FamilyAbandonedDeath from "./pageComponents/deathAbandoned/FamilyAbandonedDeath";
-// FamilyAbandonedDeath
+import AbandonedDeathCheckPage from "./pages/employee/AbandonedDeath/AbandonedCheckPage";
+import AbandonedDeathAcknowledgement from "./pages/employee/AbandonedDeath/AbandonedDeathAcknowledgement";
+import StatisticalInfoAbandoned from "./pageComponents/deathAbandoned/StatisticalInfoAbandoned";
+// StatisticalInfoAbandoned
 
 export const CRModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
@@ -397,6 +400,11 @@ const componentsToRegister = {
   witnessdetails,
   FormFieldContainer,
   BornOutsideAcknowledgement,
+  FamilyAbandonedDeath,
+  AbandonedDeathCheckPage,
+  AbandonedDeathAcknowledgement,
+  AddressDeath,
+  StatisticalInfoAbandoned
 };
 
 export const initCRComponents = () => {

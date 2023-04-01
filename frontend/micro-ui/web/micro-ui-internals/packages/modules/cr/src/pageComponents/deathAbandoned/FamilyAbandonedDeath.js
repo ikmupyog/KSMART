@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, CheckBox, BackButton,Toast } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, CheckBox, BackButton, } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
-const FamilyAbandonedDeath = ({ config, onSelect, userType, formData, isEditDeath }) => {
+const FamilyAbandonedDeath = ({ config, onSelect,  formData, isEditDeath }) => {
   console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
@@ -399,7 +399,7 @@ const FamilyAbandonedDeath = ({ config, onSelect, userType, formData, isEditDeat
                     placeholder={`${t("CR_NAME_ML")}`}
                     {...(validation = {
                       pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                      isRequired: true,
+                      isRequired: false,
                       type: "text",
                       title: t("CR_INVALID_NAME_ML"),
                     })}
@@ -478,7 +478,7 @@ const FamilyAbandonedDeath = ({ config, onSelect, userType, formData, isEditDeat
                     placeholder={`${t("CR_NAME_ML")}`}
                     {...(validation = {
                       pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                      isRequired: true,
+                      isRequired: false,
                       type: "text",
                       title: t("CR_INVALID_NAME_ML"),
                     })}
@@ -510,7 +510,6 @@ const FamilyAbandonedDeath = ({ config, onSelect, userType, formData, isEditDeat
                 label={t("CR_MOTHER_UNAVAILABLE")}
                 onChange={() => setMotherUnavailable(!MotherUnavailable)}
                 value={MotherUnavailable}
-                setMotherUnavailable
                 checked={MotherUnavailable}
               />
             </div>
@@ -561,7 +560,7 @@ const FamilyAbandonedDeath = ({ config, onSelect, userType, formData, isEditDeat
                     placeholder={`${t("CR_NAME_ML")}`}
                     {...(validation = {
                       pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                      isRequired: true,
+                      isRequired: false,
                       type: "text",
                       title: t("CR_INVALID_NAME_ML"),
                     })}
