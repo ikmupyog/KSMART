@@ -13,6 +13,10 @@ import org.egov.pgr.web.models.ServiceRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
+import net.logstash.logback.encoder.org.apache.commons.lang.StringUtils;
+
+import static org.egov.pgr.util.PGRConstants.USERTYPE_CITIZEN;
+
 import java.util.*;
 
 @org.springframework.stereotype.Service
@@ -93,8 +97,11 @@ public class PGRService {
 
         if(CollectionUtils.isEmpty(serviceWrappers))
             return new ArrayList<>();
-
-        userService.enrichUsers(serviceWrappers);
+        System.out.println(" cit"+serviceWrappers.get(0).getService().getCitizen());
+if(serviceWrappers.get(0).getService().getCitizen() != null) {
+        
+         userService.enrichUsers(serviceWrappers);
+        }
         List<ServiceWrapper> enrichedServiceWrappers = workflowService.enrichWorkflow(requestInfo,serviceWrappers);
         Map<Long, List<ServiceWrapper>> sortedWrappers = new TreeMap<>(Collections.reverseOrder());
         for(ServiceWrapper svc : enrichedServiceWrappers){

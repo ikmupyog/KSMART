@@ -75,14 +75,18 @@ public class EnrichmentService {
             });
         }
 
-        if(StringUtils.isEmpty(service.getAccountId()))
+        if(StringUtils.isEmpty(service.getAccountId())) {
         	if(!StringUtils.isEmpty(service.getCitizen())) {
         		service.setAccountId(service.getCitizen().getUuid());
         	}
-        	else if(!StringUtils.isEmpty(service.getInformer())) {
-        		 service.setAccountId(service.getInformer().getId());
+        	else {
+             service.setAccountId(requestInfo.getUserInfo().getUuid());
         	}
-        	
+        }
+//        	else if(!StringUtils.isEmpty(service.getInformer())) {
+//        		 service.setAccountId(service.getInformer().getId());
+//        	}
+//        	
 
         List<String> customIds = getIdList(requestInfo,tenantId,config.getServiceRequestIdGenName(),config.getServiceRequestIdGenFormat(),1);
 
