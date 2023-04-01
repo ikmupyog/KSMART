@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 const StillBirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, vehicleRegistrationNo, vehicleFromEn,
   vehicleToEn, vehicleFromMl, vehicleHaltPlace,  vehicleToMl, vehicleDesDetailsEn, setvehicleToEn, setadmittedHospitalEn,
   setvehicleType, setvehicleRegistrationNo, setvehicleFromEn, setvehicleFromMl, setvehicleHaltPlace,
-  setvehicleToMl, setvehicleDesDetailsEn, setSelectedadmittedHospitalEn, setWardNo, wardNo,isEditStillBirth=false
+  setvehicleToMl, setvehicleDesDetailsEn, setSelectedadmittedHospitalEn, setWardNo, wardNo,isEditBirth=false
 }) => {
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
@@ -21,7 +21,7 @@ const StillBirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleT
   const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "boundary-data");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [tenantboundary, setTenantboundary] = useState(false);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditStillBirth ? isEditStillBirth : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
 
   if (tenantboundary) {
     queryClient.removeQueries("CR_HOSPITALMASTER");
@@ -78,7 +78,7 @@ const StillBirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleT
       }
     }
   }, [localbodies, isInitialRender]);
-  if (isEditStillBirth) {
+  if (isEditBirth) {
     if (formData?.StillBirthChildDetails?.vehicleType != null) {
       if (cmbVehicle.length > 0 && (vehicleType === undefined || vehicleType === "")) {
         setvehicleType(cmbVehicle.filter(cmbVehicle => cmbVehicle.code === formData?.StillBirthChildDetails?.vehicleType)[0]);
@@ -130,13 +130,7 @@ const StillBirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleT
       setvehicleHaltPlace(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
-  // function setSelectVehicleHaltPlaceMl(e) {
-  //   if (e.target.value.length === 51) {
-  //     return false;
-  //   } else {
-  //     setvehicleHaltPlaceMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
-  //   }
-  // }
+  
   function setSelectVehicleToMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if(!(e.target.value.match(pattern))){
