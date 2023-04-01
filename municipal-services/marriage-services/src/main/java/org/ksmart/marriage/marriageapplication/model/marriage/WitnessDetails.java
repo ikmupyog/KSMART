@@ -54,7 +54,6 @@ public class WitnessDetails {
     @JsonProperty("witness1AddressMl")
     private String witness1AddressMl;
 
-    @Size(max = 150)
     @JsonProperty("witness1Mobile")
     private Long witness1Mobile;
 

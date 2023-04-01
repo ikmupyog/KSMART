@@ -96,26 +96,30 @@ public class MarriageApplicationService {
         }); 
         return request.getMarriageDetails();
 
-<<<<<<< HEAD
-=======
 
 
-
-        //  workflowIntegrator.callWorkFlow(request);
-
-        return repository.saveMarriageDetails(request);
->>>>>>> b8d9a2aee7 (UPDATE)
     }
 
     public List<MarriageApplicationDetails> updateMarriageDetails(MarriageDetailsRequest request) {
         // validatorService.validateCommonFields( request);
         Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getMarriageDetails().get(0).getTenantid());
         mdmsValidator.validateMarriageMDMSData(request,mdmsData);
+
+
+
+
         marriageDetailsEnrichment.enrichUpdate(request);
         // workflowIntegrator.callWorkFlow(request);
+<<<<<<< HEAD
        // List<MarriageApplicationDetails>  marriageApplicationDetails =repository.updateMarriageDetails(request);
         producer.push(marriageApplicationConfiguration.getUpdateMarriageApplicationTopic(), request);
         request.getMarriageDetails().forEach(marriage->{
+=======
+
+        List<MarriageApplicationDetails>  marriageApplicationDetails =repository.updateMarriageDetails(request);
+
+        marriageApplicationDetails.forEach(marriage->{
+>>>>>>> 9698db07e0 (MIGRATION UPDATION)
             if(marriage.getStatus() == MarriageConstants.STATUS_FOR_PAYMENT){
                 List<Demand> demands = new ArrayList<>();
                 Demand demand = new Demand();

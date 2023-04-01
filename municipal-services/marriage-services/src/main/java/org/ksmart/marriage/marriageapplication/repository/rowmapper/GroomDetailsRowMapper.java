@@ -20,7 +20,7 @@ public interface GroomDetailsRowMapper {
                 .middlename_ml(rs.getString("GD_middlename_ml"))
                 .lastname_en(rs.getString("GD_lastname_en"))
                 .lastname_ml(rs.getString("GD_lastname_ml"))
-                .mobile(rs.getString("GD_mobile"))
+                .mobile(Long.valueOf(Integer.valueOf(rs.getString("GD_mobile"))))
                 .emailid(rs.getString("GD_emailid"))
                 .gender(rs.getString("GD_gender"))
                 .dateofbirth(rs.getLong("GD_dateofbirth"))

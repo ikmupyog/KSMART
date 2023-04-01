@@ -1,17 +1,18 @@
 package org.ksmart.marriage.marriageapplication.repository.querybuilder;
 
 
-import org.ksmart.marriage.common.repository.builder.CommonQueryBuilder;
+//import org.ksmart.marriage.common.repository.builder.CommonQueryBuilder;
 import org.ksmart.marriage.marriageapplication.model.marriage.MarriageApplicationSearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
 @Component
 public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
-    @Autowired
-    CommonQueryBuilder commonQueryBuilder;
+//    @Autowired
+//    CommonQueryBuilder commonQueryBuilder;
 
     private static final String QUERY = new StringBuilder()
             .append("SELECT MD.id as MD_id , MD.dateofmarriage as MD_dateofmarriage ,MD.dateofreporting as MD_dateofreporting , MD.districtid as MD_districtid , ")
@@ -155,5 +156,7 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
         StringBuilder query = new StringBuilder("select fn_next_id(?,?,?)");
         return query.toString();
     }
+
+
 
 }

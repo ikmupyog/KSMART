@@ -1,5 +1,5 @@
 package org.ksmart.marriage.marriageregistry.repository.querybuilder;
-import org.ksmart.marriage.common.repository.builder.CommonQueryBuilder;
+//import org.ksmart.marriage.common.repository.builder.CommonQueryBuilder;
 import org.ksmart.marriage.marriageapplication.model.marriage.MarriageApplicationSearchCriteria;
 import org.ksmart.marriage.marriageregistry.model.MarriageRegistrySearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +13,8 @@ import java.util.List;
      */
 @Component
 public class MarriageRegistryQueryBuilder extends BaseMarriageQuery {
-    @Autowired
-    CommonQueryBuilder commonQueryBuilder;
+//    @Autowired
+//    CommonQueryBuilder commonQueryBuilder;
 //Jasmine  26.03.2023
     private static final String QUERY = new StringBuilder()
     .append(" SELECT MD.id as MD_id , MD.dateofmarriage as MD_dateofmarriage ,MD.dateofreporting as MD_dateofreporting , MD.districtid as MD_districtid , ")

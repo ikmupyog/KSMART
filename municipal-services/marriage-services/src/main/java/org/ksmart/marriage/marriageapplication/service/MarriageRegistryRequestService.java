@@ -1,8 +1,8 @@
 package org.ksmart.marriage.marriageapplication.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.ksmart.marriage.marriageapplication.model.marriage.BrideDetails;
 import org.ksmart.marriage.marriageapplication.model.marriage.MarriageDetailsRequest;
+import org.ksmart.marriage.marriageapplication.repository.MarriageApplicationRepository;
 import org.ksmart.marriage.marriageregistry.model.*;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +11,13 @@ import java.util.List;
 @Slf4j
 @Service
 public class MarriageRegistryRequestService {
+
+    private final MarriageApplicationRepository repository;
+
+    public MarriageRegistryRequestService(MarriageApplicationRepository repository) {
+        this.repository = repository;
+    }
+
     public MarriageRegistryRequest createRegistryRequest(MarriageDetailsRequest Marriagerequest) {
 
         MarriageRegistryRequest request = new MarriageRegistryRequest();
@@ -49,7 +56,6 @@ public class MarriageRegistryRequestService {
         registerMarriageDetail.setWitnessDetails(witnessRegistryDetails(Marriagerequest));
         registerMarriageDetail.setBrideAddressDetails(brideAddressRegistryDetails(Marriagerequest));
         registerMarriageDetail.setGroomAddressDetails(groomAddressRegistryDetails(Marriagerequest));
-
         registerMarriageDetails.add(registerMarriageDetail);
         request.setRequestInfo(Marriagerequest.getRequestInfo());
         request.setMarriageDetails(registerMarriageDetails);
@@ -177,7 +183,7 @@ public class MarriageRegistryRequestService {
         witnessRegistryDetails.setWitness1Esigned(marriageWitnessrequest.getMarriageDetails().get(0).getWitnessDetails().getWitness1Esigned());
         witnessRegistryDetails.setWitness2Esigned(marriageWitnessrequest.getMarriageDetails().get(0).getWitnessDetails().getWitness2Esigned());
 
-        return null;
+        return witnessRegistryDetails;
     }
 
     private GroomRegistryDetails groomRegistryDetails(MarriageDetailsRequest marriageGroomrequest) {
@@ -197,7 +203,7 @@ public class MarriageRegistryRequestService {
         groomRegistryDetails.setMiddlename_ml(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getMiddlename_ml());
         groomRegistryDetails.setLastname_en(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getLastname_en());
         groomRegistryDetails.setLastname_ml(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getLastname_ml());
-        groomRegistryDetails.setMobile(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getMobile());
+        groomRegistryDetails.setMobile(Long.valueOf(String.valueOf(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getMobile())));
         groomRegistryDetails.setEmailid(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getEmailid());
         groomRegistryDetails.setGender(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getGender());
         groomRegistryDetails.setDateofbirth(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getDateofbirth());
@@ -233,7 +239,7 @@ public class MarriageRegistryRequestService {
         brideRegistryDetails.setMiddlename_ml(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getMiddlename_ml());
         brideRegistryDetails.setLastname_en(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getLastname_en());
         brideRegistryDetails.setLastname_ml(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getLastname_ml());
-        brideRegistryDetails.setMobile(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getMobile());
+        brideRegistryDetails.setMobile(Long.valueOf(String.valueOf(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getMobile())));
         brideRegistryDetails.setEmailid(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getEmailid());
         brideRegistryDetails.setGender(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getGender());
         brideRegistryDetails.setDateofbirth(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getDateofbirth());
