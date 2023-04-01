@@ -1,12 +1,19 @@
 import { CRService } from "../../elements/CR";
 
 const AdoptionAppUpdateAction = async (applicationData, tenantId) => {
-  console.log(applicationData); 
+  // console.log('tmp1',applicationData); 
+  
   let tmpApplnData = applicationData
+  tmpApplnData.Property.action = tmpApplnData.Property?.workflow?.action
+  tmpApplnData.Property.assignee = tmpApplnData.Property?.workflow?.assignes?.length>0?tmpApplnData.Property?.workflow?.assignes[0]?.uuid ? [tmpApplnData.Property?.workflow?.assignes[0]?.uuid]:null:null
+  tmpApplnData.Property.businessservice = tmpApplnData.Property?.workflow?.businessService
+  tmpApplnData.Property.comments = tmpApplnData.Property?.workflow?.comments
+  tmpApplnData.Property.moduleName = tmpApplnData.Property?.workflow?.moduleName
+  delete tmpApplnData.Property['workflow']
+  // delete tmpApplnData.Property['action']
   tmpApplnData['AdoptionDetails'] = [tmpApplnData['Property']];
   delete tmpApplnData['Property'];
-  delete tmpApplnData['action']
-  // console.log('tmp',tmpApplnData);
+//  console.log('tmp2', tmpApplnData); 
   try {
     const response = await CRService.updateAdoption(tmpApplnData, tenantId);
     return response;

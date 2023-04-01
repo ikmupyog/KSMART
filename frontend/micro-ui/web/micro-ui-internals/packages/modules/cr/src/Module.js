@@ -16,6 +16,7 @@ import AddressSameAsAbove from "../src/pageComponents/birthComponents/AddressSam
 import AddressPermanent from "../src/pageComponents/birthComponents/AddressPermanent";
 import MultipleBirth from "../src/pageComponents/birthComponents/MultipleBirth";
 import CreateBirthRegistration from "./pages/citizen/BirthRegistration";
+import CreateBirthEmp from "./pages/employee/BirthRegistration";
 import CreateBirthNACRegistration from "./pages/citizen/BirthNACRegistration";
 import MarriageInclusion from "./pages/citizen/MarriageInclusion";
 import BirthInclusion from "./pages/citizen/BirthInclusion";
@@ -27,8 +28,10 @@ import SearchMarriageInclusion from "./components/SearchMarriageInclusion";
 import CreateAdoptions from "./pages/citizen/Adoption";
 import CreateStillBirthRegistration from "./pages/citizen/StillBirthRegistration";
 import CreateBornOutsideRegistration from "./pages/citizen/BornOutsideReg";
-// import CreateAbandonedBirth from "./pages/citizen/AbandonedBirth";
 import CreateAbandonedBirth from "./pages/employee/Abandoned-birth-route";
+import CrFlowApp from "./pages/employee/Birth-route";
+import ScrFlowApp from "./pages/employee/StillBirth-route";
+import CreateBornOutsideEmp from "./pages/employee/OutsideIndiaBirth-route";
 
 import ParentsDetails from "../src/pageComponents/birthComponents/ParentsDetails";
 import BirthPlaceHospital from "../src/pageComponents/birthComponents/BirthPlaceHospital";
@@ -122,12 +125,10 @@ import BirthCheckPage from "./pages/citizen/BirthRegistration/BirthCheckPage";
 import BirthNACCheckPage from "./pages/citizen/BirthNACRegistration/BirthNACCheckPage";
 import DeathCheckPage from "./pages/citizen/DeathRegistration/DeathCheckPage";
 import BirthNACAcknowledgement from "./pages/citizen/BirthNACRegistration/BirthNACAcknowledgement";
-import MarriageCheckPage from "./pages/citizen/MarriageRegistration/MarriageCheckPage";
 import AdoptionAcknowledgement from "./pages/citizen/Adoption/AdoptionAcknowledgement";
 import BirthAcknowledgement from "./pages/citizen/BirthRegistration/BirthAcknowledgement";
 import StillBirthAcknowledgement from "./pages/citizen/StillBirthRegistration/StillBirthAcknowledgement";
 import DeathAcknowledgement from "./pages/citizen/DeathRegistration/DeathAcknowledgement";
-import MarriageAcknowledgement from "./pages/citizen/MarriageRegistration/MarriageAcknowledgement";
 import BirthCertificate from "./pages/citizen/Certificate/BirthCertificate";
 import CreateDeathRegistration from "./pages/citizen/DeathRegistration";
 // import InsideIndia from "./pageComponents/deathComponents/InsideIndia";
@@ -152,13 +153,27 @@ import MarriageInstitution from "./pageComponents/marriageComponents/MarriageIns
 import MarriagePublicPlace from "./pageComponents/marriageComponents/MarriagePublicPlace";
 import MarriageRegistration from "./pageComponents/marriageComponents/MarriageRegistration";
 import HouseMarriageRegistration from "./pageComponents/marriageComponents/HouseMarriageRegistration";
-import Witnessdetails from "./pageComponents/marriageComponents/Witnessdetails"
+import Witnessdetails from "./pageComponents/marriageComponents/Witnessdetails";
 import MarriageInclusionEditPage from "./pageComponents/marriageComponents/MarriageCorrection";
 import MarriageCorrectionEditPage from "./pages/citizen/MarriageInclusionEdit";
+import MarriageCheckPage from "./pages/citizen/MarriageRegistration/MarriageCheckPage";
+import MarriageAcknowledgement from "./pages/citizen/MarriageRegistration/MarriageAcknowledgement";
+import MarriageAddressBasePage from "./pageComponents/marriageComponents/MarriageAddressBasePage";
+import MarriageAddressPermanent from "./pageComponents/marriageComponents/MarriageAddressPermanent";
+import MarriageAddressPermanentInsideKerala from "./pageComponents/marriageComponents/MarriageAddressPermanentInsideKerala";
+import MarriageAddressPermanentOutsideIndia from "./pageComponents/marriageComponents/MarriageAddressPermanentOutsideIndia";
+import MarriageAddressPermanentOutsideKerala from "./pageComponents/marriageComponents/MarriageAddressPermanentOutsideKerala";
+import MarriageAddressPresent from "./pageComponents/marriageComponents/MarriageAddressPresent";
+import MarriageAddressPresentInsideKerala from "./pageComponents/marriageComponents/MarriageAddressPresentInsideKerala";
+import MarriageAddressPresentOutsideIndia from "./pageComponents/marriageComponents/MarriageAddressPresentOutsideIndia";
+import MarriageAddressPresentOutsideKerala from "./pageComponents/marriageComponents/MarriageAddressPresentOutsideKerala";
+import MarriageAddressSameAsAbove from "./pageComponents/marriageComponents/MarriageAddressSameAsAbove";
 
-// import CreateAbandonedBirth from "./pages/employee/Abandoned-birth";
 import AbandonedChildDetails from "./pageComponents/abandonedBirthComponents/AbandonedChildDetails";
 import AbandonedBirthInformarDetails from "./pageComponents/abandonedBirthComponents/AbandonedBirthInformarDetails";
+import AbandonedBirthAcknowledgement from "./pages/employee/Abandoned-birth-route/AbandonedBirthAcknowledgement";
+import AbandonedBirthCheckPage from "./pages/employee/Abandoned-birth-route/AbandonedBirthCheckPage";
+
 import BornOutsideAcknowledgement from "./pages/citizen/BornOutsideReg/BornOutsideAcknowledgement";
 
 import InformationDeathAband from "./pageComponents/deathAbandoned/InformationDeathAband";
@@ -239,6 +254,9 @@ export const CRLinks = ({ matchPath, userType }) => {
 };
 
 const componentsToRegister = {
+  CrFlowApp,
+  ScrFlowApp,
+  CreateBornOutsideEmp,
   MyCRApplications,
   MyCRDeathApplications,
   CustomTimePicker,
@@ -267,10 +285,11 @@ const componentsToRegister = {
   AddressPermanent,
   MultipleBirth,
   CRCreateBirthRegistration: CreateBirthRegistration,
+  CreateBirthEmp,
   CRCreateAdoptions: CreateAdoptions,
   CRCreateStillBirthRegistration: CreateStillBirthRegistration,
   CRCreateBornOutsideRegistration: CreateBornOutsideRegistration,
-  CRCreateAbandonedBirth: CreateAbandonedBirth,
+  CreateAbandonedBirth,
   CRCreateBirthNACRegistration: CreateBirthNACRegistration,
   ParentsDetails,
   CRBirthInclusions: BirthInclusion,
@@ -377,7 +396,6 @@ const componentsToRegister = {
   CRWFApplicationTimeline,
   CRDWFApplicationTimeline,
   InformationDeathAband,
-  // CreateAbandonedBirth,
   AbandonedChildDetails,
   AbandonedBirthInformarDetails,
   //Marriage
@@ -391,8 +409,20 @@ const componentsToRegister = {
   MarriageRegistration,
   HouseMarriageRegistration,
   Witnessdetails,
+  MarriageAddressBasePage,
+  MarriageAddressPermanent,
+  MarriageAddressPermanentInsideKerala,
+  MarriageAddressPermanentOutsideIndia,
+  MarriageAddressPermanentOutsideKerala,
+  MarriageAddressPresent,
+  MarriageAddressPresentInsideKerala,
+  MarriageAddressPresentOutsideIndia,
+  MarriageAddressPresentOutsideKerala,
+  MarriageAddressSameAsAbove,
   FormFieldContainer,
   BornOutsideAcknowledgement,
+  AbandonedBirthAcknowledgement,
+  AbandonedBirthCheckPage,
 };
 
 export const initCRComponents = () => {

@@ -402,7 +402,7 @@ if(wfdata)
                 </Link>
               ) : null}
               {/* //TODO: change the actions to be fulfilled from workflow nextactions */}
-              {application?.applicationStatus === "INITIATED" ? (
+              {application?.applicationStatus === "PENDINGPAYMENT" ? (
                 <Link
                   to={{
                     pathname: `/digit-ui/citizen/payment/collect/${application?.businessservice}/${application?.applicationNumber}`,

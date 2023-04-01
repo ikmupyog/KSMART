@@ -1067,9 +1067,7 @@ export const convertToEditBirthRegistration = (data = {}) => {
         workflowcode: data?.ChildDetails.workflowcode,
         id: data?.ChildDetails?.id,
         applicationNumber: data?.ChildDetails?.applicationNumber,
-        assignee: [
-          data?.ChildDetails?.uuid,
-        ],
+        assignee: [data?.ChildDetails?.uuid],
         ParentsDetails: {
           motherFirstNameEn: data?.ChildDetails?.ParentsDetails?.motherFirstNameEn,
           motherFirstNameMl: data?.ChildDetails?.ParentsDetails?.motherFirstNameMl,
@@ -1081,18 +1079,14 @@ export const convertToEditBirthRegistration = (data = {}) => {
             : null,
           motherEducation: data?.ChildDetails?.ParentsDetails?.motherEducation ? data?.ChildDetails?.ParentsDetails?.motherEducation : null,
           motherProfession: data?.ChildDetails?.ParentsDetails?.motherProfession ? data?.ChildDetails?.ParentsDetails?.motherProfession : null,
-          motherNationality: data?.ChildDetails?.ParentsDetails?.motherNationality
-            ? data?.ChildDetails?.ParentsDetails?.motherNationality
-            : null,
+          motherNationality: data?.ChildDetails?.ParentsDetails?.motherNationality ? data?.ChildDetails?.ParentsDetails?.motherNationality : null,
           orderofChildren: data?.ChildDetails?.ParentsDetails?.orderofChildren,
           fatherAadhar: data?.ChildDetails?.ParentsDetails?.fatherAadhar,
           ismotherInfo: data?.ChildDetails?.ParentsDetails?.isMotherInfo,
           isfatherInfo: data?.ChildDetails?.ParentsDetails?.isFatherInfo,
           fatherFirstNameEn: data?.ChildDetails?.ParentsDetails?.fatherFirstNameEn,
           fatherFirstNameMl: data?.ChildDetails?.ParentsDetails?.fatherFirstNameMl,
-          fatherNationality: data?.ChildDetails?.ParentsDetails?.fatherNationality
-            ? data?.ChildDetails?.ParentsDetails?.fatherNationality
-            : null,
+          fatherNationality: data?.ChildDetails?.ParentsDetails?.fatherNationality ? data?.ChildDetails?.ParentsDetails?.fatherNationality : null,
           fatherEducation: data?.ChildDetails?.ParentsDetails?.fatherEducation ? data?.ChildDetails?.ParentsDetails?.fatherEducation : null,
           fatherProfession: data?.ChildDetails?.ParentsDetails?.fatherProfession ? data?.ParentsDetails?.ChildDetails?.fatherProfession : null,
           Religion: data?.ChildDetails?.ParentsDetails?.Religion ? data?.ChildDetails?.ParentsDetails?.Religion : null,
@@ -1775,7 +1769,6 @@ export const convertToAbandonedBirthRegistration = (data = {}) => {
           motherAadhar: data?.AbandonedChildDetails?.motherAadhar,
           ismotherInfo: data?.AbandonedChildDetails?.isMotherInfo,
           addressOfMother: data?.AbandonedChildDetails?.addressOfMother,
-
         },
         InformarHosInstDetails: {
           infomantFirstNameEn: data?.AbandonedBirthInformarDetails?.infomantFirstNameEn,
@@ -1801,7 +1794,6 @@ export const convertToAbandonedBirthRegistration = (data = {}) => {
           fileStoreId: data?.AbandonedBirthInformarDetails?.tenantId,
           fileType: data?.AbandonedBirthInformarDetails?.tenantId,
           fileSize: data?.AbandonedBirthInformarDetails?.tenantId,
-
         },
       },
     ],
@@ -2404,6 +2396,9 @@ export const convertToEditDeathRegistration = (data = {}) => {
   const empTenantId = Digit.ULBService.getCurrentUlb();
   // let tenantId = "";
   // tenantId = empTenantId["code"];
+  console.log(data);
+  console.log(data?.InformationDeath?.workFlowCode);
+
   const formdata = {
     deathCertificateDtls: [
       {
@@ -2470,7 +2465,7 @@ export const convertToEditDeathRegistration = (data = {}) => {
           Occupation: data?.InformationDeath?.Occupation ? data?.InformationDeath?.Occupation.code : null,
           funcionUID: "CRDRNR",
           registrationNo: null,
-          DeathACKNo:data?.InformationDeath?.DeathACKNo,
+          DeathACKNo: data?.InformationDeath?.DeathACKNo,
         },
         AddressBirthDetails: {
           presentaddressCountry: data?.AddressBirthDetails?.presentaddressCountry ? data?.AddressBirthDetails?.presentaddressCountry.code : null,
@@ -2675,10 +2670,10 @@ export const convertToEditDeathRegistration = (data = {}) => {
         applicationType: "new",
         businessService: "death-services",
         action: "APPLY",
-        assignee: [],
-        workflowcode: data?.InformationDeath?.workFlowCode,
-          taxHeadMasterCode: "CRB_FEES",
-          taxAmount: 12,
+        workflowcode: "DEATHHOSP",
+        assignee: [data?.InformationDeath?.uuid],
+        taxHeadMasterCode: "CRB_FEES",
+        taxAmount: 12,
       },
     ],
   };
@@ -2895,8 +2890,8 @@ export const convertToEditTrade = (data, fy = []) => {
           structureType: isDirectrenewal
             ? data.tradeLicenseDetail.structureType
             : data?.TradeDetails?.VehicleType
-              ? data?.TradeDetails?.VehicleType.code
-              : data?.TradeDetails?.BuildingType.code,
+            ? data?.TradeDetails?.VehicleType.code
+            : data?.TradeDetails?.BuildingType.code,
           subOwnerShipCategory: data?.ownershipCategory?.code.includes("INSTITUTIONAL")
             ? data?.owners?.owners?.[0]?.subOwnerShipCategory.code
             : data?.ownershipCategory?.code,
@@ -2963,12 +2958,12 @@ export const convertToResubmitTrade = (data) => {
           id: data.tradeLicenseDetail.id,
           institution: data?.ownershipCategory?.code.includes("INSTITUTIONAL")
             ? {
-              designation: data?.owners?.owners?.[0]?.designation,
-              ContactNo: data?.owners?.owners?.[0]?.altContactNumber,
-              mobileNumber: data?.owners?.owners?.[0]?.mobilenumber,
-              instituionName: data?.owners?.owners?.[0]?.institutionName,
-              name: data?.owners?.owners?.[0]?.name,
-            }
+                designation: data?.owners?.owners?.[0]?.designation,
+                ContactNo: data?.owners?.owners?.[0]?.altContactNumber,
+                mobileNumber: data?.owners?.owners?.[0]?.mobilenumber,
+                instituionName: data?.owners?.owners?.[0]?.institutionName,
+                name: data?.owners?.owners?.[0]?.name,
+              }
             : null,
         },
         calculation: null,
@@ -3157,10 +3152,10 @@ export const convertDateToEpoch = (dateString, dayStartOrEnd = "dayend") => {
 export const getQueryStringParams = (query) => {
   return query
     ? (/^[?#]/.test(query) ? query.slice(1) : query).split("&").reduce((params, param) => {
-      let [key, value] = param.split("=");
-      params[key] = value ? decodeURIComponent(value.replace(/\+/g, " ")) : "";
-      return params;
-    }, {})
+        let [key, value] = param.split("=");
+        params[key] = value ? decodeURIComponent(value.replace(/\+/g, " ")) : "";
+        return params;
+      }, {})
     : {};
 };
 

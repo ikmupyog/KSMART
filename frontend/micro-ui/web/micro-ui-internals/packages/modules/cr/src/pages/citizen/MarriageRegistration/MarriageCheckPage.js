@@ -12,8 +12,8 @@ import {
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useRouteMatch } from "react-router-dom";
+import Timeline from "../../../components/MARRIAGETimeline";
 //import TLDocument from "../../../pageComponents/TLDocumets";
-import Timeline from "../../../components/CRTimeline";
 
 const ActionButton = ({ jumpTo }) => {
   const { t } = useTranslation();
@@ -58,8 +58,9 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
   } = value;
   function getdate(date) {
     let newdate = Date.parse(date);
-    return `${new Date(newdate).getDate().toString() + "/" + (new Date(newdate).getMonth() + 1).toString() + "/" + new Date(newdate).getFullYear().toString()
-      }`;
+    return `${
+      new Date(newdate).getDate().toString() + "/" + (new Date(newdate).getMonth() + 1).toString() + "/" + new Date(newdate).getFullYear().toString()
+    }`;
   }
   // const typeOfApplication = !isEditProperty ? `new-application` : `renew-trade`;
   let routeLink = "";
@@ -77,21 +78,21 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
   console.log(value);
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") ? <Timeline currentStep={6} /> : null}
-      {window.location.href.includes("/employee") ? <Timeline currentStep={6} /> : null}
+      {window.location.href.includes("/citizen") ? <Timeline currentStep={5} /> : null}
+      {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
       <Card>
-        {/* <label style={{ fontSize: "17px", fontWeight: "bold" }}>{t("CR_REG_SUMMARY_HEADING")}</label> */}
+        <label style={{ fontSize: "17px", fontWeight: "bold" }}>{t("CR_MARRIAGE_REG_SUMMARY_HEADING")}</label>
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_REG_SUMMARY_HEADING")}`}</span>
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_MARRIAGE_REG_SUMMARY_HEADING")}`}</span>
             </h1>
           </div>
         </div>
-        <div style={{
-          maxWidth: "80%", margin: "25px auto", padding: "3rem 2rem", border: "none", borderRadius: "8px",height:"auto",backgroundColor: "lightblue" }} >
-          {/* class="site-wrap" */}
-          <div className="row" >
+        {/* <div style={{
+          maxWidth: "80%", margin: "25px auto", padding: "3rem 2rem", border: "none", borderRadius: "8px",height:"auto",backgroundColor: "lightblue" }} > */}
+        {/* class="site-wrap" */}
+        {/* <div className="row" >
             <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("CR_DATE_OF_BIRTH_TIME")}`}</CardLabel>
             </div>
@@ -126,25 +127,25 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
           </div>
           <div className="row">
             <div className="col-md-6">
-              <CardLabel style={{ lineHeight: "auto" , fontWeight: "bold"}}>{`${t("CR_COMMON_COL_MOTHER_NAME")}`}</CardLabel>
-              {/* <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(BirthPlace.BirthPlace.name)}</CardText> */}
-            </div>
-            <div className="col-md-6">
-              {/* <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_HOSPITAL")}`}</CardLabel> */}
-              <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(MotherInfoDetails.MotherFirstNameEn ? MotherInfoDetails.MotherFirstNameEn : 'NA')}</CardText>
-            </div>
-          </div>
-          
-        </div>
+              <CardLabel style={{ lineHeight: "auto" , fontWeight: "bold"}}>{`${t("CR_COMMON_COL_MOTHER_NAME")}`}</CardLabel> */}
+        {/* <CardText style={{ fontSize: "15px", Colour: "black" }}>{t(BirthPlace.BirthPlace.name)}</CardText> */}
+        {/* </div> */}
+        {/* <div className="col-md-6"> */}
+        {/* <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_HOSPITAL")}`}</CardLabel> */}
+        {/* <CardText style={{ fontSize: "15px", Colour: "black" , fontWeight: "bold"}}>: {t(MotherInfoDetails.MotherFirstNameEn ? MotherInfoDetails.MotherFirstNameEn : 'NA')}</CardText> */}
+        {/* </div> */}
+        {/* </div> */}
+
+        {/* </div>
         <div className="row">
             <div className="col-md-12">
-              <h1 className="headingh1">              
-                {/* <span style={{ background: "#fff", padding: "0 10px" }}>                
+              <h1 className="headingh1">               */}
+        {/* <span style={{ background: "#fff", padding: "0 10px" }}>                
                 </span> */}
-              </h1>
+        {/* </h1>
             </div>
-          </div>
-          <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} />
+          </div> */}
+        {/* <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} />  */}
         {/* <StatusTable>
 
           
@@ -170,7 +171,6 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
             </div>
           </div>
         </StatusTable> */}
-        
       </Card>
     </React.Fragment>
   );
