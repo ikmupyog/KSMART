@@ -96,6 +96,15 @@ public class MarriageApplicationService {
         }); 
         return request.getMarriageDetails();
 
+<<<<<<< HEAD
+=======
+
+
+
+        //  workflowIntegrator.callWorkFlow(request);
+
+        return repository.saveMarriageDetails(request);
+>>>>>>> b8d9a2aee7 (UPDATE)
     }
 
     public List<MarriageApplicationDetails> updateMarriageDetails(MarriageDetailsRequest request) {

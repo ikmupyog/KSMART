@@ -148,7 +148,4 @@ public class BrideDetails {
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
 
-
-
-
 }
