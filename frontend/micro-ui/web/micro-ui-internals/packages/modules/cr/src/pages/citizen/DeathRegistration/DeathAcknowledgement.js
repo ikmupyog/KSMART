@@ -1,4 +1,4 @@
-import { Banner, Card, CardText, LinkButton, Loader, SubmitBar } from "@egovernments/digit-ui-react-components";
+import { Banner, Card, LinkButton,  } from "@egovernments/digit-ui-react-components";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -54,6 +54,7 @@ const DeathAcknowledgement = ({ data, onSuccess, userType }) => {
  
   console.log("isEditDeath" + isEditDeath);
   const mutation = Digit.Hooks.cr.useCivilRegistrationDeathAPI(tenantId, isEditDeath ? false : true );
+  console.log(mutation);
   // console.log("isEditDeath" + isEditDeath);
 
   // const mutation1 = Digit.Hooks.cr.useCivilRegistrationDeathAPI(

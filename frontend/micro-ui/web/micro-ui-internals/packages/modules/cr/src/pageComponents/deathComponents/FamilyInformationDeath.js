@@ -3,7 +3,7 @@ import { FormStep, CardLabel, TextInput, Dropdown, CheckBox, BackButton,Toast } 
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
-const FamilyInformationDeath = ({ config, onSelect, userType, formData, isEditDeath }) => {
+const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => {
   console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
@@ -95,7 +95,7 @@ const FamilyInformationDeath = ({ config, onSelect, userType, formData, isEditDe
   const [FamilyEmailId, setFamilyEmailId] = useState(
     formData?.FamilyInformationDeath?.FamilyEmailId ? formData?.FamilyInformationDeath?.FamilyEmailId : ""
   );
-  const [inputValue, setInputValue] = useState("");
+  // const [inputValue, setInputValue] = useState("");
   const [toast, setToast] = useState(false);
   const [AadharError, setAadharError] = useState(formData?.InformationDeath?.DeceasedAadharNumber ? false : false);
 
@@ -302,13 +302,13 @@ const FamilyInformationDeath = ({ config, onSelect, userType, formData, isEditDe
     });
   };
 
-  if (isEditDeath) {
-    if (formData?.FamilyInformationDeath?.SpouseType != null) {
-      if (cmbspouse.length > 0 && (SpouseType === undefined || SpouseType === "")) {
-        setSpouseType(cmbspouse.filter((cmbspouse) => cmbspouse.code === formData?.FamilyInformationDeath?.SpouseType)[0]);
-      }
-    }
-  }
+  // if (isEditDeath) {
+  //   if (formData?.FamilyInformationDeath?.SpouseType != null) {
+  //     if (cmbspouse.length > 0 && (SpouseType === undefined || SpouseType === "")) {
+  //       setSpouseType(cmbspouse.filter((cmbspouse) => cmbspouse.code === formData?.FamilyInformationDeath?.SpouseType)[0]);
+  //     }
+  //   }
+  // }
 
   // const handleBlur = (event) => {
   //   const value = event.target.value;
