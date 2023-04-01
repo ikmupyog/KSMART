@@ -679,6 +679,19 @@ const AdoptionParentsDetails = ({ config, onSelect, userType, formData, isEditBi
                       placeholder={`${t("CR_ADOPTION_MOTHER_MARITAL_STATUS")}`}
                     />
                   </div>
+                  <div className="col-md-4">
+                    <CardLabel>{`${t("CR_ADOPTION_MOTHER_EDUCATION")}`}<span className="mandatorycss">*</span></CardLabel>
+                    <Dropdown
+                      t={t}
+                      optionKey="name"
+                      isMandatory={false}
+                      option={cmbQualification}
+                      selected={motherEducation}
+                      select={setSelectMotherEducation}
+                      disable={isDisableEdit}
+                      placeholder={`${t("CR_ADOPTION_MOTHER_EDUCATION")}`}
+                    />
+                  </div>
                 </div>
               </div>
               {/* <div className="row">
@@ -736,19 +749,7 @@ const AdoptionParentsDetails = ({ config, onSelect, userType, formData, isEditBi
                       {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "number", title: t("CR_INVALID_ORDER_CURRENT_DELIVERY") })}
                     />
                   </div> */}
-                  <div className="col-md-4">
-                    <CardLabel>{`${t("CR_ADOPTION_MOTHER_EDUCATION")}`}<span className="mandatorycss">*</span></CardLabel>
-                    <Dropdown
-                      t={t}
-                      optionKey="name"
-                      isMandatory={false}
-                      option={cmbQualification}
-                      selected={motherEducation}
-                      select={setSelectMotherEducation}
-                      disable={isDisableEdit}
-                      placeholder={`${t("CR_ADOPTION_MOTHER_EDUCATION")}`}
-                    />
-                  </div>
+                 
                   <div className="col-md-4">
                     <CardLabel>{`${t("CR_ADOPTION_MOTHER_PROFESSIONAL")}`}<span className="mandatorycss">*</span></CardLabel>
                     <Dropdown
