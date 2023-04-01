@@ -37,7 +37,7 @@ const CrFlow = ({ path }) => {
       title: "CR_BIRTH_BORN_OUTSIDE",
       subTitle: "CR_BIRTH_BORN_OUTSIDE_DESC",
       img: <BankIcon />,
-      link: `${path}/born-outside-child-details`,
+      link: `/digit-ui/employee/cr/create-bornoutsidebirth/born-outside-child-details`,
     },
     {
       title: "CR_ABANDONED_BIRTH_REGISTRATION",

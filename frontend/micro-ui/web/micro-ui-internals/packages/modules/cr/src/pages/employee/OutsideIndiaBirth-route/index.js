@@ -3,7 +3,7 @@ import { Route, Switch, useRouteMatch, useLocation, useHistory } from "react-rou
 import { useTranslation } from "react-i18next";
 import { newConfig as newConfigCR } from "../../../config/config";
 
-const OcrFlowApp = ({ parentUrl }) => {
+const CreateBornOutsideEmp = ({ parentUrl }) => {
   const { t } = useTranslation();
   const { path } = useRouteMatch();
   const match = useRouteMatch();
@@ -97,4 +97,4 @@ const OcrFlowApp = ({ parentUrl }) => {
   );
 };
 
-export default ScrFlowApp;
+export default CreateBornOutsideEmp;

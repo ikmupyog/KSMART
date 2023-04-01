@@ -31,6 +31,7 @@ import CreateBornOutsideRegistration from "./pages/citizen/BornOutsideReg";
 import CreateAbandonedBirth from "./pages/employee/Abandoned-birth-route";
 import CrFlowApp from "./pages/employee/Birth-route";
 import ScrFlowApp from "./pages/employee/StillBirth-route";
+import CreateBornOutsideEmp from "./pages/employee/OutsideIndiaBirth-route";
 
 import ParentsDetails from "../src/pageComponents/birthComponents/ParentsDetails";
 import BirthPlaceHospital from "../src/pageComponents/birthComponents/BirthPlaceHospital";
@@ -245,6 +246,7 @@ export const CRLinks = ({ matchPath, userType }) => {
 const componentsToRegister = {
   CrFlowApp,
   ScrFlowApp,
+  CreateBornOutsideEmp,
   MyCRApplications,
   MyCRDeathApplications,
   CustomTimePicker,
