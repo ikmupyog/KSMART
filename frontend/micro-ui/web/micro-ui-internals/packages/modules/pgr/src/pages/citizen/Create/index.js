@@ -33,18 +33,13 @@ export const CreateComplaint = () => {
     setCanSubmit(false);
   }, []);
 
-  useEffect(() => {
-    setParamState(params);
-    if (nextStep === null) {
-      wrapperSubmit();
-    } else {
-      history.push(`${match.path}/${nextStep}`);
-    }
-  }, [params, nextStep]);
+  // useEffect(() => {
+
+  // }, [params, nextStep]);
 
   const goNext = () => {
     const currentPath = pathname.split("/").pop();
-
+    setParamState(params);
     let { nextStep } = config.routes[currentPath];
     let compType = Digit.SessionStorage.get(PGR_CITIZEN_CREATE_COMPLAINT);
     if (nextStep === "sub-type" && compType.complaintType.key === "Others") {
@@ -54,6 +49,11 @@ export const CreateComplaint = () => {
         subType: { key: "Others", name: t("SERVICEDEFS.OTHERS") },
       });
       nextStep = config.routes[nextStep].nextStep;
+    }
+    if (nextStep === null) {
+      wrapperSubmit();
+    } else {
+      history.push(`${match.path}/${nextStep}`);
     }
     setNextStep(nextStep);
   };
@@ -71,7 +71,7 @@ export const CreateComplaint = () => {
       const { city_complaint, locality_complaint, uploadedImages, complaintType, subType, details, ...values } = paramState;
       const { code: cityCode, name: city } = city_complaint;
       const { code: localityCode, name: localityName } = locality_complaint;
-      const  deptCode  = paramState?.complaintType["deptCode"];
+      const deptCode = paramState?.complaintType["deptCode"];
 
       const _uploadImages = uploadedImages?.map((url) => ({
         documentType: "PHOTO",
