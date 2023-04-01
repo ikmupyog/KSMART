@@ -94,8 +94,9 @@ const BirthCertificate = ({  config, onSelect, userType, formData, onSubmit }) =
   }
 
   return (
+    
     <React.Fragment>
-      
+      mayaaa
       {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
@@ -118,7 +119,7 @@ const BirthCertificate = ({  config, onSelect, userType, formData, onSubmit }) =
               </div>
               <div className="col-md-4">
                 <CardLabel>
-                  {t("BC_BIRTH_DATE")}
+                  {t("Date of Birth")}
                   <span className="mandatorycss">*</span>
                 </CardLabel>
                 <span>
@@ -137,7 +138,7 @@ const BirthCertificate = ({  config, onSelect, userType, formData, onSubmit }) =
               </div>
               <div className="col-md-4">
                 <CardLabel>
-                  {`${t("BC_CHILD_GENDER")}`} <span className="mandatorycss">*</span>{" "}
+                  {`${t("Gender")}`} <span className="mandatorycss">*</span>{" "}
                 </CardLabel>
                 <Dropdown
                   t={t}
@@ -147,7 +148,7 @@ const BirthCertificate = ({  config, onSelect, userType, formData, onSubmit }) =
                   selected={setGender}
                   select={selectGender}
                   disabled={isEdit}
-                  placeholder={`${t("BC_CHILD_GENDER")}`}
+                  placeholder={`${t("Gender")}`}
                   {...(validation = { isRequired: false, title: t("CR_INVALID_GENDER") })}
                 />
               </div>
@@ -155,7 +156,7 @@ const BirthCertificate = ({  config, onSelect, userType, formData, onSubmit }) =
           </div>
           <div className="row">
             <div className="col-md-4">
-              <CardLabel>{t("BC_MOTHER_NAME")}</CardLabel>
+              <CardLabel>{t("Mother Name")}</CardLabel>
               <TextInput
                 t={t}
                 type={"text"}
@@ -164,13 +165,13 @@ const BirthCertificate = ({  config, onSelect, userType, formData, onSubmit }) =
                 value={MotherName}
                 onChange={selectSetMotherName}
                 disable={isEdit}
-                placeholder={`${t("BC_MOTHER_NAME")}`}
+                placeholder={`${t("Mother Name")}`}
               />
             </div>
           </div>
           <div className="row">
             <div className="col-md-4">
-              <CardLabel>{t("BC_FATHER_NAME")}</CardLabel>
+              <CardLabel>{t("Father Name")}</CardLabel>
               <TextInput
                 t={t}
                 type={"text"}
@@ -179,12 +180,12 @@ const BirthCertificate = ({  config, onSelect, userType, formData, onSubmit }) =
                 value={FatherName}
                 onChange={selectSetFatherName}
                 disable={isEdit}
-                placeholder={`${t("BC_FATHER_NAME")}`}
+                placeholder={`${t("Father Name")}`}
               />
             </div>
             <div className="col-md-4">
               <CardLabel>
-                {`${t("BC_HOSPITAL_NAME")}`} <span className="mandatorycss">*</span>{" "}
+                {`${t("Hospital Name")}`} <span className="mandatorycss">*</span>{" "}
               </CardLabel>
               <Dropdown
                 t={t}
@@ -195,14 +196,14 @@ const BirthCertificate = ({  config, onSelect, userType, formData, onSubmit }) =
                 cmbGender
                 select={selectSetHospitalName}
                 disabled={isEdit}
-                placeholder={`${t("BC_HOSPITAL_NAME")}`}
+                placeholder={`${t("Hospital Name")}`}
               />
             </div>
           </div>
           <div className="row">
           <div className="col-md-12">
             <div className="col-md-4">
-              <CardLabel>{t("BC_REGISTRATION_NO")}</CardLabel>
+              <CardLabel>{t("Registration Number")}</CardLabel>
               <TextInput
                 t={t}
                 type={"text"}
@@ -211,7 +212,7 @@ const BirthCertificate = ({  config, onSelect, userType, formData, onSubmit }) =
                 value={RegistrationNo}
                 onChange={selectSetRegistrationNo}
                 disable={isEdit}
-                placeholder={`${t("BC_REGISTRATION_NO")}`}
+                placeholder={`${t("Registration Number")}`}
               />
             </div>
             </div>

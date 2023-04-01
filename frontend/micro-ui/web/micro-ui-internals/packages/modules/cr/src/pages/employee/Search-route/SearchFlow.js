@@ -40,7 +40,7 @@ const SearchFlow = ({ path }) => {
         <div className="cardWrapper">
           {cardMenuData?.map((item, index) => (
            item.link?(
-            <Link to={item.link}>
+            <Link to={item.link} key={index}>
             {/* <Link to='trade-lisense'> */}
             <div className={ClassList[item.title]}>
               <div className="contentMenu">
