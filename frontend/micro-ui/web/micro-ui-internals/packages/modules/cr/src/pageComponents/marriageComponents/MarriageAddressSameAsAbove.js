@@ -3,8 +3,15 @@ import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox } from "
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-const AddressSameAsAbove = ({ config, onSelect, userType, formData, isPrsentAddress, setIsPrsentAddress,
-  isEditBirth = false, isEditDeath = false,
+const MarriageAddressSameAsAbove = ({
+  config,
+  onSelect,
+  userType,
+  formData,
+  isPrsentAddress,
+  setIsPrsentAddress,
+  isEditBirth = false,
+  isEditDeath = false,
   // isInitialRender, setIsInitialRender
 }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -38,7 +45,6 @@ const AddressSameAsAbove = ({ config, onSelect, userType, formData, isPrsentAddr
       // setPermanentPostOffice(PresentPostOffice);
       // setPermanentPincode(PresentPincode);
     } else {
-
       // setPermanentLBTypeName(' ');
       // setPermanentBuldingNo('');
       // setPermanentDoorNo('');
@@ -60,11 +66,8 @@ const AddressSameAsAbove = ({ config, onSelect, userType, formData, isPrsentAddr
   }
 
   const goNext = () => {
-
-    onSelect(config.key, {
-
-    });
-  }
+    onSelect(config.key, {});
+  };
   return (
     <React.Fragment>
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!isPrsentAddress}>
@@ -77,19 +80,21 @@ const AddressSameAsAbove = ({ config, onSelect, userType, formData, isPrsentAddr
         </div>
         <div>
           <div className="row">
-            <div className="col-md-12" >
-              <div className="col-md-12" >
-                <CheckBox label={t("CR_SAME_AS_ABOVE")} onChange={setSameAsPresent} value={isPrsentAddress} 
-                checked={isPrsentAddress} 
-                disable={isDisableEdit} 
+            <div className="col-md-12">
+              <div className="col-md-12">
+                <CheckBox
+                  label={t("CR_SAME_AS_ABOVE")}
+                  onChange={setSameAsPresent}
+                  value={isPrsentAddress}
+                  checked={isPrsentAddress}
+                  disable={isDisableEdit}
                 />
               </div>
             </div>
           </div>
         </div>
-
       </FormStep>
     </React.Fragment>
   );
 };
-export default AddressSameAsAbove;
+export default MarriageAddressSameAsAbove;

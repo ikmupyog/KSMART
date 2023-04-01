@@ -966,7 +966,7 @@ export const newConfig = [
       {
         type: "component",
         route: "address-groom",
-        component: "AddressBasePage",
+        component: "MarriageAddressBasePage",
         texts: {
           headerCaption: "",
           header: "",
@@ -999,7 +999,7 @@ export const newConfig = [
       {
         type: "component",
         route: "address-bride",
-        component: "AddressBasePage",
+        component: "MarriageAddressBasePage",
         texts: {
           headerCaption: "",
           header: "",
