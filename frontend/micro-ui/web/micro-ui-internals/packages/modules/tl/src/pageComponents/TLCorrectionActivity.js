@@ -76,7 +76,7 @@ const TLCorrectionActivity = ({ t, config,formData,onEditSelect,formDataEdit}) =
   //   unit: null, uom: null }]);
 
 
-  const [fields, setFeilds] = useState([{ businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null }]);
+  const [fields, setFeilds] = useState([{ id : null, businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null }]);
   const [noOfEmployees, setNoOfEmployees] = useState(formDataEdit?.TradeDetails?.tradeLicenseDetail?.noOfEmployees ? formDataEdit?.TradeDetails?.tradeLicenseDetail?.noOfEmployees  : "");
   const [capitalInvestment, setCapitalInvestment] = useState(formDataEdit?.TradeDetails?.tradeLicenseDetail?.capitalInvestment ? formDataEdit?.TradeDetails?.tradeLicenseDetail?.capitalInvestment : "" );
   const [commencementDate, setCommencementDate] = useState(formDataEdit?.TradeDetails?.commencementDate? convertEpochToDate(formDataEdit?.TradeDetails?.commencementDate) : null);
@@ -110,6 +110,7 @@ const TLCorrectionActivity = ({ t, config,formData,onEditSelect,formDataEdit}) =
     bussubtyp = getBusinessSubTypeMenu(bustype).filter((type) => type?.code.includes(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessSubtype))[0];
     setFeilds( [
       {
+        id: formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.id ? formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.id : null,
         businessCategory: category,
         businessType: bustype,
         businessSubtype: bussubtyp, unit: null, uom: null 
@@ -135,6 +136,7 @@ const TLCorrectionActivity = ({ t, config,formData,onEditSelect,formDataEdit}) =
     let units = [...fields];
     units[i].businessSubtype = value;
     setFeilds(units);
+    Digit.SessionStorage.set("activityedit", true);
   }
   const changesetCapitalInvestment = (e => {
     setCapitalInvestment(e.target.value.length<=12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
@@ -165,6 +167,7 @@ const TLCorrectionActivity = ({ t, config,formData,onEditSelect,formDataEdit}) =
     if(units[0]?.businessCategory?.code){
       tradeUnits =[
         {
+          "id" : units[0].id,
           "businessCategory" :  units[0].businessCategory.code,
           "businessType" :  null,
           "businessSubtype" :  null
@@ -174,6 +177,7 @@ const TLCorrectionActivity = ({ t, config,formData,onEditSelect,formDataEdit}) =
     if(units[0]?.businessType?.code){
       tradeUnits =[
         {
+          "id" : units[0].id,
           "businessCategory" :  units[0].businessCategory.code,
           "businessType" :  units[0].businessType.code,
           "businessSubtype" :  null
@@ -183,6 +187,7 @@ const TLCorrectionActivity = ({ t, config,formData,onEditSelect,formDataEdit}) =
     if(units[0]?.businessSubtype?.code){
       tradeUnits =[
         {
+          "id" : units[0].id,
           "businessCategory" :  units[0].businessCategory.code,
           "businessType" :  units[0].businessType.code,
           "businessSubtype" :  units[0].businessSubtype.code,
@@ -225,7 +230,7 @@ const TLCorrectionActivity = ({ t, config,formData,onEditSelect,formDataEdit}) =
         <div className="col-md-8">
           <RadioButtons t={t} optionsKey="name" isMandatory={config.isMandatory} options={menusector} selectedOption={businessSector} onSelect={selectBusinessSector} style={{ display: "flex", justifyContent: "space-between", width: "48%" }} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_BUSINESS_SECTOR"), })} />&nbsp;
         </div>
-      </div> */}
+      </div> 
       <div className="row">
         <div className="col-md-12">
           <div className="col-md-2">
@@ -235,7 +240,7 @@ const TLCorrectionActivity = ({ t, config,formData,onEditSelect,formDataEdit}) =
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left", fontWeight: "500" }}>{formDataEdit?.TradeDetails?.tradeLicenseDetail?.businessSector} </CardText>
           </div>
         </div>
-      </div>
+      </div>*/}
       {fields.map((field, index) => {
         return (
           <div className="row" key={index}>
@@ -250,18 +255,6 @@ const TLCorrectionActivity = ({ t, config,formData,onEditSelect,formDataEdit}) =
             <div className="col-md-4" >
               <CardLabel>{`${t("TL_NEW_TRADE_DETAILS_TRADE_SUBTYPE_LABEL")}`}<span className="mandatorycss">*</span></CardLabel>
               <Dropdown t={t} optionKey="i18nKey" isMandatory={config.isMandatory} option={sortDropdownNames(getBusinessSubTypeMenu(field?.businessType), "i18nKey", t)} selected={field?.businessSubtype} select={(e) => selectBusinessSubType(index, e)} placeholder="Bussiness Sub Type" {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_SUB_BUSINESS_TYPE"), })} />
-              {/* <MultiSelectDropdown
-              className="form-field"
-              isMandatory={true}
-              defaultUnit="Selected"
-            //  selected ={field?.businessSubtype}
-            selected={sortDropdownNames(getBusinessSubTypeMenu(field?.businessType), "i18nKey", t)}
-              options={sortDropdownNames(getBusinessSubTypeMenu(field?.businessType), "i18nKey", t) && sortDropdownNames(getBusinessSubTypeMenu(field?.businessType), "i18nKey", t)}
-          //    onSelect={(e) => selectBusinessSubType(index, e)}
-              optionsKey="name"
-              t={t}
-              placeholder={`${t("TL_INVALID_SUB_BUSINESS_TYPE")}`}
-            /> */}
             </div>
           </div>
         )
