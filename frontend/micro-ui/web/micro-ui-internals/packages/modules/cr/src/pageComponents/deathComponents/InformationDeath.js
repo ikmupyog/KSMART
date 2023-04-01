@@ -19,7 +19,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   const stateId = Digit.ULBService.getStateId();
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
   const [workFlowCode, setWorkFlowCode] = useState();
-  const {uuid:uuid,} =Digit.UserService.getUser().info ; 
+  const { uuid: uuid } = Digit.UserService.getUser().info;
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
   if (tenantId === "kl") {
@@ -244,16 +244,18 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   );
   const [Religion, setSelectedReligion] = useState(
     formData?.InformationDeath?.Religion?.code
-    ? formData?.InformationDeath?.Religion
-    : formData?.InformationDeath?.Religion
-    ? cmbReligion.filter((cmbReligion) => cmbReligion.code === formData?.InformationDeath?.Religion)[0]
-    : ""
+      ? formData?.InformationDeath?.Religion
+      : formData?.InformationDeath?.Religion
+      ? cmbReligion.filter((cmbReligion) => cmbReligion.code === formData?.InformationDeath?.Religion)[0]
+      : ""
     // formData?.InformationDeath?.Religion?.code
     //   ? formData?.InformationDeath?.Religion
     //   : formData?.InformationDeath?.Religion
     //   ? cmbReligion.filter((cmbReligion) => cmbReligion.code === formData?.InformationDeath?.Religion)[0]
     //   : ""
   );
+  const [DifferenceInTime, setDifferenceInTime] = useState(formData?.ChildDetails?.DifferenceInTime);
+  const [DifferenceInDaysRounded, setDifferenceInDaysRounded] = useState();
 
   const [CommencementDate, setCommencementDate] = useState(
     formData?.InformationDeath?.CommencementDate ? formData?.InformationDeath?.CommencementDate : ""
@@ -561,23 +563,51 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   function selectToDate(value) {
     setToDate(value);
     const today = new Date();
-    const toDate = new Date(value);
-    const fromDate = new Date(DateOfDeath);
+    today.setHours(0, 0, 0, 0);
+    const deathDate = new Date(value);
+    deathDate.setHours(0, 0, 0, 0);
 
-    if (toDate.getTime() <= today.getTime()) {
-      if (fromDate && toDate.getTime() < fromDate.getTime()) {
-        setToDate(null);
-        setDOBError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 3000);
-      } else {
-        let Difference_In_Time = today.getTime() - toDate.getTime();
-        let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-        Difference_In_DaysRounded = Math.floor(Difference_In_Days);
+    if (deathDate.getTime() <= today.getTime()) {
+      setDOBError(false);
+      // To calculate the time difference of two dates
+      let Difference_In_Time = today.getTime() - deathDate.getTime();
+      // console.log("Difference_In_Time" + Difference_In_Time);
+      setDifferenceInTime(today.getTime() - deathDate.getTime());
+      let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+      // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
+      setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
+      if (DeathPlace) {
+        let currentWorgFlow = workFlowData.filter(
+          (workFlowData) =>
+            workFlowData.BirtPlace === DeathPlace.code &&
+            workFlowData.startdateperiod <= DifferenceInTime &&
+            workFlowData.enddateperiod >= DifferenceInTime
+        );
+        console.log("currentWorgFlowDOB" + currentWorgFlow);
+        if (currentWorgFlow.length > 0) {
+          // console.log(currentWorgFlow[0].WorkflowCode);
+          setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+        }
       }
     }
+    // const today = new Date();
+    // const toDate = new Date(value);
+    // const fromDate = new Date(DateOfDeath);
+
+    // if (toDate.getTime() <= today.getTime()) {
+    //   if (fromDate && toDate.getTime() < fromDate.getTime()) {
+    //     setToDate(null);
+    //     setDOBError(true);
+    //     setToast(true);
+    //     setTimeout(() => {
+    //       setToast(false);
+    //     }, 3000);
+    //   } else {
+    //     let Difference_In_Time = today.getTime() - toDate.getTime();
+    //     let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+    //     Difference_In_DaysRounded = Math.floor(Difference_In_Days);
+    //   }
+    // }
     // else {
     //   setToDate(null);
     //   setDOBError(true);
@@ -750,13 +780,21 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   function selectDeathPlace(value) {
     setselectDeathPlace(value);
     setValue(value.code);
-
     let currentWorgFlow = workFlowData.filter(
       (workFlowData) =>
-        workFlowData.BirtPlace === value.code &&
-        workFlowData.startdateperiod <= Difference_In_DaysRounded &&
-        workFlowData.enddateperiod >= Difference_In_DaysRounded
+        workFlowData.BirtPlace === value.code && workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime
     );
+    // console.log(currentWorgFlow);
+    if (currentWorgFlow.length > 0) {
+      // console.log(currentWorgFlow[0].WorkflowCode);
+      setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+    }
+    // let currentWorgFlow = workFlowData.filter(
+    //   (workFlowData) =>
+    //     workFlowData.BirtPlace === value.code &&
+    //     workFlowData.startdateperiod <= Difference_In_DaysRounded &&
+    //     workFlowData.enddateperiod >= Difference_In_DaysRounded
+    // );
     // console.log(currentWorgFlow[0].WorkflowCode);
     // workFlowCode=currentWorgFlow[0].WorkflowCode;
     setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
@@ -1337,7 +1375,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
             <div className="row">
               <div className="col-md-12">
                 <div className="col-md-6">
-                  {/* <CheckBox label={t("CR_EXACT_DEATH_DATE_NOT_AVAILABLE")} onChange={() => setChecked((checked) => !checked)} value={checked} /> */}
                   <CheckBox
                     label={t("CR_EXACT_DEATH_DATE_NOT_AVAILABLE")}
                     onChange={setCheckedDate}
@@ -1347,7 +1384,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
                 </div>
               </div>
             </div>
-            {/* {inside && ( */}
             {DeathDateUnavailable === true && (
               <div className="row">
                 <div className="col-md-12">
@@ -1373,7 +1409,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
                     <CardLabel>{t("CR_FROM_TIME")}</CardLabel>
                     <CustomTimePicker name="DeathTimeFrom" onChange={(val) => handleFromTimeChange(val, setDeathTimeFrom)} value={DeathTimeFrom} />
                   </div> */}
-
                   <div className="col-md-3">
                     <CardLabel>
                       {t("CR_TO_DATE")}
@@ -1407,7 +1442,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
                       {t("CR_DATE_OF_DEATH")}
                       <span className="mandatorycss">*</span>
                     </CardLabel>
-                    {/* date={CommencementDate} */}
                     <DatePicker
                       date={DateOfDeath}
                       max={convertEpochToDate(new Date())}
