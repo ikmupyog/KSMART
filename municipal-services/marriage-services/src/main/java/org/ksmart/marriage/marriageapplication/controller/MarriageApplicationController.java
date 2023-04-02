@@ -58,7 +58,6 @@ public class MarriageApplicationController {
                 .marriageApplicationDetails(marriageDetails)
                 .responseInfo(
                         responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), true))
-
                 .build();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

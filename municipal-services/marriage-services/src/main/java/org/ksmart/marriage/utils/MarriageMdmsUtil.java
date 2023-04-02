@@ -54,12 +54,12 @@ public class MarriageMdmsUtil {
     private MdmsCriteriaReq getMDMSRequest(RequestInfo requestInfo, String tenantId) {
         ModuleDetail tenantIdRequest = getTenantIdRequest(tenantId);
         ModuleDetail commomMasterRequest = getCommonMastersRequest();
-        List<ModuleDetail> BNDListRequest = getMarriageListRequest();
+       // List<ModuleDetail> BNDListRequest = getMarriageListRequest();
 
         List<ModuleDetail> moduleDetails = new LinkedList<>();
         moduleDetails.add(tenantIdRequest);
         moduleDetails.add(commomMasterRequest);
-        moduleDetails.addAll(BNDListRequest);
+       //moduleDetails.addAll(BNDListRequest);
 
         MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(config.getEgovStateLevelTenant())
                                     .build();
@@ -82,48 +82,48 @@ public class MarriageMdmsUtil {
 
         ModuleDetail marriageModuleDtls = ModuleDetail.builder().masterDetails(marriageMasterDetails)
                 .moduleName(MarriageConstants.TENANT_MODULE_NAME).build();
-       
+       //System.out.println("JasmineTenantId"+marriageModuleDtls);
         return marriageModuleDtls;
     }
     private ModuleDetail getCommonMastersRequest() {
 
         List<MasterDetail> marriageMasterDetails = new ArrayList<>();  
-        //Country
-        final String filterCodeCountry = "$.[?(@.active==true)].code";
-        marriageMasterDetails
-                 .add(MasterDetail.builder().name(MarriageConstants.COUNTRY).filter(filterCodeCountry).build()); 
-        //State
-        final String filterCodeState = "$.[?(@.active==true)].code";
-        marriageMasterDetails
-                 .add(MasterDetail.builder().name(MarriageConstants.STATE).filter(filterCodeState).build()); 
-        //District
-        final String filterCodeDistrict = "$.[?(@.active==true)].code";
-        marriageMasterDetails
-                .add(MasterDetail.builder().name(MarriageConstants.DISTRICT).filter(filterCodeDistrict).build());               
-        //Taluk
-        final String filterCodeTaluk = "$.[?(@.active==true)].code";
-        marriageMasterDetails
-                .add(MasterDetail.builder().name(MarriageConstants.TALUK).filter(filterCodeTaluk).build());
-        //LbType
-        final String filterCodeLbType = "$.[?(@.active==true)].code";
-        marriageMasterDetails
-                .add(MasterDetail.builder().name(MarriageConstants.LBTYPE).filter(filterCodeLbType).build());
-        //Village
-        final String filterCodeVillage = "$.[?(@.active==true)].code";
-        marriageMasterDetails
-                .add(MasterDetail.builder().name(MarriageConstants.VILLAGE).filter(filterCodeVillage).build());
+        // //Country
+        // final String filterCodeCountry = "$.[?(@.active==true)].code";
+        // marriageMasterDetails
+        //          .add(MasterDetail.builder().name(MarriageConstants.COUNTRY).filter(filterCodeCountry).build()); 
+        // //State
+        // final String filterCodeState = "$.[?(@.active==true)].code";
+        // marriageMasterDetails
+        //          .add(MasterDetail.builder().name(MarriageConstants.STATE).filter(filterCodeState).build()); 
+        // //District
+        // final String filterCodeDistrict = "$.[?(@.active==true)].code";
+        // marriageMasterDetails
+        //         .add(MasterDetail.builder().name(MarriageConstants.DISTRICT).filter(filterCodeDistrict).build());               
+        // //Taluk
+        // final String filterCodeTaluk = "$.[?(@.active==true)].code";
+        // marriageMasterDetails
+        //         .add(MasterDetail.builder().name(MarriageConstants.TALUK).filter(filterCodeTaluk).build());
+        // //LbType
+        // final String filterCodeLbType = "$.[?(@.active==true)].code";
+        // marriageMasterDetails
+        //         .add(MasterDetail.builder().name(MarriageConstants.LBTYPE).filter(filterCodeLbType).build());
+        // //Village
+        // final String filterCodeVillage = "$.[?(@.active==true)].code";
+        // marriageMasterDetails
+        //         .add(MasterDetail.builder().name(MarriageConstants.VILLAGE).filter(filterCodeVillage).build());
         //Gender
         final String filterCodeGender = "$.[?(@.active==true)].code";
         marriageMasterDetails
                 .add(MasterDetail.builder().name(MarriageConstants.GENDERTYPE).filter(filterCodeGender).build());
-        //Religion
-        final String filterCodeReligion = "$.[?(@.active==true)].code";
-        marriageMasterDetails
-                 .add(MasterDetail.builder().name(MarriageConstants.RELIGION).filter(filterCodeReligion).build()); 
-        //Religion
-        final String filterCodePostOffice = "$.[?(@.active==true)].code";
-        marriageMasterDetails
-                 .add(MasterDetail.builder().name(MarriageConstants.POSTOFFICE).filter(filterCodePostOffice).build());         
+        // //Religion
+        // final String filterCodeReligion = "$.[?(@.active==true)].code";
+        // marriageMasterDetails
+        //          .add(MasterDetail.builder().name(MarriageConstants.RELIGION).filter(filterCodeReligion).build()); 
+        // //Religion
+        // final String filterCodePostOffice = "$.[?(@.active==true)].code";
+        // marriageMasterDetails
+        //          .add(MasterDetail.builder().name(MarriageConstants.POSTOFFICE).filter(filterCodePostOffice).build());         
 
         ModuleDetail marriageModuleDtls = ModuleDetail.builder().masterDetails(marriageMasterDetails)
                 .moduleName(MarriageConstants.COMMON_MASTER_MODULE_NAME).build();

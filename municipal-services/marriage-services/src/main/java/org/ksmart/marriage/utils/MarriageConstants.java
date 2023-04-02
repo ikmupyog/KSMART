@@ -95,18 +95,8 @@ public class MarriageConstants {
 
        public static final String MARRIAGE_TYPE = "TypeOfMarriage";
 
-       
-
-
-       
-
-
-       
-
-
-       
-
        public static final String WORKFLOW_STATUS_APPROVED = "APPROVED";
+       
        public static final String APPLICATION_NEW = "new";
 
 

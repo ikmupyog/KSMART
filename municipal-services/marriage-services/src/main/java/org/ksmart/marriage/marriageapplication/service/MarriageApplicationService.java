@@ -47,34 +47,6 @@ public class MarriageApplicationService {
     }
 
 
-    // private final MarriageProducer producer;
-    // private final MarriageApplicationConfiguration marriageApplicationConfiguration;
-    // private final MarriageDetailsEnrichment marriageDetailsEnrichment;
-    // private final MarriageApplicationQueryBuilder marriageQueryBuilder;
-    // private final MarriageApplicationRowMapper marriageApplicationRowMapper;
-    // private final JdbcTemplate jdbcTemplate;
-    // private final WorkflowIntegrator workflowIntegrator;
-    // private final MarriageMdmsUtil util;
-    // private final MarriageMDMSValidator mdmsValidator;
-
-    // @Autowired
-    // public MarriageApplicationRepository(MarriageProducer producer, MarriageApplicationConfiguration marriageApplicationConfiguration, 
-    // JdbcTemplate jdbcTemplate, MarriageDetailsEnrichment marriageDetailsEnrichment, MarriageApplicationQueryBuilder marriageQueryBuilder, 
-    // MarriageApplicationRowMapper marriageApplicationRowMapper,
-    //  WorkflowIntegrator workflowIntegrator,
-    // MarriageMdmsUtil util,
-    // MarriageMDMSValidator mdmsValidator) {
-    //     this.producer = producer;
-    //     this.marriageApplicationConfiguration = marriageApplicationConfiguration;
-    //     this.marriageDetailsEnrichment = marriageDetailsEnrichment;
-    //     this.jdbcTemplate = jdbcTemplate;
-    //     this.marriageQueryBuilder = marriageQueryBuilder;
-    //     this.marriageApplicationRowMapper = marriageApplicationRowMapper;
-    //     this.workflowIntegrator = workflowIntegrator;
-    //     this.util = util;
-    //     this.mdmsValidator=mdmsValidator;
-    // }
-
     public List<MarriageApplicationDetails> saveMarriageDetails(MarriageDetailsRequest request) {
         // validatorService.validateCommonFields( request);
         Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getMarriageDetails().get(0).getTenantid());
