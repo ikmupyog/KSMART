@@ -7,11 +7,11 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
   permntOutsideIndiaLineoneMl, setadrsPermntOutsideIndiaLineoneMl, permntOutsideIndiaLinetwoEn, setadrsPermntOutsideIndiaLinetwoEn, permntOutsideIndiaLinetwoMl, setadrsPermntOutsideIndiaLinetwoMl,
   permntOutsideIndiaprovinceEn, setPermntOutsideIndiaprovinceEn, permntOutsideIndiaprovinceMl, setPermntOutsideIndiaprovinceMl, permntOutsideIndiaVillage, setadrsPermntOutsideIndiaVillage,
   permntOutsideIndiaCityTown, setadrsPermntOutsideIndiaCityTown, permanentOutsideIndiaPostCode, setPermantpostCode,
-  isEditBirth = false, isEditDeath = false,
+  isEditBirth = false, isEditDeath = false, isEditStillBirth = false,
   // isInitialRender, setIsInitialRender
   //  permntOutsideIndiaCountry,  setPermntOutsideIndiaCountry, countryvalue, setCountryValue,
 }) => {
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : isEditStillBirth ? isEditStillBirth : false);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let tenantId = "";
@@ -44,6 +44,12 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
     if (formData?.AddressBirthDetails?.permntOutsideIndiaVillage != null) {
       if (cmbVillage.length > 0 && (permntOutsideIndiaVillage === undefined || permntOutsideIndiaVillage === "")) {
         setadrsVillage(cmbVillage.filter(cmbVillage => cmbVillage.code === formData?.AddressBirthDetails?.permntOutsideIndiaVillage)[0]);
+      }
+    }
+  } else if (isEditStillBirth) {
+    if (formData?.StillBirthChildDetails?.AddressBirthDetails?.permntOutsideIndiaVillage != null) {
+      if (cmbVillage.length > 0 && (permntOutsideIndiaVillage === undefined || permntOutsideIndiaVillage === "")) {
+        setadrsVillage(cmbVillage.filter(cmbVillage => cmbVillage.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.permntOutsideIndiaVillage)[0]);
       }
     }
   }
@@ -229,7 +235,7 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
               value={permntOutsideIndiaprovinceEn}
               onChange={setSelectPermntOutsideIndiaprovinceEn}
               placeholder={`${t("CR_STATE_REGION_PROVINCE_EN")}`}
-              disable={isDisableEdit} 
+              disable={isDisableEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
             />
           </div>
@@ -244,7 +250,7 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
               onKeyPress={setCheckMalayalamInputField}
               onChange={setSelectPermntOutsideIndiaprovinceMl}
               placeholder={`${t("CR_STATE_REGION_PROVINCE_ML")}`}
-              disable={isDisableEdit} 
+              disable={isDisableEdit}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_ML") })}
             />
           </div>
@@ -262,7 +268,7 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
               option={cmbUrbanRural}
               selected={permntOutsideIndiaVillage}
               select={setSelectadrsPermntOutsideIndiaVillage}
-              disable={isDisableEdit} 
+              disable={isDisableEdit}
               placeholder={`${t("CR_TOWN_VILLAGE_EN")}`}
             />
           </div>
@@ -278,7 +284,7 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
               value={permntOutsideIndiaCityTown}
               onChange={setSelectadrsPermntOutsideIndiaCityTown}
               placeholder={`${t("CR_CITY_TOWN_EN")}`}
-              disable={isDisableEdit} 
+              disable={isDisableEdit}
               {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_TOWN_EN") })}
             />
           </div>
@@ -291,7 +297,7 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
               name="permanentOutsideIndiaPostCode"
               value={permanentOutsideIndiaPostCode}
               onChange={setSelectPostCode}
-              disable={isDisableEdit} 
+              disable={isDisableEdit}
               placeholder={`${t("CR_ZIP_CODE")}`}
               {...(validation = {
                 pattern: "^[a-zA-Z-.0-9`' ]*$",
@@ -313,7 +319,7 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
               name="permntOutsideIndiaLineoneEn"
               value={permntOutsideIndiaLineoneEn}
               onChange={setSelectadrsPermntOutsideIndiaLineoneEn}
-              disable={isDisableEdit} 
+              disable={isDisableEdit}
               placeholder={`${t("CR_ADDRES_LINE_ONE_EN")}`}
               {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRES_LINE_ONE_EN") })}
             />
@@ -328,7 +334,7 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
               value={permntOutsideIndiaLineoneMl}
               onKeyPress={setCheckMalayalamInputField}
               onChange={setSelectadrsPermntOutsideIndiaLineoneMl}
-              disable={isDisableEdit} 
+              disable={isDisableEdit}
               placeholder={`${t("CR_ADDRES_LINE_ONE_ML")}`}
               {...(validation = {
                 pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -350,7 +356,7 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
               name="permntOutsideIndiaLinetwoEn"
               value={permntOutsideIndiaLinetwoEn}
               onChange={setSelectadrsPermntOutsideIndiaLinetwoEn}
-              disable={isDisableEdit} 
+              disable={isDisableEdit}
               placeholder={`${t("CR_ADDRES_LINE_TWO_EN")}`}
               {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRES_LINE_TWO_EN") })}
             />
