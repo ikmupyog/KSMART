@@ -3,11 +3,12 @@ import { getFilteredChildDobData, getFilteredChildNameData, getFilteredChildSexD
 
 export const initializeBirthInclusionObject = (birthInclusionDocData, selectedData) => {
   let formObj = {};
+  console.log("correction docs==",birthInclusionDocData);
   for (let field_key in BIRTH_INCLUSION_FIELD_NAMES) {
-    const filteredData = birthInclusionDocData.filter((item) => item.CorrectionField === field_key);
+    const filteredData = birthInclusionDocData?.filter((item) => item.CorrectionField === field_key);
     let inclusionsDocsData = birthInclusionFilterFieldsObj[field_key]?.(selectedData, filteredData);
     console.log("filteredData", selectedData, filteredData);
-    let tempObj = { ...inclusionsDocsData, isUpdated: false, isEditable: false, isFocused: false };
+    let tempObj = { ...inclusionsDocsData, isDisable: true, isEditable: false, isFocused: false };
     Object.assign(formObj, { [field_key]: tempObj });
   }
   console.log("returned formObj==", formObj);
