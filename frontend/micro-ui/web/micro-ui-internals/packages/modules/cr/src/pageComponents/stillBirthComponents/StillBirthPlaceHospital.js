@@ -33,10 +33,10 @@ const StillBirthPlaceHospital = ({ config, onSelect, userType, formData, selectH
     });
 
   if (isEditStillBirth) {
-    if (formData?.ChildDetails?.hospitalCode != null) {
+    if (formData?.StillBirthChildDetails?.hospitalCode != null) {
       if (cmbhospital.length > 0 && (hospitalName === undefined || hospitalName === "")) {
-        selectHospitalName(cmbhospital.filter(cmbhospital => cmbhospital.code === formData?.ChildDetails?.hospitalCode)[0]);
-        cmbhospitalMl = cmbhospital.filter(cmbhospital => cmbhospital.code === formData?.ChildDetails?.hospitalCode)[0];
+        selectHospitalName(cmbhospital.filter(cmbhospital => cmbhospital.code === formData?.StillBirthChildDetails?.hospitalCode)[0]);
+        cmbhospitalMl = cmbhospital.filter(cmbhospital => cmbhospital.code === formData?.StillBirthChildDetails?.hospitalCode)[0];
         selectHospitalNameMl(cmbhospitalMl);
       }
     }
@@ -45,7 +45,7 @@ const StillBirthPlaceHospital = ({ config, onSelect, userType, formData, selectH
   useEffect(() => {
 
     if (isInitialRender) {
-      if (formData?.ChildDetails?.hospitalName) {
+      if (formData?.StillBirthChildDetails?.hospitalName) {
         selectHospitalNameMl(hospitalNameMl);
         setIsInitialRender(false);
       } else {

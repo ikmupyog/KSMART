@@ -1,3 +1,4 @@
+import { isArray, isEmpty, isSet } from "lodash";
 import get from "lodash/get";
 import set from "lodash/set";
 
@@ -688,6 +689,249 @@ export const convertToResubmitTrade = (data) => {
   }
   return formdata;
 }
+export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
+  console.log("Anju dataCorr" + JSON.stringify(dataCorr));
+  console.log("Anju data" + JSON.stringify(data));
+  let tradeUnitCorr = [];
+  let tradeUnitHistory = [];
+  let ownersCorr = [];
+  let ownersHistory = [];
+  let structurePlaceCorr = [];
+  let structurePlaceHistory = [];
+  let applicationDocuments = [];
+  let tradeNameCorr = data?.tradeName;
+  let licenseUnitNameLocalCorr = data?.licenseUnitNameLocal;
+  let tradeNameHistory = data?.tradeName;
+  let licenseUnitNameLocalHistory = data?.licenseUnitNameLocal;
+  let ownerFlag = false;
+  let structureplaceFlag = false;
+  let unitFlag = false;
+  
+  let wardNoCorr = data?.tradeLicenseDetail?.address?.wardNo;
+  let wardIdCorr = data?.tradeLicenseDetail?.address?.wardId;
+  let wardNoHistory = data?.tradeLicenseDetail?.address?.wardNo;
+  let wardIdHistory = data?.tradeLicenseDetail?.address?.wardId;
+  let isEdit = false;
+
+  if(data?.tradeLicenseDetail?.address?.wardId !== dataCorr?.tradeLicenseDetail?.address?.wardId){
+    wardNoCorr = dataCorr?.tradeLicenseDetail?.address?.wardNo;
+    wardIdCorr = dataCorr?.tradeLicenseDetail?.address?.wardId;
+    wardNoHistory = data?.tradeLicenseDetail?.address?.wardNo;
+    wardIdHistory = data?.tradeLicenseDetail?.address?.wardId;
+    isEdit = true;
+  }
+  dataCorr?.tradeLicenseDetail?.tradeUnits.map((unitNew) => {
+    data?.tradeLicenseDetail?.tradeUnits.map((unitOld) => {
+      if (unitOld.id === unitNew.id) {
+        if ((unitOld.businessType !== unitNew.businessType)||(unitOld.businessSubtype !== unitNew.businessSubtype)){
+          tradeUnitCorr.push({
+            id : unitNew.id,
+            active: true,
+            businessCategory: unitNew.businessCategory,
+            businessType: unitNew.businessType,
+            businessSubtype: unitNew.businessSubtype
+          });         
+        }
+        isEdit = true;
+        unitFlag = true;
+      }
+      else if(unitNew.hasOwnProperty('id') === false) {
+        tradeUnitCorr.push({
+            id : null,
+            active: true,
+            businessCategory: unitNew.businessCategory,
+            businessType: unitNew.businessType,
+            businessSubtype: unitNew.businessSubtype
+        });
+        isEdit = true;
+        unitFlag = true;
+      }
+    })
+  })
+  data?.tradeLicenseDetail?.tradeUnits.map((unitOld) => {
+    if(!dataCorr?.tradeLicenseDetail?.tradeUnits.id.includes(unitOld.id) ){
+      tradeUnitCorr.push({id : ownerOld.id, active : false});
+      isEdit = true;
+      unitFlag = true;
+    } 
+  })
+
+  if(unitFlag === true){
+    ownersHistory = data?.tradeLicenseDetail?.tradeUnits;
+  }
+
+
+  dataCorr?.tradeLicenseDetail?.owners.map((ownerNew) => {
+    data?.tradeLicenseDetail?.owners.map((ownerOld) => {
+      if (ownerOld.uuid === ownerNew.uuid) {
+        if ((ownerOld.name !== ownerNew.name)||(ownerOld.careOf !== ownerNew.careOf)||(ownerOld.careOfName !== ownerNew.careOfName)
+        ||(ownerOld.designation !== ownerNew.designation)||(ownerOld.houseName !== ownerNew.houseName)||(ownerOld.street !== ownerNew.street)
+        ||(ownerOld.locality !== ownerNew.locality)||(ownerOld.postOffice !== ownerNew.postOffice)||(ownerOld.pincode !== ownerNew.pincode)){
+          ownersCorr.push({
+            id : ownerNew?.id ? ownerNew?.id : null,
+            uuid : ownerNew?.uuid ? ownerNew?.uuid : null,
+            name: ownerNew?.name ? ownerNew?.name : null,
+            mobileNumber: ownerNew?.mobileNumber ? ownerNew?.mobileNumber : null,
+            emailId: ownerNew?.emailId ? ownerNew?.emailId : null,
+            aadhaarNumber: ownerNew?.aadhaarNumber ? ownerNew?.aadhaarNumber : null,
+            active: true,
+            applicantNameLocal: ownerNew?.applicantNameLocal ? ownerNew?.applicantNameLocal : null,
+            careOf: ownerNew?.careOf ? ownerNew?.careOf : null,
+            careOfName: ownerNew?.careOfName ? ownerNew?.careOfName : null,
+            designation: ownerNew?.designation ? ownerNew?.designation : null,
+            houseName: ownerNew?.houseName ? ownerNew?.houseName : null,
+            street: ownerNew?.street ? ownerNew?.street : null,
+            locality: ownerNew?.locality ? ownerNew?.locality : null,
+            postOffice: ownerNew?.postOffice ? ownerNew?.postOffice : null,
+            pincode: ownerNew?.pincode ? ownerNew?.pincode : null
+          });
+
+          isEdit = true;
+          ownerFlag = true;
+        }
+      }
+      else if(ownerNew.hasOwnProperty('uuid') === false) {
+        ownersCorr.push({
+            id : null,
+            uuid : null,
+            name: ownerNew?.name ? ownerNew?.name : null,
+            mobileNumber: ownerNew?.mobileNumber ? ownerNew?.mobileNumber : null,
+            emailId: ownerNew?.emailId ? ownerNew?.emailId : null,
+            aadhaarNumber: ownerNew?.aadhaarNumber ? ownerNew?.aadhaarNumber : null,
+            active: true,
+            applicantNameLocal: ownerNew?.applicantNameLocal ? ownerNew?.applicantNameLocal : null,
+            careOf: ownerNew?.careOf ? ownerNew?.careOf : null,
+            careOfName: ownerNew?.careOfName ? ownerNew?.careOfName : null,
+            designation: ownerNew?.designation ? ownerNew?.designation : null,
+            houseName: ownerNew?.houseName ? ownerNew?.houseName : null,
+            street: ownerNew?.street ? ownerNew?.street : null,
+            locality: ownerNew?.locality ? ownerNew?.locality : null,
+            postOffice: ownerNew?.postOffice ? ownerNew?.postOffice : null,
+            pincode: ownerNew?.pincode ? ownerNew?.pincode : null
+        });
+        isEdit = true;
+        ownerFlag = true;
+      }
+    })
+  })
+  data?.tradeLicenseDetail?.owners.map((ownerOld) => {
+    if(!dataCorr?.tradeLicenseDetail?.owners.uuid.includes(ownerOld.uuid) ){
+      ownersCorr.push({uuid : ownerOld.uuid, active : false});
+      isEdit = true;
+      ownerFlag = true;
+    } 
+  })
+
+  if(ownerFlag === true){
+    ownersHistory = data?.tradeLicenseDetail?.owners;
+  }
+
+
+  dataCorr?.tradeLicenseDetail?.structurePlace.map((placeNew) => {
+    data?.tradeLicenseDetail?.structurePlace.map((placeOld) => {
+      if (placeOld.id === placeNew.id) {
+        if ((placeOld.doorNo !== placeNew.doorNo)||(placeOld.doorNoSub !== placeNew.doorNoSub)||(placeOld.blockNo !== placeNew.blockNo)
+        ||(placeOld.surveyNo !== placeNew.surveyNo)||(placeOld.subDivisionNo !== placeNew.subDivisionNo)||(placeOld.partitionNo !== placeNew.partitionNo)
+        ||(placeOld.vehicleNo !== placeNew.vehicleNo)||(placeOld.vesselNo !== placeNew.vesselNo)||(placeOld.isResurveyed !== placeNew.isResurveyed)||(placeOld.stallNo !== placeNew.stallNo)){
+          structurePlaceCorr.push({
+            id : placeNew?.id ? placeNew?.id : null,
+            tenantId : dataCorr.tenantId,
+            blockNo : placeNew?.blockNo ? placeNew?.blockNo : "",
+            surveyNo : placeNew?.surveyNo ? placeNew?.surveyNo : "",
+            subDivisionNo : placeNew?.subDivisionNo ? placeNew?.subDivisionNo : "",
+            partitionNo : placeNew?.partitionNo ? placeNew?.partitionNo : "",
+            doorNo : placeNew?.doorNo ? placeNew?.doorNo : null,
+            doorNoSub : placeNew?.doorNoSub ? placeNew?.doorNoSub : "",
+            buildingId : null,
+            vehicleNo : placeNew?.vehicleNo ? placeNew?.vehicleNo : "",
+            vesselNo : placeNew?.vesselNo ? placeNew?.vesselNo : "",
+            active : true,
+            auditDetails : null,
+            isResurveyed : placeNew?.isResurveyed ? placeNew?.isResurveyed : false,
+            stallNo : placeNew?.stallNo ? placeNew?.stallNo : "",
+          });
+
+          isEdit = true;
+          structureplaceFlag = true;
+        }
+      }
+      else if(placeNew.hasOwnProperty('id') === false) {
+        structurePlaceCorr.push({
+          id : null,
+          tenantId : dataCorr.tenantId,
+          blockNo : placeNew?.blockNo ? placeNew?.blockNo : "",
+          surveyNo : placeNew?.surveyNo ? placeNew?.surveyNo : "",
+          subDivisionNo : placeNew?.subDivisionNo ? placeNew?.subDivisionNo : "",
+          partitionNo : placeNew?.partitionNo ? placeNew?.partitionNo : "",
+          doorNo : placeNew?.doorNo ? placeNew?.doorNo : null,
+          doorNoSub : placeNew?.doorNoSub ? placeNew?.doorNoSub : "",
+          buildingId : null,
+          vehicleNo : placeNew?.vehicleNo ? placeNew?.vehicleNo : "",
+          vesselNo : placeNew?.vesselNo ? placeNew?.vesselNo : "",
+          active : true,
+          auditDetails : null,
+          isResurveyed : placeNew?.isResurveyed ? placeNew?.isResurveyed : false,
+          stallNo : placeNew?.stallNo ? placeNew?.stallNo : ""
+        });
+        isEdit = true;
+        structureplaceFlag = true;
+      }
+    })
+  })
+  data?.tradeLicenseDetail?.structurePlace.map((placeOld) => {
+    if(!dataCorr?.tradeLicenseDetail?.structurePlace.id.includes(placeOld.id) ){
+      structurePlaceCorr.push({id : placeOld.id, active : false});
+      isEdit = true;
+      structureplaceFlag = true;
+    } 
+  })
+  if(structureplaceFlag === true){
+    structurePlaceHistory = data?.tradeLicenseDetail?.structurePlace;
+  }
+
+  applicationDocuments = dataCorr?.tradeLicenseDetail?.applicationDocuments;
+
+  if((data?.tradeName !== dataCorr?.tradeName)||(data?.licenseUnitNameLocal !== dataCorr?.licenseUnitNameLocal)){
+    tradeNameCorr = dataCorr?.tradeName;
+    licenseUnitNameLocalCorr = dataCorr?.licenseUnitNameLocal;
+    tradeNameHistory = data?.tradeName;
+    licenseUnitNameLocalHistory = data?.licenseUnitNameLocal;
+    isEdit = true;
+  }
+
+  const formdata = {
+    LicenseCorrection: [
+      {
+        tenantId: data.tenantId,
+        tradeLicenseId : data.id,
+        tradeLicenseDetailId : data.tradeLicenseDetail.id,
+        licenseNumber : data.licenseNumber,
+        correction : {
+          tradeUnits : tradeUnitCorr,
+          applicationDocuments : applicationDocuments,
+          structurePlace : structurePlaceCorr,
+          owners : ownersCorr,
+          tradeName : tradeNameCorr,
+          licenseUnitNameLocal : licenseUnitNameLocalCorr,
+          wardId : wardIdCorr,
+          wardNo : wardNoCorr
+        },
+        history : {
+          tradeUnits : tradeUnitHistory,
+          structurePlace : structurePlaceHistory,
+          owners : ownersHistory,
+          tradeName : tradeNameHistory,
+          licenseUnitNameLocal : licenseUnitNameLocalHistory,
+          wardId : wardIdHistory,
+          wardNo : wardNoHistory
+        },
+        status: "INITIATED"
+      }
+    ]
+  };
+  console.log("Anju " + JSON.stringify(formdata));
+  return formdata;
+};
 
 /*   method to check value  if not returns NA*/
 
@@ -968,3 +1212,18 @@ export const convertEpochToDateDMY = (dateEpoch) => {
   day = (day > 9 ? "" : "0") + day;
   return `${day}/${month}/${year}`;
 };
+// export const compareAttributes = (oldValues,newValues) => {
+//   const isEditRenew = window.location.href.includes("renew-trade");
+//   oldValues.map(([keyOld,oldValue]) => {
+//     newValues.map(([keynew,newValue]) => {
+//       if (oldValue.id === newValue.id) {
+//         if (newValue.keyNew !== oldValue.keyOld){
+//           return true;
+//         }
+//         else {
+//           return false;
+//         }
+//       }
+//     })
+//   })
+// }

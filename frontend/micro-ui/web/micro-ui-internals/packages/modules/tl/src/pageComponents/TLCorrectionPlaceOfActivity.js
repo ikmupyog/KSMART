@@ -62,7 +62,6 @@ const TLCorrectionPlaceOfActivity = ({ t, config,formData,onEditSelect,formDataE
   
   const initFnEdit = () => {
     return formDataEdit?.TradeDetails?.tradeLicenseDetail?.structurePlace;
-    //return fieldsDoor;
   };
   
   place &&
@@ -245,6 +244,7 @@ const TLCorrectionPlaceOfActivity = ({ t, config,formData,onEditSelect,formDataE
           },
         ];
       case "REMOVE_THIS_DOOR":
+        Digit.SessionStorage.set("activityedit", true);
         return stateDoor.filter((e, i) => i !== action?.payload?.index);
       case "EDIT_CURRENT_DOORNO":
         return stateDoor.map((data, __index) => {
@@ -292,6 +292,8 @@ const TLCorrectionPlaceOfActivity = ({ t, config,formData,onEditSelect,formDataE
     }
   };
   const [formStateDoor, dispatchDoor] = useReducer(reducerDoor, storedDoorData, initFnEdit); 
+
+  console.log("formStateDoor : " + JSON.stringify(formStateDoor));
 
   const handleTextInputField1 = useCallback((index, e, key, length = 100) => {
     if (e.length <= length) {
@@ -371,24 +373,32 @@ const TLCorrectionPlaceOfActivity = ({ t, config,formData,onEditSelect,formDataE
       combineddoorno = combineddoorno.slice(0, -1);
 
       let tradeUnits = formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits;
+      
+      
 
       let address = {
-        "doorNo": combineddoorno,
-        "localityName": locality,
-        "street": street,
-        "landmark": landmark,
-        "buildingName": buildingName,
+        "id": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.id,
+        "tenantId": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.tenantId,
+        "doorNo":combineddoorno,
+        "latitude": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.latitude,
+        "longitude": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.longitude,
+        "landmark": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.landmark,
+        "pincode": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.pincode,
+        "buildingName": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.buildingName,
+        "street": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.street,
+        "locality": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.locality,
         "zonalId": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.zonalId,
         "wardId": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.wardId,
-        "wardno": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.wardno,
-        "postOffice": postOffice,
-        "pincode": pincode,
-        "contactno": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.contactno,
+        "wardNo": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.wardNo,
+        "contactNo": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.contactNo,
         "email": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.email,
-        "waterbody": waterbody,
-        "serviceArea": serviceArea
+        "lbBuildingCode": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.lbBuildingCode,
+        "lbBuildingName": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.lbBuildingName,
+        "postOffice": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.postOffice,
+        "waterbody": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.waterbody,
+        "serviceArea": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.serviceArea,
+        "localityName": formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.localityName
       };
-      
       
       let tenantId = formDataEdit?.TradeDetails?.tenantId;
       let structurePlace = formStateDoor;
@@ -408,7 +418,7 @@ const TLCorrectionPlaceOfActivity = ({ t, config,formData,onEditSelect,formDataE
       let tradeLicenseDetail = { tenantId, licenseeType, owners, ownerspremise, institution, businessSector, capitalInvestment, enterpriseType,
           structureType,structurePlaceSubtype, businessActivityDesc, noOfEmployees,
           ownershipCategory, address, tradeUnits, structurePlace }
-      onEditSelect(config.key,{tradeLicenseDetail});
+      onEditSelect(config.key,{tradeLicenseDetail , licenseUnitName, licenseUnitNameLocal});
     }
   });
 
@@ -491,7 +501,7 @@ const TLCorrectionPlaceOfActivity = ({ t, config,formData,onEditSelect,formDataE
                       </div>
                     </div>
                   </div>)}
-                <div className="row">
+                {/* <div className="row">
                   <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>Location and Address of Licensing Unit</span> </h1>
                   </div>
                 </div>
@@ -516,7 +526,7 @@ const TLCorrectionPlaceOfActivity = ({ t, config,formData,onEditSelect,formDataE
                   <div className="col-md-4" ><CardLabel>{`${t("TL_PIN")}`}<span className="mandatorycss">*</span></CardLabel>
                     <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="pincode" value={pincode} onChange={changesetPincode} disable={isEdit} {...(validation = { pattern: "^[0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_PIN") })} />
                   </div>
-                </div>
+                </div> */}
               </div>
             )}
 
@@ -593,7 +603,7 @@ const TLCorrectionPlaceOfActivity = ({ t, config,formData,onEditSelect,formDataE
                     <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="vehicleNo" value={field?.vehicleNo} onChange={(e) => handleTextInputField1(index, e.target.value.replace(/[^a-zA-Z-0-9/]/ig, ''), "vehicleNo")} disable={isEdit}     {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_VECHICLE_NO") })} />
                   </div>
                 </div>
-                <div className="row">
+                {/* <div className="row">
                   <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_LOCATION_ADDRESS")}`}</span> </h1>
                   </div>
                 </div>
@@ -604,7 +614,7 @@ const TLCorrectionPlaceOfActivity = ({ t, config,formData,onEditSelect,formDataE
                   <div className="col-md-6" ><CardLabel>{`${t("TL_DESIGNATED_PLACE")}`}</CardLabel>
                     <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="landmark" value={landmark} onChange={changesetLandmark}  disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: false, type: "text", title: t("TL_INVALID_DESIGNATED_PUBLIC_PLACE") })} />
                   </div>
-                </div>
+                </div> */}
               </div>
 
             )}
@@ -617,7 +627,7 @@ const TLCorrectionPlaceOfActivity = ({ t, config,formData,onEditSelect,formDataE
                 <div className="row">
                   <div className="col-md-7" ><CardLabel>{`${t("TL_VESSEL_NO")}`}<span className="mandatorycss">*</span></CardLabel>
                     <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="vesselNo" value={field?.vesselNo} onChange={(e) => handleTextInputField1(index, e.target.value.replace(/[^a-zA-Z-0-9/]/ig, ''), "vesselNo")} disable={isEdit}     {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_VESSEL_NO") })} /> </div>    </div>
-                <div className="row">
+                {/* <div className="row">
                   <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}></span>{`${t("TL_LOCATION_ADDRESS")}`} </h1>
                   </div>
                 </div>
@@ -631,7 +641,7 @@ const TLCorrectionPlaceOfActivity = ({ t, config,formData,onEditSelect,formDataE
                   <div className="col-md-4" ><CardLabel>{`${t("TL_DESIGNATED_PLACE")}`}<span className="mandatorycss">*</span></CardLabel>
                     <TextInput t={t} isMandatory={config.isMandatory} type={"text"} optionKey="i18nKey" name="landmark" value={landmark} onChange={changesetLandmark} disable={isEdit} {...(validation = { pattern: "^[a-zA-Z-0-9`' ]*$", isRequired: true, type: "text", title: t("TL_INVALID_DESIGNATED_PUBLIC_PLACE") })} />
                   </div>
-                </div>
+                </div> */}
               </div>
             )}
             {value2 === "DESIGNATEDPLACE" && (
@@ -665,7 +675,7 @@ const TLCorrectionPlaceOfActivity = ({ t, config,formData,onEditSelect,formDataE
               </div>
             </div>
           </div>
-          <div className="row">
+          {/* <div className="row">
             <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_LOCATION_ADDRESS")}`} </span></h1>
             </div>
           </div>
@@ -690,7 +700,7 @@ const TLCorrectionPlaceOfActivity = ({ t, config,formData,onEditSelect,formDataE
             <div className="col-md-4" ><CardLabel>{`${t("TL_PIN")}`}<span className="mandatorycss">*</span></CardLabel>
               <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="pincode" value={pincode} onChange={changesetPincode} disable={isEdit} {...(validation = { pattern: "^[0-9`' ]*$", isRequired: false, title: t("TL_INVALID_PIN") })} />
             </div>
-          </div>
+          </div> */}
         </div>
       )}
     </div>

@@ -61,7 +61,7 @@ const DeathInclusion = () => {
     isSuccess,
   } = Digit.Hooks.cr.useRegistrySearchDeath({filters: payload, config }); 
   useEffect(()=>{
-    console.log("searchResult",searchResult);
+    console.log("searchResult==",searchResult);
   },[searchResult,isLoading])
 //   let payloadData = { id: isSuccess && searchResult[0]?.id, source: "sms" };
 //   let registryPayload = Object.keys(payloadData)

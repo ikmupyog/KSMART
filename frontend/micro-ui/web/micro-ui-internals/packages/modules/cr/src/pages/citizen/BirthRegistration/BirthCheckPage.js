@@ -80,7 +80,6 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
   } else {
     userType = "employee";
   }
-  console.log(value?.ChildDetails.workflowcode);
   const convertEpochToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {

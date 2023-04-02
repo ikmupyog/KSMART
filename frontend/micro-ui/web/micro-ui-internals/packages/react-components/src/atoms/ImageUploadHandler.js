@@ -36,6 +36,7 @@ export const ImageUploadHandler = (props) => {
   }, [uploadedImagesIds]);
 
   useEffect(() => {
+    console.log("uplodede files==",imageFile);
     if (imageFile && imageFile.size > 2097152) {
       setError("File is too large");
     } else {
@@ -61,6 +62,7 @@ export const ImageUploadHandler = (props) => {
   }
 
   const uploadImage = useCallback(async () => {
+    console.log("uploaded images==",image);
     const response = await Digit.UploadServices.Filestorage("property-upload", image, props.tenantId);
     setUploadedImagesIds(addUploadedImageIds(response));
   }, [addUploadedImageIds, image]);

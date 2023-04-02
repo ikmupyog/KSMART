@@ -31,6 +31,31 @@ const PGRCard = () => {
       label: t("ES_PGR_NEW_COMPLAINT"),
       link: `/digit-ui/employee/pgr/complaint/create`,
       role: "CSR"
+    },
+    {
+      label: t("ES_PGR_NEW_COMPLAINT"),
+      link: `/digit-ui/employee/pgr/complaint/create`,
+      role: "PGR_ACS"
+    },
+    {
+      label: t("ES_PGR_NEW_COMPLAINT"),
+      link: `/digit-ui/employee/pgr/complaint/create`,
+      role: "PGR_MO"
+    },
+    {
+      label: t("ES_PGR_NEW_COMPLAINT"),
+      link: `/digit-ui/employee/pgr/complaint/create`,
+      role: "PGR_PD"
+    },
+    {
+      label: t("ES_PGR_NEW_COMPLAINT"),
+      link: `/digit-ui/employee/pgr/complaint/create`,
+      role: "PGR_JD"
+    },
+    {
+      label: t("ES_PGR_NEW_COMPLAINT"),
+      link: `/digit-ui/employee/pgr/complaint/create`,
+      role: "PGR_CEMP"
     }
   ]
 

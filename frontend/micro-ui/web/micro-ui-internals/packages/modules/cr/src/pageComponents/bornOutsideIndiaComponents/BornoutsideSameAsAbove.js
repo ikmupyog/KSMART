@@ -39,19 +39,19 @@ const BornoutsideSameAsAbove = ({ config, onSelect, userType, formData, isPrsent
             </h1>
           </div>
         </div> */}
-        <div>
+        {/* <div>
           <div className="row">
             <div className="col-md-12" >
               <div className="col-md-12" >
                 <CheckBox label={t("CR_RESIDENT_ADDRESS_AT_TIME_BIRTH_REG")} onChange={setSameAsPresent} value={isPrsentAddress} 
                 checked={isPrsentAddress} 
-                //disable={isDisableEdit}
+                // disable={isDisableEdit}
                
                  />
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
       </FormStep>
     </React.Fragment>

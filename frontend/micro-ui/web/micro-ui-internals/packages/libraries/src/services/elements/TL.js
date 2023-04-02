@@ -105,5 +105,17 @@ export const TLService = {
       method: "POST",
       params: {},
       auth: true,
-    }),  
+    }), 
+    createcorrection: (details, tenantId) =>
+ 
+    Request({
+      url: Urls.tl.createcorrection,
+      data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: {},
+      auth: true,
+    }), 
 };
