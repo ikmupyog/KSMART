@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   BackButton,
   Loader,
@@ -23,9 +23,13 @@ const DeathCertificateSearch = ({ path }) => {
   const { variant } = useParams();
   const { t } = useTranslation();
   const tenantId = "kl.cochin";
+  let downloadDeathConfig ={
+    enabled: false
+  }
   // const tenantId1 = Digit.ULBService.getCurrentTenantId();
   // const tenantId2 = Digit.ULBService.getStateId();
   const [payload, setPayload] = useState({});
+  const [registryPayload, setRegistryPayload] = useState({});
 
   const Search = Digit.ComponentRegistryService.getComponent(variant === "license" ? "SearchLicense" : "SearchDfmApplication");
 
@@ -45,20 +49,40 @@ const DeathCertificateSearch = ({ path }) => {
         .filter((k) => data[k])
         .reduce((acc, key) => ({ ...acc, [key]: typeof data[key] === "object" ? data[key].code : data[key] }), {})
     );
+    console.log("search api params==,",config,payload);
+    refetch();
   }
   const config = {
     enabled: !!(payload && Object.keys(payload).length > 0),
   };
 
-  const { data: { deathCertificateDtls: searchResult, Count: count } = {}, isLoading, isSuccess } =  Digit.Hooks.cr.useRegistrySearchDeath({ tenantId, filters: payload, config });
-  const response= Digit.Hooks.cr.useRegistrySearchBirth({ tenantId, filters: payload, config });
+ 
 
-  console.log({isLoading, isSuccess, searchResult, response});
+  const { data: { deathCertificateDtls: searchResult, Count: count } = {}, isLoading, isSuccess,refetch } = Digit.Hooks.cr.useRegistrySearchDeath({
+    tenantId,
+    filters: payload,
+    config,
+  });
 
-  console.log("searchResult",searchResult);
-  let payloadData = { id: isSuccess && searchResult[0]?.id, source: "sms" };
-  let registryPayload = Object.keys(payloadData).filter((k) => payloadData[k]).reduce((acc, key) => ({ ...acc, [key]: typeof payloadData[key] === "object" ? payloadData[key].code : payloadData[key] }), {});
-  const { data: { filestoreId: storeId } = {} } = Digit.Hooks.cr.useRegistryDownloadDeath({ tenantId, filters: registryPayload, config });
+  // console.log("searchResult",isSuccess,searchResult?.[0]);
+  useEffect(() => {
+    console.log("reached==",isSuccess,searchResult,isLoading);
+    if((searchResult?.length > 0)){
+    let payloadData = { id: isSuccess && searchResult?.[0]?.InformationDeath?.Id, source: "sms" };
+
+    let tempRegistryPayload = Object.keys(payloadData)
+      .filter((k) => payloadData[k])
+      .reduce((acc, key) => ({ ...acc, [key]: typeof payloadData[key] === "object" ? payloadData[key].code : payloadData[key] }), {});
+    
+    downloadDeathConfig = {
+      enabled : (registryPayload && Object.keys(registryPayload).length > 0),
+    }
+    console.log("tempPatload==",tempRegistryPayload,downloadDeathConfig);
+    setRegistryPayload(tempRegistryPayload);
+    }
+  }, [searchResult,isSuccess,isLoading]);
+
+  const { data: { filestoreId: storeId } = {}, isLoading:isDownLoadLoading, isSuccess:isDownloadSuccess } = Digit.Hooks.cr.useRegistryDownloadDeath({ tenantId, filters: registryPayload, config:downloadDeathConfig });
   return (
     <React.Fragment>
       <BackButton>{t("CS_COMMON_BACK2")}</BackButton>
@@ -70,7 +94,7 @@ const DeathCertificateSearch = ({ path }) => {
         filestoreId={storeId}
         isSuccess={isSuccess}
         isLoading={isLoading}
-        count={count} 
+        count={count}
       />
     </React.Fragment>
   );

@@ -130,13 +130,7 @@ const StillBirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleT
       setvehicleHaltPlace(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
-  // function setSelectVehicleHaltPlaceMl(e) {
-  //   if (e.target.value.length === 51) {
-  //     return false;
-  //   } else {
-  //     setvehicleHaltPlaceMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/ig, ''));
-  //   }
-  // }
+  
   function setSelectVehicleToMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if(!(e.target.value.match(pattern))){

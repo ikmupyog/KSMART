@@ -120,6 +120,8 @@ const CorrectionTradeLicence = ({ parentRoute,isRenewal }) => {
 
   const onSuccess = () => {
     sessionStorage.removeItem("CurrentFinancialYear");
+    sessionStorage.removeItem("TL_CORRECTED_TRADE");
+    sessionStorage.removeItem("TL_CORRECTION_TRADE");
     queryClient.invalidateQueries("TL_CREATE_TRADE");
   };
 
