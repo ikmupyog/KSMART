@@ -534,6 +534,27 @@ export const convertToDeathRegistration = (data = {}) => {
           InitiatorDocumentUserType: null,
           InitiatorDocumentFileStoreId: null,
         },
+        Demands: [
+          {
+            tenantId: data?.InformationDeath?.tenantId,
+            consumerCode: data?.InformationDeath?.DeathACKNo,
+            consumerType: "FEE",
+            businessService: "CR",
+            taxPeriodFrom: "1554076800000",
+            taxPeriodTo: "1901145600000",
+            demandDetails: [
+              {
+                taxHeadMasterCode: "CRB_FEES",
+                taxAmount: 12,
+                collectionAmount: 0,
+              },
+            ],
+            minimumAmountPayable: 12,
+            additionalDetails: {
+              HI: "hi",
+            },
+          },
+        ],
         AuditDetails: {
           createdBy: null,
           lastModifiedBy: null,
@@ -541,7 +562,7 @@ export const convertToDeathRegistration = (data = {}) => {
           lastModifiedTime: null,
         },
         applicationType: "new",
-        businessService: "death-services",
+        businessService: "CR",
         action: "INITIATE",
         assignee: [],
         workflowcode: data?.InformationDeath?.workFlowCode,
@@ -822,6 +843,7 @@ export const convertToEditDeathRegistration = (data = {}) => {
           InitiatorDocumentUserType: null,
           InitiatorDocumentFileStoreId: null,
         },
+       
         AuditDetails: {
           createdBy: null,
           lastModifiedBy: null,
@@ -829,13 +851,12 @@ export const convertToEditDeathRegistration = (data = {}) => {
           lastModifiedTime: null,
         },
         applicationType: "new",
-        businessService: "death-services",
+        businessService: "CR",
         action: "APPLY",
         workflowcode: "DEATHHOSP",
         assignee: [data?.InformationDeath?.uuid],
-        taxHeadMasterCode: "CRB_FEES",
-        taxAmount: 12,
       },
+      
     ],
   };
   return formdata;
