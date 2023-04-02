@@ -185,9 +185,12 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
 
   function setSelectGroomMaritalstatusID(value) {
     setGroomMaritalstatusID(value);
+    setGroomIsSpouseLiving(null);
+    setGroomNoOfSpouse("");
   }
   function setSelectGroomSpouseLiving(value) {
     setGroomIsSpouseLiving(value);
+    setGroomNoOfSpouse("");
   }
   function setselectGroomGender(value) {
     selectGroomGender(value);
@@ -457,13 +460,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     }
   };
 
-  useState(() => {
-    setGroomIsSpouseLiving(null);
-    setGroomNoOfSpouse("");
-  }, [groomMaritalstatusID]);
-  useState(() => {
-    setGroomNoOfSpouse("");
-  }, [groomIsSpouseLiving]);
+  console.log({ formData });
 
   if (isLoading || isMaritalStatusLoading) {
     return <Loader></Loader>;

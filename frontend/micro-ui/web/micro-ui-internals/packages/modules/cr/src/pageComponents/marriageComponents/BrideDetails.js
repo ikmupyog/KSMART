@@ -569,11 +569,14 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
 
   function setSelectbrideMaritalstatusID(value) {
     setbrideMaritalstatusID(value);
+    setbrideIsSpouseLiving(null);
+    setbrideNoOfSpouse("");
     // setAgeMariageStatus(value.code);
   }
 
   function setSelectbrideIsSpouseLiving(value) {
     setbrideIsSpouseLiving(value);
+    setbrideNoOfSpouse("");
   }
   function setSelectbrideNoOfSpouse(e) {
     if (e.target.value.length === 2) {
@@ -753,14 +756,6 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
       });
     }
   };
-
-  useState(() => {
-    setbrideIsSpouseLiving(null);
-    setbrideNoOfSpouse("");
-  }, [brideMaritalstatusID]);
-  useState(() => {
-    setbrideNoOfSpouse("");
-  }, [brideIsSpouseLiving]);
 
   if (isLoading) {
     return <Loader></Loader>;
@@ -1063,9 +1058,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
               </div>
               <div className="col-md-3">
                 {" "}
-                <CardLabel>
-                  {`${t("CR_BRIDE_EMAIL")}`} <span className="mandatorycss">*</span>
-                </CardLabel>
+                <CardLabel>{`${t("CR_BRIDE_EMAIL")}`}</CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -1076,7 +1069,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                   onChange={setSelectbrideEmailid}
                   disable={isDisableEdit}
                   placeholder={`${t("CR_BRIDE_EMAIL")}`}
-                  {...(validation = { isRequired: true, title: t("CR_INVALID_EMAIL") })}
+                  {...(validation = { title: t("CR_INVALID_EMAIL") })}
                 />
               </div>
             </div>
@@ -1138,7 +1131,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                     name="brideAge"
                     value={brideAge}
                     onChange={setSelectbrideAge}
-                    disable={isDisableEdit}
+                    disable={true}
                     placeholder={`${t("CR_AGE")}`}
                     {...(validation = { pattern: "^[0-9]{2}$", type: "text", isRequired: true })}
                   />
