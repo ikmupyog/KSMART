@@ -38,11 +38,10 @@ const BornOutsideAcknowledgement = ({ data, onSuccess, userType }) => {
   const [mutationHappened, setMutationHappened, clear] = Digit.Hooks.useSessionStorage("CITIZEN_TL_MUTATION_HAPPENED", false);
   const resubmit = window.location.href.includes("edit-application");
   const tenantId = Digit.ULBService.getCurrentTenantId();
-  const [isEditBornOutsideBirth, setIsEditBirth] = useState(false);
-  //console.log(Object.keys(Digit.Hooks.useSessionStorage("CR_BIRTH_EDIT_FLAG", {})).length);
-  console.log("isEditBornOutsideBirth" + isEditBornOutsideBirth);
-  const mutation = Digit.Hooks.cr.useCivilRegistrationAPI(
-    tenantId, isEditBornOutsideBirth ? false : true
+  const [isEditBornOutsideIndia, setIsEditBornOutsideIndia] = useState(false);
+
+  const mutation = Digit.Hooks.cr.useCivilRegistrationBornOutsideIndiaBirthAPI(
+    tenantId, isEditBornOutsideIndia ? false : true
   );
 
 
@@ -69,13 +68,14 @@ const BornOutsideAcknowledgement = ({ data, onSuccess, userType }) => {
         let tenantId1 = data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId;
         data.tenantId = tenantId1;
         if (!resubmit) {
-          let formdata = !isEditBornOutsideBirth ? convertToBornOutsideBirthRegistration(data) : [];
+          let formdata = !isEditBornOutsideIndia ? convertToBornOutsideBirthRegistration(data) : convertToEditBornOutsideBirthRegistration(data);
           // formdata.BirthDetails[0].tenantId = formdata?.BirthDetails[0]?.tenantId || tenantId1;
           // if (!isEditBornOutsideBirth) {
           //   mutation.mutate(formdata, {
           //     onSuccess,
           //   })
           // } else {
+// console.log(formdata);
           mutation.mutate(formdata, {
             onSuccess,
           })
