@@ -58,7 +58,7 @@ lse
         let tenantId1 = data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId;
         data.tenantId = tenantId1;
         if (!resubmit) {
-          let formdata = !isEditBirth ? convertToBirthRegistration(data) : [];
+          let formdata = !isEditBirth ? convertToDeathNACRegistration(data) : [];
           if (!isEditBirth) {
             mutation.mutate(formdata, {
               onSuccess,

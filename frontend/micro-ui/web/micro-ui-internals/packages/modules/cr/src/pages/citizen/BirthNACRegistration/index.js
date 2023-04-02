@@ -4,84 +4,33 @@ import { PrivateRoute, BreadCrumb, Component } from "@egovernments/digit-ui-reac
 import { useTranslation } from "react-i18next";
 import { newConfig as newConfigCR } from "../../../config/config";
 import { useQueryClient } from "react-query";
+import { convertToNACRegistration } from "../../../utils";
 
-const CreateBirthNACRegistration = ({ parentUrl, isEditBirth }) => {
+const CreateBirthNACRegistration = ({data, parentUrl, isEditBirth }) => {
   const { t } = useTranslation();
   const { path } = useRouteMatch();
   const match = useRouteMatch();
   const { pathname } = useLocation();
   const history = useHistory();
   const queryClient = useQueryClient();
-  const [params, setParams, clearParams] = isEditBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_BIRTH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_BIRTH_REG", {});
+  const [params, setParams, clearParams] = isEditBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_NAC_BIRTH", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_NAC_BIRTH_REG", {});
 
-  // console.log("params"+JSON.stringify(params));
   const stateId = Digit.ULBService.getStateId();
-  // let { data: newConfig, isLoading } = Digit.Hooks.tl.useMDMS.getFormConfig(stateId, {});
   let config = [];
   let { data: newConfig, isLoading } = true;
   newConfig = newConfigCR;
   const newNacBirthConfig = newConfig.find((item)=> item.head === "Birth-NAC Routing")
  
     config = config.concat(newNacBirthConfig.body.filter((a) => !a.hideInCitizen));
-    
+    let formdata =  convertToNACRegistration(data);
+
   config.indexRoute = "nac-download-details";
   const goNext = (skipStep, index, isAddMultiple, key, isPTCreateSkip) => {
     let currentPath = pathname.split("/").pop(),
       nextPage;
     let { nextStep = {} } = config.find((routeObj) => routeObj.route === currentPath);
     let { isCreateEnabled: enableCreate = true } = config.find((routeObj) => routeObj.route === currentPath);
-    // if (typeof nextStep == "object" && nextStep != null) {
-    //   if((params?.cptId?.id || params?.cpt?.details?.propertyId || (isReneworEditTrade && params?.cpt?.details?.propertyId ))  && (nextStep[sessionStorage.getItem("isAccessories")] && nextStep[sessionStorage.getItem("isAccessories")] === "know-your-property")  )
-    //   {
-    //     nextStep = "property-details";
-    //   }
-    //   if (
-    //     nextStep[sessionStorage.getItem("isAccessories")] &&
-    //     (nextStep[sessionStorage.getItem("isAccessories")] === "accessories-details" ||
-    //       nextStep[sessionStorage.getItem("isAccessories")] === "map" ||
-    //       nextStep[sessionStorage.getItem("isAccessories")] === "owner-ship-details" || 
-    //       nextStep[sessionStorage.getItem("isAccessories")] === "know-your-property")
-    //   ) {
-    //     nextStep = `${nextStep[sessionStorage.getItem("isAccessories")]}`;
-    //   } else if (
-    //     nextStep[sessionStorage.getItem("StructureType")] &&
-    //     (nextStep[sessionStorage.getItem("StructureType")] === "Building-type" ||
-    //       nextStep[sessionStorage.getItem("StructureType")] === "vehicle-type")
-    //   ) {
-    //     nextStep = `${nextStep[sessionStorage.getItem("setPlaceofActivity")]}`;
-    //     nextStep = `${nextStep[sessionStorage.getItem("StructureType")]}`;
-    //   } else if (
-    //     nextStep[sessionStorage.getItem("KnowProperty")] &&
-    //     (nextStep[sessionStorage.getItem("KnowProperty")] === "search-property" ||
-    //       nextStep[sessionStorage.getItem("KnowProperty")] === "create-property")
-    //   ) {
-    //       if(nextStep[sessionStorage.getItem("KnowProperty")] === "create-property" && !enableCreate)
-    //       {
-    //         nextStep = `map`;
-    //       }
-    //       else{
-    //      nextStep = `${nextStep[sessionStorage.getItem("KnowProperty")]}`;
-    //       }
-    //   }
-    // }
-    // if( (params?.cptId?.id || params?.cpt?.details?.propertyId || (isReneworEditTrade && params?.cpt?.details?.propertyId ))  && nextStep === "know-your-property" )
-    // { 
-    //   nextStep = "property-details";
-    // }
-    // let redirectWithHistory = history.push;
-    // if (skipStep) {
-    //   redirectWithHistory = history.replace;
-    // }
-    // if (isAddMultiple) {
-    //   nextStep = key;
-    // }
-    // if (nextStep === null) {
-    //   return redirectWithHistory(`${match.path}/check`);
-    // }
-    // if(isPTCreateSkip && nextStep === "acknowledge-create-property")
-    // {
-    //   nextStep = "map";
-    // }
+
     let redirectWithHistory = history.push;
     if (skipStep) {
       redirectWithHistory = history.replace;
@@ -122,7 +71,6 @@ const CreateBirthNACRegistration = ({ parentUrl, isEditBirth }) => {
     <React.Fragment>
       <Switch>
         {config.map((routeObj, index) => {
-          console.log("routeObj",routeObj.route);
           const { component, texts, inputs, key, isSkipEnabled } = routeObj;
           const Component = typeof component === "string" ? Digit.ComponentRegistryService.getComponent(component) : component;
           return (
@@ -133,7 +81,7 @@ const CreateBirthNACRegistration = ({ parentUrl, isEditBirth }) => {
                 onSelect={handleSelect}
                 onSkip={handleSkip}
                 t={t}
-                formData={params}
+                formData={formdata}
                 onAdd={handleMultiple}
                 userType="citizen"
               />

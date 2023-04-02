@@ -21,7 +21,6 @@ const rowContainerStyle = {
 };
 
 const BannerPicker = (props) => {
-  // console.log(JSON.stringify(props));
   return (
     <Banner
       message={GetActionMessage(props)}
@@ -38,18 +37,10 @@ const BirthNACAcknowledgement = ({ data, onSuccess, userType, isEditBirth = fals
   const resubmit = window.location.href.includes("edit-application");
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const isRenewTrade = !window.location.href.includes("renew-trade")
-  const mutation = Digit.Hooks.cr.useCivilRegistrationAPI(
-    data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
-    isRenewTrade
-  );
-  // const mutation1 = Digit.Hooks.cr.useCivilRegistrationAPI(
-  //   data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
-  //   false
+  // const mutation = Digit.Hooks.cr.useCivilRegistrationAPI(
+  //   tenantId, isEditBirth ? false : true
   // );
-  // const mutation2 = Digit.Hooks.cr.useCivilRegistrationAPI(
-  //   data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
-  //   false
-  // );
+
 
   const { data: storeData } = Digit.Hooks.useStore.getInitData();
   const { tenants } = storeData || {};
@@ -72,58 +63,17 @@ const BirthNACAcknowledgement = ({ data, onSuccess, userType, isEditBirth = fals
 
           let formdata = !isEditBirth ? convertToNACRegistration(data) : [];
           // formdata.BirthDetails[0].tenantId = formdata?.BirthDetails[0]?.tenantId || tenantId1;
-          if (!isEditBirth) {
             mutation.mutate(formdata, {
               onSuccess,
             })
+          } else {
+            
           }
-          // else{
-          //   if((fydata["egf-master"] && fydata["egf-master"].FinancialYear.length > 0 && isDirectRenewal))
-          //   {
-          //     mutation2.mutate(formdata, {
-          //       onSuccess,
-          //     })
-          //   }
-          //   else
-          //   {
-          //     mutation1.mutate(formdata, {
-          //       onSuccess,
-          //     })
-          //   }
-          // }
 
-          // !isEditBirth ? mutation.mutate(formdata, {
-          //   onSuccess,
-          // }) : (fydata["egf-master"] && fydata["egf-master"].FinancialYear.length > 0 && isDirectRenewal ? mutation2.mutate(formdata, {
-          //   onSuccess,
-          // }) :mutation1.mutate(formdata, {
-          //   onSuccess,
-          // }));
-        } else {
-          // let formdata = convertToResubmitTrade(data);
-          // formdata.Licenses[0].tenantId = formdata?.Licenses[0]?.tenantId || tenantId1;
-          // !mutation2.isLoading && !mutation2.isSuccess &&!mutationHappened && mutation2.mutate(formdata, {
-          //   onSuccessedit,
-          // })
-
-        }
       } catch (err) {
       }
     }
   }, [mutation]);
-
-  // useEffect(() => {
-  //   if (mutation.isSuccess) {
-  //     try {
-  //       let Licenses = !isEditBirth ? convertToUpdateTrade(mutation.data, data) : convertToUpdateTrade(mutation1.data, data);
-  //       mutation2.mutate(Licenses, {
-  //         onSuccess,
-  //       });
-  //     }
-  //     catch (er) {
-  //     }
-  //   }
-  // }, [mutation.isSuccess, mutation1.isSuccess]);
 
   const handleDownloadPdf = async () => {
     const { Licenses = [] } = mutation.data

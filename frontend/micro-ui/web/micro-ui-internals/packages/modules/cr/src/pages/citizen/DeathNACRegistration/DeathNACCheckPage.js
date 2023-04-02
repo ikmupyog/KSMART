@@ -115,7 +115,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
           </div>
         </div>
         <div
-         
+
           style={{
             maxWidth: "80%",
             margin: "25px auto",

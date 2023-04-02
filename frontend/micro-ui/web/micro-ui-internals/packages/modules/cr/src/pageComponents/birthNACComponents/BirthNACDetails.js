@@ -35,6 +35,9 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
   const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "WorkFlowBirth");
   const { data: PlaeceMaster = {}, isPlaceMasterLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "PlaceMaster");
   const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
+  const [InstitutionFilterList, setInstitutionFilterList] = useState(null);
+  const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(false);
+  const [PostOfficevalues, setPostOfficevalues] = useState(null);
 
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
@@ -53,7 +56,10 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
   let placeOfBirth = null;
   let cmbPlaceMaster = [];
   let workFlowData = [];
+  let wardNameEn = "";
+  let wardNameMl = "";
   let hospitalCode = "";
+  let wardNumber = "";
   let institutionTypeCode = "";
   let institutionNameCode = "";
 
@@ -82,85 +88,105 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
 });
     const [workFlowCode, setWorkFlowCode] = useState(); 
 
-  const [childDOB, setChildDOB] = useState(formData?.NACChildDetails?.childDOB ? formData?.NACChildDetails?.childDOB : "");
-  const [gender, selectGender] = useState(formData?.NACChildDetails?.gender);
+  const [childDOB, setChildDOB] = useState(formData?.NacDetails?.childDOB ? formData?.NacDetails?.childDOB : "");
+  const [gender, selectGender] = useState(formData?.NacDetails?.gender);
 
   
   const [childAadharNo, setChildAadharNo] = useState(
-    formData?.NACChildDetails?.childAadharNo ? formData?.NACChildDetails?.childAadharNo : ""
+    formData?.NacDetails?.childAadharNo ? formData?.NacDetails?.childAadharNo : ""
   );
+  console.log(formData, "formData");
   const [childFirstNameEn, setChildFirstNameEn] = useState(
-    formData?.NACChildDetails?.childFirstNameEn ? formData?.NACChildDetails?.childFirstNameEn : ""
+    formData?.NacDetails?.childFirstNameEn ? formData?.NacDetails?.childFirstNameEn : ""
   );
   const [childMiddleNameEn, setChildMiddleNameEn] = useState(
-    formData?.NACChildDetails?.childMiddleNameEn ? formData?.NACChildDetails?.childMiddleNameEn : ""
+    formData?.NacDetails?.childMiddleNameEn ? formData?.NacDetails?.childMiddleNameEn : ""
   );
   const [childLastNameEn, setChildLastNameEn] = useState(
-    formData?.NACChildDetails?.childLastNameEn ? formData?.NACChildDetails?.childLastNameEn : ""
+    formData?.NacDetails?.childLastNameEn ? formData?.NacDetails?.childLastNameEn : ""
   );
   const [childFirstNameMl, setChildFirstNameMl] = useState(
-    formData?.NACChildDetails?.childFirstNameMl ? formData?.NACChildDetails?.childFirstNameMl : ""
+    formData?.NacDetails?.childFirstNameMl ? formData?.NacDetails?.childFirstNameMl : ""
   );
   const [childMiddleNameMl, setChildMiddleNameMl] = useState(
-    formData?.NACChildDetails?.childMiddleNameMl ? formData?.NACChildDetails?.childMiddleNameMl : ""
+    formData?.NacDetails?.childMiddleNameMl ? formData?.NacDetails?.childMiddleNameMl : ""
   );
   const [childLastNameMl, setChildLastNameMl] = useState(
-    formData?.NACNACChildDetails?.childLastNameMl ? formData?.NACNACChildDetails?.childLastNameMl : ""
+    formData?.NACNacDetails?.childLastNameMl ? formData?.NACNacDetails?.childLastNameMl : ""
   );
   const [birthDateTime, setbirthDateTime] = useState(
-    formData?.NACNACChildDetails?.birthDateTime ? formData?.NACNACChildDetails?.birthDateTime : ""
+    formData?.NACNacDetails?.birthDateTime ? formData?.NACNacDetails?.birthDateTime : ""
   );
-  const [placeofBirth, setplaceofBirth] = useState(
-    formData?.NACNACChildDetails?.placeofBirth ? formData?.NACNACChildDetails?.placeofBirth : null
-  );
-  const [hospitalName, selectHospitalName] = useState(formData?.ChildDetails?.hospitalName?.code ? formData?.ChildDetails?.hospitalName : formData?.ChildDetails?.hospitalName ? "" : "");
-  const [hospitalNameMl, selectHospitalNameMl] = useState(formData?.ChildDetails?.hospitalNameMl?.code ? formData?.ChildDetails?.hospitalNameMl : formData?.ChildDetails?.hospitalNameMl ? "" : "");
-  const [birthPlace, selectBirthPlace] = useState(formData?.ChildDetails?.birthPlace?.code ? formData?.ChildDetails?.birthPlace : formData?.ChildDetails?.birthPlace ?
-    (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.ChildDetails?.birthPlace)[0]) : "");
-  const [institution, setInstitution] = useState(formData?.ChildDetails?.institution?.code ? formData?.ChildDetails?.institution : formData?.ChildDetails?.institutionTypeCode ? "" : "");
-  const [institutionId, setInstitutionId] = useState(formData?.ChildDetails?.institutionId?.code ? formData?.ChildDetails?.institutionId : formData?.ChildDetails?.institutionNameCode ? "" : "");
-  const [institutionIdMl, setInstitutionIdMl] = useState(formData?.ChildDetails?.institutionIdMl?.code ? formData?.ChildDetails?.institutionIdMl : formData?.ChildDetails?.institutionNameCode ? "" : "");
-  const [adrsPostOffice, setAdrsPostOffice] = useState(formData?.ChildDetails?.adrsPostOffice?.code ? formData?.ChildDetails?.adrsPostOffice : formData?.ChildDetails?.adrsPostOffice ? "" : "");
-  // const [adrsPostOffice, setAdrsPostOffice] = useState(formData?.NACChildDetails?.adrsPostOffice ? formData?.NACChildDetails?.adrsPostOffice : null);
-  const [adrsPincode, setAdrsPincode] = useState(formData?.ChildDetails?.adrsPincode ? formData?.ChildDetails?.adrsPincode : null);
-  const [adrsHouseNameEn, setAdrsHouseNameEn] = useState(formData?.ChildDetails?.adrsHouseNameEn ? formData?.ChildDetails?.adrsHouseNameEn : "");
-  const [adrsHouseNameMl, setAdrsHouseNameMl] = useState(formData?.ChildDetails?.adrsHouseNameMl ? formData?.ChildDetails?.adrsHouseNameMl : "");
-  const [adrsLocalityNameEn, setAdrsLocalityNameEn] = useState(formData?.ChildDetails?.adrsLocalityNameEn ? formData?.ChildDetails?.adrsLocalityNameEn : "");
-  const [adrsLocalityNameMl, setAdrsLocalityNameMl] = useState(formData?.ChildDetails?.adrsLocalityNameMl ? formData?.ChildDetails?.adrsLocalityNameMl : "");
-  const [adrsStreetNameEn, setAdrsStreetNameEn] = useState(formData?.ChildDetails?.adrsStreetNameEn ? formData?.ChildDetails?.adrsStreetNameEn : "");
-  const [adrsStreetNameMl, setAdrsStreetNameMl] = useState(formData?.ChildDetails?.adrsStreetNameMl ? formData?.ChildDetails?.adrsStreetNameMl : "");
-  const [wardNo, setWardNo] = useState(formData.ChildDetails?.wardNo?.code ? formData.ChildDetails?.wardNo : formData?.ChildDetails?.wardNo ? "" : "");
+  const [hospitalName, selectHospitalName] = useState(formData?.NacDetails?.hospitalName?.code ? formData?.NacDetails?.hospitalName : formData?.NacDetails?.hospitalName ? "" : "");
+  const [hospitalNameMl, selectHospitalNameMl] = useState(formData?.NacDetails?.hospitalNameMl?.code ? formData?.NacDetails?.hospitalNameMl : formData?.NacDetails?.hospitalNameMl ? "" : "");
+  const [birthPlace, selectBirthPlace] = useState(formData?.NacDetails?.birthPlace?.code ? formData?.NacDetails?.birthPlace : formData?.NacDetails?.birthPlace ?
+    (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.NacDetails?.birthPlace)[0]) : "");
+  const [institution, setInstitution] = useState(formData?.NacDetails?.institution?.code ? formData?.NacDetails?.institution : formData?.NacDetails?.institutionTypeCode ? "" : "");
+  const [institutionId, setInstitutionId] = useState(formData?.NacDetails?.institutionId?.code ? formData?.NacDetails?.institutionId : formData?.NacDetails?.institutionNameCode ? "" : "");
+  const [institutionIdMl, setInstitutionIdMl] = useState(formData?.NacDetails?.institutionIdMl?.code ? formData?.NacDetails?.institutionIdMl : formData?.NacDetails?.institutionNameCode ? "" : "");
+  const [adrsPostOffice, setAdrsPostOffice] = useState(formData?.NacDetails?.adrsPostOffice?.code ? formData?.NacDetails?.adrsPostOffice : formData?.NacDetails?.adrsPostOffice ? "" : "");
+  // const [adrsPostOffice, setAdrsPostOffice] = useState(formData?.NACNacDetails?.adrsPostOffice ? formData?.NACNacDetails?.adrsPostOffice : null);
+  const [adrsPincode, setAdrsPincode] = useState(formData?.NacDetails?.adrsPincode ? formData?.NacDetails?.adrsPincode : null);
+  const [adrsHouseNameEn, setAdrsHouseNameEn] = useState(formData?.NacDetails?.adrsHouseNameEn ? formData?.NacDetails?.adrsHouseNameEn : "");
+  const [adrsHouseNameMl, setAdrsHouseNameMl] = useState(formData?.NacDetails?.adrsHouseNameMl ? formData?.NacDetails?.adrsHouseNameMl : "");
+  const [adrsLocalityNameEn, setAdrsLocalityNameEn] = useState(formData?.NacDetails?.adrsLocalityNameEn ? formData?.NacDetails?.adrsLocalityNameEn : "");
+  const [adrsLocalityNameMl, setAdrsLocalityNameMl] = useState(formData?.NacDetails?.adrsLocalityNameMl ? formData?.NacDetails?.adrsLocalityNameMl : "");
+  const [adrsStreetNameEn, setAdrsStreetNameEn] = useState(formData?.NacDetails?.adrsStreetNameEn ? formData?.NacDetails?.adrsStreetNameEn : "");
+  const [adrsStreetNameMl, setAdrsStreetNameMl] = useState(formData?.NacDetails?.adrsStreetNameMl ? formData?.NacDetails?.adrsStreetNameMl : "");
+  const [wardNo, setWardNo] = useState(formData.NacDetails?.wardNo?.code ? formData.NacDetails?.wardNo : formData?.NacDetails?.wardNo ? "" : "");
   const [isInitialRenderPlace, setIsInitialRenderPlace] = useState(true);
 
-  const [vehicleType, setvehicleType] = useState(formData?.ChildDetails?.vehicleType?.code ? formData?.ChildDetails?.vehicleType : formData?.ChildDetails?.vehicleType ? "" : "");
-  const [vehicleRegistrationNo, setvehicleRegistrationNo] = useState(formData?.ChildDetails?.vehicleRegistrationNo ? formData?.ChildDetails?.vehicleRegistrationNo : "");
-  const [vehicleFromEn, setvehicleFromEn] = useState(formData?.ChildDetails?.vehicleFromEn ? formData?.ChildDetails?.vehicleFromEn : "");
-  const [vehicleToEn, setvehicleToEn] = useState(formData?.ChildDetails?.vehicleToEn ? formData?.ChildDetails?.vehicleToEn : "");
-  const [vehicleFromMl, setvehicleFromMl] = useState(formData?.ChildDetails?.vehicleFromMl ? formData?.ChildDetails?.vehicleFromMl : "");
-  const [vehicleHaltPlace, setvehicleHaltPlace] = useState(formData?.ChildDetails?.vehicleHaltPlace ? formData?.ChildDetails?.vehicleHaltPlace : "");
-  //const [vehicleHaltPlaceMl, setvehicleHaltPlaceMl] = useState(formData?.ChildDetails?.vehicleHaltPlaceMl ? formData?.ChildDetails?.vehicleHaltPlaceMl : "");
-  const [vehicleToMl, setvehicleToMl] = useState(formData?.ChildDetails?.vehicleToMl ? formData?.ChildDetails?.vehicleToMl : "");
-  const [vehicleDesDetailsEn, setvehicleDesDetailsEn] = useState(formData?.ChildDetails?.vehicleDesDetailsEn ? formData?.ChildDetails?.vehicleDesDetailsEn : "");
-  const [setadmittedHospitalEn, setSelectedadmittedHospitalEn] = useState(formData?.ChildDetails?.setadmittedHospitalEn?.code ? formData?.ChildDetails?.setadmittedHospitalEn : formData?.ChildDetails?.setadmittedHospitalEn ? "" : "");
+  const [vehicleType, setvehicleType] = useState(formData?.NacDetails?.vehicleType?.code ? formData?.NacDetails?.vehicleType : formData?.NacDetails?.vehicleType ? "" : "");
+  const [vehicleRegistrationNo, setvehicleRegistrationNo] = useState(formData?.NacDetails?.vehicleRegistrationNo ? formData?.NacDetails?.vehicleRegistrationNo : "");
+  const [vehicleFromEn, setvehicleFromEn] = useState(formData?.NacDetails?.vehicleFromEn ? formData?.NacDetails?.vehicleFromEn : "");
+  const [vehicleToEn, setvehicleToEn] = useState(formData?.NacDetails?.vehicleToEn ? formData?.NacDetails?.vehicleToEn : "");
+  const [vehicleFromMl, setvehicleFromMl] = useState(formData?.NacDetails?.vehicleFromMl ? formData?.NacDetails?.vehicleFromMl : "");
+  const [vehicleHaltPlace, setvehicleHaltPlace] = useState(formData?.NacDetails?.vehicleHaltPlace ? formData?.NacDetails?.vehicleHaltPlace : "");
+  //const [vehicleHaltPlaceMl, setvehicleHaltPlaceMl] = useState(formData?.NacDetails?.vehicleHaltPlaceMl ? formData?.NacDetails?.vehicleHaltPlaceMl : "");
+  const [vehicleToMl, setvehicleToMl] = useState(formData?.NacDetails?.vehicleToMl ? formData?.NacDetails?.vehicleToMl : "");
+  const [vehicleDesDetailsEn, setvehicleDesDetailsEn] = useState(formData?.NacDetails?.vehicleDesDetailsEn ? formData?.NacDetails?.vehicleDesDetailsEn : "");
+  const [setadmittedHospitalEn, setSelectedadmittedHospitalEn] = useState(formData?.NacDetails?.setadmittedHospitalEn?.code ? formData?.NacDetails?.setadmittedHospitalEn : formData?.NacDetails?.setadmittedHospitalEn ? "" : "");
   const [value, setValue] = useState();
+  const [DifferenceInTime, setDifferenceInTime] = useState(formData?.NacDetails?.DifferenceInTime);
 
-  const [publicPlaceType, setpublicPlaceType] = useState(formData?.ChildDetails?.publicPlaceType?.code ? formData?.ChildDetails?.publicPlaceType : formData?.ChildDetails?.publicPlaceType ? "" : "");
-  const [localityNameEn, setlocalityNameEn] = useState(formData?.ChildDetails?.localityNameEn ? formData?.ChildDetails?.localityNameEn : "");
-  const [localityNameMl, setlocalityNameMl] = useState(formData?.ChildDetails?.localityNameMl ? formData?.ChildDetails?.localityNameMl : "");
-  const [streetNameEn, setstreetNameEn] = useState(formData?.ChildDetails?.streetNameEn ? formData?.ChildDetails?.streetNameEn : "");
-  const [streetNameMl, setstreetNameMl] = useState(formData?.ChildDetails?.streetNameMl ? formData?.ChildDetails?.streetNameMl : "");
-  const [publicPlaceDecpEn, setpublicPlaceDecpEn] = useState(formData?.ChildDetails?.publicPlaceDecpEn ? formData?.NACChildDetails?.publicPlaceDecpEn : "");
+  const [publicPlaceType, setpublicPlaceType] = useState(formData?.NacDetails?.publicPlaceType?.code ? formData?.NacDetails?.publicPlaceType : formData?.NacDetails?.publicPlaceType ? "" : "");
+  const [localityNameEn, setlocalityNameEn] = useState(formData?.NacDetails?.localityNameEn ? formData?.NacDetails?.localityNameEn : "");
+  const [localityNameMl, setlocalityNameMl] = useState(formData?.NacDetails?.localityNameMl ? formData?.NacDetails?.localityNameMl : "");
+  const [streetNameEn, setstreetNameEn] = useState(formData?.NacDetails?.streetNameEn ? formData?.NacDetails?.streetNameEn : "");
+  const [streetNameMl, setstreetNameMl] = useState(formData?.NacDetails?.streetNameMl ? formData?.NacDetails?.streetNameMl : "");
+  const [publicPlaceDecpEn, setpublicPlaceDecpEn] = useState(formData?.NacDetails?.publicPlaceDecpEn ? formData?.NACNacDetails?.publicPlaceDecpEn : "");
 
-  const [orderofBirth, setorderofBirth] = useState(
+  const [orderOfBirth, setorderOfBirth] = useState(
     formData?.NACNACChildDetails?.orderofBirth ? formData?.NACNACChildDetails?.orderofBirth : null
   );
   const [toast, setToast] = useState(false);
-  const [AadharError, setAadharError] = useState(formData?.NACNACChildDetails?.childAadharNo ? false : false);
-  const [DOBError, setDOBError] = useState(formData?.NACNACChildDetails?.childDOB ? false : false);
+  //const [AadharError, setAadharError] = useState(formData?.NacDetails?.childAadharNo ? false : false);
+   const [ChildAadharHIde, setChildAadharHIde] = useState(formData?.NacDetails?.childAadharNo ? true : false);
+  const [DOBError, setDOBError] = useState(formData?.NacDetails?.childDOB ? false : true);
+  const [HospitalError, setHospitalError] = useState(formData?.NacDetails?.hospitalName ? false : true);
+  const [InstitutionError, setInstitutionError] = useState(formData?.NacDetails?.institution ? false : true);
+  const [InstitutionNameError, setInstitutionNameError] = useState(formData?.NacDetails?.institutionId ? false : true);
+  const [WardError, setAdsWardError] = useState(formData?.BirthPlaceHomeDetails?.wardNo ? false : true);
+  const [AdsHomePostOfficeError, setAdsHomePostOfficeError] = useState(formData?.BirthPlaceHomeDetails?.AdrsHomePostOffice ? false : true);
+  const [AdsHomePincodeError, setAdsHomePincodeError] = useState(formData?.BirthPlaceHomeDetails?.AdrsHomePincode ? false : true);
+  const [AdsHomeHouseNameEnError, setAdsHomeHouseNameEnError] = useState(formData?.BirthPlaceHomeDetails?.AdrsHomeHouseNameEn ? false : true);
+  const [AdsHomeHouseNameMlError, setAdsHomeHouseNameMlError] = useState(formData?.BirthPlaceHomeDetails?.AdrsHomeHouseNameMl ? false : true);
+  const [AdsHomeLocalityNameEnError, setAdsHomeLocalityNameEnError] = useState(
+    formData?.BirthPlaceHomeDetails?.AdrsHomeLocalityNameEn ? false : true
+  );
+  const [AdsHomeLocalityNameMlError, setAdsHomeLocalityNameMlError] = useState(
+    formData?.BirthPlaceHomeDetails?.AdrsHomeLocalityNameMl ? false : true
+  );
+  const [vehicleRegiNoError, setvehicleRegiNoError] = useState(formData?.NacDetails?.VehicleRegistrationNo ? false : true);
+  const [vehiTypeError, setvehiTypeError] = useState(formData?.NacDetails?.vehicleType ? false : true);
+  const [vehicleHaltPlaceError, setvehicleHaltPlaceError] = useState(formData?.NacDetails?.vehicleHaltPlace ? false : true);
+  const [admittedHospitalEnError, setadmittedHospitalEnError] = useState(formData?.NacDetails?.setadmittedHospitalEn ? false : true);
+  const [vehiDesDetailsEnError, setvehiDesDetailsEnError] = useState(formData?.NacDetails?.vehicleDesDetailsEn ? false : true);
+  const [placeTypepEnError, setplaceTypepEnError] = useState(formData?.NacDetails?.publicPlaceType ? false : true);
+  const [localNameEnError, setlocalNameEnError] = useState(formData?.NacDetails?.localityNameEn ? false : true);
+  const [localNameMlError, setlocalNameMlError] = useState(formData?.NacDetails?.localityNameMl ? false : true);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-console.log(cmbPlaceMaster,"cmbPlaceMaster");
-
-  const [placeofBirthError, setplaceofBirthError] = useState(false);
+  console.log(formData, "formdata");
 
   const [access, setAccess] = React.useState(true);
 
@@ -173,11 +199,8 @@ console.log(cmbPlaceMaster,"cmbPlaceMaster");
     const handleTimeChange = (value, cb) => {
       if (typeof value === "string") {
         cb(value);
-        console.log(cb);
-        console.log(value);
         let hour = value;
         let period = hour > 12 ? "PM" : "AM";
-        console.log(period);
         setbirthDateTime(value);
       }
     };
@@ -206,10 +229,9 @@ console.log(cmbPlaceMaster,"cmbPlaceMaster");
     // setChildLastNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
 
   }
-  function setCheckMalayalamInputField(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
-    if (!(e.key.match(pattern))) {
-      e.preventDefault();
+  function setSelectOrderOfBirth(e) {
+    if(e.target.value){
+      setorderOfBirth(e.target.value);      
     }
   }
   function setSelectChildFirstNameMl(e) {
@@ -337,15 +359,24 @@ console.log(cmbPlaceMaster,"cmbPlaceMaster");
       }
     }
   }, [isInitialRenderPlace]);
-
   function setselectBirthPlace(value) {
     selectBirthPlace(value);
     setValue(value.code);
-    let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === value.code && (workFlowData.startdateperiod <= Difference_In_DaysRounded && workFlowData.enddateperiod >= Difference_In_DaysRounded));
-    // console.log(currentWorgFlow[0].WorkflowCode);
-    // workFlowCode=currentWorgFlow[0].WorkflowCode;
-    setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+    let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === value.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
+    console.log(currentWorgFlow);
+    if (currentWorgFlow.length > 0) {
+      // console.log(currentWorgFlow[0].WorkflowCode);
+      setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+    }
   }
+  // function setselectBirthPlace(value) {
+  //   selectBirthPlace(value);
+  //   setValue(value.code);
+  //   let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === value.code && (workFlowData.startdateperiod <= Difference_In_DaysRounded && workFlowData.enddateperiod >= Difference_In_DaysRounded));
+  //   // console.log(currentWorgFlow[0].WorkflowCode);
+  //   // workFlowCode=currentWorgFlow[0].WorkflowCode;
+  //   setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+  // }
   let validFlag = true;
   const goNext = () => {
     if (birthPlace.code === "HOSPITAL") {
@@ -611,7 +642,8 @@ console.log(cmbPlaceMaster,"cmbPlaceMaster");
       sessionStorage.setItem("childFirstNameMl", childFirstNameMl ? childFirstNameMl : null);
       sessionStorage.setItem("childMiddleNameMl", childMiddleNameMl ? childMiddleNameMl : null);
       sessionStorage.setItem("childLastNameMl", childLastNameMl ? childLastNameMl : null);
-      sessionStorage.setItem("placeofBirth",  placeofBirth ? placeofBirth : null);
+      sessionStorage.setItem("placeOfBirth",  placeOfBirth ? placeOfBirth : null);
+      sessionStorage.setItem("orderOfBirth",  orderOfBirth ? orderOfBirth : null);
       sessionStorage.setItem("birthPlace", birthPlace.code);
       sessionStorage.setItem("hospitalCode", hospitalName ? hospitalName.code : null);
       sessionStorage.setItem("hospitalName", hospitalName ? hospitalName.hospitalName : null);
@@ -664,7 +696,7 @@ console.log(cmbPlaceMaster,"cmbPlaceMaster");
         vehicleType, vehicleHaltPlace, vehicleRegistrationNo, vehicleFromEn, vehicleToEn, vehicleFromMl,
         vehicleToMl, setadmittedHospitalEn, vehicleDesDetailsEn,
         publicPlaceType, localityNameEn, localityNameMl, streetNameEn, streetNameMl, publicPlaceDecpEn,
-        childFirstNameEn, childMiddleNameEn, childLastNameEn, childFirstNameMl, childMiddleNameMl, childLastNameMl,
+        childFirstNameEn, childMiddleNameEn, childLastNameEn, childFirstNameMl, childMiddleNameMl, childLastNameMl, IsEditChangeScreen
       });
     }
   };
@@ -871,7 +903,6 @@ console.log(cmbPlaceMaster,"cmbPlaceMaster");
                   date={childDOB}
                   name="childDOB"
                   max={convertEpochToDate(new Date())}
-                  // min={childDOB ? childDOB : convertEpochToDate("1900-01-01")}
                   onChange={setselectChildDOB}
                   inputFormat="DD-MM-YYYY"
                   placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
@@ -908,11 +939,11 @@ console.log(cmbPlaceMaster,"cmbPlaceMaster");
                   isMandatory={false}
                   type={"number"}
                   optionKey="i18nKey"
-                  name="orderofBirth"
-                  value={orderofBirth}
+                  name="orderOfBirth"
+                  value={orderOfBirth}
                   disable={isEdit}
-                  onChange={setorderofBirth}            
-                  placeholder={`${t("CS_COMMON_CHILD_AADHAAR")}`}
+                  onChange={setSelectOrderOfBirth}            
+                  placeholder={`${t("ORDER_OF_BIRTH")}`}
                   inputProps={{
                     maxLength: 12,
                   }}
@@ -1063,23 +1094,91 @@ console.log(cmbPlaceMaster,"cmbPlaceMaster");
               />
             </div>
           )}
-          {/* {toast && (
+          {toast && (
             <Toast
-              error={DOBError || AadharError || ProvinceEnError ||  cityTownError }
+              error={
+                DOBError ||
+                HospitalError ||
+                InstitutionError ||
+                InstitutionNameError ||
+                WardError ||
+                AdsHomePincodeError ||
+                AdsHomePostOfficeError ||
+                AdsHomeLocalityNameEnError ||
+                AdsHomeLocalityNameMlError ||
+                AdsHomeHouseNameEnError ||
+                AdsHomeHouseNameMlError ||
+                vehiTypeError ||
+                vehicleRegiNoError ||
+                vehicleHaltPlaceError ||
+                admittedHospitalEnError ||
+                vehiDesDetailsEnError ||
+                placeTypepEnError ||
+                localNameEnError ||
+                localNameMlError 
+              }
               label={
-                DOBError || AadharError || ProvinceEnError ||  cityTownError
-                  ? DOBError
-                    ? t(`BIRTH_ERROR_DOB_CHOOSE`)
-                    : AadharError
-                    ? t(`BIRTH_ERROR_OUTSIDE_STATE_PROV_EN_ERROR`)
-                    : cityTownError
-                    ? t(`BIRTH_ERROR_OUTSIDE_BIRTH_PLACE_EN_ERROR`)
+                DOBError ||
+                HospitalError ||
+                InstitutionError ||
+                InstitutionNameError ||
+                WardError ||
+                AdsHomePincodeError ||
+                AdsHomePostOfficeError ||
+                AdsHomeLocalityNameEnError ||
+                AdsHomeLocalityNameMlError ||
+                AdsHomeHouseNameEnError ||
+                AdsHomeHouseNameMlError ||
+                vehiTypeError ||
+                vehicleRegiNoError ||
+                vehicleHaltPlaceError ||
+                admittedHospitalEnError ||
+                vehiDesDetailsEnError ||
+                placeTypepEnError ||
+                localNameEnError ||
+                localNameMlError 
+                  ? HospitalError
+                    ? t(`BIRTH_ERROR_HOSPITAL_CHOOSE`)
+                    : InstitutionError
+                    ? t(`BIRTH_ERROR_INSTITUTION_TYPE_CHOOSE`)
+                    : InstitutionNameError
+                    ? t(`BIRTH_ERROR_INSTITUTION_NAME_CHOOSE`)
+                    : WardError
+                    ? t(`BIRTH_ERROR_WARD_CHOOSE`)
+                    : AdsHomePincodeError
+                    ? t(`BIRTH_ERROR_PINCODE_CHOOSE`)
+                    : AdsHomePostOfficeError
+                    ? t(`BIRTH_ERROR_POSTOFFICE_CHOOSE`)
+                    : AdsHomeLocalityNameEnError
+                    ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
+                    : AdsHomeLocalityNameMlError
+                    ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
+                    : AdsHomeHouseNameEnError
+                    ? t(`BIRTH_ERROR_HOUSE_NAME_EN_CHOOSE`)
+                    : AdsHomeHouseNameMlError
+                    ? t(`BIRTH_ERROR_HOUSE_NAME_ML_CHOOSE`)
+                    : vehiTypeError
+                    ? t(`BIRTH_ERROR_VEHICLE_TYPE_CHOOSE`)
+                    : vehicleRegiNoError
+                    ? t(`BIRTH_ERROR_VEHICLE_REGI_NO_CHOOSE`)
+                    : vehicleHaltPlaceError
+                    ? t(`BIRTH_ERROR_VEHICLE_HALT_PLACE_CHOOSE`)
+                    : admittedHospitalEnError
+                    ? t(`BIRTH_ERROR_ADMITTED_HOSPITAL_CHOOSE`)
+                    : vehiDesDetailsEnError
+                    ? t(`BIRTH_ERROR_DESCRIPTION_BOX_CHOOSE`)
+                    : placeTypepEnError
+                    ? t(`BIRTH_ERROR_PUBLIC_PLACE_TYPE_CHOOSE`)
+                    : localNameEnError
+                    ? t(`BIRTH_ERROR_LOCALITY_EN_CHOOSE`)
+                    : localNameMlError
+                    ? t(`BIRTH_ERROR_LOCALITY_ML_CHOOSE`)
                     : setToast(false)
                   : setToast(false)
               }
               onClose={() => setToast(false)}
             />
-          )} */}
+          )}
           {""}
          
         </FormStep>

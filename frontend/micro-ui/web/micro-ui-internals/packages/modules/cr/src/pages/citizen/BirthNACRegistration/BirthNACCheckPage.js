@@ -42,6 +42,7 @@ const getPath = (path, params) => {
 };
 
 const BirthNACCheckPage = ({ onSubmit, value, userType }) => {
+  console.log(value, 'value');
   let isEdit = window.location.href.includes("renew-trade");
   const { t } = useTranslation();
   const history = useHistory();
@@ -49,9 +50,11 @@ const BirthNACCheckPage = ({ onSubmit, value, userType }) => {
   const {
     ChildDetails,
     ParentsDetails,
-    AddressBirthDetails,
     NACChildDetails,
     InformarHosInstDetails,
+    BirthNACDetails,
+    BirthNACParentsDetails,
+    BirthNACAddressPage,
     // BirthPlace,
     // HospitalDetails,
     // FatherInfoDetails,
@@ -133,17 +136,17 @@ const BirthNACCheckPage = ({ onSubmit, value, userType }) => {
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                 :
                 {/* {t(ChildDetails.childFirstNameEn ? ChildDetails.childFirstNameEn : ' CR_NOT_RECORDED')} {t(ChildDetails.childMiddleNameEn  )} {t(ChildDetails.childLastNameEn  )} */}
-                {t(NACChildDetails?.childFirstNameEn ? NACChildDetails.childFirstNameEn : " CR_NOT_RECORDED") +
+                {t(BirthNACDetails?.childFirstNameEn? BirthNACDetails.childFirstNameEn : " CR_NOT_RECORDED") +
                   " " +
-                  NACChildDetails?.childMiddleNameEn +
+                  BirthNACDetails?.childMiddleNameEn +
                   " " +
-                  NACChildDetails?.childLastNameEn +
+                  BirthNACDetails?.childLastNameEn +
                   " / " +
-                  t(NACChildDetails?.childFirstNameMl) +
+                  t(BirthNACDetails?.childFirstNameMl) +
                   " " +
-                  NACChildDetails?.childMiddleNameMl +
+                  BirthNACDetails?.childMiddleNameMl +
                   " " +
-                  NACChildDetails?.childLastNameMl}
+                  BirthNACDetails?.childLastNameMl}
               </CardText>
               {/* {t(ChildDetails.institutionId.institutionName) + " / " + t(ChildDetails.institutionId.institutionNamelocal)}  */}
             </div>
@@ -154,7 +157,7 @@ const BirthNACCheckPage = ({ onSubmit, value, userType }) => {
             </div>
             <div className="col-md-6">
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                : {t(NACChildDetails?.gender.code) + " / " + t(NACChildDetails?.gender.code + "_ML")}
+                : {t(BirthNACDetails?.gender.code) + " / " + t(BirthNACDetails?.gender.code + "_ML")}
               </CardText>
             </div>
           </div>
@@ -164,7 +167,7 @@ const BirthNACCheckPage = ({ onSubmit, value, userType }) => {
               <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_DATE_OF_BIRTH")}`}</CardLabel>
             </div>
             <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>:{t(convertEpochToDate(NACChildDetails?.childDOB) ? convertEpochToDate(NACChildDetails?.childDOB) : " CR_NOT_RECORDED")}{" "} </CardText>
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>:{t(convertEpochToDate(BirthNACDetails?.childDOB) ? convertEpochToDate(BirthNACDetails?.childDOB) : " CR_NOT_RECORDED")}{" "} </CardText>
             </div>
           </div>
 
@@ -309,9 +312,9 @@ const BirthNACCheckPage = ({ onSubmit, value, userType }) => {
               {/* <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_HOSPITAL")}`}</CardLabel> */}
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                 :
-                {t(NACChildDetails?.motherFirstNameEn ? NACChildDetails?.motherFirstNameEn : "CR_NOT_RECORDED") +
+                {t(BirthNACParentsDetails?.motherFirstNameEn ? BirthNACParentsDetails?.motherFirstNameEn : "CR_NOT_RECORDED") +
                   " / " +
-                  t(NACChildDetails?.motherFirstNameMl)}
+                  t(BirthNACParentsDetails?.motherFirstNameMl)}
               </CardText>
             </div>
           </div>
@@ -322,9 +325,9 @@ const BirthNACCheckPage = ({ onSubmit, value, userType }) => {
             <div className="col-md-6">
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                 :
-                {t(NACChildDetails?.fatherFirstNameEn ? NACChildDetails?.fatherFirstNameEn : "CR_NOT_RECORDED") +
+                {t(BirthNACParentsDetails?.fatherFirstNameEn ? BirthNACParentsDetails?.fatherFirstNameEn : "CR_NOT_RECORDED") +
                   " / " +
-                  t(NACChildDetails?.fatherFirstNameMl)}
+                  t(BirthNACParentsDetails?.fatherFirstNameMl)}
               </CardText>
             </div>
           </div>
@@ -336,45 +339,45 @@ const BirthNACCheckPage = ({ onSubmit, value, userType }) => {
             <div className="col-md-6">
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                 :
-                {t(AddressBirthDetails?.presentInsideKeralaHouseNameEn ? AddressBirthDetails?.presentInsideKeralaHouseNameEn : "CR_NOT_RECORDED") +
+                {t(BirthNACAddressPage?.presentInsideKeralaHouseNameEn ? BirthNACAddressPage?.presentInsideKeralaHouseNameEn : "CR_NOT_RECORDED") +
                   " , " +
-                 ( AddressBirthDetails?.presentInsideKeralaStreetNameEn ? AddressBirthDetails?.presentInsideKeralaStreetNameEn : " CR_NOT_RECORDED") +
+                 ( BirthNACAddressPage?.presentInsideKeralaStreetNameEn ? BirthNACAddressPage?.presentInsideKeralaStreetNameEn : " CR_NOT_RECORDED") +
                   " , " +
-                  AddressBirthDetails?.presentInsideKeralaLocalityNameEn +
+                  BirthNACAddressPage?.presentInsideKeralaLocalityNameEn +
                   " , " +
-                  AddressBirthDetails?.presentInsideKeralaPostOffice.name+
+                  BirthNACAddressPage?.presentInsideKeralaPostOffice.name+
                   " , " +
-                  AddressBirthDetails?.presentInsideKeralaPincode +
+                  BirthNACAddressPage?.presentInsideKeralaPincode +
                   " , " +
-                  AddressBirthDetails?.presentInsideKeralaDistrict.name +
+                  BirthNACAddressPage?.presentInsideKeralaDistrict.name +
                   " , " +
-                  AddressBirthDetails?.presentaddressStateName.name +
+                  BirthNACAddressPage?.presentaddressStateName.name +
                   " , " +
-                  AddressBirthDetails?.presentaddressCountry.name }
+                  BirthNACAddressPage?.presentaddressCountry.name }
                     </CardText>
                      <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                 :
-                {t(AddressBirthDetails?.presentInsideKeralaHouseNameMl ? AddressBirthDetails?.presentInsideKeralaHouseNameMl : "CR_NOT_RECORDED") +
+                {t(BirthNACAddressPage?.presentInsideKeralaHouseNameMl ? BirthNACAddressPage?.presentInsideKeralaHouseNameMl : "CR_NOT_RECORDED") +
                   " , " +
-                 ( AddressBirthDetails?.presentInsideKeralaStreetNameMl ? AddressBirthDetails?.presentInsideKeralaStreetNameMl : "CR_NOT_RECORDED") +
+                 ( BirthNACAddressPage?.presentInsideKeralaStreetNameMl ? BirthNACAddressPage?.presentInsideKeralaStreetNameMl : "CR_NOT_RECORDED") +
                   " , " +
-                  AddressBirthDetails?.presentInsideKeralaLocalityNameMl +
+                  BirthNACAddressPage?.presentInsideKeralaLocalityNameMl +
                   " , " +
-                  AddressBirthDetails?.presentInsideKeralaPostOffice.namelocal+
+                  BirthNACAddressPage?.presentInsideKeralaPostOffice.namelocal+
                   " , " +
-                  AddressBirthDetails?.presentInsideKeralaPincode +
+                  BirthNACAddressPage?.presentInsideKeralaPincode +
                   " , " +
-                  AddressBirthDetails?.presentInsideKeralaDistrict.namelocal+
+                  BirthNACAddressPage?.presentInsideKeralaDistrict.namelocal+
                   " , " +
-                  AddressBirthDetails?.presentaddressStateName.namelocal+
+                  BirthNACAddressPage?.presentaddressStateName.namelocal+
                   " , " +
-                  AddressBirthDetails?.presentaddressCountry.namelocal}
+                  BirthNACAddressPage?.presentaddressCountry.namelocal}
                 ,
               </CardText>
             </div>
           </div>
         
-          {AddressBirthDetails?.isPrsentAddress === true && (
+          {BirthNACAddressPage?.isPrsentAddress === true && (
 
           <div className="row">
           
@@ -385,46 +388,46 @@ const BirthNACCheckPage = ({ onSubmit, value, userType }) => {
             <div className="col-md-6">
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                 :
-                {t(AddressBirthDetails?.presentInsideKeralaHouseNameEn ? AddressBirthDetails?.presentInsideKeralaHouseNameEn : "CR_NOT_RECORDED") +
+                {t(BirthNACAddressPage?.presentInsideKeralaHouseNameEn ? BirthNACAddressPage?.presentInsideKeralaHouseNameEn : "CR_NOT_RECORDED") +
                   " , " +
-                  (AddressBirthDetails?.presentInsideKeralaStreetNameEn   ? AddressBirthDetails?.presentInsideKeralaStreetNameEn : "CR_NOT_RECORDED")+
+                  (BirthNACAddressPage?.presentInsideKeralaStreetNameEn   ? BirthNACAddressPage?.presentInsideKeralaStreetNameEn : "CR_NOT_RECORDED")+
                   " , " +
-                  AddressBirthDetails?.presentInsideKeralaLocalityNameEn +
+                  BirthNACAddressPage?.presentInsideKeralaLocalityNameEn +
                   " , " +
-                  AddressBirthDetails?.presentInsideKeralaPostOffice.name+
+                  BirthNACAddressPage?.presentInsideKeralaPostOffice.name+
                   " , " +
-                  AddressBirthDetails?.presentInsideKeralaPincode +
+                  BirthNACAddressPage?.presentInsideKeralaPincode +
                   " , " +
-                  AddressBirthDetails?.presentInsideKeralaDistrict.name +
+                  BirthNACAddressPage?.presentInsideKeralaDistrict.name +
                   " , " +
-                  AddressBirthDetails?.presentaddressStateName.name +
+                  BirthNACAddressPage?.presentaddressStateName.name +
                   " , " +
-                  AddressBirthDetails?.presentaddressCountry.name }
+                  BirthNACAddressPage?.presentaddressCountry.name }
                     </CardText>
                      <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                 :
-                {t(AddressBirthDetails?.presentInsideKeralaHouseNameMl ? AddressBirthDetails?.presentInsideKeralaHouseNameMl : "CR_NOT_RECORDED") +
+                {t(BirthNACAddressPage?.presentInsideKeralaHouseNameMl ? BirthNACAddressPage?.presentInsideKeralaHouseNameMl : "CR_NOT_RECORDED") +
                   " , " +
-                  (AddressBirthDetails?.presentInsideKeralaStreetNameMl ? AddressBirthDetails?.presentInsideKeralaStreetNameMl : "CR_NOT_RECORDED")  +
+                  (BirthNACAddressPage?.presentInsideKeralaStreetNameMl ? BirthNACAddressPage?.presentInsideKeralaStreetNameMl : "CR_NOT_RECORDED")  +
                   " , " +
-                  AddressBirthDetails?.presentInsideKeralaLocalityNameMl +
+                  BirthNACAddressPage?.presentInsideKeralaLocalityNameMl +
                   " , " +
-                  AddressBirthDetails?.presentInsideKeralaPostOffice.namelocal+
+                  BirthNACAddressPage?.presentInsideKeralaPostOffice.namelocal+
                   " , " +
-                  AddressBirthDetails?.presentInsideKeralaPincode +
+                  BirthNACAddressPage?.presentInsideKeralaPincode +
                   " , " +
-                  AddressBirthDetails?.presentInsideKeralaDistrict.namelocal+
+                  BirthNACAddressPage?.presentInsideKeralaDistrict.namelocal+
                   " , " +
-                  AddressBirthDetails?.presentaddressStateName.namelocal+
+                  BirthNACAddressPage?.presentaddressStateName.namelocal+
                   " , " +
-                  AddressBirthDetails?.presentaddressCountry.namelocal}
+                  BirthNACAddressPage?.presentaddressCountry.namelocal}
                 ,
               </CardText>
             </div>
           </div>
           )}
 
-{AddressBirthDetails?.isPrsentAddress === false && (
+{BirthNACAddressPage?.isPrsentAddress === false && (
  <div className="row">
           
  <div className="col-md-6">
@@ -437,85 +440,48 @@ const BirthNACCheckPage = ({ onSubmit, value, userType }) => {
 
    :
    
-     {t(AddressBirthDetails?.permntInKeralaAdrHouseNameEn ? AddressBirthDetails?.permntInKeralaAdrHouseNameEn : "CR_NOT_RECORDED") +
+     {t(BirthNACAddressPage?.permntInKeralaAdrHouseNameEn ? BirthNACAddressPage?.permntInKeralaAdrHouseNameEn : "CR_NOT_RECORDED") +
        " , " +
-       (AddressBirthDetails?.permntInKeralaAdrStreetNameEn ? AddressBirthDetails?.permntInKeralaAdrStreetNameEn : "CR_NOT_RECORDED") + 
+       (BirthNACAddressPage?.permntInKeralaAdrStreetNameEn ? BirthNACAddressPage?.permntInKeralaAdrStreetNameEn : "CR_NOT_RECORDED") + 
        " , " +
-       AddressBirthDetails?.permntInKeralaAdrLocalityNameEn +
+       BirthNACAddressPage?.permntInKeralaAdrLocalityNameEn +
        " , " +
-       AddressBirthDetails?.permntInKeralaAdrPostOffice.name+
+       BirthNACAddressPage?.permntInKeralaAdrPostOffice.name+
        " , " +
-       AddressBirthDetails?.permntInKeralaAdrPincode +
+       BirthNACAddressPage?.permntInKeralaAdrPincode +
        " , " +
-       AddressBirthDetails?.permntInKeralaAdrDistrict.name +
+       BirthNACAddressPage?.permntInKeralaAdrDistrict.name +
        " , " +
-       AddressBirthDetails?.permtaddressStateName.name +
+       BirthNACAddressPage?.permtaddressStateName.name +
        " , " +
-       AddressBirthDetails?.permtaddressCountry.name }
+       BirthNACAddressPage?.permtaddressCountry.name }
       
        </CardText>
        <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
   :
   {  
-     t(AddressBirthDetails?.permntInKeralaAdrHouseNameMl ? AddressBirthDetails?.permntInKeralaAdrHouseNameMl : "CR_NOT_RECORDED") +
+     t(BirthNACAddressPage?.permntInKeralaAdrHouseNameMl ? BirthNACAddressPage?.permntInKeralaAdrHouseNameMl : "CR_NOT_RECORDED") +
        " , " +
-       (AddressBirthDetails?.permntInKeralaAdrStreetNameMl ? AddressBirthDetails?.permntInKeralaAdrStreetNameMl : "CR_NOT_RECORDED") +
+       (BirthNACAddressPage?.permntInKeralaAdrStreetNameMl ? BirthNACAddressPage?.permntInKeralaAdrStreetNameMl : "CR_NOT_RECORDED") +
        " , " +
-       AddressBirthDetails?.permntInKeralaAdrLocalityNameMl +
+       BirthNACAddressPage?.permntInKeralaAdrLocalityNameMl +
        " , " +
-       AddressBirthDetails?.permntInKeralaAdrPostOffice.name+
+       BirthNACAddressPage?.permntInKeralaAdrPostOffice.name+
        " , " +
-       AddressBirthDetails?.permntInKeralaAdrPincode +
+       BirthNACAddressPage?.permntInKeralaAdrPincode +
        " , " +
-       AddressBirthDetails?.permntInKeralaAdrDistrict.namelocal+
+       BirthNACAddressPage?.permntInKeralaAdrDistrict.namelocal+
        " , " +
-       AddressBirthDetails?.permtaddressStateName.namelocal+
+       BirthNACAddressPage?.permtaddressStateName.namelocal+
        " , " +
-       AddressBirthDetails?.permtaddressCountry.namelocal}
+       BirthNACAddressPage?.permtaddressCountry.namelocal}
      ,
      </CardText>
  </div>
 </div>
 )}
-        </div>
-{/* 
-        <div className="row">
-          <div className="col-md-12">
-              <div className="row">
-          <div className="col-md-12">
-            <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
-            </h1>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-12">
-              <CheckBox
-                label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
-                onChange={setDeclarationInfo}
-                value={isInitiatorDeclaration}
-                checked={isInitiatorDeclaration}
-                disable={isDisableEdit}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-12">
-              <CheckBox
-                label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
-                onChange={setDeclarationInfo}
-                value={isInitiatorDeclaration}
-                checked={isInitiatorDeclaration}
-                disable={isDisableEdit}
-              />
-            </div>
-          </div>
-        </div> 
-          </div>
-        </div> */}
+</div>
+
         <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} />
       </Card>
     </React.Fragment>

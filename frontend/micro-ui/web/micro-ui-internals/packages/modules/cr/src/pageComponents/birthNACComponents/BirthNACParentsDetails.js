@@ -96,8 +96,6 @@ const NACParentsDetails =({ config, onSelect, userType, formData, isEditStillBir
 
 
   const [FatherAadharError, setFatherAadharError] = useState(formData?.ParentsDetails?.fatherAadhar ? false : false);
-  const [FatherFirstNmeEnError, setFatherFirstNmeEnError] = useState(formData?.ParentsDetails?.fatherFirstNameEn ? false : false);
-  const [FatherFirstNmeMlError, setFatherFirstNmeMlError] = useState(formData?.ParentsDetails?.fatherFirstNameMl ? false : false);
 
   
 
@@ -309,7 +307,7 @@ const NACParentsDetails =({ config, onSelect, userType, formData, isEditStillBir
               <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-4">
-                    <CardLabel>{`${t("CS_COMMON_AADHAAR")}`}</CardLabel>
+                    <CardLabel>{`${t("CS_COMMON_AADHAAR")}`}<span className="mandatorycss">*</span></CardLabel>
                     <TextInput
                       t={t}
                       isMandatory={false}
@@ -320,7 +318,7 @@ const NACParentsDetails =({ config, onSelect, userType, formData, isEditStillBir
                       onChange={setSelectMotherAadhar}
                       disable={isDisableEdit}
                       placeholder={`${t("CS_COMMON_AADHAAR")}`}
-                      {...(validation = { pattern: "^[0-9]{12}$", type: "number", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                      {...(validation = { pattern: "^[0-9]{12}$", type: "number", isRequired: true, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                     />
                   </div>
 
@@ -384,7 +382,7 @@ const NACParentsDetails =({ config, onSelect, userType, formData, isEditStillBir
               <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-4">
-                    <CardLabel>{`${t("CS_COMMON_AADHAAR")}`}</CardLabel>
+                    <CardLabel>{`${t("CS_COMMON_AADHAAR")}`}<span className="mandatorycss">*</span></CardLabel>
                     <TextInput
                       t={t}
                       isMandatory={false}
@@ -395,7 +393,7 @@ const NACParentsDetails =({ config, onSelect, userType, formData, isEditStillBir
                       onChange={setSelectFatherAadhar}
                       disable={isDisableEdit}
                       placeholder={`${t("CS_COMMON_AADHAAR")}`}
-                      {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                      {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                     />
                   </div>
 
@@ -447,65 +445,25 @@ const NACParentsDetails =({ config, onSelect, userType, formData, isEditStillBir
             </div>
           {/* )} */}
 
-          {/* {toast && (
+          {toast && (
             <Toast
               error={
                 MotherAadharError ||
-                MotherBirthageError ||
-                MotherEducationError ||
-                MotherProfessionError ||
-                MotherNationalityError ||
-                FatherAadharError ||
-                FatherFirstNmeEnError ||
-                FatherEduError ||
-                FatherProfError ||
-                FatherMobileError ||
-                ReligionError ||
-                OrderofChildrenError
+                FatherAadharError 
               }
               label={
                 MotherAadharError ||
-                MotherBirthageError ||
-                MotherEducationError ||
-                MotherProfessionError ||
-                MotherNationalityError ||
-                FatherAadharError ||
-                FatherFirstNmeEnError ||
-                FatherEduError ||
-                FatherProfError ||
-                FatherMobileError ||
-                ReligionError ||
-                OrderofChildrenError
+                FatherAadharError 
                   ? MotherAadharError
                     ? t(`CS_COMMON_INVALID_MOTHER_AADHAR_NO`)
-                    : MotherBirthageError
-                    ? t(`CR_INVALID_MOTHER_AGE_AT_BIRTH`)
-                    : MotherEducationError
-                    ? t(`BIRTH_ERROR_MOTHER_EDUCATION_CHOOSE`)
-                    : MotherProfessionError
-                    ? t(`BIRTH_ERROR_MOTHER_PROFESSION_CHOOSE`)
-                    : MotherNationalityError
-                    ? t(`BIRTH_ERROR_MOTHER_NATIONALITY_CHOOSE`)
-                    : OrderofChildrenError
-                    ? t(`BIRTH_ERROR_ORDER_OF_CHILDREN`)
                     : FatherAadharError
                     ? t(`CS_COMMON_INVALID_FATHER_AADHAR_NO`)
-                    : FatherFirstNmeEnError
-                    ? t(`CR_INVALID_FATHER_NAME_EN`)
-                    : FatherEduError
-                    ? t(`BIRTH_ERROR_FATHER_EDUCATION_CHOOSE`)
-                    : FatherProfError
-                    ? t(`BIRTH_ERROR_FATHER_PROFESSION_CHOOSE`)
-                    : ReligionError
-                    ? t(`BIRTH_ERROR_RELIGION_CHOOSE`)
-                    : FatherMobileError
-                    ? t(`CR_INVALID_MOBILE_NO`)
                     : setToast(false)
                   : setToast(false)
               }
               onClose={() => setToast(false)}
             />
-          )} */}
+          )}
           {""}
         </FormStep>
       </React.Fragment>

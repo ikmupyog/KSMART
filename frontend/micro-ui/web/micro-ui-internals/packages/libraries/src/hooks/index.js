@@ -120,7 +120,6 @@ import useTLSearch from "./tl/useSearch";
 
 import useTenantsCR from "./cr/useTenants";
 import useCivilRegistrationMDMS from "./cr/useCivilRegistrationMDMS";
-// import useTLDocumentSearch from "./tl/useTLDocumentSearch";
 import useCivilRegistrationAPI from "./cr/useCivilRegistrationAPI";
 import useCivilRegistrationMarriageAPI from "./cr/useCivilRegistrationMarriageAPI";
 import useCvilRegistrationAdoptionApi from "./cr/useCvilRegistrationAdoptionApi";
@@ -132,7 +131,6 @@ import useCivilRegistrationDeathAPI from "./cr/useCivilRegistrationDeathAPI";
 // import useTradeLicenseSearch from "./tl/useTradeLicenseSearch";
 import { useCRSearchApplication, useCRApplicationDetails } from "./cr/useCRSearchApplication";
 import { useCRDeathSearchApplication, useCRApplicationDeathDetails } from "./cr/useCRDeathSearchApplication";
-// import useTLPaymentHistory from "./tl/userPaymentHistory";
 import useCRFetchBill from "./cr/useFetchBill";
 import useCRDFetchBill from "./cr/useDeathFetchBill";
 import useCRApplicationDetail from "./cr/useApplicationDetail";

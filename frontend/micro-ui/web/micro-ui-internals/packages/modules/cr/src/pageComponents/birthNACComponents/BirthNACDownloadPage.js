@@ -9,6 +9,7 @@ import {
   Loader,
   Toast,
   SubmitBar,
+  MultiLink,
 } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/NACTimeline";
 import { useTranslation } from "react-i18next";
@@ -16,12 +17,16 @@ import FormStep from "../../../../../react-components/src/molecules/FormStep";
 
 const BirthNACDownloadPage = ({config, onSelect}) => {
     const { t } = useTranslation();
+
+    const goNext = () => {
+      onSelect(config.key)
+    };
     return (
         <React.Fragment>
           <BackButton>{t("CS_COMMON_BACK")}</BackButton>
           {window.location.href.includes("/citizen") ? <Timeline/> : null}
           {window.location.href.includes("/employee") ? <Timeline/> : null}
-          <FormStep t={t} config={config} isDisabled={false}>
+          <FormStep t={t} config={config} isDisabled={false} onSelect={goNext}>
             <div className="row">
               <div className="col-md-12">
                 <div className="col-md-12">
@@ -46,37 +51,78 @@ const BirthNACDownloadPage = ({config, onSelect}) => {
                 </div>
               </div>
             </div>
-            <div className="row" style={{marginTop: "20px", paddingLeft: "10px"}}>
+            <div className="row" style={{paddingLeft: "10px", paddingTop: "50px"}}>
             <div className="col-md-12">
-                <h1 style={{fontWeight: "bold"}}>1.ID Card of the Applicant</h1>
+                <h1 style={{fontWeight: "bold"}}>1.Address proof of parents at the time of birth</h1>
             </div>
             </div>
-            <div className="row" style={{paddingLeft: "10px"}}>
+            <div className="row" style={{paddingLeft: "10px",paddingTop:"50px"}}>
             <div className="col-md-12">
-                <h1 style={{fontWeight: "bold"}}>2.  Address proof of deceased at the time of death</h1>
+                <h1 style={{fontWeight: "bold"}}>2. Proof of birth shiowing the date/place/details of parents at the time of birth</h1>
             </div>
             </div>
-            <div className="row" style={{paddingLeft: "10px"}}>
+            <div className="row" style={{paddingLeft: "10px", paddingTop: "50px"}}>
             <div className="col-md-12">
-            <h1 style={{fontWeight: "bold"}}>3.  ID proof of Father/Mother/Spouse</h1>
+            <h1 style={{fontWeight: "bold"}}>3.School certificate of child if above 6 years</h1>
             </div>
             </div>
-            <div className="row" style={{ paddingLeft: "10px"}}>
+            <div className="row" style={{ paddingLeft: "10px", paddingTop: "50px"}}>
             <div className="col-md-12">
-            <h1 style={{fontWeight: "bold"}}>4.  Proof of Death</h1>
+            <h1 style={{fontWeight: "bold"}}>4.ID proof of mother at the time of birth</h1>
             </div>
             </div>
-            <div className="row" style={{ paddingLeft: "10px"}}>
-                <div className="col-md-12">
-                <h1 style={{fontWeight: "bold"}}>5.Declaration by Applicant, counter signed by gazetted officer</h1>
+            <div className="row" style={{ paddingLeft: "10px", paddingTop: "50px"}}>
+                <div className="col-md-6">
+                <h1 style={{fontWeight: "bold"}}>5.ID proof of father at the time of birth</h1>
                 </div>
-
-            </div>
-            <div className="row" style={{ paddingLeft: "10px"}}>
-                <div className="col-md-12">
-                <h1 style={{fontWeight: "bold"}}>6.Declaration by two different credible persons separately</h1>
+              </div>
+            <div className="row" style={{ paddingLeft: "10px", paddingTop: "50px"}}>
+                <div className="col-md-6">
+                <h1 style={{fontWeight: "bold"}}>6.Medical certificate, if child is differently abled, for not attending school after 6 years</h1>
                 </div>
-
+            </div>
+            <div className="row" style={{ paddingLeft: "10px", paddingTop: "50px"}}>
+                <div className="col-md-6">
+                <h1 style={{fontWeight: "bold"}}>7.Declaration by Applicant, counter signed by gazetted officer</h1>
+               
+                </div>
+                <div className="col-md-6">
+                <MultiLink
+                style={{top: "-30px", paddingRight: "450px", alignItems: "end"}}
+                  className="multilinkWrapper"
+                // onHeadClick={() => setShowOptions(!showOptions)}
+                // displayOptions={showOptions}
+                // options={dowloadOptions}
+              />
+                </div>
+            </div>
+            <div className="row" style={{ paddingLeft: "10px", paddingTop: "50px"}}>
+                <div className="col-md-6">
+                <h1 style={{fontWeight: "bold"}}>8.Declaration by a perosn srating the event occured jurisdiction of localbody</h1>
+              </div>
+              <div className="col-md-6">
+                <MultiLink
+                style={{top: "-30px", paddingRight: "450px", alignItems: "end"}}
+                className="multilinkWrapper"
+                // onHeadClick={() => setShowOptions(!showOptions)}
+                // displayOptions={showOptions}
+                // options={dowloadOptions}
+              />
+              </div>
+            </div>
+            <div className="row" style={{ paddingLeft: "10px", paddingTop: "50px", paddingBottom: "80px"}}>
+                <div className="col-md-6">
+                <h1 style={{fontWeight: "bold"}}>9.Declaration by Applicant, not being admitted in school after 6 years due to specific reasons</h1>
+              </div>
+              <div className="col-md-6">
+                <MultiLink
+                style={{top: "-30px", paddingRight: "450px", alignItems: "end"}}
+                className="multilinkWrapper"
+                // onHeadClick={() => setShowOptions(!showOptions)}
+                // displayOptions={showOptions}
+                // options={dowloadOptions}
+              />
+              </div>
             </div>
             </FormStep>
             </React.Fragment>

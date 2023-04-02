@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useReducer, useEffect, useCallback } from "react";
 import Timeline from "../../components/NACTimeline";
 import { FormStep, CardLabel, TextInput, Dropdown, LinkButton, UploadFile,   DatePicker,
   BackButton,MultiLink, CheckBox, TextArea, Toast, Table } from "@egovernments/digit-ui-react-components";
@@ -11,22 +11,184 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
   let validation = {};
   const [isDisableEdit, setisDisableEdit] = useState(isEditStillBirth ? isEditStillBirth : false);
   const {name:name,} =Digit.UserService.getUser().info ; // window.localStorage.getItem("user-info");
-  const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.InitiatorinfoDetails?.isInitiatorDeclaration : formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration : false);
-  const [relation, setrelation] = useState(formData?.InitiatorinfoDetails?.relation ? formData?.InitiatorinfoDetails?.relation : formData?.ChildDetails?.InitiatorinfoDetails?.relation ? formData?.ChildDetails?.InitiatorinfoDetails?.relation : "");
-  const [initiatorNameEn, setinitiatorNameEn] = useState(formData?.InitiatorinfoDetails?.initiatorNameEn ? formData?.InitiatorinfoDetails?.initiatorNameEn : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorNameEn ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorNameEn : name);
-  const [initiatorAadhar, setinitiatorAadhar] = useState(formData?.InitiatorinfoDetails?.initiatorAadhar ? formData?.InitiatorinfoDetails?.initiatorAadhar : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAadhar ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAadhar : "");
-  const [initiatorMobile, setinitiatorMobile] = useState(formData?.InitiatorinfoDetails?.initiatorMobile ? formData?.InitiatorinfoDetails?.initiatorMobile : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorMobile ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorMobile : "");
-  const [initiatorDesi, setinitiatorDesi] = useState(formData?.InitiatorinfoDetails?.initiatorDesi ? formData?.InitiatorinfoDetails?.initiatorDesi : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorDesi ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorDesi : "");
-  const [initiatorAddress, setinitiatorAddress] = useState(formData?.InitiatorinfoDetails?.initiatorAddress ? formData?.InitiatorinfoDetails?.initiatorAddress : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAddress ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAddress : "");
+  const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.InitiatorinfoDetails?.isInitiatorDeclaration : formData?.ApplicantDetails?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.ApplicantDetails?.InitiatorinfoDetails?.isInitiatorDeclaration : false);
+  const [isDeclaration, setDeclaration] = useState(formData?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.InitiatorinfoDetails?.isInitiatorDeclaration : formData?.ApplicantDetails?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.ApplicantDetails?.InitiatorinfoDetails?.isInitiatorDeclaration : false);
+  const [initiatorNameEn, setinitiatorNameEn] = useState(formData?.ApplicantDetails?.initiatorNameEn ? formData?.ApplicantDetails?.initiatorNameEn : formData?.ApplicantDetails?.InitiatorinfoDetails?.initiatorNameEn ? formData?.ApplicantDetails?.InitiatorinfoDetails?.initiatorNameEn : name);
+  const [initiatorAadhar, setinitiatorAadhar] = useState(formData?.ApplicantDetails?.initiatorAadhar ? formData?.ApplicantDetails?.initiatorAadhar : formData?.ApplicantDetails?.InitiatorinfoDetails?.initiatorAadhar ? formData?.ApplicantDetails?.InitiatorinfoDetails?.initiatorAadhar : "");
+  const [initiatorMobile, setinitiatorMobile] = useState(formData?.InitiatorinfoDetails?.initiatorMobile ? formData?.ApplicantDetails?.initiatorMobile : formData?.ApplicantDetails?.InitiatorinfoDetails?.initiatorMobile ? formData?.ApplicantDetails?.InitiatorinfoDetails?.initiatorMobile : "");
+  const [initiatorDesi, setinitiatorDesi] = useState(formData?.InitiatorinfoDetails?.initiatorDesi ? formData?.ApplicantDetails?.initiatorDesi : formData?.ApplicantDetails?.InitiatorinfoDetails?.initiatorDesi ? formData?.ApplicantDetails?.InitiatorinfoDetails?.initiatorDesi : "");
+  const [initiatorAddress, setinitiatorAddress] = useState(formData?.InitiatorinfoDetails?.initiatorAddress ? formData?.InitiatorinfoDetails?.initiatorAddress : formData?.ApplicantDetails?.InitiatorinfoDetails?.initiatorAddress ? formData?.ApplicantDetails?.InitiatorinfoDetails?.initiatorAddress : "");
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [gender, selectGender] = useState(formData?.NACChildDetails?.gender);
-  const [childDOB, setChildDOB] = useState(formData?.NACChildDetails?.childDOB ? formData?.NACChildDetails?.childDOB : "");
+  const [childDOB, setChildDOB] = useState(formData?.OtherChildren?.childDOB);
+  const [gender, selectGender] = useState(formData?.OtherChildren?.sex);
+  const [childNameEn, setchildNameEn] = useState(formData?.OtherChildren?.childNameEn);
+  const [childNameMl, setchildNameMl] = useState(formData?.OtherChildren?.childNameMl);
+  const [orderofBirth, setorderOfBirth] = useState(formData?.OtherChildren?.orderOfBirth);
+  const [isAlive, setisAlive] = useState(formData?.OtherChildren?.isAlive);
+  const [slNo, setslNo] = useState("");
+  const [error, setError] = useState(null);
+  const [uploadedFile, setUploadedFile] = useState(null);
+  const [uploadedFile1, setUploadedFile1] = useState(null);
+  const [uploadedFile2, setUploadedFile2] = useState(null);
+  const [uploadedFile3, setUploadedFile3] = useState(null);
+  const [uploadedFile4, setUploadedFile4] = useState(null);
+  const [uploadedFile5, setUploadedFile5] = useState(null);
+  const [file, setFile] = useState(formData?.owners?.documents?.ProofOfIdentity);
+  const [file1, setFile1] = useState(formData?.owners?.documents?.ProofOfIdentity);
+  const [file2, setFile2] = useState(formData?.owners?.documents?.ProofOfIdentity);
+  const [file3, setFile3] = useState(formData?.owners?.documents?.ProofOfIdentity);
+  const [file4, setFile4] = useState(formData?.owners?.documents?.ProofOfIdentity);
+  const [file5, setFile5] = useState(formData?.owners?.documents?.ProofOfIdentity);
 
   const [toast, setToast] = useState(false);
   const [infomantFirstNmeEnError, setinfomantFirstNmeEnError] = useState(formData?.InitiatorinfoDetails?.initiatorNameEn ? false : false);
   const [initiatorAadharError, setinitiatorAadharError] = useState(formData?.InitiatorinfoDetails?.initiatorAadhar ? false : false);
   const [initiatorMobileError, setinitiatorMobileError] = useState(formData?.InitiatorinfoDetails?.initiatorMobile ? false : false);
   const [initiatorDesiError, setinitiatorDesiError] = useState(formData?.InitiatorinfoDetails?.initiatorDesi ? false : false);
+  const [formDatalocal, setFormDatalocal] = useState(formData?.TradeDetails);
+  const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
+  const storedAppData = null;
+  const storedOwnerData = null;
+ 
+  let ownerappmap ={
+    slNo: "slNo",
+    sex: "sex",
+    childName: "childName",
+    orderofBirth: "orderofBirth",
+    alive: "alive"
+  };
+
+  const cmbExpirationType = [
+    { i18nKey: "Alive", code: "ALIVE" },
+    { i18nKey: "Expired", code: "EXPIRED" },
+  ];
+
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case "ADD_APPLICANT":
+        return [
+          ...state,
+          {
+            slNo: "",
+            sex: "",
+            childName: "",
+            orderofBirth: "",
+            alive: "",
+          },
+        ];
+      case "REMOVE_APPLICANT":
+        return state.filter((e, i) => i !== action?.payload?.index);
+      case "EDIT_CURRENT_APP":
+        return state.map((data, __index) => {
+          if (__index === action.payload.index) {
+            return { ...data, [action.payload.key]: action.payload.value };
+          } else {
+            return data;
+          }
+        });
+      case "EDIT_CURRENT_SELECT_APP":
+        return state.map((data, __index) => {
+          if (__index === action.payload.index) {
+            return { ...data, [action.payload.key]: action.payload.value };
+          } else {
+            return data;
+          }
+        });
+    }
+  }
+  const initowneredit = () => {
+    return formDatalocal?.tradeLicenseDetail?.ownerspremise;
+  }
+  const initowner = () => {
+    return [
+      {
+        slNo: "",
+        sex: "",
+        childNameEn: "",
+        childNameMl:"",
+        orderofBirth: "",
+        alive: "",
+      },
+    ]
+  }
+
+  const reducerowner = (state, action) => {
+    switch (action.type) {
+      case "ADD_OWNER":
+        return [
+          ...state,
+          {
+            slNo: "",
+            sex: "",
+            childNameEn: "",
+            childNameMl:"",
+            orderofBirth: "",
+            alive: "",
+          },
+        ];
+      case "REMOVE_OWNER":
+        return state.filter((e, i) => i !== action?.payload?.index);
+      case "EDIT_CURRENT_OWNER":
+        return state.map((data, __index) => {
+          if (__index === action.payload.index) {
+            return { ...data, [action.payload.key]: action.payload.value };
+          } else {
+            return data;
+          }
+        });
+    }
+  }
+
+  const initapplicant = () => {
+    return [
+      {
+        slNo: "",
+        sex: "",
+        childNameEn: "",
+        childNameMl:"",
+        orderofBirth: "",
+        alive: "",
+      }
+    ]
+  }
+
+  const [appState, dispatchapplicant] = formDatalocal?.tradeLicenseDetail?.owners?.length > 0 ? useReducer(reducer, storedAppData, initapplicantedit) : useReducer(reducer, storedAppData, initapplicant);
+  const [ownerState, disptachowner] =  useReducer(reducerowner, storedOwnerData,initowner)
+
+
+  const handleAppInputField = useCallback((index, e, key, length = 100) => {
+    if(e.length===0){
+      dispatchapplicant({ type: "EDIT_CURRENT_APP", payload: { index, key, value: "" } });
+      if(formDatalocal?.tradeLicenseDetail?.ownershipCategory.code === "OWN" && LicenseeType.code === "INDIVIDUAL" && ownerappmap[key]){
+        let jsonString = [];
+        jsonString['index'] = index;
+        jsonString['key'] = ownerappmap[key];
+        jsonString['value'] = "";
+
+        disptachowner({ type: "EDIT_CURRENT_OWNER", payload: {...jsonString} });
+      }
+      return;
+    }
+    if(e.trim()==="" || e.trim()==="."){
+      return;
+    }
+    if (e.length <= length){
+      dispatchapplicant({ type: "EDIT_CURRENT_APP", payload: { index, key, value: e } });
+      if(formDatalocal?.tradeLicenseDetail?.ownershipCategory.code === "OWN" && LicenseeType.code === "INDIVIDUAL" && ownerappmap[key]){
+         let jsonString = [];
+         jsonString['index'] = index;
+         jsonString['key'] = ownerappmap[key];
+         jsonString['value'] = e;
+
+        let peyloadtemp= { index, key, value: e };
+
+        disptachowner({ type: "EDIT_CURRENT_OWNER",payload : {...jsonString} });
+      }
+    }
+     
+    else
+      return;
+  }, [dispatchapplicant,disptachowner]);
   const onSkip = () => onSelect();
   let menu = [];
   Menu &&
@@ -41,16 +203,37 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
       }
     }
   }, [isInitialRender]);
-
-  function setSelectrelation(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
-      setrelation(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+  useEffect(() => {
+    if (isInitialRender) {
+      if (formData?.InitiatorinfoDetails?.isInitiatorDeclaration != null) {
+        setIsInitialRender(false);
+        setDeclaration(formData?.InitiatorinfoDetails?.isInitiatorDeclaration);
+      }
     }
-  }
-
+  }, [isInitialRender]);
   function setSelectinitiatorNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setinitiatorNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    }
+  }
+    function setSelectinitiatorNameEn(e) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setinitiatorNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    }
+  }
+  function setSelectChildNameEn(e) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setchildNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    }
+  }
+  function setSelectChildNameMl(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      setchildNameMl('');
+    }
+    else {
+      setchildNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectinitiatorDesi(e) {
@@ -67,7 +250,9 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
   function setselectGender(value) {
     selectGender(value);
   }
-
+  function setAliveExpired(value) {
+    setisAlive(value);
+  }
   function setSelectinitiatorAadhar(e) {
     if (e.target.value.trim().length >= 0) {
       setinitiatorAadhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
@@ -86,12 +271,158 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
       setisInitiatorDeclaration(e.target.checked);
     }
   }
+  function setDeclarationStatement(e) {
+    if (e.target.checked == false) {
+      setDeclaration(e.target.checked);
+    } else {
+      setDeclaration(e.target.checked);
+    }
+  }
   function setselectChildDOB(value) {
     setChildDOB(value);
     const today = new Date();
     const birthDate = new Date(value);
   }
 
+  function selectfile(e) {
+      setFile(e.target.files[0]);
+   }
+   function selectfile1(e) {
+    setFile1(e.target.files[0]);
+ }
+ function selectfile2(e) {
+  setFile2(e.target.files[0]);
+}
+function selectfile3(e) {
+  setFile3(e.target.files[0]);
+}
+function selectfile4(e) {
+  setFile4(e.target.files[0]);
+}
+function selectfile5(e) {
+  setFile5(e.target.files[0]);
+}
+
+    useEffect(() => {
+      (async () => {
+        setError(null);
+        if (file) {
+          if (file.size >= 2000000) {
+            setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+          } else {
+            try {
+              const response = await Digit.UploadServices.Filestorage("citizen-profile", file, Digit.ULBService.getStateId());       
+                       if (response?.data?.files?.length > 0) {
+                setUploadedFile(response?.data?.files[0]?.fileStoreId);
+              } else {
+                setError(t("FILE_UPLOAD_ERROR"));
+              }
+            } catch (err) {
+            }
+          }
+        }
+      })();
+    }, [file]);
+    useEffect(() => {
+      (async () => {
+        setError(null);
+        if (file1) {
+          if (file1.size >= 2000000) {
+            setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+          } else {
+            try {
+              const response = await Digit.UploadServices.Filestorage("citizen-profile", file1, Digit.ULBService.getStateId());       
+                       if (response?.data?.files?.length > 0) {
+                setUploadedFile1(response?.data?.files[0]?.fileStoreId);
+              } else {
+                setError(t("FILE_UPLOAD_ERROR"));
+              }
+            } catch (err) {
+            }
+          }
+        }
+      })();
+    }, [file1]);
+    useEffect(() => {
+      (async () => {
+        setError(null);
+        if (file2) {
+          if (file2.size >= 2000000) {
+            setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+          } else {
+            try {
+              const response = await Digit.UploadServices.Filestorage("citizen-profile", file2, Digit.ULBService.getStateId());       
+                if (response?.data?.files?.length > 0) {
+                  setUploadedFile2(response?.data?.files[0]?.fileStoreId);
+              } else {
+                setError(t("FILE_UPLOAD_ERROR"));
+              }
+            } catch (err) {
+            }
+          }
+        }
+      })();
+    }, [file2]);
+    useEffect(() => {
+      (async () => {
+        setError(null);
+        if (file3) {
+          if (file3.size >= 2000000) {
+            setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+          } else {
+            try {
+              const response = await Digit.UploadServices.Filestorage("citizen-profile", file3, Digit.ULBService.getStateId());       
+                       if (response?.data?.files?.length > 0) {
+                setUploadedFile3(response?.data?.files[0]?.fileStoreId);
+              } else {
+                setError(t("FILE_UPLOAD_ERROR"));
+              }
+            } catch (err) {
+            }
+          }
+        }
+      })();
+    }, [file3]);
+    useEffect(() => {
+      (async () => {
+        setError(null);
+        if (file4) {
+          if (file4.size >= 2000000) {
+            setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+          } else {
+            try {
+              const response = await Digit.UploadServices.Filestorage("citizen-profile", file4, Digit.ULBService.getStateId());       
+                       if (response?.data?.files?.length > 0) {
+                setUploadedFile4(response?.data?.files[0]?.fileStoreId);
+              } else {
+                setError(t("FILE_UPLOAD_ERROR"));
+              }
+            } catch (err) {
+            }
+          }
+        }
+      })();
+    }, [file4]);
+    useEffect(() => {
+      (async () => {
+        setError(null);
+        if (file5) {
+          if (file5.size >= 2000000) {
+            setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+          } else {
+            try {
+              const response = await Digit.UploadServices.Filestorage("citizen-profile", file5, Digit.ULBService.getStateId());       
+                       if (response?.data?.files?.length > 0) {
+                setUploadedFile5(response?.data?.files[0]?.fileStoreId);
+              } else {
+                setError(t("FILE_UPLOAD_ERROR"));
+              }
+            } catch (err) {
+            }
+          }
+        }
+      })();
+    }, [file5]);
   let validFlag = true;
   const goNext = () => {
     if (initiatorNameEn == null || initiatorNameEn == "" || initiatorNameEn == undefined) {
@@ -148,7 +479,6 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
     }
 
     if (validFlag == true) {
-      sessionStorage.setItem("relation", relation ? relation : null);
       sessionStorage.setItem("initiatorNameEn", initiatorNameEn ? initiatorNameEn : null);
       sessionStorage.setItem("initiatorAadhar", initiatorAadhar ? initiatorAadhar : null);
 
@@ -158,7 +488,6 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
       sessionStorage.setItem("isInitiatorDeclaration", isInitiatorDeclaration ? isInitiatorDeclaration : null);
 
       onSelect(config.key, {
-        relation,
         initiatorNameEn,
         initiatorAadhar,
         initiatorMobile,
@@ -288,19 +617,29 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
             </h1>
           </div>
         </div>
-        <div style={{
+        {ownerState?.length > 0 && ownerState.map((field, index) => {
+          return (
+            <div key={`${field}-${index}`}>
+              <div style={{
                     border: "solid",
                     borderRadius: "10px",
                     marginTop: "5px",
                     borderColor: "#f3f3f3",
                     background: "#FAFAFA",
                   }} className="col-md-12">
-            <div className="row">
-                    <div className="col-md-4">
+                <div className="row">
+                    <div className="col-md-3">
                       <CardLabel>SL NO<span className="mandatorycss">*</span></CardLabel>
-                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="aadhaarNumber" />
+                      <TextInput
+                       t={t}
+                      isMandatory={config.isMandatory}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      name="slNo"
+                      value={slNo}
+                      onChange={(e)=>setslNo(e.target.value)}/>
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-3">
                     <CardLabel>
                   {t("CR_DATE_OF_BIRTH_TIME")}
                   <span className="mandatorycss">*</span>
@@ -316,10 +655,47 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
                   {...(validation = { isRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
                 />
                     </div>
-                    <div className="col-md-4">
-                      <CardLabel>Name of Child<span className="mandatorycss">*</span></CardLabel>
-                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownermobileno" />
-                    </div>
+                    <div className="col-md-3">
+                    <CardLabel>
+                      {`${t("CR_FIRST_NAME_EN")}`}
+                      <span className="mandatorycss">*</span>
+                    </CardLabel>
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      name="childNameEn"
+                      value={childNameEn}
+                      onChange={setSelectChildNameEn}
+                      disable={isEdit}
+                      placeholder={`${t("CR_FIRST_NAME_EN")}`}
+                      {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                    />
+                  </div>
+                  <div className="col-md-3">
+                    <CardLabel>
+                      {`${t("CR_FIRST_NAME_ML")}`}
+                      <span className="mandatorycss">*</span>
+                    </CardLabel>
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      name="childNameMl"
+                      value={childNameMl}
+                      onChange={setSelectChildNameMl}
+                      disable={isEdit}
+                      placeholder={`${t("CR_FIRST_NAME_ML")}`}
+                      {...(validation = {
+                        pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                        isRequired: true,
+                        type: "text",
+                        title: t("CR_INVALID_FIRST_NAME_ML"),
+                      })}
+                    />
+                  </div>
                     {/* </div>
                     <div className="row"> */}
                     <div className="col-md-3">
@@ -331,19 +707,49 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
                         option={menu}
                         selected={gender}
                         select={setselectGender}
-                        placeholder={`${t("CR_GENDER")}`}/>
+                        placeholder={`${t("CR_GENDER")}`}
+                        onChange={e => handleAppInputField(e.target.value)}/>
                     </div>
                 </div>
                                 
                 
                     <div className="col-md-3">
                       <CardLabel>Order of Birth<span className="mandatorycss">*</span></CardLabel>
-                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerstreet" />
+                      <TextInput t={t} 
+                      isMandatory={config.isMandatory} 
+                      type={"text"}
+                      optionKey="i18nKey" 
+                      name="orderofBirth"
+                      value={orderofBirth} 
+                      onChange={e => setorderOfBirth(e.target.value)}/>
                     </div>
                     <div className="col-md-3">
-                      <CardLabel>Alive?Yes/No<span className="mandatorycss">*</span></CardLabel>
-                      <TextInput t={t} isMandatory={config.isMandatory} type={"text"} name="ownerhousename"/>
+                      {/* <CardLabel>Alive?Yes/No<span className="mandatorycss">*</span></CardLabel> */}
+                      <CardLabel>
+                        {`${t("CR_EXPIRATION")}`}
+                        <span className="mandatorycss">*</span>
+                      </CardLabel>
+                      <Dropdown
+                        t={t}
+                        type={"text"}
+                        optionKey="i18nKey"
+                        option={cmbExpirationType}
+                        selected={isAlive}
+                        select={setAliveExpired}
+                        placeholder={t("CR_EXPIRATION_TYPE")}
+                        isMandatory={true}
+                        onChange={e => handleAppInputField(e.target.value)}
+                        {...(validation = { isRequired: true })}
+                      />
+                      {/* <TextInput 
+                      t={t} 
+                      isMandatory={config.isMandatory} 
+                      type={"text"} 
+                      name="isAlive"
+                      value={isAlive} 
+                      onChange={e => setisAlive(e.target.value)}/> */}
                     </div>
+                    {ownerState.length === (index + 1) && (
                       <div className="col-md-1">
                         <CardLabel>Add</CardLabel>
                         <LinkButton
@@ -355,6 +761,8 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
                            onClick={(e) => disptachowner({ type: "ADD_OWNER" })}
                         />
                       </div>
+                    )}
+                    {ownerState.length > 1 && (
                       <div className="col-md-1">
                         <CardLabel>Remove</CardLabel>
                         <LinkButton
@@ -362,14 +770,19 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
                             <svg viewBox="0 0 1024 1024" width="30" height="30"> <g> <path fill="none" d="M0 0h24v24H0z" />
                              <path xmlns="http://www.w3.org/2000/svg" d="M800 256h-576a30.08 30.08 0 0 0-32 32 30.08 30.08 0 0 0 32 32H256v576a64 64 0 0 0 64 64h384a64 64 0 0 0 64-64V320h32a30.08 30.08 0 0 0 32-32 30.08 30.08 0 0 0-32-32zM448 799.36a33.28 33.28 0 0 1-64 0v-384a33.28 33.28 0 0 1 64 0z m192 0a33.28 33.28 0 0 1-64 0v-384a33.28 33.28 0 0 1 64 0zM800 128H640v-32a32.64 32.64 0 0 0-32-32h-192a32 32 0 0 0-32 32V128H224a30.08 30.08 0 0 0-32 32 30.08 30.08 0 0 0 32 32h576a30.08 30.08 0 0 0 32-32 30.08 30.08 0 0 0-32-32z"/> </g> </svg>
                           }
-                          // onClick={(e) => disptachowner({ type: "REMOVE_OWNER", payload: { index } })}
+                           onClick={(e) => disptachowner({ type: "REMOVE_OWNER", payload: { index } })}
                         />
                       </div>
+                    )}
                   </div>
-                {/* </div> */}
+                  </div>
+              
+              )
+            })
+              }
                 <div className="row">
                   <div className="col-md-12">
-                  <h1 className="headingh1">
+                  <h1 className="headingh1" style={{marginTop: "30px"}}>
                   <span style={{ background: "#fff", padding: "0 10px" }}>File Upload</span>{" "}
                   </h1>
                   </div>
@@ -380,17 +793,14 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
               </div>
               <div className="col-md-3">
               <UploadFile
-              id={"tl-doc"}
-              extraStyleName={"propertyCreate"}
-              accept=".jpg,.png,.pdf"
-              // onUpload={handleFileEvent}
-              // onUpload={selectfile}
-              // onDelete={() => {
-              //   setUploadedFile(null);
-              // }}
-              //message={`${t(`TL_ACTION_FILE_UPLOADED`)}`}
-              // error={error}
-              />  
+                extraStyleName={"propertyCreate"}
+                accept=".jpg,.png,.pdf"
+                onUpload={selectfile}
+                onDelete={() => {
+                  setUploadedFile(null);}}
+                message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                  
+             />
               </div>
               </div>
               <div className="row">
@@ -399,17 +809,14 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
               </div>
               <div className="col-md-3">
               <UploadFile
-              id={"tl-doc"}
-              extraStyleName={"propertyCreate"}
-              accept=".jpg,.png,.pdf"
-              // onUpload={handleFileEvent}
-              // onUpload={selectfile}
-              // onDelete={() => {
-              //   setUploadedFile(null);
-              // }}
-              //message={`${t(`TL_ACTION_FILE_UPLOADED`)}`}
-              // error={error}
-              />  
+                extraStyleName={"propertyCreate"}
+                accept=".jpg,.png,.pdf"
+                onUpload={selectfile1}
+                onDelete={() => {
+                  setUploadedFile1(null);}}
+                message={uploadedFile1 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                  
+             />
               </div>
               </div>
               <div className="row">
@@ -418,17 +825,14 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
               </div>
               <div className="col-md-3">
               <UploadFile
-              id={"tl-doc"}
-              extraStyleName={"propertyCreate"}
-              accept=".jpg,.png,.pdf"
-              // onUpload={handleFileEvent}
-              // onUpload={selectfile}
-              // onDelete={() => {
-              //   setUploadedFile(null);
-              // }}
-              //message={`${t(`TL_ACTION_FILE_UPLOADED`)}`}
-              // error={error}
-              />  
+                extraStyleName={"propertyCreate"}
+                accept=".jpg,.png,.pdf"
+                onUpload={selectfile2}
+                onDelete={() => {
+                  setUploadedFile2(null);}}
+                message={uploadedFile2 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                  
+             />
               </div>
               </div>
               <div className="row">
@@ -437,17 +841,14 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
               </div>
               <div className="col-md-3">
               <UploadFile
-              id={"tl-doc"}
-              extraStyleName={"propertyCreate"}
-              accept=".jpg,.png,.pdf"
-              // onUpload={handleFileEvent}
-              // onUpload={selectfile}
-              // onDelete={() => {
-              //   setUploadedFile(null);
-              // }}
-              //message={`${t(`TL_ACTION_FILE_UPLOADED`)}`}
-              // error={error}
-              />  
+                extraStyleName={"propertyCreate"}
+                accept=".jpg,.png,.pdf"
+                onUpload={selectfile3}
+                onDelete={() => {
+                  setUploadedFile3(null);}}
+                message={uploadedFile3 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                  
+             />
               </div>
               </div>
               <div className="row">
@@ -456,17 +857,14 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
               </div>
               <div className="col-md-3">
               <UploadFile
-              id={"tl-doc"}
-              extraStyleName={"propertyCreate"}
-              accept=".jpg,.png,.pdf"
-              // onUpload={handleFileEvent}
-              // onUpload={selectfile}
-              // onDelete={() => {
-              //   setUploadedFile(null);
-              // }}
-              //message={`${t(`TL_ACTION_FILE_UPLOADED`)}`}
-              // error={error}
-              />  
+                extraStyleName={"propertyCreate"}
+                accept=".jpg,.png,.pdf"
+                onUpload={selectfile4}
+                onDelete={() => {
+                  setUploadedFile4(null);}}
+                message={uploadedFile4 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                  
+             />
               </div>
               </div>
               <div className="row">
@@ -475,21 +873,18 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
               </div>
               <div className="col-md-3">
               <UploadFile
-              id={"tl-doc"}
-              extraStyleName={"propertyCreate"}
-              accept=".jpg,.png,.pdf"
-              // onUpload={handleFileEvent}
-              // onUpload={selectfile}
-              // onDelete={() => {
-              //   setUploadedFile(null);
-              // }}
-              //message={`${t(`TL_ACTION_FILE_UPLOADED`)}`}
-              // error={error}
-              />  
+                extraStyleName={"propertyCreate"}
+                accept=".jpg,.png,.pdf"
+                onUpload={selectfile5}
+                onDelete={() => {
+                  setUploadedFile5(null);}}
+                message={uploadedFile5 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                  
+             />
               </div>
               </div>
               
-        {/* <div className="row">
+        <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
               <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
@@ -513,25 +908,16 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
           <div className="col-md-12">
             <div className="col-md-12">
               <CheckBox
-                label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
-                onChange={setDeclarationInfo}
-                value={isInitiatorDeclaration}
-                checked={isInitiatorDeclaration}
+                label="I do understand that NAC/NIA issue will be subject to the genuiness of documents produced and enquiry done by the registrar"
+                onChange={setDeclarationStatement}
+                value={isDeclaration}
+                checked={isDeclaration}
                 disable={isDisableEdit}
               />
             </div>
           </div>
-        </div> */}
-          {/* <div className="row">
-                  <div className="col-md-12">
-                <MultiLink
-                className="multilinkWrapper"
-                // onHeadClick={() => setShowOptions(!showOptions)}
-                // displayOptions={showOptions}
-                // options={dowloadOptions}
-              />
-              </div>
-              </div> */}
+        </div>
+         
         {toast && (
           <Toast
             error={infomantFirstNmeEnError || initiatorAadharError || initiatorMobileError || initiatorDesiError}
