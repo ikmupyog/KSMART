@@ -73,9 +73,9 @@ export const CRDeathsearch = {
           title: "PDF_DECEASED_NAME",
           value:
             response?.InformationDeath?.DeceasedFirstNameEn +
-              " " +
+              
               response?.InformationDeath?.DeceasedMiddleNameEn +
-              " " +
+               
               response?.InformationDeath?.DeceasedLastNameEn +
               " / " +
               response?.InformationDeath?.DeceasedFirstNameMl +

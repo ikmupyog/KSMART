@@ -264,7 +264,7 @@ const MarriageInclusionEditPage = () => {
                 />
               </div>
             </FieldComponentContainer>
-            <div style={{ marginTop: "2.8rem", background: "black" }}>
+            <div style={{ marginTop: "2.8rem" }}>
               <ButtonContainer>
                 <span onClick={() => setBirthInclusionFilterQuery(BIRTH_INCLUSION.childDob)}>
                   <EditIcon selected={true} label={"Edit"} />

@@ -19,7 +19,15 @@ import { ComplaintsList } from "./pages/citizen/ComplaintsList";
 import ComplaintDetailsPage from "./pages/citizen/ComplaintDetails";
 import SelectRating from "./pages/citizen/Rating/SelectRating";
 import ResponseCitizen from "./pages/citizen/Response";
-
+import SelectPincode from "./pageComponents/Steps/SelectPincode";
+import SelectAddress from "./pageComponents/Steps/SelectAddress";
+import SelectComplaintType from "./pageComponents/Steps/SelectComplaintType";
+import SelectDetails from "./pageComponents/Steps/SelectDetails";
+import SelectGeolocation from "./pageComponents/Steps/SelectGeolocation";
+import SelectImages from "./pageComponents/Steps/SelectImages";
+import SelectLandmark from "./pageComponents/Steps/SelectLandmark";
+import SelectSubType from "./pageComponents/Steps/SelectSubType";
+import ComplaintInformer from "./pageComponents/Steps/ComplaintInformer";
 
 export const PGRReducers = getRootReducer;
 
@@ -64,18 +72,17 @@ const PGRLinks = ({ matchPath }) => {
 };
 
 const componentsToRegister = {
-  PGRModule,
-  PGRLinks,
-  PGRCard,
-  PGRComplaintDetails : ComplaintDetails,
-  PGRCreateComplaintEmp : CreateComplaintEmp,
-  PGRInbox : Inbox,
-  PGRResponseEmp : ResponseEmp,
-  PGRCreateComplaintCitizen : CreateComplaintCitizen,
-  PGRComplaintsList : ComplaintsList,
-  PGRComplaintDetailsPage : ComplaintDetailsPage,
-  PGRSelectRating : SelectRating,
-  PGRResponseCitzen : ResponseCitizen
+  PGRModule, PGRLinks, PGRCard,
+  PGRComplaintDetails: ComplaintDetails,
+  PGRCreateComplaintEmp: CreateComplaintEmp,
+  PGRInbox: Inbox,
+  PGRResponseEmp: ResponseEmp,
+  PGRCreateComplaintCitizen: CreateComplaintCitizen,
+  PGRComplaintsList: ComplaintsList,
+  PGRComplaintDetailsPage: ComplaintDetailsPage,
+  PGRSelectRating: SelectRating,
+  PGRResponseCitzen: ResponseCitizen,
+  ComplaintInformer, SelectAddress, SelectComplaintType, SelectDetails, SelectGeolocation, SelectImages, SelectLandmark, SelectPincode, SelectSubType
 };
 
 export const initPGRComponents = () => {

@@ -1,17 +1,17 @@
 import React from "react";
 import { useQuery } from "react-query";
-import { CRDeathService } from "../../services/elements/CRDEATH"
+import { CRDeathService } from "../../services/elements/CRDEATH";
 
-const useRegistryDownloadDeath = ({tenantId, filters, config={}}) => useQuery(
-  
-    ["CR_SEARCH", tenantId, ...Object.keys(filters)?.map( e => filters?.[e] )],
-() => CRDeathService.CRRegistryDownloadDeath(tenantId, filters?.id,filters?.source),
-{
- 
-    ...config
-}
+const useRegistryDownloadDeath = ({ tenantId, filters, config = {} }) => {
+    console.log("death config ==", tenantId, filters, config);
+  return useQuery(
+    ["CR_SEARCH", tenantId, ...Object.keys(filters)?.map((e) => filters?.[e])],
+    () => CRDeathService.CRRegistryDownloadDeath(tenantId, filters?.id, filters?.source),
+    {
+      ...config,
+      refetchOnWindowFocus: false,
+    }
+  );
+};
 
-
-)
-
-export default useRegistryDownloadDeath
+export default useRegistryDownloadDeath;

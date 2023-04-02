@@ -76,7 +76,7 @@ const ApplicationDetails = () => {
       if (data.action == "EDIT") {
         // /digit-ui/employee/cr/cr-flow/child-details/${applicationNumber}      
           data.redirectionUrl = {
-            pathname: `/digit-ui/employee/cr/cr-flow/child-details`,
+            pathname: `/digit-ui/employee/cr/create-birth/child-details`,
             state: applicationDetails,
           },
             data.tenantId = stateId

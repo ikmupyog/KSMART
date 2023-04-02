@@ -103,9 +103,7 @@ export const CRsearch = {
       //   { title: "CR_BIRTH_PERM_PINCODE_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrPincode || "CR_NOT_RECORDED"},
       //   { title: "CR_BIRTH_PERM_DISTRICT_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrDistrict.name|| "CR_NOT_RECORDED"},
       //   { title: "CR_BIRTH_PERM_STATE_LABEL", value: response?.AddressBirthDetails.permtaddressStateName.name || "CR_NOT_RECORDED"},
-      //   { title: "CR_BIRTH_PERM_COUNTRY_LABEL", value: response?.AddressBirthDetails.permtaddressCountry.name || "CR_NOT_RECORDED"},
-        
-        
+      //   { title: "CR_BIRTH_PERM_COUNTRY_LABEL", value: response?.AddressBirthDetails.permtaddressCountry.name || "CR_NOT_RECORDED"},  
       // ],
     };
     // const fatherInfo = {
