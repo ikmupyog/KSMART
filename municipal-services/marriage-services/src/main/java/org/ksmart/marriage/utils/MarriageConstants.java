@@ -66,6 +66,48 @@ public class MarriageConstants {
        public static final String STATUSJSONKEY = "$.state.applicationStatus";
    
        public static final String TRIGGER_NOWORKFLOW = "NOWORKFLOW";
+       
+       public static final String RESIDENTSHIP_INDIAN= "INDIAN";
+
+       public static final String RESIDENTSHIP_NRI = "NRI";
+
+       public static final String RESIDENTSHIP_FOREIGN= "FOREIGN";
+
+       public static final String MARITAL_STATUS_UNMARRIED= "UNMARRIED";
+
+       public static final String MARITAL_STATUS_MARRIED= "MARRIED";
+
+       public static final String MARITAL_STATUS_WIDOWED= "WIDOWED";
+
+       public static final String MARITAL_STATUS_DIVORCED= "DIVORCED";
+
+       public static final String MARITAL_STATUS_ANNULLED= "ANNULLED";
+
+       public static final Integer VALUE_TRUE = 1;
+
+       public static final Integer VALUE_FALSE = 0;
+
+       public static final String PLACE_TYPE_RELIGIOUS_INSTITUTION = "RELIGIOUS_INSTITUTION";
+
+
+       public static final String PLACE_TYPE_MANDAPAM_OTHER ="MANDAPAM_HALL_AND_OTHER";
+
+
+       public static final String PLACE_TYPE_REGISTRAR_OFFICE = "SUB_REGISTRAR_OFFICE";
+
+
+       public static final String PLACE_TYPE_HOUSE = "HOUSE";
+
+
+       public static final String PLACE_TYPE_PRIVATE_PLACE = "PRIVATE_PLACE";
+
+
+       public static final String PLACE_TYPE_PUBLIC_PLACE = "PUBLIC_PLACE";
+
+/*AFTER UPDATING MDMS HAVE TO BE CHANGE */
+       public static final String PLACE_OTHER = "OTHER";
+    //    public static final String RESIDENTSHIP_FOREIGN= "FOREIGN";
+
 
        public static final String STATUS_FOR_PAYMENT = "PENDINGPAYMENT";
 //MDMS Fields  Common
