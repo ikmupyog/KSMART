@@ -1,7 +1,7 @@
-import { BIRTH_INCLUSION } from "../config/constants";
+import { BIRTH_INCLUSION_FIELD_NAMES } from "../config/constants";
 import { getFilteredChildDobData,getFilteredChildNameData,getFilteredChildSexData } from "../config/birth-inclusion-utils";
 
-export const getFormattedBirthInclusionData = (field_id, selectedData,birthInclusionData) => {
+export const   getFormattedBirthInclusionData = (field_id, selectedData,birthInclusionData) => {
     
     const filteredData = birthInclusionData.filter((item)=> item.CorrectionField === field_id);
   let inclusionsDocsData = birthInclusionFilterFieldsObj[field_id]?.(selectedData,filteredData);
