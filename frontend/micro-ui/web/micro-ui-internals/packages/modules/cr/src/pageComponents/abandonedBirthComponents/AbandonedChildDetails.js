@@ -13,7 +13,7 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData, }) => {
   // console.log(formData);
   // const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(false);
   // const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
-  // const [workFlowCode, setWorkFlowCode] = useState();
+  const [workFlowCode, setWorkFlowCode] = useState();
 
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
@@ -28,10 +28,11 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData, }) => {
   const { data: AttentionOfDelivery = {}, isAttentionOfDeliveryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "AttentionOfDelivery");
   const { data: DeliveryMethodList = {}, isDeliveryMethodListLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeliveryMethod");
   const { data: PlaeceMaster = {}, isPlaceMasterLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "PlaceMaster");
+  const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "WorkFlowBirth");
+
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
   const [InstitutionFilterList, setInstitutionFilterList] = useState(null);
   const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(false);
-
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
@@ -64,7 +65,7 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData, }) => {
   let menu = [];
   let placeOfBirth = null;
   let cmbPlaceMaster = [];
-  // let workFlowData = []
+  let workFlowData = []
   let cmbAttDeliverySub = [];
   let cmbDeliveryMethod = [];
   let hospitalCode = "";
@@ -74,13 +75,14 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData, }) => {
   let wardNameMl = "";
   let wardNumber = "";
   let Difference_In_DaysRounded = "";
+  
   // let workFlowCode = "BIRTHHOSP21";
-  // WorkFlowDetails &&
-  //   WorkFlowDetails["birth-death-service"] && WorkFlowDetails["birth-death-service"].WorkFlowBirth &&
-  //   WorkFlowDetails["birth-death-service"].WorkFlowBirth.map((ob) => {
-  //     workFlowData.push(ob);
-  //     // console.log(workFlowData);
-  //   });
+  WorkFlowDetails &&
+    WorkFlowDetails["birth-death-service"] && WorkFlowDetails["birth-death-service"].WorkFlowBirth &&
+    WorkFlowDetails["birth-death-service"].WorkFlowBirth.map((ob) => {
+      workFlowData.push(ob);
+      // console.log(workFlowData);
+    });
   Menu &&
     Menu.map((genderDetails) => {
       menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
@@ -185,6 +187,8 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData, }) => {
   const [deliveryMethods, setDeliveryMethod] = useState(formData?.AbandonedChildDetails?.deliveryMethods?.code ? formData?.AbandonedChildDetails?.deliveryMethods : formData?.AbandonedChildDetails?.deliveryMethods ?
     (cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.AbandonedChildDetails?.deliveryMethods)[0]) : "");
   const [birthWeight, setBirthWeight] = useState(formData?.AbandonedChildDetails?.birthWeight ? formData?.AbandonedChildDetails?.birthWeight : null);
+  const [DifferenceInTime, setDifferenceInTime] = useState(formData?.ChildDetails?.DifferenceInTime);
+  const [DifferenceInDaysRounded, setDifferenceInDaysRounded] = useState();
 
   const [toast, setToast] = useState(false);
   const [DOBError, setDOBError] = useState(formData?.AbandonedChildDetails?.childDOB ? false : false);
@@ -297,13 +301,26 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData, }) => {
   function setselectChildDOB(value) {
     setChildDOB(value);
     const today = new Date();
+    today.setHours(0, 0, 0, 0);
     const birthDate = new Date(value);
+    birthDate.setHours(0, 0, 0, 0);
     if (birthDate.getTime() <= today.getTime()) {
       setDOBError(false);
       // To calculate the time difference of two dates
       let Difference_In_Time = today.getTime() - birthDate.getTime();
+      setDifferenceInTime(today.getTime() - birthDate.getTime());
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+      setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
       Difference_In_DaysRounded = (Math.floor(Difference_In_Days));
+      if (birthPlace) {
+        let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
+        console.log("currentWorgFlowDOB" + currentWorgFlow);
+        if (currentWorgFlow.length > 0) {
+             // console.log(currentWorgFlow[0].WorkflowCode);
+          setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+        }
+      }      
+
     }    
   } 
   function setCheckMalayalamInputField(e) {
@@ -371,10 +388,10 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData, }) => {
   function setselectBirthPlace(value) {
     selectBirthPlace(value);
     setValue(value.code);
-    // let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === value.code && (workFlowData.startdateperiod <= Difference_In_DaysRounded && workFlowData.enddateperiod >= Difference_In_DaysRounded));
-    // setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
-
-
+    let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === value.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
+    if (currentWorgFlow.length > 0) {
+      setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+    }
     // if (value.code === "HOSPITAL") {
     //   setWardNo(null);
     //   setAdrsPostOffice(null);
@@ -778,31 +795,6 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData, }) => {
       setPregnancyDurationInvalidError(false);     
     }
 
-
-
-
-
-
-    // if (pregnancyDuration == null || pregnancyDuration == "" || pregnancyDuration == undefined) {
-    //   // validFlag = true;
-    //           console.log("pregnancyDuration" + pregnancyDuration);
-    //           // setPregnancyDurationInvalidError(false);
-    
-    // } else 
-    // if (pregnancyDuration < 20 || pregnancyDuration > 44) {
-    //           console.log("pregnancyDuration" + pregnancyDuration);
-    //       validFlag = false;
-    //       setPregnancyDurationInvalidError(true);
-    //       setToast(true);
-    //       setTimeout(() => {
-    //         setToast(false);
-    //       }, 2000);
-    //     } else {
-    //       // setPregnancyDurationStError(false);
-    //       setPregnancyDurationInvalidError(false);
-    //       console.log("pregnancyDuration msg" + pregnancyDuration);
-    //     }
-
     if (validFlag == true) {
       // sessionStorage.setItem("stateId", stateId ? stateId : null);
       // sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
@@ -867,7 +859,7 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData, }) => {
         vehicleToMl, setadmittedHospitalEn, vehicleDesDetailsEn,
         publicPlaceType, localityNameEn, localityNameMl, streetNameEn, streetNameMl, publicPlaceDecpEn,
         birthWeight, pregnancyDuration, medicalAttensionSub, deliveryMethods,motherFirstNameEn,motherFirstNameMl,motherAadhar,addressOfMother,isMotherInfo,
-        //  IsEditChangeScreen
+        DifferenceInTime, //  IsEditChangeScreen
       });
     }
   };
