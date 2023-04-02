@@ -6,7 +6,7 @@ const DatePicker = (props) => {
   // const [date, setDate] = useState(() => props.initialDate || null);
   const dateInp = useRef();
 
-  function defaultFormatFunc(date) {    
+  function defaultFormatFunc(date) {
     if (date) {
       const operationDate = typeof date === "string" ? new Date(date) : date;
       const years = operationDate?.getFullYear();
@@ -24,7 +24,7 @@ const DatePicker = (props) => {
   }
 
   const getDatePrint = () => props?.formattingFn?.(props?.date) || defaultFormatFunc(props?.date);
- 
+
   const selectDate = (e) => {
     const date = e.target.value;
     // setDate(date);

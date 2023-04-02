@@ -144,7 +144,7 @@ import CRDWFApplicationTimeline from "./pageComponents/deathComponents/CRDWFAppl
 import DeathInclusion from "./pages/citizen/DeathInclusion";
 import SearchDeathInclusion from "./components/SearchDeathInclusion";
 import DeathInclusionPage from "./pageComponents/deathComponents/DeathInclusionPage";
-
+import MarriageAddressPage from "./pageComponents/marriageComponents/MarriageAddressPage";
 import CreateMarriageRegistration from "./pages/citizen/MarriageRegistration";
 import GroomDetails from "./pageComponents/marriageComponents/GroomDetails";
 import GroomCorrectionDetails from "./pageComponents/marriageComponents/GroomCorrectionDetails";
@@ -409,6 +409,7 @@ const componentsToRegister = {
   MarriageInstitution,
   MarriagePublicPlace,
   MarriageRegistration,
+  MarriageAddressPage,
   HouseMarriageRegistration,
   Witnessdetails,
   MarriageAddressBasePage,
