@@ -121,7 +121,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                 setinsideKeralaLBName(currentLB[0]);
                 setLbs(cmbLB.filter((cmbLB) => cmbLB.code === tenantId));
                 setpermntInKeralaAdrLBName(currentLB[0]);
-                cmbFilterDistrict = cmbDistrict.filter((cmbDistrict) => cmbDistrict.code === currentLB[0].city.distCodeStr);
+                cmbFilterDistrict = cmbDistrict.filter((cmbDistrict) => cmbDistrict.statecode === currentLB[0].city.distCodeStr);
                 setinsideKeralaDistrict(cmbFilterDistrict[0]);
                 setpermntInKeralaAdrDistrict(cmbFilterDistrict[0]);
                 cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === currentLB[0].city.districtid);

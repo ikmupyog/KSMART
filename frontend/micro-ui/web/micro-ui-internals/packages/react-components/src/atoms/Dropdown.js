@@ -56,9 +56,11 @@ const TextField = (props) => {
 
   return (
     <input
-      ref={props.inputRef}
+      ref={props.dropdownRef}
       className={`employee-select-wrap--elipses ${props.disable && "disabled"}`}
       type="text"
+      name={props.name}
+      id={props.id}
       value={value}
       onChange={inputChange}
       onClick={props.onClick}
@@ -197,7 +199,9 @@ const Dropdown = (props) => {
             autoFocus={props.autoFocus}
             placeholder={props.placeholder}
             onBlur={props?.onBlur}
-            inputRef={props.ref}
+            dropdownRef={props.dropdownRef}
+            name={props.name}
+            id={props.id}
           />
           <ArrowDown onClick={dropdownSwitch} className="cp" disable={props.disable} />
         </div>

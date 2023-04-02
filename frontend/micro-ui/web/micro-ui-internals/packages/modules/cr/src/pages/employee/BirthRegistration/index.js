@@ -9,7 +9,7 @@ const CreateBirthEmp = ({ parentUrl }) => {
   const match = useRouteMatch();
   const { pathname } = useLocation();
   const history = useHistory();
-  console.log(sessionStorage.getItem("CR_BIRTH_EDIT_FLAG"));
+  //console.log(sessionStorage.getItem("CR_BIRTH_EDIT_FLAG"));
   const [isEditBirth, setIsEditBirth] = useState(sessionStorage.getItem("CR_BIRTH_EDIT_FLAG")? true : false);  
   const [params, setParams, clearParams] = isEditBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_BIRTH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_BIRTH_REG", {});
   // console.log("isEditBirth" + isEditBirth);
