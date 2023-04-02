@@ -268,6 +268,97 @@ export const gettradeupdateaccessories = (data) => {
   }
   return TLaccessories;
 };
+export const convertToAbandonedBirthRegistration = (data = {}) => {
+  const formdata = {
+    AbandonedDetails: [
+      {
+        childDOB: Date.parse(data?.AbandonedChildDetails?.childDOB),
+        birthDateTime: parseInt(data?.AbandonedChildDetails?.birthDateTime),
+        gender: data?.AbandonedChildDetails?.gender ? data?.AbandonedChildDetails?.gender.code : null,
+        tenantid: data?.AbandonedChildDetails?.tenantId,
+        hospitalCode: data?.AbandonedChildDetails?.hospitalName ? data?.AbandonedChildDetails?.hospitalName.code : null,
+        birthPlace: data?.AbandonedChildDetails?.birthPlace ? data?.AbandonedChildDetails?.birthPlace.code : null,
+        hospitalName: data?.AbandonedChildDetails?.hospitalName ? data?.AbandonedChildDetails?.hospitalName.hospitalName : null,
+        hospitalNameMl: data?.AbandonedChildDetails?.hospitalName ? data?.AbandonedChildDetails?.hospitalName.hospitalNamelocal : null,
+        institutionTypeCode: data?.AbandonedChildDetails?.institution ? data?.AbandonedChildDetails?.institution.code : null,
+        institution: data?.AbandonedChildDetails?.institution ? data?.AbandonedChildDetails?.institution.name : null,
+        institutionNameCode: data?.AbandonedChildDetails?.institutionId ? data?.AbandonedChildDetails?.institutionId.code : null,
+        institutionId: data?.AbandonedChildDetails?.institutionId ? data?.AbandonedChildDetails?.institutionId.institutionName : null,
+        institutionIdMl: data?.AbandonedChildDetails?.institutionIdMl ? data?.AbandonedChildDetails?.institutionIdMl.institutionNamelocal : null,
+        wardNo: data?.AbandonedChildDetails?.wardNo ? data?.AbandonedChildDetails?.wardNo.code : null,
+        wardNameEn: data?.AbandonedChildDetails?.wardNameEn ? data?.AbandonedChildDetails?.wardNameEn : null,
+        wardNameMl: data?.AbandonedChildDetails?.wardNameMl ? data?.AbandonedChildDetails?.wardNameMl : null,
+        wardNumber: data?.AbandonedChildDetails?.wardNumber ? data?.AbandonedChildDetails?.wardNumber : null,
+        adrsHouseNameEn: data?.AbandonedChildDetails?.adrsHouseNameEn,
+        adrsHouseNameMl: data?.AbandonedChildDetails?.adrsHouseNameMl,
+        adrsLocalityNameEn: data?.AbandonedChildDetails?.adrsLocalityNameEn,
+        adrsLocalityNameMl: data?.AbandonedChildDetails?.adrsLocalityNameMl,
+        adrsStreetNameEn: data?.AbandonedChildDetails?.adrsStreetNameEn,
+        adrsStreetNameMl: data?.AbandonedChildDetails?.adrsStreetNameMl,
+        adrsPostOffice: data?.AbandonedChildDetails?.adrsPostOffice ? data?.AbandonedChildDetails?.adrsPostOffice.code : null,
+        adrsPincode: data?.AbandonedChildDetails?.adrsPincode ? data?.AbandonedChildDetails?.adrsPincode.code : null,
+        vehicleType: data?.AbandonedChildDetails?.vehicleType ? data?.AbandonedChildDetails?.vehicleType.code : null,
+        vehicleHaltPlace: data?.AbandonedChildDetails?.vehicleHaltPlace,
+        vehicleHaltPlaceMl: data?.AbandonedChildDetails?.vehicleHaltPlaceMl,
+        vehicleRegistrationNo: data?.AbandonedChildDetails?.vehicleRegistrationNo,
+        vehicleFromEn: data?.AbandonedChildDetails?.vehicleFromEn,
+        vehicleToEn: data?.AbandonedChildDetails?.vehicleToEn,
+        vehicleFromMl: data?.AbandonedChildDetails?.vehicleFromMl,
+        vehicleToMl: data?.AbandonedChildDetails?.vehicleToMl,
+        setadmittedHospitalEn: data?.AbandonedChildDetails?.setadmittedHospitalEn ? data?.AbandonedChildDetails?.setadmittedHospitalEn.code : null,
+        vehicleDesDetailsEn: data?.AbandonedChildDetails?.vehicleDesDetailsEn ? data?.AbandonedChildDetails?.vehicleDesDetailsEn : null,
+        publicPlaceType: data?.AbandonedChildDetails?.publicPlaceType ? data?.AbandonedChildDetails?.publicPlaceType.code : null,
+        localityNameEn: data?.AbandonedChildDetails?.localityNameEn,
+        localityNameMl: data?.AbandonedChildDetails?.localityNameMl,
+        streetNameEn: data?.AbandonedChildDetails?.streetNameEn,
+        streetNameMl: data?.AbandonedChildDetails?.streetNameMl,
+        publicPlaceDecpEn: data?.AbandonedChildDetails?.publicPlaceDecpEn,
+        birthWeight: data?.AbandonedChildDetails?.birthWeight,
+        pregnancyDuration: data?.AbandonedChildDetails?.pregnancyDuration ? data?.AbandonedChildDetails?.pregnancyDuration : null,
+        medicalAttensionSub: data?.AbandonedChildDetails?.medicalAttensionSub ? data?.AbandonedChildDetails?.medicalAttensionSub.code : null,
+        deliveryMethods: data?.AbandonedChildDetails?.deliveryMethods ? data?.AbandonedChildDetails?.deliveryMethods.code : null,
+        action: "INITIATE",
+        applicationtype: "CRBRNR",
+        businessservice: "birth-services",
+        workflowcode: data?.AbandonedChildDetails?.workFlowCode,
+        ParentsDetails: {
+          motherFirstNameEn: data?.AbandonedChildDetails?.motherFirstNameEn,
+          motherFirstNameMl: data?.AbandonedChildDetails?.motherFirstNameMl,
+          motherAadhar: data?.AbandonedChildDetails?.motherAadhar,
+          ismotherInfo: data?.AbandonedChildDetails?.isMotherInfo,
+          addressOfMother: data?.AbandonedChildDetails?.addressOfMother,
+        },
+        InformarHosInstDetails: {
+          infomantFirstNameEn: data?.AbandonedBirthInformarDetails?.infomantFirstNameEn,
+          infomantAadhar: data?.AbandonedBirthInformarDetails?.infomantAadhar,
+          infomantMobile: data?.AbandonedBirthInformarDetails?.infomantMobile,
+          informerAddress: data?.AbandonedBirthInformarDetails?.informerAddress,
+          informerDesi: data?.AbandonedBirthInformarDetails?.informerDesi,
+          // isDeclarationInfo: data?.AbandonedBirthInformarDetails?.isDeclarationInfo,
+        },
+        caretakerDetails: {
+          institutionName: data?.AbandonedBirthInformarDetails?.institutionName,
+          caretakerName: data?.AbandonedBirthInformarDetails?.caretakerName,
+          caretakerDesignation: data?.AbandonedBirthInformarDetails?.caretakerDesignation,
+          caretakerMobile: data?.AbandonedBirthInformarDetails?.caretakerMobile,
+          caretakerAddress: data?.AbandonedBirthInformarDetails?.caretakerAddress,
+        },
+        documentDetails: {
+          tenantId: data?.AbandonedBirthInformarDetails?.tenantId,
+          documentName: data?.AbandonedBirthInformarDetails?.tenantId,
+          documentType: data?.AbandonedBirthInformarDetails?.tenantId,
+          documentLink: data?.AbandonedBirthInformarDetails?.tenantId,
+          description: data?.AbandonedBirthInformarDetails?.tenantId,
+          fileStoreId: data?.AbandonedBirthInformarDetails?.tenantId,
+          fileType: data?.AbandonedBirthInformarDetails?.tenantId,
+          fileSize: data?.AbandonedBirthInformarDetails?.tenantId,
+        },
+      },
+    ],
+  };
+
+  return formdata;
+};
 
 export const getwfdocuments = (data) => {
   let wfdoc = [];
@@ -480,8 +571,8 @@ export const convertToEditTrade = (data, fy = []) => {
           structureType: isDirectrenewal
             ? data.tradeLicenseDetail.structureType
             : data?.TradeDetails?.VehicleType
-              ? data?.TradeDetails?.VehicleType.code
-              : data?.TradeDetails?.BuildingType.code,
+            ? data?.TradeDetails?.VehicleType.code
+            : data?.TradeDetails?.BuildingType.code,
           subOwnerShipCategory: data?.ownershipCategory?.code.includes("INSTITUTIONAL")
             ? data?.owners?.owners?.[0]?.subOwnerShipCategory.code
             : data?.ownershipCategory?.code,
@@ -548,12 +639,12 @@ export const convertToResubmitTrade = (data) => {
           id: data.tradeLicenseDetail.id,
           institution: data?.ownershipCategory?.code.includes("INSTITUTIONAL")
             ? {
-              designation: data?.owners?.owners?.[0]?.designation,
-              ContactNo: data?.owners?.owners?.[0]?.altContactNumber,
-              mobileNumber: data?.owners?.owners?.[0]?.mobilenumber,
-              instituionName: data?.owners?.owners?.[0]?.institutionName,
-              name: data?.owners?.owners?.[0]?.name,
-            }
+                designation: data?.owners?.owners?.[0]?.designation,
+                ContactNo: data?.owners?.owners?.[0]?.altContactNumber,
+                mobileNumber: data?.owners?.owners?.[0]?.mobilenumber,
+                instituionName: data?.owners?.owners?.[0]?.institutionName,
+                name: data?.owners?.owners?.[0]?.name,
+              }
             : null,
         },
         calculation: null,
@@ -742,10 +833,10 @@ export const convertDateToEpoch = (dateString, dayStartOrEnd = "dayend") => {
 export const getQueryStringParams = (query) => {
   return query
     ? (/^[?#]/.test(query) ? query.slice(1) : query).split("&").reduce((params, param) => {
-      let [key, value] = param.split("=");
-      params[key] = value ? decodeURIComponent(value.replace(/\+/g, " ")) : "";
-      return params;
-    }, {})
+        let [key, value] = param.split("=");
+        params[key] = value ? decodeURIComponent(value.replace(/\+/g, " ")) : "";
+        return params;
+      }, {})
     : {};
 };
 

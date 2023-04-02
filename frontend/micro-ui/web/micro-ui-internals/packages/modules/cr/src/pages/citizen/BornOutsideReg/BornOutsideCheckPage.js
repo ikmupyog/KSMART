@@ -290,12 +290,13 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
                   // " , " +
                   // BornOutsideAddressBirthDetails.permntInKeralaAdrPostOffice.name+
                   // " , " +
-                  // BornOutsideAddressBirthDetails?.presentOutSideIndiaPostCode +
-                  // " , " +
-                  // BornOutsideAddressBirthDetails.permntInKeralaAdrDistrict.name +
-                  // " , " +
+                 
+                  BornOutsideAddressBirthDetails.presentOutSideIndiaadrsCityTown+
+                  " , " +
                   BornOutsideAddressBirthDetails?.presentOutSideIndiaProvinceEn+
                   " , " +
+                  // BornOutsideAddressBirthDetails?.presentOutSideIndiaPostCode +
+                  // " , " +
                   BornOutsideAddressBirthDetails?.presentOutSideCountry?.name}
                     </CardText>
                     </div>
@@ -311,15 +312,16 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
                   " , " +
                  ( BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressMlB ? BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressMlB : "CR_NOT_RECORDED") +
                   " , " +
-                  // BornOutsideAddressBirthDetails.presentOutsideIndiaVillage +
+                  // BornOutsideAddressBirthDetails.presentOutsideIndiaadrsVillage +
                   // " , " +
                   // BornOutsideAddressBirthDetails.permntInKeralaAdrPostOffice.namelocal+
                   // " , " +
+                  
+                  BornOutsideAddressBirthDetails.presentOutSideIndiaadrsCityTown+
+                  " , " +
+                  BornOutsideAddressBirthDetails?.presentOutSideIndiaProvinceMl+
+                  " , " +
                   // BornOutsideAddressBirthDetails.presentOutsideIndiaPostCode +
-                  // " , " +
-                  // BornOutsideAddressBirthDetails.permntInKeralaAdrDistrict.namelocal+
-                  // " , " +
-                  // BornOutsideAddressBirthDetails?.presentOutSideIndiaProvinceMl+
                   // " , " +
                   BornOutsideAddressBirthDetails?.presentOutSideCountry?.namelocal}
                 ,

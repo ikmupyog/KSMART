@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton, Loader, Toast, SubmitBar } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/CRTimeline";
+import Timeline from "../../components/SBRTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
 import StillBirthPlaceHospital from "../../pageComponents/stillBirthComponents/StillBirthPlaceHospital";
@@ -30,11 +30,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
   const { data: Menu, isLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
   const { data: AttentionOfDelivery = {}, isAttentionOfDeliveryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "AttentionOfDelivery");
   const { data: DeliveryMethodList = {}, isDeliveryMethodListLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeliveryMethod");
-  const { data: FoetalDeathList = {}, isFoetalDeathListLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
-    stateId,
-    "birth-death-service",
-    "FoetalDeath"
-  );
+  const { data: FoetalDeathList = {}, isFoetalDeathListLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId,"birth-death-service", "FoetalDeath" );
   const { data: PlaeceMaster = {}, isPlaceMasterLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "PlaceMaster");
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
   const [InstitutionFilterList, setInstitutionFilterList] = useState(null);
@@ -111,8 +107,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
       cmbDeliveryMethod.push(ob);
     });
     FoetalDeathList &&
-    FoetalDeathList["birth-death-service"] &&
-    FoetalDeathList["birth-death-service"].FoetalDeath &&
+    FoetalDeathList["birth-death-service"] && FoetalDeathList["birth-death-service"].FoetalDeath &&
     FoetalDeathList["birth-death-service"].FoetalDeath.map((ob) => {
       cmbFoetalDeath.push(ob);
     });
@@ -200,8 +195,8 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
  
   const [deliveryMethods, setDeliveryMethod] = useState(formData?.StillBirthChildDetails?.deliveryMethods?.code ? formData?.StillBirthChildDetails?.deliveryMethods : formData?.StillBirthChildDetails?.deliveryMethods ?
     (cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.StillBirthChildDetails?.deliveryMethods)[0]) : "");
-    const [causeFoetalDeath, setcauseFoetalDeath] = useState(formData?.StillBirthChildDetails?.causeFoetalDeath?.code ? formData?.StillBirthChildDetails?.causeFoetalDeath : formData?.StillBirthChildDetails?.causeFoetalDeath ?
-        (cmbFoetalDeath.filter(cmbFoetalDeath => cmbFoetalDeath.code === formData?.StillBirthChildDetails?.causeFoetalDeath)[0]) : "");
+  const [causeFoetalDeath, setcauseFoetalDeath] = useState(formData?.StillBirthChildDetails?.causeFoetalDeath?.code ? formData?.StillBirthChildDetails?.causeFoetalDeath : formData?.StillBirthChildDetails?.causeFoetalDeath ?
+   (cmbFoetalDeath.filter(cmbFoetalDeath => cmbFoetalDeath.code === formData?.StillBirthChildDetails?.causeFoetalDeath)[0]) : "");
   const [DifferenceInTime, setDifferenceInTime] = useState(formData?.StillBirthChildDetails?.DifferenceInTime);
 
   const [toast, setToast] = useState(false);
@@ -811,7 +806,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
           || (value === "PUBLIC_PLACES" ? (!publicPlaceType || !wardNo || localityNameEn === "" || localityNameMl === "") : false)
           || (value === "VEHICLE" ? (!vehicleType || vehicleRegistrationNo === "" || vehicleHaltPlace === ""
             || !setadmittedHospitalEn || !wardNo || vehicleDesDetailsEn === "") : false)
-          || !medicalAttensionSub || !deliveryMethods ||   causeFoetalDeath == null  || pregnancyDuration === ""}>
+          || !medicalAttensionSub || !deliveryMethods ||   !causeFoetalDeath  || pregnancyDuration === ""}>
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-12">
@@ -857,7 +852,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
                   option={menu}
                   selected={gender}
                   select={setselectGender}
-                  disable={isDisableEdit}
+                //  disable={isDisableEdit}
                   placeholder={`${t("CR_GENDER")}`}
                   {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })}
                 />
@@ -1074,7 +1069,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
                   option={cmbFoetalDeath}
                   selected={causeFoetalDeath}
                   select={setSelectcauseFoetalDeath}
-                  disable={isDisableEdit}
+                //  disable={isDisableEdit}
                   placeholder={`${t("CR_CAUSE_FOETAL_DEATH")}`}
                 />
               </div>

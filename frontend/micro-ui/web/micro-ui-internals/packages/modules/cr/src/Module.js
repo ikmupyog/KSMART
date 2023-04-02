@@ -6,7 +6,6 @@ import AdoptionChildDetails from "../src/pageComponents/adoptionComponents/Adopt
 import AdoptionAddressBasePage from "../src/pageComponents/adoptionComponents/AdoptionAddressBasePage";
 import AdoptionParentsDetails from "./pageComponents/adoptionComponents/AdoptionParentsDetails";
 import AdoptionInitiatorDetails from "../src/pageComponents/adoptionComponents/AdoptionInitiatorDetails";
-import FormFieldContainer from "../src/components/FormFieldContainer";
 
 import ChildDetails from "../src/pageComponents/birthComponents/ChildDetails";
 import BirthNACDetails from "../src/pageComponents/birthNACComponents/BirthNACDetails";
@@ -82,6 +81,8 @@ import BirthParentsAddress from "../src/pageComponents/adoptionComponents/BirthP
 import AdoptionStatisticalInformation from "../src/pageComponents/adoptionComponents/AdoptionStatisticalInformation";
 import AdoptionParentsAddress from "../src/pageComponents/adoptionComponents/AdoptionParentsAddress";
 
+// import AbandonedChildDetails from "../src/pageComponents/abandonedBirthComponents/AbandonedChildDetails";
+
 //@@@@@@DeathComponents@@@@@@@@@@@//
 import InformationDeath from "../src/pageComponents/deathComponents/InformationDeath";
 // import AddressOfDecesed from "./pageComponents/deathComponents/AddressOfDecesed";
@@ -143,7 +144,8 @@ import CRWFApplicationTimeline from "./pageComponents/birthComponents/CRWFApplic
 import CRDWFApplicationTimeline from "./pageComponents/deathComponents/CRDWFApplicationTimeline";
 import DeathInclusion from "./pages/citizen/DeathInclusion";
 import SearchDeathInclusion from "./components/SearchDeathInclusion";
-import DeathInclusionPage from "./pageComponents/deathComponents/DeathInclusionPage";
+import DeathCorrectionEditPage from "./pageComponents/deathComponents/DeathCorrectionEditPage";
+import FormFieldContainer from "../src/components/FormFieldContainer";
 import MarriageAddressPage from "./pageComponents/marriageComponents/MarriageAddressPage";
 import CreateMarriageRegistration from "./pages/citizen/MarriageRegistration";
 import GroomDetails from "./pageComponents/marriageComponents/GroomDetails";
@@ -331,6 +333,7 @@ const componentsToRegister = {
   BornOutsideStaticInfn,
   BornOutsideAddressPage,
   BornOutsideCheckPage,
+  BornOutsideAddressPage,
   BornOutsidePresentOutsideIndia,
   BornoutsidePermanentInsideKerala,
   BornoutsideSameAsAbove,
@@ -346,7 +349,7 @@ const componentsToRegister = {
   BirthParentsAddress,
   AdoptionStatisticalInformation,
   AdoptionParentsAddress,
-  CRDeathInclusionsPage: DeathInclusionPage,
+  CRDeathCorrectionEditPage:DeathCorrectionEditPage,
   SearchMarriageInclusion,
   //////////////////
   CRDeathcorrection,
@@ -371,8 +374,8 @@ const componentsToRegister = {
   Hospital,
   DeathPublicPlace,
   DeathOutsideJurisdiction,
-  CRDeathInclusions: DeathInclusion,
-  SearchDeathInclusion,
+  CRDeathInclusions:DeathInclusion,
+  SearchDeathInclusion:
   Informer,
   Initiater,
   // DeathCertificate,

@@ -6,6 +6,7 @@ import { convertEpochToDateDMY } from "../../utils";
 import SearchFields from "./SearchFields";
 import MobileSearchApplication from "./MobileSearchApplication";
 import { downloadDocument } from "../../utils/uploadedDocuments";
+import { useTranslation } from "react-i18next";
 
 const mystyle = {
   bgOpacity: "1",
@@ -29,7 +30,7 @@ const registyBtnStyle = {
   marginBottom: "15px",
 };
 
-const  SearchDeathInclusion = ({ tenantId, t, onSubmit, data, count, onInclusionClick }) => {
+const  SearchDeathInclusion = ({ tenantId, onSubmit, data, count, onCorrectionClick }) => {
   // const [FileData, setFileData] = useState([]);
   console.log(data,"data");
   const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
@@ -40,6 +41,7 @@ const  SearchDeathInclusion = ({ tenantId, t, onSubmit, data, count, onInclusion
       sortOrder: "DESC",
     },
   });
+  const { t } = useTranslation();
 
   useEffect(() => {
     register("offset", 0);
@@ -80,19 +82,18 @@ const  SearchDeathInclusion = ({ tenantId, t, onSubmit, data, count, onInclusion
   const columns = useMemo(
     () => [
       {
-        Header: t("CR_COMMON_COL_APP_NO"),
+        Header: t("DC_DEATH_AKNOWLEDGEMENT_NUMBER"),
         accessor: "deathApplicationNo",
         disableSortBy: true,
         Cell: ({ row }) => {
           return (
             <div>
-              <span className="link">
-                <Link to={`/digit-ui/citizen/cr/death-inclusion-edit`}
-                //  onClick={() => onInclusionClick(row.original)}
-              >
-                {row.original.InformationDeath.DeathACKNo}
-                  </Link>
-              
+              <span className="link"  onClick={() => onCorrectionClick(row.original)}>
+                {/* <Link to={`/digit-ui/citizen/cr/birth-inclusion-edit`}
+                      onClick={() => onInclusionClick(row.original)}
+                      > */}
+                   {row.original.InformationDeath.DeathACKNo}
+                {/* </Link> */}
               </span>
             </div>
           );
@@ -104,22 +105,22 @@ const  SearchDeathInclusion = ({ tenantId, t, onSubmit, data, count, onInclusion
         accessor: (row) => GetCell(row.AuditDetails.createdTime ? convertEpochToDateDMY(row.AuditDetails.createdTime) : ""),
       },
       {
-        Header: t("CR_COMMON_COL_DOD"),
+        Header: t("CR_DATE_OF_DEATH"),
         disableSortBy: true,
         accessor: (row) => GetCell(row.InformationDeath.DateOfDeath ? convertEpochToDateDMY(row.InformationDeath.DateOfDeath) : ""),
       },
+      // {
+      //     Header: t("TL_APPLICATION_TYPE_LABEL"),
+      //     disableSortBy: true,
+      //     accessor: (row) => GetCell(t(`TL_LOCALIZATION_APPLICATIONTYPE_${row.StatisticalInfo.applicationType}`)),
+      // },
       {
-          Header: t("TL_APPLICATION_TYPE_LABEL"),
-          disableSortBy: true,
-          accessor: (row) => GetCell(t(`TL_LOCALIZATION_APPLICATIONTYPE_${row.StatisticalInfo.applicationType}`)),
-      },
-      {
-        Header: t("CR_COMMON_DECEASED_NAME"),
+        Header: t("CR_GROOM_NAME"),
         disableSortBy: true,
-        accessor: (row) => GetCell(row.InformationDeath.DeceasedFirstNameEn + row.InformationDeath.DeceasedMiddleNameEn + row.InformationDeath.DeceasedLastNameEn || "-"),
+        accessor: (row) => GetCell(`${row.InformationDeath.DeceasedFirstNameEn} ${row.InformationDeath.DeceasedMiddleNameEn} ${row.InformationDeath.DeceasedLastNameEn}` || "-"),
       },
       {
-        Header: t("CR_COMMON_DEATH_PLACE"),
+        Header: t("CR_PLACE_OF_DEATH"),
         disableSortBy: true,
         accessor: (row) => GetCell(row.InformationDeath.DeathPlace || "-"),
       },
@@ -170,7 +171,7 @@ const  SearchDeathInclusion = ({ tenantId, t, onSubmit, data, count, onInclusion
   return (
     <React.Fragment>
       <div style={mystyle}>
-        <h1 style={hstyle}>{t("DEATH CERTIFICATE")}</h1>
+        <h1 style={hstyle}>{t("DEATH INCLUSION")}</h1>
         <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
           <SearchFields {...{ register, control, reset, tenantId, previousPage, t }} />
         </SearchForm>

@@ -16,11 +16,11 @@ import Timeline from "../../components/BOBRTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
 
-const BornOutsideStaticInfn = ({ config, onSelect, userType, formData, isEditBirth }) => {
+const BornOutsideStaticInfn = ({ config, onSelect, userType, formData, isEditBornOutsideIndia = false }) => {
   // console.log(JSON.stringify(formData));
   console.log(formData);
   const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(false);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditBornOutsideIndia ? isEditBornOutsideIndia : false);
 
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
@@ -322,7 +322,7 @@ const BornOutsideStaticInfn = ({ config, onSelect, userType, formData, isEditBir
       sessionStorage.setItem("pregnancyDuration", pregnancyDuration ? pregnancyDuration.code : null);
       sessionStorage.setItem("medicalAttensionSub", medicalAttensionSub ? medicalAttensionSub.code : null);
       sessionStorage.setItem("deliveryMethods", deliveryMethods ? deliveryMethods.code : null);
-      let IsEditChangeScreen = isEditBirth ? isEditBirth : false;
+      let IsEditChangeScreen = isEditBornOutsideIndia ? isEditBornOutsideIndia : false;
       sessionStorage.setItem("orderofChildren", orderofChildren ? orderofChildren : null);
       sessionStorage.setItem("relation", relation ? relation : null);
       sessionStorage.setItem("informarNameEn", informarNameEn ? informarNameEn : null);
