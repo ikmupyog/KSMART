@@ -29,6 +29,7 @@ const BirthInclusionPage = () => {
   const { t } = useTranslation();
   let formData = {};
   let validation = {};
+  let birthInclusionFormData = {};
   const stateId = Digit.ULBService.getStateId();
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const [showModal, setShowModal] = useState(false);
@@ -40,7 +41,7 @@ const BirthInclusionPage = () => {
   const [selectedInclusionItem, setSelectedInclusionItem] = useState([]);
   let location = useLocation();
   let navigationData = location?.state?.inclusionData;
-
+  console.log("locartion dayta==", location);
   const { data: correctionsData = {}, isSuccess, isError, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
     stateId,
     "birth-death-service",
@@ -81,10 +82,23 @@ const BirthInclusionPage = () => {
       cmbNation.push(ob);
     });
 
+//   useEffect(async () => {
+//     if (BirthCorrectionDocuments?.length > 0) {
+//       birthInclusionFormData = await initializeBirthInclusionObject(BirthCorrectionDocuments, navigationData);
+//     }
+//     console.log("birthInclusionFormData==", birthInclusionFormData);
+//   }, [navigationData, BirthCorrectionDocuments]);
+
   if ((isLoad, isGenderLoad, isNationLoad, isLoading)) {
     return <Loader />;
   }
-  if (cmbNation?.length > 0 && menu?.length > 0 && cmbPlace?.length > 0 && BirthCorrectionDocuments?.length > 0) {
+  if (
+    cmbNation?.length > 0 &&
+    menu?.length > 0 &&
+    cmbPlace?.length > 0 &&
+    BirthCorrectionDocuments?.length > 0 
+    // birthInclusionFormData?.length > 0
+  ) {
     return (
       <BirthInclusionEditPage
         cmbNation={cmbNation}
@@ -92,6 +106,7 @@ const BirthInclusionPage = () => {
         cmbPlace={cmbPlace}
         BirthCorrectionDocuments={BirthCorrectionDocuments}
         navigationData={navigationData}
+        // birthInclusionFormData={birthInclusionFormData}
       />
     );
   }
