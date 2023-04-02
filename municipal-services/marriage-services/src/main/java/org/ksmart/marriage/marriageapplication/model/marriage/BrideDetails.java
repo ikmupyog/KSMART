@@ -68,9 +68,9 @@ public class BrideDetails {
     @JsonProperty("brideLastnameMl")
     private String lastname_ml;
 
-    @Size(max = 150)
+
     @JsonProperty("brideMobile")
-    private String mobile;
+    private Long mobile;
 
     @Size(max = 300)
     @JsonProperty("brideEmailid")
@@ -147,8 +147,5 @@ public class BrideDetails {
 
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
-
-
-
 
 }

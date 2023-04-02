@@ -69,9 +69,8 @@ public class GroomRegistryDetails {
     @JsonProperty("groomLastnameMl")
     private String lastname_ml;
 
-    @Size(max = 150)
     @JsonProperty("groomMobile")
-    private String mobile;
+    private Long mobile;
 
     @Size(max = 300)
     @JsonProperty("groomEmailid")

@@ -65,15 +65,14 @@ public class MarriageApplicationController {
     @PostMapping(value = {"/_updatemarriage"})
     public ResponseEntity<?> updateMarriageDetails(@RequestBody MarriageDetailsRequest request) {
         List<MarriageApplicationDetails> marriageDetails = MarriageService.updateMarriageDetails(request);
-        if ((marriageDetails.get(0).getStatus() == WORKFLOW_STATUS_APPROVED && marriageDetails.get(0).getApplicationtype() == APPLICATION_NEW)) {
+       // if ((marriageDetails.get(0).getStatus() == WORKFLOW_STATUS_APPROVED && marriageDetails.get(0).getApplicationtype() == APPLICATION_NEW)) {
             MarriageRegistryRequest marriageRegistryRequest = marriageRegistryRequestService.createRegistryRequest(request);
             List<MarriageRegistryDetails> marriageRegistryDetails = marriageRegistryService.createRegistry(marriageRegistryRequest);
 
-        }
+      //  }
 
         return new ResponseEntity<>(marriageDetails, HttpStatus.OK);
     }
-
 
     @PostMapping(value = { "/_searchmarriage"})
     public ResponseEntity<MarriageApplicationResponse> searchMarriageDetails(@RequestBody MarriageDetailsRequest request,

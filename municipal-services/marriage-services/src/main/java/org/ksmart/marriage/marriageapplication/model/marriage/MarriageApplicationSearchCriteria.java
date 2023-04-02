@@ -78,8 +78,9 @@ public class MarriageApplicationSearchCriteria {
     @JsonProperty("brideLastnameMl")
     private String brideLastnameMl;
 
+
     @JsonProperty("sortBy")
-    private MarriageRegistrySearchCriteria.SortBy sortBy;
+    private SortBy sortBy;
 
     public enum SortBy {
         applicationNumber,
@@ -88,8 +89,7 @@ public class MarriageApplicationSearchCriteria {
         dateofmarriage
     }
     @JsonProperty("sortOrder")
-    private MarriageRegistrySearchCriteria.SortOrder sortOrder;
-
+    private  SortOrder sortOrder;;
     public enum SortOrder {
         ASC,
         DESC

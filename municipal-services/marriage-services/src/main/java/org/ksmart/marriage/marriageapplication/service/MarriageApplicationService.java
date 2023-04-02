@@ -10,6 +10,7 @@ import org.ksmart.marriage.marriageapplication.model.Demand.Demand;
 import org.ksmart.marriage.marriageapplication.model.marriage.MarriageApplicationSearchCriteria;
 import org.ksmart.marriage.marriageapplication.model.marriage.MarriageDetailsRequest;
 import org.ksmart.marriage.marriageapplication.repository.MarriageApplicationRepository;
+import org.ksmart.marriage.marriageapplication.validator.MarriageApplicationValidator;
 import org.ksmart.marriage.marriageapplication.validator.MarriageMDMSValidator;
 import org.ksmart.marriage.utils.MarriageConstants;
 import org.ksmart.marriage.utils.MarriageMdmsUtil;
@@ -29,14 +30,15 @@ public class MarriageApplicationService {
     private final MarriageMdmsUtil util;
     private final MarriageMDMSValidator mdmsValidator;
     private final MarriageApplicationConfiguration marriageApplicationConfiguration;
-    
 
-    public MarriageApplicationService(MarriageProducer producer,MarriageApplicationRepository repository , 
-                                    WorkflowIntegrator workflowIntegrator,
-                                    MarriageDetailsEnrichment marriageDetailsEnrichment,     
-                                    MarriageMdmsUtil util,
-                                    MarriageMDMSValidator mdmsValidator,
-                                    MarriageApplicationConfiguration marriageApplicationConfiguration) {
+    private final MarriageApplicationValidator validatorService;
+
+    public MarriageApplicationService(MarriageProducer producer, MarriageApplicationRepository repository ,
+                                      WorkflowIntegrator workflowIntegrator,
+                                      MarriageDetailsEnrichment marriageDetailsEnrichment,
+                                      MarriageMdmsUtil util,
+                                      MarriageMDMSValidator mdmsValidator,
+                                      MarriageApplicationConfiguration marriageApplicationConfiguration, MarriageApplicationValidator validatorService) {
         this.repository = repository;
         this.workflowIntegrator = workflowIntegrator;
         this. marriageDetailsEnrichment= marriageDetailsEnrichment;
@@ -44,6 +46,7 @@ public class MarriageApplicationService {
         this.mdmsValidator=mdmsValidator;
         this.producer = producer;
         this.marriageApplicationConfiguration = marriageApplicationConfiguration;
+        this.validatorService = validatorService;
     }
 
 
@@ -68,12 +71,23 @@ public class MarriageApplicationService {
         }); 
         return request.getMarriageDetails();
 
+
+
     }
 
     public List<MarriageApplicationDetails> updateMarriageDetails(MarriageDetailsRequest request) {
         // validatorService.validateCommonFields( request);
         Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getMarriageDetails().get(0).getTenantid());
         mdmsValidator.validateMarriageMDMSData(request,mdmsData);
+        String applicationNumber = request.getMarriageDetails().get(0).getApplicationNumber();
+        MarriageApplicationSearchCriteria criteria =(MarriageApplicationSearchCriteria.builder()
+                .applicationNo(applicationNumber)
+                .build());
+        List<MarriageApplicationDetails> searchResult = repository.getMarriageApplication(criteria,request.getRequestInfo());
+        validatorService.validateUpdate(request, searchResult);
+
+
+
         marriageDetailsEnrichment.enrichUpdate(request);
         // workflowIntegrator.callWorkFlow(request);
        // List<MarriageApplicationDetails>  marriageApplicationDetails =repository.updateMarriageDetails(request);
