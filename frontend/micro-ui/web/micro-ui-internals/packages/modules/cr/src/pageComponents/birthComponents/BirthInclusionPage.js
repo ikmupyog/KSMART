@@ -357,6 +357,7 @@ const BirthInclusionEditPage = () => {
             <DatePicker
               // date={DateOfDeath}
               // max={convertEpochToDate(new Date())}
+              datePickerRef={register()}
               name="DateOfDeath"
               // onChange={selectDeathDate}
               // {...(validation = {

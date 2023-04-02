@@ -103,14 +103,14 @@ const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) =>
             />
         </SearchField>
         <SearchField>
-            <label> {t("DC_DECEASED_FATHER_NAME")}</label>
-            <TextInput name="deceasedFatherName" inputRef={register({})} placeholder={`${t("DC_DECEASED_FATHER_NAME")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_DECEASED_FATHER_NAME") })} />
+            <label> {t("CR_FATHER_NAME_EN")}</label>
+            <TextInput name="deceasedFatherName" inputRef={register({})} placeholder={`${t("CR_FATHER_NAME_EN")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_FATHER_NAME_EN") })} />
         </SearchField>
         <SearchField>
-            <label> {t("DC_DECEASED_MOTHER_NAME")}</label>
-            <TextInput name="deceasedMotherName" inputRef={register({})} placeholder={`${t("DC_DECEASED_MOTHER_NAME")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_NAME_MOTHER_NAME") })} />
+            <label> {t("CR_MOTHER_NAME_EN")}</label>
+            <TextInput name="deceasedMotherName" inputRef={register({})} placeholder={`${t("CR_MOTHER_NAME_EN")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MOTHER_NAME_EN") })} />
         </SearchField>
 
         <SearchField>
@@ -120,7 +120,7 @@ const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) =>
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_HUSBAND_OR_WIFE_NAME") })} />
         </SearchField>
         <SearchField>
-            <label>{`${t("CD_HOSPITAL")}`}</label>
+            <label>{`${t("CR_HOSPITAL_EN")}`}</label>
             <Controller
 
                 control={control}
@@ -133,7 +133,7 @@ const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) =>
                         option={cmbhospital}
                         optionKey="hospitalName"
                         t={t}
-                        placeholder={`${t("CD_HOSPITAL")}`}
+                        placeholder={`${t("CR_HOSPITAL_EN")}`}
                     />
                 )}
             />

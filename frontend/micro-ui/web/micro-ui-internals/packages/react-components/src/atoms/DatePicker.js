@@ -35,7 +35,10 @@ const DatePicker = (props) => {
     <div style={{ position: "relative", width: "100%" }}>
       <React.Fragment>
         <input
+          ref={props.datePickerRef}
           type="text"
+          name={props.name}
+          id={props.id}
           disabled={props.disabled}
           value={getDatePrint() ? getDatePrint() : "DD/MM/YYYY"}
           readOnly
