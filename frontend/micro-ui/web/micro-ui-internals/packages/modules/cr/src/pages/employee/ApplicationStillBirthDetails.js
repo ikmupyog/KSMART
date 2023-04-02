@@ -76,7 +76,7 @@ const ApplicationStillBirthDetails = () => {
       if (data.action == "EDIT") {
         // /digit-ui/employee/cr/cr-flow/child-details/${applicationNumber}      
           data.redirectionUrl = {
-            pathname: `/digit-ui/employee/cr/cr-flow/stillbirth-child-details`,
+            pathname: `/digit-ui/employee/cr/create-stillbirth/stillbirth-child-details`,
             state: applicationDetails,
           },
             data.tenantId = stateId

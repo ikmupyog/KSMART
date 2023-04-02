@@ -16,6 +16,7 @@ const createComplaint = ({
   mobileNumber,
   name,
   deptCode,
+  address
 
 }) => async (dispatch, getState) => {
   const response = await Digit.Complaint.create({
@@ -34,8 +35,8 @@ const createComplaint = ({
     mobileNumber,
     name,
     deptCode,
+    address
   });
-  console.log(response);
   dispatch({
     type: CREATE_COMPLAINT,
     payload: response,

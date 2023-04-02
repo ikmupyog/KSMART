@@ -46,6 +46,7 @@ const App = () => {
   const MarriageCorrectionEditPage = Digit?.ComponentRegistryService?.getComponent('MarriageCorrectionEditPage');
   
   const CRBirthInclusionEditPage = Digit?.ComponentRegistryService?.getComponent('CRBirthInclusionEditPage');
+  const CRBirthInclusionPage = Digit?.ComponentRegistryService?.getComponent('CRBirthInclusionPage');
 
 React.useEffect(()=>{
   setFlag(false)
@@ -92,7 +93,7 @@ React.useEffect(()=>{
         <PrivateRoute path={`${path}/create-death-certificate`} component={() => <DeathCertificateSearch parentUrl={path}/>} /> 
         <PrivateRoute parentRoute={path} path={`${path}/create-birth-certificate`} component={() => <BirthCertificateSearch parentUrl={path} />} /> 
         <PrivateRoute parentRoute={path} path={`${path}/death-inclusion-edit`} component={CRDeathInclusionsPage} />
-        <PrivateRoute parentRoute={path} path={`${path}/marriage-inclusion-edit`} component={CRDeathInclusionsPage} /> 
+        {/* <PrivateRoute parentRoute={path} path={`${path}/marriage-inclusion-edit`} component={CRDeathInclusionsPage} />  */}
        </AppContainer>
       </Switch>
     </span>

@@ -9,7 +9,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
   const { t } = useTranslation();
   let validation = {};
   // console.log(Digit.UserService.getUser().info);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
+  // const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : true);
   const {name:name,} =Digit.UserService.getUser().info ; // window.localStorage.getItem("user-info");
  
   const [institutionName, setinstitutionName] = useState(formData?.AbandonedBirthInformarDetails?.institutionName ? formData?.AbandonedBirthInformarDetails?.institutionName : formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.institutionName ? formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.institutionName : "");
@@ -23,12 +23,8 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
   const [infomantFirstNameEn, setinfomantFirstNameEn] = useState(formData?.AbandonedBirthInformarDetails?.infomantFirstNameEn ? formData?.AbandonedBirthInformarDetails?.infomantFirstNameEn : formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.infomantFirstNameEn ? formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.infomantFirstNameEn : "");
   const [infomantMobile, setinfomantMobile] = useState(formData?.AbandonedBirthInformarDetails?.infomantMobile ? formData?.AbandonedBirthInformarDetails?.infomantMobile : formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.infomantMobile ? formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.infomantMobile : "");
   const [informerAddress, setinformerAddress] = useState(formData?.AbandonedBirthInformarDetails?.informerAddress ? formData?.AbandonedBirthInformarDetails?.informerAddress : formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.informerAddress ? formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.informerAddress : "");
-
-  
-   
-  
-  
- 
+  const [documentType, setdocumentType] = useState(formData?.AbandonedBirthInformarDetails?.documentType ? formData?.AbandonedBirthInformarDetails?.documentType : formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.documentType ? formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.documentType : "");
+  const [documentName, setdocumentName] = useState(formData?.AbandonedBirthInformarDetails?.documentName ? formData?.AbandonedBirthInformarDetails?.documentName : formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.documentName ? formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.documentName : "");
 
   const [toast, setToast] = useState(false);
   // const [infomantFirstNmeEnError, setinfomantFirstNmeEnError] = useState(formData?.InitiatorinfoDetails?.initiatorNameEn ? false : false);
@@ -51,6 +47,9 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
   //   }
   // }, [isInitialRender]);
 
+  useEffect(() => {    
+    }
+   );
 
   function setSelectinstitutionName(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
@@ -96,8 +95,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
       setinfomantFirstNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
-  }  
-  
+  } 
   function setSelectinfomantMobile(e) {
     if (e.target.value.trim().length != 0) {
       setinfomantMobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
@@ -108,11 +106,15 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
       setinformerAddress(e.target.value.length <= 250 ? e.target.value : (e.target.value).substring(0, 250));
     }
   } 
-   
- 
-
-  
-
+  function setSelectdocumentName(e) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+      setdocumentName(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    }
+  }  function setSelectdocumentType(e) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+      setdocumentType(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    }
+  }  
 
   let validFlag = true;
   const goNext = () => {
@@ -202,17 +204,10 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
       sessionStorage.setItem("infomantAadhar", infomantAadhar ? infomantAadhar : null);
       sessionStorage.setItem("infomantFirstNameEn", infomantFirstNameEn ? infomantFirstNameEn : null);
       sessionStorage.setItem("infomantMobile", infomantMobile ? infomantMobile : null);
-      sessionStorage.setItem("informerAddress", informerAddress ? informerAddress : null);
+      sessionStorage.setItem("informerAddress", informerAddress ? informerAddress : null);    
+      sessionStorage.setItem("documentType", documentType ? documentType : null);
+      sessionStorage.setItem("documentName", documentName ? documentName : null);
 
-      
-
-      
-
-      
-      
-
-      
-      
 
       onSelect(config.key, {
 
@@ -227,13 +222,14 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
         infomantFirstNameEn, 
         infomantMobile,  
         informerAddress,  
-      
+        documentName,
+        documentType,  
 
         
       });
     }
   };
-  console.log(formData);
+  // console.log(formData);
   return (
     <React.Fragment>
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
@@ -275,7 +271,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
           <div className="col-md-12"> 
           <div className="col-md-4">
               <CardLabel>
-                {`${t("CR_INSTITUTION_NAME")}`}                
+                {`${t("CR_INSTITUTION_NAME_EN")}`}                
               </CardLabel>
               <TextInput
                 t={t}
@@ -284,8 +280,8 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                 name="institutionName"
                 value={institutionName}
                 onChange={setSelectinstitutionName}
-                disable={isDisableEdit}
-                placeholder={`${t("CR_INSTITUTION_NAME")}`}
+                // disable={isDisableEdit}
+                placeholder={`${t("CR_INSTITUTION_NAME_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_ERROR_INSTITUTION_NAME_CHOOSE") })}
               />
             </div>           
@@ -300,7 +296,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                 name="caretakerName"
                 value={caretakerName}
                 onChange={setSelectcaretakerName}
-                disable={isDisableEdit}
+                // disable={isDisableEdit}
                 placeholder={`${t("CR_CARE_TAKER_NAME")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_ERROR_CARE_TAKER_NAME") })}
               />
@@ -316,7 +312,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                 name="caretakerDesignation"
                 value={caretakerDesignation}
                 onChange={setSelectcaretakerDesignation}
-                disable={isDisableEdit}
+                // disable={isDisableEdit}
                 placeholder={`${t("CR_CARE_TAKER_DESIGNATION")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_ERROR_CARE_TAKER_DESIGNATION") })}
               />
@@ -332,7 +328,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                 name="caretakerMobile"
                 value={caretakerMobile}
                 onChange={setSelectcaretakerMobile}
-                disable={isDisableEdit}
+                // disable={isDisableEdit}
                 placeholder={`${t("CR_MOBILE_NO")}`}
                 {...(validation = { pattern: "^([0-9]){10}$", isRequired: false, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
               />
@@ -347,7 +343,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                 name="caretakerAddress"
                 value={caretakerAddress}
                 onChange={setSelectcaretakerAddress}
-                disable={isDisableEdit}
+                // disable={isDisableEdit}
                 placeholder={`${t("CR_CARE_TAKER_ADDRESS")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRESS") })}
               />
@@ -361,10 +357,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
             </h1>
           </div>
         </div>
-        
-
-        
-
+  
         <div className="row">
           <div className="col-md-12"> 
           <div className="col-md-4">
@@ -379,13 +372,13 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                 name="infomantinstitution"
                 value={infomantinstitution}
                 onChange={setSelectinfomantinstitution}
-                disable={isDisableEdit}
+                // disable={isDisableEdit}
                 placeholder={`${t("CR_OFFICE_INSTITUTION")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_OFFICE_INSTITUTION_NAME") })}
               />
             </div>  
             <div className="col-md-4" >
-              <CardLabel>{`${t("CR_INFORMER_DESIGNATION")}`}<span className="mandatorycss">*</span></CardLabel>
+              <CardLabel>{`${t("CR_INFORMANT_DESIGNATION")}`}<span className="mandatorycss">*</span></CardLabel>
               <TextInput
                 t={t}                
                 type={"text"}
@@ -393,8 +386,8 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                 name="informerDesi"
                 value={informerDesi}
                 onChange={setSelectinformerDesi}
-                disable={isDisableEdit}
-                placeholder={`${t("CR_INFORMER_DESIGNATION")}`}
+                // disable={isDisableEdit}
+                placeholder={`${t("CR_INFORMANT_DESIGNATION")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMER_DESIGNATION") })}
               />
             </div>        
@@ -411,7 +404,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                 name="infomantAadhar"
                 value={infomantAadhar}
                 onChange={setSelectinfomantAadhar}
-                disable={isDisableEdit}
+                // disable={isDisableEdit}
                 placeholder={`${t("CS_COMMON_AADHAAR")}`}
                 {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
               />
@@ -421,7 +414,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
             <div className="row">
             <div className="col-md-12"> 
             <div className="col-md-4" >
-              <CardLabel>{`${t("CR_INFORMANT_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
+              <CardLabel>{`${t("CR_INFORMANT_NAME_EN")}`}<span className="mandatorycss">*</span></CardLabel>
               <TextInput 
               t={t} 
               isMandatory={true} 
@@ -429,7 +422,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
               optionKey="i18nKey" 
               name="infomantFirstNameEn"              
               value={infomantFirstNameEn} 
-              onChange={setSelectinfomantFirstNameEn} disable={isDisableEdit} placeholder={`${t("CR_INFORMANT_NAME")}`}
+              onChange={setSelectinfomantFirstNameEn}  placeholder={`${t("CR_INFORMANT_NAME_EN")}`}
              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMANT_NAME") })} />
             </div>
           
@@ -446,7 +439,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                 name="infomantMobile"
                 value={infomantMobile}
                 onChange={setSelectinfomantMobile }
-                disable={isDisableEdit}
+                // disable={isDisableEdit}
                 placeholder={`${t("CR_MOBILE_NO")}`}
                 {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
               />
@@ -466,6 +459,45 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
             </div>
           </div>
         </div>
+        <div className="row">
+          <div className="col-md-12">
+            <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_SUPPORTING_DOC")}`}</span>{" "}
+            </h1>
+          </div>
+        </div>
+        <div className="row">
+            <div className="col-md-12"> 
+            <div className="col-md-4" >
+              <CardLabel>{`${t("CR_DOC_TYPE")}`}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput 
+              t={t} 
+              isMandatory={true} 
+              type={"text"} 
+              optionKey="i18nKey" 
+              name="documentType"              
+              value={documentType} 
+              onChange={setSelectdocumentType}  placeholder={`${t("CR_DOC_TYPE")}`}
+             {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DOC_TYPE") })} />
+            </div>
+            <div className="col-md-4" >
+              <CardLabel>{`${t("CR_DOC_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput 
+              t={t} 
+              isMandatory={true} 
+              type={"text"} 
+              optionKey="i18nKey" 
+              name="documentName"              
+              value={documentName} 
+              onChange={setSelectdocumentName}  placeholder={`${t("CR_DOC_NAME")}`}
+             {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_DOC_NAME") })} />
+            </div>
+            <div className="col-md-4">            
+            </div>
+          </div>
+          
+        </div> 
+
         {/* <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">

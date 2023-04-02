@@ -10,7 +10,12 @@ const TLCorrectionActivity = ({ t, config,formData,onEditSelect,formDataEdit}) =
   const stateId = Digit.ULBService.getStateId();
   const [minDate, setMinDate] = useState('2018-01-01');
   let validation = {};
+  let BusinessCategoryMenu = [];
+  let BusinessTypeMenu = [];
+  let BusinessSubTypeMenu = [];
 
+  const { isLoading, data: Data = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "TradeUnits", "[?(@.type=='TL')]");
+ 
   const menusector = [
     { name: "Manufacturing Sector", code: "MANUFACTURING" },
     { name: "Service Sector", code: "SERVICE" },
@@ -22,42 +27,7 @@ const TLCorrectionActivity = ({ t, config,formData,onEditSelect,formDataEdit}) =
     { name: "Upto 4 Year", code: "4" },
     { name: "Upto 5 Year", code: "5" },
   ];
-
-  // const [businessSector, setBusinessSector] = useState(formDataEdit?.TradeDetails?.tradeLicenseDetail?.businessSector ? menusector.filter((sec) => sec?.code.includes(formDataEdit?.tradeLicenseDetail?.businessSector))[0]  : formData?.tradeLicenseDetail?.businessSector ? menusector.filter((sec) => sec?.code.includes(formData?.tradeLicenseDetail?.businessSector))[0] : "");
-  // const [fields, setFeilds] = useState(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits ? formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits : formData?.TradeDetails?.tradeLicenseDetail?.tradeUnits ? formData?.TradeDetails?.tradeLicenseDetail?.tradeUnits :[{ businesscategory: "", businesstype: "", businesssubtype: "", unit: null, uom: null }]);
-  // const [noOfEmployees, setNoOfEmployees] = useState(formDataEdit?.tradeLicenseDetail?.noOfEmployees ? formDataEdit?.tradeLicenseDetail?.noOfEmployees : formData?.tradeLicenseDetail?.noOfEmployees ? formData?.tradeLicenseDetail?.noOfEmployees : "");
-  // const [capitalInvestment, setCapitalInvestment] = useState(formDataEdit?.tradeLicenseDetail?.capitalInvestment ? formDataEdit?.tradeLicenseDetail?.capitalInvestment : formData?.tradeLicenseDetail?.capitalInvestment ? formData?.tradeLicenseDetail?.capitalInvestment : "" );
-  // const [commencementDate, setCommencementDate] = useState(formDataEdit?.commencementDate? convertEpochToDate(formDataEdit?.commencementDate) : formData?.commencementDate ? convertEpochToDate(formData?.commencementDate) : null);
-  // const [desiredLicensePeriod, setDesiredLicensePeriod] = useState(formDataEdit?.desiredLicensePeriod ? LicensePeriod.filter((period) => period?.code.includes(formDataEdit?.desiredLicensePeriod))[0] : formData?.desiredLicensePeriod ? LicensePeriod.filter((period) => period?.code.includes(formData?.desiredLicensePeriod))[0] : "");
-  //const [businessSector, setBusinessSector] = useState(formDataEdit?.TradeDetails?.tradeLicenseDetail?.businessSector ? menusector.filter((sec) => sec?.code.includes(formDataEdit?.tradeLicenseDetail?.businessSector))[0]  : "");
-  // const [fields, setFeilds] = useState(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits ? formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits  :[{ businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null }]);
-  const [fields, setFeilds] = useState([{ businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null }]);
-  const [noOfEmployees, setNoOfEmployees] = useState(formDataEdit?.TradeDetails?.tradeLicenseDetail?.noOfEmployees ? formDataEdit?.TradeDetails?.tradeLicenseDetail?.noOfEmployees  : "");
-  const [capitalInvestment, setCapitalInvestment] = useState(formDataEdit?.TradeDetails?.tradeLicenseDetail?.capitalInvestment ? formDataEdit?.TradeDetails?.tradeLicenseDetail?.capitalInvestment : "" );
-  const [commencementDate, setCommencementDate] = useState(formDataEdit?.TradeDetails?.commencementDate? convertEpochToDate(formDataEdit?.TradeDetails?.commencementDate) : null);
-  const [desiredLicensePeriod, setDesiredLicensePeriod] = useState(formDataEdit?.TradeDetails?.desiredLicensePeriod ? LicensePeriod.filter((period) => period?.code.includes(formDataEdit?.TradeDetails?.desiredLicensePeriod))[0]  : "");
- 
-
-  const { isLoading, data: Data = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "TradeUnits", "[?(@.type=='TL')]");
-  let BusinessCategoryMenu = [];
-  Data &&
-  Data.TradeLicense &&
-  Data.TradeLicense.TradeType.map((ob) => {
-    if (!BusinessCategoryMenu.some((BusinessCategoryMenu) => BusinessCategoryMenu.code === `${ob.code.split(".")[0]}`)) {
-      BusinessCategoryMenu.push({ i18nKey: `${ob.code.split(".")[0]}`, code: `${ob.code.split(".")[0]}` });
-    }
-    
-  });
-  let BusinessTypeMenu = [];
-  let BusinessSubTypeMenu = [];
-  Data &&
-    Data.TradeLicense &&
-    Data.TradeLicense.TradeType.map((ob) => {
-      if (!BusinessCategoryMenu.some((BusinessCategoryMenu) => BusinessCategoryMenu.code === `${ob.code.split(".")[0]}`)) {
-        BusinessCategoryMenu.push({ i18nKey: `${ob.code.split(".")[0]}`, code: `${ob.code.split(".")[0]}` });
-      }
-    });
- 
+  
   function getBusinessTypeMenu(BusinessCategory) {
     BusinessTypeMenu = [];
     Data &&
@@ -85,12 +55,53 @@ const TLCorrectionActivity = ({ t, config,formData,onEditSelect,formDataEdit}) =
       });
     return BusinessSubTypeMenu;
   }
-//   console.log("B1");
-//   console.log("B1" + JSON.stringify(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessCategory));
-//  // console.log("B2" + JSON.stringify(fields[0].businessCategory));
-//   //console.log("B3" + JSON.stringify(BusinessCategoryMenu));
-//   // console.log("B4" + JSON.stringify(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory));
 
+  // const [businessSector, setBusinessSector] = useState(formDataEdit?.TradeDetails?.tradeLicenseDetail?.businessSector ? menusector.filter((sec) => sec?.code.includes(formDataEdit?.tradeLicenseDetail?.businessSector))[0]  : formData?.tradeLicenseDetail?.businessSector ? menusector.filter((sec) => sec?.code.includes(formData?.tradeLicenseDetail?.businessSector))[0] : "");
+  // const [fields, setFeilds] = useState(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits ? formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits : formData?.TradeDetails?.tradeLicenseDetail?.tradeUnits ? formData?.TradeDetails?.tradeLicenseDetail?.tradeUnits :[{ businesscategory: "", businesstype: "", businesssubtype: "", unit: null, uom: null }]);
+  // const [noOfEmployees, setNoOfEmployees] = useState(formDataEdit?.tradeLicenseDetail?.noOfEmployees ? formDataEdit?.tradeLicenseDetail?.noOfEmployees : formData?.tradeLicenseDetail?.noOfEmployees ? formData?.tradeLicenseDetail?.noOfEmployees : "");
+  // const [capitalInvestment, setCapitalInvestment] = useState(formDataEdit?.tradeLicenseDetail?.capitalInvestment ? formDataEdit?.tradeLicenseDetail?.capitalInvestment : formData?.tradeLicenseDetail?.capitalInvestment ? formData?.tradeLicenseDetail?.capitalInvestment : "" );
+  // const [commencementDate, setCommencementDate] = useState(formDataEdit?.commencementDate? convertEpochToDate(formDataEdit?.commencementDate) : formData?.commencementDate ? convertEpochToDate(formData?.commencementDate) : null);
+  // const [desiredLicensePeriod, setDesiredLicensePeriod] = useState(formDataEdit?.desiredLicensePeriod ? LicensePeriod.filter((period) => period?.code.includes(formDataEdit?.desiredLicensePeriod))[0] : formData?.desiredLicensePeriod ? LicensePeriod.filter((period) => period?.code.includes(formData?.desiredLicensePeriod))[0] : "");
+  //const [businessSector, setBusinessSector] = useState(formDataEdit?.TradeDetails?.tradeLicenseDetail?.businessSector ? menusector.filter((sec) => sec?.code.includes(formDataEdit?.tradeLicenseDetail?.businessSector))[0]  : "");
+  // const [fields, setFeilds] = useState(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits ? formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits  :[{ businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null }]);
+  
+  
+  // const [category, setCategory] = useState(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory ? BusinessCategoryMenu.filter((category) => category?.code.includes(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory))[0]  : "");
+  // const [bustype, setBustype] = useState(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessType ? getBusinessTypeMenu(category).filter((type) => type?.code.includes(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessType))[0] : ""); 
+  // const [bussubtype, setBussubtype] = useState(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessSubtype ? getBusinessSubTypeMenu(bustype).filter((type) => type?.code.includes(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessSubtype))[0] : ""); 
+  // const [fields, setFeilds] = useState([{ 
+  //   businessCategory: formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory ? BusinessCategoryMenu.filter((category) => category?.code.includes(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory))[0]  : null , 
+  //   businessType: formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessType ? getBusinessTypeMenu(category).filter((type) => type?.code.includes(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessType))[0] : null, 
+  //   businessSubtype: formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessSubtype ? getBusinessSubTypeMenu(bustype).filter((type) => type?.code.includes(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessSubtype))[0] : null, 
+  //   unit: null, uom: null }]);
+
+
+  const [fields, setFeilds] = useState([{ id : null, businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null }]);
+  const [noOfEmployees, setNoOfEmployees] = useState(formDataEdit?.TradeDetails?.tradeLicenseDetail?.noOfEmployees ? formDataEdit?.TradeDetails?.tradeLicenseDetail?.noOfEmployees  : "");
+  const [capitalInvestment, setCapitalInvestment] = useState(formDataEdit?.TradeDetails?.tradeLicenseDetail?.capitalInvestment ? formDataEdit?.TradeDetails?.tradeLicenseDetail?.capitalInvestment : "" );
+  const [commencementDate, setCommencementDate] = useState(formDataEdit?.TradeDetails?.commencementDate? convertEpochToDate(formDataEdit?.TradeDetails?.commencementDate) : null);
+  const [desiredLicensePeriod, setDesiredLicensePeriod] = useState(formDataEdit?.TradeDetails?.desiredLicensePeriod ? LicensePeriod.filter((period) => period?.code.includes(formDataEdit?.TradeDetails?.desiredLicensePeriod))[0]  : "");
+ 
+
+   
+  Data &&
+  Data.TradeLicense &&
+  Data.TradeLicense.TradeType.map((ob) => {
+    if (!BusinessCategoryMenu.some((BusinessCategoryMenu) => BusinessCategoryMenu.code === `${ob.code.split(".")[0]}`)) {
+      BusinessCategoryMenu.push({ i18nKey: `${ob.code.split(".")[0]}`, code: `${ob.code.split(".")[0]}` });
+    }
+    
+  });
+  
+  Data &&
+    Data.TradeLicense &&
+    Data.TradeLicense.TradeType.map((ob) => {
+      if (!BusinessCategoryMenu.some((BusinessCategoryMenu) => BusinessCategoryMenu.code === `${ob.code.split(".")[0]}`)) {
+        BusinessCategoryMenu.push({ i18nKey: `${ob.code.split(".")[0]}`, code: `${ob.code.split(".")[0]}` });
+      }
+    });
+ 
+  
  if (formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory && (fields[0].businessCategory === undefined || fields[0].businessCategory === "") && BusinessCategoryMenu.length > 0) {
     let category = BusinessCategoryMenu.filter((category) => category?.code.includes(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory))[0];
     let bustype = null;
@@ -99,9 +110,10 @@ const TLCorrectionActivity = ({ t, config,formData,onEditSelect,formDataEdit}) =
     bussubtyp = getBusinessSubTypeMenu(bustype).filter((type) => type?.code.includes(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessSubtype))[0];
     setFeilds( [
       {
+        id: formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.id ? formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.id : null,
         businessCategory: category,
         businessType: bustype,
-        businessSubtype: bussubtyp, unit: null, uom: null
+        businessSubtype: bussubtyp, unit: null, uom: null 
       }
     ] );
     
@@ -124,6 +136,7 @@ const TLCorrectionActivity = ({ t, config,formData,onEditSelect,formDataEdit}) =
     let units = [...fields];
     units[i].businessSubtype = value;
     setFeilds(units);
+    Digit.SessionStorage.set("activityedit", true);
   }
   const changesetCapitalInvestment = (e => {
     setCapitalInvestment(e.target.value.length<=12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
@@ -154,6 +167,7 @@ const TLCorrectionActivity = ({ t, config,formData,onEditSelect,formDataEdit}) =
     if(units[0]?.businessCategory?.code){
       tradeUnits =[
         {
+          "id" : units[0].id,
           "businessCategory" :  units[0].businessCategory.code,
           "businessType" :  null,
           "businessSubtype" :  null
@@ -163,6 +177,7 @@ const TLCorrectionActivity = ({ t, config,formData,onEditSelect,formDataEdit}) =
     if(units[0]?.businessType?.code){
       tradeUnits =[
         {
+          "id" : units[0].id,
           "businessCategory" :  units[0].businessCategory.code,
           "businessType" :  units[0].businessType.code,
           "businessSubtype" :  null
@@ -172,6 +187,7 @@ const TLCorrectionActivity = ({ t, config,formData,onEditSelect,formDataEdit}) =
     if(units[0]?.businessSubtype?.code){
       tradeUnits =[
         {
+          "id" : units[0].id,
           "businessCategory" :  units[0].businessCategory.code,
           "businessType" :  units[0].businessType.code,
           "businessSubtype" :  units[0].businessSubtype.code,
@@ -214,7 +230,7 @@ const TLCorrectionActivity = ({ t, config,formData,onEditSelect,formDataEdit}) =
         <div className="col-md-8">
           <RadioButtons t={t} optionsKey="name" isMandatory={config.isMandatory} options={menusector} selectedOption={businessSector} onSelect={selectBusinessSector} style={{ display: "flex", justifyContent: "space-between", width: "48%" }} {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_BUSINESS_SECTOR"), })} />&nbsp;
         </div>
-      </div> */}
+      </div> 
       <div className="row">
         <div className="col-md-12">
           <div className="col-md-2">
@@ -224,7 +240,7 @@ const TLCorrectionActivity = ({ t, config,formData,onEditSelect,formDataEdit}) =
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left", fontWeight: "500" }}>{formDataEdit?.TradeDetails?.tradeLicenseDetail?.businessSector} </CardText>
           </div>
         </div>
-      </div>
+      </div>*/}
       {fields.map((field, index) => {
         return (
           <div className="row" key={index}>
@@ -239,18 +255,6 @@ const TLCorrectionActivity = ({ t, config,formData,onEditSelect,formDataEdit}) =
             <div className="col-md-4" >
               <CardLabel>{`${t("TL_NEW_TRADE_DETAILS_TRADE_SUBTYPE_LABEL")}`}<span className="mandatorycss">*</span></CardLabel>
               <Dropdown t={t} optionKey="i18nKey" isMandatory={config.isMandatory} option={sortDropdownNames(getBusinessSubTypeMenu(field?.businessType), "i18nKey", t)} selected={field?.businessSubtype} select={(e) => selectBusinessSubType(index, e)} placeholder="Bussiness Sub Type" {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_SUB_BUSINESS_TYPE"), })} />
-              {/* <MultiSelectDropdown
-              className="form-field"
-              isMandatory={true}
-              defaultUnit="Selected"
-            //  selected ={field?.businessSubtype}
-            selected={sortDropdownNames(getBusinessSubTypeMenu(field?.businessType), "i18nKey", t)}
-              options={sortDropdownNames(getBusinessSubTypeMenu(field?.businessType), "i18nKey", t) && sortDropdownNames(getBusinessSubTypeMenu(field?.businessType), "i18nKey", t)}
-          //    onSelect={(e) => selectBusinessSubType(index, e)}
-              optionsKey="name"
-              t={t}
-              placeholder={`${t("TL_INVALID_SUB_BUSINESS_TYPE")}`}
-            /> */}
             </div>
           </div>
         )
