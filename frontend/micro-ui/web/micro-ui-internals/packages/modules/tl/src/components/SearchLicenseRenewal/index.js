@@ -74,7 +74,7 @@ const SearchLicenseRenewal = ({ tenantId, t, onSubmit, data, count, isCancelreq 
       "desiredLicensePeriod": finaldata?.desiredLicensePeriod && finaldata?.desiredLicensePeriod !== null && finaldata?.desiredLicensePeriod !== "" ? true : false,
       "capitalInvestment": finaldata?.tradeLicenseDetail?.capitalInvestment && finaldata?.tradeLicenseDetail?.capitalInvestment !== null && finaldata?.tradeLicenseDetail?.capitalInvestment !== "" ? true : false,
     }
-
+    delete finaldata?.tradeLicenseDetail?.applicationDocuments;
     isCancelreq ? Digit.SessionStorage.set("TL_CORRECTION_TRADE", finaldata) : Digit.SessionStorage.set("TL_RENEWAL_TRADE", finaldata);
     let tempdata = { "TradeDetails": finaldata }
 
