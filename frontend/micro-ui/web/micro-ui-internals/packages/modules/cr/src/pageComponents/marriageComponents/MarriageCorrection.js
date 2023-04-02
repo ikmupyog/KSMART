@@ -18,7 +18,7 @@ import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
 import FormFieldContainer from "../../components/FormFieldContainer";
 import BirthInclusionModal from "../../components/BirthInclusionModal";
-import { BIRTH_INCLUSION } from "../../config/constants";
+import { BIRTH_INCLUSION_FIELD_NAMES } from "../../config/constants";
 import { getBirthInclusionObject } from "../../config/globalObject";
 import { useParams, useHistory, useRouteMatch, useLocation } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
@@ -228,7 +228,7 @@ const MarriageInclusionEditPage = () => {
             </FieldComponentContainer>
             <div style={{ marginTop: "2.8rem" }}>
               <ButtonContainer>
-                <span onClick={() => setBirthInclusionFilterQuery(BIRTH_INCLUSION.childDob)}>
+                <span onClick={() => setBirthInclusionFilterQuery(BIRTH_INCLUSION_FIELD_NAMES.CHILD_DOB)}>
                   <EditIcon selected={true} label={"Edit"} />
                 </span>
               </ButtonContainer>

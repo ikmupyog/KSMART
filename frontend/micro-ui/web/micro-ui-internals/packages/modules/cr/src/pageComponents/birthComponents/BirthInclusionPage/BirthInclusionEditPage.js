@@ -123,7 +123,7 @@ console.log("navigationData",navigationData);
                   // disable={true}
                   //  inputFormat="DD-MM-YYYY"
                   // inputRef={register}
-                  date={birthInclusionFormData["CHILD_DOB"].curValue} 
+                  date={birthInclusionFormData?.["CHILD_DOB"]?.curValue} 
                   // onChange={props.onChange}
                   placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
                   {...(validation = { isRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
