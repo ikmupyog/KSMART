@@ -3,32 +3,21 @@ import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, TextAre
 import Timeline from "../../components/SBRTimeline";
 import { useTranslation } from "react-i18next";
 
-const StillBirthInformarDetails = ({ config, onSelect, userType, formData }) => {
+const StillBirthInformarDetails =  ({ config, onSelect, userType, formData,isEditStillBirth=false }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
-
+  const [isDisableEdit, setisDisableEdit] = useState(isEditStillBirth ? isEditStillBirth : false);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
 
-  const [isDeclarationInfo, setIsDeclarationInfo] = useState(
-    formData?.StillBirthInformarDetails?.isDeclarationInfo ? formData?.StillBirthInformarDetails?.isDeclarationInfo : false
-  );
-  const [infomantFirstNameEn, setinfomantFirstNameEn] = useState(
-    formData?.StillBirthInformarDetails?.infomantFirstNameEn ? formData?.StillBirthInformarDetails?.infomantFirstNameEn : ""
-  );
-  const [infomantAadhar, setinfomantAadhar] = useState(
-    formData?.StillBirthInformarDetails?.infomantAadhar ? formData?.StillBirthInformarDetails?.infomantAadhar : ""
-  );
+  const [isDeclarationInfo, setIsDeclarationInfo] = useState(formData?.StillBirthInformarDetails?.isDeclarationInfo ? formData?.StillBirthInformarDetails?.isDeclarationInfo : false);
+  const [infomantFirstNameEn, setinfomantFirstNameEn] = useState(formData?.StillBirthInformarDetails?.infomantFirstNameEn ? formData?.StillBirthInformarDetails?.infomantFirstNameEn : "");
 
-  const [infomantMobile, setinfomantMobile] = useState(
-    formData?.StillBirthInformarDetails?.infomantMobile ? formData?.StillBirthInformarDetails?.infomantMobile : ""
-  );
-  const [informerDesi, setinformerDesi] = useState(
-    formData?.StillBirthInformarDetails?.informerDesi ? formData?.StillBirthInformarDetails?.informerDesi : ""
-  );
-  const [informerAddress, setinformerAddress] = useState(
-    formData?.StillBirthInformarDetails?.informerAddress ? formData?.StillBirthInformarDetails?.informerAddress : ""
-  );
+  const [infomantAadhar, setinfomantAadhar] = useState(formData?.StillBirthInformarDetails?.infomantAadhar ? formData?.StillBirthInformarDetails?.infomantAadhar : "");
+
+  const [infomantMobile, setinfomantMobile] = useState(formData?.StillBirthInformarDetails?.infomantMobile ? formData?.StillBirthInformarDetails?.infomantMobile : "");
+  const [informerDesi, setinformerDesi] = useState(formData?.StillBirthInformarDetails?.informerDesi ? formData?.StillBirthInformarDetails?.informerDesi : "");
+  const [informerAddress, setinformerAddress] = useState(formData?.StillBirthInformarDetails?.informerAddress ? formData?.StillBirthInformarDetails?.informerAddress : "");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [toast, setToast] = useState(false);
   const [infomantFirstNmeEnError, setinfomantFirstNmeEnError] = useState(formData?.StillBirthInformarDetails?.infomantFirstNameEn ? false : false);
@@ -38,7 +27,10 @@ const StillBirthInformarDetails = ({ config, onSelect, userType, formData }) => 
   const [informerDesiError, setinformerDesiError] = useState(formData?.StillBirthInformarDetails?.informerDesi ? false : false);
   const [informerAddressError, setinformerAddressError] = useState(formData?.StillBirthInformarDetails?.informerAddress ? false : false);
 
+
   const onSkip = () => onSelect();
+
+
 
   useEffect(() => {
     if (isInitialRender) {
@@ -47,21 +39,23 @@ const StillBirthInformarDetails = ({ config, onSelect, userType, formData }) => 
         setIsDeclarationInfo(formData?.StillBirthInformarDetails?.isDeclarationInfo);
       }
     }
+
+
   }, [isInitialRender]);
 
   function setSelectinfomantFirstNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z]*$") != null) {
-      setinfomantFirstNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setinfomantFirstNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectinformerDesi(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z]*$") != null) {
-      setinformerDesi(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setinformerDesi(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectinformerAddress(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z]*$") != null) {
-      setinformerAddress(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setinformerAddress(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectinfomantAadhar(e) {
@@ -94,13 +88,22 @@ const StillBirthInformarDetails = ({ config, onSelect, userType, formData }) => 
     }
   }
 
+
   function setDeclarationInfo(e) {
     if (e.target.checked == true) {
       setIsDeclarationInfo(e.target.checked);
+
+
+      //   setFatherFirstNameMl("");
+
+      //   setFatherNationality(null);
+
+
     } else {
       setIsDeclarationInfo(e.target.checked);
     }
   }
+
 
   let validFlag = true;
   const goNext = () => {
@@ -147,6 +150,8 @@ const StillBirthInformarDetails = ({ config, onSelect, userType, formData }) => 
     }
 
     if (validFlag == true) {
+
+
       sessionStorage.setItem("infomantFirstNameEn", infomantFirstNameEn ? infomantFirstNameEn : null);
       sessionStorage.setItem("infomantAadhar", infomantAadhar ? infomantAadhar : null);
 
@@ -156,12 +161,7 @@ const StillBirthInformarDetails = ({ config, onSelect, userType, formData }) => 
       sessionStorage.setItem("isDeclarationInfo", isDeclarationInfo ? isDeclarationInfo : null);
 
       onSelect(config.key, {
-        infomantFirstNameEn,
-        infomantAadhar,
-        infomantMobile,
-        informerDesi,
-        informerAddress,
-        isDeclarationInfo,
+        infomantFirstNameEn, infomantAadhar, infomantMobile, informerDesi, informerAddress, isDeclarationInfo
       });
     }
   };
@@ -172,67 +172,32 @@ const StillBirthInformarDetails = ({ config, onSelect, userType, formData }) => 
             <BackButton >{t("CS_COMMON_BACK")}</BackButton> */}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!isDeclarationInfo}>
         <div className="row">
-          <div className="col-md-12">
-            <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INFORMER_VERIFICATION")}`}</span>{" "}
-            </h1>
+          <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INFORMER_VERIFICATION")}`}</span> </h1>
           </div>
         </div>
 
+
         <div className="row">
           <div className="col-md-12">
-            <CheckBox
-              label={t("CR_INFORMER_DECLARATION_STATEMENT")}
-              onChange={setDeclarationInfo}
-              value={isDeclarationInfo}
-              checked={isDeclarationInfo}
-            />
+            <CheckBox label={t("CR_INFORMER_DECLARATION_STATEMENT")} onChange={setDeclarationInfo} value={isDeclarationInfo} checked={isDeclarationInfo} />
           </div>
         </div>
         <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-4">
-              <CardLabel>
-                {`${t("CS_COMMON_AADHAAR")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={true}
-                type={"number"}
-                optionKey="i18nKey"
-                name="infomantAadhar"
-                value={infomantAadhar}
-                onChange={setSelectinfomantAadhar}
-                disable={isEdit}
-                placeholder={`${t("CS_COMMON_AADHAAR")}`}
-                {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
-              />
+          <div className="col-md-12" >
+            <div className="col-md-4" ><CardLabel>{`${t("CS_COMMON_AADHAAR")}`}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput t={t} isMandatory={true} type={"number"} optionKey="i18nKey" name="infomantAadhar" value={infomantAadhar} onChange={setSelectinfomantAadhar} disable={isEdit}
+                placeholder={`${t("CS_COMMON_AADHAAR")}`} {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })} />
             </div>
 
-            <div className="col-md-4">
-              <CardLabel>
-                {`${t("CR_INFORMANT_NAME")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={true}
-                type={"text"}
-                optionKey="i18nKey"
-                name="infomantFirstNameEn"
-                value={infomantFirstNameEn}
-                onChange={setSelectinfomantFirstNameEn}
-                disable={isEdit}
-                placeholder={`${t("CR_INFORMANT_NAME")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMANT_NAME") })}
-              />
+
+
+            <div className="col-md-4" ><CardLabel>{`${t("CR_INFORMANT_NAME")}`}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput t={t} isMandatory={true} type={"text"} optionKey="i18nKey" name="infomantFirstNameEn"
+                value={infomantFirstNameEn} onChange={setSelectinfomantFirstNameEn} disable={isEdit} placeholder={`${t("CR_INFORMANT_NAME")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMANT_NAME") })} />
             </div>
-            <div className="col-md-4">
-              <CardLabel>
-                {`${t("CR_INFORMER_DESIGNATION")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
+            <div className="col-md-4" >
+              <CardLabel>{`${t("CR_INFORMER_DESIGNATION")}`}<span className="mandatorycss">*</span></CardLabel>
               <TextInput
                 t={t}
                 isMandatory={true}
@@ -246,29 +211,23 @@ const StillBirthInformarDetails = ({ config, onSelect, userType, formData }) => 
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMER_DESIGNATION") })}
               />
             </div>
+
+
           </div>
         </div>
         <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-3">
-              <CardLabel>
-                {`${t("CR_MOBILE_NO")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                t={t}
-                isMandatory={true}
-                type={"number"}
-                optionKey="i18nKey"
-                name="infomantMobile"
-                value={infomantMobile}
-                onChange={setSelectinfomantMobile}
-                disable={isEdit}
-                placeholder={`${t("CR_MOBILE_NO")}`}
-                {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
-              />
+          <div className="col-md-12" >
+            {/* <div className="col-md-3" ><CardLabel>{`${t("CR_MOBILE_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+                            <TextInput t={t} isMandatory={true} type={"number"} optionKey="i18nKey" name="infomantMobile" value={infomantMobile} onChange={setSelectinfomantMobile} disable={isEdit} 
+                            placeholder={`${t("CR_MOBILE_NO")}`} {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })} />
+                        </div> */}
+
+
+            <div className="col-md-3" ><CardLabel>{`${t("CR_MOBILE_NO")}`}<span className="mandatorycss">*</span></CardLabel>
+              <TextInput t={t} isMandatory={true} type={"number"} optionKey="i18nKey" name="infomantMobile" value={infomantMobile} onChange={setSelectinfomantMobile} disable={isEdit}
+                placeholder={`${t("CR_MOBILE_NO")}`} {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })} />
             </div>
-            <div className="col-md-6">
+            <div className="col-md-6" >
               <CardLabel>{`${t("CR_INFORMER_ADDRESS")}`}</CardLabel>
               <TextArea
                 t={t}
@@ -286,26 +245,44 @@ const StillBirthInformarDetails = ({ config, onSelect, userType, formData }) => 
           </div>
         </div>
 
+
         {toast && (
           <Toast
-            error={infomantFirstNmeEnError || infomantAadharError || infomantMobileError || informerDesiError}
+            error={
+              infomantFirstNmeEnError ||
+              infomantAadharError ||
+              infomantMobileError ||
+              informerDesiError
+
+
+            }
             label={
-              infomantFirstNmeEnError || infomantAadharError || infomantMobileError || informerDesiError
-                ? infomantFirstNmeEnError
+              infomantFirstNmeEnError ||
+                infomantAadharError ||
+                infomantMobileError ||
+                informerDesiError
+
+                ?
+                infomantFirstNmeEnError
                   ? t(`BIRTH_ERROR_INFORMANT_NAME_CHOOSE`)
                   : infomantAadharError
-                  ? t(`BIRTH_ERROR_INFORMANT_AADHAR_CHOOSE`)
-                  : infomantMobileError
-                  ? t(`BIRTH_ERROR_INFORMANT_MOBILE_CHOOSE`)
-                  : informerDesiError
-                  ? t(`BIRTH_ERROR_INFORMANT_DESIGNATION_CHOOSE`)
-                  : setToast(false)
+                    ? t(`BIRTH_ERROR_INFORMANT_AADHAR_CHOOSE`)
+
+                    : infomantMobileError
+                      ? t(`BIRTH_ERROR_INFORMANT_MOBILE_CHOOSE`)
+                      : informerDesiError
+                        ? t(`BIRTH_ERROR_INFORMANT_DESIGNATION_CHOOSE`)
+
+
+                        :
+                        setToast(false)
                 : setToast(false)
             }
             onClose={() => setToast(false)}
           />
         )}
         {""}
+
       </FormStep>
     </React.Fragment>
   );

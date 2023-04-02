@@ -8,14 +8,18 @@ import { useTranslation } from "react-i18next";
 const CrFlow = ({ path }) => {
   const { t } = useTranslation();
   //New Registration
-  sessionStorage.removeItem("Digit.CR_BIRTH_EDIT_FLAG");
+  sessionStorage.removeItem("CR_BIRTH_EDIT_FLAG");
   sessionStorage.removeItem("Digit.CR_EDIT_BIRTH_REG");
+  sessionStorage.removeItem("CR_STILLBIRTH_EDIT_FLAG");
+  sessionStorage.removeItem("Digit.CR_EDIT_STILLBIRTH_REG");
+  sessionStorage.removeItem("CR_BORNOUTSIDEBIRTH_EDIT_FLAG");
+  sessionStorage.removeItem("Digit.CR_EDIT_BORNOUTSIDEBIRTH_REG");
   const cardMenuData = [
     {
       title: "CR_BIRTH_REGISTRATION",
       subTitle: "CR_BIRTH_NEW_REGISTRATION",
       img: <BankIcon />,
-      link: `${path}/child-details`,
+      link: `/digit-ui/employee/cr/create-birth/child-details`,
     },
     // {
     //   title: "CR_BIRTH_ADOPTION",
@@ -27,19 +31,19 @@ const CrFlow = ({ path }) => {
       title: "CR_STILL_BIRTH",
       subTitle: "CR_STILL_BIRTH_REG",
       img: <BankIcon />,
-      link: `${path}/stillbirth-child-details`,
+      link: `/digit-ui/employee/cr/create-stillbirth/stillbirth-child-details`,
     },
     {
       title: "CR_BIRTH_BORN_OUTSIDE",
       subTitle: "CR_BIRTH_BORN_OUTSIDE_DESC",
       img: <BankIcon />,
-      link: `${path}/born-outside-child-details`,
+      link: `/digit-ui/employee/cr/create-bornoutsidebirth/born-outside-child-details`,
     },
     {
       title: "CR_ABANDONED_BIRTH_REGISTRATION",
       subTitle: "CR_ABANDONED_BIRTH_NEW_REGISTRATION",
       img: <BankIcon />,
-      link: `${path}/abandoned-child-details`,
+      link: `/digit-ui/employee/cr/create-abandonedbirth/abandoned-child-details`,
     },
 
     // {
@@ -71,7 +75,7 @@ const CrFlow = ({ path }) => {
         <div className="cardWrapper">
           {cardMenuData?.map((item, index) => (
            item.link?(
-            <Link to={item.link}>
+            <Link to={item.link} key={index}>
             {/* <Link to='trade-lisense'> */}
             <div className={ClassList[item.title]}>
               <div className="contentMenu">

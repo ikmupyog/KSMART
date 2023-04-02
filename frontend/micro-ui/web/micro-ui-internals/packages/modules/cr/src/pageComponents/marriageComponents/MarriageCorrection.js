@@ -1,64 +1,92 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import moment from "moment";
 import {
   FormStep,
   CardLabel,
-  EditButton,
   TextInput,
   Dropdown,
   DatePicker,
   CheckBox,
   BackButton,
-  NewRadioButton,
   Loader,
-  Toast,
-  SubmitBar,
+  EditButton,
+  PopUp,
+  UploadFile,
+  EditIcon,
 } from "@egovernments/digit-ui-react-components";
-import MarriageInclusionTimeline from "../../components/MarriageCorrectionTimeline";
+// import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
-// import { TimePicker } from '@material-ui/pickers';
+import FormFieldContainer from "../../components/FormFieldContainer";
+import BirthInclusionModal from "../../components/BirthInclusionModal";
+import { BIRTH_INCLUSION_FIELD_NAMES } from "../../config/constants";
+import { useLocation } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { getFormattedBirthInclusionData } from "../../config/utils";
+import MarriageAddressPage from "./MarriageAddressPage";
 
-const MarriageInclusionEditPage = ({ config, onSelect, userType, formData,isEditMarriage }) => {
-  const stateId = Digit.ULBService.getStateId();
+const types = ["HUSBAND DETAILS", "WIFE DETAILS"];
+
+const MarriageInclusionEditPage = () => {
   const { t } = useTranslation();
+  let formData = {};
   let validation = {};
+  const stateId = Digit.ULBService.getStateId();
+  const [showModal, setShowModal] = useState(false);
+  const [uploadStatus, setUploadStatus] = useState({
+    hospitalCorrectionLetter: false,
+  });
+  const [value, setValue1] = useState(0);
+  const [active, setActive] = useState(types[0]);
+  const [selectedInclusionItem, setSelectedInclusionItem] = useState([]);
+  let location = useLocation();
+  let navigationData = location?.state?.marriageCorrectionData;
+
+  const [marriageWardCode, setmarriageWardCode] = useState(
+    formData?.MarriageDetails?.marriageWardCode ? formData?.MarriageDetails?.marriageWardCode : ""
+  );
+
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
   if (tenantId === "kl") {
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
-  const [tenantWard, setTenantWard] = useState(tenantId);
-  const { data: District = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
-  const { data: Taluk = {}, isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
-  const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
-  const { data: LBType = {}, isLBTypeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
-  const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
-  const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantWard, "egov-location", "boundary-data");
-  const cmbMaritalStatus = [
-    { i18nKey: "Married", code: "MARRIED" },
-    { i18nKey: "Un Married", code: "UNMARRIED" },
-    { i18nKey: "Not Applicable", code: "NOT Applicable" },
-  ];
-  const cmbPlaceType = [
-    { i18nKey: "Religious Institution", code: "RELIGIOUSINSTITUTION" },
-    { i18nKey: "Public/Pvt Place ", code: "PUBLIC/PVTPLACE " },
-    { i18nKey: "House", code: "HOUSE" },
-   
-  ];
 
-  let cmbDistrict = [];
-  let cmbTaluk = [];
-  let cmbVillage = [];
-  let cmbLBType = [];
-  let cmbLB = [];
-  let Zonal = [];
+  const { data: correctionsData = {}, isSuccess, isError, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
+    stateId,
+    "birth-death-service",
+    "BirthCorrectionDocuments"
+  );
+  const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "MarriagePlaceType");
+  const { data: Menu, isGenderLoad } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
+  const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
+  const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "boundary-data");
+  let cmbPlace = [];
+  let menu = [];
+  let cmbNation = [];
   let cmbWardNo = [];
   let cmbWardNoFinal = [];
+  let Zonal = [];
+  let cmbState = [];
+  let cmbfilterNation = [];
+  let cmbfilterNationI = [];
+
+  place &&
+    place["birth-death-service"] &&
+    place["birth-death-service"].MarriagePlaceType &&
+    place["birth-death-service"].MarriagePlaceType.map((ob) => {
+      cmbPlace.push(ob);
+    });
+  
+    const cmbPlaceNameReligious = [
+      { i18nKey: "Religious Institution 1", name: "RELIGIOUSINSTITUTION1", namelocal: "മത സ്ഥാപനം 1" },
+      { i18nKey: "Religious Institution 2", name: "RELIGIOUSINSTITUTION2", namelocal: "മത സ്ഥാപനം 2" },
+      { i18nKey: "Others", name: "OTHERS", namelocal: "മറ്റുള്ളവ" },
+    ];
+
   boundaryList &&
     boundaryList["egov-location"] &&
     boundaryList["egov-location"].TenantBoundary.map((ob) => {
-      // console.log(ob);
-      // if(ob?.boundary){
       Zonal.push(...ob.boundary.children);
       ob.boundary.children.map((obward) => {
         cmbWardNo.push(...obward.children);
@@ -70,362 +98,194 @@ const MarriageInclusionEditPage = ({ config, onSelect, userType, formData,isEdit
     wardmst.namecmb = wardmst.wardno + " ( " + wardmst.name + " )";
     cmbWardNoFinal.push(wardmst);
   });
-  District &&
-    District["common-masters"] &&
-    District["common-masters"].District &&
-    District["common-masters"].District.map((ob) => {
-      cmbDistrict.push(ob);
+
+  Menu &&
+    Menu.map((genderDetails) => {
+      menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
     });
-  Taluk &&
-    Taluk["common-masters"] &&
-    Taluk["common-masters"].Taluk &&
-    Taluk["common-masters"].Taluk.map((ob) => {
-      cmbTaluk.push(ob);
+
+  Nation &&
+    Nation["common-masters"] &&
+    Nation["common-masters"].Country &&
+    Nation["common-masters"].Country.map((ob) => {
+      cmbNation.push(ob);
     });
-  Village &&
-    Village["common-masters"] &&
-    Village["common-masters"].Village &&
-    Village["common-masters"].Village.map((ob) => {
-      cmbVillage.push(ob);
-    });
-  LBType &&
-    LBType["common-masters"] &&
-    LBType["common-masters"].LBType &&
-    LBType["common-masters"].LBType.map((ob) => {
-      cmbLBType.push(ob);
-    });
-  localbodies &&
-    localbodies["tenant"] &&
-    localbodies["tenant"].tenants.map((ob) => {
-      cmbLB.push(ob);
-    });
-  const [tenantboundary, setTenantboundary] = useState(false);
-  const [marriageDOM, setmarriageDOM] = useState(formData?.MarriageDetails?.marriageDOM ? formData?.MarriageDetails?.marriageDOM : "");
-  const [marriageDistrict, setmarriageDistrict] = useState(
-    formData?.MarriageDetails?.marriageDistrict ? formData?.MarriageDetails?.marriageDistrict : ""
+
+  const [DeathPlaceType, selectDeathPlaceType] = useState(
+    formData?.InformationDeath?.DeathPlaceType?.code
+      ? formData?.InformationDeath?.DeathPlaceType
+      : formData?.InformationDeath?.DeathPlaceType
+      ? ""
+      : ""
+  );
+  const [HospitalNameMl, selectHospitalNameMl] = useState(
+    formData?.InformationDeathails?.HospitalNameMl?.code
+      ? formData?.InformationDeath?.HospitalNameMl
+      : formData?.InformationDeath?.HospitalNameMl
+      ? ""
+      : ""
   );
 
-  const [marriageTalukID, setmarriageTalukID] = useState(
-    formData?.MarriageDetails?.marriageTalukID ? formData?.MarriageDetails?.marriageTalukID : ""
-  );
-  const [marriageVillageName, setmarriageVillageName] = useState(
-    formData?.MarriageDetails?.marriageVillageName ? formData?.MarriageDetails?.marriageVillageName : ""
-  );
-  const [marriageLBtype, setmarriageLBtype] = useState(formData?.MarriageDetails?.marriageLBtype ? formData?.MarriageDetails?.marriageLBtype : "");
-
-  const [marriageTenantid, setmarriageTenantid] = useState(
-    formData?.MarriageDetails?.marriageTenantid ? formData?.MarriageDetails?.marriageTenantid : null
+  const [marriagePlace, setMarriagePlace] = useState(
+    formData?.InformationDeath?.marriagePlace?.code
+      ? formData?.InformationDeath?.marriagePlace
+      : formData?.InformationDeath?.marriagePlace
+      ? cmbPlace.filter((cmbPlace) => cmbPlace.code === formData?.ChildDetails?.marriagePlace)[0]
+      : ""
   );
 
-  const [marriagePlacetype, setmarriagePlacetype] = useState(
-    formData?.MarriageDetails?.marriagePlacetype ? formData?.MarriageDetails?.marriagePlacetype : ""
+  const [DeceasedGender, setselectedDeceasedGender] = useState(
+    formData?.InformationDeath?.DeceasedGender?.code
+      ? formData?.InformationDeath?.DeceasedGender
+      : formData?.InformationDeath?.DeceasedGender
+      ? menu.filter((menu) => menu.code === formData?.InformationDeath?.DeceasedGender)[0]
+      : ""
   );
-  const [marriagePlacenameEn, setmarriagePlacenameEn] = useState(
-    formData?.MarriageDetails?.marriagePlacenameEn ? formData?.MarriageDetails?.marriagePlacenameEn : ""
+  const [DeceasedAadharNumber, setDeceasedAadharNumber] = useState(
+    formData?.InformationDeath?.DeceasedAadharNumber ? formData?.InformationDeath?.DeceasedAadharNumber : ""
   );
-  const [marriagePlacenameMal, setmarriagePlacenameMal] = useState(
-    formData?.MarriageDetails?.marriagePlacenameMal ? formData?.MarriageDetails?.marriagePlacenameMal : ""
+  const [DeathPlaceInstId, setSelectedDeathPlaceInstId] = useState(
+    formData?.InformationDeath?.DeathPlaceInstId ? formData?.InformationDeath?.DeathPlaceInstId : null
   );
-  const [marriageOthersSpecify, setmarriageOthersSpecify] = useState(
-    formData?.MarriageDetails?.marriageOthersSpecify ? formData?.MarriageDetails?.marriageOthersSpecify : ""
+  const [InstitutionIdMl, setInstitutionIdMl] = useState(formData?.InformationDeath?.DeathPlaceInstId);
+  const [InstitutionFilterList, setInstitutionFilterList] = useState(null);
+  const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(false);
+  const [Nationality, setSelectedNationality] = useState(
+    formData?.InformationDeath?.Nationality?.code
+      ? formData?.InformationDeath?.Nationality
+      : formData?.InformationDeath?.Nationality
+      ? cmbNation.filter((cmbNation) => cmbNation.code === formData?.InformationDeath?.Nationality)[0]
+      : ""
   );
-  const [marriageType, setmarriageType] = useState(formData?.MarriageDetails?.marriageType ? formData?.MarriageDetails?.marriageType : "");
-  const [marriageWardCode, setmarriageWardCode] = useState(
-    formData?.MarriageDetails?.marriageWardCode ? formData?.MarriageDetails?.marriageWardCode : ""
-  );
-  const [isDisableEdit, setisDisableEdit] = useState(isEditMarriage ? isEditMarriage : false);
-  const [file, setFile] = useState();
-  function handleChange(e) {
-    console.log(e.target.files);
-    setFile(URL.createObjectURL(e.target.files[0]));
-  }
 
-  const ButtonContainer = (props) =>{
-    return(
-      <div className="col-md-3">
-        {props.children}
-      </div>
-    )
-  }
-
-  const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
+  const setBirthInclusionFilterQuery = (fieldId) => {
+    const birthInclusionData = correctionsData["birth-death-service"]?.BirthCorrectionDocuments;
+    let selectedData = getFormattedBirthInclusionData(fieldId, navigationData, birthInclusionData);
+    setSelectedInclusionItem(selectedData);
+    setShowModal(true);
   };
-  if (tenantboundary) {
-    queryClient.removeQueries("TL_ZONAL_OFFICE");
-    queryClient.removeQueries("CR_VILLAGE");
-    queryClient.removeQueries("CR_TALUK");
-    queryClient.removeQueries("CR_TALUK");
-    setTenantboundary(false);
-  }
-  const onSkip = () => onSelect();
 
-  function setSelectmarriageDOM(value) {
-    setmarriageDOM(value);
-    const today = new Date();
-    const birthDate = new Date(value);
-    if (birthDate.getTime() <= today.getTime()) {
-      // To calculate the time difference of two dates
-      let Difference_In_Time = today.getTime() - birthDate.getTime();
-      let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-      let Difference_In_DaysRounded = Math.floor(Difference_In_Days);
-      console.log(Difference_In_DaysRounded);
-    } else {
-      setmarriageDOM(null);
-      // setDOBError(true);
-      // setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 3000);
-    }
-  }
-  function setSelectmarriageDistrict(value) {
-    setmarriageDistrict(value);
-    console.log("District" + cmbDistrict);
-  }
-  function setSelectmarriageTalukID(value) {
-    setmarriageTalukID(value);
-    console.log("Taluk" + cmbTaluk);
-  }
-  function setSelectmarriageVillageName(value) {
-    setmarriageVillageName(value);
-    console.log("Village" + cmbVillage);
-  }
-  function setSelectmarriageLBtype(value) {
-    setmarriageLBtype(value);
-    console.log("LBType" + cmbLBType);
-  }
-  function setSelectmarriageTenantid(value) {
-    setmarriageTenantid(value);
-    console.log("LBType" + cmbLB);
-  }
-  function setSelectmarriagePlacetype(value) {
-    setmarriagePlacetype(value);
-    // setAgeMariageStatus(value.code);
-  }
-  function setSelectmarriagePlacenameEn(value) {
-    setmarriagePlacenameEn(value);
-    // setAgeMariageStatus(value.code);
-  }
-  function setSelectmarriagePlacenameMal(value) {
-    setmarriagePlacenameMal(value);
-    // setAgeMariageStatus(value.code);
-  }
-  function setSelectmarriageOthersSpecify(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setmarriageOthersSpecify(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-    }
-    
-  }
-  function setSelectmarriageType(value) {
-    setmarriageType(value);
-    // setAgeMariageStatus(value.code);
-  }
+  const _hideModal = () => {
+    setShowModal(false);
+  };
+
+  const FieldComponentContainer = (props) => {
+    return <div className="col-md-9">{props.children}</div>;
+  };
+
+  const ButtonContainer = (props) => {
+    return <div className="col-md-3">{props.children}</div>;
+  };
+
+  const onSubmit = (data) => console.log(data);
+
+  const { register, handleSubmit, reset, setValue, getValues, watch, errors } = useForm({
+    reValidateMode: "onSubmit",
+    mode: "all",
+  });
+
   function setSelectmarriageWardCode(value) {
-    setTenantWard(value.code);
+    // setTenantWard(value.code);
     setmarriageWardCode(value);
   }
-  let validFlag = true;
-  const goNext = () => {
-    // if (AadharError) {
-    //   validFlag = false;
-    //   setAadharErroChildAadharNor(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 2000);
-    //   // return false;
-    //   // window.alert("Username shouldn't exceed 10 characters")
-    // } else {
-    //   setAadharError(false);
-    // }
-    if (validFlag == true) {
-      sessionStorage.setItem("marriageDOM", marriageDOM ? marriageDOM : null);
-      sessionStorage.setItem("marriageDistrict", marriageDistrict ? marriageDistrict : null);
-      sessionStorage.setItem("marriageLBtype", marriageLBtype ? marriageLBtype : null);
-      sessionStorage.setItem("marriageWardCode", marriageWardCode ? marriageWardCode : null);
-      sessionStorage.setItem("marriageTenantid", marriageTenantid ? marriageTenantid : null);
-      sessionStorage.setItem("marriageTalukID", marriageTalukID ? marriageTalukID : null);
-      sessionStorage.setItem("marriageVillageName", marriageVillageName ? marriageVillageName : null);
-      sessionStorage.setItem("marriagePlacetype", marriagePlacetype ? marriagePlacetype : null);
-      sessionStorage.setItem("marriagePlacenameEn", marriagePlacenameEn ? marriagePlacenameEn : null);
-      sessionStorage.setItem("marriagePlacenameMal", marriagePlacenameMal ? marriagePlacenameMal : null);
-      sessionStorage.setItem("marriageType", marriageType ? marriageType : null);
-      sessionStorage.setItem("marriageOthersSpecify", marriageOthersSpecify ? marriageOthersSpecify : null);
-      // sessionStorage.setItem("tripStartTime", tripStartTime ? tripStartTime : null);
 
-      onSelect(config.key, {
-        marriageDOM,
-        marriageDistrict,
-        marriageTenantid,
-        marriageLBtype,
-        marriageVillageName,
-        marriageTalukID,
-        marriagePlacetype,
-        marriagePlacenameEn,
-        marriagePlacenameMal,
-        marriageType,
-        marriageWardCode,
-        marriageOthersSpecify,
-        // tripStartTime,
-        // selectedOption,
-        // Gender,
-      });
+  const getTabStyle = (selectedType) => {
+    if (active === selectedType) {
+      return { margin: "2rem", padding: "1rem 1rem 1rem 1rem", cursor: "pointer", color: "rgb(244, 119, 56)", fontWeight: "bold", borderBottom: "2px solid black" };
+    } else {
+      return { margin: "2rem", padding: "1rem 1rem 1rem 1rem", color: "black",  cursor: "pointer", fontWeight: "bold" };
     }
   };
 
-  if (isLoading || isTalukLoading ||isVillageLoading ||isLBTypeLoading ||islocalbodiesLoading|| isWardLoaded) {
-    return <Loader></Loader>;
-  } else
-    return (
-      <React.Fragment>
-        <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-        {window.location.href.includes("/citizen") ? <MarriageInclusionTimeline currentStep={1} /> : null}
-        {window.location.href.includes("/employee") ? <MarriageInclusionTimeline currentStep={1} /> : null}
-        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
-          <div className="row">
+  useEffect(() => {
+    reset({
+      groomFirstNameEn: navigationData?.GroomDetails?.groomFirstnameEn,
+      groomFirstNameMl: navigationData?.GroomDetails?.groomFirstnameMl,
+      husbandMiddleNameEn: navigationData?.GroomDetails?.groomMiddlenameEn,
+      husbandLastNameEn: navigationData?.GroomDetails?.groomLastnameEn,
+      husbandMiddleNameMl: navigationData?.GroomDetails?.groomMiddlenameMl,
+      husbandLastNameMl: navigationData?.GroomDetails?.groomLastnameMl,
+      groomMotherNameEn: navigationData?.GroomDetails?.groomMothernameEn,
+      groomMotherNameMl: navigationData?.GroomDetails?.groomMothernameMl,
+      groomFatherNameEn: navigationData?.GroomDetails?.groomFathernameEn,
+      groomFatherNameMl: navigationData?.GroomDetails?.groomFathernameMl,
+      groomGuardianNameEn: navigationData?.GroomDetails?.groomGuardiannameEn,
+      groomGuardianNameMl: navigationData?.GroomDetails?.groomGuardiannameMl,
+      marriageDOM: moment(navigationData?.marriageDOM).format("DD/MM/YYYY"),
+      groomDateOfBirth: moment(navigationData?.GroomDetails?.groomDOB).format("DD/MM/YYYY"),
+      brideFirstNameEn: navigationData?.BrideDetails?.brideFirstnameEn,
+      brideFirstNameMl: navigationData?.BrideDetails?.brideFirstnameMl,
+      brideMiddleNameEn: navigationData?.BrideDetails?.brideMiddlenameEn,
+      brideLastNameEn: navigationData?.BrideDetails?.brideLastnameEn,
+      brideMiddleNameMl: navigationData?.BrideDetails?.brideMiddlenameMl,
+      brideLastNameMl: navigationData?.BrideDetails?.brideLastnameMl,
+      brideMotherNameEn: navigationData?.BrideDetails?.brideMothernameEn,
+      brideMotherNameMl: navigationData?.BrideDetails?.brideMothernameMl,
+      brideFatherNameEn: navigationData?.BrideDetails?.brideFathernameEn,
+      brideFatherNameMl: navigationData?.BrideDetails?.brideFathernameMl,
+      brideGuardianNameEn: navigationData?.BrideDetails?.brideGuardiannameEn,
+      brideGuardianNameMl: navigationData?.BrideDetails?.brideGuardiannameMl,
+      brideDateOfBirth: moment(navigationData?.BrideDetails?.brideDOB).format("DD/MM/YYYY")
+    });
+    // }
+  }, [navigationData]);
+
+  return (
+    <React.Fragment>
+      <FormStep>
+        <div className="row">
+          <div className="col-md-12">
             <div className="col-md-12">
               <h1 className="headingh1">
                 <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DATE_OF_MARRIAGE")}`}</span>{" "}
               </h1>
             </div>
           </div>
-          <div className="row">
-            <div className="col-md-12">
-              <div className="col-md-6">
+        </div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <FormFieldContainer>
+            <FieldComponentContainer>
+              <div className="col-md-5">
                 <CardLabel>
-                  {`${t("CR_DATE_OF_MARRIAGE")}`}
+                  {t("CR_DATE_OF_MARRIAGE")}
                   <span className="mandatorycss">*</span>
                 </CardLabel>
                 <DatePicker
-                  date={marriageDOM}
-                  isMandatory={false}
+                  // date={childDOB}
+                  datePickerRef={register}
                   name="marriageDOM"
-                  onChange={setSelectmarriageDOM}
-                  inputFormat="DD-MM-YYYY"
+                  // max={convertEpochToDate(new Date())}
+                  //min={convertEpochToDate("1900-01-01")}
+                  // onChange={setselectChildDOB}
+                  // disable={isDisableEdit}
+                  //  inputFormat="DD-MM-YYYY"
                   placeholder={`${t("CR_DATE_OF_MARRIAGE")}`}
-                  {...(validation = { isRequired: true, title: t("CR_INVALID_DATE_OF_MARRIAGE") })}
+                  {...(validation = { isRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
                 />
               </div>
-              <div className="col-md-6">
+            </FieldComponentContainer>
+            <div style={{ marginTop: "2.8rem" }}>
               <ButtonContainer>
-        <EditButton
-          selected={true}
-          label={"Edit"}
-          onClick={() => {
-            setShowModal(true);
-          }}
-        />
-      </ButtonContainer>
-              </div>
+                <span onClick={() => setBirthInclusionFilterQuery(BIRTH_INCLUSION_FIELD_NAMES.CHILD_DOB)}>
+                  <EditIcon selected={true} label={"Edit"} />
+                </span>
+              </ButtonContainer>
             </div>
-          </div>
+          </FormFieldContainer>
           <div className="row">
             <div className="col-md-12">
-              <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PLACE_OF_MARRIAGE")}`}</span>{" "}
-              </h1>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col_md-12">
-              <div className="col-md-4">
-                <CardLabel>
-                  {`${t("CS_COMMON_DISTRICT")}`}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <Dropdown
-                  t={t}
-                  isMandatory={true}
-                  optionKey="name"
-                  option={cmbDistrict}
-                  name="marriageDistrict"
-                  value={marriageDistrict}
-                  select={setSelectmarriageDistrict}
-                  selected={marriageDistrict}
-                  placeholder={t("CS_COMMON_DISTRICT'")}
-                  {...(validation = { isRequired: true, title: t("CR_COMMON_INVALID_DISTRICT") })}
-                />
-              </div>
-              <div className="col-md-4">
-                <CardLabel>
-                  {`${t("CS_COMMON_TALUK")}`}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <Dropdown
-                  t={t}
-                  isMandatory={true}
-                  optionKey="name"
-                  option={cmbTaluk}
-                  name="marriageTalukID"
-                  value={marriageTalukID}
-                  select={setSelectmarriageTalukID}
-                  selected={marriageTalukID}
-                  placeholder={t("CS_COMMON_TALUK'")}
-                  {...(validation = { isRequired: true, title: t("CR_COMMON_INVALID_TALUK") })}
-                />
-              </div>
-              <div className="col-md-4">
-                <CardLabel>
-                  {`${t("CS_COMMON_VILLAGE")}`}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <Dropdown
-                  t={t}
-                  optionKey="name"
-                  isMandatory={true}
-                  option={cmbVillage}
-                  name="marriageVillageName"
-                  value={marriageVillageName}
-                  select={setSelectmarriageVillageName}
-                  selected={marriageVillageName}
-                  placeholder={t("CS_COMMON_VILLAGE'")}
-                  {...(validation = { isRequired: true, title: t("CR_COMMON_INVALID_VILLAGE") })}
-                />
+              <div className="col-md-12">
+                <h1 className="headingh1">
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PLACE_OF_MARRIAGE")}`}</span>{" "}
+                </h1>
               </div>
             </div>
           </div>
-          <div className="row">
-            <div className="col_md-12">
-              <div className="col-md-4">
+          <FormFieldContainer>
+            <FieldComponentContainer>
+              <div className="col-md-5">
                 <CardLabel>
-                  {`${t("CS_LBTYPE")}`}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <Dropdown
-                  t={t}
-                  optionKey="name"
-                  isMandatory={true}
-                  option={cmbLBType}
-                  name="marriageLBtype"
-                  value={marriageLBtype}
-                  select={setSelectmarriageLBtype}
-                  selected={marriageLBtype}
-                  placeholder={t("CS_LBTYPE'")}
-                  {...(validation = { isRequired: true, title: t("CR_INVALID_LBTYPE") })}
-                />
-              </div>
-              <div className="col-md-4">
-                <CardLabel>
-                  {`${t("CS_LB")}`}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <Dropdown
-                  t={t}
-                  optionKey="code"
-                  isMandatory={true}
-                  option={cmbLB}
-                  name="marriageTenantid"
-                  value={marriageTenantid}
-                  selected={marriageTenantid}
-                  select={setSelectmarriageTenantid}
-                  placeholder={`${t("CS_LB")}`}
-                  {...(validation = { isRequired: true, title: t("CR_INVALID_LB") })}
-                />
-              </div>
-              <div className="col-md-4">
-                <CardLabel>
-                  {`${t("CS_COMMON_WARD")}`}
+                  {t("CS_COMMON_WARD")}
                   <span className="mandatorycss">*</span>
                 </CardLabel>
                 <Dropdown
@@ -439,68 +299,738 @@ const MarriageInclusionEditPage = ({ config, onSelect, userType, formData,isEdit
                   {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
                 />
               </div>
+              <div className="col-md-5">
+                <CardLabel>
+                  {t("CR_MARRIAGE_PLACE_TYPE")}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="name"
+                  isMandatory={false}
+                  option={cmbPlace}
+                  selected={marriagePlace}
+                  select={setMarriagePlace}
+                  placeholder={`${t("CR_MARRIAGE_PLACE_TYPE")}`}
+                />
+              </div>
+              {marriagePlace.code === "RELIGIOUS_INSTITUTION" && (
+                <div className="col-md-5">
+                  <CardLabel>
+                    {t("CS_NAME_OF_PLACE")}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
+                  <Dropdown
+                    t={t}
+                    optionKey="namecmb"
+                    isMandatory={true}
+                    placeholder={t("CS_NAME_OF_PLACE'")}
+                    option={cmbPlaceNameReligious.name}
+                    selected={marriageWardCode}
+                    select={setSelectmarriageWardCode}
+                    {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
+                  />
+                </div>
+              )}
+              {marriagePlace?.code === "MANDAPAM_HALL_AND_OTHER" && (
+                <div className="col-md-5">
+                  <CardLabel>
+                    {t("CS_NAME_OF_PLACE")}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
+                  <Dropdown
+                    t={t}
+                    optionKey="namecmb"
+                    isMandatory={true}
+                    placeholder={t("CS_NAME_OF_PLACE'")}
+                    option={cmbWardNoFinal}
+                    selected={marriageWardCode}
+                    select={setSelectmarriageWardCode}
+                    {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
+                  />
+                </div>
+              )}
+              {marriagePlace?.code === "SUB_REGISTRAR_OFFICE" && (
+                <div className="col-md-5">
+                  <CardLabel>
+                    {t("CS_NAME_OF_PLACE")}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
+                  <Dropdown
+                    t={t}
+                    optionKey="namecmb"
+                    isMandatory={true}
+                    placeholder={t("CS_NAME_OF_PLACE'")}
+                    option={cmbWardNoFinal}
+                    selected={marriageWardCode}
+                    select={setSelectmarriageWardCode}
+                    {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
+                  />
+                </div>
+              )}
+            </FieldComponentContainer>
+            <div style={{ marginTop: "2.8rem" }}>
+              <ButtonContainer>
+                <EditIcon
+                  selected={true}
+                  label={"Edit"}
+                  onClick={() => {
+                    setShowModal(true);
+                  }}
+                />
+              </ButtonContainer>
             </div>
-          </div>
+          </FormFieldContainer>
           <div className="row">
-            <div className="col_md-12">
-              <div className="col-md-4">
-                <CardLabel>
-                  {`${t("CR_MARRIAGE_PLACE_TYPE")}`}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <Dropdown
-                  t={t}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  option={cmbPlaceType}
-                  selected={marriagePlacetype}
-                  select={setSelectmarriagePlacetype}
-                  placeholder={t("CR_MARRIAGE_PLACE_TYPE")}
-                  isMandatory={true}
-                  {...(validation = { isRequired: true, title: t("CS_INVALID_MARRIAGE_PLACE_TYPE") })}
-                  // option={cmbCountry}
-                />
-              </div>
-              <div className="col-md-4">
-                <CardLabel>
-                  {`${t("CR_NAME_OF_PLACE_EN")}`}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <Dropdown
-                  t={t}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  option={cmbPlaceType}
-                  selected={marriagePlacenameEn}
-                  select={setSelectmarriagePlacenameEn}
-                  placeholder={t("CR_NAME_OF_PLACE_EN")}
-                  isMandatory={true}
-                  {...(validation = { isRequired: true, title: t("CS_INVALID_MARRIAGE_PLACE_EN") })}
-                  // option={cmbCountry}
-                />
-              </div>
-              <div className="col-md-4">
-                <CardLabel>
-                  {`${t("CR_NAME_OF_PLACE_MAL")}`}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <Dropdown
-                  t={t}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  option={cmbPlaceType}
-                  selected={marriagePlacenameMal}
-                  select={setSelectmarriagePlacenameMal}
-                  placeholder={t("CR_NAME_OF_PLACE_MAL")}
-                  isMandatory={true}
-                  {...(validation = { isRequired: true, title: t("CS_INVALID_MARRIAGE_PLACE_MAL") })}
-                  // option={cmbCountry}
-                />
+            <div className="col-md-12">
+              <div className="col-md-12">
+                <h1 className="headingh1">
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PARTNER_DETAILS")}`}</span>{" "}
+                </h1>
               </div>
             </div>
           </div>
-        </FormStep>
-      </React.Fragment>
-    );
+          <FormFieldContainer>
+            <div style={{ display: "flex" }}>
+              {types.map((type, index) => (
+                <div style={getTabStyle(types[index])} key={type} active={active === type} onClick={() => setActive(type)}>
+                  {type}
+                </div>
+              ))}
+            </div>
+            <p />
+            {active === types[0] ? (
+              <div>
+                <FormFieldContainer>
+                  <FieldComponentContainer>
+                    <div className="col-md-4">
+                      <CardLabel>
+                        {`${t("CR_FIRST_NAME_EN")}`} <span className="mandatorycss">*</span>
+                      </CardLabel>
+                      <TextInput
+                        t={t}
+                        inputRef={register({})}
+                        // isMandatory={false}
+                        type={"text"}
+                        // optionKey="i18nKey"
+                        name="groomFirstNameEn"
+                        // value={DeceasedFirstNameEn}
+                        // onChange={setSelectDeceasedFirstNameEn}
+                        placeholder={`${t("CR_FIRST_NAME_EN")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <CardLabel>{`${t("CR_MIDDLE_NAME_EN")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        inputRef={register({})}
+                        // isMandatory={false}
+                        type={"text"}
+                        // optionKey="i18nKey"
+                        name="husbandMiddleNameEn"
+                        // value={DeceasedFirstNameEn}
+                        // onChange={setSelectDeceasedFirstNameEn}
+                        placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <CardLabel>{`${t("CR_LAST_NAME_EN")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        inputRef={register({})}
+                        // isMandatory={false}
+                        type={"text"}
+                        // optionKey="i18nKey"
+                        name="husbandLastNameEn"
+                        // value={DeceasedFirstNameEn}
+                        // onChange={setSelectDeceasedFirstNameEn}
+                        placeholder={`${t("CR_LAST_NAME_EN")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                  </FieldComponentContainer>
+
+                  <div style={{ marginTop: "2.8rem" }}>
+                    <ButtonContainer>
+                      <EditIcon
+                        selected={true}
+                        label={"Edit"}
+                        onClick={() => {
+                          setShowModal(true);
+                        }}
+                      />
+                    </ButtonContainer>
+                  </div>
+                </FormFieldContainer>
+                <FormFieldContainer>
+                  <FieldComponentContainer>
+                    <div className="col-md-4">
+                      <CardLabel>
+                        {`${t("CR_FIRST_NAME_ML")}`} <span className="mandatorycss">*</span>
+                      </CardLabel>
+                      <TextInput
+                        t={t}
+                        inputRef={register({})}
+                        // isMandatory={false}
+                        type={"text"}
+                        // optionKey="i18nKey"
+                        name="groomFirstNameMl"
+                        // value={DeceasedFirstNameEn}
+                        // onChange={setSelectDeceasedFirstNameEn}
+                        placeholder={`${t("CR_FIRST_NAME_ML")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <CardLabel>{`${t("CR_MIDDLE_NAME_MAL")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        inputRef={register({})}
+                        // isMandatory={false}
+                        type={"text"}
+                        // optionKey="i18nKey"
+                        name="husbandMiddleNameMl"
+                        // value={DeceasedFirstNameEn}
+                        // onChange={setSelectDeceasedFirstNameEn}
+                        placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <CardLabel>{`${t("CR_LAST_NAME_ML")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        inputRef={register({})}
+                        // isMandatory={false}
+                        type={"text"}
+                        // optionKey="i18nKey"
+                        name="husbandLastNameMl"
+                        // value={DeceasedFirstNameEn}
+                        // onChange={setSelectDeceasedFirstNameEn}
+                        placeholder={`${t("CR_LAST_NAME_MAL")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                  </FieldComponentContainer>
+
+                  <div style={{ marginTop: "2.8rem" }}>
+                    <ButtonContainer>
+                      <EditIcon
+                        selected={true}
+                        label={"Edit"}
+                        onClick={() => {
+                          setShowModal(true);
+                        }}
+                      />
+                    </ButtonContainer>
+                  </div>
+                </FormFieldContainer>
+                <FormFieldContainer>
+                  <FieldComponentContainer>
+                    <div className="col-md-4">
+                      <CardLabel>
+                        {t("CR_DATE_OF_BIRTH")}
+                        <span className="mandatorycss">*</span>
+                      </CardLabel>
+                      <DatePicker
+                        // date={DateOfDeath}
+                        datePickerRef={register}
+                        // max={convertEpochToDate(new Date())}
+                        name="groomDateOfBirth"
+                        // onChange={selectDeathDate}
+                        // {...(validation = {
+                        //   pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",
+                        //   isRequired: true,
+                        //   type: "text",
+                        //   title: t("CR_INVALID_DATE"),
+                        // })}
+                      />
+                    </div>
+                  </FieldComponentContainer>
+                  <div style={{ marginTop: "2.8rem" }}>
+                    <ButtonContainer>
+                      <EditIcon
+                        selected={true}
+                        label={"Edit"}
+                        onClick={() => {
+                          setShowModal(true);
+                        }}
+                      />
+                    </ButtonContainer>
+                  </div>
+                </FormFieldContainer>
+                <FormFieldContainer>
+                  <FieldComponentContainer>
+                    <div className="col-md-4">
+                      <CardLabel>
+                        {`${t("CR_MOTHER_NAME_EN")}`} <span className="mandatorycss">*</span>
+                      </CardLabel>
+                      <TextInput
+                        t={t}
+                        inputRef={register({})}
+                        // isMandatory={false}
+                        type={"text"}
+                        // optionKey="i18nKey"
+                        name="groomMotherNameEn"
+                        // value={DeceasedFirstNameEn}
+                        // onChange={setSelectDeceasedFirstNameEn}
+                        placeholder={`${t("CR_MOTHER_NAME_EN")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <CardLabel>{`${t("CR_MOTHER_NAME_ML")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        inputRef={register({})}
+                        // isMandatory={false}
+                        type={"text"}
+                        // optionKey="i18nKey"
+                        name="groomMotherNameMl"
+                        // value={DeceasedFirstNameEn}
+                        // onChange={setSelectDeceasedFirstNameEn}
+                        placeholder={`${t("CR_MOTHER_NAME_ML")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                  </FieldComponentContainer>
+
+                  <div style={{ marginTop: "2.8rem" }}>
+                    <ButtonContainer>
+                      <EditIcon
+                        selected={true}
+                        label={"Edit"}
+                        onClick={() => {
+                          setShowModal(true);
+                        }}
+                      />
+                    </ButtonContainer>
+                  </div>
+                </FormFieldContainer>
+                <FormFieldContainer>
+                  <FieldComponentContainer>
+                    <div className="col-md-4">
+                      <CardLabel>
+                        {`${t("CR_FATHER_NAME_EN")}`} <span className="mandatorycss">*</span>
+                      </CardLabel>
+                      <TextInput
+                        t={t}
+                        // isMandatory={false}
+                        inputRef={register({})}
+                        type={"text"}
+                        // optionKey="i18nKey"
+                        name="groomFatherNameEn"
+                        // value={DeceasedFirstNameEn}
+                        // onChange={setSelectDeceasedFirstNameEn}
+                        placeholder={`${t("CR_FATHER_NAME_EN")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <CardLabel>{`${t("CR_FATHER_NAME_ML")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        inputRef={register({})}
+                        // isMandatory={false}
+                        type={"text"}
+                        // optionKey="i18nKey"
+                        name="groomFatherNameMl"
+                        // value={DeceasedFirstNameEn}
+                        // onChange={setSelectDeceasedFirstNameEn}
+                        placeholder={`${t("CR_FATHER_NAME_ML")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                  </FieldComponentContainer>
+
+                  <div style={{ marginTop: "2.8rem" }}>
+                    <ButtonContainer>
+                      <EditIcon
+                        selected={true}
+                        label={"Edit"}
+                        onClick={() => {
+                          setShowModal(true);
+                        }}
+                      />
+                    </ButtonContainer>
+                  </div>
+                </FormFieldContainer>
+                <FormFieldContainer>
+                  <FieldComponentContainer>
+                    <div className="col-md-4">
+                      <CardLabel>{`${t("CR_GUARDIAN_NAME_EN")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        inputRef={register({})}
+                        // isMandatory={false}
+                        type={"text"}
+                        // optionKey="i18nKey"
+                        name="groomGuardianNameEn"
+                        // value={DeceasedFirstNameEn}
+                        // onChange={setSelectDeceasedFirstNameEn}
+                        placeholder={`${t("CR_GUARDIAN_NAME_EN")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <CardLabel>{`${t("CR_GUARDIAN_NAME_ML")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        inputRef={register({})}
+                        // isMandatory={false}
+                        type={"text"}
+                        // optionKey="i18nKey"
+                        name="groomGuardianNameMl"
+                        // value={DeceasedFirstNameEn}
+                        // onChange={setSelectDeceasedFirstNameEn}
+                        placeholder={`${t("CR_GUARDIAN_NAME_ML")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                  </FieldComponentContainer>
+                  <div style={{ marginTop: "2.8rem" }}>
+                    <ButtonContainer>
+                      <EditIcon
+                        selected={true}
+                        label={"Edit"}
+                        onClick={() => {
+                          setShowModal(true);
+                        }}
+                      />
+                    </ButtonContainer>
+                  </div>
+                </FormFieldContainer>
+                <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-12">
+                <h1 className="headingh1">
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PERMANENT_ADDRESS")}`}</span>{" "}
+                </h1>
+              </div>
+            </div>
+          </div>
+                <MarriageAddressPage formData={navigationData} />
+              </div>
+            ) : (
+              <div>
+                <FormFieldContainer>
+                  <FieldComponentContainer>
+                    <div className="col-md-4">
+                      <CardLabel>
+                        {`${t("CR_FIRST_NAME_EN")}`} <span className="mandatorycss">*</span>
+                      </CardLabel>
+                      <TextInput
+                        t={t}
+                        inputRef={register({})}
+                        // isMandatory={false}
+                        type={"text"}
+                        // optionKey="i18nKey"
+                        name="brideFirstNameEn"
+                        // value={DeceasedFirstNameEn}
+                        // onChange={setSelectDeceasedFirstNameEn}
+                        placeholder={`${t("CR_FIRST_NAME_EN")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <CardLabel>{`${t("CR_MIDDLE_NAME_EN")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        inputRef={register({})}
+                        // isMandatory={false}
+                        type={"text"}
+                        // optionKey="i18nKey"
+                        name="brideMiddleNameEn"
+                        // value={DeceasedFirstNameEn}
+                        // onChange={setSelectDeceasedFirstNameEn}
+                        placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <CardLabel>{`${t("CR_LAST_NAME_EN")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        inputRef={register({})}
+                        // isMandatory={false}
+                        type={"text"}
+                        // optionKey="i18nKey"
+                        name="brideLastNameEn"
+                        // value={DeceasedFirstNameEn}
+                        // onChange={setSelectDeceasedFirstNameEn}
+                        placeholder={`${t("CR_LAST_NAME_EN")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                  </FieldComponentContainer>
+
+                  <div style={{ marginTop: "2.8rem" }}>
+                    <ButtonContainer>
+                      <EditIcon
+                        selected={true}
+                        label={"Edit"}
+                        onClick={() => {
+                          setShowModal(true);
+                        }}
+                      />
+                    </ButtonContainer>
+                  </div>
+                </FormFieldContainer>
+                <FormFieldContainer>
+                  <FieldComponentContainer>
+                    <div className="col-md-4">
+                      <CardLabel>
+                        {`${t("CR_FIRST_NAME_ML")}`} <span className="mandatorycss">*</span>
+                      </CardLabel>
+                      <TextInput
+                        t={t}
+                        inputRef={register({})}
+                        // isMandatory={false}
+                        type={"text"}
+                        // optionKey="i18nKey"
+                        name="brideFirstNameMl"
+                        // value={DeceasedFirstNameEn}
+                        // onChange={setSelectDeceasedFirstNameEn}
+                        placeholder={`${t("CR_FIRST_NAME_ML")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <CardLabel>{`${t("CR_MIDDLE_NAME_MAL")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        inputRef={register({})}
+                        // isMandatory={false}
+                        type={"text"}
+                        // optionKey="i18nKey"
+                        name="brideMiddleNameMl"
+                        // value={DeceasedFirstNameEn}
+                        // onChange={setSelectDeceasedFirstNameEn}
+                        placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <CardLabel>{`${t("CR_LAST_NAME_ML")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        inputRef={register({})}
+                        // isMandatory={false}
+                        type={"text"}
+                        // optionKey="i18nKey"
+                        name="brideLastNameMl"
+                        // value={DeceasedFirstNameEn}
+                        // onChange={setSelectDeceasedFirstNameEn}
+                        placeholder={`${t("CR_LAST_NAME_MAL")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                  </FieldComponentContainer>
+
+                  <div style={{ marginTop: "2.8rem" }}>
+                    <ButtonContainer>
+                      <EditIcon
+                        selected={true}
+                        label={"Edit"}
+                        onClick={() => {
+                          setShowModal(true);
+                        }}
+                      />
+                    </ButtonContainer>
+                  </div>
+                </FormFieldContainer>
+                <FormFieldContainer>
+                  <FieldComponentContainer>
+                    <div className="col-md-4">
+                      <CardLabel>
+                        {t("CR_DATE_OF_BIRTH")}
+                        <span className="mandatorycss">*</span>
+                      </CardLabel>
+                      <DatePicker
+                        // date={DateOfDeath}
+                        // max={convertEpochToDate(new Date())}
+                        datePickerRef={register}
+                        name="brideDateOfBirth"
+                        // onChange={selectDeathDate}
+                        // {...(validation = {
+                        //   pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",
+                        //   isRequired: true,
+                        //   type: "text",
+                        //   title: t("CR_INVALID_DATE"),
+                        // })}
+                      />
+                    </div>
+                  </FieldComponentContainer>
+                  <div style={{ marginTop: "2.8rem" }}>
+                    <ButtonContainer>
+                      <EditIcon
+                        selected={true}
+                        label={"Edit"}
+                        onClick={() => {
+                          setShowModal(true);
+                        }}
+                      />
+                    </ButtonContainer>
+                  </div>
+                </FormFieldContainer>
+                <FormFieldContainer>
+                  <FieldComponentContainer>
+                    <div className="col-md-4">
+                      <CardLabel>
+                        {`${t("CR_MOTHER_NAME_EN")}`} <span className="mandatorycss">*</span>
+                      </CardLabel>
+                      <TextInput
+                        t={t}
+                        inputRef={register({})}
+                        // isMandatory={false}
+                        type={"text"}
+                        // optionKey="i18nKey"
+                        name="brideMotherNameEn"
+                        // value={DeceasedFirstNameEn}
+                        // onChange={setSelectDeceasedFirstNameEn}
+                        placeholder={`${t("CR_MOTHER_NAME_EN")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <CardLabel>{`${t("CR_MOTHER_NAME_ML")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        inputRef={register({})}
+                        // isMandatory={false}
+                        type={"text"}
+                        // optionKey="i18nKey"
+                        name="brideMotherNameMl"
+                        // value={DeceasedFirstNameEn}
+                        // onChange={setSelectDeceasedFirstNameEn}
+                        placeholder={`${t("CR_MOTHER_NAME_ML")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                  </FieldComponentContainer>
+                  <div style={{ marginTop: "2.8rem" }}>
+                    <ButtonContainer>
+                      <EditIcon
+                        selected={true}
+                        label={"Edit"}
+                        onClick={() => {
+                          setShowModal(true);
+                        }}
+                      />
+                    </ButtonContainer>
+                  </div>
+                </FormFieldContainer>
+                <FormFieldContainer>
+                  <FieldComponentContainer>
+                    <div className="col-md-4">
+                      <CardLabel>
+                        {`${t("CR_FATHER_NAME_EN")}`} <span className="mandatorycss">*</span>
+                      </CardLabel>
+                      <TextInput
+                        t={t}
+                        inputRef={register({})}
+                        // isMandatory={false}
+                        type={"text"}
+                        // optionKey="i18nKey"
+                        name="brideFatherNameEn"
+                        // value={DeceasedFirstNameEn}
+                        // onChange={setSelectDeceasedFirstNameEn}
+                        placeholder={`${t("CR_FATHER_NAME_EN")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <CardLabel>{`${t("CR_FATHER_NAME_ML")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        inputRef={register({})}
+                        // isMandatory={false}
+                        type={"text"}
+                        // optionKey="i18nKey"
+                        name="brideFatherNameMl"
+                        // value={DeceasedFirstNameEn}
+                        // onChange={setSelectDeceasedFirstNameEn}
+                        placeholder={`${t("CR_FATHER_NAME_ML")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                  </FieldComponentContainer>
+                  <div style={{ marginTop: "2.8rem" }}>
+                    <ButtonContainer>
+                      <EditIcon
+                        selected={true}
+                        label={"Edit"}
+                        onClick={() => {
+                          setShowModal(true);
+                        }}
+                      />
+                    </ButtonContainer>
+                  </div>
+                </FormFieldContainer>
+                <FormFieldContainer>
+                  <FieldComponentContainer>
+                    <div className="col-md-4">
+                      <CardLabel>{`${t("CR_GUARDIAN_NAME_EN")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        inputRef={register({})}
+                        // isMandatory={false}
+                        type={"text"}
+                        // optionKey="i18nKey"
+                        name="brideGuardianNameMl"
+                        // value={DeceasedFirstNameEn}
+                        // onChange={setSelectDeceasedFirstNameEn}
+                        placeholder={`${t("CR_GUARDIAN_NAME_EN")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <CardLabel>{`${t("CR_GUARDIAN_NAME_ML")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        inputRef={register({})}
+                        // isMandatory={false}
+                        type={"text"}
+                        // optionKey="i18nKey"
+                        name="brideGuardianNameMl"
+                        // value={DeceasedFirstNameEn}
+                        // onChange={setSelectDeceasedFirstNameEn}
+                        placeholder={`${t("CR_GUARDIAN_NAME_ML")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                  </FieldComponentContainer>
+                  <div style={{ marginTop: "2.8rem" }}>
+                    <ButtonContainer>
+                      <EditIcon
+                        selected={true}
+                        label={"Edit"}
+                        onClick={() => {
+                          setShowModal(true);
+                        }}
+                      />
+                    </ButtonContainer>
+                  </div>
+                </FormFieldContainer>
+                <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-12">
+                <h1 className="headingh1">
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PERMANENT_ADDRESS")}`}</span>{" "}
+                </h1>
+              </div>
+            </div>
+          </div>
+                <MarriageAddressPage formData={navigationData}/>
+              </div>
+            )}
+          </FormFieldContainer>
+        </form>
+        <BirthInclusionModal showModal={showModal} selectedConfig={selectedInclusionItem} hideModal={_hideModal} />
+      </FormStep>
+    </React.Fragment>
+  );
 };
 export default MarriageInclusionEditPage;

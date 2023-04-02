@@ -2,7 +2,7 @@ import { Banner, Card, CardText, LinkButton, Loader, SubmitBar } from "@egovernm
 import React, { useEffect,useState  } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { convertToAdoptionRegistration,convertToAdoptionUpdation } from "../../../utils";
+import { convertToAdoptionRegistration,convertToAdoptionUpdation } from "../../../utils/adoptionbirthindex";
 import getPDFData from "../../../utils/getTLAcknowledgementData";
 
 const GetActionMessage = (props) => {
