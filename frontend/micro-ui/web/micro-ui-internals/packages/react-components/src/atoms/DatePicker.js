@@ -6,7 +6,7 @@ const DatePicker = (props) => {
   // const [date, setDate] = useState(() => props.initialDate || null);
   const dateInp = useRef();
 
-  function defaultFormatFunc(date) {    
+  function defaultFormatFunc(date) {
     if (date) {
       const operationDate = typeof date === "string" ? new Date(date) : date;
       const years = operationDate?.getFullYear();
@@ -24,7 +24,7 @@ const DatePicker = (props) => {
   }
 
   const getDatePrint = () => props?.formattingFn?.(props?.date) || defaultFormatFunc(props?.date);
- 
+
   const selectDate = (e) => {
     const date = e.target.value;
     // setDate(date);
@@ -35,7 +35,9 @@ const DatePicker = (props) => {
     <div style={{ position: "relative", width: "100%" }}>
       <React.Fragment>
         <input
+          ref={props.datePickerRef}
           type="text"
+          name={props.name}
           disabled={props.disabled}
           value={getDatePrint() ? getDatePrint() : "DD/MM/YYYY"}
           readOnly
