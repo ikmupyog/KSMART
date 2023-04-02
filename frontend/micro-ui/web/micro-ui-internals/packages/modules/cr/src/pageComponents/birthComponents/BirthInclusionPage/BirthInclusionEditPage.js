@@ -28,11 +28,12 @@ const BirthInclusionEditPage = ({cmbNation, menu, cmbPlace ,BirthCorrectionDocum
   
   let formData = {};
   let validation = {};
-  // let birthInclusionFormData = {};
+  let birthInclusionFormData = {};
   const { t } = useTranslation();
   const stateId = Digit.ULBService.getStateId();
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const [showModal, setShowModal] = useState(false);
+  const [birthInclusionFormsObj, setbirthInclusionFormsObj] = useState(false);
   // const [isDisabled,setDisabled] = useState(false);
   // const [uploadStatus, setUploadStatus] = useState({
   //   hospitalCorrectionLetter: false,
@@ -45,8 +46,11 @@ const BirthInclusionEditPage = ({cmbNation, menu, cmbPlace ,BirthCorrectionDocum
 
   useEffect(async()=>{
      birthInclusionFormData = await initializeBirthInclusionObject(BirthCorrectionDocuments,navigationData);
+     await setbirthInclusionFormsObj(birthInclusionFormData);
     console.log("birthInclusionFormData==",birthInclusionFormData);
   },[navigationData,BirthCorrectionDocuments])
+
+
 
 console.log("navigationData",navigationData);
 
@@ -91,9 +95,11 @@ console.log("navigationData",navigationData);
 
   const onSubmit = data =>{ console.log(data) };
 
+if(Object.keys(birthInclusionFormsObj)?.length > 0){
+  console.log("birthInclusionFormData??.curValue",birthInclusionFormData.CHILD_DOB);
   return (
     <React.Fragment>
-      <FormStep >
+      <FormStep>
       <div className="row">
         <div className="col-md-12">
           <div className="col-md-12">
@@ -123,7 +129,7 @@ console.log("navigationData",navigationData);
                   // disable={true}
                   //  inputFormat="DD-MM-YYYY"
                   // inputRef={register}
-                  date={birthInclusionFormData?.["CHILD_DOB"]?.curValue} 
+                  date={birthInclusionFormData?.CHILD_DOB?.curValue} 
                   // onChange={props.onChange}
                   placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
                   {...(validation = { isRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
@@ -700,5 +706,8 @@ console.log("navigationData",navigationData);
       </FormStep>
     </React.Fragment>
   );
+  } else{
+    return (<Loader/>)
+  }
 };
 export default BirthInclusionEditPage;
