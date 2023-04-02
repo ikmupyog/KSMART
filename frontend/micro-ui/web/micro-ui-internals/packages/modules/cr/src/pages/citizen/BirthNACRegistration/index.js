@@ -13,7 +13,8 @@ const CreateBirthNACRegistration = ({data, parentUrl, isEditBirth }) => {
   const { pathname } = useLocation();
   const history = useHistory();
   const queryClient = useQueryClient();
-  const [params, setParams, clearParams] = isEditBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_NAC_BIRTH", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_NAC_BIRTH_REG", {});
+  const [isEditBirthNAC, setIsEditBirthNAC] = useState(sessionStorage.getItem("CR_BIRTH_NAC_EDIT_FLAG")? true : false);
+  const [params, setParams, clearParams] = isEditBirthNAC ? Digit.Hooks.useSessionStorage("CR_EDIT_NAC_BIRTH", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_NAC_BIRTH_REG", {});
 
   const stateId = Digit.ULBService.getStateId();
   let config = [];
@@ -22,8 +23,7 @@ const CreateBirthNACRegistration = ({data, parentUrl, isEditBirth }) => {
   const newNacBirthConfig = newConfig.find((item)=> item.head === "Birth-NAC Routing")
  
     config = config.concat(newNacBirthConfig.body.filter((a) => !a.hideInCitizen));
-    let formdata =  convertToNACRegistration(data);
-
+    
   config.indexRoute = "nac-download-details";
   const goNext = (skipStep, index, isAddMultiple, key, isPTCreateSkip) => {
     let currentPath = pathname.split("/").pop(),
@@ -60,7 +60,7 @@ const CreateBirthNACRegistration = ({data, parentUrl, isEditBirth }) => {
 
   const onSuccess = () => {
     sessionStorage.removeItem("CurrentFinancialYear");
-    queryClient.invalidateQueries("CR_CREATE_BIRTH_REG");
+    queryClient.invalidateQueries("CR_CREATE_NAC_BIRTH_REG");
   };
   const handleSkip = () => { };
   const handleMultiple = () => { };
@@ -81,7 +81,7 @@ const CreateBirthNACRegistration = ({data, parentUrl, isEditBirth }) => {
                 onSelect={handleSelect}
                 onSkip={handleSkip}
                 t={t}
-                formData={formdata}
+                formData={params}
                 onAdd={handleMultiple}
                 userType="citizen"
               />

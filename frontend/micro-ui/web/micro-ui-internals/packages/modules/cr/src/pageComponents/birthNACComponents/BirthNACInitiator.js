@@ -11,20 +11,21 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
   let validation = {};
   const [isDisableEdit, setisDisableEdit] = useState(isEditStillBirth ? isEditStillBirth : false);
   const {name:name,} =Digit.UserService.getUser().info ; // window.localStorage.getItem("user-info");
-  const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.InitiatorinfoDetails?.isInitiatorDeclaration : formData?.ApplicantDetails?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.ApplicantDetails?.InitiatorinfoDetails?.isInitiatorDeclaration : false);
-  const [isDeclaration, setDeclaration] = useState(formData?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.InitiatorinfoDetails?.isInitiatorDeclaration : formData?.ApplicantDetails?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.ApplicantDetails?.InitiatorinfoDetails?.isInitiatorDeclaration : false);
-  const [initiatorNameEn, setinitiatorNameEn] = useState(formData?.ApplicantDetails?.initiatorNameEn ? formData?.ApplicantDetails?.initiatorNameEn : formData?.ApplicantDetails?.InitiatorinfoDetails?.initiatorNameEn ? formData?.ApplicantDetails?.InitiatorinfoDetails?.initiatorNameEn : name);
-  const [initiatorAadhar, setinitiatorAadhar] = useState(formData?.ApplicantDetails?.initiatorAadhar ? formData?.ApplicantDetails?.initiatorAadhar : formData?.ApplicantDetails?.InitiatorinfoDetails?.initiatorAadhar ? formData?.ApplicantDetails?.InitiatorinfoDetails?.initiatorAadhar : "");
-  const [initiatorMobile, setinitiatorMobile] = useState(formData?.InitiatorinfoDetails?.initiatorMobile ? formData?.ApplicantDetails?.initiatorMobile : formData?.ApplicantDetails?.InitiatorinfoDetails?.initiatorMobile ? formData?.ApplicantDetails?.InitiatorinfoDetails?.initiatorMobile : "");
-  const [initiatorDesi, setinitiatorDesi] = useState(formData?.InitiatorinfoDetails?.initiatorDesi ? formData?.ApplicantDetails?.initiatorDesi : formData?.ApplicantDetails?.InitiatorinfoDetails?.initiatorDesi ? formData?.ApplicantDetails?.InitiatorinfoDetails?.initiatorDesi : "");
-  const [initiatorAddress, setinitiatorAddress] = useState(formData?.InitiatorinfoDetails?.initiatorAddress ? formData?.InitiatorinfoDetails?.initiatorAddress : formData?.ApplicantDetails?.InitiatorinfoDetails?.initiatorAddress ? formData?.ApplicantDetails?.InitiatorinfoDetails?.initiatorAddress : "");
+  const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.BirthNACInitiator?.isDeclared ? formData?. BirthNACInitiator?.isDeclared : false);
+  const [isDeclaration, setDeclaration] = useState(formData?. BirthNACInitiator?.isunderstood ? formData?. BirthNACInitiator?.isunderstood : false);
+  const [initiatorNameEn, setinitiatorNameEn] = useState(formData?.BirthNACInitiator?.initiatorNameEn ? formData?.BirthNACInitiator?.initiatorNameEn : name);
+  const [initiatorAadhar, setinitiatorAadhar] = useState(formData?.BirthNACInitiator?.initiatorAadhar ? formData?.BirthNACInitiator?.initiatorAadhar : "");
+  const [initiatorMobile, setinitiatorMobile] = useState(formData?. BirthNACInitiator?.initiatorMobile ? formData?.BirthNACInitiator?.initiatorMobile : "");
+  const [initiatorDesi, setinitiatorDesi] = useState(formData?. BirthNACInitiator?.initiatorDesi ? formData?.BirthNACInitiator?.initiatorDesi : "");
+  const [initiatorAddress, setinitiatorAddress] = useState(formData?. BirthNACInitiator?.applicantAddressEn ? formData?. BirthNACInitiator?.applicantAddressEn : "");
+  const [careofapplicant, setcareofapplicant] = useState(formData?.BirthNACInitiator?.careofapplicant);
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [childDOB, setChildDOB] = useState(formData?.OtherChildren?.childDOB);
-  const [gender, selectGender] = useState(formData?.OtherChildren?.sex);
-  const [childNameEn, setchildNameEn] = useState(formData?.OtherChildren?.childNameEn);
-  const [childNameMl, setchildNameMl] = useState(formData?.OtherChildren?.childNameMl);
-  const [orderofBirth, setorderOfBirth] = useState(formData?.OtherChildren?.orderOfBirth);
-  const [isAlive, setisAlive] = useState(formData?.OtherChildren?.isAlive);
+  const [childDOB, setChildDOB] = useState(formData?.BirthNACInitiator?.childDOB);
+  const [gender, selectGender] = useState(formData?.BirthNACInitiator?.sex);
+  const [childNameEn, setchildNameEn] = useState(formData?.BirthNACInitiator?.childNameEn);
+  const [childNameMl, setchildNameMl] = useState(formData?.BirthNACInitiator?.childNameMl);
+  const [orderofBirth, setorderOfBirth] = useState(formData?.BirthNACInitiator?.orderOfBirth);
+  const [isAlive, setisAlive] = useState(formData?.BirthNACInitiator?.isAlive);
   const [slNo, setslNo] = useState("");
   const [error, setError] = useState(null);
   const [uploadedFile, setUploadedFile] = useState(null);
@@ -41,10 +42,10 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
   const [file5, setFile5] = useState(formData?.owners?.documents?.ProofOfIdentity);
 
   const [toast, setToast] = useState(false);
-  const [infomantFirstNmeEnError, setinfomantFirstNmeEnError] = useState(formData?.InitiatorinfoDetails?.initiatorNameEn ? false : false);
-  const [initiatorAadharError, setinitiatorAadharError] = useState(formData?.InitiatorinfoDetails?.initiatorAadhar ? false : false);
-  const [initiatorMobileError, setinitiatorMobileError] = useState(formData?.InitiatorinfoDetails?.initiatorMobile ? false : false);
-  const [initiatorDesiError, setinitiatorDesiError] = useState(formData?.InitiatorinfoDetails?.initiatorDesi ? false : false);
+  const [infomantFirstNmeEnError, setinfomantFirstNmeEnError] = useState(formData?. BirthNACInitiator?.initiatorNameEn ? false : false);
+  const [initiatorAadharError, setinitiatorAadharError] = useState(formData?. BirthNACInitiator?.initiatorAadhar ? false : false);
+  const [initiatorMobileError, setinitiatorMobileError] = useState(formData?. BirthNACInitiator?.initiatorMobile ? false : false);
+  const [initiatorDesiError, setinitiatorDesiError] = useState(formData?. BirthNACInitiator?.initiatorDesi ? false : false);
   const [formDatalocal, setFormDatalocal] = useState(formData?.TradeDetails);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const storedAppData = null;
@@ -197,17 +198,17 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
     });
   useEffect(() => {
     if (isInitialRender) {
-      if (formData?.InitiatorinfoDetails?.isInitiatorDeclaration != null) {
+      if (formData?. BirthNACInitiator?.isInitiatorDeclaration != null) {
         setIsInitialRender(false);
-        setisInitiatorDeclaration(formData?.InitiatorinfoDetails?.isInitiatorDeclaration);
+        setisInitiatorDeclaration(formData?. BirthNACInitiator?.isInitiatorDeclaration);
       }
     }
   }, [isInitialRender]);
   useEffect(() => {
     if (isInitialRender) {
-      if (formData?.InitiatorinfoDetails?.isInitiatorDeclaration != null) {
+      if (formData?. BirthNACInitiator?.isInitiatorDeclaration != null) {
         setIsInitialRender(false);
-        setDeclaration(formData?.InitiatorinfoDetails?.isInitiatorDeclaration);
+        setDeclaration(formData?. BirthNACInitiator?.isInitiatorDeclaration);
       }
     }
   }, [isInitialRender]);
@@ -252,6 +253,9 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
   }
   function setAliveExpired(value) {
     setisAlive(value);
+  }
+  function setselectCareofApplicant(value) {
+    setselectCareofApplicant(value);
   }
   function setSelectinitiatorAadhar(e) {
     if (e.target.value.trim().length >= 0) {
@@ -533,7 +537,7 @@ function selectfile5(e) {
 
         <div className="row">
           <div className="col-md-12">
-            <div className="col-md-4">
+            <div className="col-md-3">
               <CardLabel>
                 {`${t("CS_COMMON_AADHAAR")}`}
                 <span className="mandatorycss">*</span>
@@ -551,7 +555,7 @@ function selectfile5(e) {
               />
             </div>
 
-            <div className="col-md-4">
+            <div className="col-md-3">
               <CardLabel>
                 {`${t("CR_INITIATOR_NAME")}`}
                 <span className="mandatorycss">*</span>
@@ -568,7 +572,22 @@ function selectfile5(e) {
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INITIATOR_NAME") })}
               />
             </div>
-            
+            <div className="col-md-3">
+              <CardLabel>
+                {`${t("CR_IS_CAREOF")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                type={"text"}
+                optionKey="i18nKey"
+                name="careofapplicant"
+                value={careofapplicant}
+                onChange={setselectCareofApplicant}
+                disable={isDisableEdit}
+                placeholder={`${t("CR_IS_CAREOF")}`}
+              />
+            </div>
             <div className="col-md-3">
               <CardLabel>
                 {`${t("CR_MOBILE_NO")}`}

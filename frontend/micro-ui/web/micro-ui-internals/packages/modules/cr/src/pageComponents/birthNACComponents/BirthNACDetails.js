@@ -88,84 +88,85 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
 });
     const [workFlowCode, setWorkFlowCode] = useState(); 
 
-  const [childDOB, setChildDOB] = useState(formData?.NacDetails?.childDOB ? formData?.NacDetails?.childDOB : "");
-  const [gender, selectGender] = useState(formData?.NacDetails?.gender);
+  const [childDOB, setChildDOB] = useState(formData?. BirthNACDetails?.childDOB ? formData?. BirthNACDetails?.childDOB : "");
+  const [gender, selectGender] = useState(formData?. BirthNACDetails?.gender);
 
   
   const [childAadharNo, setChildAadharNo] = useState(
-    formData?.NacDetails?.childAadharNo ? formData?.NacDetails?.childAadharNo : ""
+    formData?. BirthNACDetails?.childAadharNo ? formData?. BirthNACDetails?.childAadharNo : ""
   );
   console.log(formData, "formData");
   const [childFirstNameEn, setChildFirstNameEn] = useState(
-    formData?.NacDetails?.childFirstNameEn ? formData?.NacDetails?.childFirstNameEn : ""
+    formData?. BirthNACDetails?.childFirstNameEn ? formData?. BirthNACDetails?.childFirstNameEn : ""
   );
   const [childMiddleNameEn, setChildMiddleNameEn] = useState(
-    formData?.NacDetails?.childMiddleNameEn ? formData?.NacDetails?.childMiddleNameEn : ""
+    formData?. BirthNACDetails?.childMiddleNameEn ? formData?. BirthNACDetails?.childMiddleNameEn : ""
   );
   const [childLastNameEn, setChildLastNameEn] = useState(
-    formData?.NacDetails?.childLastNameEn ? formData?.NacDetails?.childLastNameEn : ""
+    formData?. BirthNACDetails?.childLastNameEn ? formData?. BirthNACDetails?.childLastNameEn : ""
   );
   const [childFirstNameMl, setChildFirstNameMl] = useState(
-    formData?.NacDetails?.childFirstNameMl ? formData?.NacDetails?.childFirstNameMl : ""
+    formData?. BirthNACDetails?.childFirstNameMl ? formData?. BirthNACDetails?.childFirstNameMl : ""
   );
   const [childMiddleNameMl, setChildMiddleNameMl] = useState(
-    formData?.NacDetails?.childMiddleNameMl ? formData?.NacDetails?.childMiddleNameMl : ""
+    formData?. BirthNACDetails?.childMiddleNameMl ? formData?. BirthNACDetails?.childMiddleNameMl : ""
   );
   const [childLastNameMl, setChildLastNameMl] = useState(
-    formData?.NACNacDetails?.childLastNameMl ? formData?.NACNacDetails?.childLastNameMl : ""
+    formData?. BirthNACDetails?.childLastNameMl ? formData?. BirthNACDetails?.childLastNameMl : ""
   );
   const [birthDateTime, setbirthDateTime] = useState(
-    formData?.NACNacDetails?.birthDateTime ? formData?.NACNacDetails?.birthDateTime : ""
+    formData?. BirthNACDetails?.birthDateTime ? formData?. BirthNACDetails?.birthDateTime : ""
   );
-  const [hospitalName, selectHospitalName] = useState(formData?.NacDetails?.hospitalName?.code ? formData?.NacDetails?.hospitalName : formData?.NacDetails?.hospitalName ? "" : "");
-  const [hospitalNameMl, selectHospitalNameMl] = useState(formData?.NacDetails?.hospitalNameMl?.code ? formData?.NacDetails?.hospitalNameMl : formData?.NacDetails?.hospitalNameMl ? "" : "");
-  const [birthPlace, selectBirthPlace] = useState(formData?.NacDetails?.birthPlace?.code ? formData?.NacDetails?.birthPlace : formData?.NacDetails?.birthPlace ?
-    (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.NacDetails?.birthPlace)[0]) : "");
-  const [institution, setInstitution] = useState(formData?.NacDetails?.institution?.code ? formData?.NacDetails?.institution : formData?.NacDetails?.institutionTypeCode ? "" : "");
-  const [institutionId, setInstitutionId] = useState(formData?.NacDetails?.institutionId?.code ? formData?.NacDetails?.institutionId : formData?.NacDetails?.institutionNameCode ? "" : "");
-  const [institutionIdMl, setInstitutionIdMl] = useState(formData?.NacDetails?.institutionIdMl?.code ? formData?.NacDetails?.institutionIdMl : formData?.NacDetails?.institutionNameCode ? "" : "");
-  const [adrsPostOffice, setAdrsPostOffice] = useState(formData?.NacDetails?.adrsPostOffice?.code ? formData?.NacDetails?.adrsPostOffice : formData?.NacDetails?.adrsPostOffice ? "" : "");
-  // const [adrsPostOffice, setAdrsPostOffice] = useState(formData?.NACNacDetails?.adrsPostOffice ? formData?.NACNacDetails?.adrsPostOffice : null);
-  const [adrsPincode, setAdrsPincode] = useState(formData?.NacDetails?.adrsPincode ? formData?.NacDetails?.adrsPincode : null);
-  const [adrsHouseNameEn, setAdrsHouseNameEn] = useState(formData?.NacDetails?.adrsHouseNameEn ? formData?.NacDetails?.adrsHouseNameEn : "");
-  const [adrsHouseNameMl, setAdrsHouseNameMl] = useState(formData?.NacDetails?.adrsHouseNameMl ? formData?.NacDetails?.adrsHouseNameMl : "");
-  const [adrsLocalityNameEn, setAdrsLocalityNameEn] = useState(formData?.NacDetails?.adrsLocalityNameEn ? formData?.NacDetails?.adrsLocalityNameEn : "");
-  const [adrsLocalityNameMl, setAdrsLocalityNameMl] = useState(formData?.NacDetails?.adrsLocalityNameMl ? formData?.NacDetails?.adrsLocalityNameMl : "");
-  const [adrsStreetNameEn, setAdrsStreetNameEn] = useState(formData?.NacDetails?.adrsStreetNameEn ? formData?.NacDetails?.adrsStreetNameEn : "");
-  const [adrsStreetNameMl, setAdrsStreetNameMl] = useState(formData?.NacDetails?.adrsStreetNameMl ? formData?.NacDetails?.adrsStreetNameMl : "");
-  const [wardNo, setWardNo] = useState(formData.NacDetails?.wardNo?.code ? formData.NacDetails?.wardNo : formData?.NacDetails?.wardNo ? "" : "");
+  const [hospitalName, selectHospitalName] = useState(formData?. BirthNACDetails?.hospitalName?.code ? formData?. BirthNACDetails?.hospitalName : formData?. BirthNACDetails?.hospitalName ? "" : "");
+  const [hospitalNameMl, selectHospitalNameMl] = useState(formData?. BirthNACDetails?.hospitalNameMl?.code ? formData?. BirthNACDetails?.hospitalNameMl : formData?. BirthNACDetails?.hospitalNameMl ? "" : "");
+  const [birthPlace, selectBirthPlace] = useState(formData?. BirthNACDetails?.birthPlace?.code ? formData?. BirthNACDetails?.birthPlace : formData?. BirthNACDetails?.birthPlace ?
+    (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?. BirthNACDetails?.birthPlace)[0]) : "");
+  const [institution, setInstitution] = useState(formData?. BirthNACDetails?.institution?.code ? formData?. BirthNACDetails?.institution : formData?. BirthNACDetails?.institutionTypeCode ? "" : "");
+  const [institutionId, setInstitutionId] = useState(formData?. BirthNACDetails?.institutionId?.code ? formData?. BirthNACDetails?.institutionId : formData?. BirthNACDetails?.institutionNameCode ? "" : "");
+  const [institutionIdMl, setInstitutionIdMl] = useState(formData?. BirthNACDetails?.institutionIdMl?.code ? formData?. BirthNACDetails?.institutionIdMl : formData?. BirthNACDetails?.institutionNameCode ? "" : "");
+  const [adrsPostOffice, setAdrsPostOffice] = useState(formData?. BirthNACDetails?.adrsPostOffice?.code ? formData?. BirthNACDetails?.adrsPostOffice : formData?. BirthNACDetails?.adrsPostOffice ? "" : "");
+  // const [adrsPostOffice, setAdrsPostOffice] = useState(formData?. BirthNACDetails?.adrsPostOffice ? formData?. BirthNACDetails?.adrsPostOffice : null);
+  const [adrsPincode, setAdrsPincode] = useState(formData?. BirthNACDetails?.adrsPincode ? formData?. BirthNACDetails?.adrsPincode : null);
+  const [adrsHouseNameEn, setAdrsHouseNameEn] = useState(formData?. BirthNACDetails?.adrsHouseNameEn ? formData?. BirthNACDetails?.adrsHouseNameEn : "");
+  const [adrsHouseNameMl, setAdrsHouseNameMl] = useState(formData?. BirthNACDetails?.adrsHouseNameMl ? formData?. BirthNACDetails?.adrsHouseNameMl : "");
+  const [adrsLocalityNameEn, setAdrsLocalityNameEn] = useState(formData?. BirthNACDetails?.adrsLocalityNameEn ? formData?. BirthNACDetails?.adrsLocalityNameEn : "");
+  const [adrsLocalityNameMl, setAdrsLocalityNameMl] = useState(formData?. BirthNACDetails?.adrsLocalityNameMl ? formData?. BirthNACDetails?.adrsLocalityNameMl : "");
+  const [adrsStreetNameEn, setAdrsStreetNameEn] = useState(formData?. BirthNACDetails?.adrsStreetNameEn ? formData?. BirthNACDetails?.adrsStreetNameEn : "");
+  const [adrsStreetNameMl, setAdrsStreetNameMl] = useState(formData?. BirthNACDetails?.adrsStreetNameMl ? formData?. BirthNACDetails?.adrsStreetNameMl : "");
+  const [wardNo, setWardNo] = useState(formData. BirthNACDetails?.wardNo?.code ? formData. BirthNACDetails?.wardNo : formData?. BirthNACDetails?.wardNo ? "" : "");
   const [isInitialRenderPlace, setIsInitialRenderPlace] = useState(true);
 
-  const [vehicleType, setvehicleType] = useState(formData?.NacDetails?.vehicleType?.code ? formData?.NacDetails?.vehicleType : formData?.NacDetails?.vehicleType ? "" : "");
-  const [vehicleRegistrationNo, setvehicleRegistrationNo] = useState(formData?.NacDetails?.vehicleRegistrationNo ? formData?.NacDetails?.vehicleRegistrationNo : "");
-  const [vehicleFromEn, setvehicleFromEn] = useState(formData?.NacDetails?.vehicleFromEn ? formData?.NacDetails?.vehicleFromEn : "");
-  const [vehicleToEn, setvehicleToEn] = useState(formData?.NacDetails?.vehicleToEn ? formData?.NacDetails?.vehicleToEn : "");
-  const [vehicleFromMl, setvehicleFromMl] = useState(formData?.NacDetails?.vehicleFromMl ? formData?.NacDetails?.vehicleFromMl : "");
-  const [vehicleHaltPlace, setvehicleHaltPlace] = useState(formData?.NacDetails?.vehicleHaltPlace ? formData?.NacDetails?.vehicleHaltPlace : "");
-  //const [vehicleHaltPlaceMl, setvehicleHaltPlaceMl] = useState(formData?.NacDetails?.vehicleHaltPlaceMl ? formData?.NacDetails?.vehicleHaltPlaceMl : "");
-  const [vehicleToMl, setvehicleToMl] = useState(formData?.NacDetails?.vehicleToMl ? formData?.NacDetails?.vehicleToMl : "");
-  const [vehicleDesDetailsEn, setvehicleDesDetailsEn] = useState(formData?.NacDetails?.vehicleDesDetailsEn ? formData?.NacDetails?.vehicleDesDetailsEn : "");
-  const [setadmittedHospitalEn, setSelectedadmittedHospitalEn] = useState(formData?.NacDetails?.setadmittedHospitalEn?.code ? formData?.NacDetails?.setadmittedHospitalEn : formData?.NacDetails?.setadmittedHospitalEn ? "" : "");
+  const [vehicleType, setvehicleType] = useState(formData?. BirthNACDetails?.vehicleType?.code ? formData?. BirthNACDetails?.vehicleType : formData?. BirthNACDetails?.vehicleType ? "" : "");
+  const [vehicleRegistrationNo, setvehicleRegistrationNo] = useState(formData?. BirthNACDetails?.vehicleRegistrationNo ? formData?. BirthNACDetails?.vehicleRegistrationNo : "");
+  const [vehicleFromEn, setvehicleFromEn] = useState(formData?. BirthNACDetails?.vehicleFromEn ? formData?. BirthNACDetails?.vehicleFromEn : "");
+  const [vehicleToEn, setvehicleToEn] = useState(formData?. BirthNACDetails?.vehicleToEn ? formData?. BirthNACDetails?.vehicleToEn : "");
+  const [vehicleFromMl, setvehicleFromMl] = useState(formData?. BirthNACDetails?.vehicleFromMl ? formData?. BirthNACDetails?.vehicleFromMl : "");
+  const [vehicleHaltPlace, setvehicleHaltPlace] = useState(formData?. BirthNACDetails?.vehicleHaltPlace ? formData?. BirthNACDetails?.vehicleHaltPlace : "");
+  //const [vehicleHaltPlaceMl, setvehicleHaltPlaceMl] = useState(formData?. BirthNACDetails?.vehicleHaltPlaceMl ? formData?. BirthNACDetails?.vehicleHaltPlaceMl : "");
+  const [vehicleToMl, setvehicleToMl] = useState(formData?. BirthNACDetails?.vehicleToMl ? formData?. BirthNACDetails?.vehicleToMl : "");
+  const [vehicleDesDetailsEn, setvehicleDesDetailsEn] = useState(formData?. BirthNACDetails?.vehicleDesDetailsEn ? formData?. BirthNACDetails?.vehicleDesDetailsEn : "");
+  const [setadmittedHospitalEn, setSelectedadmittedHospitalEn] = useState(formData?. BirthNACDetails?.setadmittedHospitalEn?.code ? formData?. BirthNACDetails?.setadmittedHospitalEn : formData?. BirthNACDetails?.setadmittedHospitalEn ? "" : "");
   const [value, setValue] = useState();
-  const [DifferenceInTime, setDifferenceInTime] = useState(formData?.NacDetails?.DifferenceInTime);
+  const [DifferenceInTime, setDifferenceInTime] = useState(formData?. BirthNACDetails?.DifferenceInTime);
 
-  const [publicPlaceType, setpublicPlaceType] = useState(formData?.NacDetails?.publicPlaceType?.code ? formData?.NacDetails?.publicPlaceType : formData?.NacDetails?.publicPlaceType ? "" : "");
-  const [localityNameEn, setlocalityNameEn] = useState(formData?.NacDetails?.localityNameEn ? formData?.NacDetails?.localityNameEn : "");
-  const [localityNameMl, setlocalityNameMl] = useState(formData?.NacDetails?.localityNameMl ? formData?.NacDetails?.localityNameMl : "");
-  const [streetNameEn, setstreetNameEn] = useState(formData?.NacDetails?.streetNameEn ? formData?.NacDetails?.streetNameEn : "");
-  const [streetNameMl, setstreetNameMl] = useState(formData?.NacDetails?.streetNameMl ? formData?.NacDetails?.streetNameMl : "");
-  const [publicPlaceDecpEn, setpublicPlaceDecpEn] = useState(formData?.NacDetails?.publicPlaceDecpEn ? formData?.NACNacDetails?.publicPlaceDecpEn : "");
+  const [publicPlaceType, setpublicPlaceType] = useState(formData?. BirthNACDetails?.publicPlaceType?.code ? formData?. BirthNACDetails?.publicPlaceType : formData?. BirthNACDetails?.publicPlaceType ? "" : "");
+  const [localityNameEn, setlocalityNameEn] = useState(formData?. BirthNACDetails?.localityNameEn ? formData?. BirthNACDetails?.localityNameEn : "");
+  const [localityNameMl, setlocalityNameMl] = useState(formData?. BirthNACDetails?.localityNameMl ? formData?. BirthNACDetails?.localityNameMl : "");
+  const [streetNameEn, setstreetNameEn] = useState(formData?. BirthNACDetails?.streetNameEn ? formData?. BirthNACDetails?.streetNameEn : "");
+  const [streetNameMl, setstreetNameMl] = useState(formData?. BirthNACDetails?.streetNameMl ? formData?. BirthNACDetails?.streetNameMl : "");
+  const [publicPlaceDecpEn, setpublicPlaceDecpEn] = useState(formData?. BirthNACDetails?.publicPlaceDecpEn ? formData?. BirthNACDetails?.publicPlaceDecpEn : "");
 
   const [orderOfBirth, setorderOfBirth] = useState(
-    formData?.NACNACChildDetails?.orderofBirth ? formData?.NACNACChildDetails?.orderofBirth : null
+    formData?.BirthNACDetails?.nacorderofChildren ? formData?.BirthNACDetails?.nacorderofChildren : null
   );
+  console.log(orderOfBirth, "orderOfBirth");
   const [toast, setToast] = useState(false);
-  //const [AadharError, setAadharError] = useState(formData?.NacDetails?.childAadharNo ? false : false);
-   const [ChildAadharHIde, setChildAadharHIde] = useState(formData?.NacDetails?.childAadharNo ? true : false);
-  const [DOBError, setDOBError] = useState(formData?.NacDetails?.childDOB ? false : true);
-  const [HospitalError, setHospitalError] = useState(formData?.NacDetails?.hospitalName ? false : true);
-  const [InstitutionError, setInstitutionError] = useState(formData?.NacDetails?.institution ? false : true);
-  const [InstitutionNameError, setInstitutionNameError] = useState(formData?.NacDetails?.institutionId ? false : true);
+  //const [AadharError, setAadharError] = useState(formData?. BirthNACDetails?.childAadharNo ? false : false);
+   const [ChildAadharHIde, setChildAadharHIde] = useState(formData?. BirthNACDetails?.childAadharNo ? true : false);
+  const [DOBError, setDOBError] = useState(formData?. BirthNACDetails?.childDOB ? false : true);
+  const [HospitalError, setHospitalError] = useState(formData?. BirthNACDetails?.hospitalName ? false : true);
+  const [InstitutionError, setInstitutionError] = useState(formData?. BirthNACDetails?.institution ? false : true);
+  const [InstitutionNameError, setInstitutionNameError] = useState(formData?. BirthNACDetails?.institutionId ? false : true);
   const [WardError, setAdsWardError] = useState(formData?.BirthPlaceHomeDetails?.wardNo ? false : true);
   const [AdsHomePostOfficeError, setAdsHomePostOfficeError] = useState(formData?.BirthPlaceHomeDetails?.AdrsHomePostOffice ? false : true);
   const [AdsHomePincodeError, setAdsHomePincodeError] = useState(formData?.BirthPlaceHomeDetails?.AdrsHomePincode ? false : true);
@@ -177,14 +178,14 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
   const [AdsHomeLocalityNameMlError, setAdsHomeLocalityNameMlError] = useState(
     formData?.BirthPlaceHomeDetails?.AdrsHomeLocalityNameMl ? false : true
   );
-  const [vehicleRegiNoError, setvehicleRegiNoError] = useState(formData?.NacDetails?.VehicleRegistrationNo ? false : true);
-  const [vehiTypeError, setvehiTypeError] = useState(formData?.NacDetails?.vehicleType ? false : true);
-  const [vehicleHaltPlaceError, setvehicleHaltPlaceError] = useState(formData?.NacDetails?.vehicleHaltPlace ? false : true);
-  const [admittedHospitalEnError, setadmittedHospitalEnError] = useState(formData?.NacDetails?.setadmittedHospitalEn ? false : true);
-  const [vehiDesDetailsEnError, setvehiDesDetailsEnError] = useState(formData?.NacDetails?.vehicleDesDetailsEn ? false : true);
-  const [placeTypepEnError, setplaceTypepEnError] = useState(formData?.NacDetails?.publicPlaceType ? false : true);
-  const [localNameEnError, setlocalNameEnError] = useState(formData?.NacDetails?.localityNameEn ? false : true);
-  const [localNameMlError, setlocalNameMlError] = useState(formData?.NacDetails?.localityNameMl ? false : true);
+  const [vehicleRegiNoError, setvehicleRegiNoError] = useState(formData?. BirthNACDetails?.VehicleRegistrationNo ? false : true);
+  const [vehiTypeError, setvehiTypeError] = useState(formData?. BirthNACDetails?.vehicleType ? false : true);
+  const [vehicleHaltPlaceError, setvehicleHaltPlaceError] = useState(formData?. BirthNACDetails?.vehicleHaltPlace ? false : true);
+  const [admittedHospitalEnError, setadmittedHospitalEnError] = useState(formData?. BirthNACDetails?.setadmittedHospitalEn ? false : true);
+  const [vehiDesDetailsEnError, setvehiDesDetailsEnError] = useState(formData?. BirthNACDetails?.vehicleDesDetailsEn ? false : true);
+  const [placeTypepEnError, setplaceTypepEnError] = useState(formData?. BirthNACDetails?.publicPlaceType ? false : true);
+  const [localNameEnError, setlocalNameEnError] = useState(formData?. BirthNACDetails?.localityNameEn ? false : true);
+  const [localNameMlError, setlocalNameMlError] = useState(formData?. BirthNACDetails?.localityNameMl ? false : true);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   console.log(formData, "formdata");
 
@@ -629,57 +630,7 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
     }
 
     if (validFlag == true) {
-      sessionStorage.setItem("stateId", stateId ? stateId : null);
-      sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
-      sessionStorage.setItem("workFlowCode", workFlowCode);
-      sessionStorage.setItem("childDOB", childDOB ? childDOB : null);
-      sessionStorage.setItem("birthDateTime", birthDateTime ? birthDateTime : null);
-      sessionStorage.setItem("gender", gender ? gender.code : null);
-      sessionStorage.setItem("childAadharNo", childAadharNo ? childAadharNo : null);
-      sessionStorage.setItem("childFirstNameEn", childFirstNameEn ? childFirstNameEn : null);
-      sessionStorage.setItem("childMiddleNameEn", childMiddleNameEn ? childMiddleNameEn : null);
-      sessionStorage.setItem("childLastNameEn", childLastNameEn ? childLastNameEn : null);
-      sessionStorage.setItem("childFirstNameMl", childFirstNameMl ? childFirstNameMl : null);
-      sessionStorage.setItem("childMiddleNameMl", childMiddleNameMl ? childMiddleNameMl : null);
-      sessionStorage.setItem("childLastNameMl", childLastNameMl ? childLastNameMl : null);
-      sessionStorage.setItem("placeOfBirth",  placeOfBirth ? placeOfBirth : null);
-      sessionStorage.setItem("orderOfBirth",  orderOfBirth ? orderOfBirth : null);
-      sessionStorage.setItem("birthPlace", birthPlace.code);
-      sessionStorage.setItem("hospitalCode", hospitalName ? hospitalName.code : null);
-      sessionStorage.setItem("hospitalName", hospitalName ? hospitalName.hospitalName : null);
-      sessionStorage.setItem("hospitalNameMl", hospitalName ? hospitalNameMl.hospitalNamelocal : null);
-      sessionStorage.setItem("institutionTypeCode", institution ? institution.code : null);
-      sessionStorage.setItem("institution", institution ? institution.name : null);
-      sessionStorage.setItem("institutionNameCode", institutionId ? institutionId.code : null);
-      sessionStorage.setItem("institutionId", institutionId ? institutionId.institutionName : null);
-      sessionStorage.setItem("institutionIdMl", institutionIdMl ? institutionIdMl.institutionNamelocal : null);
-      sessionStorage.setItem("adrsHouseNameEn", adrsHouseNameEn ? adrsHouseNameEn : null);
-      sessionStorage.setItem("adrsHouseNameMl", adrsHouseNameMl ? adrsHouseNameMl : null);
-      sessionStorage.setItem("adrsLocalityNameEn", adrsLocalityNameEn ? adrsLocalityNameEn : null);
-      sessionStorage.setItem("adrsLocalityNameMl", adrsLocalityNameMl ? adrsLocalityNameMl : null);
-      sessionStorage.setItem("adrsStreetNameEn", adrsStreetNameEn ? adrsStreetNameEn : null);
-      sessionStorage.setItem("adrsStreetNameMl", adrsStreetNameMl ? adrsStreetNameMl : null);
-      sessionStorage.setItem("adrsPostOffice", adrsPostOffice ? adrsPostOffice.code : null);
-      sessionStorage.setItem("adrsPincode", adrsPincode ? adrsPincode.code : null);
-      sessionStorage.setItem("wardNo", wardNo ? wardNo.code : null);
-      sessionStorage.setItem("wardNameEn", wardNo ? wardNo.name : null);
-      sessionStorage.setItem("wardNameMl", wardNo ? wardNo.localname : null);
-      sessionStorage.setItem("wardNumber", wardNo ? wardNo.wardno : null);
-      sessionStorage.setItem("vehicleType", vehicleType ? vehicleType : null);
-      sessionStorage.setItem("vehicleRegistrationNo", vehicleRegistrationNo ? vehicleRegistrationNo : null);
-      sessionStorage.setItem("vehicleFromEn", vehicleFromEn ? vehicleFromEn : null);
-      sessionStorage.setItem("vehicleToEn", vehicleToEn ? vehicleToEn : null);
-      sessionStorage.setItem("vehicleFromMl", vehicleFromMl ? vehicleFromMl : null);
-      sessionStorage.setItem("vehicleToMl", vehicleToMl ? vehicleToMl : null);
-      sessionStorage.setItem("vehicleHaltPlace", vehicleHaltPlace ? vehicleHaltPlace : null);
-      // sessionStorage.setItem("vehicleHaltPlaceMl", vehicleHaltPlaceMl ? vehicleHaltPlaceMl : null);
-      sessionStorage.setItem("setadmittedHospitalEn", setadmittedHospitalEn ? setadmittedHospitalEn.code : null);
-      sessionStorage.setItem("vehicleDesDetailsEn", vehicleDesDetailsEn ? vehicleDesDetailsEn : null);
-      sessionStorage.setItem("publicPlaceType", publicPlaceType ? publicPlaceType.code : null);
-      sessionStorage.setItem("localityNameEn", localityNameEn ? localityNameEn : null);
-      sessionStorage.setItem("localityNameMl", localityNameMl ? localityNameMl : null);
-      sessionStorage.setItem("streetNameEn", streetNameEn ? streetNameEn : null);
-      sessionStorage.setItem("streetNameMl", streetNameMl ? streetNameMl : null);
+      
       let IsEditChangeScreen = (isEditBirth ? isEditBirth : false);
 
       onSelect(config.key, {

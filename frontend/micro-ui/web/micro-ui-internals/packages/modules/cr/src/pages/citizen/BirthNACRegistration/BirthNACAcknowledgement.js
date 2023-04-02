@@ -10,7 +10,8 @@ const GetActionMessage = (props) => {
   if (props.isSuccess) {
     return t("CR_CREATE_SUCCESS_MSG");
   } else if (props.isLoading) {
-    return !window.location.href.includes("renew-trade") || !window.location.href.includes("edit-application") ? t("CS_TRADE_APPLICATION_SUCCESS") : t("CS_TRADE_UPDATE_APPLICATION_PENDING");
+    return t("CR_CREATE_APPLICATION_PENDING");
+    // !window.location.href.includes("renew-trade") || !window.location.href.includes("edit-application") ? t("CS_TRADE_APPLICATION_SUCCESS") : t("CS_TRADE_UPDATE_APPLICATION_PENDING");
   } else if (!props.isSuccess) {
     return t("CR_CREATE_APPLICATION_FAILED");
   }
@@ -24,22 +25,24 @@ const BannerPicker = (props) => {
   return (
     <Banner
       message={GetActionMessage(props)}
-      applicationNumber={props.data?.ChildDetails[0]?.applicationNumber}
+      applicationNumber={props.data?.NacDetails[0]?.applicationNumber}
       info={props.isSuccess ? props.applicationNumber : ""}
       successful={props.isSuccess}
     />
   );
 };
 
-const BirthNACAcknowledgement = ({ data, onSuccess, userType, isEditBirth = false }) => {
+const BirthNACAcknowledgement = ({ data, onSuccess, userType,  }) => {
   const { t } = useTranslation();
   const [mutationHappened, setMutationHappened, clear] = Digit.Hooks.useSessionStorage("CITIZEN_TL_MUTATION_HAPPENED", false);
   const resubmit = window.location.href.includes("edit-application");
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const isRenewTrade = !window.location.href.includes("renew-trade")
-  // const mutation = Digit.Hooks.cr.useCivilRegistrationAPI(
-  //   tenantId, isEditBirth ? false : true
-  // );
+  const [isEditBirthNAC, setIsEditBirthNAC] = useState(sessionStorage.getItem("CR_BIRTH_NAC_EDIT_FLAG")? true : false);
+  
+  const mutation = Digit.Hooks.cr.useCivilRegistrationNACBIRTHAPI(
+    tenantId, isEditBirthNAC ? false : true
+  );
 
 
   const { data: storeData } = Digit.Hooks.useStore.getInitData();
@@ -61,7 +64,7 @@ const BirthNACAcknowledgement = ({ data, onSuccess, userType, isEditBirth = fals
         if (!resubmit) {
           // let formdata = !isEditBirth ? convertToDeathRegistration(data) : convertToEditTrade(data, fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter(y => y.module === "CR") : []);
 
-          let formdata = !isEditBirth ? convertToNACRegistration(data) : [];
+          let formdata = !isEditBirthNAC ? convertToNACRegistration(data) : [];
           // formdata.BirthDetails[0].tenantId = formdata?.BirthDetails[0]?.tenantId || tenantId1;
             mutation.mutate(formdata, {
               onSuccess,

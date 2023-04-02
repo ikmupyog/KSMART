@@ -74,28 +74,28 @@ const NACParentsDetails =({ config, onSelect, userType, formData, isEditStillBir
     ReligionList["common-masters"].Religion.map((ob) => {
       cmbReligion.push(ob);
     });
-  const [motherAadhar, setMotherAadhar] = useState(formData?.ParentsDetails?.motherAadhar ? formData?.ParentsDetails?.motherAadhar :
-    formData?.StillBirthChildDetails?.ParentsDetails?.motherAadhar ? formData?.StillBirthChildDetails?.ParentsDetails?.motherAadhar : null);
+  const [motherAadhar, setMotherAadhar] = useState(formData?.BirthNACParentsDetails?.motherAadhar ? formData?. BirthNACParentsDetails?.motherAadhar :
+    formData?.BirthNACDetails?. BirthNACParentsDetails?.motherAadhar ? formData?.BirthNACDetails?. BirthNACParentsDetails?.motherAadhar : null);
  
-    const [motherFirstNameEn, setMotherFirstNameEn] = useState(formData?.ParentsDetails?.motherFirstNameEn ? formData?.ParentsDetails?.motherFirstNameEn :
-      formData?.StillBirthChildDetails?.ParentsDetails?.motherFirstNameEn ? formData?.StillBirthChildDetails?.ParentsDetails?.motherFirstNameEn : "");
-    const [motherFirstNameMl, setMotherFirstNameMl] = useState(formData?.StillBirthChildDetails?.motherFirstNameMl ? formData?.StillBirthChildDetails?.motherFirstNameMl :
-      formData?.StillBirthChildDetails?.ParentsDetails?.motherFirstNameMl ? formData?.StillBirthChildDetails?.ParentsDetails?.motherFirstNameMl : "");
+    const [motherFirstNameEn, setMotherFirstNameEn] = useState(formData?. BirthNACParentsDetails?.motherFirstNameEn ? formData?. BirthNACParentsDetails?.motherFirstNameEn :
+      formData?.BirthNACDetails?. BirthNACParentsDetails?.motherFirstNameEn ? formData?.BirthNACDetails?. BirthNACParentsDetails?.motherFirstNameEn : "");
+    const [motherFirstNameMl, setMotherFirstNameMl] = useState(formData?.BirthNACParentsDetails?.motherFirstNameMl ? formData?.BirthNACParentsDetails?.motherFirstNameMl :
+      formData?.BirthNACDetails?. BirthNACParentsDetails?.motherFirstNameMl ? formData?.BirthNACDetails?. BirthNACParentsDetails?.motherFirstNameMl : "");
  
 
-    const [fatherAadhar, setFatherAadhar] = useState(formData?.ParentsDetails?.fatherAadhar ? formData?.ParentsDetails?.fatherAadhar :
-      formData?.StillBirthChildDetails?.ParentsDetails?.fatherAadhar ? formData?.StillBirthChildDetails?.ParentsDetails?.fatherAadhar : null);
+    const [fatherAadhar, setFatherAadhar] = useState(formData?. BirthNACParentsDetails?.fatherAadhar ? formData?. BirthNACParentsDetails?.fatherAadhar :
+      formData?.BirthNACDetails?. BirthNACParentsDetails?.fatherAadhar ? formData?.BirthNACDetails?. BirthNACParentsDetails?.fatherAadhar : null);
 
-  const [fatherFirstNameEn, setFatherFirstNameEn] = useState(formData?.ParentsDetails?.fatherFirstNameEn ? formData?.ParentsDetails?.fatherFirstNameEn :
-    formData?.StillBirthChildDetails?.ParentsDetails?.fatherFirstNameEn ? formData?.StillBirthChildDetails?.ParentsDetails?.fatherFirstNameEn : "");
-  const [fatherFirstNameMl, setFatherFirstNameMl] = useState(formData?.ParentsDetails?.fatherFirstNameMl ? formData?.ParentsDetails?.fatherFirstNameMl :
-    formData?.StillBirthChildDetails?.ParentsDetails?.fatherFirstNameMl ? formData?.StillBirthChildDetails?.ParentsDetails?.fatherFirstNameMl : "");
+  const [fatherFirstNameEn, setFatherFirstNameEn] = useState(formData?. BirthNACParentsDetails?.fatherFirstNameEn ? formData?. BirthNACParentsDetails?.fatherFirstNameEn :
+    formData?.BirthNACDetails?. BirthNACParentsDetails?.fatherFirstNameEn ? formData?.BirthNACDetails?. BirthNACParentsDetails?.fatherFirstNameEn : "");
+  const [fatherFirstNameMl, setFatherFirstNameMl] = useState(formData?. BirthNACParentsDetails?.fatherFirstNameMl ? formData?. BirthNACParentsDetails?.fatherFirstNameMl :
+    formData?.BirthNACDetails?. BirthNACParentsDetails?.fatherFirstNameMl ? formData?.BirthNACDetails?. BirthNACParentsDetails?.fatherFirstNameMl : "");
 
   const [toast, setToast] = useState(false);
-  const [MotherAadharError, setMotherAadharError] = useState(formData?.ParentsDetails?.motherAadhar ? false : false);
+  const [MotherAadharError, setMotherAadharError] = useState(formData?. BirthNACParentsDetails?.motherAadhar ? false : false);
 
 
-  const [FatherAadharError, setFatherAadharError] = useState(formData?.ParentsDetails?.fatherAadhar ? false : false);
+  const [FatherAadharError, setFatherAadharError] = useState(formData?. BirthNACParentsDetails?.fatherAadhar ? false : false);
 
   
 
@@ -111,15 +111,15 @@ const NACParentsDetails =({ config, onSelect, userType, formData, isEditStillBir
 
   // useEffect(() => {
   //   if (isInitialRender) {
-  //     if (formData?.ParentsDetails?.ismotherInfo != null) {
+  //     if (formData?. BirthNACParentsDetails?.ismotherInfo != null) {
   //       setIsInitialRender(false);
-  //       setIsMotherInfo(formData?.ParentsDetails?.ismotherInfo);
+  //       setIsMotherInfo(formData?. BirthNACParentsDetails?.ismotherInfo);
   //     }
   //   }
 
-  //   if (formData?.ParentsDetails?.isfatherInfo != null) {
+  //   if (formData?. BirthNACParentsDetails?.isfatherInfo != null) {
   //     setIsInitialRender(false);
-  //     setIsFatherInfo(formData?.ParentsDetails?.isfatherInfo);
+  //     setIsFatherInfo(formData?. BirthNACParentsDetails?.isfatherInfo);
   //   }
   // }, [isInitialRender]);
 
@@ -253,10 +253,7 @@ const NACParentsDetails =({ config, onSelect, userType, formData, isEditStillBir
         motherFirstNameEn,
         motherFirstNameMl,
         motherAadhar,
-
         fatherAadhar,
-        //isMotherInfo,
-        //isFatherInfo,
         fatherFirstNameEn,
         fatherFirstNameMl,
       });
@@ -276,23 +273,6 @@ const NACParentsDetails =({ config, onSelect, userType, formData, isEditStillBir
           config={config}
           onSelect={goNext}
           onSkip={onSkip}
-          // isDisabled={
-          //   !fatherMobile ||
-          //   (isMotherInfo === false
-          //     ? motherFirstNameEn === "" ||
-          //       motherFirstNameMl === "" ||
-          //       !motherNationality ||
-          //       motherMarriageBirth === "" ||
-          //       orderofChildren === "" ||
-          //       !motherEducation ||
-          //       !motherProfession
-          //     : false) ||
-          //   (isFatherInfo === false
-          //     ? fatherFirstNameEn === "" || fatherFirstNameMl === "" || !fatherNationality || !fatherEducation || !fatherProfession
-          //     : false) ||
-          //   !Religion ||
-          //   fatherMobile === ""
-          // }
         >
 
           {/* {isMotherInfo === false && ( */}
