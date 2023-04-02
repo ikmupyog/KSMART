@@ -146,6 +146,7 @@ import DeathInclusion from "./pages/citizen/DeathInclusion";
 import SearchDeathInclusion from "./components/SearchDeathInclusion";
 import DeathCorrectionEditPage from "./pageComponents/deathComponents/DeathCorrectionEditPage";
 import FormFieldContainer from "../src/components/FormFieldContainer";
+import MarriageAddressPage from "./pageComponents/marriageComponents/MarriageAddressPage";
 import CreateMarriageRegistration from "./pages/citizen/MarriageRegistration";
 import GroomDetails from "./pageComponents/marriageComponents/GroomDetails";
 import GroomCorrectionDetails from "./pageComponents/marriageComponents/GroomCorrectionDetails";
@@ -410,6 +411,7 @@ const componentsToRegister = {
   MarriageInstitution,
   MarriagePublicPlace,
   MarriageRegistration,
+  MarriageAddressPage,
   HouseMarriageRegistration,
   Witnessdetails,
   MarriageAddressBasePage,
