@@ -18,7 +18,7 @@ import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../../components/CustomTimePicker";
 import FormFieldContainer from "../../../components/FormFieldContainer";
 import BirthInclusionModal from "../../../components/BirthInclusionModal";
-import { BIRTH_INCLUSION } from "../../../config/constants";
+import { BIRTH_INCLUSION_FIELD_NAMES } from "../../../config/constants";
 import { initializeBirthInclusionObject } from "../../../config/globalObject";
 import { useParams, useHistory, useRouteMatch, useLocation } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
@@ -123,7 +123,7 @@ console.log("navigationData",navigationData);
                   // disable={true}
                   //  inputFormat="DD-MM-YYYY"
                   // inputRef={register}
-                  // date={props.value} 
+                  date={birthInclusionFormData["CHILD_DOB"].curValue} 
                   // onChange={props.onChange}
                   placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
                   {...(validation = { isRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
@@ -137,7 +137,7 @@ console.log("navigationData",navigationData);
         </FieldComponentContainer>
         <div style={{ marginTop: "2.8rem" }}>
           <ButtonContainer>
-            <span  onClick={()=> setBirthInclusionFilterQuery(BIRTH_INCLUSION["CHILD_DOB"])}>
+            <span  onClick={()=> setBirthInclusionFilterQuery(BIRTH_INCLUSION_FIELD_NAMES["CHILD_DOB"])}>
             <EditIcon
               selected={true}
               label={"Edit"}
@@ -227,11 +227,12 @@ console.log("navigationData",navigationData);
 
         <div style={{ marginTop: "2.8rem" }}>
           <ButtonContainer>
+          <span  onClick={()=> setBirthInclusionFilterQuery(BIRTH_INCLUSION_FIELD_NAMES["CHILD_NAME"])}>
             <EditIcon
               selected={true}
               label={"Edit"}
-              onClick={() => ()=> setBirthInclusionFilterQuery(BIRTH_INCLUSION.childDob)}
             />
+          </span>
           </ButtonContainer>
         </div>
       </FormFieldContainer>
@@ -288,7 +289,6 @@ console.log("navigationData",navigationData);
             <EditIcon
               selected={true}
               label={"Edit"}
-              onClick={() => ()=> setBirthInclusionFilterQuery(BIRTH_INCLUSION.childDob)}
             />
           </ButtonContainer>
         </div>
@@ -317,7 +317,6 @@ console.log("navigationData",navigationData);
             <EditIcon
               selected={true}
               label={"Edit"}
-              onClick={() => ()=> setBirthInclusionFilterQuery(BIRTH_INCLUSION.childDob)}
             />
           </ButtonContainer>
         </div>
@@ -471,7 +470,7 @@ console.log("navigationData",navigationData);
               // isMandatory={false}
               type={"text"}
               // optionKey="i18nKey"
-              name="DeceasedMotherNameEn"
+              name="MotherNameEn"
               // value={DeceasedFirstNameEn}
               // onChange={setSelectDeceasedFirstNameEn}
               placeholder={`${t("CR_MOTHER_NAME_EN")}`}
@@ -482,11 +481,10 @@ console.log("navigationData",navigationData);
             <CardLabel>{`${t("CR_MOTHER_NAME_ML")}`}</CardLabel>
             <TextInput
               t={t}
-              ref={register()}
               // isMandatory={false}
               type={"text"}
               // optionKey="i18nKey"
-              name="DeceasedMotherNameMl"
+              name="MotherNameMl"
               // value={DeceasedFirstNameEn}
               // onChange={setSelectDeceasedFirstNameEn}
               placeholder={`${t("CR_MOTHER_NAME_ML")}`}
@@ -497,11 +495,12 @@ console.log("navigationData",navigationData);
 
         <div style={{ marginTop: "2.8rem" }}>
           <ButtonContainer>
+          <span  onClick={()=> setBirthInclusionFilterQuery(BIRTH_INCLUSION_FIELD_NAMES["MOTHER_DETAILS"])}>
             <EditIcon
               selected={true}
               label={"Edit"}
-              onClick={() => ()=> setBirthInclusionFilterQuery(BIRTH_INCLUSION.childDob)}
             />
+            </span>
           </ButtonContainer>
         </div>
       </FormFieldContainer>
@@ -516,7 +515,7 @@ console.log("navigationData",navigationData);
               // isMandatory={false}
               type={"text"}
               // optionKey="i18nKey"
-              name="DeceasedFatherNameEn"
+              name="FatherNameEn"
               // value={DeceasedFirstNameEn}
               // onChange={setSelectDeceasedFirstNameEn}
               placeholder={`${t("CR_FATHER_NAME_EN")}`}
@@ -530,7 +529,7 @@ console.log("navigationData",navigationData);
               // isMandatory={false}
               type={"text"}
               // optionKey="i18nKey"
-              name="DeceasedFatherNameMl"
+              name="FatherNameMl"
               // value={DeceasedFirstNameEn}
               // onChange={setSelectDeceasedFirstNameEn}
               placeholder={`${t("CR_FATHER_NAME_ML")}`}
@@ -541,11 +540,12 @@ console.log("navigationData",navigationData);
 
         <div style={{ marginTop: "2.8rem" }}>
           <ButtonContainer>
+          <span  onClick={()=> setBirthInclusionFilterQuery(BIRTH_INCLUSION_FIELD_NAMES["FATHER_DETAILS"])}>
             <EditIcon
               selected={true}
               label={"Edit"}
-              onClick={() => ()=> setBirthInclusionFilterQuery(BIRTH_INCLUSION.childDob)}
             />
+            </span>
           </ButtonContainer>
         </div>
       </FormFieldContainer>
@@ -585,10 +585,10 @@ console.log("navigationData",navigationData);
 
         <div style={{ marginTop: "2.8rem" }}>
           <ButtonContainer>
+            
             <EditIcon
               selected={true}
               label={"Edit"}
-              onClick={() => ()=> setBirthInclusionFilterQuery(BIRTH_INCLUSION.childDob)}
             />
           </ButtonContainer>
         </div>
@@ -686,89 +686,15 @@ console.log("navigationData",navigationData);
         </FieldComponentContainer>
         <div style={{ marginTop: "2.8rem" }}>
           <ButtonContainer>
-            {" "}
+          <span  onClick={()=> setBirthInclusionFilterQuery(BIRTH_INCLUSION_FIELD_NAMES["MOTHER_DETAILS"])}>
             <EditButton
               selected={true}
               label={"Edit"}
-              onClick={() => ()=> setBirthInclusionFilterQuery(BIRTH_INCLUSION.childDob)}
             />
+            </span>
           </ButtonContainer>
         </div>
       </FormFieldContainer>
-      {/* <FormFieldContainer>
-        <FieldComponentContainer>
-          <div className="col-md-3">
-            <CardLabel>{`${t("CS_COMMON_COUNTRY")}`}</CardLabel>
-            <TextInput
-              t={t}
-              // isMandatory={false}
-              type={"text"}
-              // optionKey="i18nKey"
-              name="DeceasedCountry"
-              // value={DeceasedFirstNameEn}
-              // onChange={setSelectDeceasedFirstNameEn}
-              placeholder={`${t("CS_COMMON_COUNTRY")}`}
-              // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
-            />
-          </div>
-          <div className="col-md-3">
-            <CardLabel>{`${t("CR_BIRTH_PERM_STATE_LABEL")}`}</CardLabel>
-            <TextInput
-              t={t}
-              // isMandatory={false}
-              type={"text"}
-              // optionKey="i18nKey"
-              name="DeceasedState"
-              // value={DeceasedFirstNameEn}
-              // onChange={setSelectDeceasedFirstNameEn}
-              placeholder={`${t("CR_BIRTH_PERM_STATE_LABEL")}`}
-              // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
-            />
-          </div>
-          <div className="col-md-2">
-            <CardLabel>{`${t("CR_BIRTH_PERM_DISTRICT_LABEL")}`}</CardLabel>
-            <TextInput
-              t={t}
-              // isMandatory={false}
-              type={"text"}
-              // optionKey="i18nKey"
-              name="DeceasedDISTRICT"
-              // value={DeceasedFirstNameEn}
-              // onChange={setSelectDeceasedFirstNameEn}
-              placeholder={`${t("CR_BIRTH_PERM_DISTRICT_LABEL")}`}
-              // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
-            />
-          </div>
-          <div className="col-md-2">
-            <CardLabel>{t("CS_COMMON_VILLAGE")}</CardLabel>
-            <TextInput
-              t={t}
-              // isMandatory={false}
-              type={"text"}
-              // optionKey="i18nKey"
-              name="DeceasedTown"
-              // value={DeceasedFirstNameEn}
-              // onChange={setSelectDeceasedFirstNameEn}
-              placeholder={`${t("CS_COMMON_VILLAGE")}`}
-              // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
-            />
-          </div>
-          <div className="col-md-2">
-            <CardLabel>{t("CS_COMMON_LB_NAME")}</CardLabel>
-            <TextInput
-              t={t}
-              // isMandatory={false}
-              type={"text"}
-              // optionKey="i18nKey"
-              name="DeceasedLocalBody"
-              // value={DeceasedFirstNameEn}
-              // onChange={setSelectDeceasedFirstNameEn}
-              placeholder={`${t("CS_COMMON_LB_NAME")}`}
-              // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
-            />
-          </div>
-        </FieldComponentContainer>
-      </FormFieldContainer> */}
       </form>
       <BirthInclusionModal showModal={showModal} selectedConfig={selectedInclusionItem} onSubmit={onUploadDocSubmit} hideModal={_hideModal} />
       </FormStep>

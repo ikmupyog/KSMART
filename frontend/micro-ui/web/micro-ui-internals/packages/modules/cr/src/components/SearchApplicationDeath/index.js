@@ -67,65 +67,47 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count }) => {
     return <MobileSearchApplication {...{ Controller, register, control, t, reset, previousPage, handleSubmit, tenantId, data, onSubmit }} />;
   }
   const handleLinkClick = (finaldata) => {
+    console.log({ finaldata });
     Digit.SessionStorage.set("CR_DEATH_EDIT", finaldata);
-    Digit.SessionStorage.set("CR_DEATH_EDIT_FLAG", true);
-  }
+    sessionStorage.setItem("CR_DEATH_EDIT_FLAG", true);
+  };
   //need to get from workflow
   const GetCell = (value) => <span className="cell-text">{value}</span>;
   const columns = useMemo(
     () => [
       {
-        Header: t("CR_COMMON_COL_ACKNO"),
+        Header: t("CR_SEARCH_ACK_NO"),
         accessor: "DeathACKNo",
         disableSortBy: true,
         Cell: ({ row }) => {
           return (
-            // <div>
-            //   <span className="link">
-            //     <Link to={`/digit-ui/employee/cr/application-deathdetails/${row.original.DeathACKNo}`}>{row.original.DeathACKNo}</Link>
-            //   </span>
-            // </div>
             <div>
-                <span className="link">
-                  <Link onClick={handleLinkClick(row.original)} to={`/digit-ui/employee/cr/application-deathdetails/${row.original.InformationDeath["DeathACKNo"]}`}>
-                    {row.original.InformationDeath["DeathACKNo"]}
-                  </Link>
-                </span>
-              </div>
-            // <div>
-            //     <span className="link">
-            //       <Link onClick={event => handleLinkClick(row.original.InformationDeath)} to={{pathname:`/digit-ui/employee/cr/application-deathdetails/`}}>
-            //         {row.original.InformationDeath["DeathACKNo"]}
-            //       </Link>
-            //     </span>
-            //   </div>
+              <span className="link">
+                <Link
+                  onClick={handleLinkClick(row.original)}
+                  to={`/digit-ui/employee/cr/application-deathdetails/${row.original.InformationDeath["DeathACKNo"]}`}
+                >
+                  {row.original.InformationDeath["DeathACKNo"]}
+                </Link>
+              </span>
+            </div>
           );
         },
       },
-      // {
-      //     Header: t("CR_COMMON_COL_APP_DATE"),
-      //     disableSortBy: true,
-      //     accessor: (row) => GetCell(row.auditDetails.createdTime ? convertEpochToDateDMY(row.auditDetails.createdTime) : ""),
-      // },
-      // {
-      //   Header: t("CR_COMMON_COL_DOD"),
-      //   disableSortBy: true,
-      //   accessor: (row) => GetCell(row.DateOfDeath ? convertEpochToDateDMY(row.DateOfDeath) : ""),
-      // },
       {
-        Header: t("CR_COMMON_COL_DOD"),
+        Header: t("CR_SEARCH_ACK_NO"),
         disableSortBy: true,
-        accessor: (row) => GetCell(row.InformationDeath.DateOfDeath),
+        accessor: (row) => GetCell(row.InformationDeath?.DateOfDeath ? convertEpochToDateDMY(row.InformationDeath?.DateOfDeath) : ""),
       },
-      // {
-      //     Header: t("TL_APPLICATION_TYPE_LABEL"),
-      //     disableSortBy: true,
-      //     accessor: (row) => GetCell(t(`TL_LOCALIZATION_APPLICATIONTYPE_${row.applicationType}`)),
-      // },
+
       {
         Header: t("CR_COMMON_DECEASED_NAME"),
         disableSortBy: true,
-        accessor: (row) => GetCell(row.deceasedFirstNameEn + row.deceasedMiddleNameEn + row.deceasedLastNameEn || "-"),
+        accessor: (row) =>
+          GetCell(
+            row.InformationDeath?.DeceasedFirstNameEn + row.InformationDeath?.DeceasedMiddleNameEn + row.InformationDeath?.DeceasedLastNameEn ||
+              t("CR_NOT_RECORDED")
+          ),
       },
       {
         Header: t("CR_COMMON_DEATH_PLACE"),

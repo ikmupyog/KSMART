@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Route, Switch, useRouteMatch, useLocation, useHistory, Redirect } from "react-router-dom";
-import { PrivateRoute, BreadCrumb, Component } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-// import ChildDetails from "../../../pageComponents/birthComponents/ChildDetails";
-import AbandonedChildDetails from "../../../pageComponents/abandonedBirthComponents/AbandonedChildDetails";
 import { newConfig as newConfigCR } from "../../../config/config";
 import { useQueryClient } from "react-query";
 
@@ -23,74 +20,19 @@ const CreateAbandonedBirth = ({ parentUrl, isEditAbandonedBirth }) => {
   let config = [];
   let { data: newConfig, isLoading } = true;
   newConfig = newConfigCR;
-  newConfig?.forEach((obj) => {
-    config = config.concat(obj.body.filter((a) => !a.hideInCitizen));
-  });
+  const abandonedbirthConfig = newConfig.find((item) => item.head === "AbandonedBirth Routing");
+  config = config.concat(abandonedbirthConfig.body.filter((a) => !a.hideInCitizen));
   config.indexRoute = "abandoned-child-details";
   const goNext = (skipStep, index, isAddMultiple, key, isPTCreateSkip) => {
     let currentPath = pathname.split("/").pop(),
       nextPage;
     let { nextStep = {} } = config.find((routeObj) => routeObj.route === currentPath);
     let { isCreateEnabled: enableCreate = true } = config.find((routeObj) => routeObj.route === currentPath);
-    // if (typeof nextStep == "object" && nextStep != null) {
-    //   if((params?.cptId?.id || params?.cpt?.details?.propertyId || (isReneworEditTrade && params?.cpt?.details?.propertyId ))  && (nextStep[sessionStorage.getItem("isAccessories")] && nextStep[sessionStorage.getItem("isAccessories")] === "know-your-property")  )
-    //   {
-    //     nextStep = "property-details";
-    //   }
-    //   if (
-    //     nextStep[sessionStorage.getItem("isAccessories")] &&
-    //     (nextStep[sessionStorage.getItem("isAccessories")] === "accessories-details" ||
-    //       nextStep[sessionStorage.getItem("isAccessories")] === "map" ||
-    //       nextStep[sessionStorage.getItem("isAccessories")] === "owner-ship-details" || 
-    //       nextStep[sessionStorage.getItem("isAccessories")] === "know-your-property")
-    //   ) {
-    //     nextStep = `${nextStep[sessionStorage.getItem("isAccessories")]}`;
-    //   } else if (
-    //     nextStep[sessionStorage.getItem("StructureType")] &&
-    //     (nextStep[sessionStorage.getItem("StructureType")] === "Building-type" ||
-    //       nextStep[sessionStorage.getItem("StructureType")] === "vehicle-type")
-    //   ) {
-    //     nextStep = `${nextStep[sessionStorage.getItem("setPlaceofActivity")]}`;
-    //     nextStep = `${nextStep[sessionStorage.getItem("StructureType")]}`;
-    //   } else if (
-    //     nextStep[sessionStorage.getItem("KnowProperty")] &&
-    //     (nextStep[sessionStorage.getItem("KnowProperty")] === "search-property" ||
-    //       nextStep[sessionStorage.getItem("KnowProperty")] === "create-property")
-    //   ) {
-    //       if(nextStep[sessionStorage.getItem("KnowProperty")] === "create-property" && !enableCreate)
-    //       {
-    //         nextStep = `map`;
-    //       }
-    //       else{
-    //      nextStep = `${nextStep[sessionStorage.getItem("KnowProperty")]}`;
-    //       }
-    //   }
-    // }
-    // if( (params?.cptId?.id || params?.cpt?.details?.propertyId || (isReneworEditTrade && params?.cpt?.details?.propertyId ))  && nextStep === "know-your-property" )
-    // { 
-    //   nextStep = "property-details";
-    // }
-    // let redirectWithHistory = history.push;
-    // if (skipStep) {
-    //   redirectWithHistory = history.replace;
-    // }
-    // if (isAddMultiple) {
-    //   nextStep = key;
-    // }
-    // if (nextStep === null) {
-    //   return redirectWithHistory(`${match.path}/check`);
-    // }
-    // if(isPTCreateSkip && nextStep === "acknowledge-create-property")
-    // {
-    //   nextStep = "map";
-    // }
+
     let redirectWithHistory = history.push;
     if (skipStep) {
       redirectWithHistory = history.replace;
     }
-    // if (isAddMultiple) {
-    //   nextStep = key;
-    // }
     if (nextStep === null) {
       return redirectWithHistory(`${match.path}/check`);
     }
@@ -117,8 +59,8 @@ const CreateAbandonedBirth = ({ parentUrl, isEditAbandonedBirth }) => {
   };
   const handleSkip = () => { };
   const handleMultiple = () => { };
-  const CheckPage = Digit?.ComponentRegistryService?.getComponent("AbandonedBirthCheckPage");
-  const AdoptionAcknowledgement = Digit?.ComponentRegistryService?.getComponent("AbandonedBirthAcknowledgement");
+  const AbandonedBirthCheckPage = Digit?.ComponentRegistryService?.getComponent("AbandonedBirthCheckPage");
+  const AbandonedBirthAcknowledgement = Digit?.ComponentRegistryService?.getComponent("AbandonedBirthAcknowledgement");
   return (
 
     <React.Fragment>
@@ -142,13 +84,10 @@ const CreateAbandonedBirth = ({ parentUrl, isEditAbandonedBirth }) => {
           );
         })}
         <Route path={`${match.path}/check`}>
-          <CheckPage onSubmit={createProperty} value={params} />
+          <AbandonedBirthCheckPage onSubmit={createProperty} value={params} />
         </Route>
         <Route path={`${match.path}/acknowledgement`}>
-          <AdoptionAcknowledgement data={params} onSuccess={onSuccess} />
-        </Route>
-        <Route>
-          <Redirect to={`${match.path}/${config.indexRoute}`} />
+          <AbandonedBirthAcknowledgement data={params} onSuccess={onSuccess} />
         </Route>
       </Switch>
     </React.Fragment>

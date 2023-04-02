@@ -44,7 +44,7 @@ export const CRStillBirthService = {
       userInfo: true,
       userDownloadInfo: true,
     }),
-  CRsearch: ({ tenantId, filters }) =>
+  CRStillBirthsearch: ({ tenantId, filters }) =>
     Request({
       url: Urls.crstillbirth.search,
       useCache: false,

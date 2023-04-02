@@ -2,11 +2,17 @@ import { MdmsService } from "../../services/elements/MDMS";
 import { useQuery } from "react-query";
 
 const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {}) => {
+  const useMaritalStatus = () => {
+    return useQuery("CR_MARITAL_STATUS", () => MdmsService.getMaritalStatusMaster(tenantId, moduleCode), config);
+  };
   const useWorkFlowBirth = () => {
     return useQuery("CR_BIRTH_WORKFLOW", () => MdmsService.getWorkFlowBirthMaster(tenantId, moduleCode), config);
   };
   const useWorkFlowDeath = () => {
     return useQuery("CR_DEATH_WORKFLOW", () => MdmsService.getWorkFlowDeathMaster(tenantId, moduleCode), config);
+  };
+  const useWorkFlowAdoption = () => {
+    return useQuery("CR_ADOPTION_WORKFLOW", () => MdmsService.getWorkFlowAdoptionMaster(tenantId, moduleCode), config);
   };
   const useLocalBodyMaster = () => {
     return useQuery("COMMON_LOCALBODY_MASTER", () => MdmsService.getLocalBodyMaster(tenantId, moduleCode), config);
@@ -65,6 +71,9 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   // };
   const useDeathPlaceType = () => {
     return useQuery("CR_DEATHPLACE", () => MdmsService.getDeathPlaceType(tenantId, moduleCode), config);
+  };
+  const useMarriagePlaceType  = () => {
+    return useQuery("CR_MARRIAGE_PLACE", () => MdmsService.getMarriagePlaceType(tenantId, moduleCode), config);
   };
 
   const useCROtherDeathPlace = () => {
@@ -180,10 +189,7 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
     return useQuery("TL_TRADE_OWNERSHIP_CATEGORY", () => MdmsService.GetTradeOwnerShipCategory(tenantId, moduleCode, type), config);
   };
   const useBirthCorrectionDocuments = () => {
-    return useQuery(
-      `BIRTH_CORRECTION_DOCUMENTS`,
-      () => MdmsService.GetBirthCorrectionDocuments(tenantId, moduleCode, type), config
-    );
+    return useQuery(`BIRTH_CORRECTION_DOCUMENTS`, () => MdmsService.GetBirthCorrectionDocuments(tenantId, moduleCode, type), config);
   };
   const useTradeOwnershipSubType = () => {
     return useQuery("TL_TRADE_OWNERSHIP_CATEGORY", () => MdmsService.GetTradeOwnerShipCategory(tenantId, moduleCode, type), {
@@ -282,10 +288,14 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   };
 
   switch (type) {
+    case "MaritalStatus":
+      return useMaritalStatus();
     case "WorkFlowBirth":
       return useWorkFlowBirth();
     case "WorkFlowDeath":
       return useWorkFlowDeath();
+    case "WorkFlowAdoption":
+      return useWorkFlowAdoption();
     case "tenants":
       return useLocalBodyMaster();
     case "QualificationSub":
@@ -336,6 +346,8 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
       return useCRBirthStatus();
     case "PlaceMasterDeath":
       return useDeathPlaceType();
+    case "MarriagePlaceType":
+      return useMarriagePlaceType();
     case "SpouseType":
       return useCRcauseOfSpouseType();
     // case "PlaceMasterDeath":

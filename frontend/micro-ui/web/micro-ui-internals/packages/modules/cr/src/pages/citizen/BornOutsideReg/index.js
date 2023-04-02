@@ -39,7 +39,7 @@ const CreateBornOutsideRegistration =({ parentUrl }) => {
       nextStep = key;
     }
     if (nextStep === null) {
-      return redirectWithHistory(`${match.path}/check`);
+      return redirectWithHistory(`${match.path}/born-outside-check`);
     }
     console.log("next page==",`${match.path}/${nextStep}`);
     nextPage = `${match.path}/${nextStep}`;
@@ -91,7 +91,7 @@ const CreateBornOutsideRegistration =({ parentUrl }) => {
 
           );
         })}
-        <Route path={`${match.path}/check`}>
+        <Route path={`${match.path}/born-outside-check`}>
           <CheckPage onSubmit={createProperty} value={params} />
         </Route>
         <Route path={`${match.path}/acknowledgement`}>
