@@ -85,15 +85,24 @@ public class DeathRegistryRepository {
         List<Object> preparedStmtValues = new ArrayList<>();
         String query = queryBuilder.getDeathSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
         List<DeathRegistryDtl> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), rowMapper);
+        // try {
+        //     ObjectMapper mapper = new ObjectMapper();
+        //     Object obj = criteria;
+        //     mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        //    System.out.println("Registrysearcriteria "+ mapper.writeValueAsString(obj));
+        //     }catch(Exception e) {
+        //     log.error("Exception while fetching from searcher: ",e);
+        //      }
+
         return result; 
     }
     //Jasmine 15.03.2023
     public List<DeathRegistryCorrectionDtls> getDeathCorrectionApplication(DeathRegistryCriteria criteria) {
         List<Object> preparedStmtValues = new ArrayList<>();
         String query = queryBuilder.getDeathRegistryIdSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
-        System.out.println("JasmineQuery"+query);
+        // System.out.println("JasmineQuery"+query);
         List<DeathRegistryCorrectionDtls> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), deathCorrectionRowMapper);
-        System.out.println("JasmineResult"+result);
+        // System.out.println("JasmineResult"+result);
         return result; 
     }
     //Rakhi S on 10.02.2023

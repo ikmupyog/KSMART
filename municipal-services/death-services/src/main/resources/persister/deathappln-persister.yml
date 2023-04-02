@@ -2397,8 +2397,7 @@ serviceMaps:
          dateofdeath  = ? , death_place = ?  , death_place_inst_type = ? , death_place_inst_id = ? ,
          deceased_firstname_en = ? , deceased_firstname_ml = ? , deceased_middlename_en = ? ,
          deceased_middlename_ml = ? , deceased_lastname_en = ? , deceased_lastname_ml = ? ,
-         deceased_aadhar_unavailable = ? , deceased_aadhar_number = ? , deceased_gender = ? ,
-         lastmodifiedby = ? , lastmodifiedtime = ? ,
+         deceased_aadhar_number = ? , deceased_gender = ? , lastmodifiedby = ? , lastmodifiedtime = ? ,
          male_dependent_name_en = ? , male_dependent_name_ml = ? , male_dependent_aadharno = ? ,
          female_dependent_name_en = ? , female_dependent_name_ml = ? , female_dependent_aadharno = ? ,
          vehicle_hospital_en = ? , vehicle_fromplace_ml = ? , vehicle_fromplace_en = ? ,
@@ -2432,9 +2431,7 @@ serviceMaps:
 
       - jsonPath: $.deathNACDtls.*.InformationDeath.DeceasedLastNameEn
 
-      - jsonPath: $.deathNACDtls.*.InformationDeath.DeceasedLastNameMl
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.DeceasedAadharNotAvailable
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeceasedLastNameMl  
 
       - jsonPath: $.deathNACDtls.*.InformationDeath.DeceasedAadharNumber
 
@@ -2442,13 +2439,13 @@ serviceMaps:
 
       - jsonPath: $.deathNACDtls.*.AuditDetails.lastModifiedBy
 
-      - jsonPath: $.deathNACDtls.*.AuditDetails.lastModifiedTime
+      - jsonPath: $.deathNACDtls.*.AuditDetails.lastModifiedTime  
 
       - jsonPath: $.deathNACDtls.*.InformationDeath.FatherNameEn
 
       - jsonPath: $.deathNACDtls.*.InformationDeath.FatherNameMl
 
-      - jsonPath: $.deathNACDtls.*.InformationDeath.FatherAadharNo
+      - jsonPath: $.deathNACDtls.*.InformationDeath.FatherAadharNo  
 
       - jsonPath: $.deathNACDtls.*.InformationDeath.MotherNameEn
 
@@ -2505,6 +2502,10 @@ serviceMaps:
       - jsonPath: $.deathNACDtls.*.DeathApplicantDtls.ApplicantAadhaarNo
 
       - jsonPath: $.deathNACDtls.*.DeathApplicantDtls.ApplicantMobileNo
+
+      - jsonPath: $.deathNACDtls.*.DeathApplicantDtls.ApplicantRelation
+
+      - jsonPath: $.deathNACDtls.*.DeathApplicantDtls.ApplicantAddress
 
       - jsonPath: $.deathNACDtls.*.DeathApplicantDtls.ApplicantEmail
 

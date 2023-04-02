@@ -22,6 +22,7 @@ import org.ksmart.death.deathapplication.web.models.DeathDtl;
 import org.ksmart.death.deathapplication.web.models.DeathFamilyInfo;
 import org.ksmart.death.deathapplication.web.models.DeathInformantDtls;
 import org.ksmart.death.deathapplication.web.models.DeathInitiatorDtls;
+import org.ksmart.death.deathapplication.web.models.DeathNACApplicantDtls;
 import org.ksmart.death.deathapplication.web.models.DeathNACDtls;
 import org.ksmart.death.deathapplication.web.models.DeathSearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,6 +124,28 @@ public class DeathApplnRepository {
                 deathDtl.getDeathBasicInfo().setDeathPlaceHospitalNameEn(deathPlaceHospital);
                 deathDtl.getDeathBasicInfo().setDeathPlaceHospitalNameMl(deathPlaceHospitalMl);
                }
+
+               //Rakhi S on 02.04.2023 Death place Institution
+               else if(DeathConstants.DEATH_PLACE_INSTITUTION.toString().equals(deathDtl.getDeathBasicInfo().getDeathPlace())){
+                Object mdmsDataInstitution = util.mDMSCallInstitution(requestInfo  
+                                        , deathDtl.getDeathBasicInfo().getTenantId()                           
+                                        , deathDtl.getDeathBasicInfo().getDeathPlaceType());
+                Map<String,List<String>> masterDataInstitution = getAttributeValuesHospital(mdmsDataInstitution);
+
+                Object mdmsDataInstitutionMl = util.mDMSCallInstitutionMl(requestInfo     
+                                        , deathDtl.getDeathBasicInfo().getTenantId()                           
+                                        , deathDtl.getDeathBasicInfo().getDeathPlaceType());
+                Map<String,List<String>> masterDataInstitutionMl = getAttributeValuesHospital(mdmsDataInstitutionMl);
+
+                String deathPlaceInstitution = masterDataInstitution.get(DeathConstants.INSTITUTION_NAME).toString();
+                deathPlaceInstitution = deathPlaceInstitution.replaceAll("[\\[\\]\\(\\)]", "");
+
+                String deathPlaceInstitutionMl = masterDataInstitutionMl.get(DeathConstants.INSTITUTION_NAME).toString();
+                deathPlaceInstitutionMl = deathPlaceInstitutionMl.replaceAll("[\\[\\]\\(\\)]", "");
+                
+                deathDtl.getDeathBasicInfo().setDeathPlaceInstitutionNameEn(deathPlaceInstitution);
+                deathDtl.getDeathBasicInfo().setDeathPlaceInstitutionNameMl(deathPlaceInstitutionMl);
+            } 
 
 			});
         }
@@ -226,8 +249,7 @@ public class DeathApplnRepository {
         if(result != null) {
 			result.forEach(deathDtl -> {
 
-                DeathBasicInfo deathBasicDtls =deathDtl.getDeathBasicInfo();
-                //deathBasicDtls.setDeceasedAadharNumber(encryptionDecryptionUtil.decryptObject(deathBasicDtls.getDeceasedAadharNumber(), "BndDetail", DeathBasicInfo.class,requestInfo));
+                DeathBasicInfo deathBasicDtls =deathDtl.getDeathBasicInfo();                
                 DeathBasicInfo dec = encryptionDecryptionUtil.decryptObject(deathBasicDtls, "BndDetail", DeathBasicInfo.class, requestInfo);
                 deathBasicDtls.setDeceasedAadharNumber(dec.getDeceasedAadharNumber());
                 DeathFamilyInfo deathFamilyDtls =deathDtl.getDeathFamilyInfo() ;
@@ -275,12 +297,18 @@ public class DeathApplnRepository {
         if(result != null) {
 			result.forEach(deathDtl -> {
 
-                DeathBasicInfo deathBasicDtls =deathDtl.getDeathBasicInfo();                
-                DeathBasicInfo dec = encryptionDecryptionUtil.decryptObject(deathBasicDtls, "BndDetail", DeathBasicInfo.class, requestInfo);
-                deathBasicDtls.setDeceasedAadharNumber(dec.getDeceasedAadharNumber());               
-                deathBasicDtls.setFatherAadharNo(dec.getFatherAadharNo());
-                deathBasicDtls.setMotherAadharNo(dec.getMotherAadharNo());
-                deathBasicDtls.setSpouseAadhaar(dec.getSpouseAadhaar());                
+                // DeathBasicInfo deathBasicDtls =deathDtl.getDeathBasicInfo();                
+                // DeathBasicInfo dec = encryptionDecryptionUtil.decryptObject(deathBasicDtls, "BndDetail", DeathBasicInfo.class, requestInfo);
+                // deathBasicDtls.setDeceasedAadharNumber(dec.getDeceasedAadharNumber());               
+                // deathBasicDtls.setFatherAadharNo(dec.getFatherAadharNo());
+                // deathBasicDtls.setMotherAadharNo(dec.getMotherAadharNo());
+                // deathBasicDtls.setSpouseAadhaar(dec.getSpouseAadhaar());   
+                
+                // DeathNACApplicantDtls deathInformant =deathDtl.getDeathApplicantDtls() ;
+                // if (deathInformant!=null){
+                //     DeathNACApplicantDtls deathInformantEnc = encryptionDecryptionUtil.decryptObject(deathInformant, "BndDetail", DeathNACApplicantDtls.class,requestInfo);
+                //     deathInformant.setApplicantAadhaarNo(deathInformantEnc.getApplicantAadhaarNo());
+                // }            
 
                 if(DeathConstants.DEATH_PLACE_HOSPITAL.toString().equals(deathDtl.getDeathBasicInfo().getDeathPlace())){
                     Object mdmsDataHospital = util.mDMSCallHospital(requestInfo    

@@ -144,5 +144,8 @@ public class DeathConstants {
 
     //Rakhi S  on 21.03.2023
     public static final String STATUS_FOR_PAYMENT = "PENDINGPAYMENT";
+    
+    //Rakhi S  on 02.04.2023
+    public static final String INSTITUTION_NAME = "institutionList";
 
 }

@@ -422,4 +422,10 @@ public class DeathBasicInfo {
    @JsonProperty("MotherUnavailable")
    private boolean motherUnavailable;
 
+   @JsonProperty("DeathPlaceInstitutionNameEn")
+   private String  deathPlaceInstitutionNameEn ;
+
+   @JsonProperty("DeathPlaceInstitutionNameMl")
+   private String  deathPlaceInstitutionNameMl ;
+
 }

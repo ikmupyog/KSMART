@@ -323,4 +323,94 @@ public class DeathMdmsUtil {
                
          return (crDeathModuleDtls);
     }
+    //Rakhi S on 02.04.2023
+    public Object mDMSCallInstitution(RequestInfo requestInfo  
+                                                    , String tenantId  
+                                                    , String deathPlaceInstId) {
+        MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestInstitution(requestInfo   
+                                                    , tenantId
+                                                    , deathPlaceInstId);
+        Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
+        return result;
+    }
+     //Rakhi S on 02.04.2023
+     private MdmsCriteriaReq getMDMSRequestInstitution(RequestInfo requestInfo    
+                                , String tenantId                       
+                                , String deathPlaceInstId) {
+
+        // ModuleDetail tenantIdRequest = getTenantIdCertificate(tenantId);
+        ModuleDetail commonMasterRequest = getcommonMasterRequestInstitution(deathPlaceInstId); 
+                 
+                List<ModuleDetail> moduleDetails = new LinkedList<>();
+                // moduleDetails.add(tenantIdRequest);
+                moduleDetails.add(commonMasterRequest);
+
+                MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(tenantId)
+                .build();
+
+                MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
+                .requestInfo(requestInfo).build();
+
+                // System.out.println("mdmsreq2"+mdmsCriteriaReq);
+                return mdmsCriteriaReq;
+        }
+    //Rakhi S on 02.04.2023
+      private ModuleDetail  getcommonMasterRequestInstitution(String deathPlaceInstId) {
+
+                 // master details for crDeath module
+                List<MasterDetail> crDeathMasterDetails = new ArrayList<>();
+                // master details for death certificate              
+                final String institutionfilterCode = "$.[?(@.code=='"+deathPlaceInstId+"')].address"; 
+                crDeathMasterDetails
+                .add(MasterDetail.builder().name(DeathConstants.INSTITUTION_NAME).filter(institutionfilterCode).build());       
+                
+                ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
+                .moduleName(DeathConstants.TENANT_EGOV_LOCATION).build();
+
+                return (crDeathModuleDtls);
+        }
+    //Rakhi S on 02.04.2023
+        public Object mDMSCallInstitutionMl(RequestInfo requestInfo  
+                                , String tenantId  
+                                , String deathPlaceInstId) {
+                MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestInstitutionMl(requestInfo   
+                , tenantId
+                , deathPlaceInstId);
+                Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
+                return result;
+        }
+        //Rakhi S on 02.04.2023
+        private MdmsCriteriaReq getMDMSRequestInstitutionMl(RequestInfo requestInfo    
+                                , String tenantId                       
+                                , String deathPlaceInstId) {
+
+                // ModuleDetail tenantIdRequest = getTenantIdCertificate(tenantId);
+                ModuleDetail commonMasterRequest = getcommonMasterRequestInstitutionMl(deathPlaceInstId); 
+                 
+                List<ModuleDetail> moduleDetails = new LinkedList<>();
+                // moduleDetails.add(tenantIdRequest);
+                moduleDetails.add(commonMasterRequest);
+
+                MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(tenantId)
+                .build();
+
+                MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
+                .requestInfo(requestInfo).build();
+
+                // System.out.println("mdmsreq2"+mdmsCriteriaReq);
+                return mdmsCriteriaReq;
+        }
+        //Rakhi S on 02.04.2023
+        private ModuleDetail  getcommonMasterRequestInstitutionMl(String deathPlaceInstId) {
+
+               List<MasterDetail> crDeathMasterDetails = new ArrayList<>();           
+               final String institutionfilterCode = "$.[?(@.code=='"+deathPlaceInstId+"')].addressLocal"; 
+               crDeathMasterDetails
+               .add(MasterDetail.builder().name(DeathConstants.INSTITUTION_NAME).filter(institutionfilterCode).build());       
+               
+               ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
+               .moduleName(DeathConstants.TENANT_EGOV_LOCATION).build();
+
+               return (crDeathModuleDtls);
+       }
 }
