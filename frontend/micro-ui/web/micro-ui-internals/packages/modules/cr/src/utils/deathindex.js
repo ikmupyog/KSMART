@@ -578,8 +578,7 @@ export const convertToEditDeathRegistration = (data = {}) => {
   const empTenantId = Digit.ULBService.getCurrentUlb();
   // let tenantId = "";
   // tenantId = empTenantId["code"];
-  console.log(data);
-  console.log(data?.InformationDeath?.workFlowCode);
+ 
 
   const formdata = {
     deathCertificateDtls: [
