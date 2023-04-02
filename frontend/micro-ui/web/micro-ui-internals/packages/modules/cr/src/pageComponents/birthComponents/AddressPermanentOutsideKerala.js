@@ -11,7 +11,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
   permntOutsideKeralaLocalityNameEn, setpermntOutsideKeralaLocalityNameEn, permntOutsideKeralaLocalityNameMl, setpermntOutsideKeralaLocalityNameMl,
   permntOutsideKeralaStreetNameEn, setpermntOutsideKeralaStreetNameEn, permntOutsideKeralaStreetNameMl, setpermntOutsideKeralaStreetNameMl,
   permntOutsideKeralaPostOfficeEn, setpermntoutsideKeralaPostOfficeEn, permntOutsideKeralaPostOfficeMl, setpermntoutsideKeralaPostOfficeMl,
-  value, setValue,isEditBirth = false, isEditDeath = false,
+  value, setValue,isEditBirth = false, isEditDeath = false,isEditStillBirth = false,
   // isInitialRender, setIsInitialRender
 
 }) => {
@@ -35,7 +35,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
 
   const [toast, setToast] = useState(false);
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : isEditStillBirth ? isEditStillBirth :  false);
 
   const cmbUrbanRural = [
     { i18nKey: "Town", code: "TOWN" },
@@ -119,6 +119,22 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
     if (formData?.AddressBirthDetails?.permntOutsideKeralaVillage != null) {
       if (cmbVillage.length > 0 && (permntOutsideKeralaVillage === undefined || permntOutsideKeralaVillage === "")) {
         setpermntOutsideKeralaVillage(cmbVillage.filter(cmbVillage => cmbVillage.code === formData?.AddressBirthDetails?.permntOutsideKeralaVillage)[0]);
+      }
+    }
+  } else if (isEditStillBirth) {
+    if (formData?.StillBirthChildDetails?.AddressBirthDetails?.permntOutsideKeralaDistrict != null) {
+      if (cmbDistrict.length > 0 && (permntOutsideKeralaDistrict === undefined || permntOutsideKeralaDistrict === "")) {
+        setpermntOutsideKeralaDistrict(cmbDistrict.filter(cmbDistrict => cmbDistrict.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.permntOutsideKeralaDistrict)[0]);
+      }
+    }
+    if (formData?.StillBirthChildDetails?.AddressBirthDetails?.permntOutsideKeralaTaluk != null) {
+      if (cmbTaluk.length > 0 && (permntOutsideKeralaTaluk === undefined || permntOutsideKeralaTaluk === "")) {
+        setpermntOutsideKeralaTaluk(cmbTaluk.filter(cmbTaluk => cmbTaluk.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.permntOutsideKeralaTaluk)[0]);
+      }
+    }
+    if (formData?.StillBirthChildDetails?.AddressBirthDetails?.permntOutsideKeralaVillage != null) {
+      if (cmbVillage.length > 0 && (permntOutsideKeralaVillage === undefined || permntOutsideKeralaVillage === "")) {
+        setpermntOutsideKeralaVillage(cmbVillage.filter(cmbVillage => cmbVillage.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.permntOutsideKeralaVillage)[0]);
       }
     }
   }

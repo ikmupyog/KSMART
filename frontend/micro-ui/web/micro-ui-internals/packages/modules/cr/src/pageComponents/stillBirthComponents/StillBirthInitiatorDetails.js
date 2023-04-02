@@ -1,46 +1,50 @@
 import React, { useState, useEffect } from "react";
-import Timeline from "../../components/SBRTimeline";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, TextArea, Toast } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
+import Timeline from "../../components/SBRTimeline";
 
-const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData ,isEditStillBirth=false }) => {
+const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData,isEditStillBirth=false }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
+ // console.log(Digit.UserService.getUser().info);
   const [isDisableEdit, setisDisableEdit] = useState(isEditStillBirth ? isEditStillBirth : false);
   const {name:name,} =Digit.UserService.getUser().info ; // window.localStorage.getItem("user-info");
-  const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.InitiatorinfoDetails?.isInitiatorDeclaration : formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration : false);
-  const [isCaretaker, setIsCaretaker] = useState(formData?.InitiatorinfoDetails?.isCaretaker ? formData?.InitiatorinfoDetails?.isCaretaker : formData?.ChildDetails?.InitiatorinfoDetails?.isCaretaker ? formData?.ChildDetails?.InitiatorinfoDetails?.isCaretaker : false);
-  const [relation, setrelation] = useState(formData?.InitiatorinfoDetails?.relation ? formData?.InitiatorinfoDetails?.relation : formData?.ChildDetails?.InitiatorinfoDetails?.relation ? formData?.ChildDetails?.InitiatorinfoDetails?.relation : "");
-  const [initiatorNameEn, setinitiatorNameEn] = useState(formData?.InitiatorinfoDetails?.initiatorNameEn ? formData?.InitiatorinfoDetails?.initiatorNameEn : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorNameEn ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorNameEn : name);
-  const [initiatorAadhar, setinitiatorAadhar] = useState(formData?.InitiatorinfoDetails?.initiatorAadhar ? formData?.InitiatorinfoDetails?.initiatorAadhar : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAadhar ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAadhar : "");
-  const [initiatorMobile, setinitiatorMobile] = useState(formData?.InitiatorinfoDetails?.initiatorMobile ? formData?.InitiatorinfoDetails?.initiatorMobile : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorMobile ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorMobile : "");
-  const [initiatorDesi, setinitiatorDesi] = useState(formData?.InitiatorinfoDetails?.initiatorDesi ? formData?.InitiatorinfoDetails?.initiatorDesi : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorDesi ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorDesi : "");
-  const [initiatorAddress, setinitiatorAddress] = useState(formData?.InitiatorinfoDetails?.initiatorAddress ? formData?.InitiatorinfoDetails?.initiatorAddress : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAddress ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAddress : "");
+  const {mobileNumber:mobileNumber,} =Digit.UserService.getUser().info ; // window.localStorage.getItem("user-info");
+  const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.StillBirthInitiatorDetails?.isInitiatorDeclaration ? formData?.StillBirthInitiatorDetails?.isInitiatorDeclaration : formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.isInitiatorDeclaration ? formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.isInitiatorDeclaration : false);
+  const [isCaretaker, setIsCaretaker] = useState(formData?.StillBirthInitiatorDetails?.isCaretaker ? formData?.StillBirthInitiatorDetails?.isCaretaker : formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.isCaretaker ? formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.isCaretaker : false);
+  const [relation, setrelation] = useState(formData?.StillBirthInitiatorDetails?.relation ? formData?.StillBirthInitiatorDetails?.relation : formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.relation ? formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.relation : "");
+  const [initiatorNameEn, setinitiatorNameEn] = useState(formData?.StillBirthInitiatorDetails?.initiatorNameEn ? formData?.StillBirthInitiatorDetails?.initiatorNameEn : formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorNameEn ? formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorNameEn : name);
+  const [initiatorAadhar, setinitiatorAadhar] = useState(formData?.StillBirthInitiatorDetails?.initiatorAadhar ? formData?.StillBirthInitiatorDetails?.initiatorAadhar : formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorAadhar ? formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorAadhar : "");
+  const [initiatorMobile, setinitiatorMobile] = useState(formData?.StillBirthInitiatorDetails?.initiatorMobile ? formData?.StillBirthInitiatorDetails?.initiatorMobile : formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorMobile ? formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorMobile : mobileNumber);
+  const [initiatorDesi, setinitiatorDesi] = useState(formData?.StillBirthInitiatorDetails?.initiatorDesi ? formData?.StillBirthInitiatorDetails?.initiatorDesi : formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorDesi ? formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorDesi : "");
+  const [initiatorAddress, setinitiatorAddress] = useState(formData?.StillBirthInitiatorDetails?.initiatorAddress ? formData?.StillBirthInitiatorDetails?.initiatorAddress : formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorAddress ? formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorAddress : "");
   const [isInitialRender, setIsInitialRender] = useState(true);
 
   const [toast, setToast] = useState(false);
-  const [infomantFirstNmeEnError, setinfomantFirstNmeEnError] = useState(formData?.InitiatorinfoDetails?.initiatorNameEn ? false : false);
-  const [initiatorAadharError, setinitiatorAadharError] = useState(formData?.InitiatorinfoDetails?.initiatorAadhar ? false : false);
-  const [initiatorMobileError, setinitiatorMobileError] = useState(formData?.InitiatorinfoDetails?.initiatorMobile ? false : false);
-  const [initiatorDesiError, setinitiatorDesiError] = useState(formData?.InitiatorinfoDetails?.initiatorDesi ? false : false);
+  const [infomantFirstNmeEnError, setinfomantFirstNmeEnError] = useState(formData?.StillBirthInitiatorDetails?.initiatorNameEn ? false : false);
+  const [initiatorAadharError, setinitiatorAadharError] = useState(formData?.StillBirthInitiatorDetails?.initiatorAadhar ? false : false);
+  const [initiatorMobileError, setinitiatorMobileError] = useState(formData?.StillBirthInitiatorDetails?.initiatorMobile ? false : false);
+  const [initiatorDesiError, setinitiatorDesiError] = useState(formData?.StillBirthInitiatorDetails?.initiatorDesi ? false : false);
+
   const onSkip = () => onSelect();
 
   useEffect(() => {
     if (isInitialRender) {
-      if (formData?.InitiatorinfoDetails?.isInitiatorDeclaration != null) {
+      if (formData?.StillBirthInitiatorDetails?.isInitiatorDeclaration != null) {
         setIsInitialRender(false);
-        setisInitiatorDeclaration(formData?.InitiatorinfoDetails?.isInitiatorDeclaration);
+        setisInitiatorDeclaration(formData?.StillBirthInitiatorDetails?.isInitiatorDeclaration);
       }
-      if (formData?.InitiatorinfoDetails?.isCaretaker != null) {
+      if (formData?.StillBirthInitiatorDetails?.isCaretaker != null) {
         setIsInitialRender(false);
-        setIsCaretaker(formData?.InitiatorinfoDetails?.isCaretaker);
+        setIsCaretaker(formData?.StillBirthInitiatorDetails?.isCaretaker);
       }
     }
   }, [isInitialRender]);
 
+
   function setSelectrelation(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setrelation(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
@@ -62,17 +66,64 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData ,isEd
   }
 
 
-
   function setSelectinitiatorAadhar(e) {
     if (e.target.value.trim().length >= 0) {
       setinitiatorAadhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
     }
+    // if (e.target.value.length != 0) {
+    //   if (e.target.value.length > 12) {
+    //     // setChildAadharNo(e.target.value);
+    //     setinitiatorAadharError(true);
+    //     return false;
+    //   } else if (e.target.value.length < 12) {
+    //     setinitiatorAadharError(true);
+    //     setinitiatorAadhar(e.target.value);
+    //     return false;
+    //   } else {
+    //     setinitiatorAadharError(false);
+    //     setinitiatorAadhar(e.target.value);
+    //     return true;
+    //   }
+    // } else {
+    //   setinitiatorAadharError(false);
+    //   setinitiatorAadhar(e.target.value);
+    //   return true;
+    // }
   }
+  // function setSelectinitiatorAadhar(e) {
+
+  //   if (e.target.value.length != 0) {
+  //     if (e.target.value.length > 12) {
+  //       return false;
+  //     } else if (e.target.value.length < 12) {
+  //       setinitiatorAadhar(e.target.value);
+  //       return false;
+  //     } else {
+  //       setinitiatorAadhar(e.target.value);
+  //     }
+  //   } else {
+  //     setinitiatorAadhar(e.target.value);
+  //   }
+  // }
   function setSelectinitiatorMobile(e) {
-    if (e.target.value.trim().length != 0) {
+    if (e.target.value.trim().length >= 0) {
       setinitiatorMobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
     }
   }
+  // function setSelectinitiatorMobile(e) {
+  //   if (e.target.value.length != 0) {
+  //     if (e.target.value.length > 10) {
+  //       return false;
+  //     } else if (e.target.value.length < 10) {
+  //       setinitiatorMobile(e.target.value);
+  //       return false;
+  //     } else {
+  //       setinitiatorMobile(e.target.value);
+  //     }
+  //   } else {
+  //     setinitiatorMobile(e.target.value);
+  //   }
+  // }
 
   function setDeclarationInfo(e) {
     if (e.target.checked == false) {
@@ -87,6 +138,7 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData ,isEd
       setIsCaretaker(e.target.checked);
 
       setinitiatorDesi("");
+
     } else {
       setIsCaretaker(e.target.checked);
     }
@@ -94,6 +146,16 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData ,isEd
 
   let validFlag = true;
   const goNext = () => {
+    // if (relation == null || relation == "" || relation == undefined) {
+    //   validFlag = false;
+    //   setrelationnError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 2000);
+    // } else {
+    //   setrelationnError(false);
+    // }
     if (initiatorNameEn == null || initiatorNameEn == "" || initiatorNameEn == undefined) {
       validFlag = false;
       setinfomantFirstNmeEnError(true);
@@ -105,6 +167,8 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData ,isEd
       setinfomantFirstNmeEnError(false);
     }
     if (isCaretaker === true) {
+
+
       if (initiatorDesi == null || initiatorDesi == "" || initiatorDesi == undefined) {
         validFlag = false;
         setinitiatorDesiError(true);
@@ -116,7 +180,6 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData ,isEd
         setinitiatorDesiError(false);
       }
     }
-
     if (initiatorAadhar != null || initiatorAadhar != "" || initiatorAadhar != undefined) {
       let adharLength = initiatorAadhar;
       console.log(adharLength);
@@ -158,17 +221,16 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData ,isEd
         setToast(false);
       }, 2000);
     }
-
     if (validFlag == true) {
-      sessionStorage.setItem("relation", relation ? relation : null);
-      sessionStorage.setItem("initiatorNameEn", initiatorNameEn ? initiatorNameEn : null);
-      sessionStorage.setItem("initiatorAadhar", initiatorAadhar ? initiatorAadhar : null);
+      // sessionStorage.setItem("relation", relation ? relation : null);
+      // sessionStorage.setItem("initiatorNameEn", initiatorNameEn ? initiatorNameEn : null);
+      // sessionStorage.setItem("initiatorAadhar", initiatorAadhar ? initiatorAadhar : null);
 
-      sessionStorage.setItem("initiatorMobile", initiatorMobile ? initiatorMobile : null);
-      sessionStorage.setItem("initiatorDesi", initiatorDesi ? initiatorDesi : null);
-      sessionStorage.setItem("initiatorAddress", initiatorAddress ? initiatorAddress : null);
-      sessionStorage.setItem("isInitiatorDeclaration", isInitiatorDeclaration ? isInitiatorDeclaration : null);
-      sessionStorage.setItem("isCaretaker", isCaretaker ? isCaretaker : null);
+      // sessionStorage.setItem("initiatorMobile", initiatorMobile ? initiatorMobile : null);
+      // sessionStorage.setItem("initiatorDesi", initiatorDesi ? initiatorDesi : null);
+      // sessionStorage.setItem("initiatorAddress", initiatorAddress ? initiatorAddress : null);
+      // sessionStorage.setItem("isInitiatorDeclaration", isInitiatorDeclaration ? isInitiatorDeclaration : null);
+      // sessionStorage.setItem("isCaretaker", isCaretaker ? isCaretaker : null);
 
       onSelect(config.key, {
         relation,
@@ -186,15 +248,11 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData ,isEd
   return (
     <React.Fragment>
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+
       {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
-      <FormStep
-        t={t}
-        config={config}
-        onSelect={goNext}
-        onSkip={onSkip}
-        isDisabled={!isInitiatorDeclaration || !initiatorNameEn || !initiatorAadhar || !initiatorMobile}
-      >
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!isInitiatorDeclaration || !initiatorNameEn || !initiatorAadhar || !initiatorMobile
+      }>
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -236,8 +294,8 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData ,isEd
                 name="relation"
                 value={relation}
                 onChange={setSelectrelation}
+                placeholder={`${t("CR_RELATION")}`}
                 disable={isDisableEdit}
-                placeholder={`${t("CR_RELATION")}`}        
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_RELATION") })}
               />
             </div>
@@ -291,7 +349,7 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData ,isEd
             </div>
             {isCaretaker === true && (
               <div>
-                <div className="col-md-3">
+                <div className="col-md-6">
                   <CardLabel>
                     {`${t("CR_INSTITUTION_NAME_DESIGNATION")}`}
                     <span className="mandatorycss">*</span>
@@ -312,7 +370,7 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData ,isEd
               </div>
             )}
 
-            <div className="col-md-3">
+            <div className="col-md-6">
               <CardLabel>
                 {`${t("CR_MOBILE_NO")}`}
                 <span className="mandatorycss">*</span>
@@ -329,6 +387,19 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData ,isEd
                 {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
               />
             </div>
+            {/* <div className="col-md-6">
+              <CardLabel>{`${t("CR_INFORMER_ADDRESS")}`}</CardLabel>
+              <TextArea
+                t={t}
+                type={"text"}
+                optionKey="i18nKey"
+                name="initiatorAddress"
+                value={initiatorAddress}
+                onChange={setSelectinitiatorAddress}
+                placeholder={`${t("CR_INFORMER_ADDRESS")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
+              />
+            </div> */}
           </div>
         </div>
         <div className="row">
@@ -357,12 +428,12 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData ,isEd
                 ? infomantFirstNmeEnError
                   ? t(`BIRTH_ERROR_INFORMANT_NAME_CHOOSE`)
                   : initiatorAadharError
-                  ? t(`BIRTH_ERROR_INFORMANT_AADHAR_CHOOSE`)
-                  : initiatorMobileError
-                  ? t(`BIRTH_ERROR_INFORMANT_MOBILE_CHOOSE`)
-                  : initiatorDesiError
-                  ? t(`BIRTH_ERROR_INFORMANT_DESIGNATION_CHOOSE`)
-                  : setToast(false)
+                    ? t(`BIRTH_ERROR_INFORMANT_AADHAR_CHOOSE`)
+                    : initiatorMobileError
+                      ? t(`BIRTH_ERROR_INFORMANT_MOBILE_CHOOSE`)
+                      : initiatorDesiError
+                        ? t(`BIRTH_ERROR_INFORMANT_DESIGNATION_CHOOSE`)
+                        : setToast(false)
                 : setToast(false)
             }
             onClose={() => setToast(false)}

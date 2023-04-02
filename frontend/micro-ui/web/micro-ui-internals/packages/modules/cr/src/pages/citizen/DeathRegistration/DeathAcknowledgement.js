@@ -2,7 +2,7 @@ import { Banner, Card, LinkButton,  } from "@egovernments/digit-ui-react-compone
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { convertToDeathRegistration, convertToEditDeathRegistration } from "../../../utils";
+import { convertToDeathRegistration, convertToEditDeathRegistration } from "../../../utils/deathindex";
 import getPDFData from "../../../utils/getTLAcknowledgementData";
 
 const GetActionMessage = (props) => {

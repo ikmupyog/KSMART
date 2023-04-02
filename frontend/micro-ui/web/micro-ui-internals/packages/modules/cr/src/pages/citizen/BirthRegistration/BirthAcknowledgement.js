@@ -2,11 +2,12 @@ import { Banner, Card, CardText, LinkButton, Loader, SubmitBar } from "@egovernm
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { convertToBirthRegistration, convertToEditBirthRegistration } from "../../../utils";
+import { convertToBirthRegistration, convertToEditBirthRegistration } from "../../../utils/birthindex";
 import getPDFData from "../../../utils/getTLAcknowledgementData";
 
 const GetActionMessage = (props) => {
   const { t } = useTranslation();
+  console.log(props);
   if (props.isSuccess) {
     return t("CR_CREATE_SUCCESS_MSG");
   } else if (props.isLoading) {
@@ -22,7 +23,7 @@ const rowContainerStyle = {
 };
 
 const BannerPicker = (props) => {
-  // console.log(JSON.stringify(props));
+  console.log(JSON.stringify(props));
   return (
     <Banner
       message={GetActionMessage(props)}
