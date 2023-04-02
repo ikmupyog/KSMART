@@ -83,7 +83,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
   } else {
     userType = "employee";
   }
-  console.log(value);
+  // console.log(value);
   const convertEpochToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {

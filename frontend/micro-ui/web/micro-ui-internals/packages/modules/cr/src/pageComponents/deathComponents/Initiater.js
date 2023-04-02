@@ -6,8 +6,8 @@ import { useTranslation } from "react-i18next";
 
 const Initiater = ({ config, onSelect, userType, formData,isEditDeath }) => {
   const stateId = Digit.ULBService.getStateId();
-  console.log(isEditDeath);
-  console.log(formData);
+  // console.log(isEditDeath);
+  // console.log(formData);
 
   const { t } = useTranslation();
   let validation = {};

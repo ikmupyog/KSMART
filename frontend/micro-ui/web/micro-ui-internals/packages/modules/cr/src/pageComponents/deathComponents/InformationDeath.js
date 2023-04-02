@@ -12,8 +12,8 @@ import DeathOutsideJurisdiction from "./DeathOutsideJurisdiction ";
 import { useParams } from "react-router-dom";
 
 const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath }) => {
-  console.log(formData);
-  console.log(isEditDeath);
+  // console.log(formData);
+  // console.log(isEditDeath);
   const [isEditDeathPageComponents, setIsEditDeathPageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
   const stateId = Digit.ULBService.getStateId();
@@ -600,7 +600,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
             workFlowData.startdateperiod <= DifferenceInTime &&
             workFlowData.enddateperiod >= DifferenceInTime
         );
-        console.log("currentWorgFlowDOB" + currentWorgFlow);
+        // console.log("currentWorgFlowDOB" + currentWorgFlow);
         if (currentWorgFlow.length > 0) {
           // console.log(currentWorgFlow[0].WorkflowCode);
           setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
@@ -996,7 +996,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
     if (Difference_In_DaysRounded <= 21) {
       if (DeathPlace.code == "HOSPITAL") {
         workFlowCode = "DEATHHOSP";
-        console.log(workFlowCode);
+        // console.log(workFlowCode);
       } else {
         workFlowCode = "21DEATHHHOME";
       }
