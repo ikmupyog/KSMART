@@ -115,7 +115,7 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
         StringBuilder query = new StringBuilder(QUERY);
         StringBuilder orderBy = new StringBuilder();
         addFilter("MD.id", criteria.getId(), query, preparedStmtValues);
-        addFilter("MD_tenantid", criteria.getTenantId(), query, preparedStmtValues);
+        addFilter("MD.tenantid", criteria.getTenantId(), query, preparedStmtValues);
         addFilter("MD.applicationNumber", criteria.getApplicationNo(), query, preparedStmtValues);
         addFilter("MD_registrationno", criteria.getRegistrationNo(), query, preparedStmtValues);
         // addFilter("MD_certificateno", criteria.getCertificateNo(), query, preparedStmtValues);
@@ -134,19 +134,19 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
                 query,
                 preparedStmtValues);
 
-        // if(criteria.getSortOrder() == null){
-        //   criteria.setSortOrder(MarriageRegistrySearchCriteria.SortOrder.ASC);
-        // }
-        //   if (StringUtils.isEmpty(criteria.getSortBy()))
-        //   addOrderByColumns("MD_createdtime","ASC", orderBy);
-        //   else if (criteria.getSortBy() == MarriageRegistrySearchCriteria.SortBy.dateofmarriage)
-        //   addOrderByColumns("MD_dateofmarriage",criteria.getSortOrder().toString(), orderBy);
-        //   else if (criteria.getSortBy() == MarriageRegistrySearchCriteria.SortBy.applicationNumber)
-        //   addOrderByColumns("MD_applicationnumber",criteria.getSortOrder().toString(),orderBy);
-        //   else if (criteria.getSortBy() == MarriageRegistrySearchCriteria.SortBy.tenantId)
-        //   addOrderByColumns("MD_tenantid",criteria.getSortOrder().toString(), orderBy);
-        //   addOrderToQuery(orderBy, query);
-        //   //addLimitAndOffset(criteria.getOffset(),criteria.getLimit(), query, preparedStmtValues);
+         if(criteria.getSortOrder() == null){
+           criteria.setSortOrder(MarriageApplicationSearchCriteria.SortOrder.ASC);
+         }
+           if (StringUtils.isEmpty(criteria.getSortBy()))
+           addOrderByColumns("MD.createdtime","ASC", orderBy);
+           else if (criteria.getSortBy() == MarriageApplicationSearchCriteria.SortBy.dateofmarriage)
+           addOrderByColumns("MD.dateofmarriage",criteria.getSortOrder().toString(), orderBy);
+           else if (criteria.getSortBy() == MarriageApplicationSearchCriteria.SortBy.applicationNumber)
+           addOrderByColumns("MD.applicationNumber",criteria.getSortOrder().toString(),orderBy);
+           else if (criteria.getSortBy() == MarriageApplicationSearchCriteria.SortBy.tenantId)
+           addOrderByColumns("MD.tenantid",criteria.getSortOrder().toString(), orderBy);
+           addOrderToQuery(orderBy, query);
+           //addLimitAndOffset(criteria.getOffset(),criteria.getLimit(), query, preparedStmtValues);
 
         return query.toString();
 

@@ -112,7 +112,7 @@ public class MarriageApplicationService {
                 .applicationNo(applicationNumber)
                 .build());
         List<MarriageApplicationDetails> searchResult = repository.getMarriageApplication(criteria,request.getRequestInfo());
-       // validatorService.validateUpdate(request, searchResult);
+        validatorService.validateUpdate(request, searchResult);
 
 
 

@@ -105,6 +105,12 @@ public class MarriageApplicationRepository {
 
 
     public List<MarriageApplicationDetails> getMarriageApplication(MarriageApplicationSearchCriteria criteria, RequestInfo requestInfo) {
-        return null;
+        List<Object> preparedStmtValues = new ArrayList<>();
+        String query = marriageQueryBuilder.getMarriageApplicationSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
+        // System.out.println("Query:"+query);
+        List<MarriageApplicationDetails> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriageApplicationRowMapper);
+
+        return result;
     }
-}
+
+    }
