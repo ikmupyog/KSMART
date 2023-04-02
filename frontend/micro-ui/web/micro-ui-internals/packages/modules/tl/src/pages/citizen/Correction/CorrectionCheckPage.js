@@ -371,14 +371,14 @@ const CorrectionCheckPage = ({ onSubmit, value, valuenew }) => {
                 </div>
                 <div className="row">
                   <div className="col-md-12" style={custometable}>
-                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetailsNew?.TradeDetails?.tradeLicenseDetail?.address?.wardNo}/{TradeDetails?.tradeLicenseDetail?.address?.doorNo}
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{TradeDetailsNew?.TradeDetails?.tradeLicenseDetail?.address?.wardNo}/{TradeDetailsNew?.tradeLicenseDetail?.address?.doorNo}
                     ,&nbsp;&nbsp;{TradeDetailsNew?.TradeDetails?.tradeLicenseDetail?.address?.buildingName}
                     ,&nbsp;&nbsp;{TradeDetailsNew?.TradeDetails?.tradeLicenseDetail?.address?.street}
                     ,&nbsp;&nbsp;{TradeDetailsNew?.TradeDetails?.tradeLicenseDetail?.address?.locality}
                     ,&nbsp;&nbsp;{TradeDetailsNew?.TradeDetails?.tradeLicenseDetail?.address?.landmark}
                     ,&nbsp;&nbsp;{TradeDetailsNew?.TradeDetails?.tradeLicenseDetail?.address?.waterbody}
                     ,&nbsp;&nbsp;{TradeDetailsNew?.TradeDetails?.tradeLicenseDetail?.address?.serviceArea}
-                    ,&nbsp;&nbsp;{TradeDetailsNew?.TradeDetails?.tradeLicenseDetail?.address?.postOffice} - {TradeDetails?.tradeLicenseDetail?.address?.pincode}
+                    ,&nbsp;&nbsp;{TradeDetailsNew?.TradeDetails?.tradeLicenseDetail?.address?.postOffice} - {TradeDetailsNew?.tradeLicenseDetail?.address?.pincode}
                     ,&nbsp;&nbsp;{TradeDetailsNew?.TradeDetails?.tradeLicenseDetail?.address?.email}
                     ,&nbsp;&nbsp;{TradeDetailsNew?.TradeDetails?.tradeLicenseDetail?.address?.contactNo}</CardText>
                   </div>

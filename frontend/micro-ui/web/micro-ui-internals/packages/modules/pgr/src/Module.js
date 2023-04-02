@@ -27,7 +27,7 @@ import SelectGeolocation from "./pageComponents/Steps/SelectGeolocation";
 import SelectImages from "./pageComponents/Steps/SelectImages";
 import SelectLandmark from "./pageComponents/Steps/SelectLandmark";
 import SelectSubType from "./pageComponents/Steps/SelectSubType";
-import Informer from "./pageComponents/Steps/Informer";
+import ComplaintInformer from "./pageComponents/Steps/ComplaintInformer";
 
 export const PGRReducers = getRootReducer;
 
@@ -82,7 +82,7 @@ const componentsToRegister = {
   PGRComplaintDetailsPage: ComplaintDetailsPage,
   PGRSelectRating: SelectRating,
   PGRResponseCitzen: ResponseCitizen,
-  Informer, SelectAddress, SelectComplaintType, SelectDetails, SelectGeolocation, SelectImages, SelectLandmark, SelectPincode, SelectSubType
+  ComplaintInformer, SelectAddress, SelectComplaintType, SelectDetails, SelectGeolocation, SelectImages, SelectLandmark, SelectPincode, SelectSubType
 };
 
 export const initPGRComponents = () => {

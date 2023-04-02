@@ -20,7 +20,7 @@ const SelectLandmark = ({ t, config, onSelect, value }) => {
   const { tenants } = Digit.SessionStorage.get("initData");
 
 
-  const [tenantWard, setTenantWard] = useState(tenantId);
+  const [tenantWard, setTenantWard] = useState(stateId);
   const [districtId, setDistrictId] = useState(complaint_details?.district?.districtid || tenantId);
   const [tenantboundary, setTenantboundary] = useState(false);
 
@@ -44,6 +44,7 @@ const SelectLandmark = ({ t, config, onSelect, value }) => {
   let cmbLB = [];
   let cmbPostOffice = [];
   let cmbWardNo = [];
+  let cmbWardNoFinal = [];
 
   District && District["common-masters"] &&
     District["common-masters"].District.map((ob) => {
@@ -75,6 +76,12 @@ const SelectLandmark = ({ t, config, onSelect, value }) => {
         });
       }
     });
+
+  cmbWardNo.map((wardmst) => {
+    wardmst.localnamecmb = wardmst.wardno + " ( " + wardmst.localname + " )";
+    wardmst.namecmb = wardmst.wardno + " ( " + wardmst.name + " )";
+    cmbWardNoFinal.push(wardmst);
+  });
 
   const goNext = () => {
     onSelect({
@@ -124,7 +131,7 @@ const SelectLandmark = ({ t, config, onSelect, value }) => {
       {window.location.href.includes("/employee") ? <EmpTimeLine currentStep={2} /> : null}
       <FormStep config={config} onSelect={goNext} isDisabled={selected.pincode ? false : true}>
         <div className="row">
-          <div className="col_md-12">
+          <div className="col-md-12">
             <div className="col-md-4">
               <CardLabel> {`${t("CS_COMMON_DISTRICT")}`} <span className="mandatorycss">*</span> </CardLabel>
               <Dropdown t={t} optionKey="name" option={cmbDistrict} placeholder={`${t("CS_COMMON_DISTRICT")}`}
@@ -138,44 +145,46 @@ const SelectLandmark = ({ t, config, onSelect, value }) => {
               />
             </div>
             <div className="col-md-4">
-              <CardLabel> {`${t("CS_COMMON_VILLAGE")}`} <span className="mandatorycss">*</span> </CardLabel>
-              <Dropdown t={t} optionKey="village" placeholder={`${t("BIRTH_ERROR_VILLAGE_CHOOSE")}`} option={cmbVillage}
-                selected={selected.village} select={(val) => handleChange("Village", val)}
+              <CardLabel> {`${t("CS_COMMON_WARD")}`}<span className="mandatorycss">*</span> </CardLabel>
+              <Dropdown t={t} optionKey="namecmb" option={cmbWardNoFinal} placeholder={`${t("CS_COMMON_WARD")}`}
+                selected={selected.ward} select={(val) => handleChange("Ward", val)}
               />
             </div>
           </div>
         </div>
         <div className="row">
-          <div className="col_md-12">
+          <div className="col-md-12">
             <div className="col-md-4">
-              <CardLabel> {`${t("CS_COMMON_WARD")}`}<span className="mandatorycss">*</span> </CardLabel>
-              <Dropdown t={t} optionKey="ward" option={cmbWardNo} placeholder={`${t("CS_COMMON_WARD")}`}
-                selected={selected.ward} select={(val) => handleChange("Ward", val)}
+              <CardLabel> {`${t("CS_COMMON_VILLAGE")}`} <span className="mandatorycss">*</span> </CardLabel>
+              <Dropdown t={t} optionKey="name" placeholder={`${t("BIRTH_ERROR_VILLAGE_CHOOSE")}`} option={cmbVillage}
+                selected={selected.village} select={(val) => handleChange("Village", val)}
               />
             </div>
             <div className="col-md-4">
               <CardLabel> {`${t("CS_COMMON_POST_OFFICE")}`}<span className="mandatorycss">*</span> </CardLabel>
-              <Dropdown t={t} optionKey="po" option={cmbPostOffice} placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
+              <Dropdown t={t} optionKey="name" option={cmbPostOffice} placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
                 selected={selected.postOffice} select={(val) => handleChange("PO", val)}
               />
             </div>
             <div className="col-md-4">
               <CardLabel> {`${t("CS_FILE_APPLICATION_PINCODE_LABEL")}`} </CardLabel>
-              <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="locality" value={selected.pincode}
+              <TextInput t={t} isMandatory={false} type={"text"} name="locality" value={selected.pincode}
                 disabled={true} placeholder={`${t("CS_FILE_APPLICATION_PINCODE_LABEL")}`} />
             </div>
           </div>
         </div>
         <div className="row">
-          <div className="col-md-5">
-            <CardLabel> {`${t("CS_ADDCOMPLAINT_LANDMARK")}`} </CardLabel>
-            <TextArea t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="locality" value={selected.locality}
-              onChange={(e) => setSelected({ ...selected, locality: e.target.value })} placeholder={`${t("CS_ADDCOMPLAINT_COMPLAINT_LOCATION")}`} />
-          </div>
-          <div className="col-md-5">
-            <CardLabel> {`${t("CS_ADDCOMPLAINT_PROVIDE_COMPLAINT_ADDRESS")}`} </CardLabel>
-            <TextArea t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="street" value={selected.street}
-              onChange={(e) => setSelected({ ...selected, street: e.target.value })} placeholder={`${t("CS_ADDCOMPLAINT_PROVIDE_COMPLAINT_ADDRESS")}`} />
+          <div className="col-md-12">
+            <div className="col-md-5">
+              <CardLabel> {`${t("CS_ADDCOMPLAINT_LANDMARK")}`} </CardLabel>
+              <TextArea t={t} isMandatory={false} type={"text"} name="locality" value={selected.locality}
+                onChange={(e) => setSelected({ ...selected, locality: e.target.value })} placeholder={`${t("CS_ADDCOMPLAINT_COMPLAINT_LOCATION")}`} />
+            </div>
+            <div className="col-md-5">
+              <CardLabel> {`${t("CS_ADDCOMPLAINT_PROVIDE_COMPLAINT_ADDRESS")}`} </CardLabel>
+              <TextArea t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="street" value={selected.street}
+                onChange={(e) => setSelected({ ...selected, street: e.target.value })} placeholder={`${t("CS_ADDCOMPLAINT_PROVIDE_COMPLAINT_ADDRESS")}`} />
+            </div>
           </div>
         </div>
       </FormStep>
