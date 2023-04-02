@@ -24,6 +24,7 @@ export const fetchLocalities = (city) => async (dispatch, getState) => {
 };
 
 export const updateComplaints = (data) => async (dispatch) => {
+  console.log("uploaded docs",data);
   let ServiceWrappers = await Digit.PGRService.update(data);
 
   dispatch({

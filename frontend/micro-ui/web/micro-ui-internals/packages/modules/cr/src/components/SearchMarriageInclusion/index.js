@@ -28,14 +28,13 @@ const registyBtnStyle = {
   marginBottom: "15px",
 };
 
-const  SearchMarriageInclusion = ({ tenantId, t, onSubmit, data, count, onInclusionClick }) => {
+const  SearchMarriageInclusion = ({ tenantId, t, onSubmit, data, count, onCorrectionClick }) => {
 
 
   const stateId = Digit.ULBService.getStateId();
   // let { data: newConfig, isLoading } = Digit.Hooks.tl.useMDMS.getFormConfig(stateId, {});
   // const [FileData, setFileData] = useState([]);
   
-  console.log(data,"data");
   const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
     defaultValues: {
       offset: 0,
@@ -84,39 +83,34 @@ const  SearchMarriageInclusion = ({ tenantId, t, onSubmit, data, count, onInclus
   const columns = useMemo(
     () => [
       {
-        Header: t("CR_COMMON_COL_APP_NO"),
-        accessor: "deathApplicationNo",
+        Header: t("CR_REGISTRATION NO"),
+        accessor: "marriageApplicationNo",
         disableSortBy: true,
         Cell: ({ row }) => {
           return (
             <div>
-              <span className="link">
-                <Link to={`/digit-ui/citizen/cr/marriage-correction-edit/marriage-registration-correction`}
-                //  onClick={() => onInclusionClick(row.original)}
-                >
-                {row.original.InformationDeath.DeathACKNo}
-                  </Link>
-              
+              <span className="link" onClick={() => onCorrectionClick(row.original)}>
+                {row.original.registrationno}
               </span>
             </div>
           );
         },
       },
-      // {
-      //   Header: t("CR_COMMON_COL_APP_DATE"),
-      //   disableSortBy: true,
-      //   accessor: (row) => GetCell(row.AuditDetails.createdTime ? convertEpochToDateDMY(row.AuditDetails.createdTime) : ""),
-      // },
-      // {
-      //   Header: t("CR_COMMON_COL_DOD"),
-      //   disableSortBy: true,
-      //   accessor: (row) => GetCell(row.InformationDeath.DateOfDeath ? convertEpochToDateDMY(row.InformationDeath.DateOfDeath) : ""),
-      // },
-      // {
-      //     Header: t("TL_APPLICATION_TYPE_LABEL"),
-      //     disableSortBy: true,
-      //     accessor: (row) => GetCell(t(`TL_LOCALIZATION_APPLICATIONTYPE_${row.StatisticalInfo.applicationType}`)),
-      // },
+      {
+        Header: t("CR_DATE_OF_MARRIAGE"),
+        disableSortBy: true,
+        accessor: (row) => GetCell(row.marriageDOM ? convertEpochToDateDMY(row.marriageDOM) : ""),
+      },
+      {
+        Header: t("CR_NAME_OF_HUSBAND"),
+        disableSortBy: true,
+        accessor: (row) => GetCell(`${row.GroomDetails.groomFirstnameEn} ${row.GroomDetails.groomMiddlenameEn} ${row.GroomDetails.groomLastnameEn}` || "-"),
+      },
+      {
+          Header: t("TL_NAME_OF_WIFE"),
+          disableSortBy: true,
+          accessor: (row) => GetCell(`${row.BrideDetails.brideFirstnameEn} ${row.BrideDetails.brideMiddlenameEn} ${row.BrideDetails.brideLastnameEn}` || "-"),
+      },
       // {
       //   Header: t("CR_COMMON_DECEASED_NAME"),
       //   disableSortBy: true,

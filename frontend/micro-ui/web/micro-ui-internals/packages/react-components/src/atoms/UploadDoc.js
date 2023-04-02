@@ -229,9 +229,10 @@ const ButtonSelector = (props) => {
             type={props.buttonType}
           />
             {props?.uploadedFiles?.map((file, index) => {
-              const fileDetailsData = file[1]
+              console.log("uploadedFiles==",file);
+              const fileDetailsData = file
               return <div className="tag-container" style={extraStyles ? extraStyles?.tagContainerStyles : null}>
-                <RemoveableTag extraStyles={extraStyles} key={index} text={file[0]} onClick={(e) => props?.removeTargetedFile(fileDetailsData, e)} />
+                <RemoveableTag extraStyles={extraStyles} key={index} text={file} onClick={(e) => props?.removeTargetedFile(fileDetailsData, e)} />
               </div>
             })}
           {!hasFile || props.error ? (

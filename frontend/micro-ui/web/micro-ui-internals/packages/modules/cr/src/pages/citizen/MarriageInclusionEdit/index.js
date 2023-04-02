@@ -14,9 +14,8 @@ import {
   Dropdown,
 } from "@egovernments/digit-ui-react-components";
 import { useForm, Controller } from "react-hook-form";
-import { Route, Switch, useRouteMatch, useLocation, useHistory, Redirect } from "react-router-dom";
+import { Route, Switch, useRouteMatch, useHistory, Redirect, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import SearchMarriageInclusion from "../../../components/SearchMarriageInclusion";
 import { newConfig as newConfigCR } from "../../../config/config";
 import { useQueryClient } from "react-query";
 
@@ -35,7 +34,7 @@ const MarriageInclusionEdit = () => {
   let config = [];
   let { data: newConfig, isLoading } = true;
   newConfig = newConfigCR;
-  
+
   const marriageConfig = newConfig?.find((obj) => obj.head === "Marriage Correction Routing");
   config = config.concat(marriageConfig.body.filter((a) => !a.hideInCitizen));
   console.log("marriageConfig",marriageConfig,config);
@@ -101,15 +100,6 @@ const MarriageInclusionEdit = () => {
     );
   }
 
-  const configTemp = {
-    enabled: !!(payload && Object.keys(payload).length > 0),
-  };
-
-  const { data: { deathCertificateDtls: searchResult, Count: count } = {}, isLoadingData, isSuccess } = Digit.Hooks.cr.useSearchMarriage({
-    filters: payload,
-    configTemp,
-  });
-  console.log(searchResult);
   // useEffect(() => {
   //   console.log("searchResult", searchResult);
   // }, [searchResult, isLoadingData]);
@@ -122,10 +112,8 @@ const MarriageInclusionEdit = () => {
   return (
     <React.Fragment>
       <Switch>
-        {config.map((routeObj, index) => {
-         
+        {config.map((routeObj, index) => {   
           const { component, texts, inputs, key, isSkipEnabled } = routeObj;
-          console.log("route path",`${match.path}/${routeObj.route}`,Digit.ComponentRegistryService.getComponent(component));
           const Component = typeof component === "string" ? Digit.ComponentRegistryService.getComponent(component) : component;
           return (
             <Route path={`${match.path}/${routeObj.route}`} key={index}>

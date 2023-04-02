@@ -94,7 +94,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
     );
   };
 
-  console.log(formData);
+  // console.log(formData);
   const [visible, setVisible] = useState(false);
   const stateId = Digit.ULBService.getStateId();
   const minutes = [
@@ -170,7 +170,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
     mannerOfDeath["birth-death-service"].MannerOfDeath.map((ob) => {
       cmbmannerofdeath.push(ob);
     });
-  console.log(mannerOfDeath);
+  // console.log(mannerOfDeath);
   const [isInitialRenderDeathCauseFilterList, setIsInitialRenderDeathCauseFilterList] = useState(false);
   const [DeathCauseFilterList, setDeathCauseFilterList] = useState(null);
 
@@ -565,7 +565,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
     });
   };
 
-  console.log(formData);
+  // console.log(formData);
   // if (isLoading || isLoadingA || isLoadingsub || isLoadingmanner || isLoadingPregnant || isLoadingBirthStatus) {
   //   return <Loader></Loader>;
   // }
@@ -903,7 +903,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
           </div>
         </div>
         {formData?.InformationDeath?.DeceasedGender.code == "FEMALE" &&
-          (console.log(formData?.InformationDeath?.DeceasedGender.code),
+          (console.log(formData?.InformationDeath?.DeceasedGender.code)
           (
             <div>
               <div className="row">
