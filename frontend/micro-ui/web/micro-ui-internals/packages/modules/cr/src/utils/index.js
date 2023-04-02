@@ -1004,7 +1004,7 @@ export const convertToBirthRegistration = (data = {}) => {
   return formdata;
 };
 export const convertToEditBirthRegistration = (data = {}) => {
-  console.log(data?.ChildDetails?.ParentsDetails?.fatherEducation);
+
   const formdata = {
     ChildDetails: [
       {
@@ -1061,10 +1061,11 @@ export const convertToEditBirthRegistration = (data = {}) => {
         pregnancyDuration: data?.ChildDetails?.pregnancyDuration ? data?.ChildDetails?.pregnancyDuration : null,
         medicalAttensionSub: data?.ChildDetails?.medicalAttensionSub ? data?.ChildDetails?.medicalAttensionSub.code : null,
         deliveryMethods: data?.ChildDetails?.deliveryMethods ? data?.ChildDetails?.deliveryMethods.code : null,
-        action: "INITIATE",
+        action: "APPLY",
         applicationtype: "CRBRNR",
         businessservice: "birth-services",
         workflowcode: data?.ChildDetails.workflowcode,
+        isWorkflow : data?.ChildDetails.isWorkflow,
         id: data?.ChildDetails?.id,
         applicationNumber: data?.ChildDetails?.applicationNumber,
         assignee: [data?.ChildDetails?.uuid],
@@ -1082,13 +1083,13 @@ export const convertToEditBirthRegistration = (data = {}) => {
           motherNationality: data?.ChildDetails?.ParentsDetails?.motherNationality ? data?.ChildDetails?.ParentsDetails?.motherNationality : null,
           orderofChildren: data?.ChildDetails?.ParentsDetails?.orderofChildren,
           fatherAadhar: data?.ChildDetails?.ParentsDetails?.fatherAadhar,
-          ismotherInfo: data?.ChildDetails?.ParentsDetails?.isMotherInfo,
-          isfatherInfo: data?.ChildDetails?.ParentsDetails?.isFatherInfo,
+          ismotherInfo: data?.ChildDetails?.ParentsDetails.ismotherInfo,
+          isfatherInfo: data?.ChildDetails?.ParentsDetails.isfatherInfo,
           fatherFirstNameEn: data?.ChildDetails?.ParentsDetails?.fatherFirstNameEn,
           fatherFirstNameMl: data?.ChildDetails?.ParentsDetails?.fatherFirstNameMl,
           fatherNationality: data?.ChildDetails?.ParentsDetails?.fatherNationality ? data?.ChildDetails?.ParentsDetails?.fatherNationality : null,
           fatherEducation: data?.ChildDetails?.ParentsDetails?.fatherEducation ? data?.ChildDetails?.ParentsDetails?.fatherEducation : null,
-          fatherProfession: data?.ChildDetails?.ParentsDetails?.fatherProfession ? data?.ParentsDetails?.ChildDetails?.fatherProfession : null,
+          fatherProfession: data?.ChildDetails?.ParentsDetails?.fatherProfession ? data?.ChildDetails?.ParentsDetails?.fatherProfession : null,
           Religion: data?.ChildDetails?.ParentsDetails?.Religion ? data?.ChildDetails?.ParentsDetails?.Religion : null,
           fatherMobile: data?.ChildDetails?.ParentsDetails?.fatherMobile,
           fatherEmail: data?.ChildDetails?.ParentsDetails?.fatherEmail,
@@ -1101,7 +1102,7 @@ export const convertToEditBirthRegistration = (data = {}) => {
             ? data?.ChildDetails?.AddressBirthDetails?.presentaddressStateName
             : null,
           presentInsideKeralaLBName: data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaLBName
-            ? data?.AddressBirthDetails?.presentInsideKeralaLBName
+            ? data?.AddressBirthDetails?.presentInsideKeralaLBName.code
             : null,
           presentInsideKeralaDistrict: data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaDistrict
             ? data?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaDistrict
