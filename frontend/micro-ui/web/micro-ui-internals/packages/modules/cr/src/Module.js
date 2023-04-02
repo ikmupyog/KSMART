@@ -20,9 +20,10 @@ import CreateBirthEmp from "./pages/employee/BirthRegistration";
 import CreateBirthNACRegistration from "./pages/citizen/BirthNACRegistration";
 import MarriageInclusion from "./pages/citizen/MarriageInclusion";
 import BirthInclusion from "./pages/citizen/BirthInclusion";
-import BirthInclusionEditPage from "./pageComponents/birthComponents/BirthInclusionPage";
-import SearchBirthInclusion from "./components/SearchBirthInclusion";
-import BirthInclusionModal from "./components/BirthInclusionModal";
+import BirthInclusionEditPage from "./pageComponents/birthComponents/BirthInclusionPage/BirthInclusionEditPage";
+import BirthInclusionPage from "./pageComponents/birthComponents/BirthInclusionPage/index";
+import SearchBirthInclusion from './components/SearchBirthInclusion';
+import BirthInclusionModal from './components/BirthInclusionModal';
 
 import SearchMarriageInclusion from "./components/SearchMarriageInclusion";
 import CreateAdoptions from "./pages/citizen/Adoption";
@@ -125,12 +126,10 @@ import BirthCheckPage from "./pages/citizen/BirthRegistration/BirthCheckPage";
 import BirthNACCheckPage from "./pages/citizen/BirthNACRegistration/BirthNACCheckPage";
 import DeathCheckPage from "./pages/citizen/DeathRegistration/DeathCheckPage";
 import BirthNACAcknowledgement from "./pages/citizen/BirthNACRegistration/BirthNACAcknowledgement";
-import MarriageCheckPage from "./pages/citizen/MarriageRegistration/MarriageCheckPage";
 import AdoptionAcknowledgement from "./pages/citizen/Adoption/AdoptionAcknowledgement";
 import BirthAcknowledgement from "./pages/citizen/BirthRegistration/BirthAcknowledgement";
 import StillBirthAcknowledgement from "./pages/citizen/StillBirthRegistration/StillBirthAcknowledgement";
 import DeathAcknowledgement from "./pages/citizen/DeathRegistration/DeathAcknowledgement";
-import MarriageAcknowledgement from "./pages/citizen/MarriageRegistration/MarriageAcknowledgement";
 import BirthCertificate from "./pages/citizen/Certificate/BirthCertificate";
 import CreateDeathRegistration from "./pages/citizen/DeathRegistration";
 // import InsideIndia from "./pageComponents/deathComponents/InsideIndia";
@@ -145,7 +144,7 @@ import CRDWFApplicationTimeline from "./pageComponents/deathComponents/CRDWFAppl
 import DeathInclusion from "./pages/citizen/DeathInclusion";
 import SearchDeathInclusion from "./components/SearchDeathInclusion";
 import DeathInclusionPage from "./pageComponents/deathComponents/DeathInclusionPage";
-
+import MarriageAddressPage from "./pageComponents/marriageComponents/MarriageAddressPage";
 import CreateMarriageRegistration from "./pages/citizen/MarriageRegistration";
 import GroomDetails from "./pageComponents/marriageComponents/GroomDetails";
 import GroomCorrectionDetails from "./pageComponents/marriageComponents/GroomCorrectionDetails";
@@ -155,9 +154,21 @@ import MarriageInstitution from "./pageComponents/marriageComponents/MarriageIns
 import MarriagePublicPlace from "./pageComponents/marriageComponents/MarriagePublicPlace";
 import MarriageRegistration from "./pageComponents/marriageComponents/MarriageRegistration";
 import HouseMarriageRegistration from "./pageComponents/marriageComponents/HouseMarriageRegistration";
-import Witnessdetails from "./pageComponents/marriageComponents/Witnessdetails"
+import Witnessdetails from "./pageComponents/marriageComponents/Witnessdetails";
 import MarriageInclusionEditPage from "./pageComponents/marriageComponents/MarriageCorrection";
 import MarriageCorrectionEditPage from "./pages/citizen/MarriageInclusionEdit";
+import MarriageCheckPage from "./pages/citizen/MarriageRegistration/MarriageCheckPage";
+import MarriageAcknowledgement from "./pages/citizen/MarriageRegistration/MarriageAcknowledgement";
+import MarriageAddressBasePage from "./pageComponents/marriageComponents/MarriageAddressBasePage";
+import MarriageAddressPermanent from "./pageComponents/marriageComponents/MarriageAddressPermanent";
+import MarriageAddressPermanentInsideKerala from "./pageComponents/marriageComponents/MarriageAddressPermanentInsideKerala";
+import MarriageAddressPermanentOutsideIndia from "./pageComponents/marriageComponents/MarriageAddressPermanentOutsideIndia";
+import MarriageAddressPermanentOutsideKerala from "./pageComponents/marriageComponents/MarriageAddressPermanentOutsideKerala";
+import MarriageAddressPresent from "./pageComponents/marriageComponents/MarriageAddressPresent";
+import MarriageAddressPresentInsideKerala from "./pageComponents/marriageComponents/MarriageAddressPresentInsideKerala";
+import MarriageAddressPresentOutsideIndia from "./pageComponents/marriageComponents/MarriageAddressPresentOutsideIndia";
+import MarriageAddressPresentOutsideKerala from "./pageComponents/marriageComponents/MarriageAddressPresentOutsideKerala";
+import MarriageAddressSameAsAbove from "./pageComponents/marriageComponents/MarriageAddressSameAsAbove";
 
 import AbandonedChildDetails from "./pageComponents/abandonedBirthComponents/AbandonedChildDetails";
 import AbandonedBirthInformarDetails from "./pageComponents/abandonedBirthComponents/AbandonedBirthInformarDetails";
@@ -285,6 +296,7 @@ const componentsToRegister = {
   CRBirthInclusions: BirthInclusion,
   CRMarriageInclusions: MarriageInclusion,
   CRBirthInclusionEditPage: BirthInclusionEditPage,
+  CRBirthInclusionPage:BirthInclusionPage, 
   SearchBirthInclusion,
   BirthInclusionModal,
   BirthPlaceHospital,
@@ -397,12 +409,23 @@ const componentsToRegister = {
   MarriageInstitution,
   MarriagePublicPlace,
   MarriageRegistration,
+  MarriageAddressPage,
   HouseMarriageRegistration,
   Witnessdetails,
+  MarriageAddressBasePage,
+  MarriageAddressPermanent,
+  MarriageAddressPermanentInsideKerala,
+  MarriageAddressPermanentOutsideIndia,
+  MarriageAddressPermanentOutsideKerala,
+  MarriageAddressPresent,
+  MarriageAddressPresentInsideKerala,
+  MarriageAddressPresentOutsideIndia,
+  MarriageAddressPresentOutsideKerala,
+  MarriageAddressSameAsAbove,
   FormFieldContainer,
   BornOutsideAcknowledgement,
   AbandonedBirthAcknowledgement,
-  AbandonedBirthCheckPage
+  AbandonedBirthCheckPage,
 };
 
 export const initCRComponents = () => {
