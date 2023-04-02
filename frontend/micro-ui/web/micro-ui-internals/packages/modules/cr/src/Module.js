@@ -264,6 +264,7 @@ const componentsToRegister = {
   MyCRDeathApplications,
   CustomTimePicker,
   CRModule,
+  CRSearch,
   CRLinks,
   CRCard,
   AdoptionChildDetails,
