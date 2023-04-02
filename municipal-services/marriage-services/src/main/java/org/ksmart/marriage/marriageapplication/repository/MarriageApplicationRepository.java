@@ -3,6 +3,7 @@ package org.ksmart.marriage.marriageapplication.repository;
 // import lombok.extern.slf4j.Slf4j;
 //import org.ksmart.marriage.common.producer.BndProducer;
 
+import org.egov.common.contract.request.RequestInfo;
 import org.ksmart.marriage.common.producer.MarriageProducer;
 import org.ksmart.marriage.config.MarriageApplicationConfiguration;
 import org.ksmart.marriage.marriageapplication.enrichment.MarriageDetailsEnrichment;
@@ -60,7 +61,6 @@ public class MarriageApplicationRepository {
         this.util = util;
         this.mdmsValidator = mdmsValidator;
     }
-<<<<<<< HEAD
     // public List<MarriageApplicationDetails> saveMarriageDetails(MarriageDetailsRequest request) {
 
     //    // marriageDetailsEnrichment.enrichCreate(request);
@@ -74,7 +74,6 @@ public class MarriageApplicationRepository {
     //     producer.push(marriageApplicationConfiguration.getUpdateMarriageApplicationTopic(), request);
     //     return request.getMarriageDetails();
     // }
-=======
 
     public List<MarriageApplicationDetails> saveMarriageDetails(MarriageDetailsRequest request) {
 
@@ -82,14 +81,6 @@ public class MarriageApplicationRepository {
         producer.push(marriageApplicationConfiguration.getSaveMarriageApplicationTopic(), request);
         return request.getMarriageDetails();
     }
-
-    public List<MarriageApplicationDetails> updateMarriageDetails(MarriageDetailsRequest request) {
-
-        // workflowIntegrator.callWorkFlow(request);
-        producer.push(marriageApplicationConfiguration.getUpdateMarriageApplicationTopic(), request);
-        return request.getMarriageDetails();
-    }
->>>>>>> 9698db07e0 (MIGRATION UPDATION)
     //Jasmine 31.03.2023
     // public List<MarriageDetailsRequest> saveMarriageDetails(MarriageDetailsRequest request) {
 
@@ -113,4 +104,7 @@ public class MarriageApplicationRepository {
     }
 
 
+    public List<MarriageApplicationDetails> getMarriageApplication(MarriageApplicationSearchCriteria criteria, RequestInfo requestInfo) {
+        return null;
+    }
 }
