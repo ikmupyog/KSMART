@@ -24,7 +24,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     const stateId = Digit.ULBService.getStateId();
     const [pofilter, setPofilter] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : isEditStillBirth ? isEditStillBirth :  false);
-
+    console.log("isEditStillBirth" + isEditStillBirth);
     const { t } = useTranslation();
     let validation = {};
     let tenantId = "";
@@ -122,7 +122,8 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                 setinsideKeralaLBName(currentLB[0]);
                 setLbs(cmbLB.filter((cmbLB) => cmbLB.code === tenantId));
                 setpermntInKeralaAdrLBName(currentLB[0]);
-                cmbFilterDistrict = cmbDistrict.filter((cmbDistrict) => cmbDistrict.statecode === currentLB[0].city.distCodeStr);
+                console.log(currentLB[0]);
+                cmbFilterDistrict = cmbDistrict.filter((cmbDistrict) => cmbDistrict.code === currentLB[0].city.distCodeStr);
                 setinsideKeralaDistrict(cmbFilterDistrict[0]);
                 setpermntInKeralaAdrDistrict(cmbFilterDistrict[0]);
                 cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === currentLB[0].city.districtid);
@@ -204,6 +205,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                 }
         }
     } else if (isEditStillBirth) {
+        console.log("Jetheesh Enter");
         if (formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaDistrict != null) {
             if (cmbDistrict.length > 0 && (presentInsideKeralaDistrict === undefined || presentInsideKeralaDistrict === "")) {
                 setinsideKeralaDistrict(cmbDistrict.filter(cmbDistrict => cmbDistrict.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaDistrict)[0]);
@@ -215,6 +217,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
             }
           }
         if (formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaTaluk != null) {
+            console.log("presentInsideKeralaTaluk" + formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaTaluk);
             if (cmbTaluk.length > 0 && (presentInsideKeralaTaluk === undefined || presentInsideKeralaTaluk === "")) {
                 setinsideKeralaTaluk(cmbTaluk.filter(cmbTaluk => cmbTaluk.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaTaluk)[0]);
             }
