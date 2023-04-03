@@ -17,8 +17,7 @@ import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
 
 const BornOutsideStaticInfn = ({ config, onSelect, userType, formData, isEditBornOutsideIndia = false }) => {
-  // console.log(JSON.stringify(formData));
-  console.log(formData);
+
   const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditBornOutsideIndia ? isEditBornOutsideIndia : false);
 
@@ -277,7 +276,6 @@ const BornOutsideStaticInfn = ({ config, onSelect, userType, formData, isEditBor
     }
     if (informarAadhar != null || informarAadhar != "" || informarAadhar != undefined) {
       let adharLength = informarAadhar;
-      console.log(adharLength);
       if (adharLength.length < 12 || adharLength.length > 12) {
         validFlag = false;
         setinformarAadharError(true);
@@ -354,7 +352,6 @@ const BornOutsideStaticInfn = ({ config, onSelect, userType, formData, isEditBor
 
   //   if (formData?.BornOutsideStaticInfn?.deliveryMethods != null) {
   //     if (cmbDeliveryMethod.length > 0 && (deliveryMethods === undefined || deliveryMethods === "")) {
-  //       // console.log(cmbDeliveryMethod.filter(cmbDeliveryMethod => parseInt(cmbDeliveryMethod.code) === formData?.BornOutsideStaticInfn?.deliveryMethods)[0]);
   //       setDeliveryMethod(cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.BornOutsideStaticInfn?.deliveryMethods)[0]);
   //     }
   //   }

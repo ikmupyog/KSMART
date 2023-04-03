@@ -17,7 +17,6 @@ import CustomTimePicker from "../../components/CustomTimePicker";
 // import FormStep from "../../../../../react-components/src/molecules/FormStep";
 
 const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditBornOutsideIndia = false }) => {
-  // console.log(JSON.stringify(formData));
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -48,7 +47,6 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
   //   WorkFlowDetails["birth-death-service"] && WorkFlowDetails["birth-death-service"].WorkFlowBirth &&
   //   WorkFlowDetails["birth-death-service"].WorkFlowBirth.map((ob) => {
   //     workFlowData.push(ob);
-  //     // console.log(workFlowData);
   //   });
   let cmbCountry = [];
   Country &&
@@ -175,11 +173,8 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
   const handleTimeChange = (value, cb) => {
     if (typeof value === "string") {
       cb(value);
-      console.log(cb);
-      console.log(value);
       let hour = value;
       let period = hour > 12 ? "PM" : "AM";
-      console.log(period);
       setbirthDateTime(value);
     }
   };
@@ -210,7 +205,6 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
       let Difference_In_Time = today.getTime() - birthDate.getTime();
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       let Difference_In_DaysRounded = Math.floor(Difference_In_Days);
-      // console.log(Difference_In_DaysRounded);
     }
   }
   // function setselectChildDOB(value) {

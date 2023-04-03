@@ -4,8 +4,6 @@ import Timeline from "../../components/BOBRTimeline";
 import { useTranslation } from "react-i18next";
 
 const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEditBornOutsideIndia = false }) => {
-  // console.log(JSON.stringify(formData));
-  console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -347,7 +345,6 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
 
     if (fatherMobile != null || fatherMobile != "" || fatherMobile != undefined) {
       let mobileLength = fatherMobile;
-      console.log(mobileLength);
       if (mobileLength.length < 10 || mobileLength.length > 10) {
         validFlag = false;
         setFatherMobileError(true);

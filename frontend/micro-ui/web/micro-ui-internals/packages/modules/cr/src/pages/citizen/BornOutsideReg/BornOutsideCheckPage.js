@@ -81,7 +81,7 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
   } else {
     userType = "employee";
   }
-  // console.log(value);
+
   const convertEpochToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
@@ -96,10 +96,6 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
       return null;
     }
   };
-
-  console.log("values==",value);
-  console.log("bornOutsideIndia", BornOutsideAddressBirthDetails);
-
 
   return (
    <React.Fragment>

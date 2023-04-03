@@ -10,7 +10,6 @@ import BornOutsidePermanent from "./BornOutsidePermanent";
 
 
 const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBornOutsideIndia = false }) => {
-    // console.log(formData);
     const stateId = Digit.ULBService.getStateId();
     let tenantId = "";
     tenantId = Digit.ULBService.getCurrentTenantId();

@@ -135,10 +135,11 @@ const TLCorrectionApplicant = ({ t, config,formData,onEditSelect,formDataEdit })
       let capitalInvestment = formDataEdit?.TradeDetails?.tradeLicenseDetail?.capitalInvestment ;
       let noOfEmployees = formDataEdit?.TradeDetails?.tradeLicenseDetail?.noOfEmployees;
       let tradeUnits = formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits;
+      let applicationDocuments = [];
   
       let tradeLicenseDetail = { tenantId, licenseeType, owners, ownerspremise, institution, businessSector, capitalInvestment, enterpriseType,
           structureType,structurePlaceSubtype, businessActivityDesc, noOfEmployees,
-          ownershipCategory, address, tradeUnits, structurePlace }
+          ownershipCategory, address, tradeUnits, structurePlace,applicationDocuments }
       onEditSelect(config.key,{tradeLicenseDetail});
       setIsEdit(false);
     }
