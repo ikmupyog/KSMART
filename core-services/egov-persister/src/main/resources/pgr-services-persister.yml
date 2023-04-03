@@ -117,7 +117,7 @@ serviceMaps:
     - query: INSERT INTO eg_pgr_Employee_v2(id, tenantid, parentid, employeename, emptype, emprolecode,empuuid,empmob,empemail, createdby, createdtime, lastmodifiedby, lastmodifiedtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
       basePath: service.citizen
       jsonMaps:
-      - jsonPath: $.service.citizen.id
+      - jsonPath: $.service.citizen.empId
 
       - jsonPath: $.service.tenantId
 
@@ -255,5 +255,5 @@ serviceMaps:
 
       - jsonPath: $.service.auditDetails.lastModifiedTime
 
-      - jsonPath: $.service.citizen.id
+      - jsonPath: $.service.citizen.empId
       
