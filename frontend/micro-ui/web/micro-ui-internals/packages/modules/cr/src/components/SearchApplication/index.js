@@ -315,7 +315,7 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count,applicationType, 
                   <span className="link">
                     <Link
                       onClick={(event) => handleBornOutsideBirthLinkClick(row.original)}
-                      to={`/digit-ui/employee/cr/application-bornoutsidebirth/${row.original.applicationNumber}`}
+                      to={`/digit-ui/employee/cr/application-bornOutsideIndia/${row.original.applicationNumber}`}
                     >
                       {/* {row.original.applicationNumber} */}
                       {row.original.applicationNumber}

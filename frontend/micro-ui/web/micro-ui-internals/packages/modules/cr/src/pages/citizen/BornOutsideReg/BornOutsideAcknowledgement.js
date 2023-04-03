@@ -37,7 +37,7 @@ const BornOutsideAcknowledgement = ({ data, onSuccess, userType }) => {
   const [mutationHappened, setMutationHappened, clear] = Digit.Hooks.useSessionStorage("CITIZEN_TL_MUTATION_HAPPENED", false);
   const resubmit = window.location.href.includes("edit-application");
   const tenantId = Digit.ULBService.getCurrentTenantId();
-  const [isEditBornOutsideIndia, setIsEditBornOutsideIndia] = useState(false);
+  const [isEditBornOutsideIndia, setIsEditBornOutsideIndia] = useState(sessionStorage.getItem("CR_BORNOUTSIDEBIRTH_EDIT_FLAG")? true : false);
 
   const mutation = Digit.Hooks.cr.useCivilRegistrationBornOutsideIndiaBirthAPI(
     tenantId, isEditBornOutsideIndia ? false : true

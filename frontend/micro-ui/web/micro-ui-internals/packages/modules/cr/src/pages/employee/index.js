@@ -10,6 +10,7 @@ import ApplicationDetails from "./ApplicationDetails";
 import ApplicationAdoptionDetails from './ApplicationAdoptionDetails'
 import ApplicationDeathDetails from "./ApplicationDeathDetails";
 import ApplicationStillBirthDetails from "./ApplicationStillBirthDetails";
+import ApplicationBornOutsideIndiaDetails from "./ApplicationBornOutsideIndiaDetails";
 import DeathCrFlow from "./Death-route";
 import SearchFlow from "./Search-route";
 import SearchInbox from './Inbox-route';
@@ -29,6 +30,7 @@ const CRBreadCrumb = ({ location }) => {
   const isApplicationBirthDetails = location?.pathname?.includes("cr/application-birthdetails");
   const isApplicationAdoptionDetails = location?.pathname?.includes("cr/application-Adoptiondetails");
   const isApplicationStillBirthDetails = location?.pathname?.includes("cr/application-stillbirth");
+  const isApplicationBornOutsideIndiaDetails = location?.pathname?.includes("cr/application-stillbirth");
   const isNewApplication = location?.pathname?.includes("tl/new-application");
   const isResponse = location?.pathname?.includes("tl/response");
   const isMobile = window.Digit.Utils.browser.isMobile();
@@ -154,6 +156,12 @@ const CRBreadCrumb = ({ location }) => {
         breadCrumbUrls.includes("home/application-stillbirth")
     },
     {
+      path: sessionStorage.getItem("applicationno") ? `/digit-ui/employee/cr/application-bornOutsideIndia/${sessionStorage.getItem("birthApplicationNo")}` : "",
+      content: t("Born Outside India Application Details"),
+      show: isApplicationBornOutsideIndiaDetails ||
+        breadCrumbUrls.includes("home/application-bornOutsideIndia")
+    },
+    {
       path: "/digit-ui/employee/cr/death-flow/specify-correction",
       content: t("Specify Correction"),
       show: isSpecifyCorrectSearch ||
@@ -217,6 +225,7 @@ const EmployeeApp = ({ path, url, userType }) => {
          
           <PrivateRoute path={`${path}/application-details/:id`} component={() => <ApplicationDetails parentRoute={path} />} />
           <PrivateRoute path={`${path}/application-stillbirth/:id`} component={() => <ApplicationStillBirthDetails parentRoute={path} />} />
+          <PrivateRoute path={`${path}/application-bornOutsideIndia/:id`} component={() => <ApplicationBornOutsideIndiaDetails parentRoute={path} />} />
           <PrivateRoute path={`${path}/application-Adoptiondetails/:id`} component={() => <ApplicationAdoptionDetails parentRoute={path} />} />
           <PrivateRoute path={`${path}/application-deathdetails/:id`} component={() => <ApplicationDeathDetails parentRoute={path} />} />
         </div>
