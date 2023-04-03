@@ -1,6 +1,8 @@
 package org.ksmart.marriage.marriageapplication.model.marriage;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import io.micrometer.core.instrument.step.StepLong;
 import lombok.*;
 import org.ksmart.marriage.common.model.AuditDetails;
 
@@ -69,6 +71,7 @@ public class GroomDetails {
     @JsonProperty("groomLastnameMl")
     private String lastname_ml;
 
+    
     @JsonProperty("groomMobile")
     private Long mobile;
 

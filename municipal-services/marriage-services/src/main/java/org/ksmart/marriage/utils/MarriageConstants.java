@@ -104,6 +104,9 @@ public class MarriageConstants {
 
        public static final String PLACE_TYPE_PUBLIC_PLACE = "PUBLIC_PLACE";
 
+        public static final String ADDRESS_INDIA = "COUNTRY_INDIA";
+
+        public static final String ADDRESS_KERALA = "kl";
 /*AFTER UPDATING MDMS HAVE TO BE CHANGE */
        public static final String PLACE_OTHER = "OTHER";
     //    public static final String RESIDENTSHIP_FOREIGN= "FOREIGN";
