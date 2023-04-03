@@ -554,11 +554,11 @@ export const convertToEditStillBirthRegistration = (data = {}) => {
           motherFirstNameEn: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherFirstNameEn,
           motherFirstNameMl: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherFirstNameMl,
           motherAadhar: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherAadhar,
-          motherMarriageAge: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherMarriageAge,
+          // motherMarriageAge: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherMarriageAge,
           motherMarriageBirth: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherMarriageBirth,
-          motherMaritalStatus: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherMaritalStatus
-            ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherMaritalStatus
-            : null,
+          // motherMaritalStatus: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherMaritalStatus
+          //   ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherMaritalStatus
+          //   : null,
           motherEducation: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherEducation ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherEducation : null,
           motherProfession: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherProfession ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherProfession : null,
           motherNationality: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherNationality
