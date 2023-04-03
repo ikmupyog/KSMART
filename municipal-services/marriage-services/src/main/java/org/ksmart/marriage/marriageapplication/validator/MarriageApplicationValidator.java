@@ -39,7 +39,7 @@ public class MarriageApplicationValidator {
                     "Marriage registration(s) not found in database.");
         }
         // IMP:Have to enable after URI submission
-        // validateCommonFields( request);
+         validateCommonFields( request);
     }
 
     public void validateCommonFields(MarriageDetailsRequest request) {
