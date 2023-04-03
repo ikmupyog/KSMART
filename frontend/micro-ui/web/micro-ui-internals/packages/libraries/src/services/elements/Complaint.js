@@ -23,6 +23,9 @@ export const Complaint = {
     const userType = Digit.SessionStorage.get("user_type")
     const { info } = Digit.SessionStorage.get("User")
 
+    const roleCode = info.roles[0]
+    info.rolecode = roleCode?.code
+
     const defaultData = {
       service: {
         deptCode: deptCode,
