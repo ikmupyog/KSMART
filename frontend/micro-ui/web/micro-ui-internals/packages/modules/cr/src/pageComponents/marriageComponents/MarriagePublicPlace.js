@@ -41,55 +41,52 @@ const MarriagePublicPlace = ({ config, onSelect, userType, formData }) => {
     { i18nKey: "Public", code: "PUBLIC" },
     { i18nKey: "Private", code: "PRIVATE" },
   ];
-  function setSelectMarriagePublicOrPrivatePlace(value) {
-    setMarriagePublicOrPrivatePlace(value);
-  }
 
   function setSelectMarriagePublicOrPrivateNamePlaceMal(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setMarriagePublicOrPrivateNamePlaceMal("");
+      setMarriagePublicOrPrivateNamePlaceMal('');
     } else {
-      setMarriagePublicOrPrivateNamePlaceMal(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setMarriagePublicOrPrivateNamePlaceMal(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectMarriagePublicOrPrivateNamePlaceEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setMarriagePublicOrPrivateNamePlaceEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setMarriagePublicOrPrivateNamePlaceEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectMarriageLandmark(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setMarriageLandmark(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setMarriageLandmark(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectMarriageStreetEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setMarriageStreetEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setMarriageStreetEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectMarriageLocalityEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setMarriageLocalityEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setMarriageLocalityEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectMarriageLocalityMal(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setMarriageLocalityMal("");
+      setMarriageLocalityMal('');
     } else {
-      setMarriageLocalityMal(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setMarriageLocalityMal(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectmarriageStreetMal(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setMarriageStreetMal("");
+      setMarriageStreetMal('');
     } else {
-      setMarriageStreetMal(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setMarriageStreetMal(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
@@ -138,7 +135,7 @@ const MarriagePublicPlace = ({ config, onSelect, userType, formData }) => {
               value={marriagePublicOrPrivateNamePlaceEn}
               onChange={setSelectMarriagePublicOrPrivateNamePlaceEn}
               placeholder={`${t("CR_PUBLIC_PRIVATE_PLACE_EN")}`}
-              {...(validation = { isRequired: true })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_PUBLIC_PRIVATE_PLACE_EN") })}
             />
           </div>
           <div className="col-md-3">
@@ -155,7 +152,7 @@ const MarriagePublicPlace = ({ config, onSelect, userType, formData }) => {
               value={marriageLocalityEn}
               onChange={setSelectMarriageLocalityEn}
               placeholder={`${t("CR_LOCALITY_EN")}`}
-              {...(validation = { isRequired: true })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
             />
           </div>
           <div className="col-md-3">

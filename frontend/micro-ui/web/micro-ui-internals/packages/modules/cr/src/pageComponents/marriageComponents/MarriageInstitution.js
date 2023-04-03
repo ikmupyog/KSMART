@@ -37,10 +37,6 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
     formData?.MarriageInstitution?.marriageLocalityMal ? formData?.MarriageInstitution?.marriageLocalityMal : ""
   );
 
-  const [marriageReligiousInstitution, setMarriageReligiousInstitution] = useState(
-    formData?.MarriageInstitution?.marriageReligiousInstitution ? formData?.MarriageInstitution?.marriageReligiousInstitution : null
-  );
-
   const [access, setAccess] = React.useState(true);
   const onSkip = () => onSelect();
 
@@ -51,59 +47,51 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
     { i18nKey: "ConventionCenter", code: "CONVENTIONCENTER" },
   ];
 
-  function setSelectMarriageReligiousInstitution(value) {
-    setMarriageReligiousInstitution(value);
-  }
-  function setSelectMarriageReligiousInstitutionOther(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setMarriageReligiousInstitutionOther(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
-    }
-  }
   function setSelectMarriageReligiousInstitutionOtherNameMal(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setMarriageLocalityMal("");
+      setMarriageLocalityMal('');
     } else {
-      setMarriageReligiousInstitutionOtherNameMal(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setMarriageReligiousInstitutionOtherNameMal(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectMarriageReligiousInstitutionOtherNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setMarriageReligiousInstitutionOtherNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setMarriageReligiousInstitutionOtherNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectMarriageLandmark(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setMarriageLandmark(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setMarriageLandmark(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectMarriageStreetEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setMarriageStreetEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setMarriageStreetEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectMarriageLocalityEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setMarriageLocalityEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setMarriageLocalityEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectMarriageLocalityMal(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setMarriageLocalityMal("");
+      setMarriageLocalityMal('');
     } else {
-      setMarriageLocalityMal(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setMarriageLocalityMal(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectmarriageStreetMal(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setMarriageStreetMal("");
+      setMarriageStreetMal('');
     } else {
-      setMarriageStreetMal(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setMarriageStreetMal(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
@@ -155,7 +143,7 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
               value={marriageReligiousInstitutionOtherNameEn}
               onChange={setSelectMarriageReligiousInstitutionOtherNameEn}
               placeholder={`${t("CR_RELIGIOUS_INST_OTHER_NAME_EN")}`}
-              {...(validation = { isRequired: true })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_RELIGIOUS_INST_OTHER_EN") })}
             />
           </div>
           <div className="col-md-3">
@@ -168,6 +156,7 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
               value={marriageStreetEn}
               onChange={setSelectMarriageStreetEn}
               placeholder={`${t("CR_STREET_NAME_EN")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
             />
           </div>
           <div className="col-md-3">
@@ -184,7 +173,7 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
               value={marriageLocalityEn}
               onChange={setSelectMarriageLocalityEn}
               placeholder={`${t("CR_LOCALITY_EN")}`}
-              {...(validation = { isRequired: true })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
             />
           </div>
           <div className="col-md-3">
@@ -198,6 +187,7 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
             value={marriageLandmark}
             onChange={setSelectMarriageLandmark}
             placeholder={`${t("CR_LANDMARK")}`}
+            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LANDMARK") })}
           />
         </div>
         </div>
@@ -218,7 +208,12 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
               value={marriageReligiousInstitutionOtherNameMal}
               onChange={setSelectMarriageReligiousInstitutionOtherNameMal}
               placeholder={`${t("CR_RELIGIOUS_INST_OTHER_NAME_ML")}`}
-              {...(validation = { isRequired: true })}
+              {...(validation = {
+                pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                isRequired: true,
+                type: "text",
+                title: t("CR_INVALID_RELIGIOUS_INST_OTHER_ML"),
+              })}
             />
           </div>
           <div className="col-md-3">
@@ -231,6 +226,12 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
               value={marriageStreetMal}
               onChange={setSelectmarriageStreetMal}
               placeholder={`${t("CR_STREET_NAME_ML")}`}
+              {...(validation = {
+                pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                isRequired: true,
+                type: "text",
+                title: t("CR_INVALID_STREET_NAME_ML"),
+              })}
             />
           </div>
           <div className="col-md-3">
@@ -247,7 +248,12 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
               value={marriageLocalityMal}
               onChange={setSelectMarriageLocalityMal}
               placeholder={`${t("CR_LOCALITY_ML")}`}
-              {...(validation = { isRequired: true })}
+              {...(validation = {
+                pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                isRequired: true,
+                type: "text",
+                title: t("CR_INVALID_LOCALITY_ML"),
+              })}
             />
             </div>
             </div>
