@@ -115,25 +115,25 @@ serviceMaps:
       - jsonPath: $.service.auditDetails.lastModifiedTime
       
     - query: INSERT INTO eg_pgr_Employee_v2(id, tenantid, parentid, employeename, emptype, emprolecode,empuuid,empmob,empemail, createdby, createdtime, lastmodifiedby, lastmodifiedtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
-      basePath: service.citizen
+      basePath: service.employee
       jsonMaps:
-      - jsonPath: $.service.citizen.empId
+      - jsonPath: $.service.employee.empId
 
       - jsonPath: $.service.tenantId
 
       - jsonPath: $.service.id
 
-      - jsonPath: $.service.citizen.name
+      - jsonPath: $.service.employee.name
 
-      - jsonPath: $.service.citizen.type
+      - jsonPath: $.service.employee.type
 
-      - jsonPath: $.service.citizen.rolecode
+      - jsonPath: $.service.employee.rolecode
       
-      - jsonPath: $.service.citizen.uuid
+      - jsonPath: $.service.employee.uuid
       
-      - jsonPath: $.service.citizen.mobileNumber
+      - jsonPath: $.service.employee.mobileNumber
       
-      - jsonPath: $.service.citizen.emailId
+      - jsonPath: $.service.employee.emailId
       
       - jsonPath: $.service.auditDetails.createdBy
 
@@ -242,14 +242,14 @@ serviceMaps:
       - jsonPath: $.service.informer.id
       
     - query: UPDATE eg_pgr_Employee_v2 SET employeename=?, empuuid=?, empmob=?, lastmodifiedby=?, lastmodifiedtime=? WHERE id=?;
-      basePath: service.citizen
+      basePath: service.employee
       jsonMaps:
 
-      - jsonPath: $.service.citizen.name
+      - jsonPath: $.service.employee.name
 
-      - jsonPath: $.service.citizen.uuid
+      - jsonPath: $.service.employee.uuid
 
-      - jsonPath: $.service.citizen.mobileNumber      
+      - jsonPath: $.service.employee.mobileNumber      
 
       - jsonPath: $.service.auditDetails.lastModifiedBy
 
