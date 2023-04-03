@@ -840,6 +840,285 @@ export const convertToEditDeathRegistration = (data = {}) => {
   };
   return formdata;
 };
+export const convertToNACDeathRegistration = (data = {}) => {
+  // let Financialyear = sessionStorage.getItem("CurrentFinancialYear");
+  const empTenantId = Digit.ULBService.getCurrentUlb();
+  // let tenantId = "";
+  // tenantId = empTenantId["code"];
+  const formdata = {
+    deathNACDtls: [
+      {
+        InformationDeath: {
+          Id: null,
+          TenantId: data?.InformationDeath?.tenantId,
+          DeathDateUnavailable: data?.InformationDeath?.DeathDateUnavailable,
+          DateOfDeath: Date.parse(data?.InformationDeath?.DateOfDeath),
+          TimeOfDeath: parseInt(data?.InformationDeath?.TimeOfDeath),
+          DeceasedAadharNotAvailable:  data?.InformationDeath?.DeceasedAadharNotAvailable,
+          TimeOfDeathUnit: "AM",
+          DateOfDeath: Date.parse(data?.InformationDeath?.DateOfDeath1),
+          DeathPlace: data?.InformationDeath?.DeathPlace.code,
+          DeathPlaceType: data?.InformationDeath?.DeathPlaceType ? data?.InformationDeath?.DeathPlaceType.code : null,
+          DeathPlaceInstId: data?.InformationDeath?.DeathPlaceInstId ? data?.InformationDeath?.DeathPlaceInstId.code : null,
+          VehicleNumber: data?.InformationDeath?.VehicleNumber,
+          VehicleFromplaceEn: data?.InformationDeath?.VehicleFromplaceEn,
+          VehicleFromplaceMl: data?.InformationDeath?.VehicleFromplaceMl,
+          VehicleToPlaceEn: data?.InformationDeath?.VehicleToPlaceEn,
+          VehicleToPlaceMl: data?.InformationDeath?.VehicleToPlaceMl,
+          VehicleFirstHaltEn: data?.InformationDeath?.VehicleFirstHaltEn,
+          VehicleFirstHaltMl: data?.InformationDeath?.VehicleFirstHaltMl,
+          VehicleHospitalEn: data?.InformationDeath?.VehicleHospitalEn ? data?.InformationDeath?.VehicleHospitalEn.code : null,
+          DeathPlaceCountry: data?.InformationDeath?.DeathPlaceCountry ? data?.InformationDeath?.DeathPlaceCountry.code : null,
+          DeathPlaceState: data?.InformationDeath?.DeathPlaceState ? data?.InformationDeath?.DeathPlaceState.code : null,
+          DeathPlaceDistrict: data?.InformationDeath?.DeathPlaceState ? data?.InformationDeath?.DeathPlaceState.code : null,
+          DeathPlaceCity: data?.InformationDeath?.DeathPlaceCity,
+          DeathPlaceRemarksEn: data?.InformationDeath?.DeathPlaceRemarksEn,
+          DeathPlaceRemarksMl: data?.InformationDeath?.DeathPlaceRemarksMl,
+          DeathPlaceWardId: data?.InformationDeath?.DeathPlaceWardId ? data?.InformationDeath?.DeathPlaceWardId.code : null,
+          PlaceOfBurialEn: data?.InformationDeath?.PlaceOfBurialEn,
+          PlaceOfBurialMl: data?.InformationDeath?.PlaceOfBurialMl,
+          DeathPlaceLocalityEn: data?.InformationDeath?.DeathPlaceLocalityEn,
+          DeathPlaceLocalityMl: data?.InformationDeath?.DeathPlaceLocalityMl,
+          DeathPlaceStreetEn: data?.InformationDeath?.DeathPlaceStreetEn,
+          DeathPlaceStreetMl: data?.InformationDeath?.DeathPlaceStreetMl,
+          GeneralRemarks: data?.InformationDeath?.GeneralRemarks,
+          DeathPlaceHomeWardId: data?.InformationDeath?.DeathPlaceHomeWardId ? data?.InformationDeath?.DeathPlaceHomeWardId.code : null,
+          DeathPlaceHomePostofficeId: data?.InformationDeath?.DeathPlaceHomePostofficeId
+            ? data?.InformationDeath.DeathPlaceHomePostofficeId.code
+            : null,
+          DeathPlaceHomePincode: data?.InformationDeath?.DeathPlaceHomePincode ? data?.InformationDeath?.DeathPlaceHomePincode.code : null,
+          DeathPlaceHomeLocalityEn: data?.InformationDeath?.DeathPlaceHomeLocalityEn ? data?.InformationDeath?.DeathPlaceHomeLocalityEn : null,
+          DeathPlaceHomeLocalityMl: data?.InformationDeath?.DeathPlaceHomeLocalityMl ? data?.InformationDeath?.DeathPlaceHomeLocalityMl : null,
+          DeathPlaceHomeStreetNameEn: data?.InformationDeath?.DeathPlaceHomeStreetNameEn ? data?.InformationDeath?.DeathPlaceHomeStreetNameEn : null,
+          DeathPlaceHomeStreetNameMl: data?.InformationDeath?.DeathPlaceHomeStreetNameMl ? data?.InformationDeath?.DeathPlaceHomeStreetNameMl : null,
+          DeathPlaceHomeHoueNameEn: data?.InformationDeath?.DeathPlaceHomeHoueNameEn ? data?.InformationDeath?.DeathPlaceHomeHoueNameEn : null,
+          DeathPlaceHomeHoueNameMl: data?.InformationDeath?.DeathPlaceHomeHoueNameMl ? data?.InformationDeath?.DeathPlaceHomeHoueNameMl : null,
+          DeceasedAadharNotAvailable: data?.InformationDeath?.DeceasedAadharNotAvailable ? data?.InformationDeath?.DeceasedAadharNotAvailable : false,
+          DeceasedAadharNumber: data?.InformationDeath?.DeceasedAadharNumber,
+          DeceasedIdproofType: data?.InformationDeath?.DeceasedIdproofType ? data?.InformationDeath.DeceasedIdproofType.code : null,
+          DeceasedIdproofNo: data?.InformationDeath?.DeceasedIdproofNo,
+          DeceasedFirstNameEn: data?.InformationDeath?.DeceasedFirstNameEn,
+          DeceasedMiddleNameEn: data?.InformationDeath?.DeceasedMiddleNameEn,
+          DeceasedLastNameEn: data?.InformationDeath?.DeceasedLastNameEn,
+          DeceasedFirstNameMl: data?.InformationDeath?.DeceasedFirstNameMl,
+          DeceasedMiddleNameMl: data?.InformationDeath?.DeceasedMiddleNameMl,
+          DeceasedLastNameMl: data?.InformationDeath?.DeceasedLastNameMl,
+          Age: parseInt(data?.InformationDeath?.Age),
+          AgeUnit: data?.InformationDeath?.AgeUnit.code,
+          DeceasedGender: data?.InformationDeath?.DeceasedGender.code,
+          SpouseUnavailable: data?.InformationDeath?.SpouseUnavailable,
+          SpouseType: data?. InformationDeath?.SpouseType ? data?. InformationDeath?.SpouseType.code : null,
+          SpouseNameEn: data?. InformationDeath?.SpouseNameEN ? data?. InformationDeath?.SpouseNameEN : null,
+          SpouseNameML: data?. InformationDeath?.SpouseNameMl ? data?. InformationDeath?.SpouseNameMl : null,
+          FatherUnavailable: data?. InformationDeath?.FatherUnavailable,
+          FatherNameEn: data?. InformationDeath?.FatherNameEn,
+          FatherNameMl: data?. InformationDeath?.FatherNameMl,
+          MotherUnavailable: data?. InformationDeath?.MotherUnavailable,
+          MotherNameEn: data?. InformationDeath?.MotherNameEn,
+          MotherNameMl: data?. InformationDeath?.MotherNameMl,
+          FamilyMobileNo: parseInt(data?. InformationDeath?.FamilyMobileNo),
+          FamilyEmailId: data?. InformationDeath?.FamilyEmailId,
+          SpouseAadhaar: data?. InformationDeath?.SpouseAadhaar ? data?. InformationDeath?.SpouseAadhaar : null,
+          FatherAadharNo: data?. InformationDeath?.FatherAadharNo ? data?. InformationDeath?.FatherAadharNo : null,
+          MotherAadharNo: data?. InformationDeath?.MotherAadharNo ? data?.FamilyInformationDeath?.MotherAadharNo : null,
+          funcionUID: "CRDRNR",
+          registrationNo: null,
+        },
+        AddressBirthDetails: {
+          presentaddressCountry: data?.AddressBirthDetails?.presentaddressCountry ? data?.AddressBirthDetails?.presentaddressCountry.code : null,
+          presentaddressStateName: data?.AddressBirthDetails?.presentaddressStateName
+            ? data?.AddressBirthDetails?.presentaddressStateName.code
+            : null,
+          presentInsideKeralaLBName: data?.AddressBirthDetails?.presentInsideKeralaLBName
+            ? data?.AddressBirthDetails?.presentInsideKeralaLBName.code
+            : null,
+          presentInsideKeralaDistrict: data?.AddressBirthDetails?.presentInsideKeralaDistrict
+            ? data?.AddressBirthDetails?.presentInsideKeralaDistrict.code
+            : null,
+          presentInsideKeralaTaluk: data?.AddressBirthDetails?.presentInsideKeralaTaluk
+            ? data?.AddressBirthDetails?.presentInsideKeralaTaluk.code
+            : null,
+          presentInsideKeralaVillage: data?.AddressBirthDetails?.presentInsideKeralaVillage
+            ? data?.AddressBirthDetails?.presentInsideKeralaVillage.code
+            : null,
+          presentInsideKeralaLocalityNameEn: data?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn,
+          presentInsideKeralaStreetNameEn: data?.AddressBirthDetails?.presentInsideKeralaStreetNameEn,
+          presentInsideKeralaHouseNameEn: data?.AddressBirthDetails?.presentInsideKeralaHouseNameEn,
+          presentInsideKeralaLocalityNameMl: data?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl,
+          presentInsideKeralaStreetNameMl: data?.AddressBirthDetails?.presentInsideKeralaStreetNameMl,
+          presentInsideKeralaHouseNameMl: data?.AddressBirthDetails?.presentInsideKeralaHouseNameMl,
+          presentInsideKeralaPincode: data?.AddressBirthDetails?.presentInsideKeralaPincode
+            ? data?.AddressBirthDetails?.presentInsideKeralaPincode.code
+            : null,
+          presentInsideKeralaPostOffice: data?.AddressBirthDetails?.presentInsideKeralaPostOffice
+            ? data?.AddressBirthDetails?.presentInsideKeralaPostOffice.code
+            : null,
+          presentWardNo: data?.AddressBirthDetails?.presentWardNo ? data?.AddressBirthDetails?.presentWardNo.code : null,
+          presentOutsideKeralaDistrict: data?.AddressBirthDetails?.presentOutsideKeralaDistrict
+            ? data?.AddressBirthDetails?.presentOutsideKeralaDistrict.code
+            : null,
+          presentOutsideKeralaTaluk: data?.AddressBirthDetails?.presentOutsideKeralaTaluk
+            ? data?.AddressBirthDetails?.presentOutsideKeralaTaluk
+            : null,
+          presentOutsideKeralaVillage: data?.AddressBirthDetails?.presentOutsideKeralaVillage
+            ? data?.AddressBirthDetails?.presentOutsideKeralaVillage.code
+            : null,
+          presentOutsideKeralaCityVilgeEn: data?.AddressBirthDetails?.presentOutsideKeralaCityVilgeEn,
+          presentOutsideKeralaPincode: data?.AddressBirthDetails?.presentOutsideKeralaPincode
+            ? data?.AddressBirthDetails?.presentOutsideKeralaPincode.code
+            : null,
+          presentOutsideKeralaPostOfficeEn: data?.AddressBirthDetails?.presentOutsideKeralaPostOfficeEn,
+          presentOutsideKeralaPostOfficeMl: data?.AddressBirthDetails?.presentOutsideKeralaPostOfficeMl,
+          presentOutsideKeralaLocalityNameEn: data?.AddressBirthDetails?.presentOutsideKeralaLocalityNameEn,
+          presentOutsideKeralaStreetNameEn: data?.AddressBirthDetails?.presentOutsideKeralaStreetNameEn,
+          presentOutsideKeralaHouseNameEn: data?.AddressBirthDetails?.presentOutsideKeralaHouseNameEn,
+          presentOutsideKeralaLocalityNameMl: data?.AddressBirthDetails?.presentOutsideKeralaLocalityNameMl,
+          presentOutsideKeralaStreetNameMl: data?.AddressBirthDetails?.presentOutsideKeralaStreetNameMl,
+          presentOutsideKeralaHouseNameMl: data?.AddressBirthDetails?.presentOutsideKeralaHouseNameMl,
+          presentOutSideIndiaAdressEn: data?.AddressBirthDetails?.presentOutSideIndiaAdressEn,
+          presentOutSideIndiaAdressMl: data?.AddressBirthDetails?.presentOutSideIndiaAdressMl,
+          presentOutSideIndiaAdressEnB: data?.AddressBirthDetails?.presentOutSideIndiaAdressEnB,
+          presentOutSideIndiaAdressMlB: data?.AddressBirthDetails?.presentOutSideIndiaAdressMlB,
+          presentOutSideIndiaProvinceEn: data?.AddressBirthDetails?.presentOutSideIndiaProvinceEn,
+          presentOutSideCountry: data?.AddressBirthDetails?.presentOutSideCountry ? data?.AddressBirthDetails?.presentOutSideCountry.code : null,
+          presentOutSideIndiaadrsVillage: data?.AddressBirthDetails?.presentOutSideIndiaadrsVillage
+            ? data?.AddressBirthDetails?.presentOutSideIndiaadrsVillage.code
+            : null,
+          presentOutSideIndiaadrsCityTown: data?.AddressBirthDetails?.presentOutSideIndiaadrsCityTown,
+          isPrsentAddress: data?.AddressBirthDetails?.isPrsentAddress,
+          permtaddressCountry: data?.AddressBirthDetails?.permtaddressCountry ? data?.AddressBirthDetails?.permtaddressCountry.code : null,
+          permtaddressStateName: data?.AddressBirthDetails?.permtaddressStateName ? data?.AddressBirthDetails?.permtaddressStateName.code : null,
+          permntInKeralaAdrLBName: data?.AddressBirthDetails?.permntInKeralaAdrLBName
+            ? data?.AddressBirthDetails?.permntInKeralaAdrLBName.code
+            : null,
+          permntInKeralaAdrDistrict: data?.AddressBirthDetails?.permntInKeralaAdrDistrict
+            ? data?.AddressBirthDetails?.permntInKeralaAdrDistrict.code
+            : null,
+          permntInKeralaAdrTaluk: data?.AddressBirthDetails?.permntInKeralaAdrTaluk ? data?.AddressBirthDetails?.permntInKeralaAdrTaluk.code : null,
+          permntInKeralaAdrVillage: data?.AddressBirthDetails?.permntInKeralaAdrVillage
+            ? data?.AddressBirthDetails?.permntInKeralaAdrVillage.code
+            : null,
+          permntInKeralaAdrLocalityNameEn: data?.AddressBirthDetails?.permntInKeralaAdrLocalityNameEn,
+          permntInKeralaAdrStreetNameEn: data?.AddressBirthDetails?.permntInKeralaAdrStreetNameEn,
+          permntInKeralaAdrHouseNameEn: data?.AddressBirthDetails?.permntInKeralaAdrHouseNameEn,
+          permntInKeralaAdrLocalityNameMl: data?.AddressBirthDetails?.permntInKeralaAdrLocalityNameMl,
+          permntInKeralaAdrStreetNameMl: data?.AddressBirthDetails?.permntInKeralaAdrStreetNameMl,
+          permntInKeralaAdrHouseNameMl: data?.AddressBirthDetails?.permntInKeralaAdrHouseNameMl,
+          permntInKeralaAdrPincode: data?.AddressBirthDetails?.permntInKeralaAdrPincode
+            ? data?.AddressBirthDetails?.permntInKeralaAdrPincode.code
+            : null,
+          permntInKeralaAdrPostOffice: data?.AddressBirthDetails?.permntInKeralaAdrPostOffice
+            ? data?.AddressBirthDetails?.permntInKeralaAdrPostOffice.code
+            : null,
+          permntInKeralaWardNo: data?.AddressBirthDetails?.permntInKeralaWardNo ? data?.AddressBirthDetails?.permntInKeralaWardNo.code : null,
+          permntOutsideKeralaDistrict: data?.AddressBirthDetails?.permntOutsideKeralaDistrict
+            ? data?.AddressBirthDetails?.permntOutsideKeralaDistrict.code
+            : null,
+          permntOutsideKeralaTaluk: data?.AddressBirthDetails?.permntOutsideKeralaTaluk
+            ? data?.AddressBirthDetails?.permntOutsideKeralaTaluk.code
+            : null,
+          permntOutsideKeralaVillage: data?.AddressBirthDetails?.permntOutsideKeralaVillage
+            ? data?.AddressBirthDetails?.permntOutsideKeralaVillage.code
+            : null,
+          permntOutsideKeralaCityVilgeEn: data?.AddressBirthDetails?.permntOutsideKeralaCityVilgeEn,
+          permntOutsideKeralaPincode: data?.AddressBirthDetails?.permntOutsideKeralaPincode,
+          permntOutsideKeralaLocalityNameEn: data?.AddressBirthDetails?.permntOutsideKeralaLocalityNameEn,
+          permntOutsideKeralaStreetNameEn: data?.AddressBirthDetails?.permntOutsideKeralaStreetNameEn,
+          permntOutsideKeralaHouseNameEn: data?.AddressBirthDetails?.permntOutsideKeralaHouseNameEn,
+          permntOutsideKeralaLocalityNameMl: data?.AddressBirthDetails?.permntOutsideKeralaLocalityNameMl,
+          permntOutsideKeralaStreetNameMl: data?.AddressBirthDetails?.permntOutsideKeralaStreetNameMl,
+          permntOutsideKeralaHouseNameMl: data?.AddressBirthDetails?.permntOutsideKeralaHouseNameMl,
+          permntOutsideKeralaPostOfficeEn: data?.AddressBirthDetails?.permntOutsideKeralaPostOfficeEn,
+          permntOutsideKeralaPostOfficeMl: data?.AddressBirthDetails?.permntOutsideKeralaPostOfficeMl,
+          permntOutsideIndiaLineoneEn: data?.AddressBirthDetails?.permntOutsideIndiaLineoneEn,
+          permntOutsideIndiaLineoneMl: data?.AddressBirthDetails?.permntOutsideIndiaLineoneMl,
+          permntOutsideIndiaLinetwoEn: data?.AddressBirthDetails?.permntOutsideIndiaLinetwoEn,
+          permntOutsideIndiaLinetwoMl: data?.AddressBirthDetails?.permntOutsideIndiaLinetwoMl,
+          permntOutsideIndiaprovinceEn: data?.AddressBirthDetails?.permntOutsideIndiaprovinceEn,
+          permntOutsideIndiaVillage: data?.AddressBirthDetails?.permntOutsideIndiaVillage
+            ? data?.AddressBirthDetails?.permntOutsideIndiaVillage.code
+            : null,
+          permntOutsideIndiaCityTown: data?.AddressBirthDetails?.permntOutsideIndiaCityTown,
+          permanentOutsideIndiaPostCode: data?.AddressBirthDetails?.permanentOutsideIndiaPostCode,
+          PresentAddrTypeId: "P",
+          PermanentAddrTypeId: "R",
+        },
+        StatisticalInfo: {
+          StatisticalId: null,
+          TenantId: data?.InformationDeath?.tenantId,
+          MedicalAttentionType: data?.StatisticalInfo?.MedicalAttentionType ? data?.StatisticalInfo?.MedicalAttentionType.code : null,
+          IsAutopsyPerformed: data?.StatisticalInfo?.IsAutopsyPerformed,
+          IsAutopsyCompleted: data?.StatisticalInfo?.IsAutopsyCompleted,
+          MannerOfDeath: data?.StatisticalInfo?.MannerOfDeath ? data?.StatisticalInfo?.MannerOfDeath.code : null,
+          DeathMedicallyCertified: data?.StatisticalInfo?.DeathMedicallyCertified ? data?.StatisticalInfo?.DeathMedicallyCertified.code : null,
+          DeathCauseMain: data?.StatisticalInfo?.DeathCauseMain ? data?.StatisticalInfo?.DeathCauseMain.code : null,
+          DeathCauseMainCustom: data?.StatisticalInfo?.DeathCauseMainCustom,
+          DeathCauseMainInterval: data?.StatisticalInfo?.DeathCauseMainInterval,
+          DeathCauseMainTimeUnit: data?.StatisticalInfo?.DeathCauseMainTimeUnit ? data?.StatisticalInfo?.DeathCauseMainTimeUnit.code : null,
+          DeathCauseSub: data?.StatisticalInfo?.DeathCauseSub ? data?.StatisticalInfo?.DeathCauseSub.code : null,
+          DeathCauseSubCustom: data?.StatisticalInfo?.DeathCauseSubCustom,
+          DeathCauseSubInterval: data?.StatisticalInfo?.DeathCauseSubInterval,
+          DeathCauseSubTimeUnit: data?.StatisticalInfo?.DeathCauseSubTimeUnit ? data?.StatisticalInfo?.DeathCauseSubTimeUnit.code : null,
+          DeathCauseSub2: data?.StatisticalInfo?.DeathCauseSub2 ? data?.StatisticalInfo?.DeathCauseSub2.code : null,
+          DeathCauseSubCustom2: data?.StatisticalInfo?.DeathCauseSubCustom2,
+          DeathCauseSubInterval2: data?.StatisticalInfo?.DeathCauseSubInterval2,
+          DeathCauseSubTimeUnit2: data?.StatisticalInfo?.DeathCauseSubTimeUnit2 ? data?.StatisticalInfo?.DeathCauseSubTimeUnit2.code : null,
+          DeathCauseOther: data?.StatisticalInfo?.DeathCauseOther ? data?.StatisticalInfo?.DeathCauseOther.code : null,
+          IsdeceasedPregnant: data?.StatisticalInfo?.IsdeceasedPregnant ? data?.StatisticalInfo?.IsdeceasedPregnant.code : null,
+          IsDelivery: data?.StatisticalInfo?.IsDelivery ? data?.StatisticalInfo?.IsDelivery.code : null,
+          DeathDuringDelivery: data?.StatisticalInfo?.DeathDuringDelivery,
+          SmokingType: data?.StatisticalInfo?.SmokingType,
+          TobaccoType: data?.StatisticalInfo?.TobaccoType,
+          AlcoholType: data?.StatisticalInfo?.AlcoholType,
+        },
+        InformantDetails: {
+          InformantAadharSubmitted: null,
+          InformantAadharNo: data?.InformantDetails?.InformantAadharNo,
+          InformantNameEn: data?.InformantDetails?.InformantNameEn,
+          DeathSignedOfficerDesignation: data?.InformantDetails?.DeathSignedOfficerDesignation,
+          InformantMobileNo: parseInt(data?.InformantDetails?.InformantMobileNo),
+          InformantAddress: data?.InformantDetails?.InformantAddress ? data?.InformantDetails?.InformantAddress : null,
+          IsDeclarationInformant: data?.InformantDetails?.IsDeclarationInformant,
+          InformantDocumentId: null,
+          InformantDocumentDeathDtlId: null,
+          InformantDocumentTenantId: data?.InformationDeath?.tenantId,
+          InformantDocumentAckNo: null,
+          InformantDocumentType: null,
+          InformantDocumentUserType: null,
+          InformantDocumentFileStoreId: null,
+        },
+        Initiator: {
+          IsDeclarationInitiator: data?.Initiator?.IsDeclarationInitiator,
+          InitiatorRelation: data?.Initiator?.InitiatorRelation,
+          InitiatorAadhaar: data?.Initiator?.InitiatorAadhaar,
+          InitiatorName: data?.Initiator?.InitiatorName,
+          InitiatorMobile: parseInt(data?.Initiator?.InitiatorMobile),
+          InitiatorAddress: data?.Initiator?.InitiatorAddress,
+          InitiatorDocumentId: null,
+          InitiatorDocumentTenantId: data?.InformationDeath?.tenantId,
+          InitiatorDocumentAckNo: null,
+          InitiatorDocumentType: null,
+          InitiatorDocumentUserType: null,
+          InitiatorDocumentFileStoreId: null,
+        },
+        AuditDetails: {
+          createdBy: null,
+          lastModifiedBy: null,
+          createdTime: null,
+          lastModifiedTime: null,
+        },
+        applicationType: "nac",
+        businessService: "death-services",
+        action: "INITIATE",
+        assignee: [],
+        workflowcode: data?.InformationDeath?.workFlowCode,
+        taxHeadMasterCode: "CRB_FEES",
+        taxAmount: 12,
+      },
+    ],
+  };
+  return formdata;
+};
 export const getwfdocuments = (data) => {
   let wfdoc = [];
   let doc = data ? data.owners.documents : [];

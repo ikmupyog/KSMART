@@ -1,10 +1,11 @@
 import React, { useState, useReducer, useEffect, useCallback } from "react";
 import Timeline from "../../components/NACTimeline";
 import { FormStep, CardLabel, TextInput, Dropdown, LinkButton, UploadFile,   DatePicker,
-  BackButton,MultiLink, CheckBox, TextArea, Toast, Table } from "@egovernments/digit-ui-react-components";
+  BackButton,MultiLink, CheckBox, TextArea, Toast, Table, RadioButtons } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 
 const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBirth=false }) => {
+  console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   const { data: Menu, isLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
@@ -12,20 +13,22 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
   const [isDisableEdit, setisDisableEdit] = useState(isEditStillBirth ? isEditStillBirth : false);
   const {name:name,} =Digit.UserService.getUser().info ; // window.localStorage.getItem("user-info");
   const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.BirthNACInitiator?.isDeclared ? formData?. BirthNACInitiator?.isDeclared : false);
-  const [isDeclaration, setDeclaration] = useState(formData?. BirthNACInitiator?.isunderstood ? formData?. BirthNACInitiator?.isunderstood : false);
+  const [isDeclaration, setDeclaration] = useState(formData?.BirthNACInitiator?.isunderstood ? formData?. BirthNACInitiator?.isunderstood : false);
   const [initiatorNameEn, setinitiatorNameEn] = useState(formData?.BirthNACInitiator?.initiatorNameEn ? formData?.BirthNACInitiator?.initiatorNameEn : name);
   const [initiatorAadhar, setinitiatorAadhar] = useState(formData?.BirthNACInitiator?.initiatorAadhar ? formData?.BirthNACInitiator?.initiatorAadhar : "");
-  const [initiatorMobile, setinitiatorMobile] = useState(formData?. BirthNACInitiator?.initiatorMobile ? formData?.BirthNACInitiator?.initiatorMobile : "");
-  const [initiatorDesi, setinitiatorDesi] = useState(formData?. BirthNACInitiator?.initiatorDesi ? formData?.BirthNACInitiator?.initiatorDesi : "");
-  const [initiatorAddress, setinitiatorAddress] = useState(formData?. BirthNACInitiator?.applicantAddressEn ? formData?. BirthNACInitiator?.applicantAddressEn : "");
-  const [careofapplicant, setcareofapplicant] = useState(formData?.BirthNACInitiator?.careofapplicant);
+  const [initiatorMobile, setinitiatorMobile] = useState(formData?.BirthNACInitiator?.initiatorMobile ? formData?.BirthNACInitiator?.initiatorMobile : "");
+  const [initiatorDesi, setinitiatorDesi] = useState(formData?.BirthNACInitiator?.initiatorDesi ? formData?.BirthNACInitiator?.initiatorDesi : "");
+  const [initiatorAddress, setinitiatorAddress] = useState(formData?.BirthNACInitiator?.initiatorAddress ? formData?.BirthNACInitiator?.initiatorAddress : "");
+  const [careofapplicant, setcareofapplicant] = useState(formData?.BirthNACInitiator?.careofapplicant ? formData?.BirthNACInitiator?.careofapplicant : "");
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [childDOB, setChildDOB] = useState(formData?.BirthNACInitiator?.childDOB);
-  const [gender, selectGender] = useState(formData?.BirthNACInitiator?.sex);
-  const [childNameEn, setchildNameEn] = useState(formData?.BirthNACInitiator?.childNameEn);
-  const [childNameMl, setchildNameMl] = useState(formData?.BirthNACInitiator?.childNameMl);
-  const [orderofBirth, setorderOfBirth] = useState(formData?.BirthNACInitiator?.orderOfBirth);
-  const [isAlive, setisAlive] = useState(formData?.BirthNACInitiator?.isAlive);
+  const [childDOB, setChildDOB] = useState(formData?.BirthNACInitiator?.dob ? formData?.BirthNACInitiator?.dob : "");
+  const [gender, selectGender] = useState(formData?.BirthNACInitiator?.sex ? formData?.BirthNACInitiator?.sex : "");
+  const [childNameEn, setchildNameEn] = useState(formData?.BirthNACInitiator?.childNameEn ? formData?.BirthNACInitiator?.childNameEn : "");
+  const [childNameMl, setchildNameMl] = useState(formData?.BirthNACInitiator?.childNameMl ? formData?.BirthNACInitiator?.childNameMl : "");
+  const [orderofBirth, setorderOfBirth] =useState(
+    formData?.BirthNACInitiator?.orderOfBirth ? formData?.BirthNACInitiator?.orderOfBirth : null
+  );
+  const [isAlive, setisAlive] = useState(formData?.BirthNACInitiator?.isAlive ? formData?.BirthNACInitiator?.isAlive : "");
   const [slNo, setslNo] = useState("");
   const [error, setError] = useState(null);
   const [uploadedFile, setUploadedFile] = useState(null);
@@ -50,6 +53,11 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const storedAppData = null;
   const storedOwnerData = null;
+  let menu = [];
+  let orderMenu = [
+    { i18nKey: `Alive`, code: 'Yes', value: true },
+    { i18nKey: `Expired`, code: 'No', value: false }
+  ];
  
   let ownerappmap ={
     slNo: "slNo",
@@ -58,11 +66,6 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
     orderofBirth: "orderofBirth",
     alive: "alive"
   };
-
-  const cmbExpirationType = [
-    { i18nKey: "Alive", code: "ALIVE" },
-    { i18nKey: "Expired", code: "EXPIRED" },
-  ];
 
   const reducer = (state, action) => {
     switch (action.type) {
@@ -191,7 +194,6 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
       return;
   }, [dispatchapplicant,disptachowner]);
   const onSkip = () => onSelect();
-  let menu = [];
   Menu &&
     Menu.map((genderDetails) => {
       menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
@@ -248,14 +250,17 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
     }
   }
 
-  function setselectGender(value) {
+  function setSelectOrderOfBirth(e) {
+    setorderOfBirth(e.target.value);
+  }
+   function setselectGender(value) {
     selectGender(value);
   }
   function setAliveExpired(value) {
     setisAlive(value);
   }
-  function setselectCareofApplicant(value) {
-    setselectCareofApplicant(value);
+  function setselectCareofApplicant(e) {
+    setcareofapplicant(e.target.value);
   }
   function setSelectinitiatorAadhar(e) {
     if (e.target.value.trim().length >= 0) {
@@ -483,13 +488,6 @@ function selectfile5(e) {
     }
 
     if (validFlag == true) {
-      sessionStorage.setItem("initiatorNameEn", initiatorNameEn ? initiatorNameEn : null);
-      sessionStorage.setItem("initiatorAadhar", initiatorAadhar ? initiatorAadhar : null);
-
-      sessionStorage.setItem("initiatorMobile", initiatorMobile ? initiatorMobile : null);
-      sessionStorage.setItem("initiatorDesi", initiatorDesi ? initiatorDesi : null);
-      sessionStorage.setItem("initiatorAddress", initiatorAddress ? initiatorAddress : null);
-      sessionStorage.setItem("isInitiatorDeclaration", isInitiatorDeclaration ? isInitiatorDeclaration : null);
 
       onSelect(config.key, {
         initiatorNameEn,
@@ -498,6 +496,14 @@ function selectfile5(e) {
         initiatorDesi,
         initiatorAddress,
         isInitiatorDeclaration,
+        childDOB,
+        gender,
+        childNameEn,
+        childNameMl,
+        orderofBirth,
+        slNo,
+        isAlive,
+        careofapplicant
       });
     }
   };
@@ -527,6 +533,41 @@ function selectfile5(e) {
         onSkip={onSkip}
         isDisabled={!isInitiatorDeclaration || !initiatorNameEn || !initiatorAadhar || !initiatorMobile}
       >
+        <div>
+                  
+        <div className="row">
+          <div className="col-md-12">
+            <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
+            </h1>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-12">
+              <CheckBox
+                label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
+                onChange={setDeclarationInfo}
+                value={isInitiatorDeclaration}
+                checked={isInitiatorDeclaration}
+                disable={isDisableEdit}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-12">
+              <CheckBox
+                label="I do understand that NAC/NIA issue will be subject to the genuiness of documents produced and enquiry done by the registrar"
+                onChange={setDeclarationStatement}
+                value={isDeclaration}
+                checked={isDeclaration}
+                disable={isDisableEdit}
+              />
+            </div>
+          </div>
+        </div>
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -608,9 +649,6 @@ function selectfile5(e) {
           </div>
         </div>
 
-        <div className="row">
-          
-        </div>
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
@@ -727,46 +765,50 @@ function selectfile5(e) {
                         selected={gender}
                         select={setselectGender}
                         placeholder={`${t("CR_GENDER")}`}
-                        onChange={e => handleAppInputField(e.target.value)}/>
+                        onChange={e => handleAppInputField(index, e.target.value, '')}/>
                     </div>
                 </div>
                                 
                 
                     <div className="col-md-3">
                       <CardLabel>Order of Birth<span className="mandatorycss">*</span></CardLabel>
-                      <TextInput t={t} 
+                      <TextInput 
+                      t={t} 
                       isMandatory={config.isMandatory} 
                       type={"text"}
                       optionKey="i18nKey" 
                       name="orderofBirth"
                       value={orderofBirth} 
-                      onChange={e => setorderOfBirth(e.target.value)}/>
+                      onChange={setSelectOrderOfBirth}/>
                     </div>
                     <div className="col-md-3">
-                      {/* <CardLabel>Alive?Yes/No<span className="mandatorycss">*</span></CardLabel> */}
-                      <CardLabel>
+                      <CardLabel>Alive? Yes/No<span className="mandatorycss">*</span></CardLabel>
+                      {/* <CardLabel>
                         {`${t("CR_EXPIRATION")}`}
                         <span className="mandatorycss">*</span>
-                      </CardLabel>
-                      <Dropdown
+                      </CardLabel> */}
+                      <RadioButtons
+                      style={{display: 'flex'}}
                         t={t}
-                        type={"text"}
+                      options={orderMenu}
+                      optionsKey="code"
+                      name="isAlive"
+                      value={value}
+                      selectedOption={isAlive}
+                      onSelect={setAliveExpired}
+                      isDependent={true}
+                      labelKey=""
+                    />
+                      {/* <Dropdown
+                        t={t}
                         optionKey="i18nKey"
                         option={cmbExpirationType}
                         selected={isAlive}
                         select={setAliveExpired}
                         placeholder={t("CR_EXPIRATION_TYPE")}
-                        isMandatory={true}
-                        onChange={e => handleAppInputField(e.target.value)}
+                        onChange={e => handleAppInputField(index, e.target.value, '')}
                         {...(validation = { isRequired: true })}
-                      />
-                      {/* <TextInput 
-                      t={t} 
-                      isMandatory={config.isMandatory} 
-                      type={"text"} 
-                      name="isAlive"
-                      value={isAlive} 
-                      onChange={e => setisAlive(e.target.value)}/> */}
+                      /> */}
                     </div>
                     {ownerState.length === (index + 1) && (
                       <div className="col-md-1">
@@ -799,7 +841,8 @@ function selectfile5(e) {
               )
             })
               }
-                <div className="row">
+              
+               <div className="row">
                   <div className="col-md-12">
                   <h1 className="headingh1" style={{marginTop: "30px"}}>
                   <span style={{ background: "#fff", padding: "0 10px" }}>File Upload</span>{" "}
@@ -807,6 +850,8 @@ function selectfile5(e) {
                   </div>
                 </div>
                 <div className="row">
+                <div className="col-md-12">
+                  <div className="row">
               <div className="col-md-5">
               <CardLabel>Address proof of parents at the time of birth<span className="mandatorycss">*</span></CardLabel>
               </div>
@@ -901,41 +946,10 @@ function selectfile5(e) {
                   
              />
               </div>
+              </div> 
               </div>
-              
-        <div className="row">
-          <div className="col-md-12">
-            <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
-            </h1>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-12">
-              <CheckBox
-                label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
-                onChange={setDeclarationInfo}
-                value={isInitiatorDeclaration}
-                checked={isInitiatorDeclaration}
-                disable={isDisableEdit}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-12">
-              <CheckBox
-                label="I do understand that NAC/NIA issue will be subject to the genuiness of documents produced and enquiry done by the registrar"
-                onChange={setDeclarationStatement}
-                value={isDeclaration}
-                checked={isDeclaration}
-                disable={isDisableEdit}
-              />
-            </div>
-          </div>
-        </div>
+              </div>
+    
          
         {toast && (
           <Toast
@@ -957,6 +971,7 @@ function selectfile5(e) {
           />
         )}
         {""}
+        </div>
       </FormStep>
     </React.Fragment>
   );

@@ -159,7 +159,6 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
   const [orderOfBirth, setorderOfBirth] = useState(
     formData?.BirthNACDetails?.nacorderofChildren ? formData?.BirthNACDetails?.nacorderofChildren : null
   );
-  console.log(orderOfBirth, "orderOfBirth");
   const [toast, setToast] = useState(false);
   //const [AadharError, setAadharError] = useState(formData?. BirthNACDetails?.childAadharNo ? false : false);
    const [ChildAadharHIde, setChildAadharHIde] = useState(formData?. BirthNACDetails?.childAadharNo ? true : false);
