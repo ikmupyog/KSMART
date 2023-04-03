@@ -94,7 +94,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
         return state.map((data, __index) => {
           if (__index === action.payload.index) {
             return { ...data, [action.payload.key]: action.payload.value };
-          } else {
+          } else { 
             return data;
           }
         });
@@ -257,6 +257,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
     selectGender(value);
   }
   function setAliveExpired(value) {
+    console.log("checked==",value);
     setisAlive(value);
   }
   function setselectCareofApplicant(e) {
@@ -686,7 +687,7 @@ function selectfile5(e) {
                   }} className="col-md-12">
                 <div className="row">
                     <div className="col-md-3">
-                      <CardLabel>SL NO<span className="mandatorycss">*</span></CardLabel>
+                      <CardLabel>SL NO</CardLabel>
                       <TextInput
                        t={t}
                       isMandatory={config.isMandatory}
@@ -756,7 +757,7 @@ function selectfile5(e) {
                     {/* </div>
                     <div className="row"> */}
                     <div className="col-md-3">
-                      <CardLabel>{`${t("CR_GENDER")}`}<span className="mandatorycss">*</span></CardLabel>
+                      <CardLabel>{`${t("CR_GENDER")}`}</CardLabel>
                       <Dropdown
                         t={t}
                         optionKey="code"
@@ -771,7 +772,7 @@ function selectfile5(e) {
                                 
                 
                     <div className="col-md-3">
-                      <CardLabel>Order of Birth<span className="mandatorycss">*</span></CardLabel>
+                      <CardLabel>Order of Birth</CardLabel>
                       <TextInput 
                       t={t} 
                       isMandatory={config.isMandatory} 
@@ -793,8 +794,9 @@ function selectfile5(e) {
                       options={orderMenu}
                       optionsKey="code"
                       name="isAlive"
-                      value={value}
-                      selectedOption={isAlive}
+                       //value={isAlive}
+                       checked={isAlive}
+                      //selectedOption={isAlive} 
                       onSelect={setAliveExpired}
                       isDependent={true}
                       labelKey=""
