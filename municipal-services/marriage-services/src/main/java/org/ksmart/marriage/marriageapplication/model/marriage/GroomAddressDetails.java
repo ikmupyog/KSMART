@@ -407,7 +407,7 @@ public class GroomAddressDetails {
     @JsonProperty("permntOutsideIndiaVillage")
     private String permntOutsideIndiaVillage;
 
-    @Size(max = 64)
+    @Size(max = 1000)
     @JsonProperty("permntOutsideIndiaCityTown")
     private String permntOutsideIndiaCityTown;
 
