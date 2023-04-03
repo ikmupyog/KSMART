@@ -253,23 +253,23 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     formData?.MarriageDetails?.marriageWardCode ? formData?.MarriageDetails?.marriageWardCode : ""
   );
   const [isDisableEdit, setisDisableEdit] = useState(isEditMarriage ? isEditMarriage : false);
+  const [otherMarriagePlacenameEn, setotherMarriagePlacenameEn] = useState(
+    formData?.MarriageDetails?.otherMarriagePlacenameEn ? formData?.MarriageDetails?.otherMarriagePlacenameEn : ""
+  );
+  const [otherMarriagePlacenameMl, setotherMarriagePlacenameMl] = useState(
+    formData?.MarriageDetails?.otherMarriagePlacenameMl ? formData?.MarriageDetails?.otherMarriagePlacenameMl : ""
+  );
   const [marriageLocalityEn, setmarriageLocalityEn] = useState(
     formData?.MarriageDetails?.marriageLocalityEn ? formData?.MarriageDetails?.marriageLocalityEn : ""
   );
-  const [marriageLocalityMl, setMarriageLocalityMl] = useState(
+  const [marriageLocalityMl, setmarriageLocalityMl] = useState(
     formData?.MarriageDetails?.marriageLocalityMl ? formData?.MarriageDetails?.marriageLocalityMl : ""
   );
   const [marriageStreetEn, setmarriageStreetEn] = useState(
     formData?.MarriageDetails?.marriageStreetEn ? formData?.MarriageDetails?.marriageStreetEn : ""
   );
-  const [marriageStreetMal, setmarriageStreetMal] = useState(
+  const [marriageStreetMl, setmarriageStreetMl] = useState(
     formData?.MarriageDetails?.marriageStreetMal ? formData?.MarriageDetails?.marriageStreetMal : ""
-  );
-  const [marriageHouseNoAndNameEn, setmarriageHouseNoAndNameEn] = useState(
-    formData?.MarriageDetails?.marriageHouseNoAndNameEn ? formData?.MarriageDetails?.marriageHouseNoAndNameEn : ""
-  );
-  const [marriageHouseNoAndNameMal, setmarriageHouseNoAndNameMal] = useState(
-    formData?.MarriageDetails?.marriageHouseNoAndNameMal ? formData?.MarriageDetails?.marriageHouseNoAndNameMal : ""
   );
   const [marriageLandmark, setmarriageLandmark] = useState(
     formData?.MarriageDetails?.marriageLandmark ? formData?.MarriageDetails?.marriageLandmark : ""
@@ -732,11 +732,62 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                           // option={cmbCountry}
                         />
                       </div>
-                      {marriagePlacenameEn.i18nKey === "Others" && <MarriageInstitution />}
+                      {marriagePlacenameEn.i18nKey === "Others" && (
+                        <MarriageInstitution
+                          otherMarriagePlacenameEn={otherMarriagePlacenameEn}
+                          setotherMarriagePlacenameEn={setotherMarriagePlacenameEn}
+                          otherMarriagePlacenameMl={otherMarriagePlacenameMl}
+                          setotherMarriagePlacenameMl={setotherMarriagePlacenameMl}
+                          marriageLocalityEn={marriageLocalityEn}
+                          setmarriageLocalityEn={setmarriageLocalityEn}
+                          marriageLocalityMl={marriageLocalityMl}
+                          setMarriageLocalityMl={setmarriageLocalityMl}
+                          marriageStreetEn={marriageStreetEn}
+                          setmarriageStreetEn={setmarriageStreetEn}
+                          marriageStreetMl={marriageStreetMl}
+                          setmarriageStreetMl={setmarriageStreetMl}
+                          marriageLandmark={marriageLandmark}
+                          setmarriageLandmark={setmarriageLandmark}
+                        />
+                      )}
                     </React.Fragment>
                   )}
-                  {marriagePlacetype.i18nKey === "House" && <HouseMarriageRegistration />}
-                  {(marriagePlacetype.i18nKey === "Public Place" || marriagePlacetype.i18nKey === "Private Place") && <MarriagePublicPlace />}
+                  {marriagePlacetype.i18nKey === "House" && (
+                    <HouseMarriageRegistration
+                      otherMarriagePlacenameEn={otherMarriagePlacenameEn}
+                      setOsetotherMarriagePlacenameEn={setotherMarriagePlacenameEn}
+                      otherMarriagePlacenameMl={otherMarriagePlacenameMl}
+                      setotherMarriagePlacenameMl={setotherMarriagePlacenameMl}
+                      marriageLocalityEn={marriageLocalityEn}
+                      setmarriageLocalityEn={setmarriageLocalityEn}
+                      marriageLocalityMl={marriageLocalityMl}
+                      setMarriageLocalityMl={setMarriageLocalityMl}
+                      marriageStreetEn={marriageStreetEn}
+                      setmarriageStreetEn={setmarriageStreetEn}
+                      marriageStreetMl={marriageStreetMl}
+                      setmarriageStreetMl={setmarriageStreetMl}
+                      marriageLandmark={marriageLandmark}
+                      setmarriageLandmark={setmarriageLandmark}
+                    />
+                  )}
+                  {(marriagePlacetype.i18nKey === "Public Place" || marriagePlacetype.i18nKey === "Private Place") && (
+                    <MarriagePublicPlace
+                      otherMarriagePlacenameEn={otherMarriagePlacenameEn}
+                      setOsetotherMarriagePlacenameEn={setotherMarriagePlacenameEn}
+                      otherMarriagePlacenameMl={otherMarriagePlacenameMl}
+                      setotherMarriagePlacenameMl={setotherMarriagePlacenameMl}
+                      marriageLocalityEn={marriageLocalityEn}
+                      setmarriageLocalityEn={setmarriageLocalityEn}
+                      marriageLocalityMl={marriageLocalityMl}
+                      setMarriageLocalityMl={setMarriageLocalityMl}
+                      marriageStreetEn={marriageStreetEn}
+                      setmarriageStreetEn={setmarriageStreetEn}
+                      marriageStreetMl={marriageStreetMl}
+                      setmarriageStreetMl={setmarriageStreetMl}
+                      marriageLandmark={marriageLandmark}
+                      setmarriageLandmark={setmarriageLandmark}
+                    />
+                  )}
                 </div>
               </div>
               <div className="row">

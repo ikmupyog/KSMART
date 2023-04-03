@@ -81,7 +81,7 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
   } else {
     userType = "employee";
   }
-  // console.log(value);
+
   const convertEpochToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
@@ -96,10 +96,6 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
       return null;
     }
   };
-
-  console.log("values==",value);
-  console.log("bornOutsideIndia", BornOutsideAddressBirthDetails);
-
 
   return (
    <React.Fragment>
@@ -162,8 +158,6 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
               </CardText>
             </div>
           </div>
-        
-
           <div className="row">
             <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_DATE_OF_BIRTH")}`}</CardLabel>
@@ -174,7 +168,6 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
           </div>
           </div>
           )}
-
 <div className="row">
                   <div className="col-md-6">
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PLACE_OF_BIRTH")}`}</CardLabel>

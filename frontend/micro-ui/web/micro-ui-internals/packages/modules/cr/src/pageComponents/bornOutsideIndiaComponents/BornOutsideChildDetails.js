@@ -17,19 +17,20 @@ import CustomTimePicker from "../../components/CustomTimePicker";
 // import FormStep from "../../../../../react-components/src/molecules/FormStep";
 
 const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditBornOutsideIndia = false }) => {
-  // console.log(JSON.stringify(formData));
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
   if (tenantId === "kl") {
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
+  const [DifferenceInDaysRounded, setDifferenceInDaysRounded] = useState();
+  const [workFlowCode, setWorkFlowCode] = useState();
   const { t } = useTranslation();
   let validation = {};
   let Difference_In_DaysRounded = "";
   const { data: Menu, isLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
   const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
-  //const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "WorkFlowBirth");
+  const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "WorkFlowBirth");
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
@@ -44,12 +45,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
       return null;
     }
   };
-  // WorkFlowDetails &&
-  //   WorkFlowDetails["birth-death-service"] && WorkFlowDetails["birth-death-service"].WorkFlowBirth &&
-  //   WorkFlowDetails["birth-death-service"].WorkFlowBirth.map((ob) => {
-  //     workFlowData.push(ob);
-  //     // console.log(workFlowData);
-  //   });
+ 
   let cmbCountry = [];
   Country &&
     Country["common-masters"] &&
@@ -57,14 +53,18 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
       cmbCountry.push(ob);
     });
   let menu = [];
-  // let workFlowData = []
+  let workFlowData = [];
   // let workFlowCode = "BIRTHHOSP21";
   Menu &&
     Menu.map((genderDetails) => {
       menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
     });
 
-  // const [workFlowCode, setWorkFlowCode] = useState();
+    WorkFlowDetails &&
+    WorkFlowDetails["birth-death-service"] && WorkFlowDetails["birth-death-service"].WorkFlowBirth &&
+    WorkFlowDetails["birth-death-service"].WorkFlowBirth.map((ob) => {
+      workFlowData.push(ob);
+    });
 
   const [childDOB, setChildDOB] = useState(formData?.BornOutsideChildDetails?.childDOB ? formData?.BornOutsideChildDetails?.childDOB : "");
   const [gender, selectGender] = useState(formData?.BornOutsideChildDetails?.gender);
@@ -72,6 +72,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
   const [childAadharNo, setChildAadharNo] = useState(
     formData?.BornOutsideChildDetails?.childAadharNo ? formData?.BornOutsideChildDetails?.childAadharNo : null
   );
+  const [DifferenceInTime, setDifferenceInTime] = useState(formData?.BornOutsideChildDetails?.DifferenceInTime);
   const [childFirstNameEn, setChildFirstNameEn] = useState(
     formData?.BornOutsideChildDetails?.childFirstNameEn ? formData?.BornOutsideChildDetails?.childFirstNameEn : ""
   );
@@ -175,11 +176,8 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
   const handleTimeChange = (value, cb) => {
     if (typeof value === "string") {
       cb(value);
-      console.log(cb);
-      console.log(value);
       let hour = value;
       let period = hour > 12 ? "PM" : "AM";
-      console.log(period);
       setbirthDateTime(value);
     }
   };
@@ -210,7 +208,6 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
       let Difference_In_Time = today.getTime() - birthDate.getTime();
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       let Difference_In_DaysRounded = Math.floor(Difference_In_Days);
-      // console.log(Difference_In_DaysRounded);
     }
   }
   // function setselectChildDOB(value) {
@@ -218,8 +215,32 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
   // }
   function setselectchildArrivalDate(value) {
     setchildArrivalDate(value);
-  }
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const childArrivalDate = new Date(value);
+    childArrivalDate.setHours(0, 0, 0, 0);
+    
+    if (childArrivalDate.getTime() <= today.getTime()) {
+      
+      setDOBError(false);
+      // To calculate the time difference of two dates
+      let Difference_In_Time = today.getTime() - childArrivalDate.getTime();
+      // console.log("Difference_In_Time" + Difference_In_Time);
+      setDifferenceInTime(today.getTime() - childArrivalDate.getTime());
+      let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+      // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
+      setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
+      if (birthPlace) {
+        let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
+        console.log("currentWorgFlowDOB" + currentWorgFlow);
+        if (currentWorgFlow.length > 0) {
+          // console.log(currentWorgFlow[0].WorkflowCode);
+          setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+        }
+      }
 
+  }
+  }
   function setSelectChildFirstNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
       setChildFirstNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
@@ -435,7 +456,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
       onSelect(config.key, {
         stateId,
         tenantId,
-        // workFlowCode,
+        workFlowCode,
         childDOB,
         birthDateTime,
         gender,
@@ -473,7 +494,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
     }
   };
 
-  if (isLoading || isCountryLoading) {
+  if (isLoading || isCountryLoading || isWorkFlowDetailsLoading) {
     return <Loader></Loader>;
   } else {
     return (
@@ -547,6 +568,47 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
                   inputFormat="DD-MM-YYYY"
                   placeholder={`${t("CR_DATE_OF_ARRIVAL")}`}
                   {...(validation = { isRequired: true, title: t("CR_INVALID_DATE_OF_ARRIVAL") })}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-3">
+                <CardLabel>
+                  {t("CR_DATE_OF_BIRTH_TIME")}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <DatePicker
+                  date={childDOB}
+                  name="childDOB"
+                  max={convertEpochToDate(new Date())}
+                  // min={childDOB ? childDOB : convertEpochToDate("1900-01-01")}
+                  onChange={setselectChildDOB}
+                  inputFormat="DD-MM-YYYY"
+                  placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
+                  {...(validation = { isRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
+                />
+              </div>
+
+              <div className="col-md-2">
+                <CardLabel>{t("CR_TIME_OF_BIRTH")}</CardLabel>
+                <CustomTimePicker name="birthDateTime" onChange={(val) => handleTimeChange(val, setbirthDateTime)} value={birthDateTime} />
+              </div>
+              <div className="col-md-3">
+                <CardLabel>
+                  {`${t("CR_GENDER")}`}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="code"
+                  isMandatory={true}
+                  option={menu}
+                  selected={gender}
+                  select={setselectGender}
+                  placeholder={`${t("CR_GENDER")}`}
+                  {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })}
                 />
               </div>
             </div>
@@ -692,47 +754,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
             </div>
             </div>
           </div>)}
-          <div className="row">
-            <div className="col-md-12">
-              <div className="col-md-3">
-                <CardLabel>
-                  {t("CR_DATE_OF_BIRTH_TIME")}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <DatePicker
-                  date={childDOB}
-                  name="childDOB"
-                  max={convertEpochToDate(new Date())}
-                  // min={childDOB ? childDOB : convertEpochToDate("1900-01-01")}
-                  onChange={setselectChildDOB}
-                  inputFormat="DD-MM-YYYY"
-                  placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
-                  {...(validation = { isRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
-                />
-              </div>
-
-              <div className="col-md-2">
-                <CardLabel>{t("CR_TIME_OF_BIRTH")}</CardLabel>
-                <CustomTimePicker name="birthDateTime" onChange={(val) => handleTimeChange(val, setbirthDateTime)} value={birthDateTime} />
-              </div>
-              <div className="col-md-3">
-                <CardLabel>
-                  {`${t("CR_GENDER")}`}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <Dropdown
-                  t={t}
-                  optionKey="code"
-                  isMandatory={true}
-                  option={menu}
-                  selected={gender}
-                  select={setselectGender}
-                  placeholder={`${t("CR_GENDER")}`}
-                  {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })}
-                />
-              </div>
-            </div>
-          </div>
+       
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-12">

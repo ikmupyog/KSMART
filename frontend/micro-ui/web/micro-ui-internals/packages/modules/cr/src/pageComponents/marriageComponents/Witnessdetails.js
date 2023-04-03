@@ -778,7 +778,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                         placeholder={t("CR_EXPIRATION_TYPE")}
                         isMandatory={true}
                         {...(validation = { isRequired: true })}
-                        // option={cmbCountry}
                       />
                     </div>
                   </div>

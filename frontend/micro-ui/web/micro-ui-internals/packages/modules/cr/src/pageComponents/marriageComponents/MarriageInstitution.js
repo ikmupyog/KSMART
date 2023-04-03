@@ -4,38 +4,59 @@ import Timeline from "../../components/MARRIAGETimeline";
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
 
-const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
+const MarriageInstitution = ({
+  config,
+  onSelect,
+  userType,
+  formData,
+  otherMarriagePlacenameEn,
+  setotherMarriagePlacenameEn,
+  otherMarriagePlacenameMl,
+  setotherMarriagePlacenameMl,
+  marriageLocalityEn,
+  setmarriageLocalityEn,
+  marriageLocalityMl,
+  setmarriageLocalityMl,
+  marriageStreetEn,
+  setmarriageStreetEn,
+  marriageStreetMl,
+  setmarriageStreetMl,
+  marriageLandmark,
+  setmarriageLandmark,
+}) => {
   const { t } = useTranslation();
   let validation = {};
-  const [marriageReligiousInstitutionOther, setMarriageReligiousInstitutionOther] = useState(
-    formData?.MarriageInstitution?.marriageReligiousInstitutionOther ? formData?.MarriageInstitution?.marriageReligiousInstitutionOther : ""
-  );
-  const [marriageLandmark, setMarriageLandmark] = useState(
-    formData?.MarriageInstitution?.marriageLandmark ? formData?.MarriageInstitution?.marriageLandmark : ""
-  );
-  const [marriageStreetMal, setMarriageStreetMal] = useState(
-    formData?.MarriageInstitution?.marriageStreetMal ? formData?.MarriageInstitution?.marriageStreetMal : ""
-  );
-  const [marriageReligiousInstitutionOtherNameEn, setMarriageReligiousInstitutionOtherNameEn] = useState(
-    formData?.MarriageInstitution?.marriageReligiousInstitutionOtherNameEn
-      ? formData?.MarriageInstitution?.marriageReligiousInstitutionOtherNameEn
-      : ""
-  );
-  const [marriageReligiousInstitutionOtherNameMal, setMarriageReligiousInstitutionOtherNameMal] = useState(
-    formData?.MarriageInstitution?.marriageReligiousInstitutionOtherNameMal
-      ? formData?.MarriageInstitution?.marriageReligiousInstitutionOtherNameMal
-      : ""
-  );
-  const [marriageStreetEn, setMarriageStreetEn] = useState(
-    formData?.MarriageInstitution?.marriageStreetEn ? formData?.MarriageInstitution?.marriageStreetEn : ""
-  );
-  const [marriageLocalityEn, setMarriageLocalityEn] = useState(
-    formData?.MarriageInstitution?.marriageLocalityEn ? formData?.MarriageInstitution?.marriageLocalityEn : ""
-  );
+  // const [marriageReligiousInstitutionOther, setMarriageReligiousInstitutionOther] = useState(
+  //   formData?.MarriageInstitution?.marriageReligiousInstitutionOther ? formData?.MarriageInstitution?.marriageReligiousInstitutionOther : ""
+  // );
+  // const [marriageLandmark, setMarriageLandmark] = useState(
+  //   formData?.MarriageInstitution?.marriageLandmark ? formData?.MarriageInstitution?.marriageLandmark : ""
+  // );
+  // const [marriageStreetMal, setMarriageStreetMal] = useState(
+  //   formData?.MarriageInstitution?.marriageStreetMal ? formData?.MarriageInstitution?.marriageStreetMal : ""
+  // );
+  // const [marriageReligiousInstitutionOtherNameEn, setMarriageReligiousInstitutionOtherNameEn] = useState(
+  //   formData?.MarriageDetails?.marriageReligiousInstitutionOtherNameEn ? formData?.MarriageInstitution?.marriageReligiousInstitutionOtherNameEn : ""
+  // );
+  // const [marriageReligiousInstitutionOtherNameMal, setMarriageReligiousInstitutionOtherNameMal] = useState(
+  //   formData?.MarriageInstitution?.marriageReligiousInstitutionOtherNameMal
+  //     ? formData?.MarriageInstitution?.marriageReligiousInstitutionOtherNameMal
+  //     : ""
+  // );
+  // const [marriageStreetEn, setMarriageStreetEn] = useState(
+  //   formData?.MarriageInstitution?.marriageStreetEn ? formData?.MarriageInstitution?.marriageStreetEn : ""
+  // );
+  // const [marriageLocalityEn, setMarriageLocalityEn] = useState(
+  //   formData?.MarriageInstitution?.marriageLocalityEn ? formData?.MarriageInstitution?.marriageLocalityEn : ""
+  // );
 
-  const [marriageLocalityMal, setMarriageLocalityMal] = useState(
-    formData?.MarriageInstitution?.marriageLocalityMal ? formData?.MarriageInstitution?.marriageLocalityMal : ""
-  );
+  // const [marriageLocalityMal, setMarriageLocalityMal] = useState(
+  //   formData?.MarriageInstitution?.marriageLocalityMal ? formData?.MarriageInstitution?.marriageLocalityMal : ""
+  // );
+
+  // const [marriageReligiousInstitution, setMarriageReligiousInstitution] = useState(
+  //   formData?.MarriageInstitution?.marriageReligiousInstitution ? formData?.MarriageInstitution?.marriageReligiousInstitution : null
+  // );
 
   const [access, setAccess] = React.useState(true);
   const onSkip = () => onSelect();
@@ -47,51 +68,59 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
     { i18nKey: "ConventionCenter", code: "CONVENTIONCENTER" },
   ];
 
-  function setSelectMarriageReligiousInstitutionOtherNameMal(e) {
+  function setSelectMarriageReligiousInstitution(value) {
+    setMarriageReligiousInstitution(value);
+  }
+  function setSelectMarriageReligiousInstitutionOther(e) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setMarriageReligiousInstitutionOther(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    }
+  }
+  function selectSetotherMarriagePlacenameMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
       setMarriageLocalityMal('');
     } else {
-      setMarriageReligiousInstitutionOtherNameMal(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setotherMarriagePlacenameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
-  function setSelectMarriageReligiousInstitutionOtherNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setMarriageReligiousInstitutionOtherNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+  function setSelectOtherMarriagePlacenameEn(e) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setotherMarriagePlacenameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectMarriageLandmark(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setMarriageLandmark(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setmarriageLandmark(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectMarriageStreetEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setMarriageStreetEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setmarriageStreetEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectMarriageLocalityEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setMarriageLocalityEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setmarriageLocalityEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
-  function setSelectMarriageLocalityMal(e) {
+  function setSelectMarriageLocalityMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setMarriageLocalityMal('');
+      setmarriageLocalityMl("");
     } else {
-      setMarriageLocalityMal(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setmarriageLocalityMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
-  function setSelectmarriageStreetMal(e) {
+  function setSelectmarriageStreetMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setMarriageStreetMal('');
+      setmarriageStreetMl("");
     } else {
-      setMarriageStreetMal(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setmarriageStreetMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
 
@@ -139,9 +168,9 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="marriageReligiousInstitutionOtherNameEn"
-              value={marriageReligiousInstitutionOtherNameEn}
-              onChange={setSelectMarriageReligiousInstitutionOtherNameEn}
+              name="otherMarriagePlacenameEn"
+              value={otherMarriagePlacenameEn}
+              onChange={setSelectOtherMarriagePlacenameEn}
               placeholder={`${t("CR_RELIGIOUS_INST_OTHER_NAME_EN")}`}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_RELIGIOUS_INST_OTHER_EN") })}
             />
@@ -205,8 +234,8 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
               type={"text"}
               optionKey="i18nKey"
               name="marriageReligiousInstitutionOtherNameMal"
-              value={marriageReligiousInstitutionOtherNameMal}
-              onChange={setSelectMarriageReligiousInstitutionOtherNameMal}
+              value={otherMarriagePlacenameMl}
+              onChange={selectSetotherMarriagePlacenameMl}
               placeholder={`${t("CR_RELIGIOUS_INST_OTHER_NAME_ML")}`}
               {...(validation = {
                 pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -223,8 +252,8 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
               type={"text"}
               optionKey="i18nKey"
               //name="marriageStreetMal"
-              value={marriageStreetMal}
-              onChange={setSelectmarriageStreetMal}
+              value={marriageStreetMl}
+              onChange={setSelectmarriageStreetMl}
               placeholder={`${t("CR_STREET_NAME_ML")}`}
               {...(validation = {
                 pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -245,8 +274,8 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
               type={"text"}
               optionKey="i18nKey"
               //name="marriageLocalityMal"
-              value={marriageLocalityMal}
-              onChange={setSelectMarriageLocalityMal}
+              value={marriageLocalityMl}
+              onChange={setSelectMarriageLocalityMl}
               placeholder={`${t("CR_LOCALITY_ML")}`}
               {...(validation = {
                 pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -255,8 +284,8 @@ const MarriageInstitution = ({ config, onSelect, userType, formData }) => {
                 title: t("CR_INVALID_LOCALITY_ML"),
               })}
             />
-            </div>
-            </div>
+          </div>
+        </div>
       </div>
     </React.Fragment>
   );

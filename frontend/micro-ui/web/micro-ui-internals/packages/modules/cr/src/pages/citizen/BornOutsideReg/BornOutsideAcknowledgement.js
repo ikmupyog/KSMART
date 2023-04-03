@@ -22,7 +22,6 @@ const rowContainerStyle = {
 };
 
 const BannerPicker = (props) => {
-  // console.log(JSON.stringify(props));
   return (
     <Banner
       message={GetActionMessage(props)}
@@ -75,7 +74,6 @@ const BornOutsideAcknowledgement = ({ data, onSuccess, userType }) => {
           //     onSuccess,
           //   })
           // } else {
-// console.log(formdata);
           mutation.mutate(formdata, {
             onSuccess,
           })
@@ -148,11 +146,7 @@ const BornOutsideAcknowledgement = ({ data, onSuccess, userType }) => {
         </Link>
       </Card>)
   }
-  // else if(mutation2.isLoading || mutation2.isIdle ){
-  //   return (<Loader />)
-  // }
   else
-    // console.log(JSON.stringify(mutation));
     if (mutation.isSuccess && mutation?.isError === null) {
       return (
         <Card>
