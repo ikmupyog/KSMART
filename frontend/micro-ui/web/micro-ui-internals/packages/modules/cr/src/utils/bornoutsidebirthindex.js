@@ -279,7 +279,6 @@ export const convertToBornOutsideBirthRegistration = (data = {}) => {
         childAadharNo: data?.BornOutsideChildDetails?.childAadharNo,
         childPassportNo: data?.BornOutsideChildDetails?.childPassportNo,
         childArrivalDate: Date.parse(data?.BornOutsideChildDetails?.childArrivalDate),
-        // isChildName: data?.BornOutsideChildDetails?.isChildName ? data?.ChildDetails?.isChildName : false,
         tenantid: data?.BornOutsideChildDetails?.tenantId,
         childFirstNameEn: data?.BornOutsideChildDetails?.childFirstNameEn,
         childMiddleNameEn: data?.BornOutsideChildDetails?.childMiddleNameEn,
