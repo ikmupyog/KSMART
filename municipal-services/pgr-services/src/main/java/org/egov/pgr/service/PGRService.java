@@ -97,11 +97,11 @@ public class PGRService {
 
         if(CollectionUtils.isEmpty(serviceWrappers))
             return new ArrayList<>();
-        System.out.println(" cit"+serviceWrappers.get(0).getService().getCitizen());
-if(serviceWrappers.get(0).getService().getCitizen() != null) {
-        
-         userService.enrichUsers(serviceWrappers);
-        }
+      
+		if(serviceWrappers.get(0).getService().getCitizen() != null) {
+		        
+		         userService.enrichUsers(serviceWrappers);
+		}
         List<ServiceWrapper> enrichedServiceWrappers = workflowService.enrichWorkflow(requestInfo,serviceWrappers);
         Map<Long, List<ServiceWrapper>> sortedWrappers = new TreeMap<>(Collections.reverseOrder());
         for(ServiceWrapper svc : enrichedServiceWrappers){

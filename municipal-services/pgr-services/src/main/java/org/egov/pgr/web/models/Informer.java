@@ -38,8 +38,8 @@ public class Informer {
 	  private String address;
 	  
 	  
-	  @Size(min = 10, max = 10, message = "Invalid mobile number")
-	  @Pattern(regexp = PGRConstants.PATTERN_MOBILE, message = "Invalid mobile number")
+//	  @Size(min = 10, max = 10, message = "Invalid mobile number")
+//	  @Pattern(regexp = PGRConstants.PATTERN_MOBILE, message = "Invalid mobile number")
 	  @JsonProperty("mobileNumber")
 	  private String mobileNumber;	
 }

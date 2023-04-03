@@ -22,6 +22,7 @@ public class User {
     private String emailId;
     private List<Role> roles;
     private String tenantId;
+    private String rolecode;
     private String uuid;
     private Boolean active;
 

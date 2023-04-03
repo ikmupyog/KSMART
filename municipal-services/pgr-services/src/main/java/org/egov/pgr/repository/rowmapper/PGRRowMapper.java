@@ -2,6 +2,8 @@ package org.egov.pgr.repository.rowmapper;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.deser.impl.ExternalTypeHandler.Builder;
+
 import org.egov.pgr.web.models.*;
 import org.egov.tracer.model.CustomException;
 import org.postgresql.util.PGobject;
@@ -123,6 +125,14 @@ public class PGRRowMapper implements ResultSetExtractor<List<Service>> {
 
             service.setAddress(address);
 
+        }
+        if(service.getCitizen() == null) {
+        	User emp = User.builder()
+        			.name(rs.getString("emp_name"))
+        			.rolecode(rs.getString("emp_role"))
+        			.build();
+        	service.setCitizen(emp);
+        	
         }
 
     }

@@ -21,12 +21,13 @@ public class PGRQueryBuilder {
                                                 "ser.createdby as ser_createdby,ser.createdtime as ser_createdtime," +
                                                 "ser.lastmodifiedby as ser_lastmodifiedby,ser.lastmodifiedtime as ser_lastmodifiedtime," +
                                                 "ads.createdby as ads_createdby,ads.createdtime as ads_createdtime," +
-                                                "ads.lastmodifiedby as ads_lastmodifiedby,ads.lastmodifiedtime as ads_lastmodifiedtime " ;
+                                                "ads.lastmodifiedby as ads_lastmodifiedby,ads.lastmodifiedtime as ads_lastmodifiedtime ," +
+                                                "emp.employeename as emp_name,emp.emprolecode as emp_role";
 
 
-    private static final String QUERY = "select ser.*,ads.*," + QUERY_ALIAS+
-                                        " from eg_pgr_service_v2 ser INNER JOIN eg_pgr_address_v2 ads" +
-                                        " ON ads.parentId = ser.id ";
+    private static final String QUERY = "select ser.*,ads.*,emp.*," + QUERY_ALIAS+
+                                        " from eg_pgr_service_v2 ser INNER JOIN eg_pgr_address_v2 ads  " +
+                                        " ON ads.parentId = ser.id  INNER JOIN eg_pgr_Employee_v2 emp ON emp.parentId = ser.id ";
 
     private static final String COUNT_WRAPPER = "select count(*) from ({INTERNAL_QUERY}) as count";
 
