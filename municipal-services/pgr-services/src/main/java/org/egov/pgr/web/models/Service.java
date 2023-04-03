@@ -92,6 +92,10 @@ public class Service   {
         @Valid        
         @JsonProperty("informer")
         private Informer informer = null;
+        
+        @Valid        
+        @JsonProperty("employee")
+        private Employee employee = null;
 
         @JsonProperty("auditDetails")
         private AuditDetails auditDetails = null;

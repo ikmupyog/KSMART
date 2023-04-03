@@ -126,12 +126,13 @@ public class PGRRowMapper implements ResultSetExtractor<List<Service>> {
             service.setAddress(address);
 
         }
-        if(service.getCitizen() == null) {
-        	User emp = User.builder()
+        System.out.println(" rolecode" +rs.getString("emp_role"));
+        if(service.getEmployee() == null) {
+        	Employee emp = Employee.builder()
         			.name(rs.getString("emp_name"))
         			.rolecode(rs.getString("emp_role"))
         			.build();
-        	service.setCitizen(emp);
+        	service.setEmployee(emp);
         	
         }
 

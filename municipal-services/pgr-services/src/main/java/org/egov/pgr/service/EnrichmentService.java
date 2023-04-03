@@ -63,7 +63,7 @@ public class EnrichmentService {
         service.setId(UUID.randomUUID().toString());
         service.getAddress().setId(UUID.randomUUID().toString());
         service.getAddress().setTenantId(tenantId);
-        service.getCitizen().setEmpId(UUID.randomUUID().toString());
+        service.getEmployee().setEmpId(UUID.randomUUID().toString());
         service.setActive(true);
         if(!StringUtils.isEmpty(service.getInformer())) {
 	        service.getInformer().setId(UUID.randomUUID().toString());
