@@ -4,7 +4,7 @@ import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
 const FamilyAbandonedDeath = ({ config, onSelect,  formData, isEditDeath }) => {
-  console.log(formData);
+  
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -342,7 +342,8 @@ const FamilyAbandonedDeath = ({ config, onSelect,  formData, isEditDeath }) => {
             </div>
           </div>
         </div>
-        {SpouseUnavailable ? null : (
+        {SpouseUnavailable ? null 
+        : (
           // <div style={{ pointerEvents: isSpouseChecked ? "none" : "all", opacity: isSpouseChecked ? 0.5 : 1 }}>
           <div>
             <div className="row">

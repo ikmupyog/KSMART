@@ -411,7 +411,7 @@ const componentsToRegister = {
   AbandonedDeathCheckPage,
   AbandonedDeathAcknowledgement,
   AddressDeath,
-  StatisticalInfoAbandoned
+  StatisticalInfoAbandoned,
   AbandonedBirthAcknowledgement,
   AbandonedBirthCheckPage
 };

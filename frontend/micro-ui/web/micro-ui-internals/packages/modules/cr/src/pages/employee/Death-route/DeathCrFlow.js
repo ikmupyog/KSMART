@@ -8,8 +8,6 @@ import { convertToAbandonedDeathRegistration } from "../../../utils";
 const DeathCrFlow = ({ data, path }) => {
   const { t } = useTranslation();
   const isEdit = window.location.href.includes("renew-trade");
-  sessionStorage.removeItem("CR_DEATH_EDIT_FLAG");
-  sessionStorage.removeItem("Digit.CR_DEATH_EDIT");
   const cardMenuData = [
     {
       title: "New Registration",

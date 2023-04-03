@@ -190,9 +190,9 @@ config = config.concat(abandonedDeathConfig.body.filter((a) => !a. hideInEmploye
           <DeathAcknowledgement data={params} onSuccess={onSuccess} />
         </Route>
         }
-        <Route path={`${match.path}/acknowledgement`}>
+        {/* <Route path={`${match.path}/acknowledgement`}>
           <DeathAcknowledgement data={params} onSuccess={onSuccess} />
-        </Route>
+        </Route> */}
         <Route path={`${path}`} exact>
           <DeathCrFlow path={path} data={params}/>
         </Route>
