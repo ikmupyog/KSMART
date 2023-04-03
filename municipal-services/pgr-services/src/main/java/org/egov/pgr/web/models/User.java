@@ -15,6 +15,7 @@ import java.util.List;
 public class User {
 
     private Long id;
+    private String empId;
     private String userName;
     private String name;
     private String type;
