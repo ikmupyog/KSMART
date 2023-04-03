@@ -23,18 +23,18 @@ import static org.ksmart.marriage.utils.enums.ErrorCodes.MARRIAGE_DETAILS_REQUIR
 public class MarriageApplicationValidator {
 
     public void validateUpdate(MarriageDetailsRequest request, List<MarriageApplicationDetails> searchResult) {
-        List<MarriageApplicationDetails> deathdetails = request.getMarriageDetails();
+        List<MarriageApplicationDetails> marriageDetails = request.getMarriageDetails();
 
-        if (CollectionUtils.isEmpty(deathdetails)) {
+        if (CollectionUtils.isEmpty(marriageDetails)) {
             throw new CustomException(MARRIAGE_DETAILS_REQUIRED.getCode(), "Marriage registration is required.");
         }
 
-        if (deathdetails.size() > 1) { // NOPMD
+        if (marriageDetails.size() > 1) { // NOPMD
             throw new CustomException(MARRIAGE_DETAILS_INVALID_UPDATE.getCode(),
                     "Supports only single Marriage registration update request.");
         }
 
-        if (deathdetails.size() != searchResult.size()) {
+        if (marriageDetails.size() != searchResult.size()) {
             throw new CustomException(MARRIAGE_DETAILS_INVALID_UPDATE.getCode(),
                     "Marriage registration(s) not found in database.");
         }
