@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import { Route, Switch, useRouteMatch, useLocation, useHistory, Redirect } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { newConfig as newConfigCR } from "../../../config/config";
-
+import { useQueryClient } from "react-query";
 const ScrFlowApp = ({ parentUrl }) => {
   const { t } = useTranslation();
   const { path } = useRouteMatch();
   const match = useRouteMatch();
   const { pathname } = useLocation();
   const history = useHistory();
+  const queryClient = useQueryClient();
   console.log(sessionStorage.getItem("CR_STILLBIRTH_EDIT_FLAG"));
   const [isEditStillBirth, setIsEditStillBirth] = useState(sessionStorage.getItem("CR_STILLBIRTH_EDIT_FLAG")? true : false);  
   const [params, setParams, clearParams] = isEditStillBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_STILLBIRTH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_STILLBIRTH_REG", {});

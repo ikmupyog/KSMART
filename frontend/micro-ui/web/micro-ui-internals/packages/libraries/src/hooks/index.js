@@ -127,7 +127,9 @@ import useAbandonedDeathCreationAPI from "./cr/useAbandonedDeathCreationAPI";
 import useCivilRegistrationMarriageAPI from "./cr/useCivilRegistrationMarriageAPI";
 import useCvilRegistrationAdoptionApi from "./cr/useCvilRegistrationAdoptionApi";
 import useCivilRegistrationStillBirthAPI from "./cr/useCivilRegistrationStillBirthAPI";
+import useCivilRegistrationNACBIRTHAPI from "./cr/useCivilRegistrationNACBIRTHAPI";
 import useCivilRegistrationBornOutsideIndiaBirthAPI from "./cr/useCivilRegistrationBornOutsideIndiaBirthAPI";
+import useCivilRegistrationAbandonedBirthAPI from "./cr/useCivilRegistrationAbandonedBirthAPI";
 import useApplicationBornOutsideIndiaBirthDetail from "./cr/useApplicationBornOutsideIndiaBirthDetail"; 
 
 import useCivilRegistrationDeathAPI from "./cr/useCivilRegistrationDeathAPI";
@@ -140,9 +142,12 @@ import useCRDFetchBill from "./cr/useDeathFetchBill";
 import useCRApplicationDetail from "./cr/useApplicationDetail";
 import useApplicationMarriageDetail from "./cr/useApplicationMarriageDetail";
 import useApplicationStillBirthDetail from "./cr/useApplicationStillBirthDetail"; 
+import useApplicationAbandondBirthDetail from "./cr/useApplicationAbandondBirthDetail";
 import useApplicationDeathDetail from "./cr/useApplicationDeathDetail"; 
 import useCRApplicationActions from "./cr/useApplicationActions";
 import useCRAdoptionApplicationActions from "./cr/useAdoptionApplActions";
+import useApplicationBirthNACActions from "./cr/useApplicationBirthNACActions";
+import useApplicationAbandonedBirthActions from "./cr/useApplicationAbandonedBirthActions";
 import useCRStillBirthApplicationActions from "./cr/useApplicationStillBirthActions";
 import useApplicationBornOutsideIndiaBirthActions from "./cr/useApplicationBornOutsideIndiaBirthActions";
 import useCRDeathApplicationActions from "./cr/useApplicationDeathActions";
@@ -150,6 +155,8 @@ import useCRGenderMDMS from "./cr/useCRGenderMDMS";
 import useCRInbox from "./cr/useInbox";
 import useCRMDMS from "./cr/useMDMS";
 import useCRSearch from "./cr/useSearch";
+import useAbandonedBirthSearch from "./cr/useAbandonedBirthSearch";
+import useBirthNACSearch from "./cr/useBirthNACSearch";
 import useAdoptionSearch from "./cr/useAdoptionSearch";
 import useRegistryDownloadDeath from "./cr/useRegistryDownloadDeath";
 import useResistryDownloadBirth from "./cr/useResistryDownloadBirth"
@@ -157,6 +164,8 @@ import useRegistrySearchBirth from "./cr/useRegistrySearchBirth";
 import useRegistrySearchDeath from "./cr/useRegistrySearchDeath";
 import useSearchMarriage from "./cr/useSearchMarriage";
 import useRegistrySearchMarriage from "./cr/useRegistrySearchMarriage";
+import useApplicationBIRTHNACDetail from "./cr/useApplicationBIRTHNACDetail";
+
 
 import useSearchDeath  from "./cr/useSearchDeath";
 import useSearchStillBirth  from "./cr/useSearchStillBirth";
@@ -352,15 +361,19 @@ const cr = {
   useAbandonedDeathCreationAPI,
   useCivilRegistrationMDMS,
   useCivilRegistrationAPI,
+  useCivilRegistrationAbandonedBirthAPI,
   useCivilRegistrationMarriageAPI,
   useCvilRegistrationAdoptionApi,
   useCivilRegistrationStillBirthAPI,
+  useCivilRegistrationNACBIRTHAPI,
   useCivilRegistrationBornOutsideIndiaBirthAPI,
   useCivilRegistrationDeathAPI,
   useCRGenderMDMS,
   useInbox: useCRInbox,
   useMDMS: useCRMDMS,
   useSearch: useCRSearch,
+  useAbandonedBirthSearch,
+  useBirthNACSearch,
   useSearchMarriage,
   useAdoptionSearch,
   useRegistrySearchDeath,
@@ -373,10 +386,14 @@ const cr = {
   useApplicationDetail: useCRApplicationDetail,
   useApplicationMarriageDetail,
   useApplicationStillBirthDetail:useApplicationStillBirthDetail,
+  useApplicationAbandondBirthDetail,
+  useApplicationBIRTHNACDetail,
   useApplicationBornOutsideIndiaBirthDetail,
   useApplicationActions: useCRApplicationActions,
   useAdoptionApplActions:useCRAdoptionApplicationActions,
   useCRStillBirthApplicationActions:useCRStillBirthApplicationActions,
+  useApplicationAbandonedBirthActions,
+  useApplicationBirthNACActions,
   useApplicationBornOutsideIndiaBirthActions,
   useCRDeathApplicationActions: useCRDeathApplicationActions,
   useApplicationDeathDetail,

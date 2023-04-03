@@ -54,12 +54,12 @@ const SelectImages = ({ t, config, onSelect, onSkip, value }) => {
 
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") ? <Timeline currentStep={5} /> : null}
+      {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
       {window.location.href.includes("/employee") ? <EmpTimeLine currentStep={3} /> : null}
       <FormStep config={config} onSelect={handleSubmit} onSkip={onSkip} t={t}>
         <CardLabel>{`${t("CR_IMAGES")}`}</CardLabel>
         <ImageUploadHandler tenantId={value.city_complaint?.code} uploadedImages={uploadedImages} onPhotoChange={handleUpload} />
-        {window.location.href.includes("/employee") && <div>
+        {window.location.href.includes("/employee") && <div style={{ marginBottom: "20px" }}>
           <CardLabel>{`${t("CR_SUPPORTING_DOC")}`}</CardLabel>
           <UploadFile
             id={"PGR-doc"}

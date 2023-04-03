@@ -64,6 +64,21 @@ const initRequestBody = (tenantId) => ({
     ],
   },
 });
+const getMaritalStatusMasterList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "MaritalStatus",
+          },
+        ],
+      },
+    ],
+  },
+});
 const getWorkFlowBirthMasterList = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -824,6 +839,18 @@ const getTLLocalbody = (tenantId, moduleCode, type) => ({
     ],
   },
 });
+const getTradeApplicationDocuments = (tenantId, moduleCode, type) => ({
+  type,
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [{ name: "ApplicationDocuments" }],
+      },
+    ],
+  },
+})
 
 const getPTFloorList = (tenantId, moduleCode, type) => ({
   type,
@@ -1053,8 +1080,7 @@ const getCROtherDeathPlacelist = (tenantId, moduleCode) => ({
     ],
   },
 });
-const getCRMannerOfDeathlist
- = (tenantId, moduleCode) => ({
+const getCRMannerOfDeathlist = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
     moduleDetails: [
@@ -1069,8 +1095,7 @@ const getCRMannerOfDeathlist
     ],
   },
 });
-const getCRPregnantDeceasedlist
- = (tenantId, moduleCode) => ({
+const getCRPregnantDeceasedlist = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
     moduleDetails: [
@@ -1085,8 +1110,7 @@ const getCRPregnantDeceasedlist
     ],
   },
 });
-const getCRRBirthStatuslist
- = (tenantId, moduleCode) => ({
+const getCRRBirthStatuslist = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
     moduleDetails: [
@@ -1374,22 +1398,22 @@ const getCRMaleDependentlist = (tenantId, moduleCode) => ({
   },
 });
 const getBirthCorrectionDocumentslist = (tenantId, moduleCode) => {
-  return ({
-  details: {
-    tenantId: tenantId,
-    moduleDetails: [
-      {
-        moduleName: moduleCode,
-        masterDetails: [
-          {
-            name: "BirthCorrectionDocuments"
-          },
-        ],
-      },
-    ],
-  },
-});
-}
+  return {
+    details: {
+      tenantId: tenantId,
+      moduleDetails: [
+        {
+          moduleName: moduleCode,
+          masterDetails: [
+            {
+              name: "BirthCorrectionDocuments",
+            },
+          ],
+        },
+      ],
+    },
+  };
+};
 const getCRTitleList = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -2347,6 +2371,9 @@ export const MdmsService = {
     // PersistantStorage.set(key, responseValue, cacheSetting.cacheTimeInSecs);
     return responseValue;
   },
+  getMaritalStatusMaster: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getMaritalStatusMasterList(tenantId, moduleCode), moduleCode);
+  },
   getWorkFlowBirthMaster: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getWorkFlowBirthMasterList(tenantId, moduleCode), moduleCode);
   },
@@ -2431,7 +2458,7 @@ export const MdmsService = {
   getCRPregnantDeceased: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRPregnantDeceasedlist(tenantId, moduleCode), moduleCode);
   },
-  
+
   getCRBirthStatus: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRRBirthStatuslist(tenantId, moduleCode), moduleCode);
   },
@@ -2513,7 +2540,7 @@ export const MdmsService = {
   },
   getCRIdProofDetails: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRIdProofDetailsList(tenantId, moduleCode), moduleCode);
-  }, 
+  },
   getCRDeathPlaceType: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getCRDeathPlaceTypeList(tenantId, moduleCode), moduleCode);
   },
@@ -2589,7 +2616,6 @@ export const MdmsService = {
     return MdmsService.getDataByCriteria(tenantId, getTradeOwnerShipCategoryCriteria(tenantId, moduleCode, type), moduleCode);
   },
 
-
   getPropertyOwnerType: (tenantId, moduleCode, type) => {
     return MdmsService.getDataByCriteria(tenantId, getPropertyOwnerTypeCriteria(tenantId, moduleCode, type), moduleCode);
   },
@@ -2649,6 +2675,9 @@ export const MdmsService = {
   },
   getTLLocalbody: (tenantId, moduleCode, type) => {
     return MdmsService.getDataByCriteria(tenantId, getTLLocalbody(tenantId, moduleCode), moduleCode);
+  },
+  getTradeApplicationDocuments : (tenantId, moduleCode, type) => {
+    return MdmsService.getDataByCriteria(tenantId, getTradeApplicationDocuments(tenantId, moduleCode, type), moduleCode);
   },
   getFloorList: (tenantId, moduleCode, type) => {
     return MdmsService.getDataByCriteria(tenantId, getPTFloorList(tenantId, moduleCode, type), moduleCode);

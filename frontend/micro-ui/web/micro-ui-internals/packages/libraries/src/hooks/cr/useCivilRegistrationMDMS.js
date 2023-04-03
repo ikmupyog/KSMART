@@ -2,6 +2,9 @@ import { MdmsService } from "../../services/elements/MDMS";
 import { useQuery } from "react-query";
 
 const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {}) => {
+  const useMaritalStatus = () => {
+    return useQuery("CR_MARITAL_STATUS", () => MdmsService.getMaritalStatusMaster(tenantId, moduleCode), config);
+  };
   const useWorkFlowBirth = () => {
     return useQuery("CR_BIRTH_WORKFLOW", () => MdmsService.getWorkFlowBirthMaster(tenantId, moduleCode), config);
   };
@@ -186,10 +189,7 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
     return useQuery("TL_TRADE_OWNERSHIP_CATEGORY", () => MdmsService.GetTradeOwnerShipCategory(tenantId, moduleCode, type), config);
   };
   const useBirthCorrectionDocuments = () => {
-    return useQuery(
-      `BIRTH_CORRECTION_DOCUMENTS`,
-      () => MdmsService.GetBirthCorrectionDocuments(tenantId, moduleCode, type), config
-    );
+    return useQuery(`BIRTH_CORRECTION_DOCUMENTS`, () => MdmsService.GetBirthCorrectionDocuments(tenantId, moduleCode, type), config);
   };
   const useTradeOwnershipSubType = () => {
     return useQuery("TL_TRADE_OWNERSHIP_CATEGORY", () => MdmsService.GetTradeOwnerShipCategory(tenantId, moduleCode, type), {
@@ -288,6 +288,8 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   };
 
   switch (type) {
+    case "MaritalStatus":
+      return useMaritalStatus();
     case "WorkFlowBirth":
       return useWorkFlowBirth();
     case "WorkFlowDeath":

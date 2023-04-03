@@ -62,7 +62,6 @@ const TLCorrectionPlaceOfActivity = ({ t, config,formData,onEditSelect,formDataE
   
   const initFnEdit = () => {
     return formDataEdit?.TradeDetails?.tradeLicenseDetail?.structurePlace;
-    //return fieldsDoor;
   };
   
   place &&
@@ -245,6 +244,7 @@ const TLCorrectionPlaceOfActivity = ({ t, config,formData,onEditSelect,formDataE
           },
         ];
       case "REMOVE_THIS_DOOR":
+        Digit.SessionStorage.set("activityedit", true);
         return stateDoor.filter((e, i) => i !== action?.payload?.index);
       case "EDIT_CURRENT_DOORNO":
         return stateDoor.map((data, __index) => {
@@ -292,6 +292,8 @@ const TLCorrectionPlaceOfActivity = ({ t, config,formData,onEditSelect,formDataE
     }
   };
   const [formStateDoor, dispatchDoor] = useReducer(reducerDoor, storedDoorData, initFnEdit); 
+
+  console.log("formStateDoor : " + JSON.stringify(formStateDoor));
 
   const handleTextInputField1 = useCallback((index, e, key, length = 100) => {
     if (e.length <= length) {
@@ -412,10 +414,11 @@ const TLCorrectionPlaceOfActivity = ({ t, config,formData,onEditSelect,formDataE
       let enterpriseType = formDataEdit?.TradeDetails?.tradeLicenseDetail?.enterpriseType;
       let capitalInvestment = formDataEdit?.TradeDetails?.tradeLicenseDetail?.capitalInvestment ;
       let noOfEmployees = formDataEdit?.TradeDetails?.tradeLicenseDetail?.noOfEmployees;
+      let applicationDocuments = [];
   
       let tradeLicenseDetail = { tenantId, licenseeType, owners, ownerspremise, institution, businessSector, capitalInvestment, enterpriseType,
           structureType,structurePlaceSubtype, businessActivityDesc, noOfEmployees,
-          ownershipCategory, address, tradeUnits, structurePlace }
+          ownershipCategory, address, tradeUnits, structurePlace ,applicationDocuments }
       onEditSelect(config.key,{tradeLicenseDetail , licenseUnitName, licenseUnitNameLocal});
     }
   });

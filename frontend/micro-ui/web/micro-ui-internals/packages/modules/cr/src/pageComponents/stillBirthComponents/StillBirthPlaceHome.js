@@ -56,7 +56,6 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
         });
       }
     });
-
   cmbWardNo.map((wardmst) => {
     wardmst.localnamecmb = wardmst.wardno + ' ( ' + wardmst.localname + ' )';
     wardmst.namecmb = wardmst.wardno + ' ( ' + wardmst.name + ' )';
@@ -136,11 +135,11 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
   }
   function setSelectAdrsHouseNameMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$/;
-    if(!(e.target.value.match(pattern))){
+    if (!(e.target.value.match(pattern))) {
       e.preventDefault();
       setAdrsHouseNameMl('');
     }
-    else{
+    else {
       setAdrsHouseNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
@@ -152,11 +151,11 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
   }
   function setSelectAdrsLocalityNameMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
-    if(!(e.target.value.match(pattern))){
+    if (!(e.target.value.match(pattern))) {
       e.preventDefault();
       setAdrsLocalityNameMl('');
     }
-    else{
+    else {
       setAdrsLocalityNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
@@ -168,11 +167,11 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
   }
   function setSelectAdrsStreetNameMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
-    if(!(e.target.value.match(pattern))){
+    if (!(e.target.value.match(pattern))) {
       e.preventDefault();
       setAdrsStreetNameMl('');
     }
-    else{
+    else {
       setAdrsStreetNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
@@ -182,15 +181,15 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
   }
   function setCheckMalayalamInputField(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
-    if(!(e.key.match(pattern))){
+    if (!(e.key.match(pattern))) {
       e.preventDefault();
-    }    
+    }
   }
   function setCheckMalayalamInputSplChar(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]/;
-    if(!(e.key.match(pattern))) {
+    if (!(e.key.match(pattern))) {
       e.preventDefault();
-    }    
+    }
   }
   let validFlag = true;
 
@@ -204,7 +203,8 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
   } else
     return (
       <React.Fragment>
-        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!adrsLocalityNameEn}>
+        {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!adrsLocalityNameEn}> */}
+        <div className="row">
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
@@ -334,7 +334,7 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
                 optionKey="i18nKey"
                 name="adrsLocalityNameMl"
                 value={adrsLocalityNameMl}
-                onKeyPress = {setCheckMalayalamInputField}
+                onKeyPress={setCheckMalayalamInputField}
                 onChange={setSelectAdrsLocalityNameMl}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_LOCALITY_ML")}`}
@@ -354,7 +354,7 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
                 optionKey="i18nKey"
                 name="adrsStreetNameMl"
                 value={adrsStreetNameMl}
-                onKeyPress = {setCheckMalayalamInputField}
+                onKeyPress={setCheckMalayalamInputField}
                 onChange={setSelectAdrsStreetNameMl}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_STREET_NAME_ML")}`}
@@ -371,7 +371,7 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
                 optionKey="i18nKey"
                 name="adrsHouseNameMl"
                 value={adrsHouseNameMl}
-                onKeyPress = {setCheckMalayalamInputSplChar}
+                onKeyPress={setCheckMalayalamInputSplChar}
                 onChange={setSelectAdrsHouseNameMl}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_HOUSE_NAME_ML")}`}
@@ -379,7 +379,8 @@ const StillBirthPlaceHome = ({ config, onSelect, userType, formData,
               />
             </div>
           </div>
-        </FormStep>
+        </div>
+        {/* </FormStep> */}
       </React.Fragment>
     );
 };

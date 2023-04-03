@@ -24,7 +24,7 @@ const DeathCrFlowApp = ({ parentUrl,  props, }) => {
   const { pathname } = useLocation();
   const history = useHistory();
   const [isEditDeath, setIsEditDeath] = useState(sessionStorage.getItem("CR_DEATH_EDIT_FLAG")? true : false);
-  console.log(sessionStorage.getItem("CR_DEATH_EDIT_FLAG"));
+  // console.log(sessionStorage.getItem("CR_DEATH_EDIT_FLAG"));
   const [params, setParams, clearParams] = isEditDeath ? Digit.Hooks.useSessionStorage("CR_DEATH_EDIT", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_DEATH", {});
 
   // console.log(isEditDeath);

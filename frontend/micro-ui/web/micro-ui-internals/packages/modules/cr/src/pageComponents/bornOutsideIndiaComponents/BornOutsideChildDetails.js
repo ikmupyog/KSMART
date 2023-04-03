@@ -16,8 +16,7 @@ import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
 // import FormStep from "../../../../../react-components/src/molecules/FormStep";
 
-const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
-  // console.log(JSON.stringify(formData));
+const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditBornOutsideIndia = false }) => {
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -48,7 +47,6 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
   //   WorkFlowDetails["birth-death-service"] && WorkFlowDetails["birth-death-service"].WorkFlowBirth &&
   //   WorkFlowDetails["birth-death-service"].WorkFlowBirth.map((ob) => {
   //     workFlowData.push(ob);
-  //     // console.log(workFlowData);
   //   });
   let cmbCountry = [];
   Country &&
@@ -95,6 +93,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
   const [birthDateTime, setbirthDateTime] = useState(
     formData?.BornOutsideChildDetails?.birthDateTime ? formData?.BornOutsideChildDetails?.birthDateTime : ""
   );
+  const [birthPlace, setbirthPlace] = useState("OUTSIDE_COUNTRY");
   const [childPassportNo, setchildPassportNo] = useState(
     formData?.BornOutsideChildDetails?.childPassportNo ? formData?.BornOutsideChildDetails?.childPassportNo : ""
   );
@@ -174,11 +173,8 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
   const handleTimeChange = (value, cb) => {
     if (typeof value === "string") {
       cb(value);
-      console.log(cb);
-      console.log(value);
       let hour = value;
       let period = hour > 12 ? "PM" : "AM";
-      console.log(period);
       setbirthDateTime(value);
     }
   };
@@ -209,7 +205,6 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
       let Difference_In_Time = today.getTime() - birthDate.getTime();
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       let Difference_In_DaysRounded = Math.floor(Difference_In_Days);
-      // console.log(Difference_In_DaysRounded);
     }
   }
   // function setselectChildDOB(value) {
@@ -410,26 +405,26 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
     }
 
     if (validFlag == true) {
-      sessionStorage.setItem("stateId", stateId ? stateId : null);
-      sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
-      // sessionStorage.setItem("workFlowCode", workFlowCode);
-      sessionStorage.setItem("childDOB", childDOB ? childDOB : null);
-      sessionStorage.setItem("birthDateTime", birthDateTime ? birthDateTime : null);
-      sessionStorage.setItem("gender", gender ? gender.code : null);
-      sessionStorage.setItem("childAadharNo", childAadharNo ? childAadharNo : null);
-      sessionStorage.setItem("childPassportNo", childPassportNo ? childPassportNo : null);
-      sessionStorage.setItem("childArrivalDate", childArrivalDate ? childArrivalDate : null);
-      sessionStorage.setItem("childFirstNameEn", childFirstNameEn ? childFirstNameEn : null);
-      sessionStorage.setItem("childMiddleNameEn", childMiddleNameEn ? childMiddleNameEn : null);
-      sessionStorage.setItem("childLastNameEn", childLastNameEn ? childLastNameEn : null);
-      sessionStorage.setItem("childFirstNameMl", childFirstNameMl ? childFirstNameMl : null);
-      sessionStorage.setItem("childMiddleNameMl", childMiddleNameMl ? childMiddleNameMl : null);
-      sessionStorage.setItem("childLastNameMl", childLastNameMl ? childLastNameMl : null);
-      sessionStorage.setItem("provinceEn", provinceEn ? provinceEn : null);
-      sessionStorage.setItem("cityTown", cityTown ? cityTown : null);
-      sessionStorage.setItem("postCode", postCode ? postCode : null);
-      sessionStorage.setItem("outsideBirthPlace",  outsideBirthPlace ? outsideBirthPlace : null);
-      sessionStorage.setItem("country", country  ?  country.code : null);
+      // sessionStorage.setItem("stateId", stateId ? stateId : null);
+      // sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
+      // // sessionStorage.setItem("workFlowCode", workFlowCode);
+      // sessionStorage.setItem("childDOB", childDOB ? childDOB : null);
+      // sessionStorage.setItem("birthDateTime", birthDateTime ? birthDateTime : null);
+      // sessionStorage.setItem("gender", gender ? gender.code : null);
+      // sessionStorage.setItem("childAadharNo", childAadharNo ? childAadharNo : null);
+      // sessionStorage.setItem("childPassportNo", childPassportNo ? childPassportNo : null);
+      // sessionStorage.setItem("childArrivalDate", childArrivalDate ? childArrivalDate : null);
+      // sessionStorage.setItem("childFirstNameEn", childFirstNameEn ? childFirstNameEn : null);
+      // sessionStorage.setItem("childMiddleNameEn", childMiddleNameEn ? childMiddleNameEn : null);
+      // sessionStorage.setItem("childLastNameEn", childLastNameEn ? childLastNameEn : null);
+      // sessionStorage.setItem("childFirstNameMl", childFirstNameMl ? childFirstNameMl : null);
+      // sessionStorage.setItem("childMiddleNameMl", childMiddleNameMl ? childMiddleNameMl : null);
+      // sessionStorage.setItem("childLastNameMl", childLastNameMl ? childLastNameMl : null);
+      // sessionStorage.setItem("provinceEn", provinceEn ? provinceEn : null);
+      // sessionStorage.setItem("cityTown", cityTown ? cityTown : null);
+      // sessionStorage.setItem("postCode", postCode ? postCode : null);
+      // sessionStorage.setItem("outsideBirthPlace",  outsideBirthPlace ? outsideBirthPlace : null);
+      // sessionStorage.setItem("country", country  ?  country.code : null);
 
       onSelect(config.key, {
         stateId,
@@ -438,6 +433,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
         childDOB,
         birthDateTime,
         gender,
+        birthPlace,
         childAadharNo,
         childPassportNo,
         childArrivalDate,
@@ -455,6 +451,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
       });
     }
   };
+
   const convertEpochToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {

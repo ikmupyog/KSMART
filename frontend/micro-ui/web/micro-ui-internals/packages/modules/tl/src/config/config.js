@@ -1011,15 +1011,30 @@ export const newConfig = [
         isMandatory: true,
         component: "TLCorrectionDetailsView", //"TLCorrectionDetails",
         texts: {
-        //  header: "TL_LB_DET_LABEL",     ///"TL_TRADE_UNITS_HEADER",
+          header: "",     ///"TL_TRADE_UNITS_HEADER",
           submitBarLabel: "CS_COMMON_NEXT",
         },
         key: "TradeDetails",
         isCreateEnabled: true,
         withoutLabel: true,
         hideInEmployee: true,
-        nextStep: null,
+        nextStep: "license-corrdoc-det",
       },
+      {
+        type: "component",
+        route: "license-corrdoc-det",
+        isMandatory: true,
+        component: "TLCorrectionDocumentUpload",
+        texts: {
+          header: "",     ///"TL_TRADE_UNITS_HEADER",
+          submitBarLabel: "CS_COMMON_NEXT",
+        },
+        key: "TradeDetails",
+        isCreateEnabled: true,
+        withoutLabel: true,
+        hideInEmployee: true,
+        nextStep:null
+      }
       // {
       //   //if want to input index in url just pul @0 after route name owner-ship-details@0
       //   type: "component",

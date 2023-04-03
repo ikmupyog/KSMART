@@ -47,10 +47,10 @@ export const config = {
         submitBarLabel: "CS_COMMON_NEXT",
         skipText: "CORE_COMMON_SKIP_CONTINUE",
       },
-      nextStep: "informer-details",
+      nextStep: "complaint-informer",
     },
-    "informer-details": {
-      component: "Informer",
+    "complaint-informer": {
+      component: "ComplaintInformer",
       texts: {
         header: "CS_ADDCOMPLAINT_INFORMER",
         cardText: "CS_ADDCOMPLAINT_INFORMER_TEXT",
