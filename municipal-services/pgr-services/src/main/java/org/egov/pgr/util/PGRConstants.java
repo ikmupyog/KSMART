@@ -13,9 +13,9 @@ public class PGRConstants {
 
 
     public static final String PGR_BUSINESSSERVICE = "PGR";
-    public static final String PGR_BUSINESSSERVICE_ENGG = "PGR_EnggDept";
+    public static final String PGR_BUSINESSSERVICE_ENGG = "PGR_EngCode";
 //    		"PGR_ENGG";
-    public static final String PGR_BUSINESSSERVICE_HEALTH = "PGR_HealthDept";
+    public static final String PGR_BUSINESSSERVICE_HEALTH = "PGR_HealthCode";
 //    		"PGR_HEALTH";
    
 
