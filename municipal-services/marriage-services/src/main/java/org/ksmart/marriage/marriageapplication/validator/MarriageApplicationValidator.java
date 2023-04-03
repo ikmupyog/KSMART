@@ -28,7 +28,6 @@ import java.util.List;
 import static org.ksmart.marriage.utils.enums.ErrorCodes.MARRIAGE_DETAILS_INVALID_UPDATE;
 import static org.ksmart.marriage.utils.enums.ErrorCodes.MARRIAGE_DETAILS_REQUIRED;
 
-//import static org.ksmart.marriage.utils.enums.ErrorCodes.BIRTH_DETAILS_REQUIRED;
 
 @Component
 public class MarriageApplicationValidator {
