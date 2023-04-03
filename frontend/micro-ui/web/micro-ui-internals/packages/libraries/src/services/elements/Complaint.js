@@ -17,12 +17,16 @@ export const Complaint = {
     deptCode,
     address
   }) => {
+
     const tenantId = Digit.ULBService.getCurrentTenantId();
+    const citizenCityId = Digit.ULBService.getCitizenCurrentTenant(true);
     const userType = Digit.SessionStorage.get("user_type")
+    const { info } = Digit.SessionStorage.get("User")
+
     const defaultData = {
       service: {
         deptCode: deptCode,
-        tenantId: tenantId,
+        tenantId: userType === "employee" ? tenantId : citizenCityId,
         serviceCode: complaintType,
         description: description,
         additionalDetail: {},
@@ -41,6 +45,7 @@ export const Complaint = {
           },
           geoLocation: {},
         },
+        citizen: info
       },
       workflow: {
         action: "APPLY",
