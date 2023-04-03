@@ -60,9 +60,6 @@ const MarriagePublicPlace = ({
     { i18nKey: "Public", code: "PUBLIC" },
     { i18nKey: "Private", code: "PRIVATE" },
   ];
-  function setSelectMarriagePublicOrPrivatePlace(value) {
-    setMarriagePublicOrPrivatePlace(value);
-  }
 
   function setSelectOtherMarriagePlacenameMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
@@ -79,8 +76,8 @@ const MarriagePublicPlace = ({
     }
   }
   function setSelectMarriageLandmark(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setMarriageLandmark(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setMarriageLandmark(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectMarriageStreetEn(e) {
@@ -157,7 +154,7 @@ const MarriagePublicPlace = ({
               value={otherMarriagePlacenameEn}
               onChange={setSelectOtherMarriagePlacenameEn}
               placeholder={`${t("CR_PUBLIC_PRIVATE_PLACE_EN")}`}
-              {...(validation = { isRequired: true })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_PUBLIC_PRIVATE_PLACE_EN") })}
             />
           </div>
           <div className="col-md-3">
@@ -174,7 +171,7 @@ const MarriagePublicPlace = ({
               value={marriageLocalityEn}
               onChange={setSelectMarriageLocalityEn}
               placeholder={`${t("CR_LOCALITY_EN")}`}
-              {...(validation = { isRequired: true })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
             />
           </div>
           <div className="col-md-3">

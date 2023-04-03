@@ -48,7 +48,7 @@ export const Complaint = {
           },
           geoLocation: {},
         },
-        citizen: info
+        employee: info
       },
       workflow: {
         action: "APPLY",
