@@ -187,7 +187,7 @@ public class MarriageApplicationValidator {
                                     groomInfo.getGender() + " is invalid");
                         }
                         if ((groomInfo.getDateofbirth() <= 0)) {
-                            throw new CustomException("DEATH DATE INVALID", "The date can't be null");
+                            throw new CustomException("GROOM BIRTH DATE INVALID", "The date can't be null");
                         }
 
                         if (StringUtils.isEmpty(groomInfo.getFather_aadharno())) {
@@ -301,7 +301,7 @@ public class MarriageApplicationValidator {
                                     brideInfo.getGender() + " is invalid");
                         }
                         if ((brideInfo.getDateofbirth() <= 0)) {
-                            throw new CustomException("DEATH DATE INVALID", "The date can't be null");
+                            throw new CustomException("BRIDE BIRTH DATE INVALID", "The date can't be null");
                         }
 
                         if (StringUtils.isEmpty(brideInfo.getFather_aadharno())) {
