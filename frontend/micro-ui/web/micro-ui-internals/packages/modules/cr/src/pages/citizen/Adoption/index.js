@@ -136,6 +136,7 @@ const CreateAdoption = ({ parentUrl, isEditBirth }) => {
                 formData={params}
                 onAdd={handleMultiple}
                 userType="citizen"
+                isEditAdoption={editFlag}
               />
             </Route>
 

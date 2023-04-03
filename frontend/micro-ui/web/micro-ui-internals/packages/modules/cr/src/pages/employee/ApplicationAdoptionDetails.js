@@ -82,6 +82,7 @@ const ApplicationAdoptionDetails = () => {
       appData.AdoptionAddressBasePage =applicationDetails?.applicationData?.AddressBirthDetails,
       appData.AdoptionInitiatorDetails =applicationDetails?.applicationData?.InitiatorinfoDetails,
       setParams(appData)
+      
       let tmp =applicationDetails
       tmp?.applicationDetails?.splice(0,1,{title : "CR_ADOPTION_SUMMARY_DETAILS",asSectionHeader:  true })
       setFlag(true)
