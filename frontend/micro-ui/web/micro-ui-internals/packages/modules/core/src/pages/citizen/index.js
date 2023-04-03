@@ -145,8 +145,15 @@ const Home = ({
             state: { module: "cr-birth" }
           }),
         },
-        
-
+        {
+          name: t("CR_NAC"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname:`${matchPath}/cr-birth-nac`,
+            state: { module: "cr-birth" }
+          }),
+        },
+    
       ],
       styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
     };
@@ -157,7 +164,6 @@ const Home = ({
         onClick: () => history.push("/digit-ui/citizen/all-services"),
       },
       options: [
-    
         {
           name:t("CR_NAME_INCLUSION_CORRECTION"),
           Icon: <OBPSIcon />,
@@ -222,6 +228,14 @@ const Home = ({
             state: { module: "cr-death" }
           }),
         }, 
+        {
+          name: t("CR_NAC"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname: `${matchPath}/cr-death-nac`,
+            state: { module: "cr-death" }
+          }),
+        }, 
       ],
       styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
     };
@@ -232,7 +246,6 @@ const Home = ({
         onClick: () => history.push("/digit-ui/citizen/all-services"),
       },
       options: [
-        
            {
           name: t("CR_COMMON_CERT_DOWNLOAD"),
           Icon: <OBPSIcon />,
