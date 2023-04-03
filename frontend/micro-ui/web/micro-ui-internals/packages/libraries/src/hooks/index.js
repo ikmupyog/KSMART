@@ -153,6 +153,7 @@ import useCRMDMS from "./cr/useMDMS";
 import useCRSearch from "./cr/useSearch";
 import useAbandonedBirthSearch from "./cr/useAbandonedBirthSearch";
 import useBirthNACSearch from "./cr/useBirthNACSearch";
+import useBornOutSideBirthSearch from "./cr/useBornOutSideBirthSearch";
 import useAdoptionSearch from "./cr/useAdoptionSearch";
 import useRegistryDownloadDeath from "./cr/useRegistryDownloadDeath";
 import useResistryDownloadBirth from "./cr/useResistryDownloadBirth"
@@ -369,6 +370,7 @@ const cr = {
   useSearch: useCRSearch,
   useAbandonedBirthSearch,
   useBirthNACSearch,
+  useBornOutSideBirthSearch,
   useSearchMarriage,
   useAdoptionSearch,
   useRegistrySearchDeath,
