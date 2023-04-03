@@ -839,12 +839,12 @@ public class MarriageApplicationValidator {
                                         "The deceased  City" +
                                                 brideaddressInfo.getPresentOutSideIndiaadrsCityTown() + " is invalid");
                             }
-                            // if(StringUtils.isEmpty(brideaddressInfo.getPresentOutSideIndiaPostCode()))
-                            // {
-                            // throw new CustomException("DECEASED POST CODE INVALID",
-                            // "The deceased Post Code" +
-                            // brideaddressInfo.getPresentOutSideIndiaPostCode() + " is invalid");
-                            // }
+                            if(StringUtils.isEmpty(brideaddressInfo.getPresentOutSideIndiaPostCode()))
+                            {
+                            throw new CustomException("DECEASED POST CODE INVALID",
+                            "The deceased Post Code" +
+                            brideaddressInfo.getPresentOutSideIndiaPostCode() + " is invalid");
+                            }
                             if (StringUtils.isEmpty(brideaddressInfo.getPresentOutSideIndiaAdressEn())) {
                                 throw new CustomException("DECEASED ADDRESS LINE ONE ENGLISH INVALID",
                                         "The deceased  Adress Line One English" +
