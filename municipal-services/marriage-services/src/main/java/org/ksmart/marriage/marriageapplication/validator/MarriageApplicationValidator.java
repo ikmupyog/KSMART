@@ -1,12 +1,4 @@
 package org.ksmart.marriage.marriageapplication.validator;
-
-<<<<<<< HEAD
-
-import org.apache.commons.collections4.CollectionUtils;
-import org.egov.tracer.model.CustomException;
-import org.ksmart.marriage.marriageapplication.model.MarriageApplicationDetails;
-import org.ksmart.marriage.marriageapplication.model.marriage.MarriageDetailsRequest;
-=======
 import java.util.List;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -20,7 +12,6 @@ import org.ksmart.marriage.marriageapplication.model.marriage.GroomDetails;
 import org.ksmart.marriage.marriageapplication.model.marriage.MarriageDetailsRequest;
 import org.ksmart.marriage.marriageapplication.model.marriage.WitnessDetails;
 import org.ksmart.marriage.utils.MarriageConstants;
->>>>>>> bed9061267 (Field validation)
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -32,9 +23,7 @@ import static org.ksmart.marriage.utils.enums.ErrorCodes.MARRIAGE_DETAILS_REQUIR
 @Component
 public class MarriageApplicationValidator {
 
-    public void validateCommonFields(MarriageDetailsRequest request) {
 
-<<<<<<< HEAD
     public void validateUpdate(MarriageDetailsRequest request, List<MarriageApplicationDetails> searchResult) {
         List<MarriageApplicationDetails> deathdetails = request.getMarriageDetails();
 
@@ -43,7 +32,7 @@ public class MarriageApplicationValidator {
         }
 
         if (deathdetails.size() > 1) { // NOPMD
-            throw new CustomException( MARRIAGE_DETAILS_INVALID_UPDATE.getCode(),
+            throw new CustomException(MARRIAGE_DETAILS_INVALID_UPDATE.getCode(),
                     "Supports only single Marriage registration update request.");
         }
 
@@ -51,9 +40,10 @@ public class MarriageApplicationValidator {
             throw new CustomException(MARRIAGE_DETAILS_INVALID_UPDATE.getCode(),
                     "Marriage registration(s) not found in database.");
         }
+    }
         //IMP:Have to enable after URI submission
         //validateCommonFields( request);
-=======
+        public void validateCommonFields(MarriageDetailsRequest request) {
         List<MarriageApplicationDetails> marriageApplication = request.getMarriageDetails();
         if (marriageApplication != null) {
             marriageApplication
@@ -359,6 +349,5 @@ public class MarriageApplicationValidator {
                         
                     });
         }
->>>>>>> bed9061267 (Field validation)
     }
 }
