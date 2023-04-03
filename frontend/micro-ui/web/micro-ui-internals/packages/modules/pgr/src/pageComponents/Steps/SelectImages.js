@@ -54,7 +54,7 @@ const SelectImages = ({ t, config, onSelect, onSkip, value }) => {
 
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") ? <Timeline currentStep={5} /> : null}
+      {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
       {window.location.href.includes("/employee") ? <EmpTimeLine currentStep={3} /> : null}
       <FormStep config={config} onSelect={handleSubmit} onSkip={onSkip} t={t}>
         <CardLabel>{`${t("CR_IMAGES")}`}</CardLabel>

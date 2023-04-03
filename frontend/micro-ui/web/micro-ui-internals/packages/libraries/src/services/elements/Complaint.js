@@ -18,6 +18,7 @@ export const Complaint = {
     address
   }) => {
     const tenantId = Digit.ULBService.getCurrentTenantId();
+    const userType = Digit.SessionStorage.get("user_type")
     const defaultData = {
       service: {
         deptCode: deptCode,
@@ -47,7 +48,7 @@ export const Complaint = {
       },
     };
 
-    if (Digit.SessionStorage.get("user_type") === "employee") {
+    if (userType === "employee") {
       defaultData.service.informer = {
         name: name,
         type: "CITIZEN",
