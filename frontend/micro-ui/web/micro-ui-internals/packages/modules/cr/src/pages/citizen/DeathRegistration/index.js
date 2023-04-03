@@ -92,7 +92,7 @@ const CreateDeathRegistration = ({ parentUrl }) => {
       return redirectWithHistory(`${match.path}/check`);
     }
     nextPage = `${match.path}/${nextStep}`;
-    console.log("nextPage",nextPage);
+    // console.log("nextPage",nextPage);
     redirectWithHistory(nextPage);
   };
 
@@ -100,12 +100,12 @@ const CreateDeathRegistration = ({ parentUrl }) => {
     setParams({ ...params, ...{ [key]: { ...params[key], ...data } } });
     if(key === "isSkip" && data === true)
     {
-      console.log("handle skip==",skipStep, index, isAddMultiple, key);
+      // console.log("handle skip==",skipStep, index, isAddMultiple, key);
       goNext(skipStep, index, isAddMultiple, key, true);
     }
     else
     {
-      console.log("handle skip== else",skipStep, index, isAddMultiple, key);
+      // console.log("handle skip== else",skipStep, index, isAddMultiple, key);
       goNext(skipStep, index, isAddMultiple, key);
     }
   }
@@ -121,7 +121,7 @@ const CreateDeathRegistration = ({ parentUrl }) => {
   const handleMultiple = () => {};
   const CheckPage = Digit?.ComponentRegistryService?.getComponent("DeathCheckPage");
   const DeathAcknowledgement = Digit?.ComponentRegistryService?.getComponent("DeathAcknowledgement");
-  console.log("config==",config);
+  // console.log("config==",config);
   return (
     
     <React.Fragment>

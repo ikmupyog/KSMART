@@ -414,10 +414,11 @@ const TLCorrectionPlaceOfActivity = ({ t, config,formData,onEditSelect,formDataE
       let enterpriseType = formDataEdit?.TradeDetails?.tradeLicenseDetail?.enterpriseType;
       let capitalInvestment = formDataEdit?.TradeDetails?.tradeLicenseDetail?.capitalInvestment ;
       let noOfEmployees = formDataEdit?.TradeDetails?.tradeLicenseDetail?.noOfEmployees;
+      let applicationDocuments = [];
   
       let tradeLicenseDetail = { tenantId, licenseeType, owners, ownerspremise, institution, businessSector, capitalInvestment, enterpriseType,
           structureType,structurePlaceSubtype, businessActivityDesc, noOfEmployees,
-          ownershipCategory, address, tradeUnits, structurePlace }
+          ownershipCategory, address, tradeUnits, structurePlace ,applicationDocuments }
       onEditSelect(config.key,{tradeLicenseDetail , licenseUnitName, licenseUnitNameLocal});
     }
   });

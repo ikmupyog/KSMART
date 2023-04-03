@@ -839,6 +839,18 @@ const getTLLocalbody = (tenantId, moduleCode, type) => ({
     ],
   },
 });
+const getTradeApplicationDocuments = (tenantId, moduleCode, type) => ({
+  type,
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [{ name: "ApplicationDocuments" }],
+      },
+    ],
+  },
+})
 
 const getPTFloorList = (tenantId, moduleCode, type) => ({
   type,
@@ -2663,6 +2675,9 @@ export const MdmsService = {
   },
   getTLLocalbody: (tenantId, moduleCode, type) => {
     return MdmsService.getDataByCriteria(tenantId, getTLLocalbody(tenantId, moduleCode), moduleCode);
+  },
+  getTradeApplicationDocuments : (tenantId, moduleCode, type) => {
+    return MdmsService.getDataByCriteria(tenantId, getTradeApplicationDocuments(tenantId, moduleCode, type), moduleCode);
   },
   getFloorList: (tenantId, moduleCode, type) => {
     return MdmsService.getDataByCriteria(tenantId, getPTFloorList(tenantId, moduleCode, type), moduleCode);
