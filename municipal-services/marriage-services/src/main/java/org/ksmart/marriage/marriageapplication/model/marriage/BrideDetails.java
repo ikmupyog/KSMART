@@ -72,7 +72,8 @@ public class BrideDetails {
     @JsonProperty("brideMobile")
     private Long mobile;
 
-    @Size(max = 300)
+
+    @Size(max = 10)
     @JsonProperty("brideEmailid")
     private String emailid;
 
