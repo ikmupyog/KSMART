@@ -393,11 +393,11 @@ serviceMaps:
 
                 - jsonPath: $.MarriageDetails.*.BrideAddressDetails.presentOutSideIndiaAdressMlB
 
-                - jsonPath: $.MarriageDetails.*.BrideAddressDetails.presentOutSideIndiaProvinceEn
+                - jsonPath: $.MarriageDetails.*.BrideAddressDetails.PresentOutSideIndiaProvinceEn
 
                 - jsonPath: $.MarriageDetails.*.BrideAddressDetails.presentOutSideIndiaProvinceMl
 
-                - jsonPath: $.MarriageDetails.*.BrideAddressDetails.presentOutSideIndiaPostCode
+                - jsonPath: $.MarriageDetails.*.BrideAddressDetails.outSideIndiaPostCodePresent
 
                 - jsonPath: $.MarriageDetails.*.BrideAddressDetails.presentOutsideKeralaPostOfficeMl
 
@@ -550,11 +550,11 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentOutSideIndiaAdressMlB
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentOutSideIndiaProvinceEn
+            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.PresentOutSideIndiaProvinceEn
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentOutSideIndiaProvinceMl
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentOutSideIndiaPostCode
+            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.outSideIndiaPostCodePresent
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentOutsideKeralaPostOfficeMl
 
@@ -1080,11 +1080,11 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.presentOutSideIndiaAdressMlB
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.presentOutSideIndiaProvinceEn
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.PresentOutSideIndiaProvinceEn
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.presentOutSideIndiaProvinceMl
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.presentOutSideIndiaPostCode
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.outSideIndiaPostCodePresent
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.presentOutsideKeralaPostOfficeMl
 
@@ -1163,11 +1163,11 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentOutSideIndiaAdressMlB
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentOutSideIndiaProvinceEn
+            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.PresentOutSideIndiaProvinceEn
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentOutSideIndiaProvinceMl
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentOutSideIndiaPostCode
+            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.outSideIndiaPostCodePresent
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentOutsideKeralaPostOfficeMl
 

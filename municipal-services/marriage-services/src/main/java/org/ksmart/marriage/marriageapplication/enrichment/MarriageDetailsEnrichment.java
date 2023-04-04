@@ -111,9 +111,9 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                         marriage.getGroomAddressDetails().setBrideGroomPresent("G");
                     }
 
-                    if (marriage.getGroomAddressDetails() != null && marriage.getGroomAddressDetails().getIsPermanentAddress() != null)  {
+                    if (marriage.getGroomAddressDetails() != null && marriage.getGroomAddressDetails().getIsPermanentAddress() != null) {
                         marriage.getGroomAddressDetails().setIsPermanentAddressInt(marriage.getGroomAddressDetails().getIsPermanentAddress() == true ? 1 : 0);
-                        if(marriage.getGroomAddressDetails().getIsPermanentAddress()) {
+                        if (marriage.getGroomAddressDetails().getIsPermanentAddress()) {
                             marriage.getGroomAddressDetails().setCountryIdPresent(marriage.getGroomAddressDetails().getCountryIdPermanent());
                             marriage.getGroomAddressDetails().setStateIdPresent(marriage.getGroomAddressDetails().getStateIdPermanent());
                             if (marriage.getGroomAddressDetails().getCountryIdPermanent().contains(MarriageConstants.COUNTRY_CODE)) {
@@ -127,7 +127,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                         if (marriage.getGroomAddressDetails().getPresentaddressCountry() != null && marriage.getGroomAddressDetails().getPresentaddressStateName() != null) {
                             if (marriage.getGroomAddressDetails().getPresentaddressCountry().contains(MarriageConstants.COUNTRY_CODE)) {
                                 if (marriage.getGroomAddressDetails().getPresentaddressStateName().contains(MarriageConstants.STATE_CODE_SMALL)) {
-                                    if(!marriage.getGroomAddressDetails().getIsPermanentAddress()){
+                                    if (!marriage.getGroomAddressDetails().getIsPermanentAddress()) {
                                         marriage.getGroomAddressDetails().setCountryIdPresent(marriage.getGroomAddressDetails().getPresentaddressCountry());
                                         marriage.getGroomAddressDetails().setStateIdPresent(marriage.getGroomAddressDetails().getPresentaddressStateName());
                                     }
@@ -147,8 +147,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                                     marriage.getGroomAddressDetails().setPoNoPresent(marriage.getGroomAddressDetails().getPresentInsideKeralaPostOffice());
 
 
-                                }
-                                else {
+                                } else {
                                     if (!marriage.getGroomAddressDetails().getIsPermanentAddress()) {
                                         marriage.getGroomAddressDetails().setCountryIdPresent(marriage.getGroomAddressDetails().getPresentaddressCountry());
                                         marriage.getGroomAddressDetails().setStateIdPresent(marriage.getGroomAddressDetails().getPresentaddressStateName());
@@ -174,8 +173,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 
                                 }
                             }
-
-                            else {
+                            } else {
                                 if (marriage.getGroomAddressDetails().getPresentOutSideCountry() != null) {
                                     marriage.getGroomAddressDetails().setCountryIdPresent(marriage.getGroomAddressDetails().getPresentOutSideCountry());
                                     marriage.getGroomAddressDetails().setVillageNamePresent(marriage.getGroomAddressDetails().getPresentOutSideIndiaadrsVillage());
@@ -194,11 +192,11 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 
                                 }
                             }
-                        }
 
 
 
                     }
+
 
 
                 });
@@ -276,7 +274,9 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                             else {
                                 if (marriage.getGroomAddressDetails().getPermntOutsideIndiaCountry() != null) {
                                     marriage.getGroomAddressDetails().setCountryIdPresent(marriage.getGroomAddressDetails().getPermntOutsideIndiaCountry());
+
                                     marriage.getGroomAddressDetails().setVillageNamePermanent(marriage.getGroomAddressDetails().getPermntOutsideIndiaVillage());
+
                                     marriage.getGroomAddressDetails().setTownOrVillagePermanent(marriage.getGroomAddressDetails().getPermntOutsideIndiaCityTown());
 
                                     marriage.getGroomAddressDetails().setPermntOthrIndiaLineoneEn(marriage.getGroomAddressDetails().getPermntOutsideIndiaLineoneEn());
@@ -329,7 +329,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                         if (marriage.getBrideAddressDetails().getPresentaddressCountry() != null && marriage.getBrideAddressDetails().getPresentaddressStateName() != null) {
                             if (marriage.getBrideAddressDetails().getPresentaddressCountry().contains(MarriageConstants.COUNTRY_CODE)) {
                                 if (marriage.getBrideAddressDetails().getPresentaddressStateName().contains(MarriageConstants.STATE_CODE_SMALL)) {
-                                    if(!marriage.getBrideAddressDetails().getIsPermanentAddress()){
+                                    if (!marriage.getBrideAddressDetails().getIsPermanentAddress()) {
                                         marriage.getBrideAddressDetails().setCountryIdPresent(marriage.getBrideAddressDetails().getPresentaddressCountry());
                                         marriage.getBrideAddressDetails().setStateIdPresent(marriage.getBrideAddressDetails().getPresentaddressStateName());
                                     }
@@ -349,8 +349,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                                     marriage.getBrideAddressDetails().setPoNoPresent(marriage.getBrideAddressDetails().getPresentInsideKeralaPostOffice());
 
 
-                                }
-                                else {
+                                } else {
                                     if (!marriage.getBrideAddressDetails().getIsPermanentAddress()) {
                                         marriage.getBrideAddressDetails().setCountryIdPresent(marriage.getBrideAddressDetails().getPresentaddressCountry());
                                         marriage.getBrideAddressDetails().setStateIdPresent(marriage.getBrideAddressDetails().getPresentaddressStateName());
@@ -376,9 +375,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                                     marriage.getBrideAddressDetails().setTownOrVillagePresent(marriage.getBrideAddressDetails().getPresentOutsideKeralaCityVilgeEn());
 
                                 }
-                            }
-
-                            else {
+                            } else {
                                 if (marriage.getBrideAddressDetails().getPresentOutSideCountry() != null) {
                                     marriage.getBrideAddressDetails().setCountryIdPresent(marriage.getBrideAddressDetails().getPresentOutSideCountry());
                                     marriage.getBrideAddressDetails().setVillageNamePresent(marriage.getBrideAddressDetails().getPresentOutSideIndiaadrsVillage());
@@ -397,11 +394,10 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                                     marriage.getBrideAddressDetails().setOutSideIndiaPostCodePresent(marriage.getBrideAddressDetails().getPresentOutSideIndiaPostCode());
 
 
-
                                 }
                             }
-                                }
 
+                        }
 
 
                     }

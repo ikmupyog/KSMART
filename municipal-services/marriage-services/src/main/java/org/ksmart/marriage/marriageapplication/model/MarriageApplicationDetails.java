@@ -117,33 +117,6 @@ public class MarriageApplicationDetails {
     @Size(max = 2500)
     @JsonProperty("marriageHouseNoAndNameMl")
     private String marriageHouseNoAndNameMl;
-//
-//    @Size(max = 1000)
-//    @JsonProperty("marriageReligiousInstitutionOther")
-//    private String marriageReligiousInstitutionOther;
-//
-//    @Size(max = 1000)
-//    @JsonProperty("marriagePublicOrPrivatePlace")
-//    private String marriagePublicOrPrivatePlace;
-//
-//    @Size(max = 2500)
-//    @JsonProperty("marriagePublicOrPrivateNamePlaceEn")
-//    private String marriagePublicOrPrivateNamePlaceEn;
-//    @Size(max = 2500)
-//    @JsonProperty("marriagePublicOrPrivateNamePlaceMl")
-//    private String marriagePublicOrPrivateNamePlaceMl;
-//
-//
-//    @Size(max = 1000)
-//    @JsonProperty("marriageReligiousInstitution")
-//    private String marriageReligiousInstitution;
-//
-//    @Size(max = 2500)
-//    @JsonProperty("marriageReligiousInstitutionOtherNameEn")
-//    private String marriageReligiousInstitutionOtherNameEn;
-//    @Size(max = 2500)
-//    @JsonProperty("marriageReligiousInstitutionOtherNameMl")
-//    private String marriageReligiousInstitutionOtherNameMl;
 
     @Size(max = 64)
     @JsonProperty("applicationNumber")
@@ -175,6 +148,14 @@ public class MarriageApplicationDetails {
     @Size(max = 64)
     @JsonProperty("status")
     private String status;
+
+    @Size(max = 64)
+    @JsonProperty("villageId")
+    private String villageId;
+
+    @Size(max = 1000)
+    @JsonProperty("talukName")
+    private String talukName;
 
     @JsonProperty("assignee")
     private List<String> assignees;
