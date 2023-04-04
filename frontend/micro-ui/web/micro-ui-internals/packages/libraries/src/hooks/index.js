@@ -241,6 +241,8 @@ import useWaterSearch from "./ws/useWaterSearch";
 import useSewarageSearch from "./ws/useSewarageSearch";
 import useTradeLicensePdeAPI from "./tl/useTradeLicensePdeAPI";
 import useSearchPde from "./tl/useSearchPde";
+import { useRegSearchDeath, getDeathFileSourceDetails } from "./cr/death";
+
 const pgr = {
   useComplaintDetails,
   useComplaintsList,
@@ -355,6 +357,8 @@ const tl = {
   useTradeLicenseCorrectionAPI
 };
 const cr = {
+  useRegSearchDeath,
+  getDeathFileSourceDetails,
   useCivilRegMDMS,
   useTenants: useTenantsCR,
   useCivilRegistrationMDMS,
