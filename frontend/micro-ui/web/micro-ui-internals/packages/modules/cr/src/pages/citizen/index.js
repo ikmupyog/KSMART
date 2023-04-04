@@ -42,6 +42,7 @@ const App = () => {
 
   const CRMarriageInclusions = Digit?.ComponentRegistryService?.getComponent('CRMarriageInclusions');
   const SearchMarriageInclusion = Digit?.ComponentRegistryService?.getComponent('SearchMarriageInclusion');
+  const SearchApplicationMarriage = Digit?.ComponentRegistryService?.getComponent('SearchApplicationMarriage');
   const MarriageInclusionEditPage = Digit?.ComponentRegistryService?.getComponent('MarriageInclusionEditPage');
   const MarriageCorrectionEditPage = Digit?.ComponentRegistryService?.getComponent('MarriageCorrectionEditPage');
   
@@ -85,6 +86,7 @@ React.useEffect(()=>{
         <PrivateRoute path={`${path}/cr-marriage-correction-search`} component={SearchMarriageInclusion} />        
         <PrivateRoute path={`${path}/cr/my-application`} component={MyCRApplications} />
         <PrivateRoute path={`${path}/cr/death/my-application`} component={MyCRDeathApplications} />
+        <PrivateRoute path={`${path}/cr/marriage/my-application`} component={SearchApplicationMarriage} />
         <PrivateRoute path={`${path}/cr/my-bills`} component={() => <MyCRApplications view="bills" />} />
         <PrivateRoute path={`${path}/cr/application/:id/:tenantId`} component={ApplicationDetails} />
         <PrivateRoute path={`${path}/cr/death/application/:id/:tenantId`} component={ApplicationDeathDetails} />

@@ -315,7 +315,7 @@ const Home = ({
           name: t("TL_MY_APPLICATIONS_HEADER"),
           Icon: <OBPSIcon />,
           onClick: () => history.push({
-            pathname: `${matchPath}/cr-marriage-creation`,
+            pathname: `${matchPath}/cr/marriage/my-application`,
             state: { module: "cr-marriage" }
           }),
         },
