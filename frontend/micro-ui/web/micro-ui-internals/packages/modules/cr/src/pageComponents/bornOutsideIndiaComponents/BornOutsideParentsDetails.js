@@ -3,8 +3,7 @@ import { FormStep, CardLabel, TextInput, DatePicker, Dropdown, BackButton, Loade
 import Timeline from "../../components/BOBRTimeline";
 import { useTranslation } from "react-i18next";
 
-const BornOutsideParentsDetails = ({ config, onSelect, userType, formData }) => {
-  // console.log(JSON.stringify(formData));
+const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEditBornOutsideIndia = false }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -100,6 +99,10 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData }) => 
   const [motherNationality, setMotherNationality] = useState(
     formData?.BornOutsideParentsDetails?.motherNationality ? formData?.BornOutsideParentsDetails?.motherNationality : null
   );
+
+  const [ismotherInfo, setIsmotherInfo] = useState(false);
+
+  const [isfatherInfo, setIsfatherInfo] = useState(false);
   
   const [toast, setToast] = useState(false);
 
@@ -182,7 +185,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData }) => 
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setmotherPassportNo(e.target.value);
+      setmotherPassportNo(e.target.value.length<=8 ? e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '') : (e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '').substring(0, 8)));
     }
   }
   function setSelectfatherPassportNo(e) {
@@ -190,7 +193,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData }) => 
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setfatherPassportNo(e.target.value);
+      setfatherPassportNo(e.target.value.length<=8 ? e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '') : (e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '').substring(0, 8)));
     }
   }
 
@@ -342,7 +345,6 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData }) => 
 
     if (fatherMobile != null || fatherMobile != "" || fatherMobile != undefined) {
       let mobileLength = fatherMobile;
-      console.log(mobileLength);
       if (mobileLength.length < 10 || mobileLength.length > 10) {
         validFlag = false;
         setFatherMobileError(true);
@@ -377,24 +379,24 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData }) => 
     }
 
     if (validFlag == true) {
-      sessionStorage.setItem("motherFirstNameEn", motherFirstNameEn ? motherFirstNameEn : null);
-      sessionStorage.setItem("motherFirstNameMl", motherFirstNameMl ? motherFirstNameMl : null);
-      sessionStorage.setItem("motherPassportNo", motherPassportNo ? motherPassportNo : null);
-      sessionStorage.setItem("motherMarriageAge", motherMarriageAge ? motherMarriageAge : null);
-      sessionStorage.setItem("motherMarriageBirth", motherMarriageBirth ? motherMarriageBirth : null);
-      sessionStorage.setItem("motherEducation", motherEducation ? motherEducation.code : null);
-      sessionStorage.setItem("motherProfession", motherProfession ? motherProfession.code : null);
-      sessionStorage.setItem("motherNationality", motherNationality ? motherNationality.code : null);
+      // sessionStorage.setItem("motherFirstNameEn", motherFirstNameEn ? motherFirstNameEn : null);
+      // sessionStorage.setItem("motherFirstNameMl", motherFirstNameMl ? motherFirstNameMl : null);
+      // sessionStorage.setItem("motherPassportNo", motherPassportNo ? motherPassportNo : null);
+      // sessionStorage.setItem("motherMarriageAge", motherMarriageAge ? motherMarriageAge : null);
+      // sessionStorage.setItem("motherMarriageBirth", motherMarriageBirth ? motherMarriageBirth : null);
+      // sessionStorage.setItem("motherEducation", motherEducation ? motherEducation.code : null);
+      // sessionStorage.setItem("motherProfession", motherProfession ? motherProfession.code : null);
+      // sessionStorage.setItem("motherNationality", motherNationality ? motherNationality.code : null);
 
-      sessionStorage.setItem("fatherFirstNameEn", fatherFirstNameEn ? fatherFirstNameEn : null);
-      sessionStorage.setItem("fatherFirstNameMl", fatherFirstNameMl ? fatherFirstNameMl : null);
-      sessionStorage.setItem("fatherPassportNo", fatherPassportNo ? fatherPassportNo : null);
-      sessionStorage.setItem("fatherNationality", fatherNationality ? fatherNationality.code : null);
-      sessionStorage.setItem("fatherEducation", fatherEducation ? fatherEducation.code : null);
-      sessionStorage.setItem("fatherProfession", fatherProfession ? fatherProfession.code : null);
-      sessionStorage.setItem("Religion", Religion ? Religion.code : null);
-      sessionStorage.setItem("fatherEmail", fatherEmail ? fatherEmail : null);
-      sessionStorage.setItem("fatherMobile", fatherMobile ? fatherMobile : null);
+      // sessionStorage.setItem("fatherFirstNameEn", fatherFirstNameEn ? fatherFirstNameEn : null);
+      // sessionStorage.setItem("fatherFirstNameMl", fatherFirstNameMl ? fatherFirstNameMl : null);
+      // sessionStorage.setItem("fatherPassportNo", fatherPassportNo ? fatherPassportNo : null);
+      // sessionStorage.setItem("fatherNationality", fatherNationality ? fatherNationality.code : null);
+      // sessionStorage.setItem("fatherEducation", fatherEducation ? fatherEducation.code : null);
+      // sessionStorage.setItem("fatherProfession", fatherProfession ? fatherProfession.code : null);
+      // sessionStorage.setItem("Religion", Religion ? Religion.code : null);
+      // sessionStorage.setItem("fatherEmail", fatherEmail ? fatherEmail : null);
+      // sessionStorage.setItem("fatherMobile", fatherMobile ? fatherMobile : null);
 
       onSelect(config.key, {
         motherFirstNameEn,
@@ -406,6 +408,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData }) => 
         motherEducation,
         motherProfession,
         motherNationality,
+        ismotherInfo,
 
         fatherFirstNameEn,
         fatherFirstNameMl,
@@ -414,6 +417,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData }) => 
         fatherPassportNo,
         fatherEducation,
         fatherProfession,
+        isfatherInfo,
         Religion,
         fatherMobile,
         fatherEmail,

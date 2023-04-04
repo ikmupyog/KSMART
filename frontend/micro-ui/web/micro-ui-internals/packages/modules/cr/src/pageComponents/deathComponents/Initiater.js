@@ -6,8 +6,8 @@ import { useTranslation } from "react-i18next";
 
 const Initiater = ({ config, onSelect, userType, formData,isEditDeath }) => {
   const stateId = Digit.ULBService.getStateId();
-  console.log(isEditDeath);
-  console.log(formData);
+  // console.log(isEditDeath);
+  // console.log(formData);
 
   const { t } = useTranslation();
   let validation = {};
@@ -81,7 +81,7 @@ const Initiater = ({ config, onSelect, userType, formData,isEditDeath }) => {
 
   function setSelectInitiatorMobile(e) {
     if (e.target.value.trim().length >= 0) {
-      setInitiatorMobile(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
+      setInitiatorMobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
     } 
   }
   function setSelectInitiatorAddress(e) {
@@ -251,7 +251,7 @@ const Initiater = ({ config, onSelect, userType, formData,isEditDeath }) => {
                 value={InitiatorMobile}
                 onChange={setSelectInitiatorMobile}
                 placeholder={`${t("CR_MOBILE_NO")}`}
-                {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CR_INVALID_MOBILE_NO") })}
+                {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: false, title: t("CR_INVALID_MOBILE_NO") })}
 
               />
             </div>

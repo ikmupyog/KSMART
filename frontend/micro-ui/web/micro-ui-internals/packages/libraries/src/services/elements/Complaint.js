@@ -14,18 +14,28 @@ export const Complaint = {
     uploadedImages,
     mobileNumber,
     name,
-    deptCode
+    deptCode,
+    address
   }) => {
+
     const tenantId = Digit.ULBService.getCurrentTenantId();
+    const citizenCityId = Digit.ULBService.getCitizenCurrentTenant(true);
+    const userType = Digit.SessionStorage.get("user_type")
+    const { info } = Digit.SessionStorage.get("User")
+
+    const roleCode = info.roles[0]
+    info.rolecode = roleCode?.code
+
     const defaultData = {
       service: {
-        deptCode:deptCode,
-        tenantId: cityCode,
+        deptCode: deptCode,
+        tenantId: userType === "employee" ? tenantId : citizenCityId,
         serviceCode: complaintType,
         description: description,
         additionalDetail: {},
         source: Digit.Utils.browser.isWebview() ? "mobile" : "web",
         address: {
+          tenantId: cityCode,
           landmark: landmark,
           city: city,
           district: district,
@@ -38,6 +48,7 @@ export const Complaint = {
           },
           geoLocation: {},
         },
+        employee: info
       },
       workflow: {
         action: "APPLY",
@@ -45,11 +56,12 @@ export const Complaint = {
       },
     };
 
-    if (Digit.SessionStorage.get("user_type") === "employee") {
-      defaultData.service.citizen = {
+    if (userType === "employee") {
+      defaultData.service.informer = {
         name: name,
         type: "CITIZEN",
         mobileNumber: mobileNumber,
+        address: address,
         roles: [
           {
             id: null,
@@ -61,7 +73,7 @@ export const Complaint = {
         tenantId: tenantId,
       };
     }
-    const response = await Digit.PGRService.create(defaultData, cityCode);
+    const response = await Digit.PGRService.create(defaultData, tenantId);
     return response;
   },
 
@@ -71,17 +83,17 @@ export const Complaint = {
     complaintDetails.workflow.comments = comments;
     uploadedDocument
       ? (complaintDetails.workflow.verificationDocuments = [
-            {
-              documentType: "PHOTO",
-              fileStoreId: uploadedDocument,
-              documentUid: "",
-              additionalDetails: {},
-            },
-          ])
+        {
+          documentType: "PHOTO",
+          fileStoreId: uploadedDocument,
+          documentUid: "",
+          additionalDetails: {},
+        },
+      ])
       : null;
 
     if (!uploadedDocument) complaintDetails.workflow.verificationDocuments = [];
-    
+
     //TODO: get tenant id
     const response = await Digit.PGRService.update(complaintDetails, tenantId);
     return response;

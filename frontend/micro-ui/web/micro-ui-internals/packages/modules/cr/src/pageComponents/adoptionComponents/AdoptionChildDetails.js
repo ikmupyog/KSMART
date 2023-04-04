@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown,Card, DatePicker, CheckBox, BackButton, Loader, Toast, SubmitBar } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/CRTimeline";
+import Timeline from "../../components/AdoptionTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
-import BirthPlaceHospital from "../../pageComponents/birthComponents/BirthPlaceHospital";
-import BirthPlaceInstitution from "../../pageComponents/birthComponents/BirthPlaceInstitution";
-import BirthPlaceHome from "../../pageComponents/birthComponents/BirthPlaceHome";
-import BirthPlaceVehicle from "../../pageComponents/birthComponents/BirthPlaceVehicle";
-import BirthPlacePublicPlace from "../../pageComponents/birthComponents/BirthPlacePublicPlace";
+import BirthPlaceHospital from "../../pageComponents/adoptionComponents/BirthPlaceHospital";
+import BirthPlaceInstitution from "../../pageComponents/adoptionComponents/BirthPlaceInstitution";
+import BirthPlaceHome from "../../pageComponents/adoptionComponents/BirthPlaceHome";
+import BirthPlaceVehicle from "../../pageComponents/adoptionComponents/BirthPlaceVehicle";
+import BirthPlacePublicPlace from "../../pageComponents/adoptionComponents/BirthPlacePublicPlace";
 import AdoptionBirthReqSearch from './AdoptionBirthReqSearch'
 import BirthReqSearch from './BirthReqSearch'
 import { convertEpochToDateDMY } from  "../../utils";
 
-const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirth, isEditFlag =false}) => {
-  // console.log(JSON.stringify(formData));  
+const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdoption, isEditFlag =false}) => {
+  // console.log(JSON.stringify(formData));   isEditAdoption ? isEditAdoption :
   const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(false);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
+  const [isDisableEdit, setisDisableEdit] = useState( false);
   const [workFlowCode, setWorkFlowCode] = useState();
 
   const stateId = Digit.ULBService.getStateId();
@@ -31,10 +31,13 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
   const { data: AttentionOfDelivery = {}, isAttentionOfDeliveryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "AttentionOfDelivery");
   const { data: DeliveryMethodList = {}, isDeliveryMethodListLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeliveryMethod");
   const { data: PlaeceMaster = {}, isPlaceMasterLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "PlaceMaster");
+  const { data: hospitalData = {}, isLoadings } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "hospital");
+  const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false) 
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
   const [InstitutionFilterList, setInstitutionFilterList] = useState(null);
   const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(false);
-
+  const [SearchRegId,setSearchRegId] = useState()
+// console.log('M',formData,isEditAdoption);
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
@@ -70,6 +73,8 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
   let workFlowData = []
   let cmbAttDeliverySub = [];
   let cmbDeliveryMethod = [];
+  let cmbhospital = [];
+  let cmbhospitalMl = [];
   let hospitalCode = "";
   let institutionTypeCode = "";
   let institutionNameCode = "";
@@ -103,6 +108,12 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
     DeliveryMethodList["birth-death-service"].DeliveryMethod.map((ob) => {
       cmbDeliveryMethod.push(ob);
     });
+ 
+    hospitalData &&
+      hospitalData["egov-location"] && hospitalData["egov-location"].hospitalList &&
+      hospitalData["egov-location"].hospitalList.map((ob) => {
+        cmbhospital.push(ob);
+      });
   const cmbPregWeek = [
     { i18nKey: "20", code: "20" },
     { i18nKey: "21", code: "21" },
@@ -128,26 +139,29 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
     { i18nKey: "41", code: "41" },
     { i18nKey: "42", code: "42" },
   ];
-  const [childDOB, setChildDOB] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined) ? convertEpochToDate(formData?.AdoptionChildDetails?.childDOB) : formData?.AdoptionChildDetails?.childDOB); //formData?.AdoptionChildDetails?.childDOB
-  // const [gender, selectGender] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined) ? (menu.filter(menu => menu.code === formData?.AdoptionChildDetails?.gender)[0]) : formData?.AdoptionChildDetails?.gender);
+  //formData?.AdoptionChildDetails?.gender?.code ? formData?.AdoptionChildDetails?.gender : formData?.AdoptionChildDetails?.gender ?
+  // menu?.length>0&&(menu.filter(menu => menu.code === formData?.AdoptionChildDetails?.gender)[0]) : ""
+  const [childDOB, setChildDOB] = useState(isEditAdoption && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined) ? convertEpochToDate(formData?.AdoptionChildDetails?.childDOB)  : convertEpochToDate(formData?.AdoptionChildDetails?.childDOB)); //formData?.AdoptionChildDetails?.childDOB
+  // const [gender, selectGender] = useState(isEditAdoption && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined) ? (menu.filter(menu => menu.code === formData?.AdoptionChildDetails?.gender)[0]) : formData?.AdoptionChildDetails?.gender);
   const [gender, selectGender] = useState(formData?.AdoptionChildDetails?.gender?.code ? formData?.AdoptionChildDetails?.gender : formData?.AdoptionChildDetails?.gender ?
     (menu.filter(menu => menu.code === formData?.AdoptionChildDetails?.gender)[0]) : "");
 
-  const [childAadharNo, setChildAadharNo] = useState(formData?.AdoptionChildDetails?.childAadharNo ? formData?.AdoptionChildDetails?.childAadharNo : null);
+  const [childAadharNo, setChildAadharNo] = useState(formData?.AdoptionChildDetails?.childAadharNo ? formData?.AdoptionChildDetails?.childAadharNo  :null);
   const [childFirstNameEn, setChildFirstNameEn] = useState(formData?.AdoptionChildDetails?.childFirstNameEn ? formData?.AdoptionChildDetails?.childFirstNameEn : "");
   const [childMiddleNameEn, setChildMiddleNameEn] = useState(formData?.AdoptionChildDetails?.childMiddleNameEn ? formData?.AdoptionChildDetails?.childMiddleNameEn : "");
   const [childLastNameEn, setChildLastNameEn] = useState(formData?.AdoptionChildDetails?.childLastNameEn ? formData?.AdoptionChildDetails?.childLastNameEn : "");
-  const [childFirstNameMl, setChildFirstNameMl] = useState(formData?.AdoptionChildDetails?.childFirstNameMl ? formData?.AdoptionChildDetails?.childFirstNameMl : "");
+  const [childFirstNameMl, setChildFirstNameMl] = useState(formData?.AdoptionChildDetails?.childFirstNameMl ? formData?.AdoptionChildDetails?.childFirstNameMl  : "");
   const [childMiddleNameMl, setChildMiddleNameMl] = useState(formData?.AdoptionChildDetails?.childMiddleNameMl ? formData?.AdoptionChildDetails?.childMiddleNameMl : "");
   const [childLastNameMl, setChildLastNameMl] = useState(formData?.AdoptionChildDetails?.childLastNameMl ? formData?.AdoptionChildDetails?.childLastNameMl : "");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isInitialRenderPlace, setIsInitialRenderPlace] = useState(true);
   const [isInitialRenderFormData, setisInitialRenderFormData] = useState(false);
-  const [birthDateTime, setbirthDateTime] = useState(""); //formData?.AdoptionChildDetails?.birthDateTime ? formData?.AdoptionChildDetails?.birthDateTime :
-  const [isChildName, setIsChildName] = useState(formData?.AdoptionChildDetails?.isChildName ? formData?.AdoptionChildDetails?.isChildName : true);
-  const [adoptionAgency, setIsAdoptionAgency] = useState(formData?.AdoptionChildDetails?.adoptionAgency ? formData?.AdoptionChildDetails?.adoptionAgency : false);
+
+  const [birthDateTime, setbirthDateTime] = useState(""); 
+  const [isChildName, setIsChildName] = useState(true);
+  const [adoptionAgency, setIsAdoptionAgency] = useState(formData?.AdoptionChildDetails?.adopthasagency ? formData?.AdoptionChildDetails?.adopthasagency :formData?.AdoptionChildDetails?.adoptionAgency ? formData?.AdoptionChildDetails?.adoptionAgency : false);
   const [birthRegistered, setbirthRegistered] = useState(formData?.AdoptionChildDetails?.birthRegistered ? formData?.AdoptionChildDetails?.birthRegistered : false);
-  // const [birthPlace, selectBirthPlace] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined) ? (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.AdoptionChildDetails?.birthPlace)[0]) : formData?.AdoptionChildDetails?.birthPlace);
+  // const [birthPlace, selectBirthPlace] = useState(isEditAdoption && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined) ? (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.AdoptionChildDetails?.birthPlace)[0]) : formData?.AdoptionChildDetails?.birthPlace);
   const [birthPlace, selectBirthPlace] = useState(formData?.AdoptionChildDetails?.birthPlace?.code ? formData?.AdoptionChildDetails?.birthPlace : formData?.AdoptionChildDetails?.birthPlace ?
     (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.AdoptionChildDetails?.birthPlace)[0]) : "");
   const [value, setValue] = useState();
@@ -188,15 +202,15 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
   const [streetNameMl, setstreetNameMl] = useState(formData?.AdoptionChildDetails?.streetNameMl ? formData?.AdoptionChildDetails?.streetNameMl : "");
   const [publicPlaceDecpEn, setpublicPlaceDecpEn] = useState(formData?.AdoptionChildDetails?.publicPlaceDecpEn ? formData?.AdoptionChildDetails?.publicPlaceDecpEn : "");
 
-  // const [pregnancyDuration, setPregnancyDuration] = useState(isEditBirth ? (cmbPregWeek.filter(cmbPregWeek => cmbPregWeek.code === formData?.AdoptionChildDetails?.pregnancyDuration)[0]) : formData?.AdoptionChildDetails?.pregnancyDuration);
+  // const [pregnancyDuration, setPregnancyDuration] = useState(isEditAdoption ? (cmbPregWeek.filter(cmbPregWeek => cmbPregWeek.code === formData?.AdoptionChildDetails?.pregnancyDuration)[0]) : formData?.AdoptionChildDetails?.pregnancyDuration);
 
   const [pregnancyDuration, setPregnancyDuration] = useState(formData?.AdoptionChildDetails?.pregnancyDuration ? formData?.AdoptionChildDetails?.pregnancyDuration : "");
   const [medicalAttensionSub, setMedicalAttensionSub] = useState(formData?.AdoptionChildDetails?.medicalAttensionSub?.code ? formData?.AdoptionChildDetails?.medicalAttensionSub : formData?.AdoptionChildDetails?.medicalAttensionSub ?
     (cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.AdoptionChildDetails?.medicalAttensionSub)[0]) : "");
-  // const [medicalAttensionSub, setMedicalAttensionSub] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined) ? (cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.AdoptionChildDetails?.medicalAttensionSub)[0]) : formData?.AdoptionChildDetails?.medicalAttensionSub);
+  // const [medicalAttensionSub, setMedicalAttensionSub] = useState(isEditAdoption && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined) ? (cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.AdoptionChildDetails?.medicalAttensionSub)[0]) : formData?.AdoptionChildDetails?.medicalAttensionSub);
   const [deliveryMethods, setDeliveryMethod] = useState(formData?.AdoptionChildDetails?.deliveryMethods?.code ? formData?.AdoptionChildDetails?.deliveryMethods : formData?.AdoptionChildDetails?.deliveryMethods ?
     (cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.AdoptionChildDetails?.deliveryMethods)[0]) : "");
-  //  const [deliveryMethods, setDeliveryMethod] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined) ? (cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.AdoptionChildDetails?.deliveryMethods)[0]) : formData?.AdoptionChildDetails?.deliveryMethods);
+  //  const [deliveryMethods, setDeliveryMethod] = useState(isEditAdoption && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined) ? (cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.AdoptionChildDetails?.deliveryMethods)[0]) : formData?.AdoptionChildDetails?.deliveryMethods);
   const [birthWeight, setBirthWeight] = useState(formData?.AdoptionChildDetails?.birthWeight ? formData?.AdoptionChildDetails?.birthWeight : null);
 
   const [toast, setToast] = useState(false);
@@ -229,7 +243,6 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
   const [PregnancyDurationStError, setPregnancyDurationStError] = useState(formData?.AdoptionChildDetails?.pregnancyDuration ? false : false);
   const [PregnancyDurationInvalidError, setPregnancyDurationInvalidError] = useState(formData?.AdoptionChildDetails?.pregnancyDuration ? false : false);
   const [AdoptionDecreErr, setAdoptionDecreErr] = useState(formData?.AdoptionChildDetails?.AdoptionDecreErr ? false : false);
-  const [SearchRegId,setSearchRegId] = useState()
   // const [isAdopted, setIsAdopted] = useState(formData?.AdoptionChildDetails?.isAdopted);
   // const [isMultipleBirth, setIsMultipleBirth] = useState(formData?.AdoptionChildDetails?.isMultipleBirth);
   // const [isBornOutSide, setIsBornOutSide] = useState(formData?.AdoptionChildDetails?.isBornOutSide);
@@ -249,34 +262,49 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
   //     cmbInstitutionId.push(ob);
   //   });
   //   console.log(cmbInstitutionId);
-  const [AdoptionAgencyName , setAdoptionAgentName]=useState(formData?.AdoptionChildDetails?.AdoptionAgencyName ? formData?.AdoptionChildDetails?.AdoptionAgencyName : "")
-  const [AdoptionAgencyAddress , setAdoptionAgencyAddress]=useState(formData?.AdoptionChildDetails?.AdoptionAgencyAddress ? formData?.AdoptionChildDetails?.AdoptionAgencyAddress : "")
-  const [AdoptionContractPersonName , setAdoptionAgencyPersonName]=useState(formData?.AdoptionChildDetails?.AdoptionContractPersonName ? formData?.AdoptionChildDetails?.AdoptionContractPersonName : "")
-  const [AdoptionContactNo , setAdoptionContactNo]=useState(formData?.AdoptionChildDetails?.AdoptionContactNo ? formData?.AdoptionChildDetails?.AdoptionContactNo : "")
-  const [AdoptionDecreOrderNo,setAdoptionDecreOrderNo]= useState(formData?.AdoptionChildDetails?.AdoptionDecreOrderNo ? formData?.AdoptionChildDetails?.AdoptionDecreOrderNo : "")
-  const [AdoptionDecreOrderDate,setAdoptionDecreOrderDate]= useState(formData?.AdoptionChildDetails?.AdoptionDecreOrderDate ? formData?.AdoptionChildDetails?.AdoptionDecreOrderDate : "")
-  const [IssuingAuthority,setIssuingAuthority]= useState(formData?.AdoptionChildDetails?.IssuingAuthority ? formData?.AdoptionChildDetails?.IssuingAuthority : "")
-  const [AdoptionDeedNo,setAdoptionDeedNo]= useState(formData?.AdoptionChildDetails?.AdoptionDeedNo ? formData?.AdoptionChildDetails?.AdoptionDeedNo : "")
-  const [AdoptionDeedRegDate,setAdoptionDeedRegDate]= useState(formData?.AdoptionChildDetails?.AdoptionDeedRegDate ? formData?.AdoptionChildDetails?.AdoptionDeedRegDate : "")
-  const [RegistrationAuthority,setRegistrationAuthority]= useState(formData?.AdoptionChildDetails?.RegistrationAuthority ? formData?.AdoptionChildDetails?.RegistrationAuthority : "")
+  const [AdoptionAgencyName , setAdoptionAgentName]=useState(formData?.AdoptionChildDetails?.adoptagencyname ? formData?.AdoptionChildDetails?.adoptagencyname :  formData?.AdoptionChildDetails?.AdoptionAgencyName? formData?.AdoptionChildDetails?.AdoptionAgencyName:"")
+  const [AdoptionAgencyAddress , setAdoptionAgencyAddress]=useState(formData?.AdoptionChildDetails?.adoptagencyaddress ? formData?.AdoptionChildDetails?.adoptagencyaddress :formData?.AdoptionChildDetails?.AdoptionAgencyAddress ? formData?.AdoptionChildDetails?.AdoptionAgencyAddress  : "")
+  const [AdoptionContractPersonName , setAdoptionAgencyPersonName]=useState(formData?.AdoptionChildDetails?.adoptagencycontactperson ? formData?.AdoptionChildDetails?.adoptagencycontactperson :formData?.AdoptionChildDetails?.AdoptionContractPersonName ? formData?.AdoptionChildDetails?.AdoptionContractPersonName :"")
+  const [AdoptionContactNo , setAdoptionContactNo]=useState(formData?.AdoptionChildDetails?.adoptagencycontactpersonmobileno ? formData?.AdoptionChildDetails?.adoptagencycontactpersonmobileno :formData?.AdoptionChildDetails?.AdoptionContactNo? formData?.AdoptionChildDetails?.AdoptionContactNo :"")
+  const [AdoptionDecreOrderNo,setAdoptionDecreOrderNo]= useState(formData?.AdoptionChildDetails?.adoptdecreeorderno ? formData?.AdoptionChildDetails?.adoptdecreeorderno:formData?.AdoptionChildDetails?.AdoptionDecreOrderNo ? formData?.AdoptionChildDetails?.AdoptionDecreOrderNo : "")
+  const [AdoptionDecreOrderDate,setAdoptionDecreOrderDate]= useState(formData?.AdoptionChildDetails?.adoptdateoforderdecree ? convertEpochToDate(formData?.AdoptionChildDetails?.adoptdateoforderdecree) :formData?.AdoptionChildDetails?.AdoptionDecreOrderDate ? convertEpochToDate(formData?.AdoptionChildDetails?.AdoptionDecreOrderDate) : "")
+  const [IssuingAuthority,setIssuingAuthority]= useState(formData?.AdoptionChildDetails?.adoptissuingauththority ? formData?.AdoptionChildDetails?.adoptissuingauththority : formData?.AdoptionChildDetails?.IssuingAuthority? formData?.AdoptionChildDetails?.IssuingAuthority: "")
+  const [AdoptionDeedNo,setAdoptionDeedNo]= useState(formData?.AdoptionChildDetails?.adoptdeedorderno ? formData?.AdoptionChildDetails?.adoptdeedorderno :formData?.AdoptionChildDetails?.AdoptionDeedNo? formData?.AdoptionChildDetails?.AdoptionDeedNo: "")
+  const [AdoptionDeedRegDate,setAdoptionDeedRegDate]= useState(formData?.AdoptionChildDetails?.adoptdateoforderdeed ? convertEpochToDate(formData?.AdoptionChildDetails?.adoptdateoforderdeed) :formData?.AdoptionChildDetails?.AdoptionDeedRegDate ? convertEpochToDate(formData?.AdoptionChildDetails?.AdoptionDeedRegDate): "")
+  const [RegistrationAuthority,setRegistrationAuthority]= useState(formData?.AdoptionChildDetails?.adoptissuingauththority ? formData?.AdoptionChildDetails?.adoptissuingauththority : formData?.AdoptionChildDetails?.RegistrationAuthority ? formData?.AdoptionChildDetails?.RegistrationAuthority : "")
   const [BirthRegNo,setBirthRegNo]= useState(formData?.AdoptionChildDetails?.BirthRegNo ? formData?.AdoptionChildDetails?.BirthRegNo : "")
   const onSkip = () => onSelect();
 
   useEffect(() => {
-    if (isInitialRender) {
-      if (formData?.AdoptionChildDetails?.isChildName != null) {
-        setIsInitialRender(false);
-        setIsChildName(formData?.AdoptionChildDetails?.isChildName);
-      }
-    }
-  }, [isInitialRender]);
+    if (isInitialRender && isEditAdoption !==false) {
+      formData?.AdoptionChildDetails?.gender !== "" ?selectGender((menu?.filter(menu => menu.code === formData?.AdoptionChildDetails?.gender)[0])):""
+      formData?.AdoptionChildDetails?.birthPlace !== ""?selectBirthPlace((cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.AdoptionChildDetails?.birthPlace)[0])) :""
+      formData?.AdoptionChildDetails?.birthPlace !== ""?setValue((cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.AdoptionChildDetails?.birthPlace)[0]?.code)) :""
+      // formData?.AdoptionChildDetails.hospitalName !== ""?selectHospitalName((cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.AdoptionChildDetails?.hospitalName)[0]?.code)) :setValue("")
 
-  useState(()=>{
-    if(isEditBirth){
-      formData.AdoptionDetails.pop()
     }
+  }, [ menu?.length>0 || cmbPlaceMaster?.length>0]);
 
-  },[formData])
+  // useState(()=>{
+  //   if(isEditAdoption){
+  //     formData.AdoptionDetails.pop()
+  //   }
+
+  // },[formData])
+  useEffect(()=>{
+    if(SearchRegId){
+        SearchRegId?.childDOB ? setChildDOB(convertEpochToDate(SearchRegId?.childDOB)):setChildDOB(null)
+        SearchRegId?.gender ? selectGender((menu.filter(menu => menu.code === SearchRegId?.gender)[0])):selectGender('')
+        SearchRegId?.childAadharNo ? setChildAadharNo(SearchRegId.childAadharNo):setChildAadharNo(null)
+        SearchRegId?.childFirstNameEn ? setChildFirstNameEn(SearchRegId.childFirstNameEn) :setChildFirstNameEn('')
+        SearchRegId?.childMiddleNameEn ? setChildMiddleNameEn(SearchRegId.childMiddleNameEn):setChildMiddleNameEn('')
+        SearchRegId?.childLastNameEn ? setChildLastNameEn(SearchRegId.childLastNameEn):setChildLastNameEn('')
+        SearchRegId?.childFirstNameMl ? setChildFirstNameMl(SearchRegId.childFirstNameMl):setChildFirstNameMl('')
+        SearchRegId?.childMiddleNameMl ? setChildMiddleNameMl(SearchRegId.childMiddleNameMl):setChildMiddleNameMl('')
+        SearchRegId?.childLastNameMl ? setChildLastNameMl(SearchRegId.childLastNameMl):setChildLastNameMl('')
+    }
+   
+  },[SearchRegId])
 
   React.useEffect(() => {
     if (isInitialRenderPlace) {
@@ -570,6 +598,15 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
     } else {
       setbirthRegistered(e.target.checked)
       setBirthRegNo('')
+      setChildDOB(null)
+      selectGender('')
+      setChildAadharNo(null)
+      setChildFirstNameEn('')
+      setChildMiddleNameEn('')
+      setChildLastNameEn('')
+      setChildFirstNameMl('')
+      setChildMiddleNameMl('')
+      setChildLastNameMl('')
     }
   }
   function setSelectDeliveryMethod(value) {
@@ -1008,7 +1045,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
       sessionStorage.setItem("pregnancyDuration", pregnancyDuration ? pregnancyDuration.code : null);
       sessionStorage.setItem("medicalAttensionSub", medicalAttensionSub ? medicalAttensionSub.code : null);
       sessionStorage.setItem("deliveryMethods", deliveryMethods ? deliveryMethods.code : null);
-      let IsEditChangeScreen = (isEditBirth ? isEditBirth : false);
+      let IsEditChangeScreen = (isEditAdoption ? isEditAdoption : false);
       onSelect(config.key, {
         stateId, tenantId, workFlowCode, childDOB, birthDateTime, gender, childAadharNo,
         isChildName,SearchRegId,birthRegistered,adoptionAgency,AdoptionAgencyName,AdoptionAgencyAddress,AdoptionContractPersonName,AdoptionContactNo,
@@ -1023,7 +1060,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
       });
     }
   };
-  if (isEditBirth && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined)) {
+  if (isEditAdoption && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined)) {
 
     if (formData?.AdoptionChildDetails?.gender != null) {
       if (menu.length > 0 && (gender === undefined || gender === "")) {
@@ -1073,20 +1110,24 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
             || !setadmittedHospitalEn || !wardNo || vehicleDesDetailsEn === "") : false)
           // || !medicalAttensionSub || !deliveryMethods || birthWeight == null || pregnancyDuration === ""
         }>
+          {!editFlag&&(
              <div className="row">
-            <div className="col-md-12">
-              <div className="col-md-6">
-                <CheckBox label={t("CR_BIRTH_REGISTERED")} onChange={setBirthRegDetails} value={birthRegistered} checked={birthRegistered} />
-              </div>
-            </div>
-          </div>
+             <div className="col-md-12">
+               <div className="col-md-6">
+                 <CheckBox label={t("CR_BIRTH_REGISTERED")} onChange={setBirthRegDetails} value={birthRegistered} checked={birthRegistered} />
+               </div>
+             </div>
+           </div>
+          )}
+            
 
-          {birthRegistered == true &&(<React.Fragment>
-            {isEditFlag?(
+          {!editFlag && birthRegistered == true &&(<React.Fragment>
+            {/* {isEditFlag?(
               <AdoptionBirthReqSearch BirthRegNo={BirthRegNo} setSelectSetBirthRegNo={setSelectSetBirthRegNo} setSearchRegId={setSearchRegId}/>
-            ):(
+            ):
+            ( */}
               <BirthReqSearch BirthRegNo={BirthRegNo} setSelectSetBirthRegNo={setSelectSetBirthRegNo} setSearchRegId={setSearchRegId}/>
-            )}
+            
             
           {birthRegistered == true && BirthRegNo && SearchRegId && (
                <div className="row">
@@ -1114,7 +1155,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
                      })}
                    />
                  </div>
-                 <div className="col-md-3">
+                 {/* <div className="col-md-3">
                    <CardLabel>{`${t("CR_COMMON_COL_MOTHER_NAME")}`}
                    {AdoptionDeedNo ==="" &&  <span className="mandatorycss">*</span>}
                    </CardLabel>
@@ -1136,7 +1177,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
                      })}
                    />
                       
-                 </div>
+                 </div> */}
                  <div className="col-md-3">
                    <CardLabel>{`${t("CR_COMMON_COL_DOB")}`}
                    {AdoptionDeedNo ==="" &&  <span className="mandatorycss">*</span>}
@@ -1588,7 +1629,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
                 </div>
               </div>
 
-              {ChildAadharHIde === true && (
+              {/* {ChildAadharHIde === true && (
                 <div className="col-md-3">
                   <CardLabel>{`${t("CS_COMMON_CHILD_AADHAAR")}`}</CardLabel>
                   <TextInput
@@ -1606,7 +1647,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
                     }}
                     {...(validation = { isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                   />
-                </div>)}
+                </div>)} */}
             </div>
           </div>
           <div className="row">
@@ -1644,7 +1685,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
                 hospitalNameMl={hospitalNameMl}
                 selectHospitalNameMl={selectHospitalNameMl}
                 formData={formData}
-                isEditBirth={isEditBirth}
+                isEditAdoption={isEditAdoption}
               />
             </div>
           )}
@@ -1662,7 +1703,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
                 isInitialRenderInstitutionList={isInitialRenderInstitutionList}
                 setIsInitialRenderInstitutionList={setIsInitialRenderInstitutionList}
                 formData={formData}
-                isEditBirth={isEditBirth}
+                isEditAdoption={isEditAdoption}
               />
             </div>
           )}
@@ -1690,7 +1731,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
                 PostOfficevalues={PostOfficevalues}
                 setPostOfficevalues={setPostOfficevalues}
                 formData={formData}
-                isEditBirth={isEditBirth}
+                isEditAdoption={isEditAdoption}
               />
             </div>
           )}
@@ -1720,7 +1761,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
                 wardNo={wardNo}
                 setWardNo={setWardNo}
                 formData={formData}
-                isEditBirth={isEditBirth}
+                isEditAdoption={isEditAdoption}
               />
             </div>
           )}
@@ -1742,7 +1783,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
                 setpublicPlaceDecpEn={setpublicPlaceDecpEn}
                 setWardNo={setWardNo}
                 formData={formData}
-                isEditBirth={isEditBirth}
+                isEditAdoption={isEditAdoption}
               />
             </div>
           )}

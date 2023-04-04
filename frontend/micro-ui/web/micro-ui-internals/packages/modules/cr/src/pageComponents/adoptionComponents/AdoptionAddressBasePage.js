@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Toast, BackButton, Loader } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/CRTimeline";
+import Timeline from "../../components/AdoptionTimeline";
 import DRTimeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 import AddressPresent from "../birthComponents/AddressPresent";
@@ -13,8 +13,8 @@ import AddressPermanentInsideKerala from "../birthComponents/AddressPermanentIns
 import AddressPermanentOutsideKerala from "../birthComponents/AddressPermanentOutsideKerala";
 import AddressPermanentOutsideIndia from "../birthComponents/AddressPermanentOutsideIndia";
 
-const AdoptionAddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = false, isEditDeath = false }) => {
-    console.log(formData);
+const AdoptionAddressBasePage = ({ config, onSelect, userType, formData, isEditAdoption, isEditDeath = false }) => {
+    // console.log(formData,isEditAdoption);
     const stateId = Digit.ULBService.getStateId();
     let tenantId = "";
     tenantId = Digit.ULBService.getCurrentTenantId();
@@ -76,73 +76,73 @@ const AdoptionAddressBasePage = ({ config, onSelect, userType, formData, isEditB
 
     //################################### Present Country State ############################################################################################
 
-    const [presentaddressCountry, setaddressCountry] = useState(formData?.AdoptionAddressBasePage?.presentaddressCountry?.code ? formData?.AdoptionAddressBasePage?.presentaddressCountry : formData?.ChildDetails?.AdoptionAddressBasePage?.presentaddressCountry ? "" : "");
-    const [presentaddressStateName, setaddressStateName] = useState(formData?.AdoptionAddressBasePage?.presentaddressStateName?.code ? formData?.AdoptionAddressBasePage?.presentaddressStateName : formData?.ChildDetails?.AdoptionAddressBasePage?.presentaddressStateName ? "" : "");
-    const [countryvalue, setCountryValue] = useState(formData?.AdoptionAddressBasePage?.presentaddressCountry?.code ? formData?.AdoptionAddressBasePage?.presentaddressCountry.countrycode : formData?.ChildDetails?.AdoptionAddressBasePage?.presentaddressCountry ? "" : "")
-    const [value, setValue] = useState(formData?.AdoptionAddressBasePage?.presentaddressStateName?.code ? formData?.AdoptionAddressBasePage?.presentaddressStateName.statecode : formData?.ChildDetails?.AdoptionAddressBasePage?.presentaddressStateName ? "" : "");
+    const [presentaddressCountry, setaddressCountry] = useState(formData?.AdoptionAddressBasePage?.presentaddressCountry?.code ? formData?.AdoptionAddressBasePage?.presentaddressCountry : formData?.AdoptionAddressBasePage?.presentaddressCountry ? "" : "");
+    const [presentaddressStateName, setaddressStateName] = useState(formData?.AdoptionAddressBasePage?.presentaddressStateName?.code ? formData?.AdoptionAddressBasePage?.presentaddressStateName : formData?.AdoptionAddressBasePage?.presentaddressStateName ? "" : "");
+    const [countryvalue, setCountryValue] = useState(formData?.AdoptionAddressBasePage?.presentaddressCountry?.code ? formData?.AdoptionAddressBasePage?.presentaddressCountry.countrycode : formData?.AdoptionAddressBasePage?.presentaddressCountry ? "" : "")
+    const [value, setValue] = useState(formData?.AdoptionAddressBasePage?.presentaddressStateName?.code ? formData?.AdoptionAddressBasePage?.presentaddressStateName.statecode : formData?.AdoptionAddressBasePage?.presentaddressStateName ? "" : "");
 
     //################################# Present Inside Kerala #########################################################################################################
-
-    const [presentWardNo, setPresentWardNo] = useState(formData.AdoptionAddressBasePage?.presentWardNo?.code ? formData.AdoptionAddressBasePage?.presentWardNo : formData?.ChildDetails?.AdoptionAddressBasePage?.presentWardNo ? "" : "");
-    const [presentInsideKeralaDistrict, setinsideKeralaDistrict] = useState(formData?.AdoptionAddressBasePage?.presentInsideKeralaDistrict?.code ? formData?.AdoptionAddressBasePage?.presentInsideKeralaDistrict : formData?.ChildDetails?.AdoptionAddressBasePage?.presentInsideKeralaDistrict ? "" : "");
+    
+    const [presentWardNo, setPresentWardNo] = useState(formData.AdoptionAddressBasePage?.presentWardNo?.code ? formData.AdoptionAddressBasePage?.presentWardNo : formData?.AdoptionAddressBasePage?.presentWardNo ? "" : "");
+    const [presentInsideKeralaDistrict, setinsideKeralaDistrict] = useState(formData?.AdoptionAddressBasePage?.presentInsideKeralaDistrict?.code ? formData?.AdoptionAddressBasePage?.presentInsideKeralaDistrict : formData?.AdoptionAddressBasePage?.presentInsideKeralaDistrict ? formData?.AdoptionAddressBasePage?.presentInsideKeralaDistrict : "");
     const [presentInsideKeralaLBTypeName, setinsideKeralaLBTypeName] = useState(formData?.AdoptionAddressBasePage?.presentInsideKeralaLBTypeName ? formData?.AdoptionAddressBasePage?.presentInsideKeralaLBTypeName : null);
-    const [presentInsideKeralaLBName, setinsideKeralaLBName] = useState(formData?.AdoptionAddressBasePage?.presentInsideKeralaLBName?.code ? formData?.AdoptionAddressBasePage?.presentInsideKeralaLBName : formData?.ChildDetails?.AdoptionAddressBasePage?.presentInsideKeralaLBName ? "" : "");
-    const [presentInsideKeralaTaluk, setinsideKeralaTaluk] = useState(formData?.AdoptionAddressBasePage?.presentInsideKeralaTaluk?.code ? formData?.AdoptionAddressBasePage?.presentInsideKeralaTaluk : formData?.ChildDetails?.AdoptionAddressBasePage?.presentInsideKeralaTaluk ? "" : "");
-    const [presentInsideKeralaVillage, setinsideKeralaVillage] = useState(formData?.AdoptionAddressBasePage?.presentInsideKeralaVillage?.code ? formData?.AdoptionAddressBasePage?.presentInsideKeralaVillage : formData?.ChildDetails?.AdoptionAddressBasePage?.presentInsideKeralaVillage ? "" : "");
-    const [presentInsideKeralaPostOffice, setinsideKeralaPostOffice] = useState(formData?.AdoptionAddressBasePage?.presentInsideKeralaPostOffice?.code ? formData?.AdoptionAddressBasePage?.presentInsideKeralaPostOffice : formData?.ChildDetails?.AdoptionAddressBasePage?.presentInsideKeralaPostOffice ? "" : "");
-    const [presentInsideKeralaPincode, setinsideKeralaPincode] = useState(formData?.AdoptionAddressBasePage?.presentInsideKeralaPincode ? formData?.AdoptionAddressBasePage?.presentInsideKeralaPincode : formData?.ChildDetails?.AdoptionAddressBasePage?.presentInsideKeralaPincode ? formData?.ChildDetails?.AdoptionAddressBasePage?.presentInsideKeralaPincode : "");
-    const [presentInsideKeralaHouseNameEn, setinsideKeralaHouseNameEn] = useState(formData?.AdoptionAddressBasePage?.presentInsideKeralaHouseNameEn ? formData?.AdoptionAddressBasePage?.presentInsideKeralaHouseNameEn : formData?.ChildDetails?.AdoptionAddressBasePage?.presentInsideKeralaHouseNameEn ? formData?.ChildDetails?.AdoptionAddressBasePage?.presentInsideKeralaHouseNameEn : "");
-    const [presentInsideKeralaHouseNameMl, setinsideKeralaHouseNameMl] = useState(formData?.AdoptionAddressBasePage?.presentInsideKeralaHouseNameMl ? formData?.AdoptionAddressBasePage?.presentInsideKeralaHouseNameMl : formData?.ChildDetails?.AdoptionAddressBasePage?.presentInsideKeralaHouseNameMl ? formData?.ChildDetails?.AdoptionAddressBasePage?.presentInsideKeralaHouseNameMl : "");
-    const [presentInsideKeralaLocalityNameEn, setinsideKeralaLocalityNameEn] = useState(formData?.AdoptionAddressBasePage?.presentInsideKeralaLocalityNameEn ? formData?.AdoptionAddressBasePage?.presentInsideKeralaLocalityNameEn : formData?.ChildDetails?.AdoptionAddressBasePage?.presentInsideKeralaLocalityNameEn ? formData?.ChildDetails?.AdoptionAddressBasePage?.presentInsideKeralaLocalityNameEn : "");
-    const [presentInsideKeralaLocalityNameMl, setinsideKeralaLocalityNameMl] = useState(formData?.AdoptionAddressBasePage?.presentInsideKeralaLocalityNameMl ? formData?.AdoptionAddressBasePage?.presentInsideKeralaLocalityNameMl : formData?.ChildDetails?.AdoptionAddressBasePage?.presentInsideKeralaLocalityNameMl ? formData?.ChildDetails?.AdoptionAddressBasePage?.presentInsideKeralaLocalityNameMl : "");
-    const [presentInsideKeralaStreetNameEn, setinsideKeralaStreetNameEn] = useState(formData?.AdoptionAddressBasePage?.presentInsideKeralaStreetNameEn ? formData?.AdoptionAddressBasePage?.presentInsideKeralaStreetNameEn : formData?.ChildDetails?.AdoptionAddressBasePage?.presentInsideKeralaStreetNameEn ? formData?.ChildDetails?.AdoptionAddressBasePage?.presentInsideKeralaStreetNameEn : "");
-    const [presentInsideKeralaStreetNameMl, setinsideKeralaStreetNameMl] = useState(formData?.AdoptionAddressBasePage?.presentInsideKeralaStreetNameMl ? formData?.AdoptionAddressBasePage?.presentInsideKeralaStreetNameMl : formData?.ChildDetails?.AdoptionAddressBasePage?.presentInsideKeralaStreetNameMl ? formData?.ChildDetails?.AdoptionAddressBasePage?.presentInsideKeralaStreetNameMl : "");
+    const [presentInsideKeralaLBName, setinsideKeralaLBName] = useState(formData?.AdoptionAddressBasePage?.presentInsideKeralaLBName?.code ? formData?.AdoptionAddressBasePage?.presentInsideKeralaLBName : formData?.AdoptionAddressBasePage?.presentInsideKeralaLBName ? "" : "");
+    const [presentInsideKeralaTaluk, setinsideKeralaTaluk] = useState(formData?.AdoptionAddressBasePage?.presentInsideKeralaTaluk?.code ? formData?.AdoptionAddressBasePage?.presentInsideKeralaTaluk : formData?.AdoptionAddressBasePage?.presentInsideKeralaTaluk ? "" : "");
+    const [presentInsideKeralaVillage, setinsideKeralaVillage] = useState(formData?.AdoptionAddressBasePage?.presentInsideKeralaVillage?.code ? formData?.AdoptionAddressBasePage?.presentInsideKeralaVillage : formData?.AdoptionAddressBasePage?.presentInsideKeralaVillage ? "" : "");
+    const [presentInsideKeralaPostOffice, setinsideKeralaPostOffice] = useState(formData?.AdoptionAddressBasePage?.presentInsideKeralaPostOffice?.code ? formData?.AdoptionAddressBasePage?.presentInsideKeralaPostOffice : formData?.AdoptionAddressBasePage?.presentInsideKeralaPostOffice ? "" : "");
+    const [presentInsideKeralaPincode, setinsideKeralaPincode] = useState(formData?.AdoptionAddressBasePage?.presentInsideKeralaPincode ? formData?.AdoptionAddressBasePage?.presentInsideKeralaPincode : formData?.AdoptionAddressBasePage?.presentInsideKeralaPincode ? formData?.AdoptionAddressBasePage?.presentInsideKeralaPincode : "");
+    const [presentInsideKeralaHouseNameEn, setinsideKeralaHouseNameEn] = useState(formData?.AdoptionAddressBasePage?.presentInsideKeralaHouseNameEn ? formData?.AdoptionAddressBasePage?.presentInsideKeralaHouseNameEn : formData?.AdoptionAddressBasePage?.presentInsideKeralaHouseNameEn ? formData?.AdoptionAddressBasePage?.presentInsideKeralaHouseNameEn : "");
+    const [presentInsideKeralaHouseNameMl, setinsideKeralaHouseNameMl] = useState(formData?.AdoptionAddressBasePage?.presentInsideKeralaHouseNameMl ? formData?.AdoptionAddressBasePage?.presentInsideKeralaHouseNameMl : formData?.AdoptionAddressBasePage?.presentInsideKeralaHouseNameMl ? formData?.AdoptionAddressBasePage?.presentInsideKeralaHouseNameMl : "");
+    const [presentInsideKeralaLocalityNameEn, setinsideKeralaLocalityNameEn] = useState(formData?.AdoptionAddressBasePage?.presentInsideKeralaLocalityNameEn ? formData?.AdoptionAddressBasePage?.presentInsideKeralaLocalityNameEn : formData?.AdoptionAddressBasePage?.presentInsideKeralaLocalityNameEn ? formData?.AdoptionAddressBasePage?.presentInsideKeralaLocalityNameEn : "");
+    const [presentInsideKeralaLocalityNameMl, setinsideKeralaLocalityNameMl] = useState(formData?.AdoptionAddressBasePage?.presentInsideKeralaLocalityNameMl ? formData?.AdoptionAddressBasePage?.presentInsideKeralaLocalityNameMl : formData?.AdoptionAddressBasePage?.presentInsideKeralaLocalityNameMl ? formData?.AdoptionAddressBasePage?.presentInsideKeralaLocalityNameMl : "");
+    const [presentInsideKeralaStreetNameEn, setinsideKeralaStreetNameEn] = useState(formData?.AdoptionAddressBasePage?.presentInsideKeralaStreetNameEn ? formData?.AdoptionAddressBasePage?.presentInsideKeralaStreetNameEn : formData?.AdoptionAddressBasePage?.presentInsideKeralaStreetNameEn ? formData?.AdoptionAddressBasePage?.presentInsideKeralaStreetNameEn : "");
+    const [presentInsideKeralaStreetNameMl, setinsideKeralaStreetNameMl] = useState(formData?.AdoptionAddressBasePage?.presentInsideKeralaStreetNameMl ? formData?.AdoptionAddressBasePage?.presentInsideKeralaStreetNameMl : formData?.AdoptionAddressBasePage?.presentInsideKeralaStreetNameMl ? formData?.AdoptionAddressBasePage?.presentInsideKeralaStreetNameMl : "");
     const [Talukvalues, setLbsTalukvalue] = useState(null);
     const [Villagevalues, setLbsVillagevalue] = useState(null);
     const [PostOfficevalues, setPostOfficevalues] = useState(null);
     //################################# Present Outside Kerala ##########################################################################################################
 
-    const [presentOutsideKeralaDistrict, setoutsideKeralaDistrict] = useState(formData?.AdoptionAddressBasePage?.presentOutsideKeralaDistrict?.code ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaDistrict : formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaDistrict ? "" : "");
-    const [presentOutsideKeralaTaluk, setoutsideKeralaTaluk] = useState(formData?.AdoptionAddressBasePage?.presentOutsideKeralaTaluk?.code ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaTaluk : formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaTaluk ? "" : "");
-    const [presentOutsideKeralaCityVilgeEn, setoutsideKeralaCityVilgeEn] = useState(formData?.AdoptionAddressBasePage?.presentOutsideKeralaCityVilgeEn ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaCityVilgeEn : formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaCityVilgeEn ? formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaCityVilgeEn : "");
-    const [presentOutsideKeralaVillage, setoutsideKeralaVillage] = useState(formData?.AdoptionAddressBasePage?.presentOutsideKeralaVillage?.code ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaVillage : formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaVillage ? "" : "");
+    const [presentOutsideKeralaDistrict, setoutsideKeralaDistrict] = useState(formData?.AdoptionAddressBasePage?.presentOutsideKeralaDistrict?.code ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaDistrict : formData?.AdoptionAddressBasePage?.presentOutsideKeralaDistrict ? "" : "");
+    const [presentOutsideKeralaTaluk, setoutsideKeralaTaluk] = useState(formData?.AdoptionAddressBasePage?.presentOutsideKeralaTaluk?.code ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaTaluk : formData?.AdoptionAddressBasePage?.presentOutsideKeralaTaluk ? "" : "");
+    const [presentOutsideKeralaCityVilgeEn, setoutsideKeralaCityVilgeEn] = useState(formData?.AdoptionAddressBasePage?.presentOutsideKeralaCityVilgeEn ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaCityVilgeEn : formData?.AdoptionAddressBasePage?.presentOutsideKeralaCityVilgeEn ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaCityVilgeEn : "");
+    const [presentOutsideKeralaVillage, setoutsideKeralaVillage] = useState(formData?.AdoptionAddressBasePage?.presentOutsideKeralaVillage?.code ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaVillage : formData?.AdoptionAddressBasePage?.presentOutsideKeralaVillage ? "" : "");
     // const [presentOutsideKeralaPostOffice, setoutsideKeralaPostOffice] = useState(formData?.AdoptionAddressBasePage?.presentOutsideKeralaPostOffice);
-    const [presentOutsideKeralaPincode, setoutsideKeralaPincode] = useState(formData?.AdoptionAddressBasePage?.presentOutsideKeralaPincode ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaPincode : formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaPincode ? formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaPincode : "");
-    const [presentOutsideKeralaHouseNameEn, setoutsideKeralaHouseNameEn] = useState(formData?.AdoptionAddressBasePage?.presentOutsideKeralaHouseNameEn ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaHouseNameEn : formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaHouseNameEn ? formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaHouseNameEn : "");
-    const [presentOutsideKeralaHouseNameMl, setoutsideKeralaHouseNameMl] = useState(formData?.AdoptionAddressBasePage?.presentOutsideKeralaHouseNameMl ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaHouseNameMl : formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaHouseNameMl ? formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaHouseNameMl : "");
-    const [presentOutsideKeralaLocalityNameEn, setoutsideKeralaLocalityNameEn] = useState(formData?.AdoptionAddressBasePage?.presentOutsideKeralaLocalityNameEn ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaLocalityNameEn : formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaLocalityNameEn ? formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaLocalityNameEn : "");
-    const [presentOutsideKeralaLocalityNameMl, setoutsideKeralaLocalityNameMl] = useState(formData?.AdoptionAddressBasePage?.presentOutsideKeralaLocalityNameMl ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaLocalityNameMl : formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaLocalityNameMl ? formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaLocalityNameMl : "");
-    const [presentOutsideKeralaStreetNameEn, setoutsideKeralaStreetNameEn] = useState(formData?.AdoptionAddressBasePage?.presentOutsideKeralaStreetNameEn ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaStreetNameEn : formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaStreetNameEn ? formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaStreetNameEn : "");
-    const [presentOutsideKeralaStreetNameMl, setoutsideKeralaStreetNameMl] = useState(formData?.AdoptionAddressBasePage?.presentOutsideKeralaStreetNameMl ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaStreetNameMl : formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaStreetNameMl ? formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaStreetNameMl : "");
-    const [presentOutsideKeralaPostOfficeEn, setoutsideKeralaPostOfficeEn] = useState(formData?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeEn ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeEn : formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeEn ? formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeEn : "");
-    const [presentOutsideKeralaPostOfficeMl, setoutsideKeralaPostOfficeMl] = useState(formData?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl : formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl ? formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl : "");
+    const [presentOutsideKeralaPincode, setoutsideKeralaPincode] = useState(formData?.AdoptionAddressBasePage?.presentOutsideKeralaPincode ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaPincode : formData?.AdoptionAddressBasePage?.presentOutsideKeralaPincode ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaPincode : "");
+    const [presentOutsideKeralaHouseNameEn, setoutsideKeralaHouseNameEn] = useState(formData?.AdoptionAddressBasePage?.presentOutsideKeralaHouseNameEn ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaHouseNameEn : formData?.AdoptionAddressBasePage?.presentOutsideKeralaHouseNameEn ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaHouseNameEn : "");
+    const [presentOutsideKeralaHouseNameMl, setoutsideKeralaHouseNameMl] = useState(formData?.AdoptionAddressBasePage?.presentOutsideKeralaHouseNameMl ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaHouseNameMl : formData?.AdoptionAddressBasePage?.presentOutsideKeralaHouseNameMl ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaHouseNameMl : "");
+    const [presentOutsideKeralaLocalityNameEn, setoutsideKeralaLocalityNameEn] = useState(formData?.AdoptionAddressBasePage?.presentOutsideKeralaLocalityNameEn ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaLocalityNameEn : formData?.AdoptionAddressBasePage?.presentOutsideKeralaLocalityNameEn ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaLocalityNameEn : "");
+    const [presentOutsideKeralaLocalityNameMl, setoutsideKeralaLocalityNameMl] = useState(formData?.AdoptionAddressBasePage?.presentOutsideKeralaLocalityNameMl ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaLocalityNameMl : formData?.AdoptionAddressBasePage?.presentOutsideKeralaLocalityNameMl ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaLocalityNameMl : "");
+    const [presentOutsideKeralaStreetNameEn, setoutsideKeralaStreetNameEn] = useState(formData?.AdoptionAddressBasePage?.presentOutsideKeralaStreetNameEn ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaStreetNameEn : formData?.AdoptionAddressBasePage?.presentOutsideKeralaStreetNameEn ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaStreetNameEn : "");
+    const [presentOutsideKeralaStreetNameMl, setoutsideKeralaStreetNameMl] = useState(formData?.AdoptionAddressBasePage?.presentOutsideKeralaStreetNameMl ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaStreetNameMl : formData?.AdoptionAddressBasePage?.presentOutsideKeralaStreetNameMl ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaStreetNameMl : "");
+    const [presentOutsideKeralaPostOfficeEn, setoutsideKeralaPostOfficeEn] = useState(formData?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeEn ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeEn : formData?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeEn ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeEn : "");
+    const [presentOutsideKeralaPostOfficeMl, setoutsideKeralaPostOfficeMl] = useState(formData?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl : formData?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl : "");
 
     //############################################### Present Out Side India ###########################################################################################################
 
-    const [presentOutSideIndiaAdressEn, setAdressEn] = useState(formData?.AdoptionAddressBasePage?.presentOutSideIndiaAdressEn ? formData?.AdoptionAddressBasePage?.presentOutSideIndiaAdressEn : formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl ? formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl : "");
-    const [presentOutSideIndiaAdressMl, setAdressMl] = useState(formData?.AdoptionAddressBasePage?.presentOutSideIndiaAdressMl ? formData?.AdoptionAddressBasePage?.presentOutSideIndiaAdressMl : formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl ? formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl : "");
-    const [presentOutSideIndiaAdressEnB, setAdressEnB] = useState(formData?.AdoptionAddressBasePage?.presentOutSideIndiaAdressEnB ? formData?.AdoptionAddressBasePage?.presentOutSideIndiaAdressEnB : formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl ? formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl : "");
-    const [presentOutSideIndiaAdressMlB, setAdressMlB] = useState(formData?.AdoptionAddressBasePage?.presentOutSideIndiaAdressMlB ? formData?.AdoptionAddressBasePage?.presentOutSideIndiaAdressMlB : formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl ? formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl : "");
-    const [presentOutSideIndiaProvinceEn, setProvinceEn] = useState(formData?.AdoptionAddressBasePage?.presentOutSideIndiaProvinceEn ? formData?.AdoptionAddressBasePage?.presentOutSideIndiaProvinceEn : formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl ? formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl : "");
-    const [presentOutSideIndiaProvinceMl, setProvinceMl] = useState(formData?.AdoptionAddressBasePage?.presentOutSideIndiaProvinceMl ? formData?.AdoptionAddressBasePage?.presentOutSideIndiaProvinceMl : formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl ? formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl : "");
-    const [presentOutSideIndiaadrsVillage, setadrsVillage] = useState(formData?.AdoptionAddressBasePage?.presentOutSideIndiaadrsVillage ? formData?.AdoptionAddressBasePage?.presentOutSideIndiaadrsVillage : formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl ? formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl : "");
-    const [presentOutSideIndiaadrsCityTown, setadrsCityTown] = useState(formData?.AdoptionAddressBasePage?.presentOutSideIndiaadrsCityTown ? formData?.AdoptionAddressBasePage?.presentOutSideIndiaadrsCityTown : formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutSideIndiaadrsCityTown ? formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutSideIndiaadrsCityTown : "");
-    const [presentOutSideIndiaPostCode, setPostCode] = useState(formData?.AdoptionAddressBasePage?.presentOutSideIndiaPostCode ? formData?.AdoptionAddressBasePage?.presentOutSideIndiaPostCode : formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutSideIndiaPostCode ? formData?.ChildDetails?.AdoptionAddressBasePage?.presentOutSideIndiaPostCode : "");
+    const [presentOutSideIndiaAdressEn, setAdressEn] = useState(formData?.AdoptionAddressBasePage?.presentOutSideIndiaAdressEn ? formData?.AdoptionAddressBasePage?.presentOutSideIndiaAdressEn : formData?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl : "");
+    const [presentOutSideIndiaAdressMl, setAdressMl] = useState(formData?.AdoptionAddressBasePage?.presentOutSideIndiaAdressMl ? formData?.AdoptionAddressBasePage?.presentOutSideIndiaAdressMl : formData?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl : "");
+    const [presentOutSideIndiaAdressEnB, setAdressEnB] = useState(formData?.AdoptionAddressBasePage?.presentOutSideIndiaAdressEnB ? formData?.AdoptionAddressBasePage?.presentOutSideIndiaAdressEnB : formData?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl : "");
+    const [presentOutSideIndiaAdressMlB, setAdressMlB] = useState(formData?.AdoptionAddressBasePage?.presentOutSideIndiaAdressMlB ? formData?.AdoptionAddressBasePage?.presentOutSideIndiaAdressMlB : formData?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl : "");
+    const [presentOutSideIndiaProvinceEn, setProvinceEn] = useState(formData?.AdoptionAddressBasePage?.presentOutSideIndiaProvinceEn ? formData?.AdoptionAddressBasePage?.presentOutSideIndiaProvinceEn : formData?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl : "");
+    const [presentOutSideIndiaProvinceMl, setProvinceMl] = useState(formData?.AdoptionAddressBasePage?.presentOutSideIndiaProvinceMl ? formData?.AdoptionAddressBasePage?.presentOutSideIndiaProvinceMl : formData?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl : "");
+    const [presentOutSideIndiaadrsVillage, setadrsVillage] = useState(formData?.AdoptionAddressBasePage?.presentOutSideIndiaadrsVillage ? formData?.AdoptionAddressBasePage?.presentOutSideIndiaadrsVillage : formData?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl ? formData?.AdoptionAddressBasePage?.presentOutsideKeralaPostOfficeMl : "");
+    const [presentOutSideIndiaadrsCityTown, setadrsCityTown] = useState(formData?.AdoptionAddressBasePage?.presentOutSideIndiaadrsCityTown ? formData?.AdoptionAddressBasePage?.presentOutSideIndiaadrsCityTown : formData?.AdoptionAddressBasePage?.presentOutSideIndiaadrsCityTown ? formData?.AdoptionAddressBasePage?.presentOutSideIndiaadrsCityTown : "");
+    const [presentOutSideIndiaPostCode, setPostCode] = useState(formData?.AdoptionAddressBasePage?.presentOutSideIndiaPostCode ? formData?.AdoptionAddressBasePage?.presentOutSideIndiaPostCode : formData?.AdoptionAddressBasePage?.presentOutSideIndiaPostCode ? formData?.AdoptionAddressBasePage?.presentOutSideIndiaPostCode : "");
     //const [presentOutSideCountry, setOutSideCountry] = useState(formData?.AdoptionAddressBasePage?.presentOutSideCountry ? formData?.AdoptionAddressBasePage?.presentOutSideCountry : null);
 
     //############################################### Same As Above ##################################################################################################
 
-    const [isPrsentAddress, setIsPrsentAddress] = useState(formData?.AdoptionAddressBasePage?.isPrsentAddress ? formData?.AdoptionAddressBasePage?.isPrsentAddress : formData?.ChildDetails?.AdoptionAddressBasePage?.isPrsentAddress ? formData?.ChildDetails?.AdoptionAddressBasePage?.isPrsentAddress : true);
+    const [isPrsentAddress, setIsPrsentAddress] = useState(formData?.AdoptionAddressBasePage?.isPrsentAddress ? formData?.AdoptionAddressBasePage?.isPrsentAddress : formData?.AdoptionAddressBasePage?.isPrsentAddress ? formData?.AdoptionAddressBasePage?.isPrsentAddress : true);
 
     //################################################### Country State Permanent ###########################################################################
 
-    const [permtaddressCountry, setpermtaddressCountry] = useState(formData?.AdoptionAddressBasePage?.permtaddressCountry?.code ? formData?.AdoptionAddressBasePage?.permtaddressCountry : formData?.ChildDetails?.AdoptionAddressBasePage?.permtaddressCountry ? "" : "");
+    const [permtaddressCountry, setpermtaddressCountry] = useState(formData?.AdoptionAddressBasePage?.permtaddressCountry?.code ? formData?.AdoptionAddressBasePage?.permtaddressCountry : formData?.AdoptionAddressBasePage?.permtaddressCountry ? "" : "");
     const [permtaddressStateName, setpermtaddressStateName] = useState(formData?.AdoptionAddressBasePage?.permtaddressStateName);
     const [countryValuePermanent, setCountryValuePermanent] = useState(formData?.AdoptionAddressBasePage?.presentaddressCountry ? formData?.AdoptionAddressBasePage?.presentaddressCountry.countrycode : null);
     const [valuePermanent, setValuePermanent] = useState(formData?.AdoptionAddressBasePage?.presentaddressStateName ? formData?.AdoptionAddressBasePage?.presentaddressStateName.statecode : null);
     //################################################# Permanent Inside Kerala ##########################################################################################
 
-    const [permntInKeralaAdrDistrict, setpermntInKeralaAdrDistrict] = useState(formData?.AdoptionAddressBasePage?.permntInKeralaAdrDistrict ? formData?.AdoptionAddressBasePage?.permntInKeralaAdrDistrict : null);
+    const [permntInKeralaAdrDistrict, setpermntInKeralaAdrDistrict] = useState(formData?.AdoptionAddressBasePage?.permntInKeralaAdrDistrict.code ? formData?.AdoptionAddressBasePage?.permntInKeralaAdrDistrict : formData?.AdoptionAddressBasePage?.permntInKeralaAdrDistrict);
     // const [permntInKeralaAdrLBTypeName, setpermntInKeralaAdrLBTypeName] = useState(formData?.AdoptionAddressBasePage?.permntInKeralaAdrLBTypeName ? formData?.AdoptionAddressBasePage?.permntInKeralaAdrLBTypeName : null);
     const [permntInKeralaAdrLBName, setpermntInKeralaAdrLBName] = useState(formData?.AdoptionAddressBasePage?.permntInKeralaAdrLBName ? formData?.AdoptionAddressBasePage?.permntInKeralaAdrLBName : null);
     const [permntInKeralaAdrTaluk, setpermntInKeralaAdrTaluk] = useState(formData?.AdoptionAddressBasePage?.permntInKeralaAdrTaluk ? formData?.AdoptionAddressBasePage?.permntInKeralaAdrTaluk : null);
@@ -248,7 +248,7 @@ const AdoptionAddressBasePage = ({ config, onSelect, userType, formData, isEditB
                 } else {
                     setPresentInsideKeralaDistrictError(false);
                 }
-                if (presentInsideKeralaTaluk == null || presentInsideKeralaTaluk == undefined) {
+                if (presentInsideKeralaTaluk == null || presentInsideKeralaTaluk == undefined || presentInsideKeralaTaluk == "") {
                     setPresentInsideKeralaTalukError(true);
                     validFlag = false;
                     setToast(true);
@@ -258,7 +258,7 @@ const AdoptionAddressBasePage = ({ config, onSelect, userType, formData, isEditB
                 } else {
                     setPresentInsideKeralaTalukError(false);
                 }
-                if (presentInsideKeralaVillage == null || presentInsideKeralaVillage == undefined) {
+                if (presentInsideKeralaVillage == null || presentInsideKeralaVillage == undefined || presentInsideKeralaVillage == "") {
                     setPresentInsideKeralaVillageError(true);
                     validFlag = false;
                     setToast(true);
@@ -278,7 +278,7 @@ const AdoptionAddressBasePage = ({ config, onSelect, userType, formData, isEditB
                 } else {
                     setPresentInsideKeralaLBNameError(false);
                 }
-                if (presentWardNo == null || presentWardNo == undefined) {
+                if (presentWardNo == null || presentWardNo == undefined || presentWardNo === "") {
                     setPresentInsideKeralaWardNoError(true);
                     validFlag = false;
                     setToast(true);
@@ -800,7 +800,7 @@ const AdoptionAddressBasePage = ({ config, onSelect, userType, formData, isEditB
                             setpermtaddressStateName={setpermtaddressStateName}
                             isPrsentAddress={isPrsentAddress}
                             setIsPrsentAddress={setIsPrsentAddress}
-                            isEditBirth={isEditBirth}
+                            isEditAdoption={isEditAdoption}
                             isEditDeath={isEditDeath}
                             formData={formData}
                         />
@@ -872,7 +872,7 @@ const AdoptionAddressBasePage = ({ config, onSelect, userType, formData, isEditB
                                 setpermntInKeralaAdrStreetNameMl={setpermntInKeralaAdrStreetNameMl}
                                 permntInKeralaWardNo={permntInKeralaWardNo}
                                 setpermntInKeralaWardNo={setpermntInKeralaWardNo}
-                                isEditBirth={isEditBirth}
+                                isEditAdoption={isEditAdoption}
                                 isEditDeath={isEditDeath}
                                 formData={formData}
                             />
@@ -937,7 +937,7 @@ const AdoptionAddressBasePage = ({ config, onSelect, userType, formData, isEditB
                                 setpermntoutsideKeralaPostOfficeEn={setpermntoutsideKeralaPostOfficeEn}
                                 permntOutsideKeralaPostOfficeMl={permntOutsideKeralaPostOfficeMl}
                                 setpermntoutsideKeralaPostOfficeMl={setpermntoutsideKeralaPostOfficeMl}
-                                isEditBirth={isEditBirth}
+                                isEditAdoption={isEditAdoption}
                                 isEditDeath={isEditDeath}
                                 formData={formData}
                             />
@@ -990,7 +990,7 @@ const AdoptionAddressBasePage = ({ config, onSelect, userType, formData, isEditB
                                 setPermantpostCode={setPermantpostCode}
                                 // permntOutsideIndiaCountry={permntOutsideIndiaCountry}
                                 // setPermntOutsideIndiaCountry={setPermntOutsideIndiaCountry}
-                                isEditBirth={isEditBirth}
+                                isEditAdoption={isEditAdoption}
                                 isEditDeath={isEditDeath}
                                 formData={formData}
                             />
@@ -1000,7 +1000,7 @@ const AdoptionAddressBasePage = ({ config, onSelect, userType, formData, isEditB
                         <AddressSameAsAbove
                             isPrsentAddress={isPrsentAddress}
                             setIsPrsentAddress={setIsPrsentAddress}
-                            isEditBirth={isEditBirth}
+                            isEditAdoption={isEditAdoption}
                             isEditDeath={isEditDeath}
                             formData={formData}
                         />
@@ -1022,7 +1022,7 @@ const AdoptionAddressBasePage = ({ config, onSelect, userType, formData, isEditB
                                 setCountryValuePermanent={setCountryValuePermanent}
                                 valuePermanent={valuePermanent}
                                 setValuePermanent={setValuePermanent}
-                                isEditBirth={isEditBirth}
+                                isEditAdoption={isEditAdoption}
                                 isEditDeath={isEditDeath}
                                 formData={formData}
                             />
@@ -1065,7 +1065,7 @@ const AdoptionAddressBasePage = ({ config, onSelect, userType, formData, isEditB
                                 setLbsVillagevalue={setLbsVillagevalue}
                                 PostOfficevalues={PostOfficevalues}
                                 setPostOfficevalues={setPostOfficevalues}
-                                isEditBirth={isEditBirth}
+                                isEditAdoption={isEditAdoption}
                                 isEditDeath={isEditDeath}
                                 formData={formData}
                             />
@@ -1102,7 +1102,7 @@ const AdoptionAddressBasePage = ({ config, onSelect, userType, formData, isEditB
                                 setpermntoutsideKeralaPostOfficeMl={setpermntoutsideKeralaPostOfficeMl}
                                 value={value}
                                 setValue={setValue}
-                                isEditBirth={isEditBirth}
+                                isEditAdoption={isEditAdoption}
                                 isEditDeath={isEditDeath}
                                 formData={formData}
                             />
@@ -1133,7 +1133,7 @@ const AdoptionAddressBasePage = ({ config, onSelect, userType, formData, isEditB
                                 // setPermntOutsideIndiaCountry={setPermntOutsideIndiaCountry}
                                 countryvalue={countryvalue}
                                 setCountryValue={setCountryValue}
-                                isEditBirth={isEditBirth}
+                                isEditAdoption={isEditAdoption}
                                 isEditDeath={isEditDeath}
                                 formData={formData}
                             />

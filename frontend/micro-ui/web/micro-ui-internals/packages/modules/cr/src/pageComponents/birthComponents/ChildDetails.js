@@ -10,9 +10,10 @@ import BirthPlaceVehicle from "../../pageComponents/birthComponents/BirthPlaceVe
 import BirthPlacePublicPlace from "../../pageComponents/birthComponents/BirthPlacePublicPlace";
 import FormStep from "../../../../../react-components/src/molecules/FormStep";
 
-const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => {
+const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false }) => {
   // console.log(JSON.stringify(formData));  
   // console.log(formData);
+  // console.log(isEditBirth);
   const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
   const [workFlowCode, setWorkFlowCode] = useState();
@@ -34,8 +35,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
   const [InstitutionFilterList, setInstitutionFilterList] = useState(null);
   const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(false);
   const [DifferenceInDaysRounded, setDifferenceInDaysRounded] = useState();
-  const [DifferenceInTime, setDifferenceInTime] = useState();
-
+  const {uuid:uuid,} =Digit.UserService.getUser().info ; 
+  // console.log(Digit.UserService.getUser().info);
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
@@ -196,6 +197,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
     (cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.ChildDetails?.deliveryMethods)[0]) : "");
   //  const [deliveryMethods, setDeliveryMethod] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? (cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.ChildDetails?.deliveryMethods)[0]) : formData?.ChildDetails?.deliveryMethods);
   const [birthWeight, setBirthWeight] = useState(formData?.ChildDetails?.birthWeight ? formData?.ChildDetails?.birthWeight : null);
+  const [DifferenceInTime, setDifferenceInTime] = useState(formData?.ChildDetails?.DifferenceInTime);
 
   const [toast, setToast] = useState(false);
   const [AadharError, setAadharError] = useState(formData?.ChildDetails?.childAadharNo ? false : false);
@@ -324,14 +326,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
     today.setHours(0, 0, 0, 0);
     const birthDate = new Date(value);
     birthDate.setHours(0, 0, 0, 0);
-    if (birthPlace) {
-      let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
-      // console.log(currentWorgFlow);
-      if (currentWorgFlow.length > 0) {
-        // console.log(currentWorgFlow[0].WorkflowCode);
-        setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
-      }
-    }
+    
     if (birthDate.getTime() <= today.getTime()) {
       
       setDOBError(false);
@@ -342,7 +337,14 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
       setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
-
+      if (birthPlace) {
+        let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
+        console.log("currentWorgFlowDOB" + currentWorgFlow);
+        if (currentWorgFlow.length > 0) {
+          // console.log(currentWorgFlow[0].WorkflowCode);
+          setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+        }
+      }
       if (Difference_In_Days >= 365) {
         setChildAadharHIde(true);
       } else {
@@ -492,7 +494,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
   function setselectBirthPlace(value) {
     // console.log(workFlowData);
     // console.log("DifferenceInDaysRounded" + DifferenceInDaysRounded);
-    // console.log("DifferenceInTimeJEtheesh" + DifferenceInTime);
+    console.log("DifferenceInTimeJEtheesh" + DifferenceInTime);
 
     selectBirthPlace(value);
     setValue(value.code);
@@ -850,62 +852,9 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
       setDeliveryMethodStError(false);
     }
     if (validFlag == true) {
-      // sessionStorage.setItem("stateId", stateId ? stateId : null);
-      // sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
-      // sessionStorage.setItem("workFlowCode", workFlowCode);
-      // sessionStorage.setItem("childDOB", childDOB ? childDOB : null);
-      // sessionStorage.setItem("birthDateTime", birthDateTime ? birthDateTime : null);
-      // sessionStorage.setItem("gender", gender ? gender.code : null);
-      // sessionStorage.setItem("childAadharNo", childAadharNo ? childAadharNo : null);
-      // sessionStorage.setItem("childFirstNameEn", childFirstNameEn ? childFirstNameEn : null);
-      // sessionStorage.setItem("childMiddleNameEn", childMiddleNameEn ? childMiddleNameEn : null);
-      // sessionStorage.setItem("childLastNameEn", childLastNameEn ? childLastNameEn : null);
-      // sessionStorage.setItem("childFirstNameMl", childFirstNameMl ? childFirstNameMl : null);
-      // sessionStorage.setItem("childMiddleNameMl", childMiddleNameMl ? childMiddleNameMl : null);
-      // sessionStorage.setItem("childLastNameMl", childLastNameMl ? childLastNameMl : null);
-      // sessionStorage.setItem("isChildName", isChildName);
-      // sessionStorage.setItem("birthPlace", birthPlace.code);
-      // sessionStorage.setItem("hospitalCode", hospitalName ? hospitalName.code : null);
-      // sessionStorage.setItem("hospitalName", hospitalName ? hospitalName.hospitalName : null);
-      // sessionStorage.setItem("hospitalNameMl", hospitalName ? hospitalNameMl.hospitalNamelocal : null);
-      // sessionStorage.setItem("institutionTypeCode", institution ? institution.code : null);
-      // sessionStorage.setItem("institution", institution ? institution.name : null);
-      // sessionStorage.setItem("institutionNameCode", institutionId ? institutionId.code : null);
-      // sessionStorage.setItem("institutionId", institutionId ? institutionId.institutionName : null);
-      // sessionStorage.setItem("institutionIdMl", institutionIdMl ? institutionIdMl.institutionNamelocal : null);
-      // sessionStorage.setItem("adrsHouseNameEn", adrsHouseNameEn ? adrsHouseNameEn : null);
-      // sessionStorage.setItem("adrsHouseNameMl", adrsHouseNameMl ? adrsHouseNameMl : null);
-      // sessionStorage.setItem("adrsLocalityNameEn", adrsLocalityNameEn ? adrsLocalityNameEn : null);
-      // sessionStorage.setItem("adrsLocalityNameMl", adrsLocalityNameMl ? adrsLocalityNameMl : null);
-      // sessionStorage.setItem("adrsStreetNameEn", adrsStreetNameEn ? adrsStreetNameEn : null);
-      // sessionStorage.setItem("adrsStreetNameMl", adrsStreetNameMl ? adrsStreetNameMl : null);
-      // sessionStorage.setItem("adrsPostOffice", adrsPostOffice ? adrsPostOffice.code : null);
-      // sessionStorage.setItem("adrsPincode", adrsPincode ? adrsPincode.code : null);
-      // sessionStorage.setItem("wardNo", wardNo ? wardNo.code : null);
-      // sessionStorage.setItem("wardNameEn", wardNo ? wardNo.name : null);
-      // sessionStorage.setItem("wardNameMl", wardNo ? wardNo.localname : null);
-      // sessionStorage.setItem("wardNumber", wardNo ? wardNo.wardno : null);
-      // sessionStorage.setItem("vehicleType", vehicleType ? vehicleType : null);
-      // sessionStorage.setItem("vehicleRegistrationNo", vehicleRegistrationNo ? vehicleRegistrationNo : null);
-      // sessionStorage.setItem("vehicleFromEn", vehicleFromEn ? vehicleFromEn : null);
-      // sessionStorage.setItem("vehicleToEn", vehicleToEn ? vehicleToEn : null);
-      // sessionStorage.setItem("vehicleFromMl", vehicleFromMl ? vehicleFromMl : null);
-      // sessionStorage.setItem("vehicleToMl", vehicleToMl ? vehicleToMl : null);
-      // sessionStorage.setItem("vehicleHaltPlace", vehicleHaltPlace ? vehicleHaltPlace : null);
-      // // sessionStorage.setItem("vehicleHaltPlaceMl", vehicleHaltPlaceMl ? vehicleHaltPlaceMl : null);
-      // sessionStorage.setItem("setadmittedHospitalEn", setadmittedHospitalEn ? setadmittedHospitalEn.code : null);
-      // sessionStorage.setItem("vehicleDesDetailsEn", vehicleDesDetailsEn ? vehicleDesDetailsEn : null);
-      // sessionStorage.setItem("publicPlaceType", publicPlaceType ? publicPlaceType.code : null);
-      // sessionStorage.setItem("localityNameEn", localityNameEn ? localityNameEn : null);
-      // sessionStorage.setItem("localityNameMl", localityNameMl ? localityNameMl : null);
-      // sessionStorage.setItem("streetNameEn", streetNameEn ? streetNameEn : null);
-      // sessionStorage.setItem("streetNameMl", streetNameMl ? streetNameMl : null);
-      // sessionStorage.setItem("publicPlaceDecpEn", publicPlaceDecpEn ? publicPlaceDecpEn : null);
-      // sessionStorage.setItem("birthWeight", birthWeight ? birthWeight : null);
-      // sessionStorage.setItem("pregnancyDuration", pregnancyDuration ? pregnancyDuration.code : null);
-      // sessionStorage.setItem("medicalAttensionSub", medicalAttensionSub ? medicalAttensionSub.code : null);
-      // sessionStorage.setItem("deliveryMethods", deliveryMethods ? deliveryMethods.code : null);
+      
       let IsEditChangeScreen = (isEditBirth ? isEditBirth : false);
+      let isWorkflow = isEditBirth ? false : true;
       onSelect(config.key, {
         stateId, tenantId, workFlowCode, childDOB, birthDateTime, gender, childAadharNo,
         isChildName, childFirstNameEn, childMiddleNameEn, childLastNameEn, childFirstNameMl, childMiddleNameMl, childLastNameMl,
@@ -915,7 +864,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth }) => 
         vehicleType, vehicleHaltPlace, vehicleRegistrationNo, vehicleFromEn, vehicleToEn, vehicleFromMl,
         vehicleToMl, setadmittedHospitalEn, vehicleDesDetailsEn,
         publicPlaceType, localityNameEn, localityNameMl, streetNameEn, streetNameMl, publicPlaceDecpEn,
-        birthWeight, pregnancyDuration, medicalAttensionSub, deliveryMethods, IsEditChangeScreen
+        birthWeight, pregnancyDuration, medicalAttensionSub, deliveryMethods, IsEditChangeScreen,
+        uuid,DifferenceInTime,isWorkflow
       });
     }
   };

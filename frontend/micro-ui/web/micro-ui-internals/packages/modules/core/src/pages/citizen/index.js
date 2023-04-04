@@ -34,14 +34,25 @@ const Home = ({
   pathname,
 }) => {
   const queryClient = useQueryClient();
-  queryClient.removeQueries("CR_CREATE_BIRTH_REG");  
+  // queryClient.removeQueries("CR_CREATE_BIRTH_REG");  
+  // Digit.sessionStorage.removeItem("CR_CREATE_BIRTH_REG");
+  // Digit.sessionStorage.removeItem("CR_BIRTH_EDIT_FLAG");
+  sessionStorage.removeItem("CR_BIRTH_EDIT_FLAG");
+  sessionStorage.removeItem("CR_EDIT_BIRTH_REG");
+
+  sessionStorage.removeItem("CR_DEATH_EDIT_FLAG");
+  sessionStorage.removeItem("Digit.CR_DEATH_EDIT");
+  const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false) 
+  
   const location = useLocation()
   const classname = Digit.Hooks.fsm.useRouteSubscription(pathname);
   const { t } = useTranslation();
   const { path } = useRouteMatch();
   sourceUrl = "https://s3.ap-south-1.amazonaws.com/egov-qa-assets";
   const pdfUrl = "https://pg-egov-assets.s3.ap-south-1.amazonaws.com/Upyog+Code+and+Copyright+License_v1.pdf"
-
+  React.useEffect(()=>{
+    setFlag(false)
+  },[])
   const appRoutes = modules.map(({ code, tenants }, index) => {
     const Module = Digit.ComponentRegistryService.getComponent(`${code}Module`);
     return (
@@ -137,8 +148,15 @@ const Home = ({
             state: { module: "cr-birth" }
           }),
         },
-        
-
+        {
+          name: t("CR_NAC"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname:`${matchPath}/cr-birth-nac`,
+            state: { module: "cr-birth" }
+          }),
+        },
+    
       ],
       styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
     };
@@ -149,7 +167,6 @@ const Home = ({
         onClick: () => history.push("/digit-ui/citizen/all-services"),
       },
       options: [
-    
         {
           name:t("CR_NAME_INCLUSION_CORRECTION"),
           Icon: <OBPSIcon />,
@@ -214,6 +231,14 @@ const Home = ({
             state: { module: "cr-death" }
           }),
         }, 
+        {
+          name: t("CR_NAC"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname: `${matchPath}/cr-death-nac`,
+            state: { module: "cr-death" }
+          }),
+        }, 
       ],
       styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
     };
@@ -224,7 +249,6 @@ const Home = ({
         onClick: () => history.push("/digit-ui/citizen/all-services"),
       },
       options: [
-        
            {
           name: t("CR_COMMON_CERT_DOWNLOAD"),
           Icon: <OBPSIcon />,

@@ -22,7 +22,10 @@ import { useQueryClient } from "react-query";
 
 const MarriageInclusion = () => {
   const { t } = useTranslation();
- 
+  const { path } = useRouteMatch();
+  const tenantId = Digit.ULBService.getCurrentTenantId();
+  let history = useHistory();
+
   const [payload, setPayload] = useState({});
 
   function onSubmit(_data) {
@@ -43,37 +46,33 @@ const MarriageInclusion = () => {
     );
   }
 
-  const configTemp = {
-    enabled: !!(payload && Object.keys(payload).length > 0),
+  const gotoEditCorrection = async (data) => {
+    history.push({
+      pathname: `/digit-ui/citizen/cr/marriage-correction-edit/marriage-registration-correction`,
+      state: { marriageCorrectionData: data },
+    });
   };
 
-  const { data: { deathCertificateDtls: searchResult, Count: count } = {}, isLoadingData, isSuccess } = Digit.Hooks.cr.useRegistrySearchDeath({
+  const config = {
+    enabled: !!(payload && Object.keys(payload).length > 0),
+    };
+
+  const SearchMarriageInclusion = Digit.ComponentRegistryService.getComponent("SearchMarriageInclusion");
+
+  const { data: { MarriageDetails: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useRegistrySearchMarriage({
     filters: payload,
-    configTemp,
+    config,
   });
-  useEffect(() => {
-    console.log("searchResult", searchResult);
-  }, [searchResult, isLoadingData]);
-  //   let payloadData = { id: isSuccess && searchResult[0]?.id, source: "sms" };
-  //   let registryPayload = Object.keys(payloadData)
-  //     .filter((k) => payloadData[k])
-  //     .reduce((acc, key) => ({ ...acc, [key]: typeof payloadData[key] === "object" ? payloadData[key].code : payloadData[key] }), {});
-  //   const { data:  { filestoreId: storeId } = {} } = Digit.Hooks.cr.useRegistryDownloadDeath({  filters: registryPayload, config });
 
   return (
-    <React.Fragment>
-      <BackButton>{t("CS_COMMON_BACK2")}</BackButton>
-        <SearchMarriageInclusion
-          t={t}
-          onSubmit={onSubmit}
-          data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : { display: "ES_COMMON_NO_DATA" }) : ""}
-          // filestoreId={storeId}
-          // isSuccess={isSuccess}
-          // isLoading={isLoading}
-          count={count}
-          // onClick={handleClick}
-        />
-    </React.Fragment>
+    <SearchMarriageInclusion
+      t={t}
+      tenantId={tenantId}
+      onSubmit={onSubmit}
+      data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : { display: "ES_COMMON_NO_DATA" }) : ""}
+      count={count}
+      onCorrectionClick={gotoEditCorrection}
+    />
   );
 };
 

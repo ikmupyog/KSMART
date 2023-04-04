@@ -13,7 +13,7 @@ const ApplicationDetails = () => {
   const { id: applicationNumber } = useParams();
   const [showToast, setShowToast] = useState(null);
   // const [callUpdateService, setCallUpdateValve] = useState(false);
-  const [businessService, setBusinessService] = useState(""); //DIRECTRENEWAL BIRTHHOSP21
+  const [businessService, setBusinessService] = useState("BIRTHHOSP21"); //DIRECTRENEWAL BIRTHHOSP21
   const [numberOfApplications, setNumberOfApplications] = useState([]);
   const [allowedToNextYear, setAllowedToNextYear] = useState(false);
   sessionStorage.setItem("applicationNumber", applicationNumber);
@@ -33,16 +33,6 @@ const ApplicationDetails = () => {
 
   // let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
   // console.log(applicationDetails?.applicationData?.applicationtype);
-
-  useEffect(()=>{
-    if(applicationDetails?.applicationData?.workflowcode && window.location.href.includes("/application-Adoptiondetails")){
-      setBusinessService(applicationDetails?.applicationData?.workflowcode)
-    }else if(window.location.href.includes("/application-details")){
-      setBusinessService("BIRTHHOSP21")
-    }else{
-      setBusinessService("")
-    }
-  },[applicationDetails])
 
   let workflowDetails = Digit.Hooks.useWorkflowDetails({
     tenantId: applicationDetails?.applicationData.tenantid || tenantId,
@@ -76,23 +66,6 @@ const ApplicationDetails = () => {
     }
   }, [workflowDetails.data]);
 
-  useEffect(()=>{
-    if(window.location.href.includes("/application-Adoptiondetails")){
-      let appData ={}
-      appData.AdoptionChildDetails =applicationDetails?.applicationData,
-      appData.AdoptionParentsDetails =applicationDetails?.applicationData?.ParentsDetails,
-      appData.AdoptionAddressBasePage =applicationDetails?.applicationData?.AddressBirthDetails,
-      appData.AdoptionInitiatorDetails =applicationDetails?.applicationData?.InitiatorinfoDetails,
-      setParams(appData)
-      let tmp =applicationDetails
-      tmp?.applicationDetails?.splice(0,1,{title : "CR_ADOPTION_SUMMARY_DETAILS",asSectionHeader:  true })
-      setFlag(true)
-    }else{
-      let tmp =applicationDetails
-      tmp?.applicationDetails?.splice(0,1,{asSectionHeader:  true ,title : "CR_BIRTH_SUMMARY_DETAILS"})
-      setFlag(false)
-    }
-  },[applicationDetails])
   if (workflowDetails?.data?.processInstances?.length > 0) {
     let filteredActions = [];
     filteredActions = get(workflowDetails?.data?.processInstances[0], "nextActions", [])?.filter((item) => item.action != "ADHOC");
@@ -100,24 +73,14 @@ const ApplicationDetails = () => {
     if ((!actions || actions?.length == 0) && workflowDetails?.data?.actionState) workflowDetails.data.actionState.nextActions = [];
 
     workflowDetails?.data?.actionState?.nextActions?.forEach(data => {
+      console.log(data.action);
       if (data.action == "EDIT") {
-        // /digit-ui/employee/cr/cr-flow/child-details/${applicationNumber}
-        if(window.location.href.includes("/application-Adoptiondetails")){
-         
+        // /digit-ui/employee/cr/cr-flow/child-details/${applicationNumber}      
           data.redirectionUrl = {
-            pathname: `/digit-ui/employee/cr/cr-adoptionflow`,
-            state: {applicationDetails,isEdit:true}
-          },
-
-            data.tenantId = stateId
-        }else if((window.location.href.includes("/application-details"))){
-          data.redirectionUrl = {
-            pathname: `/digit-ui/employee/cr/cr-flow/child-details`,
+            pathname: `/digit-ui/employee/cr/create-birth/child-details`,
             state: applicationDetails,
           },
             data.tenantId = stateId
-        }
-        
         
       }
     });

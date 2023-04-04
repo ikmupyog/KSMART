@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCountry, setaddressCountry,
     presentaddressStateName, setaddressStateName, value, setValue, countryvalue, setCountryValue,
     permtaddressCountry, setpermtaddressCountry, permtaddressStateName, setpermtaddressStateName, isPrsentAddress,
-    setIsPrsentAddress, Villagevalues, setLbsVillagevalue, isEditBirth = false, isEditDeath = false, presentOutsideKeralaDistrict,
+    setIsPrsentAddress, Villagevalues, setLbsVillagevalue, isEditBirth = false, isEditDeath = false,isEditStillBirth=false, presentOutsideKeralaDistrict,
     setoutsideKeralaDistrict
 }) => {
     const stateId = Digit.ULBService.getStateId();
@@ -21,7 +21,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
     const { data: State = {}, isStateLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
     const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
     const [isInitialRender, setIsInitialRender] = useState(true);
-    const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : false);
+    const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : isEditStillBirth ? isEditStillBirth :  false);
 
     let cmbLB = [];
     let cmbCountry = [];
@@ -57,7 +57,6 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
         if (isInitialRender) {
             if (cmbLB.length > 0) {
                 currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
-                console.log(currentLB);
                 // setAdrsLBName(currentLB[0]);
                 cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
                 setaddressCountry(cmbFilterCountry[0]);
@@ -96,6 +95,19 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
             if (cmbState.length > 0 && (presentaddressStateName === undefined || presentaddressStateName === "")) {
                 setaddressStateName(cmbState.filter(cmbState => cmbState.code === formData?.AddressBirthDetails?.presentaddressStateName)[0]);
                 setValue(value.formData?.AddressBirthDetails?.presentaddressStateName);
+            }
+        }
+    } else if (isEditStillBirth) {
+        if (formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressCountry != null) {
+            if (cmbCountry.length > 0 && (presentaddressCountry === undefined || presentaddressCountry === "")) {
+                setaddressCountry(cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressCountry)[0]);
+                setCountryValue(value.formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressCountry);
+            }
+        }
+        if (formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressStateName != null) {
+            if (cmbState.length > 0 && (presentaddressStateName === undefined || presentaddressStateName === "")) {
+                setaddressStateName(cmbState.filter(cmbState => cmbState.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressStateName)[0]);
+                setValue(value.formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressStateName);
             }
         }
     }

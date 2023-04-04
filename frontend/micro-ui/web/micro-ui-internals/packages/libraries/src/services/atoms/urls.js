@@ -104,7 +104,8 @@ const Urls = {
     createpde:"/tl-services/pde/_create",
     searchpde:"/tl-services/pde/_search",
     updatepde:"/tl-services/pde/_update",
-    updatepdewf: "/tl-services/pde/_updatewf"
+    updatepdewf: "/tl-services/pde/_updatewf",
+    createcorrection: "/tl-services/correction/_create",
   },
   cr: {
     create: "/birth-services/cr/createbirth",
@@ -117,10 +118,34 @@ const Urls = {
     registry_search_birth: "/birth-services/cr/registry/_search",
     create_adoption:'/birth-services/cr/createadoption'    
   },
+  crNAC: {
+    create: "/birth-services/cr/createnac",
+    // search:"/birth-services/cr/searchbirth",
+    // adoption_search:'/birth-services/cr/searchadoption',
+    // adoption_update:'/birth-services/cr/updateadoption',
+    // update:"/birth-services/cr/updatebirth",   
+    // download_pdf: "/egov-pdf/download/CR/",
+    // registry_download: "/birth-services/cr/registry/_download", 
+    // registry_search_birth: "/birth-services/cr/registry/_search",
+    // create_adoption:'/birth-services/cr/createadoption'    
+  },
   crstillbirth: {
     create: "/birth-services/cr/createstillbirth",
     search:"/birth-services/cr/searchstillbirth",
     update:"/birth-services/cr/updatestillbirth",  
+  },
+  crnacbirth: {
+    create: "/birth-services/cr/createnac",
+  },
+  crbornoutsideindiabirth: {
+    create: "/birth-services/cr/createbornoutside",
+    search:"/birth-services/cr/searchbornoutside",
+    update:"/birth-services/cr/updatebornoutside",  
+  },
+  crabandonedbirth: {
+    create: "/birth-services/cr/createbornoutside",
+    search:"/birth-services/cr/searchbornoutside",
+    update:"/birth-services/cr/updatebornoutside",  
   },
   crdeath: {
     create: "/death-services/v1/deathdetails/_createdeath ",
@@ -132,8 +157,9 @@ const Urls = {
   },
   crmarriage: {
     create: "/birth-services/cr/createbirth",
-    search:"/birth-services/cr/searchbirth",
+    search:"/marriage-services/v1/marriagedetails/search",
     update:"/birth-services/cr/updatebirth",  
+    registry_search_marriage:"/marriage-services/v1/marriagedetails/_searchregistry",
   },
   dfm: {
     create: "/filemgmnt/v1/applicantservices/_create",

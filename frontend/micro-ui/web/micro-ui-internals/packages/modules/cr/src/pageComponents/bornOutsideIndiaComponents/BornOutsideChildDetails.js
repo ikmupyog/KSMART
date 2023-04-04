@@ -16,20 +16,21 @@ import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
 // import FormStep from "../../../../../react-components/src/molecules/FormStep";
 
-const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
-  // console.log(JSON.stringify(formData));
+const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditBornOutsideIndia = false }) => {
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
   if (tenantId === "kl") {
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
+  const [DifferenceInDaysRounded, setDifferenceInDaysRounded] = useState();
+  const [workFlowCode, setWorkFlowCode] = useState();
   const { t } = useTranslation();
   let validation = {};
   let Difference_In_DaysRounded = "";
   const { data: Menu, isLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
   const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
-  //const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "WorkFlowBirth");
+  const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "WorkFlowBirth");
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
@@ -44,12 +45,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
       return null;
     }
   };
-  // WorkFlowDetails &&
-  //   WorkFlowDetails["birth-death-service"] && WorkFlowDetails["birth-death-service"].WorkFlowBirth &&
-  //   WorkFlowDetails["birth-death-service"].WorkFlowBirth.map((ob) => {
-  //     workFlowData.push(ob);
-  //     // console.log(workFlowData);
-  //   });
+ 
   let cmbCountry = [];
   Country &&
     Country["common-masters"] &&
@@ -57,21 +53,26 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
       cmbCountry.push(ob);
     });
   let menu = [];
-  // let workFlowData = []
+  let workFlowData = [];
   // let workFlowCode = "BIRTHHOSP21";
   Menu &&
     Menu.map((genderDetails) => {
       menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
     });
 
-  // const [workFlowCode, setWorkFlowCode] = useState();
+    WorkFlowDetails &&
+    WorkFlowDetails["birth-death-service"] && WorkFlowDetails["birth-death-service"].WorkFlowBirth &&
+    WorkFlowDetails["birth-death-service"].WorkFlowBirth.map((ob) => {
+      workFlowData.push(ob);
+    });
 
   const [childDOB, setChildDOB] = useState(formData?.BornOutsideChildDetails?.childDOB ? formData?.BornOutsideChildDetails?.childDOB : "");
   const [gender, selectGender] = useState(formData?.BornOutsideChildDetails?.gender);
 
   const [childAadharNo, setChildAadharNo] = useState(
-    formData?.BornOutsideChildDetails?.childAadharNo ? formData?.BornOutsideChildDetails?.childAadharNo : ""
+    formData?.BornOutsideChildDetails?.childAadharNo ? formData?.BornOutsideChildDetails?.childAadharNo : null
   );
+  const [DifferenceInTime, setDifferenceInTime] = useState(formData?.BornOutsideChildDetails?.DifferenceInTime);
   const [childFirstNameEn, setChildFirstNameEn] = useState(
     formData?.BornOutsideChildDetails?.childFirstNameEn ? formData?.BornOutsideChildDetails?.childFirstNameEn : ""
   );
@@ -95,6 +96,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
   const [birthDateTime, setbirthDateTime] = useState(
     formData?.BornOutsideChildDetails?.birthDateTime ? formData?.BornOutsideChildDetails?.birthDateTime : ""
   );
+  const [birthPlace, setbirthPlace] = useState("OUTSIDE_COUNTRY");
   const [childPassportNo, setchildPassportNo] = useState(
     formData?.BornOutsideChildDetails?.childPassportNo ? formData?.BornOutsideChildDetails?.childPassportNo : ""
   );
@@ -117,8 +119,11 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
   const [outsideBirthPlaceError, setoutsideBirthPlaceError] = useState(formData?.BornOutsideChildDetails?.outsideBirthPlaceError ? false : false);
   const [DOBError, setDOBError] = useState(formData?.BornOutsideChildDetails?.childDOB ? false : false);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
+  const [isChildName, setIsChildName] = useState(formData?.ChildDetails?.isChildName ? formData?.ChildDetails?.isChildName : false);
 
   const [access, setAccess] = React.useState(true);
+
+  const filteredCountries = cmbCountry.filter(country=>country.name !== "India ")
 
   const onSkip = () => onSelect();
 
@@ -141,6 +146,20 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
       );
     }
   }
+  function setChildName(e) {
+    if (e.target.checked === true) {
+      setIsChildName(e.target.checked);
+
+    } else {
+      setIsChildName(e.target.checked);
+      setChildFirstNameEn("");
+      setChildMiddleNameEn("");
+      setChildLastNameEn("");
+      setChildFirstNameMl("");
+      setChildMiddleNameMl("");
+      setChildLastNameMl("");
+    }
+  }
   // function setSelectpostCode(e) {
   //   if (e.target.value.length != 0) {
   //     if (e.target.value.length > 6) {
@@ -157,11 +176,8 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
   const handleTimeChange = (value, cb) => {
     if (typeof value === "string") {
       cb(value);
-      console.log(cb);
-      console.log(value);
       let hour = value;
       let period = hour > 12 ? "PM" : "AM";
-      console.log(period);
       setbirthDateTime(value);
     }
   };
@@ -192,7 +208,6 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
       let Difference_In_Time = today.getTime() - birthDate.getTime();
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       let Difference_In_DaysRounded = Math.floor(Difference_In_Days);
-      // console.log(Difference_In_DaysRounded);
     }
   }
   // function setselectChildDOB(value) {
@@ -200,8 +215,32 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
   // }
   function setselectchildArrivalDate(value) {
     setchildArrivalDate(value);
-  }
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const childArrivalDate = new Date(value);
+    childArrivalDate.setHours(0, 0, 0, 0);
+    
+    if (childArrivalDate.getTime() <= today.getTime()) {
+      
+      setDOBError(false);
+      // To calculate the time difference of two dates
+      let Difference_In_Time = today.getTime() - childArrivalDate.getTime();
+      // console.log("Difference_In_Time" + Difference_In_Time);
+      setDifferenceInTime(today.getTime() - childArrivalDate.getTime());
+      let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+      // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
+      setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
+      if (birthPlace) {
+        let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
+        console.log("currentWorgFlowDOB" + currentWorgFlow);
+        if (currentWorgFlow.length > 0) {
+          // console.log(currentWorgFlow[0].WorkflowCode);
+          setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+        }
+      }
 
+  }
+  }
   function setSelectChildFirstNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
       setChildFirstNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
@@ -258,6 +297,8 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
       );
     }
   }
+
+
   // function setSelectChildAadharNo(e) {
   //   // setContactno(e.target.value.length<=10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
   //   if (e.target.value.length != 0) {
@@ -282,7 +323,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
   // }
 
   function setSelectPassportNo(e) {
-    setchildPassportNo(e.target.value);
+    setchildPassportNo(e.target.value.length<=8 ? e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '') : (e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '').substring(0, 8)))
   }
 
   function setSelectprovinceEn(e) {
@@ -334,6 +375,9 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
       } else {
         setAadharError(false);
       }
+    }
+    else{
+      setAadharError(false);
     }
     if (ChildPassportError) {
       validFlag = false;
@@ -388,34 +432,35 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
     }
 
     if (validFlag == true) {
-      sessionStorage.setItem("stateId", stateId ? stateId : null);
-      sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
-      // sessionStorage.setItem("workFlowCode", workFlowCode);
-      sessionStorage.setItem("childDOB", childDOB ? childDOB : null);
-      sessionStorage.setItem("birthDateTime", birthDateTime ? birthDateTime : null);
-      sessionStorage.setItem("gender", gender ? gender.code : null);
-      sessionStorage.setItem("childAadharNo", childAadharNo ? childAadharNo : null);
-      sessionStorage.setItem("childPassportNo", childPassportNo ? childPassportNo : null);
-      sessionStorage.setItem("childArrivalDate", childArrivalDate ? childArrivalDate : null);
-      sessionStorage.setItem("childFirstNameEn", childFirstNameEn ? childFirstNameEn : null);
-      sessionStorage.setItem("childMiddleNameEn", childMiddleNameEn ? childMiddleNameEn : null);
-      sessionStorage.setItem("childLastNameEn", childLastNameEn ? childLastNameEn : null);
-      sessionStorage.setItem("childFirstNameMl", childFirstNameMl ? childFirstNameMl : null);
-      sessionStorage.setItem("childMiddleNameMl", childMiddleNameMl ? childMiddleNameMl : null);
-      sessionStorage.setItem("childLastNameMl", childLastNameMl ? childLastNameMl : null);
-      sessionStorage.setItem("provinceEn", provinceEn ? provinceEn : null);
-      sessionStorage.setItem("cityTown", cityTown ? cityTown : null);
-      sessionStorage.setItem("postCode", postCode ? postCode : null);
-      sessionStorage.setItem("outsideBirthPlace",  outsideBirthPlace ? outsideBirthPlace : null);
-      sessionStorage.setItem("country", country  ?  country.code : null);
+      // sessionStorage.setItem("stateId", stateId ? stateId : null);
+      // sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
+      // // sessionStorage.setItem("workFlowCode", workFlowCode);
+      // sessionStorage.setItem("childDOB", childDOB ? childDOB : null);
+      // sessionStorage.setItem("birthDateTime", birthDateTime ? birthDateTime : null);
+      // sessionStorage.setItem("gender", gender ? gender.code : null);
+      // sessionStorage.setItem("childAadharNo", childAadharNo ? childAadharNo : null);
+      // sessionStorage.setItem("childPassportNo", childPassportNo ? childPassportNo : null);
+      // sessionStorage.setItem("childArrivalDate", childArrivalDate ? childArrivalDate : null);
+      // sessionStorage.setItem("childFirstNameEn", childFirstNameEn ? childFirstNameEn : null);
+      // sessionStorage.setItem("childMiddleNameEn", childMiddleNameEn ? childMiddleNameEn : null);
+      // sessionStorage.setItem("childLastNameEn", childLastNameEn ? childLastNameEn : null);
+      // sessionStorage.setItem("childFirstNameMl", childFirstNameMl ? childFirstNameMl : null);
+      // sessionStorage.setItem("childMiddleNameMl", childMiddleNameMl ? childMiddleNameMl : null);
+      // sessionStorage.setItem("childLastNameMl", childLastNameMl ? childLastNameMl : null);
+      // sessionStorage.setItem("provinceEn", provinceEn ? provinceEn : null);
+      // sessionStorage.setItem("cityTown", cityTown ? cityTown : null);
+      // sessionStorage.setItem("postCode", postCode ? postCode : null);
+      // sessionStorage.setItem("outsideBirthPlace",  outsideBirthPlace ? outsideBirthPlace : null);
+      // sessionStorage.setItem("country", country  ?  country.code : null);
 
       onSelect(config.key, {
         stateId,
         tenantId,
-        // workFlowCode,
+        workFlowCode,
         childDOB,
         birthDateTime,
         gender,
+        birthPlace,
         childAadharNo,
         childPassportNo,
         childArrivalDate,
@@ -433,6 +478,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
       });
     }
   };
+
   const convertEpochToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
@@ -448,7 +494,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
     }
   };
 
-  if (isLoading || isCountryLoading) {
+  if (isLoading || isCountryLoading || isWorkFlowDetailsLoading) {
     return <Loader></Loader>;
   } else {
     return (
@@ -456,7 +502,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
         <BackButton>{t("CS_COMMON_BACK")}</BackButton>
         {window.location.href.includes("/citizen") ? <Timeline /> : null}
         {window.location.href.includes("/employee") ? <Timeline /> : null}
-        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!childAadharNo}>
+        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!childPassportNo }>
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-12">
@@ -483,7 +529,8 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
                   inputProps={{
                     maxLength: 12,
                   }}
-                  {...(validation = { pattern: "^[0-9]{12}$", type: "test", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                  {...(validation = { pattern: "^[0-9]{12}$",
+                  isRequired:false, type: "test", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                 />
               </div>
 
@@ -527,6 +574,47 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
           </div>
           <div className="row">
             <div className="col-md-12">
+              <div className="col-md-3">
+                <CardLabel>
+                  {t("CR_DATE_OF_BIRTH_TIME")}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <DatePicker
+                  date={childDOB}
+                  name="childDOB"
+                  max={convertEpochToDate(new Date())}
+                  // min={childDOB ? childDOB : convertEpochToDate("1900-01-01")}
+                  onChange={setselectChildDOB}
+                  inputFormat="DD-MM-YYYY"
+                  placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
+                  {...(validation = { isRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
+                />
+              </div>
+
+              <div className="col-md-2">
+                <CardLabel>{t("CR_TIME_OF_BIRTH")}</CardLabel>
+                <CustomTimePicker name="birthDateTime" onChange={(val) => handleTimeChange(val, setbirthDateTime)} value={birthDateTime} />
+              </div>
+              <div className="col-md-3">
+                <CardLabel>
+                  {`${t("CR_GENDER")}`}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="code"
+                  isMandatory={true}
+                  option={menu}
+                  selected={gender}
+                  select={setselectGender}
+                  placeholder={`${t("CR_GENDER")}`}
+                  {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
               <div className="col-md-12">
                 <h1 className="headingh1">
                   <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_CHILD_INFO")}`}</span>{" "}
@@ -534,6 +622,16 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
               </div>
             </div>
           </div>
+          <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-6">
+                <CheckBox label={t("CR_WANT_TO_ENTER_CHILD_NAME")} onChange={setChildName}
+                  value={isChildName} checked={isChildName} />
+              </div>
+            </div>
+          </div>
+          {isChildName === true && (
+            <div>
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-4">
@@ -654,48 +752,9 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
                 />
               </div>
             </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12">
-              <div className="col-md-3">
-                <CardLabel>
-                  {t("CR_DATE_OF_BIRTH_TIME")}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <DatePicker
-                  date={childDOB}
-                  name="childDOB"
-                  max={convertEpochToDate(new Date())}
-                  // min={childDOB ? childDOB : convertEpochToDate("1900-01-01")}
-                  onChange={setselectChildDOB}
-                  inputFormat="DD-MM-YYYY"
-                  placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
-                  {...(validation = { isRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
-                />
-              </div>
-
-              <div className="col-md-2">
-                <CardLabel>{t("CR_TIME_OF_BIRTH")}</CardLabel>
-                <CustomTimePicker name="birthDateTime" onChange={(val) => handleTimeChange(val, setbirthDateTime)} value={birthDateTime} />
-              </div>
-              <div className="col-md-3">
-                <CardLabel>
-                  {`${t("CR_GENDER")}`}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <Dropdown
-                  t={t}
-                  optionKey="code"
-                  isMandatory={true}
-                  option={menu}
-                  selected={gender}
-                  select={setselectGender}
-                  placeholder={`${t("CR_GENDER")}`}
-                  {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })}
-                />
-              </div>
             </div>
-          </div>
+          </div>)}
+       
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-12">
@@ -716,7 +775,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
             <Dropdown
               t={t}
               optionKey="name"
-              option={cmbCountry}
+              option={filteredCountries}
               selected={country}
               select={setSelectcountry}
               placeholder={`${t("CS_COMMON_COUNTRY")}`}
@@ -763,9 +822,9 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData }) => {
                {...(validation = {
                 pattern: "^[a-zA-Z-.0-9`' ]*$",
                 isRequired: true,
-                type: "number",
-                // max: 6,
-                // min: 6,
+                type: "text",
+                max: 6,
+                min: 6,
                 title: t("CR_INVALID_ZIP_CODE"),
               })}
             />
