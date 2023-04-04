@@ -5,43 +5,48 @@ import {
   PopUp,
   UploadFile,
   TextInput,
-  // DatePicker,
-  // Dropdown,
+  DatePicker,
+  Dropdown,
   FormStep,
   LinkButton,
+  BackButton,
   EditIcon,
+  Loader,
 } from "@egovernments/digit-ui-react-components";
-import DatePicker from "../../../../../react-components/src/atoms/DatePicker";
-import Dropdown from "../../../../../react-components/src/atoms/Dropdown";
-import FormFieldContainer from "../../components/FormFieldContainer";
+import FormFieldContainer from "../../../components/FormFieldContainer";
 import { useTranslation } from "react-i18next";
-import Hospital from "./Hospital";
-import Institution from "./Institution";
-import DeathPlaceHome from "./DeathPlaceHome";
-import DeathPlaceVehicle from "./DeathPlaceVehicle";
-import DeathPublicPlace from "./DeathPublicPlace";
-import DeathOutsideJurisdiction from "./DeathOutsideJurisdiction ";
-import CustomTimePicker from "../../components/CustomTimePicker";
-import DeathCorrectionModal from "../../components/DeathCorrectionModal";
+import Hospital from "../Hospital";
+import Institution from "../Institution";
+import DeathPlaceHome from "../DeathPlaceHome";
+import DeathPlaceVehicle from "../DeathPlaceVehicle";
+import DeathPublicPlace from "../DeathPublicPlace";
+import DeathOutsideJurisdiction from "../DeathOutsideJurisdiction ";
+import DeathCorrectionModal from "../../../components/DeathCorrectionModal";
+import { DEATH_CORRECTION_FIELD_NAMES } from "../../../config/constants";
+import { initializedDeathCorrectionObject } from "../../../config/globalObject";
 import { useLocation } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
 import moment from "moment";
 
-function DeathCorrectionEditPage({ formData, isEditDeath }) {
+function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, menu, cmbPlace , BirthCorrectionDocuments,navigationData}) {
   const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false);
   const stateId = Digit.ULBService.getStateId();
   const [uploadStatus, setUploadStatus] = useState({
     approvedPhotoId: false,
   });
+  const [selectedCorrectionItem, setSelectedCorrectionItem] = useState([]);
+  
+  let deathCorrectionFormData = {};
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
   const [value, setValue1] = useState(0);
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isInitialRenderDeathPlace, setIsInitialRenderDeathPlace] = useState(true);
   const [isInitialMdmsServiceCompleted, setIsInitialMdmsServiceCompleted] = useState(false);
+  const [deathCorrectionFormsObj, setDeathCorrectionFormsObj] = useState(false);
+
 
   let location = useLocation();
-  let navigationData = location?.state?.correctionData;
 
   let validation = {};
 
@@ -71,34 +76,8 @@ function DeathCorrectionEditPage({ formData, isEditDeath }) {
       key: "name",
     },
   ];
-  const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PlaceMasterDeath");
-  const { data: Menu, isGenderLoad } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
-  const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
+ 
 
-  let cmbPlace = [];
-  let menu = [];
-  let cmbNation = [];
-  let cmbState = [];
-  let cmbfilterNation = [];
-  let cmbfilterNationI = [];
-  let naturetype = null;
-
-  place &&
-    place["common-masters"] &&
-    place["common-masters"].PlaceMasterDeath &&
-    place["common-masters"].PlaceMasterDeath.map((ob) => {
-      cmbPlace.push(ob);
-    });
-  Menu &&
-    Menu.map((genderDetails) => {
-      menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
-    });
-  Nation &&
-    Nation["common-masters"] &&
-    Nation["common-masters"].Country &&
-    Nation["common-masters"].Country.map((ob) => {
-      cmbNation.push(ob);
-    });
 
   const [DeathPlaceType, selectDeathPlaceType] = useState(
     formData?.InformationDeath?.DeathPlaceType?.code
@@ -145,29 +124,6 @@ function DeathCorrectionEditPage({ formData, isEditDeath }) {
       ? cmbNation.filter((cmbNation) => cmbNation.code === formData?.InformationDeath?.Nationality)[0]
       : ""
   );
-
-  useEffect(() => {
-    if (isInitialRender) {
-      if (Nationality == null || Nationality == "") {
-        if (stateId === "kl" && cmbNation.length > 0) {
-          cmbfilterNation = cmbNation.filter((cmbNation) => cmbNation.nationalityname.includes("Indian"));
-          setSelectedNationality(cmbfilterNation[0]);
-        }
-      }
-      if (DeathPlaceCountry == null || DeathPlaceCountry == "") {
-        if (stateId === "kl" && cmbNation.length > 0) {
-          cmbfilterNationI = cmbNation.filter((cmbNation) => cmbNation.name.includes("India"));
-          setSelectDeathPlaceCountry(cmbfilterNationI[0]);
-        }
-      }
-      if (DeathPlaceState == null || DeathPlaceState == "") {
-        if (stateId === "kl" && cmbState.length > 0) {
-          cmbFilterState = cmbState.filter((cmbState) => cmbState.name != "Kerala");
-          SelectDeathPlaceState(cmbFilterState);
-        }
-      }
-    }
-  }, [Nation, isInitialRender]);
 
   // Home
   const [DeathPlaceHomePostofficeId, setDeathPlaceHomepostofficeId] = useState(
@@ -233,29 +189,38 @@ function DeathCorrectionEditPage({ formData, isEditDeath }) {
 
   const [AadharError, setAadharError] = useState(formData?.InformationDeath?.DeceasedAadharNumber ? false : false);
 
-  useEffect(() => {
-    if (isInitialRender) {
-      if (Nationality == null || Nationality == "") {
-        if (stateId === "kl" && cmbNation.length > 0) {
-          cmbfilterNation = cmbNation.filter((cmbNation) => cmbNation.nationalityname.includes("Indian"));
-          setSelectedNationality(cmbfilterNation[0]);
-        }
-      }
 
-      if (DeathPlaceCountry == null || DeathPlaceCountry == "") {
-        if (stateId === "kl" && cmbNation.length > 0) {
-          cmbfilterNationI = cmbNation.filter((cmbNation) => cmbNation.name.includes("India"));
-          setSelectDeathPlaceCountry(cmbfilterNationI[0]);
-        }
-      }
-      if (DeathPlaceState == null || DeathPlaceState == "") {
-        if (stateId === "kl" && cmbState.length > 0) {
-          cmbFilterState = cmbState.filter((cmbState) => cmbState.name != "Kerala");
-          SelectDeathPlaceState(cmbFilterState);
-        }
-      }
-    }
-  }, [Nation, isInitialRender]);
+  
+  useEffect(async()=>{
+    deathCorrectionFormData = await initializedDeathCorrectionObject(BirthCorrectionDocuments,navigationData);
+    await setDeathCorrectionFormsObj(deathCorrectionFormData);
+   console.log("deathCorrectionFormData==",deathCorrectionFormData);
+ },[navigationData,BirthCorrectionDocuments])
+
+ console.log("navigationData",navigationData);
+
+  const setDeathCorrectionFilterQuery = (fieldId) => {
+    console.log("deathCorrectionFormData--------",deathCorrectionFormsObj,fieldId);
+    let selectedDeathCorrectionData = deathCorrectionFormsObj[fieldId];
+    console.log("birthInclusionData",selectedDeathCorrectionData);
+    setSelectedCorrectionItem(selectedDeathCorrectionData);
+    setShowModal(true);
+  };
+
+  const ButtonContainer = ({children}) => {
+    return <div className="col-md-3">{children}</div>;
+  };
+
+ 
+const onUploadDocSubmit = async (fileData) => {
+    console.log("upload response==", fileData);
+    let tempObj = {...deathCorrectionFormsObj};
+    let {CHILD_DOB} = tempObj;
+    tempObj={...tempObj,CHILD_DOB:{...CHILD_DOB,isFocused : true,isDisabled : false}};
+    setDeathCorrectionFormsObj(tempObj);
+      setShowModal(false);
+    };
+
 
   if (
     isEditDeath &&
@@ -606,41 +571,17 @@ function DeathCorrectionEditPage({ formData, isEditDeath }) {
     return selectedDeathPlace;
   };
   console.log(cmbPlace);
-  useEffect(() => {
-    console.log("navigationData==", navigationData);
-    // if (isInitialMdmsServiceCompleted) {
-      console.log("reset");
-      reset({
-        DeceasedAadharNumber: navigationData?.InformantDetails?.InformantAadharNo,
-        DeceasedFirstNameEn: navigationData?.InformationDeath?.DeceasedFirstNameEn,
-        DeceasedMiddleNameEn: navigationData?.InformationDeath?.DeceasedMiddleNameEn,
-        DeceasedLastNameEn: navigationData?.InformationDeath?.DeceasedLastNameEn,
-        DeceasedFirstNameMl: navigationData?.InformationDeath?.DeceasedFirstNameMl,
-        DeceasedMiddleNameMl: navigationData?.InformationDeath?.DeceasedMiddleNameMl,
-        DeceasedLastNameMl: navigationData?.InformationDeath?.DeceasedLastNameMl,
-        selectDeathPlace:  navigationData?.InformationDeath?.DeathPlace,
-        selectDeceasedGender: navigationData?.InformationDeath?.DeceasedGender,
-        DeceasedMotherNameEn: navigationData?.FamilyInformationDeath?.MotherNameEn,
-        DeceasedMotherNameMl: navigationData?.FamilyInformationDeath?.MotherNameMl,
-        DeceasedFatherNameEn: navigationData?.FamilyInformationDeath?.FatherNameEn,
-        DeceasedFatherNameMl: navigationData?.FamilyInformationDeath?.FatherNameMl,
-        DeceasedSpouseEn: navigationData?.FamilyInformationDeath?.SpouseNameEn,
-        DeceasedSpouseMl: navigationData?.FamilyInformationDeath?.SpouseNameMl,
-        DeceasedHouseNameEn: navigationData?.AddressBirthDetails?.PermanentAddrHoueNameEn,
-        DeceasedLocalityEn: navigationData?.AddressBirthDetails?.PermanentAddrLocalityEn,
-        DeceasedStreet: navigationData?.AddressBirthDetails?.PermanentAddrStreetNameEn,
-        DeceasedStreetMl: navigationData?.AddressBirthDetails?.PermanentAddrStreetNameMl,
-        DateOfDeath: moment(navigationData?.InformationDeath?.DateOfDeath).format("DD-MM-YYYY"),
-      });
-    // }
-  }, [navigationData,isInitialMdmsServiceCompleted]);
 
   // useEffect(() => {
   //   console.log("DeathPlace==", DeathPlace);
   // }, [DeathPlace]);
 
+  if(Object.keys(deathCorrectionFormsObj)?.length > 0){
+    console.log("deathCorrectionFormData??.curValue",deathCorrectionFormsObj?.DECEASED_FIRST_NAME);
+
   return (
     <React.Fragment>
+      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       <FormStep
        t={t}
         >
@@ -660,10 +601,10 @@ function DeathCorrectionEditPage({ formData, isEditDeath }) {
                 <CardLabel>{t("CR_AADHAR")}</CardLabel>
                 <TextInput
                   t={t}
-                  inputRef={register({})}
                   isMandatory={false}
                   optionKey="i18nKey"
                   name="DeceasedAadharNumber"
+                  value={deathCorrectionFormData?.DECEASED_AADHAR?.curValue} 
                   // value={navigationData.InformantDetails.InformantAadharNo}
                   // onChange={setSelectDeceasedAadharNumber}
                   placeholder={`${t("CR_AADHAR")}`}
@@ -671,7 +612,7 @@ function DeathCorrectionEditPage({ formData, isEditDeath }) {
                 />
               </div>
             </FieldComponentContainer>
-            <div style={{ marginTop: "2.8rem" }}>
+            {/* <div style={{ marginTop: "2.8rem" }}>
               <LinkButton
                 label={<EditIcon selected={true} label={"Edit"} />}
                 style={{ width: "100px", display: "inline" }}
@@ -679,7 +620,17 @@ function DeathCorrectionEditPage({ formData, isEditDeath }) {
                   setShowModal(true);
                 }}
               />
-            </div>
+            </div> */}
+            <div style={{ marginTop: "2.8rem" }}>
+          <ButtonContainer>
+            <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["CHILD_DOB"])}>
+            <EditIcon
+              selected={true}
+              label={"Edit"}
+            />
+            </span>
+          </ButtonContainer>
+        </div>
           </FormFieldContainer>
           <FormFieldContainer>
             <FieldComponentContainer>
@@ -692,8 +643,8 @@ function DeathCorrectionEditPage({ formData, isEditDeath }) {
                   type={"text"}
                   optionKey="i18nKey"
                   name="DeceasedFirstNameEn"
-                  // value={navigationData.InformationDeath.DeceasedFirstNameEn}
-                  // onChange={setSelectDeceasedFirstNameEn}
+                  value={deathCorrectionFormsObj?.DECEASED_FIRST_NAME?.curValue} 
+                    // onChange={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_FIRST_NAME_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
@@ -707,7 +658,7 @@ function DeathCorrectionEditPage({ formData, isEditDeath }) {
                   type={"text"}
                   optionKey="i18nKey"
                   name="DeceasedMiddleNameEn"
-                  // value={navigationData.InformationDeath.DeceasedMiddleNameEn}
+                  value={deathCorrectionFormData?.DECEASED_MIDDLE_NAME?.curValue} 
                   // onChange={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -730,7 +681,7 @@ function DeathCorrectionEditPage({ formData, isEditDeath }) {
               </div>
             </FieldComponentContainer>
 
-            <div style={{ marginTop: "2.8rem" }}>
+            {/* <div style={{ marginTop: "2.8rem" }}>
               <LinkButton
                 label={<EditIcon selected={true} label={"Edit"} />}
                 style={{ width: "100px", display: "inline" }}
@@ -738,7 +689,17 @@ function DeathCorrectionEditPage({ formData, isEditDeath }) {
                   setShowModal(true);
                 }}
               />
-            </div>
+            </div> */}
+              <div style={{ marginTop: "2.8rem" }}>
+          <ButtonContainer>
+          <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["CHILD_NAME"])}>
+            <EditIcon
+              selected={true}
+              label={"Edit"}
+            />
+          </span>
+          </ButtonContainer>
+        </div>
           </FormFieldContainer>
           <FormFieldContainer>
             <FieldComponentContainer>
@@ -751,7 +712,7 @@ function DeathCorrectionEditPage({ formData, isEditDeath }) {
                   type={"text"}
                   optionKey="i18nKey"
                   name="DeceasedFirstNameMl"
-                  value={navigationData.InformationDeath.DeceasedFirstNameMl}
+                  // value={navigationData.InformationDeath.DeceasedFirstNameMl}
                   // onChange={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_FIRST_NAME_ML")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -788,7 +749,7 @@ function DeathCorrectionEditPage({ formData, isEditDeath }) {
                 />
               </div>
             </FieldComponentContainer>
-
+{/* 
             <div style={{ marginTop: "2.8rem" }}>
               <LinkButton
                 label={<EditIcon selected={true} label={"Edit"} />}
@@ -797,7 +758,18 @@ function DeathCorrectionEditPage({ formData, isEditDeath }) {
                   setShowModal(true);
                 }}
               />
-            </div>
+            </div> */}
+            
+        <div style={{ marginTop: "2.8rem" }}>
+          <ButtonContainer>
+          <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["MOTHER_DETAILS"])}>
+            <EditIcon
+              selected={true}
+              label={"Edit"}
+            />
+            </span>
+          </ButtonContainer>
+        </div>
           </FormFieldContainer>
           <FormFieldContainer>
             <FieldComponentContainer>
@@ -807,6 +779,9 @@ function DeathCorrectionEditPage({ formData, isEditDeath }) {
                   // {...register('DateOfDeath')}
                   datePickerRef={register}
                   name="DateOfDeath"
+                  disabled={deathCorrectionFormsObj.CHILD_DOB?.isDisabled}
+                  autofocus={deathCorrectionFormsObj.CHILD_DOB?.isFocused}
+                  date={deathCorrectionFormsObj?.CHILD_DOB?.curValue} 
                   // max={convertEpochToDate(new Date())}
                   // onChange={selectDeathDate}
                   // {...(validation = {
@@ -826,6 +801,7 @@ function DeathCorrectionEditPage({ formData, isEditDeath }) {
                   name="selectDeathPlace"
                   isMandatory={false}
                   option={cmbPlace}
+
                   // selected={DeathPlace}
                   // select={selectDeathPlace}
                   placeholder={`${t("CR_PLACE_OF_DEATH")}`}
@@ -870,7 +846,7 @@ function DeathCorrectionEditPage({ formData, isEditDeath }) {
                 />
               </div>
             </FieldComponentContainer>
-            <div style={{ marginTop: "2.8rem" }}>
+            {/* <div style={{ marginTop: "2.8rem" }}>
               <LinkButton
                 label={<EditIcon selected={true} label={"Edit"} />}
                 style={{ width: "100px", display: "inline" }}
@@ -878,7 +854,17 @@ function DeathCorrectionEditPage({ formData, isEditDeath }) {
                   setShowModal(true);
                 }}
               />
-            </div>
+            </div> */}
+                <div style={{ marginTop: "2.8rem" }}>
+          <ButtonContainer>
+          <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["CHILD_DOB"])}>
+            <EditIcon
+              selected={true}
+              label={"Edit"}
+            />
+            </span>
+          </ButtonContainer>
+        </div>
           </FormFieldContainer>
           {value === "HOSPITAL" && (
             <div>
@@ -1052,7 +1038,7 @@ function DeathCorrectionEditPage({ formData, isEditDeath }) {
               </div>
             </FieldComponentContainer>
 
-            <div style={{ marginTop: "2.8rem" }}>
+            {/* <div style={{ marginTop: "2.8rem" }}>
               <LinkButton
                 label={<EditIcon selected={true} label={"Edit"}  style={{}} />}
                 style={{ width: "100px", display: "inline"}}
@@ -1060,7 +1046,27 @@ function DeathCorrectionEditPage({ formData, isEditDeath }) {
                   setShowModal(true);
                 }}                        
               />
-            </div>
+            </div> */}
+              {/* <div style={{ marginTop: "2.8rem" }}>
+          <ButtonContainer>
+          <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["MOTHER_DETAILS"])}>
+            <EditButton
+              selected={true}
+              label={"Edit"}
+            />
+            </span>
+          </ButtonContainer>
+        </div> */
+        <div style={{ marginTop: "2.8rem" }}>
+        <ButtonContainer>
+        <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["FATHER_DETAILS"])}>
+          <EditIcon
+            selected={true}
+            label={"Edit"}
+          />
+          </span>
+        </ButtonContainer>
+      </div>}
           </FormFieldContainer>
           <FormFieldContainer>
             <FieldComponentContainer>
@@ -1283,10 +1289,13 @@ function DeathCorrectionEditPage({ formData, isEditDeath }) {
       </PopUp>
     )} */}
         </form>
-        <DeathCorrectionModal showModal={showModal}  hideModal={_hideModal}/>
+        <DeathCorrectionModal showModal={showModal} selectedConfig={selectedCorrectionItem}  onSubmit={onUploadDocSubmit} hideModal={_hideModal}/>
       </FormStep>
     </React.Fragment>
   );
-}
-
+    } else{
+      return (<Loader/>)
+    }
+  };
+ 
 export default DeathCorrectionEditPage;
