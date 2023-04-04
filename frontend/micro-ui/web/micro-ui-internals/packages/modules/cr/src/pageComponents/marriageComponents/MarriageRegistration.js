@@ -22,6 +22,7 @@ import { useQueryClient } from "react-query";
 // import { TimePicker } from '@material-ui/pickers';
 
 const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarriage }) => {
+  console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -360,8 +361,8 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     // setAgeMariageStatus(value.code);
   }
   function setSelectmarriageOthersSpecify(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setmarriageOthersSpecify(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setmarriageOthersSpecify(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectmarriageType(value) {
@@ -795,7 +796,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                         onChange={setSelectmarriageOthersSpecify}
                         disable={isDisableEdit}
                         placeholder={`${t("CR_MARRIAGE_OTHER_SPECIFY")}`}
-                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MARRIAGE_OTHER") })}
+                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_MARRIAGE_TYPE_OTHER") })}
                       />
                     </div>
                   )}

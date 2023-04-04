@@ -66,7 +66,6 @@ export const CreateComplaint = () => {
   };
   const submitComplaint = async () => {
     if (paramState?.complaintType) {
-      console.log(paramState?.complaintType["deptCode"]);
       // let deptCode = paramState?.complaintType["deptCode"];
       const { city_complaint, locality_complaint, uploadedImages, complaintType, subType, details, ...values } = paramState;
       const { code: cityCode, name: city } = city_complaint;
@@ -94,7 +93,6 @@ export const CreateComplaint = () => {
         state: stateInfo.name,
         uploadedImages: _uploadImages,
       };
-      console.log(data);
       await dispatch(createComplaint(data));
       await client.refetchQueries(["complaintsList"]);
       history.push(`${match.path}/response`);

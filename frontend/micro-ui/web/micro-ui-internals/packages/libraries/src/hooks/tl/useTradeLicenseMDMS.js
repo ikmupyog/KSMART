@@ -131,6 +131,9 @@ const useTradeLicenseMDMS = (tenantId, moduleCode, type, filter, config = {}) =>
   const useTLPostoffice=()=>{
     return useQuery("TL_POSTOFFICE", () => MdmsService.getCRPostOffice(tenantId, moduleCode, type), config);
   }
+  const useTradeApplicationDoc = () => {
+    return useQuery("TL_TRADE_APPLICATION_DOCUMENTS", () => MdmsService.getTradeApplicationDocuments(tenantId, moduleCode, type), config);
+  };
   const _default = () => {
     return useQuery([tenantId, moduleCode, type], () => MdmsService.getMultipleTypes(tenantId, moduleCode, type), config);
   };
@@ -174,6 +177,8 @@ const useTradeLicenseMDMS = (tenantId, moduleCode, type, filter, config = {}) =>
       return useTLLocalbody();
     case "PostOffice" :
         return useTLPostoffice();
+    case "ApplicationDocuments" :
+      return useTradeApplicationDoc();
     default:
       return _default();
   }
