@@ -14,6 +14,7 @@ import {
   useRecieptSearch,
 } from "./payment";
 import { useUserSearch } from "./userSearch";
+import {useCivilRegMDMS} from "./cr/useCivilRegMDMS";
 import { useApplicationsForBusinessServiceSearch } from "./useApplicationForBillSearch";
 import useBoundaryLocalities from "./useLocalities";
 import useCommonMDMS from "./useMDMS";
@@ -354,6 +355,7 @@ const tl = {
   useTradeLicenseCorrectionAPI
 };
 const cr = {
+  useCivilRegMDMS,
   useTenants: useTenantsCR,
   useCivilRegistrationMDMS,
   useCivilRegistrationAPI,

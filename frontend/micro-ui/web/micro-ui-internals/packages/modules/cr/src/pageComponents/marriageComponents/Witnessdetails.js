@@ -135,6 +135,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   //   const handleOptionChange = (event) => {
   //     setSelectedOption(event.target.value);
   //   };
+  const [toast, setToast] = useState(false);
   const [groomImage, setGroomImage] = useState(null);
   const [brideImage, setBrideImage] = useState(null);
   const [previewGroomImage, setPreviewGroomImage] = useState(null);
@@ -230,40 +231,37 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   //   }
   // }
   function setSelectwitness1AadharNo(e) {
-    if (e.target.value.trim().length >= 0) {
-      setwitness1AadharNo(
-        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
-      );
+    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12)
+   
+    if (newValue === witness2AdharNo) {
+      setwitness1AadharNo("");
+      setAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 3000);
+    } else {
+      setwitness1AadharNo(newValue);
     }
-    // if (e.target.value.length != 0) {
-    //   if (e.target.value.length > 12) {
-    //     // setChildAadharNo(e.target.value);
-    //     setAadharError(true);
-    //     return false;
-    //     // const limit = 12;
-    //     // setChildAadharNo(e.target.value.slice(0, limit));
-    //     // window.alert("Username shouldn't exceed 10 characters")
-    //   } else if (e.target.value.length < 12) {
-    //     setAadharError(true);
-    //     setwitness1AadharNo(e.target.value);
-    //     return false;
-    //   } else {
-    //     setAadharError(false);
-    //     setwitness1AadharNo(e.target.value);
-    //     return true;
-    //   }
-    // } else {
-    //   setAadharError(false);
-    //   setwitness1AadharNo(e.target.value);
-    //   return true;
-    // }
   }
   function setSelectwitness2AdharNo(e) {
-    if (e.target.value.trim().length >= 0) {
-      setwitness2AdharNo(
-        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
-      );
+    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12)
+   
+    if (newValue === witness1AadharNo) {
+      setwitness2AdharNo("");
+      setAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 3000);
+    } else {
+      setwitness2AdharNo(newValue);
     }
+    // if (e.target.value.trim().length >= 0) {
+    //   setwitness2AdharNo(
+    //     e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
+    //   );
+    // }
     // i
     // if (e.target.value.trim().length >= 0) {
     //   setwitness2AdharNo(
@@ -882,6 +880,13 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                   </div>
                 </div>
               </div>
+              {toast && (
+          <Toast
+            error={AadharError}
+            label={AadharError ? (AadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`) : setToast(false)) : setToast(false)}
+            onClose={() => setToast(false)}
+          />
+        )}
             </FormStep>
           </div>
         </div>

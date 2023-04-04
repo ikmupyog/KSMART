@@ -24,10 +24,10 @@ const HouseMarriageRegistration = ({
   userType,
   formData,
   isEditHouseMarriage,
-  otherMarriagePlacenameEn,
-  setotherMarriagePlacenameEn,
-  otherMarriagePlacenameMl,
-  setotherMarriagePlacenameMl,
+  marriagePlacenameEn,
+  setmarriagePlacenameEn,
+  marriagePlacenameMl,
+  setmarriagePlacenameMl,
   marriageLocalityEn,
   setmarriageLocalityEn,
   marriageLocalityMl,
@@ -234,9 +234,9 @@ const HouseMarriageRegistration = ({
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setmarriageLocalityMl("");
+      setmarriageLocalityMl('');
     } else {
-      setmarriageLocalityMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setmarriageLocalityMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
     // setmarriageLocalityMl(value);
     // setAgeMariageStatus(value.code);
@@ -252,27 +252,27 @@ const HouseMarriageRegistration = ({
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setmarriageStreetMl("");
+      setmarriageStreetMl('');
     } else {
-      setmarriageStreetMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setmarriageStreetMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
     // setmarriageStreetMl(value);
     // setAgeMariageStatus(value.code);
   }
   function setSelectOtherMarriagePlacenameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setotherMarriagePlacenameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setmarriagePlacenameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
     // setmarriageHouseNoAndNameEn(value);
     // setAgeMariageStatus(value.code);
   }
-  function selectSetotherMarriagePlacenameMl(e) {
+  function selectSetmarriagePlacenameMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
       setmarriageHouseNoAndNameMal('');
     } else {
-      setotherMarriagePlacenameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setmarriagePlacenameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
     // setmarriageHouseNoAndNameMal(value);
     // setAgeMariageStatus(value.code);
@@ -340,14 +340,14 @@ const HouseMarriageRegistration = ({
         // marriageVillageName,
         // marriageTalukID,
         // marriagePlacetype,
-        marriageLocalityEn,
-        marriageLocalityMl,
-        marriageLandmark,
+        // marriageLocalityEn,
+        // marriageLocalityMl,
+        // marriageLandmark,
         // marriageWardCode,
-        marriageHouseNoAndNameEn,
-        marriageHouseNoAndNameMal,
-        marriageStreetEn,
-        marriageStreetMl,
+        // marriageHouseNoAndNameEn,
+        // marriageHouseNoAndNameMal,
+        // marriageStreetEn,
+        // marriageStreetMl,
         // marriageType,
         // marriageOthersSpecify,
         // tripStartTime,
@@ -559,7 +559,7 @@ const HouseMarriageRegistration = ({
             optionKey="i18nKey"
             isMandatory={false}
             name="marriageHouseNoAndNameEn"
-            value={otherMarriagePlacenameEn}
+            value={marriagePlacenameEn}
             onChange={setSelectOtherMarriagePlacenameEn}
             disable={isDisableEdit}
             placeholder={`${t("CR_HOUSE_NO_AND_NAME_EN")}`}
@@ -607,7 +607,7 @@ const HouseMarriageRegistration = ({
               pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
               isRequired: true,
               type: "text",
-              title: t("CS_INVALID_LOCALITY_MAL"),
+              title: t("CR_INVALID_LOCALITY_ML"),
             })}
           />
         </div>
@@ -644,8 +644,8 @@ const HouseMarriageRegistration = ({
             type={"text"}
             optionKey="i18nKey"
             name="marriageHouseNoAndNameMal"
-            value={otherMarriagePlacenameMl}
-            onChange={selectSetotherMarriagePlacenameMl}
+            value={marriagePlacenameMl}
+            onChange={selectSetmarriagePlacenameMl}
             disable={isDisableEdit}
             isMandatory={false}
             placeholder={`${t("CR_HOUSE_NO_AND_NAME_MAL")}`}

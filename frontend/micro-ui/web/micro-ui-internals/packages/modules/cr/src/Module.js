@@ -20,7 +20,7 @@ import MultipleBirth from "../src/pageComponents/birthComponents/MultipleBirth";
 import CreateBirthRegistration from "./pages/citizen/BirthRegistration";
 import CreateBirthEmp from "./pages/employee/BirthRegistration";
 import CreateBirthNACRegistration from "./pages/citizen/BirthNACRegistration";
-import MarriageInclusion from "./pages/citizen/MarriageInclusion";
+import MarriageCorrection from "./pages/citizen/MarriageCorrection";
 import BirthNACDownloadPage from "./pageComponents/birthNACComponents/BirthNACDownloadPage";
 import BirthInclusion from "./pages/citizen/BirthInclusion";
 import BirthInclusionEditPage from "./pageComponents/birthComponents/BirthInclusionPage/BirthInclusionEditPage";
@@ -29,6 +29,7 @@ import SearchBirthInclusion from './components/SearchBirthInclusion';
 import BirthInclusionModal from './components/BirthInclusionModal';
 
 import SearchMarriageInclusion from "./components/SearchMarriageInclusion";
+import SearchApplicationMarriage from "./components/SearchApplicationMarriage";
 import CreateAdoptions from "./pages/citizen/Adoption";
 import CreateStillBirthRegistration from "./pages/citizen/StillBirthRegistration";
 import CreateBornOutsideRegistration from "./pages/citizen/BornOutsideReg";
@@ -153,16 +154,14 @@ import FormFieldContainer from "../src/components/FormFieldContainer";
 import MarriageAddressPage from "./pageComponents/marriageComponents/MarriageAddressPage";
 import CreateMarriageRegistration from "./pages/citizen/MarriageRegistration";
 import GroomDetails from "./pageComponents/marriageComponents/GroomDetails";
-import GroomCorrectionDetails from "./pageComponents/marriageComponents/GroomCorrectionDetails";
 import BrideDetails from "./pageComponents/marriageComponents/BrideDetails";
-import BrideCorrectionDetails from "./pageComponents/marriageComponents/BrideCorrectionDetails";
 import MarriageInstitution from "./pageComponents/marriageComponents/MarriageInstitution";
 import MarriagePublicPlace from "./pageComponents/marriageComponents/MarriagePublicPlace";
 import MarriageRegistration from "./pageComponents/marriageComponents/MarriageRegistration";
 import HouseMarriageRegistration from "./pageComponents/marriageComponents/HouseMarriageRegistration";
 import Witnessdetails from "./pageComponents/marriageComponents/Witnessdetails";
-import MarriageInclusionEditPage from "./pageComponents/marriageComponents/MarriageCorrection";
-import MarriageCorrectionEditPage from "./pages/citizen/MarriageInclusionEdit";
+import MarriageCorrectionEditPage from "./pageComponents/marriageComponents/MarriageCorrectionPage/MarriageCorrectionEditPage";
+import MarriageCorrectionLoadPage from "./pageComponents/marriageComponents/MarriageCorrectionPage/index";
 import MarriageCheckPage from "./pages/citizen/MarriageRegistration/MarriageCheckPage";
 import MarriageAcknowledgement from "./pages/citizen/MarriageRegistration/MarriageAcknowledgement";
 import MarriageAddressBasePage from "./pageComponents/marriageComponents/MarriageAddressBasePage";
@@ -315,7 +314,7 @@ const componentsToRegister = {
   BirthNACAddressPage,
   BirthNACInitiator,
   CRBirthInclusions: BirthInclusion,
-  CRMarriageInclusions: MarriageInclusion,
+  CRMarriageCorrection: MarriageCorrection,
   CRBirthInclusionEditPage: BirthInclusionEditPage,
   CRBirthInclusionPage:BirthInclusionPage, 
   SearchBirthInclusion,
@@ -370,7 +369,7 @@ const componentsToRegister = {
   AdoptionParentsAddress,
   CRDeathCorrectionEditPage:DeathCorrectionEditPage,
   SearchMarriageInclusion,
-  //////////////////
+  SearchApplicationMarriage,
   CRDeathcorrection,
   CRSearchdeathcorrection,
   CRSearchDeathCorrectionRoute,
@@ -394,7 +393,7 @@ const componentsToRegister = {
   DeathPublicPlace,
   DeathOutsideJurisdiction,
   CRDeathInclusions:DeathInclusion,
-  SearchDeathInclusion:
+  // SearchDeathInclusion:
   Informer,
   Initiater,
   // DeathCertificate,
@@ -409,8 +408,8 @@ const componentsToRegister = {
   BirthAcknowledgement,
   DeathAcknowledgement,
   MarriageAcknowledgement,
-  MarriageInclusionEditPage,
-  MarriageCorrectionEditPage,
+  CRMarriageCorrectionEditPage:MarriageCorrectionEditPage,
+  CRMarriageCorrectionLoadPage:MarriageCorrectionLoadPage,
   StillBirthAcknowledgement,
   BirthCertificate,
   CRCreateDeathRegistration: CreateDeathRegistration,
@@ -425,9 +424,7 @@ const componentsToRegister = {
   //Marriage
   CRCreateMarriageRegistration: CreateMarriageRegistration,
   GroomDetails,
-  GroomCorrectionDetails,
   BrideDetails,
-  BrideCorrectionDetails,
   MarriageInstitution,
   MarriagePublicPlace,
   MarriageRegistration,
