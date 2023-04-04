@@ -80,7 +80,7 @@ const MarriageInstitution = ({
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setMarriageLocalityMal('');
+      setMarriageLocalityMal("");
     } else {
       setmarriagePlacenameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
@@ -142,14 +142,14 @@ const MarriageInstitution = ({
         marriageReligiousInstitutionOtherNameEn ? marriageReligiousInstitutionOtherNameEn : null
       );
       onSelect(config.key, {
-        marriageReligiousInstitutionOther,
-        marriageLocalityMal,
-        marriageLocalityEn,
-        marriageLandmark,
-        marriageReligiousInstitutionOtherNameMal,
-        marriageReligiousInstitutionOtherNameEn,
-        marriageStreetEn,
-        marriageStreetMal,
+        // marriageReligiousInstitutionOther,
+        // marriageLocalityMal,
+        // marriageLocalityEn,
+        // marriageLandmark,
+        // marriageReligiousInstitutionOtherNameMal,
+        // marriageReligiousInstitutionOtherNameEn,
+        // marriageStreetEn,
+        // marriageStreetMal,
       });
     }
   };
@@ -185,7 +185,7 @@ const MarriageInstitution = ({
               value={marriageStreetEn}
               onChange={setSelectMarriageStreetEn}
               placeholder={`${t("CR_STREET_NAME_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
             />
           </div>
           <div className="col-md-3">
@@ -206,19 +206,19 @@ const MarriageInstitution = ({
             />
           </div>
           <div className="col-md-3">
-          <CardLabel>{t("CR_LANDMARK")}</CardLabel>
-          <TextInput
-            t={t}
-            isMandatory={false}
-            type={"text"}
-            optionKey="i18nKey"
-            //name="marriageLandmark"
-            value={marriageLandmark}
-            onChange={setSelectMarriageLandmark}
-            placeholder={`${t("CR_LANDMARK")}`}
-            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LANDMARK") })}
-          />
-        </div>
+            <CardLabel>{t("CR_LANDMARK")}</CardLabel>
+            <TextInput
+              t={t}
+              isMandatory={false}
+              type={"text"}
+              optionKey="i18nKey"
+              //name="marriageLandmark"
+              value={marriageLandmark}
+              onChange={setSelectMarriageLandmark}
+              placeholder={`${t("CR_LANDMARK")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LANDMARK") })}
+            />
+          </div>
         </div>
       </div>
       <div className="row">
@@ -257,7 +257,7 @@ const MarriageInstitution = ({
               placeholder={`${t("CR_STREET_NAME_ML")}`}
               {...(validation = {
                 pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                isRequired: true,
+                isRequired: false,
                 type: "text",
                 title: t("CR_INVALID_STREET_NAME_ML"),
               })}

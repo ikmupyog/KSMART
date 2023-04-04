@@ -76,8 +76,8 @@ const MarriagePublicPlace = ({
     }
   }
   function setSelectMarriageLandmark(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setMarriageLandmark(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setMarriageLandmark(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectMarriageStreetEn(e) {
@@ -124,14 +124,14 @@ const MarriagePublicPlace = ({
       // sessionStorage.setItem("marriagePublicOrPrivateNamePlaceMal", marriagePublicOrPrivateNamePlaceMal ? marriagePublicOrPrivateNamePlaceMal : null);
       // sessionStorage.setItem("marriagePublicOrPrivatePlace", marriagePublicOrPrivatePlace ? marriagePublicOrPrivatePlace : null);
       onSelect(config.key, {
-        marriageLocalityMl,
-        marriageLocalityEn,
-        marriageLandmark,
-        marriagePublicOrPrivatePlace,
-        marriageStreetEn,
-        marriageStreetMl,
-        marriagePublicOrPrivateNamePlaceMal,
-        marriagePublicOrPrivateNamePlaceEn,
+        // marriageLocalityMl,
+        // marriageLocalityEn,
+        // marriageLandmark,
+        // marriagePublicOrPrivatePlace,
+        // marriageStreetEn,
+        // marriageStreetMl,
+        // marriagePublicOrPrivateNamePlaceMal,
+        // marriagePublicOrPrivateNamePlaceEn,
       });
     }
   };
