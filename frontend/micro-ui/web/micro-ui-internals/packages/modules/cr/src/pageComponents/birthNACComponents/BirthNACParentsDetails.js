@@ -211,7 +211,6 @@ const NACParentsDetails =({ config, onSelect, userType, formData, isEditStillBir
     //}
       if (fatherAadhar != null || fatherAadhar != "" || fatherAadhar != undefined) {
         let adharLength = fatherAadhar;
-        console.log(adharLength);
         if (adharLength.length < 12 || adharLength.length > 12) {
           validFlag = false;
           setFatherAadharError(true);
@@ -250,6 +249,7 @@ const NACParentsDetails =({ config, onSelect, userType, formData, isEditStillBir
           config={config}
           onSelect={goNext}
           onSkip={onSkip}
+          isDisabled={!motherAadhar || !motherFirstNameEn || !motherFirstNameMl || !fatherAadhar || !fatherFirstNameEn || !fatherFirstNameMl }
         >
 
           {/* {isMotherInfo === false && ( */}

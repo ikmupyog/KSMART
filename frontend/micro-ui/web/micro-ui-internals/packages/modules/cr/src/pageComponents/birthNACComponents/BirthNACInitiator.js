@@ -5,7 +5,6 @@ import { FormStep, CardLabel, TextInput, Dropdown, LinkButton, UploadFile,   Dat
 import { useTranslation } from "react-i18next";
 
 const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBirth=false }) => {
-  console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   const { data: Menu, isLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
@@ -48,7 +47,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
   const [infomantFirstNmeEnError, setinfomantFirstNmeEnError] = useState(formData?. BirthNACInitiator?.initiatorNameEn ? false : false);
   const [initiatorAadharError, setinitiatorAadharError] = useState(formData?. BirthNACInitiator?.initiatorAadhar ? false : false);
   const [initiatorMobileError, setinitiatorMobileError] = useState(formData?. BirthNACInitiator?.initiatorMobile ? false : false);
-  const [initiatorDesiError, setinitiatorDesiError] = useState(formData?. BirthNACInitiator?.initiatorDesi ? false : false);
+  const [initiatorAddressError, setinitiatorAddressError] = useState(formData?. BirthNACInitiator?.initiatorAddress ? false : false);
   const [formDatalocal, setFormDatalocal] = useState(formData?.TradeDetails);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const storedAppData = null;
@@ -449,7 +448,6 @@ function selectfile5(e) {
 
     if (initiatorAadhar != null || initiatorAadhar != "" || initiatorAadhar != undefined) {
       let adharLength = initiatorAadhar;
-      console.log(adharLength);
       if (adharLength.length < 12 || adharLength.length > 12) {
         validFlag = false;
         setinitiatorAadharError(true);
@@ -488,7 +486,17 @@ function selectfile5(e) {
         setToast(false);
       }, 2000);
     }
-
+    if (initiatorAddress === null || initiatorAddress === "" || initiatorAddress === undefined) {
+        validFlag = false;
+        setinitiatorAddressError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setinitiatorAddressError(false);
+      }
+   
     if (validFlag == true) {
 
       onSelect(config.key, {
@@ -534,7 +542,7 @@ function selectfile5(e) {
         config={config}
         onSelect={goNext}
         onSkip={onSkip}
-        isDisabled={!isInitiatorDeclaration || !initiatorNameEn || !initiatorAadhar || !initiatorMobile}
+        isDisabled={!isInitiatorDeclaration || !initiatorNameEn || !initiatorAadhar || !initiatorMobile || !initiatorAddress}
       >
         <div>
                   
@@ -655,17 +663,18 @@ function selectfile5(e) {
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
-              <CardLabel>{`${t("CR_INFORMER_ADDRESS")}`}</CardLabel>
+              <CardLabel>{`${t("CR_INFORMER_ADDRESS")}`}<span className="mandatorycss">*</span></CardLabel>
               <TextArea
                 t={t}
                 type={"text"}
                 optionKey="i18nKey"
                 name="initiatorAddress"
+                isMandatory={true}
                 value={initiatorAddress}
                 onChange={setSelectinitiatorAddress}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_INFORMER_ADDRESS")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
               />
             </div>
           </div>
@@ -692,7 +701,7 @@ function selectfile5(e) {
                       <CardLabel>SL NO</CardLabel>
                       <TextInput
                        t={t}
-                      isMandatory={config.isMandatory}
+                      //isMandatory={config.isMandatory}
                       type={"number"}
                       optionKey="i18nKey"
                       name="slNo"
@@ -702,7 +711,6 @@ function selectfile5(e) {
                     <div className="col-md-3">
                     <CardLabel>
                   {t("CR_DATE_OF_BIRTH_TIME")}
-                  <span className="mandatorycss">*</span>
                 </CardLabel>
                 <DatePicker
                   date={dob}
@@ -711,35 +719,33 @@ function selectfile5(e) {
                   onChange={setselectChildDOB}
                   inputFormat="DD-MM-YYYY"
                   placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
-                  {...(validation = { isRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
+                  {...(validation = { isRequired: false, title: t("CR_DATE_OF_BIRTH_TIME") })}
                 />
                     </div>
                     <div className="col-md-3">
                     <CardLabel>
-                      {`${t("CR_FIRST_NAME_EN")}`}
-                      <span className="mandatorycss">*</span>
+                      {`${t("CR_NAME_EN")}`}
                     </CardLabel>
                     <TextInput
                       t={t}
-                      isMandatory={false}
+                      //isMandatory={false}
                       type={"text"}
                       optionKey="i18nKey"
                       name="childNameEn"
                       value={childNameEn}
                       onChange={setSelectChildNameEn}
                       disable={isEdit}
-                      placeholder={`${t("CR_FIRST_NAME_EN")}`}
-                      {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      placeholder={`${t("CR_NAME_EN")}`}
+                      {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_NAME_EN") })}
                     />
                   </div>
                   <div className="col-md-3">
                     <CardLabel>
-                      {`${t("CR_FIRST_NAME_ML")}`}
-                      <span className="mandatorycss">*</span>
+                      {`${t("CR_NAME_ML")}`}
                     </CardLabel>
                     <TextInput
                       t={t}
-                      isMandatory={false}
+                      //isMandatory={false}
                       type={"text"}
                       optionKey="i18nKey"
                       name="childNameMl"
@@ -749,9 +755,9 @@ function selectfile5(e) {
                       placeholder={`${t("CR_FIRST_NAME_ML")}`}
                       {...(validation = {
                         pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                        isRequired: true,
+                        isRequired: false,
                         type: "text",
-                        title: t("CR_INVALID_FIRST_NAME_ML"),
+                        title: t("CR_INVALID_NAME_ML"),
                       })}
                     />
                   </div>
@@ -776,7 +782,7 @@ function selectfile5(e) {
                       <CardLabel>Order of Birth</CardLabel>
                       <TextInput 
                       t={t} 
-                      isMandatory={config.isMandatory} 
+                      //isMandatory={config.isMandatory} 
                       type={"number"}
                       optionKey="i18nKey" 
                       name="orderOfBirth"
@@ -784,34 +790,18 @@ function selectfile5(e) {
                       onChange={setSelectOrderOfBirth}/>
                     </div>
                     <div className="col-md-3">
-                      <CardLabel>Alive? Yes/No<span className="mandatorycss">*</span></CardLabel>
-                      {/* <CardLabel>
-                        {`${t("CR_EXPIRATION")}`}
-                        <span className="mandatorycss">*</span>
-                      </CardLabel> */}
+                      <CardLabel>Alive? Yes/No</CardLabel>
                       <RadioButtons
                       style={{display: 'flex'}}
                         t={t}
                       options={orderMenu}
                       optionsKey="code"
                       name="isAlive"
-                       //value={isAlive}
-                       //checked={isAlive}
                       selectedOption={isAlive} 
                       onSelect={setAliveExpired}
                       isDependent={true}
                       labelKey=""
                     />
-                      {/* <Dropdown
-                        t={t}
-                        optionKey="i18nKey"
-                        option={cmbExpirationType}
-                        selected={isAlive}
-                        select={setAliveExpired}
-                        placeholder={t("CR_EXPIRATION_TYPE")}
-                        onChange={e => handleAppInputField(index, e.target.value, '')}
-                        {...(validation = { isRequired: true })}
-                      /> */}
                     </div>
                     {ownerState.length === (index + 1) && (
                       <div className="col-md-1">
@@ -956,17 +946,17 @@ function selectfile5(e) {
          
         {toast && (
           <Toast
-            error={infomantFirstNmeEnError || initiatorAadharError || initiatorMobileError || initiatorDesiError}
+            error={infomantFirstNmeEnError || initiatorAadharError || initiatorMobileError || initiatorAddressError}
             label={
-              infomantFirstNmeEnError || initiatorAadharError || initiatorMobileError || initiatorDesiError
+              infomantFirstNmeEnError || initiatorAadharError || initiatorMobileError || initiatorAddressError
                 ? infomantFirstNmeEnError
                   ? t(`BIRTH_ERROR_INFORMANT_NAME_CHOOSE`)
                   : initiatorAadharError
                   ? t(`BIRTH_ERROR_INFORMANT_AADHAR_CHOOSE`)
                   : initiatorMobileError
                   ? t(`BIRTH_ERROR_INFORMANT_MOBILE_CHOOSE`)
-                  : initiatorDesiError
-                  ? t(`BIRTH_ERROR_INFORMANT_DESIGNATION_CHOOSE`)
+                  : initiatorAddressError
+                  ? t(`BIRTH_ERROR_INFORMANT_ADDRESS_CHOOSE`)
                   : setToast(false)
                 : setToast(false)
             }

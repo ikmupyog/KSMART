@@ -279,7 +279,7 @@ export const convertToNACRegistration = (data = {}) => {
         childAadharNo: data?.BirthNACDetails?.childAadharNo,
         nacorderofChildren: data?.BirthNACDetails?.nacorderofChildren,
         isChildName: data?.BirthNACDetails?.isChildName ? data?. BirthNACDetails?.isChildName : false,
-        tenantid: data?.BirthNACDetails?.tenantid,
+        tenantid: data?.BirthNACDetails?.tenantId,
         childFirstNameEn: data?.BirthNACDetails?.childFirstNameEn,
         childFirstNameMl: data?.BirthNACDetails?.childFirstNameMl,
         childMiddleNameEn: data?.BirthNACDetails?.childMiddleNameEn,
@@ -494,9 +494,9 @@ export const convertToNACRegistration = (data = {}) => {
         OtherChildren: {
           childNameEn: data?.BirthNACInitiator?.childNameEn,
           childNameMl: data?.BirthNACInitiator?.childNameMl,
-          sex: data?.BirthNACInitiator?.sex,
+          sex: data?.BirthNACInitiator?.sex?.value,
           orderOfBirth: data?.BirthNACInitiator?.orderOfBirth,
-          dob: data?.BirthNACInitiator?.dob,
+          dob:  Date.parse(data?.BirthNACInitiator?.dob),
           isAlive: data?.BirthNACInitiator?.isAlive?.value,
         }
       },
