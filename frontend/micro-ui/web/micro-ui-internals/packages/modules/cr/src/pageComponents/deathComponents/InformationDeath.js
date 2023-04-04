@@ -252,6 +252,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
       ? cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.code === formData?.InformationDeath?.DeceasedGender)[0]
       : ""
   );
+  
 
   const [DeceasedGender, setselectedDeceasedGender] = useState(
     formData?.InformationDeath?.DeceasedGender?.code

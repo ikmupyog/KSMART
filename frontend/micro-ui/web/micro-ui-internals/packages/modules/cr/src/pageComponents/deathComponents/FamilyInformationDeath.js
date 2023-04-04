@@ -22,6 +22,7 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
       ? cmbspouse.filter((cmbspouse) => cmbspouse.code === formData?.FamilyInformationDeath?.SpouseType)[0]
       : ""
   );
+
   const [SpouseUnavailable, setSpouseUnavailable] = useState(
     formData?.FamilyInformationDeath?.SpouseUnavailable
       ? formData?.FamilyInformationDeath?.SpouseUnavailable
