@@ -22,6 +22,7 @@ import { useQueryClient } from "react-query";
 // import { TimePicker } from '@material-ui/pickers';
 
 const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarriage }) => {
+  console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -392,8 +393,8 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     // setAgeMariageStatus(value.code);
   }
   function setSelectmarriageOthersSpecify(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setmarriageOthersSpecify(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setmarriageOthersSpecify(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectmarriageType(value) {
@@ -572,7 +573,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                       // value={marriageDistrictid}
                       select={setSelectMarriageDistrictid}
                       selected={marriageDistrictid}
-                      placeholder={t("CS_COMMON_DISTRICT'")}
+                      placeholder={t("CS_COMMON_DISTRICT")}
                       {...(validation = { isRequired: true, title: t("CR_COMMON_INVALID_DISTRICT") })}
                     />
                   </div>
@@ -590,7 +591,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                       value={marriageTalukID}
                       select={setSelectmarriageTalukID}
                       selected={marriageTalukID}
-                      placeholder={t("CS_COMMON_TALUK'")}
+                      placeholder={t("CS_COMMON_TALUK")}
                       {...(validation = { isRequired: true, title: t("CR_COMMON_INVALID_TALUK") })}
                     />
                   </div>
@@ -608,7 +609,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                       value={marriageVillageName}
                       select={setSelectmarriageVillageName}
                       selected={marriageVillageName}
-                      placeholder={t("CS_COMMON_VILLAGE'")}
+                      placeholder={t("CS_COMMON_VILLAGE")}
                       {...(validation = { isRequired: true, title: t("CR_COMMON_INVALID_VILLAGE") })}
                     />
                   </div>
@@ -661,7 +662,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                       t={t}
                       optionKey="namecmb"
                       isMandatory={true}
-                      placeholder={t("CS_COMMON_WARD'")}
+                      placeholder={t("CS_COMMON_WARD")}
                       option={cmbWardNoFinal}
                       selected={marriageWardCode}
                       select={setSelectmarriageWardCode}
@@ -835,7 +836,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                         onChange={setSelectmarriageOthersSpecify}
                         disable={isDisableEdit}
                         placeholder={`${t("CR_MARRIAGE_OTHER_SPECIFY")}`}
-                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MARRIAGE_OTHER") })}
+                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_MARRIAGE_TYPE_OTHER") })}
                       />
                     </div>
                   )}

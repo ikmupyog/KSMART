@@ -42,6 +42,7 @@ const Home = ({
 
   sessionStorage.removeItem("CR_DEATH_EDIT_FLAG");
   sessionStorage.removeItem("Digit.CR_DEATH_EDIT");
+  const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false) 
   
   const location = useLocation()
   const classname = Digit.Hooks.fsm.useRouteSubscription(pathname);
@@ -49,7 +50,9 @@ const Home = ({
   const { path } = useRouteMatch();
   sourceUrl = "https://s3.ap-south-1.amazonaws.com/egov-qa-assets";
   const pdfUrl = "https://pg-egov-assets.s3.ap-south-1.amazonaws.com/Upyog+Code+and+Copyright+License_v1.pdf"
-
+  React.useEffect(()=>{
+    setFlag(false)
+  },[])
   const appRoutes = modules.map(({ code, tenants }, index) => {
     const Module = Digit.ComponentRegistryService.getComponent(`${code}Module`);
     return (
