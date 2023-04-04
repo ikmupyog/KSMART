@@ -612,15 +612,6 @@ const onUploadDocSubmit = async (fileData) => {
                 />
               </div>
             </FieldComponentContainer>
-            {/* <div style={{ marginTop: "2.8rem" }}>
-              <LinkButton
-                label={<EditIcon selected={true} label={"Edit"} />}
-                style={{ width: "100px", display: "inline" }}
-                onClick={() => {
-                  setShowModal(true);
-                }}
-              />
-            </div> */}
             <div style={{ marginTop: "2.8rem" }}>
           <ButtonContainer>
             <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["CHILD_DOB"])}>
