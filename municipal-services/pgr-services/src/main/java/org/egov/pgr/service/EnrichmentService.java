@@ -108,8 +108,11 @@ public class EnrichmentService {
         AuditDetails auditDetails = utils.getAuditDetails(requestInfo.getUserInfo().getUuid(), service,false);
 
         service.setAuditDetails(auditDetails);
+        
+        if(serviceRequest.getService().getEmployee().getRolecode() == USERTYPE_CITIZEN) {
 
-        userService.callUserService(serviceRequest);
+        	userService.callUserService(serviceRequest);
+        }
     }
 
     /**
