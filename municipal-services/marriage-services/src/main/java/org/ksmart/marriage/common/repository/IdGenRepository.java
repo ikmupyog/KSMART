@@ -39,6 +39,67 @@ public class IdGenRepository {
     @Autowired
     private ServiceRequestRepository restRepo;
 
+
+
+//Jasmine -03.04.2023
+
+    // @Autowired
+    // private RestTemplate restTemplate;
+
+	// @Autowired
+    // private BirthDeathConfiguration config;
+
+    public IdGenerationResponse getId(RequestInfo requestInfo, String tenantId, String name, String format, int count) {
+
+        List<IdRequest> reqList = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            reqList.add(IdRequest.builder().idName(name).format(format).tenantId(tenantId).build());
+        }
+        IdGenerationRequest req = IdGenerationRequest.builder().idRequests(reqList).requestInfo(requestInfo).build();
+        IdGenerationResponse response = null;
+        try {
+            response = restTemplate.postForObject( config.getIdGenHost()+ config.getIdGenPath(), req, IdGenerationResponse.class);
+        } catch (HttpClientErrorException e) {
+            throw new ServiceCallException(e.getResponseBodyAsString());
+        } catch (Exception e) {
+            Map<String, String> map = new HashMap<>();
+            map.put(e.getCause().getClass().getName(),e.getMessage());
+            throw new CustomException(map);
+        }
+        return response;
+    }
+       //Jasmine  
+    public List<String> getIdList(RequestInfo requestInfo, String tenantId, String idName, String moduleCode,String fnType, int count) {
+        List<IdResponse> idResponses = getMarriageIds(requestInfo, tenantId, idName, moduleCode, fnType, count).getIdResponses();
+
+        if (CollectionUtils.isEmpty(idResponses))
+        throw new CustomException("IDGEN ERROR", "No ids returned from idgen Service");
+
+        return idResponses.stream()
+        .map(IdResponse::getId).collect(Collectors.toList());
+        }
+
+       //Jasmine  
+    public IdGenerationResponse getMarriageIds(RequestInfo requestInfo, String tenantId, String Idname,  String modulecode, String functionType ,int count) {
+    //System.out.println("modulecode"+modulecode);
+        List<IdRequest> reqList = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            reqList.add(IdRequest.builder().idName(Idname).moduleCode(modulecode).tenantId(tenantId).fnType(functionType).build());
+        }
+        IdGenerationRequest req = IdGenerationRequest.builder().idRequests(reqList).requestInfo(requestInfo).build();
+        IdGenerationResponse response = null;
+        try {
+            response = restTemplate.postForObject( config.getIdGenHost()+ config.getIdGenPath(), req, IdGenerationResponse.class);
+        } catch (HttpClientErrorException e) {
+            throw new ServiceCallException(e.getResponseBodyAsString());
+        } catch (Exception e) {
+            Map<String, String> map = new HashMap<>();
+            map.put(e.getCause().getClass().getName(),e.getMessage());
+            throw new CustomException(map);
+        }
+        return response;
+    }
+
 //    public IdGenerationResponse getIdOld(RequestInfo requestInfo, String tenantId, String name, String format, int count) {
 //
 //        List<IdRequest> reqList = new ArrayList<>();
@@ -114,37 +175,37 @@ public class IdGenRepository {
 //                .map(IdResponse::getId)
 //                .collect(Collectors.toList());
 //    }
+//comment from here on 3.04.2023
+    // public List<String> getIdList(RequestInfo requestInfo, String tenantId, String idName, String moduleCode, String  fnType, int count) {
+    //     List<IdRequest> reqList = new ArrayList<>();
+    //     for (int i = 0; i < count; i++) {
+    //         reqList.add(IdRequest.builder()
+    //                 .idName(idName)
+    //                 .tenantId(tenantId)
+    //                 .moduleCode(moduleCode)
+    //                 .fnType(fnType)
+    //                 .build());
+    //     }
 
-    public List<String> getIdList(RequestInfo requestInfo, String tenantId, String idName, String moduleCode, String  fnType, int count) {
-        List<IdRequest> reqList = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            reqList.add(IdRequest.builder()
-                    .idName(idName)
-                    .tenantId(tenantId)
-                    .moduleCode(moduleCode)
-                    .fnType(fnType)
-                    .build());
-        }
+    //     IdGenerationRequest request = IdGenerationRequest.builder()
+    //             .idRequests(reqList)
+    //             .requestInfo(requestInfo)
+    //             .build();
+    //     StringBuilder uri = new StringBuilder(config.getIdGenHost()).append(config.getIdGenPath());
+    //     System.out.println("req  :"+request);
+    //     IdGenerationResponse response = mapper.convertValue(restRepo.fetchResult(uri, request),
+    //             IdGenerationResponse.class);
 
-        IdGenerationRequest request = IdGenerationRequest.builder()
-                .idRequests(reqList)
-                .requestInfo(requestInfo)
-                .build();
-        StringBuilder uri = new StringBuilder(config.getIdGenHost()).append(config.getIdGenPath());
-        System.out.println("req  :"+request);
-        IdGenerationResponse response = mapper.convertValue(restRepo.fetchResult(uri, request),
-                IdGenerationResponse.class);
+    //     List<IdResponse> idResponses = response.getIdResponses();
 
-        List<IdResponse> idResponses = response.getIdResponses();
+    //     if (CollectionUtils.isEmpty(idResponses)) {
+    //         throw new CustomException("IDGEN ERROR", "No ids returned from idgen Service");
+    //     }
 
-        if (CollectionUtils.isEmpty(idResponses)) {
-            throw new CustomException("IDGEN ERROR", "No ids returned from idgen Service");
-        }
-
-        return idResponses.stream()
-                .map(IdResponse::getId)
-                .collect(Collectors.toList());
-    }
+    //     return idResponses.stream()
+    //             .map(IdResponse::getId)
+    //             .collect(Collectors.toList());
+    // }
 
 
 }

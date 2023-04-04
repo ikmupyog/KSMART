@@ -58,7 +58,7 @@ public class MarriageApplicationService {
 
         producer.push(marriageApplicationConfiguration.getSaveMarriageApplicationTopic(), request);
        // List<MarriageApplicationDetails>  marriageApplicationDetails = repository.saveMarriageDetails(request);
-       // workflowIntegrator.callWorkFlow(request);
+      //  workflowIntegrator.callWorkFlow(request);
        request.getMarriageDetails().forEach(marriage->{
             if(marriage.getStatus() == MarriageConstants.STATUS_FOR_PAYMENT){
                 List<Demand> demands = new ArrayList<>();
@@ -71,8 +71,6 @@ public class MarriageApplicationService {
         }); 
         return request.getMarriageDetails();
 
-
-
     }
 
     public List<MarriageApplicationDetails> updateMarriageDetails(MarriageDetailsRequest request) {
@@ -81,12 +79,10 @@ public class MarriageApplicationService {
         mdmsValidator.validateMarriageMDMSData(request,mdmsData);
         String applicationNumber = request.getMarriageDetails().get(0).getApplicationNumber();
         MarriageApplicationSearchCriteria criteria =(MarriageApplicationSearchCriteria.builder()
-                .applicationNo(applicationNumber)
-                .build());
+                                                    .applicationNo(applicationNumber)
+                                                    .build());
         List<MarriageApplicationDetails> searchResult = repository.getMarriageApplication(criteria,request.getRequestInfo());
         validatorService.validateUpdate(request, searchResult);
-
-
 
         marriageDetailsEnrichment.enrichUpdate(request);
         // workflowIntegrator.callWorkFlow(request);

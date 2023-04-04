@@ -44,7 +44,6 @@ public class MarriageApplicationDetails {
     private String lbtype;
 
 
-
     @Size(max = 64)
     @JsonProperty("marriageTenantid")
     private String tenantid;

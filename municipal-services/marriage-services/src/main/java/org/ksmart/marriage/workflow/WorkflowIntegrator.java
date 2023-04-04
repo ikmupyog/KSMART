@@ -31,14 +31,15 @@ public class WorkflowIntegrator {
 
     private   final MarriageApplicationConfiguration bndConfig;
     private   final RestTemplate restTemplate;
-   // private final MarriageApplicationRepository repository;
+    //private final MarriageApplicationRepository repository;
     @Autowired
-    public WorkflowIntegrator(RestTemplate restTemplate, MarriageApplicationConfiguration bndConfig ) {
-   // MarriageApplicationRepository repository
+    public WorkflowIntegrator(RestTemplate restTemplate, MarriageApplicationConfiguration bndConfig
+                                ) {
+    //  MarriageApplicationRepository repository
   
         this.restTemplate = restTemplate;
         this.bndConfig = bndConfig; 
-       // this.repository=repository;
+       // this.repository = repository;
 
     }
 
