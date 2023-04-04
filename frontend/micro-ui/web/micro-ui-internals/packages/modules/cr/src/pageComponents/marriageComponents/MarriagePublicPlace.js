@@ -9,10 +9,10 @@ const MarriagePublicPlace = ({
   onSelect,
   userType,
   formData,
-  otherMarriagePlacenameEn,
-  setotherMarriagePlacenameEn,
-  otherMarriagePlacenameMl,
-  setotherMarriagePlacenameMl,
+  marriagePlacenameEn,
+  setmarriagePlacenameEn,
+  marriagePlacenameMl,
+  setmarriagePlacenameMl,
   marriageLocalityEn,
   setmarriageLocalityEn,
   marriageLocalityMl,
@@ -68,14 +68,14 @@ const MarriagePublicPlace = ({
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setotherMarriagePlacenameMl("");
+      setmarriagePlacenameMl("");
     } else {
-      setotherMarriagePlacenameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setmarriagePlacenameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectOtherMarriagePlacenameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setotherMarriagePlacenameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setmarriagePlacenameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectMarriageLandmark(e) {
@@ -154,7 +154,7 @@ const MarriagePublicPlace = ({
               type={"text"}
               optionKey="i18nKey"
               name="marriagePublicOrPrivateNamePlaceEn"
-              value={otherMarriagePlacenameEn}
+              value={marriagePlacenameEn}
               onChange={setSelectOtherMarriagePlacenameEn}
               placeholder={`${t("CR_PUBLIC_PRIVATE_PLACE_EN")}`}
               {...(validation = { isRequired: true })}
@@ -217,7 +217,7 @@ const MarriagePublicPlace = ({
               type={"text"}
               optionKey="i18nKey"
               name="marriagePublicOrPrivateNamePlaceMal"
-              value={otherMarriagePlacenameMl}
+              value={marriagePlacenameMl}
               onChange={setSelectOtherMarriagePlacenameMl}
               placeholder={`${t("CR_PUBLIC_PRIVATE_PLACE_EN")}`}
               {...(validation = { isRequired: true })}

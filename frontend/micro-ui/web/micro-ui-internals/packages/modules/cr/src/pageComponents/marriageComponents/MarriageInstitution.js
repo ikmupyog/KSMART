@@ -9,10 +9,10 @@ const MarriageInstitution = ({
   onSelect,
   userType,
   formData,
-  otherMarriagePlacenameEn,
-  setotherMarriagePlacenameEn,
-  otherMarriagePlacenameMl,
-  setotherMarriagePlacenameMl,
+  marriagePlacenameEn,
+  setmarriagePlacenameEn,
+  marriagePlacenameMl,
+  setmarriagePlacenameMl,
   marriageLocalityEn,
   setmarriageLocalityEn,
   marriageLocalityMl,
@@ -76,18 +76,18 @@ const MarriageInstitution = ({
       setMarriageReligiousInstitutionOther(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
-  function selectSetotherMarriagePlacenameMl(e) {
+  function selectSetmarriagePlacenameMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
       setMarriageLocalityMal("");
     } else {
-      setotherMarriagePlacenameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setmarriagePlacenameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectOtherMarriagePlacenameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setotherMarriagePlacenameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setmarriagePlacenameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectMarriageLandmark(e) {
@@ -168,8 +168,8 @@ const MarriageInstitution = ({
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="otherMarriagePlacenameEn"
-              value={otherMarriagePlacenameEn}
+              name="marriagePlacenameEn"
+              value={marriagePlacenameEn}
               onChange={setSelectOtherMarriagePlacenameEn}
               placeholder={`${t("CR_RELIGIOUS_INST_OTHER_NAME_EN")}`}
               {...(validation = { isRequired: true })}
@@ -232,8 +232,8 @@ const MarriageInstitution = ({
               type={"text"}
               optionKey="i18nKey"
               name="marriageReligiousInstitutionOtherNameMal"
-              value={otherMarriagePlacenameMl}
-              onChange={selectSetotherMarriagePlacenameMl}
+              value={marriagePlacenameMl}
+              onChange={selectSetmarriagePlacenameMl}
               placeholder={`${t("CR_RELIGIOUS_INST_OTHER_NAME_ML")}`}
               {...(validation = { isRequired: true })}
             />

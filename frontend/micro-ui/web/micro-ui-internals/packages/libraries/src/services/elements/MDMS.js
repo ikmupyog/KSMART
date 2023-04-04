@@ -64,6 +64,21 @@ const initRequestBody = (tenantId) => ({
     ],
   },
 });
+const getTypeOfMarriageMasterList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "TypeOfMarriage",
+          },
+        ],
+      },
+    ],
+  },
+});
 const getMaritalStatusMasterList = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -2358,6 +2373,9 @@ export const MdmsService = {
     const cacheSetting = getCacheSetting(mdmsDetails.details.moduleDetails[0].moduleName);
     // PersistantStorage.set(key, responseValue, cacheSetting.cacheTimeInSecs);
     return responseValue;
+  },
+  getTypeOfMarriageMaster: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getTypeOfMarriageMasterList(tenantId, moduleCode), moduleCode);
   },
   getMaritalStatusMaster: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getMaritalStatusMasterList(tenantId, moduleCode), moduleCode);
