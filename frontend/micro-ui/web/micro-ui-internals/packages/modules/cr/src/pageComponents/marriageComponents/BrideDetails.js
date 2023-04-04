@@ -181,9 +181,9 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setBrideFirstnameMl("");
+      setBrideFirstnameMl('');
     } else {
-      setBrideFirstnameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setBrideFirstnameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
 
     // if (e.target.value.length === 51) {
@@ -196,8 +196,8 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     // }
   }
   function setSelectbrideFirstnameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setbrideFirstnameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setbrideFirstnameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
     // if (e.target.value.length === 51) {
     //   return false;
@@ -207,8 +207,8 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     // }
   }
   function setSelectbrideMiddlenameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setbrideMiddlenameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setbrideMiddlenameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
     // if (e.target.value.length === 51) {
 
@@ -222,9 +222,9 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setMotherFirstNameMl("");
+      setMotherFirstNameMl('');
     } else {
-      setbrideMiddlenameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setbrideMiddlenameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
     // if (e.target.value.length === 51) {
     //   return false;
@@ -236,8 +236,8 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     // }
   }
   function setSelectbrideLastnameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setbrideLastnameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setbrideLastnameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
     // if (e.target.value.length === 51) {
     //   return false;
@@ -250,29 +250,15 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setbrideLastnameMl("");
+      setbrideLastnameMl('');
     } else {
-      setbrideLastnameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setbrideLastnameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
-    // if (e.target.value.length === 51) {
-    //   return false;
-    //   // window.alert("Username shouldn't exceed 10 characters")
-    // } else {
-    //   setbrideLastnameMl(
-    //     e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-    //   );
-    // }
   }
   function setSelectbrideMobile(e) {
     if (e.target.value.trim().length != 0) {
       setbrideMobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 10));
     }
-    // if (e.target.value.length === 11) {
-    //   return false;
-    //   // window.alert("Username shouldn't exceed 10 characters")
-    // } else {
-    //   setbrideMobile(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C a-zA-Z]/gi, ""));
-    // }
   }
   function setSelectbrideGender(value) {
     // console.log("gender" + value);
@@ -344,236 +330,116 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
         e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
       );
     }
-    // if (e.target.value.length === 51) {
-    //   return false;
-    //   // window.alert("Username shouldn't exceed 10 characters")
-    // } else {
-    //   setbrideParentGuardian(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' A-Z]/gi, ""));
-    // }
   }
   function setSelectbrideFathernameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setbrideFathernameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setbrideFathernameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
-    // if (e.target.value.length === 51) {
-    //   return false;
-    //   // window.alert("Username shouldn't exceed 10 characters")
-    // } else {
-    //   setbrideFathernameEn(
-    //     e.target.value.replace(
-    //       /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
-    //       ""
-    //     )
-    //   );
-    // }
   }
   function setSelectbrideMothernameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setbrideMothernameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setbrideMothernameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
-    // if (e.target.value.length === 51) {
-    //   return false;
-    //   // window.alert("Username shouldn't exceed 10 characters")
-    // } else {
-    //   setbrideMothernameEn(
-    //     e.target.value.replace(
-    //       /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
-    //       ""
-    //     )
-    //   );
-    // }
   }
   function setSelectbrideMothernameMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setbrideMothernameMl("");
+      setbrideMothernameMl('');
     } else {
-      setbrideMothernameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setbrideMothernameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
-    // if (e.target.value.length === 51) {
-    //   return false;
-    //   // window.alert("Username shouldn't exceed 10 characters")
-    // } else {
-    //   setbrideMothernameMl(
-    //     e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-    //   );
-    // }
   }
   function setSelectbrideGuardiannameMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setMotherFirstNameMl("");
+      setMotherFirstNameMl('');
     } else {
-      setbrideGuardiannameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setbrideGuardiannameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
-    // if (e.target.value.length === 51) {
-    //   return false;
-    //   // window.alert("Username shouldn't exceed 10 characters")
-    // } else {
-    //   setbrideGuardiannameMl(
-    //     e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-    //   );
-    // }
   }
   function setSelectbrideFathernameMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setbrideFathernameMl("");
+      setbrideFathernameMl('');
     } else {
-      setbrideFathernameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setbrideFathernameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
-    // if (e.target.value.length === 51) {
-    //   return false;
-    //   // window.alert("Username shouldn't exceed 10 characters")
-    // } else {
-    //   setbrideFathernameMl(
-    //     e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-    //   );
-    // }
   }
   function setSelectbrideFatherAadharNo(e) {
-    if (e.target.value.trim().length >= 0) {
-      setbrideFatherAadharNo(
-        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
-      );
+    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+    if (newValue === brideAadharNo || newValue === brideMotherAadharNo || newValue === brideGuardianAadharNo) {
+      setbrideFatherAadharNo("");
+      setAadharError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else {
+      setbrideFatherAadharNo(newValue);
     }
-    // if (e.target.value.length != 0) {
-    //   if (e.target.value.length > 12) {
-    //     // setChildAadharNo(e.target.value);
-    //     setAadharError(true);
-    //     return false;
-    //     // const limit = 12;
-    //     // setChildAadharNo(e.target.value.slice(0, limit));
-    //     // window.alert("Username shouldn't exceed 10 characters")
-    //   } else if (e.target.value.length < 12) {
-    //     setAadharError(true);
-    //     setbrideFatherAadharNo(e.target.value);
-    //     return false;
-    //   } else {
-    //     setAadharError(false);
-    //     setbrideFatherAadharNo(e.target.value);
-    //     return true;
-    //   }
-    // } else {
-    //   setAadharError(false);
-    //   setbrideFatherAadharNo(e.target.value);
-    //   return true;
-    // }
   }
+
   function setSelectbrideAadharNo(e) {
-    if (e.target.value.trim().length >= 0) {
-      setBrideAadharNo(
-        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
-      );
+    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+
+    if (newValue === brideMotherAadharNo || newValue === brideGuardianAadharNo || newValue === brideFatherAadharNo) {
+      setBrideAadharNo("");
+      setAadharError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else {
+      setBrideAadharNo(newValue);
     }
-    // if (e.target.value.length != 0) {
-    //   if (e.target.value.length > 12) {
-    //     // setChildAadharNo(e.target.value);
-    //     setAadharError(true);
-    //     return false;
-    //     // const limit = 12;
-    //     // setChildAadharNo(e.target.value.slice(0, limit));
-    //     // window.alert("Username shouldn't exceed 10 characters")
-    //   } else if (e.target.value.length < 12) {
-    //     setAadharError(true);
-    //     setBrideAadharNo(e.target.value);
-    //     return false;
-    //   } else {
-    //     setAadharError(false);
-    //     setBrideAadharNo(e.target.value);
-    //     return true;
-    //   }
-    // } else {
-    //   setAadharError(false);
-    //   setBrideAadharNo(e.target.value);
-    //   return true;
-    // }
   }
   function setSelectbrideMotherAadharNo(e) {
-    if (e.target.value.trim().length >= 0) {
-      setbrideMotherAadharNo(
-        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
-      );
+    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+
+    if (newValue === brideAadharNo || newValue === brideGuardianAadharNo || newValue === brideFatherAadharNo) {
+      setbrideMotherAadharNo("");
+      setAadharError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else {
+      setbrideMotherAadharNo(newValue);
     }
-    // if (e.target.value.length != 0) {
-    //   if (e.target.value.length > 12) {
-    //     // setChildAadharNo(e.target.value);
-    //     setAadharError(true);
-    //     return false;
-    //     // const limit = 12;
-    //     // setChildAadharNo(e.target.value.slice(0, limit));
-    //     // window.alert("Username shouldn't exceed 10 characters")
-    //   } else if (e.target.value.length < 12) {
-    //     setAadharError(true);
-    //     setbrideMotherAadharNo(e.target.value);
-    //     return false;
-    //   } else {
-    //     setAadharError(false);
-    //     setbrideMotherAadharNo(e.target.value);
-    //     return true;
-    //   }
-    // } else {
-    //   setAadharError(false);
-    //   setbrideMotherAadharNo(e.target.value);
-    //   return true;
-    // }
   }
   function setSelectbrideGuardianAadharNo(e) {
-    if (e.target.value.trim().length >= 0) {
-      setbrideGuardianAadharNo(
-        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
-      );
+    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+
+    if (newValue === brideAadharNo || newValue === brideMotherAadharNo || newValue === brideFatherAadharNo) {
+      setbrideGuardianAadharNo("");
+      setAadharError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else {
+      setbrideGuardianAadharNo(newValue);
     }
-    // if (e.target.value.length != 0) {
-    //   if (e.target.value.length > 12) {
-    //     // setChildAadharNo(e.target.value);
-    //     setAadharError(true);
-    //     return false;
-    //     // const limit = 12;
-    //     // setChildAadharNo(e.target.value.slice(0, limit));
-    //     // window.alert("Username shouldn't exceed 10 characters")
-    //   } else if (e.target.value.length < 12) {
-    //     setAadharError(true);
-    //     setbrideGuardianAadharNo(e.target.value);
-    //     return false;
-    //   } else {
-    //     setAadharError(false);
-    //     setbrideGuardianAadharNo(e.target.value);
-    //     return true;
-    //   }
-    // } else {
-    //   setAadharError(false);
-    //   setbrideGuardianAadharNo(e.target.value);
-    //   return true;
-    // }
   }
   function setSelectbrideGuardiannameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setbrideGuardiannameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setbrideGuardiannameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
-    // if (e.target.value.length === 51) {
-    //   return false;
-    //   // window.alert("Username shouldn't exceed 10 characters")
-    // } else {
-    //   setbrideGuardiannameEn(
-    //     e.target.value.replace(
-    //       /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
-    //       ""
-    //     )
-    //   );
-    // }
   }
 
   function setSelectbrideMaritalstatusID(value) {
     setbrideMaritalstatusID(value);
+    setbrideIsSpouseLiving(null);
+    setbrideNoOfSpouse("");
     // setAgeMariageStatus(value.code);
   }
 
   function setSelectbrideIsSpouseLiving(value) {
     setbrideIsSpouseLiving(value);
+    setbrideNoOfSpouse("");
   }
   function setSelectbrideNoOfSpouse(e) {
     if (e.target.value.length === 2) {
@@ -602,7 +468,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     }
   }
   function setSelectbridePassportNo(e) {
-    if (e.target.value.length === 12) {
+    if (e.target.value.length === 21) {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
@@ -612,38 +478,6 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
   function selectParentType(e) {
     setSelectedParent(e.target.value);
   }
-  // function setSelectChildLastNameEn(e) {
-  //   if (e.target.value.length === 51) {
-  //     return false;
-  //     // window.alert("Username shouldn't exceed 10 characters")
-  //   } else {
-  //     setChildLastNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
-  //   }
-  // }
-  // function setSelectChildFirstNameMl(e) {
-  //   if (e.target.value.length === 51) {
-  //     return false;
-  //     // window.alert("Username shouldn't exceed 10 characters")
-  //   } else {
-  //     setChildFirstNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
-  //   }
-  // }
-  // function setSelectChildMiddleNameMl(e) {
-  //   if (e.target.value.length === 51) {
-  //     return false;
-  //     // window.alert("Username shouldn't exceed 10 characters")
-  //   } else {
-  //     setChildMiddleNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
-  //   }
-  // }
-  // function setSelectChildLastNameMl(e) {
-  //   if (e.target.value.length === 51) {
-  //     return false;
-  //     // window.alert("Username shouldn't exceed 10 characters")
-  //   } else {
-  //     setChildLastNameMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
-  //   }
-  // }
 
   const handleTimeChange = (value, cb) => {
     if (typeof value === "string") {
@@ -651,19 +485,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
       setTripStartTime(value);
     }
   };
-  // function setChildName(e) {
-  //   if (e.target.checked === true) {
-  //     setIsChildName(e.target.checked);
-  //   } else {
-  //     setIsChildName(e.target.checked);
-  //     setChildFirstNameEn("");
-  //     setChildMiddleNameEn("");
-  //     setChildLastNameEn("");
-  //     setChildFirstNameMl("");
-  //     setChildMiddleNameMl("");
-  //     setChildLastNameMl("");
-  //   }
-  // }
+
   let validFlag = true;
   const goNext = () => {
     if (AadharError) {
@@ -722,6 +544,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
       // sessionStorage.setItem("selectedOption", selectedOption ? selectedOption : "ILB");
       // // sessionStorage.setItem("isMotherInfo", isMotherInfo);
       onSelect(config.key, {
+        brideResidentShip,
         selectedOption,
         brideAadharNo,
         bridePassportNo,
@@ -734,6 +557,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
         brideMobile,
         brideGender,
         brideDOB,
+        brideAge,
         brideMothernameEn,
         brideMothernameMl,
         brideGuardiannameMl,
@@ -753,14 +577,6 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
       });
     }
   };
-
-  useState(() => {
-    setbrideIsSpouseLiving(null);
-    setbrideNoOfSpouse("");
-  }, [brideMaritalstatusID]);
-  useState(() => {
-    setbrideNoOfSpouse("");
-  }, [brideIsSpouseLiving]);
 
   if (isLoading) {
     return <Loader></Loader>;
@@ -869,7 +685,6 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                   type={"text"}
                   optionKey="i18nKey"
                   name="bridePassportNo"
-                  // disable={isChildName}
                   onChange={setSelectbridePassportNo}
                   disable={isDisableEdit}
                   placeholder={`${t("CR_PASSPORT_NO")}`}
@@ -1076,7 +891,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                   onChange={setSelectbrideEmailid}
                   disable={isDisableEdit}
                   placeholder={`${t("CR_BRIDE_EMAIL")}`}
-                  {...(validation = { isRequired: true, title: t("CR_INVALID_EMAIL") })}
+                  {...(validation = { title: t("CR_INVALID_EMAIL") })}
                 />
               </div>
             </div>
@@ -1102,7 +917,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                     select={setSelectbrideGender}
                     disable={isDisableEdit}
                     placeholder={`${t("CR_GENDER")}`}
-                    {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })}
+                    {...(validation = { isRequired: true })}
                   />
                 </div>
 
@@ -1138,7 +953,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                     name="brideAge"
                     value={brideAge}
                     onChange={setSelectbrideAge}
-                    disable={isDisableEdit}
+                    disable={true}
                     placeholder={`${t("CR_AGE")}`}
                     {...(validation = { pattern: "^[0-9]{2}$", type: "text", isRequired: true })}
                   />
@@ -1161,7 +976,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                   select={setSelectbrideMaritalstatusID}
                   disable={isDisableEdit}
                   placeholder={t("CR_MARIATAL_STATUS")}
-                  {...(validation = { isRequired: true, title: t("CR_INVALID_BRIDE_MARITAL_STATUS") })}
+                  {...(validation = { isRequired: true })}
                 />
               </div>
               {(brideMaritalstatusID?.code === "MARRIED" ||
@@ -1182,7 +997,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                     selected={brideIsSpouseLiving}
                     select={setSelectbrideIsSpouseLiving}
                     placeholder={t("CR_Y/N")}
-                    {...(validation = { isRequired: true, title: t("CR_INVALID_SPOUSE_LIVING") })}
+                    {...(validation = { isRequired: true })}
                   />
                 </div>
               )}
@@ -1220,16 +1035,6 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                 </h1>
               </div>
             </div>
-            {/* <div className="row">
-            <div className="col-md-12">
-              <div className="col-md-6">
-                <CardLabel>
-                  {t("CR_PAREENTS/_GUARDIAN'")} */}
-            {/* <span className="mandatorycss">*</span> */}
-            {/* </CardLabel>
-              </div>
-            </div>
-          </div> */}
             <div className="row">
               <div className="col-md-12">
                 <div className="radios" style={{ justifyContent: "center", columnGap: "40px" }}>
@@ -1421,7 +1226,6 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                           maxLength: 12,
                         }}
                         {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
-                        // {...(validation = { isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                       />
                     </div>
                     <div className="col-md-4">
@@ -1512,107 +1316,17 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
               </div>
             </div> */}
 
-            {/* <div className="row">
-              <div className="col-md-12">
-                <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ADDRESS_DETAILS")}`}</span>{" "}
-                </h1>
-              </div>
-            </div>
-            <div className="col-md-12">
-              <div className="col-md-6">
-                <CardLabel>{t("CR_PERMANENT_ADDRESS'")}</CardLabel>
-              </div>
-            </div>
-
-            <div className="col-md-12">
-              <div className="col-md-2">
-                <Dropdown t={t} optionKey="i18nKey" placeholder={t("CR_COUNTRY'")} />
-              </div>
-              <div className="col-md-2">
-                <Dropdown t={t} optionKey="i18nKey" placeholder={t("CR_STATE'")} />
-              </div>
-              <div className="col-md-2">
-                <Dropdown t={t} optionKey="i18nKey" placeholder={t("CR_DISTRICT'")} />
-              </div>
-              <div className="col-md-2">
-                <Dropdown t={t} optionKey="i18nKey" placeholder={t("CR_SUBDISTRICT'")} />
-              </div>
-              <div className="col-md-4">
-                <Dropdown t={t} optionKey="i18nKey" placeholder={t("CR_CITY_TOWN_VILLAGE'")} />
-              </div>
-            </div>
-
-            <div className="col-md-12">
-              <div className="col-md-2">
-                <Dropdown t={t} optionKey="i18nKey" placeholder={t("CR_LOCALITY'")} />
-              </div>
-              <div className="col-md-2">
-                <Dropdown t={t} optionKey="i18nKey" placeholder={t("CR_STREAT'")} />
-              </div>
-              <div className="col-md-4">
-                <TextInput t={t} optionKey="i18nKey" placeholder={t("CR_HOUSE_NAME_AND_NO'")} />
-              </div>
-              <div className="col-md-2">
-                <Dropdown t={t} optionKey="i18nKey" placeholder={t("CR_PIN'")} />
-              </div>
-              <div className="col-md-2">
-                <Dropdown t={t} optionKey="i18nKey" placeholder={t("CR_PO'")} />
-              </div>
-            </div>
-
-            <div className="col-md-12">
-              <div className="col-md-4">
-                <CardLabel>{t("CR_PRESENNT_ADDRESS'")}</CardLabel>
-              </div>
-              <div className="col-md-2">
-                <input type="radio" checked={selectedOption === "IK"} onChange={handleOptionChange} />
-                {t("CR_SAME_AS _ABOVE  ")}
-              </div>
-            </div>
-            <div className="col-md-12">
-              <div className="col-md-2">
-                <Dropdown t={t} optionKey="i18nKey" placeholder={t("CR_COUNTRY'")} />
-              </div>
-              <div className="col-md-2">
-                <Dropdown t={t} optionKey="i18nKey" placeholder={t("CR_STATE'")} />
-              </div>
-              <div className="col-md-2">
-                <Dropdown t={t} optionKey="i18nKey" placeholder={t("CR_DISTRICT'")} />
-              </div>
-              <div className="col-md-2">
-                <Dropdown t={t} optionKey="i18nKey" placeholder={t("CR_SUBDISTRICT'")} />
-              </div>
-              <div className="col-md-4">
-                <Dropdown t={t} optionKey="i18nKey" placeholder={t("CR_CITY_TOWN_VILLAGE'")} />
-              </div>
-            </div>
-
-            <div className="col-md-12">
-              <div className="col-md-2">
-                <Dropdown t={t} optionKey="i18nKey" placeholder={t("CR_LOCALITY'")} />
-              </div>
-              <div className="col-md-2">
-                <Dropdown t={t} optionKey="i18nKey" placeholder={t("CR_STREAT'")} />
-              </div>
-              <div className="col-md-4">
-                <TextInput t={t} optionKey="i18nKey" placeholder={t("CR_HOUSE_NAME_AND_NO'")} />
-              </div>
-              <div className="col-md-2">
-                <Dropdown t={t} optionKey="i18nKey" placeholder={t("CR_PIN'")} />
-              </div>
-              <div className="col-md-2">
-                <Dropdown t={t} optionKey="i18nKey" placeholder={t("CR_PO'")} />
-              </div>
-            </div> */}
             {toast && (
-              <Toast
-                error={AgeValidationMsg}
-                label={AgeValidationMsg ? "Age should be 18 or more" : setToast(false)}
-                onClose={() => setToast(false)}
+              <Toast 
+              error={AadharError || AgeValidationMsg} 
+              label={AadharError || AgeValidationMsg 
+                ? AadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`)
+                 : AgeValidationMsg ? t(`CR_INVALID_BRIDE_AGE`) 
+                 : setToast(false)
+                : setToast(false)} 
+                onClose={() => setToast(false)} 
               />
             )}
-            {""}
             <div className="row">
               <div className="col-md-12">
                 <h1 className="">
@@ -1620,10 +1334,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                 </h1>
               </div>
             </div>
-
-            {""}
           </div>
-          {/* <div><BackButton >{t("CS_COMMON_BACK")}</BackButton></div> */}
         </FormStep>
       </React.Fragment>
     );

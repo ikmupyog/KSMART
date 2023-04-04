@@ -27,6 +27,7 @@ const App = () => {
 
   const CreateBirthRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateBirthRegistration');
   const CreateBirthNACRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateBirthNACRegistration');
+  const CRCreateDeathNACRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateDeathNACRegistration');
   const CreateAdoption = Digit?.ComponentRegistryService?.getComponent('CRCreateAdoptions');
   const CreateStillBirthRegistration = Digit?.ComponentRegistryService?.getComponent('CRCreateStillBirthRegistration');
   const CreateAbandonedBirth =  Digit?.ComponentRegistryService?.getComponent('CRCreateAbandonedBirth');
@@ -42,7 +43,7 @@ const App = () => {
   const CRMarriageCorrection = Digit?.ComponentRegistryService?.getComponent('CRMarriageCorrection');
   // const MarriageInclusionEditPage = Digit?.ComponentRegistryService?.getComponent('MarriageInclusionEditPage');
   const CRMarriageCorrectionLoadPage = Digit?.ComponentRegistryService?.getComponent('CRMarriageCorrectionLoadPage');
-  const CRMarriageCorrectionEditPage = Digit?.ComponentRegistryService?.getComponent('CRMarriageCorrectionEditPage');
+  const SearchApplicationMarriage = Digit?.ComponentRegistryService?.getComponent('SearchApplicationMarriage');
   
   const CRBirthInclusionPage = Digit?.ComponentRegistryService?.getComponent('CRBirthInclusionPage');
 
@@ -73,6 +74,7 @@ React.useEffect(()=>{
         <PrivateRoute parentRoute={path} path={`${path}/birth-inclusion-edit`} component={CRBirthInclusionPage} />
         <PrivateRoute parentRoute={path} path={`${path}/marriage-correction-edit`} component={CRMarriageCorrectionLoadPage} />
         <PrivateRoute path={`${path}/cr-birth-nac`} component={CreateBirthNACRegistration} />
+        <PrivateRoute path={`${path}/cr-death-nac`} component={CRCreateDeathNACRegistration} />
         <PrivateRoute path={`${path}/cr-adoption`} component={CreateAdoption} />
         <PrivateRoute path={`${path}/cr-stillbirth-creation`} component={CreateStillBirthRegistration} />
         <PrivateRoute path={`${path}/cr-outsideindiabirth-creation`} component={CreateBornOutsideRegistration} />
@@ -81,6 +83,7 @@ React.useEffect(()=>{
         <PrivateRoute path={`${path}/cr-marriage-creation`} component={CreateMarriageRegistration} />     
         <PrivateRoute path={`${path}/cr/my-application`} component={MyCRApplications} />
         <PrivateRoute path={`${path}/cr/death/my-application`} component={MyCRDeathApplications} />
+        <PrivateRoute path={`${path}/cr/marriage/my-application`} component={SearchApplicationMarriage} />
         <PrivateRoute path={`${path}/cr/my-bills`} component={() => <MyCRApplications view="bills" />} />
         <PrivateRoute path={`${path}/cr/application/:id/:tenantId`} component={ApplicationDetails} />
         <PrivateRoute path={`${path}/cr/death/application/:id/:tenantId`} component={ApplicationDeathDetails} />

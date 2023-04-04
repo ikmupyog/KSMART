@@ -3,9 +3,9 @@ import { FormStep, CardLabel, TextInput, DatePicker, Dropdown, BackButton, Loade
 import Timeline from "../../components/AdoptionTimeline";
 import { useTranslation } from "react-i18next";
 
-const AdoptionParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isEditBirthPageComponents }) => {
-  // console.log(JSON.stringify(formData));
-  console.log(formData);
+const AdoptionParentsDetails = ({ config, onSelect, userType, formData, isEditAdoption, isEditBirthPageComponents }) => {
+  // console.log(JSON.stringify(formData)); isEditAdoption ? isEditAdoption :
+  // console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -16,7 +16,7 @@ const AdoptionParentsDetails = ({ config, onSelect, userType, formData, isEditBi
   const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
+  const [isDisableEdit, setisDisableEdit] = useState( false);
   let cmbfilterNation = [];
   const cmbMaritalStatus = [
     { i18nKey: "Married", code: "MARRIED" },
@@ -64,48 +64,48 @@ const AdoptionParentsDetails = ({ config, onSelect, userType, formData, isEditBi
     });
   const [isMotherInfo, setIsMotherInfo] = useState(formData?.AdoptionParentsDetails?.isMotherInfo ? formData?.AdoptionParentsDetails?.isMotherInfo : false);
   const [motherAadhar, setMotherAadhar] = useState(formData?.AdoptionParentsDetails?.motherAadhar ? formData?.AdoptionParentsDetails?.motherAadhar :
-    formData?.ChildDetails?.AdoptionParentsDetails?.motherAadhar ? formData?.ChildDetails?.AdoptionParentsDetails?.motherAadhar : "");
+    formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.motherAadhar ? formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.motherAadhar : "");
   const [motherFirstNameEn, setMotherFirstNameEn] = useState(formData?.AdoptionParentsDetails?.motherFirstNameEn ? formData?.AdoptionParentsDetails?.motherFirstNameEn :
-    formData?.ChildDetails?.AdoptionParentsDetails?.motherFirstNameEn ? formData?.ChildDetails?.AdoptionParentsDetails?.motherFirstNameEn : "");
+    formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.motherFirstNameEn ? formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.motherFirstNameEn : "");
   const [motherFirstNameMl, setMotherFirstNameMl] = useState(formData?.AdoptionParentsDetails?.motherFirstNameMl ? formData?.AdoptionParentsDetails?.motherFirstNameMl :
-    formData?.ChildDetails?.AdoptionParentsDetails?.motherFirstNameMl ? formData?.ChildDetails?.AdoptionParentsDetails?.motherFirstNameMl : "");
-  const [motherNationality, setMotherNationality] = useState(formData?.AdoptionParentsDetails?.motherNationality?.code ? formData?.AdoptionParentsDetails?.motherNationality : formData?.ChildDetails?.AdoptionParentsDetails?.motherNationality ?
-    (cmbNation.filter(cmbNation => cmbNation.code === formData?.ChildDetails?.AdoptionParentsDetails?.motherNationality)[0]) : "");
-  const [motherMaritalStatus, setMotherMaritalStatus] = useState(formData?.AdoptionParentsDetails?.motherMaritalStatus?.code ? formData?.AdoptionParentsDetails?.motherMaritalStatus : formData?.ChildDetails?.AdoptionParentsDetails?.motherMaritalStatus ?
-    (cmbMaritalStatus.filter(cmbMaritalStatus => cmbMaritalStatus.code === formData?.ChildDetails?.AdoptionParentsDetails?.motherMaritalStatus)[0]) : "");
-  const [ageMariageStatusHide, setAgeMariageStatus] = useState(formData?.AdoptionParentsDetails?.motherMaritalStatus?.code ? formData?.AdoptionParentsDetails?.motherMaritalStatus.code : formData?.ChildDetails?.AdoptionParentsDetails?.motherMaritalStatus ?
-    formData?.ChildDetails?.AdoptionParentsDetails?.motherMaritalStatus : "");
+    formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.motherFirstNameMl ? formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.motherFirstNameMl : "");
+  const [motherNationality, setMotherNationality] = useState(formData?.AdoptionParentsDetails?.motherNationality?.code ? formData?.AdoptionParentsDetails?.motherNationality : formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.motherNationality ?
+    (cmbNation.filter(cmbNation => cmbNation.code === formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.motherNationality)[0]) : "");
+  const [motherMaritalStatus, setMotherMaritalStatus] = useState(formData?.AdoptionParentsDetails?.motherMaritalStatus?.code ? formData?.AdoptionParentsDetails?.motherMaritalStatus : formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.motherMaritalStatus ?
+    (cmbMaritalStatus.filter(cmbMaritalStatus => cmbMaritalStatus.code === formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.motherMaritalStatus)[0]) : "");
+  const [ageMariageStatusHide, setAgeMariageStatus] = useState(formData?.AdoptionParentsDetails?.motherMaritalStatus?.code ? formData?.AdoptionParentsDetails?.motherMaritalStatus.code : formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.motherMaritalStatus ?
+    formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.motherMaritalStatus : "");
 
   const [motherMarriageAge, setMotherMarriageAge] = useState(formData?.AdoptionParentsDetails?.motherMarriageAge ? formData?.AdoptionParentsDetails?.motherMarriageAge :
-    formData?.ChildDetails?.AdoptionParentsDetails?.motherMarriageAge ? formData?.ChildDetails?.AdoptionParentsDetails?.motherMarriageAge : "");
+    formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.motherMarriageAge ? formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.motherMarriageAge : "");
   const [motherMarriageBirth, setMotherMarriageBirth] = useState(formData?.AdoptionParentsDetails?.motherMarriageBirth ? formData?.AdoptionParentsDetails?.motherMarriageBirth :
-    formData?.ChildDetails?.AdoptionParentsDetails?.motherMarriageBirth ? formData?.ChildDetails?.AdoptionParentsDetails?.motherMarriageBirth : "");
+    formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.motherMarriageBirth ? formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.motherMarriageBirth : "");
   const [orderofChildren, setOrderofChildren] = useState(formData?.AdoptionParentsDetails?.orderofChildren ? formData?.AdoptionParentsDetails?.orderofChildren :
-    formData?.ChildDetails?.AdoptionParentsDetails?.orderofChildren ? formData?.ChildDetails?.AdoptionParentsDetails?.orderofChildren : "");
-  const [motherEducation, setMotherEducation] = useState(formData?.AdoptionParentsDetails?.motherEducation?.code ? formData?.AdoptionParentsDetails?.motherEducation : formData?.ChildDetails?.AdoptionParentsDetails?.motherEducation ?
-    (cmbQualification.filter(cmbQualification => cmbQualification.code === formData?.ChildDetails?.AdoptionParentsDetails?.motherEducation)[0]) : "");
-  const [motherProfession, setMotherProfession] = useState(formData?.AdoptionParentsDetails?.motherProfession?.code ? formData?.AdoptionParentsDetails?.motherProfession : formData?.ChildDetails?.AdoptionParentsDetails?.motherProfession ?
-    (cmbProfession.filter(cmbProfession => cmbProfession.code === formData?.ChildDetails?.AdoptionParentsDetails?.motherProfession)[0]) : "");
+    formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.orderofChildren ? formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.orderofChildren : "");
+  const [motherEducation, setMotherEducation] = useState(formData?.AdoptionParentsDetails?.motherEducation?.code ? formData?.AdoptionParentsDetails?.motherEducation : formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.motherEducation ?
+    (cmbQualification.filter(cmbQualification => cmbQualification.code === formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.motherEducation)[0]) : "");
+  const [motherProfession, setMotherProfession] = useState(formData?.AdoptionParentsDetails?.motherProfession?.code ? formData?.AdoptionParentsDetails?.motherProfession : formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.motherProfession ?
+    (cmbProfession.filter(cmbProfession => cmbProfession.code === formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.motherProfession)[0]) : "");
 
   const [isFatherInfo, setIsFatherInfo] = useState(formData?.AdoptionParentsDetails?.isFatherInfo ? formData?.AdoptionParentsDetails?.isFatherInfo : false);
   const [fatherAadhar, setFatherAadhar] = useState(formData?.AdoptionParentsDetails?.fatherAadhar ? formData?.AdoptionParentsDetails?.fatherAadhar :
-    formData?.ChildDetails?.AdoptionParentsDetails?.fatherAadhar ? formData?.ChildDetails?.AdoptionParentsDetails?.fatherAadhar : "");
+    formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.fatherAadhar ? formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.fatherAadhar : "");
   const [fatherFirstNameEn, setFatherFirstNameEn] = useState(formData?.AdoptionParentsDetails?.fatherFirstNameEn ? formData?.AdoptionParentsDetails?.fatherFirstNameEn :
-    formData?.ChildDetails?.AdoptionParentsDetails?.fatherFirstNameEn ? formData?.ChildDetails?.AdoptionParentsDetails?.fatherFirstNameEn : "");
+    formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.fatherFirstNameEn ? formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.fatherFirstNameEn : "");
   const [fatherFirstNameMl, setFatherFirstNameMl] = useState(formData?.AdoptionParentsDetails?.fatherFirstNameMl ? formData?.AdoptionParentsDetails?.fatherFirstNameMl :
-    formData?.ChildDetails?.AdoptionParentsDetails?.fatherFirstNameMl ? formData?.ChildDetails?.AdoptionParentsDetails?.fatherFirstNameMl : "");
-  const [fatherNationality, setFatherNationality] = useState(formData?.AdoptionParentsDetails?.fatherNationality?.code ? formData?.AdoptionParentsDetails?.fatherNationality : formData?.ChildDetails?.AdoptionParentsDetails?.fatherNationality ?
-    (cmbNation.filter(cmbNation => cmbNation.code === formData?.ChildDetails?.AdoptionParentsDetails?.fatherNationality)[0]) : "");
-  const [fatherEducation, setFatherEducation] = useState(formData?.AdoptionParentsDetails?.fatherEducation?.code ? formData?.AdoptionParentsDetails?.fatherEducation : formData?.ChildDetails?.AdoptionParentsDetails?.fatherEducation ?
-    (cmbQualification.filter(cmbQualification => cmbQualification.code === formData?.ChildDetails?.AdoptionParentsDetails?.fatherEducation)[0]) : "");
-  const [fatherProfession, setFatherProfession] = useState(formData?.AdoptionParentsDetails?.fatherProfession?.code ? formData?.AdoptionParentsDetails?.fatherProfession : formData?.ChildDetails?.AdoptionParentsDetails?.fatherProfession ?
-    (cmbProfession.filter(cmbProfession => cmbProfession.code === formData?.ChildDetails?.AdoptionParentsDetails?.fatherProfession)[0]) : "");
-  const [Religion, setReligion] = useState(formData?.AdoptionParentsDetails?.Religion?.code ? formData?.AdoptionParentsDetails?.Religion : formData?.ChildDetails?.AdoptionParentsDetails?.Religion ?
-    (cmbReligion.filter(cmbReligion => cmbReligion.code === formData?.ChildDetails?.AdoptionParentsDetails?.Religion)[0]) : "");
+    formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.fatherFirstNameMl ? formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.fatherFirstNameMl : "");
+  const [fatherNationality, setFatherNationality] = useState(formData?.AdoptionParentsDetails?.fatherNationality?.code ? formData?.AdoptionParentsDetails?.fatherNationality : formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.fatherNationality ?
+    (cmbNation.filter(cmbNation => cmbNation.code === formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.fatherNationality)[0]) : "");
+  const [fatherEducation, setFatherEducation] = useState(formData?.AdoptionParentsDetails?.fatherEducation?.code ? formData?.AdoptionParentsDetails?.fatherEducation : formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.fatherEducation ?
+    (cmbQualification.filter(cmbQualification => cmbQualification.code === formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.fatherEducation)[0]) : "");
+  const [fatherProfession, setFatherProfession] = useState(formData?.AdoptionParentsDetails?.fatherProfession?.code ? formData?.AdoptionParentsDetails?.fatherProfession : formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.fatherProfession ?
+    (cmbProfession.filter(cmbProfession => cmbProfession.code === formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.fatherProfession)[0]) : "");
+  const [Religion, setReligion] = useState(formData?.AdoptionParentsDetails?.Religion?.code ? formData?.AdoptionParentsDetails?.Religion : formData?.AdoptionParentsDetails?.Religion ?
+    (cmbReligion.filter(cmbReligion => cmbReligion.code === formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.Religion)[0]) : "");
   const [fatherEmail, setFatherEmail] = useState(formData?.AdoptionParentsDetails?.fatherEmail ? formData?.AdoptionParentsDetails?.fatherEmail :
-    formData?.ChildDetails?.AdoptionParentsDetails?.fatherEmail ? formData?.ChildDetails?.AdoptionParentsDetails?.fatherEmail : "");
+    formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.fatherEmail ? formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.fatherEmail : "");
   const [fatherMobile, setFatherMobile] = useState(formData?.AdoptionParentsDetails?.fatherMobile ? formData?.AdoptionParentsDetails?.fatherMobile :
-    formData?.ChildDetails?.AdoptionParentsDetails?.fatherMobile ? formData?.ChildDetails?.AdoptionParentsDetails?.fatherMobile : "");
+    formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.fatherMobile ? formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.fatherMobile : "");
 
   const [toast, setToast] = useState(false);
   const [MotherAadharError, setMotherAadharError] = useState(formData?.AdoptionParentsDetails?.motherAadhar ? false : false);
@@ -133,7 +133,17 @@ const AdoptionParentsDetails = ({ config, onSelect, userType, formData, isEditBi
       setMotherNationality(cmbfilterNation[0]);
     }
   }, [Nation]);
-
+  useEffect(()=>{
+    if(isEditAdoption){
+      formData?.AdoptionParentsDetails?.Religion!==""? setReligion(cmbReligion.filter(cmbReligion => cmbReligion.code === formData?.AdoptionParentsDetails?.Religion)[0]):''
+      formData?.AdoptionParentsDetails?.motherMaritalStatus!==""? setMotherMaritalStatus(cmbMaritalStatus.filter(cmbMaritalStatus => cmbMaritalStatus.code === formData?.AdoptionParentsDetails?.motherMaritalStatus)[0]):''
+      formData?.AdoptionParentsDetails?.motherEducation!==""? setMotherEducation (cmbQualification.filter(cmbQualification => cmbQualification.code === formData?.AdoptionParentsDetails?.motherEducation)[0]):''
+      formData?.AdoptionParentsDetails?.motherProfession!==""? setMotherProfession (cmbProfession.filter(cmbProfession => cmbProfession.code === formData?.AdoptionParentsDetails?.motherProfession)[0]):''
+      formData?.AdoptionParentsDetails?.fatherEducation!==""? setFatherEducation  (cmbQualification.filter(cmbQualification => cmbQualification.code === formData?.AdoptionParentsDetails?.fatherEducation)[0]) :""
+      formData?.AdoptionParentsDetails?.fatherProfession!==""? setFatherProfession  (cmbProfession.filter(cmbProfession => cmbProfession.code === formData?.AdoptionParentsDetails?.fatherProfession)[0]) : ""
+      
+    }
+  },[cmbReligion?.length>0 || cmbQualification?.length>0 || cmbProfession?.length>0])
 
   useEffect(() => {
     if (isInitialRender) {
@@ -220,12 +230,12 @@ const AdoptionParentsDetails = ({ config, onSelect, userType, formData, isEditBi
     }
   }
   function setSelectMotherEducation(value) {
-    console.log(value);
+    // console.log(value);
     setMotherEducation(value);
   }
 
   function setSelectMotherProfession(value) {
-    console.log(value);
+    // console.log(value);
     setMotherProfession(value);
   }
   function setSelectLBType(value) {
@@ -322,46 +332,46 @@ const AdoptionParentsDetails = ({ config, onSelect, userType, formData, isEditBi
       e.preventDefault();
     }    
   }
-  if (isEditBirth) {
+  if (isEditAdoption) {
 
-    if (formData?.ChildDetails?.AdoptionParentsDetails?.motherNationality != null) {
+    if (formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.motherNationality != null) {
       if (cmbNation.length > 0 && (motherNationality === undefined || motherNationality === "")) {
-        setMotherNationality(cmbNation.filter(cmbNation => cmbNation.code === formData?.ChildDetails?.AdoptionParentsDetails?.motherNationality)[0]);
+        setMotherNationality(cmbNation.filter(cmbNation => cmbNation.code === formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.motherNationality)[0]);
       }
     }
-    if (formData?.ChildDetails?.AdoptionParentsDetails?.motherMaritalStatus != null) {
+    if (formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.motherMaritalStatus != null) {
       if (cmbMaritalStatus.length > 0 && (motherMaritalStatus === undefined || motherMaritalStatus === "")) {
-        setMotherMaritalStatus(cmbMaritalStatus.filter(cmbMaritalStatus => cmbMaritalStatus.code === formData?.ChildDetails?.AdoptionParentsDetails?.motherMaritalStatus)[0]);
+        setMotherMaritalStatus(cmbMaritalStatus.filter(cmbMaritalStatus => cmbMaritalStatus.code === formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.motherMaritalStatus)[0]);
       }
     }
-    if (formData?.ChildDetails?.AdoptionParentsDetails?.motherEducation != null) {
+    if (formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.motherEducation != null) {
       if (cmbQualification.length > 0 && (motherEducation === undefined || motherEducation === "")) {
-        setMotherEducation(cmbQualification.filter(cmbQualification => cmbQualification.code === formData?.ChildDetails?.AdoptionParentsDetails?.motherEducation)[0]);
+        setMotherEducation(cmbQualification.filter(cmbQualification => cmbQualification.code === formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.motherEducation)[0]);
       }
     }
-    if (formData?.ChildDetails?.AdoptionParentsDetails?.motherProfession != null) {
+    if (formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.motherProfession != null) {
       if (cmbProfession.length > 0 && (motherProfession === undefined || motherProfession === "")) {
-        setMotherProfession(cmbProfession.filter(cmbProfession => cmbProfession.code === formData?.ChildDetails?.AdoptionParentsDetails?.motherProfession)[0]);
+        setMotherProfession(cmbProfession.filter(cmbProfession => cmbProfession.code === formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.motherProfession)[0]);
       }
     }
-    if (formData?.ChildDetails?.AdoptionParentsDetails?.fatherNationality != null) {
+    if (formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.fatherNationality != null) {
       if (cmbNation.length > 0 && (fatherNationality === undefined || fatherNationality === "")) {
-        setFatherNationality(cmbNation.filter(cmbNation => cmbNation.code === formData?.ChildDetails?.AdoptionParentsDetails?.fatherNationality)[0]);
+        setFatherNationality(cmbNation.filter(cmbNation => cmbNation.code === formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.fatherNationality)[0]);
       }
     }
-    if (formData?.ChildDetails?.AdoptionParentsDetails?.fatherEducation != null) {
+    if (formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.fatherEducation != null) {
       if (cmbQualification.length > 0 && (fatherEducation === undefined || fatherEducation === "")) {
-        setFatherEducation(cmbQualification.filter(cmbQualification => cmbQualification.code === formData?.ChildDetails?.AdoptionParentsDetails?.fatherEducation)[0]);
+        setFatherEducation(cmbQualification.filter(cmbQualification => cmbQualification.code === formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.fatherEducation)[0]);
       }
     }
-    if (formData?.ChildDetails?.AdoptionParentsDetails?.fatherProfession != null) {
+    if (formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.fatherProfession != null) {
       if (cmbProfession.length > 0 && (fatherProfession === undefined || fatherProfession === "")) {
-        setFatherProfession(cmbProfession.filter(cmbProfession => cmbProfession.code === formData?.ChildDetails?.AdoptionParentsDetails?.fatherProfession)[0]);
+        setFatherProfession(cmbProfession.filter(cmbProfession => cmbProfession.code === formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.fatherProfession)[0]);
       }
     }
-    if (formData?.ChildDetails?.AdoptionParentsDetails?.Religion != null) {
+    if (formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.Religion != null) {
       if (cmbReligion.length > 0 && (Religion === undefined || Religion === "")) {
-        setReligion(cmbReligion.filter(cmbReligion => cmbReligion.code === formData?.ChildDetails?.AdoptionParentsDetails?.Religion)[0]);
+        setReligion(cmbReligion.filter(cmbReligion => cmbReligion.code === formData?.AdoptionParentsDetails?.AdoptionParentsDetails?.Religion)[0]);
       }
     }
   }

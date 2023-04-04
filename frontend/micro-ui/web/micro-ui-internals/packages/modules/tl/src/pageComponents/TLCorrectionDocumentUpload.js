@@ -68,11 +68,13 @@ const TLCorrectionDocumentUpload = ({ t, config, onSelect, formData,onEditSelect
   //console.log(JSON.stringify(formData?.TradeDetails?.ownersdoc));
   let extraStyles = {};
   extraStyles = getStyle();
-  let documentList = [
-    { "code": "OWNERIDPROOF", "description": "ProofOfIdentity" , "label" : "Proof Of Identity" },
-    { "code": "OWNERSHIPPROOF", "description": "ProofOfOwnership","label" : "Proof Of Ownership" },
-    { "code": "OWNERPHOTO", "description": "OwnerPhotoProof","label" : "Photo" }
-  ]
+  // let documentList = [
+  //   { "code": "OWNERIDPROOF", "description": "ProofOfIdentity" , "label" : "Proof Of Identity" },
+  //   { "code": "OWNERSHIPPROOF", "description": "ProofOfOwnership","label" : "Proof Of Ownership" },
+  //   { "code": "OWNERPHOTO", "description": "OwnerPhotoProof","label" : "Photo" }
+  // ]
+  
+
 
   const [uploadedFiles, setUploadedFiles] = useState(formDataEdit?.TradeDetails?.tradeLicenseDetail?.applicationDocuments? formDataEdit?.TradeDetails?.tradeLicenseDetail?.applicationDocuments: []);
   const [docuploadedId, setDocuploadedId] = useState();
@@ -86,29 +88,58 @@ const TLCorrectionDocumentUpload = ({ t, config, onSelect, formData,onEditSelect
   const [dropdownValue, setDropdownValue] = useState(formDataEdit?.TradeDetails?.owners?.documents?.ProofOfIdentity?.documentType || null);
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const stateId = Digit.ULBService.getStateId();
-  const { data: Documentsob = {} } = Digit.Hooks.pt.usePropertyMDMS(stateId, "PropertyTax", "Documents");
-  const docs = Documentsob?.PropertyTax?.Documents;
-  const proofOfIdentity = Array.isArray(docs) && docs.filter((doc) => doc.code.includes("ADDRESSPROOF"));
+  // const { data: Documentsob = {} } = Digit.Hooks.pt.usePropertyMDMS(stateId, "PropertyTax", "Documents");
+  // const docs = Documentsob?.PropertyTax?.Documents;
+  // const proofOfIdentity = Array.isArray(docs) && docs.filter((doc) => doc.code.includes("ADDRESSPROOF"));
+  const { data: Documentsob = {}, isLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "ApplicationDocuments");
+
+  let documentList =[];
+
+  Documentsob &&
+  Documentsob["TradeLicense"] &&
+  Documentsob["TradeLicense"].ApplicationDocuments.map((ob) => {
+    ob.DocumentList.map(obchild => {
+      if(ob.code === formDataEdit?.TradeDetails?.tradeLicenseDetail?.licenseeType){
+        documentList.push({ "code": obchild.code, "description": obchild.description , "label" : obchild.name });
+      }
+      if(ob.code === formDataEdit?.TradeDetails?.tradeLicenseDetail?.structureType+ "." + formDataEdit?.TradeDetails?.tradeLicenseDetail?.ownershipCategory){
+        documentList.push({ "code": obchild.code, "description": obchild.description , "label" : obchild.name });
+      }
+    });
+  });
+  
+  
+  // const docs = Documentsob?.ApplicationDocuments?.DocumentList;
+  // const proofOfIdentity = Array.isArray(docs) && docs.filter((doc) => doc.code.includes("ADDRESSPROOF"));
+  
   const handleSubmit = () => {
     let applndoc = formDataEdit?.TradeDetails?.tradeLicenseDetail?.applicationDocuments;
     if (uploadedFiles.length > 0) {
-      applndoc = uploadedFiles
-      // uploadedFiles.map((element) => {
-      //   let fileDetails = element.file;
-      //   fileDetails.documentType = element.documentType;
-      //   fileDetails.fileStoreId = element.fileStoreId;
-      //   if (ownersdoc && ownersdoc.documents) {
-      //     ownersdoc.documents[element.description] = fileDetails;
-      //   } else {
-      //     ownersdoc["documents"] = [];
-      //     ownersdoc.documents[element.description] = fileDetails;
-      //   }
-      // }, [ownersdoc]);
+      applndoc = uploadedFiles;
     }
-    // console.log(ownersdoc.documents["OwnerPhotoProof"].name);
+      let owners = formDataEdit?.TradeDetails?.tradeLicenseDetail?.owners;
+      let address = formDataEdit?.TradeDetails?.tradeLicenseDetail?.address;
+      let tenantId = formDataEdit?.TradeDetails?.tenantId;
+      let structurePlace = formDataEdit?.TradeDetails?.tradeLicenseDetail?.structurePlace;
+      let ownerspremise = formDataEdit?.TradeDetails?.tradeLicenseDetail?.ownerspremise;
+      let institution = formDataEdit?.TradeDetails?.tradeLicenseDetail?.institution;
+      let licenseeType = formDataEdit?.TradeDetails?.tradeLicenseDetail?.licenseeType;
+      let businessSector = formDataEdit?.TradeDetails?.tradeLicenseDetail?.businessSector;
+      let structureType = formDataEdit?.TradeDetails?.tradeLicenseDetail?.structureType;
+      let structurePlaceSubtype = formDataEdit?.TradeDetails?.tradeLicenseDetail?.structurePlaceSubtype;
+      let businessActivityDesc = formDataEdit?.TradeDetails?.tradeLicenseDetail?.businessActivityDesc;
+      let ownershipCategory = formDataEdit?.TradeDetails?.tradeLicenseDetail?.ownershipCategory;
+      let enterpriseType = formDataEdit?.TradeDetails?.tradeLicenseDetail?.enterpriseType;
+      let capitalInvestment = formDataEdit?.TradeDetails?.tradeLicenseDetail?.capitalInvestment ;
+      let noOfEmployees = formDataEdit?.TradeDetails?.tradeLicenseDetail?.noOfEmployees;
+      let tradeUnits = formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits;
+      let applicationDocuments = applndoc;
+  
+      let tradeLicenseDetail = { tenantId, licenseeType, owners, ownerspremise, institution, businessSector, capitalInvestment, enterpriseType,
+          structureType,structurePlaceSubtype, businessActivityDesc, noOfEmployees,
+          ownershipCategory, address, tradeUnits, structurePlace,applicationDocuments }
 
-    let applicationDocuments = { applicationDocuments: applndoc }
-    onSelect(config.key, applicationDocuments);
+      onSelect(config.key, {tradeLicenseDetail});
   };
   const onSkip = () => onSelect();
 
@@ -209,12 +240,12 @@ const TLCorrectionDocumentUpload = ({ t, config, onSelect, formData,onEditSelect
                 documentList.map((doc, index, arr) => (
                   <div className="row" key={doc.code}>
                     <div className="col-md-12">
-                      <div className="col-md-3">
+                      <div className="col-md-6">
                         <span>
                           {doc.label}
                         </span>
                       </div>
-                      <div className="col-md-3">
+                      <div className="col-md-6">
                         <UploadFile
                           id={doc.code}
                           name={doc.description}

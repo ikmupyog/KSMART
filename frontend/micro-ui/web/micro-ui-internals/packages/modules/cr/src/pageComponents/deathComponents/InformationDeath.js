@@ -12,13 +12,13 @@ import DeathOutsideJurisdiction from "./DeathOutsideJurisdiction ";
 import { useParams } from "react-router-dom";
 
 const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath }) => {
-  console.log(formData);
-  console.log(isEditDeath);
+  // console.log(formData);
+  // console.log(isEditDeath);
   const [isEditDeathPageComponents, setIsEditDeathPageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
   const stateId = Digit.ULBService.getStateId();
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
-  const [workFlowCode, setWorkFlowCode] = useState();
+  const [workFlowCode, setWorkFlowCode] = useState(formData?.InformationDeath?.workFlowCode);
   const { uuid: uuid } = Digit.UserService.getUser().info;
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -237,7 +237,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
     //   ? cmbReligion.filter((cmbReligion) => cmbReligion.code === formData?.InformationDeath?.Religion)[0]
     //   : ""
   );
-  const [DifferenceInTime, setDifferenceInTime] = useState(formData?.ChildDetails?.DifferenceInTime);
+  const [DifferenceInTime, setDifferenceInTime] = useState(formData?.InformationDeath?.DifferenceInTime);
   const [DifferenceInDaysRounded, setDifferenceInDaysRounded] = useState();
 
   const [CommencementDate, setCommencementDate] = useState(
@@ -531,60 +531,32 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   }
   function selectToDate(value) {
     setToDate(value);
+
     const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const deathDate = new Date(value);
-    deathDate.setHours(0, 0, 0, 0);
+    const toDate = new Date(value);
+    const fromDate = new Date(DateOfDeath);
 
-    if (deathDate.getTime() <= today.getTime()) {
-      setDOBError(false);
-      // To calculate the time difference of two dates
-      let Difference_In_Time = today.getTime() - deathDate.getTime();
-      // console.log("Difference_In_Time" + Difference_In_Time);
-      setDifferenceInTime(today.getTime() - deathDate.getTime());
-      let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-      // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
-      setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
-      if (DeathPlace) {
-        let currentWorgFlow = workFlowData.filter(
-          (workFlowData) =>
-            workFlowData.BirtPlace === DeathPlace.code &&
-            workFlowData.startdateperiod <= DifferenceInTime &&
-            workFlowData.enddateperiod >= DifferenceInTime
-        );
-        console.log("currentWorgFlowDOB" + currentWorgFlow);
-        if (currentWorgFlow.length > 0) {
-          // console.log(currentWorgFlow[0].WorkflowCode);
-          setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
-        }
+    if (toDate.getTime() <= today.getTime()) {
+      if (fromDate && toDate.getTime() < fromDate.getTime()) {
+        setToDate(null);
+        setDOBError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 3000);
+      } else {
+        let Difference_In_Time = today.getTime() - toDate.getTime();
+        let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+        Difference_In_DaysRounded = Math.floor(Difference_In_Days);
       }
+    } else {
+      setToDate(null);
+      setDOBError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
     }
-    // const today = new Date();
-    // const toDate = new Date(value);
-    // const fromDate = new Date(DateOfDeath);
-
-    // if (toDate.getTime() <= today.getTime()) {
-    //   if (fromDate && toDate.getTime() < fromDate.getTime()) {
-    //     setToDate(null);
-    //     setDOBError(true);
-    //     setToast(true);
-    //     setTimeout(() => {
-    //       setToast(false);
-    //     }, 3000);
-    //   } else {
-    //     let Difference_In_Time = today.getTime() - toDate.getTime();
-    //     let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-    //     Difference_In_DaysRounded = Math.floor(Difference_In_Days);
-    //   }
-    // }
-    // else {
-    //   setToDate(null);
-    //   setDOBError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 3000);
-    // }
   }
 
   // function selectToDate(value) {
@@ -606,15 +578,42 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
 
   // }
   function selectDeathDate(value) {
-    // setDeathDate(value);
     setDateOfDeath(value);
     const today = new Date();
+    today.setHours(0, 0, 0, 0);
     const deathDate = new Date(value);
+    deathDate.setHours(0, 0, 0, 0);
+
     if (deathDate.getTime() <= today.getTime()) {
+      setDOBError(false);
+      // To calculate the time difference of two dates
       let Difference_In_Time = today.getTime() - deathDate.getTime();
+      // console.log("Difference_In_Time" + Difference_In_Time);
+      setDifferenceInTime(today.getTime() - deathDate.getTime());
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-      Difference_In_DaysRounded = Math.floor(Difference_In_Days);
+      // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
+      setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
+      if (DeathPlace) {
+        let currentWorgFlow = workFlowData.filter(
+          (workFlowData) =>
+            workFlowData.BirtPlace === DeathPlace.code &&
+            workFlowData.startdateperiod <= DifferenceInTime &&
+            workFlowData.enddateperiod >= DifferenceInTime
+        );
+        // console.log("currentWorgFlowDOB" + currentWorgFlow);
+        if (currentWorgFlow.length > 0) {
+          // console.log(currentWorgFlow[0].WorkflowCode);
+          setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+        }
+      }
     }
+    // const today = new Date();
+    // const deathDate = new Date(value);
+    // if (deathDate.getTime() <= today.getTime()) {
+    //   let Difference_In_Time = today.getTime() - deathDate.getTime();
+    //   let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+    //   Difference_In_DaysRounded = Math.floor(Difference_In_Days);
+    // }
     // else {
     //   setDateOfDeath(null);
     //   setDOBError(true);
@@ -759,207 +758,198 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
       // console.log(currentWorgFlow[0].WorkflowCode);
       setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
     }
-    // let currentWorgFlow = workFlowData.filter(
-    //   (workFlowData) =>
-    //     workFlowData.BirtPlace === value.code &&
-    //     workFlowData.startdateperiod <= Difference_In_DaysRounded &&
-    //     workFlowData.enddateperiod >= Difference_In_DaysRounded
-    // );
-    // console.log(currentWorgFlow[0].WorkflowCode);
-    // workFlowCode=currentWorgFlow[0].WorkflowCode;
-    setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
-    if (value.code === "HOSPITAL") {
-      //Institution
-      setSelectedDeathPlaceInstId(null);
-      setInstitutionIdMl(null);
-      setInstitutionFilterList(null);
-      // setIsInitialRenderInstitutionList
-      //Home
-      setDeathPlaceHomepostofficeId(null);
-      setDeathPlaceHomepincode(null);
-      setDeathPlaceHomehoueNameEn(null);
-      setDeathPlaceHomehoueNameMl(null);
-      setDeathPlaceHomelocalityEn(null);
-      setDeathPlaceHomelocalityMl(null);
-      setDeathPlaceHomestreetNameEn(null);
-      setDeathPlaceHomestreetNameMl(null);
-      setDeathPlaceWardId(null);
-      setPostOfficevalues(null);
-      //Vehicle
-      setVehicleNumber(null);
-      setVehicleFromplaceEn(null);
-      setVehicleToPlaceEn(null);
-      setGeneralRemarks(null);
-      setVehicleFirstHaltEn(null);
-      setVehicleFirstHaltMl(null);
-      setSelectedVehicleHospitalEn(null);
-      setVehicleFromplaceMl(null);
-      setVehicleToPlaceMl(null);
-      //PublicPlace
-      setDeathPlaceLocalityEn(null);
-      setDeathPlaceLocalityMl(null);
-      setDeathPlaceStreetEn(null);
-      setDeathPlaceStreetMl(null);
-      //DeathOutsideJurisdiction
-      setSelectDeathPlaceCountry(null);
-      SelectDeathPlaceState(null);
-      SelectDeathPlaceDistrict(null);
-      SelectDeathPlaceCity(null);
-      SelectDeathPlaceRemarksEn(null);
-      SelectDeathPlaceRemarksMl(null);
-      SelectPlaceOfBurialEn(null);
-      SelectPlaceOfBurialMl(null);
-    } else if (value.code === "INSTITUTION") {
-      //Hospital
-      selectHospitalNameMl(null);
-      //Home
-      setDeathPlaceHomepostofficeId(null);
-      setDeathPlaceHomepincode(null);
-      setDeathPlaceHomehoueNameEn(null);
-      setDeathPlaceHomehoueNameMl(null);
-      setDeathPlaceHomelocalityEn(null);
-      setDeathPlaceHomelocalityMl(null);
-      setDeathPlaceHomestreetNameEn(null);
-      setDeathPlaceHomestreetNameMl(null);
-      setDeathPlaceWardId(null);
-      setPostOfficevalues(null);
-      //Vehicle
-      selectDeathPlaceType(null);
-      setVehicleNumber(null);
-      setVehicleFromplaceEn(null);
-      setVehicleToPlaceEn(null);
-      setGeneralRemarks(null);
-      setVehicleFirstHaltEn(null);
-      setVehicleFirstHaltMl(null);
-      setSelectedVehicleHospitalEn(null);
-      setVehicleFromplaceMl(null);
-      setVehicleToPlaceMl(null);
-      //PublicPlace
-      setDeathPlaceLocalityEn(null);
-      setDeathPlaceLocalityMl(null);
-      setDeathPlaceStreetEn(null);
-      setDeathPlaceStreetMl(null);
-      //DeathOutsideJurisdiction
-      setSelectDeathPlaceCountry(null);
-      SelectDeathPlaceState(null);
-      SelectDeathPlaceDistrict(null);
-      SelectDeathPlaceCity(null);
-      SelectDeathPlaceRemarksEn(null);
-      SelectDeathPlaceRemarksMl(null);
-      SelectPlaceOfBurialEn(null);
-      SelectPlaceOfBurialMl(null);
-    } else if (value.code === "VEHICLE") {
-      //Hospital
-      // selectDeathPlaceType(null);
-      selectHospitalNameMl(null);
-      //Institution
-      selectDeathPlaceType(null);
-      setSelectedDeathPlaceInstId(null);
-      setInstitutionIdMl(null);
-      setInstitutionFilterList(null);
-      //Home
-      setDeathPlaceHomepostofficeId(null);
-      setDeathPlaceHomepincode(null);
-      setDeathPlaceHomehoueNameEn(null);
-      setDeathPlaceHomehoueNameMl(null);
-      setDeathPlaceHomelocalityEn(null);
-      setDeathPlaceHomelocalityMl(null);
-      setDeathPlaceHomestreetNameEn(null);
-      setDeathPlaceHomestreetNameMl(null);
-      setDeathPlaceWardId(null);
-      setPostOfficevalues(null);
-      //PublicPlace
-      setDeathPlaceLocalityEn(null);
-      setDeathPlaceLocalityMl(null);
-      setDeathPlaceStreetEn(null);
-      setDeathPlaceStreetMl(null);
-      setGeneralRemarks(null);
-      //DeathOutsideJurisdiction
-      setSelectDeathPlaceCountry(null);
-      SelectDeathPlaceState(null);
-      SelectDeathPlaceDistrict(null);
-      SelectDeathPlaceCity(null);
-      SelectDeathPlaceRemarksEn(null);
-      SelectDeathPlaceRemarksMl(null);
-      SelectPlaceOfBurialEn(null);
-      SelectPlaceOfBurialMl(null);
-    }
-    if (value.code === "PUBLIC_PLACES") {
-      //Hospital
-      selectDeathPlaceType(null);
-      selectHospitalNameMl(null);
-      //Institution
-      setSelectedDeathPlaceInstId(null);
-      setInstitutionIdMl(null);
-      setInstitutionFilterList(null);
-      // setIsInitialRenderInstitutionList
-      //Home
-      setDeathPlaceHomepostofficeId(null);
-      setDeathPlaceHomepincode(null);
-      setDeathPlaceHomehoueNameEn(null);
-      setDeathPlaceHomehoueNameMl(null);
-      setDeathPlaceHomelocalityEn(null);
-      setDeathPlaceHomelocalityMl(null);
-      setDeathPlaceHomestreetNameEn(null);
-      setDeathPlaceHomestreetNameMl(null);
-      setPostOfficevalues(null);
-      //Vehicle
-      setVehicleNumber(null);
-      setVehicleFromplaceEn(null);
-      setVehicleToPlaceEn(null);
-      setVehicleFirstHaltEn(null);
-      setVehicleFirstHaltMl(null);
-      setSelectedVehicleHospitalEn(null);
-      setVehicleFromplaceMl(null);
-      setVehicleToPlaceMl(null);
-      setDeathPlaceWardId(null);
-      //DeathOutsideJurisdiction
-      setSelectDeathPlaceCountry(null);
-      SelectDeathPlaceState(null);
-      SelectDeathPlaceDistrict(null);
-      SelectDeathPlaceCity(null);
-      SelectDeathPlaceRemarksEn(null);
-      SelectDeathPlaceRemarksMl(null);
-      SelectPlaceOfBurialEn(null);
-      SelectPlaceOfBurialMl(null);
-      setGeneralRemarks(null);
-    }
-    if (value.code === "OUTSIDE_JURISDICTION") {
-      //Hospital
-      // selectDeathPlaceType(null);
-      selectHospitalNameMl(null);
-      //Institution
-      setSelectedDeathPlaceInstId(null);
-      setInstitutionIdMl(null);
-      setInstitutionFilterList(null);
-      // setIsInitialRenderInstitutionList
-      //Home
-      setDeathPlaceHomepostofficeId(null);
-      setDeathPlaceHomepincode(null);
-      setDeathPlaceHomehoueNameEn(null);
-      setDeathPlaceHomehoueNameMl(null);
-      setDeathPlaceHomelocalityEn(null);
-      setDeathPlaceHomelocalityMl(null);
-      setDeathPlaceHomestreetNameEn(null);
-      setDeathPlaceHomestreetNameMl(null);
-      setPostOfficevalues(null);
-      //Vehicle
-      setVehicleNumber(null);
-      setVehicleFromplaceEn(null);
-      setVehicleToPlaceEn(null);
-      setVehicleFirstHaltEn(null);
-      setVehicleFirstHaltMl(null);
-      setSelectedVehicleHospitalEn(null);
-      setVehicleFromplaceMl(null);
-      setVehicleToPlaceMl(null);
-      //PublicPlace
-      setDeathPlaceLocalityEn(null);
-      setDeathPlaceLocalityMl(null);
-      setDeathPlaceStreetEn(null);
-      setDeathPlaceStreetMl(null);
-      setGeneralRemarks(null);
-      setDeathPlaceWardId(null);
-    }
+    // if (value.code === "HOSPITAL") {
+    //   //Institution
+    //   setSelectedDeathPlaceInstId(null);
+    //   setInstitutionIdMl(null);
+    //   setInstitutionFilterList(null);
+    //   // setIsInitialRenderInstitutionList
+    //   //Home
+    //   setDeathPlaceHomepostofficeId(null);
+    //   setDeathPlaceHomepincode(null);
+    //   setDeathPlaceHomehoueNameEn(null);
+    //   setDeathPlaceHomehoueNameMl(null);
+    //   setDeathPlaceHomelocalityEn(null);
+    //   setDeathPlaceHomelocalityMl(null);
+    //   setDeathPlaceHomestreetNameEn(null);
+    //   setDeathPlaceHomestreetNameMl(null);
+    //   setDeathPlaceWardId(null);
+    //   setPostOfficevalues(null);
+    //   //Vehicle
+    //   setVehicleNumber(null);
+    //   setVehicleFromplaceEn(null);
+    //   setVehicleToPlaceEn(null);
+    //   setGeneralRemarks(null);
+    //   setVehicleFirstHaltEn(null);
+    //   setVehicleFirstHaltMl(null);
+    //   setSelectedVehicleHospitalEn(null);
+    //   setVehicleFromplaceMl(null);
+    //   setVehicleToPlaceMl(null);
+    //   //PublicPlace
+    //   setDeathPlaceLocalityEn(null);
+    //   setDeathPlaceLocalityMl(null);
+    //   setDeathPlaceStreetEn(null);
+    //   setDeathPlaceStreetMl(null);
+    //   //DeathOutsideJurisdiction
+    //   setSelectDeathPlaceCountry(null);
+    //   SelectDeathPlaceState(null);
+    //   SelectDeathPlaceDistrict(null);
+    //   SelectDeathPlaceCity(null);
+    //   SelectDeathPlaceRemarksEn(null);
+    //   SelectDeathPlaceRemarksMl(null);
+    //   SelectPlaceOfBurialEn(null);
+    //   SelectPlaceOfBurialMl(null);
+    // } else if (value.code === "INSTITUTION") {
+    //   //Hospital
+    //   selectHospitalNameMl(null);
+    //   //Home
+    //   setDeathPlaceHomepostofficeId(null);
+    //   setDeathPlaceHomepincode(null);
+    //   setDeathPlaceHomehoueNameEn(null);
+    //   setDeathPlaceHomehoueNameMl(null);
+    //   setDeathPlaceHomelocalityEn(null);
+    //   setDeathPlaceHomelocalityMl(null);
+    //   setDeathPlaceHomestreetNameEn(null);
+    //   setDeathPlaceHomestreetNameMl(null);
+    //   setDeathPlaceWardId(null);
+    //   setPostOfficevalues(null);
+    //   //Vehicle
+    //   selectDeathPlaceType(null);
+    //   setVehicleNumber(null);
+    //   setVehicleFromplaceEn(null);
+    //   setVehicleToPlaceEn(null);
+    //   setGeneralRemarks(null);
+    //   setVehicleFirstHaltEn(null);
+    //   setVehicleFirstHaltMl(null);
+    //   setSelectedVehicleHospitalEn(null);
+    //   setVehicleFromplaceMl(null);
+    //   setVehicleToPlaceMl(null);
+    //   //PublicPlace
+    //   setDeathPlaceLocalityEn(null);
+    //   setDeathPlaceLocalityMl(null);
+    //   setDeathPlaceStreetEn(null);
+    //   setDeathPlaceStreetMl(null);
+    //   //DeathOutsideJurisdiction
+    //   setSelectDeathPlaceCountry(null);
+    //   SelectDeathPlaceState(null);
+    //   SelectDeathPlaceDistrict(null);
+    //   SelectDeathPlaceCity(null);
+    //   SelectDeathPlaceRemarksEn(null);
+    //   SelectDeathPlaceRemarksMl(null);
+    //   SelectPlaceOfBurialEn(null);
+    //   SelectPlaceOfBurialMl(null);
+    // } else if (value.code === "VEHICLE") {
+    //   //Hospital
+    //   // selectDeathPlaceType(null);
+    //   selectHospitalNameMl(null);
+    //   //Institution
+    //   selectDeathPlaceType(null);
+    //   setSelectedDeathPlaceInstId(null);
+    //   setInstitutionIdMl(null);
+    //   setInstitutionFilterList(null);
+    //   //Home
+    //   setDeathPlaceHomepostofficeId(null);
+    //   setDeathPlaceHomepincode(null);
+    //   setDeathPlaceHomehoueNameEn(null);
+    //   setDeathPlaceHomehoueNameMl(null);
+    //   setDeathPlaceHomelocalityEn(null);
+    //   setDeathPlaceHomelocalityMl(null);
+    //   setDeathPlaceHomestreetNameEn(null);
+    //   setDeathPlaceHomestreetNameMl(null);
+    //   setDeathPlaceWardId(null);
+    //   setPostOfficevalues(null);
+    //   //PublicPlace
+    //   setDeathPlaceLocalityEn(null);
+    //   setDeathPlaceLocalityMl(null);
+    //   setDeathPlaceStreetEn(null);
+    //   setDeathPlaceStreetMl(null);
+    //   setGeneralRemarks(null);
+    //   //DeathOutsideJurisdiction
+    //   setSelectDeathPlaceCountry(null);
+    //   SelectDeathPlaceState(null);
+    //   SelectDeathPlaceDistrict(null);
+    //   SelectDeathPlaceCity(null);
+    //   SelectDeathPlaceRemarksEn(null);
+    //   SelectDeathPlaceRemarksMl(null);
+    //   SelectPlaceOfBurialEn(null);
+    //   SelectPlaceOfBurialMl(null);
+    // }
+    // if (value.code === "PUBLIC_PLACES") {
+    //   //Hospital
+    //   selectDeathPlaceType(null);
+    //   selectHospitalNameMl(null);
+    //   //Institution
+    //   setSelectedDeathPlaceInstId(null);
+    //   setInstitutionIdMl(null);
+    //   setInstitutionFilterList(null);
+    //   // setIsInitialRenderInstitutionList
+    //   //Home
+    //   setDeathPlaceHomepostofficeId(null);
+    //   setDeathPlaceHomepincode(null);
+    //   setDeathPlaceHomehoueNameEn(null);
+    //   setDeathPlaceHomehoueNameMl(null);
+    //   setDeathPlaceHomelocalityEn(null);
+    //   setDeathPlaceHomelocalityMl(null);
+    //   setDeathPlaceHomestreetNameEn(null);
+    //   setDeathPlaceHomestreetNameMl(null);
+    //   setPostOfficevalues(null);
+    //   //Vehicle
+    //   setVehicleNumber(null);
+    //   setVehicleFromplaceEn(null);
+    //   setVehicleToPlaceEn(null);
+    //   setVehicleFirstHaltEn(null);
+    //   setVehicleFirstHaltMl(null);
+    //   setSelectedVehicleHospitalEn(null);
+    //   setVehicleFromplaceMl(null);
+    //   setVehicleToPlaceMl(null);
+    //   setDeathPlaceWardId(null);
+    //   //DeathOutsideJurisdiction
+    //   setSelectDeathPlaceCountry(null);
+    //   SelectDeathPlaceState(null);
+    //   SelectDeathPlaceDistrict(null);
+    //   SelectDeathPlaceCity(null);
+    //   SelectDeathPlaceRemarksEn(null);
+    //   SelectDeathPlaceRemarksMl(null);
+    //   SelectPlaceOfBurialEn(null);
+    //   SelectPlaceOfBurialMl(null);
+    //   setGeneralRemarks(null);
+    // }
+    // if (value.code === "OUTSIDE_JURISDICTION") {
+    //   //Hospital
+    //   // selectDeathPlaceType(null);
+    //   selectHospitalNameMl(null);
+    //   //Institution
+    //   setSelectedDeathPlaceInstId(null);
+    //   setInstitutionIdMl(null);
+    //   setInstitutionFilterList(null);
+    //   // setIsInitialRenderInstitutionList
+    //   //Home
+    //   setDeathPlaceHomepostofficeId(null);
+    //   setDeathPlaceHomepincode(null);
+    //   setDeathPlaceHomehoueNameEn(null);
+    //   setDeathPlaceHomehoueNameMl(null);
+    //   setDeathPlaceHomelocalityEn(null);
+    //   setDeathPlaceHomelocalityMl(null);
+    //   setDeathPlaceHomestreetNameEn(null);
+    //   setDeathPlaceHomestreetNameMl(null);
+    //   setPostOfficevalues(null);
+    //   //Vehicle
+    //   setVehicleNumber(null);
+    //   setVehicleFromplaceEn(null);
+    //   setVehicleToPlaceEn(null);
+    //   setVehicleFirstHaltEn(null);
+    //   setVehicleFirstHaltMl(null);
+    //   setSelectedVehicleHospitalEn(null);
+    //   setVehicleFromplaceMl(null);
+    //   setVehicleToPlaceMl(null);
+    //   //PublicPlace
+    //   setDeathPlaceLocalityEn(null);
+    //   setDeathPlaceLocalityMl(null);
+    //   setDeathPlaceStreetEn(null);
+    //   setDeathPlaceStreetMl(null);
+    //   setGeneralRemarks(null);
+    //   setDeathPlaceWardId(null);
+    // }
   }
   function selectAgeUnit(value) {
     setSelectedAgeUnit(value);
@@ -1006,7 +996,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
     if (Difference_In_DaysRounded <= 21) {
       if (DeathPlace.code == "HOSPITAL") {
         workFlowCode = "DEATHHOSP";
-        console.log(workFlowCode);
+        // console.log(workFlowCode);
       } else {
         workFlowCode = "21DEATHHHOME";
       }

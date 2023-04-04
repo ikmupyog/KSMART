@@ -3,12 +3,12 @@ import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, TextAre
 import { useTranslation } from "react-i18next";
 import Timeline from "../../components/AdoptionTimeline";
 
-const AdoptionInitiatorDetails = ({ config, onSelect, userType, formData,isEditBirth=false }) => {
+const AdoptionInitiatorDetails = ({ config, onSelect, userType, formData,isEditAdoption=false }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
   // console.log(Digit.UserService.getUser().info);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
+  const [isDisableEdit, setisDisableEdit] = useState( false);
   const {name:name,} =Digit.UserService.getUser().info ; // window.localStorage.getItem("user-info");
   const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.AdoptionInitiatorDetails?.isInitiatorDeclaration ? formData?.AdoptionInitiatorDetails?.isInitiatorDeclaration : formData?.ChildDetails?.AdoptionInitiatorDetails?.isInitiatorDeclaration ? formData?.ChildDetails?.AdoptionInitiatorDetails?.isInitiatorDeclaration : false);
   const [isCaretaker, setIsCaretaker] = useState(formData?.AdoptionInitiatorDetails?.isCaretaker ? formData?.AdoptionInitiatorDetails?.isCaretaker : formData?.ChildDetails?.AdoptionInitiatorDetails?.isCaretaker ? formData?.ChildDetails?.AdoptionInitiatorDetails?.isCaretaker : false);

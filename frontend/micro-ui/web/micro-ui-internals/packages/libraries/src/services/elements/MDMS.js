@@ -64,6 +64,21 @@ const initRequestBody = (tenantId) => ({
     ],
   },
 });
+const getTypeOfMarriageMasterList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "TypeOfMarriage",
+          },
+        ],
+      },
+    ],
+  },
+});
 const getMaritalStatusMasterList = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -839,6 +854,18 @@ const getTLLocalbody = (tenantId, moduleCode, type) => ({
     ],
   },
 });
+const getTradeApplicationDocuments = (tenantId, moduleCode, type) => ({
+  type,
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [{ name: "ApplicationDocuments" }],
+      },
+    ],
+  },
+})
 
 const getPTFloorList = (tenantId, moduleCode, type) => ({
   type,
@@ -2380,6 +2407,9 @@ export const MdmsService = {
   getCommonDbmsService: (tenantId, moduleCode, type) => {
     return MdmsService.getDataByCriteria(tenantId, getCommonDbmsServiceCriteria(tenantId, moduleCode,type), moduleCode);
   },
+  getTypeOfMarriageMaster: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getTypeOfMarriageMasterList(tenantId, moduleCode), moduleCode);
+  },
   getMaritalStatusMaster: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getMaritalStatusMasterList(tenantId, moduleCode), moduleCode);
   },
@@ -2684,6 +2714,9 @@ export const MdmsService = {
   },
   getTLLocalbody: (tenantId, moduleCode, type) => {
     return MdmsService.getDataByCriteria(tenantId, getTLLocalbody(tenantId, moduleCode), moduleCode);
+  },
+  getTradeApplicationDocuments : (tenantId, moduleCode, type) => {
+    return MdmsService.getDataByCriteria(tenantId, getTradeApplicationDocuments(tenantId, moduleCode, type), moduleCode);
   },
   getFloorList: (tenantId, moduleCode, type) => {
     return MdmsService.getDataByCriteria(tenantId, getPTFloorList(tenantId, moduleCode, type), moduleCode);
