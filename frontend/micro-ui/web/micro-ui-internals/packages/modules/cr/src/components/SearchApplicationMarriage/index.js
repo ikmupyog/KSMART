@@ -1,10 +1,12 @@
-import React from "react";
-import { SearchForm, Table } from "@egovernments/digit-ui-react-components";
+import React, { useState, useMemo } from "react";
+import { SearchForm } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import SearchFields from "./SearchFields";
 import { useForm } from "react-hook-form";
 
 const SearchApplicationMarriage = () => {
+    const [payload, setPayload] = useState({});
+    const tenantId = Digit.ULBService.getCitizenCurrentTenant();
     const { t } = useTranslation();
     const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
         defaultValues: {
@@ -15,9 +17,34 @@ const SearchApplicationMarriage = () => {
         },
     });
 
-    const onSubmit = () => {
+    const onSubmit = (_data) => {
+        let dateOfMarriage = new Date(_data?.dateOfMarriage);
+        dateOfMarriage?.setSeconds(dateOfMarriage?.getSeconds() - 19800);
 
-    }
+        let data = {
+            ..._data,
+            ...(_data.dateOfMarriage ? { dateOfMarriage: dateOfMarriage?.getTime() } : {}),
+        };
+
+        setPayload(Object.keys(data)
+            .filter((k) => data[k])
+            .reduce((acc, key) => ({ ...acc, [key]: typeof data[key] === "object" ? data[key].name : data[key] }), {}))
+    };
+
+    const config = {
+        enabled: !!(payload && Object.keys(payload).length > 0),
+    };
+
+
+    const {
+        data: { results: marriageApplications } = {},
+        isSuccess,
+        isLoading,
+    } = Digit.Hooks.cr.useRegistrySearchMarriage({
+        tenantId,
+        config,
+        filters: payload
+    });
 
     function previousPage() {
         setValue("offset", getValues("offset") - getValues("limit"));

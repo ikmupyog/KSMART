@@ -9,17 +9,20 @@ const SearchFields = ({
                           reset,
                           previousPage
                       }) => {
-    const stateId = Digit.ULBService.getStateId();
-    const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PlaceMasterDeath");
 
     let validation = {};
-    let cmbPlace = [];
-    place &&
-    place["common-masters"] &&
-    place["common-masters"].PlaceMasterDeath &&
-    place["common-masters"].PlaceMasterDeath.map((ob) => {
-        cmbPlace.push(ob);
-    });
+    const cmbPlace = [
+        { i18nKey: "Religious Institution", name: "RELIGIOUSINSTITUTION", namelocal: "മത സ്ഥാപനം" },
+        {
+            i18nKey: "Mandapam/Hall/Auditorium/Convention Centre",
+            name: "MANDAPAM/HALL/AUDITORIUM/CONVENTIONALCENTRE",
+            namelocal: "മണ്ഡപം/ ഹാൾ / ഓഡിറ്റോറിയം",
+        },
+        { i18nKey: "Sub Registrar's Office", name: "SUBREGISTRARSOFFICE", namelocal: "സബ് രജിസ്ട്രാർ ഓഫീസ്" },
+        { i18nKey: "House", name: "HOUSE", namelocal: "വീട്" },
+        { i18nKey: "Private Place", name: "PRIVATEPLACE", namelocal: "സ്വകാര്യ സ്ഥലം" },
+        { i18nKey: "Public Place", name: "PUBLICPLACE", namelocal: "പൊതു സ്ഥലം" },
+    ];
 
 
     return (
@@ -39,7 +42,7 @@ const SearchFields = ({
                 />
             </SearchField>
             <SearchField>
-                <label> {t("NAME OF HUSBAND")}</label>
+                <label><span className="mandatorycss">*</span> {t("NAME OF HUSBAND")}</label>
                 <TextInput name="nameOfHusband" inputRef={register({})} placeholder={`${t("Name Of Husband")}`}
                            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("Invalid Husband name") })} />
             </SearchField>
@@ -59,10 +62,10 @@ const SearchFields = ({
                             select={props.onChange}
                             onBlur={props.onBlur}
                             option={cmbPlace}
-                            optionKey="code"
+                            optionKey="i18nKey"
                             t={t}
-                            placeholder={`${t("PLACE_OF_MARRIAGE")}`}
-                            {...(validation = { isRequired: false, title: t("Invalid Place Of Marriage") })}
+                            placeholder={`${t("CR_MARRIAGE_PLACE_TYPE")}`}
+                            {...(validation = { isRequired: false, title: t("CS_INVALID_MARRIAGE_PLACE_TYPE") })}
                         />
                     )}
                 />
