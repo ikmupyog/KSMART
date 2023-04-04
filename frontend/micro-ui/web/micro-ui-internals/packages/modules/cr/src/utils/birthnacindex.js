@@ -277,7 +277,7 @@ export const convertToNACRegistration = (data = {}) => {
         birthDateTime: parseInt(data?. BirthNACDetails?.birthDateTime),
         gender: data?.BirthNACDetails?.gender ? data?.BirthNACDetails?.gender.code : null,
         childAadharNo: data?.BirthNACDetails?.childAadharNo,
-        nacorderofChildren: data?.BirthNACDetails?.nacorderofChildren ? data?.BirthNACDetails?.nacorderofChildren: null,
+        nacorderofChildren: data?.BirthNACDetails?.nacorderofChildren,
         isChildName: data?.BirthNACDetails?.isChildName ? data?. BirthNACDetails?.isChildName : false,
         tenantid: data?.BirthNACDetails?.tenantid,
         childFirstNameEn: data?.BirthNACDetails?.childFirstNameEn,
@@ -420,7 +420,7 @@ export const convertToNACRegistration = (data = {}) => {
             ? data?. BirthNACAddressPage?.presentOutSideIndiaadrsVillage.code
             : null,
           presentOutSideIndiaadrsCityTown: data?. BirthNACAddressPage?.presentOutSideIndiaadrsCityTown,
-          isPrsentAddress: data?. BirthNACAddressPage?.isPrsentAddress,
+          isPrsentAddress: data?. BirthNACAddressPage?.isPrsentAddress ? data?. BirthNACAddressPage?.isPrsentAddress : null,
           permtaddressCountry: data?. BirthNACAddressPage?.permtaddressCountry ? data?. BirthNACAddressPage?.permtaddressCountry.code : null,
           permtaddressStateName: data?. BirthNACAddressPage?.permtaddressStateName
             ? data?. BirthNACAddressPage?.permtaddressStateName.code
@@ -497,7 +497,7 @@ export const convertToNACRegistration = (data = {}) => {
           sex: data?.BirthNACInitiator?.sex,
           orderOfBirth: data?.BirthNACInitiator?.orderOfBirth,
           dob: data?.BirthNACInitiator?.dob,
-          isAlive: data?.BirthNACInitiator?.isAlive,
+          isAlive: data?.BirthNACInitiator?.isAlive?.value,
         }
       },
     ],

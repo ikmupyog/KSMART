@@ -223,31 +223,8 @@ const NACParentsDetails =({ config, onSelect, userType, formData, isEditStillBir
           setFatherAadharError(false);
         }
       }
-   // }
-    // if (fatherFirstNameEn != null || fatherFirstNameEn != "" || fatherFirstNameEn != undefined) {
-    //   if (FatherFirstNmeEnError) {
-    //     validFlag = false;
-    //     setFatherFirstNmeEnError(true);
-    //     setToast(true);
-    //     setTimeout(() => {
-    //       setToast(false);
-    //     }, 2000);
-    //     // return false;
-    //     // window.alert("Username shouldn't exceed 10 characters")
-    //   } else {
-    //     setFatherFirstNmeEnError(false);
-    //   }
-    // }
-
+ 
     if (validFlag == true) {
-      sessionStorage.setItem("motherFirstNameEn", motherFirstNameEn ? motherFirstNameEn : null);
-      sessionStorage.setItem("motherFirstNameMl", motherFirstNameMl ? motherFirstNameMl : null);
-      sessionStorage.setItem("motherAadhar", motherAadhar ? motherAadhar : null);
-      //sessionStorage.setItem("isMotherInfo", isMotherInfo ? isMotherInfo : null);
-      //sessionStorage.setItem("isFatherInfo", isFatherInfo ? isFatherInfo : null);
-      sessionStorage.setItem("fatherAadhar", fatherAadhar ? fatherAadhar : null);
-      sessionStorage.setItem("fatherFirstNameEn", fatherFirstNameEn ? fatherFirstNameEn : null);
-      sessionStorage.setItem("fatherFirstNameMl", fatherFirstNameMl ? fatherFirstNameMl : null);
 
       onSelect(config.key, {
         motherFirstNameEn,

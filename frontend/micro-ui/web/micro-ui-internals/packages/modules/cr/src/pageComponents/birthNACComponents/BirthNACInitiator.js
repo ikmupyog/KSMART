@@ -21,15 +21,15 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
   const [initiatorAddress, setinitiatorAddress] = useState(formData?.BirthNACInitiator?.initiatorAddress ? formData?.BirthNACInitiator?.initiatorAddress : "");
   const [careofapplicant, setcareofapplicant] = useState(formData?.BirthNACInitiator?.careofapplicant ? formData?.BirthNACInitiator?.careofapplicant : "");
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [childDOB, setChildDOB] = useState(formData?.BirthNACInitiator?.dob ? formData?.BirthNACInitiator?.dob : "");
-  const [gender, selectGender] = useState(formData?.BirthNACInitiator?.sex ? formData?.BirthNACInitiator?.sex : "");
+  const [dob, setChildDOB] = useState(formData?.BirthNACInitiator?.dob ? formData?.BirthNACInitiator?.dob : "");
+  const [sex, selectGender] = useState(formData?.BirthNACInitiator?.sex ? formData?.BirthNACInitiator?.sex : "");
   const [childNameEn, setchildNameEn] = useState(formData?.BirthNACInitiator?.childNameEn ? formData?.BirthNACInitiator?.childNameEn : "");
   const [childNameMl, setchildNameMl] = useState(formData?.BirthNACInitiator?.childNameMl ? formData?.BirthNACInitiator?.childNameMl : "");
-  const [orderofBirth, setorderOfBirth] =useState(
-    formData?.BirthNACInitiator?.orderOfBirth ? formData?.BirthNACInitiator?.orderOfBirth : null
+  const [orderOfBirth, setorderOfBirth] =useState(
+    formData?.BirthNACInitiator?.orderOfBirth ? formData?.BirthNACInitiator?.orderOfBirth : ""
   );
   const [isAlive, setisAlive] = useState(formData?.BirthNACInitiator?.isAlive ? formData?.BirthNACInitiator?.isAlive : "");
-  const [slNo, setslNo] = useState("");
+  const [slNo, setslNo] = useState();
   const [error, setError] = useState(null);
   const [uploadedFile, setUploadedFile] = useState(null);
   const [uploadedFile1, setUploadedFile1] = useState(null);
@@ -62,8 +62,9 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
   let ownerappmap ={
     slNo: "slNo",
     sex: "sex",
-    childName: "childName",
-    orderofBirth: "orderofBirth",
+    childNameEn: "childNameEn",
+    childNameMl: "childNameMl",
+    orderOfBirth: "orderOfBirth",
     alive: "alive"
   };
 
@@ -75,8 +76,9 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
           {
             slNo: "",
             sex: "",
-            childName: "",
-            orderofBirth: "",
+            childNameEn: "",
+            childNameMl: "",
+            orderOfBirth: "",
             alive: "",
           },
         ];
@@ -110,7 +112,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
         sex: "",
         childNameEn: "",
         childNameMl:"",
-        orderofBirth: "",
+        orderOfBirth: "",
         alive: "",
       },
     ]
@@ -126,7 +128,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
             sex: "",
             childNameEn: "",
             childNameMl:"",
-            orderofBirth: "",
+            orderOfBirth: "",
             alive: "",
           },
         ];
@@ -150,7 +152,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
         sex: "",
         childNameEn: "",
         childNameMl:"",
-        orderofBirth: "",
+        orderOfBirth: "",
         alive: "",
       }
     ]
@@ -257,7 +259,6 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
     selectGender(value);
   }
   function setAliveExpired(value) {
-    console.log("checked==",value);
     setisAlive(value);
   }
   function setselectCareofApplicant(e) {
@@ -497,11 +498,12 @@ function selectfile5(e) {
         initiatorDesi,
         initiatorAddress,
         isInitiatorDeclaration,
-        childDOB,
-        gender,
+        isDeclaration,
+        dob,
+        sex,
         childNameEn,
         childNameMl,
-        orderofBirth,
+        orderOfBirth,
         slNo,
         isAlive,
         careofapplicant
@@ -691,7 +693,7 @@ function selectfile5(e) {
                       <TextInput
                        t={t}
                       isMandatory={config.isMandatory}
-                      type={"text"}
+                      type={"number"}
                       optionKey="i18nKey"
                       name="slNo"
                       value={slNo}
@@ -703,10 +705,9 @@ function selectfile5(e) {
                   <span className="mandatorycss">*</span>
                 </CardLabel>
                 <DatePicker
-                  date={childDOB}
-                  name="childDOB"
+                  date={dob}
+                  name="dob"
                   max={convertEpochToDate(new Date())}
-                  // min={childDOB ? childDOB : convertEpochToDate("1900-01-01")}
                   onChange={setselectChildDOB}
                   inputFormat="DD-MM-YYYY"
                   placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
@@ -763,7 +764,7 @@ function selectfile5(e) {
                         optionKey="code"
                         isMandatory={true}
                         option={menu}
-                        selected={gender}
+                        selected={sex}
                         select={setselectGender}
                         placeholder={`${t("CR_GENDER")}`}
                         onChange={e => handleAppInputField(index, e.target.value, '')}/>
@@ -776,10 +777,10 @@ function selectfile5(e) {
                       <TextInput 
                       t={t} 
                       isMandatory={config.isMandatory} 
-                      type={"text"}
+                      type={"number"}
                       optionKey="i18nKey" 
-                      name="orderofBirth"
-                      value={orderofBirth} 
+                      name="orderOfBirth"
+                      value={orderOfBirth} 
                       onChange={setSelectOrderOfBirth}/>
                     </div>
                     <div className="col-md-3">
@@ -795,8 +796,8 @@ function selectfile5(e) {
                       optionsKey="code"
                       name="isAlive"
                        //value={isAlive}
-                       checked={isAlive}
-                      //selectedOption={isAlive} 
+                       //checked={isAlive}
+                      selectedOption={isAlive} 
                       onSelect={setAliveExpired}
                       isDependent={true}
                       labelKey=""

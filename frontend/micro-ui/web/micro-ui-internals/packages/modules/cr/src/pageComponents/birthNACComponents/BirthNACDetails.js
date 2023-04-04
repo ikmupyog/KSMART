@@ -156,12 +156,10 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
   const [streetNameMl, setstreetNameMl] = useState(formData?. BirthNACDetails?.streetNameMl ? formData?. BirthNACDetails?.streetNameMl : "");
   const [publicPlaceDecpEn, setpublicPlaceDecpEn] = useState(formData?. BirthNACDetails?.publicPlaceDecpEn ? formData?. BirthNACDetails?.publicPlaceDecpEn : "");
 
-  const [orderOfBirth, setorderOfBirth] = useState(
+  const [nacorderofChildren, setorderOfBirth] = useState(
     formData?.BirthNACDetails?.nacorderofChildren ? formData?.BirthNACDetails?.nacorderofChildren : null
   );
   const [toast, setToast] = useState(false);
-  //const [AadharError, setAadharError] = useState(formData?. BirthNACDetails?.childAadharNo ? false : false);
-   const [ChildAadharHIde, setChildAadharHIde] = useState(formData?. BirthNACDetails?.childAadharNo ? true : false);
   const [DOBError, setDOBError] = useState(formData?. BirthNACDetails?.childDOB ? false : true);
   const [HospitalError, setHospitalError] = useState(formData?. BirthNACDetails?.hospitalName ? false : true);
   const [InstitutionError, setInstitutionError] = useState(formData?. BirthNACDetails?.institution ? false : true);
@@ -186,7 +184,6 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
   const [localNameEnError, setlocalNameEnError] = useState(formData?. BirthNACDetails?.localityNameEn ? false : true);
   const [localNameMlError, setlocalNameMlError] = useState(formData?. BirthNACDetails?.localityNameMl ? false : true);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  console.log(formData, "formdata");
 
   const [access, setAccess] = React.useState(true);
 
@@ -230,9 +227,7 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
 
   }
   function setSelectOrderOfBirth(e) {
-    if(e.target.value){
-      setorderOfBirth(e.target.value);      
-    }
+    setorderOfBirth(e.target.value);      
   }
   function setSelectChildFirstNameMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
@@ -640,6 +635,7 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
         birthDateTime,
         gender,
         childAadharNo,
+        nacorderofChildren,
         birthPlace, hospitalCode, hospitalName, hospitalNameMl,
         institutionTypeCode, institution, institutionNameCode, institutionId, institutionIdMl,
         wardNo, wardNameEn, wardNameMl, wardNumber, adrsHouseNameEn, adrsHouseNameMl, adrsLocalityNameEn, adrsLocalityNameMl, adrsStreetNameEn, adrsStreetNameMl, adrsPostOffice, adrsPincode,
@@ -889,14 +885,11 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
                   isMandatory={false}
                   type={"number"}
                   optionKey="i18nKey"
-                  name="orderOfBirth"
-                  value={orderOfBirth}
+                  name="nacorderofChildren"
+                  value={nacorderofChildren}
                   disable={isEdit}
                   onChange={setSelectOrderOfBirth}            
                   placeholder={`${t("ORDER_OF_BIRTH")}`}
-                  inputProps={{
-                    maxLength: 12,
-                  }}
                 />
               </div>
             </div>
