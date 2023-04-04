@@ -2,7 +2,7 @@ import { Banner, Card, CardText, LinkButton, Loader, SubmitBar } from "@egovernm
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { convertToStillBirthRegistration } from "../../../utils/stillbirthindex";
+import { convertToStillBirthRegistration,convertToEditStillBirthRegistration  } from "../../../utils/stillbirthindex";
 import getPDFData from "../../../utils/getTLAcknowledgementData";
 
 const GetActionMessage = (props) => {
@@ -72,8 +72,8 @@ const StillBirthAcknowledgement = ({ data, onSuccess, userType }) => {
         data.tenantId = tenantId1;
         if (!resubmit) {
           // let formdata = !isEditBirth ? convertToDeathRegistration(data) : convertToEditTrade(data, fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter(y => y.module === "CR") : []);
+          let formdata = !isEditStillBirth ? convertToStillBirthRegistration(data) : convertToEditStillBirthRegistration(data);
 
-          let formdata = !isEditStillBirth ? convertToStillBirthRegistration(data) : [];
           // formdata.BirthDetails[0].tenantId = formdata?.BirthDetails[0]?.tenantId || tenantId1;
           // if (!isEditStillBirth) {
             mutation.mutate(formdata, {

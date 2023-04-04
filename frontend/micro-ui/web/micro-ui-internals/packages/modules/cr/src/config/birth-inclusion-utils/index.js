@@ -59,15 +59,16 @@ export const getFilteredChildNameData = (selectedData, inclusionData) =>{
 }
 
 
-export const getFilteredChildSexData = (data) =>{
-    let query = "[?(@.condition ==";
-    if(data?.placeOfBirth === "HOSPITAL"){
-       query += "HOSPITAL";
-    } else if(data?.placeOfBirth === "NON-HOSPITAL"){
-       query += "NON-HOSPITAL";
-    }
-    query += ")]";
-    return query;
+export const getFilteredChildSexData = (selectedData, inclusionData) =>{
+  let filteredData = {};
+  if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
+    filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
+  } else {
+    filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
+  }
+  //TODO need validation to check dob is null
+  let currentValue = {curValue: selectedData?.dateofbirth && moment(selectedData?.dateofbirth).format("DD/MM/YYYY")}
+  return {...filteredData,...currentValue};
 }
 
 

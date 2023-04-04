@@ -196,14 +196,24 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     selectGroomGender(value);
   }
   function setSelectGroomPassportNo(e) {
+    if (e.target.value.length === 21) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+  } else {
     setGroomPassportNo(e.target.value);
   }
+  }
   function setSelectGroomSocialSecurityNo(e) {
+    if (e.target.value.length === 21) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+  } else {
     setGroomSocialSecurityNo(e.target.value);
   }
+  }
   function setSelectGroomMobile(e) {
-    if (e.target.value.trim().length != 0) {
-      setGroomMobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 10));
+    if (e.target.value.trim().length >= 0) {
+      setGroomMobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
     }
   }
   function setSelectGroomEmailid(e) {
@@ -215,7 +225,14 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     }
   }
   function setSelectGroomNoOfSpouse(e) {
-    setGroomNoOfSpouse(e.target.value);
+    if (e.target.value.length === 2) {
+      if (e.target.value > 3) {
+        return false;
+      }
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setGroomNoOfSpouse(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' a-zA-Z]/gi, ""));
+    }
   }
   function setSelectGroomAge(e) {
     if (e.target.value.trim().length === 3) {
@@ -282,18 +299,18 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     }
   }
   function setSelectGroomFirstnameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setGroomFirstnameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setGroomFirstnameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectGroomLastnameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setGroomLastnameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setGroomLastnameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectGroomMiddlenameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setGroomMiddlenameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setGroomMiddlenameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectGroomLastnameMal(e) {
@@ -302,7 +319,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       e.preventDefault();
       setGroomLastnameMal('');
     } else {
-      setGroomLastnameMal(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setGroomLastnameMal(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectGroomMiddlenameMal(e) {
@@ -311,7 +328,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       e.preventDefault();
       setGroomMiddlenameMl('');
     } else {
-      setGroomMiddlenameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setGroomMiddlenameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectGroomFirstnameMal(e) {
@@ -320,7 +337,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       e.preventDefault();
       setGroomFirstnameMl('');
     } else {
-      setGroomFirstnameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setGroomFirstnameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
@@ -330,7 +347,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       e.preventDefault();
       setGroomFathernameMal('');
     } else {
-      setGroomFathernameMal(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setGroomFathernameMal(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectGroomGuardiannameMal(e) {
@@ -339,18 +356,18 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       e.preventDefault();
       setGroomGuardiannameMl('');
     } else {
-      setGroomGuardiannameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setGroomGuardiannameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
   function setSelectGroomFathernameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setGroomFathernameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setGroomFathernameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectGroomGuardiannameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setGroomGuardiannameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setGroomGuardiannameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectGroomMothernameMal(e) {
@@ -359,12 +376,12 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       e.preventDefault();
       setGroomMothernameMal('');
     } else {
-      setGroomMothernameMal(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setGroomMothernameMal(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectGroomMothernameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setGroomMothernameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setGroomMothernameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
@@ -744,7 +761,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
               <div className="col-md-3">
                 <CardLabel>
                   {t("CR_GROOM_EMAIL")}
-                  {/* <span className="mandatorycss">*</span> */}
+                  <span className="mandatorycss">*</span>
                 </CardLabel>
                 <TextInput
                   t={t}
@@ -755,7 +772,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   value={groomEmailid}
                   onChange={setSelectGroomEmailid}
                   placeholder={`${t("CR_GROOM_EMAIL")}`}
-                  {...(validation = { isRequired: false, title: t("CR_INVALID_EMAIL") })}
+                  {...(validation = { isRequired: true, title: t("CR_INVALID_EMAIL") })}
                 />
               </div>
             </div>
@@ -1106,10 +1123,11 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
           )}
           {toast && (
             <Toast 
-            error={AgeValidationMsg || AadharError} 
-            label={AgeValidationMsg || AadharError
-              ? t(`CR_INVALID_AGE`) //"Age should be 21 or more" 
-              : AadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`)
+            error={AadharError || AgeValidationMsg} 
+            label={AadharError || AgeValidationMsg 
+              ? AadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`)
+               : AgeValidationMsg ? t(`CR_INVALID_GROOM_AGE`) 
+               : setToast(false)
               : setToast(false)} 
               onClose={() => setToast(false)} 
             />

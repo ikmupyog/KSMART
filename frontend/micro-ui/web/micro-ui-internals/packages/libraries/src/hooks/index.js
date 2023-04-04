@@ -14,6 +14,7 @@ import {
   useRecieptSearch,
 } from "./payment";
 import { useUserSearch } from "./userSearch";
+import {useCivilRegMDMS} from "./cr/useCivilRegMDMS";
 import { useApplicationsForBusinessServiceSearch } from "./useApplicationForBillSearch";
 import useBoundaryLocalities from "./useLocalities";
 import useCommonMDMS from "./useMDMS";
@@ -120,7 +121,6 @@ import useTLSearch from "./tl/useSearch";
 
 import useTenantsCR from "./cr/useTenants";
 import useCivilRegistrationMDMS from "./cr/useCivilRegistrationMDMS";
-// import useTLDocumentSearch from "./tl/useTLDocumentSearch";
 import useCivilRegistrationAPI from "./cr/useCivilRegistrationAPI";
 import useCivilRegistrationMarriageAPI from "./cr/useCivilRegistrationMarriageAPI";
 import useCvilRegistrationAdoptionApi from "./cr/useCvilRegistrationAdoptionApi";
@@ -134,7 +134,6 @@ import useCivilRegistrationDeathAPI from "./cr/useCivilRegistrationDeathAPI";
 // import useTradeLicenseSearch from "./tl/useTradeLicenseSearch";
 import { useCRSearchApplication, useCRApplicationDetails } from "./cr/useCRSearchApplication";
 import { useCRDeathSearchApplication, useCRApplicationDeathDetails } from "./cr/useCRDeathSearchApplication";
-// import useTLPaymentHistory from "./tl/userPaymentHistory";
 import useCRFetchBill from "./cr/useFetchBill";
 import useCRDFetchBill from "./cr/useDeathFetchBill";
 import useCRApplicationDetail from "./cr/useApplicationDetail";
@@ -155,6 +154,7 @@ import useCRMDMS from "./cr/useMDMS";
 import useCRSearch from "./cr/useSearch";
 import useAbandonedBirthSearch from "./cr/useAbandonedBirthSearch";
 import useBirthNACSearch from "./cr/useBirthNACSearch";
+import useBornOutSideBirthSearch from "./cr/useBornOutSideBirthSearch";
 import useAdoptionSearch from "./cr/useAdoptionSearch";
 import useRegistryDownloadDeath from "./cr/useRegistryDownloadDeath";
 import useResistryDownloadBirth from "./cr/useResistryDownloadBirth"
@@ -355,6 +355,7 @@ const tl = {
   useTradeLicenseCorrectionAPI
 };
 const cr = {
+  useCivilRegMDMS,
   useTenants: useTenantsCR,
   useCivilRegistrationMDMS,
   useCivilRegistrationAPI,
@@ -371,6 +372,7 @@ const cr = {
   useSearch: useCRSearch,
   useAbandonedBirthSearch,
   useBirthNACSearch,
+  useBornOutSideBirthSearch,
   useSearchMarriage,
   useAdoptionSearch,
   useRegistrySearchDeath,
