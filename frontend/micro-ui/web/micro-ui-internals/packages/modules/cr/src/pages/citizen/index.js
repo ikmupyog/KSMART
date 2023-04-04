@@ -39,12 +39,11 @@ const App = () => {
   const CRDeathInclusions = Digit?.ComponentRegistryService?.getComponent('CRDeathInclusions');
   const CRDeathCorrectionEditPage = Digit?.ComponentRegistryService?.getComponent('CRDeathCorrectionEditPage');
 
-  const CRMarriageInclusions = Digit?.ComponentRegistryService?.getComponent('CRMarriageInclusions');
-  const SearchMarriageInclusion = Digit?.ComponentRegistryService?.getComponent('SearchMarriageInclusion');
-  const MarriageInclusionEditPage = Digit?.ComponentRegistryService?.getComponent('MarriageInclusionEditPage');
-  const MarriageCorrectionEditPage = Digit?.ComponentRegistryService?.getComponent('MarriageCorrectionEditPage');
+  const CRMarriageCorrection = Digit?.ComponentRegistryService?.getComponent('CRMarriageCorrection');
+  // const MarriageInclusionEditPage = Digit?.ComponentRegistryService?.getComponent('MarriageInclusionEditPage');
+  const CRMarriageCorrectionLoadPage = Digit?.ComponentRegistryService?.getComponent('CRMarriageCorrectionLoadPage');
+  const CRMarriageCorrectionEditPage = Digit?.ComponentRegistryService?.getComponent('CRMarriageCorrectionEditPage');
   
-  const CRBirthInclusionEditPage = Digit?.ComponentRegistryService?.getComponent('CRBirthInclusionEditPage');
   const CRBirthInclusionPage = Digit?.ComponentRegistryService?.getComponent('CRBirthInclusionPage');
 
 React.useEffect(()=>{
@@ -72,22 +71,21 @@ React.useEffect(()=>{
         <PrivateRoute path={`${path}/cr-birth-creation`} component={CreateBirthRegistration} />
         <PrivateRoute path={`${path}/cr-name-inclusion`} component={CRBirthInclusions} />
         <PrivateRoute parentRoute={path} path={`${path}/birth-inclusion-edit`} component={CRBirthInclusionPage} />
-        <PrivateRoute path={`${path}/marriage-correction-edit`} component={MarriageCorrectionEditPage} />
+        <PrivateRoute parentRoute={path} path={`${path}/marriage-correction-edit`} component={CRMarriageCorrectionLoadPage} />
         <PrivateRoute path={`${path}/cr-birth-nac`} component={CreateBirthNACRegistration} />
         <PrivateRoute path={`${path}/cr-adoption`} component={CreateAdoption} />
         <PrivateRoute path={`${path}/cr-stillbirth-creation`} component={CreateStillBirthRegistration} />
         <PrivateRoute path={`${path}/cr-outsideindiabirth-creation`} component={CreateBornOutsideRegistration} />
         <PrivateRoute path={`${path}/cr-abandonedbirth-creation`} component={CreateAbandonedBirth} />
         <PrivateRoute path={`${path}/cr-death-creation`} component={CreateDeathRegistration} />
-        <PrivateRoute path={`${path}/cr-marriage-creation`} component={CreateMarriageRegistration} />
-        <PrivateRoute path={`${path}/cr-marriage-correction-search`} component={SearchMarriageInclusion} />        
+        <PrivateRoute path={`${path}/cr-marriage-creation`} component={CreateMarriageRegistration} />     
         <PrivateRoute path={`${path}/cr/my-application`} component={MyCRApplications} />
         <PrivateRoute path={`${path}/cr/death/my-application`} component={MyCRDeathApplications} />
         <PrivateRoute path={`${path}/cr/my-bills`} component={() => <MyCRApplications view="bills" />} />
         <PrivateRoute path={`${path}/cr/application/:id/:tenantId`} component={ApplicationDetails} />
         <PrivateRoute path={`${path}/cr/death/application/:id/:tenantId`} component={ApplicationDeathDetails} />
         <PrivateRoute path={`${path}/cr-death-inclusion`} component={CRDeathInclusions} />
-        <PrivateRoute path={`${path}/cr-marriage-inclusion`} component={CRMarriageInclusions} />
+        <PrivateRoute path={`${path}/cr-marriage-correction`} component={CRMarriageCorrection} />
         <PrivateRoute path={`${path}/create-death-certificate`} component={() => <DeathCertificateSearch parentUrl={path}/>} /> 
         <PrivateRoute parentRoute={path} path={`${path}/create-birth-certificate`} component={() => <BirthCertificateSearch parentUrl={path} />} /> 
         <PrivateRoute parentRoute={path} path={`${path}/death-correction-edit`} component={CRDeathCorrectionEditPage} /> 

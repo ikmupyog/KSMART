@@ -89,7 +89,7 @@ const BirthInclusionPage = () => {
 //     console.log("birthInclusionFormData==", birthInclusionFormData);
 //   }, [navigationData, BirthCorrectionDocuments]);
 
-  if ((isLoad, isGenderLoad, isNationLoad, isLoading)) {
+  if ((isLoad || isGenderLoad || isNationLoad || isLoading)) {
     return <Loader />;
   }
   if (
