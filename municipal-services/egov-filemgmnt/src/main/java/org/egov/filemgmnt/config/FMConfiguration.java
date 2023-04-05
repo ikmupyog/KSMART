@@ -95,15 +95,14 @@ public class FMConfiguration {
     @Value("${persister.update.draftingstatus.topic:}")
     private String updateDraftingStatusTopic;
 
-    //enquiry config
+    // enquiry config
 
     @Value("${persister.save.enquiry.topic:}")
-    private  String saveEnquiryTopic;
-
+    private String saveEnquiryTopic;
 
     @Value("${persister.save.draftprocessinstance.topic:}")
     private String saveDraftProcessInstance;
-    
+
     // PDF Gen
 
     @Value("${egov.pdfservice.host}")

@@ -1,17 +1,25 @@
 package org.egov.filemgmnt.web.controllers;
 
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
+
 import org.egov.filemgmnt.service.EnquiryService;
 import org.egov.filemgmnt.util.FMUtils;
 import org.egov.filemgmnt.util.ResponseInfoFactory;
-import org.egov.filemgmnt.web.models.Enquiry.*;
 import org.egov.filemgmnt.web.models.RequestInfoWrapper;
+import org.egov.filemgmnt.web.models.enquiry.Enquiry;
+import org.egov.filemgmnt.web.models.enquiry.EnquiryRequest;
+import org.egov.filemgmnt.web.models.enquiry.EnquiryResponse;
+import org.egov.filemgmnt.web.models.enquiry.EnquirySearchCriteria;
+import org.egov.filemgmnt.web.models.enquiry.EnquirySearchResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.egov.filemgmnt.web.models.Enquiry.EnquirySearchCriteria;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
@@ -21,9 +29,7 @@ public class EnquiryController {
     private final ResponseInfoFactory responseInfoFactory;
     private final EnquiryService enquiryService;
 
-
-
-    public EnquiryController(ResponseInfoFactory responseInfoFactory, EnquiryService enquiryService) {
+    public EnquiryController(final ResponseInfoFactory responseInfoFactory, final EnquiryService enquiryService) {
         this.responseInfoFactory = responseInfoFactory;
         this.enquiryService = enquiryService;
 
@@ -34,28 +40,27 @@ public class EnquiryController {
         if (log.isDebugEnabled()) {
             log.debug("Enquiry main-create:  \n{}", FMUtils.toJson(request));
         }
-        List<Enquiry> enquiryDetails = enquiryService.saveEnquiry(request);
-        EnquiryResponse response = EnquiryResponse.builder()
-                .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
-                        Boolean.TRUE))
-                .enquiryList(enquiryDetails)
-                .build();
+        final List<Enquiry> enquiryDetails = enquiryService.saveEnquiry(request);
+        final EnquiryResponse response = EnquiryResponse.builder()
+                                                        .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+                                                                                                                            Boolean.TRUE))
+                                                        .enquiryList(enquiryDetails)
+                                                        .build();
         return ResponseEntity.ok(response);
     }
 
     @PostMapping("/applicantservices/_searchEnquiry")
-    public ResponseEntity<EnquirySearchResponse> SearchEnquiry(@RequestBody final RequestInfoWrapper request,
-                                                                        @ModelAttribute EnquirySearchCriteria enquirySearchCriteria) {
+    public ResponseEntity<EnquirySearchResponse> searchEnquiry(@RequestBody final RequestInfoWrapper request,
+                                                               @ModelAttribute final EnquirySearchCriteria enquirySearchCriteria) {
         if (log.isDebugEnabled()) {
             log.debug("Enquiry-search:  \n{}", FMUtils.toJson(enquirySearchCriteria));
         }
-        final List<Enquiry> result = enquiryService.SearchEnquiry(request.getRequestInfo(), enquirySearchCriteria);
+        final List<Enquiry> result = enquiryService.searchEnquiry(request.getRequestInfo(), enquirySearchCriteria);
         return ResponseEntity.ok(EnquirySearchResponse.builder()
-                .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
-                        Boolean.TRUE))
-                .enquiries(result)
-                .build());
+                                                      .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+                                                                                                                          Boolean.TRUE))
+                                                      .enquiries(result)
+                                                      .build());
 
     }
 }
-

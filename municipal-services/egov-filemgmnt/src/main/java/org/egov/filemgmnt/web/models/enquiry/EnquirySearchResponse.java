@@ -1,14 +1,20 @@
-package org.egov.filemgmnt.web.models.Enquiry;
+package org.egov.filemgmnt.web.models.enquiry;
 
+import java.util.ArrayList;
+import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
+import javax.validation.Valid;
+
 import org.egov.common.contract.response.ResponseInfo;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Validated
 @Getter
@@ -26,12 +32,13 @@ public class EnquirySearchResponse {
     private List<Enquiry> enquiries;
     @JsonProperty("Count")
     private int count;
-    public EnquirySearchResponse addEnquiry (Enquiry enquiry) {
-        if (enquiries==null){
-            enquiries =new ArrayList<>();
+
+    public EnquirySearchResponse addEnquiry(Enquiry enquiry) {
+        if (enquiries == null) {
+            enquiries = new ArrayList<>();
         }
         enquiries.add(enquiry);
-        return this ;
+        return this;
 
     }
 }

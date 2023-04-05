@@ -1,48 +1,42 @@
-package org.egov.filemgmnt.web.models.communication;
+package org.egov.filemgmnt.web.models.enquiry;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.validation.Valid;
 
 import org.egov.common.contract.response.ResponseInfo;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Schema(description = "Enquiry service response for create and update")
 @Validated
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 
-public class CommunicationFileResponse {
-
+public class EnquiryResponse {
     @JsonProperty("ResponseInfo")
     private ResponseInfo responseInfo;
 
-    @JsonProperty("CommunicationFile")
-    @Valid
-    private List<CommunicationFile> communicationFiles;
+    @JsonProperty("Enquiry")
+    private List<Enquiry> enquiryList;
 
-    @JsonProperty("Count")
-    private int count;
+    public EnquiryResponse addEnquiry(Enquiry newEnquiry) {
 
-    public CommunicationFileResponse addCommunicationFile(CommunicationFile communicationFile) {
-
-        if (communicationFiles == null) {
-            communicationFiles = new ArrayList<>();
+        if (enquiryList == null) {
+            enquiryList = new ArrayList<>();
         }
-        communicationFiles.add(communicationFile);
+        enquiryList.add(newEnquiry);
         return this;
-
     }
-
 }
