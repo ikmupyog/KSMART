@@ -236,6 +236,9 @@ const EmployeeApp = ({ path, url, userType }) => {
   // const Response = Digit?.ComponentRegistryService?.getComponent('TLResponse');
   const Search = Digit?.ComponentRegistryService?.getComponent('DFMEmployeeSearch');
   const EmployeeDetails = Digit?.ComponentRegistryService?.getComponent('EmployeeDetails')
+    const NoteAndDrafting = Digit?.ComponentRegistryService?.getComponent('NoteAndDrafting')
+   const LegacyFile = Digit?.ComponentRegistryService?.getComponent('LegacyFile')
+   const DraftingFile = Digit?.ComponentRegistryService?.getComponent('DraftingFile')
 
   return (
     <Switch>
@@ -247,6 +250,9 @@ const EmployeeApp = ({ path, url, userType }) => {
           <PrivateRoute parentRoute={path} path={`${path}/file-flow`} component={() => <FileFlow parentUrl={url} />} />
           <PrivateRoute path={`${path}/search/:variant`} component={(props) => <Search {...props} parentRoute={path} />} />
           <PrivateRoute path={`${path}/searchDetails/:id`} component={() => <EmployeeDetails parentRoute={path} />} />
+           <PrivateRoute path={`${path}/note-drafting`} component={() => <NoteAndDrafting parentRoute={path} />} />
+          <PrivateRoute path={`${path}/drafting`} component={() => <DraftingFile parentRoute={path} />} />
+          <PrivateRoute path={`${path}/legacy-file`} component={() => <LegacyFile parentRoute={path} />} />
         </div>
       </React.Fragment>
     </Switch>

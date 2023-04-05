@@ -35,3 +35,189 @@
         align-items: center;
     }
 }
+
+.file-link-button {
+    text-align: right;
+    margin-top: -32px;
+    color: blue;
+}
+
+.link-file {
+    margin-left: 30px;
+    float: left;
+    margin-right: 20px;
+    text-decoration: underline;
+    text-decoration-color: blue;
+}
+
+.link-file-sec {
+    margin-left: 30px;
+    text-decoration: underline;
+    text-decoration-color: blue;
+}
+
+.card-file {
+    border: 2px solid black;
+    height: 300px;
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+
+.card-label-file {
+    float: left;
+    margin-right: 10px;
+}
+
+.card-checkbox {
+    float: left;
+    margin-right: 200px;
+}
+
+.search-file {
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.card-file-draft {
+    border: 3px solid #9fc5f8;
+    height: 300px;
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+
+.custom-draft-button {
+    text-align-last: end;
+}
+
+.textarea-draft {
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-top:50px;
+    margin-bottom:50px;
+}
+
+.wrapper-file {
+    height: 50px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.draft-file{
+    height:600px;
+}
+
+.button-column{
+    padding-top:30px;
+}
+
+.forward-button{
+    float:right;
+}
+
+.save-button{
+    margin-top:30px;
+}
+.card-document{
+    height: 200px;
+     margin-top: 30px;
+     h2{
+        text-align: center;
+         margin-bottom: 30px;
+     }
+}
+.card-document-column{
+    margin-bottom: 20px;
+}
+
+.link-view{
+    text-align: center;
+     text-decoration: underline;
+      text-decoration-color: blue;
+}
+.document{
+    float: right;
+}
+.check-mark{
+    color: green; 
+}
+.reference-row{
+    border: 2px solid black;
+    height: 200px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+.reference-column{
+    margin-left:80px;
+    float: left;
+    margin-right: 80px;
+    text-decoration: underline;
+    text-decoration-color: blue;
+}  
+.geo-location{
+    height: 200px;
+     margin-top: 30px;
+}
+.geo-column{
+    margin-bottom: 20px;
+}
+.reference{
+    float: right;
+}
+.reference-div{
+    margin-top: 30px;
+}
+.geo-tag{
+    margin-top:20px;
+}
+.legacy-section{
+    margin-top: 50px ;
+    margin-bottom:100px;
+    color:red;
+    h1{
+        font-size:19px;
+    }
+}
+.select-section{
+    margin-top: 50px;
+}
+.label{
+    margin-top: -25px;
+}
+.subject-section{
+    margin-top: 50px;
+}
+.enter-file-section{
+    margin-bottom: 50px;
+}
+.date-picker{
+    float: right;
+}
+.personal_register_view{
+    margin-left:40%;
+}
+
+.upload-section{
+    margin-bottom: 50px;
+}
+.file-section{
+    margin-bottom: 30px;
+    margin-top:30px;
+}
+.legacy{
+    height: 770px;
+}
+.save-legacy{
+    text-align: center;
+}
+.save-button-drafing{
+    margin-right: 30px;
+}
+.ck-editor__editable {
+    min-height: 240px;
+}
+.draft-editor{
+    height:850px;
+}
+.card-file-draft{
+    height: 551px;
+}

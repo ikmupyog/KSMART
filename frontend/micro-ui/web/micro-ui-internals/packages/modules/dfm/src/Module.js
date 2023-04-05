@@ -24,6 +24,9 @@ import Response from "./pages/Response";
 
 import CitizenApp from "./pages/citizen";
 import EmployeeApp from "./pages/employee";
+import NoteAndDrafting from "./components/NoteAndDrafting";
+import DraftingFile from "./components/DraftingFile";
+import LegacyFile from "./components/LegacyFile";
 
 export const DFMModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
@@ -87,6 +90,9 @@ const componentsToRegister = {
   SearchDfmApplication,
   DFMEmployeeSearch,
   EmployeeDetails,
+    NoteAndDrafting,
+  DraftingFile,
+   LegacyFile
 };
 
 export const initDFMComponents = () => {

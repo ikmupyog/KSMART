@@ -53,6 +53,28 @@ export const DFMService = {
       params: {},
       auth: true,
     }),
+    drafting: (details, tenantId) =>
+    Request({
+      url: Urls.dfm.create_draft,
+      data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: {},
+      auth: true,
+    }),
+    note_drafting: (details, tenantId) =>
+    Request({
+      url: Urls.dfm.create_note,
+      data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: {},
+      auth: true,
+    }),
   // billingslab: ({ tenantId, filters, auth }) =>
   //   Request({
   //     url: Urls.tl.billingslab,

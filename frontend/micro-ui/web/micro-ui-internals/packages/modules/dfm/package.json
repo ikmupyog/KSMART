@@ -19,6 +19,8 @@
     "react-router-dom": "5.3.0"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^36.0.1",
+    "@ckeditor/ckeditor5-react": "^5.1.0",
     "@egovernments/digit-ui-libraries": "1.5.4",
     "@egovernments/digit-ui-react-components": "1.5.4",
     "lodash.merge": "^4.6.2",

@@ -166,6 +166,8 @@ const Urls = {
     search: "/filemgmnt/v1/applicantpersonals/_search",
     download_pdf: "/egov-pdf/download/dfm/",
     update: "/filemgmnt/v1/applicantpersonals/_update",
+    create_draft: "/filemgmnt/v1/applicantservices/_createDraftingMain",
+    create_note:"/filemgmnt/v1/applicantservices/_createDraftProcessInstance",
   },
   receipts: {
     receipt_download: "/egov-pdf/download/PAYMENT/consolidatedreceipt",
