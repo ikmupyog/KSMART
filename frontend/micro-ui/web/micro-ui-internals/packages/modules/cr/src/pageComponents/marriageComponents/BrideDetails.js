@@ -257,7 +257,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
   }
   function setSelectbrideMobile(e) {
     if (e.target.value.trim().length >= 0) {
-      setbrideMobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
+      setbrideMobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 10));
     }
   }
   function setSelectbrideGender(value) {
@@ -468,7 +468,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     }
   }
   function setSelectbridePassportNo(e) {
-    if (e.target.value.length === 21) {
+    if (e.target.value.length < 8) {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
