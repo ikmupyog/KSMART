@@ -34,6 +34,7 @@ import { MCollectService } from "./services/elements/MCollect";
 import HrmsService from "./services/elements/HRMS";
 import { InboxGeneral } from "./services/elements/InboxService";
 import EventsServices from "./services/elements/Events";
+import { CRNACDeathService } from "./services/elements/CRNACDEATH";
 
 import ShareFiles from "./services/molecules/ShareFiles";
 import { GetServiceDefinitions } from "./services/molecules/ServiceDefinitions";
@@ -79,6 +80,7 @@ const initLibraries = () => {
   setupLibraries("CRStillBirthService", CRStillBirthService);
   setupLibraries("CRMarriageService", CRMarriageService);
   setupLibraries("CRDeathService", CRDeathService);
+  setupLibraries("CRNACDeathService", CRNACDeathService);
   setupLibraries("DFMService", DFMService);
   setupLibraries("HRMSService", HrmsService);
   setupLibraries("ReceiptsService", ReceiptsService);

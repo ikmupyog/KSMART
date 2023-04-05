@@ -165,6 +165,10 @@ import useRegistrySearchDeath from "./cr/useRegistrySearchDeath";
 import useSearchMarriage from "./cr/useSearchMarriage";
 import useRegistrySearchMarriage from "./cr/useRegistrySearchMarriage";
 import useApplicationBIRTHNACDetail from "./cr/useApplicationBIRTHNACDetail";
+import useCivilRegistrationNACDEATHAPI from "./cr/useCivilRegistrationNACDEATHAPI";
+import useDeathNACSearch from "./cr/useDeathNACSearch";
+import useApplicationDEATHNACActions from "./cr/useApplicationDEATHNACActions";
+import useApplicationDEATHNACDetail from "./cr/useApplicationDEATHNACDetail";
 
 
 import useSearchDeath  from "./cr/useSearchDeath";
@@ -395,6 +399,10 @@ const cr = {
   useApplicationStillBirthDetail:useApplicationStillBirthDetail,
   useApplicationAbandondBirthDetail,
   useApplicationBIRTHNACDetail,
+  useCivilRegistrationNACDEATHAPI,
+  useDeathNACSearch,
+  useApplicationDEATHNACActions,
+  useApplicationDEATHNACDetail,
   useApplicationBornOutsideIndiaBirthDetail,
   useApplicationActions: useCRApplicationActions,
   useAdoptionApplActions:useCRAdoptionApplicationActions,

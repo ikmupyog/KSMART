@@ -1,17 +1,22 @@
 import { BackButton } from "@egovernments/digit-ui-react-components";
+import _ from "lodash";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import SearchRegistryDeath from "../../../components/SearchRegistryDeath";
+import { STATE_CODE } from "../../../config/constants";
 
 const DeathCertificateSearch = () => {
   const { t } = useTranslation();
-  const tenantId = Digit.ULBService.getCurrentTenantId();
+  let tenantId = Digit.ULBService.getCurrentTenantId();
+  if (tenantId === STATE_CODE.KL) {
+    tenantId = Digit.ULBService.getCitizenCurrentTenant();
+  }
   const mutation = Digit.Hooks.cr.useRegSearchDeath(tenantId);
 
   const [payload, setPayload] = useState({});
   const [searchData, setSearchData] = useState({});
   const [isSuccess, setIsSuccess] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
 
   function onSubmit(_data) {
@@ -39,9 +44,12 @@ const DeathCertificateSearch = () => {
   }
 
   useEffect(() => {
-    setIsSuccess(false);
-    setIsLoading(true);
-    mutation.mutate({ filters: payload }, { onSuccess });
+    let { limit, offset, sortBy, sortOrder, ...filters } = payload
+    if (!_.isEmpty(filters)) {
+      setIsSuccess(false);
+      setIsLoading(true);
+      mutation.mutate({ filters: payload }, { onSuccess });
+    }
   }, [payload])
 
   const { deathCertificateDtls: searchResult, Count: count } = searchData;
@@ -57,6 +65,7 @@ const DeathCertificateSearch = () => {
         isSuccess={isSuccess}
         isLoading={isLoading}
         count={count}
+        onRestClick={setSearchData}
       />
     </React.Fragment>
   );
