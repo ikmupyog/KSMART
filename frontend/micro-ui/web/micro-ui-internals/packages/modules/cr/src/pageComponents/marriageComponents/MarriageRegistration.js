@@ -466,7 +466,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     }
   };
 
-  console.log({ formData });
+  console.log({ marriagePlacetype });
 
   if (
     isLoading ||
@@ -485,7 +485,14 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
         <BackButton>{t("CS_COMMON_BACK")}</BackButton>
         {window.location.href.includes("/citizen") ? <Timeline currentStep={1} /> : null}
         {window.location.href.includes("/employee") ? <Timeline currentStep={1} /> : null}
-        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
+        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!marriageDOM || !marriageDistrictid
+        || !marriageTalukID || !marriageVillageName || !marriageLBtype || !marriageTenantid || !marriagePlacetype
+        || (marriagePlacetype.name === "Religious Institution" ? (!placeidEn) : false)
+        || (marriagePlacetype.name === "Mandapam/Hall/Auditorium/Convention Centre" ? (!placeidEn) : false)
+        || (marriagePlacetype.name === "Sub Registrar’s Office" ? (!placeidEn) : false)
+        || (marriagePlacetype.name === "House" ? (!marriageLocalityEn || !marriageLocalityMl || !marriagePlacenameEn || !marriagePlacenameMl) : false)
+        || (marriagePlacetype.name === "Public Place" || "Private Place" ? (!marriageLocalityEn || !marriageLocalityMl || !marriagePlacenameEn || !marriagePlacenameMl) : false)
+        }>
           <div className="row">
             <div className="col-md-12">
               <div className="row">
