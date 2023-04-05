@@ -193,8 +193,8 @@ serviceMaps:
 
       - jsonPath: $.deathCertificateDtls.*.InformantDetails.IsDeclarationInformant
 
-    - query: INSERT INTO public.eg_death_address_registry(id, death_dtl_id, tenantid, addr_typeid, streetname_en, streetname_ml, locality_en, locality_ml, ward_id, taluk_id, village_id, postoffice_id, pincode, district_id, state_id, country_id, createdby, createdtime, lastmodifiedby, lastmodifiedtime, location_type, housename_ml, housename_en, lbtype, postal_code)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+    - query: INSERT INTO public.eg_death_address_registry(id, death_dtl_id, tenantid, addr_typeid, streetname_en, streetname_ml, locality_en, locality_ml, ward_id, taluk_id, village_id, postoffice_id, pincode, district_id, state_id, country_id, createdby, createdtime, lastmodifiedby, lastmodifiedtime, location_type, housename_ml, housename_en, lbtype, postal_code, province_name_en, province_name_ml, city_town_village, city_en, addr_lb_name, addr_sameas_present)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
      
 
       basePath: deathCertificateDtls.*
@@ -249,8 +249,20 @@ serviceMaps:
 
       - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PresentAddrPostalCode
 
-    - query: INSERT INTO public.eg_death_address_registry(id, death_dtl_id, tenantid, addr_typeid, streetname_en, streetname_ml, locality_en, locality_ml, ward_id, taluk_id, village_id, postoffice_id, pincode, district_id, state_id, country_id, createdby, createdtime, lastmodifiedby, lastmodifiedtime, location_type, housename_ml, housename_en, lbtype, postal_code)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.presentOutSideIndiaProvinceEn
+
+      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.presentOutSideIndiaProvinceMl
+
+      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PresentAddrTownOrVillage
+
+      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PresentAddrCityOrVillageEn
+
+      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.presentInsideKeralaLBName
+
+      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.isPrsentAddress
+
+    - query: INSERT INTO public.eg_death_address_registry(id, death_dtl_id, tenantid, addr_typeid, streetname_en, streetname_ml, locality_en, locality_ml, ward_id, taluk_id, village_id, postoffice_id, pincode, district_id, state_id, country_id, createdby, createdtime, lastmodifiedby, lastmodifiedtime, location_type, housename_ml, housename_en, lbtype, postal_code, province_name_en, province_name_ml, city_town_village, city_en, addr_lb_name, addr_sameas_present)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
      
 
       basePath: deathCertificateDtls.*
@@ -304,6 +316,18 @@ serviceMaps:
       - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PermanentAddrLbType
 
       - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PermanentAddrPostalCode
+
+      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PermntOutsideIndiaprovinceEn
+
+      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PermntOutsideIndiaprovinceMl
+
+      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PermanentAddrTownOrVillage
+
+      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.PermanentAddrCityOrVillageEn
+
+      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.permntInKeralaAdrLBName
+
+      - jsonPath: $.deathCertificateDtls.*.AddressBirthDetails.isPrsentAddress
 
     - query: INSERT INTO public.eg_death_statistical_registry(id, death_dtl_id, tenantid, religion, occupation, medical_attention_type, death_medically_certified, death_cause_main, death_cause_sub, death_cause_other, death_during_delivery, createdby, createdtime, lastmodifiedby, lastmodifiedtime, nationality,  smoking_type, tobacco_type,  alcohol_type, autopsy_performed, autopsy_completed, manner_of_death, death_cause_main_custom, death_cause_main_interval, death_cause_main_timeunit, death_cause_sub_custom, death_cause_sub_interval, death_cause_sub_timeunit, death_cause_sub2, death_cause_sub2_custom, death_cause_sub2_interval, death_cause_sub2_timeunit, deceased_pregnant, is_delivery)
           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
@@ -778,4 +802,140 @@ serviceMaps:
       - jsonPath: $.deathNACDtls.*.InformationDeath.certificateNo
       - jsonPath: $.deathNACDtls.*.InformationDeath.certificateDate
       - jsonPath: $.deathNACDtls.*.InformationDeath.certificateNoId
+
+    - query: INSERT INTO eg_death_address_nac_registry(id, death_dtl_id, tenantid, addr_typeid, streetname_en, streetname_ml, locality_en, locality_ml, ward_id, taluk_id, village_id, postoffice_id, pincode, district_id, state_id, country_id, createdby, createdtime, lastmodifiedby, lastmodifiedtime, location_type, housename_ml, housename_en, lbtype, postal_code, province_name_en, province_name_ml, city_town_village, city_en, addr_lb_name, addr_sameas_present)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+     
+
+      basePath: deathNACDtls.*
+      jsonMaps:
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrId
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.Id
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.TenantId
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrTypeId
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrStreetNameEn
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrStreetNameMl
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrLocalityEn
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrLocalityMl
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrWardId
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrTalukId
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrVillageId
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrPostofficeId
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrPincode
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrDistrictId
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrStateId
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrCountryId
+
+      - jsonPath: $.deathNACDtls.*.AuditDetails.createdBy
+      
+      - jsonPath: $.deathNACDtls.*.AuditDetails.createdTime
+
+      - jsonPath: $.deathNACDtls.*.AuditDetails.lastModifiedBy
+
+      - jsonPath: $.deathNACDtls.*.AuditDetails.lastModifiedTime
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrLocationType
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrHoueNameMl
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrHoueNameEn
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrLbType
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrPostalCode
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.presentOutSideIndiaProvinceEn
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.presentOutSideIndiaProvinceMl
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrTownOrVillage
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PresentAddrCityOrVillageEn
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.presentInsideKeralaLBName
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.isPrsentAddress
+
+    - query: INSERT INTO eg_death_address_nac_registry(id, death_dtl_id, tenantid, addr_typeid, streetname_en, streetname_ml, locality_en, locality_ml, ward_id, taluk_id, village_id, postoffice_id, pincode, district_id, state_id, country_id, createdby, createdtime, lastmodifiedby, lastmodifiedtime, location_type, housename_ml, housename_en, lbtype, postal_code, province_name_en, province_name_ml, city_town_village, city_en, addr_lb_name, addr_sameas_present)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+     
+
+      basePath: deathNACDtls.*
+      jsonMaps:
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrId
+      
+      - jsonPath: $.deathNACDtls.*.InformationDeath.Id
+
+      - jsonPath: $.deathNACDtls.*.InformationDeath.TenantId
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrTypeId
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrStreetNameEn
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrStreetNameMl
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrLocalityEn
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrLocalityMl
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrWardId
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrTalukId
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrVillageId
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrPostofficeId
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrPincode
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrDistrictId
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrStateId
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrCountryId
+
+      - jsonPath: $.deathNACDtls.*.AuditDetails.createdBy
+      
+      - jsonPath: $.deathNACDtls.*.AuditDetails.createdTime
+
+      - jsonPath: $.deathNACDtls.*.AuditDetails.lastModifiedBy
+
+      - jsonPath: $.deathNACDtls.*.AuditDetails.lastModifiedTime
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrLocationType
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrHoueNameMl
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrHoueNameEn
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrLbType
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrPostalCode
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermntOutsideIndiaprovinceEn
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermntOutsideIndiaprovinceMl
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrTownOrVillage
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.PermanentAddrCityOrVillageEn
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.permntInKeralaAdrLBName
+
+      - jsonPath: $.deathNACDtls.*.AddressBirthDetails.isPrsentAddress
   

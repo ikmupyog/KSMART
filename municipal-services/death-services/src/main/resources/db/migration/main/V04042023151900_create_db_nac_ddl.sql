@@ -77,3 +77,4 @@ CREATE TABLE IF NOT EXISTS eg_death_nac_registry
     dateofissue bigint;
     CONSTRAINT eg_death_nac_registry_pkey PRIMARY KEY (id)
 );
+

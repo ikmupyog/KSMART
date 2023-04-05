@@ -102,17 +102,17 @@ public class DeathApplnService {
           producer.push(deathConfig.getSaveDeathDetailsTopic(), request);
           workflowIntegrator.callWorkFlow(request);
           //Rakhi S on 21.03.2023
-          request.getDeathCertificateDtls().forEach(death->{
-               if(death.getApplicationStatus().equals(DeathConstants.STATUS_FOR_PAYMENT)){    
-                    // System.out.println("PaymentGateway");               
-                   List<Demand> demands = new ArrayList<>();
-                   Demand demand = new Demand();
-                   demand.setTenantId(death.getDeathBasicInfo().getTenantId());
-                   demand.setConsumerCode(death.getDeathBasicInfo().getDeathACKNo());
-                   demands.add(demand);
-                   death.setDemands(demandService.saveDemandDetails(demands,request.getRequestInfo()));
-               }
-           });         
+          // request.getDeathCertificateDtls().forEach(death->{
+          //      if(death.getApplicationStatus().equals(DeathConstants.STATUS_FOR_PAYMENT)){    
+          //           // System.out.println("PaymentGateway");               
+          //          List<Demand> demands = new ArrayList<>();
+          //          Demand demand = new Demand();
+          //          demand.setTenantId(death.getDeathBasicInfo().getTenantId());
+          //          demand.setConsumerCode(death.getDeathBasicInfo().getDeathACKNo());
+          //          demands.add(demand);
+          //          death.setDemands(demandService.saveDemandDetails(demands,request.getRequestInfo()));
+          //      }
+          //  });         
  
           return request.getDeathCertificateDtls();
      }
