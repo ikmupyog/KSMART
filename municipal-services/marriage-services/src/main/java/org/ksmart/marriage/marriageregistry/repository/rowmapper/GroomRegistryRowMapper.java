@@ -1,6 +1,6 @@
 package org.ksmart.marriage.marriageregistry.repository.rowmapper;
 
-import org.ksmart.marriage.marriageregistry.model.GroomRegistryDetails;
+import org.ksmart.marriage.marriageregistry.web.model.GroomRegistryDetails;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.springframework.stereotype.Component;

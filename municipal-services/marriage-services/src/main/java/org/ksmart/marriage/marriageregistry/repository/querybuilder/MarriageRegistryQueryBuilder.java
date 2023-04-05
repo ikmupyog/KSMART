@@ -1,8 +1,6 @@
 package org.ksmart.marriage.marriageregistry.repository.querybuilder;
 //import org.ksmart.marriage.common.repository.builder.CommonQueryBuilder;
-import org.ksmart.marriage.marriageapplication.model.marriage.MarriageApplicationSearchCriteria;
-import org.ksmart.marriage.marriageregistry.model.MarriageRegistrySearchCriteria;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistrySearchCriteria;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import javax.validation.constraints.NotNull;

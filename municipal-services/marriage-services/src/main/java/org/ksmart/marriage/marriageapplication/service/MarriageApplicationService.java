@@ -3,12 +3,12 @@ package org.ksmart.marriage.marriageapplication.service;
 import lombok.extern.slf4j.Slf4j;
 
 import org.ksmart.marriage.common.producer.MarriageProducer;
-import org.ksmart.marriage.config.MarriageApplicationConfiguration;
+import org.ksmart.marriage.marriageapplication.config.MarriageApplicationConfiguration;
 import org.ksmart.marriage.marriageapplication.enrichment.MarriageDetailsEnrichment;
-import org.ksmart.marriage.marriageapplication.model.MarriageApplicationDetails;
-import org.ksmart.marriage.marriageapplication.model.Demand.Demand;
-import org.ksmart.marriage.marriageapplication.model.marriage.MarriageApplicationSearchCriteria;
-import org.ksmart.marriage.marriageapplication.model.marriage.MarriageDetailsRequest;
+import org.ksmart.marriage.marriageapplication.web.model.MarriageApplicationDetails;
+import org.ksmart.marriage.marriageapplication.web.model.Demand.Demand;
+import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageApplicationSearchCriteria;
+import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageDetailsRequest;
 import org.ksmart.marriage.marriageapplication.repository.MarriageApplicationRepository;
 import org.ksmart.marriage.marriageapplication.validator.MarriageApplicationValidator;
 import org.ksmart.marriage.marriageapplication.validator.MarriageMDMSValidator;

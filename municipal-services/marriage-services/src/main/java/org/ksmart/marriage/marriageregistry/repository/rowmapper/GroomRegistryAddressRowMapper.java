@@ -1,9 +1,9 @@
 package org.ksmart.marriage.marriageregistry.repository.rowmapper;
 
-//import org.ksmart.marriage.marriageapplication.model.marriage.PresentAddressDetails;
+//import org.ksmart.marriage.marriageapplication.web.model.marriage.PresentAddressDetails;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import org.ksmart.marriage.marriageregistry.model.GroomRegistryAddressDetails;
+import org.ksmart.marriage.marriageregistry.web.model.GroomRegistryAddressDetails;
 
 public interface GroomRegistryAddressRowMapper {
     default GroomRegistryAddressDetails getGroomAddressDetails (ResultSet rs) throws SQLException {

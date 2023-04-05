@@ -1,8 +1,8 @@
 package org.ksmart.marriage.marriageapplication.repository.rowmapper;
 
-//import org.ksmart.marriage.marriageapplication.model.marriage.PresentAddressDetails;
+//import org.ksmart.marriage.marriageapplication.web.model.marriage.PresentAddressDetails;
 
-import org.ksmart.marriage.marriageapplication.model.marriage.GroomAddressDetails;
+import org.ksmart.marriage.marriageapplication.web.model.marriage.GroomAddressDetails;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
