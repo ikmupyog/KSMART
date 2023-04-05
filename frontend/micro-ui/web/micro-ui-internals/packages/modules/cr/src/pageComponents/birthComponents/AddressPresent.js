@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCountry, setaddressCountry,
     presentaddressStateName, setaddressStateName, value, setValue, countryvalue, setCountryValue,
     permtaddressCountry, setpermtaddressCountry, permtaddressStateName, setpermtaddressStateName, isPrsentAddress,
-    setIsPrsentAddress, Villagevalues, setLbsVillagevalue, isEditBirth = false, isEditDeath = false,isEditAdoption,isEditStillBirth=false, presentOutsideKeralaDistrict,
+    setIsPrsentAddress, Villagevalues, setLbsVillagevalue, isEditBirth = false, isEditDeath = false, isEditAdoption, isEditStillBirth = false, presentOutsideKeralaDistrict,
     setoutsideKeralaDistrict
 }) => {
     const stateId = Digit.ULBService.getStateId();
@@ -21,7 +21,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
     const { data: State = {}, isStateLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
     const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
     const [isInitialRender, setIsInitialRender] = useState(true);
-    const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : isEditStillBirth ? isEditStillBirth :  false);
+    const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : isEditStillBirth ? isEditStillBirth : false);
 
     let cmbLB = [];
     let cmbCountry = [];
@@ -57,6 +57,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
         if (isInitialRender) {
             if (cmbLB.length > 0) {
                 currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
+                //console.log(currentLB);
                 // setAdrsLBName(currentLB[0]);
                 cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
                 setaddressCountry(cmbFilterCountry[0]);
@@ -84,7 +85,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
                 setValue(value.formData?.ChildDetails?.AddressBirthDetails?.presentaddressStateName);
             }
         }
-    } else if(isEditAdoption!==false){
+    } else if (isEditAdoption !== false) {
         if (formData?.AdoptionAddressBasePage?.presentaddressCountry != null) {
             if (cmbCountry.length > 0 && (presentaddressCountry === undefined || presentaddressCountry === "")) {
                 setaddressCountry(cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.AdoptionAddressBasePage?.presentaddressCountry)[0]);
@@ -97,7 +98,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
                 setValue(value.formData?.AdoptionAddressBasePage?.presentaddressStateName);
             }
         }
-    }else if (isEditDeath) {
+    } else if (isEditDeath) {
         if (formData?.AddressBirthDetails?.presentaddressCountry != null) {
             if (cmbCountry.length > 0 && (presentaddressCountry === undefined || presentaddressCountry === "")) {
                 setaddressCountry(cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.AddressBirthDetails?.presentaddressCountry)[0]);
@@ -136,14 +137,17 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
         }
     }
     function setSelectaddressStateName(value) {
+        //console.log(value);
         setaddressStateName(value);
         setValue(value.code);
-        if (value.code != "kl") {
-            setoutsideKeralaDistrict(null);
-            sessionStorage.setItem("presentOutsideKeralaFlag", true);
-        } else {
-            sessionStorage.setItem("presentOutsideKeralaFlag", false);
-        }
+        // if (value.code != "kl") {
+        //     setoutsideKeralaDistrict(null);
+        //     sessionStorage.setItem("presentOutsideKeralaFlag", true);
+        //     sessionStorage.setItem("presentOutsideKeralaStateCode", value.code);
+        // } else {
+        //     sessionStorage.setItem("presentOutsideKeralaFlag", false);
+        //     sessionStorage.removeItem("presentOutsideKeralaStateCode");
+        // }
         if (isPrsentAddress) {
             setpermtaddressStateName(value);
         } else {

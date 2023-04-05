@@ -2,7 +2,7 @@ import { Banner, Card, CardText, LinkButton, Loader, SubmitBar } from "@egovernm
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-// import { convertToBirthRegistration } from "../../../utils";
+import { convertToMarriageRegistration } from "../../../utils/marriageIndex";
 import getPDFData from "../../../utils/getTLAcknowledgementData";
 
 const GetActionMessage = (props) => {
@@ -10,7 +10,9 @@ const GetActionMessage = (props) => {
   if (props.isSuccess) {
     return t("CR_CREATE_SUCCESS_MSG");
   } else if (props.isLoading) {
-    return !window.location.href.includes("renew-trade") || !window.location.href.includes("edit-application") ? t("CS_TRADE_APPLICATION_SUCCESS") : t("CS_TRADE_UPDATE_APPLICATION_PENDING");
+    return !window.location.href.includes("renew-trade") || !window.location.href.includes("edit-application")
+      ? t("CS_TRADE_APPLICATION_SUCCESS")
+      : t("CS_TRADE_UPDATE_APPLICATION_PENDING");
   } else if (!props.isSuccess) {
     return t("CR_CREATE_APPLICATION_FAILED");
   }
@@ -25,7 +27,7 @@ const BannerPicker = (props) => {
   return (
     <Banner
       message={GetActionMessage(props)}
-      applicationNumber={props.data?.ChildDetails[0]?.applicationNumber}
+      applicationNumber={props.data?.MarriageDetails[0]?.applicationNumber}
       info={props.isSuccess ? props.applicationNumber : ""}
       successful={props.isSuccess}
     />
@@ -37,11 +39,9 @@ const MarriageAcknowledgement = ({ data, onSuccess, userType, isEditBirth = fals
   const [mutationHappened, setMutationHappened, clear] = Digit.Hooks.useSessionStorage("CITIZEN_TL_MUTATION_HAPPENED", false);
   const resubmit = window.location.href.includes("edit-application");
   const tenantId = Digit.ULBService.getCurrentTenantId();
-  const isRenewTrade = !window.location.href.includes("renew-trade")
-  const mutation = Digit.Hooks.cr.useCivilRegistrationAPI(
-    data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
-    isRenewTrade
-  );
+  const isRenewTrade = !window.location.href.includes("renew-trade");
+  const [isEditMarriage, setIsEditMarriage] = useState(sessionStorage.getItem("CR_MARRIAGE_EDIT_FLAG") ? true : false);
+  const mutation = Digit.Hooks.cr.useCivilRegistrationMarriageAPI(tenantId, isEditMarriage ? false : true);
   // const mutation1 = Digit.Hooks.cr.useCivilRegistrationAPI(
   //   data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
   //   false
@@ -70,13 +70,11 @@ const MarriageAcknowledgement = ({ data, onSuccess, userType, isEditBirth = fals
         if (!resubmit) {
           // let formdata = !isEditBirth ? convertToDeathRegistration(data) : convertToEditTrade(data, fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter(y => y.module === "CR") : []);
 
-          let formdata = !isEditBirth ? convertToBirthRegistration(data) : [];
+          let formdata = !isEditMarriage ? convertToMarriageRegistration(data) : [];
           // formdata.BirthDetails[0].tenantId = formdata?.BirthDetails[0]?.tenantId || tenantId1;
-          if (!isEditBirth) {
-            mutation.mutate(formdata, {
-              onSuccess,
-            })
-          }
+          mutation.mutate(formdata, {
+            onSuccess,
+          });
           // else{
           //   if((fydata["egf-master"] && fydata["egf-master"].FinancialYear.length > 0 && isDirectRenewal))
           //   {
@@ -105,10 +103,8 @@ const MarriageAcknowledgement = ({ data, onSuccess, userType, isEditBirth = fals
           // !mutation2.isLoading && !mutation2.isSuccess &&!mutationHappened && mutation2.mutate(formdata, {
           //   onSuccessedit,
           // })
-
         }
-      } catch (err) {
-      }
+      } catch (err) {}
     }
   }, [mutation]);
 
@@ -126,51 +122,57 @@ const MarriageAcknowledgement = ({ data, onSuccess, userType, isEditBirth = fals
   // }, [mutation.isSuccess, mutation1.isSuccess]);
 
   const handleDownloadPdf = async () => {
-    const { Licenses = [] } = mutation.data
+    const { Licenses = [] } = mutation.data;
     const License = (Licenses && Licenses[0]) || {};
     const tenantInfo = tenants.find((tenant) => tenant.code === License.tenantId);
     let res = License;
     const data = getPDFData({ ...res }, tenantInfo, t);
     data.then((ress) => Digit.Utils.pdf.generate(ress));
   };
-  let enableLoader = (mutation.isIdle || mutation.isLoading);
-  if (enableLoader) { return (<Loader />) }
-  else if (((mutation?.isSuccess == false && mutation?.isIdle == false) || (mutation1?.isSuccess == false && mutation1?.isIdle == false))) {
+  let enableLoader = mutation.isIdle || mutation.isLoading;
+  if (enableLoader) {
+    return <Loader />;
+  } else if ((mutation?.isSuccess == false && mutation?.isIdle == false) || (mutation1?.isSuccess == false && mutation1?.isIdle == false)) {
     return (
       <Card>
-        <BannerPicker t={t} data={mutation.data || mutation1.data} isSuccess={mutation.isSuccess || mutation1.isSuccess} isLoading={(mutation?.isLoading || mutation1?.isLoading)} />
+        <BannerPicker
+          t={t}
+          data={mutation.data || mutation1.data}
+          isSuccess={mutation.isSuccess || mutation1.isSuccess}
+          isLoading={mutation?.isLoading || mutation1?.isLoading}
+        />
         {<CardText>{t("CR_BIRTH_CREATION_FAILED_RESPONSE")}</CardText>}
         <Link to={`/digit-ui/citizen`}>
           <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
         </Link>
-      </Card>)
+      </Card>
+    );
   }
   // else if(mutation2.isLoading || mutation2.isIdle ){
   //   return (<Loader />)
   // }
-  else
-    // console.log(JSON.stringify(mutation));
-    if (mutation.isSuccess && mutation?.isError === null) {
-      return (
-        <Card>
-          <BannerPicker t={t} data={mutation.data} isSuccess={"success"} isLoading={(mutation.isIdle || mutation.isLoading)} />
-          {/* <CardText>{!isDirectRenewal?t("Application Submitted Successfully"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText>
-     */}
-          <LinkButton
-            label={
-              <div className="response-download-button">
-                <span>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#f47738">
-                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
-                  </svg>
-                </span>
-                <span className="download-button">{t("Acknowledgment")}</span>
-              </div>
-            }
-            //style={{ width: "100px" }}
-            onClick={handleDownloadPdf}
-          />
-          {/* <BannerPicker t={t} data={mutation2.data} isSuccess={mutation2.isSuccess} isLoading={(mutation2.isIdle || mutation2.isLoading)} />
+  // console.log(JSON.stringify(mutation));
+  else if (mutation.isSuccess && mutation?.isError === null) {
+    return (
+      <Card>
+        <BannerPicker t={t} data={mutation.data} isSuccess={"success"} isLoading={mutation.isIdle || mutation.isLoading} />
+        {/* <CardText>{!isDirectRenewal?t("Application Submitted Successfully"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText>
+         */}
+        <LinkButton
+          label={
+            <div className="response-download-button">
+              <span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#f47738">
+                  <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                </svg>
+              </span>
+              <span className="download-button">{t("Acknowledgment")}</span>
+            </div>
+          }
+          //style={{ width: "100px" }}
+          onClick={handleDownloadPdf}
+        />
+        {/* <BannerPicker t={t} data={mutation2.data} isSuccess={mutation2.isSuccess} isLoading={(mutation2.isIdle || mutation2.isLoading)} />
       {(mutation2.isSuccess) && <CardText>{!isDirectRenewal?t("TL_FILE_TRADE_RESPONSE"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText>}
       {(!mutation2.isSuccess) && <CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>}
       {!isEditBirth && mutation2.isSuccess && <SubmitBar label={t("TL_DOWNLOAD_ACK_FORM")} onSubmit={handleDownloadPdf} />}
@@ -198,23 +200,19 @@ const MarriageAcknowledgement = ({ data, onSuccess, userType, isEditBirth = fals
       <Link to={`/digit-ui/citizen`}>
         <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
       </Link> */}
-        </Card>
-      );
-    } else {
-      return (
-
-        <Card>
-          <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={mutation?.isLoading} />
-          {/* {<CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>} */}
-          <Link to={`/digit-ui/citizen`}>
-            <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
-          </Link>
-        </Card>
-
-
-      );
-    }
-
+      </Card>
+    );
+  } else {
+    return (
+      <Card>
+        <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={mutation?.isLoading} />
+        {/* {<CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>} */}
+        <Link to={`/digit-ui/citizen`}>
+          <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
+        </Link>
+      </Card>
+    );
+  }
 };
 
 export default MarriageAcknowledgement;

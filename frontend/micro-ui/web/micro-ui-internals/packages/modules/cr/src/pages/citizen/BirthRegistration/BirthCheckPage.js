@@ -1,16 +1,6 @@
-import {
-  Card,
-  CardLabel,
-  CardSubHeader,
-  CardText,
-  CitizenInfoLabel,
-  LinkButton,
-  Row,
-  StatusTable,
-  SubmitBar,
-  BackButton,
-} from "@egovernments/digit-ui-react-components";
-import React from "react";
+import {  Card,  CardLabel,  CardSubHeader,  CardText,  CitizenInfoLabel,
+  LinkButton,  Row,  StatusTable,  SubmitBar,  BackButton,  CheckBox } from "@egovernments/digit-ui-react-components";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useRouteMatch } from "react-router-dom";
 //import TLDocument from "../../../pageComponents/TLDocumets";
@@ -42,7 +32,6 @@ const getPath = (path, params) => {
 };
 
 const BirthCheckPage = ({ onSubmit, value, userType }) => {
-  let isEdit = window.location.href.includes("renew-trade");
   const { t } = useTranslation();
   const history = useHistory();
   const match = useRouteMatch();
@@ -94,7 +83,25 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
       return null;
     }
   };
+  const [isInitialRender, setIsInitialRender] = useState(true);
+  const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(false);
 
+  // useEffect(() => {
+  //   if (isInitialRender) {
+  //     if (formData?.InitiatorinfoDetails?.isInitiatorDeclaration != null) {
+  //       setIsInitialRender(false);
+  //       setisInitiatorDeclaration(formData?.InitiatorinfoDetails?.isInitiatorDeclaration);
+  //     }
+  //   }
+  // }, [isInitialRender]);
+
+  function setDeclarationInfo(e) {
+    if (e.target.checked == false) {
+      setisInitiatorDeclaration(e.target.checked);
+    } else {
+      setisInitiatorDeclaration(e.target.checked);
+    }
+  }
   return (
     <React.Fragment>
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
@@ -540,11 +547,26 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
 
         <div className="row">
           <div className="col-md-12">
-            <h1 className="headingh1">{/* <span style={{ background: "#fff", padding: "0 10px" }}>                
-                </span> */}</h1>
+            <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
+            </h1>
           </div>
         </div>
-        <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} />
+
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-12">
+              <CheckBox
+                label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
+                onChange={setDeclarationInfo}
+                value={isInitiatorDeclaration}
+                checked={isInitiatorDeclaration}
+                // disable={isDisableEdit}
+              />
+            </div>
+          </div>
+        </div>
+        <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} isDisabled={!initiatorNameEn} />
       </Card>
     </React.Fragment>
   );

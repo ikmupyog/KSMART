@@ -33,3 +33,6 @@ export const DEATH_CORRECTION_FIELD_NAMES = {
     GENDER: "GENDER"
 }
 
+export const STATE_CODE= {
+    KL:"kl"
+}

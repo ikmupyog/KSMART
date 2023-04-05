@@ -21,14 +21,14 @@ const Urls = {
   Authenticate: "/user/oauth/token",
   RegisterUser: "/user/citizen/_create",
   ChangePassword: "/user/password/nologin/_update",
-  ChangePassword1: "/user/password/_update", 
+  ChangePassword1: "/user/password/_update",
   UserProfileUpdate: "/user/profile/_update",
   EmployeeSearch: "/egov-hrms/employees/_search",
 
   InboxSearch: "/inbox/v1/_search",
 
   UserSearch: "/user/_search",
-  UserLogout : "/user/_logout",
+  UserLogout: "/user/_logout",
 
   Shortener: "/egov-url-shortening/shortener",
 
@@ -68,7 +68,7 @@ const Urls = {
     assessment_create: "/property-services/assessment/_create",
     assessment_search: "/property-services/assessment/_search",
     payment_search: "/collection-services/payments/PT/_search",
-    pt_calculate_mutation: "/pt-calculator-v2/propertytax/mutation/_calculate"
+    pt_calculate_mutation: "/pt-calculator-v2/propertytax/mutation/_calculate",
   },
 
   dss: {
@@ -101,56 +101,56 @@ const Urls = {
     download_pdf: "/egov-pdf/download/TL/",
     update: "/tl-services/v1/_update",
     billingslab: "/tl-calculator/billingslab/_search",
-    createpde:"/tl-services/pde/_create",
-    searchpde:"/tl-services/pde/_search",
-    updatepde:"/tl-services/pde/_update",
+    createpde: "/tl-services/pde/_create",
+    searchpde: "/tl-services/pde/_search",
+    updatepde: "/tl-services/pde/_update",
     updatepdewf: "/tl-services/pde/_updatewf",
     createcorrection: "/tl-services/correction/_create",
   },
   cr: {
     create: "/birth-services/cr/createbirth",
-    search:"/birth-services/cr/searchbirth",
-    adoption_search:'/birth-services/cr/searchadoption',
-    adoption_update:'/birth-services/cr/updateadoption',
-    update:"/birth-services/cr/updatebirth",   
+    search: "/birth-services/cr/searchbirth",
+    adoption_search: "/birth-services/cr/searchadoption",
+    adoption_update: "/birth-services/cr/updateadoption",
+    update: "/birth-services/cr/updatebirth",
     download_pdf: "/egov-pdf/download/CR/",
-    registry_download: "/birth-services/cr/registry/_download", 
+    registry_download: "/birth-services/cr/registry/_download",
     registry_search_birth: "/birth-services/cr/registry/_search",
-    create_adoption:'/birth-services/cr/createadoption',
-    correct_update: ''    
+    create_adoption: "/birth-services/cr/createadoption",
+    correct_update: "",
   },
   crNAC: {
     create: "/birth-services/cr/createnac",
     // search:"/birth-services/cr/searchbirth",
     // adoption_search:'/birth-services/cr/searchadoption',
     // adoption_update:'/birth-services/cr/updateadoption',
-    // update:"/birth-services/cr/updatebirth",   
+    // update:"/birth-services/cr/updatebirth",
     // download_pdf: "/egov-pdf/download/CR/",
-    // registry_download: "/birth-services/cr/registry/_download", 
+    // registry_download: "/birth-services/cr/registry/_download",
     // registry_search_birth: "/birth-services/cr/registry/_search",
-    // create_adoption:'/birth-services/cr/createadoption'    
+    // create_adoption:'/birth-services/cr/createadoption'
   },
   crstillbirth: {
     create: "/birth-services/cr/createstillbirth",
-    search:"/birth-services/cr/searchstillbirth",
-    update:"/birth-services/cr/updatestillbirth",  
+    search: "/birth-services/cr/searchstillbirth",
+    update: "/birth-services/cr/updatestillbirth",
   },
   crnacbirth: {
     create: "/birth-services/cr/createnac",
   },
   crbornoutsideindiabirth: {
     create: "/birth-services/cr/createbornoutside",
-    search:"/birth-services/cr/searchbornoutside",
-    update:"/birth-services/cr/updatebornoutside",  
+    search: "/birth-services/cr/searchbornoutside",
+    update: "/birth-services/cr/updatebornoutside",
   },
   crabandonedbirth: {
-    create: "/birth-services/cr/createabandonedbirth",
-    search:"/birth-services/cr/searchbornoutside",
-    update:"/birth-services/cr/updatebornoutside",  
+    create: "/birth-services/cr/createabandoned",
+    search: "/birth-services/cr/searchbornoutside",
+    update: "/birth-services/cr/updatebornoutside",
   },
   crnacdeath: {
-    create : "/death-services/v1/deathdetails/_createdeathnac",
-    update : "/death-services/v1/deathdetails/_updatedeathnac",
+    create: "/death-services/v1/deathdetails/_createdeathnac",
+    update: "/death-services/v1/deathdetails/_updatedeathnac",
   },
   crdeath: {
     create: "/death-services/v1/deathdetails/_createdeath ",
@@ -161,10 +161,10 @@ const Urls = {
     registry_download: "/death-services/v1/deathregistry/_downloaddeath",
   },
   crmarriage: {
-    create: "/birth-services/cr/createbirth",
-    search:"/marriage-services/v1/marriagedetails/search",
-    update:"/birth-services/cr/updatebirth",  
-    registry_search_marriage:"/marriage-services/v1/marriagedetails/_searchregistry",
+    create: "/marriage-services/v1/marriagedetails/_createmarriage",
+    search: "/marriage-services/v1/marriagedetails/_searchmarriage",
+    update: "/marriage-services/v1/marriagedetails/_updatemarriage",
+    registry_search_marriage: "/marriage-services/v1/marriagedetails/_searchregistry",
   },
   dfm: {
     create: "/filemgmnt/v1/applicantservices/_create",
@@ -208,7 +208,7 @@ const Urls = {
 
   ws: {
     water_search: "/ws-services/wc/_search",
-    sewarage_search : "/sw-services/swc/_search",
+    sewarage_search: "/sw-services/swc/_search",
   },
 
   engagement: {
@@ -224,12 +224,12 @@ const Urls = {
       search: "/egov-survey-services/egov-ss/survey/_search",
       delete: "/egov-survey-services/egov-ss/survey/_delete",
       submitResponse: "/egov-survey-services/egov-ss/survey/response/_submit",
-      showResults: "/egov-survey-services/egov-ss/survey/response/_results"
-    }
+      showResults: "/egov-survey-services/egov-ss/survey/response/_results",
+    },
   },
 
   noc: {
-    nocSearch: "/noc-services/v1/noc/_search"
+    nocSearch: "/noc-services/v1/noc/_search",
   },
 };
 
