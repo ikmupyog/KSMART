@@ -680,3 +680,102 @@ serviceMaps:
       - jsonPath: $.deathCorrection.*.InformationDeathCorrection.TenantId
 
       - jsonPath: $.deathCorrection.*.AddressBirthDetails.PermanentAddrTypeId
+
+    # DEATH NAC  SAVE Rakhi S on 04.04.2023
+  - version: 1.0
+    description: Persists death reporting form details in  eg_death_nac_registry,eg_death_address_registry  table by rakhi s ikm on 04.04.2023
+    fromTopic: save-deathnacregistry-topic
+    isTransaction: true
+    queryMaps:
+    - query: INSERT INTO eg_death_nac_registry(id, tenantid, dateofdeath, deceased_firstname_en,
+          deceased_firstname_ml, deceased_middlename_en, deceased_middlename_ml, deceased_lastname_en, deceased_lastname_ml,
+          deceased_aadhar_number, deceased_gender, death_place, death_place_inst_type, death_place_inst_id,
+          vehicle_hospital_en, vehicle_fromplace_ml,
+          vehicle_fromplace_en, vehicle_toplace_ml, vehicle_toplace_en, vehicle_number, vehicle_first_halt,
+          vehicle_first_halt_ml, death_place_ward_id, death_place_locality_en,
+          death_place_locality_ml, death_place_street_en, death_place_street_ml,
+          death_home_locality_en, death_home_locality_ml, death_home_street_en, death_home_street_ml,
+          death_home_housename_en, death_home_housename_ml, death_home_postoffice_id, death_home_pincode,
+          death_home_ward, place_of_burial_en, father_name_en, father_name_ml, father_aadharno,
+          mother_name_en, mother_name_ml, mother_aadharno, spouse_unavailable, spouse_type,
+          spouse_name_en, spouse_name_ml, spouse_aadhaar, applicant_name, applicant_aadhar_no,
+          applicant_relation, applicant_address, applicant_mobile_no, applicant_email, status,
+          created_by, createdtime, lastmodifiedby, lastmodifiedtime, workflowcode, businessservice,
+          action, comment, assignee, appl_type, ack_no, application_date, funcion_uid,
+          certificate_no, certificate_date, certificate_no_id)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+      basePath: deathNACDtls.*
+      jsonMaps:
+      - jsonPath: $.deathNACDtls.*.InformationDeath.Id
+      - jsonPath: $.deathNACDtls.*.InformationDeath.TenantId
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DateOfDeath
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeceasedFirstNameEn
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeceasedFirstNameMl
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeceasedMiddleNameEn
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeceasedMiddleNameMl
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeceasedLastNameEn
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeceasedLastNameMl
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeceasedAadharNumber
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeceasedGender
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlace
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceType
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceInstId
+      - jsonPath: $.deathNACDtls.*.InformationDeath.VehicleHospitalEn
+      - jsonPath: $.deathNACDtls.*.InformationDeath.VehicleFromplaceMl
+      - jsonPath: $.deathNACDtls.*.InformationDeath.VehicleFromplaceEn
+      - jsonPath: $.deathNACDtls.*.InformationDeath.VehicleToPlaceMl
+      - jsonPath: $.deathNACDtls.*.InformationDeath.VehicleToPlaceEn
+      - jsonPath: $.deathNACDtls.*.InformationDeath.VehicleNumber
+      - jsonPath: $.deathNACDtls.*.InformationDeath.VehicleFirstHaltEn
+      - jsonPath: $.deathNACDtls.*.InformationDeath.VehicleFirstHaltMl
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceWardId
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceLocalityEn
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceLocalityMl
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceStreetEn
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceStreetMl
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceHomeLocalityEn
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceHomeLocalityMl
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceHomeStreetNameEn
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceHomeStreetNameMl
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceHomeHoueNameEn
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceHomeHoueNameMl
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceHomePostofficeId
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceHomePincode
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceHomeWardId
+      - jsonPath: $.deathNACDtls.*.InformationDeath.PlaceOfBurialEn
+      - jsonPath: $.deathNACDtls.*.InformationDeath.FatherNameEn
+      - jsonPath: $.deathNACDtls.*.InformationDeath.FatherNameMl
+      - jsonPath: $.deathNACDtls.*.InformationDeath.FatherAadharNo
+      - jsonPath: $.deathNACDtls.*.InformationDeath.MotherNameEn
+      - jsonPath: $.deathNACDtls.*.InformationDeath.MotherNameMl
+      - jsonPath: $.deathNACDtls.*.InformationDeath.MotherAadharNo
+      - jsonPath: $.deathNACDtls.*.InformationDeath.SpouseUnavailable
+      - jsonPath: $.deathNACDtls.*.InformationDeath.SpouseType
+      - jsonPath: $.deathNACDtls.*.InformationDeath.SpouseNameEn
+      - jsonPath: $.deathNACDtls.*.InformationDeath.SpouseNameML
+      - jsonPath: $.deathNACDtls.*.InformationDeath.SpouseAadhaar
+      - jsonPath: $.deathNACDtls.*.DeathApplicantDtls.ApplicantName
+      - jsonPath: $.deathNACDtls.*.DeathApplicantDtls.ApplicantAadhaarNo
+      - jsonPath: $.deathNACDtls.*.DeathApplicantDtls.ApplicantRelation
+      - jsonPath: $.deathNACDtls.*.DeathApplicantDtls.ApplicantAddress
+      - jsonPath: $.deathNACDtls.*.DeathApplicantDtls.ApplicantMobileNo
+      - jsonPath: $.deathNACDtls.*.DeathApplicantDtls.ApplicantEmail
+      - jsonPath: $.deathNACDtls.*.applicationStatus
+      - jsonPath: $.deathNACDtls.*.AuditDetails.createdBy      
+      - jsonPath: $.deathNACDtls.*.AuditDetails.createdTime
+      - jsonPath: $.deathNACDtls.*.AuditDetails.lastModifiedBy
+      - jsonPath: $.deathNACDtls.*.AuditDetails.lastModifiedTime
+      - jsonPath: $.deathNACDtls.*.workflowcode
+      - jsonPath: $.deathNACDtls.*.businessService
+      - jsonPath: $.deathNACDtls.*.action
+      - jsonPath: $.deathNACDtls.*.comment
+      - jsonPath: $.deathNACDtls.*.assignuser
+      - jsonPath: $.deathNACDtls.*.applicationType
+      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathACKNo
+      - jsonPath: $.deathNACDtls.*.InformationDeath.ApplicationDate
+      - jsonPath: $.deathNACDtls.*.InformationDeath.funcionUID
+      - jsonPath: $.deathNACDtls.*.InformationDeath.certificateNo
+      - jsonPath: $.deathNACDtls.*.InformationDeath.certificateDate
+      - jsonPath: $.deathNACDtls.*.InformationDeath.certificateNoId
+  

@@ -11,6 +11,8 @@ import org.ksmart.death.deathregistry.kafka.producer.DeathRegistryProducer;
 import org.ksmart.death.deathregistry.repository.DeathRegistryRepository;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryCriteria;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryDtl;
+import org.ksmart.death.deathregistry.web.models.DeathRegistryNACDtls;
+import org.ksmart.death.deathregistry.web.models.DeathRegistryNACRequest;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryRequest;
 import org.ksmart.death.deathregistry.web.models.certmodel.DeathCertRequest;
 import org.ksmart.death.deathregistry.web.models.certmodel.DeathCertificate;
@@ -180,37 +182,39 @@ public class DeathRegistryService {
   public List<DeathRegistryCorrectionDtls> update(DeathRegistryCorrectionRequest request) {
 
     String regNo = request.getDeathCorrection().get(0).getDeathCorrectionBasicInfo().getRegistrationNo();
-
     String tenantId = request.getDeathCorrection().get(0).getDeathCorrectionBasicInfo().getTenantId();
-
-   // System.out.println("regNo"+regNo);
-
-    // try {
-    //         ObjectMapper mapper = new ObjectMapper();
-    //         Object obj = request;
-    //         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-    //        System.out.println("RegistryUpdate "+ mapper.writeValueAsString(obj));
-    // }catch(Exception e) {
-    //     log.error("Exception while fetching from searcher: ",e);
-    // }
-     List<DeathRegistryCorrectionDtls> searchResult = repository.getDeathCorrectionApplication(DeathRegistryCriteria
+    List<DeathRegistryCorrectionDtls> searchResult = repository.getDeathCorrectionApplication(DeathRegistryCriteria
                                                                            .builder()
                                                                            .tenantId(tenantId)
                                                                            .registrationNo(regNo)
                                                                            .build());
 
      request.getDeathCorrection().get(0).getDeathCorrectionBasicInfo().setId(searchResult.get(0).getDeathCorrectionBasicInfo().getId()) ;                                                       
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            Object obj = request;
-            mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-           System.out.println("RegistryUpdate "+ mapper.writeValueAsString(obj));
-    }catch(Exception e) {
-        log.error("Exception while fetching from searcher: ",e);
-    }
+     
      producer.push(deathConfig.getUpdateDeathRegistryTopic(), request);
-
      return request.getDeathCorrection();
    }
+
+   //Rakhi S ikm on 04.04.2023 Registry NAC  Create
+   public List<DeathRegistryNACDtls> createNAC(DeathRegistryNACRequest request) { 
+     enrichmentService.enrichCreateNAC(request);
+    //  enrichmentService.setRegistrationNumberNAC(request); 
+     enrichmentService.setCertificateNumberNAC(request);   
+     producer.push(deathConfig.getSaveDeathRegistryNACTopic(), request);
+     return request.getDeathNACDtls();
+ }
     
 }
+ //           /********************************************* */
+
+    //        try {
+    //         ObjectMapper mapper = new ObjectMapper();
+    //         Object obj = request;
+    //         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+    //        System.out.println("rakhiNAC "+ mapper.writeValueAsString(obj));
+    // }catch(Exception e) {
+    //     log.error("Exception while fetching from searcher: ",e);
+    // }
+
+    
+    // /********************************************** */

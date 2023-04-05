@@ -25,6 +25,8 @@ import org.ksmart.death.deathregistry.web.models.AuditDetails;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryDtl;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryRequest;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryInformantDtls;
+import org.ksmart.death.deathregistry.web.models.DeathRegistryNACDtls;
+import org.ksmart.death.deathregistry.web.models.DeathRegistryNACRequest;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.request.User;
 import org.egov.tracer.model.CustomException;
@@ -222,4 +224,66 @@ public class DeathRegistryEnrichment implements BaseEnrichment{
 
                 });
     }
+
+    //Rakhi S ikm on 04.04.2023
+    public void enrichCreateNAC(DeathRegistryNACRequest request) {
+
+        RequestInfo requestInfo = request.getRequestInfo();
+        User userInfo = requestInfo.getUserInfo();
+        
+        AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
+
+        request.getDeathNACDtls()
+               .forEach(deathdtls -> {
+                deathdtls.getDeathBasicInfo().setId(UUID.randomUUID().toString());
+                deathdtls.setDeathAuditDetails(auditDetails);                 
+                deathdtls.getDeathAddressInfo().setPresentAddrId(UUID.randomUUID().toString());
+                deathdtls.getDeathAddressInfo().setPermanentAddrId(UUID.randomUUID().toString());                
+                });
+    }
+    //Rakhi S ikm on 04.04.2023
+    public void setRegistrationNumberNAC(DeathRegistryNACRequest request) {
+        RequestInfo requestInfo = request.getRequestInfo();
+        List<DeathRegistryNACDtls> deathDtls = request.getDeathNACDtls();
+        Long currentTime = Long.valueOf(System.currentTimeMillis());
+        String tenantId = deathDtls.get(0).getDeathBasicInfo().getTenantId();
+        
+        List<String> ackNoDetails = idGenRepository.getIdList(requestInfo,
+                                    tenantId,
+                                    config.getDeathRegNumberIdName(),
+                                    request.getDeathNACDtls().get(0).getDeathBasicInfo().getFuncionUID(),
+                                    "REGN",deathDtls.size());
+
+        ListIterator<String> itr = ackNoDetails.listIterator();
+        request.getDeathNACDtls()
+                .forEach(deathdtls -> {
+                    deathdtls.getDeathBasicInfo().setRegistrationNo(itr.next());
+                    deathdtls.getDeathBasicInfo().setRegistrationNoID(deathApplnUtil.setSeqId(ackNoDetails));
+                    deathdtls.getDeathBasicInfo().setRegistrationDate(currentTime);
+
+                });
+    }
+    //Rakhi S ikm on 04.04.2023
+    public void setCertificateNumberNAC(DeathRegistryNACRequest request) {
+        RequestInfo requestInfo = request.getRequestInfo();
+        List<DeathRegistryNACDtls> deathDtls = request.getDeathNACDtls();
+        Long currentTime = Long.valueOf(System.currentTimeMillis());
+        String tenantId = deathDtls.get(0).getDeathBasicInfo().getTenantId();
+        
+        List<String> ackNoDetails = idGenRepository.getIdList(requestInfo,
+                                    tenantId,
+                                    config.getDeathCertNumberIdName(),
+                                    request.getDeathNACDtls().get(0).getDeathBasicInfo().getFuncionUID(),
+                                    "CERT",deathDtls.size());
+
+        ListIterator<String> itr = ackNoDetails.listIterator();
+        request.getDeathNACDtls()
+                .forEach(deathdtls -> {
+                    deathdtls.getDeathBasicInfo().setCertificateNo(itr.next());
+                    deathdtls.getDeathBasicInfo().setCertificateNoId(deathApplnUtil.setSeqId(ackNoDetails));
+                    deathdtls.getDeathBasicInfo().setCertificateDate(currentTime);
+
+                });
+    }
+
 }

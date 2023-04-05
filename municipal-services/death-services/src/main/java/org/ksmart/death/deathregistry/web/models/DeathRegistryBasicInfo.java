@@ -423,4 +423,55 @@ public class DeathRegistryBasicInfo {
 
     @JsonProperty("funcionUID")
     private String funcionUID;
+
+    //Details for NAC only Rakhi S on 04.04.2023
+   @JsonProperty("SpouseType")
+   private String spouseType ;
+
+   @JsonProperty("SpouseNameEn")
+   private String spouseNameEn ;
+
+   @JsonProperty("SpouseNameML")
+   private String spouseNameML ;
+
+   @JsonProperty("FatherNameEn")
+   private String fatherNameEn ;
+
+   @JsonProperty("FatherNameMl")
+   private String fatherNameMl ;
+   
+   @JsonProperty("MotherNameEn")
+   private String motherNameEn;   
+   
+   @JsonProperty("MotherNameMl")
+   private String motherNameMl;
+
+   @Size(max = 12)
+   @JsonProperty("SpouseAadhaar")
+   private String spouseAadhaar;
+   
+   @Size(max = 12)
+   @JsonProperty("FatherAadharNo")
+   private String fatherAadharNo;
+
+   @Size(max = 12)
+   @JsonProperty("MotherAadharNo")
+   private String motherAadharNo;
+   
+   @JsonProperty("SpouseUnavailable")
+   private boolean spouseUnavailable ;
+
+   @JsonProperty("FatherUnavailable")
+   private boolean fatherUnavailable ;
+
+   @JsonProperty("MotherUnavailable")
+   private boolean motherUnavailable;
+
+   @JsonProperty("DeathPlaceInstitutionNameEn")
+   private String  deathPlaceInstitutionNameEn ;
+
+   @JsonProperty("DeathPlaceInstitutionNameMl")
+   private String  deathPlaceInstitutionNameMl ;
+
+   //Details for NAC End
 }

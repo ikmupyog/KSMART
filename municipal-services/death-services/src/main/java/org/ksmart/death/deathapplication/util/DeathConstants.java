@@ -147,5 +147,7 @@ public class DeathConstants {
     
     //Rakhi S  on 02.04.2023
     public static final String INSTITUTION_NAME = "institutionList";
+    //Rakhi S  on 04.04.2023
+    public static final String APPLICATION_TYPE = "nac";
 
 }

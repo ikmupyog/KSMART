@@ -104,5 +104,10 @@ public class DeathRegistryConfiguration {
 
     @Value("${egov.idgen.deathapplncertno.name}")
     private String deathCertNumberIdName;
+
+
+      //Persister Config  RAkhi S ikm on 04.04.2023    
+      @Value("${persister.save.deathnacregistry.topic}")
+      private String saveDeathRegistryNACTopic;
 	
 }

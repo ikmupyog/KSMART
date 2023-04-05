@@ -7,6 +7,9 @@ import org.ksmart.death.common.contract.RequestInfoWrapper;
 import org.ksmart.death.deathregistry.service.DeathRegistryService;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryCriteria;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryDtl;
+import org.ksmart.death.deathregistry.web.models.DeathRegistryNACDtls;
+import org.ksmart.death.deathregistry.web.models.DeathRegistryNACRequest;
+import org.ksmart.death.deathregistry.web.models.DeathRegistryNACResponse;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryRequest;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryResponse;
 import org.ksmart.death.deathregistry.web.models.certmodel.DeathCertResponse;
@@ -66,22 +69,7 @@ public class DeathRegistryController {
                                             .deathCertificateDtls(deathDetails)
                                             .build();
         return ResponseEntity.ok(response);
-    }
-        // //Update Jasmine 07.02.2023
-        // @PostMapping("/deathregistry/_updatedeath")
-
-        // public ResponseEntity<DeathRegistryResponse> update(@RequestBody DeathRegistryRequest request) {
-    
-        //     List<DeathRegistryDtl> deathDetails = deathService.update(request);
-    
-        //     DeathRegistryResponse response = DeathRegistryResponse
-        //                                         .builder()
-        //                                         .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))
-        //                                         .deathCertificateDtls(deathDetails)
-        //                                         .build();
-        //     return ResponseEntity.ok(response);
-        // }
-    
+    }    
         //Search  Jasmine 08.02.2023
         @PostMapping("/deathregistry/_searchdeath")
     
@@ -104,7 +92,6 @@ public class DeathRegistryController {
                                                     @Valid @ModelAttribute DeathRegistryCriteria criteria){
 
     List<DeathCertificate> deathCertSearch = deathService.searchCertificate(criteria); 
-        
     DeathCertResponse response ;
     if (null != deathCertSearch && !deathCertSearch.isEmpty()){
         if(deathCertSearch.get(0).getCounter()<=0){
@@ -144,19 +131,9 @@ public class DeathRegistryController {
     //Update Jasmine 06.03.2023
     @PostMapping("/deathregistry/_updatedeath")
 
-    public ResponseEntity<DeathRegistryCorrectionResponse> update(@RequestBody DeathRegistryCorrectionRequest request) {
-        
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            Object obj = request;
-            mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-           System.out.println("JasmineRegistryCorrection "+ mapper.writeValueAsString(obj));
-    }catch(Exception e) {
-        log.error("Exception while fetching from searcher: ",e);
-    }
-
-        List<DeathRegistryCorrectionDtls> deathDetails = deathService.update(request);
-        
+    public ResponseEntity<DeathRegistryCorrectionResponse> update(@RequestBody DeathRegistryCorrectionRequest request) {       
+       
+        List<DeathRegistryCorrectionDtls> deathDetails = deathService.update(request);        
         DeathRegistryCorrectionResponse response = DeathRegistryCorrectionResponse
                                                     .builder()
                                                     .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))
@@ -165,4 +142,16 @@ public class DeathRegistryController {
         return ResponseEntity.ok(response);
     }
     
+     //Rakhi S on 04.04.2023 - Death Registry NAC Create Controller 
+     @PostMapping("/crdeathregistry/_createdeathnac")
+     public ResponseEntity<DeathRegistryNACResponse> createNAC(@Valid @RequestBody DeathRegistryNACRequest request) {  
+         List<DeathRegistryNACDtls> deathDetails = deathService.createNAC(request);
+ 
+         DeathRegistryNACResponse response = DeathRegistryNACResponse
+                                             .builder()
+                                             .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
+                                             .deathNACDtls(deathDetails)
+                                             .build();
+         return ResponseEntity.ok(response);
+     }   
 }

@@ -24,6 +24,8 @@ import org.ksmart.death.deathregistry.service.DeathRegistryService;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryCorrectionDtls;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryCorrectionRequest;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryDtl;
+import org.ksmart.death.deathregistry.web.models.DeathRegistryNACDtls;
+import org.ksmart.death.deathregistry.web.models.DeathRegistryNACRequest;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryRequest;
 import org.ksmart.death.utils.ResponseInfoFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -223,13 +225,13 @@ public class DeathApplnController {
        public ResponseEntity<DeathNACResponse> update(@RequestBody DeathNACRequest request) {
     
            List<DeathNACDtls> deathDetails = deathService.updateNAC(request);
-        //    String status=request.getDeathNACDtls().get(0).getApplicationStatus();
-        //    String applicationType =request.getDeathNACDtls().get(0).getApplicationType();
+           String status=request.getDeathNACDtls().get(0).getApplicationStatus();
+           String applicationType =request.getDeathNACDtls().get(0).getApplicationType();
    
-        //    if (status.equals(DeathConstants.WORKFLOW_STATUS_APPROVED) &&  request.getDeathNACDtls().get(0).getApplicationType().equals(DeathConstants.APPLICATION_NEW)){         
-        //        DeathRegistryRequest registryRequest = deathRegistryRequestService.createRegistryAbandonedRequest(request);
-        //        List<DeathRegistryDtl> registryDeathDetails =  deathRegistryService.create(registryRequest);
-        //    }  
+        if (status.equals(DeathConstants.WORKFLOW_STATUS_APPROVED) &&  request.getDeathNACDtls().get(0).getApplicationType().equals(DeathConstants.APPLICATION_TYPE)){         
+            DeathRegistryNACRequest registryRequest = deathRegistryRequestService.createRegistryNACRequest(request);
+            List<DeathRegistryNACDtls> registryDeathDetails =  deathRegistryService.createNAC(registryRequest);
+        }
    
         DeathNACResponse response = DeathNACResponse
                             .builder()
