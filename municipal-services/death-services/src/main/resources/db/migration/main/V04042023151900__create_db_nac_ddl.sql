@@ -1,6 +1,6 @@
 
 
-CREATE TABLE IF NOT EXISTS eg_death_nac_registry
+CREATE TABLE IF NOT EXISTS public.eg_death_nac_registry
 (
     id character varying(64)  NOT NULL, 
     tenantid character varying(50)  NOT NULL,
