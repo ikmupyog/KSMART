@@ -31,15 +31,12 @@ export const initializeBirthInclusionObject = (birthInclusionDocData, selectedDa
 };
 export const initializedDeathCorrectionObject = (deathCorrectionDocData, selectedData) => {
   let formObj = {};
-  console.log("correction docs==",deathCorrectionDocData);
   for (let field_key in DEATH_CORRECTION_FIELD_NAMES) {
     const filteredData = deathCorrectionDocData?.filter((item) => item.CorrectionField === field_key);
     let correctionDocsData = deathCorrectionFilterFieldsObj[field_key]?.(selectedData, filteredData);
-    console.log("filteredData", selectedData, filteredData);
     let tempObj = { ...correctionDocsData, isDisabled: true, isEditable: false, isFocused: false };
     Object.assign(formObj, { [field_key]: tempObj });
   }
-  console.log("returned formObj==", formObj);
   return formObj;
 };
 

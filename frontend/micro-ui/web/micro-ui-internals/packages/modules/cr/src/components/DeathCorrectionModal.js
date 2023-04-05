@@ -21,12 +21,10 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
   let acceptFormat = ".jpg,.png,.pdf,.jpeg";
   const handleUploadDoc = (file, docType) => {
     let tempObj = { [docType]: [...file] };
-    console.log("uploadedd===files--", docType, [...file], tempObj);
     setUploadDoc({ ...uploadDoc, ...tempObj });
   };
 
   function onDeleteown(e) {
-    console.log("onDelete",e);
     const removeindex = uploadedFiles.findIndex((element) => {
       return element.documentType === e;
     });
@@ -39,9 +37,7 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
   }
 
   function selectfile(e) {
-    console.log("select file===", e.target.files);
     let result = selectedConfig?.Documents?.filter((obj) => obj.DocumentId == e?.target?.id);
-    console.log("select file==22",result);
     setDocuploadedName(result[0].DocumentType);
     setDocuploadedId(e?.target?.id);
     setUploadedFile(null);
@@ -77,15 +73,12 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
               //   setUploadedFiles(tempfiles);
               //  // setUploadedFiles(!!uploadedFiles.splice(removeindex, 1))
               // }
-
-              console.log("to change stATUS==",docuploadedId);
               // const changeStatusIndex = formDetails?.findIndex((element) => {
               //   return element.DocumentId === docuploadedId;
               // });
               
               // formDetails?.[changeStatusIndex]?.isUploaded = false;
               // formDetails?.[changeStatusIndex]?.uploadedDocId = null;
-              console.log("tempfiles===",temp);
               uploadedFiles.push(temp);
               setUploadedFile(response?.data?.files[0]?.fileStoreId);
               // formDetails.isUploaded = true;
@@ -100,7 +93,6 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
   }, [file, uploadedFiles]);
 
   const InclusionCard = ({ data }) => {
-    console.log("inclusioncards--doc--", uploadDoc, data);
     return (
       <div style={{ padding: ".5rem, 0,.5rem, 0" }}>
         <h1 style={{ fontWeight: "bold" }}>{data.DocumentType}</h1>
@@ -111,7 +103,6 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
           // onUpload={handleFileEvent}
           onUpload={(doc) => handleUploadDoc(doc?.target?.files,data.DocumentType)}
           removeTargetedFile={(data,item) => {
-            console.log("delete call",data,item);
             setUploadDoc({});
             }}
           uploadedFiles={uploadDoc?.[data.DocumentType]?.length > 0 ? [uploadDoc?.[data.DocumentType]?.[0]?.name] : []} 

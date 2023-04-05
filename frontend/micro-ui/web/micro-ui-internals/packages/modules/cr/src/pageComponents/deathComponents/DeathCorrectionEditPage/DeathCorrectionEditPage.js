@@ -797,7 +797,7 @@ const onUploadDocSubmit = async (fileData) => {
                 <CardLabel>{t("CR_GENDER")}</CardLabel>
                 <TextInput
                   t={t}
-                  // inputRef={register({})}
+                   // inputRef={register({})}
                   isMandatory={false}
                   type={"text"}
                   optionKey="i18nKey"

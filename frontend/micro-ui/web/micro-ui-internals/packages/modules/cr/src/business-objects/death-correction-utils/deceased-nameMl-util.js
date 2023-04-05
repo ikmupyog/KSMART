@@ -1,7 +1,4 @@
-
-
-export const getFatherDetailsbData = (selectedData, correctionData) => {
-    console.log("selectedData==123", selectedData, correctionData);
+export const getFilteredDeceasedNameDataMl = (selectedData, correctionData) => {
     let filteredData = {};
     if (selectedData?.registerDeathPlace?.placeofdeathid === "HOSPITAL") {
       filteredData = correctionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
@@ -10,14 +7,9 @@ export const getFatherDetailsbData = (selectedData, correctionData) => {
     }
     //TODO need validation to check dob is null
     let childDobObj = {
-      curValue: selectedData?.dateofdeath && moment(selectedData?.dateofdeath).format("DD/MM/YYYY"),
+      curValue: selectedData?.InformationDeath?.DeceasedFirstNameEn,
       // changeCurValue: (value,data)=> _changeCurValue(value,data)
     };
-    let currentValue = { curValue: selectedData?.dateofdeath && moment(selectedData?.dateofdeath).format("DD/MM/YYYY") };
+    let currentValue = { curValue: {firstName: selectedData?.InformationDeath?.DeceasedFirstNameMl ,middleName: selectedData?.InformationDeath?.DeceasedMiddleNameMl,lastName:selectedData?.InformationDeath?.DeceasedLastNameMl}};
     return { ...filteredData, ...currentValue };
   };
-  
-  // const _changeCurValue = (value,data) =>{
-  //   return()
-  // }
-  
