@@ -40,7 +40,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
   // const [error, setError] = useState(null);
   // let acceptFormat = ".jpg,.png,.pdf,.jpeg"
 
-  const [uploadedFiles, setUploadedFiles] = useState(formData?.AbandonedBirthInformarDetails?.document? formData?.AbandonedDocumentUpload?.document: []);
+  const [uploadedFiles, setUploadedFiles] = useState(formData?.AbandonedBirthInformarDetails?.document? formData?.AbandonedBirthInformarDetails?.document: []);
   const [docuploadedId, setDocuploadedId] = useState();
   const [docuploadedName, setDocuploadedName] = useState();
   const [uploadedFile, setUploadedFile] = useState(formData?.AbandonedBirthInformarDetails?.documents?.ProofOfIdentity?.fileStoreId || null);
@@ -119,11 +119,17 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
     }
   } 
   function selectfile(e) {
+    console.log({e});
     let result = documentList.filter(obj => obj.code == e?.target?.id);
     setDocuploadedName(result[0].description);
     setDocuploadedId(e?.target?.id);
     setUploadedFile(null);
     setFile(e.target.files[0]);
+    console.log(uploadedFiles);  
+    // console.log(uploadedFile);  
+  
+
+
   }
   function onDeleteown(e) {
     const removeindex = uploadedFiles.findIndex(element => {
