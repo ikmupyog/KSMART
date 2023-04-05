@@ -144,7 +144,7 @@ const Urls = {
     update:"/birth-services/cr/updatebornoutside",  
   },
   crabandonedbirth: {
-    create: "/birth-services/cr/createbornoutside",
+    create: "/birth-services/cr/createabandonedbirth",
     search:"/birth-services/cr/searchbornoutside",
     update:"/birth-services/cr/updatebornoutside",  
   },
