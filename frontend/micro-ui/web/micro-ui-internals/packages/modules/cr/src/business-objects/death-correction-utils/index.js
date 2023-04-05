@@ -197,7 +197,6 @@ export const getFatherDetailsbData = (selectedData, correctionData) => {
     return { ...filteredData, ...currentValue };
   };
   export const getFilteredDeceasedFathersName = (selectedData, correctionData) => {
-    console.log("selectedData==dob---parms", selectedData, correctionData);
     let filteredData = {};
     if (selectedData?.registerDeathPlace?.placeofdeathid === "HOSPITAL") {
       filteredData = correctionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
@@ -213,7 +212,6 @@ export const getFatherDetailsbData = (selectedData, correctionData) => {
     return { ...filteredData, ...currentValue };
   };
   export const getFilteredDeceasedSpouseName = (selectedData, correctionData) => {
-    console.log("selectedData==dob---parms", selectedData, correctionData);
     let filteredData = {};
     if (selectedData?.registerDeathPlace?.placeofdeathid === "HOSPITAL") {
       filteredData = correctionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
@@ -229,7 +227,6 @@ export const getFatherDetailsbData = (selectedData, correctionData) => {
     return { ...filteredData, ...currentValue };
   };
   export const getFilteredDeceasedAddressEn = (selectedData, correctionData) => {
-    console.log("selectedData==dob---parms", selectedData, correctionData);
     let filteredData = {};
     if (selectedData?.registerDeathPlace?.placeofdeathid === "HOSPITAL") {
       filteredData = correctionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
@@ -248,7 +245,6 @@ export const getFatherDetailsbData = (selectedData, correctionData) => {
     return { ...filteredData, ...currentValue };
   };
   export const getFilteredDeceasedAddressMl = (selectedData, correctionData) => {
-    console.log("selectedData==dob---parms", selectedData, correctionData);
     let filteredData = {};
     if (selectedData?.registerDeathPlace?.placeofdeathid === "HOSPITAL") {
       filteredData = correctionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
