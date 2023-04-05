@@ -7,7 +7,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData,isEditBirth=fal
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
-  console.log(Digit.UserService.getUser().info);
+  // console.log(Digit.UserService.getUser().info);
   const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
   const {name:name,} =Digit.UserService.getUser().info ; // window.localStorage.getItem("user-info");
   const {mobileNumber:mobileNumber,} =Digit.UserService.getUser().info ; // window.localStorage.getItem("user-info");
@@ -182,7 +182,6 @@ const InitiatorDetails = ({ config, onSelect, userType, formData,isEditBirth=fal
     }
     if (initiatorAadhar != null || initiatorAadhar != "" || initiatorAadhar != undefined) {
       let adharLength = initiatorAadhar;
-      console.log(adharLength);
       if (adharLength.length < 12 || adharLength.length > 12) {
         validFlag = false;
         setinitiatorAadharError(true);
@@ -244,16 +243,16 @@ const InitiatorDetails = ({ config, onSelect, userType, formData,isEditBirth=fal
       });
     }
   };
-  console.log(formData);
   return (
     <React.Fragment>
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
 
       {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!isInitiatorDeclaration || !initiatorNameEn || !initiatorAadhar || !initiatorMobile
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!initiatorNameEn || !initiatorAadhar || !initiatorMobile
       }>
-        <div className="row">
+        {/* !isInitiatorDeclaration */}
+        {/* <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
               <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
@@ -273,7 +272,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData,isEditBirth=fal
               />
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="row">
           <div className="col-md-12">
@@ -285,7 +284,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData,isEditBirth=fal
 
         <div className="row">
           <div className="col-md-12">
-            <div className="col-md-4">
+            <div className="col-md-3">
               <CardLabel>{`${t("CR_RELATION")}`}</CardLabel>
               <TextInput
                 t={t}
@@ -300,7 +299,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData,isEditBirth=fal
               />
             </div>
 
-            <div className="col-md-4">
+            <div className="col-md-3">
               <CardLabel>
                 {`${t("CS_COMMON_AADHAAR")}`}
                 <span className="mandatorycss">*</span>
@@ -318,7 +317,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData,isEditBirth=fal
               />
             </div>
 
-            <div className="col-md-4">
+            <div className="col-md-3">
               <CardLabel>
                 {`${t("CR_INITIATOR_NAME")}`}
                 <span className="mandatorycss">*</span>
@@ -333,6 +332,23 @@ const InitiatorDetails = ({ config, onSelect, userType, formData,isEditBirth=fal
                 disable={isDisableEdit}
                 placeholder={`${t("CR_INITIATOR_NAME")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INITIATOR_NAME") })}
+              />
+            </div>
+            <div className="col-md-6">
+              <CardLabel>
+                {`${t("CR_MOBILE_NO")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                type={"number"}
+                optionKey="i18nKey"
+                name="initiatorMobile"
+                value={initiatorMobile}
+                onChange={setSelectinitiatorMobile}
+                disable={isDisableEdit}
+                placeholder={`${t("CR_MOBILE_NO")}`}
+                {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
               />
             </div>
           </div>
@@ -370,23 +386,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData,isEditBirth=fal
               </div>
             )}
 
-            <div className="col-md-6">
-              <CardLabel>
-                {`${t("CR_MOBILE_NO")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                t={t}
-                type={"number"}
-                optionKey="i18nKey"
-                name="initiatorMobile"
-                value={initiatorMobile}
-                onChange={setSelectinitiatorMobile}
-                disable={isDisableEdit}
-                placeholder={`${t("CR_MOBILE_NO")}`}
-                {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
-              />
-            </div>
+            
             {/* <div className="col-md-6">
               <CardLabel>{`${t("CR_INFORMER_ADDRESS")}`}</CardLabel>
               <TextArea
