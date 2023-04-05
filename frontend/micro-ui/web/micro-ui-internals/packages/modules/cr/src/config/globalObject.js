@@ -14,7 +14,7 @@ import {
   getFilteredDeceasedAddressMl,
   getFilteredDeceasedPlaceOfDeath,
   getFilteredDeceasedGender
-} from "../config/death-correction-utils";
+} from "../business-objects/death-correction-utils";
 
 export const initializeBirthInclusionObject = (birthInclusionDocData, selectedData) => {
   let formObj = {};
