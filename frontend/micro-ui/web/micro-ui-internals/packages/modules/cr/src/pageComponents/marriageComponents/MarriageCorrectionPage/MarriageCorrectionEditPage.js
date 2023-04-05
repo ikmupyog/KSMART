@@ -27,7 +27,6 @@ const MarriageCorrectionEditPage = ({ navigationData,cmbPlace,BirthCorrectionDoc
   const { t } = useTranslation();
   let formData = {};
   let validation = {};
-  // let BirthCorrectionDocuments = [];
   const stateId = Digit.ULBService.getStateId();
   const [showModal, setShowModal] = useState(false);
   const [uploadStatus, setUploadStatus] = useState({
