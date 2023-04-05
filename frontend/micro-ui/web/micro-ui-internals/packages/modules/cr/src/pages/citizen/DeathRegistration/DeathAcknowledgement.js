@@ -2,13 +2,13 @@ import { Banner, Card, LinkButton,  } from "@egovernments/digit-ui-react-compone
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { convertToDeathRegistration, convertToEditDeathRegistration } from "../../../utils";
+import { convertToDeathRegistration, convertToEditDeathRegistration } from "../../../utils/deathindex";
 import getPDFData from "../../../utils/getTLAcknowledgementData";
 
 const GetActionMessage = (props) => {
   const { t } = useTranslation();
   if (props.isSuccess) {
-    console.log(props.isSuccess);
+    // console.log(props.isSuccess);
     return t("CR_CREATE_SUCCESS_MSG");
   } else if (props.isLoading) {
     return !window.location.href.includes("renew-trade") || !window.location.href.includes("edit-application")
@@ -52,9 +52,9 @@ const DeathAcknowledgement = ({ data, onSuccess, userType }) => {
 
   const [isEditDeath, setIsEditDeath] = useState(sessionStorage.getItem("CR_DEATH_EDIT_FLAG")? true : false);
  
-  console.log("isEditDeath" + isEditDeath);
+  // console.log("isEditDeath" + isEditDeath);
   const mutation = Digit.Hooks.cr.useCivilRegistrationDeathAPI(tenantId, isEditDeath ? false : true );
-  console.log(mutation);
+  // console.log(mutation);
   // console.log("isEditDeath" + isEditDeath);
 
   // const mutation1 = Digit.Hooks.cr.useCivilRegistrationDeathAPI(

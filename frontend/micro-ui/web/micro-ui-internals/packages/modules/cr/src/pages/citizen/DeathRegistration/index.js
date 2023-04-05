@@ -16,7 +16,6 @@ const CreateDeathRegistration = ({ parentUrl }) => {
   const [params, setParams, clearParams] = isEditDeath ? Digit.Hooks.useSessionStorage("CR_DEATH_EDIT", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_DEATH", {});
 
   const stateId = Digit.ULBService.getStateId();
-  // let { data: newConfig, isLoading } = Digit.Hooks.tl.useMDMS.getFormConfig(stateId, {});
   let config = [];
   let { data: newConfig, isLoading } = true;
   newConfig = newConfigCR;
@@ -29,58 +28,7 @@ const CreateDeathRegistration = ({ parentUrl }) => {
       nextPage;
     let { nextStep = {} } = config.find((routeObj) => routeObj.route === currentPath);
     let { isCreateEnabled : enableCreate = true } = config.find((routeObj) => routeObj.route === currentPath);
-    // if (typeof nextStep == "object" && nextStep != null) {
-    //   if((params?.cptId?.id || params?.cpt?.details?.propertyId || (isReneworEditTrade && params?.cpt?.details?.propertyId ))  && (nextStep[sessionStorage.getItem("isAccessories")] && nextStep[sessionStorage.getItem("isAccessories")] === "know-your-property")  )
-    //   {
-    //     nextStep = "property-details";
-    //   }
-    //   if (
-    //     nextStep[sessionStorage.getItem("isAccessories")] &&
-    //     (nextStep[sessionStorage.getItem("isAccessories")] === "accessories-details" ||
-    //       nextStep[sessionStorage.getItem("isAccessories")] === "map" ||
-    //       nextStep[sessionStorage.getItem("isAccessories")] === "owner-ship-details" || 
-    //       nextStep[sessionStorage.getItem("isAccessories")] === "know-your-property")
-    //   ) {
-    //     nextStep = `${nextStep[sessionStorage.getItem("isAccessories")]}`;
-    //   } else if (
-    //     nextStep[sessionStorage.getItem("StructureType")] &&
-    //     (nextStep[sessionStorage.getItem("StructureType")] === "Building-type" ||
-    //       nextStep[sessionStorage.getItem("StructureType")] === "vehicle-type")
-    //   ) {
-    //     nextStep = `${nextStep[sessionStorage.getItem("setPlaceofActivity")]}`;
-    //     nextStep = `${nextStep[sessionStorage.getItem("StructureType")]}`;
-    //   } else if (
-    //     nextStep[sessionStorage.getItem("KnowProperty")] &&
-    //     (nextStep[sessionStorage.getItem("KnowProperty")] === "search-property" ||
-    //       nextStep[sessionStorage.getItem("KnowProperty")] === "create-property")
-    //   ) {
-    //       if(nextStep[sessionStorage.getItem("KnowProperty")] === "create-property" && !enableCreate)
-    //       {
-    //         nextStep = `map`;
-    //       }
-    //       else{
-    //      nextStep = `${nextStep[sessionStorage.getItem("KnowProperty")]}`;
-    //       }
-    //   }
-    // }
-    // if( (params?.cptId?.id || params?.cpt?.details?.propertyId || (isReneworEditTrade && params?.cpt?.details?.propertyId ))  && nextStep === "know-your-property" )
-    // { 
-    //   nextStep = "property-details";
-    // }
-    // let redirectWithHistory = history.push;
-    // if (skipStep) {
-    //   redirectWithHistory = history.replace;
-    // }
-    // if (isAddMultiple) {
-    //   nextStep = key;
-    // }
-    // if (nextStep === null) {
-    //   return redirectWithHistory(`${match.path}/check`);
-    // }
-    // if(isPTCreateSkip && nextStep === "acknowledge-create-property")
-    // {
-    //   nextStep = "map";
-    // }
+    
     let redirectWithHistory = history.push;
     if (skipStep) {
       redirectWithHistory = history.replace;
@@ -92,7 +40,6 @@ const CreateDeathRegistration = ({ parentUrl }) => {
       return redirectWithHistory(`${match.path}/check`);
     }
     nextPage = `${match.path}/${nextStep}`;
-    console.log("nextPage",nextPage);
     redirectWithHistory(nextPage);
   };
 
@@ -100,12 +47,10 @@ const CreateDeathRegistration = ({ parentUrl }) => {
     setParams({ ...params, ...{ [key]: { ...params[key], ...data } } });
     if(key === "isSkip" && data === true)
     {
-      console.log("handle skip==",skipStep, index, isAddMultiple, key);
       goNext(skipStep, index, isAddMultiple, key, true);
     }
     else
     {
-      console.log("handle skip== else",skipStep, index, isAddMultiple, key);
       goNext(skipStep, index, isAddMultiple, key);
     }
   }
@@ -121,7 +66,6 @@ const CreateDeathRegistration = ({ parentUrl }) => {
   const handleMultiple = () => {};
   const CheckPage = Digit?.ComponentRegistryService?.getComponent("DeathCheckPage");
   const DeathAcknowledgement = Digit?.ComponentRegistryService?.getComponent("DeathAcknowledgement");
-  console.log("config==",config);
   return (
     
     <React.Fragment>

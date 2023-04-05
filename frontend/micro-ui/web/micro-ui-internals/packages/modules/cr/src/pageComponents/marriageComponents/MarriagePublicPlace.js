@@ -4,35 +4,54 @@ import Timeline from "../../components/MARRIAGETimeline";
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
 
-const MarriagePublicPlace = ({ config, onSelect, userType, formData }) => {
+const MarriagePublicPlace = ({
+  config,
+  onSelect,
+  userType,
+  formData,
+  marriagePlacenameEn,
+  setmarriagePlacenameEn,
+  marriagePlacenameMl,
+  setmarriagePlacenameMl,
+  marriageLocalityEn,
+  setmarriageLocalityEn,
+  marriageLocalityMl,
+  setmarriageLocalityMl,
+  marriageStreetEn,
+  setmarriageStreetEn,
+  marriageStreetMl,
+  setmarriageStreetMl,
+  marriageLandmark,
+  setmarriageLandmark,
+}) => {
   const { t } = useTranslation();
   let validation = {};
 
-  const [marriageLocalityEn, setMarriageLocalityEn] = useState(
-    formData?.MarriagePublicPlace?.marriageLocalityEn ? formData?.MarriagePublicPlace?.marriageLocalityEn : ""
-  );
-  const [marriageLocalityMal, setMarriageLocalityMal] = useState(
-    formData?.MarriagePublicPlace?.marriageLocalityMal ? formData?.MarriagePublicPlace?.marriageLocalityMal : ""
-  );
+  // const [marriageLocalityEn, setmarriageLocalityEn] = useState(
+  //   formData?.MarriagePublicPlace?.marriageLocalityEn ? formData?.MarriagePublicPlace?.marriageLocalityEn : ""
+  // );
+  // const [marriageLocalityMl, setmarriageLocalityMl] = useState(
+  //   formData?.MarriagePublicPlace?.marriageLocalityMl ? formData?.MarriagePublicPlace?.marriageLocalityMl : ""
+  // );
 
-  const [marriageLandmark, setMarriageLandmark] = useState(
-    formData?.MarriagePublicPlace?.marriageLandmark ? formData?.MarriagePublicPlace?.marriageLandmark : ""
-  );
-  const [marriageStreetMal, setMarriageStreetMal] = useState(
-    formData?.MarriagePublicPlace?.marriageStreetMal ? formData?.MarriagePublicPlace?.marriageStreetMal : ""
-  );
-  const [marriagePublicOrPrivateNamePlaceEn, setMarriagePublicOrPrivateNamePlaceEn] = useState(
-    formData?.MarriagePublicPlace?.marriagePublicOrPrivateNamePlaceEn ? formData?.MarriagePublicPlace?.marriagePublicOrPrivateNamePlaceEn : ""
-  );
-  const [marriagePublicOrPrivateNamePlaceMal, setMarriagePublicOrPrivateNamePlaceMal] = useState(
-    formData?.MarriagePublicPlace?.marriagePublicOrPrivateNamePlaceMal ? formData?.MarriagePublicPlace?.marriagePublicOrPrivateNamePlaceMal : ""
-  );
-  const [marriageStreetEn, setMarriageStreetEn] = useState(
-    formData?.MarriagePublicPlace?.marriageStreetEn ? formData?.MarriagePublicPlace?.marriageStreetEn : ""
-  );
-  const [marriagePublicOrPrivatePlace, setMarriagePublicOrPrivatePlace] = useState(
-    formData?.MarriagePublicPlace?.marriagePublicOrPrivatePlace ? formData?.MarriagePublicPlace?.marriagePublicOrPrivatePlace : null
-  );
+  // const [marriageLandmark, setMarriageLandmark] = useState(
+  //   formData?.MarriagePublicPlace?.marriageLandmark ? formData?.MarriagePublicPlace?.marriageLandmark : ""
+  // );
+  // const [marriageStreetMl, setmarriageStreetMl] = useState(
+  //   formData?.MarriagePublicPlace?.marriageStreetMl ? formData?.MarriagePublicPlace?.marriageStreetMl : ""
+  // );
+  // const [marriagePublicOrPrivateNamePlaceEn, setMarriagePublicOrPrivateNamePlaceEn] = useState(
+  //   formData?.MarriagePublicPlace?.marriagePublicOrPrivateNamePlaceEn ? formData?.MarriagePublicPlace?.marriagePublicOrPrivateNamePlaceEn : ""
+  // );
+  // const [marriagePublicOrPrivateNamePlaceMal, setMarriagePublicOrPrivateNamePlaceMal] = useState(
+  //   formData?.MarriagePublicPlace?.marriagePublicOrPrivateNamePlaceMal ? formData?.MarriagePublicPlace?.marriagePublicOrPrivateNamePlaceMal : ""
+  // );
+  // const [marriageStreetEn, setmarriageStreetEn] = useState(
+  //   formData?.MarriagePublicPlace?.marriageStreetEn ? formData?.MarriagePublicPlace?.marriageStreetEn : ""
+  // );
+  // const [marriagePublicOrPrivatePlace, setMarriagePublicOrPrivatePlace] = useState(
+  //   formData?.MarriagePublicPlace?.marriagePublicOrPrivatePlace ? formData?.MarriagePublicPlace?.marriagePublicOrPrivatePlace : null
+  // );
 
   const [access, setAccess] = React.useState(true);
 
@@ -41,81 +60,78 @@ const MarriagePublicPlace = ({ config, onSelect, userType, formData }) => {
     { i18nKey: "Public", code: "PUBLIC" },
     { i18nKey: "Private", code: "PRIVATE" },
   ];
-  function setSelectMarriagePublicOrPrivatePlace(value) {
-    setMarriagePublicOrPrivatePlace(value);
-  }
 
-  function setSelectMarriagePublicOrPrivateNamePlaceMal(e) {
+  function setSelectOtherMarriagePlacenameMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setMarriagePublicOrPrivateNamePlaceMal("");
+      setmarriagePlacenameMl('');
     } else {
-      setMarriagePublicOrPrivateNamePlaceMal(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setmarriagePlacenameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
-  function setSelectMarriagePublicOrPrivateNamePlaceEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setMarriagePublicOrPrivateNamePlaceEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+  function setSelectOtherMarriagePlacenameEn(e) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setmarriagePlacenameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectMarriageLandmark(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setMarriageLandmark(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setMarriageLandmark(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectMarriageStreetEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setMarriageStreetEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setmarriageStreetEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectMarriageLocalityEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setMarriageLocalityEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setmarriageLocalityEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectMarriageLocalityMal(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setMarriageLocalityMal("");
+      setmarriageLocalityMl('');
     } else {
-      setMarriageLocalityMal(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setmarriageLocalityMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
-  function setSelectmarriageStreetMal(e) {
+  function setSelectmarriageStreetMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setMarriageStreetMal("");
+      setmarriageStreetMl('');
     } else {
-      setMarriageStreetMal(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setmarriageStreetMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
   let validFlag = true;
   const goNext = () => {
     if (validFlag == true) {
-      sessionStorage.setItem(
-        "marriagePublicOrPrivateNamePlaceEn",
-        marriagePublicOrPrivateNamePlaceEn ? marriagePublicOrPrivateNamePlaceEn.code : null
-      );
-      sessionStorage.setItem("marriageLocalityMal", marriageLocalityMal ? marriageLocalityMal : null);
-      sessionStorage.setItem("marriageLocalityEn", marriageLocalityEn ? marriageLocalityEn : null);
-      sessionStorage.setItem("marriageLandmark", marriageLandmark ? marriageLandmark : null);
-      sessionStorage.setItem("marriageStreetEn", marriageStreetEn ? marriageStreetEn : null);
-      sessionStorage.setItem("marriageStreetMal", marriageStreetMal ? marriageStreetMal : null);
-      sessionStorage.setItem("marriagePublicOrPrivateNamePlaceMal", marriagePublicOrPrivateNamePlaceMal ? marriagePublicOrPrivateNamePlaceMal : null);
-      sessionStorage.setItem("marriagePublicOrPrivatePlace", marriagePublicOrPrivatePlace ? marriagePublicOrPrivatePlace : null);
+      // sessionStorage.setItem(
+      //   "marriagePublicOrPrivateNamePlaceEn",
+      //   marriagePublicOrPrivateNamePlaceEn ? marriagePublicOrPrivateNamePlaceEn.code : null
+      // );
+      // sessionStorage.setItem("marriageLocalityMl", marriageLocalityMl ? marriageLocalityMl : null);
+      // sessionStorage.setItem("marriageLocalityEn", marriageLocalityEn ? marriageLocalityEn : null);
+      // sessionStorage.setItem("marriageLandmark", marriageLandmark ? marriageLandmark : null);
+      // sessionStorage.setItem("marriageStreetEn", marriageStreetEn ? marriageStreetEn : null);
+      // sessionStorage.setItem("marriageStreetMl", marriageStreetMl ? marriageStreetMl : null);
+      // sessionStorage.setItem("marriagePublicOrPrivateNamePlaceMal", marriagePublicOrPrivateNamePlaceMal ? marriagePublicOrPrivateNamePlaceMal : null);
+      // sessionStorage.setItem("marriagePublicOrPrivatePlace", marriagePublicOrPrivatePlace ? marriagePublicOrPrivatePlace : null);
       onSelect(config.key, {
-        marriageLocalityMal,
-        marriageLocalityEn,
-        marriageLandmark,
-        marriagePublicOrPrivatePlace,
-        marriageStreetEn,
-        marriageStreetMal,
-        marriagePublicOrPrivateNamePlaceMal,
-        marriagePublicOrPrivateNamePlaceEn,
+        // marriageLocalityMl,
+        // marriageLocalityEn,
+        // marriageLandmark,
+        // marriagePublicOrPrivatePlace,
+        // marriageStreetEn,
+        // marriageStreetMl,
+        // marriagePublicOrPrivateNamePlaceMal,
+        // marriagePublicOrPrivateNamePlaceEn,
       });
     }
   };
@@ -135,10 +151,10 @@ const MarriagePublicPlace = ({ config, onSelect, userType, formData }) => {
               type={"text"}
               optionKey="i18nKey"
               name="marriagePublicOrPrivateNamePlaceEn"
-              value={marriagePublicOrPrivateNamePlaceEn}
-              onChange={setSelectMarriagePublicOrPrivateNamePlaceEn}
+              value={marriagePlacenameEn}
+              onChange={setSelectOtherMarriagePlacenameEn}
               placeholder={`${t("CR_PUBLIC_PRIVATE_PLACE_EN")}`}
-              {...(validation = { isRequired: true })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_PUBLIC_PRIVATE_PLACE_EN") })}
             />
           </div>
           <div className="col-md-3">
@@ -155,7 +171,7 @@ const MarriagePublicPlace = ({ config, onSelect, userType, formData }) => {
               value={marriageLocalityEn}
               onChange={setSelectMarriageLocalityEn}
               placeholder={`${t("CR_LOCALITY_EN")}`}
-              {...(validation = { isRequired: true })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
             />
           </div>
           <div className="col-md-3">
@@ -168,6 +184,7 @@ const MarriagePublicPlace = ({ config, onSelect, userType, formData }) => {
               value={marriageStreetEn}
               onChange={setSelectMarriageStreetEn}
               placeholder={`${t("CR_STREET_NAME_EN")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
             />
           </div>
           <div className="col-md-3">
@@ -181,6 +198,7 @@ const MarriagePublicPlace = ({ config, onSelect, userType, formData }) => {
               value={marriageLandmark}
               onChange={setSelectMarriageLandmark}
               placeholder={`${t("CR_LANDMARK")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LANDMARK") })}
             />
           </div>
         </div>
@@ -198,10 +216,10 @@ const MarriagePublicPlace = ({ config, onSelect, userType, formData }) => {
               type={"text"}
               optionKey="i18nKey"
               name="marriagePublicOrPrivateNamePlaceMal"
-              value={marriagePublicOrPrivateNamePlaceMal}
-              onChange={setSelectMarriagePublicOrPrivateNamePlaceMal}
+              value={marriagePlacenameMl}
+              onChange={setSelectOtherMarriagePlacenameMl}
               placeholder={`${t("CR_PUBLIC_PRIVATE_PLACE_EN")}`}
-              {...(validation = { isRequired: true })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_PUBLIC_PRIVATE_PLACE_ML") })}
             />
           </div>
           <div className="col-md-3">
@@ -214,11 +232,16 @@ const MarriagePublicPlace = ({ config, onSelect, userType, formData }) => {
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              //name="marriageLocalityMal"
-              value={marriageLocalityMal}
+              //name="marriageLocalityMl"
+              value={marriageLocalityMl}
               onChange={setSelectMarriageLocalityMal}
               placeholder={`${t("CR_LOCALITY_ML")}`}
-              {...(validation = { isRequired: true })}
+              {...(validation = {
+                pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                isRequired: true,
+                type: "text",
+                title: t("CR_INVALID_LOCALITY_ML"),
+              })}
             />
           </div>
           <div className="col-md-3">
@@ -227,10 +250,16 @@ const MarriagePublicPlace = ({ config, onSelect, userType, formData }) => {
               t={t}
               type={"text"}
               optionKey="i18nKey"
-              //name="marriageStreetMal"
-              value={marriageStreetMal}
-              onChange={setSelectmarriageStreetMal}
+              //name="marriageStreetMl"
+              value={marriageStreetMl}
+              onChange={setSelectmarriageStreetMl}
               placeholder={`${t("CR_STREET_NAME_ML")}`}
+              {...(validation = {
+                pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                isRequired: false,
+                type: "text",
+                title: t("CR_INVALID_STREET_NAME_ML"),
+              })}
             />
           </div>
         </div>

@@ -16,7 +16,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
   // console.log(isEditBirth);
   const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
-  const [workFlowCode, setWorkFlowCode] = useState();
+  const [workFlowCode, setWorkFlowCode] = useState(formData?.ChildDetails?.workFlowCode);
 
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
@@ -854,7 +854,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
     if (validFlag == true) {
       
       let IsEditChangeScreen = (isEditBirth ? isEditBirth : false);
-      let isWorkflow = isEditBirth ? isEditBirth : false;
+      let isWorkflow = isEditBirth ? false : true;
       onSelect(config.key, {
         stateId, tenantId, workFlowCode, childDOB, birthDateTime, gender, childAadharNo,
         isChildName, childFirstNameEn, childMiddleNameEn, childLastNameEn, childFirstNameMl, childMiddleNameMl, childLastNameMl,

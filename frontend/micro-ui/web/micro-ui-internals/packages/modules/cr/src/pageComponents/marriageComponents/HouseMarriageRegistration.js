@@ -24,19 +24,19 @@ const HouseMarriageRegistration = ({
   userType,
   formData,
   isEditHouseMarriage,
+  marriagePlacenameEn,
+  setmarriagePlacenameEn,
+  marriagePlacenameMl,
+  setmarriagePlacenameMl,
   marriageLocalityEn,
-  marriageLocalityMal,
-  marriageStreetEn,
-  marriageStreetMal,
-  marriageHouseNoAndNameEn,
-  marriageHouseNoAndNameMal,
-  marriageLandmark,
   setmarriageLocalityEn,
-  setmarriageLocalityMal,
+  marriageLocalityMl,
+  setmarriageLocalityMl,
+  marriageStreetEn,
   setmarriageStreetEn,
-  setmarriageStreetMal,
-  setmarriageHouseNoAndNameEn,
-  setmarriageHouseNoAndNameMal,
+  marriageStreetMl,
+  setmarriageStreetMl,
+  marriageLandmark,
   setmarriageLandmark,
 }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -138,14 +138,14 @@ const HouseMarriageRegistration = ({
   // const [marriageLocalityEn, setmarriageLocalityEn] = useState(
   //   formData?.MarriageDetails?.marriageLocalityEn ? formData?.MarriageDetails?.marriageLocalityEn : ""
   // );
-  // const [marriageLocalityMal, setmarriageLocalityMal] = useState(
-  //   formData?.MarriageDetails?.marriageLocalityMal ? formData?.MarriageDetails?.marriageLocalityMal : ""
+  // const [marriageLocalityMl, setmarriageLocalityMl] = useState(
+  //   formData?.MarriageDetails?.marriageLocalityMl ? formData?.MarriageDetails?.marriageLocalityMl : ""
   // );
   // const [marriageStreetEn, setmarriageStreetEn] = useState(
   //   formData?.MarriageDetails?.marriageStreetEn ? formData?.MarriageDetails?.marriageStreetEn : ""
   // );
-  // const [marriageStreetMal, setmarriageStreetMal] = useState(
-  //   formData?.MarriageDetails?.marriageStreetMal ? formData?.MarriageDetails?.marriageStreetMal : ""
+  // const [marriageStreetMl, setmarriageStreetMl] = useState(
+  //   formData?.MarriageDetails?.marriageStreetMl ? formData?.MarriageDetails?.marriageStreetMl : ""
   // );
   // const [marriageHouseNoAndNameEn, setmarriageHouseNoAndNameEn] = useState(
   //   formData?.MarriageDetails?.marriageHouseNoAndNameEn ? formData?.MarriageDetails?.marriageHouseNoAndNameEn : ""
@@ -224,55 +224,55 @@ const HouseMarriageRegistration = ({
   // }
 
   function setSelectmarriageLocalityEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setmarriageLocalityEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setmarriageLocalityEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
     // setmarriageLocalityEn(value);
     // setAgeMariageStatus(value.code);
   }
-  function setSelectmarriageLocalityMal(e) {
+  function setSelectmarriageLocalityMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setmarriageLocalityMal("");
+      setmarriageLocalityMl('');
     } else {
-      setmarriageLocalityMal(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setmarriageLocalityMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
-    // setmarriageLocalityMal(value);
+    // setmarriageLocalityMl(value);
     // setAgeMariageStatus(value.code);
   }
   function setSelectmarriageStreetEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setmarriageStreetEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setmarriageStreetEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
     // setmarriageStreetEn(value);
     // setAgeMariageStatus(value.code);
   }
-  function setSelectmarriageStreetMal(e) {
+  function setSelectmarriageStreetMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setmarriageStreetMal("");
+      setmarriageStreetMl('');
     } else {
-      setmarriageStreetMal(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setmarriageStreetMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
-    // setmarriageStreetMal(value);
+    // setmarriageStreetMl(value);
     // setAgeMariageStatus(value.code);
   }
-  function setSelectmarriageHouseNoAndNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setmarriageHouseNoAndNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+  function setSelectOtherMarriagePlacenameEn(e) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setmarriagePlacenameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
     // setmarriageHouseNoAndNameEn(value);
     // setAgeMariageStatus(value.code);
   }
-  function setSelectmarriageHouseNoAndNameMal(e) {
+  function selectSetmarriagePlacenameMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setmarriageHouseNoAndNameMal("");
+      setmarriageHouseNoAndNameMal('');
     } else {
-      setmarriageHouseNoAndNameMal(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setmarriagePlacenameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
     // setmarriageHouseNoAndNameMal(value);
     // setAgeMariageStatus(value.code);
@@ -282,8 +282,8 @@ const HouseMarriageRegistration = ({
   //   setmarriageWardCode(value);
   // }
   function setSelectmarriageLandmark(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setmarriageLandmark(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setmarriageLandmark(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   // function setSelectmarriageOthersSpecify(e) {
@@ -322,11 +322,11 @@ const HouseMarriageRegistration = ({
       // sessionStorage.setItem("marriagePlacetype", marriagePlacetype ? marriagePlacetype : null);
       // sessionStorage.setItem("marriageLocalityEn", marriageLocalityEn ? marriageLocalityEn : null);
       // // sessionStorage.setItem("marriageWardCode", marriageWardCode ? marriageWardCode : null);
-      // sessionStorage.setItem("marriageStreetMal", marriageStreetMal ? marriageStreetMal : null);
+      // sessionStorage.setItem("marriageStreetMl", marriageStreetMl ? marriageStreetMl : null);
       // sessionStorage.setItem("marriageStreetEn", marriageStreetEn ? marriageStreetEn : null);
       // sessionStorage.setItem("marriageHouseNoAndNameEn", marriageHouseNoAndNameEn ? marriageHouseNoAndNameEn : null);
       // sessionStorage.setItem("marriageHouseNoAndNameMal", marriageHouseNoAndNameMal ? marriageHouseNoAndNameMal : null);
-      // sessionStorage.setItem("marriageLocalityMal", marriageLocalityMal ? marriageLocalityMal : null);
+      // sessionStorage.setItem("marriageLocalityMl", marriageLocalityMl ? marriageLocalityMl : null);
       // sessionStorage.setItem("marriageLandmark", marriageLandmark ? marriageLandmark : null);
       // // sessionStorage.setItem("marriageType", marriageType ? marriageType : null);
       // // sessionStorage.setItem("marriageOthersSpecify", marriageOthersSpecify ? marriageOthersSpecify : null);
@@ -340,14 +340,14 @@ const HouseMarriageRegistration = ({
         // marriageVillageName,
         // marriageTalukID,
         // marriagePlacetype,
-        marriageLocalityEn,
-        marriageLocalityMal,
-        marriageLandmark,
+        // marriageLocalityEn,
+        // marriageLocalityMl,
+        // marriageLandmark,
         // marriageWardCode,
-        marriageHouseNoAndNameEn,
-        marriageHouseNoAndNameMal,
-        marriageStreetEn,
-        marriageStreetMal,
+        // marriageHouseNoAndNameEn,
+        // marriageHouseNoAndNameMal,
+        // marriageStreetEn,
+        // marriageStreetMl,
         // marriageType,
         // marriageOthersSpecify,
         // tripStartTime,
@@ -527,7 +527,7 @@ const HouseMarriageRegistration = ({
             isMandatory={false}
             disable={isDisableEdit}
             placeholder={`${t("CR_LOCALITY_EN")}`}
-            {...(validation = { isRequired: true, title: t("CS_INVALID_LOCALITY_EN") })}
+            {...(validation = { isRequired: true, title: t("CR_INVALID_LOCALITY_EN") })}
           />
         </div>
         <div className="col-md-3">
@@ -545,7 +545,7 @@ const HouseMarriageRegistration = ({
             onChange={setSelectmarriageStreetEn}
             disable={isDisableEdit}
             placeholder={`${t("CR_STREET_EN")}`}
-            {...(validation = { isRequired: false, title: t("CS_INVALID_STREET_EN") })}
+            {...(validation = { isRequired: false, title: t("CR_INVALID_STREET_NAME_EN") })}
           />
         </div>
         <div className="col-md-3">
@@ -559,11 +559,11 @@ const HouseMarriageRegistration = ({
             optionKey="i18nKey"
             isMandatory={false}
             name="marriageHouseNoAndNameEn"
-            value={marriageHouseNoAndNameEn}
-            onChange={setSelectmarriageHouseNoAndNameEn}
+            value={marriagePlacenameEn}
+            onChange={setSelectOtherMarriagePlacenameEn}
             disable={isDisableEdit}
             placeholder={`${t("CR_HOUSE_NO_AND_NAME_EN")}`}
-            {...(validation = { isRequired: true, title: t("CS_INVALID_HOUSENO_NAME") })}
+            {...(validation = { isRequired: true, title: t("CR_INVALID_HOUSENO_NAME_EN") })}
           />
         </div>
         <div className="col-md-3">
@@ -582,7 +582,7 @@ const HouseMarriageRegistration = ({
             onChange={setSelectmarriageLandmark}
             disable={isDisableEdit}
             placeholder={`${t("CR_LANDMARK")}`}
-            {...(validation = { isRequired: false, title: t("CS_INVALID_LANDMARK") })}
+            {...(validation = { isRequired: false, title: t("CR_INVALID_LANDMARK") })}
           />
         </div>
       </div>
@@ -597,9 +597,9 @@ const HouseMarriageRegistration = ({
             t={t}
             type={"text"}
             optionKey="i18nKey"
-            name="marriageLocalityMal"
-            value={marriageLocalityMal}
-            onChange={setSelectmarriageLocalityMal}
+            name="marriageLocalityMl"
+            value={marriageLocalityMl}
+            onChange={setSelectmarriageLocalityMl}
             isMandatory={false}
             disable={isDisableEdit}
             placeholder={`${t("CR_LOCALITY_MAL")}`}
@@ -607,7 +607,7 @@ const HouseMarriageRegistration = ({
               pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
               isRequired: true,
               type: "text",
-              title: t("CS_INVALID_LOCALITY_MAL"),
+              title: t("CR_INVALID_LOCALITY_ML"),
             })}
           />
         </div>
@@ -620,9 +620,9 @@ const HouseMarriageRegistration = ({
             t={t}
             type={"text"}
             optionKey="i18nKey"
-            name="marriageStreetMal"
-            value={marriageStreetMal}
-            onChange={setSelectmarriageStreetMal}
+            name="marriageStreetMl"
+            value={marriageStreetMl}
+            onChange={setSelectmarriageStreetMl}
             disable={isDisableEdit}
             isMandatory={false}
             placeholder={`${t("CR_STREET_MAL")}`}
@@ -630,7 +630,7 @@ const HouseMarriageRegistration = ({
               pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
               isRequired: false,
               type: "text",
-              title: t("CS_INVALID_STREET_MAL"),
+              title: t("CR_INVALID_STREET_NAME_ML"),
             })}
           />
         </div>
@@ -644,8 +644,8 @@ const HouseMarriageRegistration = ({
             type={"text"}
             optionKey="i18nKey"
             name="marriageHouseNoAndNameMal"
-            value={marriageHouseNoAndNameMal}
-            onChange={setSelectmarriageHouseNoAndNameMal}
+            value={marriagePlacenameMl}
+            onChange={selectSetmarriagePlacenameMl}
             disable={isDisableEdit}
             isMandatory={false}
             placeholder={`${t("CR_HOUSE_NO_AND_NAME_MAL")}`}
@@ -653,7 +653,7 @@ const HouseMarriageRegistration = ({
               pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
               isRequired: true,
               type: "text",
-              title: t("CS_INVALID_HOUSENO_NAME"),
+              title: t("CR_INVALID_HOUSENO_NAME_ML"),
             })}
           />
         </div>
