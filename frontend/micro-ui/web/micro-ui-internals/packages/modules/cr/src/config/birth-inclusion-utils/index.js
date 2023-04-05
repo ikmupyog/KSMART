@@ -5,7 +5,7 @@
 import moment from 'moment';
 
 export const getFilteredChildAdharData = (selectedData, inclusionData) => {
-  console.log("selectedData==123",selectedData,inclusionData);
+
   let filteredData = {};
   if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
     filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
@@ -18,7 +18,7 @@ export const getFilteredChildAdharData = (selectedData, inclusionData) => {
 };
 
 export const getFilteredChildDobData = (selectedData, inclusionData) => {
-  console.log("selectedData==123", selectedData, inclusionData);
+ 
   let filteredData = {};
   if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
     filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
@@ -36,7 +36,7 @@ export const getFilteredChildDobData = (selectedData, inclusionData) => {
 
 export const getFilteredChildNameData = (selectedData, inclusionData) =>{
     let filteredData = {};
-    console.log("filteredData==",selectedData, inclusionData);
+   
   if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
     filteredData = inclusionData?.find((item) => item.conditionCode === "LESS_THAN_SIX");
   } else if(selectedData) {
@@ -73,7 +73,7 @@ export const getFilteredChildSexData = (selectedData, inclusionData) =>{
 
 
 export const getFatherDetailsbData = (selectedData, inclusionData) => {
-    console.log("selectedData==123", selectedData, inclusionData);
+   
     let filteredData = {};
     if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
       filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
@@ -88,8 +88,5 @@ export const getFatherDetailsbData = (selectedData, inclusionData) => {
     let currentValue = { curValue: selectedData?.dateofbirth && moment(selectedData?.dateofbirth).format("DD/MM/YYYY") };
     return { ...filteredData, ...currentValue };
   };
-  
-  // const _changeCurValue = (value,data) =>{
-  //   return()
-  // }
+
   

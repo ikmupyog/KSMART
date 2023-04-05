@@ -1,7 +1,6 @@
 import moment from "moment";
 
 export const getFilteredChildDobData = (selectedData, inclusionData) => {
-  console.log("selectedData==123 childdob", selectedData, inclusionData);
   let filteredDocuments = getFilteredDocuments(selectedData,inclusionData);
   const computedValue = computeInitialValue(selectedData?.dateofbirth);
   let selectedDobObj = {
