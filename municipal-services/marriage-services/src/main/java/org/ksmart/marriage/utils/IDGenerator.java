@@ -6,7 +6,7 @@ import org.ksmart.marriage.common.services.MdmsTenantService;
 ////import org.ksmart.birth.newbirth.repository.querybuilder.NewBirthQueryBuilder;
 //import org.ksmart.birth.web.model.newbirth.NewBirthDetailRequest;
 //import org.ksmart.birth.web.model.stillbirth.StillBirthDetailRequest;
-import org.ksmart.marriage.marriageapplication.model.marriage.MarriageDetailsRequest;
+import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageDetailsRequest;
 import org.ksmart.marriage.marriageapplication.repository.querybuilder.MarriageApplicationQueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;

@@ -2,22 +2,21 @@ package org.ksmart.marriage.marriageapplication.validator;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.egov.tracer.model.CustomException;
-import org.ksmart.marriage.marriageapplication.model.MarriageApplicationDetails;
-import org.ksmart.marriage.marriageapplication.model.marriage.MarriageDetailsRequest;
+import org.ksmart.marriage.marriageapplication.web.model.MarriageApplicationDetails;
+import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageDetailsRequest;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
-import org.checkerframework.checker.units.qual.g;
-import org.ksmart.marriage.marriageapplication.model.marriage.BrideAddressDetails;
-import org.ksmart.marriage.marriageapplication.model.marriage.BrideDetails;
-import org.ksmart.marriage.marriageapplication.model.marriage.GroomAddressDetails;
-import org.ksmart.marriage.marriageapplication.model.marriage.GroomDetails;
-import org.ksmart.marriage.marriageapplication.model.marriage.WitnessDetails;
+import org.ksmart.marriage.marriageapplication.web.model.marriage.BrideAddressDetails;
+import org.ksmart.marriage.marriageapplication.web.model.marriage.BrideDetails;
+import org.ksmart.marriage.marriageapplication.web.model.marriage.GroomAddressDetails;
+import org.ksmart.marriage.marriageapplication.web.model.marriage.GroomDetails;
+import org.ksmart.marriage.marriageapplication.web.model.marriage.WitnessDetails;
 import org.ksmart.marriage.utils.MarriageConstants;
 import org.springframework.stereotype.Component;
-import static org.ksmart.marriage.utils.enums.ErrorCodes.MARRIAGE_DETAILS_INVALID_UPDATE;
-import static org.ksmart.marriage.utils.enums.ErrorCodes.MARRIAGE_DETAILS_REQUIRED;
+import static org.ksmart.marriage.marriageapplication.web.enums.ErrorCodes.MARRIAGE_DETAILS_INVALID_UPDATE;
+import static org.ksmart.marriage.marriageapplication.web.enums.ErrorCodes.MARRIAGE_DETAILS_REQUIRED;
 
-//import static org.ksmart.marriage.utils.enums.ErrorCodes.BIRTH_DETAILS_REQUIRED;
+//import static org.ksmart.marriage.marriageapplication.web.enums.ErrorCodes.BIRTH_DETAILS_REQUIRED;
 
 @Component
 public class MarriageApplicationValidator {

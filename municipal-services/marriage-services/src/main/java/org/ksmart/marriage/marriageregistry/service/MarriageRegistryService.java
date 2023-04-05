@@ -1,9 +1,9 @@
 package org.ksmart.marriage.marriageregistry.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.ksmart.marriage.marriageregistry.model.MarriageRegistryDetails;
-import org.ksmart.marriage.marriageregistry.model.MarriageRegistryRequest;
-import org.ksmart.marriage.marriageregistry.model.MarriageRegistrySearchCriteria;
+import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryDetails;
+import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryRequest;
+import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistrySearchCriteria;
 import org.ksmart.marriage.marriageregistry.repository.MarriageRegistryRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;

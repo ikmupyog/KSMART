@@ -1,11 +1,11 @@
 package org.ksmart.marriage.marriageregistry.repository;
 
 import org.ksmart.marriage.common.producer.MarriageProducer;
- import org.ksmart.marriage.config.MarriageApplicationConfiguration;
+ import org.ksmart.marriage.marriageapplication.config.MarriageApplicationConfiguration;
 import org.ksmart.marriage.marriageregistry.enrichment.MarriageRegistryEnrichment;
-import org.ksmart.marriage.marriageregistry.model.MarriageRegistryDetails;
-import org.ksmart.marriage.marriageregistry.model.MarriageRegistryRequest;
-import org.ksmart.marriage.marriageregistry.model.MarriageRegistrySearchCriteria;
+import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryDetails;
+import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryRequest;
+import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistrySearchCriteria;
 import org.ksmart.marriage.marriageregistry.repository.querybuilder.MarriageRegistryQueryBuilder;
 import org.ksmart.marriage.marriageregistry.repository.rowmapper.MarriageRegistryRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;

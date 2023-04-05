@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.egov.tracer.model.CustomException;
-import org.ksmart.marriage.marriageapplication.model.marriage.MarriageDetailsRequest;
+import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageDetailsRequest;
 import org.ksmart.marriage.utils.MarriageConstants;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;

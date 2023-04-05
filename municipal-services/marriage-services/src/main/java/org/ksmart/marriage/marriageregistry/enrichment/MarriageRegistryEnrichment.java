@@ -6,21 +6,20 @@ import org.egov.common.contract.request.User;
 import org.egov.tracer.model.CustomException;
 import org.ksmart.marriage.common.model.AuditDetails;
 import org.ksmart.marriage.common.repository.IdGenRepository;
-import org.ksmart.marriage.config.MarriageApplicationConfiguration;
-import org.ksmart.marriage.marriageregistry.model.MarriageRegistryDetails;
-// import org.ksmart.marriage.marriageapplication.model.MarriageApplicationDetail;
-import org.ksmart.marriage.marriageregistry.model.MarriageRegistryRequest;
+import org.ksmart.marriage.marriageapplication.config.MarriageApplicationConfiguration;
+import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryDetails;
+// import org.ksmart.marriage.marriageapplication.web.model.MarriageApplicationDetail;
+import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryRequest;
 import org.ksmart.marriage.utils.IDGenerator;
 import org.ksmart.marriage.utils.MarriageConstants;
-import org.ksmart.marriage.utils.enums.ErrorCodes;
+import org.ksmart.marriage.marriageapplication.web.enums.ErrorCodes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.IdGenerator;
+
 import java.util.List;
 import java.util.ListIterator;
 import java.util.UUID;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
+
 import lombok.extern.slf4j.Slf4j;
 /**
      * Created by Jasmine

@@ -9,7 +9,7 @@ import org.ksmart.marriage.common.Idgen.IdGenerationRequest;
 import org.ksmart.marriage.common.Idgen.IdGenerationResponse;
 import org.ksmart.marriage.common.Idgen.IdRequest;
 import org.ksmart.marriage.common.Idgen.IdResponse;
-import org.ksmart.marriage.config.MarriageApplicationConfiguration;
+import org.ksmart.marriage.marriageapplication.config.MarriageApplicationConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
