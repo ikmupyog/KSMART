@@ -114,21 +114,410 @@ public class MarriageMDMSValidator {
         // }
 
         // ADDRESS VALIDATION
-
-        if (request.getMarriageDetails().get(0).getGroomAddressDetails().getCountryIdPermanent() != null) {
+        // Anu.l.s
+        // groom PERMANENT address details//////////////////////
+        if (request.getMarriageDetails().get(0).getGroomAddressDetails().getPermtaddressCountry() != null) {
             if (!masterData.get(MarriageConstants.COUNTRY)
-                    .contains(request.getMarriageDetails().get(0).getGroomAddressDetails().getCountryIdPermanent()))
+                    .contains(request.getMarriageDetails().get(0).getGroomAddressDetails().getPermtaddressCountry()))
                 errorMap.put("GROOM PERMANENT ADDRESS: COUNTRY NAME INVALID", "The country name of  groom " +
-                        request.getMarriageDetails().get(0).getGroomAddressDetails().getCountryIdPermanent()
+                        request.getMarriageDetails().get(0).getGroomAddressDetails().getPermtaddressCountry()
                         + " is invalid");
         }
-        if (request.getMarriageDetails().get(0).getGroomAddressDetails().getStateIdPermanent() != null) {
+
+        if (request.getMarriageDetails().get(0).getGroomAddressDetails().getPermtaddressStateName() != null) {
             if (!masterData.get(MarriageConstants.STATE)
-                    .contains(request.getMarriageDetails().get(0).getGroomAddressDetails().getStateIdPermanent()))
+                    .contains(request.getMarriageDetails().get(0).getGroomAddressDetails().getPermtaddressStateName()))
                 errorMap.put("GROOM PERMANENT ADDRESS: STATE NAME INVALID", "The state name of  groom " +
-                        request.getMarriageDetails().get(0).getGroomAddressDetails().getStateIdPermanent()
+                        request.getMarriageDetails().get(0).getGroomAddressDetails().getPermtaddressStateName()
                         + " is invalid");
         }
+
+        if (request.getMarriageDetails().get(0).getGroomAddressDetails().getPermntInKeralaAdrDistrict() != null) {
+            if (!masterData.get(MarriageConstants.DISTRICT)
+                    .contains(request.getMarriageDetails().get(0).getGroomAddressDetails()
+                            .getPermntInKeralaAdrDistrict()))
+                errorMap.put("GROOM PERMANENT ADDRESS: DISTRICT NAME INVALID",
+                        "groom district inside kerala " +
+                                request.getMarriageDetails().get(0).getGroomAddressDetails()
+                                        .getPermntInKeralaAdrDistrict()
+                                + " is invalid");
+        }
+        if (request.getMarriageDetails().get(0).getGroomAddressDetails().getPermntOutsideKeralaDistrict() != null) {
+            if (!masterData.get(MarriageConstants.DISTRICT)
+                    .contains(request.getMarriageDetails().get(0).getGroomAddressDetails()
+                            .getPermntOutsideKeralaDistrict()))
+                errorMap.put("GROOM PERMANENT ADDRESS: DISTRICT  INVALID", "groom district outside kerala is  " +
+                        request.getMarriageDetails().get(0).getGroomAddressDetails().getPermntOutsideKeralaDistrict()
+                        + " is invalid");
+        }
+        if (request.getMarriageDetails().get(0).getGroomAddressDetails().getPermntInKeralaAdrTaluk() != null) {
+            if (!masterData.get(MarriageConstants.TALUK)
+                    .contains(request.getMarriageDetails().get(0).getGroomAddressDetails().getPermntInKeralaAdrTaluk()))
+                errorMap.put("GROOM PERMANENT ADDRESS: TALUK NAME INVALID", "groom taluk inside kerala " +
+                        request.getMarriageDetails().get(0).getGroomAddressDetails().getPermntInKeralaAdrTaluk()
+                        + " is invalid");
+        }
+
+        if (request.getMarriageDetails().get(0).getGroomAddressDetails().getPermntOutsideKeralaTaluk() != null) {
+            if (!masterData.get(MarriageConstants.TALUK)
+                    .contains(
+                            request.getMarriageDetails().get(0).getGroomAddressDetails().getPermntOutsideKeralaTaluk()))
+                errorMap.put("GROOM PERMANENT ADDRESS: TALUK NAME INVALID", "groom taluk outside kerala  " +
+                        request.getMarriageDetails().get(0).getGroomAddressDetails().getPermntOutsideKeralaTaluk()
+                        + " is invalid");
+        }
+        if (request.getMarriageDetails().get(0).getGroomAddressDetails().getPermntOutsideKeralaVillage() != null) {
+            if (!masterData.get(MarriageConstants.VILLAGE)
+                    .contains(request.getMarriageDetails().get(0).getGroomAddressDetails()
+                            .getPermntOutsideKeralaVillage()))
+                errorMap.put("GROOM PERMANENT ADDRESS: VILLAGE NAME INVALID",
+                        "groom village outside kerala " +
+                                request.getMarriageDetails().get(0).getGroomAddressDetails()
+                                        .getPermntOutsideKeralaVillage()
+                                + " is invalid");
+        }
+        if (request.getMarriageDetails().get(0).getGroomAddressDetails().getPermntInKeralaAdrVillage() != null) {
+            if (!masterData.get(MarriageConstants.VILLAGE)
+                    .contains(
+                            request.getMarriageDetails().get(0).getGroomAddressDetails().getPermntInKeralaAdrVillage()))
+                errorMap.put("GROOM PERMANENT ADDRESS: VILLAGE NAME INVALID",
+                        "groom village inside kerala  " +
+                                request.getMarriageDetails().get(0).getGroomAddressDetails()
+                                        .getPermntInKeralaAdrVillage()
+                                + " is invalid");
+        }
+
+        if (request.getMarriageDetails().get(0).getGroomAddressDetails().getPermntInKeralaAdrLBName() != null) {
+            if (!masterData.get(MarriageConstants.TENANTS)
+                    .contains(
+                            request.getMarriageDetails().get(0).getGroomAddressDetails().getPermntInKeralaAdrLBName()))
+                errorMap.put("GROOM PERMANENT ADDRESS: LB NAME INVALID", "groom lbname inside kerala  " +
+                        request.getMarriageDetails().get(0).getGroomAddressDetails().getPermntInKeralaAdrLBName()
+                        + " is invalid");
+        }
+        // System.out.println("ousidetaluk"+request.getMarriageDetails().get(0).getGroomAddressDetails().getPermntInKeralaWardNo()
+        // );
+        // if
+        // (request.getMarriageDetails().get(0).getGroomAddressDetails().getPermntInKeralaWardNo()
+        // != null) {
+        // if (!masterData.get(MarriageConstants.WARD)
+        // .contains(request.getMarriageDetails().get(0).getGroomAddressDetails().getPermntInKeralaWardNo()))
+        // errorMap.put("GROOM PERMANENT ADDRESS: WARD INVALID", "The ward of groom " +
+        // request.getMarriageDetails().get(0).getGroomAddressDetails().getPermntInKeralaWardNo()
+        // + " is invalid");
+        // }
+        if (request.getMarriageDetails().get(0).getGroomAddressDetails().getPermntInKeralaAdrPostOffice() != null) {
+            if (!masterData.get(MarriageConstants.POSTOFFICE)
+                    .contains(request.getMarriageDetails().get(0).getGroomAddressDetails()
+                            .getPermntInKeralaAdrPostOffice()))
+                errorMap.put("GROOM PERMANENT ADDRESS: POST OFFICE INVALID",
+                        "groom post office inside kerala is invalid" +
+                                request.getMarriageDetails().get(0).getGroomAddressDetails()
+                                        .getPermntInKeralaAdrPostOffice()
+                                + " is invalid");
+        }
+
+        // GROOM PRESENT ADDRESS////////////
+        if (request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentaddressCountry() != null) {
+            System.out.println("isExists");
+            if (!masterData.get(MarriageConstants.COUNTRY)
+                    .contains(request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentaddressCountry()))
+                errorMap.put("GROOM PRESENT ADDRESS: COUNTRY NAME INVALID", "The country name of  groom " +
+                        request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentaddressCountry()
+                        + " is invalid");
+        }
+
+        if (request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentaddressStateName() != null) {
+            if (!masterData.get(MarriageConstants.STATE)
+                    .contains(
+                            request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentaddressStateName()))
+                errorMap.put("GROOM PRESENT ADDRESS: STATE NAME INVALID", "The state name of  groom " +
+                        request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentaddressStateName()
+                        + " is invalid");
+        }
+
+        if (request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentInsideKeralaDistrict() != null) {
+            if (!masterData.get(MarriageConstants.DISTRICT)
+                    .contains(request.getMarriageDetails().get(0).getGroomAddressDetails()
+                            .getPresentInsideKeralaDistrict()))
+                errorMap.put("GROOM PRESENT ADDRESS: DISTRICT INVALID", "groom district inside kerala " +
+                        request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentInsideKeralaDistrict()
+                        + " is invalid");
+        }
+        if (request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentOutsideKeralaDistrict() != null) {
+            if (!masterData.get(MarriageConstants.DISTRICT)
+                    .contains(request.getMarriageDetails().get(0).getGroomAddressDetails()
+                            .getPresentOutsideKeralaDistrict()))
+                errorMap.put("GROOM PRESENT ADDRESS: DISTRICT  INVALID", "groom district outside kerala " +
+                        request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentOutsideKeralaDistrict()
+                        + " is invalid");
+        }
+
+        if (request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentInsideKeralaTaluk() != null) {
+            if (!masterData.get(MarriageConstants.TALUK)
+                    .contains(
+                            request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentInsideKeralaTaluk()))
+                errorMap.put("GROOM PRESENT ADDRESS: TALUK NAME INVALID", "groom taluk inside kerala " +
+                        request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentInsideKeralaTaluk()
+                        + " is invalid");
+        }
+        if (request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentOutsideKeralaTalukName() != null) {
+            if (!masterData.get(MarriageConstants.TALUK)
+                    .contains(request.getMarriageDetails().get(0).getGroomAddressDetails()
+                            .getPresentOutsideKeralaTalukName()))
+                errorMap.put("GROOM PRESENT ADDRESS: TALUK NAME INVALID", "groom taluk outside kerala " +
+                        request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentOutsideKeralaTalukName()
+                        + " is invalid");
+        }
+        if (request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentOutsideKeralaVillageName() != null) {
+            if (!masterData.get(MarriageConstants.VILLAGE)
+                    .contains(request.getMarriageDetails().get(0).getGroomAddressDetails()
+                            .getPresentOutsideKeralaVillageName()))
+                errorMap.put("GROOM PRESENT ADDRESS: VILLAGE NAME INVALID", "groom village outdide kerala " +
+                        request.getMarriageDetails().get(0).getGroomAddressDetails()
+                                .getPresentOutsideKeralaVillageName()
+                        + " is invalid");
+        }
+        if (request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentInsideKeralaVillage() != null) {
+            if (!masterData.get(MarriageConstants.VILLAGE)
+                    .contains(request.getMarriageDetails().get(0).getGroomAddressDetails()
+                            .getPresentInsideKeralaVillage()))
+                errorMap.put("GROOM PRESENT ADDRESS: VILLAGE NAME INVALID", "groom village inside kerala" +
+                        request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentInsideKeralaVillage()
+                        + " is invalid");
+        }
+
+        if (request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentInsideKeralaLBName() != null) {
+            if (!masterData.get(MarriageConstants.TENANTS)
+                    .contains(request.getMarriageDetails().get(0).getGroomAddressDetails()
+                            .getPresentInsideKeralaLBName()))
+                errorMap.put("GROOM PRESENT ADDRESS: LB NAME INVALID", "groom lbname inside kerala " +
+                        request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentInsideKeralaLBName()
+                        + " is invalid");
+        }
+        // //
+        // System.out.println("ousidetaluk"+request.getMarriageDetails().get(0).getGroomAddressDetails().getPermntInKeralaWardNo()
+        // );
+        // // if
+        // (request.getMarriageDetails().get(0).getGroomAddressDetails().getPermntInKeralaWardNo()
+        // != null) {
+        // // if (!masterData.get(MarriageConstants.WARD)
+        // //
+        // .contains(request.getMarriageDetails().get(0).getGroomAddressDetails().getPermntInKeralaWardNo()))
+        // // errorMap.put("GROOM PERMANENT ADDRESS: WARD INVALID", "The ward of groom "
+        // +
+        // //
+        // request.getMarriageDetails().get(0).getGroomAddressDetails().getPermntInKeralaWardNo()
+        // // + " is invalid");
+        // // }
+        if (request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentInsideKeralaPostOffice() != null) {
+            if (!masterData.get(MarriageConstants.POSTOFFICE)
+                    .contains(request.getMarriageDetails().get(0).getGroomAddressDetails()
+                            .getPresentInsideKeralaPostOffice()))
+                errorMap.put("GROOM PRESENT ADDRESS: POST OFFICE INVALID", "groom post office inside kerala " +
+                        request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentInsideKeralaPostOffice()
+                        + " is invalid");
+        }
+        ///////////////////////////// end of groom address
+        ///////////////////////////// details/////////////////////////////////////////////
+        // bride PERMANENT address details//////////////////////
+        if (request.getMarriageDetails().get(0).getBrideAddressDetails().getPermtaddressCountry() != null) {
+            if (!masterData.get(MarriageConstants.COUNTRY)
+                    .contains(request.getMarriageDetails().get(0).getBrideAddressDetails().getPermtaddressCountry()))
+                errorMap.put("BRIDE PERMANENT ADDRESS: COUNTRY NAME INVALID", "The country name of  bride " +
+                        request.getMarriageDetails().get(0).getBrideAddressDetails().getPermtaddressCountry()
+                        + " is invalid");
+        }
+        if (request.getMarriageDetails().get(0).getBrideAddressDetails().getPermtaddressStateName() != null) {
+            if (!masterData.get(MarriageConstants.STATE)
+                    .contains(request.getMarriageDetails().get(0).getBrideAddressDetails().getPermtaddressStateName()))
+                errorMap.put("BRIDE PERMANENT ADDRESS: STATE NAME INVALID", "The state name of  bride " +
+                        request.getMarriageDetails().get(0).getBrideAddressDetails().getPermtaddressStateName()
+                        + " is invalid");
+        }
+
+        if (request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaAdrDistrict() != null) {
+            if (!masterData.get(MarriageConstants.DISTRICT)
+                    .contains(request.getMarriageDetails().get(0).getBrideAddressDetails()
+                            .getPermntInKeralaAdrDistrict()))
+                errorMap.put("BRIDE PERMANENT ADDRESS: DISTRICT NAME INVALID", "bride district inside kerala " +
+                        request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaAdrDistrict()
+                        + " is invalid");
+        }
+        if (request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntOutsideKeralaDistrict() != null) {
+            if (!masterData.get(MarriageConstants.DISTRICT)
+                    .contains(request.getMarriageDetails().get(0).getBrideAddressDetails()
+                            .getPermntOutsideKeralaDistrict()))
+                errorMap.put("BRIDE PERMANENT ADDRESS: DISTRICT  INVALID", "bride district ouside kerala" +
+                        request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntOutsideKeralaDistrict()
+                        + " is invalid");
+        }
+        if (request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaAdrTaluk() != null) {
+            if (!masterData.get(MarriageConstants.TALUK)
+                    .contains(request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaAdrTaluk()))
+                errorMap.put("BRIDE PERMANENT ADDRESS: TALUK NAME INVALID", "bride taluk inside kerala" +
+                        request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaAdrTaluk()
+                        + " is invalid");
+        }
+
+        if (request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntOutsideKeralaTaluk() != null) {
+            if (!masterData.get(MarriageConstants.TALUK)
+                    .contains(
+                            request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntOutsideKeralaTaluk()))
+                errorMap.put("BRIDE PERMANENT ADDRESS: TALUK NAME INVALID", "bride taluk ouside kerala " +
+                        request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntOutsideKeralaTaluk()
+                        + " is invalid");
+        }
+        if (request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntOutsideKeralaVillage() != null) {
+            if (!masterData.get(MarriageConstants.VILLAGE)
+                    .contains(request.getMarriageDetails().get(0).getBrideAddressDetails()
+                            .getPermntOutsideKeralaVillage()))
+                errorMap.put("BRIDE PERMANENT ADDRESS: VILLAGE NAME INVALID", "bride village outside kerala " +
+                        request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntOutsideKeralaVillage()
+                        + " is invalid");
+        }
+        if (request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaAdrVillage() != null) {
+            if (!masterData.get(MarriageConstants.VILLAGE)
+                    .contains(
+                            request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaAdrVillage()))
+                errorMap.put("BRIDE PERMANENT ADDRESS: VILLAGE NAME INVALID", "Tbride village inside kerala " +
+                        request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaAdrVillage()
+                        + " is invalid");
+        }
+
+        if (request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaAdrLBName() != null) {
+            if (!masterData.get(MarriageConstants.TENANTS)
+                    .contains(
+                            request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaAdrLBName()))
+                errorMap.put("BRIDE PERMANENT ADDRESS: LB NAME INVALID", "bride lbname inside kerala" +
+                        request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaAdrLBName()
+                        + " is invalid");
+        }
+        // //
+        // System.out.println("ousidetaluk"+request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaWardNo()
+        // // );
+        // // if
+        // (request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaWardNo()
+        // != null) {
+        // if (!masterData.get(MarriageConstants.WARD)
+        // .contains(request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaWardNo()))
+        // errorMap.put("GROOM PERMANENT ADDRESS: WARD INVALID", "The ward of bride " +
+        // request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaWardNo()
+        // + " is invalid");
+        // }
+        if (request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaAdrPostOffice() != null) {
+            if (!masterData.get(MarriageConstants.POSTOFFICE)
+                    .contains(request.getMarriageDetails().get(0).getBrideAddressDetails()
+                            .getPermntInKeralaAdrPostOffice()))
+                errorMap.put("BRIDE PERMANENT ADDRESS: POST OFFICE INVALID", "bride post office inside kerala " +
+                        request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaAdrPostOffice()
+                        + " is invalid");
+        }
+
+        // BRIDE PRESENT ADDRESS////////////
+        if (request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentaddressCountry() != null) {
+            System.out.println("isExists");
+            if (!masterData.get(MarriageConstants.COUNTRY)
+                    .contains(request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentaddressCountry()))
+                errorMap.put("BRIDE PRESENT ADDRESS: COUNTRY NAME INVALID", "The country name of  bride " +
+                        request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentaddressCountry()
+                        + " is invalid");
+        }
+
+        if (request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentaddressStateName() != null) {
+            if (!masterData.get(MarriageConstants.STATE)
+                    .contains(
+                            request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentaddressStateName()))
+                errorMap.put("BRIDE PRESENT ADDRESS: STATE NAME INVALID", "The state name of  bride " +
+                        request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentaddressStateName()
+                        + " is invalid");
+        }
+
+        if (request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentInsideKeralaDistrict() != null) {
+            if (!masterData.get(MarriageConstants.DISTRICT)
+                    .contains(request.getMarriageDetails().get(0).getBrideAddressDetails()
+                            .getPresentInsideKeralaDistrict()))
+                errorMap.put("BRIDE PRESENT ADDRESS: DISTRICT INVALID", "bride district inside kerala " +
+                        request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentInsideKeralaDistrict()
+                        + " is invalid");
+        }
+        if (request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentOutsideKeralaDistrict() != null) {
+            if (!masterData.get(MarriageConstants.DISTRICT)
+                    .contains(request.getMarriageDetails().get(0).getBrideAddressDetails()
+                            .getPresentOutsideKeralaDistrict()))
+                errorMap.put("BRIDE PRESENT ADDRESS: DISTRICT  INVALID", "bride district outside kerala " +
+                        request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentOutsideKeralaDistrict()
+                        + " is invalid");
+        }
+
+        if (request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentInsideKeralaTaluk() != null) {
+            if (!masterData.get(MarriageConstants.TALUK)
+                    .contains(
+                            request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentInsideKeralaTaluk()))
+                errorMap.put("BRIDE PRESENT ADDRESS: TALUK NAME INVALID", "bride taluk inside kerala" +
+                        request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentInsideKeralaTaluk()
+                        + " is invalid");
+        }
+        if (request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentOutsideKeralaTalukName() != null) {
+            if (!masterData.get(MarriageConstants.TALUK)
+                    .contains(request.getMarriageDetails().get(0).getBrideAddressDetails()
+                            .getPresentOutsideKeralaTalukName()))
+                errorMap.put("BRIDE PRESENT ADDRESS: TALUK NAME INVALID", "bride taluk outside kerala " +
+                        request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentOutsideKeralaTalukName()
+                        + " is invalid");
+        }
+        if (request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentOutsideKeralaVillageName() != null) {
+            if (!masterData.get(MarriageConstants.VILLAGE)
+                    .contains(request.getMarriageDetails().get(0).getBrideAddressDetails()
+                            .getPresentOutsideKeralaVillageName()))
+                errorMap.put("BRIDE PRESENT ADDRESS: VILLAGE NAME INVALID", "bride village outside kerala" +
+                        request.getMarriageDetails().get(0).getBrideAddressDetails()
+                                .getPresentOutsideKeralaVillageName()
+                        + " is invalid");
+        }
+        if (request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentInsideKeralaVillage() != null) {
+            if (!masterData.get(MarriageConstants.VILLAGE)
+                    .contains(request.getMarriageDetails().get(0).getBrideAddressDetails()
+                            .getPresentInsideKeralaVillage()))
+                errorMap.put("BRIDE PRESENT ADDRESS: VILLAGE NAME INVALID", "bride village inside kerala " +
+                        request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentInsideKeralaVillage()
+                        + " is invalid");
+        }
+
+        if (request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentInsideKeralaLBName() != null) {
+            if (!masterData.get(MarriageConstants.TENANTS)
+                    .contains(request.getMarriageDetails().get(0).getBrideAddressDetails()
+                            .getPresentInsideKeralaLBName()))
+                errorMap.put("BRIDE PRESENT ADDRESS: LB NAME INVALID", "bride lbname inside kerala " +
+                        request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentInsideKeralaLBName()
+                        + " is invalid");
+        }
+
+        // System.out.println("ousidetaluk"+request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaWardNo()
+        // );
+        // // if
+        // (request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaWardNo()
+        // != null) {
+        // // if (!masterData.get(MarriageConstants.WARD)
+        // //
+        // .contains(request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaWardNo()))
+        // // errorMap.put("GROOM PERMANENT ADDRESS: WARD INVALID", "The ward of bride "
+        // +
+        // //
+        // request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaWardNo()
+        // // + " is invalid");
+        // }
+        if (request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentInsideKeralaPostOffice() != null) {
+            if (!masterData.get(MarriageConstants.POSTOFFICE)
+                    .contains(request.getMarriageDetails().get(0).getBrideAddressDetails()
+                            .getPresentInsideKeralaPostOffice()))
+                errorMap.put("BRIDE PRESENT ADDRESS: POST OFFICE INVALID", "bride post office inside kerala " +
+                        request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentInsideKeralaPostOffice()
+                        + " is invalid");
+        }
+        ///////////////////////////// end of bride address
+        ///////////////////////////// details/////////////////////////////////////////////
+
         // if(request.getMarriageDetails().get(0).getTalukid() != null) {
         // if(!masterData.get(MarriageConstants.TALUK)
         // .contains(request.getMarriageDetails().get(0).getTalukid()))
