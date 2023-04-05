@@ -33,7 +33,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Builder
 @ToString
-public class ProcessInstance {
+public class DraftFilesProcessInstance {
 
     @Size(max = 256)
     @JsonProperty("id")
@@ -99,7 +99,7 @@ public class ProcessInstance {
     @JsonProperty("escalated")
     private Boolean escalated;
 
-    public ProcessInstance addDocumentsItem(Document documentsItem) {
+    public DraftFilesProcessInstance addDocumentsItem(Document documentsItem) {
         if (this.documents == null) {
             this.documents = new ArrayList<>();
         }
@@ -109,7 +109,7 @@ public class ProcessInstance {
         return this;
     }
 
-    public ProcessInstance addUsersItem(User usersItem) {
+    public DraftFilesProcessInstance addUsersItem(User usersItem) {
         if (this.assignes == null) {
             this.assignes = new ArrayList<>();
         }

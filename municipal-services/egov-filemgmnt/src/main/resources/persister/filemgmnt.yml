@@ -682,36 +682,36 @@ serviceMaps:
     isTransaction: true
     queryMaps:
       - query: INSERT INTO public.eg_fm_drafting(id, tenantid, businessservice, modulename, filecode, drafttype, drafttext, assigner, filestoreid, status, createdby, createdtime, lastmodifiedby, lastmodifiedtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
-        basePath: Drafting.*
+        basePath: DraftFiles.*
         jsonMaps:
 
-          - jsonPath: $.Drafting.*.uuid
+          - jsonPath: $.DraftFiles.*.uuid
 
-          - jsonPath: $.Drafting.*.tenantId
+          - jsonPath: $.DraftFiles.*.tenantId
 
-          - jsonPath: $.Drafting.*.businessService
+          - jsonPath: $.DraftFiles.*.businessService
 
-          - jsonPath: $.Drafting.*.moduleName
+          - jsonPath: $.DraftFiles.*.moduleName
 
-          - jsonPath: $.Drafting.*.fileCode
+          - jsonPath: $.DraftFiles.*.fileCode
 
-          - jsonPath: $.Drafting.*.draftType
+          - jsonPath: $.DraftFiles.*.draftType
 
-          - jsonPath: $.Drafting.*.draftText
+          - jsonPath: $.DraftFiles.*.draftText
 
-          - jsonPath: $.Drafting.*.assigner
+          - jsonPath: $.DraftFiles.*.assigner
 
-          - jsonPath: $.Drafting.*.fileStoreId
+          - jsonPath: $.DraftFiles.*.fileStoreId
 
-          - jsonPath: $.Drafting.*.status
+          - jsonPath: $.DraftFiles.*.status
 
-          - jsonPath: $.Drafting.*.auditDetails.createdBy
+          - jsonPath: $.DraftFiles.*.auditDetails.createdBy
 
-          - jsonPath: $.Drafting.*.auditDetails.createdTime
+          - jsonPath: $.DraftFiles.*.auditDetails.createdTime
 
-          - jsonPath: $.Drafting.*.auditDetails.lastModifiedBy
+          - jsonPath: $.DraftFiles.*.auditDetails.lastModifiedBy
 
-          - jsonPath: $.Drafting.*.auditDetails.lastModifiedTime
+          - jsonPath: $.DraftFiles.*.auditDetails.lastModifiedTime
           
   - version: 1.0
     description: Update draft Text  in egov_filemgmnt database, eg_fm_drafting
@@ -719,17 +719,17 @@ serviceMaps:
     isTransaction: true
     queryMaps:
       - query: UPDATE public.eg_fm_drafting  SET  drafttext=?   WHERE filecode =? AND drafttype = ? AND assigner = ? ;
-        basePath: Drafting.*
+        basePath: DraftFiles.*
         jsonMaps:
 
 
-          - jsonPath: $.Drafting.*.draftText
+          - jsonPath: $.DraftFiles.*.draftText
 
-          - jsonPath: $.Drafting.*.fileCode
+          - jsonPath: $.DraftFiles.*.fileCode
 
-          - jsonPath: $.Drafting.*.draftType
+          - jsonPath: $.DraftFiles.*.draftType
 
-          - jsonPath: $.Drafting.*.assigner
+          - jsonPath: $.DraftFiles.*.assigner
 
   - version: 1.0
     description: Update drafting status  in egov_filemgmnt database, eg_fm_drafting
@@ -737,15 +737,15 @@ serviceMaps:
     isTransaction: true
     queryMaps:
       - query: UPDATE public.eg_fm_drafting  SET  status=?   WHERE filecode =? AND drafttype = ? AND assigner = ? ;
-        basePath: Drafting.*
+        basePath: DraftFiles.*
         jsonMaps:
-          - jsonPath: $.Drafting.*.status
+          - jsonPath: $.DraftFiles.*.status
 
-          - jsonPath: $.Drafting.*.fileCode
+          - jsonPath: $.DraftFiles.*.fileCode
 
-          - jsonPath: $.Drafting.*.draftType
+          - jsonPath: $.DraftFiles.*.draftType
 
-          - jsonPath: $.Drafting.*.assigner
+          - jsonPath: $.DraftFiles.*.assigner
   - version: 1.0
     description: Save Enquiry  in egov_filemgmnt database, eg_fm_enquiry
     fromTopic: save_fm_enquiry

@@ -54,10 +54,6 @@ public class FileManagementController implements FileManagementBaseController {
                                                          .applicantServiceDetail(serviceDetail)
                                                          .build());
     }
-    
-    
-   
-    
 
     @Override
     @PutMapping("/applicantservices/_update")

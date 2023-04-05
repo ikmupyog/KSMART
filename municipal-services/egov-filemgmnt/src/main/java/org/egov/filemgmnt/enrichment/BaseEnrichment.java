@@ -7,7 +7,7 @@ import org.egov.filemgmnt.util.IdgenUtil;
 import org.egov.filemgmnt.web.models.AuditDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 
-abstract class BaseEnrichment { // NOPMD
+class BaseEnrichment { // NOPMD
 
     @Autowired
     private IdgenUtil idgenUtil;
@@ -38,7 +38,7 @@ abstract class BaseEnrichment { // NOPMD
     }
 
     protected List<String> generateIds(final RequestInfo requestInfo, final String tenantId, final String idName,
-                                       final String moduleCode, String fnType, final int count) {
+                                       final String moduleCode, final String fnType, final int count) {
         return idgenUtil.getIdList(requestInfo, tenantId, idName, moduleCode, fnType, count);
     }
 }

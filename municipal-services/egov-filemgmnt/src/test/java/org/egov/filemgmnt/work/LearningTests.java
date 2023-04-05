@@ -57,9 +57,9 @@ class LearningTests {
                                                  .build();
 
         ApplicantPersonal usrCopy = usr.toBuilder()
-                                    .build();
+                                       .build();
         usrCopy.getAddress()
-            .setHouseName("Tower2 (16E)");
+               .setHouseName("Tower2 (16E)");
 
         log.info("*** Builder.toBuilder:: \nusr={} \nusr2={}", FMUtils.toJson(usr), FMUtils.toJson(usrCopy));
     }

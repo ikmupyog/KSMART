@@ -1,4 +1,4 @@
-package org.egov.filemgmnt.web.models.arisingfile;
+package org.egov.filemgmnt.web.models.drafting;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,21 +23,18 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-
-public class ArisingFileResponse {
-
+public class DraftFilesSearchResponse {
     @JsonProperty("ResponseInfo")
     private ResponseInfo responseInfo;
+    @JsonProperty("Drafting")
+    private List<DraftFiles> draftings;
 
-    @JsonProperty("ArisingFile")
-    private List<ArisingFile> arisingFileDetail;
+    public DraftFilesSearchResponse addDrafting(DraftFiles drafting) {
 
-    public ArisingFileResponse addArisingFile(ArisingFile arisingFile) {
-
-        if (arisingFileDetail == null) {
-            arisingFileDetail = new ArrayList<>();
+        if (draftings == null) {
+            draftings = new ArrayList<>();
         }
-        arisingFileDetail.add(arisingFile);
+        draftings.add(drafting);
         return this;
     }
 
