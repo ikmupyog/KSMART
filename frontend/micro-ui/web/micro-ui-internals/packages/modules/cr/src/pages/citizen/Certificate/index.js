@@ -1,37 +1,18 @@
+import { BackButton } from "@egovernments/digit-ui-react-components";
 import React, { useEffect, useState } from "react";
-import {
-  BackButton,
-  Loader,
-  TextInput,
-  Label,
-  SubmitBar,
-  LinkLabel,
-  ActionBar,
-  CloseSvg,
-  DatePicker,
-  CardLabelError,
-  SearchForm,
-  SearchField,
-  Dropdown,
-} from "@egovernments/digit-ui-react-components";
-import { useForm, Controller } from "react-hook-form";
-import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import DeathCertificate from "../../../components/SearchRegistryDeath";
+import SearchRegistryDeath from "../../../components/SearchRegistryDeath";
 
-const DeathCertificateSearch = ({ path }) => {
-  const { variant } = useParams();
+const DeathCertificateSearch = () => {
   const { t } = useTranslation();
-  const tenantId = "kl.cochin";
-  let downloadDeathConfig ={
-    enabled: false
-  }
-  // const tenantId1 = Digit.ULBService.getCurrentTenantId();
-  // const tenantId2 = Digit.ULBService.getStateId();
-  const [payload, setPayload] = useState({});
-  const [registryPayload, setRegistryPayload] = useState({});
+  const tenantId = Digit.ULBService.getCurrentTenantId();
+  const mutation = Digit.Hooks.cr.useRegSearchDeath(tenantId);
 
-  const Search = Digit.ComponentRegistryService.getComponent(variant === "license" ? "SearchLicense" : "SearchDfmApplication");
+  const [payload, setPayload] = useState({});
+  const [searchData, setSearchData] = useState({});
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
 
   function onSubmit(_data) {
     var fromDate = new Date(_data?.fromDate);
@@ -49,49 +30,30 @@ const DeathCertificateSearch = ({ path }) => {
         .filter((k) => data[k])
         .reduce((acc, key) => ({ ...acc, [key]: typeof data[key] === "object" ? data[key].code : data[key] }), {})
     );
-    console.log("search api params==,",config,payload);
-    refetch();
   }
-  const config = {
-    enabled: !!(payload && Object.keys(payload).length > 0),
-  };
 
- 
+  const onSuccess = (data) => {
+    setSearchData(data);
+    setIsSuccess(true);
+    setIsLoading(false);
+  }
 
-  const { data: { deathCertificateDtls: searchResult, Count: count } = {}, isLoading, isSuccess,refetch } = Digit.Hooks.cr.useRegistrySearchDeath({
-    tenantId,
-    filters: payload,
-    config,
-  });
-
-  // console.log("searchResult",isSuccess,searchResult?.[0]);
   useEffect(() => {
-    console.log("reached==",isSuccess,searchResult,isLoading);
-    if((searchResult?.length > 0)){
-    let payloadData = { id: isSuccess && searchResult?.[0]?.InformationDeath?.Id, source: "sms" };
+    setIsSuccess(false);
+    setIsLoading(true);
+    mutation.mutate({ filters: payload }, { onSuccess });
+  }, [payload])
 
-    let tempRegistryPayload = Object.keys(payloadData)
-      .filter((k) => payloadData[k])
-      .reduce((acc, key) => ({ ...acc, [key]: typeof payloadData[key] === "object" ? payloadData[key].code : payloadData[key] }), {});
-    
-    downloadDeathConfig = {
-      enabled : (registryPayload && Object.keys(registryPayload).length > 0),
-    }
-    console.log("tempPatload==",tempRegistryPayload,downloadDeathConfig);
-    setRegistryPayload(tempRegistryPayload);
-    }
-  }, [searchResult,isSuccess,isLoading]);
+  const { deathCertificateDtls: searchResult, Count: count } = searchData;
 
-  const { data: { filestoreId: storeId } = {}, isLoading:isDownLoadLoading, isSuccess:isDownloadSuccess } = Digit.Hooks.cr.useRegistryDownloadDeath({ tenantId, filters: registryPayload, config:downloadDeathConfig });
   return (
     <React.Fragment>
       <BackButton>{t("CS_COMMON_BACK2")}</BackButton>
-      <DeathCertificate
+      <SearchRegistryDeath
         t={t}
         tenantId={tenantId}
         onSubmit={onSubmit}
-        data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : { display: "ES_COMMON_NO_DATA" }) : ""}
-        filestoreId={storeId}
+        data={searchResult || []}
         isSuccess={isSuccess}
         isLoading={isLoading}
         count={count}

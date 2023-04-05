@@ -184,6 +184,7 @@ const MarriagePublicPlace = ({
               value={marriageStreetEn}
               onChange={setSelectMarriageStreetEn}
               placeholder={`${t("CR_STREET_NAME_EN")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
             />
           </div>
           <div className="col-md-3">
@@ -197,6 +198,7 @@ const MarriagePublicPlace = ({
               value={marriageLandmark}
               onChange={setSelectMarriageLandmark}
               placeholder={`${t("CR_LANDMARK")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LANDMARK") })}
             />
           </div>
         </div>
@@ -217,7 +219,7 @@ const MarriagePublicPlace = ({
               value={marriagePlacenameMl}
               onChange={setSelectOtherMarriagePlacenameMl}
               placeholder={`${t("CR_PUBLIC_PRIVATE_PLACE_EN")}`}
-              {...(validation = { isRequired: true })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_PUBLIC_PRIVATE_PLACE_ML") })}
             />
           </div>
           <div className="col-md-3">
@@ -234,7 +236,12 @@ const MarriagePublicPlace = ({
               value={marriageLocalityMl}
               onChange={setSelectMarriageLocalityMal}
               placeholder={`${t("CR_LOCALITY_ML")}`}
-              {...(validation = { isRequired: true })}
+              {...(validation = {
+                pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                isRequired: true,
+                type: "text",
+                title: t("CR_INVALID_LOCALITY_ML"),
+              })}
             />
           </div>
           <div className="col-md-3">
@@ -247,6 +254,12 @@ const MarriagePublicPlace = ({
               value={marriageStreetMl}
               onChange={setSelectmarriageStreetMl}
               placeholder={`${t("CR_STREET_NAME_ML")}`}
+              {...(validation = {
+                pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                isRequired: false,
+                type: "text",
+                title: t("CR_INVALID_STREET_NAME_ML"),
+              })}
             />
           </div>
         </div>

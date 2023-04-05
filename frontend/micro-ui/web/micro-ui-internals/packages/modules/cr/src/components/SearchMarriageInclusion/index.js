@@ -28,7 +28,7 @@ const registyBtnStyle = {
   marginBottom: "15px",
 };
 
-const  SearchMarriageInclusion = ({ tenantId, t, onSubmit, data, count, onCorrectionClick }) => {
+const  SearchMarriageInclusion = ({ tenantId, t, onSubmit, data, count, onCorrectionClick, isLoading }) => {
 
 
   const stateId = Digit.ULBService.getStateId();
@@ -159,6 +159,7 @@ const  SearchMarriageInclusion = ({ tenantId, t, onSubmit, data, count, onCorrec
     []
   );
   let tmpData = data;
+  console.log("data==",data);
   // useEffect(() => {
   //   if (filestoreId && isSuccess === true) {
   //     tmpData[0] = { ...data[0], filestoreId, isSuccess };
@@ -174,7 +175,8 @@ const  SearchMarriageInclusion = ({ tenantId, t, onSubmit, data, count, onCorrec
           <SearchFields {...{ register, control, reset, tenantId, previousPage, t }} />
         </SearchForm>
       </div>
-      {data?.length > 0 && (
+      {isLoading && <Loader/>}
+      {(data?.length > 0) && (
           <React.Fragment>
             {/* {(filestoreId && isSuccess === true )? <div style={registyBtnStyle}>
         <SubmitBar label={t("Download Certificate")} onSubmit={() => downloadDocument(filestoreId)} />

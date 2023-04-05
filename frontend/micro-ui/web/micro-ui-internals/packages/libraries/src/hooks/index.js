@@ -14,6 +14,7 @@ import {
   useRecieptSearch,
 } from "./payment";
 import { useUserSearch } from "./userSearch";
+import {useCivilRegMDMS} from "./cr/useCivilRegMDMS";
 import { useApplicationsForBusinessServiceSearch } from "./useApplicationForBillSearch";
 import useBoundaryLocalities from "./useLocalities";
 import useCommonMDMS from "./useMDMS";
@@ -128,6 +129,7 @@ import useCivilRegistrationNACBIRTHAPI from "./cr/useCivilRegistrationNACBIRTHAP
 import useCivilRegistrationBornOutsideIndiaBirthAPI from "./cr/useCivilRegistrationBornOutsideIndiaBirthAPI";
 import useCivilRegistrationAbandonedBirthAPI from "./cr/useCivilRegistrationAbandonedBirthAPI";
 import useApplicationBornOutsideIndiaBirthDetail from "./cr/useApplicationBornOutsideIndiaBirthDetail"; 
+import useBirthCorrectionAction from "./cr/useBirthCorrectionAction";
 
 import useCivilRegistrationDeathAPI from "./cr/useCivilRegistrationDeathAPI";
 // import useTradeLicenseSearch from "./tl/useTradeLicenseSearch";
@@ -136,6 +138,7 @@ import { useCRDeathSearchApplication, useCRApplicationDeathDetails } from "./cr/
 import useCRFetchBill from "./cr/useFetchBill";
 import useCRDFetchBill from "./cr/useDeathFetchBill";
 import useCRApplicationDetail from "./cr/useApplicationDetail";
+import useCRApplicationAdoptionDetail from "./cr/useApplicationAdoptionDetail";
 import useApplicationMarriageDetail from "./cr/useApplicationMarriageDetail";
 import useApplicationStillBirthDetail from "./cr/useApplicationStillBirthDetail"; 
 import useApplicationAbandondBirthDetail from "./cr/useApplicationAbandondBirthDetail";
@@ -240,6 +243,8 @@ import useWaterSearch from "./ws/useWaterSearch";
 import useSewarageSearch from "./ws/useSewarageSearch";
 import useTradeLicensePdeAPI from "./tl/useTradeLicensePdeAPI";
 import useSearchPde from "./tl/useSearchPde";
+import { useRegSearchDeath, getDeathFileSourceDetails } from "./cr/death";
+
 const pgr = {
   useComplaintDetails,
   useComplaintsList,
@@ -354,6 +359,10 @@ const tl = {
   useTradeLicenseCorrectionAPI
 };
 const cr = {
+  useBirthCorrectionAction,
+  useRegSearchDeath,
+  getDeathFileSourceDetails,
+  useCivilRegMDMS,
   useTenants: useTenantsCR,
   useCivilRegistrationMDMS,
   useCivilRegistrationAPI,
@@ -381,6 +390,7 @@ const cr = {
   useSearchDeath ,
   useSearchStillBirth,
   useApplicationDetail: useCRApplicationDetail,
+  useApplicationAdoptionDetail:useCRApplicationAdoptionDetail,
   useApplicationMarriageDetail,
   useApplicationStillBirthDetail:useApplicationStillBirthDetail,
   useApplicationAbandondBirthDetail,

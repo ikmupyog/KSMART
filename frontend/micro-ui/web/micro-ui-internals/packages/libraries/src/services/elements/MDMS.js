@@ -1812,6 +1812,24 @@ const getFSMTripNumberCriteria = (tenantId, moduleCode, type) => ({
   },
 });
 
+const getCommonDbmsServiceCriteria = (tenantId, moduleCode, type) => ({
+  type,
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: type,
+            filter: null,
+          },
+        ],
+      },
+    ],
+  },
+});
+
 const getFSMReceivedPaymentTypeCriteria = (tenantId, moduleCode, type) => ({
   type,
   details: {
@@ -2385,6 +2403,9 @@ export const MdmsService = {
     const cacheSetting = getCacheSetting(mdmsDetails.details.moduleDetails[0].moduleName);
     // PersistantStorage.set(key, responseValue, cacheSetting.cacheTimeInSecs);
     return responseValue;
+  },
+  getCommonDbmsService: (tenantId, moduleCode, type) => {
+    return MdmsService.getDataByCriteria(tenantId, getCommonDbmsServiceCriteria(tenantId, moduleCode,type), moduleCode);
   },
   getTypeOfMarriageMaster: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getTypeOfMarriageMasterList(tenantId, moduleCode), moduleCode);

@@ -22,6 +22,7 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
       ? cmbspouse.filter((cmbspouse) => cmbspouse.code === formData?.FamilyInformationDeath?.SpouseType)[0]
       : ""
   );
+
   const [SpouseUnavailable, setSpouseUnavailable] = useState(
     formData?.FamilyInformationDeath?.SpouseUnavailable
       ? formData?.FamilyInformationDeath?.SpouseUnavailable
@@ -246,20 +247,10 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
     // }
   }
   function setSelectFamilyMobileNo(e) {
-    if (e.target.value != null || e.target.value != "") {
-      if (e.target.value.length <= 10) {
-        if (e.target.value < 10) {
-          setFamilyMobileNo(e.target.value);
-          // setMotherAgeMarriageError(true);
-          return false;
-        } else {
-          setFamilyMobileNo(e.target.value);
-          // setMotherAgeMarriageError(false);
-        }
-      } else {
-        // setMotherAgeMarriageError(true);
-        return false;
-      }
+    if (e.target.value.trim().length >= 0) {
+      setFamilyMobileNo(
+        e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 10)
+      );
     }
   }
   function setSelectFamilyEmailId(e) {
@@ -602,14 +593,15 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={false}
                 type={"number"}
                 optionKey="i18nKey"
                 name="FamilyMobileNo"
                 value={FamilyMobileNo}
                 onChange={setSelectFamilyMobileNo}
                 placeholder={`${t("CR_FAMILY_MOBILE_NO")}`}
-                {...(validation = { pattern: "^[0-9 ]*$", isRequired: false, type: "text", title: t("CR_INVALID_PHONE_NO") })}
+                {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "number", title: t("CS_COMMON_INVALID_AGE") })}
+
+                // {...(validation = { pattern: "^[0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_PHONE_NO") })}
               />
             </div>
             <div className="col-md-4">
