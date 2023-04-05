@@ -450,15 +450,7 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
 
   //############################################### Same As Above ##################################################################################################
 
-  const [isPrsentAddress, setIsPrsentAddress] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.isPrsentAddress
-        ? formData?.GroomAddressDetails?.isPrsentAddress
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.isPrsentAddress
-        : formData?.BrideAddressDetails?.isPrsentAddress
-      : true
-  );
+  const [isPrsentAddress, setIsPrsentAddress] = useState(true);
 
   //################################################### Country State Permanent ###########################################################################
 
@@ -1446,6 +1438,7 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
       });
     }
   };
+  console.log({ isPrsentAddress });
   if (
     isCountryLoading ||
     isStateLoading ||

@@ -1,6 +1,13 @@
 import { BIRTH_INCLUSION_FIELD_NAMES, DEATH_CORRECTION_FIELD_NAMES, MARRIAGE_INCLUSION_FIELD_NAMES } from "../config/constants";
-import { getFilteredGroomNameEnData, getFilteredMarriageDOMData, getFilteredWardData } from "../business-objects/marriage-correction-utils";
-import { getFilteredChildDobData, getFilteredChildNameData, getFilteredChildSexData, getFilteredFatherData, getFilteredMotherData,getFilteredParentAddressData } from "../business-objects/birth-inclusion-utils";
+import { getFilteredGroomNameEnData, getFilteredMarriageDOMData, getFilteredWardData } from "./marriage-correction-utils";
+import {
+  getFilteredChildDobData,
+  getFilteredChildNameData,
+  getFilteredChildSexData,
+  getFilteredFatherData,
+  getFilteredMotherData,
+  getFilteredParentAddressData,
+} from "./birth-inclusion-utils";
 
 import {
   getFilteredDodData,
@@ -13,8 +20,8 @@ import {
   getFilteredDeceasedAddressEn,
   getFilteredDeceasedAddressMl,
   getFilteredDeceasedPlaceOfDeath,
-  getFilteredDeceasedGender
-} from "../business-objects/death-correction-utils";
+  getFilteredDeceasedGender,
+} from "./death-correction-utils";
 
 export const initializeBirthInclusionObject = (birthInclusionDocData, selectedData) => {
   let formObj = {};
@@ -37,15 +44,6 @@ export const initializedDeathCorrectionObject = (deathCorrectionDocData, selecte
   return formObj;
 };
 
-export const birthInclusionFilterFieldsObj = {
-  CHILD_DOB: (data, inclusionData) => getFilteredChildDobData(data, inclusionData),
-  CHILD_NAME: (data, inclusionData) => getFilteredChildNameData(data, inclusionData),
-  CHILD_SEX: (data, inclusionData) => getFilteredChildSexData(data, inclusionData),
-  FATHER_DETAILS: (data, inclusionData) => getFilteredFatherData(data, inclusionData),
-  MOTHER_DETAILS: (data, inclusionData) => getFilteredMotherData(data, inclusionData),
-  PRESENT_ADDRESS: (data, inclusionData) => getFilteredParentAddressData(data, inclusionData),
-};
-
 export const initializeMarriageCorrectionObject = (marriageCorrectionDocData, selectedData) => {
   let formObj = {};
   for (let field_key in MARRIAGE_INCLUSION_FIELD_NAMES) {
@@ -57,6 +55,15 @@ export const initializeMarriageCorrectionObject = (marriageCorrectionDocData, se
   return formObj;
 };
 
+export const birthInclusionFilterFieldsObj = {
+  CHILD_DOB: (data, inclusionData) => getFilteredChildDobData(data, inclusionData),
+  CHILD_NAME: (data, inclusionData) => getFilteredChildNameData(data, inclusionData),
+  CHILD_SEX: (data, inclusionData) => getFilteredChildSexData(data, inclusionData),
+  FATHER_DETAILS: (data, inclusionData) => getFilteredFatherData(data, inclusionData),
+  MOTHER_DETAILS: (data, inclusionData) => getFilteredMotherData(data, inclusionData),
+  PRESENT_ADDRESS: (data, inclusionData) => getFilteredParentAddressData(data, inclusionData),
+};
+
 export const deathCorrectionFilterFieldsObj = {
   CHILD_DOB: (data, correctionData) => getFilteredDodData(data, correctionData),
   DECEASED_AADHAR: (data, correctionData) => getFilteredDeceasedAadharData(data, correctionData),
@@ -64,14 +71,12 @@ export const deathCorrectionFilterFieldsObj = {
   DECEASED_NAME_ML: (data, correctionData) => getFilteredDeceasedNameDataMl(data, correctionData),
   PLACE_OF_DEATH: (data, correctionData) => getFilteredDeceasedPlaceOfDeath(data, correctionData),
   GENDER: (data, correctionData) => getFilteredDeceasedGender(data, correctionData),
-  MOTHERS_NAME:(data, correctionData) => getFilteredDeceasedMothersName(data, correctionData),
-  FATHERS_NAME:(data, correctionData) => getFilteredDeceasedFathersName(data, correctionData),
-  SPOUSE_NAME:(data, correctionData) => getFilteredDeceasedSpouseName(data, correctionData),
-  ADDRESS_EN:(data, correctionData) => getFilteredDeceasedAddressEn(data, correctionData),
-  ADDRESS_ML:(data, correctionData) => getFilteredDeceasedAddressMl(data, correctionData),
-}
-
-
+  MOTHERS_NAME: (data, correctionData) => getFilteredDeceasedMothersName(data, correctionData),
+  FATHERS_NAME: (data, correctionData) => getFilteredDeceasedFathersName(data, correctionData),
+  SPOUSE_NAME: (data, correctionData) => getFilteredDeceasedSpouseName(data, correctionData),
+  ADDRESS_EN: (data, correctionData) => getFilteredDeceasedAddressEn(data, correctionData),
+  ADDRESS_ML: (data, correctionData) => getFilteredDeceasedAddressMl(data, correctionData),
+};
 
 export const marriageCorrectionFilterFieldsObj = {
   CHILD_DOB: (data, inclusionData) => getFilteredMarriageDOMData(data, inclusionData),

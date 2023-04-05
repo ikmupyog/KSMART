@@ -19,7 +19,7 @@ import CustomTimePicker from "../../../components/CustomTimePicker";
 import FormFieldContainer from "../../../components/FormFieldContainer";
 import BirthInclusionModal from "../../../components/BirthInclusionModal";
 import { BIRTH_INCLUSION_FIELD_NAMES } from "../../../config/constants";
-import { initializeBirthInclusionObject } from "../../../config/globalObject";
+import { initializeBirthInclusionObject } from "../../../business-objects/globalObject";
 import { useParams, useHistory, useRouteMatch, useLocation } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
 import moment from "moment";
@@ -71,7 +71,7 @@ const BirthInclusionEditPage = ({ cmbNation, menu, cmbPlace, BirthCorrectionDocu
   const onUploadDocSubmit = async (fileData, error) => {
     console.log("upload response==", fileData);
     if (fileData && fileData?.length > 0) {
-      const selectedDocIds = fileData.map((item) => item.documentType);
+      const selectedDocIds = fileData.map((item) => item.documentId);
       setSelectedDocs(selectedDocIds);
     }
     selectedDocs;

@@ -19,7 +19,7 @@ import FormFieldContainer from "../../../components/FormFieldContainer";
 import HouseMarriageRegistration from "../HouseMarriageRegistration";
 import BirthInclusionModal from "../../../components/BirthInclusionModal";
 import { MARRIAGE_INCLUSION_FIELD_NAMES } from "../../../config/constants";
-import { initializeMarriageCorrectionObject } from "../../../config/globalObject";
+import { initializeMarriageCorrectionObject } from "../../../business-objects/globalObject";
 import { useForm } from "react-hook-form";
 import MarriageAddressPage from "../MarriageAddressPage";
 

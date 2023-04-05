@@ -1,7 +1,6 @@
 import moment from 'moment';
 
 export const getFilteredChildAdharData = (selectedData, inclusionData) => {
-  console.log("selectedData==123",selectedData,inclusionData);
   let filteredData = {};
   if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
     filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
