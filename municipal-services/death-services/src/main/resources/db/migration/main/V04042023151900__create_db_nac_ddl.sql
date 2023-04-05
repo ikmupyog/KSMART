@@ -73,8 +73,8 @@ CREATE TABLE IF NOT EXISTS eg_death_nac_registry
     certificate_no character varying(64),
     certificate_date bigint,
 	certificate_no_id bigint,
-    filestoreid character varying(64);	
-    dateofissue bigint;
+    filestoreid character varying(64),	
+    dateofissue bigint,
     CONSTRAINT eg_death_nac_registry_pkey PRIMARY KEY (id)
 );
 
