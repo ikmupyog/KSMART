@@ -603,7 +603,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
         // console.log("currentWorgFlowDOB" + currentWorgFlow);
         if (currentWorgFlow.length > 0) {
           // console.log(currentWorgFlow[0].WorkflowCode);
-          setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+          setWorkFlowCode(currentWorgFlow[0].workFlowCode);
         }
       }
     }
@@ -756,7 +756,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
     // console.log(currentWorgFlow);
     if (currentWorgFlow.length > 0) {
       // console.log(currentWorgFlow[0].WorkflowCode);
-      setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+      setWorkFlowCode(currentWorgFlow[0].workFlowCode);
     }
     // if (value.code === "HOSPITAL") {
     //   //Institution
