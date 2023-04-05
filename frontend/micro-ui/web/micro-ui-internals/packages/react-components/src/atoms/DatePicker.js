@@ -40,6 +40,7 @@ const DatePicker = (props) => {
           name={props.name}
           id={props.id}
           disabled={props.disabled}
+          autofocus={props.autofocus}
           value={getDatePrint() ? getDatePrint() : "DD/MM/YYYY"}
           readOnly
           className={`employee-card-input ${props.disabled ? "disabled" : ""}`}

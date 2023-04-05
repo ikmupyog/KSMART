@@ -146,10 +146,7 @@ const AbandonedBirthCheckPage = ({ onSubmit, value, userType }) => {
             <div className="col-md-6">
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>:{t(convertEpochToDate(AbandonedChildDetails.childDOB) ? convertEpochToDate(AbandonedChildDetails.childDOB) : " CR_NOT_RECORDED")}{" "} </CardText>
             </div>
-          </div>
-
-          <div className="row">
-            <div className="col-md-12">
+          </div>          
               {AbandonedChildDetails.birthPlace.code === "HOSPITAL" && (
                 <div className="row">
                   <div className="col-md-6">
@@ -287,9 +284,48 @@ const AbandonedBirthCheckPage = ({ onSubmit, value, userType }) => {
                     </CardText>
                   </div>
                 </div>
-              )}
+              )}              
+      
+      <div className="row">
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}> {`${t("PDF_BIRTH_NAME_OF_MOTHER")}`} </CardLabel>
             </div>
+
+            {AbandonedChildDetails?.isMotherInfo ? (
+              <div className="col-md-6">
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                :{" "}  {t("CR_NOT_RECORDED")}{" "}
+               </CardText>
+               </div> 
+             ) : (  
+            <div className="col-md-6">
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                :{" "}
+                {t(AbandonedChildDetails?.motherFirstNameMl ? AbandonedChildDetails?.motherFirstNameMl : "CR_NOT_RECORDED") +
+                  "/" +
+                  " " +
+                  (AbandonedChildDetails?.motherFirstNameEn ? AbandonedChildDetails?.motherFirstNameEn : "CR_NOT_RECORDED")
+                  }
+              </CardText>
+            </div>
+            )}
           </div>
+          <div className="row">
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}> {`${t("PDF_BIRTH_ADDRESS_OF_MOTHER")}`} </CardLabel>
+            </div>
+           
+            <div className="col-md-6">
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                :{" "}
+                {t(AbandonedChildDetails?.addressOfMother ? AbandonedChildDetails?.addressOfMother : "CR_NOT_RECORDED")  }
+              </CardText>
+            </div>
+          
+          </div>
+
+
+
           
         </div>
 

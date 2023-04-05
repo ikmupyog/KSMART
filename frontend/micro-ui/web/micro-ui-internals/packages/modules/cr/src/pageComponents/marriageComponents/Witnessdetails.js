@@ -331,6 +331,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     } else {
       setwitness1Age(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' a-zA-Z]/gi, ""));
     }
+    
   }
   function setSelectwitness2Age(e) {
     if (e.target.value.length === 3) {

@@ -142,7 +142,7 @@ const AdoptionAddressBasePage = ({ config, onSelect, userType, formData, isEditA
     const [valuePermanent, setValuePermanent] = useState(formData?.AdoptionAddressBasePage?.presentaddressStateName ? formData?.AdoptionAddressBasePage?.presentaddressStateName.statecode : null);
     //################################################# Permanent Inside Kerala ##########################################################################################
 
-    const [permntInKeralaAdrDistrict, setpermntInKeralaAdrDistrict] = useState(formData?.AdoptionAddressBasePage?.permntInKeralaAdrDistrict.code ? formData?.AdoptionAddressBasePage?.permntInKeralaAdrDistrict : formData?.AdoptionAddressBasePage?.permntInKeralaAdrDistrict);
+    const [permntInKeralaAdrDistrict, setpermntInKeralaAdrDistrict] = useState(formData?.AdoptionAddressBasePage?.permntInKeralaAdrDistrict?.code ? formData?.AdoptionAddressBasePage?.permntInKeralaAdrDistrict : formData?.AdoptionAddressBasePage?.permntInKeralaAdrDistrict);
     // const [permntInKeralaAdrLBTypeName, setpermntInKeralaAdrLBTypeName] = useState(formData?.AdoptionAddressBasePage?.permntInKeralaAdrLBTypeName ? formData?.AdoptionAddressBasePage?.permntInKeralaAdrLBTypeName : null);
     const [permntInKeralaAdrLBName, setpermntInKeralaAdrLBName] = useState(formData?.AdoptionAddressBasePage?.permntInKeralaAdrLBName ? formData?.AdoptionAddressBasePage?.permntInKeralaAdrLBName : null);
     const [permntInKeralaAdrTaluk, setpermntInKeralaAdrTaluk] = useState(formData?.AdoptionAddressBasePage?.permntInKeralaAdrTaluk ? formData?.AdoptionAddressBasePage?.permntInKeralaAdrTaluk : null);

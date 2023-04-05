@@ -199,17 +199,17 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     if (e.target.value.length === 21) {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
-  } else {
-    setGroomPassportNo(e.target.value);
-  }
+    } else {
+      setGroomPassportNo(e.target.value);
+    }
   }
   function setSelectGroomSocialSecurityNo(e) {
     if (e.target.value.length === 21) {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
-  } else {
-    setGroomSocialSecurityNo(e.target.value);
-  }
+    } else {
+      setGroomSocialSecurityNo(e.target.value);
+    }
   }
   function setSelectGroomMobile(e) {
     if (e.target.value.trim().length >= 0) {
@@ -299,45 +299,45 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     }
   }
   function setSelectGroomFirstnameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setGroomFirstnameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setGroomFirstnameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectGroomLastnameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setGroomLastnameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setGroomLastnameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectGroomMiddlenameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setGroomMiddlenameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setGroomMiddlenameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectGroomLastnameMal(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setGroomLastnameMal('');
+      setGroomLastnameMal("");
     } else {
-      setGroomLastnameMal(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setGroomLastnameMal(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectGroomMiddlenameMal(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setGroomMiddlenameMl('');
+      setGroomMiddlenameMl("");
     } else {
-      setGroomMiddlenameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setGroomMiddlenameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectGroomFirstnameMal(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setGroomFirstnameMl('');
+      setGroomFirstnameMl("");
     } else {
-      setGroomFirstnameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setGroomFirstnameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
 
@@ -345,98 +345,98 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setGroomFathernameMal('');
+      setGroomFathernameMal("");
     } else {
-      setGroomFathernameMal(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setGroomFathernameMal(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectGroomGuardiannameMal(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setGroomGuardiannameMl('');
+      setGroomGuardiannameMl("");
     } else {
-      setGroomGuardiannameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setGroomGuardiannameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
 
   function setSelectGroomFathernameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setGroomFathernameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setGroomFathernameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectGroomGuardiannameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setGroomGuardiannameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setGroomGuardiannameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectGroomMothernameMal(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setGroomMothernameMal('');
+      setGroomMothernameMal("");
     } else {
-      setGroomMothernameMal(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setGroomMothernameMal(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectGroomMothernameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setGroomMothernameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setGroomMothernameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
 
   function setSelectGroomAadharNo(e) {
-    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12)
-    
+    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+
     if (newValue === groomFatherAadharNo || newValue === groomMotherAadharNo || newValue === groomGuardianAadharNo) {
       setGroomAadharNo("");
       setAadharError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 3000);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
     } else {
       setGroomAadharNo(newValue);
     }
   }
   function setSelectGroomFatherAdharNo(e) {
-    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12)
-   
+    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+
     if (newValue === groomAadharNo || newValue === groomMotherAadharNo || newValue === groomGuardianAadharNo) {
       setGroomFatherAadharNo("");
       setAadharError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 3000);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
     } else {
       setGroomFatherAadharNo(newValue);
     }
   }
   function setSelectGroomGardianAdhar(e) {
-    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12)
-   
+    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+
     if (newValue === groomAadharNo || newValue === groomMotherAadharNo || newValue === groomFatherAadharNo) {
       setGroomGuardianAadharNo("");
       setAadharError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 3000);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
     } else {
       setGroomGuardianAadharNo(newValue);
     }
   }
   function setSelectGroomMotherAdharNo(e) {
-    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12)
-   
+    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+
     if (newValue === groomAadharNo || newValue === groomGuardianAadharNo || newValue === groomFatherAadharNo) {
       setGroomMotherAadharNo("");
       setAadharError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 3000);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
     } else {
       setGroomMotherAadharNo(newValue);
     }
@@ -570,8 +570,9 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   value={groomAadharNo}
                   onChange={setSelectGroomAadharNo}
                   placeholder={`${t("CR_GROOM_AADHAR_NO")}`}
-                  {...(groomResidentShip === "INDIAN" && 
-                  { ...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") }) })}
+                  {...(groomResidentShip === "INDIAN" && {
+                    ...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") }),
+                  })}
                 />
               </div>
               <div className="col-md-4">
@@ -589,8 +590,8 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   value={groomPassportNo}
                   onChange={setSelectGroomPassportNo}
                   placeholder={`${t("CR_GROOM_PASSPORT_NO")}`}
-                  {...((groomResidentShip === "NRI" || groomResidentShip === "FOREIGN") && 
-                  {...(validation = { pattern: "^[0-9]{12}$", type: "number", isRequired: true, title: t("CS_COMMON_INVALID_PASSPORT_NO") }),
+                  {...((groomResidentShip === "NRI" || groomResidentShip === "FOREIGN") && {
+                    ...(validation = { pattern: "^[0-9]{12}$", type: "number", isRequired: true, title: t("CS_COMMON_INVALID_PASSPORT_NO") }),
                   })}
                 />
               </div>
@@ -609,8 +610,9 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   value={groomSocialSecurityNo}
                   onChange={setSelectGroomSocialSecurityNo}
                   placeholder={`${t("CR_GROOM_SOCIAL_SECURITY_NO")}`}
-                  {...(groomResidentShip === "FOREIGN" && 
-                  { ...(validation = { pattern: "^[0-9]{12}$", type: "number", isRequired: true, title: t("CR_INVALID_SOCIAL_SECURITY_NUMBER") }) })}
+                  {...(groomResidentShip === "FOREIGN" && {
+                    ...(validation = { pattern: "^[0-9]{12}$", type: "number", isRequired: true, title: t("CR_INVALID_SOCIAL_SECURITY_NUMBER") }),
+                  })}
                 />
               </div>
             </div>
@@ -1122,14 +1124,18 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
             </div>
           )}
           {toast && (
-            <Toast 
-            error={AadharError || AgeValidationMsg} 
-            label={AadharError || AgeValidationMsg 
-              ? AadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`)
-               : AgeValidationMsg ? t(`CR_INVALID_GROOM_AGE`) 
-               : setToast(false)
-              : setToast(false)} 
-              onClose={() => setToast(false)} 
+            <Toast
+              error={AadharError || AgeValidationMsg}
+              label={
+                AadharError || AgeValidationMsg
+                  ? AadharError
+                    ? t(`CS_COMMON_INVALID_AADHAR_NO`)
+                    : AgeValidationMsg
+                    ? t(`CR_INVALID_GROOM_AGE`)
+                    : setToast(false)
+                  : setToast(false)
+              }
+              onClose={() => setToast(false)}
             />
           )}
         </FormStep>
