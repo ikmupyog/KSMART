@@ -98,7 +98,7 @@ public class WorkflowIntegrator {
             workFlowRequest.put(MarriageConstants.REQUESTINFOKEY, request.getRequestInfo());
             workFlowRequest.put(MarriageConstants.WORKFLOWREQUESTARRAYKEY, array);
             String response = null;
-           // System.out.println("workflow Check  :" + workFlowRequest);
+            System.out.println("workflow Check  :" + workFlowRequest);
             log.info("workflow integrator request " + workFlowRequest);
 
             try {

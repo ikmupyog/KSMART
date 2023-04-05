@@ -58,7 +58,7 @@ public class MarriageApplicationService {
 
         producer.push(marriageApplicationConfiguration.getSaveMarriageApplicationTopic(), request);
        // List<MarriageApplicationDetails>  marriageApplicationDetails = repository.saveMarriageDetails(request);
-      //  workflowIntegrator.callWorkFlow(request);
+        workflowIntegrator.callWorkFlow(request);
        request.getMarriageDetails().forEach(marriage->{
             if(marriage.getStatus() == MarriageConstants.STATUS_FOR_PAYMENT){
                 List<Demand> demands = new ArrayList<>();
