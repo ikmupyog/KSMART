@@ -82,7 +82,13 @@ const componentsToRegister = {
   PGRComplaintDetailsPage: ComplaintDetailsPage,
   PGRSelectRating: SelectRating,
   PGRResponseCitzen: ResponseCitizen,
-  ComplaintInformer, SelectAddress, SelectComplaintType, SelectDetails, SelectGeolocation, SelectImages, SelectLandmark, SelectPincode, SelectSubType
+  PGRComplaintInformer: ComplaintInformer,
+  PGRSelectAddress: SelectAddress,
+  PGRSelectComplaintType: SelectComplaintType,
+  PGRSelectDetails: SelectDetails,
+  PGRSelectGeolocation: SelectGeolocation,
+  PGRSelectImages: SelectImages,
+  PGRSelectLandmark: SelectLandmark, PGRSelectPincode: SelectPincode, PGRSelectSubType: SelectSubType
 };
 
 export const initPGRComponents = () => {
