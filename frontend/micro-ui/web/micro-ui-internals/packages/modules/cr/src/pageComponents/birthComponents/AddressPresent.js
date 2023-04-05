@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCountry, setaddressCountry,
     presentaddressStateName, setaddressStateName, value, setValue, countryvalue, setCountryValue,
     permtaddressCountry, setpermtaddressCountry, permtaddressStateName, setpermtaddressStateName, isPrsentAddress,
-    setIsPrsentAddress, Villagevalues, setLbsVillagevalue, isEditBirth = false, isEditDeath = false,isEditStillBirth=false, presentOutsideKeralaDistrict,
+    setIsPrsentAddress, Villagevalues, setLbsVillagevalue, isEditBirth = false, isEditDeath = false,isEditAdoption,isEditStillBirth=false, presentOutsideKeralaDistrict,
     setoutsideKeralaDistrict
 }) => {
     const stateId = Digit.ULBService.getStateId();
@@ -84,7 +84,20 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
                 setValue(value.formData?.ChildDetails?.AddressBirthDetails?.presentaddressStateName);
             }
         }
-    } else if (isEditDeath) {
+    } else if(isEditAdoption!==false){
+        if (formData?.AdoptionAddressBasePage?.presentaddressCountry != null) {
+            if (cmbCountry.length > 0 && (presentaddressCountry === undefined || presentaddressCountry === "")) {
+                setaddressCountry(cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.AdoptionAddressBasePage?.presentaddressCountry)[0]);
+                setCountryValue(value.formData?.AdoptionAddressBasePage?.presentaddressCountry);
+            }
+        }
+        if (formData?.AdoptionAddressBasePage?.presentaddressStateName != null) {
+            if (cmbState.length > 0 && (presentaddressStateName === undefined || presentaddressStateName === "")) {
+                setaddressStateName(cmbState.filter(cmbState => cmbState.code === formData?.AdoptionAddressBasePage?.presentaddressStateName)[0]);
+                setValue(value.formData?.AdoptionAddressBasePage?.presentaddressStateName);
+            }
+        }
+    }else if (isEditDeath) {
         if (formData?.AddressBirthDetails?.presentaddressCountry != null) {
             if (cmbCountry.length > 0 && (presentaddressCountry === undefined || presentaddressCountry === "")) {
                 setaddressCountry(cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.AddressBirthDetails?.presentaddressCountry)[0]);
