@@ -27,32 +27,6 @@ const MarriagePublicPlace = ({
   const { t } = useTranslation();
   let validation = {};
 
-  // const [marriageLocalityEn, setmarriageLocalityEn] = useState(
-  //   formData?.MarriagePublicPlace?.marriageLocalityEn ? formData?.MarriagePublicPlace?.marriageLocalityEn : ""
-  // );
-  // const [marriageLocalityMl, setmarriageLocalityMl] = useState(
-  //   formData?.MarriagePublicPlace?.marriageLocalityMl ? formData?.MarriagePublicPlace?.marriageLocalityMl : ""
-  // );
-
-  // const [marriageLandmark, setMarriageLandmark] = useState(
-  //   formData?.MarriagePublicPlace?.marriageLandmark ? formData?.MarriagePublicPlace?.marriageLandmark : ""
-  // );
-  // const [marriageStreetMl, setmarriageStreetMl] = useState(
-  //   formData?.MarriagePublicPlace?.marriageStreetMl ? formData?.MarriagePublicPlace?.marriageStreetMl : ""
-  // );
-  // const [marriagePublicOrPrivateNamePlaceEn, setMarriagePublicOrPrivateNamePlaceEn] = useState(
-  //   formData?.MarriagePublicPlace?.marriagePublicOrPrivateNamePlaceEn ? formData?.MarriagePublicPlace?.marriagePublicOrPrivateNamePlaceEn : ""
-  // );
-  // const [marriagePublicOrPrivateNamePlaceMal, setMarriagePublicOrPrivateNamePlaceMal] = useState(
-  //   formData?.MarriagePublicPlace?.marriagePublicOrPrivateNamePlaceMal ? formData?.MarriagePublicPlace?.marriagePublicOrPrivateNamePlaceMal : ""
-  // );
-  // const [marriageStreetEn, setmarriageStreetEn] = useState(
-  //   formData?.MarriagePublicPlace?.marriageStreetEn ? formData?.MarriagePublicPlace?.marriageStreetEn : ""
-  // );
-  // const [marriagePublicOrPrivatePlace, setMarriagePublicOrPrivatePlace] = useState(
-  //   formData?.MarriagePublicPlace?.marriagePublicOrPrivatePlace ? formData?.MarriagePublicPlace?.marriagePublicOrPrivatePlace : null
-  // );
-
   const [access, setAccess] = React.useState(true);
 
   const onSkip = () => onSelect();
