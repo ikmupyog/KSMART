@@ -59,6 +59,8 @@ const BirthInclusionPage = () => {
   let cmbfilterNation = [];
   let cmbfilterNationI = [];
 
+  console.log("correctionsData--23234",correctionsData);
+
   BirthCorrectionDocuments = correctionsData["birth-death-service"]?.BirthCorrectionDocuments;
 
   console.log(navigationData);
@@ -82,21 +84,21 @@ const BirthInclusionPage = () => {
       cmbNation.push(ob);
     });
 
-//   useEffect(async () => {
-//     if (BirthCorrectionDocuments?.length > 0) {
-//       birthInclusionFormData = await initializeBirthInclusionObject(BirthCorrectionDocuments, navigationData);
-//     }
-//     console.log("birthInclusionFormData==", birthInclusionFormData);
-//   }, [navigationData, BirthCorrectionDocuments]);
+  //   useEffect(async () => {
+  //     if (BirthCorrectionDocuments?.length > 0) {
+  //       birthInclusionFormData = await initializeBirthInclusionObject(BirthCorrectionDocuments, navigationData);
+  //     }
+  //     console.log("birthInclusionFormData==", birthInclusionFormData);
+  //   }, [navigationData, BirthCorrectionDocuments]);
 
-  if ((isLoad, isGenderLoad, isNationLoad, isLoading)) {
+  if (isLoad || isGenderLoad || isNationLoad || isLoading) {
     return <Loader />;
   }
   if (
     cmbNation?.length > 0 &&
     menu?.length > 0 &&
     cmbPlace?.length > 0 &&
-    BirthCorrectionDocuments?.length > 0 
+    BirthCorrectionDocuments?.length > 0
     // birthInclusionFormData?.length > 0
   ) {
     return (
@@ -109,6 +111,8 @@ const BirthInclusionPage = () => {
         // birthInclusionFormData={birthInclusionFormData}
       />
     );
-  }
+  } else{
+    return null
+  };
 };
 export default BirthInclusionPage;

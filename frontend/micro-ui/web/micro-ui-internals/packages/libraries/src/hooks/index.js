@@ -128,6 +128,7 @@ import useCivilRegistrationStillBirthAPI from "./cr/useCivilRegistrationStillBir
 import useCivilRegistrationNACBIRTHAPI from "./cr/useCivilRegistrationNACBIRTHAPI";
 import useCivilRegistrationBornOutsideIndiaBirthAPI from "./cr/useCivilRegistrationBornOutsideIndiaBirthAPI";
 import useApplicationBornOutsideIndiaBirthDetail from "./cr/useApplicationBornOutsideIndiaBirthDetail"; 
+import useBirthCorrectionAction from "./cr/useBirthCorrectionAction";
 
 import useCivilRegistrationDeathAPI from "./cr/useCivilRegistrationDeathAPI";
 // import useTradeLicenseSearch from "./tl/useTradeLicenseSearch";
@@ -351,6 +352,7 @@ const tl = {
   useTradeLicenseCorrectionAPI
 };
 const cr = {
+  useBirthCorrectionAction,
   useTenants: useTenantsCR,
   useCivilRegistrationMDMS,
   useCivilRegistrationAPI,
