@@ -5,7 +5,6 @@
 import moment from 'moment';
 
 export const getFilteredChildAdharData = (selectedData, inclusionData) => {
-  console.log("selectedData==123",selectedData,inclusionData);
   let filteredData = {};
   if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
     filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
@@ -18,7 +17,6 @@ export const getFilteredChildAdharData = (selectedData, inclusionData) => {
 };
 
 export const getFilteredChildDobData = (selectedData, inclusionData) => {
-  console.log("selectedData==123", selectedData, inclusionData);
   let filteredData = {};
   if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
     filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
@@ -36,7 +34,6 @@ export const getFilteredChildDobData = (selectedData, inclusionData) => {
 
 export const getFilteredChildNameData = (selectedData, inclusionData) =>{
     let filteredData = {};
-    console.log("filteredData==",selectedData, inclusionData);
   if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
     filteredData = inclusionData?.find((item) => item.conditionCode === "LESS_THAN_SIX");
   } else if(selectedData) {
@@ -72,7 +69,6 @@ export const getFilteredChildSexData = (data) =>{
 
 
 export const getFatherDetailsbData = (selectedData, inclusionData) => {
-    console.log("selectedData==123", selectedData, inclusionData);
     let filteredData = {};
     if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
       filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
@@ -92,3 +88,49 @@ export const getFatherDetailsbData = (selectedData, inclusionData) => {
   //   return()
   // }
   
+  export const getFilteredMarriageDOMData = (selectedData, inclusionData) => {
+    let filteredData = {};
+    if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
+      filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
+    } else {
+      filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
+    }
+    let childDobObj = {
+      curValue: selectedData?.marriageDOM && moment(selectedData?.marriageDOM).format("DD/MM/YYYY"),
+    };
+    
+    //TODO need validation to check dob is null
+    let currentValue = {curValue: selectedData?.marriageDOM && moment(selectedData?.marriageDOM).format("DD/MM/YYYY")}
+    return {...filteredData,...currentValue};
+  };
+  export const getFilteredGroomNameEnData = (selectedData, inclusionData) => {
+    let filteredData = {};
+    if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
+      filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
+    } else {
+      filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
+    }
+    let childDobObj = {
+      curValue:  selectedData?.GroomDetails?.groomFirstnameEn,
+    };
+    
+    //TODO need validation to check dob is null
+    let currentValue = {curValue: selectedData?.GroomDetails?.groomFirstnameEn }
+    return {...filteredData,...currentValue};
+  };
+
+  export const getFilteredWardData = (selectedData, inclusionData) => {
+    let filteredData = {};
+    if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
+      filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
+    } else {
+      filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
+    }
+    let childDobObj = {
+      curValue:  selectedData?.GroomDetails?.groomFirstnameEn,
+    };
+    
+    //TODO need validation to check dob is null
+    let currentValue = {curValue: selectedData?.marriageWardCode }
+    return {...filteredData,...currentValue};
+  };
