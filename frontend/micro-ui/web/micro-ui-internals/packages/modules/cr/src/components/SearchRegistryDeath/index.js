@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { SearchForm, Table, Loader } from "@egovernments/digit-ui-react-components";
+import { SearchForm, Table, Loader, Card } from "@egovernments/digit-ui-react-components";
 import { Link } from "react-router-dom";
 import { convertEpochToDateDMY } from "../../utils";
 import SearchFields from "./SearchFields";
@@ -24,7 +24,7 @@ const hstyle = {
   lineHieght: "1.5rem",
 };
 
-const SearchRegistryDeath = ({ tenantId, t, onSubmit, data, isSuccess, isLoading, count }) => {
+const SearchRegistryDeath = ({ tenantId, t, onSubmit, data, isSuccess, isLoading, count, onRestClick }) => {
   const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
     defaultValues: {
       offset: 0,
@@ -82,9 +82,7 @@ const SearchRegistryDeath = ({ tenantId, t, onSubmit, data, isSuccess, isLoading
           return (
             <div>
               <span className="link">
-                <Link to={`/digit-ui/employee/cr/application-deathdetails/${row.original.DeathACKNo}`}>
                   {row.original?.InformationDeath?.DeathACKNo}
-                </Link>
               </span>
             </div>
           );
@@ -165,10 +163,10 @@ const SearchRegistryDeath = ({ tenantId, t, onSubmit, data, isSuccess, isLoading
       <div style={mystyle}>
         <h1 style={hstyle}>{t("DEATH CERTIFICATE")}</h1>
         <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
-          <SearchFields {...{ register, control, reset, tenantId, previousPage, t }} />
+          <SearchFields {...{ register, control, reset, tenantId, previousPage, t, onRestClick }} />
         </SearchForm>
       </div>
-      {isLoading ? <Loader /> : <Table
+      {isLoading ? <Loader /> : data.length > 0 ? <Table
         t={t}
         data={data}
         totalRecords={count}
@@ -190,7 +188,11 @@ const SearchRegistryDeath = ({ tenantId, t, onSubmit, data, isSuccess, isLoading
         onSort={onSort}
         disableSort={false}
         sortParams={[{ id: getValues("sortBy"), desc: getValues("sortOrder") === "DESC" ? true : false }]}
-      />}
+      /> : <Card style={{ marginTop: 20 }}>
+        <p style={{ textAlign: "center" }}>
+          {t("ES_COMMON_NO_DATA")}
+        </p>
+      </Card>}
     </React.Fragment>
   );
 };
