@@ -8,7 +8,6 @@ function DeathCorrectionPage() {
   let location = useLocation();
   let navigationData = location?.state?.correctionData;
 
-  console.log("locartion dayta==", location);
   const { data: correctionsData = {}, isSuccess, isError, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
     stateId,
     "birth-death-service",

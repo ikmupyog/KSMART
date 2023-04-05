@@ -67,7 +67,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   let institutionNameCode = "";
   let naturetypecmbvalue = null;
   const maxDate = new Date();
-  // let workFlowCode = "";
   let Difference_In_DaysRounded = "";
   let cmbfilterNation = [];
   let cmbfilterReligion = [];
@@ -994,7 +993,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   //   // }
   // };
   const goNext = () => {
-    
+   
     if (DeceasedGender == null || DeceasedGender == "" || DeceasedGender == undefined) {
       validFlag = false;
       setsexError(true);
@@ -1102,7 +1101,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
       // // sessionStorage.setItem("Occupation", Occupation ? Occupation.code : null);
       // // sessionStorage.setItem("DeathPlace", DeathPlace ? DeathPlace.code : null);
 
-      // // sessionStorage.setItem("workFlowCode", workFlowCode);
 
       // // sessionStorage.setItem("DeathPlaceTypecode", DeathPlaceType ? DeathPlaceType.code : null);
       // // sessionStorage.setItem("institutionNameCode", DeathPlaceInstId ? DeathPlaceInstId.code : null);

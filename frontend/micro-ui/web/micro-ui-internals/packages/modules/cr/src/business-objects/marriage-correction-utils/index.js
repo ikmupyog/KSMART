@@ -17,6 +17,7 @@ export const getFilteredChildAdharData = (selectedData, inclusionData) => {
 };
 
 export const getFilteredChildDobData = (selectedData, inclusionData) => {
+ 
   let filteredData = {};
   if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
     filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
@@ -34,6 +35,7 @@ export const getFilteredChildDobData = (selectedData, inclusionData) => {
 
 export const getFilteredChildNameData = (selectedData, inclusionData) =>{
     let filteredData = {};
+   
   if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
     filteredData = inclusionData?.find((item) => item.conditionCode === "LESS_THAN_SIX");
   } else if(selectedData) {
@@ -69,6 +71,7 @@ export const getFilteredChildSexData = (data) =>{
 
 
 export const getFatherDetailsbData = (selectedData, inclusionData) => {
+   
     let filteredData = {};
     if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
       filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
@@ -83,10 +86,7 @@ export const getFatherDetailsbData = (selectedData, inclusionData) => {
     let currentValue = { curValue: selectedData?.dateofbirth && moment(selectedData?.dateofbirth).format("DD/MM/YYYY") };
     return { ...filteredData, ...currentValue };
   };
-  
-  // const _changeCurValue = (value,data) =>{
-  //   return()
-  // }
+
   
   export const getFilteredMarriageDOMData = (selectedData, inclusionData) => {
     let filteredData = {};

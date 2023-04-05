@@ -20,7 +20,7 @@ import DeathPublicPlace from "../DeathPublicPlace";
 import DeathOutsideJurisdiction from "../DeathOutsideJurisdiction ";
 import DeathCorrectionModal from "../../../components/DeathCorrectionModal";
 import { DEATH_CORRECTION_FIELD_NAMES } from "../../../config/constants";
-import { initializedDeathCorrectionObject } from "../../../config/globalObject";
+import { initializedDeathCorrectionObject } from "../../../business-objects/globalObject";
 import { useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
@@ -48,25 +48,6 @@ function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, menu, cmbPl
   const FieldComponentContainer = ({ children }) => {
     return <div className="col-md-9">{children}</div>;
   };
-  
-  const UploadfilesConfig = [
-    {
-      key: "dob",
-      files: [
-        {
-          name: "approvedPhotoId",
-          title: "Any Other Govt Approved Photo Id Of The Applicant",
-          isuploaded: uploadStatus.approvedPhotoId,
-        },
-      ],
-    },
-    {
-      key: "ownAdhar",
-    },
-    {
-      key: "name",
-    },
-  ];
  
 
 
@@ -185,15 +166,14 @@ function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, menu, cmbPl
   useEffect(async()=>{
     deathCorrectionFormData = await initializedDeathCorrectionObject(BirthCorrectionDocuments,navigationData);
     await setDeathCorrectionFormsObj(deathCorrectionFormData);
-   console.log("deathCorrectionFormData==",deathCorrectionFormData);
+
  },[navigationData,BirthCorrectionDocuments])
 
- console.log("navigationData",navigationData);
 
   const setDeathCorrectionFilterQuery = (fieldId) => {
-    console.log("deathCorrectionFormData--------",deathCorrectionFormsObj,fieldId);
+    
     let selectedDeathCorrectionData = deathCorrectionFormsObj[fieldId];
-    console.log("birthInclusionData",selectedDeathCorrectionData);
+
     setSelectedCorrectionItem(selectedDeathCorrectionData);
     setShowModal(true);
   };
@@ -204,7 +184,7 @@ function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, menu, cmbPl
 
  
 const onUploadDocSubmit = async (fileData) => {
-    console.log("upload response==", fileData);
+  
     let tempObj = {...deathCorrectionFormsObj};
     let {CHILD_DOB} = tempObj;
     tempObj={...tempObj,CHILD_DOB:{...CHILD_DOB,isFocused : true,isDisabled : false}};
