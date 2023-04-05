@@ -441,10 +441,11 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
               :
               {t(
                 GroomDetails?.groomFathernameEn
-                  ? GroomDetails?.groomFathernameEn + " / " + GroomDetails?.groomFathernameMl
-                    ? GroomDetails?.groomFathernameMl
-                    : "CR_NOT_RECORDED"
-                  : "CR_NOT_RECORDED"
+                  ? GroomDetails?.groomFathernameEn
+                  : //+ " / " + GroomDetails?.groomFathernameMl
+                    //   ? GroomDetails?.groomFathernameMl
+                    //   : "CR_NOT_RECORDED"
+                    "CR_NOT_RECORDED"
               )}
             </CardText>
           </div>
@@ -483,7 +484,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
               {t(
                 BrideDetails?.brideMothernameEn
                   ? BrideDetails?.brideMothernameEn + " / " + BrideDetails?.brideMothernameMl
-                    ? BrideDetails?.bridrMothernameMl
+                    ? BrideDetails?.brideMothernameMl
                     : "CR_NOT_RECORDED"
                   : "CR_NOT_RECORDED"
               )}

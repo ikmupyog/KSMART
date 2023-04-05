@@ -389,58 +389,58 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
   function setSelectGroomAadharNo(e) {
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
-    if (newValue === groomFatherAadharNo || newValue === groomMotherAadharNo || newValue === groomGuardianAadharNo) {
-      setGroomAadharNo("");
-      setAadharError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 3000);
-    } else {
-      setGroomAadharNo(newValue);
-    }
+    // if (newValue === groomFatherAadharNo || newValue === groomMotherAadharNo || newValue === groomGuardianAadharNo) {
+    //   setGroomAadharNo("");
+    //   setAadharError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 3000);
+    // } else {
+    setGroomAadharNo(newValue);
+    // }
   }
   function setSelectGroomFatherAdharNo(e) {
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
-    if (newValue === groomAadharNo || newValue === groomMotherAadharNo || newValue === groomGuardianAadharNo) {
-      setGroomFatherAadharNo("");
-      setAadharError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 3000);
-    } else {
-      setGroomFatherAadharNo(newValue);
-    }
+    // if (newValue === groomAadharNo || newValue === groomMotherAadharNo || newValue === groomGuardianAadharNo) {
+    //   setGroomFatherAadharNo("");
+    //   setAadharError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 3000);
+    // } else {
+    setGroomFatherAadharNo(newValue);
+    // }
   }
   function setSelectGroomGardianAdhar(e) {
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
-    if (newValue === groomAadharNo || newValue === groomMotherAadharNo || newValue === groomFatherAadharNo) {
-      setGroomGuardianAadharNo("");
-      setAadharError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 3000);
-    } else {
-      setGroomGuardianAadharNo(newValue);
-    }
+    // if (newValue === groomAadharNo || newValue === groomMotherAadharNo || newValue === groomFatherAadharNo) {
+    //   setGroomGuardianAadharNo("");
+    //   setAadharError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 3000);
+    // } else {
+    setGroomGuardianAadharNo(newValue);
+    // }
   }
   function setSelectGroomMotherAdharNo(e) {
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
-    if (newValue === groomAadharNo || newValue === groomGuardianAadharNo || newValue === groomFatherAadharNo) {
-      setGroomMotherAadharNo("");
-      setAadharError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 3000);
-    } else {
-      setGroomMotherAadharNo(newValue);
-    }
+    // if (newValue === groomAadharNo || newValue === groomGuardianAadharNo || newValue === groomFatherAadharNo) {
+    //   setGroomMotherAadharNo("");
+    //   setAadharError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 3000);
+    // } else {
+    setGroomMotherAadharNo(newValue);
+    // }
   }
 
   let validFlag = true;
