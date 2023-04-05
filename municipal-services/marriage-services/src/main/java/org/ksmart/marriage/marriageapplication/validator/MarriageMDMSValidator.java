@@ -115,7 +115,7 @@ public class MarriageMDMSValidator {
 
         // ADDRESS VALIDATION
         // Anu.l.s
-        // groom PERMANENT address details//////////////////////
+        // ***********************************groom PERMANENT address detail*********************************************************//
         if (request.getMarriageDetails().get(0).getGroomAddressDetails().getPermtaddressCountry() != null) {
             if (!masterData.get(MarriageConstants.COUNTRY)
                     .contains(request.getMarriageDetails().get(0).getGroomAddressDetails().getPermtaddressCountry()))
@@ -217,7 +217,7 @@ public class MarriageMDMSValidator {
                                 + " is invalid");
         }
 
-        // GROOM PRESENT ADDRESS////////////
+        //************************************************* */ GROOM PRESENT ADDRESS***************************************************//
         if (request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentaddressCountry() != null) {
             System.out.println("isExists");
             if (!masterData.get(MarriageConstants.COUNTRY)
@@ -318,9 +318,8 @@ public class MarriageMDMSValidator {
                         request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentInsideKeralaPostOffice()
                         + " is invalid");
         }
-        ///////////////////////////// end of groom address
-        ///////////////////////////// details/////////////////////////////////////////////
-        // bride PERMANENT address details//////////////////////
+        //****************************** */ end of groom address details***************************************//
+        //****************************** */ bride PERMANENT address details********************************************//
         if (request.getMarriageDetails().get(0).getBrideAddressDetails().getPermtaddressCountry() != null) {
             if (!masterData.get(MarriageConstants.COUNTRY)
                     .contains(request.getMarriageDetails().get(0).getBrideAddressDetails().getPermtaddressCountry()))
@@ -394,15 +393,15 @@ public class MarriageMDMSValidator {
                         + " is invalid");
         }
         // //
-        // System.out.println("ousidetaluk"+request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaWardNo()
+        // System.out.println("ousidetaluk"+request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentWardNo()
         // // );
         // // if
-        // (request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaWardNo()
+        // (request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentWardNo()
         // != null) {
         // if (!masterData.get(MarriageConstants.WARD)
-        // .contains(request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaWardNo()))
-        // errorMap.put("GROOM PERMANENT ADDRESS: WARD INVALID", "The ward of bride " +
-        // request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaWardNo()
+        // .contains(request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentWardNo()))
+        // errorMap.put("BRIDE PERMANENT ADDRESS: WARD INVALID", "The ward of bride " +
+        // request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentWardNo()
         // + " is invalid");
         // }
         if (request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaAdrPostOffice() != null) {
@@ -515,8 +514,7 @@ public class MarriageMDMSValidator {
                         request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentInsideKeralaPostOffice()
                         + " is invalid");
         }
-        ///////////////////////////// end of bride address
-        ///////////////////////////// details/////////////////////////////////////////////
+        //********************************* * end of bride address details************************************************//
 
         // if(request.getMarriageDetails().get(0).getTalukid() != null) {
         // if(!masterData.get(MarriageConstants.TALUK)
