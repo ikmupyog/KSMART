@@ -48,27 +48,27 @@ public class GroomDetails {
 
     @Size(max = 200)
     @JsonProperty("groomFirstnameEn")
-    private String firstname_en;
+    private String firstnameEn;
 
     @Size(max = 200)
     @JsonProperty("groomFirstnameMl")
-    private String firstname_ml;
+    private String firstnameMl;
 
     @Size(max = 200)
     @JsonProperty("groomMiddlenameEn")
-    private String middlename_en;
+    private String middlenameEn;
 
     @Size(max = 200)
     @JsonProperty("groomMiddlenameMl")
-    private String middlename_ml;
+    private String middlenameMl;
 
     @Size(max = 200)
     @JsonProperty("groomLastnameEn")
-    private String lastname_en;
+    private String lastnameEn;
 
     @Size(max = 200)
     @JsonProperty("groomLastnameMl")
-    private String lastname_ml;
+    private String lastnameMl;
 
     
     @JsonProperty("groomMobile")
@@ -90,48 +90,39 @@ public class GroomDetails {
 
     @Size(max = 64)
     @JsonProperty("groomParentGuardian")
-    private String parent_guardian;
+    private String parentGuardian;
 
     @Size(max = 200)
     @JsonProperty("groomFathernameEn")
-    private String fathername_en;
+    private String fathernameEn;
 
     @Size(max = 200)
     @JsonProperty("groomFathernameMl")
-    private String fathername_ml;
+    private String fathernameMl;
 
     @Size(max = 200)
     @JsonProperty("groomMothernameEn")
-    private String mothername_en;
+    private String mothernameEn;
     
     @Size(max = 200)
     @JsonProperty("groomMothernameMl")
-    private String mothername_ml;
+    private String mothernameMl;
 
     @Size(max = 15)
     @JsonProperty("groomFatherAadharNo")
-    private String father_aadharno;
+    private String fatherAadharno;
     @Size(max = 15)
     @JsonProperty("groomMotherAadharNo")
-    private String mother_aadharno;
+    private String motherAadharno;
     @Size(max = 200)
     @JsonProperty("groomGuardiannameEn")
-    private String guardianname_en;
+    private String guardiannameEn;
     @Size(max = 200)
     @JsonProperty("groomGuardiannameMl")
-    private String guardianname_ml;
+    private String guardiannameMl;
     @Size(max = 15)
     @JsonProperty("groomGuardianAadharNo")
-    private String guardian_aadharno;
-
-//    @Size(max = 200)
-//    @JsonProperty("groomProfessionEn")
-//    private String profession_en;
-//
-//
-//    @Size(max = 200)
-//    @JsonProperty("groomProfessionMal")
-//    private String profession_mal;
+    private String guardianAadharno;
 
     @Size(max = 64)
     @JsonProperty("groomMaritalstatusID")

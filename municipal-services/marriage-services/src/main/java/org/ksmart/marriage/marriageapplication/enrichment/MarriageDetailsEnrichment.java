@@ -63,8 +63,8 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
             if(marriage.getWitnessDetails()!=null){
                 marriage.getWitnessDetails().setWitnessId1(UUID.randomUUID().toString());
                 marriage.getWitnessDetails().setWitnessId2(UUID.randomUUID().toString());
-                marriage.getWitnessDetails().setSerial_no1(1);
-                marriage.getWitnessDetails().setSerial_no2(2);
+                marriage.getWitnessDetails().setSerialNo1(1);
+                marriage.getWitnessDetails().setSerialNo2(2);
                 marriage.getWitnessDetails().setWitnessAuditDetails(auditDetails);
             }
             List <MarriageDocument> marriagedocument = marriage.getMarriageDocuments();

@@ -68,9 +68,9 @@ public class MarriageApplicationValidator {
                             throw new CustomException(" TALUK INVALID", "The  Taluk" +
                                     marriagedtls.getTalukid() + " is invalid");
                         }
-                        if (StringUtils.isEmpty(marriagedtls.getVillage_name())) {
+                        if (StringUtils.isEmpty(marriagedtls.getVillageName())) {
                             throw new CustomException(" VILLAGE INVALID", "The  Village" +
-                                    marriagedtls.getVillage_name() + " is invalid");
+                                    marriagedtls.getVillageName() + " is invalid");
                         }
 
                         if (StringUtils.isEmpty(marriagedtls.getLbtype())) {
@@ -78,9 +78,9 @@ public class MarriageApplicationValidator {
                                     marriagedtls.getLbtype() + " is invalid");
                         }
 
-                        if (StringUtils.isEmpty(marriagedtls.getWard_code())) {
+                        if (StringUtils.isEmpty(marriagedtls.getWardCode())) {
                             throw new CustomException(" LB TYPE INVALID", "The  LB type " +
-                                    marriagedtls.getWard_code() + " is invalid");
+                                    marriagedtls.getWardCode() + " is invalid");
                         }
 
                         if (StringUtils.isEmpty(marriagedtls.getPlacetype())) {
@@ -89,15 +89,15 @@ public class MarriageApplicationValidator {
                                             marriagedtls.getPlacetype() + " is invalid");
                         } else {
                             if (marriagedtls.getPlacetype().equals(MarriageConstants.PLACE_TYPE_HOUSE)) {
-                                if (StringUtils.isEmpty(marriagedtls.getLocality_en())) {
+                                if (StringUtils.isEmpty(marriagedtls.getLocalityEn())) {
                                     throw new CustomException(" MARRIAGE PLACE LOCALITY ENGLISH INVALID",
                                             "The  Place Locality Name in English " +
-                                                    marriagedtls.getLocality_en() + " is invalid");
+                                                    marriagedtls.getLocalityEn() + " is invalid");
                                 }
-                                if (StringUtils.isEmpty(marriagedtls.getLocality_ml())) {
+                                if (StringUtils.isEmpty(marriagedtls.getLocalityMl())) {
                                     throw new CustomException(" MARRIAGE PLACE LOCALITY MALAYALAM INVALID",
                                             "The  Place Locality Name in Malayalam " +
-                                                    marriagedtls.getLocality_ml() + " is invalid");
+                                                    marriagedtls.getLocalityMl() + " is invalid");
                                 }
                                 if (StringUtils.isEmpty(marriagedtls.getMarriageHouseNoAndNameEn())) {
                                     throw new CustomException(" HOUSE NAME ENGLISH INVALID",
@@ -169,13 +169,13 @@ public class MarriageApplicationValidator {
 
                         }
 
-                        if (StringUtils.isEmpty(groomInfo.getFirstname_en())) {
+                        if (StringUtils.isEmpty(groomInfo.getFirstnameEn())) {
                             throw new CustomException(" NAME INVALID", "The  name in english" +
-                                    groomInfo.getFirstname_en() + " is invalid");
+                                    groomInfo.getFirstnameEn() + " is invalid");
                         }
-                        if (StringUtils.isEmpty(groomInfo.getFirstname_ml())) {
+                        if (StringUtils.isEmpty(groomInfo.getFirstnameMl())) {
                             throw new CustomException(" NAME INVALID", "The  name in malayalam" +
-                                    groomInfo.getFirstname_ml() + " is invalid");
+                                    groomInfo.getFirstnameMl() + " is invalid");
                         }
                         if (groomInfo.getMobile() <= 0) {
                             throw new CustomException("CONTACT NUMBER INVALID", "The  groom mobile number " +
@@ -189,13 +189,13 @@ public class MarriageApplicationValidator {
                             throw new CustomException("GROOM BIRTH DATE INVALID", "The date can't be null");
                         }
 
-                        if (StringUtils.isEmpty(groomInfo.getFather_aadharno())) {
+                        if (StringUtils.isEmpty(groomInfo.getFatherAadharno())) {
                             throw new CustomException(" AADHAR INVALID", "The   Father Aadhar number" +
-                                    groomInfo.getFather_aadharno() + " is invalid");
+                                    groomInfo.getFatherAadharno() + " is invalid");
                         }
-                        if (StringUtils.isEmpty(groomInfo.getMother_aadharno())) {
+                        if (StringUtils.isEmpty(groomInfo.getMotherAadharno())) {
                             throw new CustomException(" AADHAR INVALID", "The   Father Aadhar number" +
-                                    groomInfo.getMother_aadharno() + " is invalid");
+                                    groomInfo.getMotherAadharno() + " is invalid");
                         }
                         if (StringUtils.isEmpty(groomInfo.getMaritalstatusid())) {
                             throw new CustomException(" MARITAL STATUS INVALID",
@@ -283,13 +283,13 @@ public class MarriageApplicationValidator {
 
                         }
 
-                        if (StringUtils.isEmpty(brideInfo.getFirstname_en())) {
+                        if (StringUtils.isEmpty(brideInfo.getFirstnameEn())) {
                             throw new CustomException(" NAME INVALID", "The  name in english" +
-                                    brideInfo.getFirstname_en() + " is invalid");
+                                    brideInfo.getFirstnameEn() + " is invalid");
                         }
-                        if (StringUtils.isEmpty(brideInfo.getFirstname_ml())) {
+                        if (StringUtils.isEmpty(brideInfo.getFirstnameMl())) {
                             throw new CustomException(" NAME INVALID", "The  name in malayalam" +
-                                    brideInfo.getFirstname_ml() + " is invalid");
+                                    brideInfo.getFirstnameMl() + " is invalid");
                         }
                         if (brideInfo.getMobile() <= 0) {
                             throw new CustomException("CONTACT NUMBER INVALID", "The  groom mobile number " +
@@ -303,13 +303,13 @@ public class MarriageApplicationValidator {
                             throw new CustomException("BRIDE BIRTH DATE INVALID", "The date can't be null");
                         }
 
-                        if (StringUtils.isEmpty(brideInfo.getFather_aadharno())) {
+                        if (StringUtils.isEmpty(brideInfo.getFatherAadharno())) {
                             throw new CustomException(" AADHAR INVALID", "The   Father Aadhar number" +
-                                    brideInfo.getFather_aadharno() + " is invalid");
+                                    brideInfo.getFatherAadharno() + " is invalid");
                         }
-                        if (StringUtils.isEmpty(brideInfo.getMother_aadharno())) {
+                        if (StringUtils.isEmpty(brideInfo.getMotherAadharno())) {
                             throw new CustomException(" AADHAR INVALID", "The   Father Aadhar number" +
-                                    brideInfo.getMother_aadharno() + " is invalid");
+                                    brideInfo.getMotherAadharno() + " is invalid");
                         }
                         if (StringUtils.isEmpty(brideInfo.getMaritalstatusid())) {
                             throw new CustomException(" MARITAL STATUS INVALID",

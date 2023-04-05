@@ -59,16 +59,16 @@ public class MarriageApplicationDetails {
 
     @Size(max = 64)
     @JsonProperty("marriageWardCode")
-    private String ward_code;
+    private String wardCode;
 
 
     @Size(max = 1000)
     @JsonProperty("marriageStreetEn")
-    private String street_name_en;
+    private String streetNameEn;
 
     @Size(max = 1000)
     @JsonProperty("marriageStreetMl")
-    private String street_name_ml;
+    private String streetNameMl;
 
     @Size(max = 64)
     @JsonProperty("marriageTalukID")
@@ -76,7 +76,7 @@ public class MarriageApplicationDetails {
 
     @Size(max = 64)
     @JsonProperty("marriageVillageName")
-    private String village_name;
+    private String villageName;
 
     @Size(max = 1000)
     @JsonProperty("marriageLandmark")
@@ -84,25 +84,25 @@ public class MarriageApplicationDetails {
 
     @Size(max = 1000)
     @JsonProperty("marriageLocalityEn")
-    private String locality_en;
+    private String localityEn;
 
     @Size(max = 1000)
     @JsonProperty("marriageLocalityMl")
-    private String locality_ml;
+    private String localityMl;
 
     @Size(max = 64)
     @JsonProperty("marriageType")
-    private String marriage_type;
+    private String marriageType;
 
     @Size(max = 200)
     @JsonProperty("othMarriageType")
-    private String oth_marriage_type;
+    private String othMarriageType;
 
     @Size(max = 64)
     @JsonProperty("registrationno")
     private String registrationno;
 
-    @JsonProperty("registration_date")
+    @JsonProperty("registrationDate")
     private Long registrationDate;
 
     @Size(max = 1000)
