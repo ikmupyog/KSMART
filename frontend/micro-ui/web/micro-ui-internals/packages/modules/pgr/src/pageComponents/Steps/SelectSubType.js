@@ -1,6 +1,6 @@
 import { TypeSelectCard } from "@egovernments/digit-ui-react-components";
 import React, { useState } from "react";
-import Timeline from "../../components/PGRTimeline";
+import PGRTimeline from "../../components/PGRTimeline";
 import EmpTimeLine from "../../components/EmpPGRTimeline"
 
 const SelectSubType = ({ t, config, onSelect, value }) => {
@@ -33,7 +33,7 @@ const SelectSubType = ({ t, config, onSelect, value }) => {
 
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") ? <Timeline /> : null}
+      {window.location.href.includes("/citizen") ? <PGRTimeline /> : null}
       {window.location.href.includes("/employee") ? <EmpTimeLine /> : null}
       <TypeSelectCard {...configNew} disabled={Object.keys(subType).length === 0 || subType === null ? true : false} t={t} />
     </React.Fragment>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { CardLabel, Dropdown, FormStep, TextArea } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/PGRTimeline";
+import PGRTimeline from "../../components/PGRTimeline";
 
 const SelectAddress = ({ t, config, onSelect, value }) => {
   const allCities = Digit.Hooks.pgr.useTenants();
@@ -55,7 +55,7 @@ const SelectAddress = ({ t, config, onSelect, value }) => {
   }
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
+      {window.location.href.includes("/citizen") ? <PGRTimeline currentStep={3} /> : null}
       <FormStep config={config} onSelect={onSubmit} t={t} isDisabled={selectedLocality ? false : true}>
         <div>
           <CardLabel>{t("CS_COMMON_LOCAL_BODY")}</CardLabel>
