@@ -10,7 +10,7 @@ import BirthPlaceVehicle from "../../pageComponents/birthComponents/BirthPlaceVe
 import BirthPlacePublicPlace from "../../pageComponents/birthComponents/BirthPlacePublicPlace";
 import FormStep from "../../../../../react-components/src/molecules/FormStep";
 
-const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false }) => {
+const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = false }) => {
   // console.log(JSON.stringify(formData));  
   // console.log(formData);
   // console.log(isEditBirth);
@@ -35,7 +35,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
   const [InstitutionFilterList, setInstitutionFilterList] = useState(null);
   const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(false);
   const [DifferenceInDaysRounded, setDifferenceInDaysRounded] = useState();
-  const {uuid:uuid,} =Digit.UserService.getUser().info ; 
+  const { uuid: uuid, } = Digit.UserService.getUser().info;
   // console.log(Digit.UserService.getUser().info);
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
@@ -326,9 +326,9 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
     today.setHours(0, 0, 0, 0);
     const birthDate = new Date(value);
     birthDate.setHours(0, 0, 0, 0);
-    
+
     if (birthDate.getTime() <= today.getTime()) {
-      
+
       setDOBError(false);
       // To calculate the time difference of two dates
       let Difference_In_Time = today.getTime() - birthDate.getTime();
@@ -506,23 +506,27 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
     }
   }
   function setSelectBirthWeight(e) {
-    if (e.target.value.length === 5) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setBirthWeight(e.target.value);
-      // if(e.target.value <= 0 || e.target.value > 10 ){
-      //   setBirthWeightError(true);
-      //   setToast(true);
-      //   setTimeout(() => {
-      //   setToast(false);
-      // }, 3000);
-      // } else {
-      //   setBirthWeightError(false);
-      //   setBirthWeight(e.target.value);        
-      // }
-
+    if (e.target.value.trim().length >= 0) {
+      // if (!amount || amount.match(/^\d{1,}(\.\d{0,4})?$/)) {
+      setBirthWeight(e.target.value.length <= 4 ? e.target.value.replace(/[^0-9.]/ig, '') : (e.target.value.replace(/[^0-9.]/ig, '')).substring(0, 4));
     }
+    // if (e.target.value.length === 5) {
+    //   return false;
+    //   // window.alert("Username shouldn't exceed 10 characters")
+    // } else {
+    //   setBirthWeight(e.target.value);
+    //   // if(e.target.value <= 0 || e.target.value > 10 ){
+    //   //   setBirthWeightError(true);
+    //   //   setToast(true);
+    //   //   setTimeout(() => {
+    //   //   setToast(false);
+    //   // }, 3000);
+    //   // } else {
+    //   //   setBirthWeightError(false);
+    //   //   setBirthWeight(e.target.value);        
+    //   // }
+
+    // }
   }
   let validFlag = true;
   const goNext = () => {
@@ -791,15 +795,25 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
     }
     if (birthWeight != null || birthWeight != "" || birthWeight != undefined) {
       let BirthWeightCheck = birthWeight;
-      if (BirthWeightCheck < 0.25 || BirthWeightCheck > 10) {
+      console.log(BirthWeightCheck);
+      if (BirthWeightCheck != ".") {
+        if (BirthWeightCheck < 0.25 || BirthWeightCheck > 10) {
+          validFlag = false;
+          setBirthWeightError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } else {
+          setBirthWeightError(false);
+        }
+      } else {
         validFlag = false;
         setBirthWeightError(true);
         setToast(true);
         setTimeout(() => {
           setToast(false);
         }, 2000);
-      } else {
-        setBirthWeightError(false);
       }
     }
     else {
@@ -829,7 +843,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
         setToast(false);
       }, 2000);
     } else {
-      if (pregnancyDuration < 20 || pregnancyDuration > 44) {
+      if (pregnancyDuration < 20 || pregnancyDuration > 42) {
         validFlag = false;
         setPregnancyDurationInvalidError(true);
         setToast(true);
@@ -852,7 +866,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
       setDeliveryMethodStError(false);
     }
     if (validFlag == true) {
-      
+
       let IsEditChangeScreen = (isEditBirth ? isEditBirth : false);
       let isWorkflow = isEditBirth ? false : true;
       onSelect(config.key, {
@@ -865,7 +879,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
         vehicleToMl, setadmittedHospitalEn, vehicleDesDetailsEn,
         publicPlaceType, localityNameEn, localityNameMl, streetNameEn, streetNameMl, publicPlaceDecpEn,
         birthWeight, pregnancyDuration, medicalAttensionSub, deliveryMethods, IsEditChangeScreen,
-        uuid,DifferenceInTime,isWorkflow
+        uuid, DifferenceInTime, isWorkflow
       });
     }
   };
@@ -1371,7 +1385,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
                   value={birthWeight}
                   onChange={setSelectBirthWeight}
                   placeholder={`${t("CR_BIRTH_WEIGHT")}`}
-                  {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "decimal", title: t("CR_INVALID_BIRTH_WEIGHT") })}
+                  {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_BIRTH_WEIGHT") })}
                 />
               </div>
             </div>
