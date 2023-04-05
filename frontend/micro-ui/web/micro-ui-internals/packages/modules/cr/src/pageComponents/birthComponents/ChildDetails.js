@@ -795,7 +795,6 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     }
     if (birthWeight != null || birthWeight != "" || birthWeight != undefined) {
       let BirthWeightCheck = birthWeight;
-      console.log(BirthWeightCheck);
       if (BirthWeightCheck != ".") {
         if (BirthWeightCheck < 0.25 || BirthWeightCheck > 10) {
           validFlag = false;
