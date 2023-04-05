@@ -5,7 +5,6 @@ import {getFilteredChildSexData} from './child-sex-util';
 import moment from "moment";
 
 export const getFilteredChildAdharData = (selectedData, inclusionData) => {
-  console.log("selectedData==123", selectedData, inclusionData);
   let filteredData = {};
   if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
     filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
@@ -18,7 +17,6 @@ export const getFilteredChildAdharData = (selectedData, inclusionData) => {
 };
 
 export const getFilteredFatherData = (selectedData, inclusionData) => {
-  console.log("selectedData==123", selectedData, inclusionData);
   let filteredData = {};
   if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
     filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
@@ -35,7 +33,6 @@ export const getFilteredFatherData = (selectedData, inclusionData) => {
 };
 
 export const getFilteredMotherData = (selectedData, inclusionData) => {
-  console.log("selectedData==123", selectedData, inclusionData);
   let filteredData = {};
   if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
     filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
@@ -52,7 +49,6 @@ export const getFilteredMotherData = (selectedData, inclusionData) => {
 };
 
 export const getFilteredParentAddressData = (selectedData, inclusionData) => {
-  console.log("selectedData==123", selectedData, inclusionData);
   let filteredData = {};
   if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
     filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
@@ -77,4 +73,4 @@ const computeInitialValue = (dob) => {
   return initialValue;
 };
 
-export { getFilteredChildDobData,getFilteredChildNameData, getFilteredChildSexData };
+export { getFilteredChildDobData, getFilteredChildNameData, getFilteredChildSexData };
