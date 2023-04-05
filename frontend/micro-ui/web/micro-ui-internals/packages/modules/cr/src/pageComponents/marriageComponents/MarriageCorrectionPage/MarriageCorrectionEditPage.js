@@ -14,19 +14,16 @@ import {
   UploadFile,
   EditIcon,
 } from "@egovernments/digit-ui-react-components";
-// import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 import FormFieldContainer from "../../../components/FormFieldContainer";
 import BirthInclusionModal from "../../../components/BirthInclusionModal";
 import { BIRTH_INCLUSION_FIELD_NAMES } from "../../../config/constants";
-import { useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { getFormattedBirthInclusionData } from "../../../config/utils";
 import MarriageAddressPage from "../MarriageAddressPage";
 
 const types = ["HUSBAND DETAILS", "WIFE DETAILS"];
 
-const MarriageCorrectionEditPage = ({ navigationData,cmbPlace}) => {
+const MarriageCorrectionEditPage = ({ navigationData,cmbPlace,BirthCorrectionDocuments}) => {
   const { t } = useTranslation();
   let formData = {};
   let validation = {};
@@ -49,16 +46,6 @@ const MarriageCorrectionEditPage = ({ navigationData,cmbPlace}) => {
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
 
-  //   let cmbPlace = [];
-  //   let menu = [];
-  //   let cmbNation = [];
-  let cmbWardNo = [];
-  //   let cmbWardNoFinal = [];
-  let Zonal = [];
-  //   let cmbState = [];
-  //   let cmbfilterNation = [];
-  //   let cmbfilterNationI = [];
-
   const [marriagePlace, setMarriagePlace] = useState(
     formData?.InformationDeath?.marriagePlace?.code
       ? formData?.InformationDeath?.marriagePlace
@@ -68,9 +55,8 @@ const MarriageCorrectionEditPage = ({ navigationData,cmbPlace}) => {
   );
 
   const setBirthInclusionFilterQuery = (fieldId) => {
-    const birthInclusionData = correctionsData["birth-death-service"]?.BirthCorrectionDocuments;
-    let selectedData = getFormattedBirthInclusionData(fieldId, navigationData, birthInclusionData);
-    setSelectedInclusionItem(selectedData);
+    const birthInclusionData = BirthCorrectionDocuments;
+    setSelectedInclusionItem(birthInclusionData);
     setShowModal(true);
   };
 
