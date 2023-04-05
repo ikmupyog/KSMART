@@ -1,33 +1,29 @@
-import React, { useState } from "react";
-import { Loader } from "@egovernments/digit-ui-react-components";
-import { useTranslation } from "react-i18next";
-
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { Loader } from "@egovernments/digit-ui-react-components";
+import DeathCorrectionEditPage from "./DeathCorrectionEditPage";
 
-import BirthInclusionEditPage from "./BirthInclusionEditPage";
-
-const BirthInclusionPage = () => {
-  const { t } = useTranslation();
-
+function DeathCorrectionPage() {
   const stateId = Digit.ULBService.getStateId();
-
   let location = useLocation();
-  let navigationData = location?.state?.inclusionData;
+  let navigationData = location?.state?.correctionData;
 
+  console.log("locartion dayta==", location);
   const { data: correctionsData = {}, isSuccess, isError, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
     stateId,
     "birth-death-service",
     "BirthCorrectionDocuments"
   );
-  const { data: place = {}, isLoading: isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PlaceMasterDeath");
-  const { data: Menu, isLoading: isGenderLoad } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
-  const { data: Nation = {}, isLoading: isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
+
+  const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PlaceMasterDeath");
+  const { data: Menu, isGenderLoad } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
+  const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
 
   let cmbPlace = [];
   let menu = [];
   let cmbNation = [];
   let BirthCorrectionDocuments = [];
-
+  
   BirthCorrectionDocuments = correctionsData["birth-death-service"]?.BirthCorrectionDocuments;
 
   place &&
@@ -36,12 +32,10 @@ const BirthInclusionPage = () => {
     place["common-masters"].PlaceMasterDeath.map((ob) => {
       cmbPlace.push(ob);
     });
-
   Menu &&
     Menu.map((genderDetails) => {
       menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
     });
-
   Nation &&
     Nation["common-masters"] &&
     Nation["common-masters"].Country &&
@@ -49,22 +43,24 @@ const BirthInclusionPage = () => {
       cmbNation.push(ob);
     });
 
-  if (isLoad || isGenderLoad || isNationLoad || isLoading) {
+  if ((isLoad || isGenderLoad || isNationLoad || isLoading)) {
     return <Loader />;
   }
-  if (cmbNation?.length > 0 && menu?.length > 0 && cmbPlace?.length > 0 && BirthCorrectionDocuments?.length > 0) {
+  if (
+    cmbNation?.length > 0 &&
+    menu?.length > 0 &&
+    cmbPlace?.length > 0 &&
+    BirthCorrectionDocuments?.length > 0 
+  ) {
     return (
-      <BirthInclusionEditPage
+      <DeathCorrectionEditPage
         cmbNation={cmbNation}
         menu={menu}
         cmbPlace={cmbPlace}
         BirthCorrectionDocuments={BirthCorrectionDocuments}
         navigationData={navigationData}
-        // birthInclusionFormData={birthInclusionFormData}
       />
     );
-  } else {
-    return null;
   }
 };
-export default BirthInclusionPage;
+export default DeathCorrectionPage;

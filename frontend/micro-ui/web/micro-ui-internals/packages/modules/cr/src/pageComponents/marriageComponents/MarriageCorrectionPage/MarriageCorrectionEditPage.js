@@ -75,6 +75,11 @@ const MarriageCorrectionEditPage = ({ navigationData,cmbPlace,cmbWardNoFinal,Bir
   const [marriageLandmark, setmarriageLandmark] = useState(
     formData?.MarriageDetails?.marriageLandmark ? formData?.MarriageDetails?.marriageLandmark : ""
   );
+  const setBirthInclusionFilterQuery = (fieldId) => {
+    const birthInclusionData = BirthCorrectionDocuments;
+    setSelectedInclusionItem(birthInclusionData);
+    setShowModal(true);
+  };
 
   const _hideModal = () => {
     setShowModal(false);

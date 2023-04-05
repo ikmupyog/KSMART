@@ -129,6 +129,7 @@ import useCivilRegistrationNACBIRTHAPI from "./cr/useCivilRegistrationNACBIRTHAP
 import useCivilRegistrationBornOutsideIndiaBirthAPI from "./cr/useCivilRegistrationBornOutsideIndiaBirthAPI";
 import useCivilRegistrationAbandonedBirthAPI from "./cr/useCivilRegistrationAbandonedBirthAPI";
 import useApplicationBornOutsideIndiaBirthDetail from "./cr/useApplicationBornOutsideIndiaBirthDetail"; 
+import useBirthCorrectionAction from "./cr/useBirthCorrectionAction";
 
 import useCivilRegistrationDeathAPI from "./cr/useCivilRegistrationDeathAPI";
 // import useTradeLicenseSearch from "./tl/useTradeLicenseSearch";
@@ -241,6 +242,8 @@ import useWaterSearch from "./ws/useWaterSearch";
 import useSewarageSearch from "./ws/useSewarageSearch";
 import useTradeLicensePdeAPI from "./tl/useTradeLicensePdeAPI";
 import useSearchPde from "./tl/useSearchPde";
+import { useRegSearchDeath, getDeathFileSourceDetails } from "./cr/death";
+
 const pgr = {
   useComplaintDetails,
   useComplaintsList,
@@ -355,6 +358,9 @@ const tl = {
   useTradeLicenseCorrectionAPI
 };
 const cr = {
+  useBirthCorrectionAction,
+  useRegSearchDeath,
+  getDeathFileSourceDetails,
   useCivilRegMDMS,
   useTenants: useTenantsCR,
   useCivilRegistrationMDMS,

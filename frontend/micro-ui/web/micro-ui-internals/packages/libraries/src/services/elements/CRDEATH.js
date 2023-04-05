@@ -63,5 +63,19 @@ export const CRDeathService = {
       locale: true,
       userInfo: true,
       userDownloadInfo: true,
+      ...additionalProps
     }),
+    CRRegDownloadDeathFileDetails: ({params={}, additionalProps={}}) =>
+    Request({
+      url: Urls.crdeath.registry_download,
+      data: {},
+      useCache: false,
+      method: "POST",
+      params,
+      auth: true,
+      locale: true,
+      userInfo: true,
+      userDownloadInfo: true,
+      ...additionalProps
+    })
 };
