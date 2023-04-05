@@ -68,7 +68,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.registrationno
 
-            - jsonPath: $.MarriageDetails.*.registration_date
+            - jsonPath: $.MarriageDetails.*.registrationDate
 
             - jsonPath: $.MarriageDetails.*.action
 
@@ -281,7 +281,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.auditDetails.lastModifiedBy
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetails.serial_no1
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.serialNo1
 
             - jsonPath: $.MarriageDetails.*.marriageTenantid
 
@@ -321,7 +321,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.auditDetails.lastModifiedBy
 
-            - jsonPath: $.MarriageDetails.*.WitnessDetails.serial_no2
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.serialNo2
 
             - jsonPath: $.MarriageDetails.*.marriageTenantid
 
@@ -747,7 +747,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.registrationno
 
-            - jsonPath: $.MarriageDetails.*.registration_date
+            - jsonPath: $.MarriageDetails.*.registrationDate
 
             - jsonPath: $.MarriageDetails.*.action
 

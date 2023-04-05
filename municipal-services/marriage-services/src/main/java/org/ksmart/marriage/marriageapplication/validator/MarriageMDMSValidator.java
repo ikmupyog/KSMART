@@ -50,11 +50,11 @@ public class MarriageMDMSValidator {
                         request.getMarriageDetails().get(0).getGroomDetails().getMaritalstatusid() + " is invalid");
         }
 
-        if (request.getMarriageDetails().get(0).getMarriage_type() != null) {
+        if (request.getMarriageDetails().get(0).getMarriageType() != null) {
             if (!masterData.get(MarriageConstants.MARRIAGE_TYPE)
-                    .contains(request.getMarriageDetails().get(0).getMarriage_type()))
+                    .contains(request.getMarriageDetails().get(0).getMarriageType()))
                 errorMap.put("GROOM:TYPE OF MARRIAGE INVALID", "The marriage type " +
-                        request.getMarriageDetails().get(0).getMarriage_type() + " is invalid");
+                        request.getMarriageDetails().get(0).getMarriageType() + " is invalid");
         }
 
         if (request.getMarriageDetails().get(0).getPlacetype() != null) {
@@ -94,11 +94,11 @@ public class MarriageMDMSValidator {
                         request.getMarriageDetails().get(0).getTalukid() + " is invalid");
         }
         // have to change as villageId
-        if (request.getMarriageDetails().get(0).getVillage_name() != null) {
+        if (request.getMarriageDetails().get(0).getVillageName() != null) {
             if (!masterData.get(MarriageConstants.VILLAGE)
-                    .contains(request.getMarriageDetails().get(0).getVillage_name()))
+                    .contains(request.getMarriageDetails().get(0).getVillageName()))
                 errorMap.put(" VILLAGE NAME INVALID", "The village name of marriage place " +
-                        request.getMarriageDetails().get(0).getVillage_name() + " is invalid");
+                        request.getMarriageDetails().get(0).getVillageName() + " is invalid");
         }
         if (request.getMarriageDetails().get(0).getLbtype() != null) {
             if (!masterData.get(MarriageConstants.LBTYPE)

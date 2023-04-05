@@ -60,11 +60,11 @@ public class WitnessDetails {
     @JsonProperty("witness1Esigned")
     private Boolean witness1Esigned;
 
-    @JsonProperty("serial_no1")
-    private Integer serial_no1;
+    @JsonProperty("serialNo1")
+    private Integer serialNo1;
 
-    @JsonProperty("serial_no2")
-    private Integer serial_no2;
+    @JsonProperty("serialNo2")
+    private Integer serialNo2;
 
     @Size(max = 15)
     @JsonProperty("witness2AadharNo")
