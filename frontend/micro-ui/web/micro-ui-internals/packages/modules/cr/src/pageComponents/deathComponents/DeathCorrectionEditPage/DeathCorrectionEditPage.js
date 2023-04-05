@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
   CardLabel,
-  EditButton,
-  PopUp,
-  UploadFile,
   TextInput,
   DatePicker,
   Dropdown,
@@ -25,8 +22,7 @@ import DeathCorrectionModal from "../../../components/DeathCorrectionModal";
 import { DEATH_CORRECTION_FIELD_NAMES } from "../../../config/constants";
 import { initializedDeathCorrectionObject } from "../../../config/globalObject";
 import { useLocation } from "react-router-dom";
-import { Controller, useForm } from "react-hook-form";
-import moment from "moment";
+import { useForm } from "react-hook-form";
 
 function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, menu, cmbPlace , BirthCorrectionDocuments,navigationData}) {
   const { t } = useTranslation();
@@ -44,12 +40,7 @@ function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, menu, cmbPl
   const [isInitialRenderDeathPlace, setIsInitialRenderDeathPlace] = useState(true);
   const [isInitialMdmsServiceCompleted, setIsInitialMdmsServiceCompleted] = useState(false);
   const [deathCorrectionFormsObj, setDeathCorrectionFormsObj] = useState(false);
-
-
-  let location = useLocation();
-
   let validation = {};
-
   const _hideModal = () => {
     setShowModal(false);
   };
@@ -238,23 +229,6 @@ const onUploadDocSubmit = async (fileData) => {
         setValue(formData?.InformationDeath?.DeathPlace);
       }
     }
-    // if (formData?.ChildDetails?.medicalAttensionSub != null) {
-    //   if (cmbAttDeliverySub.length > 0 && (medicalAttensionSub === undefined || medicalAttensionSub === "")) {
-    //     setMedicalAttensionSub(cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.ChildDetails?.medicalAttensionSub)[0]);
-    //   }
-    // }
-    // if (formData?.ChildDetails?.pregnancyDuration != null) {
-    //   console.log("pregnancyDuration" + pregnancyDuration);
-    //   if (cmbPregWeek.length > 0 && (pregnancyDuration === undefined || pregnancyDuration === "")) {
-    //     setPregnancyDuration(cmbPregWeek.filter(cmbPregWeek => parseInt(cmbPregWeek.code) === formData?.ChildDetails?.pregnancyDuration)[0]);
-    //   }
-    // }
-    // if (formData?.ChildDetails?.deliveryMethods != null) {
-    //   if (cmbDeliveryMethod.length > 0 && (deliveryMethods === undefined || deliveryMethods === "")) {
-    //     // console.log(cmbDeliveryMethod.filter(cmbDeliveryMethod => parseInt(cmbDeliveryMethod.code) === formData?.ChildDetails?.deliveryMethods)[0]);
-    //     setDeliveryMethod(cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.ChildDetails?.deliveryMethods)[0]);
-    //   }
-    // }
   }
   function setSelectDeceasedAadharNumber(e) {
     if (e.target.value.trim().length >= 0) {
@@ -267,7 +241,6 @@ const onUploadDocSubmit = async (fileData) => {
     setSelectedNationality(value);
   }
   function selectDeceasedGender(value) {
-    // console.log("gender" + value);
     setselectedDeceasedGender(value);
   }
   function selectDeathPlace(value) {
@@ -572,10 +545,6 @@ const onUploadDocSubmit = async (fileData) => {
   };
   console.log(cmbPlace);
 
-  // useEffect(() => {
-  //   console.log("DeathPlace==", DeathPlace);
-  // }, [DeathPlace]);
-
   if(Object.keys(deathCorrectionFormsObj)?.length > 0){
     console.log("deathCorrectionFormData??.curValue",deathCorrectionFormsObj?.DECEASED_FIRST_NAME);
 
@@ -605,8 +574,6 @@ const onUploadDocSubmit = async (fileData) => {
                   optionKey="i18nKey"
                   name="DeceasedAadharNumber"
                   value={deathCorrectionFormData?.DECEASED_AADHAR?.curValue} 
-                  // value={navigationData.InformantDetails.InformantAadharNo}
-                  // onChange={setSelectDeceasedAadharNumber}
                   placeholder={`${t("CR_AADHAR")}`}
                   {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                 />
@@ -634,8 +601,7 @@ const onUploadDocSubmit = async (fileData) => {
                   type={"text"}
                   optionKey="i18nKey"
                   name="DeceasedFirstNameEn"
-                  value={deathCorrectionFormsObj?.DECEASED_FIRST_NAME?.curValue} 
-                    // onChange={setSelectDeceasedFirstNameEn}
+                  value={deathCorrectionFormsObj?.DECEASED_NAME_EN?.curValue.firstName} 
                   placeholder={`${t("CR_FIRST_NAME_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
@@ -649,7 +615,7 @@ const onUploadDocSubmit = async (fileData) => {
                   type={"text"}
                   optionKey="i18nKey"
                   name="DeceasedMiddleNameEn"
-                  value={deathCorrectionFormData?.DECEASED_MIDDLE_NAME?.curValue} 
+                  value={deathCorrectionFormsObj?.DECEASED_NAME_EN?.curValue.middleName} 
                   // onChange={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -664,6 +630,7 @@ const onUploadDocSubmit = async (fileData) => {
                   type={"text"}
                   optionKey="i18nKey"
                   name="DeceasedLastNameEn"
+                  value={deathCorrectionFormsObj?.DECEASED_NAME_EN?.curValue.lastName} 
                   // value={navigationData.InformationDeath.DeceasedLastNameEn}
                   // onChange={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_LAST_NAME_EN")}`}
@@ -671,19 +638,9 @@ const onUploadDocSubmit = async (fileData) => {
                 />
               </div>
             </FieldComponentContainer>
-
-            {/* <div style={{ marginTop: "2.8rem" }}>
-              <LinkButton
-                label={<EditIcon selected={true} label={"Edit"} />}
-                style={{ width: "100px", display: "inline" }}
-                onClick={() => {
-                  setShowModal(true);
-                }}
-              />
-            </div> */}
               <div style={{ marginTop: "2.8rem" }}>
           <ButtonContainer>
-          <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["CHILD_NAME"])}>
+          <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_NAME_EN"])}>
             <EditIcon
               selected={true}
               label={"Edit"}
@@ -703,6 +660,7 @@ const onUploadDocSubmit = async (fileData) => {
                   type={"text"}
                   optionKey="i18nKey"
                   name="DeceasedFirstNameMl"
+                  value={deathCorrectionFormsObj?.DECEASED_NAME_ML?.curValue.firstName} 
                   // value={navigationData.InformationDeath.DeceasedFirstNameMl}
                   // onChange={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_FIRST_NAME_ML")}`}
@@ -718,7 +676,7 @@ const onUploadDocSubmit = async (fileData) => {
                   type={"text"}
                   optionKey="i18nKey"
                   name="DeceasedMiddleNameMl"
-                  // value={navigationData.InformationDeath.DeceasedMiddleNameMl}
+                  value={deathCorrectionFormsObj?.DECEASED_NAME_ML?.curValue.middleName} 
                   // onChange={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -733,27 +691,16 @@ const onUploadDocSubmit = async (fileData) => {
                   type={"text"}
                   optionKey="i18nKey"
                   name="DeceasedLastNameMl"
-                  // value={navigationData.InformationDeath.DeceasedLastNameMl}
+                  value={deathCorrectionFormsObj?.DECEASED_NAME_ML?.curValue.lastName} 
                   // onChange={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_LAST_NAME_ML")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
               </div>
-            </FieldComponentContainer>
-{/* 
-            <div style={{ marginTop: "2.8rem" }}>
-              <LinkButton
-                label={<EditIcon selected={true} label={"Edit"} />}
-                style={{ width: "100px", display: "inline" }}
-                onClick={() => {
-                  setShowModal(true);
-                }}
-              />
-            </div> */}
-            
+            </FieldComponentContainer>           
         <div style={{ marginTop: "2.8rem" }}>
           <ButtonContainer>
-          <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["MOTHER_DETAILS"])}>
+          <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_NAME_ML"])}>
             <EditIcon
               selected={true}
               label={"Edit"}
@@ -768,7 +715,7 @@ const onUploadDocSubmit = async (fileData) => {
                 <CardLabel>{t("CR_DATE_OF_DEATH")}</CardLabel>
                 <DatePicker
                   // {...register('DateOfDeath')}
-                  datePickerRef={register}
+                  // datePickerRef={register}
                   name="DateOfDeath"
                   disabled={deathCorrectionFormsObj.CHILD_DOB?.isDisabled}
                   autofocus={deathCorrectionFormsObj.CHILD_DOB?.isFocused}
@@ -783,6 +730,37 @@ const onUploadDocSubmit = async (fileData) => {
                   // })}
                 />
               </div>
+              </FieldComponentContainer>
+              <div style={{ marginTop: "2.8rem" }}>
+          <ButtonContainer>
+          <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["CHILD_DOB"])}>
+            <EditIcon
+              selected={true}
+              label={"Edit"}
+            />
+            </span>
+          </ButtonContainer>
+        </div>
+          </FormFieldContainer>
+          <FormFieldContainer>
+            <FieldComponentContainer>
+              <div className="col-md-4">
+                <CardLabel>{t("CR_PLACE_OF_DEATH")}</CardLabel>
+                <Dropdown
+                  t={t}
+                  // dropdownRef={register()}
+                  optionKey="name"
+                  name="selectDeathPlace"
+                  isMandatory={false}
+                  option={cmbPlace}
+                  disabled={deathCorrectionFormsObj.PLACE_OF_DEATH?.isDisabled}
+                  autofocus={deathCorrectionFormsObj.PLACE_OF_DEATH?.isFocused}
+                  select={deathCorrectionFormsObj?.PLACE_OF_DEATH?.curValue} 
+                  // selected={DeathPlace}
+                  // select={selectDeathPlace}
+                  placeholder={`${t("CR_PLACE_OF_DEATH")}`}
+                />
+              </div>
               <div className="col-md-4">
                 <CardLabel>{t("CR_PLACE_OF_DEATH")}</CardLabel>
                 <Dropdown
@@ -792,44 +770,41 @@ const onUploadDocSubmit = async (fileData) => {
                   name="selectDeathPlace"
                   isMandatory={false}
                   option={cmbPlace}
-
+                  disabled={deathCorrectionFormsObj.PLACE_OF_DEATH?.isDisabled}
+                  autofocus={deathCorrectionFormsObj.PLACE_OF_DEATH?.isFocused}
+                  select={deathCorrectionFormsObj?.PLACE_OF_DEATH?.curValue} 
                   // selected={DeathPlace}
                   // select={selectDeathPlace}
                   placeholder={`${t("CR_PLACE_OF_DEATH")}`}
                 />
-                {/* <TextInput
-                  t={t}
-                  inputRef={register({})}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="selectDeathPlace"
-                  // value={navigationData.InformationDeath.DeathPlace}
-                  // onChange={setSelectDeceasedFirstNameEn}
-                  placeholder={`${t("CR_LAST_NAME_ML")}`}
-                  // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
-                /> */}
               </div>
-
+              </FieldComponentContainer>
+            
+              <div style={{ marginTop: "2.8rem" }}>
+          <ButtonContainer>
+          <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["PLACE_OF_DEATH"])}>
+            <EditIcon
+              selected={true}
+              label={"Edit"}
+            />
+            </span>
+          </ButtonContainer>
+        </div>
+          </FormFieldContainer>
+          <FormFieldContainer>
+            <FieldComponentContainer>
               <div className="col-md-4">
                 <CardLabel>{t("CR_GENDER")}</CardLabel>
-                {/* <Dropdown
-                  t={t}
-                  optionKey="code"
-                  isMandatory={true}
-                  option={menu}
-                  selected={navigationData.InformationDeath.DeceasedGender}
-                  select={selectDeceasedGender}
-                  placeholder={`${t("CR_GENDER")}`}
-                  // {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })}
-                /> */}
                 <TextInput
                   t={t}
-                  inputRef={register({})}
+                  // inputRef={register({})}
                   isMandatory={false}
                   type={"text"}
                   optionKey="i18nKey"
                   name="selectDeceasedGender"
+                  disabled={deathCorrectionFormsObj.GENDER?.isDisabled}
+                  autofocus={deathCorrectionFormsObj.GENDER?.isFocused}
+                  select={deathCorrectionFormsObj?.GENDER?.curValue}  
                   // value={navigationData.InformationDeath.DeceasedGender}
                   // onChange={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_LAST_NAME_ML")}`}
@@ -837,18 +812,9 @@ const onUploadDocSubmit = async (fileData) => {
                 />
               </div>
             </FieldComponentContainer>
-            {/* <div style={{ marginTop: "2.8rem" }}>
-              <LinkButton
-                label={<EditIcon selected={true} label={"Edit"} />}
-                style={{ width: "100px", display: "inline" }}
-                onClick={() => {
-                  setShowModal(true);
-                }}
-              />
-            </div> */}
-                <div style={{ marginTop: "2.8rem" }}>
+              <div style={{ marginTop: "2.8rem" }}>
           <ButtonContainer>
-          <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["CHILD_DOB"])}>
+          <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["GENDER"])}>
             <EditIcon
               selected={true}
               label={"Edit"}
@@ -1021,6 +987,7 @@ const onUploadDocSubmit = async (fileData) => {
                   type={"text"}
                   optionKey="i18nKey"
                   name="DeceasedMotherNameMl"
+                  value={deathCorrectionFormsObj?.MOTHERS_NAME?.curValue.mothersNameEn} 
                   // value={navigationData.FamilyInformationDeath.MotherNameMl}
                   // onChange={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_MOTHER_NAME_ML")}`}
@@ -1028,36 +995,16 @@ const onUploadDocSubmit = async (fileData) => {
                 />
               </div>
             </FieldComponentContainer>
-
-            {/* <div style={{ marginTop: "2.8rem" }}>
-              <LinkButton
-                label={<EditIcon selected={true} label={"Edit"}  style={{}} />}
-                style={{ width: "100px", display: "inline"}}
-                onClick={() => {
-                  setShowModal(true);
-                }}                        
-              />
-            </div> */}
-              {/* <div style={{ marginTop: "2.8rem" }}>
-          <ButtonContainer>
-          <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["MOTHER_DETAILS"])}>
-            <EditButton
-              selected={true}
-              label={"Edit"}
-            />
-            </span>
-          </ButtonContainer>
-        </div> */
         <div style={{ marginTop: "2.8rem" }}>
         <ButtonContainer>
-        <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["FATHER_DETAILS"])}>
+        <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["MOTHERS_NAME"])}>
           <EditIcon
             selected={true}
             label={"Edit"}
           />
           </span>
         </ButtonContainer>
-      </div>}
+      </div>
           </FormFieldContainer>
           <FormFieldContainer>
             <FieldComponentContainer>
@@ -1070,7 +1017,7 @@ const onUploadDocSubmit = async (fileData) => {
                   type={"text"}
                   optionKey="i18nKey"
                   name="DeceasedFatherNameEn"
-                  // value={navigationData.FamilyInformationDeath.FatherNameEn}
+                  value={deathCorrectionFormsObj?.FATHERS_NAME?.curValue.mothersNameMl} 
                   // onChange={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_FATHER_NAME_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -1085,7 +1032,7 @@ const onUploadDocSubmit = async (fileData) => {
                   type={"text"}
                   optionKey="i18nKey"
                   name="DeceasedFatherNameMl"
-                  // value={navigationData.FamilyInformationDeath.FatherNameMl}
+                  value={deathCorrectionFormsObj?.FATHERS_NAME?.curValue.fathersNameMl} 
                   // onChange={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_FATHER_NAME_ML")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -1094,14 +1041,15 @@ const onUploadDocSubmit = async (fileData) => {
             </FieldComponentContainer>
 
             <div style={{ marginTop: "2.8rem" }}>
-              <LinkButton
-                label={<EditIcon selected={true} label={"Edit"} />}
-                style={{ width: "100px", display: "inline" }}
-                onClick={() => {
-                  setShowModal(true);
-                }}
-              />
-            </div>
+        <ButtonContainer>
+        <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["FATHERS_NAME"])}>
+          <EditIcon
+            selected={true}
+            label={"Edit"}
+          />
+          </span>
+        </ButtonContainer>
+      </div>
           </FormFieldContainer>
           <FormFieldContainer>
             <FieldComponentContainer>
@@ -1114,7 +1062,8 @@ const onUploadDocSubmit = async (fileData) => {
                   type={"text"}
                   optionKey="i18nKey"
                   name="DeceasedSpouseEn"
-                  // value={navigationData.FamilyInformationDeath.SpouseNameEn}
+                  value={deathCorrectionFormsObj?.SPOUSE_NAME?.curValue.spouseNameEn} 
+                 
                   // onChange={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_SPOUSE_TYPE_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -1129,7 +1078,7 @@ const onUploadDocSubmit = async (fileData) => {
                   type={"text"}
                   optionKey="i18nKey"
                   name="DeceasedSpouseMl"
-                  // value={navigationData.FamilyInformationDeath.SpouseNameML}
+                  value={deathCorrectionFormsObj?.SPOUSE_NAME?.curValue.spouseNameMl} 
                   // onChange={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_SPOUSE_TYPE_ML")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -1137,14 +1086,15 @@ const onUploadDocSubmit = async (fileData) => {
               </div>
             </FieldComponentContainer>
             <div style={{ marginTop: "2.8rem" }}>
-              <LinkButton
-                label={<EditIcon selected={true} label={"Edit"} />}
-                style={{ width: "100px", display: "inline" }}
-                onClick={() => {
-                  setShowModal(true);
-                }}
-              />
-            </div>
+        <ButtonContainer>
+        <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["SPOUSE_NAME"])}>
+          <EditIcon
+            selected={true}
+            label={"Edit"}
+          />
+          </span>
+        </ButtonContainer>
+      </div>
           </FormFieldContainer>
           <FormFieldContainer>
             <FieldComponentContainer>
@@ -1157,7 +1107,9 @@ const onUploadDocSubmit = async (fileData) => {
                   type={"text"}
                   optionKey="i18nKey"
                   name="DeceasedHouseNameEn"
-                  // value={navigationData.AddressBirthDetails.PermanentAddrHoueNameEn}
+                  disabled={deathCorrectionFormsObj.ADDRESS_EN?.isDisabled}
+                  autofocus={deathCorrectionFormsObj.ADDRESS_EN?.isFocused}
+                  value={deathCorrectionFormsObj?.ADDRESS_EN?.curValue.houseNameEn} 
                   // onChange={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_HOUSE_NO_AND_NAME_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -1172,7 +1124,9 @@ const onUploadDocSubmit = async (fileData) => {
                   type={"text"}
                   optionKey="i18nKey"
                   name="DeceasedLocalityEn"
-                  // value={navigationData.AddressBirthDetails.PermanentAddrLocalityEn}
+                  disabled={deathCorrectionFormsObj.ADDRESS_EN?.isDisabled}
+                  autofocus={deathCorrectionFormsObj.ADDRESS_EN?.isFocused}
+                  value={deathCorrectionFormsObj?.ADDRESS_EN?.curValue.localityNameEn} 
                   // onChange={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_LOCALITY_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -1187,13 +1141,27 @@ const onUploadDocSubmit = async (fileData) => {
                   type={"text"}
                   optionKey="i18nKey"
                   name="DeceasedStreet"
-                  // value={navigationData.AddressBirthDetails.PermanentAddrStreetNameEn}
+                  disabled={deathCorrectionFormsObj.ADDRESS_EN?.isDisabled}
+                  autofocus={deathCorrectionFormsObj.ADDRESS_EN?.isFocused}
+                  value={deathCorrectionFormsObj?.ADDRESS_EN?.curValue.streetNameEn} 
                   // onChange={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_STREET_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
               </div>
-            </FieldComponentContainer>
+              </FieldComponentContainer>
+              <div style={{ marginTop: "2.8rem" }}>
+             
+        <ButtonContainer>
+        <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["ADDRESS_EN"])}>
+          <EditIcon
+            selected={true}
+            label={"Edit"}
+          />
+          </span>
+        </ButtonContainer>
+      </div>
+           
           </FormFieldContainer>
           <FormFieldContainer>
             <FieldComponentContainer>
@@ -1206,7 +1174,7 @@ const onUploadDocSubmit = async (fileData) => {
                   type={"text"}
                   optionKey="i18nKey"
                   name="DeceasedHouseNameMl"
-                  // value={navigationData.AddressBirthDetails.PermanentAddrHoueNameMl}
+                  value={deathCorrectionFormsObj?.ADDRESS_ML?.curValue.houseNameMl} 
                   // onChange={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_HOUSE_NO_AND_NAME_MAL")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -1221,7 +1189,7 @@ const onUploadDocSubmit = async (fileData) => {
                   type={"text"}
                   optionKey="i18nKey"
                   name="DeceasedLocalityMl"
-                  // value={navigationData.AddressBirthDetails.PermanentAddrLocalityMl}
+                  value={deathCorrectionFormsObj?.ADDRESS_ML?.curValue.localityNameMl}
                   // onChange={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_LOCALITY_MAL")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -1236,7 +1204,7 @@ const onUploadDocSubmit = async (fileData) => {
                   type={"text"}
                   optionKey="i18nKey"
                   name="DeceasedStreetMl"
-                  // value={navigationData.AddressBirthDetails.PermanentAddrStreetNameMl}
+                  value={deathCorrectionFormsObj?.ADDRESS_ML?.curValue.streetNameMl} 
                   // onChange={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_STREET_MAL")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -1244,41 +1212,16 @@ const onUploadDocSubmit = async (fileData) => {
               </div>
             </FieldComponentContainer>
             <div style={{ marginTop: "2.8rem" }}>
-              <LinkButton
-                label={<EditIcon selected={true} label={"Edit"} />}
-                style={{ width: "100px", display: "inline" }}
-                onClick={() => {
-                  setShowModal(true);
-                }}
-              />
-            </div>
+        <ButtonContainer>
+        <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["ADDRESS_ML"])}>
+          <EditIcon
+            selected={true}
+            label={"Edit"}
+          />
+          </span>
+        </ButtonContainer>
+      </div>
           </FormFieldContainer>
-          {/* {showModal && (
-      <PopUp>
-        <div className="popup-module">
-          <h1>populated modal</h1>
-          <UploadFile
-              id={"tl-doc"}
-              extraStyleName={"propertyCreate"}
-              accept=".jpg,.png,.pdf"
-              // onUpload={handleFileEvent}
-              // onUpload={selectfile}
-              // onDelete={() => {
-              //   setUploadedFile(null);
-              // }}
-              message={`${t(`TL_ACTION_FILEUPLOADED`)}`}
-              // error={error}
-            />
-          <EditButton
-          selected={true}
-          label={"Cancel"}
-          onClick={() => {
-            setShowModal(false);
-          }}
-        />
-        </div>
-      </PopUp>
-    )} */}
         </form>
         <DeathCorrectionModal showModal={showModal} selectedConfig={selectedCorrectionItem}  onSubmit={onUploadDocSubmit} hideModal={_hideModal}/>
       </FormStep>
