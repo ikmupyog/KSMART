@@ -31,8 +31,6 @@ const FormStep = ({
   });
 
 
-  console.log("In form steps===",isDisabled,errors,config);
-
   const goNext = (data) => {
     onSelect(data);
   };
