@@ -27,6 +27,7 @@ const mystyle = {
   {label:"New Birth", value:"birthsearch"},
   { label: "Still Birth", value: "stillbirthsearch" },
   { label: "Birth - Born Outside India", value: "bornoutsidebirthsearch" },
+  { label: "NAC Birth", value: "nacbirthsearch" },
 ]
 let  validation =''
 

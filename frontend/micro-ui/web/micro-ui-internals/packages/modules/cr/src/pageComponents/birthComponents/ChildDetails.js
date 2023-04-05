@@ -16,7 +16,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
   // console.log(isEditBirth);
   const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
-  const [workFlowCode, setWorkFlowCode] = useState();
+  const [workFlowCode, setWorkFlowCode] = useState(formData?.ChildDetails?.workFlowCode);
 
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
