@@ -541,15 +541,14 @@ export const convertToEditStillBirthRegistration = (data = {}) => {
         pregnancyDuration: data?.StillBirthChildDetails?.pregnancyDuration ? data?.StillBirthChildDetails?.pregnancyDuration : null,
         medicalAttensionSub: data?.StillBirthChildDetails?.medicalAttensionSub ? data?.StillBirthChildDetails?.medicalAttensionSub.code : null,
         deliveryMethods: data?.StillBirthChildDetails?.deliveryMethods ? data?.StillBirthChildDetails?.deliveryMethods.code : null,
-        action: "INITIATE",
-        applicationtype:  "CRBRSB",
+        action: "APPLY",
+        applicationtype: "CRBRSB",
         businessservice: "birth-services",
         workflowcode: data?.StillBirthChildDetails.workflowcode,
+        isWorkflow: data?.StillBirthChildDetails.isWorkflow,
         id: data?.StillBirthChildDetails?.id,
         applicationNumber: data?.StillBirthChildDetails?.applicationNumber,
-        assignee: [
-          data?.StillBirthChildDetails?.uuid,
-        ],
+        assignee: [data?.StillBirthChildDetails?.uuid],
         StillBirthParentsDetails: {
           motherFirstNameEn: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherFirstNameEn,
           motherFirstNameMl: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherFirstNameMl,
@@ -559,8 +558,12 @@ export const convertToEditStillBirthRegistration = (data = {}) => {
           // motherMaritalStatus: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherMaritalStatus
           //   ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherMaritalStatus
           //   : null,
-          motherEducation: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherEducation ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherEducation : null,
-          motherProfession: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherProfession ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherProfession : null,
+          motherEducation: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherEducation
+            ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherEducation
+            : null,
+          motherProfession: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherProfession
+            ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherProfession
+            : null,
           motherNationality: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherNationality
             ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherNationality
             : null,
@@ -573,9 +576,15 @@ export const convertToEditStillBirthRegistration = (data = {}) => {
           fatherNationality: data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherNationality
             ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherNationality
             : null,
-          fatherEducation: data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherEducation ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherEducation : null,
-          fatherProfession: data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherProfession ? data?.StillBirthParentsDetails?.StillBirthChildDetails?.fatherProfession : null,
-          Religion: data?.StillBirthChildDetails?.StillBirthParentsDetails?.Religion ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.Religion : null,
+          fatherEducation: data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherEducation
+            ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherEducation
+            : null,
+          fatherProfession: data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherProfession
+            ? data?.StillBirthParentsDetails?.StillBirthChildDetails?.fatherProfession
+            : null,
+          Religion: data?.StillBirthChildDetails?.StillBirthParentsDetails?.Religion
+            ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.Religion
+            : null,
           fatherMobile: data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherMobile,
           fatherEmail: data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherEmail,
         },
@@ -587,7 +596,7 @@ export const convertToEditStillBirthRegistration = (data = {}) => {
             ? data?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressStateName
             : null,
           presentInsideKeralaLBName: data?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaLBName
-            ? data?.AddressBirthDetails?.presentInsideKeralaLBName
+            ? data?.AddressBirthDetails?.presentInsideKeralaLBName.code
             : null,
           presentInsideKeralaDistrict: data?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaDistrict
             ? data?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaDistrict
@@ -610,7 +619,9 @@ export const convertToEditStillBirthRegistration = (data = {}) => {
           presentInsideKeralaPostOffice: data?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaPostOffice
             ? data?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaPostOffice
             : null,
-          presentWardNo: data?.StillBirthChildDetails?.AddressBirthDetails?.presentWardNo ? data?.StillBirthChildDetails?.AddressBirthDetails?.presentWardNo : null,
+          presentWardNo: data?.StillBirthChildDetails?.AddressBirthDetails?.presentWardNo
+            ? data?.StillBirthChildDetails?.AddressBirthDetails?.presentWardNo
+            : null,
           presentOutsideKeralaDistrict: data?.StillBirthChildDetails?.AddressBirthDetails?.presentOutsideKeralaDistrict
             ? data?.StillBirthChildDetails?.AddressBirthDetails?.presentOutsideKeralaDistrict
             : null,
@@ -627,7 +638,8 @@ export const convertToEditStillBirthRegistration = (data = {}) => {
           presentOutsideKeralaPostOfficeEn: data?.StillBirthChildDetails?.AddressBirthDetails?.presentOutsideKeralaPostOfficeEn,
           presentOutsideKeralaPostOfficeMl: data?.StillBirthChildDetails?.AddressBirthDetails?.presentOutsideKeralaPostOfficeMl,
           presentOutsideKeralaLocalityNameEn: data?.StillBirthChildDetails?.AddressBirthDetails?.presentOutsideKeralaLocalityNameEn,
-          presentOutsideKeralaStreetNameEn: data?.StillBirthChildDetails?.StillBirthChildDetails?.AddressBirthDetails?.presentOutsideKeralaStreetNameEn,
+          presentOutsideKeralaStreetNameEn:
+            data?.StillBirthChildDetails?.StillBirthChildDetails?.AddressBirthDetails?.presentOutsideKeralaStreetNameEn,
           presentOutsideKeralaHouseNameEn: data?.StillBirthChildDetails?.StillBirthChildDetails?.AddressBirthDetails?.presentOutsideKeralaHouseNameEn,
           presentOutsideKeralaLocalityNameMl: data?.StillBirthChildDetails?.AddressBirthDetails?.presentOutsideKeralaLocalityNameMl,
           presentOutsideKeralaStreetNameMl: data?.StillBirthChildDetails?.AddressBirthDetails?.presentOutsideKeralaStreetNameMl,

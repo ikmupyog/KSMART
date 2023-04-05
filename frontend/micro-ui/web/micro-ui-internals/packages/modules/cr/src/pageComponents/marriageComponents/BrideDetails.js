@@ -181,9 +181,9 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setBrideFirstnameMl('');
+      setBrideFirstnameMl("");
     } else {
-      setBrideFirstnameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setBrideFirstnameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
 
     // if (e.target.value.length === 51) {
@@ -196,8 +196,8 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     // }
   }
   function setSelectbrideFirstnameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setbrideFirstnameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setbrideFirstnameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
     // if (e.target.value.length === 51) {
     //   return false;
@@ -207,8 +207,8 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     // }
   }
   function setSelectbrideMiddlenameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setbrideMiddlenameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setbrideMiddlenameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
     // if (e.target.value.length === 51) {
 
@@ -222,9 +222,9 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setMotherFirstNameMl('');
+      setMotherFirstNameMl("");
     } else {
-      setbrideMiddlenameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setbrideMiddlenameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
     // if (e.target.value.length === 51) {
     //   return false;
@@ -236,8 +236,8 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     // }
   }
   function setSelectbrideLastnameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setbrideLastnameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setbrideLastnameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
     // if (e.target.value.length === 51) {
     //   return false;
@@ -250,9 +250,9 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setbrideLastnameMl('');
+      setbrideLastnameMl("");
     } else {
-      setbrideLastnameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setbrideLastnameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectbrideMobile(e) {
@@ -332,40 +332,40 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     }
   }
   function setSelectbrideFathernameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setbrideFathernameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setbrideFathernameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectbrideMothernameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setbrideMothernameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setbrideMothernameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectbrideMothernameMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setbrideMothernameMl('');
+      setbrideMothernameMl("");
     } else {
-      setbrideMothernameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setbrideMothernameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectbrideGuardiannameMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setMotherFirstNameMl('');
+      setMotherFirstNameMl("");
     } else {
-      setbrideGuardiannameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setbrideGuardiannameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectbrideFathernameMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setbrideFathernameMl('');
+      setbrideFathernameMl("");
     } else {
-      setbrideFathernameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setbrideFathernameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectbrideFatherAadharNo(e) {
@@ -425,8 +425,8 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     }
   }
   function setSelectbrideGuardiannameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setbrideGuardiannameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setbrideGuardiannameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
 
@@ -490,7 +490,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
   const goNext = () => {
     if (AadharError) {
       validFlag = false;
-      setAadharErroChildAadharNor(true);
+      // setAadharErroChildAadharNor(true);
       setToast(true);
       setTimeout(() => {
         setToast(false);
@@ -1317,14 +1317,18 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
             </div> */}
 
             {toast && (
-              <Toast 
-              error={AadharError || AgeValidationMsg} 
-              label={AadharError || AgeValidationMsg 
-                ? AadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`)
-                 : AgeValidationMsg ? t(`CR_INVALID_BRIDE_AGE`) 
-                 : setToast(false)
-                : setToast(false)} 
-                onClose={() => setToast(false)} 
+              <Toast
+                error={AadharError || AgeValidationMsg}
+                label={
+                  AadharError || AgeValidationMsg
+                    ? AadharError
+                      ? t(`CS_COMMON_INVALID_AADHAR_NO`)
+                      : AgeValidationMsg
+                      ? t(`CR_INVALID_BRIDE_AGE`)
+                      : setToast(false)
+                    : setToast(false)
+                }
+                onClose={() => setToast(false)}
               />
             )}
             <div className="row">
