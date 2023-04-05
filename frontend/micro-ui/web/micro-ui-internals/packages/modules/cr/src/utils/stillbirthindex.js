@@ -484,7 +484,7 @@ export const convertToStillBirthRegistration = (data = {}) => {
   return formdata;
 };
 export const convertToEditStillBirthRegistration = (data = {}) => {
-  console.log(data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherEducation);
+  console.log(data?.StillBirthChildDetails);
   const formdata = {
     StillBirthChildDetails: [
       {
