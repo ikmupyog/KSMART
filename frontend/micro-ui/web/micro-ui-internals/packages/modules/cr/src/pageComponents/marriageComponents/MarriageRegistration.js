@@ -187,7 +187,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   let currentLB = [];
   const [marriageDOM, setmarriageDOM] = useState(formData?.MarriageDetails?.marriageDOM ? formData?.MarriageDetails?.marriageDOM : "");
   const [marriageDistrictid, setMarriageDistrictid] = useState(
-    formData?.MarriageDetails?.marriageDistrictid ? formData?.MarriageDetails?.marriageDistrictid : ""
+    formData?.MarriageDetails?.marriageDistrictid.code ? formData?.MarriageDetails?.marriageDistrictid : ""
   );
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isInitialRenderMarriagePlace, setisInitialRenderMarriagePlace] = useState(true);
@@ -213,8 +213,8 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   //     ? cmbPlaceType.filter((cmbPlaceType) => cmbPlaceType.code === formData?.MarriageDetails?.marriagePlacenameEn)[0]
   //     : ""
   // );
-  const [placeidEn, setplaceidEn] = useState(formData?.MarriageDetails?.placeid ? formData?.MarriageDetails?.placeidEn : "");
-  const [placeidMl, setplaceidMl] = useState("");
+  const [placeidEn, setplaceidEn] = useState(formData?.MarriageDetails?.placeidEn?.i18nKey ? formData?.MarriageDetails?.placeidEn : "");
+  const [placeidMl, setplaceidMl] = useState(formData?.MarriageDetails?.placeidMl?.i18nKey ? formData?.MarriageDetails?.placeidMl : "");
   const [marriagePlacenameEn, setmarriagePlacenameEn] = useState(
     formData?.MarriageDetails?.marriagePlacenameEn ? formData?.MarriageDetails?.marriagePlacenameEn : ""
   );
@@ -302,7 +302,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
       // setDOBError(true);
       // setToast(true);
       setTimeout(() => {
-        setToast(false);
+        // setToast(false);
       }, 3000);
     }
   }
@@ -351,15 +351,16 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     // }
     // setAgeMariageStatus(value.code);
   }
-  function setPlaceidEn(value) {
-    setplaceidEn(value.code);
+  function setSelectPlaceidEn(value) {
+    setplaceidEn(value);
+    setplaceidMl(value);
     // setMarriagePlacenameMl(value.localname);
     // setAgeMariageStatus(value.code);
   }
-  function setPlaceidMl(value) {
-    setplaceidMl(value.namelocal);
-    // setAgeMariageStatus(value.code);
-  }
+  // function setSelectPlaceidMl(value) {
+
+  //   // setAgeMariageStatus(value.code);
+  // }
   function setSelectmarriageOthersSpecify(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
       setmarriageOthersSpecify(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
@@ -393,6 +394,8 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
       return cmbSubRegistarOffice;
     }
   }
+
+  console.log({ placeidEn, placeidMl });
 
   let validFlag = true;
   const goNext = () => {
@@ -445,6 +448,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
         marriageTenantid,
         marriagePlacetype,
         placeidEn,
+        placeidMl,
         marriagePlacenameEn,
         marriagePlacenameMl,
         marriageType,
@@ -462,7 +466,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     }
   };
 
-  console.log({ marriageType });
+  console.log({ formData });
 
   if (
     isLoading ||
@@ -666,7 +670,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                           optionKey="i18nKey"
                           option={setMarriagePlace(marriagePlacetype)}
                           selected={placeidEn}
-                          select={setPlaceidEn}
+                          select={setSelectPlaceidEn}
                           placeholder={t("CR_NAME_OF_PLACE_EN")}
                           isMandatory={true}
                           {...(validation = { isRequired: true, title: t("CS_INVALID_MARRIAGE_PLACE_EN") })}
@@ -684,7 +688,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                           optionKey="namelocal"
                           option={setMarriagePlace(marriagePlacetype)}
                           selected={placeidMl}
-                          select={setPlaceidMl}
+                          // select={setSelectPlaceidMl}
                           disable={true}
                           placeholder={t("CR_NAME_OF_PLACE_MAL")}
                           isMandatory={true}
@@ -692,7 +696,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                           // option={cmbCountry}
                         />
                       </div>
-                      {placeidEn.i18nKey === "Others" && (
+                      {placeidEn?.i18nKey === "Others" && (
                         <MarriageInstitution
                           marriagePlacenameEn={marriagePlacenameEn}
                           setmarriagePlacenameEn={setmarriagePlacenameEn}
@@ -780,7 +784,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                       // option={cmbCountry}
                     />
                   </div>
-                  {marriageType.i18nKey === "Others" && (
+                  {marriageType?.i18nKey === "Others" && (
                     <div className="col-md-4">
                       <CardLabel>
                         {`${t("CR_MARRIAGE_OTHER_SPECIFY")}`}
