@@ -41,7 +41,7 @@ const BannerPicker = (props) => {
 };
 
 const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
-  onst[toast, setToast] = useState(false);
+  const[toast, setToast] = useState(false);
   const { t } = useTranslation();
   const [mutationHappened, setMutationHappened, clear] = Digit.Hooks.useSessionStorage("CITIZEN_TL_MUTATION_HAPPENED", false);
   const resubmit = window.location.href.includes("edit-application");
