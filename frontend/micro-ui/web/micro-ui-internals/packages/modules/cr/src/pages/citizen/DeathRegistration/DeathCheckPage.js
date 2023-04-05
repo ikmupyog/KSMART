@@ -104,7 +104,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
             </div>
             <div className="col-md-6">
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                : {t(InformationDeath.DeceasedFirstNameMl ? InformationDeath?.DeceasedFirstNameMl : " CR_NOT_RECORDED")}{" "}
+                : {t(InformationDeath.DeceasedFirstNameMl || " CR_NOT_RECORDED")}{" "}
                 {t(InformationDeath.DeceasedMiddleNameMl)}{" "}
                 {t(InformationDeath.DeceasedLastNameMl) +
                   " / " +
@@ -263,17 +263,17 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                       :{" "}
-                      {t(InformationDeath.DeathPlaceDistrict.namelocal) +
+                      {t(InformationDeath.DeathPlaceDistrict.namelocal|| "CR_NOT_RECORDED") +
                         "," +
-                        InformationDeath.DeathPlaceState.namelocal +
+                        InformationDeath.DeathPlaceState.namelocal || "CR_NOT_RECORDED"+
                         "," +
-                        InformationDeath.DeathPlaceCountry.namelocal +
+                        InformationDeath.DeathPlaceCountry.namelocal || "CR_NOT_RECORDED" + 
                         "/" +
-                        InformationDeath.DeathPlaceDistrict.name +
+                        InformationDeath.DeathPlaceDistrict.name || "CR_NOT_RECORDED" +
                         "," +
-                        InformationDeath.DeathPlaceState.name +
+                        InformationDeath.DeathPlaceState.name || "CR_NOT_RECORDED"+
                         "," +
-                        InformationDeath.DeathPlaceCountry.name}
+                        InformationDeath.DeathPlaceCountry.name || "CR_NOT_RECORDED"}
                     </CardText>
                   </div>
                 </div>

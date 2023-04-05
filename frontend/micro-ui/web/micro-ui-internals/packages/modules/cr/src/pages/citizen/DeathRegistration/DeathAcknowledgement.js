@@ -1,12 +1,20 @@
-import { Banner, Card, LinkButton,  } from "@egovernments/digit-ui-react-components";
-import React, { useEffect, useState } from "react";
+import { Banner, Card, LinkButton } from "@egovernments/digit-ui-react-components";
+import React, { useEffect, useState, useHistory } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { convertToDeathRegistration, convertToEditDeathRegistration } from "../../../utils/deathindex";
 import getPDFData from "../../../utils/getTLAcknowledgementData";
 
 const GetActionMessage = (props) => {
+  // const history = useHistory();
   const { t } = useTranslation();
+  // useEffect(() => {
+  //   const CR_DEATH_EDIT_FLAG = sessionStorage.getItem('CR_DEATH_EDIT_FLAG');
+  //   if (CR_DEATH_EDIT_FLAG === 'true' && props.isSuccess) {
+  //     history.push('/digit-ui/employee/cr/application-deathdetails');
+  //   }
+  // }, [props.isSuccess, history]);
+
   if (props.isSuccess) {
     // console.log(props.isSuccess);
     return t("CR_CREATE_SUCCESS_MSG");
@@ -43,17 +51,17 @@ const BannerPicker = (props) => {
     />
   );
 };
-const DeathAcknowledgement = ({ data, onSuccess, userType }) => {
+const DeathAcknowledgement = ({ data, onSuccess: successAction, userType }) => {
   const { t } = useTranslation();
   const [mutationHappened, setMutationHappened, clear] = Digit.Hooks.useSessionStorage("CITIZEN_TL_MUTATION_HAPPENED", false);
   const resubmit = window.location.href.includes("edit-application");
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const isRenewTrade = !window.location.href.includes("renew-trade");
 
-  const [isEditDeath, setIsEditDeath] = useState(sessionStorage.getItem("CR_DEATH_EDIT_FLAG")? true : false);
- 
+  const [isEditDeath, setIsEditDeath] = useState(sessionStorage.getItem("CR_DEATH_EDIT_FLAG") ? true : false);
+
   // console.log("isEditDeath" + isEditDeath);
-  const mutation = Digit.Hooks.cr.useCivilRegistrationDeathAPI(tenantId, isEditDeath ? false : true );
+  const mutation = Digit.Hooks.cr.useCivilRegistrationDeathAPI(tenantId, isEditDeath ? false : true);
   // console.log(mutation);
   // console.log("isEditDeath" + isEditDeath);
 
@@ -72,7 +80,17 @@ const DeathAcknowledgement = ({ data, onSuccess, userType }) => {
   // const { isLoading, data: fydata = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "egf-master", "FinancialYear");
   // let isDirectRenewal = sessionStorage.getItem("isDirectRenewal") ? stringToBoolean(sessionStorage.getItem("isDirectRenewal")) : null;
   const [isInitialRender, setIsInitialRender] = useState(true);
-
+  const onSuccess = (data) => {
+    successAction();
+    console.log({ data });
+    onSuccess();
+    if (isEditDeath) {
+      const { deathCertificateDtls: { InformationDeath: { DeathACKNo } = {} } = {} } = data;
+      if(DeathACKNo){
+        history.push(`/digit-ui/employee/cr/application-deathdetails/${DeathACKNo}`);
+      }
+    }
+  };
   useEffect(() => {
     if (isInitialRender) {
       // const onSuccessedit = () => {
@@ -85,11 +103,12 @@ const DeathAcknowledgement = ({ data, onSuccess, userType }) => {
         if (!resubmit) {
           // let formdata = !isEdit ? convertToDeathRegistration(data) : convertToEditTrade(data, fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter(y => y.module === "CR") : []);
           let formdata = !isEditDeath ? convertToDeathRegistration(data) : convertToEditDeathRegistration(data);
+          console.log({ formdata, isEditDeath });
           // let formdata = !isEdit ? convertToDeathRegistration(data):[] ;
-            mutation.mutate(formdata, {
-              onSuccess,
-            });
-        
+          mutation.mutate(formdata, { onSuccess:(response)=>{
+            console.log({response})
+          } });
+
           // else{
           //   if((fydata["egf-master"] && fydata["egf-master"].FinancialYear.length > 0 && isDirectRenewal))
           //   {
@@ -119,7 +138,9 @@ const DeathAcknowledgement = ({ data, onSuccess, userType }) => {
           //   onSuccessedit,
           // })
         }
-      } catch (err) {}
+      } catch (err) {
+        console.error({ err });
+      }
     }
   }, [mutation]);
 
