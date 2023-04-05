@@ -1,6 +1,7 @@
 import React, { Fragment } from "react"
 import { Controller, useWatch } from "react-hook-form";
 import { TextInput, SubmitBar, DatePicker, SearchField, Dropdown, Loader, ButtonSelector } from "@egovernments/digit-ui-react-components";
+import _ from "lodash";
 
 //style
 const mystyle = {
@@ -8,13 +9,12 @@ const mystyle = {
 };
 let validation = {}
 
-const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) => {
+const SearchFields = ({ register, control, reset, tenantId, t, previousPage, onRestClick }) => {
     const stateId = Digit.ULBService.getStateId();
     const { data: applicationTypes, isLoading: applicationTypesLoading } = Digit.Hooks.cr.useMDMS.applicationTypes(tenantId)
     const { data: Menu, isLoading: genderLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
-    const { data: hospitalData = {}, isLoading:hospitalLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "hospital");
+    const { data: hospitalData = {}, isLoading:hospitalLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "hospital");
 
-  
     const applicationType = useWatch({ control, name: "applicationType" });
 
     let businessServices = [];
@@ -39,40 +39,35 @@ const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) =>
     })
     let GenderOptions = [];
     Menu &&
-      Menu.map((genderDetails) => {
-        GenderOptions.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
-      });
-      let cmbhospital = [];
-      hospitalData &&
-        hospitalData["egov-location"] &&
-        hospitalData["egov-location"].hospitalList.map((ob) => {
-          cmbhospital.push(ob);
+        Menu.map((genderDetails) => {
+            GenderOptions.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
         });
+    
     return <>
         <SearchField>
             <label><span className="mandatorycss">*</span> {t("Registry ID")}</label>
-            <TextInput name="Id" inputRef={register({})} 
-             placeholder={`${t("Registry ID")}`} 
-             {...(validation = { isRequired: false, type: "text", title: t("DC_INVALID_REGISTRY_ID") })}/>
+            <TextInput name="Id" inputRef={register({})}
+                placeholder={`${t("Registry ID")}`}
+                {...(validation = { isRequired: false, type: "text", title: t("DC_INVALID_REGISTRY_ID") })} />
         </SearchField>
         <SearchField>
             <label>
-                 {/* <span className="mandatorycss">*</span>  */}
-            {t("Aknowledgement Number")}</label>
+                {/* <span className="mandatorycss">*</span>  */}
+                {t("Aknowledgement Number")}</label>
             <TextInput name="DeathACKNo" inputRef={register({})}
                 placeholder={`${t("DC_DEATH_AKNOWLEDGEMENT_NUMBER")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_REGISTRATION_NUMBER") })} />
         </SearchField>
         <SearchField>
-            <label> 
+            <label>
                 {/* <span className="mandatorycss">*</span> */}
-            {t(" DC_NAME_DECEASED")}</label>
-            <TextInput name="deceasedFirstNameEn" inputRef={register({})} 
-             placeholder={`${t("DC_NAME_DECEASED")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_NAME_DECEASED") })}/>
+                {t(" DC_NAME_DECEASED")}</label>
+            <TextInput name="deceasedFirstNameEn" inputRef={register({})}
+                placeholder={`${t("DC_NAME_DECEASED")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_NAME_DECEASED") })} />
         </SearchField>
         <SearchField>
-            <label> 
+            <label>
                 {/* <span className="mandatorycss">*</span> */}
                 {t("DC_DATE_DEATH")}</label>
             <Controller
@@ -130,8 +125,8 @@ const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) =>
                         selected={props.value}
                         select={props.onChange}
                         onBlur={props.onBlur}
-                        option={cmbhospital}
-                        optionKey="DeathPlaceType"
+                        option={_.get(hospitalData,"egov-location.hospitalList",[])}
+                        optionKey="hospitalName"
                         t={t}
                         placeholder={`${t("CD_HOSPITAL")}`}
                     />
@@ -144,7 +139,7 @@ const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) =>
                 placeholder={`${t("DC_REGISTRATION_NUMBER")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_REGISTRATION_NUMBER") })} />
         </SearchField> */}
-        
+
 
         {/* {applicationTypesLoading ? <Loader/> : <SearchField> 
             <label>{t("CR_SEARCH_APPLICATION_TYPE")}</label>
@@ -206,22 +201,23 @@ const SearchFields = ({ register, control, reset, tenantId, t,previousPage }) =>
         <SearchField className="submit">
             <SubmitBar label={t("ES_COMMON_SEARCH")} submit />
             <p onClick={() => {
-                reset({ 
-                    Id: "", 
-                    DeathACKNo:"",
-                    DeceasedFirstNameEn: "", 
+                reset({
+                    Id: "",
+                    DeathACKNo: "",
+                    DeceasedFirstNameEn: "",
                     DateOfDeath: "",
                     DeceasedGender: "",
                     SpouseNameEn: "",
-                    DeathPlaceType:"",
+                    DeathPlaceType: "",
                     offset: 0,
                     limit: 10,
-                    sortBy: "dateofreport",
-                    sortOrder: "DESC"
+                    sortBy: "DateOfDeath",
+                    sortOrder: "DESC",
                 });
+                onRestClick && onRestClick({})
                 previousPage();
             }}>{t(`ES_COMMON_CLEAR_ALL`)}</p>
-        </SearchField> 
+        </SearchField>
     </>
 }
 export default SearchFields

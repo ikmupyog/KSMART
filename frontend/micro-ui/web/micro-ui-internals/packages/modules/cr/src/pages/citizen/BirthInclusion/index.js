@@ -23,7 +23,7 @@ const BirthInclusion = () => {
   const { t } = useTranslation();
   const { path } = useRouteMatch();
   let history = useHistory();
-
+  const [apiConfig,setApiConfig] = useState({enabled: false})
   const [payload, setPayload] = useState({});
 
   function onSubmit(_data) {
@@ -42,6 +42,7 @@ const BirthInclusion = () => {
         .filter((k) => data[k])
         .reduce((acc, key) => ({ ...acc, [key]: typeof data[key] === "object" ? data[key].code : data[key] }), {})
     );
+    setApiConfig({enabled:true})
   }
   //   const queryClient = useQueryClient();
   // const tenantId = Digit.ULBService.getCurrentTenantId();

@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPlaceType, setpublicPlaceType,
   localityNameEn, setlocalityNameEn, localityNameMl, setlocalityNameMl, streetNameEn, setstreetNameEn,
-  streetNameMl, setstreetNameMl, publicPlaceDecpEn, setpublicPlaceDecpEn, setWardNo, wardNo,isEditBirth=false
+  streetNameMl, setstreetNameMl, publicPlaceDecpEn, setpublicPlaceDecpEn, setWardNo, wardNo, isEditBirth = false
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
@@ -47,12 +47,12 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
     wardmst.namecmb = wardmst.wardno + ' ( ' + wardmst.name + ' )';
     cmbWardNoFinal.push(wardmst);
   });
-  if (isEditBirth) { 
+  if (isEditBirth) {
     if (formData?.ChildDetails?.publicPlaceType != null) {
       if (cmbOtherplace.length > 0 && (publicPlaceType === undefined || publicPlaceType === "")) {
         setpublicPlaceType(cmbOtherplace.filter(cmbOtherplace => cmbOtherplace.code === formData?.ChildDetails?.publicPlaceType)[0]);
       }
-    }  
+    }
     if (formData?.ChildDetails?.wardNo != null) {
       if (cmbWardNo.length > 0 && (wardNo === undefined || wardNo === "")) {
         setWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.ChildDetails?.wardNo)[0]);
@@ -73,11 +73,11 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
   }
   function setSelectlocalityNameMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
-    if(!(e.target.value.match(pattern))){
+    if (!(e.target.value.match(pattern))) {
       e.preventDefault();
       setlocalityNameMl('');
     }
-    else{
+    else {
       setlocalityNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
@@ -89,11 +89,11 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
   }
   function setSelectstreetNameMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
-    if(!(e.target.value.match(pattern))){
+    if (!(e.target.value.match(pattern))) {
       e.preventDefault();
       setstreetNameMl('');
     }
-    else{
+    else {
       setstreetNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
@@ -105,9 +105,9 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
   }
   function setCheckMalayalamInputField(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
-    if(!(e.key.match(pattern))){
+    if (!(e.key.match(pattern))) {
       e.preventDefault();
-    }    
+    }
   }
   let validFlag = true;
 
@@ -119,7 +119,8 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
   } else
     return (
       <React.Fragment>
-        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!publicPlaceType}>
+        {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!publicPlaceType}> */}
+        <div className="col-md-12">
           <div className="row">
             <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PUBLIC_PLACE")}`}</span> </h1>
             </div>
@@ -184,7 +185,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
                 optionKey="i18nKey"
                 name="localityNameMl"
                 value={localityNameMl}
-                onKeyPress = {setCheckMalayalamInputField}
+                onKeyPress={setCheckMalayalamInputField}
                 onChange={setSelectlocalityNameMl}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_LOCALITY_ML")}`}
@@ -221,7 +222,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
                 optionKey="i18nKey"
                 name="streetNameMl"
                 value={streetNameMl}
-                onKeyPress = {setCheckMalayalamInputField}
+                onKeyPress={setCheckMalayalamInputField}
                 onChange={setSelectstreetNameMl}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_STREET_NAME_ML")}`}
@@ -250,8 +251,8 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
               />
             </div>
           </div>
-
-        </FormStep>
+        </div>
+        {/* </FormStep> */}
       </React.Fragment>
     );
 };

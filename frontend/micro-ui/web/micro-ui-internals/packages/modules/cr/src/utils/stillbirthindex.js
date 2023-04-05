@@ -491,15 +491,15 @@ export const convertToEditStillBirthRegistration = (data = {}) => {
         childDOB: Date.parse(data?.StillBirthChildDetails?.childDOB),
         birthDateTime: parseInt(data?.StillBirthChildDetails?.birthDateTime),
         gender: data?.StillBirthChildDetails?.gender ? data?.StillBirthChildDetails?.gender.code : null,
-        childAadharNo: data?.StillBirthChildDetails?.childAadharNo,
-        isChildName: data?.StillBirthChildDetails?.isChildName ? data?.StillBirthChildDetails?.isChildName : false,
+        // childAadharNo: data?.StillBirthChildDetails?.childAadharNo,
+        // isChildName: data?.StillBirthChildDetails?.isChildName ? data?.StillBirthChildDetails?.isChildName : false,
         tenantid: data?.StillBirthChildDetails?.tenantId,
-        childFirstNameEn: data?.StillBirthChildDetails?.childFirstNameEn,
-        childFirstNameMl: data?.StillBirthChildDetails?.childFirstNameMl,
-        childMiddleNameEn: data?.StillBirthChildDetails?.childMiddleNameEn,
-        childMiddleNameMl: data?.StillBirthChildDetails?.childMiddleNameMl,
-        childLastNameEn: data?.StillBirthChildDetails?.childLastNameEn,
-        childLastNameMl: data?.StillBirthChildDetails?.childLastNameMl,
+        // childFirstNameEn: data?.StillBirthChildDetails?.childFirstNameEn,
+        // childFirstNameMl: data?.StillBirthChildDetails?.childFirstNameMl,
+        // childMiddleNameEn: data?.StillBirthChildDetails?.childMiddleNameEn,
+        // childMiddleNameMl: data?.StillBirthChildDetails?.childMiddleNameMl,
+        // childLastNameEn: data?.StillBirthChildDetails?.childLastNameEn,
+        // childLastNameMl: data?.StillBirthChildDetails?.childLastNameMl,
         hospitalCode: data?.StillBirthChildDetails?.hospitalName ? data?.StillBirthChildDetails?.hospitalName.code : null,
         birthPlace: data?.StillBirthChildDetails?.birthPlace ? data?.StillBirthChildDetails?.birthPlace.code : null,
         hospitalName: data?.StillBirthChildDetails?.hospitalName ? data?.StillBirthChildDetails?.hospitalName.hospitalName : null,
@@ -537,30 +537,33 @@ export const convertToEditStillBirthRegistration = (data = {}) => {
         streetNameEn: data?.StillBirthChildDetails?.streetNameEn,
         streetNameMl: data?.StillBirthChildDetails?.streetNameMl,
         publicPlaceDecpEn: data?.StillBirthChildDetails?.publicPlaceDecpEn,
-        birthWeight: data?.StillBirthChildDetails?.birthWeight,
+        causeFoetalDeath: data?.StillBirthChildDetails?.causeFoetalDeath ? data?.StillBirthChildDetails?.causeFoetalDeath.code : null,
         pregnancyDuration: data?.StillBirthChildDetails?.pregnancyDuration ? data?.StillBirthChildDetails?.pregnancyDuration : null,
         medicalAttensionSub: data?.StillBirthChildDetails?.medicalAttensionSub ? data?.StillBirthChildDetails?.medicalAttensionSub.code : null,
         deliveryMethods: data?.StillBirthChildDetails?.deliveryMethods ? data?.StillBirthChildDetails?.deliveryMethods.code : null,
-        action: "INITIATE",
-        applicationtype:  "CRBRSB",
+        action: "APPLY",
+        applicationtype: "CRBRSB",
         businessservice: "birth-services",
         workflowcode: data?.StillBirthChildDetails.workflowcode,
+        isWorkflow: data?.StillBirthChildDetails.isWorkflow,
         id: data?.StillBirthChildDetails?.id,
         applicationNumber: data?.StillBirthChildDetails?.applicationNumber,
-        assignee: [
-          data?.StillBirthChildDetails?.uuid,
-        ],
+        assignee: [data?.StillBirthChildDetails?.uuid],
         StillBirthParentsDetails: {
           motherFirstNameEn: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherFirstNameEn,
           motherFirstNameMl: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherFirstNameMl,
           motherAadhar: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherAadhar,
-          motherMarriageAge: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherMarriageAge,
+          // motherMarriageAge: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherMarriageAge,
           motherMarriageBirth: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherMarriageBirth,
-          motherMaritalStatus: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherMaritalStatus
-            ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherMaritalStatus
+          // motherMaritalStatus: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherMaritalStatus
+          //   ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherMaritalStatus
+          //   : null,
+          motherEducation: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherEducation
+            ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherEducation
             : null,
-          motherEducation: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherEducation ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherEducation : null,
-          motherProfession: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherProfession ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherProfession : null,
+          motherProfession: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherProfession
+            ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherProfession
+            : null,
           motherNationality: data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherNationality
             ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.motherNationality
             : null,
@@ -573,9 +576,15 @@ export const convertToEditStillBirthRegistration = (data = {}) => {
           fatherNationality: data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherNationality
             ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherNationality
             : null,
-          fatherEducation: data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherEducation ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherEducation : null,
-          fatherProfession: data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherProfession ? data?.StillBirthParentsDetails?.StillBirthChildDetails?.fatherProfession : null,
-          Religion: data?.StillBirthChildDetails?.StillBirthParentsDetails?.Religion ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.Religion : null,
+          fatherEducation: data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherEducation
+            ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherEducation
+            : null,
+          fatherProfession: data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherProfession
+            ? data?.StillBirthParentsDetails?.StillBirthChildDetails?.fatherProfession
+            : null,
+          Religion: data?.StillBirthChildDetails?.StillBirthParentsDetails?.Religion
+            ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.Religion
+            : null,
           fatherMobile: data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherMobile,
           fatherEmail: data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherEmail,
         },
@@ -587,7 +596,7 @@ export const convertToEditStillBirthRegistration = (data = {}) => {
             ? data?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressStateName
             : null,
           presentInsideKeralaLBName: data?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaLBName
-            ? data?.AddressBirthDetails?.presentInsideKeralaLBName
+            ? data?.AddressBirthDetails?.presentInsideKeralaLBName.code
             : null,
           presentInsideKeralaDistrict: data?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaDistrict
             ? data?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaDistrict
@@ -610,7 +619,9 @@ export const convertToEditStillBirthRegistration = (data = {}) => {
           presentInsideKeralaPostOffice: data?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaPostOffice
             ? data?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaPostOffice
             : null,
-          presentWardNo: data?.StillBirthChildDetails?.AddressBirthDetails?.presentWardNo ? data?.StillBirthChildDetails?.AddressBirthDetails?.presentWardNo : null,
+          presentWardNo: data?.StillBirthChildDetails?.AddressBirthDetails?.presentWardNo
+            ? data?.StillBirthChildDetails?.AddressBirthDetails?.presentWardNo
+            : null,
           presentOutsideKeralaDistrict: data?.StillBirthChildDetails?.AddressBirthDetails?.presentOutsideKeralaDistrict
             ? data?.StillBirthChildDetails?.AddressBirthDetails?.presentOutsideKeralaDistrict
             : null,
@@ -627,7 +638,8 @@ export const convertToEditStillBirthRegistration = (data = {}) => {
           presentOutsideKeralaPostOfficeEn: data?.StillBirthChildDetails?.AddressBirthDetails?.presentOutsideKeralaPostOfficeEn,
           presentOutsideKeralaPostOfficeMl: data?.StillBirthChildDetails?.AddressBirthDetails?.presentOutsideKeralaPostOfficeMl,
           presentOutsideKeralaLocalityNameEn: data?.StillBirthChildDetails?.AddressBirthDetails?.presentOutsideKeralaLocalityNameEn,
-          presentOutsideKeralaStreetNameEn: data?.StillBirthChildDetails?.StillBirthChildDetails?.AddressBirthDetails?.presentOutsideKeralaStreetNameEn,
+          presentOutsideKeralaStreetNameEn:
+            data?.StillBirthChildDetails?.StillBirthChildDetails?.AddressBirthDetails?.presentOutsideKeralaStreetNameEn,
           presentOutsideKeralaHouseNameEn: data?.StillBirthChildDetails?.StillBirthChildDetails?.AddressBirthDetails?.presentOutsideKeralaHouseNameEn,
           presentOutsideKeralaLocalityNameMl: data?.StillBirthChildDetails?.AddressBirthDetails?.presentOutsideKeralaLocalityNameMl,
           presentOutsideKeralaStreetNameMl: data?.StillBirthChildDetails?.AddressBirthDetails?.presentOutsideKeralaStreetNameMl,

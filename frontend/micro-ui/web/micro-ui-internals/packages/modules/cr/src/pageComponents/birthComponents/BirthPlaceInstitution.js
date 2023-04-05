@@ -44,7 +44,7 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
         setInstitution(cmbInstitutionType.filter(cmbInstitutionType => cmbInstitutionType.code === formData?.ChildDetails?.institutionTypeCode)[0]);
       }
     }
-    if (formData?.ChildDetails?.institutionNameCode != null) {      
+    if (formData?.ChildDetails?.institutionNameCode != null) {
       if (cmbInstitutionList.length > 0 && (institutionId === undefined || institutionId === "")) {
         setInstitutionId(cmbInstitutionList.filter(cmbInstitutionList => cmbInstitutionList.code === formData?.ChildDetails?.institutionNameCode)[0]);
         setInstitutionIdMl(cmbInstitutionList.filter(cmbInstitutionList => cmbInstitutionList.code === formData?.ChildDetails?.institutionNameCode)[0]);
@@ -82,7 +82,8 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
   } else
     return (
       <React.Fragment>
-        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!institution}>
+        {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!institution}> */}
+        <div className="col-md-12">
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
@@ -104,7 +105,7 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
               />
             </div>
             <div className="col-md-4">
-              <CardLabel>{`${t("CR_INSTITUTION_NAME_EN")}`}<span className="mandatorycss">*</span></CardLabel>              
+              <CardLabel>{`${t("CR_INSTITUTION_NAME_EN")}`}<span className="mandatorycss">*</span></CardLabel>
               <Dropdown
                 t={t}
                 optionKey="institutionName"
@@ -116,7 +117,7 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
               />
             </div>
             <div className="col-md-4">
-              <CardLabel>{`${t("CR_INSTITUTION_NAME_ML")}`}<span className="mandatorycss">*</span></CardLabel> 
+              <CardLabel>{`${t("CR_INSTITUTION_NAME_ML")}`}<span className="mandatorycss">*</span></CardLabel>
               <Dropdown
                 t={t}
                 optionKey="institutionNamelocal"
@@ -128,7 +129,8 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
               />
             </div>
           </div>
-        </FormStep>
+        </div>
+        {/* </FormStep> */}
       </React.Fragment>
     );
 };

@@ -1,6 +1,6 @@
 import { FormStep } from "@egovernments/digit-ui-react-components";
 import React, { useState } from "react";
-import Timeline from "../../components/PGRTimeline";
+import PGRTimeline from "../../components/PGRTimeline";
 
 const SelectPincode = ({ t, config, onSelect, value }) => {
   const tenants = Digit.Hooks.pgr.useTenants();
@@ -43,7 +43,7 @@ const SelectPincode = ({ t, config, onSelect, value }) => {
   const onSkip = () => onSelect();
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
+      {window.location.href.includes("/citizen") ? <PGRTimeline currentStep={2} /> : null}
       <FormStep
         t={t}
         config={config}

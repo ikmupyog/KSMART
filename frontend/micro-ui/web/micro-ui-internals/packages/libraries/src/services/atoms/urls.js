@@ -116,7 +116,19 @@ const Urls = {
     download_pdf: "/egov-pdf/download/CR/",
     registry_download: "/birth-services/cr/registry/_download", 
     registry_search_birth: "/birth-services/cr/registry/_search",
-    create_adoption:'/birth-services/cr/createadoption'    
+    create_adoption:'/birth-services/cr/createadoption',
+    correct_update: ''    
+  },
+  crNAC: {
+    create: "/birth-services/cr/createnac",
+    // search:"/birth-services/cr/searchbirth",
+    // adoption_search:'/birth-services/cr/searchadoption',
+    // adoption_update:'/birth-services/cr/updateadoption',
+    // update:"/birth-services/cr/updatebirth",   
+    // download_pdf: "/egov-pdf/download/CR/",
+    // registry_download: "/birth-services/cr/registry/_download", 
+    // registry_search_birth: "/birth-services/cr/registry/_search",
+    // create_adoption:'/birth-services/cr/createadoption'    
   },
   crstillbirth: {
     create: "/birth-services/cr/createstillbirth",
@@ -130,6 +142,15 @@ const Urls = {
     create: "/birth-services/cr/createbornoutside",
     search:"/birth-services/cr/searchbornoutside",
     update:"/birth-services/cr/updatebornoutside",  
+  },
+  crabandonedbirth: {
+    create: "/birth-services/cr/createabandoned",
+    search:"/birth-services/cr/searchbornoutside",
+    update:"/birth-services/cr/updatebornoutside",  
+  },
+  crnacdeath: {
+    create : "/death-services/v1/deathdetails/_createdeathnac",
+    update : "/death-services/v1/deathdetails/_updatedeathnac",
   },
   crdeath: {
     create: "/death-services/v1/deathdetails/_createdeath ",

@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isEditBirthPageComponents }) => {
   // console.log(JSON.stringify(formData));
-  console.log(formData);
+  //console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -21,7 +21,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
   const cmbMaritalStatus = [
     { i18nKey: "Married", code: "MARRIED" },
     { i18nKey: "UnMarried", code: "UNMARRIED" },
-    { i18nKey: "Not Applicable", code: "NOT_APPLICABLE" },
+    { i18nKey: "Not Disclosed", code: "NOT_APPLICABLE" },
   ];
 
   let cmbQualification = [];
