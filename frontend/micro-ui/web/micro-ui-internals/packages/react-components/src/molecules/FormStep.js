@@ -30,9 +30,6 @@ const FormStep = ({
     defaultValues: _defaultValues,
   });
 
-
-  console.log("In form steps===",isDisabled,errors,config);
-
   const goNext = (data) => {
     onSelect(data);
   };
