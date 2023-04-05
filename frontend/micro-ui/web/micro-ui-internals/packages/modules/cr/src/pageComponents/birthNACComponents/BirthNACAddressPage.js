@@ -13,7 +13,6 @@ import AddressPermanentOutsideKerala from "../birthComponents/AddressPermanentOu
 import AddressPermanentOutsideIndia from "../birthComponents/AddressPermanentOutsideIndia";
 
 const BirthNACAddressPage = ({ config, onSelect, userType, formData, isEditBirth = false, isEditDeath = false }) => {
-    console.log(formData);
     const stateId = Digit.ULBService.getStateId();
     let tenantId = "";
     tenantId = Digit.ULBService.getCurrentTenantId();

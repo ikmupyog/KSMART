@@ -1,6 +1,6 @@
 import { SearchForm, Table } from "@egovernments/digit-ui-react-components";
 import { useForm, Controller } from "react-hook-form";
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useCallback } from "react";
 import SearchDeathFields from "./SearchDeathFields";
 import { Link } from "react-router-dom";
 
@@ -40,9 +40,9 @@ const SearchDeathApplication = ({  t, onSubmit, data, count, isSuccess, isLoadin
             accessor : (row) => GetCell(row.TL_COMMON_TABLE_COL_APP_NO),
         },
         {
-          Header: t("CR_DECEASED_NAME"),
-          disableSortBy: true,
-          accessor: (row) => GetCell(row.CR_DECEASED_NAME),
+            Header: t("CR_DECEASED_NAME"),
+            disableSortBy: true,
+            accessor: (row) => GetCell(row.CR_DECEASED_NAME),
         },
         {
             Header: "Father Name",
@@ -61,17 +61,37 @@ const SearchDeathApplication = ({  t, onSubmit, data, count, isSuccess, isLoadin
             accessor : (row) => GetCell(row.TL_COMMON_CITY_NAME),
         },
         {
-            Header: "Details",
-            accessor : (row) => {
+            Header: "Status",
+            disableSortBy: true,
+            Cell: ({ row }) => {
+                return (
+                    <div>
+                        <span className="link" onClick={() => downloadDocument(row?.original?.filestoreId)}>
+                        <Link to={`/digit-ui/citizen/cr/cr/death/application/${row?.original?.TL_COMMON_TABLE_COL_APP_NO}/${row?.original?.TL_COMMON_CITY_NAME}`}>
+                                VIEW DETAILS
+                            </Link>
+                        </span>
+                    </div>
+                );
             },
         },
        
     ];
     // console.log("data", data);
+    const onSort = useCallback((args) => {
+        if (args.length === 0) return;
+        setValue("sortBy", args.id);
+        setValue("sortOrder", args.desc ? "DESC" : "ASC");
+    }, []);
+    
+    function onPageSizeChange(e) {
+        setValue("limit", Number(e.target.value));
+        handleSubmit(onSubmit)();
+    }
 
     function nextPage() {
-      setValue("offset", getValues("offset") + getValues("limit"));
-      handleSubmit(onSubmit)();
+        setValue("offset", getValues("offset") + getValues("limit"));
+        handleSubmit(onSubmit)();
     }
     
     function previousPage() {
@@ -85,8 +105,7 @@ const SearchDeathApplication = ({  t, onSubmit, data, count, isSuccess, isLoadin
           tmpData[0] = { ...data[0], isSuccess };
         }
         setFileData(tmpData);
-        console.log('data', data)
-    },);
+    });
     return(
         <React.Fragment>
             <div style={mystyle}>
@@ -99,11 +118,15 @@ const SearchDeathApplication = ({  t, onSubmit, data, count, isSuccess, isLoadin
                 fileData !== "" && (
                     <React.Fragment>
                         <Table 
-                        t={t}
-                        data={fileData ? fileData : data}
-                        totalRecords={count}
-                        columns={columns}
-                        getCellProps={() => {
+                            t={t}
+                            data={fileData ? fileData : data}
+                            totalRecords={count}
+                            columns={columns}
+                            onPageSizeChange={onPageSizeChange}
+                            onNextPage={nextPage}
+                            onPreviousPage={previousPage}
+                            onSort={onSort}
+                            getCellProps={() => {
                             return {
                               style: {
                                 minWidth: "240px" ,
