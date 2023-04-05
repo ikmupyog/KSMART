@@ -33,22 +33,7 @@ export const getFilteredChildDobData = (selectedData, correctionData) => {
   let currentValue = { curValue: selectedData?.dateofdeath && moment(selectedData?.dateofdeath).format("DD/MM/YYYY") };
   return { ...filteredData, ...currentValue };
 };
-export const getFilteredDodData = (selectedData, correctionData) => {
-  console.log("selectedData==dob---parms", selectedData, correctionData);
-  let filteredData = {};
-  if (selectedData?.registerDeathPlace?.placeofdeathid === "HOSPITAL") {
-    filteredData = correctionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
-  } else {
-    filteredData = correctionData?.find((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
-  }
-  //TODO need validation to check dob is null
-  let childDobObj = {
-    curValue: selectedData?.InformationDeath?.DateofDeath && moment(selectedData?.InformationDeath?.DateofDeath).format("DD/MM/YYYY"),
-    // changeCurValue: (value,data)=> _changeCurValue(value,data)
-  };
-  let currentValue = { curValue: selectedData?.InformationDeath?.DateofDeath && moment(selectedData?.InformationDeath?.DateofDeath).format("DD/MM/YYYY") };
-  return { ...filteredData, ...currentValue };
-};
+
 
 export const getFilteredChildNameData = (selectedData, correctionData) =>{
     let filteredData = {};
@@ -123,15 +108,35 @@ export const getFatherDetailsbData = (selectedData, correctionData) => {
       filteredData = correctionData?.find((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
     }
     //TODO need validation to check dob is null
-    let childDobObj = {
-      curValue: selectedData?.DeceasedAadharNumber,
-      // changeCurValue: (value,data)=> _changeCurValue(value,data)
-    };
     let currentValue = { curValue: selectedData?.DeceasedAadharNumber };
     return { ...filteredData, ...currentValue };
   };
+  export const getFilteredDeceasedPlaceOfDeath = (selectedData, correctionData) => {
+    console.log("selectedData==123", selectedData, correctionData);
+    let filteredData = {};
+    if (selectedData?.registerDeathPlace?.placeofdeathid === "HOSPITAL") {
+      filteredData = correctionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
+    } else {
+      filteredData = correctionData?.find((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
+    }
+    //TODO need validation to check dob is null
+    let currentValue = { curValue: selectedData?.InformationDeath?.DeathPlace };
+    return { ...filteredData, ...currentValue };
+  };
+  export const getFilteredDeceasedGender = (selectedData, correctionData) => {
+    console.log("selectedData==123", selectedData, correctionData);
+    let filteredData = {};
+    if (selectedData?.registerDeathPlace?.placeofdeathid === "HOSPITAL") {
+      filteredData = correctionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
+    } else {
+      filteredData = correctionData?.find((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
+    }
+    //TODO need validation to check dob is null
+    let currentValue = { curValue: selectedData?.InformationDeath?.DeceasedGender };
+    return { ...filteredData, ...currentValue };
+  };
   
-  export const getFilteredDeceasedFirstNameData = (selectedData, correctionData) => {
+  export const getFilteredDeceasedNameDataEn = (selectedData, correctionData) => {
     console.log("selectedData==123", selectedData, correctionData);
     let filteredData = {};
     if (selectedData?.registerDeathPlace?.placeofdeathid === "HOSPITAL") {
@@ -144,7 +149,120 @@ export const getFatherDetailsbData = (selectedData, correctionData) => {
       curValue: selectedData?.InformationDeath?.DeceasedFirstNameEn,
       // changeCurValue: (value,data)=> _changeCurValue(value,data)
     };
-    let currentValue = { curValue: selectedData?.InformationDeath?.DeceasedFirstNameEn };
+    let currentValue = { curValue: {firstName: selectedData?.InformationDeath?.DeceasedFirstNameEn ,middleName: selectedData?.InformationDeath?.DeceasedMiddleNameEn,lastName:selectedData?.InformationDeath?.DeceasedLastNameEn}};
     return { ...filteredData, ...currentValue };
   };
-  
+  export const getFilteredDeceasedNameDataMl = (selectedData, correctionData) => {
+    console.log("selectedData==123", selectedData, correctionData);
+    let filteredData = {};
+    if (selectedData?.registerDeathPlace?.placeofdeathid === "HOSPITAL") {
+      filteredData = correctionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
+    } else {
+      filteredData = correctionData?.find((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
+    }
+    //TODO need validation to check dob is null
+    let childDobObj = {
+      curValue: selectedData?.InformationDeath?.DeceasedFirstNameEn,
+      // changeCurValue: (value,data)=> _changeCurValue(value,data)
+    };
+    let currentValue = { curValue: {firstName: selectedData?.InformationDeath?.DeceasedFirstNameMl ,middleName: selectedData?.InformationDeath?.DeceasedMiddleNameMl,lastName:selectedData?.InformationDeath?.DeceasedLastNameMl}};
+    return { ...filteredData, ...currentValue };
+  };
+  export const getFilteredDodData = (selectedData, correctionData) => {
+    console.log("selectedData==dob---parms", selectedData, correctionData);
+    let filteredData = {};
+    if (selectedData?.registerDeathPlace?.placeofdeathid === "HOSPITAL") {
+      filteredData = correctionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
+    } else {
+      filteredData = correctionData?.find((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
+    }
+    //TODO need validation to check dob is null
+    let childDobObj = {
+      curValue: selectedData?.InformationDeath?.DateofDeath && moment(selectedData?.InformationDeath?.DateofDeath).format("DD/MM/YYYY"),
+      // changeCurValue: (value,data)=> _changeCurValue(value,data)
+    };
+    let currentValue = { curValue: selectedData?.InformationDeath?.DateofDeath && moment(selectedData?.InformationDeath?.DateofDeath).format("DD/MM/YYYY") };
+    return { ...filteredData, ...currentValue };
+  };
+  export const getFilteredDeceasedMothersName = (selectedData, correctionData) => {
+    console.log("selectedData==dob---parms", selectedData, correctionData);
+    let filteredData = {};
+    if (selectedData?.registerDeathPlace?.placeofdeathid === "HOSPITAL") {
+      filteredData = correctionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
+    } else {
+      filteredData = correctionData?.find((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
+    }
+    //TODO need validation to check dob is null
+    let currentValue = { curValue: {mothersNameEn: selectedData?.FamilyInformationDeath?.MotherNameEn, mothersNameMl: selectedData?.FamilyInformationDeath?.MotherNameMl}};
+    return { ...filteredData, ...currentValue };
+  };
+  export const getFilteredDeceasedFathersName = (selectedData, correctionData) => {
+    console.log("selectedData==dob---parms", selectedData, correctionData);
+    let filteredData = {};
+    if (selectedData?.registerDeathPlace?.placeofdeathid === "HOSPITAL") {
+      filteredData = correctionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
+    } else {
+      filteredData = correctionData?.find((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
+    }
+    //TODO need validation to check dob is null
+    let childDobObj = {
+      curValue: selectedData?.InformationDeath?.DateofDeath && moment(selectedData?.InformationDeath?.DateofDeath).format("DD/MM/YYYY"),
+      // changeCurValue: (value,data)=> _changeCurValue(value,data)
+    };
+    let currentValue = { curValue: {fathersNameEn: selectedData?.FamilyInformationDeath?.FatherNameEn, fathersNameMl: selectedData?.FamilyInformationDeath?.FatherNameMl}};
+    return { ...filteredData, ...currentValue };
+  };
+  export const getFilteredDeceasedSpouseName = (selectedData, correctionData) => {
+    console.log("selectedData==dob---parms", selectedData, correctionData);
+    let filteredData = {};
+    if (selectedData?.registerDeathPlace?.placeofdeathid === "HOSPITAL") {
+      filteredData = correctionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
+    } else {
+      filteredData = correctionData?.find((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
+    }
+    //TODO need validation to check dob is null
+    let childDobObj = {
+      curValue: selectedData?.InformationDeath?.DateofDeath && moment(selectedData?.InformationDeath?.DateofDeath).format("DD/MM/YYYY"),
+      // changeCurValue: (value,data)=> _changeCurValue(value,data)
+    };
+    let currentValue = { curValue: {spouseNameEn: selectedData?.FamilyInformationDeath?.SpouseNameEn, spouseNameMl: selectedData?.FamilyInformationDeath?.SpouseNameMl}};
+    return { ...filteredData, ...currentValue };
+  };
+  export const getFilteredDeceasedAddressEn = (selectedData, correctionData) => {
+    console.log("selectedData==dob---parms", selectedData, correctionData);
+    let filteredData = {};
+    if (selectedData?.registerDeathPlace?.placeofdeathid === "HOSPITAL") {
+      filteredData = correctionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
+    } else {
+      filteredData = correctionData?.find((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
+    }
+    //TODO need validation to check dob is null
+    let childDobObj = {
+      curValue: selectedData?.InformationDeath?.DateofDeath && moment(selectedData?.InformationDeath?.DateofDeath).format("DD/MM/YYYY"),
+      // changeCurValue: (value,data)=> _changeCurValue(value,data)
+    };
+    let currentValue = { curValue: {houseNameEn: selectedData?.AddressBirthDetails?.PermanentAddrHoueNameEn, 
+      localityNameEn: selectedData?.AddressBirthDetails?.PermanentAddrLocalityEn,
+      streetNameEn: selectedData?.AddressBirthDetails?.PermanentAddrStreetNameEn,
+    }};
+    return { ...filteredData, ...currentValue };
+  };
+  export const getFilteredDeceasedAddressMl = (selectedData, correctionData) => {
+    console.log("selectedData==dob---parms", selectedData, correctionData);
+    let filteredData = {};
+    if (selectedData?.registerDeathPlace?.placeofdeathid === "HOSPITAL") {
+      filteredData = correctionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
+    } else {
+      filteredData = correctionData?.find((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
+    }
+    //TODO need validation to check dob is null
+    let childDobObj = {
+      curValue: selectedData?.InformationDeath?.DateofDeath && moment(selectedData?.InformationDeath?.DateofDeath).format("DD/MM/YYYY"),
+      // changeCurValue: (value,data)=> _changeCurValue(value,data)
+    };
+    let currentValue = { curValue: {houseNameMl: selectedData?.AddressBirthDetails?.PermanentAddrHoueNameMl, 
+      localityNameMl: selectedData?.AddressBirthDetails?.PermanentAddrLocalityMl,
+      streetNameMl: selectedData?.AddressBirthDetails?.PermanentAddrStreetNameMl,
+    }};
+    return { ...filteredData, ...currentValue };
+  };
