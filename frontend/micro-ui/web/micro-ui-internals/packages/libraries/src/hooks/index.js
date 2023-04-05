@@ -138,6 +138,7 @@ import { useCRDeathSearchApplication, useCRApplicationDeathDetails } from "./cr/
 import useCRFetchBill from "./cr/useFetchBill";
 import useCRDFetchBill from "./cr/useDeathFetchBill";
 import useCRApplicationDetail from "./cr/useApplicationDetail";
+import useCRApplicationAdoptionDetail from "./cr/useApplicationAdoptionDetail";
 import useApplicationMarriageDetail from "./cr/useApplicationMarriageDetail";
 import useApplicationStillBirthDetail from "./cr/useApplicationStillBirthDetail"; 
 import useApplicationAbandondBirthDetail from "./cr/useApplicationAbandondBirthDetail";
@@ -389,6 +390,7 @@ const cr = {
   useSearchDeath ,
   useSearchStillBirth,
   useApplicationDetail: useCRApplicationDetail,
+  useApplicationAdoptionDetail:useCRApplicationAdoptionDetail,
   useApplicationMarriageDetail,
   useApplicationStillBirthDetail:useApplicationStillBirthDetail,
   useApplicationAbandondBirthDetail,

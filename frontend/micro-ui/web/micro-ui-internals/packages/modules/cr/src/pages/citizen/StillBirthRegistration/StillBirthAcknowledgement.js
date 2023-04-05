@@ -94,7 +94,7 @@ const StillBirthAcknowledgement = ({ data, onSuccess, userType }) => {
     return (
       <Card>
         <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation?.isLoading)} />
-        {<CardText>{t("CR_STILLBIRTH_CREATION_FAILED_RESPONSE")}</CardText>}
+        {<CardText>{t("CR_BIRTH_CREATION_FAILED_RESPONSE")}</CardText>}
         <Link to={`/digit-ui/citizen`}>
           <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
         </Link>

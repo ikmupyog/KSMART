@@ -1923,4 +1923,5 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
     );
   }
 };
+//anzar
 export default InformationDeath;

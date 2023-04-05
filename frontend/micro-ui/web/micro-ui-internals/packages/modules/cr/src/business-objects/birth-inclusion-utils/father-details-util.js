@@ -1,7 +1,6 @@
 import moment from 'moment'
 
 export const getFatherDetailsbData = (selectedData, inclusionData) => {
-  console.log("selectedData==123", selectedData, inclusionData);
   let filteredData = {};
   if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
     filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
@@ -17,6 +16,4 @@ export const getFatherDetailsbData = (selectedData, inclusionData) => {
   return { ...filteredData, ...currentValue };
 };
 
-// const _changeCurValue = (value,data) =>{
-//   return()
-// }
+
