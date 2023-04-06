@@ -12,7 +12,7 @@ import DeathOutsideJurisdiction from "./DeathOutsideJurisdiction ";
 import { useParams } from "react-router-dom";
 
 const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath }) => {
-  // console.log(formData);
+  console.log(formData);
   // console.log(isEditDeath);
   const [isEditDeathPageComponents, setIsEditDeathPageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
@@ -67,7 +67,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   let institutionNameCode = "";
   let naturetypecmbvalue = null;
   const maxDate = new Date();
-  // let workFlowCode = "";
   let Difference_In_DaysRounded = "";
   let cmbfilterNation = [];
   let cmbfilterReligion = [];
@@ -94,6 +93,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
     AgeUnitvalue["birth-death-service"].AgeUnit.map((ob) => {
       cmbAgeUnit.push(ob);
     });
+    console.log({cmbAgeUnit});
   Nation &&
     Nation["common-masters"] &&
     Nation["common-masters"].Country &&
@@ -252,7 +252,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
       ? cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.code === formData?.InformationDeath?.DeceasedGender)[0]
       : ""
   );
-  
 
   const [DeceasedGender, setselectedDeceasedGender] = useState(
     formData?.InformationDeath?.DeceasedGender?.code
@@ -286,7 +285,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
       : ""
   );
   const [HospitalNameMl, selectHospitalNameMl] = useState(
-    formData?.  InformationDeathails?.HospitalNameMl?.code
+    formData?.InformationDeathails?.HospitalNameMl?.code
       ? formData?.InformationDeath?.HospitalNameMl
       : formData?.InformationDeath?.HospitalNameMl
       ? ""
@@ -682,6 +681,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
       }
     }
     if (e.target.value <= 11) {
+      console.log({cmbAgeUnit})
       setcmbAgeUnitFilter(cmbAgeUnit);
     } else if (e.target.value > 11 && e.target.value <= 23) {
       setcmbAgeUnitFilter(
@@ -994,7 +994,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   //   // }
   // };
   const goNext = () => {
-    
     if (DeceasedGender == null || DeceasedGender == "" || DeceasedGender == undefined) {
       validFlag = false;
       setsexError(true);
@@ -1101,8 +1100,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
       // // sessionStorage.setItem("DeceasedAadharNotAvailable ", DeceasedAadharNotAvailable ? DeceasedAadharNotAvailable : false);
       // // sessionStorage.setItem("Occupation", Occupation ? Occupation.code : null);
       // // sessionStorage.setItem("DeathPlace", DeathPlace ? DeathPlace.code : null);
-
-      // // sessionStorage.setItem("workFlowCode", workFlowCode);
 
       // // sessionStorage.setItem("DeathPlaceTypecode", DeathPlaceType ? DeathPlaceType.code : null);
       // // sessionStorage.setItem("institutionNameCode", DeathPlaceInstId ? DeathPlaceInstId.code : null);
@@ -1824,7 +1821,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
                   t={t}
                   optionKey="name"
                   isMandatory={false}
-                  option={cmbAgeUnitFilter}
+                  option={cmbAgeUnit}
                   selected={AgeUnit}
                   select={selectAgeUnit}
                   placeholder={`${t("CR_AGE_UNIT")}`}

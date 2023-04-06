@@ -21,7 +21,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
   const cmbMaritalStatus = [
     { i18nKey: "Married", code: "MARRIED" },
     { i18nKey: "UnMarried", code: "UNMARRIED" },
-    { i18nKey: "Not Applicable", code: "NOT_APPLICABLE" },
+    { i18nKey: "Not Disclosed", code: "NOT_APPLICABLE" },
   ];
 
   let cmbQualification = [];

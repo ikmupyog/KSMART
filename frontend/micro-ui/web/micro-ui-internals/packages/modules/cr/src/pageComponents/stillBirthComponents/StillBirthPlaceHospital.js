@@ -75,7 +75,9 @@ const StillBirthPlaceHospital = ({ config, onSelect, userType, formData, selectH
   } else
     return (
       <React.Fragment>
-        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!hospitalName}>
+        {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!hospitalName}> */}
+        <div className="row">
+        <div className="col-md-12">
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
@@ -117,8 +119,9 @@ const StillBirthPlaceHospital = ({ config, onSelect, userType, formData, selectH
               />
             </div>
           </div>
-
-        </FormStep>
+          </div>
+          </div>
+        {/* </FormStep> */}
       </React.Fragment>
     );
 };

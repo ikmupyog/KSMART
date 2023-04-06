@@ -27,32 +27,6 @@ const MarriagePublicPlace = ({
   const { t } = useTranslation();
   let validation = {};
 
-  // const [marriageLocalityEn, setmarriageLocalityEn] = useState(
-  //   formData?.MarriagePublicPlace?.marriageLocalityEn ? formData?.MarriagePublicPlace?.marriageLocalityEn : ""
-  // );
-  // const [marriageLocalityMl, setmarriageLocalityMl] = useState(
-  //   formData?.MarriagePublicPlace?.marriageLocalityMl ? formData?.MarriagePublicPlace?.marriageLocalityMl : ""
-  // );
-
-  // const [marriageLandmark, setMarriageLandmark] = useState(
-  //   formData?.MarriagePublicPlace?.marriageLandmark ? formData?.MarriagePublicPlace?.marriageLandmark : ""
-  // );
-  // const [marriageStreetMl, setmarriageStreetMl] = useState(
-  //   formData?.MarriagePublicPlace?.marriageStreetMl ? formData?.MarriagePublicPlace?.marriageStreetMl : ""
-  // );
-  // const [marriagePublicOrPrivateNamePlaceEn, setMarriagePublicOrPrivateNamePlaceEn] = useState(
-  //   formData?.MarriagePublicPlace?.marriagePublicOrPrivateNamePlaceEn ? formData?.MarriagePublicPlace?.marriagePublicOrPrivateNamePlaceEn : ""
-  // );
-  // const [marriagePublicOrPrivateNamePlaceMal, setMarriagePublicOrPrivateNamePlaceMal] = useState(
-  //   formData?.MarriagePublicPlace?.marriagePublicOrPrivateNamePlaceMal ? formData?.MarriagePublicPlace?.marriagePublicOrPrivateNamePlaceMal : ""
-  // );
-  // const [marriageStreetEn, setmarriageStreetEn] = useState(
-  //   formData?.MarriagePublicPlace?.marriageStreetEn ? formData?.MarriagePublicPlace?.marriageStreetEn : ""
-  // );
-  // const [marriagePublicOrPrivatePlace, setMarriagePublicOrPrivatePlace] = useState(
-  //   formData?.MarriagePublicPlace?.marriagePublicOrPrivatePlace ? formData?.MarriagePublicPlace?.marriagePublicOrPrivatePlace : null
-  // );
-
   const [access, setAccess] = React.useState(true);
 
   const onSkip = () => onSelect();
@@ -65,47 +39,47 @@ const MarriagePublicPlace = ({
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setmarriagePlacenameMl('');
+      setmarriagePlacenameMl("");
     } else {
-      setmarriagePlacenameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setmarriagePlacenameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectOtherMarriagePlacenameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setmarriagePlacenameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setmarriagePlacenameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectMarriageLandmark(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setMarriageLandmark(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setmarriageLandmark(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectMarriageStreetEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setmarriageStreetEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setmarriageStreetEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectMarriageLocalityEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setmarriageLocalityEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setmarriageLocalityEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectMarriageLocalityMal(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setmarriageLocalityMl('');
+      setmarriageLocalityMl("");
     } else {
-      setmarriageLocalityMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setmarriageLocalityMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectmarriageStreetMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setmarriageStreetMl('');
+      setmarriageStreetMl("");
     } else {
-      setmarriageStreetMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setmarriageStreetMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
 

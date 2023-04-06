@@ -2,7 +2,7 @@ import { Banner, Card, CardText, LinkButton, Loader, SubmitBar } from "@egovernm
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { convertToBornOutsideBirthRegistration} from "../../../utils/bornoutsidebirthindex";
+import { convertToBornOutsideBirthRegistration } from "../../../utils/bornoutsidebirthindex";
 import getPDFData from "../../../utils/getTLAcknowledgementData";
 
 const GetActionMessage = (props) => {
@@ -43,6 +43,7 @@ const BornOutsideAcknowledgement = ({ data, onSuccess, userType }) => {
     tenantId, isEditBornOutsideIndia ? false : true
   );
 
+  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_CREATE_BORN_OUTSIDE_REG", {});
 
 
   // const mutation2 = Digit.Hooks.cr.useCivilRegistrationAPI(
@@ -56,7 +57,9 @@ const BornOutsideAcknowledgement = ({ data, onSuccess, userType }) => {
   //  const { isLoading, data: fydata = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "egf-master", "FinancialYear");
   //let isDirectRenewal = sessionStorage.getItem("isDirectRenewal") ? stringToBoolean(sessionStorage.getItem("isDirectRenewal")) : null;
   const [isInitialRender, setIsInitialRender] = useState(true);
-
+  useEffect(() => {
+    clearParams();
+  }, [mutation?.data])
   useEffect(() => {
     if (isInitialRender) {
       // const onSuccessedit = () => {

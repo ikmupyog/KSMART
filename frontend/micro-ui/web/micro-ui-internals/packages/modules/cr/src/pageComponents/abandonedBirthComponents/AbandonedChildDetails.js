@@ -13,7 +13,8 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData, }) => {
   // console.log(formData);
   // const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(false);
   // const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
-  const [workFlowCode, setWorkFlowCode] = useState();
+
+  // const [workFlowCode, setWorkFlowCode] = useState();
 
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
@@ -28,7 +29,7 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData, }) => {
   const { data: AttentionOfDelivery = {}, isAttentionOfDeliveryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "AttentionOfDelivery");
   const { data: DeliveryMethodList = {}, isDeliveryMethodListLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeliveryMethod");
   const { data: PlaeceMaster = {}, isPlaceMasterLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "PlaceMaster");
-  const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "WorkFlowBirth");
+  // const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "WorkFlowBirth");
 
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
   const [InstitutionFilterList, setInstitutionFilterList] = useState(null);
@@ -74,15 +75,15 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData, }) => {
   let wardNameEn = "";
   let wardNameMl = "";
   let wardNumber = "";
-  let Difference_In_DaysRounded = "";
+  let Difference_In_DaysRounded = "";  
+  let workFlowCode = "21BIRTHHOME";
   
-  // let workFlowCode = "BIRTHHOSP21";
-  WorkFlowDetails &&
-    WorkFlowDetails["birth-death-service"] && WorkFlowDetails["birth-death-service"].WorkFlowBirth &&
-    WorkFlowDetails["birth-death-service"].WorkFlowBirth.map((ob) => {
-      workFlowData.push(ob);
-      // console.log(workFlowData);
-    });
+  // WorkFlowDetails &&
+  //   WorkFlowDetails["birth-death-service"] && WorkFlowDetails["birth-death-service"].WorkFlowBirth &&
+  //   WorkFlowDetails["birth-death-service"].WorkFlowBirth.map((ob) => {
+  //     workFlowData.push(ob);
+  //     // console.log(workFlowData);
+  //   });
   Menu &&
     Menu.map((genderDetails) => {
       menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
