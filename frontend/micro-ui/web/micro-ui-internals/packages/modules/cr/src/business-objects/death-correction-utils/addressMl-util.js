@@ -1,18 +1,32 @@
-export const getFilteredDeceasedAddressMl = (selectedData, correctionData) => {
-    let filteredData = {};
-    if (selectedData?.registerDeathPlace?.placeofdeathid === "HOSPITAL") {
+  export const getFilteredDeceasedAddressMl = (selectedData, correctionData) => {
+    let filteredDocuments = getFilteredDocuments(selectedData,correctionData);
+    const computedValue = computeInitialValue({houseNameMl: selectedData?.AddressBirthDetails?.PermanentAddrHoueNameMl, 
+      localityNameMl: selectedData?.AddressBirthDetails?.PermanentAddrLocalityMl,
+      streetNameMl: selectedData?.AddressBirthDetails?.PermanentAddrStreetNameMl,
+    });
+    let selectedDodObj = {
+      initialValue: computedValue,
+      curValue: computedValue,
+      isDisabled: true,
+      isFocused: false,
+      ...filteredDocuments,
+    };
+    return { ...selectedDodObj };
+  };
+  
+  //TODO need validation to check dob is null
+  const computeInitialValue = (addressMl) => {
+    const initialValue = addressMl;
+    return initialValue;
+  };
+  
+  const getFilteredDocuments = (selectedData,correctionData) => {
+    let filteredData  = {};
+    if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
       filteredData = correctionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
     } else {
       filteredData = correctionData?.find((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
     }
-    //TODO need validation to check dob is null
-    let childDobObj = {
-      curValue: selectedData?.InformationDeath?.DateofDeath && moment(selectedData?.InformationDeath?.DateofDeath).format("DD/MM/YYYY"),
-      // changeCurValue: (value,data)=> _changeCurValue(value,data)
-    };
-    let currentValue = { curValue: {houseNameMl: selectedData?.AddressBirthDetails?.PermanentAddrHoueNameMl, 
-      localityNameMl: selectedData?.AddressBirthDetails?.PermanentAddrLocalityMl,
-      streetNameMl: selectedData?.AddressBirthDetails?.PermanentAddrStreetNameMl,
-    }};
-    return { ...filteredData, ...currentValue };
+    return filteredData;
   };
+  

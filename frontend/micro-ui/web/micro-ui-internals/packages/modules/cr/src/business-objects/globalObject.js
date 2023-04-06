@@ -38,7 +38,7 @@ export const initializedDeathCorrectionObject = (deathCorrectionDocData, selecte
   for (let field_key in DEATH_CORRECTION_FIELD_NAMES) {
     const filteredData = deathCorrectionDocData?.filter((item) => item.CorrectionField === field_key);
     let correctionDocsData = deathCorrectionFilterFieldsObj[field_key]?.(selectedData, filteredData);
-    let tempObj = { ...correctionDocsData, isDisabled: true, isEditable: false, isFocused: false };
+    let tempObj = { ...correctionDocsData };
     Object.assign(formObj, { [field_key]: tempObj });
   }
   return formObj;

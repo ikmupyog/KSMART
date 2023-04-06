@@ -5,7 +5,7 @@ import { checkForEmployee } from "../utils";
 import UploadDoc from "../../../../react-components/src/atoms/UploadDoc";
 import { DEATH_CORRECTION_FIELD_NAMES } from "../config/constants";
 
-const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedConfig }) => {
+const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedConfig,selectedDocs }) => {
   const { t } = useTranslation();
   let formData = {};
   let docIdDetails = [];
@@ -17,6 +17,7 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
   const [docuploadedName, setDocuploadedName] = useState();
   const [docuploadedType, setDocuploadedType] = useState();
   const [uploadedFile, setUploadedFile] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState(formData?.owners?.documents?.ProofOfIdentity);
   const [error, setError] = useState(null);
   let acceptFormat = ".jpg,.png,.pdf,.jpeg";

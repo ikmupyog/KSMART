@@ -6,6 +6,7 @@ import {
   Dropdown,
   FormStep,
   LinkButton,
+  EditButton,
   BackButton,
   EditIcon,
   Loader,
@@ -23,6 +24,7 @@ import { DEATH_CORRECTION_FIELD_NAMES } from "../../../config/constants";
 import { initializedDeathCorrectionObject } from "../../../business-objects/globalObject";
 import { useLocation } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { formatApiParams } from "../../../utils/birthInclusionParams";
 
 function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, menu, cmbPlace , BirthCorrectionDocuments,navigationData}) {
   const { t } = useTranslation();
@@ -40,6 +42,7 @@ function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, menu, cmbPl
   const [isInitialRenderDeathPlace, setIsInitialRenderDeathPlace] = useState(true);
   const [isInitialMdmsServiceCompleted, setIsInitialMdmsServiceCompleted] = useState(false);
   const [deathCorrectionFormsObj, setDeathCorrectionFormsObj] = useState(false);
+  const [selectedDocs, setSelectedDocs] = useState([]);
   let validation = {};
   const _hideModal = () => {
     setShowModal(false);
@@ -49,7 +52,7 @@ function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, menu, cmbPl
     return <div className="col-md-9">{children}</div>;
   };
  
-
+  const { data: Menu, isLoading: genderLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType")
 
   const [DeathPlaceType, selectDeathPlaceType] = useState(
     formData?.InformationDeath?.DeathPlaceType?.code
@@ -96,7 +99,7 @@ function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, menu, cmbPl
       ? cmbNation.filter((cmbNation) => cmbNation.code === formData?.InformationDeath?.Nationality)[0]
       : ""
   );
-
+console.log("menu---", menu);
   // Home
   const [DeathPlaceHomePostofficeId, setDeathPlaceHomepostofficeId] = useState(
     formData?.InformationDeath?.DeathPlaceHomePostofficeId ? formData?.InformationDeath?.DeathPlaceHomePostofficeId : null
@@ -183,15 +186,21 @@ function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, menu, cmbPl
   };
 
  
-const onUploadDocSubmit = async (fileData) => {
+    const onUploadDocSubmit = async (fileData, error) => {
+      console.log("upload response==", fileData);
+      if (fileData && fileData?.length > 0) {
+        const selectedDocIds = fileData.map((item) => item.documentId);
+        setSelectedDocs(selectedDocIds);
+      }
+      selectedDocs;
+      let tempObj = { ...deathCorrectionFormsObj };
+      let { CHILD_DOB } = tempObj;
+      tempObj = { ...tempObj, CHILD_DOB: { ...CHILD_DOB, Documents: fileData, isFocused: true, isDisabled: false } };
   
-    let tempObj = {...deathCorrectionFormsObj};
-    let {CHILD_DOB} = tempObj;
-    tempObj={...tempObj,CHILD_DOB:{...CHILD_DOB,isFocused : true,isDisabled : false}};
-    setDeathCorrectionFormsObj(tempObj);
+      setDeathCorrectionFormsObj(tempObj);
       setShowModal(false);
     };
-
+  
 
   if (
     isEditDeath &&
@@ -525,8 +534,13 @@ const onUploadDocSubmit = async (fileData) => {
   };
   console.log(cmbPlace);
 
+  const onSubmitDeathCorrection = () => {
+    const formattedResp = formatApiParams(deathCorrectionFormsObj);
+    console.log("formattedResp", formattedResp);
+  };
+
   if(Object.keys(deathCorrectionFormsObj)?.length > 0){
-    console.log("deathCorrectionFormData??.curValue",deathCorrectionFormsObj?.DECEASED_FIRST_NAME);
+    console.log("deathCorrectionFormData??.curValue",deathCorrectionFormsObj?.PLACE_OF_DEATH?.curValue);
 
   return (
     <React.Fragment>
@@ -730,36 +744,18 @@ const onUploadDocSubmit = async (fileData) => {
                   t={t}
                   // dropdownRef={register()}
                   optionKey="name"
-                  name="selectDeathPlace"
+                  name="DeathPlace"
                   isMandatory={false}
                   option={cmbPlace}
                   disabled={deathCorrectionFormsObj.PLACE_OF_DEATH?.isDisabled}
                   autofocus={deathCorrectionFormsObj.PLACE_OF_DEATH?.isFocused}
-                  select={deathCorrectionFormsObj?.PLACE_OF_DEATH?.curValue} 
-                  // selected={DeathPlace}
-                  // select={selectDeathPlace}
-                  placeholder={`${t("CR_PLACE_OF_DEATH")}`}
-                />
-              </div>
-              <div className="col-md-4">
-                <CardLabel>{t("CR_PLACE_OF_DEATH")}</CardLabel>
-                <Dropdown
-                  t={t}
-                  dropdownRef={register()}
-                  optionKey="name"
-                  name="selectDeathPlace"
-                  isMandatory={false}
-                  option={cmbPlace}
-                  disabled={deathCorrectionFormsObj.PLACE_OF_DEATH?.isDisabled}
-                  autofocus={deathCorrectionFormsObj.PLACE_OF_DEATH?.isFocused}
-                  select={deathCorrectionFormsObj?.PLACE_OF_DEATH?.curValue} 
-                  // selected={DeathPlace}
+                  // select={deathCorrectionFormsObj?.PLACE_OF_DEATH?.curValue} 
+                  selected={cmbPlace.find((item) => item.code === deathCorrectionFormsObj?.PLACE_OF_DEATH?.curValue)}
                   // select={selectDeathPlace}
                   placeholder={`${t("CR_PLACE_OF_DEATH")}`}
                 />
               </div>
               </FieldComponentContainer>
-            
               <div style={{ marginTop: "2.8rem" }}>
           <ButtonContainer>
           <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["PLACE_OF_DEATH"])}>
@@ -775,19 +771,20 @@ const onUploadDocSubmit = async (fileData) => {
             <FieldComponentContainer>
               <div className="col-md-4">
                 <CardLabel>{t("CR_GENDER")}</CardLabel>
-                <TextInput
+                <Dropdown
                   t={t}
                    // inputRef={register({})}
                   isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="selectDeceasedGender"
+                  optionKey="code"
+                  name="DeceasedGender"
+                  option={menu}
                   disabled={deathCorrectionFormsObj.GENDER?.isDisabled}
                   autofocus={deathCorrectionFormsObj.GENDER?.isFocused}
                   select={deathCorrectionFormsObj?.GENDER?.curValue}  
+                  selected={menu.find((item) => item.code === deathCorrectionFormsObj?.GENDER?.curValue)}
                   // value={navigationData.InformationDeath.DeceasedGender}
                   // onChange={setSelectDeceasedFirstNameEn}
-                  placeholder={`${t("CR_LAST_NAME_ML")}`}
+                  placeholder={`${t("CR_GENDER")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
               </div>
@@ -799,7 +796,7 @@ const onUploadDocSubmit = async (fileData) => {
               selected={true}
               label={"Edit"}
             />
-            </span>
+            </span> 
           </ButtonContainer>
         </div>
           </FormFieldContainer>
@@ -1202,8 +1199,25 @@ const onUploadDocSubmit = async (fileData) => {
         </ButtonContainer>
       </div>
           </FormFieldContainer>
+          <div style={{ display: "flex", flexDirection: "column-reverse" }}></div>
+            <FormFieldContainer>
+              <FieldComponentContainer></FieldComponentContainer>
+              <ButtonContainer>
+                <div style={{ marginTop: "2.8rem" }}>
+                  <span onClick={onSubmitDeathCorrection}>
+                    <EditButton selected={true} label={"Submit"} />
+                  </span>
+                </div>
+              </ButtonContainer>
+            </FormFieldContainer>
         </form>
-        <DeathCorrectionModal showModal={showModal} selectedConfig={selectedCorrectionItem}  onSubmit={onUploadDocSubmit} hideModal={_hideModal}/>
+        <DeathCorrectionModal 
+        showModal={showModal} 
+        selectedConfig={selectedCorrectionItem}  
+        onSubmit={onUploadDocSubmit} 
+        hideModal={_hideModal}
+        selectedDocs={selectedDocs}
+        />
       </FormStep>
     </React.Fragment>
   );
