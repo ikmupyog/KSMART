@@ -94,7 +94,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
         request.getMarriageDetails()
                 .forEach(marriage -> marriage.setAuditDetails(auditDetails));
 
-         setRegistrationNumber(request);
+       //  setRegistrationNumber(request);
         setBridePermanentAddress(request);
         setBridePresentAddress(request);
         setGroomPermanentAddress(request);
@@ -503,30 +503,30 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
         }
 
 
-     private void setRegistrationNumber(MarriageDetailsRequest request) {
+    //  private void setRegistrationNumber(MarriageDetailsRequest request) {
 
-         RequestInfo requestInfo = request.getRequestInfo();
-         List<MarriageApplicationDetails> marriageDetails = request.getMarriageDetails();
-         String tenantId = marriageDetails.get(0)
-                 .getTenantid();
+    //      RequestInfo requestInfo = request.getRequestInfo();
+    //      List<MarriageApplicationDetails> marriageDetails = request.getMarriageDetails();
+    //      String tenantId = marriageDetails.get(0)
+    //              .getTenantid();
 
-         List<String> filecodes = getIds(requestInfo,
-                 tenantId,
-                 config.getGetMarriageRegisNumberName(),
-                 request.getMarriageDetails().get(0).getApplicationtype(),
-                 "REG",
-                 marriageDetails.size());
-         validateFileCodes(filecodes, marriageDetails.size());
-         Long currentTime = Long.valueOf(System.currentTimeMillis());
-         ListIterator<String> itr = filecodes.listIterator();
-         request.getMarriageDetails()
-                 .forEach(marriage -> {
-                    // if((marriage.getStatus().equals("APPROVED"))&&(marriage.getAction().equals("APPROVE"))) {
-                         marriage.setRegistrationno(itr.next());
-                         marriage.setRegistrationDate(currentTime);
-                    // }
-                 });
-     }
+    //      List<String> filecodes = getIds(requestInfo,
+    //              tenantId,
+    //              config.getGetMarriageRegisNumberName(),
+    //              request.getMarriageDetails().get(0).getApplicationtype(),
+    //              "REG",
+    //              marriageDetails.size());
+    //      validateFileCodes(filecodes, marriageDetails.size());
+    //      Long currentTime = Long.valueOf(System.currentTimeMillis());
+    //      ListIterator<String> itr = filecodes.listIterator();
+    //      request.getMarriageDetails()
+    //              .forEach(marriage -> {
+    //                 // if((marriage.getStatus().equals("APPROVED"))&&(marriage.getAction().equals("APPROVE"))) {
+    //                      marriage.setRegistrationno(itr.next());
+    //                      marriage.setRegistrationDate(currentTime);
+    //                 // }
+    //              });
+    //  }
 
 //     private void setFileNumbers(MarriageDetailsRequest request) {
 

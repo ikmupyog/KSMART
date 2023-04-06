@@ -18,7 +18,7 @@ public class MarriageRegistryRowMapper implements ResultSetExtractor<List<Marria
 
     @Override
     public List<MarriageRegistryDetails> extractData(ResultSet rs) throws SQLException, DataAccessException { //how to handle null
-      System.out.println("QuertOut"+rs);
+    //  System.out.println("QuertOut"+rs);
         List<MarriageRegistryDetails> result = new ArrayList<>();
         while (rs.next()) {
             

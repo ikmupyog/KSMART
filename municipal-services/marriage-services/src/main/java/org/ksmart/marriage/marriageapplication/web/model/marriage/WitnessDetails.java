@@ -96,6 +96,33 @@ public class WitnessDetails {
     @JsonProperty("witness2Esigned")
     private  Boolean witness2Esigned;
 
+    //Jasmine 06.04.2023
+    @Size(max = 200)
+    @JsonProperty("brideurl")
+    private String brideurl;
+
+    @Size(max = 200)
+    @JsonProperty("groomurl")
+    private String groomurl;
+
+    @Size(max = 64)
+    @JsonProperty("imageuuid")
+    private String imageuuid;
+
+    @Size(max = 256)
+    @JsonProperty("brideFilestoreid")
+    private String brideFilestoreid;
+
+    @Size(max = 256)
+    @JsonProperty("groomFilestoreid")
+    private String groomFilestoreid;
+
+    @JsonProperty("brideExpired")
+    private boolean brideExpired;
+
+    @JsonProperty("groomExpired")
+    private boolean groomExpired;
+
     @JsonProperty("auditDetails")
     private AuditDetails witnessAuditDetails;
 

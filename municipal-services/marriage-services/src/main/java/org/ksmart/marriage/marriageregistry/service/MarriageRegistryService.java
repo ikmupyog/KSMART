@@ -6,6 +6,14 @@ import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryRequest;
 import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistrySearchCriteria;
 import org.ksmart.marriage.marriageregistry.repository.MarriageRegistryRepository;
 import org.springframework.stereotype.Service;
+import org.ksmart.marriage.common.producer.MarriageProducer;
+import org.ksmart.marriage.marriageapplication.config.MarriageApplicationConfiguration;
+import org.ksmart.marriage.marriageregistry.enrichment.MarriageRegistryEnrichment;
+import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryDetails;
+import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryRequest;
+import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistrySearchCriteria;
+import org.ksmart.marriage.marriageregistry.repository.querybuilder.MarriageRegistryQueryBuilder;
+import org.ksmart.marriage.marriageregistry.repository.rowmapper.MarriageRegistryRowMapper;
 import java.util.List;
 /**
      * Created by Jasmine
@@ -14,15 +22,36 @@ import java.util.List;
 @Slf4j
 @Service
 public class MarriageRegistryService {
+    private final MarriageProducer producer;
+    private final MarriageApplicationConfiguration marriageApplicationConfiguration;
+    private final MarriageRegistryEnrichment marriageRegistryEnrichment;
     private final MarriageRegistryRepository repository;
 
-    public MarriageRegistryService(MarriageRegistryRepository repository) {
-        this.repository = repository;
+    public MarriageRegistryService(MarriageRegistryRepository repository,MarriageRegistryEnrichment marriageRegistryEnrichment, 
+                                    MarriageProducer producer, 
+                                    MarriageApplicationConfiguration marriageApplicationConfiguration ) {
+
+            this.producer = producer;
+            this.marriageApplicationConfiguration = marriageApplicationConfiguration;
+            this.marriageRegistryEnrichment = marriageRegistryEnrichment;
+            this.repository = repository;
     }
 
     public List<MarriageRegistryDetails> createRegistry(MarriageRegistryRequest request) {
+        System.out.println("HiRegistry");
 
-        return repository.createMarriageRegistry(request);
+System.out.println("registryApplicationnumber"+request.getMarriageDetails().get(0).getApplicationNumber());
+        marriageRegistryEnrichment.enrichCreate(request);
+
+        producer.push(marriageApplicationConfiguration.getSaveMarriageRegistryTopic(), request);
+
+        MarriageRegistryRequest result = MarriageRegistryRequest
+                                .builder()
+                                .requestInfo(request.getRequestInfo())
+                                .marriageDetails(request.getMarriageDetails())
+                                .build();
+        return result.getMarriageDetails();
+
     }
 
 
@@ -32,6 +61,7 @@ public class MarriageRegistryService {
     // }
 
     public List<MarriageRegistryDetails> searchRegistry(MarriageRegistrySearchCriteria criteria) {
+        
         return repository.searchMarriageRegistry(criteria);
     }
 

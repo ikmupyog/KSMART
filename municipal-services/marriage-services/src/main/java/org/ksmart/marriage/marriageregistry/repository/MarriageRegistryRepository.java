@@ -43,20 +43,25 @@ public class MarriageRegistryRepository {
     }
 
 
-    public List<MarriageRegistryDetails> createMarriageRegistry(MarriageRegistryRequest request) {
+    // public List<MarriageRegistryDetails> createMarriageRegistry(MarriageRegistryRequest request) {
+        // marriageRegistryEnrichment.enrichCreate(request);
 
-        marriageRegistryEnrichment.enrichCreate(request);
-        producer.push(marriageApplicationConfiguration.getSaveMarriageRegistryTopic(), request);
-        MarriageRegistryRequest result = MarriageRegistryRequest
-                                .builder()
-                                .requestInfo(request.getRequestInfo())
-                                .marriageDetails(request.getMarriageDetails())
-                                .build();
-        return result.getMarriageDetails();
-    }
+        // producer.push(marriageApplicationConfiguration.getSaveMarriageRegistryTopic(), request);
+
+        // MarriageRegistryRequest result = MarriageRegistryRequest
+        //                         .builder()
+        //                         .requestInfo(request.getRequestInfo())
+        //                         .marriageDetails(request.getMarriageDetails())
+        //                         .build();
+        // return result.getMarriageDetails();
+
+    // }
     public List<MarriageRegistryDetails> searchMarriageRegistry(MarriageRegistrySearchCriteria criteria) {
+
         List<Object> preparedStmtValues = new ArrayList<>();
+
         String query = queryBuilder.getMarriageRegistrySearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
+        
         List<MarriageRegistryDetails> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriageRegistryRowMapper);
  
         return result; 

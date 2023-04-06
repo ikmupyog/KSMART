@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class MarriageRegistryRequestService {
@@ -59,6 +62,16 @@ public class MarriageRegistryRequestService {
         registerMarriageDetails.add(registerMarriageDetail);
         request.setRequestInfo(Marriagerequest.getRequestInfo());
         request.setMarriageDetails(registerMarriageDetails);
+
+        
+  try {
+     ObjectMapper mapper = new ObjectMapper();
+     Object obj = request;
+     mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+    System.out.println("JasmineRegistryRequest "+ mapper.writeValueAsString(obj));
+        }catch(Exception e) {
+        log.error("Exception while fetching from searcher: ",e);
+    }
 
         return request;
     }

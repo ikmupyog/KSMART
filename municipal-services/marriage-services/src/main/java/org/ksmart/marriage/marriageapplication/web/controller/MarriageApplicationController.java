@@ -11,6 +11,7 @@ import org.ksmart.marriage.marriageapplication.service.MarriageRegistryRequestSe
 import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryDetails;
 import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryRequest;
 import org.ksmart.marriage.marriageregistry.service.MarriageRegistryService;
+import org.ksmart.marriage.utils.MarriageConstants;
 import org.ksmart.marriage.utils.ResponseInfoFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,37 +50,49 @@ public class MarriageApplicationController {
 
 
     @PostMapping(value = {"/_createmarriage"})
+    
     public ResponseEntity<MarriageApplicationResponse> saveMarriageDetails(@RequestBody MarriageDetailsRequest request) {
+        
         List<MarriageApplicationDetails> marriageDetails = MarriageService.saveMarriageDetails(request);
-        MarriageApplicationResponse response = MarriageApplicationResponse.builder()
-                .marriageApplicationDetails(marriageDetails)
-                .responseInfo(
-                        responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), true))
-                .build();
+        
+        MarriageApplicationResponse response = MarriageApplicationResponse
+                                                .builder()
+                                                .marriageApplicationDetails(marriageDetails)
+                                                .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), true))
+                                                .build();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping(value = {"/_updatemarriage"})
+
     public ResponseEntity<?> updateMarriageDetails(@RequestBody MarriageDetailsRequest request) {
+        
         List<MarriageApplicationDetails> marriageDetails = MarriageService.updateMarriageDetails(request);
-       // if ((marriageDetails.get(0).getStatus() == WORKFLOW_STATUS_APPROVED && marriageDetails.get(0).getApplicationtype() == APPLICATION_NEW)) {
+        String status=marriageDetails.get(0).getStatus();
+        String applicationType=marriageDetails.get(0).getApplicationtype();
+        if ((status.equals( MarriageConstants.WORKFLOW_STATUS_APPROVED) &&  applicationType.equals(MarriageConstants.APPLICATION_NEW))) {
+            System.out.println("RegistryInsertBegin"+marriageDetails.get(0).getStatus() );
             MarriageRegistryRequest marriageRegistryRequest = marriageRegistryRequestService.createRegistryRequest(request);
+            
             List<MarriageRegistryDetails> marriageRegistryDetails = marriageRegistryService.createRegistry(marriageRegistryRequest);
 
-      //  }
+        }
 
         return new ResponseEntity<>(marriageDetails, HttpStatus.OK);
     }
 
     @PostMapping(value = { "/_searchmarriage"})
+
     public ResponseEntity<MarriageApplicationResponse> searchMarriageDetails(@RequestBody MarriageDetailsRequest request,
                                                                      @Valid @ModelAttribute MarriageApplicationSearchCriteria criteria) {
+        
         List<MarriageApplicationDetails> marriageDetails = MarriageService.searchMarriageDetails(criteria);
-        MarriageApplicationResponse response = MarriageApplicationResponse.builder()
-                .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
-                        Boolean.TRUE))
-                .marriageApplicationDetails(marriageDetails)
-                .build();
+       
+        MarriageApplicationResponse response = MarriageApplicationResponse
+                                                .builder()
+                                                .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))
+                                                .marriageApplicationDetails(marriageDetails)
+                                                .build();
         return ResponseEntity.ok(response);
     }
 

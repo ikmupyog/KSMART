@@ -53,7 +53,7 @@ public class MarriageConstants {
    
        public static final String UUIDKEY = "uuid";
    
-       public static final String BNDMODULENAMEVALUE = "marriage-services";
+       public static final String BNDMODULENAMEVALUE = "CR";
    
        public static final String WORKFLOWREQUESTARRAYKEY = "ProcessInstances";
    

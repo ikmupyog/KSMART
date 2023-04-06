@@ -219,7 +219,7 @@ public class MarriageMDMSValidator {
 
         //************************************************* */ GROOM PRESENT ADDRESS***************************************************//
         if (request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentaddressCountry() != null) {
-            System.out.println("isExists");
+          //  System.out.println("isExists");
             if (!masterData.get(MarriageConstants.COUNTRY)
                     .contains(request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentaddressCountry()))
                 errorMap.put("GROOM PRESENT ADDRESS: COUNTRY NAME INVALID", "The country name of  groom " +
@@ -415,7 +415,7 @@ public class MarriageMDMSValidator {
 
         // BRIDE PRESENT ADDRESS////////////
         if (request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentaddressCountry() != null) {
-            System.out.println("isExists");
+          //  System.out.println("isExists");
             if (!masterData.get(MarriageConstants.COUNTRY)
                     .contains(request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentaddressCountry()))
                 errorMap.put("BRIDE PRESENT ADDRESS: COUNTRY NAME INVALID", "The country name of  bride " +
@@ -550,7 +550,7 @@ public class MarriageMDMSValidator {
         modulepaths.forEach(modulepath -> {
             try {
                 mdmsResMap.putAll(JsonPath.read(mdmsdata, modulepath));
-                log.error("jsonpath1" + JsonPath.read(mdmsdata, modulepath));
+               // log.error("jsonpath1" + JsonPath.read(mdmsdata, modulepath));
             } catch (Exception e) {
                 log.error("Error while fetching MDMS data", e);
                 throw new CustomException(MarriageConstants.INVALID_TENANT_ID_MDMS_KEY,
