@@ -74,9 +74,9 @@ public class MarriageApplicationValidator {
                                                         throw new CustomException(" TALUK INVALID ", "The  Taluk " +
                                                                         marriagedtls.getTalukid() + " is invalid");
                                                 }
-                                                if (StringUtils.isEmpty(marriagedtls.getVillage_name())) {
+                                                if (StringUtils.isEmpty(marriagedtls.getVillageName())) {
                                                         throw new CustomException(" VILLAGE INVALID ", "The  Village " +
-                                                                        marriagedtls.getVillage_name() + " is invalid");
+                                                                        marriagedtls.getVillageName() + " is invalid");
                                                 }
 
                                                 if (StringUtils.isEmpty(marriagedtls.getLbtype())) {
@@ -84,9 +84,9 @@ public class MarriageApplicationValidator {
                                                                         marriagedtls.getLbtype() + " is invalid");
                                                 }
 
-                                                if (StringUtils.isEmpty(marriagedtls.getWard_code())) {
+                                                if (StringUtils.isEmpty(marriagedtls.getWardCode())) {
                                                         throw new CustomException(" WARD INVALID ", "The  Ward " +
-                                                                        marriagedtls.getWard_code() + " is invalid");
+                                                                        marriagedtls.getWardCode() + " is invalid");
                                                 }
 
                                                 if (StringUtils.isEmpty(marriagedtls.getPlacetype())) {
@@ -98,21 +98,21 @@ public class MarriageApplicationValidator {
                                                         if (marriagedtls.getPlacetype()
                                                                         .equals(MarriageConstants.PLACE_TYPE_HOUSE)) {
                                                                 if (StringUtils.isEmpty(
-                                                                                marriagedtls.getLocality_en())) {
+                                                                                marriagedtls.getLocalityEn())) {
                                                                         throw new CustomException(
                                                                                         " MARRIAGE PLACE LOCALITY ENGLISH INVALID ",
                                                                                         "The  Place Locality Name in English "
                                                                                                         +
-                                                                                                        marriagedtls.getLocality_en()
+                                                                                                        marriagedtls.getLocalityEn()
                                                                                                         + " is invalid");
                                                                 }
                                                                 if (StringUtils.isEmpty(
-                                                                                marriagedtls.getLocality_ml())) {
+                                                                                marriagedtls.getLocalityMl())) {
                                                                         throw new CustomException(
                                                                                         " MARRIAGE PLACE LOCALITY MALAYALAM INVALID ",
                                                                                         "The  Place Locality Name in Malayalam "
                                                                                                         +
-                                                                                                        marriagedtls.getLocality_ml()
+                                                                                                        marriagedtls.getLocalityMl()
                                                                                                         + " is invalid");
                                                                 }
                                                                 if (StringUtils.isEmpty(marriagedtls
@@ -166,21 +166,21 @@ public class MarriageApplicationValidator {
                                                                                                                         + " is invalid");
                                                                                 }
                                                                                 if (StringUtils.isEmpty(marriagedtls
-                                                                                                .getLocality_en())) {
+                                                                                                .getLocalityEn())) {
                                                                                         throw new CustomException(
                                                                                                         " LOCALITY NAME ENGLISH IS INVALID ",
                                                                                                         "The  Locality Name English "
                                                                                                                         +
-                                                                                                                        marriagedtls.getPlacenameMl()
+                                                                                                                        marriagedtls.getLocalityEn()
                                                                                                                         + " is invalid");
                                                                                 }
                                                                                 if (StringUtils.isEmpty(marriagedtls
-                                                                                                .getLocality_ml())) {
+                                                                                                .getLocalityMl())) {
                                                                                         throw new CustomException(
                                                                                                         " LOCALITY NAME MALAYALAM IS INVALID ",
                                                                                                         "The  Locality Name Malayalam "
                                                                                                                         +
-                                                                                                                        marriagedtls.getPlacenameMl()
+                                                                                                                        marriagedtls.getLocalityMl()
                                                                                                                         + " is invalid");
                                                                                 }
                                                                         }
@@ -209,19 +209,19 @@ public class MarriageApplicationValidator {
                                                                                                         + " is invalid");
                                                                 }
                                                                 if (StringUtils.isEmpty(
-                                                                                marriagedtls.getLocality_en())) {
+                                                                                marriagedtls.getLocalityEn())) {
                                                                         throw new CustomException(
                                                                                         " LOCALITY NAME ENGLISH IS INVALID ",
                                                                                         "The  Locality Name English " +
-                                                                                                        marriagedtls.getPlacenameMl()
+                                                                                                        marriagedtls.getLocalityEn()
                                                                                                         + " is invalid");
                                                                 }
                                                                 if (StringUtils.isEmpty(
-                                                                                marriagedtls.getLocality_ml())) {
+                                                                                marriagedtls.getLocalityMl())) {
                                                                         throw new CustomException(
                                                                                         " LOCALITY NAME MALAYALAM IS INVALID ",
                                                                                         "The  Locality Name Malayalam" +
-                                                                                                        marriagedtls.getPlacenameMl()
+                                                                                                        marriagedtls.getLocalityMl()
                                                                                                         + " is invalid");
                                                                 }
                                                         }
@@ -271,16 +271,16 @@ public class MarriageApplicationValidator {
 
                                                 }
 
-                                                if (StringUtils.isEmpty(groomInfo.getFirstname_en())) {
+                                                if (StringUtils.isEmpty(groomInfo.getFirstnameEn())) {
                                                         throw new CustomException(" GROOM NAME ENGLISH INVALID ",
                                                                         "The groom name in english " +
-                                                                                        groomInfo.getFirstname_en()
+                                                                                        groomInfo.getFirstnameEn()
                                                                                         + " is invalid");
                                                 }
-                                                if (StringUtils.isEmpty(groomInfo.getFirstname_ml())) {
+                                                if (StringUtils.isEmpty(groomInfo.getFirstnameMl())) {
                                                         throw new CustomException("GROOM NAME MALAYALAM INVALID ",
                                                                         "The groom name in malayalam " +
-                                                                                        groomInfo.getFirstname_ml()
+                                                                                        groomInfo.getFirstnameMl()
                                                                                         + " is invalid");
                                                 }
                                                 if (groomInfo.getMobile() <= 0) {
@@ -299,71 +299,71 @@ public class MarriageApplicationValidator {
                                                         throw new CustomException("GROOM BIRTH DATE INVALID ",
                                                                         "The groom date of birth can't be null ");
                                                 }
-                                                if (groomInfo.getParent_guardian().equals(MarriageConstants.PARENT)) {
-                                                        if (StringUtils.isEmpty(groomInfo.getFather_aadharno())) {
+                                                if (groomInfo.getParentGuardian().equals(MarriageConstants.PARENT)) {
+                                                        if (StringUtils.isEmpty(groomInfo.getFatherAadharno())) {
                                                                 throw new CustomException(
                                                                                 "GROOM FATHER AADHAR INVALID ",
                                                                                 "The  groom Father Aadhar number " +
-                                                                                                groomInfo.getFather_aadharno()
+                                                                                                groomInfo.getFatherAadharno()
                                                                                                 + " is invalid");
                                                         }
-                                                        if (StringUtils.isEmpty(groomInfo.getMother_aadharno())) {
+                                                        if (StringUtils.isEmpty(groomInfo.getMotherAadharno())) {
                                                                 throw new CustomException(
                                                                                 " GROOM MOTHER AADHAR INVALID ",
                                                                                 "The  groom Father Aadhar number " +
-                                                                                                groomInfo.getMother_aadharno()
+                                                                                                groomInfo.getMotherAadharno()
                                                                                                 + " is invalid");
                                                         }
-                                                        if (StringUtils.isEmpty(groomInfo.getFathername_en())) {
+                                                        if (StringUtils.isEmpty(groomInfo.getFathernameEn())) {
                                                                 throw new CustomException(" GROOM FATHER NAME ENGLISH ",
                                                                                 "The  groom Father  Name in english " +
-                                                                                                groomInfo.getFathername_en()
+                                                                                                groomInfo.getFathernameEn()
                                                                                                 + " is invalid");
                                                         }
-                                                        if (StringUtils.isEmpty(groomInfo.getFathername_ml())) {
+                                                        if (StringUtils.isEmpty(groomInfo.getFathernameMl())) {
                                                                 throw new CustomException(
                                                                                 " GROOM FATHER NAME MALAYALAM ",
                                                                                 "The  groom Father  Name in malayalam "
                                                                                                 +
-                                                                                                groomInfo.getFathername_ml()
+                                                                                                groomInfo.getFathernameMl()
                                                                                                 + " is invalid");
                                                         }
-                                                        if (StringUtils.isEmpty(groomInfo.getMothername_en())) {
+                                                        if (StringUtils.isEmpty(groomInfo.getMothernameEn())) {
                                                                 throw new CustomException(" GROOM MOTHER NAME ENGLISH ",
                                                                                 "The  groom Mother  Name in english " +
-                                                                                                groomInfo.getMothername_en()
+                                                                                                groomInfo.getMothernameEn()
                                                                                                 + " is invalid");
                                                         }
-                                                        if (StringUtils.isEmpty(groomInfo.getMothername_ml())) {
+                                                        if (StringUtils.isEmpty(groomInfo.getMothernameMl())) {
                                                                 throw new CustomException(
                                                                                 " GROOM MOTHER NAME MALAYALAM ",
                                                                                 "The  groom Mother  Name in malayalam "
                                                                                                 +
-                                                                                                groomInfo.getMothername_ml()
+                                                                                                groomInfo.getMothernameMl()
                                                                                                 + " is invalid");
                                                         }
                                                 } else {
-                                                        if (StringUtils.isEmpty(groomInfo.getGuardian_aadharno())) {
+                                                        if (StringUtils.isEmpty(groomInfo.getGuardianAadharno())) {
                                                                 throw new CustomException(
                                                                                 " GROOM GUARDIAN AADHAR INVALID ",
                                                                                 "The  groom Guardian Aadhar number " +
-                                                                                                groomInfo.getGuardian_aadharno()
+                                                                                                groomInfo.getGuardianAadharno()
                                                                                                 + " is invalid");
                                                         }
-                                                        if (StringUtils.isEmpty(groomInfo.getGuardianname_en())) {
+                                                        if (StringUtils.isEmpty(groomInfo.getGuardiannameEn())) {
                                                                 throw new CustomException(
                                                                                 " GROOM GUARDIAN NAME ENGLISH ",
                                                                                 "The  groom Guardian  Name in english "
                                                                                                 +
-                                                                                                groomInfo.getGuardianname_en()
+                                                                                                groomInfo.getGuardiannameEn()
                                                                                                 + " is invalid");
                                                         }
-                                                        if (StringUtils.isEmpty(groomInfo.getGuardianname_ml())) {
+                                                        if (StringUtils.isEmpty(groomInfo.getGuardiannameMl())) {
                                                                 throw new CustomException(
                                                                                 " GROOM GUARDIAN NAME MALAYALAM ",
                                                                                 "The  groom Guardian  Name in malayalam "
                                                                                                 +
-                                                                                                groomInfo.getGuardianname_ml()
+                                                                                                groomInfo.getGuardiannameMl()
                                                                                                 + " is invalid");
                                                         }
                                                 }
@@ -481,16 +481,16 @@ public class MarriageApplicationValidator {
 
                                                 }
 
-                                                if (StringUtils.isEmpty(brideInfo.getFirstname_en())) {
+                                                if (StringUtils.isEmpty(brideInfo.getFirstnameEn())) {
                                                         throw new CustomException("BRIDE NAME ENGLISH INVALID ",
                                                                         "The bride name in english " +
-                                                                                        brideInfo.getFirstname_en()
+                                                                                        brideInfo.getFirstnameEn()
                                                                                         + " is invalid");
                                                 }
-                                                if (StringUtils.isEmpty(brideInfo.getFirstname_ml())) {
+                                                if (StringUtils.isEmpty(brideInfo.getFirstnameMl())) {
                                                         throw new CustomException("BRIDE NAME MALAYALAM INVALID ",
                                                                         "The bride name in malayalam " +
-                                                                                        brideInfo.getFirstname_ml()
+                                                                                        brideInfo.getFirstnameMl()
                                                                                         + " is invalid");
                                                 }
                                                 if (brideInfo.getMobile() <= 0) {
@@ -509,71 +509,71 @@ public class MarriageApplicationValidator {
                                                         throw new CustomException("BRIDE DATE OF BIRTH INVALID ",
                                                                         "The bride date of birth can't be null ");
                                                 }
-                                                if (groomInfo.getParent_guardian().equals(MarriageConstants.PARENT)) {
-                                                        if (StringUtils.isEmpty(brideInfo.getFather_aadharno())) {
+                                                if (groomInfo.getParentGuardian().equals(MarriageConstants.PARENT)) {
+                                                        if (StringUtils.isEmpty(brideInfo.getFatherAadharno())) {
                                                                 throw new CustomException(
                                                                                 "BRIDE: FATHER AADHAR INVALID ",
                                                                                 "The Father's Aadhar number " +
-                                                                                                brideInfo.getFather_aadharno()
+                                                                                                brideInfo.getFatherAadharno()
                                                                                                 + " is invalid");
                                                         }
-                                                        if (StringUtils.isEmpty(brideInfo.getMother_aadharno())) {
+                                                        if (StringUtils.isEmpty(brideInfo.getMotherAadharno())) {
                                                                 throw new CustomException(
                                                                                 "BRIDE:MOTHER AADHAR INVALID ",
                                                                                 "The mother's Aadhar number " +
-                                                                                                brideInfo.getMother_aadharno()
+                                                                                                brideInfo.getMotherAadharno()
                                                                                                 + " is invalid");
                                                         }
-                                                        if (StringUtils.isEmpty(brideInfo.getFathername_en())) {
+                                                        if (StringUtils.isEmpty(brideInfo.getFathernameEn())) {
                                                                 throw new CustomException(" BRIDE FATHER NAME ENGLISH ",
                                                                                 "The  bride Father  Name in english " +
-                                                                                                brideInfo.getFathername_en()
+                                                                                                brideInfo.getFathernameEn()
                                                                                                 + " is invalid");
                                                         }
-                                                        if (StringUtils.isEmpty(brideInfo.getFathername_ml())) {
+                                                        if (StringUtils.isEmpty(brideInfo.getFathernameMl())) {
                                                                 throw new CustomException(
                                                                                 " BRIDE FATHER NAME MALAYALAM ",
                                                                                 "The  bride Father  Name in malayalam "
                                                                                                 +
-                                                                                                brideInfo.getFathername_ml()
+                                                                                                brideInfo.getFathernameMl()
                                                                                                 + " is invalid");
                                                         }
-                                                        if (StringUtils.isEmpty(brideInfo.getMothername_en())) {
+                                                        if (StringUtils.isEmpty(brideInfo.getMothernameEn())) {
                                                                 throw new CustomException(" BRIDE MOTHER NAME ENGLISH ",
                                                                                 "The  bride Mother  Name in english " +
-                                                                                                brideInfo.getMothername_en()
+                                                                                                brideInfo.getMothernameEn()
                                                                                                 + " is invalid");
                                                         }
-                                                        if (StringUtils.isEmpty(brideInfo.getMothername_ml())) {
+                                                        if (StringUtils.isEmpty(brideInfo.getMothernameMl())) {
                                                                 throw new CustomException(
                                                                                 " BRIDE MOTHER NAME MALAYALAM ",
                                                                                 "The  bride Mother  Name in malayalam "
                                                                                                 +
-                                                                                                brideInfo.getMothername_ml()
+                                                                                                brideInfo.getMothernameMl()
                                                                                                 + " is invalid");
                                                         }
                                                 } else {
-                                                        if (StringUtils.isEmpty(brideInfo.getGuardian_aadharno())) {
+                                                        if (StringUtils.isEmpty(brideInfo.getGuardianAadharno())) {
                                                                 throw new CustomException(
                                                                                 " BRIDE GUARDIAN AADHAR INVALID ",
                                                                                 "The  bride Guardian Aadhar number " +
-                                                                                                brideInfo.getGuardian_aadharno()
+                                                                                                brideInfo.getGuardianAadharno()
                                                                                                 + " is invalid");
                                                         }
-                                                        if (StringUtils.isEmpty(brideInfo.getGuardianname_en())) {
+                                                        if (StringUtils.isEmpty(brideInfo.getGuardiannameEn())) {
                                                                 throw new CustomException(
                                                                                 " BRIDE GUARDIAN NAME ENGLISH ",
                                                                                 "The  bride Guardian  Name in english "
                                                                                                 +
-                                                                                                brideInfo.getGuardianname_en()
+                                                                                                brideInfo.getGuardiannameEn()
                                                                                                 + " is invalid");
                                                         }
-                                                        if (StringUtils.isEmpty(brideInfo.getGuardianname_ml())) {
+                                                        if (StringUtils.isEmpty(brideInfo.getGuardiannameMl())) {
                                                                 throw new CustomException(
                                                                                 " BRIDE GUARDIAN NAME MALAYALAM ",
                                                                                 "The  bride Guardian  Name in malayalam "
                                                                                                 +
-                                                                                                brideInfo.getGuardianname_ml()
+                                                                                                brideInfo.getGuardiannameMl()
                                                                                                 + " is invalid");
                                                         }
                                                 }
