@@ -13,7 +13,7 @@ import AddressPermanentInsideKerala from "./AddressPermanentInsideKerala";
 import AddressPermanentOutsideKerala from "./AddressPermanentOutsideKerala";
 import AddressPermanentOutsideIndia from "./AddressPermanentOutsideIndia";
 
-const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = false, isEditDeath = false,isEditStillBirth=false, }) => {
+const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = false, isEditDeath = false, isEditStillBirth = false, }) => {
 
     const stateId = Digit.ULBService.getStateId();
     let tenantId = "";
@@ -83,7 +83,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
         formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressCountry ? "" : "")
     const [value, setValue] = useState(formData?.AddressBirthDetails?.presentaddressStateName?.code ? formData?.AddressBirthDetails?.presentaddressStateName.code : formData?.ChildDetails?.AddressBirthDetails?.presentaddressStateName ? "" :
         formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressStateName ? "" : "");
- 
+
     //################################# Present Inside Kerala #########################################################################################################
 
     const [presentWardNo, setPresentWardNo] = useState(formData.AddressBirthDetails?.presentWardNo?.code ? formData.AddressBirthDetails?.presentWardNo : formData?.ChildDetails?.AddressBirthDetails?.presentWardNo ? "" :
@@ -113,7 +113,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
         formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameEn ? formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameEn : null);
     const [presentInsideKeralaStreetNameMl, setinsideKeralaStreetNameMl] = useState(formData?.AddressBirthDetails?.presentInsideKeralaStreetNameMl ? formData?.AddressBirthDetails?.presentInsideKeralaStreetNameMl : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameMl ? formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameMl :
         formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameMl ? formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameMl : null);
-        
+
     const [Districtvalues, setDistrictvalue] = useState(null);
     const [Talukvalues, setLbsTalukvalue] = useState(null);
     const [Villagevalues, setLbsVillagevalue] = useState(null);
@@ -437,33 +437,27 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                 } else {
                     setPresentInsideKeralaHouseNameMlError(false);
                 }
-                if (presentInsideKeralaStreetNameEn != null) {
-                    if (presentInsideKeralaStreetNameMl == null) {
-                        setPresentInsideKeralaStreetNameMlError(true);
-                        validFlag = false;
-                        setToast(true);
-                        setTimeout(() => {
-                            setToast(false);
-                        }, 2000);
-                    } else {
-                        setPresentInsideKeralaStreetNameMlError(false);
-                    }
-                } else {
-                    setPresentInsideKeralaStreetNameEnError(false);
-                }
-                if (presentInsideKeralaStreetNameMl != null) {
-                    if (presentInsideKeralaStreetNameEn == null) {
-                        setPresentInsideKeralaStreetNameEnError(true);
-                        validFlag = false;
-                        setToast(true);
-                        setTimeout(() => {
-                            setToast(false);
-                        }, 2000);
-                    } else {
-                        setPresentInsideKeralaStreetNameEnError(false);
-                    }
+                if (presentInsideKeralaStreetNameEn != null && presentInsideKeralaStreetNameMl === null) {
+                    setPresentInsideKeralaStreetNameMlError(true);
+                    validFlag = false;
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
                 } else {
                     setPresentInsideKeralaStreetNameMlError(false);
+                }
+                if (presentInsideKeralaStreetNameMl != null && presentInsideKeralaStreetNameEn === null) {
+
+                    setPresentInsideKeralaStreetNameEnError(true);
+                    validFlag = false;
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+
+                } else {
+                    setPresentInsideKeralaStreetNameEnError(false);
                 }
             }
             if (countryvalue === "IND" && value != "KL") {
@@ -899,7 +893,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
 
                     <div className="accordion-wrapper">
                         <AddressPresent
-                            
+
                             presentaddressCountry={presentaddressCountry}
                             setaddressCountry={setaddressCountry}
                             presentaddressStateName={presentaddressStateName}

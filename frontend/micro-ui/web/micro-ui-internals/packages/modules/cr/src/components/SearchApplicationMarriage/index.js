@@ -1,55 +1,71 @@
-import React, { useState, useMemo } from "react";
-import { SearchForm } from "@egovernments/digit-ui-react-components";
+import React, { useState} from "react";
+import { Loader, SearchForm} from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import SearchFields from "./SearchFields";
 import { useForm } from "react-hook-form";
+import ResultTable from "../SearchMarriageInclusion/ResultTable";
+import {useHistory} from "react-router-dom";
 
 const SearchApplicationMarriage = () => {
-    const [payload, setPayload] = useState({});
-    const tenantId = Digit.ULBService.getCitizenCurrentTenant();
-    const { t } = useTranslation();
-    const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
-        defaultValues: {
-            offset: 0,
-            limit: 10,
-            sortBy: "DateOfDeath",
-            sortOrder: "DESC",
-        },
+    let history = useHistory();
+
+    const [results, setResults] = useState([]);
+    const [defaultValue, setDefaultValue] = useState({
+        offset: 0,
+        limit: 10,
+        sortBy: "",
+        sortOrder: "DESC",
     });
 
+    const tenantId = Digit.ULBService.getCurrentTenantId();
+    const { mutate, isLoading } = Digit.Hooks.cr.useSearchMarriage(tenantId);
+    const { t } = useTranslation();
+    const { register, control, handleSubmit, reset } = useForm();
+
+    const getValue = (type) => {
+        return defaultValue[type];
+    }
+
+    const setValue = (type, value) => {
+        const obj = {...defaultValue };
+        obj[type] = value;
+        setDefaultValue(obj);
+    }
+    const onSuccess = (data) => {
+        if (data && data["MarriageDetails"]) {
+            setResults(data["MarriageDetails"])
+        }
+    };
+
     const onSubmit = (_data) => {
-        let dateOfMarriage = new Date(_data?.dateOfMarriage);
-        dateOfMarriage?.setSeconds(dateOfMarriage?.getSeconds() - 19800);
+        let marriageDOM = new Date(_data?.marriageDOM);
+        marriageDOM?.setSeconds(marriageDOM?.getSeconds() - 19800);
 
         let data = {
             ..._data,
-            ...(_data.dateOfMarriage ? { dateOfMarriage: dateOfMarriage?.getTime() } : {}),
+            ...(_data.marriageDOM ? { marriageDOM: marriageDOM?.getTime() } : {}),
         };
 
-        setPayload(Object.keys(data)
+        data = Object.keys(data)
             .filter((k) => data[k])
-            .reduce((acc, key) => ({ ...acc, [key]: typeof data[key] === "object" ? data[key].name : data[key] }), {}))
+            .reduce((acc, key) => ({ ...acc, [key]: typeof data[key] === "object" ? data[key].name : data[key] }), {})
+
+        const params = {
+            filters: data
+        }
+        mutate(params, { onSuccess })
     };
-
-    const config = {
-        enabled: !!(payload && Object.keys(payload).length > 0),
-    };
-
-
-    const {
-        data: { results: marriageApplications } = {},
-        isSuccess,
-        isLoading,
-    } = Digit.Hooks.cr.useRegistrySearchMarriage({
-        tenantId,
-        config,
-        filters: payload
-    });
-
     function previousPage() {
         setValue("offset", getValues("offset") - getValues("limit"));
         handleSubmit(onSubmit)();
     }
+
+    const goToLink = (data) => {
+        history.push({
+            pathname: `/digit-ui/citizen/cr/marriage-correction-edit`,
+            state: { marriageCorrectionData: data },
+        });
+    };
 
 
     return (
@@ -60,6 +76,20 @@ const SearchApplicationMarriage = () => {
                     <SearchFields {...{ t, register, control, reset, previousPage }} />
                 </SearchForm>
             </div>
+            {isLoading && <Loader/>}
+            { results && results.length > 0 && (
+                <React.Fragment>
+                    <ResultTable
+                        setValue={setValue}
+                        getValues={getValue}
+                        data={results}
+                        handleSubmit={handleSubmit}
+                        t={t}
+                        onSubmit={onSubmit}
+                        goToLink={goToLink}
+                    />
+                </React.Fragment>
+            )}
         </React.Fragment>
     );
 };

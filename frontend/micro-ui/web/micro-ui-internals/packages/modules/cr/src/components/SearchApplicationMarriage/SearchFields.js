@@ -28,28 +28,28 @@ const SearchFields = ({
     return (
         <>
             <SearchField>
-                <label> {t("REGISTRATION NO")}</label>
-                <TextInput name="registrationNo" inputRef={register({})}
-                           placeholder={`${t("Registration No")}`}
-                           {...(validation = { isRequired: false, type: "text", title: t("Invalid Registration No.") })}/>
+                <label> {t("APPLICATION NO")}</label>
+                <TextInput name="applicationNo" inputRef={register({})}
+                           placeholder={`${t("Application No")}`}
+                           {...(validation = { isRequired: false, type: "text", title: t("Invalid Application No.") })}/>
             </SearchField>
             <SearchField>
                 <label><span className="mandatorycss">*</span> {t("DATE OF MARRIAGE")}</label>
                 <Controller
-                    render={(props) => <DatePicker date={props.value} onChange={props.onChange} {...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: true, title: t("CR_INVALID_DATE") })} />}
-                    name="dateOfMarriage"
+                    render={(props) => <DatePicker date={props.value} onChange={props.onChange} {...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: false, title: t("CR_INVALID_DATE") })} />}
+                    name="marriageDOM"
                     control={control}
                 />
             </SearchField>
             <SearchField>
-                <label><span className="mandatorycss">*</span> {t("NAME OF HUSBAND")}</label>
-                <TextInput name="nameOfHusband" inputRef={register({})} placeholder={`${t("Name Of Husband")}`}
-                           {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("Invalid Husband name") })} />
+                <label><span className="mandatorycss">*</span> {t("FIRST NAME OF HUSBAND")}</label>
+                <TextInput name="groomFirstnameEn" inputRef={register({})} placeholder={`${t("Name Of Husband")}`}
+                           {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("Invalid Husband name") })} />
             </SearchField>
             <SearchField>
-                <label><span className="mandatorycss">*</span> {t("NAME OF WIFE")}</label>
-                <TextInput name="nameOfWife" inputRef={register({})} placeholder={`${t("Name Of Wife")}`}
-                           {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("Invalid Wife name") })} />
+                <label><span className="mandatorycss">*</span> {t("FIRST NAME OF WIFE")}</label>
+                <TextInput name="brideFirstnameEn" inputRef={register({})} placeholder={`${t("Name Of Wife")}`}
+                           {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("Invalid Wife name") })} />
             </SearchField>
             <SearchField>
                 <label> {t("PLACE OF MARRIAGE")}</label>
@@ -70,23 +70,15 @@ const SearchFields = ({
                     )}
                 />
             </SearchField>
-            <SearchField>
-                <label> {t("KEY NO")}</label>
-                <TextInput name="keyNo" inputRef={register({})}
-                           placeholder={`${t("Key No")}`}
-                           {...(validation = { isRequired: false, type: "text", title: t("Invalid Key No.") })}/>
-            </SearchField>
             <SearchField className="submit">
                 <SubmitBar label={t("ES_COMMON_SEARCH")} submit />
                 <p onClick={() => {
-
                     reset({
-                        registrationNo: "",
-                        dateOfMarriage: "",
-                        nameOfHusband: "",
-                        nameOfWife: "",
+                        applicationNo: "",
+                        marriageDOM: "",
+                        groomFirstnameEn: "",
+                        brideFirstnameEn: "",
                         placeOfMarriage: "",
-                        keyNo: ""
                     });
                     previousPage();
                 }}>{t(`ES_COMMON_CLEAR_ALL`)}</p>

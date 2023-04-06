@@ -33,12 +33,12 @@ const MyCRDeathApplications = ({view}) => {
   //   enabled: !!(payload && Object.keys(payload).length > 0)
   // }
   
-  // const { isLoading, isSuccess, isError, data, error, Count: count, ...rest } = view === "bills" ? Digit.Hooks.cr.useDeathFetchBill(
+  // const { isLoading, isSuccess, data, Count, ...rest } = view === "bills" ? Digit.Hooks.cr.useDeathFetchBill(
   //   {
   //     params: { businessService: "CR", tenantId, mobileNumber },
   //     config: { enabled: view === "bills" }
   //   }
-  // ) : Digit.Hooks.cr.useCRDeathSearchApplication({}, {
+  // ) : Digit.Hooks.cr.useCRDeathSearchApplication(payload, {
   //    enabled: view !== "bills"
   // },t);
   
@@ -50,7 +50,7 @@ const MyCRDeathApplications = ({view}) => {
   }
   return (
     <React.Fragment>
-     
+     <BackButton>{t("CS_COMMON_BACK2")}</BackButton>
      <Header>{`${t("TL_MY_APPLICATIONS_HEADER")}`}</Header>
      <SearchDeathApplication
       t = {t}

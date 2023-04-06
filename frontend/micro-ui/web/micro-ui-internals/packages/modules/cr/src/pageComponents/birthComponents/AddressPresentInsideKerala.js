@@ -122,10 +122,12 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
 
             if (cmbLB.length > 0) {
                 currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
+                // console.log(currentLB[0].city.districtid);
                 setinsideKeralaLBName(currentLB[0]);
-                setLbs(cmbLB.filter((cmbLB) => cmbLB.code === tenantId));
+                // console.log(cmbLB.filter((cmbLB) => cmbLB.city.districtid === currentLB[0].city.districtid));
+                setLbs(cmbLB.filter((cmbLB) => cmbLB.city.districtid === currentLB[0].city.districtid));
                 setpermntInKeralaAdrLBName(currentLB[0]);
-                //console.log(currentLB[0]);
+                // console.log(currentLB[0]);
                 cmbFilterDistrict = cmbDistrict.filter((cmbDistrict) => cmbDistrict.statecode === currentLB[0].city.statecode);
                 //console.log(cmbFilterDistrict);
                 setDistrictvalue(cmbFilterDistrict);
@@ -134,7 +136,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                 setinsideKeralaDistrict(cmbFilterDistrict.filter((cmbFilterDistrict) => cmbFilterDistrict.code === currentLB[0].city.distCodeStr)[0]);
 
                 // setinsideKeralaDistrict(cmbFilterDistrict.filter((cmbFilterDistrict) => cmbFilterDistrict.code === currentLB[0].city.distCodeStr)[0]);
-                setpermntInKeralaAdrDistrict(cmbFilterDistrict.filter((cmbFilterDistrict) => cmbFilterDistrict.code === currentLB[0].city.distCodeStr));
+                setpermntInKeralaAdrDistrict(cmbFilterDistrict.filter((cmbFilterDistrict) => cmbFilterDistrict.code === currentLB[0].city.distCodeStr)[0]);
                 cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === currentLB[0].city.districtid);
                 setLbsTalukvalue(cmbFilterTaluk);
                 cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
