@@ -64,7 +64,7 @@ serviceMaps:
 
             # - jsonPath: $.MarriageDetails.*.workflowCode
 
-            - jsonPath: $.MarriageDetails.*.applicationnumber
+            - jsonPath: $.MarriageDetails.*.applicationNumber
 
             - jsonPath: $.MarriageDetails.*.registrationno
 
