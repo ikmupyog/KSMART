@@ -117,7 +117,7 @@ const Urls = {
     registry_download: "/birth-services/cr/registry/_download", 
     registry_search_birth: "/birth-services/cr/registry/_search",
     create_adoption:'/birth-services/cr/createadoption',
-    correct_update: ''    
+    correct_update: '/birth-services/cr/createbirthcorrection'    
   },
   crNAC: {
     create: "/birth-services/cr/createnac",
