@@ -10,7 +10,7 @@ let validation = {};
 
 const SearchFields = ({ register, control, reset, tenantId, t, previousPage }) => {
   const stateId = Digit.ULBService.getStateId();
-  const { data: applicationTypes, isLoading: applicationTypesLoading } = Digit.Hooks.cr.useMDMS.applicationTypes(tenantId);
+  // const { data: applicationTypes, isLoading: applicationTypesLoading } = Digit.Hooks.cr.useMDMS.applicationTypes(tenantId);
   const { data: place, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "MarriagePlaceType");
 
   const [DeceasedAadharNumber, setDeceasedAadharNumber] = useState();

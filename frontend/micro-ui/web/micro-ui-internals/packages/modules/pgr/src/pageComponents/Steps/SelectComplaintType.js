@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Timeline from "../../components/PGRTimeline";
+import PGRTimeline from "../../components/PGRTimeline";
 import EmpTimeLine from "../../components/EmpPGRTimeline"
 import { TypeSelectCard, CardLabel } from "@egovernments/digit-ui-react-components";
 
@@ -28,11 +28,12 @@ const SelectComplaintType = ({ t, config, onSelect, value }) => {
 
   function selectedValue(value) {
     setComplaintType(value);
+    onSelect({ complaintType: value });
     // SessionStorage.set("complaintType", value);
   }
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") ? <Timeline /> : null}
+      {window.location.href.includes("/citizen") ? <PGRTimeline /> : null}
       {window.location.href.includes("/employee") ? <EmpTimeLine /> : null}
       <TypeSelectCard
         {...mystyle}

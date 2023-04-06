@@ -1,5 +1,5 @@
 import { BackButton,CardBasedOptions,ComplaintIcon ,OBPSIcon,DropIcon} from "@egovernments/digit-ui-react-components";
-import React from "react";
+import React,{useEffect} from "react";
 import { useTranslation } from "react-i18next";
 import { Route, Switch, useLocation, useRouteMatch, useHistory } from "react-router-dom";
 import ErrorBoundary from "../../components/ErrorBoundaries";
@@ -34,16 +34,17 @@ const Home = ({
   pathname,
 }) => {
   const queryClient = useQueryClient();
-  // queryClient.removeQueries("CR_CREATE_BIRTH_REG");  
-  // Digit.sessionStorage.removeItem("CR_CREATE_BIRTH_REG");
-  // Digit.sessionStorage.removeItem("CR_BIRTH_EDIT_FLAG");
-  sessionStorage.removeItem("CR_BIRTH_EDIT_FLAG");
-  sessionStorage.removeItem("CR_EDIT_BIRTH_REG");
-
   sessionStorage.removeItem("CR_DEATH_EDIT_FLAG");
   sessionStorage.removeItem("Digit.CR_DEATH_EDIT");
   const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false) 
-  
+  //Birth Data Reset
+  sessionStorage.removeItem("CR_BIRTH_EDIT_FLAG");
+  // const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_CREATE_BIRTH_REG", {});
+
+  // useEffect(() => {
+  //   clearParams();
+  // }, []);
+
   const location = useLocation()
   const classname = Digit.Hooks.fsm.useRouteSubscription(pathname);
   const { t } = useTranslation();
@@ -346,10 +347,10 @@ const Home = ({
     };
 
     return (
-      <React.Fragment>
+      <React.Fragment key={index}>
        
         {code === "CR" && location?.state?.module === crBirth ? (
-          <Route key={index} path={`${path}/${crBirth.toLowerCase()}-home`}>
+          <Route path={`${path}/${crBirth.toLowerCase()}-home`}>
             <div className="moduleLinkHomePage">
               <img src={bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
               <BackButton className="moduleLinkHomePageBackButton" />
@@ -362,7 +363,7 @@ const Home = ({
           </Route>
         ) :
          code === "CR" && location?.state?.module === crDeath ? (
-          <Route key={index} path={`${path}/${crDeath.toLowerCase()}-home`}>
+          <Route path={`${path}/${crDeath.toLowerCase()}-home`}>
             <div className="moduleLinkHomePage">
               <img src={bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
               <BackButton className="moduleLinkHomePageBackButton" />
@@ -374,7 +375,7 @@ const Home = ({
             </div>
           </Route>
         ) :  code === "CR" && location?.state?.module === crMarriage ? (
-          <Route key={index} path={`${path}/${crMarriage.toLowerCase()}-home`}>
+          <Route path={`${path}/${crMarriage.toLowerCase()}-home`}>
             <div className="moduleLinkHomePage">
               <img src={bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
               <BackButton className="moduleLinkHomePageBackButton" />
@@ -389,7 +390,7 @@ const Home = ({
         ) :
         code === "CR"?
         (
-          <Route key={index} path={`${path}/${code.toLowerCase()}-home`}>
+          <Route path={`${path}/${code.toLowerCase()}-home`}>
             <div className="moduleLinkHomePage">
               <img src={bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
               <BackButton className="moduleLinkHomePageBackButton" />
@@ -406,7 +407,7 @@ const Home = ({
         )
         :
          (
-          <Route key={index} path={`${path}/${code.toLowerCase()}-home`}>
+          <Route path={`${path}/${code.toLowerCase()}-home`}>
             <div className="moduleLinkHomePage">
               <img src={bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
               <BackButton className="moduleLinkHomePageBackButton" />

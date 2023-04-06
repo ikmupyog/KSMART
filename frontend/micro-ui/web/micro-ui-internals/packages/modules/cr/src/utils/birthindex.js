@@ -329,6 +329,7 @@ export const convertToBirthRegistration = (data = {}) => {
         applicationtype: "CRBRNR",
         businessservice: "birth-services",
         workflowcode: data?.ChildDetails?.workFlowCode,
+        //applicationStatus:"PENDINGPAYEMNT",
         ParentsDetails: {
           motherFirstNameEn: data?.ParentsDetails?.motherFirstNameEn,
           motherFirstNameMl: data?.ParentsDetails?.motherFirstNameMl,
@@ -478,7 +479,7 @@ export const convertToBirthRegistration = (data = {}) => {
           isDeclarationInfo: data?.InformarHosInstDetails?.isDeclarationInfo,
         },
         InitiatorinfoDetails: {
-          relation: data?.InitiatorinfoDetails?.relation,
+          relation: data?.InitiatorinfoDetails?.relation ? data?.InitiatorinfoDetails?.relation.code : null,
           initiatorNameEn: data?.InitiatorinfoDetails?.initiatorNameEn,
           initiatorAadhar: data?.InitiatorinfoDetails?.initiatorAadhar,
           initiatorMobile: data?.InitiatorinfoDetails?.initiatorMobile,

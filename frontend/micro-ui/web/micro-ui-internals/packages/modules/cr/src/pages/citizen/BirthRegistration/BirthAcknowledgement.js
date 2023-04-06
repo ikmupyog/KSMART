@@ -1,4 +1,4 @@
-import { Banner, Card, CardText, LinkButton, Loader, SubmitBar } from "@egovernments/digit-ui-react-components";
+import { Banner, Card, CardText, LinkButton, Loader, SubmitBar, toast } from "@egovernments/digit-ui-react-components";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -23,31 +23,39 @@ const rowContainerStyle = {
 };
 
 const BannerPicker = (props) => {
-  console.log(JSON.stringify(props));
-  return (
-    <Banner
-      message={GetActionMessage(props)}
-      applicationNumber={props.data?.ChildDetails[0]?.applicationNumber}
-      info={props.isSuccess ? props.applicationNumber : ""}
-      successful={props.isSuccess}
-    />
-  );
+  if (props.isSuccess && sessionStorage.getItem("CR_BIRTH_EDIT_FLAG")) {
+    console.log(JSON.stringify(props));
+    window.location.assign(`${window.location.origin}/digit-ui/employee/cr/application-details/${props.applicationNumber}`);
+  } else {
+    return (
+      <Banner
+        message={GetActionMessage(props)}
+        applicationNumber={props.data?.ChildDetails[0]?.applicationNumber}
+        info={props.isSuccess ? props.applicationNumber : ""}
+        successful={props.isSuccess}
+      />
+    );
+  }
+
+
 };
 
 const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
+  const [toast, setToast] = useState(false);
   const { t } = useTranslation();
   const [mutationHappened, setMutationHappened, clear] = Digit.Hooks.useSessionStorage("CITIZEN_TL_MUTATION_HAPPENED", false);
   const resubmit = window.location.href.includes("edit-application");
   const tenantId = Digit.ULBService.getCurrentTenantId();
   //console.log(sessionStorage.getItem("CR_BIRTH_EDIT_FLAG"));
   // const [isEditBirth, setIsEditBirth] = useState(Object.keys(Digit.Hooks.useSessionStorage("CR_BIRTH_EDIT_FLAG", {})[0]).length > 0 ? true : false);
-  const [isEditBirth, setIsEditBirth] = useState(sessionStorage.getItem("CR_BIRTH_EDIT_FLAG")? true : false);
-  
+  const [isEditBirth, setIsEditBirth] = useState(sessionStorage.getItem("CR_BIRTH_EDIT_FLAG") ? true : false);
+
   //console.log("isEditBirth" + isEditBirth);
   const mutation = Digit.Hooks.cr.useCivilRegistrationAPI(
     tenantId, isEditBirth ? false : true
   );
 
+  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_CREATE_BIRTH_REG", {});
 
 
   // const mutation2 = Digit.Hooks.cr.useCivilRegistrationAPI(
@@ -61,7 +69,9 @@ const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
   //  const { isLoading, data: fydata = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "egf-master", "FinancialYear");
   //let isDirectRenewal = sessionStorage.getItem("isDirectRenewal") ? stringToBoolean(sessionStorage.getItem("isDirectRenewal")) : null;
   const [isInitialRender, setIsInitialRender] = useState(true);
-
+  useEffect(() => {
+    clearParams();
+  }, [mutation?.data])
   useEffect(() => {
     if (isInitialRender) {
       // const onSuccessedit = () => {
@@ -139,8 +149,11 @@ const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
     const data = getPDFData({ ...res }, tenantInfo, t);
     data.then((ress) => Digit.Utils.pdf.generate(ress));
   };
+
   let enableLoader = (mutation.isIdle || mutation.isLoading);
-  if (enableLoader) { return (<Loader />) }
+  if (enableLoader) {
+    return (<Loader />)
+  }
   else if (((mutation?.isSuccess == false && mutation?.isIdle == false))) {
     return (
       <Card>

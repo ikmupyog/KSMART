@@ -10,7 +10,7 @@
 export const config = {
   routes: {
     "complaint-type": {
-      component: "SelectComplaintType",
+      component: "PGRSelectComplaintType",
       texts: {
         headerCaption: "",
         header: "CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER",
@@ -20,7 +20,7 @@ export const config = {
       nextStep: "sub-type",
     },
     "sub-type": {
-      component: "SelectSubType",
+      component: "PGRSelectSubType",
       texts: {
         header: "CS_ADDCOMPLAINT_COMPLAINT_SUBTYPE_PLACEHOLDER",
         cardText: "CS_COMPLAINT_SUBTYPE_TEXT",
@@ -29,7 +29,7 @@ export const config = {
       nextStep: "address",
     },
     address: {
-      component: "SelectLandmark",
+      component: "PGRSelectLandmark",
       texts: {
         headerCaption: "CS_ADDCOMPLAINT_PROVIDE_COMPLAINT_ADDRESS",
         header: "CS_ADDCOMPLAINT_PROVIDE_COMPLAINT_ADDRESS",
@@ -40,7 +40,7 @@ export const config = {
     },
 
     "upload-photos": {
-      component: "SelectImages",
+      component: "PGRSelectImages",
       texts: {
         header: "CS_ADDCOMPLAINT_UPLOAD_PHOTO",
         cardText: "CS_ADDCOMPLAINT_UPLOAD_PHOTO_TEXT",
@@ -50,7 +50,7 @@ export const config = {
       nextStep: "complaint-informer",
     },
     "complaint-informer": {
-      component: "ComplaintInformer",
+      component: "PGRComplaintInformer",
       texts: {
         header: "CS_ADDCOMPLAINT_INFORMER",
         cardText: "CS_ADDCOMPLAINT_INFORMER_TEXT",
@@ -59,7 +59,7 @@ export const config = {
       nextStep: "additional-details",
     },
     "additional-details": {
-      component: "SelectDetails",
+      component: "PGRSelectDetails",
       texts: {
         header: "CS_ADDCOMPLAINT_PROVIDE_ADDITIONAL_DETAILS",
         cardText: "CS_ADDCOMPLAINT_DETAILS_TEXT",

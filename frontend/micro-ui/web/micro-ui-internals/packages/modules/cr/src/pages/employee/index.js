@@ -10,6 +10,7 @@ import ApplicationDetails from "./ApplicationDetails";
 import ApplicationAdoptionDetails from './ApplicationAdoptionDetails'
 import ApplicationDeathDetails from "./ApplicationDeathDetails";
 import ApplicationStillBirthDetails from "./ApplicationStillBirthDetails";
+import ApplicationAbandonedBirthDetails from "./ApplicationAbandonedBirthDetails";
 import DeathCrFlow from "./Death-route";
 import SearchFlow from "./Search-route";
 import SearchInbox from './Inbox-route';
@@ -29,6 +30,7 @@ const CRBreadCrumb = ({ location }) => {
   const isApplicationBirthDetails = location?.pathname?.includes("cr/application-birthdetails");
   const isApplicationAdoptionDetails = location?.pathname?.includes("cr/application-Adoptiondetails");
   const isApplicationStillBirthDetails = location?.pathname?.includes("cr/application-stillbirth");
+  const isApplicationAbandonedBirthDetails = location?.pathname?.includes("cr/application-abandonedbirth");
   const isNewApplication = location?.pathname?.includes("tl/new-application");
   const isResponse = location?.pathname?.includes("tl/response");
   const isMobile = window.Digit.Utils.browser.isMobile();
@@ -217,6 +219,7 @@ const EmployeeApp = ({ path, url, userType }) => {
          
           <PrivateRoute path={`${path}/application-details/:id`} component={() => <ApplicationDetails parentRoute={path} />} />
           <PrivateRoute path={`${path}/application-stillbirth/:id`} component={() => <ApplicationStillBirthDetails parentRoute={path} />} />
+          <PrivateRoute path={`${path}/application-abandonedbirth/:id`} component={() => <ApplicationAbandonedBirthDetails parentRoute={path} />} />
           <PrivateRoute path={`${path}/application-Adoptiondetails/:id`} component={() => <ApplicationAdoptionDetails parentRoute={path} />} />
           <PrivateRoute path={`${path}/application-deathdetails/:id`} component={() => <ApplicationDeathDetails parentRoute={path} />} />
         </div>

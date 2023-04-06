@@ -292,9 +292,10 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     // }
   }
   function setSelectwitness1NameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setwitness1NameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setwitness1NameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
+  }
     // if (e.target.value.length === 51) {
     //   return false;
     //   // window.alert("Username shouldn't exceed 10 characters")
@@ -306,10 +307,10 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     //     )
     //   );
     // }
-  }
+  
   function setSelectwitness2NameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setwitness2NameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setwitness2NameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
     // if (e.target.value.length === 51) {
     //   return false;
@@ -330,6 +331,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     } else {
       setwitness1Age(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' a-zA-Z]/gi, ""));
     }
+    
   }
   function setSelectwitness2Age(e) {
     if (e.target.value.length === 3) {
@@ -340,8 +342,8 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     }
   }
   function setSelectwitness1AddresSEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setwitness1AddresSEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setwitness1AddresSEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
     // if (e.target.value.length === 51) {
     //   return false;
@@ -356,8 +358,8 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     // }
   }
   function setSelectwitness2AddresSEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setwitness2AddresSEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setwitness2AddresSEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
     // if (e.target.value.length === 51) {
     //   return false;
@@ -372,22 +374,28 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     // }
   }
   function setSelectwitness1Mobile(e) {
-    setwitness1Mobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 10));
-    // if (e.target.value.length === 11) {
-    //   return false;
-    //   // window.alert("Username shouldn't exceed 10 characters")
-    // } else {
-    //   setwitness1Mobile(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C a-zA-Z]/gi, ""));
-    // }
+    if (e.target.value.trim().length >= 0) {
+      setwitness1Mobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
+    }
+    // setwitness1Mobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 10));
+    // // if (e.target.value.length === 11) {
+    // //   return false;
+    // //   // window.alert("Username shouldn't exceed 10 characters")
+    // // } else {
+    // //   setwitness1Mobile(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C a-zA-Z]/gi, ""));
+    // // }
   }
   function setSelectwitness2Mobile(e) {
-    setwitness2Mobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 10));
-    // if (e.target.value.length === 11) {
-    //   return false;
-    //   // window.alert("Username shouldn't exceed 10 characters")
-    // } else {
-    //   setwitness2Mobile(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C a-zA-Z]/gi, ""));
-    // }
+    if (e.target.value.trim().length >= 0) {
+      setwitness2Mobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
+    }
+    // setwitness2Mobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 10));
+    // // if (e.target.value.length === 11) {
+    // //   return false;
+    // //   // window.alert("Username shouldn't exceed 10 characters")
+    // // } else {
+    // //   setwitness2Mobile(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C a-zA-Z]/gi, ""));
+    // // }
   }
   function setSelectmarriageLocalityEn(value) {
     setmarriageLocalityEn(value);
@@ -520,7 +528,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                         inputProps={{
                           maxLength: 12,
                         }}
-                        {...(validation = { pattern: "^[0-9]{12}$", isRequired: true, type: "number", title: t("CR_INVALID_WITNESS1_ADHAR_NO") })}
+                        {...(validation = { pattern: "^[0-9]{12}$", isRequired: true, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                       />
                     </div>
                     <div className="col-md-4">
@@ -534,10 +542,12 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                         optionKey="i18nKey"
                         isMandatory={false}
                         name="witness1NameEn"
+                        value={witness1NameEn}
                         onChange={setSelectwitness1NameEn}
                         disable={isDisableEdit}
                         placeholder={`${t("CR_WITNESS1_NAME")}`}
-                        {...(validation = { isRequired: true, title: t("CS_INVALID_NAME") })}
+                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CS_INVALID_NAME") })}
+                        //{...(validation = { isRequired: true, title: t("CS_INVALID_NAME") })}
                       />
                     </div>
                     <div className="col-md-4">
@@ -551,10 +561,11 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                         optionKey="i18nKey"
                         isMandatory={false}
                         name="witness1Age"
+                        value={witness1Age}
                         onChange={setSelectwitness1Age}
                         disable={isDisableEdit}
                         placeholder={`${t("CR_WITNESS1_AGE")}`}
-                        {...(validation = { isRequired: true, title: t("CS_INVALID_AGE") })}
+                        {...(validation = { pattern: "^[0-9]{2}$", type: "text", isRequired: true, title: t("CS_INVALID_AGE") })}
                       />
                     </div>
                   </div>
@@ -570,10 +581,11 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                         optionKey="i18nKey"
                         isMandatory={false}
                         name="witness1AddresSEn"
+                        value={witness1AddresSEn}
                         onChange={setSelectwitness1AddresSEn}
                         disable={isDisableEdit}
                         placeholder={`${t("CR_WITNESS1_ADDRESS")}`}
-                        {...(validation = { isRequired: true, title: t("CS_INVALID_ADDRESS") })}
+                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CS_INVALID_ADDRESS") })}
                       />
                     </div>
 
@@ -592,7 +604,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                         onChange={setSelectwitness1Mobile}
                         disable={isDisableEdit}
                         placeholder={`${t("CR_WITNESS1_MOBILE_NO")}`}
-                        {...(validation = { isRequired: true, title: t("CS_INVALID_MOBILE_NO") })}
+                        {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })}
                       />
                     </div>
                     <div className="col-md-2">
@@ -657,10 +669,11 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                         optionKey="i18nKey"
                         isMandatory={false}
                         name="witness2NameEn"
+                        value={witness2NameEn}
                         onChange={setSelectwitness2NameEn}
                         disable={isDisableEdit}
                         placeholder={`${t("CR_WITNESS2_NAME")}`}
-                        {...(validation = { isRequired: true, title: t("CS_INVALID_NAME") })}
+                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CS_INVALID_NAME") })}
                       />
                     </div>
                     <div className="col-md-4">
@@ -674,10 +687,11 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                         isMandatory={false}
                         optionKey="i18nKey"
                         name="witness2Age"
+                        value={witness2Age}
                         onChange={setSelectwitness2Age}
                         disable={isDisableEdit}
                         placeholder={`${t("CR_WITNESS2_AGE")}`}
-                        {...(validation = { isRequired: true, title: t("CS_INVALID_AGE") })}
+                        {...(validation = { pattern: "^[0-9]{2}$", type: "text", isRequired: true, title: t("CS_INVALID_AGE") })}
                       />
                     </div>
                   </div>
@@ -693,10 +707,11 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                         optionKey="i18nKey"
                         isMandatory={false}
                         name="witness2AddresSEn"
+                        value={witness2AddresSEn}
                         onChange={setSelectwitness2AddresSEn}
                         disable={isDisableEdit}
                         placeholder={`${t("CR_WITNESS2_ADDRESS")}`}
-                        {...(validation = { isRequired: true, title: t("CS_INVALID_ADDRESS") })}
+                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CS_INVALID_ADDRESS") })}
                       />
                     </div>
 
@@ -715,7 +730,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                         onChange={setSelectwitness2Mobile}
                         disable={isDisableEdit}
                         placeholder={`${t("CR_WITNESS2_MOBILE_NO")}`}
-                        {...(validation = { isRequired: true, title: t("CS_INVALID_MOBILE_NO") })}
+                        {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })}
                       />
                     </div>
                     <div className="col-md-2">

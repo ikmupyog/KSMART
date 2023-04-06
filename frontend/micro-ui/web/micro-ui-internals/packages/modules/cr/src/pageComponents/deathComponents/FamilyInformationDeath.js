@@ -4,15 +4,15 @@ import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
 const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => {
-  // console.log(formData);
+  console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
   const { data: Spouse = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "SpouseType");
   let cmbspouse = [];
   Spouse &&
-    Spouse["birth-death-service"] &&
-    Spouse["birth-death-service"].SpouseType.map((ob) => {
+    Spouse["birth-death-service"] && Spouse["birth-death-service"].spouseType &&
+    Spouse["birth-death-service"].spouseType.map((ob) => {
       cmbspouse.push(ob);
     });
   const [SpouseType, setSpouseType] = useState(
@@ -22,6 +22,7 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
       ? cmbspouse.filter((cmbspouse) => cmbspouse.code === formData?.FamilyInformationDeath?.SpouseType)[0]
       : ""
   );
+
   const [SpouseUnavailable, setSpouseUnavailable] = useState(
     formData?.FamilyInformationDeath?.SpouseUnavailable
       ? formData?.FamilyInformationDeath?.SpouseUnavailable
@@ -248,7 +249,7 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
   function setSelectFamilyMobileNo(e) {
     if (e.target.value.trim().length >= 0) {
       setFamilyMobileNo(
-        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
+        e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 10)
       );
     }
   }
@@ -592,14 +593,15 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={false}
                 type={"number"}
                 optionKey="i18nKey"
                 name="FamilyMobileNo"
                 value={FamilyMobileNo}
                 onChange={setSelectFamilyMobileNo}
                 placeholder={`${t("CR_FAMILY_MOBILE_NO")}`}
-                {...(validation = { pattern: "^[0-9 ]*$", isRequired: false, type: "text", title: t("CR_INVALID_PHONE_NO") })}
+                {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "number", title: t("CS_COMMON_INVALID_AGE") })}
+
+                // {...(validation = { pattern: "^[0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_PHONE_NO") })}
               />
             </div>
             <div className="col-md-4">

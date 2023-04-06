@@ -1,11 +1,12 @@
-import React, { useCallback, useState, useMemo, useEffect } from "react";
+import React, { useCallback, useMemo, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { SearchForm, Table, Card, Header, SubmitBar, Loader } from "@egovernments/digit-ui-react-components";
+import { SearchForm, Table, Loader, Card } from "@egovernments/digit-ui-react-components";
 import { Link } from "react-router-dom";
 import { convertEpochToDateDMY } from "../../utils";
 import SearchFields from "./SearchFields";
 import MobileSearchApplication from "./MobileSearchApplication";
 import { downloadDocument } from "../../utils/uploadedDocuments";
+import _ from "lodash";
 
 const mystyle = {
   bgOpacity: "1",
@@ -22,28 +23,23 @@ const hstyle = {
   marginBottom: ".5rem",
   lineHieght: "1.5rem",
 };
-const registyBtnStyle = {
-  display: "flex",
-  justifyContent: "flex-end",
-  marginRight: "15px",
-  marginBottom: "15px",
-};
 
-const SearchRegistryDeath = ({ tenantId, t, onSubmit, data, filestoreId, isSuccess, isLoading, count }) => {
-  const [FileData, setFileData] = useState([]);
+const SearchRegistryDeath = ({ tenantId, t, onSubmit, data, isSuccess, isLoading, count, onRestClick }) => {
   const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
     defaultValues: {
       offset: 0,
       limit: 10,
-      // sortBy: "DateOfDeath",
+      sortBy: "DateOfDeath",
       sortOrder: "DESC",
     },
   });
 
+  const fileSource = Digit.Hooks.cr.getDeathFileSourceDetails(tenantId);
+
   useEffect(() => {
     register("offset", 0);
     register("limit", 10);
-    // register("sortBy", "DateOfDeath");
+    register("sortBy", "DateOfDeath");
     register("sortOrder", "DESC");
   }, [register]);
 
@@ -75,7 +71,7 @@ const SearchRegistryDeath = ({ tenantId, t, onSubmit, data, filestoreId, isSucce
 
   //need to get from workflow
   const GetCell = (value) => <span className="cell-text">{value}</span>;
-  
+
   const columns = useMemo(
     () => [
       {
@@ -86,54 +82,58 @@ const SearchRegistryDeath = ({ tenantId, t, onSubmit, data, filestoreId, isSucce
           return (
             <div>
               <span className="link">
-                {/* <Link to={`/digit-ui/employee/cr/application-deathdetails/${row.original.deathApplicationNo}`}>
-                    {row.original.deathApplicationNo} "188e3dc8-17c8-4ce3-80bf-fb7b8b6df944",
-                  </Link> */}
-                {row.original?.InformationDeath?.DeathACKNo}
+                  {row.original?.InformationDeath?.DeathACKNo}
               </span>
             </div>
           );
         },
       },
-      // {
-      //   Header: t("CR_COMMON_COL_APP_DATE"),
-      //   disableSortBy: true,
-      //   accessor: (row) => GetCell(row.auditDetails.createdTime ? convertEpochToDateDMY(row.auditDetails.createdTime) : ""),
-      // },
-      // {
-      //   Header: t("CR_COMMON_COL_DOD"),
-      //   disableSortBy: true,
-      //   accessor: (row) => GetCell(row.dateOfDeath ? convertEpochToDateDMY(row.dateOfDeath) : ""),
-      // },
-      // {
-      //     Header: t("TL_APPLICATION_TYPE_LABEL"),
-      //     disableSortBy: true,
-      //     accessor: (row) => GetCell(t(`TL_LOCALIZATION_APPLICATIONTYPE_${row.applicationType}`)),
-      // },
-      // {
-      //   Header: t("CR_COMMON_DECEASED_NAME"),
-      //   disableSortBy: true,
-      //   accessor: (row) => GetCell(row.deceasedFirstNameEn + row.deceasedMiddleNameEn + row.deceasedLastNameEn || "-"),
-      // },
-      // {
-      //   Header: t("CR_COMMON_DEATH_PLACE"),
-      //   disableSortBy: true,
-      //   accessor: (row) => GetCell(row.deathPlace || "-"),
-      // },
+      {
+        Header: t("CR_COMMON_COL_APP_DATE"),
+        disableSortBy: true,
+        accessor: (row) => GetCell(row?.AuditDetails?.createdTime ? convertEpochToDateDMY(row.AuditDetails.createdTime) : ""),
+      },
+      {
+        Header: t("CR_COMMON_COL_DOD"),
+        disableSortBy: true,
+        accessor: (row) => GetCell(row?.InformationDeath?.DateOfDeath ? convertEpochToDateDMY(row.InformationDeath.DateOfDeath) : ""),
+      },
+      {
+        Header: t("TL_APPLICATION_TYPE_LABEL"),
+        disableSortBy: true,
+        accessor: (row) => GetCell(t(`TL_LOCALIZATION_APPLICATIONTYPE_${row.applicationType}`)),
+      },
+      {
+        Header: t("CR_COMMON_DECEASED_NAME"),
+        disableSortBy: true,
+        accessor: (row) => GetCell(row?.InformationDeath?.deceasedFirstNameEn + row?.InformationDeath?.deceasedMiddleNameEn + row?.InformationDeath?.deceasedLastNameEn || "-"),
+      },
+      {
+        Header: t("CR_COMMON_DEATH_PLACE"),
+        disableSortBy: true,
+        accessor: (row) => GetCell(row?.InformationDeath?.deathPlace || "-"),
+      },
       {
         Header: t("Download Certificate"),
         disableSortBy: true,
         Cell: ({ row }) => {
-          // console.log('row',row?.original);
+          let id = _.get(row, "original.InformationDeath.Id", null);
           return (
             <div>
-              {row.original?.filestoreId && row.original?.isSuccess === true ? (
-                <span className="link" onClick={() => downloadDocument(row?.original?.filestoreId)}>
-                  Download
-                </span>
-              ) : ( 
-                <Loader />
-              )}
+              {id !== null && <span className="link" onClick={() => {
+                fileSource.mutate({ filters: { id, source: "sms" } }, {
+                  onSuccess: (fileDownloadInfo) => {
+                    const { filestoreId } = fileDownloadInfo;
+                    if (filestoreId) {
+                      downloadDocument(filestoreId);
+                    } else {
+                      console.log("filestoreId is null");
+                    }
+                  }
+                });
+              }}>
+                Download
+              </span>}
             </div>
           );
         },
@@ -157,66 +157,42 @@ const SearchRegistryDeath = ({ tenantId, t, onSubmit, data, filestoreId, isSucce
     ],
     []
   );
-  let tmpData = data;
-  useEffect(() => {
-    if (filestoreId && isSuccess === true) {
-      tmpData[0] = { ...data[0], filestoreId, isSuccess };
-    }
-    setFileData(tmpData);
-  }, [filestoreId]);
+
   return (
     <React.Fragment>
       <div style={mystyle}>
         <h1 style={hstyle}>{t("DEATH CERTIFICATE")}</h1>
         <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
-          <SearchFields {...{ register, control, reset, tenantId, previousPage, t }} />
+          <SearchFields {...{ register, control, reset, tenantId, previousPage, t, onRestClick }} />
         </SearchForm>
       </div>
-
-      {FileData?.display ? (
-        <Card style={{ marginTop: 20 }}>
-          {t(FileData.display)
-            .split("\\n")
-            .map((text, index) => (
-              <p key={index} style={{ textAlign: "center" }}>
-                {text}
-              </p>
-            ))}
-        </Card>
-      ) : isLoading && !FileData === true ? (
-        <Loader />
-      ) : (
-        FileData !== "" && (
-          <React.Fragment>
-            {(filestoreId && isSuccess === true )? <div style={registyBtnStyle}>
-        <SubmitBar label={t("Download Certificate")} onSubmit={() => downloadDocument(filestoreId)} />
-       </div>:<Loader/>}
-            <Table
-              t={t}
-              data={FileData ? FileData : data}
-              totalRecords={count}
-              columns={columns}
-              getCellProps={(cellInfo) => {
-                return {
-                  style: {
-                    minWidth: cellInfo.column.Header === t("ES_INBOX_APPLICATION_NO") ? "240px" : "",
-                    padding: "20px 18px",
-                    fontSize: "16px",
-                  },
-                };
-              }}
-              onPageSizeChange={onPageSizeChange}
-              currentPage={getValues("offset") / getValues("limit")}
-              onNextPage={nextPage}
-              onPrevPage={previousPage}
-              pageSizeLimit={getValues("limit")}
-              onSort={onSort}
-              disableSort={false}
-              sortParams={[{ id: getValues("sortBy"), desc: getValues("sortOrder") === "DESC" ? true : false }]}
-            />
-          </React.Fragment>
-        )
-      )}
+      {isLoading ? <Loader /> : data.length > 0 ? <Table
+        t={t}
+        data={data}
+        totalRecords={count}
+        columns={columns}
+        getCellProps={(cellInfo) => {
+          return {
+            style: {
+              minWidth: cellInfo.column.Header === t("ES_INBOX_APPLICATION_NO") ? "240px" : "",
+              padding: "20px 18px",
+              fontSize: "16px",
+            },
+          };
+        }}
+        onPageSizeChange={onPageSizeChange}
+        currentPage={getValues("offset") / getValues("limit")}
+        onNextPage={nextPage}
+        onPrevPage={previousPage}
+        pageSizeLimit={getValues("limit")}
+        onSort={onSort}
+        disableSort={false}
+        sortParams={[{ id: getValues("sortBy"), desc: getValues("sortOrder") === "DESC" ? true : false }]}
+      /> : <Card style={{ marginTop: 20 }}>
+        <p style={{ textAlign: "center" }}>
+          {t("ES_COMMON_NO_DATA")}
+        </p>
+      </Card>}
     </React.Fragment>
   );
 };

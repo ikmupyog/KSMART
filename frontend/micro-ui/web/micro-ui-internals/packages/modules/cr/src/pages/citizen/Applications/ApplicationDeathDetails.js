@@ -11,6 +11,7 @@ import {
   LinkLabel,
   LinkButton,
   StatusTable,
+  BackButton
 } from "@egovernments/digit-ui-react-components";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -156,7 +157,7 @@ if(wfdata)
 
   return (
     <React.Fragment>
-      
+      <BackButton>{t("CS_COMMON_BACK2")}</BackButton>
       <div className="cardHeaderWithOptions">
         <Header>{t("CS_TITLE_APPLICATION_DETAILS")}</Header>
         <MultiLink

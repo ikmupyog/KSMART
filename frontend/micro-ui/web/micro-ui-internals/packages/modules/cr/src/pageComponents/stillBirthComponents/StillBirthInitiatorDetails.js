@@ -11,7 +11,7 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData,isEdi
   const [isDisableEdit, setisDisableEdit] = useState(isEditStillBirth ? isEditStillBirth : false);
   const {name:name,} =Digit.UserService.getUser().info ; // window.localStorage.getItem("user-info");
   const {mobileNumber:mobileNumber,} =Digit.UserService.getUser().info ; // window.localStorage.getItem("user-info");
-  const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.StillBirthInitiatorDetails?.isInitiatorDeclaration ? formData?.StillBirthInitiatorDetails?.isInitiatorDeclaration : formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.isInitiatorDeclaration ? formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.isInitiatorDeclaration : false);
+  // const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.StillBirthInitiatorDetails?.isInitiatorDeclaration ? formData?.StillBirthInitiatorDetails?.isInitiatorDeclaration : formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.isInitiatorDeclaration ? formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.isInitiatorDeclaration : false);
   const [isCaretaker, setIsCaretaker] = useState(formData?.StillBirthInitiatorDetails?.isCaretaker ? formData?.StillBirthInitiatorDetails?.isCaretaker : formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.isCaretaker ? formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.isCaretaker : false);
   const [relation, setrelation] = useState(formData?.StillBirthInitiatorDetails?.relation ? formData?.StillBirthInitiatorDetails?.relation : formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.relation ? formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.relation : "");
   const [initiatorNameEn, setinitiatorNameEn] = useState(formData?.StillBirthInitiatorDetails?.initiatorNameEn ? formData?.StillBirthInitiatorDetails?.initiatorNameEn : formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorNameEn ? formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorNameEn : name);
@@ -31,10 +31,10 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData,isEdi
 
   useEffect(() => {
     if (isInitialRender) {
-      if (formData?.StillBirthInitiatorDetails?.isInitiatorDeclaration != null) {
-        setIsInitialRender(false);
-        setisInitiatorDeclaration(formData?.StillBirthInitiatorDetails?.isInitiatorDeclaration);
-      }
+      // if (formData?.StillBirthInitiatorDetails?.isInitiatorDeclaration != null) {
+      //   setIsInitialRender(false);
+      //   setisInitiatorDeclaration(formData?.StillBirthInitiatorDetails?.isInitiatorDeclaration);
+      // }
       if (formData?.StillBirthInitiatorDetails?.isCaretaker != null) {
         setIsInitialRender(false);
         setIsCaretaker(formData?.StillBirthInitiatorDetails?.isCaretaker);
@@ -239,7 +239,7 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData,isEdi
         initiatorMobile,
         initiatorDesi,
         initiatorAddress,
-        isInitiatorDeclaration,
+        // isInitiatorDeclaration,
         isCaretaker,
       });
     }
@@ -251,17 +251,17 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData,isEdi
 
       {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!isInitiatorDeclaration || !initiatorNameEn || !initiatorAadhar || !initiatorMobile
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={ !initiatorNameEn || !initiatorAadhar || !initiatorMobile
       }>
-        <div className="row">
+        {/* <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
               <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
             </h1>
           </div>
-        </div>
+        </div> */}
 
-        <div className="row">
+        {/* <div className="row">
           <div className="col-md-12">
             <div className="col-md-12">
               <CheckBox
@@ -273,7 +273,7 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData,isEdi
               />
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="row">
           <div className="col-md-12">
