@@ -347,10 +347,10 @@ const Home = ({
     };
 
     return (
-      <React.Fragment>
+      <React.Fragment key={index}>
        
         {code === "CR" && location?.state?.module === crBirth ? (
-          <Route key={index} path={`${path}/${crBirth.toLowerCase()}-home`}>
+          <Route path={`${path}/${crBirth.toLowerCase()}-home`}>
             <div className="moduleLinkHomePage">
               <img src={bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
               <BackButton className="moduleLinkHomePageBackButton" />
@@ -363,7 +363,7 @@ const Home = ({
           </Route>
         ) :
          code === "CR" && location?.state?.module === crDeath ? (
-          <Route key={index} path={`${path}/${crDeath.toLowerCase()}-home`}>
+          <Route path={`${path}/${crDeath.toLowerCase()}-home`}>
             <div className="moduleLinkHomePage">
               <img src={bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
               <BackButton className="moduleLinkHomePageBackButton" />
@@ -375,7 +375,7 @@ const Home = ({
             </div>
           </Route>
         ) :  code === "CR" && location?.state?.module === crMarriage ? (
-          <Route key={index} path={`${path}/${crMarriage.toLowerCase()}-home`}>
+          <Route path={`${path}/${crMarriage.toLowerCase()}-home`}>
             <div className="moduleLinkHomePage">
               <img src={bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
               <BackButton className="moduleLinkHomePageBackButton" />
@@ -390,7 +390,7 @@ const Home = ({
         ) :
         code === "CR"?
         (
-          <Route key={index} path={`${path}/${code.toLowerCase()}-home`}>
+          <Route path={`${path}/${code.toLowerCase()}-home`}>
             <div className="moduleLinkHomePage">
               <img src={bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
               <BackButton className="moduleLinkHomePageBackButton" />
@@ -407,7 +407,7 @@ const Home = ({
         )
         :
          (
-          <Route key={index} path={`${path}/${code.toLowerCase()}-home`}>
+          <Route path={`${path}/${code.toLowerCase()}-home`}>
             <div className="moduleLinkHomePage">
               <img src={bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
               <BackButton className="moduleLinkHomePageBackButton" />
