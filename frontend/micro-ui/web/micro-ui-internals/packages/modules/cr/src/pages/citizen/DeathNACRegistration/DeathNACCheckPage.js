@@ -49,10 +49,10 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
   const {
     InformationDeath,
     FamilyInformationDeath,
-    AddressBirthDetails,
+    // DeathNACAddressPage,
     // ChildDetails,
     // ParentsDetails,
-    // AddressBirthDetails,
+    // DeathNACAddressPage,
     // InitiatorinfoDetails,
     // InformarHosInstDetails,
     // BirthPlace,
@@ -63,6 +63,11 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
     // StatisticalInfoDetails,
     isEditProperty,
     cpt,
+
+    DeathNACDetails,
+    DeathNACParentsDetails,
+    DeathNACAddressPage,
+
   } = value;
   function getdate(date) {
     let newdate = Date.parse(date);
@@ -83,7 +88,6 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
   } else {
     userType = "employee";
   }
-  console.log(value);
   const convertEpochToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
@@ -132,12 +136,12 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
             </div>
             <div className="col-md-6">
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                : {t(InformationDeath.DeceasedFirstNameMl ? InformationDeath?.DeceasedFirstNameMl : " CR_NOT_RECORDED")}{" "}
-                {t(InformationDeath.DeceasedMiddleNameMl)}{" "}
-                {t(InformationDeath.DeceasedLastNameMl) +
+                : {t(DeathNACDetails.DeceasedFirstNameMl ? DeathNACDetails.DeceasedFirstNameMl : " CR_NOT_RECORDED")}{" "}
+                {t(DeathNACDetails.DeceasedMiddleNameMl)}{" "}
+                {t(DeathNACDetails.DeceasedLastNameMl) +
                   " / " +
-                  (InformationDeath.DeceasedFirstNameEn ? InformationDeath?.DeceasedFirstNameEn : " CR_NOT_RECORDED")}{" "}
-                {t(InformationDeath.DeceasedMiddleNameEn)} {t(InformationDeath.DeceasedLastNameEn)}
+                  (DeathNACDetails.DeceasedFirstNameEn ? DeathNACDetails?.DeceasedFirstNameEn : " CR_NOT_RECORDED")}{" "}
+                {t(DeathNACDetails.DeceasedMiddleNameEn)} {t(DeathNACDetails.DeceasedLastNameEn)}
               </CardText>
             </div>
           </div>
@@ -147,7 +151,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
             </div>
             <div className="col-md-6">
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                : {t(InformationDeath.DeceasedGender.code + "_ML" ) +  " / " +  (InformationDeath.DeceasedGender.code )}
+                : {t(DeathNACDetails.DeceasedGender.code + "_ML" ) +  " / " +  (DeathNACDetails.DeceasedGender.code )}
                 {/* {" "}
                 {t(InformationDeath.DeceasedGender.code + "_ML " ? InformationDeath?.DeceasedGender.code + "_ML " : " CR_NOT_RECORDED") +
                   " / " +
@@ -161,25 +165,25 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
             </div>
             <div className="col-md-6">
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                : {t(convertEpochToDate(InformationDeath.DateOfDeath) ? convertEpochToDate(InformationDeath.DateOfDeath) : " CR_NOT_RECORDED")}{" "}
+                : {t(convertEpochToDate(DeathNACDetails.DateOfDeath) ? convertEpochToDate(DeathNACDetails.DateOfDeath) : " CR_NOT_RECORDED")}{" "}
               </CardText>
             </div>
           </div>
           <div className="row">
             <div className="col-md-12">
-              {InformationDeath.DeathPlace.code === "HOSPITAL" && (
+              {DeathNACDetails.DeathPlace.code === "HOSPITAL" && (
                 <div className="row">
                   <div className="col-md-6">
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_CR_PLACE_OF_DEATH")}`}</CardLabel>
                   </div>
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                      : {t(InformationDeath.DeathPlaceType.hospitalNamelocal) + "/" + InformationDeath.DeathPlaceType.hospitalName}
+                      : {t(DeathNACDetails.DeathPlaceType.hospitalNamelocal) + "/" + DeathNACDetails.DeathPlaceType.hospitalName}
                     </CardText>
                   </div>
                 </div>
               )}
-              {InformationDeath.DeathPlace.code === "INSTITUTION" && (
+              {DeathNACDetails.DeathPlace.code === "INSTITUTION" && (
                 <div className="row">
                   <div className="col-md-6">
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_CR_PLACE_OF_DEATH")}`}</CardLabel>
@@ -187,18 +191,18 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                       :{" "}
-                      {t(InformationDeath.DeathPlaceType.namelocal) +
+                      {t(DeathNACDetails.DeathPlaceType.namelocal) +
                         "," +
-                        InformationDeath.DeathPlaceInstId.institutionNamelocal +
+                        DeathNACDetails.DeathPlaceInstId.institutionNamelocal +
                         "/" +
-                        InformationDeath.DeathPlaceType.code +
+                        DeathNACDetails.DeathPlaceType.code +
                         "," +
-                        InformationDeath.DeathPlaceInstId.institutionName}
+                        DeathNACDetails.DeathPlaceInstId.institutionName}
                     </CardText>
                   </div>
                 </div>
               )}
-              {InformationDeath.DeathPlace.code === "HOME" && (
+              {DeathNACDetails.DeathPlace.code === "HOME" && (
                 <div className="row">
                   <div className="col-md-6">
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_PLACE_OF_DEATH")}`}</CardLabel>
@@ -206,30 +210,30 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                       :{" "}
-                      {t(InformationDeath.DeathPlaceHomeHoueNameMl) +
+                      {t(DeathNACDetails.DeathPlaceHomeHoueNameMl) +
                         "," +
-                        InformationDeath.DeathPlaceHomeLocalityMl +
+                        DeathNACDetails.DeathPlaceHomeLocalityMl +
                         "," +
-                        InformationDeath.DeathPlaceHomeStreetNameMl +
+                        DeathNACDetails.DeathPlaceHomeStreetNameMl +
                         "," +
-                        InformationDeath.DeathPlaceHomePostofficeId.namelocal +
+                        DeathNACDetails.DeathPlaceHomePostofficeId.namelocal +
                         "," +
-                        InformationDeath.DeathPlaceHomePostofficeId.pincode +
+                        DeathNACDetails.DeathPlaceHomePostofficeId.pincode +
                         "/" +
-                        InformationDeath.DeathPlaceHomeHoueNameEn +
+                        DeathNACDetails.DeathPlaceHomeHoueNameEn +
                         "," +
-                        InformationDeath.DeathPlaceHomeLocalityEn +
+                        DeathNACDetails.DeathPlaceHomeLocalityEn +
                         "," +
-                        InformationDeath.DeathPlaceHomeStreetNameEn +
+                        DeathNACDetails.DeathPlaceHomeStreetNameEn +
                         "," +
-                        InformationDeath.DeathPlaceHomePostofficeId.name +
+                        DeathNACDetails.DeathPlaceHomePostofficeId.name +
                         "," +
-                        InformationDeath.DeathPlaceHomePostofficeId.pincode}
+                        DeathNACDetails.DeathPlaceHomePostofficeId.pincode}
                     </CardText>
                   </div>
                 </div>
               )}
-              {InformationDeath.DeathPlace.code === "VEHICLE" && (
+              {DeathNACDetails.DeathPlace.code === "VEHICLE" && (
                 <div className="row">
                   <div className="col-md-6">
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_PLACE_OF_DEATH")}`}</CardLabel>
@@ -240,35 +244,35 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       {`${
                         t("PDF_CR_VEHICLE_STATEMENT_ONE") +
                         " " +
-                        InformationDeath.VehicleFromplaceMl +
+                        DeathNACDetails.VehicleFromplaceMl +
                         " " +
                         "PDF_CR_VEHICLE_STATEMENT_TWO" +
                         " " +
-                        InformationDeath.VehicleToPlaceMl +
+                        DeathNACDetails.VehicleToPlaceMl +
                         " " +
                         "PDF_CR_VEHICLE_STATEMENT_THREE" +
                         " " +
-                        InformationDeath.VehicleFirstHaltEn +
+                        DeathNACDetails.VehicleFirstHaltEn +
                         " " +
                         "PDF_CR_VEHICLE_STATEMENT_FOUR"  +
                         "/ " +
                         "PDF_CR_VEHICLE_STATEMENT_ONE_EN" +
                         " " +
-                        InformationDeath.VehicleFromplaceEn +
+                        DeathNACDetails.VehicleFromplaceEn +
                         " " +
                         "PDF_CR_VEHICLE_STATEMENT_TWO_EN" +
                         " " +
-                        InformationDeath.VehicleToPlaceEn +
+                        DeathNACDetails.VehicleToPlaceEn +
                         "" +
                         "PDF_CR_VEHICLE_STATEMENT_THREE_EN"+
                         " " +
-                        InformationDeath.VehicleFirstHaltEn
+                        DeathNACDetails.VehicleFirstHaltEn
                       }`}
                     </CardText>
                   </div>
                 </div>
               )}
-              {InformationDeath.DeathPlace.code === "PUBLIC_PLACES" && (
+              {DeathNACDetails.DeathPlace.code === "PUBLIC_PLACES" && (
                 <div className="row">
                   <div className="col-md-6">
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_PLACE_OF_DEATH")}`}</CardLabel>
@@ -276,18 +280,18 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                       :{" "}
-                      {t(InformationDeath.DeathPlaceLocalityMl) +
+                      {t(DeathNACDetails.DeathPlaceLocalityMl) +
                         "," +
-                        InformationDeath.DeathPlaceStreetMl +
+                        DeathNACDetails.DeathPlaceStreetMl +
                         "/" +
-                        InformationDeath.DeathPlaceLocalityEn +
+                        DeathNACDetails.DeathPlaceLocalityEn +
                         "," +
-                        InformationDeath.DeathPlaceStreetEn}
+                        DeathNACDetails.DeathPlaceStreetEn}
                     </CardText>
                   </div>
                 </div>
               )}
-              {InformationDeath.DeathPlace.code === "OUTSIDE_JURISDICTION" && (
+              {DeathNACDetails.DeathPlace.code === "OUTSIDE_JURISDICTION" && (
                 <div className="row">
                   <div className="col-md-6">
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_PLACE_OF_DEATH")}`}</CardLabel>
@@ -295,17 +299,17 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                       :{" "}
-                      {t(InformationDeath.DeathPlaceDistrict.namelocal) +
+                      {t(DeathNACDetails.DeathPlaceDistrict.namelocal) +
                         "," +
-                        InformationDeath.DeathPlaceState.namelocal +
+                        DeathNACDetails.DeathPlaceState.namelocal +
                         "," +
-                        InformationDeath.DeathPlaceCountry.namelocal +
+                        DeathNACDetails.DeathPlaceCountry.namelocal +
                         "/" +
-                        InformationDeath.DeathPlaceDistrict.name +
+                        DeathNACDetails.DeathPlaceDistrict.name +
                         "," +
-                        InformationDeath.DeathPlaceState.name +
+                        DeathNACDetails.DeathPlaceState.name +
                         "," +
-                        InformationDeath.DeathPlaceCountry.name}
+                        DeathNACDetails.DeathPlaceCountry.name}
                     </CardText>
                   </div>
                 </div>
@@ -313,11 +317,10 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
             </div>
           </div>
 
-          <div className="row">
+          {/* <div className="row">
             <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}> {`${t("PDF_CR_NAME_WIFE_HUSBAND")}`} </CardLabel>
             </div>
-            {/* {FamilyInformationDeath.SpouseUnavailable === false && ( */}
             {FamilyInformationDeath.SpouseUnavailable ? (
              <div className="col-md-6">
              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
@@ -345,52 +348,58 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                 </CardText>
               </div>
             )}
-          </div>          
+          </div>           */}
             <div className="row">
             <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}> {`${t("PDF_BIRTH_NAME_OF_MOTHER")}`} </CardLabel>
             </div>
 
-            {FamilyInformationDeath.MotherUnavailable ? (
+            {DeathNACParentsDetails.MotherUnavailable ? (
+              <div className="col-md-6">
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                :{" "}
+                {t(DeathNACParentsDetails.MotherNameMl ? DeathNACParentsDetails?.MotherNameMl : "CR_NOT_RECORDED") +
+                  "/" +
+                  " " +
+                  (DeathNACParentsDetails.MotherNameEn ? DeathNACParentsDetails?.MotherNameEn : "CR_NOT_RECORDED")
+                  // (FamilyInformationDeath.MotherNameEn ? FamilyInformationDeath?.MotherNameEn : "CR_NOT_RECORDED")
+                  }
+              </CardText>
+            </div>
+              
+             ) : (  
               <div className="col-md-6">
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                 :{" "}  {t("CR_NOT_RECORDED")}{" "}
                </CardText>
                </div> 
-             ) : (  
-            <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                :{" "}
-                {t(FamilyInformationDeath.MotherNameMl ? FamilyInformationDeath?.MotherNameMl : "CR_NOT_RECORDED") +
-                  "/" +
-                  " " +
-                  (FamilyInformationDeath.MotherNameEn ? FamilyInformationDeath?.MotherNameEn : "CR_NOT_RECORDED")
-                  // (FamilyInformationDeath.MotherNameEn ? FamilyInformationDeath?.MotherNameEn : "CR_NOT_RECORDED")
-                  }
-              </CardText>
-            </div>
             )}
           </div>
           <div className="row">
             <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}> {`${t("PDF_BIRTH_NAME_OF_FATHER")}`} </CardLabel>
             </div>
-            {FamilyInformationDeath.FatherUnavailable ? (
+            {DeathNACParentsDetails.FatherNameMl ? (
+
+<div className="col-md-6">
+<CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+  :{" "}
+  {t(DeathNACParentsDetails.FatherNameMl ? DeathNACParentsDetails?.FatherNameMl : "CR_NOT_RECORDED") +
+    "/" +
+    " " +
+    (DeathNACParentsDetails.FatherNameEn ? DeathNACParentsDetails?.FatherNameEn : "CR_NOT_RECORDED")}
+</CardText>
+</div>
+              
+               
+             ) : (  
+
+              
               <div className="col-md-6">
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                 :{" "}  {t("CR_NOT_RECORDED")}{" "}
                </CardText>
-               </div> 
-             ) : (  
-            <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                :{" "}
-                {t(FamilyInformationDeath.FatherNameMl ? FamilyInformationDeath?.FatherNameMl : "CR_NOT_RECORDED") +
-                  "/" +
-                  " " +
-                  (FamilyInformationDeath.FatherNameEn ? FamilyInformationDeath?.FatherNameEn : "CR_NOT_RECORDED")}
-              </CardText>
-            </div>
+               </div>
              )}
           </div>          
             
@@ -401,21 +410,21 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
             <div className="col-md-6">
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                 :
-                {t(AddressBirthDetails.presentInsideKeralaHouseNameMl ? AddressBirthDetails.presentInsideKeralaHouseNameMl : "CR_NOT_RECORDED") +
+                {t(DeathNACAddressPage.presentInsideKeralaHouseNameMl ? DeathNACAddressPage.presentInsideKeralaHouseNameMl : "CR_NOT_RECORDED") +
                   " , " +
-                  AddressBirthDetails.presentInsideKeralaStreetNameMl +
+                  DeathNACAddressPage.presentInsideKeralaStreetNameMl +
                   " , " +
-                  AddressBirthDetails.presentInsideKeralaLocalityNameMl +
+                  DeathNACAddressPage.presentInsideKeralaLocalityNameMl +
                   " , " +
-                  AddressBirthDetails.presentInsideKeralaPostOffice.namelocal+
+                  DeathNACAddressPage.presentInsideKeralaPostOffice.namelocal+
                   " , " +
-                  AddressBirthDetails.presentInsideKeralaPincode +
+                  DeathNACAddressPage.presentInsideKeralaPincode +
                   " , " +
-                  AddressBirthDetails.presentInsideKeralaDistrict.namelocal+
+                  DeathNACAddressPage.presentInsideKeralaDistrict.namelocal+
                   " , " +
-                  AddressBirthDetails.presentaddressStateName.namelocal+
+                  DeathNACAddressPage.presentaddressStateName.namelocal+
                   " , " +
-                  AddressBirthDetails.presentaddressCountry.namelocal}{" "}
+                  DeathNACAddressPage.presentaddressCountry.namelocal}{" "}
                 ,
               </CardText>
             </div>
@@ -426,27 +435,27 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
             <div className="col-md-6">
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                 :
-                {t(AddressBirthDetails.presentInsideKeralaHouseNameEn ? AddressBirthDetails.presentInsideKeralaHouseNameEn : "CR_NOT_RECORDED") +
+                {t(DeathNACAddressPage.presentInsideKeralaHouseNameEn ? DeathNACAddressPage.presentInsideKeralaHouseNameEn : "CR_NOT_RECORDED") +
                   " , " +
-                  AddressBirthDetails.presentInsideKeralaStreetNameEn +
+                  DeathNACAddressPage.presentInsideKeralaStreetNameEn +
                   " , " +
-                  AddressBirthDetails.presentInsideKeralaLocalityNameEn +
+                  DeathNACAddressPage.presentInsideKeralaLocalityNameEn +
                   " , " +
-                  AddressBirthDetails.presentInsideKeralaPostOffice.name +
+                  DeathNACAddressPage.presentInsideKeralaPostOffice.name +
                   " , " +
-                  AddressBirthDetails.presentInsideKeralaPincode +
+                  DeathNACAddressPage.presentInsideKeralaPincode +
                   " , " +
-                  AddressBirthDetails.presentInsideKeralaDistrict.name +
+                  DeathNACAddressPage.presentInsideKeralaDistrict.name +
                   " , " +
-                  AddressBirthDetails.presentaddressStateName.name +
+                  DeathNACAddressPage.presentaddressStateName.name +
                   " , " +
-                  AddressBirthDetails.presentaddressCountry.name}{" "}
+                  DeathNACAddressPage.presentaddressCountry.name}{" "}
                 ,
               </CardText>
             </div>
           </div>
         
-          {AddressBirthDetails.isPrsentAddress === true && (
+          {DeathNACAddressPage.isPrsentAddress === true && (
             <div>
           <div className="row">
             <div className="col-md-6">
@@ -455,21 +464,21 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
             <div className="col-md-6">
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                 :
-                {t(AddressBirthDetails.presentInsideKeralaHouseNameMl ? AddressBirthDetails.presentInsideKeralaHouseNameMl : "CR_NOT_RECORDED") +
+                {t(DeathNACAddressPage.presentInsideKeralaHouseNameMl ? DeathNACAddressPage.presentInsideKeralaHouseNameMl : "CR_NOT_RECORDED") +
                   " , " +
-                  AddressBirthDetails.presentInsideKeralaStreetNameMl +
+                  DeathNACAddressPage.presentInsideKeralaStreetNameMl +
                   " , " +
-                  AddressBirthDetails.presentInsideKeralaLocalityNameMl +
+                  DeathNACAddressPage.presentInsideKeralaLocalityNameMl +
                   " , " +
-                  AddressBirthDetails.presentInsideKeralaPostOffice.namelocal+
+                  DeathNACAddressPage.presentInsideKeralaPostOffice.namelocal+
                   " , " +
-                  AddressBirthDetails.presentInsideKeralaPincode +
+                  DeathNACAddressPage.presentInsideKeralaPincode +
                   " , " +
-                  AddressBirthDetails.presentInsideKeralaDistrict.namelocal+
+                  DeathNACAddressPage.presentInsideKeralaDistrict.namelocal+
                   " , " +
-                  AddressBirthDetails.presentaddressStateName.namelocal+
+                  DeathNACAddressPage.presentaddressStateName.namelocal+
                   " , " +
-                  AddressBirthDetails.presentaddressCountry.namelocal}{" "}
+                  DeathNACAddressPage.presentaddressCountry.namelocal}{" "}
                 ,
               </CardText>
             </div>
@@ -482,21 +491,21 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
             <div className="col-md-6">
               <CardText style={{ fontSize: "17px", Colour: "black", fontWeight: "bold" }}>
                 :
-                {t(AddressBirthDetails.presentInsideKeralaHouseNameEn ? AddressBirthDetails.presentInsideKeralaHouseNameEn : "CR_NOT_RECORDED") +
+                {t(DeathNACAddressPage.presentInsideKeralaHouseNameEn ? DeathNACAddressPage.presentInsideKeralaHouseNameEn : "CR_NOT_RECORDED") +
                   " , " +
-                  AddressBirthDetails.presentInsideKeralaStreetNameEn +
+                  DeathNACAddressPage.presentInsideKeralaStreetNameEn +
                   " , " +
-                  AddressBirthDetails.presentInsideKeralaLocalityNameEn +
+                  DeathNACAddressPage.presentInsideKeralaLocalityNameEn +
                   " , " +
-                  AddressBirthDetails.presentInsideKeralaPostOffice.name+
+                  DeathNACAddressPage.presentInsideKeralaPostOffice.name+
                   " , " +
-                  AddressBirthDetails.presentInsideKeralaPincode +
+                  DeathNACAddressPage.presentInsideKeralaPincode +
                   " , " +
-                  AddressBirthDetails.presentInsideKeralaDistrict.name +
+                  DeathNACAddressPage.presentInsideKeralaDistrict.name +
                   " , " +
-                  AddressBirthDetails.presentaddressStateName.name +
+                  DeathNACAddressPage.presentaddressStateName.name +
                   " , " +
-                  AddressBirthDetails.presentaddressCountry.name }{" "}
+                  DeathNACAddressPage.presentaddressCountry.name }{" "}
                 ,
               </CardText>
             </div>
@@ -504,7 +513,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
           </div>
           )}
 
-{AddressBirthDetails.isPrsentAddress === false && (
+{DeathNACAddressPage.isPrsentAddress === false && (
   <div>
           <div className="row">
             <div className="col-md-6">
@@ -514,21 +523,21 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                 :
                 {  
-     t(AddressBirthDetails.permntInKeralaAdrHouseNameMl ? AddressBirthDetails.permntInKeralaAdrHouseNameMl : "CR_NOT_RECORDED") +
+     t(DeathNACAddressPage.permntInKeralaAdrHouseNameMl ? DeathNACAddressPage.permntInKeralaAdrHouseNameMl : "CR_NOT_RECORDED") +
        " , " +
-       AddressBirthDetails.permntInKeralaAdrStreetNameMl +
+       DeathNACAddressPage.permntInKeralaAdrStreetNameMl +
        " , " +
-       AddressBirthDetails.permntInKeralaAdrLocalityNameMl +
+       DeathNACAddressPage.permntInKeralaAdrLocalityNameMl +
        " , " +
-       AddressBirthDetails.permntInKeralaAdrPostOffice.name+
+       DeathNACAddressPage.permntInKeralaAdrPostOffice.name+
        " , " +
-       AddressBirthDetails.permntInKeralaAdrPincode +
+       DeathNACAddressPage.permntInKeralaAdrPincode +
        " , " +
-       AddressBirthDetails.permntInKeralaAdrDistrict.namelocal+
+       DeathNACAddressPage.permntInKeralaAdrDistrict.namelocal+
        " , " +
-       AddressBirthDetails.permtaddressStateName.namelocal+
+       DeathNACAddressPage.permtaddressStateName.namelocal+
        " , " +
-       AddressBirthDetails.permtaddressCountry.namelocal}
+       DeathNACAddressPage.permtaddressCountry.namelocal}
                             ,
               </CardText>
             </div>
@@ -541,21 +550,21 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
             <div className="col-md-6">
               <CardText style={{ fontSize: "17px", Colour: "black", fontWeight: "bold" }}>
                 :
-                {t(AddressBirthDetails.permntInKeralaAdrHouseNameEn ? AddressBirthDetails.permntInKeralaAdrHouseNameEn : "CR_NOT_RECORDED") +
+                {t(DeathNACAddressPage.permntInKeralaAdrHouseNameEn ? DeathNACAddressPage.permntInKeralaAdrHouseNameEn : "CR_NOT_RECORDED") +
        " , " +
-       AddressBirthDetails.permntInKeralaAdrStreetNameEn +
+       DeathNACAddressPage.permntInKeralaAdrStreetNameEn +
        " , " +
-       AddressBirthDetails.permntInKeralaAdrLocalityNameEn +
+       DeathNACAddressPage.permntInKeralaAdrLocalityNameEn +
        " , " +
-       AddressBirthDetails.permntInKeralaAdrPostOffice.name+
+       DeathNACAddressPage.permntInKeralaAdrPostOffice.name+
        " , " +
-       AddressBirthDetails.permntInKeralaAdrPincode +
+       DeathNACAddressPage.permntInKeralaAdrPincode +
        " , " +
-       AddressBirthDetails.permntInKeralaAdrDistrict.name +
+       DeathNACAddressPage.permntInKeralaAdrDistrict.name +
        " , " +
-       AddressBirthDetails.permtaddressStateName.name +
+       DeathNACAddressPage.permtaddressStateName.name +
        " , " +
-       AddressBirthDetails.permtaddressCountry.name }{" "}
+       DeathNACAddressPage.permtaddressCountry.name }{" "}
                 ,
               </CardText>
             </div>
