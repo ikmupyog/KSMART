@@ -325,11 +325,11 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     // }
   }
   function setSelectwitness1Age(e) {
-    if (e.target.value.length === 3) {
+    if (e.target.value.length === 3 ) {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setwitness1Age(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' a-zA-Z]/gi, ""));
+      setwitness1Age(e.target.value);
     }
     
   }
@@ -565,7 +565,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                         onChange={setSelectwitness1Age}
                         disable={isDisableEdit}
                         placeholder={`${t("CR_WITNESS1_AGE")}`}
-                        {...(validation = { pattern: "^[0-9]{2}$", type: "text", isRequired: true, title: t("CS_INVALID_AGE") })}
+                        {...(validation = { pattern: "^[0-9]{0,2}$", type: "text", isRequired: true, title: t("CS_INVALID_AGE") })}
                       />
                     </div>
                   </div>

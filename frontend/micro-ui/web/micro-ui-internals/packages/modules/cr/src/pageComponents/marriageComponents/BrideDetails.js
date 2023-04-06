@@ -472,7 +472,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setbridePassportNo(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' a-zA-Z]/gi, ""));
+      setbridePassportNo(e.target.value);
     }
   }
   function selectParentType(e) {
@@ -685,6 +685,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                   type={"text"}
                   optionKey="i18nKey"
                   name="bridePassportNo"
+                  value={bridePassportNo}
                   onChange={setSelectbridePassportNo}
                   disable={isDisableEdit}
                   placeholder={`${t("CR_PASSPORT_NO")}`}
