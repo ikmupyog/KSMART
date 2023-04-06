@@ -30,8 +30,18 @@ const SearchDeathApplication = ({  t, onSubmit, data, count, isSuccess, isLoadin
         defaultValues: {
             offset: 0,
             limit: 10,
+            sortBy: "TL_COMMON_TABLE_COL_APP_NO",
+            sortOrder: "DESC",
         },
     });
+
+    // useEffect(() => {
+    //     register("offset", 0);
+    //     register("limit", 10);
+    //     register("sortBy", "TL_COMMON_TABLE_COL_APP_NO");
+    //     register("sortOrder", "DESC");
+    //   }, [register]);
+
     const GetCell = (value) => <span className="cell-text">{value}</span>;
 
     const columns = [
@@ -56,10 +66,10 @@ const SearchDeathApplication = ({  t, onSubmit, data, count, isSuccess, isLoadin
             Header: "Address",
             accessor : (row) => GetCell(row.CR_ADDRESS),
         },
-        {
-            Header: "City",
-            accessor : (row) => GetCell(row.TL_COMMON_CITY_NAME),
-        },
+        // {
+        //     Header: "City",
+        //     accessor : (row) => GetCell(row.TL_COMMON_CITY_NAME),
+        // },
         {
             Header: "Status",
             disableSortBy: true,

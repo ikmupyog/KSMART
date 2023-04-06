@@ -23,10 +23,10 @@ const rowContainerStyle = {
 };
 
 const BannerPicker = (props) => {
-  if(props.isSuccess && sessionStorage.getItem("CR_BIRTH_EDIT_FLAG")){
+  if (props.isSuccess && sessionStorage.getItem("CR_BIRTH_EDIT_FLAG")) {
     console.log(JSON.stringify(props));
     window.location.assign(`${window.location.origin}/digit-ui/employee/cr/application-details/${props.applicationNumber}`);
-   } else {
+  } else {
     return (
       <Banner
         message={GetActionMessage(props)}
@@ -36,12 +36,12 @@ const BannerPicker = (props) => {
       />
     );
   }
-  
-  
+
+
 };
 
 const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
-  const[toast, setToast] = useState(false);
+  const [toast, setToast] = useState(false);
   const { t } = useTranslation();
   const [mutationHappened, setMutationHappened, clear] = Digit.Hooks.useSessionStorage("CITIZEN_TL_MUTATION_HAPPENED", false);
   const resubmit = window.location.href.includes("edit-application");
@@ -55,6 +55,7 @@ const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
     tenantId, isEditBirth ? false : true
   );
 
+  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_CREATE_BIRTH_REG", {});
 
 
   // const mutation2 = Digit.Hooks.cr.useCivilRegistrationAPI(
@@ -68,7 +69,9 @@ const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
   //  const { isLoading, data: fydata = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "egf-master", "FinancialYear");
   //let isDirectRenewal = sessionStorage.getItem("isDirectRenewal") ? stringToBoolean(sessionStorage.getItem("isDirectRenewal")) : null;
   const [isInitialRender, setIsInitialRender] = useState(true);
-
+  useEffect(() => {
+    clearParams();
+  }, [mutation?.data])
   useEffect(() => {
     if (isInitialRender) {
       // const onSuccessedit = () => {

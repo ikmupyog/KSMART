@@ -13,7 +13,7 @@ import AddressPermanentInsideKerala from "./AddressPermanentInsideKerala";
 import AddressPermanentOutsideKerala from "./AddressPermanentOutsideKerala";
 import AddressPermanentOutsideIndia from "./AddressPermanentOutsideIndia";
 
-const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = false, isEditDeath = false,isEditStillBirth=false, }) => {
+const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = false, isEditDeath = false, isEditStillBirth = false, }) => {
 
     const stateId = Digit.ULBService.getStateId();
     let tenantId = "";
@@ -114,6 +114,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
     const [presentInsideKeralaStreetNameMl, setinsideKeralaStreetNameMl] = useState(formData?.AddressBirthDetails?.presentInsideKeralaStreetNameMl ? formData?.AddressBirthDetails?.presentInsideKeralaStreetNameMl : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameMl ? formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameMl :
         formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameMl ? formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameMl : null);
 
+    const [Districtvalues, setDistrictvalue] = useState(null);
     const [Talukvalues, setLbsTalukvalue] = useState(null);
     const [Villagevalues, setLbsVillagevalue] = useState(null);
     const [PostOfficevalues, setPostOfficevalues] = useState(null);
@@ -376,7 +377,6 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                 } else {
                     setPresentInsideKeralaWardNoError(false);
                 }
-                console.log(presentInsideKeralaPostOffice);
                 if (presentInsideKeralaPostOffice === null || presentInsideKeralaPostOffice === undefined || presentInsideKeralaPostOffice === "") {
                     setPresentInsideKeralaPostOfficeError(true);
                     validFlag = false;
@@ -397,7 +397,6 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                 } else {
                     setPresentInsideKeralaPincodeError(false);
                 }
-                console.log(presentInsideKeralaLocalityNameEn);
                 if (presentInsideKeralaLocalityNameEn === null) {
                     setPresentInsideKeralaLocalityNameEnError(true);
                     validFlag = false;
@@ -438,34 +437,27 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                 } else {
                     setPresentInsideKeralaHouseNameMlError(false);
                 }
-                console.log(presentInsideKeralaStreetNameEn);
-                if (presentInsideKeralaStreetNameEn != null) {
-                    if (presentInsideKeralaStreetNameMl == null) {
-                        setPresentInsideKeralaStreetNameMlError(true);
-                        validFlag = false;
-                        setToast(true);
-                        setTimeout(() => {
-                            setToast(false);
-                        }, 2000);
-                    } else {
-                        setPresentInsideKeralaStreetNameMlError(false);
-                    }
-                } else {
-                    setPresentInsideKeralaStreetNameEnError(false);
-                }
-                if (presentInsideKeralaStreetNameMl != null) {
-                    if (presentInsideKeralaStreetNameEn == null) {
-                        setPresentInsideKeralaStreetNameEnError(true);
-                        validFlag = false;
-                        setToast(true);
-                        setTimeout(() => {
-                            setToast(false);
-                        }, 2000);
-                    } else {
-                        setPresentInsideKeralaStreetNameEnError(false);
-                    }
+                if (presentInsideKeralaStreetNameEn != null && presentInsideKeralaStreetNameMl === null) {
+                    setPresentInsideKeralaStreetNameMlError(true);
+                    validFlag = false;
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
                 } else {
                     setPresentInsideKeralaStreetNameMlError(false);
+                }
+                if (presentInsideKeralaStreetNameMl != null && presentInsideKeralaStreetNameEn === null) {
+
+                    setPresentInsideKeralaStreetNameEnError(true);
+                    validFlag = false;
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+
+                } else {
+                    setPresentInsideKeralaStreetNameEnError(false);
                 }
             }
             if (countryvalue === "IND" && value != "KL") {
@@ -901,6 +893,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
 
                     <div className="accordion-wrapper">
                         <AddressPresent
+
                             presentaddressCountry={presentaddressCountry}
                             setaddressCountry={setaddressCountry}
                             presentaddressStateName={presentaddressStateName}
@@ -956,6 +949,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 setinsideKeralaStreetNameEn={setinsideKeralaStreetNameEn}
                                 presentInsideKeralaStreetNameMl={presentInsideKeralaStreetNameMl}
                                 setinsideKeralaStreetNameMl={setinsideKeralaStreetNameMl}
+                                Districtvalues={Districtvalues}
+                                setDistrictvalue={setDistrictvalue}
                                 lbs={lbs}
                                 setLbs={setLbs}
                                 Talukvalues={Talukvalues}
@@ -996,6 +991,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 isEditDeath={isEditDeath}
                                 isEditStillBirth={isEditStillBirth}
                                 formData={formData}
+                                value={value}
+                                setValue={setValue}
                             />
                         </div>
                     )}
@@ -1182,6 +1179,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 setpermntInKeralaAdrStreetNameMl={setpermntInKeralaAdrStreetNameMl}
                                 permntInKeralaWardNo={permntInKeralaWardNo}
                                 setpermntInKeralaWardNo={setpermntInKeralaWardNo}
+                                Districtvalues={Districtvalues}
+                                setDistrictvalue={setDistrictvalue}
                                 lbs={lbs}
                                 setLbs={setLbs}
                                 Talukvalues={Talukvalues}

@@ -113,7 +113,7 @@ const CreateAdoption = ({ parentUrl, isEditBirth }) => {
 
   const onSuccess = () => {
     sessionStorage.removeItem("CurrentFinancialYear");
-    queryClient.invalidateQueries("CR_CREATE_BIRTH_REG");
+    queryClient.invalidateQueries("CR_CREATE_ADOPTION_REG");
   };
   const handleSkip = () => { };
   const handleMultiple = () => { };

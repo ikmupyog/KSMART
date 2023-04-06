@@ -139,8 +139,8 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
   }, [isInitialRender]);
 
   const cmbSpouseLiving = [
-    { i18nKey: "Yes", code: "YES" },
-    { i18nKey: "No", code: "NO" },
+    { i18nKey: "Yes", code: true },
+    { i18nKey: "No", code: false },
   ];
   function selectgroomResidenship(event) {
     setGroomResidentShip(event.target.value);
@@ -189,7 +189,8 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     setGroomNoOfSpouse("");
   }
   function setSelectGroomSpouseLiving(value) {
-    setGroomIsSpouseLiving(value);
+    console.log({ value });
+    setGroomIsSpouseLiving(value.code);
     setGroomNoOfSpouse("");
   }
   function setselectGroomGender(value) {
@@ -213,7 +214,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
   }
   function setSelectGroomMobile(e) {
     if (e.target.value.trim().length >= 0) {
-      setGroomMobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
+      setGroomMobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 10));
     }
   }
   function setSelectGroomEmailid(e) {
@@ -388,58 +389,58 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
   function setSelectGroomAadharNo(e) {
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
-    if (newValue === groomFatherAadharNo || newValue === groomMotherAadharNo || newValue === groomGuardianAadharNo) {
-      setGroomAadharNo("");
-      setAadharError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 3000);
-    } else {
-      setGroomAadharNo(newValue);
-    }
+    // if (newValue === groomFatherAadharNo || newValue === groomMotherAadharNo || newValue === groomGuardianAadharNo) {
+    //   setGroomAadharNo("");
+    //   setAadharError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 3000);
+    // } else {
+    setGroomAadharNo(newValue);
+    // }
   }
   function setSelectGroomFatherAdharNo(e) {
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
-    if (newValue === groomAadharNo || newValue === groomMotherAadharNo || newValue === groomGuardianAadharNo) {
-      setGroomFatherAadharNo("");
-      setAadharError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 3000);
-    } else {
-      setGroomFatherAadharNo(newValue);
-    }
+    // if (newValue === groomAadharNo || newValue === groomMotherAadharNo || newValue === groomGuardianAadharNo) {
+    //   setGroomFatherAadharNo("");
+    //   setAadharError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 3000);
+    // } else {
+    setGroomFatherAadharNo(newValue);
+    // }
   }
   function setSelectGroomGardianAdhar(e) {
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
-    if (newValue === groomAadharNo || newValue === groomMotherAadharNo || newValue === groomFatherAadharNo) {
-      setGroomGuardianAadharNo("");
-      setAadharError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 3000);
-    } else {
-      setGroomGuardianAadharNo(newValue);
-    }
+    // if (newValue === groomAadharNo || newValue === groomMotherAadharNo || newValue === groomFatherAadharNo) {
+    //   setGroomGuardianAadharNo("");
+    //   setAadharError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 3000);
+    // } else {
+    setGroomGuardianAadharNo(newValue);
+    // }
   }
   function setSelectGroomMotherAdharNo(e) {
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
-    if (newValue === groomAadharNo || newValue === groomGuardianAadharNo || newValue === groomFatherAadharNo) {
-      setGroomMotherAadharNo("");
-      setAadharError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 3000);
-    } else {
-      setGroomMotherAadharNo(newValue);
-    }
+    // if (newValue === groomAadharNo || newValue === groomGuardianAadharNo || newValue === groomFatherAadharNo) {
+    //   setGroomMotherAadharNo("");
+    //   setAadharError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 3000);
+    // } else {
+    setGroomMotherAadharNo(newValue);
+    // }
   }
 
   let validFlag = true;
@@ -505,7 +506,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     }
   };
 
-  console.log({ formData });
+  console.log({ groomIsSpouseLiving });
 
   if (isLoading || isMaritalStatusLoading) {
     return <Loader></Loader>;
