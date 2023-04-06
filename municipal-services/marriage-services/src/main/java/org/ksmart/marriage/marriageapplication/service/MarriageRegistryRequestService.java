@@ -46,7 +46,7 @@ public class MarriageRegistryRequestService {
         registerMarriageDetail.setMarriage_type(Marriagerequest.getMarriageDetails().get(0).getMarriageType());
         registerMarriageDetail.setOth_marriage_type(Marriagerequest.getMarriageDetails().get(0).getOthMarriageType());
         registerMarriageDetail.setRegistrationDate(Marriagerequest.getMarriageDetails().get(0).getRegistrationDate());
-        registerMarriageDetail.setRegistrationno(Marriagerequest.getMarriageDetails().get(0).getRegistrationno());
+        registerMarriageDetail.setRegistrationno(Marriagerequest.getMarriageDetails().get(0).getRegistrationNo());
         registerMarriageDetail.setMarriageHouseNoAndNameEn(Marriagerequest.getMarriageDetails().get(0).getMarriageHouseNoAndNameEn());
         registerMarriageDetail.setMarriageHouseNoAndNameMl(Marriagerequest.getMarriageDetails().get(0).getMarriageHouseNoAndNameMl());
         registerMarriageDetail.setApplicationNumber(Marriagerequest.getMarriageDetails().get(0).getApplicationNumber());

@@ -99,8 +99,8 @@ public class MarriageApplicationDetails {
     private String othMarriageType;
 
     @Size(max = 64)
-    @JsonProperty("registrationno")
-    private String registrationno;
+    @JsonProperty("registrationNo")
+    private String registrationNo;
 
     @JsonProperty("registrationDate")
     private Long registrationDate;

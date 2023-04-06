@@ -94,7 +94,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
         request.getMarriageDetails()
                 .forEach(marriage -> marriage.setAuditDetails(auditDetails));
 
-       //  setRegistrationNumber(request);
+
         setBridePermanentAddress(request);
         setBridePresentAddress(request);
         setGroomPermanentAddress(request);
@@ -503,6 +503,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
         }
 
 
+
     //  private void setRegistrationNumber(MarriageDetailsRequest request) {
 
     //      RequestInfo requestInfo = request.getRequestInfo();
@@ -527,6 +528,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
     //                 // }
     //              });
     //  }
+
 
 //     private void setFileNumbers(MarriageDetailsRequest request) {
 
