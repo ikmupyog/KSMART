@@ -120,7 +120,7 @@ const StillBirthPlacePublicPlace = ({ config, onSelect, userType, formData, publ
     return (
       <React.Fragment>
         {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!publicPlaceType}> */}
-        <div className="row">
+       
         <div className="col-md-12" >
           <div className="row">
             <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PUBLIC_PLACE")}`}</span> </h1>
@@ -250,7 +250,7 @@ const StillBirthPlacePublicPlace = ({ config, onSelect, userType, formData, publ
                 placeholder={`${t("CR_DESCRIPTION")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_DESCRIPTION") })}
               />
-            </div>
+          
           </div>
           </div>
           </div>
