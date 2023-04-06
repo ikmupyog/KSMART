@@ -29,9 +29,9 @@ const MyCRDeathApplications = ({view}) => {
     setPayload(params)
   }
 
-  const config = {
-    enabled: !!(payload && Object.keys(payload).length > 0)
-  }
+  // const config = {
+  //   enabled: !!(payload && Object.keys(payload).length > 0)
+  // }
   
   // const { isLoading, isSuccess, data, Count, ...rest } = view === "bills" ? Digit.Hooks.cr.useDeathFetchBill(
   //   {
