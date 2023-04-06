@@ -27,43 +27,22 @@ const CorrectionTradeLicence = ({ parentRoute,isRenewal }) => {
     let { nextStep = {} } = config.find((routeObj) => routeObj.route === currentPath);
     let { isCreateEnabled : enableCreate = true } = config.find((routeObj) => routeObj.route === currentPath);
     if (typeof nextStep == "object" && nextStep != null) {
-      if((params?.cptId?.id || params?.cpt?.details?.propertyId || (isReneworEditTrade && params?.cpt?.details?.propertyId ))  && (nextStep[sessionStorage.getItem("isAccessories")] && nextStep[sessionStorage.getItem("isAccessories")] === "know-your-property")  )
-      {
-        nextStep = "property-details";
-      }
-      if (
-        nextStep[sessionStorage.getItem("isAccessories")] &&
-        (nextStep[sessionStorage.getItem("isAccessories")] === "accessories-details" ||
-          nextStep[sessionStorage.getItem("isAccessories")] === "map" ||
-          nextStep[sessionStorage.getItem("isAccessories")] === "owner-ship-details" || 
-          nextStep[sessionStorage.getItem("isAccessories")] === "know-your-property")
-      ) {
-        nextStep = `${nextStep[sessionStorage.getItem("isAccessories")]}`;
-      } else if (
-        nextStep[sessionStorage.getItem("StructureType")] &&
-        (nextStep[sessionStorage.getItem("StructureType")] === "Building-type" ||
-          nextStep[sessionStorage.getItem("StructureType")] === "vehicle-type")
-      ) {
-        nextStep = `${nextStep[sessionStorage.getItem("setPlaceofActivity")]}`;
-        nextStep = `${nextStep[sessionStorage.getItem("StructureType")]}`;
-      } else if (
-        nextStep[sessionStorage.getItem("KnowProperty")] &&
-        (nextStep[sessionStorage.getItem("KnowProperty")] === "search-property" ||
-          nextStep[sessionStorage.getItem("KnowProperty")] === "create-property")
-      ) {
-          if(nextStep[sessionStorage.getItem("KnowProperty")] === "create-property" && !enableCreate)
-          {
-            nextStep = `map`;
-          }
-          else{
-         nextStep = `${nextStep[sessionStorage.getItem("KnowProperty")]}`;
-          }
-      }
+      let validation = true;
+      paramscorrected?.TradeDetails?.tradeLicenseDetail?.tradeUnits.map(tUnit => {
+        if(tUnit?.businessType.lenth === 0){
+          setErrorMessage(t("TL_INVALID_BUSINESS_TYPE"));
+          validation = false;
+          return validation;
+        }
+        if(tUnit?.businessSubtype.lenth === 0){
+          setErrorMessage(t("TL_INVALID_BUSINESS_SUBTYPE"));
+          validation = false;
+          return validation;
+        }
+      });
+      
     }
-    if( (params?.cptId?.id || params?.cpt?.details?.propertyId || (isReneworEditTrade && params?.cpt?.details?.propertyId ))  && nextStep === "know-your-property" )
-    { 
-      nextStep = "property-details";
-    }
+    
     let redirectWithHistory = history.push;
     if (skipStep) {
       redirectWithHistory = history.replace;
