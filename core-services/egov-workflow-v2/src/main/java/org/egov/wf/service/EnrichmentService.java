@@ -87,7 +87,7 @@ public class EnrichmentService {
             enrichAndUpdateSlaForTransition(processStateAndAction,isStateChanging);
             setNextActions(requestInfo,processStateAndActions,true);
         });
-        enrichUsers(requestInfo,processStateAndActions);
+       // enrichUsers(requestInfo,processStateAndActions);
     }
 
 

@@ -1,6 +1,5 @@
 package org.egov.tl.repository;
 
-
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.tl.config.TLConfiguration;
 import org.egov.tl.web.models.Idgen.IdGenerationRequest;
@@ -21,8 +20,6 @@ import java.util.Map;
 @Repository
 public class IdGenRepository {
 
-
-
     private RestTemplate restTemplate;
 
     private TLConfiguration config;
@@ -33,36 +30,38 @@ public class IdGenRepository {
         this.config = config;
     }
 
-
     /**
      * Call iDgen to generateIds
+     * 
      * @param requestInfo The rquestInfo of the request
-     * @param tenantId The tenantiD of the tradeLicense
-     * @param name Name of the foramt
-     * @param format Format of the ids
-     * @param count Total Number of idGen ids required
+     * @param tenantId    The tenantiD of the tradeLicense
+     * @param name        Name of the foramt
+     * @param format      Format of the ids
+     * @param count       Total Number of idGen ids required
      * @return
      */
-    public IdGenerationResponse getId(RequestInfo requestInfo, String tenantId, String name, String format, int count) {
+    public IdGenerationResponse getId(RequestInfo requestInfo, String tenantId, String format, String modulecode,
+            String functionType, int count) {
 
         List<IdRequest> reqList = new ArrayList<>();
         for (int i = 0; i < count; i++) {
-            reqList.add(IdRequest.builder().idName(name).format(format).tenantId(tenantId).build());
+            // reqList.add(IdRequest.builder().idName(name).format(format).tenantId(tenantId).build());
+            reqList.add(IdRequest.builder().idName(format).moduleCode(modulecode).tenantId(tenantId)
+                    .fnType(functionType).build());
         }
         IdGenerationRequest req = IdGenerationRequest.builder().idRequests(reqList).requestInfo(requestInfo).build();
         IdGenerationResponse response = null;
         try {
-            response = restTemplate.postForObject( config.getIdGenHost()+ config.getIdGenPath(), req, IdGenerationResponse.class);
+            response = restTemplate.postForObject(config.getIdGenHost() + config.getIdGenPath(), req,
+                    IdGenerationResponse.class);
         } catch (HttpClientErrorException e) {
             throw new ServiceCallException(e.getResponseBodyAsString());
         } catch (Exception e) {
             Map<String, String> map = new HashMap<>();
-            map.put(e.getCause().getClass().getName(),e.getMessage());
+            map.put(e.getCause().getClass().getName(), e.getMessage());
             throw new CustomException(map);
         }
         return response;
     }
-
-
 
 }

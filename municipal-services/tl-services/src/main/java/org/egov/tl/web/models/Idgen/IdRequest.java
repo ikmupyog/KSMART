@@ -31,4 +31,10 @@ public class IdRequest {
 	@JsonProperty("format")
 	private String format;
 
+	@JsonProperty("moduleCode")
+	private String moduleCode;
+
+	@JsonProperty("fnType")
+	private String fnType;
+
 }

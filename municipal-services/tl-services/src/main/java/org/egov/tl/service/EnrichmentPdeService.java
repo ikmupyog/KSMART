@@ -166,9 +166,17 @@ public class EnrichmentPdeService {
             });
             if (taxPdelist.size() > 0)
                 tradeLicense.getTradeLicenseDetail().setTaxPdefinal(taxPdelist);
-            tradeLicense.setApplicationNumber(
-                    idGen.setIDGenerator(tradeLicenseRequest, TLConstants.FUN_MODULE_PDE,
-                            TLConstants.APP_NUMBER_CAPTION));
+            // tradeLicense.setApplicationNumber(
+            // idGen.setIDGenerator(tradeLicenseRequest, TLConstants.FUN_MODULE_PDE,
+            // TLConstants.APP_NUMBER_CAPTION));
+            List<String> appNoDetails = getIdList(requestInfo, tradeLicense.getTenantId(),
+                    config.getApplicationNumberIdgenNameTL(), TLConstants.FUN_MODULE_PDE,
+                    TLConstants.APP_NUMBER_CAPTION, tradeLicenseRequest.getLicenses().size());
+            ListIterator<String> itr = appNoDetails.listIterator();
+            tradeLicenseRequest.getLicenses().forEach(License -> {
+                License.setApplicationNumber(itr.next());
+            });
+
             if (requestInfo.getUserInfo().getType().equalsIgnoreCase("CITIZEN"))
                 tradeLicense.setAccountId(requestInfo.getUserInfo().getUuid());
 
@@ -198,57 +206,66 @@ public class EnrichmentPdeService {
      * @param count       Number of ids to be generated
      * @return List of ids generated using idGen service
      */
-    private List<String> getIdList(RequestInfo requestInfo, String tenantId, String idKey,
-            String idformat, int count) {
-        List<IdResponse> idResponses = idGenRepository.getId(requestInfo, tenantId, idKey, idformat, count)
-                .getIdResponses();
+    // private List<String> getIdList(RequestInfo requestInfo, String tenantId,
+    // String idKey,
+    // String idformat, int count) {
+    // List<IdResponse> idResponses = idGenRepository.getId(requestInfo, tenantId,
+    // idKey, idformat, count)
+    // .getIdResponses();
 
-        if (CollectionUtils.isEmpty(idResponses))
-            throw new CustomException("IDGEN ERROR", "No ids returned from idgen Service");
+    // if (CollectionUtils.isEmpty(idResponses))
+    // throw new CustomException("IDGEN ERROR", "No ids returned from idgen
+    // Service");
 
-        return idResponses.stream()
-                .map(IdResponse::getId).collect(Collectors.toList());
-    }
+    // return idResponses.stream()
+    // .map(IdResponse::getId).collect(Collectors.toList());
+    // }
 
     /**
      * Sets the ApplicationNumber for given TradeLicenseRequest
      *
      * @param request TradeLicenseRequest which is to be created
      */
-    private void setIdgenIds(TradeLicenseRequest request) {
-        RequestInfo requestInfo = request.getRequestInfo();
-        String tenantId = request.getLicenses().get(0).getTenantId();
-        List<TradeLicense> licenses = request.getLicenses();
-        String businessService = licenses.isEmpty() ? null : licenses.get(0).getBusinessService();
-        if (businessService == null)
-            businessService = businessService_TL;
-        List<String> applicationNumbers = null;
-        switch (businessService) {
-            case businessService_TL:
-                applicationNumbers = getIdList(requestInfo, tenantId, config.getApplicationNumberIdgenNameTL(),
-                        config.getApplicationNumberIdgenFormatTL(), request.getLicenses().size());
-                break;
-
-            case businessService_BPA:
-                applicationNumbers = getIdList(requestInfo, tenantId, config.getApplicationNumberIdgenNameBPA(),
-                        config.getApplicationNumberIdgenFormatBPA(), request.getLicenses().size());
-                break;
-        }
-        ListIterator<String> itr = applicationNumbers.listIterator();
-
-        Map<String, String> errorMap = new HashMap<>();
-        if (applicationNumbers.size() != request.getLicenses().size()) {
-            errorMap.put("IDGEN ERROR ",
-                    "The number of LicenseNumber returned by idgen is not equal to number of TradeLicenses");
-        }
-
-        if (!errorMap.isEmpty())
-            throw new CustomException(errorMap);
-
-        licenses.forEach(tradeLicense -> {
-            tradeLicense.setApplicationNumber(itr.next());
-        });
-    }
+    /*
+     * private void setIdgenIds(TradeLicenseRequest request) {
+     * RequestInfo requestInfo = request.getRequestInfo();
+     * String tenantId = request.getLicenses().get(0).getTenantId();
+     * List<TradeLicense> licenses = request.getLicenses();
+     * String businessService = licenses.isEmpty() ? null :
+     * licenses.get(0).getBusinessService();
+     * if (businessService == null)
+     * businessService = businessService_TL;
+     * List<String> applicationNumbers = null;
+     * switch (businessService) {
+     * case businessService_TL:
+     * applicationNumbers = getIdList(requestInfo, tenantId,
+     * config.getApplicationNumberIdgenNameTL(),
+     * config.getApplicationNumberIdgenFormatTL(), request.getLicenses().size());
+     * break;
+     * 
+     * case businessService_BPA:
+     * applicationNumbers = getIdList(requestInfo, tenantId,
+     * config.getApplicationNumberIdgenNameBPA(),
+     * config.getApplicationNumberIdgenFormatBPA(), request.getLicenses().size());
+     * break;
+     * }
+     * ListIterator<String> itr = applicationNumbers.listIterator();
+     * 
+     * Map<String, String> errorMap = new HashMap<>();
+     * if (applicationNumbers.size() != request.getLicenses().size()) {
+     * errorMap.put("IDGEN ERROR ",
+     * "The number of LicenseNumber returned by idgen is not equal to number of TradeLicenses"
+     * );
+     * }
+     * 
+     * if (!errorMap.isEmpty())
+     * throw new CustomException(errorMap);
+     * 
+     * licenses.forEach(tradeLicense -> {
+     * tradeLicense.setApplicationNumber(itr.next());
+     * });
+     * }
+     */
 
     /**
      * Adds the ownerIds from userSearchReponse to search criteria
@@ -532,13 +549,15 @@ public class EnrichmentPdeService {
                     businessService = businessService_TL;
                 switch (businessService) {
                     case businessService_TL:
-                        licenseNumbers = getIdList(requestInfo, tenantId, config.getLicenseNumberIdgenNameTL(),
-                                config.getLicenseNumberIdgenFormatTL(), count);
+                        // licenseNumbers = getIdList(requestInfo, tenantId,
+                        // config.getLicenseNumberIdgenNameTL(),
+                        // config.getLicenseNumberIdgenFormatTL(), count);
                         break;
 
                     case businessService_BPA:
-                        licenseNumbers = getIdList(requestInfo, tenantId, config.getLicenseNumberIdgenNameBPA(),
-                                config.getLicenseNumberIdgenFormatBPA(), count);
+                        // licenseNumbers = getIdList(requestInfo, tenantId,
+                        // config.getLicenseNumberIdgenNameBPA(),
+                        // config.getLicenseNumberIdgenFormatBPA(), count);
                         break;
                 }
                 ListIterator<String> itr = licenseNumbers.listIterator();
@@ -691,8 +710,9 @@ public class EnrichmentPdeService {
         List<String> applicationNumbers = null;
         switch (businessService) {
             case businessService_TL:
-                applicationNumbers = getIdList(requestInfo, tenantId, config.getApplicationNumberPdeIdgenNameTL(),
-                        config.getApplicationNumberPdeIdgenFormatTL(), request.getLicenses().size());
+                // applicationNumbers = getIdList(requestInfo, tenantId,
+                // config.getApplicationNumberPdeIdgenNameTL(),
+                // config.getApplicationNumberPdeIdgenFormatTL(), request.getLicenses().size());
                 break;
         }
         ListIterator<String> itr = applicationNumbers.listIterator();
@@ -709,6 +729,27 @@ public class EnrichmentPdeService {
         licenses.forEach(tradeLicense -> {
             tradeLicense.setApplicationNumber(itr.next());
         });
+    }
+
+    /**
+     * Returns a list of numbers generated from idgen
+     *
+     * @param requestInfo RequestInfo from the request
+     * @param tenantId    tenantId of the city
+     * @param idKey       code of the field defined in application properties for
+     *                    which ids are generated for
+     * @param idformat    format in which ids are to be generated
+     * @param count       Number of ids to be generated
+     * @return List of ids generated using idGen service
+     */
+    private List<String> getIdList(RequestInfo requestInfo, String tenantId, String idformat, String moduleCode,
+            String fnType, int count) {
+        List<IdResponse> idResponses = idGenRepository.getId(requestInfo, tenantId, idformat, moduleCode, fnType, count)
+                .getIdResponses();
+        if (CollectionUtils.isEmpty(idResponses))
+            throw new CustomException("IDGEN ERROR", "No ids returned from idgen Service");
+        return idResponses.stream()
+                .map(IdResponse::getId).collect(Collectors.toList());
     }
 
 }
