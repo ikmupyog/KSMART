@@ -76,7 +76,7 @@ const StillBirthPlaceHospital = ({ config, onSelect, userType, formData, selectH
     return (
       <React.Fragment>
         {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!hospitalName}> */}
-        <div className="row">
+       
         <div className="col-md-12">
           <div className="row">
             <div className="col-md-12">
@@ -117,7 +117,7 @@ const StillBirthPlaceHospital = ({ config, onSelect, userType, formData, selectH
                 placeholder={`${t("CR_HOSPITAL_ML")}`}
                 disable={true}
               />
-            </div>
+            
           </div>
           </div>
           </div>

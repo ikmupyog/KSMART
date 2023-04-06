@@ -190,6 +190,7 @@ import DeathNACParentsDetails from "./pageComponents/DeathNACComponents/DeathNAC
 import DeathNACInitiator from "./pageComponents/DeathNACComponents/DeathNACInitiator";
 import DeathNACDownloadPage from "./pageComponents/DeathNACComponents/DeathNACDownloadPage";
 export const CRModule = ({ stateCode, userType, tenants }) => {
+  
   const { path, url } = useRouteMatch();
 
   const moduleCode = "CR";
@@ -205,10 +206,12 @@ export const CRModule = ({ stateCode, userType, tenants }) => {
 };
 
 export const CRLinks = ({ matchPath, userType }) => {
+
   const { t } = useTranslation();
-  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("PT_CREATE_TRADE", {});
+  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_CREATE_BIRTH_REG", {});
 
   useEffect(() => {
+    console.log('cleare');
     clearParams();
   }, []);
 

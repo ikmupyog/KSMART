@@ -580,8 +580,9 @@ export const convertToEditStillBirthRegistration = (data = {}) => {
             ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherEducation
             : null,
           fatherProfession: data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherProfession
-            ? data?.StillBirthParentsDetails?.StillBirthChildDetails?.fatherProfession
+            ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherProfession
             : null,
+       
           Religion: data?.StillBirthChildDetails?.StillBirthParentsDetails?.Religion
             ? data?.StillBirthChildDetails?.StillBirthParentsDetails?.Religion
             : null,

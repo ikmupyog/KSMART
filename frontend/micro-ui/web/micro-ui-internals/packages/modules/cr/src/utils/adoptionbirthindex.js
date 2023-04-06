@@ -589,7 +589,7 @@ export const convertToAdoptionUpdation = (data = {}) => {
           : "",
         applicationtype: "CRBRAD",
         businessservice: "birth-services",
-        workflowcode: data?.AdoptionChildDetails?.workFlowCode,
+        workflowcode: data?.AdoptionChildDetails?.workflowcode,
         applicationnumber: data?.AdoptionChildDetails?.applicationNumber ? data?.AdoptionChildDetails?.applicationNumber : "",
         id: data?.AdoptionChildDetails?.id ? data?.AdoptionChildDetails?.id : "",
         ParentsDetails: {

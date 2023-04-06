@@ -49,7 +49,6 @@ const LocationSelection = () => {
     if (isInitialRender) {
 
       if (selectedDistrict) {
-        console.log(selectedDistrict.districtid);
         setIsInitialRender(false);
         setLbs(localbodies.filter((localbodies) => localbodies.city.districtid === selectedDistrict.districtid));
       }

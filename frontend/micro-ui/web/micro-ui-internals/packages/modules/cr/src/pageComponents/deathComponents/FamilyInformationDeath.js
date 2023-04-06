@@ -11,8 +11,8 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
   const { data: Spouse = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "SpouseType");
   let cmbspouse = [];
   Spouse &&
-    Spouse["birth-death-service"] &&
-    Spouse["birth-death-service"].SpouseType.map((ob) => {
+    Spouse["birth-death-service"] && Spouse["birth-death-service"].spouseType &&
+    Spouse["birth-death-service"].spouseType.map((ob) => {
       cmbspouse.push(ob);
     });
   const [SpouseType, setSpouseType] = useState(

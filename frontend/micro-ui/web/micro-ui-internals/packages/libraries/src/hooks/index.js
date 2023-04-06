@@ -14,7 +14,7 @@ import {
   useRecieptSearch,
 } from "./payment";
 import { useUserSearch } from "./userSearch";
-import {useCivilRegMDMS} from "./cr/useCivilRegMDMS";
+import { useCivilRegMDMS } from "./cr/useCivilRegMDMS";
 import { useApplicationsForBusinessServiceSearch } from "./useApplicationForBillSearch";
 import useBoundaryLocalities from "./useLocalities";
 import useCommonMDMS from "./useMDMS";
@@ -128,7 +128,7 @@ import useCivilRegistrationStillBirthAPI from "./cr/useCivilRegistrationStillBir
 import useCivilRegistrationNACBIRTHAPI from "./cr/useCivilRegistrationNACBIRTHAPI";
 import useCivilRegistrationBornOutsideIndiaBirthAPI from "./cr/useCivilRegistrationBornOutsideIndiaBirthAPI";
 import useCivilRegistrationAbandonedBirthAPI from "./cr/useCivilRegistrationAbandonedBirthAPI";
-import useApplicationBornOutsideIndiaBirthDetail from "./cr/useApplicationBornOutsideIndiaBirthDetail"; 
+import useApplicationBornOutsideIndiaBirthDetail from "./cr/useApplicationBornOutsideIndiaBirthDetail";
 import useBirthCorrectionAction from "./cr/useBirthCorrectionAction";
 
 import useCivilRegistrationDeathAPI from "./cr/useCivilRegistrationDeathAPI";
@@ -140,9 +140,9 @@ import useCRDFetchBill from "./cr/useDeathFetchBill";
 import useCRApplicationDetail from "./cr/useApplicationDetail";
 import useCRApplicationAdoptionDetail from "./cr/useApplicationAdoptionDetail";
 import useApplicationMarriageDetail from "./cr/useApplicationMarriageDetail";
-import useApplicationStillBirthDetail from "./cr/useApplicationStillBirthDetail"; 
+import useApplicationStillBirthDetail from "./cr/useApplicationStillBirthDetail";
 import useApplicationAbandondBirthDetail from "./cr/useApplicationAbandondBirthDetail";
-import useApplicationDeathDetail from "./cr/useApplicationDeathDetail"; 
+import useApplicationDeathDetail from "./cr/useApplicationDeathDetail";
 import useCRApplicationActions from "./cr/useApplicationActions";
 import useCRAdoptionApplicationActions from "./cr/useAdoptionApplActions";
 import useApplicationBirthNACActions from "./cr/useApplicationBirthNACActions";
@@ -171,8 +171,8 @@ import useApplicationDEATHNACActions from "./cr/useApplicationDEATHNACActions";
 import useApplicationDEATHNACDetail from "./cr/useApplicationDEATHNACDetail";
 
 
-import useSearchDeath  from "./cr/useSearchDeath";
-import useSearchStillBirth  from "./cr/useSearchStillBirth";
+import useSearchDeath from "./cr/useSearchDeath";
+import useSearchStillBirth from "./cr/useSearchStillBirth";
 import useTenantsDFM from "./dfm/useTenants";
 import useFileManagmentMDMS from "./dfm/useFileManagmentMDMS";
 import useFileManagmentAPI from "./dfm/useFileManagmentAPI";
@@ -248,6 +248,7 @@ import useSewarageSearch from "./ws/useSewarageSearch";
 import useTradeLicensePdeAPI from "./tl/useTradeLicensePdeAPI";
 import useSearchPde from "./tl/useSearchPde";
 import { useRegSearchDeath, getDeathFileSourceDetails } from "./cr/death";
+import { getBirthFileSourceDetails } from "./cr/birth";
 
 const pgr = {
   useComplaintDetails,
@@ -363,6 +364,7 @@ const tl = {
   useTradeLicenseCorrectionAPI
 };
 const cr = {
+  getBirthFileSourceDetails,
   useBirthCorrectionAction,
   useRegSearchDeath,
   getDeathFileSourceDetails,
@@ -391,12 +393,12 @@ const cr = {
   useResistryDownloadBirth,
   useRegistrySearchBirth,
   useRegistrySearchMarriage,
-  useSearchDeath ,
+  useSearchDeath,
   useSearchStillBirth,
   useApplicationDetail: useCRApplicationDetail,
-  useApplicationAdoptionDetail:useCRApplicationAdoptionDetail,
+  useApplicationAdoptionDetail: useCRApplicationAdoptionDetail,
   useApplicationMarriageDetail,
-  useApplicationStillBirthDetail:useApplicationStillBirthDetail,
+  useApplicationStillBirthDetail: useApplicationStillBirthDetail,
   useApplicationAbandondBirthDetail,
   useApplicationBIRTHNACDetail,
   useCivilRegistrationNACDEATHAPI,
@@ -405,8 +407,8 @@ const cr = {
   useApplicationDEATHNACDetail,
   useApplicationBornOutsideIndiaBirthDetail,
   useApplicationActions: useCRApplicationActions,
-  useAdoptionApplActions:useCRAdoptionApplicationActions,
-  useCRStillBirthApplicationActions:useCRStillBirthApplicationActions,
+  useAdoptionApplActions: useCRAdoptionApplicationActions,
+  useCRStillBirthApplicationActions: useCRStillBirthApplicationActions,
   useApplicationAbandonedBirthActions,
   useApplicationBirthNACActions,
   useApplicationBornOutsideIndiaBirthActions,
