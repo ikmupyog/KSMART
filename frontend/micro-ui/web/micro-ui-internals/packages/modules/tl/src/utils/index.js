@@ -720,6 +720,7 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
     wardIdHistory = data?.tradeLicenseDetail?.address?.wardId;
     isEdit = true;
   }
+  console.log("11111111");
   dataCorr?.tradeLicenseDetail?.tradeUnits.map((unitNew) => {
     data?.tradeLicenseDetail?.tradeUnits.map((unitOld) => {
       if (unitOld.id === unitNew.id) {
@@ -748,19 +749,21 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
       }
     })
   })
-  data?.tradeLicenseDetail?.tradeUnits.map((unitOld) => {
-    if(!dataCorr?.tradeLicenseDetail?.tradeUnits.id.includes(unitOld.id) ){
-      tradeUnitCorr.push({id : ownerOld.id, active : false});
-      isEdit = true;
-      unitFlag = true;
-    } 
-  })
 
+  console.log("2222222222222222");
+  // data?.tradeLicenseDetail?.tradeUnits.map((unitOld) => {
+  //   if(!dataCorr?.tradeLicenseDetail?.tradeUnits.id.includes(unitOld.id) ){
+  //     tradeUnitCorr.push({id : ownerOld.id, active : false});
+  //     isEdit = true;
+  //     unitFlag = true;
+  //   } 
+  // })
+  console.log("3333333333333");
   if(unitFlag === true){
     ownersHistory = data?.tradeLicenseDetail?.tradeUnits;
   }
 
-
+  console.log("4444444444444444");
   dataCorr?.tradeLicenseDetail?.owners.map((ownerNew) => {
     data?.tradeLicenseDetail?.owners.map((ownerOld) => {
       if (ownerOld.uuid === ownerNew.uuid) {
@@ -814,18 +817,19 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
       }
     })
   })
-  data?.tradeLicenseDetail?.owners.map((ownerOld) => {
-    if(!dataCorr?.tradeLicenseDetail?.owners.uuid.includes(ownerOld.uuid) ){
-      ownersCorr.push({uuid : ownerOld.uuid, active : false});
-      isEdit = true;
-      ownerFlag = true;
-    } 
-  })
-
+  console.log("55555555555555");
+  // data?.tradeLicenseDetail?.owners.map((ownerOld) => {
+  //   if(!dataCorr?.tradeLicenseDetail?.owners.uuid.includes(ownerOld.uuid) ){
+  //     ownersCorr.push({uuid : ownerOld.uuid, active : false});
+  //     isEdit = true;
+  //     ownerFlag = true;
+  //   } 
+  // })
+  console.log("66666666666666666666");
   if(ownerFlag === true){
     ownersHistory = data?.tradeLicenseDetail?.owners;
   }
-
+  console.log("777777777777777777777777");
 
   dataCorr?.tradeLicenseDetail?.structurePlace.map((placeNew) => {
     data?.tradeLicenseDetail?.structurePlace.map((placeOld) => {
@@ -878,17 +882,20 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
       }
     })
   })
-  data?.tradeLicenseDetail?.structurePlace.map((placeOld) => {
-    if(!dataCorr?.tradeLicenseDetail?.structurePlace.id.includes(placeOld.id) ){
-      structurePlaceCorr.push({id : placeOld.id, active : false});
-      isEdit = true;
-      structureplaceFlag = true;
-    } 
-  })
+
+  console.log("88888888888888888888888888");
+  // data?.tradeLicenseDetail?.structurePlace.map((placeOld) => {
+  //   if(!dataCorr?.tradeLicenseDetail?.structurePlace.id.includes(placeOld.id) ){
+  //     structurePlaceCorr.push({id : placeOld.id, active : false});
+  //     isEdit = true;
+  //     structureplaceFlag = true;
+  //   } 
+  // });
+  console.log("99999999999999999999");
   if(structureplaceFlag === true){
     structurePlaceHistory = data?.tradeLicenseDetail?.structurePlace;
   }
-
+  console.log("00000000000000000000");
   applicationDocuments = dataCorr?.tradeLicenseDetail?.applicationDocuments;
 
   if((data?.tradeName !== dataCorr?.tradeName)||(data?.licenseUnitNameLocal !== dataCorr?.licenseUnitNameLocal)){
@@ -898,7 +905,7 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
     licenseUnitNameLocalHistory = data?.licenseUnitNameLocal;
     isEdit = true;
   }
-
+  console.log("AAAAAAAAAAAAAAAAAA");
   const formdata = {
     LicenseCorrection: [
       {

@@ -133,6 +133,7 @@ const CorrectionCheckPage = ({ onSubmit, value, valuenew }) => {
 
   return (
     <React.Fragment>
+         {window.location.href.includes("/citizen") ? <Timeline currentStep={3} flow={'CORRECTION'}/> : null}
      <div style={{display: "flex",gap: "80px"}} >
      <Card>
         <div style={{width: "100%"}}>
