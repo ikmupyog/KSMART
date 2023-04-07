@@ -389,58 +389,58 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
   function setSelectGroomAadharNo(e) {
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
-    // if (newValue === groomFatherAadharNo || newValue === groomMotherAadharNo || newValue === groomGuardianAadharNo) {
-    //   setGroomAadharNo("");
-    //   setAadharError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 3000);
-    // } else {
+    if (newValue === groomFatherAadharNo || newValue === groomMotherAadharNo || newValue === groomGuardianAadharNo) {
+      setGroomAadharNo("");
+      setAadharError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else {
     setGroomAadharNo(newValue);
-    // }
+     }
   }
   function setSelectGroomFatherAdharNo(e) {
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
-    // if (newValue === groomAadharNo || newValue === groomMotherAadharNo || newValue === groomGuardianAadharNo) {
-    //   setGroomFatherAadharNo("");
-    //   setAadharError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 3000);
-    // } else {
+    if (newValue === groomAadharNo || newValue === groomMotherAadharNo || newValue === groomGuardianAadharNo) {
+      setGroomFatherAadharNo("");
+      setAadharError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else {
     setGroomFatherAadharNo(newValue);
-    // }
+     }
   }
   function setSelectGroomGardianAdhar(e) {
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
-    // if (newValue === groomAadharNo || newValue === groomMotherAadharNo || newValue === groomFatherAadharNo) {
-    //   setGroomGuardianAadharNo("");
-    //   setAadharError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 3000);
-    // } else {
+    if (newValue === groomAadharNo || newValue === groomMotherAadharNo || newValue === groomFatherAadharNo) {
+      setGroomGuardianAadharNo("");
+      setAadharError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else {
     setGroomGuardianAadharNo(newValue);
-    // }
+     }
   }
   function setSelectGroomMotherAdharNo(e) {
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
-    // if (newValue === groomAadharNo || newValue === groomGuardianAadharNo || newValue === groomFatherAadharNo) {
-    //   setGroomMotherAadharNo("");
-    //   setAadharError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 3000);
-    // } else {
+    if (newValue === groomAadharNo || newValue === groomGuardianAadharNo || newValue === groomFatherAadharNo) {
+      setGroomMotherAadharNo("");
+      setAadharError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else {
     setGroomMotherAadharNo(newValue);
-    // }
+     }
   }
 
   let validFlag = true;
@@ -516,7 +516,8 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
         <BackButton>{t("CS_COMMON_BACK")}</BackButton>
         {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
         {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
-        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
+        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}
+        >
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
