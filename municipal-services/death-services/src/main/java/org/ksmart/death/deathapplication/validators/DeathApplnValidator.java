@@ -98,7 +98,8 @@ public void validateCommonFields(DeathDtlRequest request) {
 //Common validation for all cases
             // if((basicInfo.getDateOfDeath()<=0) || (basicInfo.getTimeOfDeath()<=0)) { 
             //         throw new CustomException("DEATH DATE INVALID", "The date and time can't be null");
-            // }
+            // }          
+
 
             if(StringUtils.isEmpty(basicInfo.getDeceasedGender()) ){
                 throw new CustomException("DECEASED GENDER INVALID", "The deceased  gender" +
@@ -1017,5 +1018,45 @@ public void validateNACUpdate(DeathNACRequest request, List<DeathNACDtls> search
                 "Death NAC registration(s) not found in database.");
     }
 }
+ //Rakhi S on 06.04.2023 
+ public void ruleEngineDeath(DeathDtlRequest request){
     
+    List<DeathDtl> deathApplication = request.getDeathCertificateDtls();
+    if (deathApplication!=null){
+        deathApplication
+                .forEach(deathdtls -> {
+        DeathBasicInfo  basicInfo = deathdtls.getDeathBasicInfo();
+        Long dod = basicInfo.getDateOfDeath();          
+          java.sql.Date dodDate=new java.sql.Date(dod); 
+          int diffDays= getDaysDiff(dodDate);
+          if(diffDays <= 21){
+            System.out.println("Normal Registration");
+            basicInfo.setNormalRegn(true);
+          }
+          else if(diffDays > 21 && diffDays <= 30){
+            System.out.println("Delayed within 30days");
+            basicInfo.setDelayedWithinThirty(true);
+          }
+          else if(diffDays > 30 && diffDays < 365){
+            System.out.println("Delayed less than 1 year");
+            basicInfo.setDelayedWithinOneyear(true);
+          }
+          else if(diffDays >= 365){
+            System.out.println("Delayed Greater than 1 year");
+            basicInfo.setDelayedAfterOneyear(true);
+          }
+        });
+    }
+ }
+ //Rakhi S on 06.04.2023 
+ public int getDaysDiff(Date dateToCheck) 
+    {
+        long diffMilliseconds = new Date().getTime() - dateToCheck.getTime();
+        double diffSeconds = diffMilliseconds / 1000;
+        double diffMinutes = diffSeconds / 60;
+        double diffHours = diffMinutes / 60;
+        double diffDays = diffHours / 24;
+            
+        return (int) Math.round(diffDays);
+    }
 }

@@ -97,8 +97,8 @@ public class DeathRegistryRequestService {
             
    
             deathRegistryBasicInfo.setRegistrationUnit(deathBasicInfo.getRegistrationUnit());
-            deathRegistryBasicInfo.setDateOfDeath(deathBasicInfo.getDateOfDeath());
-            deathRegistryBasicInfo.setTimeOfDeath(deathBasicInfo.getTimeOfDeath());
+            // deathRegistryBasicInfo.setDateOfDeath(deathBasicInfo.getDateOfDeath());
+            // deathRegistryBasicInfo.setTimeOfDeath(deathBasicInfo.getTimeOfDeath());
             deathRegistryBasicInfo.setTenantId(deathBasicInfo.getTenantId());
             deathRegistryBasicInfo.setRegistrationUnit(deathBasicInfo.getRegistrationUnit());
             deathRegistryBasicInfo.setDateOfDeath(deathBasicInfo.getDateOfDeath());
@@ -166,6 +166,17 @@ public class DeathRegistryRequestService {
             deathRegistryBasicInfo.setOccupation(deathBasicInfo.getOccupation());
             deathRegistryBasicInfo.setDeathACKNo(deathBasicInfo.getDeathACKNo());
             deathRegistryBasicInfo.setFuncionUID(deathBasicInfo.getFuncionUID());
+
+            deathRegistryBasicInfo.setDateOfDeath1(deathBasicInfo.getDateOfDeath1());
+            deathRegistryBasicInfo.setTimeOfDeath1(deathBasicInfo.getTimeOfDeath1());
+            deathRegistryBasicInfo.setTimeOfDeathUnit1(deathBasicInfo.getTimeOfDeathUnit1());
+            deathRegistryBasicInfo.setDeathDateUnavailable(deathBasicInfo.isDeathDateUnavailable());
+            deathRegistryBasicInfo.setDeceasedUnIdentified(deathBasicInfo.getDeceasedUnIdentified());
+            deathRegistryBasicInfo.setNormalRegn(deathBasicInfo.isNormalRegn());
+            deathRegistryBasicInfo.setDelayedWithinThirty(deathBasicInfo.isDelayedWithinThirty());
+            deathRegistryBasicInfo.setDelayedWithinOneyear(deathBasicInfo.isDelayedWithinOneyear());
+            deathRegistryBasicInfo.setDelayedAfterOneyear(deathBasicInfo.isDelayedAfterOneyear());
+
             return deathRegistryBasicInfo;
         
     }
@@ -482,8 +493,8 @@ public DeathRegistryBasicInfo createRegistryBasicInfoAbandoned(DeathAbandonedReq
     DeathBasicInfo deathBasicInfo = deathrequest.getDeathAbandonedDtls().get(0).getDeathBasicInfo();
     deathRegistryBasicInfo.setTenantId(deathBasicInfo.getTenantId());
     deathRegistryBasicInfo.setRegistrationUnit(deathBasicInfo.getRegistrationUnit());
-    deathRegistryBasicInfo.setDateOfDeath(deathBasicInfo.getDateOfDeath());
-    deathRegistryBasicInfo.setTimeOfDeath(deathBasicInfo.getTimeOfDeath());
+    // deathRegistryBasicInfo.setDateOfDeath(deathBasicInfo.getDateOfDeath());
+    // deathRegistryBasicInfo.setTimeOfDeath(deathBasicInfo.getTimeOfDeath());
     deathRegistryBasicInfo.setTenantId(deathBasicInfo.getTenantId());
     deathRegistryBasicInfo.setRegistrationUnit(deathBasicInfo.getRegistrationUnit());
     deathRegistryBasicInfo.setDateOfDeath(deathBasicInfo.getDateOfDeath());
@@ -551,6 +562,16 @@ public DeathRegistryBasicInfo createRegistryBasicInfoAbandoned(DeathAbandonedReq
     deathRegistryBasicInfo.setOccupation(deathBasicInfo.getOccupation());
     deathRegistryBasicInfo.setDeathACKNo(deathBasicInfo.getDeathACKNo());
     deathRegistryBasicInfo.setFuncionUID(deathBasicInfo.getFuncionUID());
+
+    deathRegistryBasicInfo.setDateOfDeath1(deathBasicInfo.getDateOfDeath1());
+    deathRegistryBasicInfo.setTimeOfDeath1(deathBasicInfo.getTimeOfDeath1());
+    deathRegistryBasicInfo.setTimeOfDeathUnit1(deathBasicInfo.getTimeOfDeathUnit1());
+    deathRegistryBasicInfo.setDeathDateUnavailable(deathBasicInfo.isDeathDateUnavailable());
+    deathRegistryBasicInfo.setDeceasedUnIdentified(deathBasicInfo.getDeceasedUnIdentified());
+    deathRegistryBasicInfo.setNormalRegn(deathBasicInfo.isNormalRegn());
+    deathRegistryBasicInfo.setDelayedWithinThirty(deathBasicInfo.isDelayedWithinThirty());
+    deathRegistryBasicInfo.setDelayedWithinOneyear(deathBasicInfo.isDelayedWithinOneyear());
+    deathRegistryBasicInfo.setDelayedAfterOneyear(deathBasicInfo.isDelayedAfterOneyear());
     return deathRegistryBasicInfo;
 
 }

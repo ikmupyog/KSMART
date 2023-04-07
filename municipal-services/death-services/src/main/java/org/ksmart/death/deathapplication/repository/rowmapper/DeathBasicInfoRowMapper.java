@@ -83,6 +83,10 @@ public class DeathBasicInfoRowMapper  implements ResultSetExtractor  , BaseRowMa
           .timeOfDeathUnit1(rs.getString("timeofdeath_unit_to"))
           .deceasedUnIdentified(rs.getInt("deceased_unidentified"))
           .deceasedAadharNotAvailable(rs.getBoolean("deceased_aadhar_unavailable"))
+          .normalRegn(rs.getBoolean("normal_regn"))
+          .delayedWithinThirty(rs.getBoolean("delayed_within_thirty"))
+          .delayedWithinOneyear(rs.getBoolean("delayed_within_oneyear"))
+          .delayedAfterOneyear(rs.getBoolean("delayed_after_oneyear"))
           .build();
       }
    

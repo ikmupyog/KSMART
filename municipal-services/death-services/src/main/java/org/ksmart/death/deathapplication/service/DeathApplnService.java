@@ -90,7 +90,7 @@ public class DeathApplnService {
      public List<DeathDtl> create(DeathDtlRequest request) {
           // Rakhi S IKM validate mdms data on 14.02.2023
           Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getTenantId());
-         //Jasmine 22.03.2023
+          validatorService.ruleEngineDeath(request);
           validatorService.validateCommonFields( request);
           mdmsValidator.validateDeathMDMSData(request,mdmsData);
           //Rakhi S ikm on 08.02.2023

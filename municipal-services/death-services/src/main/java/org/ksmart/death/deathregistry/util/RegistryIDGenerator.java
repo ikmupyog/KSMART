@@ -97,7 +97,7 @@ public class RegistryIDGenerator {
             modulepaths.forEach(modulepath -> {
                 try {
                     mdmsResMap.putAll(JsonPath.read(mdmsdata,modulepath));
-                    log.error("jsonpath1"+JsonPath.read(mdmsdata,modulepath));
+                    // log.error("jsonpath1"+JsonPath.read(mdmsdata,modulepath));
                 } catch (Exception e) {
                     log.error("Error while fetching MDMS data",e);
                     throw new CustomException(DeathRegistryConstants.INVALID_TENANT_ID_MDMS_KEY,

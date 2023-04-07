@@ -474,4 +474,27 @@ public class DeathRegistryBasicInfo {
    private String  deathPlaceInstitutionNameMl ;
 
    //Details for NAC End
+
+   //Rakhi S on 07.04.2023
+   private boolean normalRegn ;
+   private boolean delayedWithinThirty ;
+   private boolean delayedWithinOneyear ;
+   private boolean delayedAfterOneyear ;
+
+   @JsonProperty("DeathDateUnavailable")
+   private boolean deathDateUnavailable ;
+
+   @JsonProperty("DateOfDeath1")
+   private Long dateOfDeath1 ;
+
+   @JsonProperty("TimeOfDeath1")
+   private Integer  timeOfDeath1 ;
+
+   @Size(max = 64)
+   @JsonProperty("TimeOfDeathUnit1")
+   private String timeOfDeathUnit1 ;
+
+   @JsonProperty("DeceasedUnIdentified")
+   private Integer  deceasedUnIdentified ;
+
 }

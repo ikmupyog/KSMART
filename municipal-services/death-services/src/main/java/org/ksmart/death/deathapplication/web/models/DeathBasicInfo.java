@@ -428,4 +428,8 @@ public class DeathBasicInfo {
    @JsonProperty("DeathPlaceInstitutionNameMl")
    private String  deathPlaceInstitutionNameMl ;
 
+   private boolean normalRegn ;
+   private boolean delayedWithinThirty ;
+   private boolean delayedWithinOneyear ;
+   private boolean delayedAfterOneyear ;
 }
