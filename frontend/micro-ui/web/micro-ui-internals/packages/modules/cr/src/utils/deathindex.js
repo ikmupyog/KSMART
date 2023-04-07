@@ -567,7 +567,7 @@ export const convertToDeathRegistration = (data = {}) => {
         assignee: [],
         workflowcode: data?.InformationDeath?.workFlowCode,
         taxHeadMasterCode: "CRB_FEES",
-        taxAmount: 12,
+        taxAmount: data?.InformationDeath?.workFlowAmount,
       },
     ],
   };
