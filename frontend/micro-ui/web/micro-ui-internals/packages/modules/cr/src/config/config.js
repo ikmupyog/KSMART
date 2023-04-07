@@ -309,7 +309,7 @@ export const newConfig = [
       },
       {
         route: "adoption-address-birth",
-        component: "AdoptionAddressBasePage",
+        component: "AddressBasePage",
         texts: {
           headerCaption: "",
           header: "",
@@ -318,7 +318,7 @@ export const newConfig = [
           skipText: "",
         },
         withoutLabel: true,
-        key: "AdoptionAddressBasePage",
+        key: "AddressBasePage",
         nextStep: null,
         type: "component",
         hideInEmployee: false,
