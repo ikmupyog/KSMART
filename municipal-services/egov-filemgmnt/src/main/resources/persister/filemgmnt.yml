@@ -611,7 +611,7 @@ serviceMaps:
     fromTopic: save-fm-arisingfiledetails
     isTransaction: true
     queryMaps:
-      - query: INSERT INTO public.eg_fm_arisingfile(id, tenantid, filenumber, filecode, filearisingmode, filearisingdate, financialyear, workflowcode, businessservice, assignee, action, filestatus, createdby, createdtime, lastmodifiedby, lastmodifiedtime)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+      - query: INSERT INTO public.eg_fm_arisingfile(id, tenantid, filenumber, filecode, filearisingmode, filearisingdate, financialyear, workflowcode, businessservice, assignee, action, filestatus, createdby, createdtime, lastmodifiedby, lastmodifiedtime, serviceid, subject, applicationdetails)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?);
         basePath: ArisingFile.*
         jsonMaps:
         - jsonPath: $.ArisingFile.*.id
@@ -644,7 +644,15 @@ serviceMaps:
         
         - jsonPath: $.ArisingFile.*.auditDetails.lastModifiedBy
 
-        - jsonPath: $.ArisingFile.*.auditDetails.lastModifiedTime      
+        - jsonPath: $.ArisingFile.*.auditDetails.lastModifiedTime
+
+        - jsonPath: $.ArisingFile.*.auditDetails.serviceId
+
+        - jsonPath: $.ArisingFile.*.auditDetails.subject
+
+        - jsonPath: $.ArisingFile.*.auditDetails.applicationDetails
+
+
 
   - version: 1.0
     description: Update arising file  details in egov_filemgmnt database, eg_fm_arisingfile table
