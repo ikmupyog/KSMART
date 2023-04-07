@@ -12,16 +12,14 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
     { i18nKey: "Father", code: "FATHER" },
     { i18nKey: "Mother", code: "MOTHER" },
     { i18nKey: "Others", code: "OTHERS" },
-  ];
-  console.log(formData?.ChildDetails?.InitiatorinfoDetails?.relation);
-  console.log(cmbRelation.filter(cmbRelation => cmbRelation.code === formData?.ChildDetails?.InitiatorinfoDetails?.relation)[0].code);
+  ];  
   // console.log(Digit.UserService.getUser().info);
   const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
   const { name: name, } = Digit.UserService.getUser().info; // window.localStorage.getItem("user-info");
   const { mobileNumber: mobileNumber, } = Digit.UserService.getUser().info; // window.localStorage.getItem("user-info");
   const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.InitiatorinfoDetails?.isInitiatorDeclaration : formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration : false);
   const [isCaretaker, setIsCaretaker] = useState(formData?.InitiatorinfoDetails?.isCaretaker ? formData?.InitiatorinfoDetails?.isCaretaker : formData?.ChildDetails?.InitiatorinfoDetails?.isCaretaker ? formData?.ChildDetails?.InitiatorinfoDetails?.isCaretaker : false);
-  const [relation, setrelation] = useState(formData?.InitiatorinfoDetails?.relation.code ? formData?.InitiatorinfoDetails?.relation : formData?.ChildDetails?.InitiatorinfoDetails?.relation ? (cmbRelation.filter(cmbRelation => cmbRelation.code === formData?.ChildDetails?.InitiatorinfoDetails?.relation)[0].code) : "");
+  const [relation, setrelation] = useState(formData?.InitiatorinfoDetails?.relation.code ? formData?.InitiatorinfoDetails?.relation : formData?.ChildDetails?.InitiatorinfoDetails?.relation ? cmbRelation.filter(cmbRelation => cmbRelation.code === formData?.ChildDetails?.InitiatorinfoDetails?.relation)[0] : "");
   const [initiatorNameEn, setinitiatorNameEn] = useState(formData?.InitiatorinfoDetails?.initiatorNameEn ? formData?.InitiatorinfoDetails?.initiatorNameEn : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorNameEn ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorNameEn : name);
   const [initiatorAadhar, setinitiatorAadhar] = useState(formData?.InitiatorinfoDetails?.initiatorAadhar ? formData?.InitiatorinfoDetails?.initiatorAadhar : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAadhar ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAadhar : "");
   const [initiatorMobile, setinitiatorMobile] = useState(formData?.InitiatorinfoDetails?.initiatorMobile ? formData?.InitiatorinfoDetails?.initiatorMobile : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorMobile ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorMobile : mobileNumber);
