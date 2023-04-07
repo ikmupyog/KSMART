@@ -601,6 +601,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
 
   // }
   function selectDeathDate(value) {
+    console.log("value",value)
     setDateOfDeath(value);
     const today = new Date();
     today.setHours(0, 0, 0, 0);

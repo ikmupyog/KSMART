@@ -13,7 +13,8 @@ import FormStep from "../../../../../react-components/src/molecules/FormStep";
 const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = false }) => {
   // console.log(JSON.stringify(formData));  
   // console.log(formData);
-  // console.log(isEditBirth);
+  // console.log(isEditBirth);  
+  sessionStorage.removeItem("applicationNumber");
   const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
   const [workFlowCode, setWorkFlowCode] = useState(formData?.ChildDetails?.workFlowCode);
@@ -321,6 +322,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   }
 
   function setselectChildDOB(value) {
+   
     setChildDOB(value);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -468,9 +470,9 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     if (typeof value === "string") {
       cb(value);
       console.log(value);
-      let hour = value;
-      let period = hour > 12 ? "PM" : "AM";
-      console.log(period);
+      // let hour = value;
+      // let period = hour > 12 ? "PM" : "AM";
+      // console.log(period);
       setbirthDateTime(value);
     }
   };

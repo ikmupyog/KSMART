@@ -4,25 +4,26 @@ import PGRTimeline from "../../components/PGRTimeline";
 
 const SelectPincode = ({ t, config, onSelect, value }) => {
   const tenants = Digit.Hooks.pgr.useTenants();
+  console.log("first", tenants)
   // const __initPincode = Digit.SessionStorage.get("PGR_CREATE_PINCODE");
   const [pincode, setPincode] = useState(() => {
     const { pincode } = value;
     return pincode;
   });
+
   let isNextDisabled = pincode?.length === 6 ? false : true;
   const [pincodeServicability, setPincodeServicability] = useState(null);
 
-
-  const goNext = async (data) => {
-    var foundValue = tenants.find((obj) => obj.pincode?.find((item) => item == data?.pincode));
+  const goNext = async () => {
+    var foundValue = tenants.find((obj) => obj.pincode.find(pin => pin == pincode));
     if (foundValue) {
       Digit.SessionStorage.set("city_complaint", foundValue);
-      let response = await Digit.LocationService.getLocalities(foundValue.code);
-      if (response.TenantBoundary.length > 0) {
-        let __localityList = Digit.LocalityService.get(response.TenantBoundary[0]);
-        const filteredLocalities = __localityList.filter((obj) => obj.pincode?.find((item) => item == data.pincode));
-      }
-      onSelect({ ...data, city_complaint: foundValue });
+      // let response = await Digit.LocationService.getLocalities(foundValue.code);
+      // if (response.TenantBoundary.length > 0) {
+      //   let __localityList = Digit.LocalityService.get(response.TenantBoundary[0]);
+      //   const filteredLocalities = __localityList.filter((obj) => obj.pincode?.find((item) => item === pincode));
+      // }
+      onSelect({ pincode: pincode, city_complaint: foundValue });
     } else {
       Digit.SessionStorage.set("city_complaint", undefined);
       Digit.SessionStorage.set("selected_localities", undefined);
@@ -35,12 +36,12 @@ const SelectPincode = ({ t, config, onSelect, value }) => {
       isNextDisabled = false
     }
     if (e.target.value.trim().length >= 0) {
-      const phone = e.target.value.length <= 6 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 6)
-      setPincode(phone);
+      const code = e.target.value.length <= 6 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 6)
+      setPincode(code);
     }
   }
 
-  const onSkip = () => onSelect();
+  const onSkip = () => onSelect({ pincode: pincode });
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <PGRTimeline currentStep={2} /> : null}

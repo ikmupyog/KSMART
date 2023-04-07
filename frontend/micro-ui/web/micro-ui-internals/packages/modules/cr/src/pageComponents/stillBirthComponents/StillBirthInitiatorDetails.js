@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, TextArea, Toast } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-import Timeline from "../../components/CRTimeline";
+import Timeline from "../../components/SBRTimeline";
 
 const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData, isEditStillBirth = false }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -11,6 +11,12 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData, isEd
   const [isDisableEdit, setisDisableEdit] = useState(isEditStillBirth ? isEditStillBirth : false);
   const { name: name } = Digit.UserService.getUser().info; // window.localStorage.getItem("user-info");
   const { mobileNumber: mobileNumber } = Digit.UserService.getUser().info; // window.localStorage.getItem("user-info");
+  const cmbRelation = [
+    { i18nKey: "Father", code: "FATHER" },
+    { i18nKey: "Mother", code: "MOTHER" },
+    { i18nKey: "Others", code: "OTHERS" },
+  ];
+ 
   const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(
     formData?.StillBirthInitiatorDetails?.isInitiatorDeclaration
       ? formData?.StillBirthInitiatorDetails?.isInitiatorDeclaration
@@ -25,6 +31,7 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData, isEd
       ? formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.isCaretaker
       : false
   );
+   
   const [relation, setrelation] = useState(
     formData?.StillBirthInitiatorDetails?.relation.code
       ? formData?.StillBirthInitiatorDetails?.relation
@@ -76,11 +83,8 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData, isEd
   const [initiatorDesiError, setinitiatorDesiError] = useState(formData?.StillBirthInitiatorDetails?.initiatorDesi ? false : false);
 
   const onSkip = () => onSelect();
-  const cmbRelation = [
-    { i18nKey: "Father", code: "FATHER" },
-    { i18nKey: "Mother", code: "MOTHER" },
-    { i18nKey: "Others", code: "OTHERS" },
-  ];
+
+ 
   useEffect(() => {
     if (isInitialRender) {
       if (formData?.StillBirthInitiatorDetails?.isInitiatorDeclaration != null) {

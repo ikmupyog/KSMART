@@ -9,7 +9,7 @@ import SearchComplaint from "./inbox/search";
 import { LOCALE } from "../constants/Localization";
 
 const DesktopInbox = ({
-  data,
+  data = [],
   onFilterChange,
   onSearch,
   isLoading,
@@ -87,7 +87,7 @@ const DesktopInbox = ({
           ))}
       </Card>
     );
-  } else if (data.length > 0) {
+  } else if (data && data.length > 0) {
     result = (
       <ComplaintTable
         t={t}

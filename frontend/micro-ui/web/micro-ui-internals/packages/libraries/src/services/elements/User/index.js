@@ -56,14 +56,16 @@ export const UserService = {
       }
     }
   },
-  sendOtp: (details, stateCode) =>
-    ServiceRequest({
+  sendOtp: (details, stateCode) =>{
+  console.log("send otp===",details, stateCode);
+    return(ServiceRequest({
       serviceName: "sendOtp",
       url: Urls.OTP_Send,
       data: details,
       auth: false,
       params: { tenantId: stateCode },
-    }),
+    }))
+  },
   setUser: (data) => {
     return Digit.SessionStorage.set("User", data);
   },

@@ -11,7 +11,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
   permntOutsideKeralaLocalityNameEn, setpermntOutsideKeralaLocalityNameEn, permntOutsideKeralaLocalityNameMl, setpermntOutsideKeralaLocalityNameMl,
   permntOutsideKeralaStreetNameEn, setpermntOutsideKeralaStreetNameEn, permntOutsideKeralaStreetNameMl, setpermntOutsideKeralaStreetNameMl,
   permntOutsideKeralaPostOfficeEn, setpermntoutsideKeralaPostOfficeEn, permntOutsideKeralaPostOfficeMl, setpermntoutsideKeralaPostOfficeMl,
-  value, setValue,isEditBirth = false, isEditDeath = false,isEditStillBirth = false,isEditAdoption,
+  value, setValue,isEditBirth = false, isEditDeath = false,isEditStillBirth = false,isEditAdoption,isEditBirthNAC=false
   // isInitialRender, setIsInitialRender
 
 }) => {
