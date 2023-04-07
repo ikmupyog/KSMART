@@ -8,13 +8,14 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   permntInKeralaAdrLBName, setpermntInKeralaAdrLBName,
   permntInKeralaAdrTaluk, setpermntInKeralaAdrTaluk, permntInKeralaAdrVillage, setpermntInKeralaAdrVillage,
   permntInKeralaAdrPostOffice, setpermntInKeralaAdrPostOffice, permntInKeralaAdrPincode, setpermntInKeralaAdrPincode,
-  permntInKeralaAdrHouseNameEn, setpermntInKeralaAdrHouseNameEn,
+  permntInKeralaAdrHouseNameEn, setpermntInKeralaAdrHouseNameEn,Districtvalues, setDistrictvalue,
   permntInKeralaAdrHouseNameMl, setpermntInKeralaAdrHouseNameMl, permntInKeralaAdrLocalityNameEn, setpermntInKeralaAdrLocalityNameEn,
   permntInKeralaAdrLocalityNameMl, setpermntInKeralaAdrLocalityNameMl, permntInKeralaAdrStreetNameEn, setpermntInKeralaAdrStreetNameEn,
   permntInKeralaAdrStreetNameMl, setpermntInKeralaAdrStreetNameMl, lbs, setLbs, Talukvalues, setLbsTalukvalue, Villagevalues, setLbsVillagevalue, permntInKeralaWardNo,
-  setpermntInKeralaWardNo, PostOfficevalues, setPostOfficevalues, isEditBirth = false, isEditDeath = false,
+  setpermntInKeralaWardNo, PostOfficevalues, setPostOfficevalues, isEditBirth = false, isEditDeath = false,isEditAdoption,
   isEditStillBirth = false,
   // isInitialRender, setIsInitialRender
+  // isInitialRender, setIsInitialRender isEditBirth ? isEditBirth : isEditDeath ? false :
 
 }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -224,6 +225,39 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
       if (cmbFilterPostOffice.length > 0 && (permntInKeralaAdrPostOffice === undefined || permntInKeralaAdrPostOffice === "")) {
         setpermntInKeralaAdrPostOffice(cmbFilterPostOffice.filter(cmbFilterPostOffice => cmbFilterPostOffice.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.permntInKeralaAdrPostOffice)[0]);
         let pin = cmbFilterPostOffice.filter(cmbFilterPostOffice => cmbFilterPostOffice.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.permntInKeralaAdrPostOffice)[0];
+        setpermntInKeralaAdrPincode(pin.pincode);
+      }
+    }
+  } else if (isEditAdoption !==false) {
+    if (formData?.AdoptionAddressBasePage?.permntInKeralaAdrDistrict != null) {
+      if (cmbDistrict.length > 0 && (permntInKeralaAdrDistrict === undefined || permntInKeralaAdrDistrict === "")) {
+        setpermntInKeralaAdrDistrict(cmbDistrict.filter(cmbDistrict => cmbDistrict.code === formData?.AddressBirthDetails?.permntInKeralaAdrDistrict)[0]);
+      }
+    }
+    if (formData?.AdoptionAddressBasePage?.permntInKeralaAdrLBName != null) {
+      if (cmbLB.length > 0 && (permntInKeralaAdrLBName === undefined || permntInKeralaAdrLBName === "")) {
+        setpermntInKeralaAdrLBName(cmbLB.filter(cmbLB => cmbLB.code === formData?.AdoptionAddressBasePage?.permntInKeralaAdrLBName)[0]);
+      }
+    }
+    if (formData?.AdoptionAddressBasePage?.permntInKeralaAdrTaluk != null) {
+      if (cmbTaluk.length > 0 && (permntInKeralaAdrTaluk === undefined || permntInKeralaAdrTaluk === "")) {
+        setpermntInKeralaAdrTaluk(cmbTaluk.filter(cmbTaluk => cmbTaluk.code === formData?.AdoptionAddressBasePage?.permntInKeralaAdrTaluk)[0]);
+      }
+    }
+    if (formData?.AdoptionAddressBasePage?.permntInKeralaAdrVillage != null) {
+      if (cmbVillage.length > 0 && (permntInKeralaAdrVillage === undefined || permntInKeralaAdrVillage === "")) {
+        setpermntInKeralaAdrVillage(cmbVillage.filter(cmbVillage => cmbVillage.code === formData?.AdoptionAddressBasePage?.permntInKeralaAdrVillage)[0]);
+      }
+    }
+    if (formData?.AdoptionAddressBasePage?.permntInKeralaWardNo != null) {
+      if (cmbWardNo.length > 0 && (permntInKeralaWardNo === undefined || permntInKeralaWardNo === "")) {
+        setpermntInKeralaWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.AdoptionAddressBasePage?.permntInKeralaWardNo)[0]);
+      }
+    }
+    if (formData?.AdoptionAddressBasePage?.permntInKeralaAdrPostOffice != null) {
+      if (cmbFilterPostOffice.length > 0 && (permntInKeralaAdrPostOffice === undefined || permntInKeralaAdrPostOffice === "")) {
+        setpermntInKeralaAdrPostOffice(cmbFilterPostOffice.filter(cmbFilterPostOffice => cmbFilterPostOffice.code === formData?.AdoptionAddressBasePage?.permntInKeralaAdrPostOffice)[0]);
+        let pin = cmbFilterPostOffice.filter(cmbFilterPostOffice => cmbFilterPostOffice.code === formData?.AdoptionAddressBasePage?.permntInKeralaAdrPostOffice)[0];
         setpermntInKeralaAdrPincode(pin.pincode);
       }
     }

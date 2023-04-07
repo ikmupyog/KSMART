@@ -30,8 +30,10 @@ const EmployeeApp = ({
   const location = useLocation();
   const showLanguageChange = location?.pathname?.includes("language-selection");
   const isUserProfile = location?.pathname?.includes("user/profile");
+  const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false) 
   useEffect(() => {
     Digit.UserService.setType("employee");
+    setFlag(false)
   }, []);
   sourceUrl = "https://s3.ap-south-1.amazonaws.com/egov-qa-assets";
   const pdfUrl = "https://pg-egov-assets.s3.ap-south-1.amazonaws.com/Upyog+Code+and+Copyright+License_v1.pdf"

@@ -11,7 +11,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
   permntOutsideKeralaLocalityNameEn, setpermntOutsideKeralaLocalityNameEn, permntOutsideKeralaLocalityNameMl, setpermntOutsideKeralaLocalityNameMl,
   permntOutsideKeralaStreetNameEn, setpermntOutsideKeralaStreetNameEn, permntOutsideKeralaStreetNameMl, setpermntOutsideKeralaStreetNameMl,
   permntOutsideKeralaPostOfficeEn, setpermntoutsideKeralaPostOfficeEn, permntOutsideKeralaPostOfficeMl, setpermntoutsideKeralaPostOfficeMl,
-  value, setValue,isEditBirth = false, isEditDeath = false,isEditStillBirth = false,
+  value, setValue,isEditBirth = false, isEditDeath = false,isEditStillBirth = false,isEditAdoption,isEditBirthNAC=false
   // isInitialRender, setIsInitialRender
 
 }) => {
@@ -32,7 +32,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
   const { data: District = {}, isDistrictLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
   // const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
   // const { data: boundaryList = {}, isLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
-
+//isEditBirth ? isEditBirth : isEditDeath ? false :
   const [toast, setToast] = useState(false);
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : isEditStillBirth ? isEditStillBirth :  false);
@@ -135,6 +135,22 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
     if (formData?.StillBirthChildDetails?.AddressBirthDetails?.permntOutsideKeralaVillage != null) {
       if (cmbVillage.length > 0 && (permntOutsideKeralaVillage === undefined || permntOutsideKeralaVillage === "")) {
         setpermntOutsideKeralaVillage(cmbVillage.filter(cmbVillage => cmbVillage.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.permntOutsideKeralaVillage)[0]);
+      }
+    }
+  } else if (isEditAdoption !==false) {
+    if (formData?.AdoptionAddressBasePage?.permntOutsideKeralaDistrict != null) {
+      if (cmbDistrict.length > 0 && (permntOutsideKeralaDistrict === undefined || permntOutsideKeralaDistrict === "")) {
+        setpermntOutsideKeralaDistrict(cmbDistrict.filter(cmbDistrict => cmbDistrict.code === formData?.AdoptionAddressBasePage?.permntOutsideKeralaDistrict)[0]);
+      }
+    }
+    if (formData?.AdoptionAddressBasePage?.permntOutsideKeralaTaluk != null) {
+      if (cmbTaluk.length > 0 && (permntOutsideKeralaTaluk === undefined || permntOutsideKeralaTaluk === "")) {
+        setpermntOutsideKeralaTaluk(cmbTaluk.filter(cmbTaluk => cmbTaluk.code === formData?.AdoptionAddressBasePage?.permntOutsideKeralaTaluk)[0]);
+      }
+    }
+    if (formData?.AdoptionAddressBasePage?.permntOutsideKeralaVillage != null) {
+      if (cmbVillage.length > 0 && (permntOutsideKeralaVillage === undefined || permntOutsideKeralaVillage === "")) {
+        setpermntOutsideKeralaVillage(cmbVillage.filter(cmbVillage => cmbVillage.code === formData?.AdoptionAddressBasePage?.permntOutsideKeralaVillage)[0]);
       }
     }
   }

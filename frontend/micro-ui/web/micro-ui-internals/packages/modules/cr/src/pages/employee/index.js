@@ -11,6 +11,7 @@ import ApplicationAdoptionDetails from './ApplicationAdoptionDetails';
 import ApplicationAbandonedDeathDetails from "./ApplicationAbandonedDeathDetails";
 import ApplicationDeathDetails from "./ApplicationDeathDetails";
 import ApplicationStillBirthDetails from "./ApplicationStillBirthDetails";
+import ApplicationAbandonedBirthDetails from "./ApplicationAbandonedBirthDetails";
 import DeathCrFlow from "./Death-route";
 import SearchFlow from "./Search-route";
 import SearchInbox from './Inbox-route';
@@ -30,6 +31,7 @@ const CRBreadCrumb = ({ location }) => {
   const isApplicationBirthDetails = location?.pathname?.includes("cr/application-birthdetails");
   const isApplicationAdoptionDetails = location?.pathname?.includes("cr/application-Adoptiondetails");
   const isApplicationStillBirthDetails = location?.pathname?.includes("cr/application-stillbirth");
+  const isApplicationAbandonedBirthDetails = location?.pathname?.includes("cr/application-abandonedbirth");
   const isNewApplication = location?.pathname?.includes("tl/new-application");
   const isResponse = location?.pathname?.includes("tl/response");
   const isMobile = window.Digit.Utils.browser.isMobile();
@@ -144,19 +146,19 @@ const CRBreadCrumb = ({ location }) => {
     },
     {
       path: sessionStorage.getItem("deathApplicationNo") ? `/digit-ui/employee/cr/application-birthdetails/${sessionStorage.getItem("birthApplicationNo")}` : "",
-      content: t("Birth Application Details"),
+      content: t("BIRTH_APPLICATION_DETAILS"),
       show: isApplicationBirthDetails ||
         breadCrumbUrls.includes("home/application-birthdetails")
     },
     {
       path: sessionStorage.getItem("deathApplicationNo") ? `/digit-ui/employee/cr/application-Adoptiondetails/${sessionStorage.getItem("birthApplicationNo")}` : "",
-      content: t("Adoption Application Details"),
+      content: t("ADOPTION_APPLICATION_DETAILS"),
       show: isApplicationAdoptionDetails ||
         breadCrumbUrls.includes("home/application-Adoptiondetails")
     },
     {
       path: sessionStorage.getItem("applicationno") ? `/digit-ui/employee/cr/application-stillbirth/${sessionStorage.getItem("birthApplicationNo")}` : "",
-      content: t("Still Birth Application Details"),
+      content: t("STILL_BIRTH_APPLICATION_DETAILS"),
       show: isApplicationStillBirthDetails ||
         breadCrumbUrls.includes("home/application-stillbirth")
     },
@@ -224,6 +226,7 @@ const EmployeeApp = ({ path, url, userType }) => {
          
           <PrivateRoute path={`${path}/application-details/:id`} component={() => <ApplicationDetails parentRoute={path} />} />
           <PrivateRoute path={`${path}/application-stillbirth/:id`} component={() => <ApplicationStillBirthDetails parentRoute={path} />} />
+          <PrivateRoute path={`${path}/application-abandonedbirth/:id`} component={() => <ApplicationAbandonedBirthDetails parentRoute={path} />} />
           <PrivateRoute path={`${path}/application-Adoptiondetails/:id`} component={() => <ApplicationAdoptionDetails parentRoute={path} />} />
           <PrivateRoute path={`${path}/application-deathdetails/:id`} component={() => <ApplicationDeathDetails parentRoute={path} />} />
           <PrivateRoute path={`${path}/application-abandoneddeathdetails/:id`} component={() => <ApplicationAbandonedDeathDetails parentRoute={path} />} />

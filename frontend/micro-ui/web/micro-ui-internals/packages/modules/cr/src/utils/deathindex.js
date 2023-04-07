@@ -578,7 +578,8 @@ export const convertToEditDeathRegistration = (data = {}) => {
   const empTenantId = Digit.ULBService.getCurrentUlb();
   // let tenantId = "";
   // tenantId = empTenantId["code"];
- 
+  // console.log(data);
+  // console.log(data?.InformationDeath?.workFlowCode);
 
   const formdata = {
     deathCertificateDtls: [
@@ -592,9 +593,9 @@ export const convertToEditDeathRegistration = (data = {}) => {
           TimeOfDeath: parseInt(data?.InformationDeath?.TimeOfDeath),
           TimeOfDeathUnit: "AM",
           DateOfDeath1: Date.parse(data?.InformationDeath?.DateOfDeath1),
-          DeathPlace: data?.InformationDeath?.DeathPlace.code,
-          DeathPlaceType: data?.InformationDeath?.DeathPlaceType ? data?.InformationDeath?.DeathPlaceType.code : null,
-          DeathPlaceInstId: data?.InformationDeath?.DeathPlaceInstId ? data?.InformationDeath?.DeathPlaceInstId.code : null,
+          DeathPlace: data?.InformationDeath?.DeathPlace?.code,
+          DeathPlaceType: data?.InformationDeath?.DeathPlaceType ? data?.InformationDeath?.DeathPlaceType?.code : null,
+          DeathPlaceInstId: data?.InformationDeath?.DeathPlaceInstId ? data?.InformationDeath?.DeathPlaceInstId?.code : null,
           VehicleNumber: data?.InformationDeath?.VehicleNumber,
           VehicleFromplaceEn: data?.InformationDeath?.VehicleFromplaceEn,
           VehicleFromplaceMl: data?.InformationDeath?.VehicleFromplaceMl,
@@ -602,14 +603,14 @@ export const convertToEditDeathRegistration = (data = {}) => {
           VehicleToPlaceMl: data?.InformationDeath?.VehicleToPlaceMl,
           VehicleFirstHalt: data?.InformationDeath?.VehicleFirstHalt,
           VehicleFirstHaltMl: data?.InformationDeath?.VehicleFirstHaltMl,
-          VehicleHospitalEn: data?.InformationDeath?.VehicleHospitalEn ? data?.InformationDeath?.VehicleHospitalEn.code : null,
-          DeathPlaceCountry: data?.InformationDeath?.DeathPlaceCountry ? data?.InformationDeath?.DeathPlaceCountry.code : null,
-          DeathPlaceState: data?.InformationDeath?.DeathPlaceState ? data?.InformationDeath?.DeathPlaceState.code : null,
-          DeathPlaceDistrict: data?.InformationDeath?.DeathPlaceState ? data?.InformationDeath?.DeathPlaceState.code : null,
+          VehicleHospitalEn: data?.InformationDeath?.VehicleHospitalEn ? data?.InformationDeath?.VehicleHospitalEn?.code : null,
+          DeathPlaceCountry: data?.InformationDeath?.DeathPlaceCountry ? data?.InformationDeath?.DeathPlaceCountry?.code : null,
+          DeathPlaceState: data?.InformationDeath?.DeathPlaceState ? data?.InformationDeath?.DeathPlaceState?.code : null,
+          DeathPlaceDistrict: data?.InformationDeath?.DeathPlaceState ? data?.InformationDeath?.DeathPlaceState?.code : null,
           DeathPlaceCity: data?.InformationDeath?.DeathPlaceCity,
           DeathPlaceRemarksEn: data?.InformationDeath?.DeathPlaceRemarksEn,
           DeathPlaceRemarksMl: data?.InformationDeath?.DeathPlaceRemarksMl,
-          DeathPlaceWardId: data?.InformationDeath?.DeathPlaceWardId ? data?.InformationDeath?.DeathPlaceWardId.code : null,
+          DeathPlaceWardId: data?.InformationDeath?.DeathPlaceWardId ? data?.InformationDeath?.DeathPlaceWardId?.code : null,
           PlaceOfBurialEn: data?.InformationDeath?.PlaceOfBurialEn,
           PlaceOfBurialMl: data?.InformationDeath?.PlaceOfBurialMl,
           DeathPlaceLocalityEn: data?.InformationDeath?.DeathPlaceLocalityEn,
@@ -617,11 +618,11 @@ export const convertToEditDeathRegistration = (data = {}) => {
           DeathPlaceStreetEn: data?.InformationDeath?.DeathPlaceStreetEn,
           DeathPlaceStreetMl: data?.InformationDeath?.DeathPlaceStreetMl,
           GeneralRemarks: data?.InformationDeath?.GeneralRemarks,
-          DeathPlaceHomeWardId: data?.InformationDeath?.DeathPlaceHomeWardId ? data?.InformationDeath?.DeathPlaceHomeWardId.code : null,
+          DeathPlaceHomeWardId: data?.InformationDeath?.DeathPlaceHomeWardId ? data?.InformationDeath?.DeathPlaceHomeWardId?.code : null,
           DeathPlaceHomePostofficeId: data?.InformationDeath?.DeathPlaceHomePostofficeId
-            ? data?.InformationDeath.DeathPlaceHomePostofficeId.code
+            ? data?.InformationDeath.DeathPlaceHomePostofficeId?.code
             : null,
-          DeathPlaceHomePincode: data?.InformationDeath?.DeathPlaceHomePincode ? data?.InformationDeath?.DeathPlaceHomePincode.code : null,
+          DeathPlaceHomePincode: data?.InformationDeath?.DeathPlaceHomePincode ? data?.InformationDeath?.DeathPlaceHomePincode?.code : null,
           DeathPlaceHomeLocalityEn: data?.InformationDeath?.DeathPlaceHomeLocalityEn ? data?.InformationDeath?.DeathPlaceHomeLocalityEn : null,
           DeathPlaceHomeLocalityMl: data?.InformationDeath?.DeathPlaceHomeLocalityMl ? data?.InformationDeath?.DeathPlaceHomeLocalityMl : null,
           DeathPlaceHomeStreetNameEn: data?.InformationDeath?.DeathPlaceHomeStreetNameEn ? data?.InformationDeath?.DeathPlaceHomeStreetNameEn : null,
@@ -630,7 +631,7 @@ export const convertToEditDeathRegistration = (data = {}) => {
           DeathPlaceHomeHoueNameMl: data?.InformationDeath?.DeathPlaceHomeHoueNameMl ? data?.InformationDeath?.DeathPlaceHomeHoueNameMl : null,
           DeceasedAadharNotAvailable: data?.InformationDeath?.DeceasedAadharNotAvailable ? data?.InformationDeath?.DeceasedAadharNotAvailable : false,
           DeceasedAadharNumber: data?.InformationDeath?.DeceasedAadharNumber,
-          DeceasedIdproofType: data?.InformationDeath?.DeceasedIdproofType ? data?.InformationDeath.DeceasedIdproofType.code : null,
+          DeceasedIdproofType: data?.InformationDeath?.DeceasedIdproofType ? data?.InformationDeath.DeceasedIdproofType?.code : null,
           DeceasedIdproofNo: data?.InformationDeath?.DeceasedIdproofNo,
           DeceasedFirstNameEn: data?.InformationDeath?.DeceasedFirstNameEn,
           DeceasedMiddleNameEn: data?.InformationDeath?.DeceasedMiddleNameEn,
@@ -639,31 +640,31 @@ export const convertToEditDeathRegistration = (data = {}) => {
           DeceasedMiddleNameMl: data?.InformationDeath?.DeceasedMiddleNameMl,
           DeceasedLastNameMl: data?.InformationDeath?.DeceasedLastNameMl,
           Age: parseInt(data?.InformationDeath?.Age),
-          AgeUnit: data?.InformationDeath?.AgeUnit.code,
-          DeceasedGender: data?.InformationDeath?.DeceasedGender.code,
-          Nationality: data?.InformationDeath?.Nationality.code,
-          Religion: data?.InformationDeath?.Religion.code,
-          Occupation: data?.InformationDeath?.Occupation ? data?.InformationDeath?.Occupation.code : null,
+          AgeUnit: data?.InformationDeath?.AgeUnit?.code,
+          DeceasedGender: data?.InformationDeath?.DeceasedGender?.code,
+          Nationality: data?.InformationDeath?.Nationality?.code,
+          Religion: data?.InformationDeath?.Religion?.code,
+          Occupation: data?.InformationDeath?.Occupation ? data?.InformationDeath?.Occupation?.code : null,
           funcionUID: "CRDRNR",
           registrationNo: null,
           DeathACKNo: data?.InformationDeath?.DeathACKNo,
         },
         AddressBirthDetails: {
-          presentaddressCountry: data?.AddressBirthDetails?.presentaddressCountry ? data?.AddressBirthDetails?.presentaddressCountry.code : null,
+          presentaddressCountry: data?.AddressBirthDetails?.presentaddressCountry ? data?.AddressBirthDetails?.presentaddressCountry?.code : null,
           presentaddressStateName: data?.AddressBirthDetails?.presentaddressStateName
-            ? data?.AddressBirthDetails?.presentaddressStateName.code
+            ? data?.AddressBirthDetails?.presentaddressStateName?.code
             : null,
           presentInsideKeralaLBName: data?.AddressBirthDetails?.presentInsideKeralaLBName
-            ? data?.AddressBirthDetails?.presentInsideKeralaLBName.code
+            ? data?.AddressBirthDetails?.presentInsideKeralaLBName?.code
             : null,
           presentInsideKeralaDistrict: data?.AddressBirthDetails?.presentInsideKeralaDistrict
-            ? data?.AddressBirthDetails?.presentInsideKeralaDistrict.code
+            ? data?.AddressBirthDetails?.presentInsideKeralaDistrict?.code
             : null,
           presentInsideKeralaTaluk: data?.AddressBirthDetails?.presentInsideKeralaTaluk
-            ? data?.AddressBirthDetails?.presentInsideKeralaTaluk.code
+            ? data?.AddressBirthDetails?.presentInsideKeralaTaluk?.code
             : null,
           presentInsideKeralaVillage: data?.AddressBirthDetails?.presentInsideKeralaVillage
-            ? data?.AddressBirthDetails?.presentInsideKeralaVillage.code
+            ? data?.AddressBirthDetails?.presentInsideKeralaVillage?.code
             : null,
           presentInsideKeralaLocalityNameEn: data?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn,
           presentInsideKeralaStreetNameEn: data?.AddressBirthDetails?.presentInsideKeralaStreetNameEn,
@@ -672,24 +673,24 @@ export const convertToEditDeathRegistration = (data = {}) => {
           presentInsideKeralaStreetNameMl: data?.AddressBirthDetails?.presentInsideKeralaStreetNameMl,
           presentInsideKeralaHouseNameMl: data?.AddressBirthDetails?.presentInsideKeralaHouseNameMl,
           presentInsideKeralaPincode: data?.AddressBirthDetails?.presentInsideKeralaPincode
-            ? data?.AddressBirthDetails?.presentInsideKeralaPincode.code
+            ? data?.AddressBirthDetails?.presentInsideKeralaPincode?.code
             : null,
           presentInsideKeralaPostOffice: data?.AddressBirthDetails?.presentInsideKeralaPostOffice
-            ? data?.AddressBirthDetails?.presentInsideKeralaPostOffice.code
+            ? data?.AddressBirthDetails?.presentInsideKeralaPostOffice?.code
             : null,
-          presentWardNo: data?.AddressBirthDetails?.presentWardNo ? data?.AddressBirthDetails?.presentWardNo.code : null,
+          presentWardNo: data?.AddressBirthDetails?.presentWardNo ? data?.AddressBirthDetails?.presentWardNo?.code : null,
           presentOutsideKeralaDistrict: data?.AddressBirthDetails?.presentOutsideKeralaDistrict
-            ? data?.AddressBirthDetails?.presentOutsideKeralaDistrict.code
+            ? data?.AddressBirthDetails?.presentOutsideKeralaDistrict?.code
             : null,
           presentOutsideKeralaTaluk: data?.AddressBirthDetails?.presentOutsideKeralaTaluk
             ? data?.AddressBirthDetails?.presentOutsideKeralaTaluk
             : null,
           presentOutsideKeralaVillage: data?.AddressBirthDetails?.presentOutsideKeralaVillage
-            ? data?.AddressBirthDetails?.presentOutsideKeralaVillage.code
+            ? data?.AddressBirthDetails?.presentOutsideKeralaVillage?.code
             : null,
           presentOutsideKeralaCityVilgeEn: data?.AddressBirthDetails?.presentOutsideKeralaCityVilgeEn,
           presentOutsideKeralaPincode: data?.AddressBirthDetails?.presentOutsideKeralaPincode
-            ? data?.AddressBirthDetails?.presentOutsideKeralaPincode.code
+            ? data?.AddressBirthDetails?.presentOutsideKeralaPincode?.code
             : null,
           presentOutsideKeralaPostOfficeEn: data?.AddressBirthDetails?.presentOutsideKeralaPostOfficeEn,
           presentOutsideKeralaPostOfficeMl: data?.AddressBirthDetails?.presentOutsideKeralaPostOfficeMl,
@@ -704,23 +705,23 @@ export const convertToEditDeathRegistration = (data = {}) => {
           presentOutSideIndiaAdressEnB: data?.AddressBirthDetails?.presentOutSideIndiaAdressEnB,
           presentOutSideIndiaAdressMlB: data?.AddressBirthDetails?.presentOutSideIndiaAdressMlB,
           presentOutSideIndiaProvinceEn: data?.AddressBirthDetails?.presentOutSideIndiaProvinceEn,
-          presentOutSideCountry: data?.AddressBirthDetails?.presentOutSideCountry ? data?.AddressBirthDetails?.presentOutSideCountry.code : null,
+          presentOutSideCountry: data?.AddressBirthDetails?.presentOutSideCountry ? data?.AddressBirthDetails?.presentOutSideCountry?.code : null,
           presentOutSideIndiaadrsVillage: data?.AddressBirthDetails?.presentOutSideIndiaadrsVillage
-            ? data?.AddressBirthDetails?.presentOutSideIndiaadrsVillage.code
+            ? data?.AddressBirthDetails?.presentOutSideIndiaadrsVillage?.code
             : null,
           presentOutSideIndiaadrsCityTown: data?.AddressBirthDetails?.presentOutSideIndiaadrsCityTown,
           isPrsentAddress: data?.AddressBirthDetails?.isPrsentAddress,
-          permtaddressCountry: data?.AddressBirthDetails?.permtaddressCountry ? data?.AddressBirthDetails?.permtaddressCountry.code : null,
-          permtaddressStateName: data?.AddressBirthDetails?.permtaddressStateName ? data?.AddressBirthDetails?.permtaddressStateName.code : null,
+          permtaddressCountry: data?.AddressBirthDetails?.permtaddressCountry ? data?.AddressBirthDetails?.permtaddressCountry?.code : null,
+          permtaddressStateName: data?.AddressBirthDetails?.permtaddressStateName ? data?.AddressBirthDetails?.permtaddressStateName?.code : null,
           permntInKeralaAdrLBName: data?.AddressBirthDetails?.permntInKeralaAdrLBName
-            ? data?.AddressBirthDetails?.permntInKeralaAdrLBName.code
+            ? data?.AddressBirthDetails?.permntInKeralaAdrLBName?.code
             : null,
           permntInKeralaAdrDistrict: data?.AddressBirthDetails?.permntInKeralaAdrDistrict
-            ? data?.AddressBirthDetails?.permntInKeralaAdrDistrict.code
+            ? data?.AddressBirthDetails?.permntInKeralaAdrDistrict?.code
             : null,
-          permntInKeralaAdrTaluk: data?.AddressBirthDetails?.permntInKeralaAdrTaluk ? data?.AddressBirthDetails?.permntInKeralaAdrTaluk.code : null,
+          permntInKeralaAdrTaluk: data?.AddressBirthDetails?.permntInKeralaAdrTaluk ? data?.AddressBirthDetails?.permntInKeralaAdrTaluk?.code : null,
           permntInKeralaAdrVillage: data?.AddressBirthDetails?.permntInKeralaAdrVillage
-            ? data?.AddressBirthDetails?.permntInKeralaAdrVillage.code
+            ? data?.AddressBirthDetails?.permntInKeralaAdrVillage?.code
             : null,
           permntInKeralaAdrLocalityNameEn: data?.AddressBirthDetails?.permntInKeralaAdrLocalityNameEn,
           permntInKeralaAdrStreetNameEn: data?.AddressBirthDetails?.permntInKeralaAdrStreetNameEn,
@@ -729,20 +730,20 @@ export const convertToEditDeathRegistration = (data = {}) => {
           permntInKeralaAdrStreetNameMl: data?.AddressBirthDetails?.permntInKeralaAdrStreetNameMl,
           permntInKeralaAdrHouseNameMl: data?.AddressBirthDetails?.permntInKeralaAdrHouseNameMl,
           permntInKeralaAdrPincode: data?.AddressBirthDetails?.permntInKeralaAdrPincode
-            ? data?.AddressBirthDetails?.permntInKeralaAdrPincode.code
+            ? data?.AddressBirthDetails?.permntInKeralaAdrPincode?.code
             : null,
           permntInKeralaAdrPostOffice: data?.AddressBirthDetails?.permntInKeralaAdrPostOffice
-            ? data?.AddressBirthDetails?.permntInKeralaAdrPostOffice.code
+            ? data?.AddressBirthDetails?.permntInKeralaAdrPostOffice?.code
             : null,
-          permntInKeralaWardNo: data?.AddressBirthDetails?.permntInKeralaWardNo ? data?.AddressBirthDetails?.permntInKeralaWardNo.code : null,
+          permntInKeralaWardNo: data?.AddressBirthDetails?.permntInKeralaWardNo ? data?.AddressBirthDetails?.permntInKeralaWardNo?.code : null,
           permntOutsideKeralaDistrict: data?.AddressBirthDetails?.permntOutsideKeralaDistrict
-            ? data?.AddressBirthDetails?.permntOutsideKeralaDistrict.code
+            ? data?.AddressBirthDetails?.permntOutsideKeralaDistrict?.code
             : null,
           permntOutsideKeralaTaluk: data?.AddressBirthDetails?.permntOutsideKeralaTaluk
             ? data?.AddressBirthDetails?.permntOutsideKeralaTaluk.code
             : null,
           permntOutsideKeralaVillage: data?.AddressBirthDetails?.permntOutsideKeralaVillage
-            ? data?.AddressBirthDetails?.permntOutsideKeralaVillage.code
+            ? data?.AddressBirthDetails?.permntOutsideKeralaVillage?.code
             : null,
           permntOutsideKeralaCityVilgeEn: data?.AddressBirthDetails?.permntOutsideKeralaCityVilgeEn,
           permntOutsideKeralaPincode: data?.AddressBirthDetails?.permntOutsideKeralaPincode,
@@ -760,7 +761,7 @@ export const convertToEditDeathRegistration = (data = {}) => {
           permntOutsideIndiaLinetwoMl: data?.AddressBirthDetails?.permntOutsideIndiaLinetwoMl,
           permntOutsideIndiaprovinceEn: data?.AddressBirthDetails?.permntOutsideIndiaprovinceEn,
           permntOutsideIndiaVillage: data?.AddressBirthDetails?.permntOutsideIndiaVillage
-            ? data?.AddressBirthDetails?.permntOutsideIndiaVillage.code
+            ? data?.AddressBirthDetails?.permntOutsideIndiaVillage?.code
             : null,
           permntOutsideIndiaCityTown: data?.AddressBirthDetails?.permntOutsideIndiaCityTown,
           permanentOutsideIndiaPostCode: data?.AddressBirthDetails?.permanentOutsideIndiaPostCode,
@@ -769,7 +770,7 @@ export const convertToEditDeathRegistration = (data = {}) => {
         },
         FamilyInformationDeath: {
           SpouseUnavailable: data?.FamilyInformationDeath?.SpouseUnavailable,
-          SpouseType: data?.FamilyInformationDeath?.SpouseType ? data?.FamilyInformationDeath?.SpouseType.code : null,
+          SpouseType: data?.FamilyInformationDeath?.SpouseType ? data?.FamilyInformationDeath?.SpouseType?.code : null,
           SpouseNameEn: data?.FamilyInformationDeath?.SpouseNameEN ? data?.FamilyInformationDeath?.SpouseNameEN : null,
           SpouseNameML: data?.FamilyInformationDeath?.SpouseNameMl ? data?.FamilyInformationDeath?.SpouseNameMl : null,
           FatherUnavailable: data?.FamilyInformationDeath?.FatherUnavailable,
@@ -787,26 +788,26 @@ export const convertToEditDeathRegistration = (data = {}) => {
         StatisticalInfo: {
           StatisticalId: null,
           TenantId: data?.InformationDeath?.tenantId,
-          MedicalAttentionType: data?.StatisticalInfo?.MedicalAttentionType ? data?.StatisticalInfo?.MedicalAttentionType.code : null,
+          MedicalAttentionType: data?.StatisticalInfo?.MedicalAttentionType ? data?.StatisticalInfo?.MedicalAttentionType?.code : null,
           IsAutopsyPerformed: data?.StatisticalInfo?.IsAutopsyPerformed,
           IsAutopsyCompleted: data?.StatisticalInfo?.IsAutopsyCompleted,
-          MannerOfDeath: data?.StatisticalInfo?.MannerOfDeath ? data?.StatisticalInfo?.MannerOfDeath.code : null,
-          DeathMedicallyCertified: data?.StatisticalInfo?.DeathMedicallyCertified ? data?.StatisticalInfo?.DeathMedicallyCertified.code : null,
-          DeathCauseMain: data?.StatisticalInfo?.DeathCauseMain ? data?.StatisticalInfo?.DeathCauseMain.code : null,
+          MannerOfDeath: data?.StatisticalInfo?.MannerOfDeath ? data?.StatisticalInfo?.MannerOfDeath?.code : null,
+          DeathMedicallyCertified: data?.StatisticalInfo?.DeathMedicallyCertified ? data?.StatisticalInfo?.DeathMedicallyCertified?.code : null,
+          DeathCauseMain: data?.StatisticalInfo?.DeathCauseMain ? data?.StatisticalInfo?.DeathCauseMain?.code : null,
           DeathCauseMainCustom: data?.StatisticalInfo?.DeathCauseMainCustom,
           DeathCauseMainInterval: data?.StatisticalInfo?.DeathCauseMainInterval,
-          DeathCauseMainTimeUnit: data?.StatisticalInfo?.DeathCauseMainTimeUnit ? data?.StatisticalInfo?.DeathCauseMainTimeUnit.code : null,
-          DeathCauseSub: data?.StatisticalInfo?.DeathCauseSub ? data?.StatisticalInfo?.DeathCauseSub.code : null,
+          DeathCauseMainTimeUnit: data?.StatisticalInfo?.DeathCauseMainTimeUnit ? data?.StatisticalInfo?.DeathCauseMainTimeUnit?.code : null,
+          DeathCauseSub: data?.StatisticalInfo?.DeathCauseSub ? data?.StatisticalInfo?.DeathCauseSub?.code : null,
           DeathCauseSubCustom: data?.StatisticalInfo?.DeathCauseSubCustom,
           DeathCauseSubInterval: data?.StatisticalInfo?.DeathCauseSubInterval,
-          DeathCauseSubTimeUnit: data?.StatisticalInfo?.DeathCauseSubTimeUnit ? data?.StatisticalInfo?.DeathCauseSubTimeUnit.code : null,
-          DeathCauseSub2: data?.StatisticalInfo?.DeathCauseSub2 ? data?.StatisticalInfo?.DeathCauseSub2.code : null,
+          DeathCauseSubTimeUnit: data?.StatisticalInfo?.DeathCauseSubTimeUnit ? data?.StatisticalInfo?.DeathCauseSubTimeUnit?.code : null,
+          DeathCauseSub2: data?.StatisticalInfo?.DeathCauseSub2 ? data?.StatisticalInfo?.DeathCauseSub2?.code : null,
           DeathCauseSubCustom2: data?.StatisticalInfo?.DeathCauseSubCustom2,
           DeathCauseSubInterval2: data?.StatisticalInfo?.DeathCauseSubInterval2,
-          DeathCauseSubTimeUnit2: data?.StatisticalInfo?.DeathCauseSubTimeUnit2 ? data?.StatisticalInfo?.DeathCauseSubTimeUnit2.code : null,
-          DeathCauseOther: data?.StatisticalInfo?.DeathCauseOther ? data?.StatisticalInfo?.DeathCauseOther.code : null,
-          IsdeceasedPregnant: data?.StatisticalInfo?.IsdeceasedPregnant ? data?.StatisticalInfo?.IsdeceasedPregnant.code : null,
-          IsDelivery: data?.StatisticalInfo?.IsDelivery ? data?.StatisticalInfo?.IsDelivery.code : null,
+          DeathCauseSubTimeUnit2: data?.StatisticalInfo?.DeathCauseSubTimeUnit2 ? data?.StatisticalInfo?.DeathCauseSubTimeUnit2?.code : null,
+          DeathCauseOther: data?.StatisticalInfo?.DeathCauseOther ? data?.StatisticalInfo?.DeathCauseOther?.code : null,
+          IsdeceasedPregnant: data?.StatisticalInfo?.IsdeceasedPregnant ? data?.StatisticalInfo?.IsdeceasedPregnant?.code : null,
+          IsDelivery: data?.StatisticalInfo?.IsDelivery ? data?.StatisticalInfo?.IsDelivery?.code : null,
           DeathDuringDelivery: data?.StatisticalInfo?.DeathDuringDelivery,
           SmokingType: data?.StatisticalInfo?.SmokingType,
           TobaccoType: data?.StatisticalInfo?.TobaccoType,
@@ -852,7 +853,7 @@ export const convertToEditDeathRegistration = (data = {}) => {
         applicationType: "new",
         businessService: "CR",
         action: "APPLY",
-        workflowcode: "DEATHHOSP",
+        workflowcode: data?.InformationDeath?.workFlowCode,
         assignee: [data?.InformationDeath?.uuid],
       },
       

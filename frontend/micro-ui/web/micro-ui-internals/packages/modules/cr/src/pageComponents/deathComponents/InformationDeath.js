@@ -10,9 +10,11 @@ import DeathPlaceVehicle from "./DeathPlaceVehicle";
 import DeathPublicPlace from "./DeathPublicPlace";
 import DeathOutsideJurisdiction from "./DeathOutsideJurisdiction ";
 import { useParams } from "react-router-dom";
+import _ from "lodash";
+import { STATE_CODE } from "../../config/constants";
 
 const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath }) => {
-  // console.log(formData);
+  console.log(formData);
   // console.log(isEditDeath);
   const [isEditDeathPageComponents, setIsEditDeathPageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
@@ -22,12 +24,14 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   const { uuid: uuid } = Digit.UserService.getUser().info;
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
-  if (tenantId === "kl") {
+  if (tenantId === STATE_CODE.KL) {
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
   const { t } = useTranslation();
   let validation = {};
+  // const [cmbAgeUnitFilter, setcmbAgeUnitFilter] = useState();
 
+  
   const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
     stateId,
     "birth-death-service",
@@ -67,7 +71,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   let institutionNameCode = "";
   let naturetypecmbvalue = null;
   const maxDate = new Date();
-  // let workFlowCode = "";
   let Difference_In_DaysRounded = "";
   let cmbfilterNation = [];
   let cmbfilterReligion = [];
@@ -218,6 +221,25 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
     formData?.InformationDeath?.DeceasedLastNameMl ? formData?.InformationDeath?.DeceasedLastNameMl : ""
   );
   const [Age, setAge] = useState(formData?.InformationDeath?.Age ? formData?.InformationDeath?.Age : "");
+
+  // useEffect(()=>{
+  //   getAgeUnitOptions
+  // },[Age])
+
+  const getAgeUnitOptions=()=> {
+    if (Age <= 11) {
+      return cmbAgeUnit;
+    } else if (Age > 11 && Age <= 23) {
+        return cmbAgeUnit.filter(
+          (cmbAgeUnit) => cmbAgeUnit.code === "AGE_UNIT_YEARS" || cmbAgeUnit.code === "AGE_UNIT_DAYS" || cmbAgeUnit.code === "AGE_UNIT_HOURS"
+        )
+    } else if (Age > 23 && Age <= 29) {
+      return cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.code === "AGE_UNIT_YEARS" || cmbAgeUnit.code === "AGE_UNIT_DAYS");
+    } else if (Age > 29 && Age <= 120) {
+      return cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.code === "AGE_UNIT_YEARS");
+    }
+  }
+
   const [Nationality, setSelectedNationality] = useState(
     formData?.InformationDeath?.Nationality?.code
       ? formData?.InformationDeath?.Nationality
@@ -243,7 +265,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   const [CommencementDate, setCommencementDate] = useState(
     formData?.InformationDeath?.CommencementDate ? formData?.InformationDeath?.CommencementDate : ""
   );
-  const [cmbAgeUnitFilter, setcmbAgeUnitFilter] = useState();
 
   const [AgeUnit, setSelectedAgeUnit] = useState(
     formData?.InformationDeath?.AgeUnit?.code
@@ -285,7 +306,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
       : ""
   );
   const [HospitalNameMl, selectHospitalNameMl] = useState(
-    formData?.  InformationDeathails?.HospitalNameMl?.code
+    formData?.InformationDeathails?.HospitalNameMl?.code
       ? formData?.InformationDeath?.HospitalNameMl
       : formData?.InformationDeath?.HospitalNameMl
       ? ""
@@ -676,24 +697,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
     }
   }
   function setSelectAge(e) {
-    if (e.target.value != null || e.target.value != "") {
-      if (e.target.value <= 120) {
-        setAge(e.target.value);
-      }
-    }
-    if (e.target.value <= 11) {
-      setcmbAgeUnitFilter(cmbAgeUnit);
-    } else if (e.target.value > 11 && e.target.value <= 23) {
-      setcmbAgeUnitFilter(
-        cmbAgeUnit.filter(
-          (cmbAgeUnit) => cmbAgeUnit.code === "AGE_UNIT_YEARS" || cmbAgeUnit.code === "AGE_UNIT_DAYS" || cmbAgeUnit.code === "AGE_UNIT_HOURS"
-        )
-      );
-    } else if (e.target.value > 23 && e.target.value <= 29) {
-      setcmbAgeUnitFilter(cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.code === "AGE_UNIT_YEARS" || cmbAgeUnit.code === "AGE_UNIT_DAYS"));
-    } else if (e.target.value > 29 && e.target.value <= 120) {
-      setcmbAgeUnitFilter(cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.code === "AGE_UNIT_YEARS"));
-    }
+    getAgeUnitOptions(e.target.value);
   }
   // function setSelectDeceasedAadharNumber(e) {
   //   if (e.target.value.length != 0) {
@@ -994,14 +998,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   //   // }
   // };
   const goNext = () => {
-    if (Difference_In_DaysRounded <= 21) {
-      if (DeathPlace.code == "HOSPITAL") {
-        workFlowCode = "DEATHHOSP";
-        // console.log(workFlowCode);
-      } else {
-        workFlowCode = "21DEATHHHOME";
-      }
-    }
     if (DeceasedGender == null || DeceasedGender == "" || DeceasedGender == undefined) {
       validFlag = false;
       setsexError(true);
@@ -1108,8 +1104,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
       // // sessionStorage.setItem("DeceasedAadharNotAvailable ", DeceasedAadharNotAvailable ? DeceasedAadharNotAvailable : false);
       // // sessionStorage.setItem("Occupation", Occupation ? Occupation.code : null);
       // // sessionStorage.setItem("DeathPlace", DeathPlace ? DeathPlace.code : null);
-
-      // // sessionStorage.setItem("workFlowCode", workFlowCode);
 
       // // sessionStorage.setItem("DeathPlaceTypecode", DeathPlaceType ? DeathPlaceType.code : null);
       // // sessionStorage.setItem("institutionNameCode", DeathPlaceInstId ? DeathPlaceInstId.code : null);
@@ -1831,7 +1825,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
                   t={t}
                   optionKey="name"
                   isMandatory={false}
-                  option={cmbAgeUnitFilter}
+                  option={getAgeUnitOptions()}
                   selected={AgeUnit}
                   select={selectAgeUnit}
                   placeholder={`${t("CR_AGE_UNIT")}`}
@@ -1932,4 +1926,5 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
     );
   }
 };
+//anzar
 export default InformationDeath;

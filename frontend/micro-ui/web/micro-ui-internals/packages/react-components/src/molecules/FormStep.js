@@ -30,7 +30,6 @@ const FormStep = ({
     defaultValues: _defaultValues,
   });
 
-
   const goNext = (data) => {
     onSelect(data);
   };

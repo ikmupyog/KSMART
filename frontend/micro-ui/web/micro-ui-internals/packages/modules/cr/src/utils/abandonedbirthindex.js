@@ -268,6 +268,27 @@ export const gettradeupdateaccessories = (data) => {
   }
   return TLaccessories;
 };
+
+
+// let document =[];
+//       let doc= {"documentType": "" ,
+//           "fileStoreId":"",
+//           "documentName":"", 
+//           "size":"",
+//           "type" :"" };
+
+//       let doc1= {"documentType": "" ,
+//           "fileStoreId":"",
+//           "documentName":"", 
+//           "size":"",
+//           "type" :"" }; 
+
+// document.push(doc);
+// document.push(doc1);
+// console.log(document);
+// // }
+
+
 export const convertToAbandonedBirthRegistration = (data = {}) => {
   const formdata = {
     AbandonedDetails: [
@@ -318,14 +339,15 @@ export const convertToAbandonedBirthRegistration = (data = {}) => {
         medicalAttensionSub: data?.AbandonedChildDetails?.medicalAttensionSub ? data?.AbandonedChildDetails?.medicalAttensionSub.code : null,
         deliveryMethods: data?.AbandonedChildDetails?.deliveryMethods ? data?.AbandonedChildDetails?.deliveryMethods.code : null,
         action: "INITIATE",
-        applicationtype: "CRBRNR",
+        applicationtype: "CRBRAB",
         businessservice: "birth-services",
-        workflowcode: data?.AbandonedChildDetails?.workFlowCode,
+        workflowcode: "21BIRTHHOME",
         ParentsDetails: {
           motherFirstNameEn: data?.AbandonedChildDetails?.motherFirstNameEn,
           motherFirstNameMl: data?.AbandonedChildDetails?.motherFirstNameMl,
           motherAadhar: data?.AbandonedChildDetails?.motherAadhar,
           ismotherInfo: data?.AbandonedChildDetails?.isMotherInfo,
+          isfatherInfo: data?.AbandonedChildDetails?.isMotherInfo,
           addressOfMother: data?.AbandonedChildDetails?.addressOfMother,
         },
         InformarHosInstDetails: {
@@ -344,14 +366,14 @@ export const convertToAbandonedBirthRegistration = (data = {}) => {
           caretakerAddress: data?.AbandonedBirthInformarDetails?.caretakerAddress,
         },
         documentDetails: {
-          tenantId: data?.AbandonedBirthInformarDetails?.tenantId,
-          documentName: data?.AbandonedBirthInformarDetails?.tenantId,
-          documentType: data?.AbandonedBirthInformarDetails?.tenantId,
-          documentLink: data?.AbandonedBirthInformarDetails?.tenantId,
-          description: data?.AbandonedBirthInformarDetails?.tenantId,
-          fileStoreId: data?.AbandonedBirthInformarDetails?.tenantId,
-          fileType: data?.AbandonedBirthInformarDetails?.tenantId,
-          fileSize: data?.AbandonedBirthInformarDetails?.tenantId,
+
+          tenantId: data?.AbandonedBirthInformarDetails?.tenantId,         
+          document : data?.AbandonedBirthInformarDetails?.document,
+
+
+        // appplicantDocument : document
+      
+
         },
       },
     ],

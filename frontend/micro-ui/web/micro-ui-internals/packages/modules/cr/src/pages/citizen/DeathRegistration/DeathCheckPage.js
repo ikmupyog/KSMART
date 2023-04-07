@@ -47,46 +47,20 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
   const { t } = useTranslation();
   const history = useHistory();
   const match = useRouteMatch();
-  const {
-    InformationDeathAband,
-    FamilyInformationDeath,
-    AddressBirthDetails,
-    // ChildDetails,
-    // ParentsDetails,
-    // AddressBirthDetails,
-    // InitiatorinfoDetails,
-    // InformarHosInstDetails,
-    // BirthPlace,
-    // HospitalDetails,
-    // FatherInfoDetails,
-    // MotherInfoDetails,
-    // AddressDetails,
-    // StatisticalInfoDetails,
-    isEditProperty,
-    cpt,
-  } = value;
+  const { InformationDeathAband, FamilyInformationDeath, AddressBirthDetails, isEditProperty, cpt } = value;
   function getdate(date) {
     let newdate = Date.parse(date);
     return `${
       new Date(newdate).getDate().toString() + "/" + (new Date(newdate).getMonth() + 1).toString() + "/" + new Date(newdate).getFullYear().toString()
     }`;
   }
-  // const typeOfApplication = !isEditProperty ? `new-application` : `renew-trade`;
   let routeLink = "";
-  // `/digit-ui/citizen/tl/tradelicence/${typeOfApplication}`;
-  // if (window.location.href.includes("edit-application") || window.location.href.includes("renew-trade")) {
-  //   routeLink = `${getPath(match.path, match.params)}`;
-  //   routeLink = routeLink.replace("/check", "");
-  // }
-
   if (window.location.href.includes("/citizen") == "citizen") {
     userType = "citizen";
   } else {
     userType = "employee";
   }
-  // console.log(value);
   const convertEpochToDate = (dateEpoch) => {
-    // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
       const dateFromApi = new Date(dateEpoch);
       let month = dateFromApi.getMonth() + 1;
@@ -107,7 +81,6 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
       {window.location.href.includes("/employee") ? <Timeline currentStep={6} /> : null}
 
       <Card>
-        {/* <label style={{ fontSize: "17px", fontWeight: "bold" }}>{t("CR_REG_SUMMARY_HEADING")}</label> */}
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -116,7 +89,6 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
           </div>
         </div>
         <div
-
           style={{
             maxWidth: "80%",
             margin: "25px auto",
@@ -251,7 +223,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                         " " +
                         InformationDeathAband.VehicleFirstHaltEn +
                         " " +
-                        "PDF_CR_VEHICLE_STATEMENT_FOUR"  +
+                        "PDF_CR_VEHICLE_STATEMENT_FOUR" +
                         "/ " +
                         "PDF_CR_VEHICLE_STATEMENT_ONE_EN" +
                         " " +
@@ -261,7 +233,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                         " " +
                         InformationDeathAband.VehicleToPlaceEn +
                         "" +
-                        "PDF_CR_VEHICLE_STATEMENT_THREE_EN"+
+                        "PDF_CR_VEHICLE_STATEMENT_THREE_EN" +
                         " " +
                         InformationDeathAband.VehicleFirstHaltEn
                       }`}
@@ -296,17 +268,17 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                       :{" "}
-                      {t(InformationDeathAband.DeathPlaceDistrict.namelocal) +
+                      {t(InformationDeath.DeathPlaceDistrict.namelocal|| "CR_NOT_RECORDED") +
                         "," +
-                        InformationDeathAband.DeathPlaceState.namelocal +
+                        InformationDeath.DeathPlaceState.namelocal || "CR_NOT_RECORDED"+
                         "," +
-                        InformationDeathAband.DeathPlaceCountry.namelocal +
+                        InformationDeath.DeathPlaceCountry.namelocal || "CR_NOT_RECORDED" + 
                         "/" +
-                        InformationDeathAband.DeathPlaceDistrict.name +
+                        InformationDeath.DeathPlaceDistrict.name || "CR_NOT_RECORDED" +
                         "," +
-                        InformationDeathAband.DeathPlaceState.name +
+                        InformationDeath.DeathPlaceState.name || "CR_NOT_RECORDED"+
                         "," +
-                        InformationDeathAband.DeathPlaceCountry.name}
+                        InformationDeath.DeathPlaceCountry.name || "CR_NOT_RECORDED"}
                     </CardText>
                   </div>
                 </div>
@@ -318,12 +290,9 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
             <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}> {`${t("PDF_CR_NAME_WIFE_HUSBAND")}`} </CardLabel>
             </div>
-            {/* {FamilyInformationDeath.SpouseUnavailable === false && ( */}
             {FamilyInformationDeath.SpouseUnavailable ? (
-             <div className="col-md-6">
-             <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-               :{" "}  {t("CR_NOT_RECORDED")}{" "}
-              </CardText>
+              <div className="col-md-6">
+                <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>: {t("CR_NOT_RECORDED")} </CardText>
               </div>
             ) : (
               <div className="col-md-6">
@@ -346,30 +315,26 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                 </CardText>
               </div>
             )}
-          </div>          
-            <div className="row">
+          </div>
+          <div className="row">
             <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}> {`${t("PDF_BIRTH_NAME_OF_MOTHER")}`} </CardLabel>
             </div>
 
             {FamilyInformationDeath.MotherUnavailable ? (
               <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                :{" "}  {t("CR_NOT_RECORDED")}{" "}
-               </CardText>
-               </div> 
-             ) : (  
-            <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                :{" "}
-                {t(FamilyInformationDeath.MotherNameMl ? FamilyInformationDeath?.MotherNameMl : "CR_NOT_RECORDED") +
-                  "/" +
-                  " " +
-                  (FamilyInformationDeath.MotherNameEn ? FamilyInformationDeath?.MotherNameEn : "CR_NOT_RECORDED")
-                  // (FamilyInformationDeath.MotherNameEn ? FamilyInformationDeath?.MotherNameEn : "CR_NOT_RECORDED")
-                  }
-              </CardText>
-            </div>
+                <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>: {t("CR_NOT_RECORDED")} </CardText>
+              </div>
+            ) : (
+              <div className="col-md-6">
+                <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                  :{" "}
+                  {t(FamilyInformationDeath.MotherNameMl ? FamilyInformationDeath?.MotherNameMl : "CR_NOT_RECORDED") +
+                    "/" +
+                    " " +
+                    (FamilyInformationDeath.MotherNameEn ? FamilyInformationDeath?.MotherNameEn : "CR_NOT_RECORDED")}
+                </CardText>
+              </div>
             )}
           </div>
           <div className="row">
@@ -378,26 +343,24 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
             </div>
             {FamilyInformationDeath.FatherUnavailable ? (
               <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                :{" "}  {t("CR_NOT_RECORDED")}{" "}
-               </CardText>
-               </div> 
-             ) : (  
-            <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                :{" "}
-                {t(FamilyInformationDeath.FatherNameMl ? FamilyInformationDeath?.FatherNameMl : "CR_NOT_RECORDED") +
-                  "/" +
-                  " " +
-                  (FamilyInformationDeath.FatherNameEn ? FamilyInformationDeath?.FatherNameEn : "CR_NOT_RECORDED")}
-              </CardText>
-            </div>
-             )}
-          </div>          
-            
+                <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>: {t("CR_NOT_RECORDED")} </CardText>
+              </div>
+            ) : (
+              <div className="col-md-6">
+                <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                  :{" "}
+                  {t(FamilyInformationDeath.FatherNameMl ? FamilyInformationDeath?.FatherNameMl : "CR_NOT_RECORDED") +
+                    "/" +
+                    " " +
+                    (FamilyInformationDeath.FatherNameEn ? FamilyInformationDeath?.FatherNameEn : "CR_NOT_RECORDED")}
+                </CardText>
+              </div>
+            )}
+          </div>
+
           <div className="row">
             <div className="col-md-6">
-              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold",  fontSize: "14px" }}>{`${t("PDF_PRESENT_ADDRESS_DECEASED_ML")}`}</CardLabel>
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold", fontSize: "14px" }}>{`${t("PDF_PRESENT_ADDRESS_DECEASED_ML")}`}</CardLabel>
             </div>
             <div className="col-md-6">
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
@@ -408,21 +371,21 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                   " , " +
                   AddressBirthDetails.presentInsideKeralaLocalityNameMl +
                   " , " +
-                  AddressBirthDetails.presentInsideKeralaPostOffice.namelocal+
+                  AddressBirthDetails.presentInsideKeralaPostOffice.namelocal +
                   " , " +
                   AddressBirthDetails.presentInsideKeralaPincode +
                   " , " +
-                  AddressBirthDetails.presentInsideKeralaDistrict.namelocal+
+                  AddressBirthDetails.presentInsideKeralaDistrict.namelocal +
                   " , " +
-                  AddressBirthDetails.presentaddressStateName.namelocal+
+                  AddressBirthDetails.presentaddressStateName.namelocal +
                   " , " +
                   AddressBirthDetails.presentaddressCountry.namelocal}{" "}
                 ,
               </CardText>
             </div>
-        
-          <div className="col-md-6">
-              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold", fontSize: "17px"}}>{`${t("PDF_PRESENT_ADDRESS_DECEASED_EN")}`}</CardLabel>
+
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold", fontSize: "17px" }}>{`${t("PDF_PRESENT_ADDRESS_DECEASED_EN")}`}</CardLabel>
             </div>
             <div className="col-md-6">
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
@@ -446,158 +409,128 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
               </CardText>
             </div>
           </div>
-        
+
           {AddressBirthDetails.isPrsentAddress === true && (
             <div>
-          <div className="row">
-            <div className="col-md-6">
-              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_PERMANENT_ADDRESS_DECEASED_ML")}`}</CardLabel>
+              <div className="row">
+                <div className="col-md-6">
+                  <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_PERMANENT_ADDRESS_DECEASED_ML")}`}</CardLabel>
+                </div>
+                <div className="col-md-6">
+                  <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                    :
+                    {t(AddressBirthDetails.presentInsideKeralaHouseNameMl ? AddressBirthDetails.presentInsideKeralaHouseNameMl : "CR_NOT_RECORDED") +
+                      " , " +
+                      AddressBirthDetails.presentInsideKeralaStreetNameMl +
+                      " , " +
+                      AddressBirthDetails.presentInsideKeralaLocalityNameMl +
+                      " , " +
+                      AddressBirthDetails.presentInsideKeralaPostOffice.namelocal +
+                      " , " +
+                      AddressBirthDetails.presentInsideKeralaPincode +
+                      " , " +
+                      AddressBirthDetails.presentInsideKeralaDistrict.namelocal +
+                      " , " +
+                      AddressBirthDetails.presentaddressStateName.namelocal +
+                      " , " +
+                      AddressBirthDetails.presentaddressCountry.namelocal}{" "}
+                    ,
+                  </CardText>
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="col-md-6">
+                  <CardLabel style={{ lineHeight: "auto", fontWeight: "bold", fontSize: "17px" }}>{`${t(
+                    "PDF_PERMANENT_ADDRESS_DECEASED_EN"
+                  )}`}</CardLabel>
+                </div>
+                <div className="col-md-6">
+                  <CardText style={{ fontSize: "17px", Colour: "black", fontWeight: "bold" }}>
+                    :
+                    {t(AddressBirthDetails.presentInsideKeralaHouseNameEn ? AddressBirthDetails.presentInsideKeralaHouseNameEn : "CR_NOT_RECORDED") +
+                      " , " +
+                      AddressBirthDetails.presentInsideKeralaStreetNameEn +
+                      " , " +
+                      AddressBirthDetails.presentInsideKeralaLocalityNameEn +
+                      " , " +
+                      AddressBirthDetails.presentInsideKeralaPostOffice.name +
+                      " , " +
+                      AddressBirthDetails.presentInsideKeralaPincode +
+                      " , " +
+                      AddressBirthDetails.presentInsideKeralaDistrict.name +
+                      " , " +
+                      AddressBirthDetails.presentaddressStateName.name +
+                      " , " +
+                      AddressBirthDetails.presentaddressCountry.name}{" "}
+                    ,
+                  </CardText>
+                </div>
+              </div>
             </div>
-            <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                :
-                {t(AddressBirthDetails.presentInsideKeralaHouseNameMl ? AddressBirthDetails.presentInsideKeralaHouseNameMl : "CR_NOT_RECORDED") +
-                  " , " +
-                  AddressBirthDetails.presentInsideKeralaStreetNameMl +
-                  " , " +
-                  AddressBirthDetails.presentInsideKeralaLocalityNameMl +
-                  " , " +
-                  AddressBirthDetails.presentInsideKeralaPostOffice.namelocal+
-                  " , " +
-                  AddressBirthDetails.presentInsideKeralaPincode +
-                  " , " +
-                  AddressBirthDetails.presentInsideKeralaDistrict.namelocal+
-                  " , " +
-                  AddressBirthDetails.presentaddressStateName.namelocal+
-                  " , " +
-                  AddressBirthDetails.presentaddressCountry.namelocal}{" "}
-                ,
-              </CardText>
-            </div>
-          </div>
-     
-          <div className="row">
-            <div className="col-md-6">
-              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold", fontSize: "17px"}}>{`${t("PDF_PERMANENT_ADDRESS_DECEASED_EN")}`}</CardLabel>
-            </div>
-            <div className="col-md-6">
-              <CardText style={{ fontSize: "17px", Colour: "black", fontWeight: "bold" }}>
-                :
-                {t(AddressBirthDetails.presentInsideKeralaHouseNameEn ? AddressBirthDetails.presentInsideKeralaHouseNameEn : "CR_NOT_RECORDED") +
-                  " , " +
-                  AddressBirthDetails.presentInsideKeralaStreetNameEn +
-                  " , " +
-                  AddressBirthDetails.presentInsideKeralaLocalityNameEn +
-                  " , " +
-                  AddressBirthDetails.presentInsideKeralaPostOffice.name+
-                  " , " +
-                  AddressBirthDetails.presentInsideKeralaPincode +
-                  " , " +
-                  AddressBirthDetails.presentInsideKeralaDistrict.name +
-                  " , " +
-                  AddressBirthDetails.presentaddressStateName.name +
-                  " , " +
-                  AddressBirthDetails.presentaddressCountry.name }{" "}
-                ,
-              </CardText>
-            </div>
-          </div>
-          </div>
           )}
 
-{AddressBirthDetails.isPrsentAddress === false && (
-  <div>
-          <div className="row">
-            <div className="col-md-6">
-              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_PERMANENT_ADDRESS_DECEASED_ML")}`}</CardLabel>
-            </div>
-            <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                :
-                {  
-     t(AddressBirthDetails.permntInKeralaAdrHouseNameMl ? AddressBirthDetails.permntInKeralaAdrHouseNameMl : "CR_NOT_RECORDED") +
-       " , " +
-       AddressBirthDetails.permntInKeralaAdrStreetNameMl +
-       " , " +
-       AddressBirthDetails.permntInKeralaAdrLocalityNameMl +
-       " , " +
-       AddressBirthDetails.permntInKeralaAdrPostOffice.name+
-       " , " +
-       AddressBirthDetails.permntInKeralaAdrPincode +
-       " , " +
-       AddressBirthDetails.permntInKeralaAdrDistrict.namelocal+
-       " , " +
-       AddressBirthDetails.permtaddressStateName.namelocal+
-       " , " +
-       AddressBirthDetails.permtaddressCountry.namelocal}
-                            ,
-              </CardText>
-            </div>
-          </div>
-    
-          <div className="row">
-            <div className="col-md-6">
-              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold", fontSize: "17px"}}>{`${t("PDF_PERMANENT_ADDRESS_DECEASED_EN")}`}</CardLabel>
-            </div>
-            <div className="col-md-6">
-              <CardText style={{ fontSize: "17px", Colour: "black", fontWeight: "bold" }}>
-                :
-                {t(AddressBirthDetails.permntInKeralaAdrHouseNameEn ? AddressBirthDetails.permntInKeralaAdrHouseNameEn : "CR_NOT_RECORDED") +
-       " , " +
-       AddressBirthDetails.permntInKeralaAdrStreetNameEn +
-       " , " +
-       AddressBirthDetails.permntInKeralaAdrLocalityNameEn +
-       " , " +
-       AddressBirthDetails.permntInKeralaAdrPostOffice.name+
-       " , " +
-       AddressBirthDetails.permntInKeralaAdrPincode +
-       " , " +
-       AddressBirthDetails.permntInKeralaAdrDistrict.name +
-       " , " +
-       AddressBirthDetails.permtaddressStateName.name +
-       " , " +
-       AddressBirthDetails.permtaddressCountry.name }{" "}
-                ,
-              </CardText>
-            </div>
-          </div>
-          </div>
-          )}
-          
-        </div>
+          {AddressBirthDetails.isPrsentAddress === false && (
+            <div>
+              <div className="row">
+                <div className="col-md-6">
+                  <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_PERMANENT_ADDRESS_DECEASED_ML")}`}</CardLabel>
+                </div>
+                <div className="col-md-6">
+                  <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                    :
+                    {t(AddressBirthDetails.permntInKeralaAdrHouseNameMl ? AddressBirthDetails.permntInKeralaAdrHouseNameMl : "CR_NOT_RECORDED") +
+                      " , " +
+                      AddressBirthDetails.permntInKeralaAdrStreetNameMl +
+                      " , " +
+                      AddressBirthDetails.permntInKeralaAdrLocalityNameMl +
+                      " , " +
+                      AddressBirthDetails.permntInKeralaAdrPostOffice.name +
+                      " , " +
+                      AddressBirthDetails.permntInKeralaAdrPincode +
+                      " , " +
+                      AddressBirthDetails.permntInKeralaAdrDistrict.namelocal +
+                      " , " +
+                      AddressBirthDetails.permtaddressStateName.namelocal +
+                      " , " +
+                      AddressBirthDetails.permtaddressCountry.namelocal}
+                    ,
+                  </CardText>
+                </div>
+              </div>
 
-        <div className="row">
-          <div className="col-md-12">
-            <h1 className="headingh1">{/* <span style={{ background: "#fff", padding: "0 10px" }}>                
-                </span> */}</h1>
-          </div>
+              <div className="row">
+                <div className="col-md-6">
+                  <CardLabel style={{ lineHeight: "auto", fontWeight: "bold", fontSize: "17px" }}>{`${t(
+                    "PDF_PERMANENT_ADDRESS_DECEASED_EN"
+                  )}`}</CardLabel>
+                </div>
+                <div className="col-md-6">
+                  <CardText style={{ fontSize: "17px", Colour: "black", fontWeight: "bold" }}>
+                    :
+                    {t(AddressBirthDetails.permntInKeralaAdrHouseNameEn ? AddressBirthDetails.permntInKeralaAdrHouseNameEn : "CR_NOT_RECORDED") +
+                      " , " +
+                      AddressBirthDetails.permntInKeralaAdrStreetNameEn +
+                      " , " +
+                      AddressBirthDetails.permntInKeralaAdrLocalityNameEn +
+                      " , " +
+                      AddressBirthDetails.permntInKeralaAdrPostOffice.name +
+                      " , " +
+                      AddressBirthDetails.permntInKeralaAdrPincode +
+                      " , " +
+                      AddressBirthDetails.permntInKeralaAdrDistrict.name +
+                      " , " +
+                      AddressBirthDetails.permtaddressStateName.name +
+                      " , " +
+                      AddressBirthDetails.permtaddressCountry.name}{" "}
+                    ,
+                  </CardText>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
         <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} />
-        {/* <StatusTable>
-
-          
-          <div className="row">
-            <div className="col-md-6">
-              <CardLabel style={{ lineHeight: "auto" }}>{`${t("Father Name")}`}</CardLabel>
-              <CardText style={{ fontSize: "15px", Colour: "black" }}>
-                {t(FatherInfoDetails.FatherFirstNameEn)}&nbsp;{t(FatherInfoDetails.FatherLastNameEn)}
-              </CardText>
-            </div>
-            <div className="col-md-6">
-              <CardLabel style={{ lineHeight: "auto" }}>{`${t("Mother Name")}`}</CardLabel>
-              <CardText style={{ fontSize: "15px", Colour: "black" }}>
-                {t(MotherInfoDetails.MotherFirstNameEn)}&nbsp;{t(MotherInfoDetails.MotherLastNameEn)}
-              </CardText>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12">
-              <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}></span>
-              </h1>
-            </div>
-          </div>
-        </StatusTable> */}
       </Card>
     </React.Fragment>
   );

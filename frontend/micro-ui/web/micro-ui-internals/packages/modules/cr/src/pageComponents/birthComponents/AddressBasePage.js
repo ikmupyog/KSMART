@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Toast, BackButton, Loader } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import DRTimeline from "../../components/DRTimeline";
+import AdoptionTimeline from '../../components/AdoptionTimeline'
 import { useTranslation } from "react-i18next";
 import AddressPresent from "./AddressPresent";
 import AddressPresentInsideKerala from "./AddressPresentInsideKerala";
@@ -13,7 +14,7 @@ import AddressPermanentInsideKerala from "./AddressPermanentInsideKerala";
 import AddressPermanentOutsideKerala from "./AddressPermanentOutsideKerala";
 import AddressPermanentOutsideIndia from "./AddressPermanentOutsideIndia";
 
-const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = false, isEditDeath = false }) => {
+const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = false, isEditDeath = false, isEditStillBirth = false,isEditAdoption=false, isEditBirthNAC=false  }) => {
 
     const stateId = Digit.ULBService.getStateId();
     let tenantId = "";
@@ -89,7 +90,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
     const [presentWardNo, setPresentWardNo] = useState(formData.AddressBirthDetails?.presentWardNo?.code ? formData.AddressBirthDetails?.presentWardNo : formData?.ChildDetails?.AddressBirthDetails?.presentWardNo ? "" :
         formData?.StillBirthChildDetails?.AddressBirthDetails?.presentWardNo ? "" : "");
     const [presentInsideKeralaDistrict, setinsideKeralaDistrict] = useState(formData?.AddressBirthDetails?.presentInsideKeralaDistrict?.code ? formData?.AddressBirthDetails?.presentInsideKeralaDistrict : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaDistrict ? "" :
-        formData?.StillBirthChildDetails?.AddressBirthDetails?.presentWardNo ? "" : "");
+        formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaDistrict ? "" : "");
     const [presentInsideKeralaLBTypeName, setinsideKeralaLBTypeName] = useState(formData?.AddressBirthDetails?.presentInsideKeralaLBTypeName ? formData?.AddressBirthDetails?.presentInsideKeralaLBTypeName : null);
     const [presentInsideKeralaLBName, setinsideKeralaLBName] = useState(formData?.AddressBirthDetails?.presentInsideKeralaLBName?.code ? formData?.AddressBirthDetails?.presentInsideKeralaLBName : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaLBName ? "" :
         formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaLBName ? "" : "");
@@ -114,6 +115,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
     const [presentInsideKeralaStreetNameMl, setinsideKeralaStreetNameMl] = useState(formData?.AddressBirthDetails?.presentInsideKeralaStreetNameMl ? formData?.AddressBirthDetails?.presentInsideKeralaStreetNameMl : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameMl ? formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameMl :
         formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameMl ? formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameMl : null);
 
+    const [Districtvalues, setDistrictvalue] = useState(null);
     const [Talukvalues, setLbsTalukvalue] = useState(null);
     const [Villagevalues, setLbsVillagevalue] = useState(null);
     const [PostOfficevalues, setPostOfficevalues] = useState(null);
@@ -376,7 +378,6 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                 } else {
                     setPresentInsideKeralaWardNoError(false);
                 }
-                console.log(presentInsideKeralaPostOffice);
                 if (presentInsideKeralaPostOffice === null || presentInsideKeralaPostOffice === undefined || presentInsideKeralaPostOffice === "") {
                     setPresentInsideKeralaPostOfficeError(true);
                     validFlag = false;
@@ -397,7 +398,6 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                 } else {
                     setPresentInsideKeralaPincodeError(false);
                 }
-                console.log(presentInsideKeralaLocalityNameEn);
                 if (presentInsideKeralaLocalityNameEn === null) {
                     setPresentInsideKeralaLocalityNameEnError(true);
                     validFlag = false;
@@ -438,34 +438,27 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                 } else {
                     setPresentInsideKeralaHouseNameMlError(false);
                 }
-                console.log(presentInsideKeralaStreetNameEn);
-                if (presentInsideKeralaStreetNameEn != null) {
-                    if (presentInsideKeralaStreetNameMl == null) {
-                        setPresentInsideKeralaStreetNameMlError(true);
-                        validFlag = false;
-                        setToast(true);
-                        setTimeout(() => {
-                            setToast(false);
-                        }, 2000);
-                    } else {
-                        setPresentInsideKeralaStreetNameMlError(false);
-                    }
-                } else {
-                    setPresentInsideKeralaStreetNameEnError(false);
-                }
-                if (presentInsideKeralaStreetNameMl != null) {
-                    if (presentInsideKeralaStreetNameEn == null) {
-                        setPresentInsideKeralaStreetNameEnError(true);
-                        validFlag = false;
-                        setToast(true);
-                        setTimeout(() => {
-                            setToast(false);
-                        }, 2000);
-                    } else {
-                        setPresentInsideKeralaStreetNameEnError(false);
-                    }
+                if (presentInsideKeralaStreetNameEn != null && presentInsideKeralaStreetNameMl === null) {
+                    setPresentInsideKeralaStreetNameMlError(true);
+                    validFlag = false;
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
                 } else {
                     setPresentInsideKeralaStreetNameMlError(false);
+                }
+                if (presentInsideKeralaStreetNameMl != null && presentInsideKeralaStreetNameEn === null) {
+
+                    setPresentInsideKeralaStreetNameEnError(true);
+                    validFlag = false;
+                    setToast(true);
+                    setTimeout(() => {
+                        setToast(false);
+                    }, 2000);
+
+                } else {
+                    setPresentInsideKeralaStreetNameEnError(false);
                 }
             }
             if (countryvalue === "IND" && value != "KL") {
@@ -896,11 +889,13 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
             <React.Fragment>
                 <BackButton>{t("CS_COMMON_BACK")}</BackButton>
                 {window.location.href.includes("/citizen/cr/cr-birth-creation/address-birth") ? <Timeline currentStep={3} /> : null || window.location.href.includes("employee/cr/cr-flow") ? <Timeline currentStep={3} /> : null}
+                {window.location.href.includes("/citizen/cr-adoptionflow/adoption-address-birth") ? <AdoptionTimeline currentStep={3} /> : null || window.location.href.includes("employee/cr/cr-adoptionflow") ? <AdoptionTimeline currentStep={3} /> : null}
                 {window.location.href.includes("/citizen/cr/cr-death-creation/address-death") ? <DRTimeline currentStep={2} /> : null || window.location.href.includes("employee/cr/death-flow") ? <DRTimeline currentStep={2} /> : null}
                 <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
 
                     <div className="accordion-wrapper">
                         <AddressPresent
+
                             presentaddressCountry={presentaddressCountry}
                             setaddressCountry={setaddressCountry}
                             presentaddressStateName={presentaddressStateName}
@@ -921,7 +916,12 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                             setIsPrsentAddress={setIsPrsentAddress}
                             isEditBirth={isEditBirth}
                             isEditDeath={isEditDeath}
+                            isEditStillBirth={isEditStillBirth}
+                            isEditAdoption={isEditAdoption}         
+                            isEditBirthNAC={isEditBirthNAC}                   
                             formData={formData}
+                            Districtvalues={Districtvalues}
+                            setDistrictvalue={setDistrictvalue}
                         />
                     </div>
                     {countryvalue === "IND" && value === "KL" && (
@@ -955,6 +955,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 setinsideKeralaStreetNameEn={setinsideKeralaStreetNameEn}
                                 presentInsideKeralaStreetNameMl={presentInsideKeralaStreetNameMl}
                                 setinsideKeralaStreetNameMl={setinsideKeralaStreetNameMl}
+                                Districtvalues={Districtvalues}
+                                setDistrictvalue={setDistrictvalue}
                                 lbs={lbs}
                                 setLbs={setLbs}
                                 Talukvalues={Talukvalues}
@@ -993,7 +995,12 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 setpermntInKeralaWardNo={setpermntInKeralaWardNo}
                                 isEditBirth={isEditBirth}
                                 isEditDeath={isEditDeath}
+                                isEditStillBirth={isEditStillBirth}
+                                isEditAdoption={isEditAdoption}    
+                                isEditBirthNAC={isEditBirthNAC}        
                                 formData={formData}
+                                value={value}
+                                setValue={setValue}
                             />
                         </div>
                     )}
@@ -1058,6 +1065,9 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 setpermntoutsideKeralaPostOfficeMl={setpermntoutsideKeralaPostOfficeMl}
                                 isEditBirth={isEditBirth}
                                 isEditDeath={isEditDeath}
+                                isEditStillBirth={isEditStillBirth}
+                                isEditAdoption={isEditAdoption}      
+                                isEditBirthNAC={isEditBirthNAC}      
                                 formData={formData}
                             />
                         </div>
@@ -1111,6 +1121,9 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 // setPermntOutsideIndiaCountry={setPermntOutsideIndiaCountry}
                                 isEditBirth={isEditBirth}
                                 isEditDeath={isEditDeath}
+                                isEditStillBirth={isEditStillBirth}
+                                isEditAdoption={isEditAdoption}      
+                                isEditBirthNAC={isEditBirthNAC}    
                                 formData={formData}
                             />
                         </div>
@@ -1121,6 +1134,9 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                             setIsPrsentAddress={setIsPrsentAddress}
                             isEditBirth={isEditBirth}
                             isEditDeath={isEditDeath}
+                            isEditStillBirth={isEditStillBirth}
+                            isEditAdoption={isEditAdoption}      
+                            isEditBirthNAC={isEditBirthNAC}    
                             formData={formData}
                         />
                     </div>
@@ -1143,6 +1159,9 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 setValuePermanent={setValuePermanent}
                                 isEditBirth={isEditBirth}
                                 isEditDeath={isEditDeath}
+                                isEditStillBirth={isEditStillBirth}
+                                isEditAdoption={isEditAdoption}     
+                                isEditBirthNAC={isEditBirthNAC}     
                                 formData={formData}
                             />
                         </div>
@@ -1176,6 +1195,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 setpermntInKeralaAdrStreetNameMl={setpermntInKeralaAdrStreetNameMl}
                                 permntInKeralaWardNo={permntInKeralaWardNo}
                                 setpermntInKeralaWardNo={setpermntInKeralaWardNo}
+                                Districtvalues={Districtvalues}
+                                setDistrictvalue={setDistrictvalue}
                                 lbs={lbs}
                                 setLbs={setLbs}
                                 Talukvalues={Talukvalues}
@@ -1186,6 +1207,9 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 setPostOfficevalues={setPostOfficevalues}
                                 isEditBirth={isEditBirth}
                                 isEditDeath={isEditDeath}
+                                isEditStillBirth={isEditStillBirth}
+                                isEditAdoption={isEditAdoption}      
+                                isEditBirthNAC={isEditBirthNAC}    
                                 formData={formData}
                             />
                         </div>
@@ -1223,6 +1247,9 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 setValue={setValue}
                                 isEditBirth={isEditBirth}
                                 isEditDeath={isEditDeath}
+                                isEditStillBirth={isEditStillBirth}
+                                isEditAdoption={isEditAdoption}     
+                                isEditBirthNAC={isEditBirthNAC}     
                                 formData={formData}
                             />
                         </div>
@@ -1254,6 +1281,9 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 setCountryValue={setCountryValue}
                                 isEditBirth={isEditBirth}
                                 isEditDeath={isEditDeath}
+                                isEditStillBirth={isEditStillBirth}
+                                isEditAdoption={isEditAdoption}   
+                                isEditBirthNAC={isEditBirthNAC}       
                                 formData={formData}
                             />
                         </div>

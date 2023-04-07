@@ -1,6 +1,6 @@
-import { FormStep } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput } from "@egovernments/digit-ui-react-components";
 import React, { useState } from "react";
-import Timeline from "../../components/PGRTimeline";
+import PGRTimeline from "../../components/PGRTimeline";
 
 const SelectPincode = ({ t, config, onSelect, value }) => {
   const tenants = Digit.Hooks.pgr.useTenants();
@@ -9,19 +9,9 @@ const SelectPincode = ({ t, config, onSelect, value }) => {
     const { pincode } = value;
     return pincode;
   });
-  let isNextDisabled = pincode ? false : true;
+  let isNextDisabled = pincode?.length === 6 ? false : true;
   const [pincodeServicability, setPincodeServicability] = useState(null);
 
-  function onChange(e) {
-    setPincode(e.target.value);
-    if (!e.target.value) {
-      isNextDisabled = true;
-    } else {
-      isNextDisabled = false;
-    }
-    // Digit.SessionStorage.set("PGR_CREATE_PINCODE", e.target.value);
-    // setPincodeServicability(null);
-  }
 
   const goNext = async (data) => {
     var foundValue = tenants.find((obj) => obj.pincode?.find((item) => item == data?.pincode));
@@ -40,21 +30,45 @@ const SelectPincode = ({ t, config, onSelect, value }) => {
     }
   };
 
+  const handleChange = (e) => {
+    if (e.target.value.trim().length === 6) {
+      isNextDisabled = false
+    }
+    if (e.target.value.trim().length >= 0) {
+      const phone = e.target.value.length <= 6 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 6)
+      setPincode(phone);
+    }
+  }
+
   const onSkip = () => onSelect();
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
+      {window.location.href.includes("/citizen") ? <PGRTimeline currentStep={2} /> : null}
+
       <FormStep
         t={t}
         config={config}
         onSelect={goNext}
-        value={pincode}
-        onChange={onChange}
         disabled={true}
         onSkip={onSkip}
         forcedError={t(pincodeServicability)}
-        isDisabled={isNextDisabled}
-      ></FormStep>
+        isDisabled={isNextDisabled} >
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-4">
+              <CardLabel>
+                {`${t("CORE_COMMON_PINCODE")}`}
+              </CardLabel>
+              <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="pincode" value={pincode}
+                onChange={handleChange} placeholder={`${t("CORE_COMMON_PINCODE")}`} />
+            </div>
+            <div className="col-md-4">
+            </div>
+            <div className="col-md-4">
+            </div>
+          </div>
+        </div>
+      </FormStep>
     </React.Fragment>
   );
 };

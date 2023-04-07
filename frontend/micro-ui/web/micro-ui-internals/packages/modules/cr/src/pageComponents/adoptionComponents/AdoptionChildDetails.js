@@ -3,19 +3,19 @@ import { FormStep, CardLabel, TextInput, Dropdown,Card, DatePicker, CheckBox, Ba
 import Timeline from "../../components/AdoptionTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
-import BirthPlaceHospital from "../../pageComponents/birthComponents/BirthPlaceHospital";
-import BirthPlaceInstitution from "../../pageComponents/birthComponents/BirthPlaceInstitution";
-import BirthPlaceHome from "../../pageComponents/birthComponents/BirthPlaceHome";
-import BirthPlaceVehicle from "../../pageComponents/birthComponents/BirthPlaceVehicle";
-import BirthPlacePublicPlace from "../../pageComponents/birthComponents/BirthPlacePublicPlace";
+import BirthPlaceHospital from "../../pageComponents/adoptionComponents/BirthPlaceHospital";
+import BirthPlaceInstitution from "../../pageComponents/adoptionComponents/BirthPlaceInstitution";
+import BirthPlaceHome from "../../pageComponents/adoptionComponents/BirthPlaceHome";
+import BirthPlaceVehicle from "../../pageComponents/adoptionComponents/BirthPlaceVehicle";
+import BirthPlacePublicPlace from "../../pageComponents/adoptionComponents/BirthPlacePublicPlace";
 import AdoptionBirthReqSearch from './AdoptionBirthReqSearch'
 import BirthReqSearch from './BirthReqSearch'
 import { convertEpochToDateDMY } from  "../../utils";
 
-const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirth, isEditFlag =false}) => {
-  // console.log(JSON.stringify(formData));  
+const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdoption, isEditFlag =false}) => {
+  // console.log(JSON.stringify(formData));   isEditAdoption ? isEditAdoption :
   const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(false);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
+  const [isDisableEdit, setisDisableEdit] = useState( false);
   const [workFlowCode, setWorkFlowCode] = useState();
 
   const stateId = Digit.ULBService.getStateId();
@@ -31,12 +31,13 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
   const { data: AttentionOfDelivery = {}, isAttentionOfDeliveryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "AttentionOfDelivery");
   const { data: DeliveryMethodList = {}, isDeliveryMethodListLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeliveryMethod");
   const { data: PlaeceMaster = {}, isPlaceMasterLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "PlaceMaster");
+  const { data: hospitalData = {}, isLoadings } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "hospital");
   const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false) 
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
   const [InstitutionFilterList, setInstitutionFilterList] = useState(null);
   const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(false);
   const [SearchRegId,setSearchRegId] = useState()
-
+// console.log('M',formData,isEditAdoption);
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
@@ -72,6 +73,8 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
   let workFlowData = []
   let cmbAttDeliverySub = [];
   let cmbDeliveryMethod = [];
+  let cmbhospital = [];
+  let cmbhospitalMl = [];
   let hospitalCode = "";
   let institutionTypeCode = "";
   let institutionNameCode = "";
@@ -105,6 +108,12 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
     DeliveryMethodList["birth-death-service"].DeliveryMethod.map((ob) => {
       cmbDeliveryMethod.push(ob);
     });
+ 
+    hospitalData &&
+      hospitalData["egov-location"] && hospitalData["egov-location"].hospitalList &&
+      hospitalData["egov-location"].hospitalList.map((ob) => {
+        cmbhospital.push(ob);
+      });
   const cmbPregWeek = [
     { i18nKey: "20", code: "20" },
     { i18nKey: "21", code: "21" },
@@ -130,8 +139,10 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
     { i18nKey: "41", code: "41" },
     { i18nKey: "42", code: "42" },
   ];
-  const [childDOB, setChildDOB] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined) ? convertEpochToDate(formData?.AdoptionChildDetails?.childDOB)  : convertEpochToDate(formData?.AdoptionChildDetails?.childDOB)); //formData?.AdoptionChildDetails?.childDOB
-  // const [gender, selectGender] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined) ? (menu.filter(menu => menu.code === formData?.AdoptionChildDetails?.gender)[0]) : formData?.AdoptionChildDetails?.gender);
+  //formData?.AdoptionChildDetails?.gender?.code ? formData?.AdoptionChildDetails?.gender : formData?.AdoptionChildDetails?.gender ?
+  // menu?.length>0&&(menu.filter(menu => menu.code === formData?.AdoptionChildDetails?.gender)[0]) : ""
+  const [childDOB, setChildDOB] = useState(isEditAdoption && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined) ? convertEpochToDate(formData?.AdoptionChildDetails?.childDOB)  : convertEpochToDate(formData?.AdoptionChildDetails?.childDOB)); //formData?.AdoptionChildDetails?.childDOB
+  // const [gender, selectGender] = useState(isEditAdoption && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined) ? (menu.filter(menu => menu.code === formData?.AdoptionChildDetails?.gender)[0]) : formData?.AdoptionChildDetails?.gender);
   const [gender, selectGender] = useState(formData?.AdoptionChildDetails?.gender?.code ? formData?.AdoptionChildDetails?.gender : formData?.AdoptionChildDetails?.gender ?
     (menu.filter(menu => menu.code === formData?.AdoptionChildDetails?.gender)[0]) : "");
 
@@ -146,11 +157,11 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
   const [isInitialRenderPlace, setIsInitialRenderPlace] = useState(true);
   const [isInitialRenderFormData, setisInitialRenderFormData] = useState(false);
 
-  const [birthDateTime, setbirthDateTime] = useState(""); //formData?.AdoptionChildDetails?.birthDateTime ? formData?.AdoptionChildDetails?.birthDateTime :
+  const [birthDateTime, setbirthDateTime] = useState(""); 
   const [isChildName, setIsChildName] = useState(true);
-  const [adoptionAgency, setIsAdoptionAgency] = useState(formData?.AdoptionChildDetails?.adoptionAgency ? formData?.AdoptionChildDetails?.adoptionAgency : false);
+  const [adoptionAgency, setIsAdoptionAgency] = useState(formData?.AdoptionChildDetails?.adopthasagency ? formData?.AdoptionChildDetails?.adopthasagency :formData?.AdoptionChildDetails?.adoptionAgency ? formData?.AdoptionChildDetails?.adoptionAgency : false);
   const [birthRegistered, setbirthRegistered] = useState(formData?.AdoptionChildDetails?.birthRegistered ? formData?.AdoptionChildDetails?.birthRegistered : false);
-  // const [birthPlace, selectBirthPlace] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined) ? (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.AdoptionChildDetails?.birthPlace)[0]) : formData?.AdoptionChildDetails?.birthPlace);
+  // const [birthPlace, selectBirthPlace] = useState(isEditAdoption && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined) ? (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.AdoptionChildDetails?.birthPlace)[0]) : formData?.AdoptionChildDetails?.birthPlace);
   const [birthPlace, selectBirthPlace] = useState(formData?.AdoptionChildDetails?.birthPlace?.code ? formData?.AdoptionChildDetails?.birthPlace : formData?.AdoptionChildDetails?.birthPlace ?
     (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.AdoptionChildDetails?.birthPlace)[0]) : "");
   const [value, setValue] = useState();
@@ -191,15 +202,15 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
   const [streetNameMl, setstreetNameMl] = useState(formData?.AdoptionChildDetails?.streetNameMl ? formData?.AdoptionChildDetails?.streetNameMl : "");
   const [publicPlaceDecpEn, setpublicPlaceDecpEn] = useState(formData?.AdoptionChildDetails?.publicPlaceDecpEn ? formData?.AdoptionChildDetails?.publicPlaceDecpEn : "");
 
-  // const [pregnancyDuration, setPregnancyDuration] = useState(isEditBirth ? (cmbPregWeek.filter(cmbPregWeek => cmbPregWeek.code === formData?.AdoptionChildDetails?.pregnancyDuration)[0]) : formData?.AdoptionChildDetails?.pregnancyDuration);
+  // const [pregnancyDuration, setPregnancyDuration] = useState(isEditAdoption ? (cmbPregWeek.filter(cmbPregWeek => cmbPregWeek.code === formData?.AdoptionChildDetails?.pregnancyDuration)[0]) : formData?.AdoptionChildDetails?.pregnancyDuration);
 
   const [pregnancyDuration, setPregnancyDuration] = useState(formData?.AdoptionChildDetails?.pregnancyDuration ? formData?.AdoptionChildDetails?.pregnancyDuration : "");
   const [medicalAttensionSub, setMedicalAttensionSub] = useState(formData?.AdoptionChildDetails?.medicalAttensionSub?.code ? formData?.AdoptionChildDetails?.medicalAttensionSub : formData?.AdoptionChildDetails?.medicalAttensionSub ?
     (cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.AdoptionChildDetails?.medicalAttensionSub)[0]) : "");
-  // const [medicalAttensionSub, setMedicalAttensionSub] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined) ? (cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.AdoptionChildDetails?.medicalAttensionSub)[0]) : formData?.AdoptionChildDetails?.medicalAttensionSub);
+  // const [medicalAttensionSub, setMedicalAttensionSub] = useState(isEditAdoption && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined) ? (cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.AdoptionChildDetails?.medicalAttensionSub)[0]) : formData?.AdoptionChildDetails?.medicalAttensionSub);
   const [deliveryMethods, setDeliveryMethod] = useState(formData?.AdoptionChildDetails?.deliveryMethods?.code ? formData?.AdoptionChildDetails?.deliveryMethods : formData?.AdoptionChildDetails?.deliveryMethods ?
     (cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.AdoptionChildDetails?.deliveryMethods)[0]) : "");
-  //  const [deliveryMethods, setDeliveryMethod] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined) ? (cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.AdoptionChildDetails?.deliveryMethods)[0]) : formData?.AdoptionChildDetails?.deliveryMethods);
+  //  const [deliveryMethods, setDeliveryMethod] = useState(isEditAdoption && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined) ? (cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.AdoptionChildDetails?.deliveryMethods)[0]) : formData?.AdoptionChildDetails?.deliveryMethods);
   const [birthWeight, setBirthWeight] = useState(formData?.AdoptionChildDetails?.birthWeight ? formData?.AdoptionChildDetails?.birthWeight : null);
 
   const [toast, setToast] = useState(false);
@@ -251,35 +262,35 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
   //     cmbInstitutionId.push(ob);
   //   });
   //   console.log(cmbInstitutionId);
-  const [AdoptionAgencyName , setAdoptionAgentName]=useState(formData?.AdoptionChildDetails?.AdoptionAgencyName ? formData?.AdoptionChildDetails?.AdoptionAgencyName : "")
-  const [AdoptionAgencyAddress , setAdoptionAgencyAddress]=useState(formData?.AdoptionChildDetails?.AdoptionAgencyAddress ? formData?.AdoptionChildDetails?.AdoptionAgencyAddress : "")
-  const [AdoptionContractPersonName , setAdoptionAgencyPersonName]=useState(formData?.AdoptionChildDetails?.AdoptionContractPersonName ? formData?.AdoptionChildDetails?.AdoptionContractPersonName : "")
-  const [AdoptionContactNo , setAdoptionContactNo]=useState(formData?.AdoptionChildDetails?.AdoptionContactNo ? formData?.AdoptionChildDetails?.AdoptionContactNo : "")
-  const [AdoptionDecreOrderNo,setAdoptionDecreOrderNo]= useState(formData?.AdoptionChildDetails?.AdoptionDecreOrderNo ? formData?.AdoptionChildDetails?.AdoptionDecreOrderNo : "")
-  const [AdoptionDecreOrderDate,setAdoptionDecreOrderDate]= useState(formData?.AdoptionChildDetails?.AdoptionDecreOrderDate ? formData?.AdoptionChildDetails?.AdoptionDecreOrderDate : "")
-  const [IssuingAuthority,setIssuingAuthority]= useState(formData?.AdoptionChildDetails?.IssuingAuthority ? formData?.AdoptionChildDetails?.IssuingAuthority : "")
-  const [AdoptionDeedNo,setAdoptionDeedNo]= useState(formData?.AdoptionChildDetails?.AdoptionDeedNo ? formData?.AdoptionChildDetails?.AdoptionDeedNo : "")
-  const [AdoptionDeedRegDate,setAdoptionDeedRegDate]= useState(formData?.AdoptionChildDetails?.AdoptionDeedRegDate ? formData?.AdoptionChildDetails?.AdoptionDeedRegDate : "")
-  const [RegistrationAuthority,setRegistrationAuthority]= useState(formData?.AdoptionChildDetails?.RegistrationAuthority ? formData?.AdoptionChildDetails?.RegistrationAuthority : "")
+  const [AdoptionAgencyName , setAdoptionAgentName]=useState(formData?.AdoptionChildDetails?.adoptagencyname ? formData?.AdoptionChildDetails?.adoptagencyname :  formData?.AdoptionChildDetails?.AdoptionAgencyName? formData?.AdoptionChildDetails?.AdoptionAgencyName:"")
+  const [AdoptionAgencyAddress , setAdoptionAgencyAddress]=useState(formData?.AdoptionChildDetails?.adoptagencyaddress ? formData?.AdoptionChildDetails?.adoptagencyaddress :formData?.AdoptionChildDetails?.AdoptionAgencyAddress ? formData?.AdoptionChildDetails?.AdoptionAgencyAddress  : "")
+  const [AdoptionContractPersonName , setAdoptionAgencyPersonName]=useState(formData?.AdoptionChildDetails?.adoptagencycontactperson ? formData?.AdoptionChildDetails?.adoptagencycontactperson :formData?.AdoptionChildDetails?.AdoptionContractPersonName ? formData?.AdoptionChildDetails?.AdoptionContractPersonName :"")
+  const [AdoptionContactNo , setAdoptionContactNo]=useState(formData?.AdoptionChildDetails?.adoptagencycontactpersonmobileno ? formData?.AdoptionChildDetails?.adoptagencycontactpersonmobileno :formData?.AdoptionChildDetails?.AdoptionContactNo? formData?.AdoptionChildDetails?.AdoptionContactNo :"")
+  const [AdoptionDecreOrderNo,setAdoptionDecreOrderNo]= useState(formData?.AdoptionChildDetails?.adoptdecreeorderno ? formData?.AdoptionChildDetails?.adoptdecreeorderno:formData?.AdoptionChildDetails?.AdoptionDecreOrderNo ? formData?.AdoptionChildDetails?.AdoptionDecreOrderNo : "")
+  const [AdoptionDecreOrderDate,setAdoptionDecreOrderDate]= useState(formData?.AdoptionChildDetails?.adoptdateoforderdecree ? convertEpochToDate(formData?.AdoptionChildDetails?.adoptdateoforderdecree) :formData?.AdoptionChildDetails?.AdoptionDecreOrderDate ? convertEpochToDate(formData?.AdoptionChildDetails?.AdoptionDecreOrderDate) : "")
+  const [IssuingAuthority,setIssuingAuthority]= useState(formData?.AdoptionChildDetails?.adoptissuingauththority ? formData?.AdoptionChildDetails?.adoptissuingauththority : formData?.AdoptionChildDetails?.IssuingAuthority? formData?.AdoptionChildDetails?.IssuingAuthority: "")
+  const [AdoptionDeedNo,setAdoptionDeedNo]= useState(formData?.AdoptionChildDetails?.adoptdeedorderno ? formData?.AdoptionChildDetails?.adoptdeedorderno :formData?.AdoptionChildDetails?.AdoptionDeedNo? formData?.AdoptionChildDetails?.AdoptionDeedNo: "")
+  const [AdoptionDeedRegDate,setAdoptionDeedRegDate]= useState(formData?.AdoptionChildDetails?.adoptdateoforderdeed ? convertEpochToDate(formData?.AdoptionChildDetails?.adoptdateoforderdeed) :formData?.AdoptionChildDetails?.AdoptionDeedRegDate ? convertEpochToDate(formData?.AdoptionChildDetails?.AdoptionDeedRegDate): "")
+  const [RegistrationAuthority,setRegistrationAuthority]= useState(formData?.AdoptionChildDetails?.adoptissuingauththority ? formData?.AdoptionChildDetails?.adoptissuingauththority : formData?.AdoptionChildDetails?.RegistrationAuthority ? formData?.AdoptionChildDetails?.RegistrationAuthority : "")
   const [BirthRegNo,setBirthRegNo]= useState(formData?.AdoptionChildDetails?.BirthRegNo ? formData?.AdoptionChildDetails?.BirthRegNo : "")
   const onSkip = () => onSelect();
 
-  // useEffect(() => {
-  //   if (isInitialRender) {
-  //     if (formData?.AdoptionChildDetails.gender != "") {
-  //       setIsInitialRender(false);
-  //       selectGender((menu?.filter(menu => menu.code === ormData?.AdoptionChildDetails?.gender)[0]))
-  //       // setIsChildName(formData?.AdoptionChildDetails?.isChildName);
-  //     }
-  //   }
-  // }, [isInitialRender]);
+  useEffect(() => {
+    if (isInitialRender && isEditAdoption !==false) {
+      formData?.AdoptionChildDetails?.gender !== "" ?selectGender((menu?.filter(menu => menu.code === formData?.AdoptionChildDetails?.gender)[0])):""
+      formData?.AdoptionChildDetails?.birthPlace !== ""?selectBirthPlace((cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.AdoptionChildDetails?.birthPlace)[0])) :""
+      formData?.AdoptionChildDetails?.birthPlace !== ""?setValue((cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.AdoptionChildDetails?.birthPlace)[0]?.code)) :""
+      // formData?.AdoptionChildDetails.hospitalName !== ""?selectHospitalName((cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.AdoptionChildDetails?.hospitalName)[0]?.code)) :setValue("")
 
-  useState(()=>{
-    if(isEditBirth){
-      formData.AdoptionDetails.pop()
     }
+  }, [ menu?.length>0 || cmbPlaceMaster?.length>0]);
 
-  },[formData])
+  // useState(()=>{
+  //   if(isEditAdoption){
+  //     formData.AdoptionDetails.pop()
+  //   }
+
+  // },[formData])
   useEffect(()=>{
     if(SearchRegId){
         SearchRegId?.childDOB ? setChildDOB(convertEpochToDate(SearchRegId?.childDOB)):setChildDOB(null)
@@ -966,75 +977,76 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
       setAdoptionDecreErr(false)
     }
     if (validFlag == true) {
-      sessionStorage.setItem("stateId", stateId ? stateId : null);
-      sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
-      sessionStorage.setItem("workFlowCode", workFlowCode);
-      sessionStorage.setItem("childDOB", childDOB ? childDOB : null);
-      sessionStorage.setItem("birthDateTime", birthDateTime ? birthDateTime : null);
-      sessionStorage.setItem("gender", gender ? gender.code : null);
-      sessionStorage.setItem("childAadharNo", childAadharNo ? childAadharNo : null);
-      sessionStorage.setItem("childFirstNameEn", childFirstNameEn ? childFirstNameEn : null);
-      sessionStorage.setItem("childMiddleNameEn", childMiddleNameEn ? childMiddleNameEn : null);
-      sessionStorage.setItem("childLastNameEn", childLastNameEn ? childLastNameEn : null);
-      sessionStorage.setItem("childFirstNameMl", childFirstNameMl ? childFirstNameMl : null);
-      sessionStorage.setItem("childMiddleNameMl", childMiddleNameMl ? childMiddleNameMl : null);
-      sessionStorage.setItem("childLastNameMl", childLastNameMl ? childLastNameMl : null);
-      sessionStorage.setItem("isChildName", isChildName);
-      sessionStorage.setItem("adoptionAgency", adoptionAgency);
-      sessionStorage.setItem("birthRegistered", birthRegistered);
-      sessionStorage.setItem("SearchRegId", SearchRegId);
-      sessionStorage.setItem("AdoptionAgencyName", AdoptionAgencyName);
-      sessionStorage.setItem("AdoptionAgencyAddress", AdoptionAgencyAddress);
-      sessionStorage.setItem("AdoptionContractPersonName", AdoptionContractPersonName);
-      sessionStorage.setItem("AdoptionContactNo", AdoptionContactNo);
-      sessionStorage.setItem("AdoptionDecreOrderDate", AdoptionDecreOrderDate);
-      sessionStorage.setItem("AdoptionDecreOrderNo", AdoptionDecreOrderNo);
-      sessionStorage.setItem("IssuingAuthority", IssuingAuthority);
-      sessionStorage.setItem("AdoptionDeedNo", AdoptionDeedNo);
-      sessionStorage.setItem("AdoptionDeedRegDate", AdoptionDeedRegDate);
-      sessionStorage.setItem("RegistrationAuthority", RegistrationAuthority);
-      sessionStorage.setItem("birthPlace", birthPlace.code);
-      sessionStorage.setItem("hospitalCode", hospitalName ? hospitalName.code : null);
-      sessionStorage.setItem("hospitalName", hospitalName ? hospitalName.hospitalName : null);
-      sessionStorage.setItem("hospitalNameMl", hospitalName ? hospitalNameMl.hospitalNamelocal : null);
-      sessionStorage.setItem("institutionTypeCode", institution ? institution.code : null);
-      sessionStorage.setItem("institution", institution ? institution.name : null);
-      sessionStorage.setItem("institutionNameCode", institutionId ? institutionId.code : null);
-      sessionStorage.setItem("institutionId", institutionId ? institutionId.institutionName : null);
-      sessionStorage.setItem("institutionIdMl", institutionIdMl ? institutionIdMl.institutionNamelocal : null);
-      sessionStorage.setItem("adrsHouseNameEn", adrsHouseNameEn ? adrsHouseNameEn : null);
-      sessionStorage.setItem("adrsHouseNameMl", adrsHouseNameMl ? adrsHouseNameMl : null);
-      sessionStorage.setItem("adrsLocalityNameEn", adrsLocalityNameEn ? adrsLocalityNameEn : null);
-      sessionStorage.setItem("adrsLocalityNameMl", adrsLocalityNameMl ? adrsLocalityNameMl : null);
-      sessionStorage.setItem("adrsStreetNameEn", adrsStreetNameEn ? adrsStreetNameEn : null);
-      sessionStorage.setItem("adrsStreetNameMl", adrsStreetNameMl ? adrsStreetNameMl : null);
-      sessionStorage.setItem("adrsPostOffice", adrsPostOffice ? adrsPostOffice.code : null);
-      sessionStorage.setItem("adrsPincode", adrsPincode ? adrsPincode.code : null);
-      sessionStorage.setItem("wardNo", wardNo ? wardNo.code : null);
-      sessionStorage.setItem("wardNameEn", wardNo ? wardNo.name : null);
-      sessionStorage.setItem("wardNameMl", wardNo ? wardNo.localname : null);
-      sessionStorage.setItem("wardNumber", wardNo ? wardNo.wardno : null);
-      sessionStorage.setItem("vehicleType", vehicleType ? vehicleType : null);
-      sessionStorage.setItem("vehicleRegistrationNo", vehicleRegistrationNo ? vehicleRegistrationNo : null);
-      sessionStorage.setItem("vehicleFromEn", vehicleFromEn ? vehicleFromEn : null);
-      sessionStorage.setItem("vehicleToEn", vehicleToEn ? vehicleToEn : null);
-      sessionStorage.setItem("vehicleFromMl", vehicleFromMl ? vehicleFromMl : null);
-      sessionStorage.setItem("vehicleToMl", vehicleToMl ? vehicleToMl : null);
-      sessionStorage.setItem("vehicleHaltPlace", vehicleHaltPlace ? vehicleHaltPlace : null);
-      // sessionStorage.setItem("vehicleHaltPlaceMl", vehicleHaltPlaceMl ? vehicleHaltPlaceMl : null);
-      sessionStorage.setItem("setadmittedHospitalEn", setadmittedHospitalEn ? setadmittedHospitalEn.code : null);
-      sessionStorage.setItem("vehicleDesDetailsEn", vehicleDesDetailsEn ? vehicleDesDetailsEn : null);
-      sessionStorage.setItem("publicPlaceType", publicPlaceType ? publicPlaceType.code : null);
-      sessionStorage.setItem("localityNameEn", localityNameEn ? localityNameEn : null);
-      sessionStorage.setItem("localityNameMl", localityNameMl ? localityNameMl : null);
-      sessionStorage.setItem("streetNameEn", streetNameEn ? streetNameEn : null);
-      sessionStorage.setItem("streetNameMl", streetNameMl ? streetNameMl : null);
-      sessionStorage.setItem("publicPlaceDecpEn", publicPlaceDecpEn ? publicPlaceDecpEn : null);
-      sessionStorage.setItem("birthWeight", birthWeight ? birthWeight : null);
-      sessionStorage.setItem("pregnancyDuration", pregnancyDuration ? pregnancyDuration.code : null);
-      sessionStorage.setItem("medicalAttensionSub", medicalAttensionSub ? medicalAttensionSub.code : null);
-      sessionStorage.setItem("deliveryMethods", deliveryMethods ? deliveryMethods.code : null);
-      let IsEditChangeScreen = (isEditBirth ? isEditBirth : false);
+      // sessionStorage.setItem("stateId", stateId ? stateId : null);
+      // sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
+      // sessionStorage.setItem("workFlowCode", workFlowCode);
+      // sessionStorage.setItem("childDOB", childDOB ? childDOB : null);
+      // sessionStorage.setItem("birthDateTime", birthDateTime ? birthDateTime : null);
+      // sessionStorage.setItem("gender", gender ? gender.code : null);
+      // sessionStorage.setItem("childAadharNo", childAadharNo ? childAadharNo : null);
+      // sessionStorage.setItem("childFirstNameEn", childFirstNameEn ? childFirstNameEn : null);
+      // sessionStorage.setItem("childMiddleNameEn", childMiddleNameEn ? childMiddleNameEn : null);
+      // sessionStorage.setItem("childLastNameEn", childLastNameEn ? childLastNameEn : null);
+      // sessionStorage.setItem("childFirstNameMl", childFirstNameMl ? childFirstNameMl : null);
+      // sessionStorage.setItem("childMiddleNameMl", childMiddleNameMl ? childMiddleNameMl : null);
+      // sessionStorage.setItem("childLastNameMl", childLastNameMl ? childLastNameMl : null);
+      // sessionStorage.setItem("isChildName", isChildName);
+      // sessionStorage.setItem("adoptionAgency", adoptionAgency);
+      // sessionStorage.setItem("birthRegistered", birthRegistered);
+      // sessionStorage.setItem("SearchRegId", SearchRegId);
+      // sessionStorage.setItem("AdoptionAgencyName", AdoptionAgencyName);
+      // sessionStorage.setItem("AdoptionAgencyAddress", AdoptionAgencyAddress);
+      // sessionStorage.setItem("AdoptionContractPersonName", AdoptionContractPersonName);
+      // sessionStorage.setItem("AdoptionContactNo", AdoptionContactNo);
+      // sessionStorage.setItem("AdoptionDecreOrderDate", AdoptionDecreOrderDate);
+      // sessionStorage.setItem("AdoptionDecreOrderNo", AdoptionDecreOrderNo);
+      // sessionStorage.setItem("IssuingAuthority", IssuingAuthority);
+      // sessionStorage.setItem("AdoptionDeedNo", AdoptionDeedNo);
+      // sessionStorage.setItem("AdoptionDeedRegDate", AdoptionDeedRegDate);
+      // sessionStorage.setItem("RegistrationAuthority", RegistrationAuthority);
+      // sessionStorage.setItem("birthPlace", birthPlace.code);
+      // sessionStorage.setItem("hospitalCode", hospitalName ? hospitalName.code : null);
+      // sessionStorage.setItem("hospitalName", hospitalName ? hospitalName.hospitalName : null);
+      // sessionStorage.setItem("hospitalNameMl", hospitalName ? hospitalNameMl.hospitalNamelocal : null);
+      // sessionStorage.setItem("institutionTypeCode", institution ? institution.code : null);
+      // sessionStorage.setItem("institution", institution ? institution.name : null);
+      // sessionStorage.setItem("institutionNameCode", institutionId ? institutionId.code : null);
+      // sessionStorage.setItem("institutionId", institutionId ? institutionId.institutionName : null);
+      // sessionStorage.setItem("institutionIdMl", institutionIdMl ? institutionIdMl.institutionNamelocal : null);
+      // sessionStorage.setItem("adrsHouseNameEn", adrsHouseNameEn ? adrsHouseNameEn : null);
+      // sessionStorage.setItem("adrsHouseNameMl", adrsHouseNameMl ? adrsHouseNameMl : null);
+      // sessionStorage.setItem("adrsLocalityNameEn", adrsLocalityNameEn ? adrsLocalityNameEn : null);
+      // sessionStorage.setItem("adrsLocalityNameMl", adrsLocalityNameMl ? adrsLocalityNameMl : null);
+      // sessionStorage.setItem("adrsStreetNameEn", adrsStreetNameEn ? adrsStreetNameEn : null);
+      // sessionStorage.setItem("adrsStreetNameMl", adrsStreetNameMl ? adrsStreetNameMl : null);
+      // sessionStorage.setItem("adrsPostOffice", adrsPostOffice ? adrsPostOffice.code : null);
+      // sessionStorage.setItem("adrsPincode", adrsPincode ? adrsPincode.code : null);
+      // sessionStorage.setItem("wardNo", wardNo ? wardNo.code : null);
+      // sessionStorage.setItem("wardNameEn", wardNo ? wardNo.name : null);
+      // sessionStorage.setItem("wardNameMl", wardNo ? wardNo.localname : null);
+      // sessionStorage.setItem("wardNumber", wardNo ? wardNo.wardno : null);
+      // sessionStorage.setItem("vehicleType", vehicleType ? vehicleType : null);
+      // sessionStorage.setItem("vehicleRegistrationNo", vehicleRegistrationNo ? vehicleRegistrationNo : null);
+      // sessionStorage.setItem("vehicleFromEn", vehicleFromEn ? vehicleFromEn : null);
+      // sessionStorage.setItem("vehicleToEn", vehicleToEn ? vehicleToEn : null);
+      // sessionStorage.setItem("vehicleFromMl", vehicleFromMl ? vehicleFromMl : null);
+      // sessionStorage.setItem("vehicleToMl", vehicleToMl ? vehicleToMl : null);
+      // sessionStorage.setItem("vehicleHaltPlace", vehicleHaltPlace ? vehicleHaltPlace : null);
+      // // sessionStorage.setItem("vehicleHaltPlaceMl", vehicleHaltPlaceMl ? vehicleHaltPlaceMl : null);
+      // sessionStorage.setItem("setadmittedHospitalEn", setadmittedHospitalEn ? setadmittedHospitalEn.code : null);
+      // sessionStorage.setItem("vehicleDesDetailsEn", vehicleDesDetailsEn ? vehicleDesDetailsEn : null);
+      // sessionStorage.setItem("publicPlaceType", publicPlaceType ? publicPlaceType.code : null);
+      // sessionStorage.setItem("localityNameEn", localityNameEn ? localityNameEn : null);
+      // sessionStorage.setItem("localityNameMl", localityNameMl ? localityNameMl : null);
+      // sessionStorage.setItem("streetNameEn", streetNameEn ? streetNameEn : null);
+      // sessionStorage.setItem("streetNameMl", streetNameMl ? streetNameMl : null);
+      // sessionStorage.setItem("publicPlaceDecpEn", publicPlaceDecpEn ? publicPlaceDecpEn : null);
+      // sessionStorage.setItem("birthWeight", birthWeight ? birthWeight : null);
+      // sessionStorage.setItem("pregnancyDuration", pregnancyDuration ? pregnancyDuration.code : null);
+      // sessionStorage.setItem("medicalAttensionSub", medicalAttensionSub ? medicalAttensionSub.code : null);
+      // sessionStorage.setItem("deliveryMethods", deliveryMethods ? deliveryMethods.code : null);
+      let IsEditChangeScreen = (isEditAdoption ? isEditAdoption : false);
+      let isWorkflow = isEditAdoption ? false : true;
       onSelect(config.key, {
         stateId, tenantId, workFlowCode, childDOB, birthDateTime, gender, childAadharNo,
         isChildName,SearchRegId,birthRegistered,adoptionAgency,AdoptionAgencyName,AdoptionAgencyAddress,AdoptionContractPersonName,AdoptionContactNo,
@@ -1045,11 +1057,11 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
         vehicleType, vehicleHaltPlace, vehicleRegistrationNo, vehicleFromEn, vehicleToEn, vehicleFromMl,
         vehicleToMl, setadmittedHospitalEn, vehicleDesDetailsEn,
         publicPlaceType, localityNameEn, localityNameMl, streetNameEn, streetNameMl, publicPlaceDecpEn,
-        birthWeight, pregnancyDuration, medicalAttensionSub, deliveryMethods, IsEditChangeScreen
+        birthWeight, pregnancyDuration, medicalAttensionSub, deliveryMethods, IsEditChangeScreen,isWorkflow
       });
     }
   };
-  if (isEditBirth && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined)) {
+  if (isEditAdoption && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined)) {
 
     if (formData?.AdoptionChildDetails?.gender != null) {
       if (menu.length > 0 && (gender === undefined || gender === "")) {
@@ -1618,7 +1630,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
                 </div>
               </div>
 
-              {ChildAadharHIde === true && (
+              {/* {ChildAadharHIde === true && (
                 <div className="col-md-3">
                   <CardLabel>{`${t("CS_COMMON_CHILD_AADHAAR")}`}</CardLabel>
                   <TextInput
@@ -1636,7 +1648,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
                     }}
                     {...(validation = { isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                   />
-                </div>)}
+                </div>)} */}
             </div>
           </div>
           <div className="row">
@@ -1674,7 +1686,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
                 hospitalNameMl={hospitalNameMl}
                 selectHospitalNameMl={selectHospitalNameMl}
                 formData={formData}
-                isEditBirth={isEditBirth}
+                isEditAdoption={isEditAdoption}
               />
             </div>
           )}
@@ -1692,7 +1704,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
                 isInitialRenderInstitutionList={isInitialRenderInstitutionList}
                 setIsInitialRenderInstitutionList={setIsInitialRenderInstitutionList}
                 formData={formData}
-                isEditBirth={isEditBirth}
+                isEditAdoption={isEditAdoption}
               />
             </div>
           )}
@@ -1720,7 +1732,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
                 PostOfficevalues={PostOfficevalues}
                 setPostOfficevalues={setPostOfficevalues}
                 formData={formData}
-                isEditBirth={isEditBirth}
+                isEditAdoption={isEditAdoption}
               />
             </div>
           )}
@@ -1750,7 +1762,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
                 wardNo={wardNo}
                 setWardNo={setWardNo}
                 formData={formData}
-                isEditBirth={isEditBirth}
+                isEditAdoption={isEditAdoption}
               />
             </div>
           )}
@@ -1772,7 +1784,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditBirt
                 setpublicPlaceDecpEn={setpublicPlaceDecpEn}
                 setWardNo={setWardNo}
                 formData={formData}
-                isEditBirth={isEditBirth}
+                isEditAdoption={isEditAdoption}
               />
             </div>
           )}

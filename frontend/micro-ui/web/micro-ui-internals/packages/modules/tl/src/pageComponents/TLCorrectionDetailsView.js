@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { Modal, LinkButton, Card, StatusTable, CardText, FormStep, FormComposer, ButtonSelector, SubmitBar } from "@egovernments/digit-ui-react-components";
-
+import Timeline from "../components/TLTimeline";
 const Heading = (props) => {
   return <h1 className="heading-m">{props.label}</h1>;
 };
@@ -98,7 +98,8 @@ console.log("formData Main"+JSON.stringify(formData));
   }
   return (
     <React.Fragment>
-     
+       {window.location.href.includes("/citizen") ? <Timeline flow={'CORRECTION'}/> : null}
+      {window.location.href.includes("/employee") ? <Timeline  flow={'CORRECTION'}/> : null}
       <FormStep  config={config} onSelect={goNext} onSkip={onSkip} t={t}  >
         <div style={{ borderRadius: "5px", borderColor: "#f3f3f3", background: "white", display: "flow-root", }} >
           <TLCorrectionActivity t={t} config={config} onSelect={onSelect} formData={formData}  onEditSelect={onEditSelect} formDataEdit={formDataEdit}></TLCorrectionActivity>

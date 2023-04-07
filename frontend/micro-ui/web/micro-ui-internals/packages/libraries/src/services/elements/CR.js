@@ -2,6 +2,17 @@ import Urls from "../atoms/urls";
 import { Request } from "../atoms/Utils/Request";
 
 export const CRService = {
+  correctBirth: (details, tenantId) =>
+    Request({
+      url: Urls.cr.correct_update,
+      data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: {},
+      auth: true,
+    }),
   create: (details, tenantId) =>
     Request({
       url: Urls.cr.create,

@@ -113,9 +113,15 @@ const CreateBirthRegistration = ({ parentUrl }) => {
     history.push(`${match.path}/acknowledgement`);
   };
 
-  const onSuccess = () => {
-    sessionStorage.removeItem("CurrentFinancialYear");
+  const onSuccess = (data) => {
+    // console.log(data);
+    // console.log(data?.ChildDetails[0].applicationNumber);
+    if(isEditBirth === false){
+      clearParams();
+    }    
+    // sessionStorage.removeItem("CurrentFinancialYear");
     queryClient.invalidateQueries("CR_CREATE_BIRTH_REG");
+
   };
   const handleSkip = () => { };
   const handleMultiple = () => { };

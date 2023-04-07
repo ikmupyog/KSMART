@@ -7,8 +7,9 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
   permntOutsideIndiaLineoneMl, setadrsPermntOutsideIndiaLineoneMl, permntOutsideIndiaLinetwoEn, setadrsPermntOutsideIndiaLinetwoEn, permntOutsideIndiaLinetwoMl, setadrsPermntOutsideIndiaLinetwoMl,
   permntOutsideIndiaprovinceEn, setPermntOutsideIndiaprovinceEn, permntOutsideIndiaprovinceMl, setPermntOutsideIndiaprovinceMl, permntOutsideIndiaVillage, setadrsPermntOutsideIndiaVillage,
   permntOutsideIndiaCityTown, setadrsPermntOutsideIndiaCityTown, permanentOutsideIndiaPostCode, setPermantpostCode,
-  isEditBirth = false, isEditDeath = false, isEditStillBirth = false,
+  isEditBirth = false, isEditDeath = false, isEditStillBirth = false,isEditAdoption,isEditBirthNAC=false
   // isInitialRender, setIsInitialRender
+  //isEditBirth ? isEditBirth : isEditDeath ? false :
   //  permntOutsideIndiaCountry,  setPermntOutsideIndiaCountry, countryvalue, setCountryValue,
 }) => {
   const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : isEditStillBirth ? isEditStillBirth : false);
@@ -50,6 +51,12 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
     if (formData?.StillBirthChildDetails?.AddressBirthDetails?.permntOutsideIndiaVillage != null) {
       if (cmbVillage.length > 0 && (permntOutsideIndiaVillage === undefined || permntOutsideIndiaVillage === "")) {
         setadrsVillage(cmbVillage.filter(cmbVillage => cmbVillage.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.permntOutsideIndiaVillage)[0]);
+      }
+    }
+  }if (isEditAdoption !==false) {
+    if (formData?.AdoptionAddressBasePage?.permntOutsideIndiaVillage != null) {
+      if (cmbVillage.length > 0 && (permntOutsideIndiaVillage === undefined || permntOutsideIndiaVillage === "")) {
+        setadrsVillage(cmbVillage.filter(cmbVillage => cmbVillage.code === formData?.AdoptionAddressBasePage?.permntOutsideIndiaVillage)[0]);
       }
     }
   }

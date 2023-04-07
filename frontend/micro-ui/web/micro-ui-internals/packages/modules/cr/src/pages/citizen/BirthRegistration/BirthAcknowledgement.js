@@ -1,13 +1,13 @@
-import { Banner, Card, CardText, LinkButton, Loader, SubmitBar } from "@egovernments/digit-ui-react-components";
+import { Banner, Card, CardText, LinkButton, Loader, SubmitBar, toast } from "@egovernments/digit-ui-react-components";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { convertToBirthRegistration, convertToEditBirthRegistration } from "../../../utils/birthindex";
 import getPDFData from "../../../utils/getTLAcknowledgementData";
+import { useHistory } from "react-router-dom";
 
 const GetActionMessage = (props) => {
   const { t } = useTranslation();
-  console.log(props);
   if (props.isSuccess) {
     return t("CR_CREATE_SUCCESS_MSG");
   } else if (props.isLoading) {
@@ -23,47 +23,46 @@ const rowContainerStyle = {
 };
 
 const BannerPicker = (props) => {
-  console.log(JSON.stringify(props));
-  return (
-    <Banner
-      message={GetActionMessage(props)}
-      applicationNumber={props.data?.ChildDetails[0]?.applicationNumber}
-      info={props.isSuccess ? props.applicationNumber : ""}
-      successful={props.isSuccess}
-    />
-  );
+  if (props.isSuccess && sessionStorage.getItem("CR_BIRTH_EDIT_FLAG")) {
+    //console.log(JSON.stringify(props));
+    window.location.assign(`${window.location.origin}/digit-ui/employee/cr/application-details/${props.applicationNumber}`);
+  } else {
+    return (
+      <Banner
+        message={GetActionMessage(props)}
+        applicationNumber={props.data?.ChildDetails[0]?.applicationNumber}
+        info={props.isSuccess ? props.applicationNumber : ""}
+        successful={props.isSuccess}
+      />
+    );
+  }
+
+
 };
 
 const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
+  const [toast, setToast] = useState(false);
   const { t } = useTranslation();
+  const history = useHistory();
+  const { data: storeData } = Digit.Hooks.useStore.getInitData();
+  const { tenants } = storeData || {};
+  const stateId = Digit.ULBService.getStateId();
+  const [isInitialRender, setIsInitialRender] = useState(true);
   const [mutationHappened, setMutationHappened, clear] = Digit.Hooks.useSessionStorage("CITIZEN_TL_MUTATION_HAPPENED", false);
   const resubmit = window.location.href.includes("edit-application");
   const tenantId = Digit.ULBService.getCurrentTenantId();
   //console.log(sessionStorage.getItem("CR_BIRTH_EDIT_FLAG"));
-  // const [isEditBirth, setIsEditBirth] = useState(Object.keys(Digit.Hooks.useSessionStorage("CR_BIRTH_EDIT_FLAG", {})[0]).length > 0 ? true : false);
-  const [isEditBirth, setIsEditBirth] = useState(sessionStorage.getItem("CR_BIRTH_EDIT_FLAG")? true : false);
-  
+  const [isEditBirth, setIsEditBirth] = useState(sessionStorage.getItem("CR_BIRTH_EDIT_FLAG") ? true : false);
+
+  let applicationNumber = sessionStorage.getItem("applicationNumber") != null ? sessionStorage.getItem("applicationNumber") : null;
+  // console.log(applicationNumber);
   //console.log("isEditBirth" + isEditBirth);
   const mutation = Digit.Hooks.cr.useCivilRegistrationAPI(
     tenantId, isEditBirth ? false : true
   );
 
-
-
-  // const mutation2 = Digit.Hooks.cr.useCivilRegistrationAPI(
-  //   data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
-  //   false
-  // );
-
-  const { data: storeData } = Digit.Hooks.useStore.getInitData();
-  const { tenants } = storeData || {};
-  const stateId = Digit.ULBService.getStateId();
-  //  const { isLoading, data: fydata = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "egf-master", "FinancialYear");
-  //let isDirectRenewal = sessionStorage.getItem("isDirectRenewal") ? stringToBoolean(sessionStorage.getItem("isDirectRenewal")) : null;
-  const [isInitialRender, setIsInitialRender] = useState(true);
-
   useEffect(() => {
-    if (isInitialRender) {
+    if (isInitialRender && applicationNumber === null) {
       // const onSuccessedit = () => {
       //   setMutationHappened(true);
       // };
@@ -116,6 +115,9 @@ const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
       } catch (err) {
       }
     }
+    // else {
+    //   history.push(`/digit-ui/citizen`)
+    // }
   }, [mutation]);
 
   // useEffect(() => {
@@ -130,6 +132,21 @@ const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
   //     }
   //   }
   // }, [mutation.isSuccess, mutation1.isSuccess]);
+  useEffect(() => {
+    //console.log(mutation.data);
+    if (mutation.isSuccess) {
+      //console.log(mutation.data?.ChildDetails[0].applicationNumber);
+      applicationNumber = mutation.data?.ChildDetails[0].applicationNumber;
+      sessionStorage.setItem("applicationNumber", applicationNumber);
+      //console.log(applicationNumber);
+    } else {
+      applicationNumber = null;
+    }
+  }, [mutation.isSuccess]);
+
+  // if(isRoutingStatus){
+  //   history.push(`/digit-ui/citizen`);
+  // }
 
   const handleDownloadPdf = async () => {
     const { Licenses = [] } = mutation.data
@@ -139,8 +156,22 @@ const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
     const data = getPDFData({ ...res }, tenantInfo, t);
     data.then((ress) => Digit.Utils.pdf.generate(ress));
   };
+
   let enableLoader = (mutation.isIdle || mutation.isLoading);
-  if (enableLoader) { return (<Loader />) }
+  // console.log(JSON.stringify(mutation));
+  if (enableLoader) {
+    if (mutation?.isLoading === false && mutation?.isSuccess === false && mutation?.isError == false && mutation?.isIdle === true && applicationNumber != null) {
+      return (
+        <Card>
+          <Link to={`/digit-ui/citizen`}>
+            <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
+          </Link>
+        </Card>
+      )
+    } else if (mutation.isIdle || mutation.isLoading) {
+      return (<Loader />)
+    }
+  }
   else if (((mutation?.isSuccess == false && mutation?.isIdle == false))) {
     return (
       <Card>
@@ -151,9 +182,6 @@ const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
         </Link>
       </Card>)
   }
-  // else if(mutation2.isLoading || mutation2.isIdle ){
-  //   return (<Loader />)
-  // }
   else
     // console.log(JSON.stringify(mutation));
     if (mutation.isSuccess && mutation?.isError === null) {

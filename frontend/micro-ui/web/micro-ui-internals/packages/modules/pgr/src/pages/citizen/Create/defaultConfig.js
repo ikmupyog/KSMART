@@ -1,9 +1,7 @@
-// import SelectAddress from "../../../pageComponents/Steps/SelectAddress";
-
 export const config = {
   routes: {
     "complaint-type": {
-      component: "SelectComplaintType",
+      component: "PGRSelectComplaintType",
       texts: {
         headerCaption: "",
         header: "CS_ADDCOMPLAINT_COMPLAINT_TYPE_PLACEHOLDER",
@@ -13,7 +11,7 @@ export const config = {
       nextStep: "sub-type",
     },
     "sub-type": {
-      component: "SelectSubType",
+      component: "PGRSelectSubType",
       texts: {
         header: "CS_ADDCOMPLAINT_COMPLAINT_SUBTYPE_PLACEHOLDER",
         cardText: "CS_COMPLAINT_SUBTYPE_TEXT",
@@ -22,11 +20,11 @@ export const config = {
       nextStep: "map",
     },
     map: {
-      component: "SelectGeolocation",
+      component: "PGRSelectGeolocation",
       nextStep: "pincode",
     },
     pincode: {
-      component: "SelectPincode",
+      component: "PGRSelectPincode",
       texts: {
         headerCaption: "CS_ADDCOMPLAINT_COMPLAINT_LOCATION",
         header: "CS_FILE_APPLICATION_PINCODE_LABEL",
@@ -34,22 +32,10 @@ export const config = {
         submitBarLabel: "CS_COMMON_NEXT",
         skipText: "CORE_COMMON_SKIP_CONTINUE",
       },
-      inputs: [
-        {
-          label: "CORE_COMMON_PINCODE",
-          type: "text",
-          name: "pincode",
-          validation: {
-            minLength: 6,
-            maxLength: 7,
-          },
-          error: "CORE_COMMON_PINCODE_INVALID",
-        },
-      ],
       nextStep: "address",
     },
     address: {
-      component: "SelectAddress",
+      component: "PGRSelectAddress",
       texts: {
         headerCaption: "CS_ADDCOMPLAINT_COMPLAINT_LOCATION",
         header: "CS_ADDCOMPLAINT_PROVIDE_COMPLAINT_ADDRESS",
@@ -58,26 +44,8 @@ export const config = {
       },
       nextStep: "upload-photos",
     },
-    // landmark: {
-    //   component: SelectLandmark,
-    //   texts: {
-    //     headerCaption: "CS_ADDCOMPLAINT_COMPLAINT_LOCATION",
-    //     header: "CS_FILE_APPLICATION_PROPERTY_LOCATION_PROVIDE_LANDMARK_TITLE",
-    //     cardText: "CS_FILE_APPLICATION_PROPERTY_LOCATION_PROVIDE_LANDMARK_TITLE_TEXT",
-    //     submitBarLabel: "CS_COMMON_NEXT",
-    //     skipText: "CORE_COMMON_SKIP_CONTINUE",
-    //   },
-    //   inputs: [
-    //     {
-    //       label: "CS_ADDCOMPLAINT_LANDMARK",
-    //       type: "textarea",
-    //       name: "landmark",
-    //     },
-    //   ],
-    //   nextStep: "upload-photos",
-    // },
     "upload-photos": {
-      component: "SelectImages",
+      component: "PGRSelectImages",
       texts: {
         header: "CS_ADDCOMPLAINT_UPLOAD_PHOTO",
         cardText: "CS_ADDCOMPLAINT_UPLOAD_PHOTO_TEXT",
@@ -87,19 +55,12 @@ export const config = {
       nextStep: "additional-details",
     },
     "additional-details": {
-      component: "SelectDetails",
+      component: "PGRSelectDetails",
       texts: {
         header: "CS_ADDCOMPLAINT_PROVIDE_ADDITIONAL_DETAILS",
         cardText: "CS_ADDCOMPLAINT_DETAILS_TEXT",
         submitBarLabel: "CS_COMMON_SUBMIT",
       },
-      inputs: [
-        {
-          label: "CS_ADDCOMPLAINT_DETAILS",
-          type: "textarea",
-          name: "details",
-        },
-      ],
       nextStep: null,
     },
   },

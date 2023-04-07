@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { CardLabel, Dropdown, FormStep, TextArea } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/PGRTimeline";
+import PGRTimeline from "../../components/PGRTimeline";
 
 const SelectAddress = ({ t, config, onSelect, value }) => {
   const allCities = Digit.Hooks.pgr.useTenants();
@@ -10,6 +10,8 @@ const SelectAddress = ({ t, config, onSelect, value }) => {
     const { city_complaint } = value;
     return city_complaint ? city_complaint : null;
   });
+
+  const locale = Digit.SessionStorage.get("locale");
 
   const [localities, setLocalities] = useState(null);
   const [landmark, setLandmark] = useState("");
@@ -50,32 +52,54 @@ const SelectAddress = ({ t, config, onSelect, value }) => {
     // Digit.SessionStorage.set("locality_complaint", locality);
   }
 
+  let ml_pattern = /^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$/;
+  let en_pattern = /^[a-zA-Z-.`'0-9 ]*$/;
+
+  const handleLandmark = (e) => {
+    if (locale === "ml_IN") {
+      if (e.target.value.match(ml_pattern)) {
+        setLandmark(e.target.value);
+      }
+    } else if (e.target.value.match(en_pattern)) {
+      setLandmark(e.target.value);
+    }
+  }
+
   function onSubmit() {
     onSelect({ city_complaint: selectedCity, locality_complaint: selectedLocality, landmark: landmark });
   }
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
+      {window.location.href.includes("/citizen") ? <PGRTimeline currentStep={3} /> : null}
       <FormStep config={config} onSelect={onSubmit} t={t} isDisabled={selectedLocality ? false : true}>
-        <div>
-          <CardLabel>{t("CS_COMMON_LOCAL_BODY")}</CardLabel>
-          {/* {cities?.length < 5 ? (
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-6">
+              <CardLabel>{t("CS_COMMON_LOCAL_BODY")}</CardLabel>
+              <Dropdown isMandatory selected={selectedCity} option={cities} select={selectCity} optionKey="i18nKey" t={t} disable={true} />
+              {/*
             <RadioButtons selectedOption={selectedCity} options={cities} optionsKey="i18nKey" onSelect={selectCity} disabled={true} />
-          ) : ( */}
-          <Dropdown isMandatory selected={selectedCity} option={cities} select={selectCity} optionKey="i18nKey" t={t} disable={true} />
-          {/* )} */}
-          {selectedCity && localities && <CardLabel>{t("CS_COMMON_WARD")}</CardLabel>}
-          {selectedCity && localities && (
-            <React.Fragment>
-              <Dropdown isMandatory selected={selectedLocality} optionKey="i18nkey" option={localities} select={selectLocality} t={t} />
-              <CardLabel>
-                {`${t("CS_ADDCOMPLAINT_LANDMARK")}`}
-              </CardLabel>
-              <TextArea t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="landmark" value={landmark}
-                onChange={(e) => setLandmark(e.target.value)} placeholder={`${t("CS_ADDCOMPLAINT_COMPLAINT_LOCATION")}`} />
-            </React.Fragment>
-          )}
+          */}
+            </div>
+            {selectedCity && localities ? (
+              <div className="col-md-6">
+                <CardLabel>{t("CS_COMMON_WARD")}</CardLabel>
+                <Dropdown isMandatory selected={selectedLocality} optionKey="i18nkey" option={localities} select={selectLocality} t={t} />
+              </div>
+            ) : <div className="col-md-6"></div>}
+          </div>
         </div>
+        {selectedCity && localities && (
+          <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-12">
+                <CardLabel> {`${t("CS_ADDCOMPLAINT_LANDMARK")}`} </CardLabel>
+                <TextArea t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="landmark" value={landmark}
+                  onChange={handleLandmark} placeholder={`${t("CS_ADDCOMPLAINT_COMPLAINT_LOCATION")}`} />
+              </div>
+            </div>
+          </div>
+        )}
       </FormStep>
     </React.Fragment>
   );
