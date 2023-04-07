@@ -4,6 +4,7 @@ import PTActionModal from "./PTActionModal";
 import TLActionModal from "./TLActionModal";
 import BirthActionModal from "./BirthActionModal";
 import AdoptionActionModal from "./AdoptionActionModal";
+import AbandonedActionModal from "./AbandonedActionModal";
 import DeathActionModal from "./DeathActionModal";
 import DFMActionModal from "./DFMActionModal";
 import BPAREGActionModal from "./BPAREGActionModal";
@@ -25,6 +26,9 @@ const ActionModal = (props) => {
 
   if (props?.businessService.includes("21DEATHHHOME") || props?.businessService.includes("DEATHHOSP")) {
     return <DeathActionModal {...props} />;
+  }
+  if (props?.businessService.includes("DEATHABANDONED") || props?.businessService.includes("DEATHHOSP")) {
+    return <AbandonedActionModal {...props} />;
   }
   if (props?.businessService.includes("NewDFM")) {
     return <DFMActionModal {...props} />;
