@@ -5,7 +5,8 @@ import { useTranslation } from "react-i18next";
 const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCountry, setaddressCountry,
     presentaddressStateName, setaddressStateName, value, setValue, countryvalue, setCountryValue,
     permtaddressCountry, setpermtaddressCountry, permtaddressStateName, setpermtaddressStateName, isPrsentAddress,
-    setIsPrsentAddress, Villagevalues, setLbsVillagevalue, isEditBirth = false, isEditDeath = false, isEditAdoption, isEditStillBirth = false, presentOutsideKeralaDistrict,
+    setIsPrsentAddress, Villagevalues, setLbsVillagevalue, isEditBirth = false, isEditDeath = false, isEditAdoption, isEditStillBirth = false, isEditBirthNAC=false,
+    presentOutsideKeralaDistrict,
     setoutsideKeralaDistrict
 }) => {
     const stateId = Digit.ULBService.getStateId();

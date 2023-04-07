@@ -155,7 +155,7 @@ export const newConfig = [
       },
       {
         route: "nac-address-details",
-        component: "BirthNACAddressPage",
+        component: "AddressBasePage",
         texts: {
           headerCaption: "",
           header: "",

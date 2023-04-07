@@ -13,7 +13,7 @@ import AddressPermanentInsideKerala from "./AddressPermanentInsideKerala";
 import AddressPermanentOutsideKerala from "./AddressPermanentOutsideKerala";
 import AddressPermanentOutsideIndia from "./AddressPermanentOutsideIndia";
 
-const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = false, isEditDeath = false, isEditStillBirth = false, }) => {
+const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = false, isEditDeath = false, isEditStillBirth = false,isEditAdoption=false, isEditBirthNAC=false  }) => {
 
     const stateId = Digit.ULBService.getStateId();
     let tenantId = "";
@@ -915,7 +915,11 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                             isEditBirth={isEditBirth}
                             isEditDeath={isEditDeath}
                             isEditStillBirth={isEditStillBirth}
+                            isEditAdoption={isEditAdoption}         
+                            isEditBirthNAC={isEditBirthNAC}                   
                             formData={formData}
+                            Districtvalues={Districtvalues}
+                            setDistrictvalue={setDistrictvalue}
                         />
                     </div>
                     {countryvalue === "IND" && value === "KL" && (
@@ -990,6 +994,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 isEditBirth={isEditBirth}
                                 isEditDeath={isEditDeath}
                                 isEditStillBirth={isEditStillBirth}
+                                isEditAdoption={isEditAdoption}    
+                                isEditBirthNAC={isEditBirthNAC}        
                                 formData={formData}
                                 value={value}
                                 setValue={setValue}
@@ -1058,6 +1064,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 isEditBirth={isEditBirth}
                                 isEditDeath={isEditDeath}
                                 isEditStillBirth={isEditStillBirth}
+                                isEditAdoption={isEditAdoption}      
+                                isEditBirthNAC={isEditBirthNAC}      
                                 formData={formData}
                             />
                         </div>
@@ -1112,6 +1120,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 isEditBirth={isEditBirth}
                                 isEditDeath={isEditDeath}
                                 isEditStillBirth={isEditStillBirth}
+                                isEditAdoption={isEditAdoption}      
+                                isEditBirthNAC={isEditBirthNAC}    
                                 formData={formData}
                             />
                         </div>
@@ -1123,6 +1133,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                             isEditBirth={isEditBirth}
                             isEditDeath={isEditDeath}
                             isEditStillBirth={isEditStillBirth}
+                            isEditAdoption={isEditAdoption}      
+                            isEditBirthNAC={isEditBirthNAC}    
                             formData={formData}
                         />
                     </div>
@@ -1146,6 +1158,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 isEditBirth={isEditBirth}
                                 isEditDeath={isEditDeath}
                                 isEditStillBirth={isEditStillBirth}
+                                isEditAdoption={isEditAdoption}     
+                                isEditBirthNAC={isEditBirthNAC}     
                                 formData={formData}
                             />
                         </div>
@@ -1192,6 +1206,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 isEditBirth={isEditBirth}
                                 isEditDeath={isEditDeath}
                                 isEditStillBirth={isEditStillBirth}
+                                isEditAdoption={isEditAdoption}      
+                                isEditBirthNAC={isEditBirthNAC}    
                                 formData={formData}
                             />
                         </div>
@@ -1230,6 +1246,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 isEditBirth={isEditBirth}
                                 isEditDeath={isEditDeath}
                                 isEditStillBirth={isEditStillBirth}
+                                isEditAdoption={isEditAdoption}     
+                                isEditBirthNAC={isEditBirthNAC}     
                                 formData={formData}
                             />
                         </div>
@@ -1262,6 +1280,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 isEditBirth={isEditBirth}
                                 isEditDeath={isEditDeath}
                                 isEditStillBirth={isEditStillBirth}
+                                isEditAdoption={isEditAdoption}   
+                                isEditBirthNAC={isEditBirthNAC}       
                                 formData={formData}
                             />
                         </div>
