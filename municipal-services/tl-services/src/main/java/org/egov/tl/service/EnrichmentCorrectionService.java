@@ -64,11 +64,20 @@ public class EnrichmentCorrectionService {
             correction.setId(UUID.randomUUID().toString());
             correction.setAuditDetails(auditDetails);
             correction.setActive(true);
-            correction.setApplicationNumber(
-                    idGen.setIDGenCorrection(correctionRequest, TLConstants.FUN_MODULE_CORRECTION,
-                            TLConstants.APP_NUMBER_CAPTION));
+            // correction.setApplicationNumber(
+            // idGen.setIDGenCorrection(correctionRequest,
+            // TLConstants.FUN_MODULE_CORRECTION,
+            // TLConstants.APP_NUMBER_CAPTION));
+
             // if (requestInfo.getUserInfo().getType().equalsIgnoreCase("CITIZEN"))
             // tradeLicense.setAccountId(requestInfo.getUserInfo().getUuid());
+            List<String> appNoDetails = getIdList(requestInfo, correction.getTenantId(),
+                    config.getApplicationNumberIdgenNameTL(), TLConstants.FUN_MODULE_CORRECTION,
+                    TLConstants.APP_NUMBER_CAPTION, correctionRequest.getLicenseCorrection().size());
+            ListIterator<String> itr = appNoDetails.listIterator();
+            correctionRequest.getLicenseCorrection().forEach(License -> {
+                License.setApplicationNumber(itr.next());
+            });
 
         });
         // setIdgenPdeIds(tradeLicenseRequest);
@@ -196,6 +205,27 @@ public class EnrichmentCorrectionService {
                     break;
             }
         });
+    }
+
+    /**
+     * Returns a list of numbers generated from idgen
+     *
+     * @param requestInfo RequestInfo from the request
+     * @param tenantId    tenantId of the city
+     * @param idKey       code of the field defined in application properties for
+     *                    which ids are generated for
+     * @param idformat    format in which ids are to be generated
+     * @param count       Number of ids to be generated
+     * @return List of ids generated using idGen service
+     */
+    private List<String> getIdList(RequestInfo requestInfo, String tenantId, String idformat, String moduleCode,
+            String fnType, int count) {
+        List<IdResponse> idResponses = idGenRepository.getId(requestInfo, tenantId, idformat, moduleCode, fnType, count)
+                .getIdResponses();
+        if (CollectionUtils.isEmpty(idResponses))
+            throw new CustomException("IDGEN ERROR", "No ids returned from idgen Service");
+        return idResponses.stream()
+                .map(IdResponse::getId).collect(Collectors.toList());
     }
 
 }
