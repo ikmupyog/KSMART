@@ -19,6 +19,7 @@ import AddressPermanent from "../src/pageComponents/birthComponents/AddressPerma
 import MultipleBirth from "../src/pageComponents/birthComponents/MultipleBirth";
 import CreateBirthRegistration from "./pages/citizen/BirthRegistration";
 import CreateBirthEmp from "./pages/employee/BirthRegistration";
+import CreateDeathEmp from "./pages/employee/DeathRegistration";
 import CreateBirthNACRegistration from "./pages/citizen/BirthNACRegistration";
 import MarriageCorrection from "./pages/citizen/MarriageCorrection";
 import BirthNACDownloadPage from "./pageComponents/birthNACComponents/BirthNACDownloadPage";
@@ -311,6 +312,7 @@ const componentsToRegister = {
   MultipleBirth,
   CRCreateBirthRegistration: CreateBirthRegistration,
   CreateBirthEmp,
+  CreateDeathEmp,
   CRCreateAdoptions: CreateAdoptions,
   CRCreateStillBirthRegistration: CreateStillBirthRegistration,
   CRCreateBornOutsideRegistration: CreateBornOutsideRegistration,

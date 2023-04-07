@@ -206,6 +206,9 @@ const EmployeeApp = ({ path, url, userType }) => {
   const CreateAbandonedBirth = Digit?.ComponentRegistryService?.getComponent('CreateAbandonedBirth');
   const CreateBornOutsideEmp = Digit?.ComponentRegistryService?.getComponent('CreateBornOutsideEmp');
 
+  const CreateDeathEmp = Digit?.ComponentRegistryService?.getComponent('CreateDeathEmp');
+
+
   return (
     <Switch>
       <React.Fragment>
@@ -224,6 +227,8 @@ const EmployeeApp = ({ path, url, userType }) => {
           <PrivateRoute path={`${path}/create-stillbirth`} component={ScrFlowApp} />
           <PrivateRoute path={`${path}/create-abandonedbirth`} component={CreateAbandonedBirth} />
           <PrivateRoute path={`${path}/create-bornoutsidebirth`} component={CreateBornOutsideEmp} />
+
+          <PrivateRoute path={`${path}/create-death`} component={CreateDeathEmp} />
          
           <PrivateRoute path={`${path}/application-details/:id`} component={() => <ApplicationDetails parentRoute={path} />} />
           <PrivateRoute path={`${path}/application-stillbirth/:id`} component={() => <ApplicationStillBirthDetails parentRoute={path} />} />
