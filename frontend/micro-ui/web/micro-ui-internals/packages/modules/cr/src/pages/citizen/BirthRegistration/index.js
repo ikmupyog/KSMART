@@ -114,9 +114,11 @@ const CreateBirthRegistration = ({ parentUrl }) => {
   };
 
   const onSuccess = (data) => {
-    console.log(data);
-    console.log(data?.ChildDetails[0].applicationNumber);
-    clearParams();
+    // console.log(data);
+    // console.log(data?.ChildDetails[0].applicationNumber);
+    if(isEditBirth === false){
+      clearParams();
+    }    
     // sessionStorage.removeItem("CurrentFinancialYear");
     queryClient.invalidateQueries("CR_CREATE_BIRTH_REG");
 

@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useReducer, useEffect } from "react";
-import { CardLabel, TextInput, Dropdown, LinkButton, RadioButtons, CardText, DatePicker, MultiSelectDropdown, RemoveableTag } from "@egovernments/digit-ui-react-components";
+import { CardLabel, TextInput, Dropdown, LinkButton, RadioButtons, CardText, DatePicker, MultiSelectDropdown, RemoveableTag, Toast } from "@egovernments/digit-ui-react-components";
 import { sortDropdownNames } from "../utils/index";
 import { convertEpochToDate } from '../utils/index';
 import { isUndefined } from "lodash";
@@ -11,6 +11,8 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
   const stateId = Digit.ULBService.getStateId();
   const [subType, setSubType] = useState([]);
   const [minDate, setMinDate] = useState('2018-01-01');
+  const [toast, setToast] = useState(false);
+  
   let validation = {};
   let BusinessCategoryMenu = [];
   let BusinessTypeMenu = [];
@@ -268,15 +270,15 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
             "active":true,
             "unit":null,"uom":null
           });
-        units.map(unit =>{
-            let subCode = + "{" +subUnit.code.split(".")[0] + "." + subUnit.code.split(".")[1]+ "}";
-            if( subCode === unit.businessType.code){
-              if(!subUnits.includes(unit.businessSubtype.code)){
-                tradeUnits.splice(unit.id, 1);
-                tradeUnits.push({ "id": unit.id,"active":false});
-              }
-            }
-          }) 
+        // units.map(unit =>{
+        //     let subCode = + "{" +subUnit.code.split(".")[0] + "." + subUnit.code.split(".")[1]+ "}";
+        //     if( subCode === unit.businessType.code){
+        //       if(!subUnits.includes(unit.businessSubtype.code)){
+        //         tradeUnits.splice(unit.id, 1);
+        //         tradeUnits.push({ "id": unit.id,"active":false});
+        //       }
+        //     }
+        //   }) 
       })
       if(tradeUnits[0]?.businessCategory){
         Digit.SessionStorage.set("activityedit", true);
@@ -422,7 +424,14 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
                 })}
               </div>
             </div>
-            <div className="col-md-1">
+            {toast && (
+                    <Toast
+                        error={toast}
+                        label={errorMessage}
+                        onClose={() => setToast(false)}
+                    />
+                )}{""}
+            {/* <div className="col-md-1">
               <CardLabel>Add More</CardLabel>
               <LinkButton
                 label={
@@ -432,7 +441,7 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
                 }
                 onClick={(e) => dispatchBusinessType({ type: "ADD_NEW_BUSINESSTYPE" })}
               />
-            </div>
+            </div> */}
           </div>
           
         )
