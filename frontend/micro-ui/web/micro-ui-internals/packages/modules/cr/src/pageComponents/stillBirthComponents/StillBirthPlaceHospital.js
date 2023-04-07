@@ -98,7 +98,7 @@ const StillBirthPlaceHospital = ({ config, onSelect, userType, formData, selectH
                 option={cmbhospital}
                 selected={hospitalName}
                 select={setselectHospitalName}
-                disable={isDisableEdit}
+             //   disable={isDisableEdit}
                 placeholder={`${t("CR_HOSPITAL_EN")}`}
               />
             </div>

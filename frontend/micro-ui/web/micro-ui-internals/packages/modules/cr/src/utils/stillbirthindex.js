@@ -569,8 +569,8 @@ export const convertToEditStillBirthRegistration = (data = {}) => {
             : null,
           orderofChildren: data?.StillBirthChildDetails?.StillBirthParentsDetails?.orderofChildren,
           fatherAadhar: data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherAadhar,
-          ismotherInfo: data?.StillBirthChildDetails?.StillBirthParentsDetails?.isMotherInfo,
-          isfatherInfo: data?.StillBirthChildDetails?.StillBirthParentsDetails?.isFatherInfo,
+          ismotherInfo: data?.StillBirthChildDetails?.StillBirthParentsDetails?.ismotherInfo,
+          isfatherInfo: data?.StillBirthChildDetails?.StillBirthParentsDetails?.isfatherInfo,    
           fatherFirstNameEn: data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherFirstNameEn,
           fatherFirstNameMl: data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherFirstNameMl,
           fatherNationality: data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherNationality
