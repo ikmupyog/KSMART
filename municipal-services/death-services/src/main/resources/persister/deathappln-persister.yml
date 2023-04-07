@@ -2403,120 +2403,20 @@ serviceMaps:
       - jsonPath: $.deathNACDtls.*.id
 
     - query: UPDATE  public.eg_death_dtls  SET 
-         dateofdeath  = ? , death_place = ?  , death_place_inst_type = ? , death_place_inst_id = ? ,
-         deceased_firstname_en = ? , deceased_firstname_ml = ? , deceased_middlename_en = ? ,
-         deceased_middlename_ml = ? , deceased_lastname_en = ? , deceased_lastname_ml = ? ,
-         deceased_aadhar_number = ? , deceased_gender = ? , lastmodifiedby = ? , lastmodifiedtime = ? ,
-         male_dependent_name_en = ? , male_dependent_name_ml = ? , male_dependent_aadharno = ? ,
-         female_dependent_name_en = ? , female_dependent_name_ml = ? , female_dependent_aadharno = ? ,
-         vehicle_hospital_en = ? , vehicle_fromplace_ml = ? , vehicle_fromplace_en = ? ,
-         vehicle_toplace_ml = ? , vehicle_toplace_en = ? , vehicle_number = ? ,
-         death_place_ward_id = ? , vehicle_first_halt = ? , vehicle_first_halt_ml = ? ,
-         spouse_name_en = ? , spouse_name_ml = ? , spouse_aadhaar = ? , spouse_type = ? , funcion_uid = ? ,
-         death_place_locality_en = ? ,   death_place_locality_ml = ? , death_place_street_en = ? ,
-         death_place_street_ml = ? , death_place_country = ? , place_of_burial_en = ? ,
-         action = ? , status = ?  , initiator_name = ? , initiator_aadhar_no = ? , initiator_mobile_no = ? ,
-         initiator_relation = ? , initiator_address = ? , initiator_email = ? 
+         lastmodifiedby = ? , lastmodifiedtime = ? ,    
+         action = ? , status = ?  
          WHERE  tenantid = ? AND ack_no = ?
 
       basePath: deathNACDtls.*
-      jsonMaps:
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.DateOfDeath      
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlace
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceType
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceInstId
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.DeceasedFirstNameEn
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.DeceasedFirstNameMl
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.DeceasedMiddleNameEn
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.DeceasedMiddleNameMl 
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.DeceasedLastNameEn
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.DeceasedLastNameMl  
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.DeceasedAadharNumber
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.DeceasedGender
+      jsonMaps:      
 
       - jsonPath: $.deathNACDtls.*.AuditDetails.lastModifiedBy
 
       - jsonPath: $.deathNACDtls.*.AuditDetails.lastModifiedTime  
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.FatherNameEn
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.FatherNameMl
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.FatherAadharNo  
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.MotherNameEn
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.MotherNameMl
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.MotherAadharNo 
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.VehicleHospitalEn
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.VehicleFromplaceMl
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.VehicleFromplaceEn
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.VehicleToPlaceMl
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.VehicleToPlaceEn
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.VehicleNumber
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceWardId
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.VehicleFirstHaltEn
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.VehicleFirstHaltMl
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.SpouseNameEn
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.SpouseNameML
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.SpouseAadhaar
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.SpouseType
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.funcionUID
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceLocalityEn
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceLocalityMl
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceStreetEn
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceStreetMl
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.DeathPlaceCountry 
-
-      - jsonPath: $.deathNACDtls.*.InformationDeath.PlaceOfBurialEn
-
+     
       - jsonPath: $.deathNACDtls.*.action
 
-      - jsonPath: $.deathNACDtls.*.applicationStatus
-
-      - jsonPath: $.deathNACDtls.*.DeathApplicantDtls.ApplicantName
-
-      - jsonPath: $.deathNACDtls.*.DeathApplicantDtls.ApplicantAadhaarNo
-
-      - jsonPath: $.deathNACDtls.*.DeathApplicantDtls.ApplicantMobileNo
-
-      - jsonPath: $.deathNACDtls.*.DeathApplicantDtls.ApplicantRelation
-
-      - jsonPath: $.deathNACDtls.*.DeathApplicantDtls.ApplicantAddress
-
-      - jsonPath: $.deathNACDtls.*.DeathApplicantDtls.ApplicantEmail
+      - jsonPath: $.deathNACDtls.*.applicationStatus      
 
       - jsonPath: $.deathNACDtls.*.InformationDeath.TenantId
 

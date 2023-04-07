@@ -87,6 +87,20 @@ public class DeathBasicInfoRowMapper  implements ResultSetExtractor  , BaseRowMa
           .delayedWithinThirty(rs.getBoolean("delayed_within_thirty"))
           .delayedWithinOneyear(rs.getBoolean("delayed_within_oneyear"))
           .delayedAfterOneyear(rs.getBoolean("delayed_after_oneyear"))
+          .spouseAadhaar(rs.getString("spouse_aadhaar"))
+          .fatherAadharNo(rs.getString("male_dependent_aadharno"))
+          .motherAadharNo(rs.getString("female_dependent_aadharno"))
+
+          .spouseUnavailable(rs.getBoolean("spouse_unavailable"))
+          .spouseType(rs.getString("spouse_type"))
+          .spouseNameEn(rs.getString("spouse_name_en"))
+          .spouseNameML(rs.getString("spouse_name_ml"))
+          .fatherUnavailable(rs.getBoolean("male_dependent_unavailable"))
+          .fatherNameEn(rs.getString("male_dependent_name_en"))
+          .fatherNameMl(rs.getString("male_dependent_name_ml"))
+          .motherUnavailable(rs.getBoolean("female_dependent_unavailable"))
+          .motherNameEn(rs.getString("female_dependent_name_en"))
+          .motherNameMl(rs.getString("female_dependent_name_ml"))                     
           .build();
       }
    

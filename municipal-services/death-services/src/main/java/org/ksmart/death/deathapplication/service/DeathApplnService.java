@@ -242,10 +242,13 @@ public class DeathApplnService {
                                         .build());
 
           List<DeathNACDtls> searchResult = repository.getDeathNACDetails(criteria,request.getRequestInfo());
+          request.getDeathNACDtls().get(0).getDeathBasicInfo().setFatherAadharNo(searchResult.get(0).getDeathBasicInfo().getFatherAadharNo());
+          request.getDeathNACDtls().get(0).getDeathBasicInfo().setMotherAadharNo(searchResult.get(0).getDeathBasicInfo().getMotherAadharNo());
+          request.getDeathNACDtls().get(0).getDeathBasicInfo().setSpouseAadhaar(searchResult.get(0).getDeathBasicInfo().getSpouseAadhaar());
+
           validatorService.validateNACUpdate(request, searchResult);    
           workflowIntegrator.callWorkFlowNAC(request);
           producer.push(deathConfig.getUpdateDeathNACTopic(), request);
-
           DeathNACRequest result = DeathNACRequest
                                         .builder()
                                         .requestInfo(request.getRequestInfo())

@@ -32,6 +32,7 @@ import java.util.LinkedList;
 import java.util.List;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryCorrectionResponse;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryCorrectionRequest;
+import org.ksmart.death.deathregistry.web.models.DeathNACCriteria;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryCorrectionDtls;
 
 /**
@@ -154,4 +155,10 @@ public class DeathRegistryController {
                                              .build();
          return ResponseEntity.ok(response);
      }   
+      //Certificate Download NAC by Rakhi S on 07.04.2023
+    // @PostMapping("/deathregistry/_downloaddeathnac")
+    // public ResponseEntity<DeathCertResponse> downloadNAC(@RequestBody RequestInfoWrapper requestInfoWrapper,
+    //                                                 @Valid @ModelAttribute DeathNACCriteria criteria){
+
+    // }
 }

@@ -838,14 +838,14 @@ public class DeathEnrichment implements BaseEnrichment{
                 addressinfo.setPresentAddrId(UUID.randomUUID().toString());
                 addressinfo.setPermanentAddrId(UUID.randomUUID().toString());
             }                      
-            // DeathBasicInfo deathBasicDtls =deathdtls.getDeathBasicInfo();
-            // if(deathBasicDtls.getDeceasedAadharNumber()!=null){
-            //     DeathBasicInfo deathBasicEnc =  encryptionDecryptionUtil.encryptObject(deathBasicDtls, "BndDetail", DeathBasicInfo.class);
-            //     deathBasicDtls.setDeceasedAadharNumber(deathBasicEnc.getDeceasedAadharNumber());
-            //     deathBasicDtls.setFatherAadharNo(deathBasicEnc.getFatherAadharNo());
-            //     deathBasicDtls.setMotherAadharNo(deathBasicEnc.getMotherAadharNo());
-            //     deathBasicDtls.setSpouseAadhaar(deathBasicEnc.getSpouseAadhaar());
-            // }          
+            DeathBasicInfo deathBasicDtls =deathdtls.getDeathBasicInfo();
+            if(deathBasicDtls.getDeceasedAadharNumber()!=null){
+                DeathBasicInfo deathBasicEnc =  encryptionDecryptionUtil.encryptObject(deathBasicDtls, "BndDetail", DeathBasicInfo.class);
+                deathBasicDtls.setDeceasedAadharNumber(deathBasicEnc.getDeceasedAadharNumber());
+                deathBasicDtls.setFatherAadharNo(deathBasicEnc.getFatherAadharNo());
+                deathBasicDtls.setMotherAadharNo(deathBasicEnc.getMotherAadharNo());
+                deathBasicDtls.setSpouseAadhaar(deathBasicEnc.getSpouseAadhaar());
+            }          
             // DeathNACApplicantDtls deathApplicant =deathdtls.getDeathApplicantDtls();
             // if(deathApplicant.getApplicantAadhaarNo()!=null){
             //     DeathNACApplicantDtls deathApplicantEnc = encryptionDecryptionUtil.encryptObject(deathApplicant, "BndDetail", DeathNACApplicantDtls.class);

@@ -85,6 +85,10 @@ public class DeathApplnRepository {
                 //deathBasicDtls.setDeceasedAadharNumber(encryptionDecryptionUtil.decryptObject(deathBasicDtls.getDeceasedAadharNumber(), "BndDetail", DeathBasicInfo.class,requestInfo));
                 DeathBasicInfo dec = encryptionDecryptionUtil.decryptObject(deathBasicDtls, "BndDetail", DeathBasicInfo.class, requestInfo);
                 deathBasicDtls.setDeceasedAadharNumber(dec.getDeceasedAadharNumber());
+
+                deathBasicDtls.setFatherAadharNo(dec.getFatherAadharNo());
+                deathBasicDtls.setMotherAadharNo(dec.getMotherAadharNo());
+                deathBasicDtls.setSpouseAadhaar(dec.getSpouseAadhaar());
                 
                 DeathFamilyInfo deathFamilyDtls =deathDtl.getDeathFamilyInfo() ;
                 DeathFamilyInfo deathFamilyDcr = encryptionDecryptionUtil.decryptObject(deathFamilyDtls, "BndDetail", DeathFamilyInfo.class,requestInfo);
@@ -300,12 +304,12 @@ public class DeathApplnRepository {
         if(result != null) {
 			result.forEach(deathDtl -> {
 
-                // DeathBasicInfo deathBasicDtls =deathDtl.getDeathBasicInfo();                
-                // DeathBasicInfo dec = encryptionDecryptionUtil.decryptObject(deathBasicDtls, "BndDetail", DeathBasicInfo.class, requestInfo);
-                // deathBasicDtls.setDeceasedAadharNumber(dec.getDeceasedAadharNumber());               
-                // deathBasicDtls.setFatherAadharNo(dec.getFatherAadharNo());
-                // deathBasicDtls.setMotherAadharNo(dec.getMotherAadharNo());
-                // deathBasicDtls.setSpouseAadhaar(dec.getSpouseAadhaar());   
+                DeathBasicInfo deathBasicDtls =deathDtl.getDeathBasicInfo();                
+                DeathBasicInfo dec = encryptionDecryptionUtil.decryptObject(deathBasicDtls, "BndDetail", DeathBasicInfo.class, requestInfo);
+                deathBasicDtls.setDeceasedAadharNumber(dec.getDeceasedAadharNumber());               
+                deathBasicDtls.setFatherAadharNo(dec.getFatherAadharNo());
+                deathBasicDtls.setMotherAadharNo(dec.getMotherAadharNo());
+                deathBasicDtls.setSpouseAadhaar(dec.getSpouseAadhaar());   
                 
                 // DeathNACApplicantDtls deathInformant =deathDtl.getDeathApplicantDtls() ;
                 // if (deathInformant!=null){
