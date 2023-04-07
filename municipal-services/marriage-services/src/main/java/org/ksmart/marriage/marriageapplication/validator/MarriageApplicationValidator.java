@@ -56,10 +56,12 @@ public class MarriageApplicationValidator {
                                                                 .getBrideAddressDetails();
                                                 WitnessDetails witnessDtls = marriagedtls.getWitnessDetails();
 
+                                                System.out.println("marriagedate" + marriagedtls.getDateofmarriage());
+
                                                 if (marriagedtls.getDateofmarriage() <= 0) {
                                                         throw new CustomException(" DATE OF MARRIAGE INVALID ",
                                                                         "The  Date of marriage " +
-                                                                                        groomInfo.getResidentship()
+                                                                                        marriagedtls.getDateofmarriage()
                                                                                         + " is invalid");
                                                 }
 
@@ -84,6 +86,7 @@ public class MarriageApplicationValidator {
                                                                         marriagedtls.getLbtype() + " is invalid");
                                                 }
 
+                                                System.out.println("marriageward" + marriagedtls.getWardCode());
                                                 if (StringUtils.isEmpty(marriagedtls.getWardCode())) {
                                                         throw new CustomException(" WARD INVALID ", "The  Ward " +
                                                                         marriagedtls.getWardCode() + " is invalid");
@@ -133,61 +136,68 @@ public class MarriageApplicationValidator {
                                                                 }
 
                                                         }
+
                                                         if (marriagedtls.getPlacetype()
                                                                         .equals(MarriageConstants.PLACE_TYPE_RELIGIOUS_INSTITUTION)
-                                                                        || marriagedtls.getPlacetype()
-                                                                                        .equals(MarriageConstants.PLACE_TYPE_MANDAPAM_OTHER)) {
+                                                        || marriagedtls.getPlacetype()
+                                                        .equals(MarriageConstants.PLACE_TYPE_MANDAPAM_OTHER))
+                                                        {
                                                                 if (StringUtils.isEmpty(
-                                                                                marriagedtls.getPlacenameEn())) {
-                                                                        throw new CustomException(
-                                                                                        " PLACE NAME ENGLISH IS INVALID ",
-                                                                                        "The  Place Name English " +
-                                                                                                        marriagedtls.getPlacenameEn()
-                                                                                                        + " is invalid");
-                                                                } else {
-                                                                        if (marriagedtls.getPlacenameEn().equals(
-                                                                                        MarriageConstants.PLACE_OTHER)) {
-                                                                                if (StringUtils.isEmpty(marriagedtls
-                                                                                                .getPlacenameEn())) {
-                                                                                        throw new CustomException(
-                                                                                                        " PLACE NAME ENGLISH IS INVALID ",
-                                                                                                        "The  Place Name English "
-                                                                                                                        +
-                                                                                                                        marriagedtls.getPlacenameEn()
-                                                                                                                        + " is invalid");
-                                                                                }
-                                                                                if (StringUtils.isEmpty(marriagedtls
-                                                                                                .getPlacenameMl())) {
-                                                                                        throw new CustomException(
-                                                                                                        " PLACE NAME MALAYALAM IS INVALID ",
-                                                                                                        "The  Place Name Malayalam "
-                                                                                                                        +
-                                                                                                                        marriagedtls.getPlacenameMl()
-                                                                                                                        + " is invalid");
-                                                                                }
-                                                                                if (StringUtils.isEmpty(marriagedtls
-                                                                                                .getLocalityEn())) {
-                                                                                        throw new CustomException(
-                                                                                                        " LOCALITY NAME ENGLISH IS INVALID ",
-                                                                                                        "The  Locality Name English "
-                                                                                                                        +
-                                                                                                                        marriagedtls.getLocalityEn()
-                                                                                                                        + " is invalid");
-                                                                                }
-                                                                                if (StringUtils.isEmpty(marriagedtls
-                                                                                                .getLocalityMl())) {
-                                                                                        throw new CustomException(
-                                                                                                        " LOCALITY NAME MALAYALAM IS INVALID ",
-                                                                                                        "The  Locality Name Malayalam "
-                                                                                                                        +
-                                                                                                                        marriagedtls.getLocalityMl()
-                                                                                                                        + " is invalid");
-                                                                                }
-                                                                        }
 
-                                                                }
+                                                                                marriagedtls.getPlaceid())) {
+                                                                        System.out.println("marriageward" + marriagedtls
+                                                                                        .getPlaceid());
+                                                                        throw new CustomException(
+                                                                                        " PLACE ID  IS INVALID ",
+                                                                                        "The  Place Id English " +
+                                                                                                        marriagedtls.getPlaceid()
+                                                                                                        + " is invalid");
+                                                                } 
+                                                                // else {
+                                                                //         if (marriagedtls.getPlacenameEn().equals(
+                                                                //                         MarriageConstants.PLACE_OTHER)) {
+                                                                //                 if (StringUtils.isEmpty(marriagedtls
+                                                                //                                 .getPlacenameEn())) {
+                                                                //                         throw new CustomException(
+                                                                //                                         " PLACE NAME ENGLISH IS INVALID ",
+                                                                //                                         "The  Place Name English "
+                                                                //                                                         +
+                                                                //                                                         marriagedtls.getPlacenameEn()
+                                                                //                                                         + " is invalid");
+                                                                //                 }
+                                                                //                 if (StringUtils.isEmpty(marriagedtls
+                                                                //                                 .getPlacenameMl())) {
+                                                                //                         throw new CustomException(
+                                                                //                                         " PLACE NAME MALAYALAM IS INVALID ",
+                                                                //                                         "The  Place Name Malayalam "
+                                                                //                                                         +
+                                                                //                                                         marriagedtls.getPlacenameMl()
+                                                                //                                                         + " is invalid");
+                                                                //                 }
+                                                                //                 if (StringUtils.isEmpty(marriagedtls
+                                                                //                                 .getLocalityEn())) {
+                                                                //                         throw new CustomException(
+                                                                //                                         " LOCALITY NAME ENGLISH IS INVALID ",
+                                                                //                                         "The  Locality Name English "
+                                                                //                                                         +
+                                                                //                                                         marriagedtls.getLocalityEn()
+                                                                //                                                         + " is invalid");
+                                                                //                 }
+                                                                //                 if (StringUtils.isEmpty(marriagedtls
+                                                                //                                 .getLocalityMl())) {
+                                                                //                         throw new CustomException(
+                                                                //                                         " LOCALITY NAME MALAYALAM IS INVALID ",
+                                                                //                                         "The  Locality Name Malayalam "
+                                                                //                                                         +
+                                                                //                                                         marriagedtls.getLocalityMl()
+                                                                //                                                         + " is invalid");
+                                                                //                 }
+                                                                //         }
+
+                                                                // }
 
                                                         }
+
                                                         if (marriagedtls.getPlacetype().equals(
                                                                         MarriageConstants.PLACE_TYPE_PRIVATE_PLACE) ||
                                                                         (marriagedtls.getPlacetype().equals(
@@ -237,6 +247,8 @@ public class MarriageApplicationValidator {
                                                         if (groomInfo.getResidentship().equals(
                                                                         MarriageConstants.RESIDENTSHIP_INDIAN)) {
                                                                 if (StringUtils.isEmpty(groomInfo.getAadharno())) {
+                                                                        System.out.println(groomInfo.getAadharno());
+
                                                                         throw new CustomException(
                                                                                         "GROOM AADHAR INVALID ",
                                                                                         "The groom  Aadhar number " +
@@ -257,6 +269,11 @@ public class MarriageApplicationValidator {
                                                                         MarriageConstants.RESIDENTSHIP_FOREIGN)) {
                                                                 if (StringUtils.isEmpty(groomInfo.getPassportno())
                                                                                 && StringUtils.isEmpty(groomInfo
+                                                                                                .getSocialsecurityno())
+                                                                                || StringUtils.isEmpty(groomInfo
+                                                                                                .getPassportno())
+                                                                                ||
+                                                                                StringUtils.isEmpty(groomInfo
                                                                                                 .getSocialsecurityno())) {
                                                                         throw new CustomException(
                                                                                         "GROOM PASSPORT NUMBER AND SOCIAL SECURITY NUMBER INVALID ",
@@ -270,7 +287,7 @@ public class MarriageApplicationValidator {
                                                         }
 
                                                 }
-
+                                                System.out.println("groomname" + groomInfo.getFirstnameEn());
                                                 if (StringUtils.isEmpty(groomInfo.getFirstnameEn())) {
                                                         throw new CustomException(" GROOM NAME ENGLISH INVALID ",
                                                                         "The groom name in english " +
@@ -300,6 +317,23 @@ public class MarriageApplicationValidator {
                                                                         "The groom date of birth can't be null ");
                                                 }
                                                 if (groomInfo.getParentGuardian().equals(MarriageConstants.PARENT)) {
+
+                                                        if (StringUtils.isEmpty(groomInfo.getFathernameEn())) {
+                                                                throw new CustomException(" GROOM FATHER NAME ENGLISH ",
+                                                                                "The  groom Father  Name in english " +
+                                                                                                groomInfo.getFathernameEn()
+                                                                                                + " is invalid");
+                                                        }
+                                                        if (StringUtils.isEmpty(groomInfo.getFathernameMl())) {
+                                                                System.out.println("groomfather"
+                                                                                + groomInfo.getFathernameMl());
+                                                                throw new CustomException(
+                                                                                " GROOM FATHER NAME MALAYALAM ",
+                                                                                "The  groom Father  Name in malayalam "
+                                                                                                +
+                                                                                                groomInfo.getFathernameMl()
+                                                                                                + " is invalid");
+                                                        }
                                                         if (StringUtils.isEmpty(groomInfo.getFatherAadharno())) {
                                                                 throw new CustomException(
                                                                                 "GROOM FATHER AADHAR INVALID ",
@@ -314,20 +348,7 @@ public class MarriageApplicationValidator {
                                                                                                 groomInfo.getMotherAadharno()
                                                                                                 + " is invalid");
                                                         }
-                                                        if (StringUtils.isEmpty(groomInfo.getFathernameEn())) {
-                                                                throw new CustomException(" GROOM FATHER NAME ENGLISH ",
-                                                                                "The  groom Father  Name in english " +
-                                                                                                groomInfo.getFathernameEn()
-                                                                                                + " is invalid");
-                                                        }
-                                                        if (StringUtils.isEmpty(groomInfo.getFathernameMl())) {
-                                                                throw new CustomException(
-                                                                                " GROOM FATHER NAME MALAYALAM ",
-                                                                                "The  groom Father  Name in malayalam "
-                                                                                                +
-                                                                                                groomInfo.getFathernameMl()
-                                                                                                + " is invalid");
-                                                        }
+
                                                         if (StringUtils.isEmpty(groomInfo.getMothernameEn())) {
                                                                 throw new CustomException(" GROOM MOTHER NAME ENGLISH ",
                                                                                 "The  groom Mother  Name in english " +
@@ -465,8 +486,14 @@ public class MarriageApplicationValidator {
                                                                 }
                                                         } else if (brideInfo.getResidentship().equals(
                                                                         MarriageConstants.RESIDENTSHIP_FOREIGN)) {
+
                                                                 if (StringUtils.isEmpty(brideInfo.getPassportno())
                                                                                 && StringUtils.isEmpty(brideInfo
+                                                                                                .getSocialsecurityno())
+                                                                                || StringUtils.isEmpty(brideInfo
+                                                                                                .getPassportno())
+                                                                                ||
+                                                                                StringUtils.isEmpty(brideInfo
                                                                                                 .getSocialsecurityno())) {
                                                                         throw new CustomException(
                                                                                         "BRIDE PASSPORT NUMBER AND SOCIAL SECURITY NUMBER INVALID ",
@@ -509,21 +536,7 @@ public class MarriageApplicationValidator {
                                                         throw new CustomException("BRIDE DATE OF BIRTH INVALID ",
                                                                         "The bride date of birth can't be null ");
                                                 }
-                                                if (groomInfo.getParentGuardian().equals(MarriageConstants.PARENT)) {
-                                                        if (StringUtils.isEmpty(brideInfo.getFatherAadharno())) {
-                                                                throw new CustomException(
-                                                                                "BRIDE: FATHER AADHAR INVALID ",
-                                                                                "The Father's Aadhar number " +
-                                                                                                brideInfo.getFatherAadharno()
-                                                                                                + " is invalid");
-                                                        }
-                                                        if (StringUtils.isEmpty(brideInfo.getMotherAadharno())) {
-                                                                throw new CustomException(
-                                                                                "BRIDE:MOTHER AADHAR INVALID ",
-                                                                                "The mother's Aadhar number " +
-                                                                                                brideInfo.getMotherAadharno()
-                                                                                                + " is invalid");
-                                                        }
+                                                if (brideInfo.getParentGuardian().equals(MarriageConstants.PARENT)) {
                                                         if (StringUtils.isEmpty(brideInfo.getFathernameEn())) {
                                                                 throw new CustomException(" BRIDE FATHER NAME ENGLISH ",
                                                                                 "The  bride Father  Name in english " +
@@ -538,6 +551,21 @@ public class MarriageApplicationValidator {
                                                                                                 brideInfo.getFathernameMl()
                                                                                                 + " is invalid");
                                                         }
+                                                        if (StringUtils.isEmpty(brideInfo.getFatherAadharno())) {
+                                                                throw new CustomException(
+                                                                                "BRIDE: FATHER AADHAR INVALID ",
+                                                                                "The Father's Aadhar number " +
+                                                                                                brideInfo.getFatherAadharno()
+                                                                                                + " is invalid");
+                                                        }
+                                                        if (StringUtils.isEmpty(brideInfo.getMotherAadharno())) {
+                                                                throw new CustomException(
+                                                                                "BRIDE:MOTHER AADHAR INVALID ",
+                                                                                "The mother's Aadhar number " +
+                                                                                                brideInfo.getMotherAadharno()
+                                                                                                + " is invalid");
+                                                        }
+                                                        
                                                         if (StringUtils.isEmpty(brideInfo.getMothernameEn())) {
                                                                 throw new CustomException(" BRIDE MOTHER NAME ENGLISH ",
                                                                                 "The  bride Mother  Name in english " +
@@ -713,6 +741,7 @@ public class MarriageApplicationValidator {
                                                                         }
                                                                         if (StringUtils.isEmpty(groomaddressInfo
                                                                                         .getPermntInKeralaAdrPincode())) {
+
                                                                                 throw new CustomException(
                                                                                                 "GROOM PERMANENT ADDRESS INSIDE KERALA: PINCODE INVALID ",
                                                                                                 "The Pincode " +
@@ -1004,14 +1033,19 @@ public class MarriageApplicationValidator {
                                                                                                                 groomaddressInfo.getPresentInsideKeralaPostOffice()
                                                                                                                 + " is invalid");
                                                                         }
-                                                                        if (StringUtils.isEmpty(groomaddressInfo
-                                                                                        .getPresentInsideKeralaPincode())) {
-                                                                                throw new CustomException(
-                                                                                                "GROOM PRESENT ADDRESS INSIDE KERALA: PINCODE INVALID ",
-                                                                                                "The   Pincode " +
-                                                                                                                groomaddressInfo.getPresentInsideKeralaPincode()
-                                                                                                                + " is invalid");
-                                                                        }
+                                                                        // if (StringUtils.isEmpty(groomaddressInfo
+                                                                        // .getPresentInsideKeralaPincode())) {
+                                                                        // System.out.println("pincode is
+                                                                        // "+groomaddressInfo
+                                                                        // .getPresentInsideKeralaPincode());
+                                                                        // throw new CustomException(
+                                                                        // "GROOM PRESENT ADDRESS INSIDE KERALA: PINCODE
+                                                                        // INVALID ",
+                                                                        // "The Pincode " +
+                                                                        // groomaddressInfo.getPresentInsideKeralaPincode()
+                                                                        // + " is invalid");
+                                                                        // }
+
                                                                         if (StringUtils.isEmpty(groomaddressInfo
                                                                                         .getPresentInsideKeralaLocalityNameEn())) {
                                                                                 throw new CustomException(
@@ -1579,14 +1613,15 @@ public class MarriageApplicationValidator {
                                                                                                                 brideaddressInfo.getPresentInsideKeralaPostOffice()
                                                                                                                 + " is invalid");
                                                                         }
-                                                                        if (StringUtils.isEmpty(brideaddressInfo
-                                                                                        .getPresentInsideKeralaPincode())) {
-                                                                                throw new CustomException(
-                                                                                                "BRIDE PRESENT ADDRESS INSIDE KERALA: PINCODE INVALID ",
-                                                                                                "The   Pincode " +
-                                                                                                                brideaddressInfo.getPresentInsideKeralaPincode()
-                                                                                                                + " is invalid");
-                                                                        }
+                                                                        // if (StringUtils.isEmpty(brideaddressInfo
+                                                                        // .getPresentInsideKeralaPincode())) {
+                                                                        // throw new CustomException(
+                                                                        // "BRIDE PRESENT ADDRESS INSIDE KERALA: PINCODE
+                                                                        // INVALID ",
+                                                                        // "The Pincode " +
+                                                                        // brideaddressInfo.getPresentInsideKeralaPincode()
+                                                                        // + " is invalid");
+                                                                        // }
                                                                         if (StringUtils.isEmpty(brideaddressInfo
                                                                                         .getPresentInsideKeralaLocalityNameEn())) {
                                                                                 throw new CustomException(
@@ -1843,8 +1878,7 @@ public class MarriageApplicationValidator {
                                                                                         witnessDtls.getWitness1Mobile()
                                                                                         + " is invalid");
                                                 }
-                                                if ((witnessDtls.getWitness1Esigned()
-                                                                .equals(MarriageConstants.VALUE_FALSE))) {
+                                                if (!witnessDtls.getWitness1Esigned()) {
 
                                                         throw new CustomException(" WITNESS1 E-SIGN INVALID ",
                                                                         "The   Witness1  E-sign " +
@@ -1904,8 +1938,7 @@ public class MarriageApplicationValidator {
                                                                                         witnessDtls.getWitness2Mobile()
                                                                                         + " is invalid");
                                                 }
-                                                if ((witnessDtls.getWitness2Esigned()
-                                                                .equals(MarriageConstants.VALUE_FALSE))) {
+                                                if (!witnessDtls.getWitness2Esigned()) {
 
                                                         throw new CustomException(" WITNESS2 E-SIGN INVALID ",
                                                                         "The   Witness2  E-sign " +
