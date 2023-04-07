@@ -86,12 +86,15 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count }) => {
                 <Link
                   onClick={handleLinkClick(row.original)}
                   to={row.original.InformationDeath["DeathACKNo"].includes("CRDRNR") ?
-                    `/digit-ui/employee/cr/application-abandoneddeathdetails/${row.original.InformationDeath["DeathACKNo"]}`
+                    `/digit-ui/employee/cr/application-deathdetails/${row.original.InformationDeath["DeathACKNo"]}`
                     :
                     row.original.InformationDeath["DeathACKNo"].includes("CRDRNA") ?
-                      `/digit-ui/employee/cr/application-deathnacdetails/${row.original.InformationDeath["DeathACKNo"]}` :
+                      `/digit-ui/employee/cr/application-deathnacdetails/${row.original.InformationDeath["DeathACKNo"]}` 
+                    :
+                      row.original.InformationDeath["DeathACKNo"].includes("CRDRAB") ?
+                      `/digit-ui/employee/cr/application-abandoneddeathdetails/${row.original.InformationDeath["DeathACKNo"]}`
 
-                      `/digit-ui/employee/cr/application-deathdetails/${row.original.InformationDeath["DeathACKNo"]}`
+                    : "/digit-ui/employee/cr/search-flow/deathsearch/application"
                   }
                 >
                   {row.original.InformationDeath["DeathACKNo"]}
