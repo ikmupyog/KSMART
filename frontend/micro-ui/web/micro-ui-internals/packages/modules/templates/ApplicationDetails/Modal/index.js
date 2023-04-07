@@ -3,6 +3,7 @@ import FSMActionModal from "./FSMActionModal";
 import PTActionModal from "./PTActionModal";
 import TLActionModal from "./TLActionModal";
 import BirthActionModal from "./BirthActionModal";
+import StillBirthActionModal from "./StillBirthActionModal";
 import AdoptionActionModal from "./AdoptionActionModal";
 import AbandonedActionModal from "./AbandonedActionModal";
 import DeathActionModal from "./DeathActionModal";
@@ -20,6 +21,10 @@ const ActionModal = (props) => {
   if (props?.businessService.includes("BIRTHHOSP21") || props?.businessService.includes("BIRTHHOSP30") || props?.businessService.includes("BIRTHHOSPONEYEAR")
   || props?.businessService.includes("21BIRTHHOME") || props?.businessService.includes("BIRTHHOME30") || props?.businessService.includes("BIRTHHOMEONEYEAR")) {
     return <BirthActionModal {...props} />;
+  }
+  if (props?.businessService.includes("STILLBIRTHHOSP")
+  || props?.businessService.includes("STILLBIRTHHOME") ){
+    return <StillBirthActionModal {...props} />;
   }
   if(props?.businessService.includes("ADOPTIONHOME")){
     return <AdoptionActionModal {...props} />;
