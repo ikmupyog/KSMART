@@ -10,6 +10,7 @@ import ApplicationDetails from "./ApplicationDetails";
 import ApplicationAdoptionDetails from './ApplicationAdoptionDetails';
 import ApplicationAbandonedDeathDetails from "./ApplicationAbandonedDeathDetails";
 import ApplicationDeathDetails from "./ApplicationDeathDetails";
+import ApplicationDeathNACDetails from "./ApplicationDeathNACDetails";
 import ApplicationStillBirthDetails from "./ApplicationStillBirthDetails";
 import ApplicationAbandonedBirthDetails from "./ApplicationAbandonedBirthDetails";
 import DeathCrFlow from "./Death-route";
@@ -229,6 +230,7 @@ const EmployeeApp = ({ path, url, userType }) => {
           <PrivateRoute path={`${path}/application-abandonedbirth/:id`} component={() => <ApplicationAbandonedBirthDetails parentRoute={path} />} />
           <PrivateRoute path={`${path}/application-Adoptiondetails/:id`} component={() => <ApplicationAdoptionDetails parentRoute={path} />} />
           <PrivateRoute path={`${path}/application-deathdetails/:id`} component={() => <ApplicationDeathDetails parentRoute={path} />} />
+          <PrivateRoute path={`${path}/application-deathnacdetails/:id`} component={() => <ApplicationDeathNACDetails parentRoute={path} />} />
           <PrivateRoute path={`${path}/application-abandoneddeathdetails/:id`} component={() => <ApplicationAbandonedDeathDetails parentRoute={path} />} />
         </div>
       </React.Fragment>
