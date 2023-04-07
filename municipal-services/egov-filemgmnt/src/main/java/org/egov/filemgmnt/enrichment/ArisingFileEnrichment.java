@@ -2,6 +2,7 @@ package org.egov.filemgmnt.enrichment;
 
 import static org.egov.filemgmnt.web.enums.ErrorCodes.IDGEN_ERROR;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,39 +25,35 @@ public class ArisingFileEnrichment extends BaseEnrichment {
     public void enrichAriseFileCreate(ArisingFileRequest request) {
         RequestInfo requestInfo = request.getRequestInfo();
         User userInfo = requestInfo.getUserInfo();
-
         AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
 
-        request.getArisingFileDetail()
-               .forEach(arisingfile -> {
-                   arisingfile.setId(UUID.randomUUID()
-                                         .toString());
-                   arisingfile.setAuditDetails(auditDetails);
-                   // arisingfile.setFileCode(null);
-
-               });
+        final ArisingFile arisingFile= request.getArisingFileDetail();
+        final AuditDetails arisingAuditDetails=arisingFile.getAuditDetails();
+        arisingFile.setAuditDetails(arisingAuditDetails);
+        arisingFile.getAuditDetails().setLastModifiedBy(auditDetails.getLastModifiedBy());
+        arisingAuditDetails.setLastModifiedTime(auditDetails.getLastModifiedTime());
         setFileCodes(request);
-
     }
 
-    public void enrichArisingFileUpdate(ArisingFileRequest request) {
-
-        RequestInfo requestInfo = request.getRequestInfo();
-        User userInfo = requestInfo.getUserInfo();
-
-        AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
-
-        request.getArisingFileDetail()
-               .forEach(arisingfile -> arisingfile.setAuditDetails(auditDetails));
-    }
+//public void enrichArisingFileUpdate(ArisingFileRequest request) {
+//    RequestInfo requestInfo = request.getRequestInfo();
+//    User userInfo = requestInfo.getUserInfo();
+//
+//    AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
+//    final List<ArisingFile> arisingFiles= Collections.singletonList(request.getArisingFileDetail());
+//    for (ArisingFile currentArisingFile : arisingFiles ) {
+//        currentArisingFile.setAuditDetails(auditDetails);
+//    }
+//
+//    }
 
     private void setFileCodes(final ArisingFileRequest request) {
         final RequestInfo requestInfo = request.getRequestInfo();
-        final List<ArisingFile> files = request.getArisingFileDetail();
-        String tenantId = null;
-        for (ArisingFile arising : files) {
-            tenantId = arising.getTenantId();
-        }
+        final ArisingFile files = request.getArisingFileDetail();
+       final  String tenantId =files.getTenantId();
+//        for (ArisingFile arising : files) {
+//            tenantId = arising.getTenantId();
+//        }
 
         final List<String> filescodes = generateIds(requestInfo,
                                                     tenantId,
@@ -66,11 +63,11 @@ public class ArisingFileEnrichment extends BaseEnrichment {
                                                     1);
         validateFileCodes(filescodes, 1);
 
-        String fileCode = null;
-        for (ArisingFile arisefilecode : files) {
-            arisefilecode.setFileCode(filescodes.get(0));
-        }
-
+//        String fileCode = null;
+//        for (ArisingFile arisefilecode : files) {
+//            arisefilecode.setFileCode(filescodes.get(0));
+//        }
+       final ArisingFile fileDetail= request.getArisingFileDetail();
         System.out.println("Filecode=: " + filescodes.get(0));
 
     }

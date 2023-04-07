@@ -18,6 +18,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Schema(description = "A Object holds the file data of arising file submitted by the user")
 @Validated
 @Getter
@@ -99,7 +101,21 @@ public class ArisingFile {
     @JsonProperty("fileStatus")
     private String fileStatus;
 
+    @JsonProperty("serviceId")
+    private String serviceId;
+
+    @Schema(type = "string", description = "File Subject")
+    @JsonProperty("subject")
+    private String subject;
+
+    @Schema(type = "string", description = "Detailed description of Application")
+    @JsonProperty("applicationDetails")
+    private String applicationDetails;
+
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
+
+
+
 
 }

@@ -1,9 +1,9 @@
 package org.egov.filemgmnt.service;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.filemgmnt.config.FMConfiguration;
 import org.egov.filemgmnt.enrichment.ArisingFileEnrichment;
@@ -42,8 +42,10 @@ public class ArisingFileService {
         this.repository = repository;
     }
 
-    public List<ArisingFile> createArisingFile(ArisingFileRequest request) {
+    //public List<ArisingFile> createArisingFile(ArisingFileRequest request) {
+    public ArisingFile createArisingFile(ArisingFileRequest request) {
 
+        final ArisingFile arisingFile=request.getArisingFileDetail();
         // enrich request
         fileEnrichment.enrichAriseFileCreate(request);
 
@@ -51,26 +53,23 @@ public class ArisingFileService {
         return request.getArisingFileDetail();
     }
 
-    public List<ArisingFile> updateArisingFile(ArisingFileRequest request) {
-        List<String> arisingFileCode = request.getArisingFileDetail()
-                                              .stream()
-                                              .map(ArisingFile::getFileCode)
-                                              .collect(Collectors.toCollection(LinkedList::new));
-
-        // search database
-        List<ArisingFile> searchResult = repository.searchArisingFiles(ArisingFileSearchCriteria.builder()
-                                                                                                .fileCode(arisingFileCode)
-                                                                                                .build());
-
-        // validate request
-
-        validator.validateArisingFileUpdate(request, searchResult);
-        fileEnrichment.enrichArisingFileUpdate(request);
-
-        producer.push(fmConfig.getUpdateArisingFileTopic(), request);
-
-        return request.getArisingFileDetail();
-    }
+//        public ArisingFile updateArisingFile(ArisingFileRequest request) {
+//        String arisingFileCode = request.getArisingFileDetail().getFileCode();
+//
+//        // search database
+//        List<ArisingFile> searchResult = repository.searchArisingFiles(ArisingFileSearchCriteria.builder()
+//                                                .fileCode(Collections.singletonList(arisingFileCode))
+//                                                .build());
+//
+//        // validate request
+//
+//        validator.validateArisingFileUpdate(request, searchResult);
+//        fileEnrichment.enrichArisingFileUpdate(request);
+//
+//        producer.push(fmConfig.getUpdateArisingFileTopic(), request);
+//
+//        return request.getArisingFileDetail();
+//    }
 
     public List<ArisingFile> searchFile(final RequestInfo requestInfo, final ArisingFileSearchCriteria searchCriteria) {
         final List<ArisingFile> result = repository.searchArisingFiles(searchCriteria);

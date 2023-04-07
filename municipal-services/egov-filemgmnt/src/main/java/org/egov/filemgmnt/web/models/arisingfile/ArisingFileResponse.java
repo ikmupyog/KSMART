@@ -30,15 +30,7 @@ public class ArisingFileResponse {
     private ResponseInfo responseInfo;
 
     @JsonProperty("ArisingFile")
-    private List<ArisingFile> arisingFileDetail;
+    private ArisingFile arisingFileDetail;
 
-    public ArisingFileResponse addArisingFile(ArisingFile arisingFile) {
-
-        if (arisingFileDetail == null) {
-            arisingFileDetail = new ArrayList<>();
-        }
-        arisingFileDetail.add(arisingFile);
-        return this;
-    }
 
 }
