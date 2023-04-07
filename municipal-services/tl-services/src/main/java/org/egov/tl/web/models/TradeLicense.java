@@ -231,4 +231,28 @@ public class TradeLicense {
   @SafeHtml
   @JsonProperty("oldApplicationNumber")
   private String oldApplicationNumber = null;
+
+  @Size(max = 64)
+  @SafeHtml
+  @JsonProperty("correctionId")
+  private String correctionId;
+
+  @Size(max = 64)
+  @SafeHtml
+  @JsonProperty("correctionAppNumber")
+  private String correctionAppNumber;
+
+  @Size(max = 64)
+  @SafeHtml
+  @JsonProperty("correction")
+  private String correction;
+
+  @Size(max = 64)
+  @SafeHtml
+  @JsonProperty("correctionStatus")
+  private String correctionStatus;
+
+  @JsonProperty("isCurrentRequest")
+  private Boolean isCurrentRequest;
+
 }

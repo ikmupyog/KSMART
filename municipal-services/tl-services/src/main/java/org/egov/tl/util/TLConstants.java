@@ -249,6 +249,8 @@ public class TLConstants {
 
         public static final String APPLICATION_TYPE_NEW = "NEW";
 
+        public static final String APPLICATION_TYPE_CORRECTION = "CORRECTION";
+
         // error constants
 
         public static final String INVALID_TENANT_ID_MDMS_KEY = "INVALID TENANTID";

@@ -76,6 +76,11 @@ public class TLRowMapper implements ResultSetExtractor<List<TradeLicense>> {
                         .isMigrated(rs.getBoolean("is_migrated"))
                         .renewalActive(rs.getBoolean("renewalactive"))
                         .oldApplicationNumber(rs.getString("mig_num_appln_id"))
+                        .correctionId(rs.getString("correction_id"))
+                        .correctionAppNumber(rs.getString("correctionappnumber"))
+                        .correction(rs.getString("correction"))
+                        .correctionStatus(rs.getString("correctionstatus"))
+                        .isCurrentRequest(rs.getBoolean("iscurrentrequest"))
                         .id(id)
                         .build();
 

@@ -109,7 +109,13 @@ public class TLQueryBuilder {
             +
             " premiseown.locality as premiseown_locality, premiseown.postoffice as premiseown_postoffice, premiseown.pincode as premiseown_pincode, "
             +
-            " premiseown.aadhaarno as premiseown_aadhaarno, premiseown.contactno as premiseown_contactno, premiseown.active as premiseown_active "
+            " premiseown.aadhaarno as premiseown_aadhaarno, premiseown.contactno as premiseown_contactno, premiseown.active as premiseown_active, "
+            +
+            " correction.id as correction_id, correction.tradelicenseid  as correction_tradelicenseid, correction.tradelicensedetailid as correction_tradelicensedetailid, correction.licensenumber as correction_licensenumber, "
+            +
+            " correction.correctionappnumber as correctionappnumber, correction.correction as correction, history as correction_history, "
+            +
+            " correction.correctionstatus as correctionstatus, correction.active as correction_active, correction.iscurrentrequest "
             +
             "FROM eg_tl_tradelicense tl"
             + LEFT_OUTER_JOIN_STRING
@@ -133,7 +139,9 @@ public class TLQueryBuilder {
             + LEFT_OUTER_JOIN_STRING
             + "eg_tl_structureplacedetail tlstructplace ON tlstructplace.tradelicensedetailid = tld.id "
             + LEFT_OUTER_JOIN_STRING
-            + "eg_tl_premiseowner premiseown ON premiseown.tradelicensedetailid = tld.id ";
+            + "eg_tl_premiseowner premiseown ON premiseown.tradelicensedetailid = tld.id "
+            + LEFT_OUTER_JOIN_STRING
+            + "eg_tl_correction correction ON correction.tradelicensedetailid = tld.id and correction.iscurrentrequest=true ";
 
     private final String paginationWrapper = "SELECT * FROM " +
             "(SELECT *, DENSE_RANK() OVER (ORDER BY tl_lastModifiedTime DESC , tl_id) offset_ FROM " +
@@ -234,11 +242,32 @@ public class TLQueryBuilder {
                 preparedStmtList.add(true);
             }
 
-            if (criteria.getApplicationNumber() != null) {
-                List<String> applicationNumber = Arrays.asList(criteria.getApplicationNumber().split(","));
+            if (criteria.getApplicationType() != null
+                    && !criteria.getApplicationType().equals(TLConstants.APPLICATION_TYPE_CORRECTION)) {
                 addClauseIfRequired(preparedStmtList, builder);
-                builder.append(" LOWER(tl.applicationnumber) IN (").append(createQuery(applicationNumber)).append(")");
-                addToPreparedStatement(preparedStmtList, applicationNumber);
+                builder.append("  tl.applicationtype = ? ");
+                preparedStmtList.add(criteria.getApplicationType());
+                if (criteria.getApplicationType().equals(TLConstants.APPLICATION_TYPE_RENEWAL)) {
+                    addRenewalCriteria(builder, preparedStmtList, criteria);
+                }
+            }
+
+            if (criteria.getApplicationNumber() != null) {
+                if (criteria.getApplicationType() != null
+                        && criteria.getApplicationType().equals(TLConstants.APPLICATION_TYPE_CORRECTION)) {
+
+                    List<String> applicationNumber = Arrays.asList(criteria.getApplicationNumber().split(","));
+                    addClauseIfRequired(preparedStmtList, builder);
+                    builder.append(" LOWER(correction.correctionappnumber) IN (").append(createQuery(applicationNumber))
+                            .append(")");
+                    addToPreparedStatement(preparedStmtList, applicationNumber);
+                } else {
+                    List<String> applicationNumber = Arrays.asList(criteria.getApplicationNumber().split(","));
+                    addClauseIfRequired(preparedStmtList, builder);
+                    builder.append(" LOWER(tl.applicationnumber) IN (").append(createQuery(applicationNumber))
+                            .append(")");
+                    addToPreparedStatement(preparedStmtList, applicationNumber);
+                }
             }
 
             List<String> status = criteria.getStatus();
@@ -246,15 +275,6 @@ public class TLQueryBuilder {
                 addClauseIfRequired(preparedStmtList, builder);
                 builder.append(" LOWER(tl.status) IN (").append(createQuery(status)).append(")");
                 addToPreparedStatement(preparedStmtList, status);
-            }
-
-            if (criteria.getApplicationType() != null) {
-                addClauseIfRequired(preparedStmtList, builder);
-                builder.append("  tl.applicationtype = ? ");
-                preparedStmtList.add(criteria.getApplicationType());
-                if (criteria.getApplicationType().equals(TLConstants.APPLICATION_TYPE_RENEWAL)) {
-                    addRenewalCriteria(builder, preparedStmtList, criteria);
-                }
             }
 
             List<String> licenseNumbers = criteria.getLicenseNumbers();
@@ -359,7 +379,7 @@ public class TLQueryBuilder {
             }
 
         }
-
+        System.out.println("rohit" + builder);
         // enrichCriteriaForUpdateSearch(builder,preparedStmtList,criteria);
 
         if (!isCount) {
