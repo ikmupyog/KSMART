@@ -199,7 +199,7 @@ import FamilyAbandonedDeath from "./pageComponents/deathAbandoned/FamilyAbandone
 import AbandonedDeathCheckPage from "./pages/employee/AbandonedDeath/AbandonedCheckPage";
 import AbandonedDeathAcknowledgement from "./pages/employee/AbandonedDeath/AbandonedDeathAcknowledgement";
 import StatisticalInfoAbandoned from "./pageComponents/deathAbandoned/StatisticalInfoAbandoned";
-// StatisticalInfoAbandoned
+
 
 export const CRModule = ({ stateCode, userType, tenants }) => {
   
