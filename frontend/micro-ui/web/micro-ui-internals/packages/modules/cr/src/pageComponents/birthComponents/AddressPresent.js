@@ -61,9 +61,11 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
                 // setAdrsLBName(currentLB[0]);
                 cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
                 setaddressCountry(cmbFilterCountry[0]);
+                setpermtaddressCountry(cmbFilterCountry[0]);
                 setCountryValue(cmbFilterCountry[0].countrycode)
                 cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
                 setaddressStateName(cmbFilterState[0]);
+                setpermtaddressStateName(cmbFilterState[0]);
                 setValue(cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode)[0].statecode);
                 cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
                 setLbsVillagevalue(cmbFilterVillage);

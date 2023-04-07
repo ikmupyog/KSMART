@@ -115,10 +115,12 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
         cmbWardNoFinal.push(wardmst);
     });
 
+    console.log("renderJetheesh");
 
     useEffect(() => {
 
         if (isInitialRender) {
+            console.log("render1");
 
             if (cmbLB.length > 0) {
                 currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
