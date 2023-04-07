@@ -31,7 +31,7 @@ const SelectDetails = ({ t, config, onSelect, value }) => {
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <PGRTimeline currentStep={6} /> : null}
       {window.location.href.includes("/employee") ? <EmpTimeLine currentStep={5} /> : null}
-      <FormStep config={config} onSelect={goNext} disabled={true} t={t}>
+      <FormStep config={config} onSelect={goNext} disabled={true} t={t} isDisabled={details?.length < 10}>
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
