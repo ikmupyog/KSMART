@@ -1,24 +1,72 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, TextArea, Toast } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-import Timeline from "../../components/SBRTimeline";
+import Timeline from "../../components/CRTimeline";
 
-const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData,isEditStillBirth=false }) => {
+const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData, isEditStillBirth = false }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
- // console.log(Digit.UserService.getUser().info);
+  // console.log(Digit.UserService.getUser().info);
   const [isDisableEdit, setisDisableEdit] = useState(isEditStillBirth ? isEditStillBirth : false);
-  const {name:name,} =Digit.UserService.getUser().info ; // window.localStorage.getItem("user-info");
-  const {mobileNumber:mobileNumber,} =Digit.UserService.getUser().info ; // window.localStorage.getItem("user-info");
-  // const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.StillBirthInitiatorDetails?.isInitiatorDeclaration ? formData?.StillBirthInitiatorDetails?.isInitiatorDeclaration : formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.isInitiatorDeclaration ? formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.isInitiatorDeclaration : false);
-  const [isCaretaker, setIsCaretaker] = useState(formData?.StillBirthInitiatorDetails?.isCaretaker ? formData?.StillBirthInitiatorDetails?.isCaretaker : formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.isCaretaker ? formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.isCaretaker : false);
-  const [relation, setrelation] = useState(formData?.StillBirthInitiatorDetails?.relation ? formData?.StillBirthInitiatorDetails?.relation : formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.relation ? formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.relation : "");
-  const [initiatorNameEn, setinitiatorNameEn] = useState(formData?.StillBirthInitiatorDetails?.initiatorNameEn ? formData?.StillBirthInitiatorDetails?.initiatorNameEn : formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorNameEn ? formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorNameEn : name);
-  const [initiatorAadhar, setinitiatorAadhar] = useState(formData?.StillBirthInitiatorDetails?.initiatorAadhar ? formData?.StillBirthInitiatorDetails?.initiatorAadhar : formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorAadhar ? formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorAadhar : "");
-  const [initiatorMobile, setinitiatorMobile] = useState(formData?.StillBirthInitiatorDetails?.initiatorMobile ? formData?.StillBirthInitiatorDetails?.initiatorMobile : formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorMobile ? formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorMobile : mobileNumber);
-  const [initiatorDesi, setinitiatorDesi] = useState(formData?.StillBirthInitiatorDetails?.initiatorDesi ? formData?.StillBirthInitiatorDetails?.initiatorDesi : formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorDesi ? formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorDesi : "");
-  const [initiatorAddress, setinitiatorAddress] = useState(formData?.StillBirthInitiatorDetails?.initiatorAddress ? formData?.StillBirthInitiatorDetails?.initiatorAddress : formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorAddress ? formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorAddress : "");
+  const { name: name } = Digit.UserService.getUser().info; // window.localStorage.getItem("user-info");
+  const { mobileNumber: mobileNumber } = Digit.UserService.getUser().info; // window.localStorage.getItem("user-info");
+  const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(
+    formData?.StillBirthInitiatorDetails?.isInitiatorDeclaration
+      ? formData?.StillBirthInitiatorDetails?.isInitiatorDeclaration
+      : formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.isInitiatorDeclaration
+      ? formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.isInitiatorDeclaration
+      : false
+  );
+  const [isCaretaker, setIsCaretaker] = useState(
+    formData?.StillBirthInitiatorDetails?.isCaretaker
+      ? formData?.StillBirthInitiatorDetails?.isCaretaker
+      : formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.isCaretaker
+      ? formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.isCaretaker
+      : false
+  );
+  const [relation, setrelation] = useState(
+    formData?.StillBirthInitiatorDetails?.relation.code
+      ? formData?.StillBirthInitiatorDetails?.relation
+      : formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.relation
+      ? cmbRelation.filter((cmbRelation) => cmbRelation.code === formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.relation[0])
+      : ""
+  );
+  const [initiatorNameEn, setinitiatorNameEn] = useState(
+    formData?.StillBirthInitiatorDetails?.initiatorNameEn
+      ? formData?.StillBirthInitiatorDetails?.initiatorNameEn
+      : formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorNameEn
+      ? formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorNameEn
+      : name
+  );
+  const [initiatorAadhar, setinitiatorAadhar] = useState(
+    formData?.StillBirthInitiatorDetails?.initiatorAadhar
+      ? formData?.StillBirthInitiatorDetails?.initiatorAadhar
+      : formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorAadhar
+      ? formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorAadhar
+      : ""
+  );
+  const [initiatorMobile, setinitiatorMobile] = useState(
+    formData?.StillBirthInitiatorDetails?.initiatorMobile
+      ? formData?.StillBirthInitiatorDetails?.initiatorMobile
+      : formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorMobile
+      ? formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorMobile
+      : mobileNumber
+  );
+  const [initiatorDesi, setinitiatorDesi] = useState(
+    formData?.StillBirthInitiatorDetails?.initiatorDesi
+      ? formData?.StillBirthInitiatorDetails?.initiatorDesi
+      : formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorDesi
+      ? formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorDesi
+      : ""
+  );
+  const [initiatorAddress, setinitiatorAddress] = useState(
+    formData?.StillBirthInitiatorDetails?.initiatorAddress
+      ? formData?.StillBirthInitiatorDetails?.initiatorAddress
+      : formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorAddress
+      ? formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorAddress
+      : ""
+  );
   const [isInitialRender, setIsInitialRender] = useState(true);
 
   const [toast, setToast] = useState(false);
@@ -28,13 +76,17 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData,isEdi
   const [initiatorDesiError, setinitiatorDesiError] = useState(formData?.StillBirthInitiatorDetails?.initiatorDesi ? false : false);
 
   const onSkip = () => onSelect();
-
+  const cmbRelation = [
+    { i18nKey: "Father", code: "FATHER" },
+    { i18nKey: "Mother", code: "MOTHER" },
+    { i18nKey: "Others", code: "OTHERS" },
+  ];
   useEffect(() => {
     if (isInitialRender) {
-      // if (formData?.StillBirthInitiatorDetails?.isInitiatorDeclaration != null) {
-      //   setIsInitialRender(false);
-      //   setisInitiatorDeclaration(formData?.StillBirthInitiatorDetails?.isInitiatorDeclaration);
-      // }
+      if (formData?.StillBirthInitiatorDetails?.isInitiatorDeclaration != null) {
+        setIsInitialRender(false);
+        setisInitiatorDeclaration(formData?.StillBirthInitiatorDetails?.isInitiatorDeclaration);
+      }
       if (formData?.StillBirthInitiatorDetails?.isCaretaker != null) {
         setIsInitialRender(false);
         setIsCaretaker(formData?.StillBirthInitiatorDetails?.isCaretaker);
@@ -42,33 +94,37 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData,isEdi
     }
   }, [isInitialRender]);
 
-
-  function setSelectrelation(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setrelation(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-    }
+  function setSelectrelation(value) {
+    setrelation(value);
   }
 
+  // function setSelectrelation(e) {
+  //   if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+  //     setrelation(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+  //   }
+  // }
+
   function setSelectinitiatorNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setinitiatorNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setinitiatorNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectinitiatorDesi(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setinitiatorDesi(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setinitiatorDesi(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectinitiatorAddress(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setinitiatorAddress(e.target.value.length <= 250 ? e.target.value : (e.target.value).substring(0, 250));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setinitiatorAddress(e.target.value.length <= 250 ? e.target.value : e.target.value.substring(0, 250));
     }
   }
 
-
   function setSelectinitiatorAadhar(e) {
     if (e.target.value.trim().length >= 0) {
-      setinitiatorAadhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
+      setinitiatorAadhar(
+        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
+      );
     }
     // if (e.target.value.length != 0) {
     //   if (e.target.value.length > 12) {
@@ -107,7 +163,9 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData,isEdi
   // }
   function setSelectinitiatorMobile(e) {
     if (e.target.value.trim().length >= 0) {
-      setinitiatorMobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
+      setinitiatorMobile(
+        e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 10)
+      );
     }
   }
   // function setSelectinitiatorMobile(e) {
@@ -138,7 +196,6 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData,isEdi
       setIsCaretaker(e.target.checked);
 
       setinitiatorDesi("");
-
     } else {
       setIsCaretaker(e.target.checked);
     }
@@ -167,8 +224,6 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData,isEdi
       setinfomantFirstNmeEnError(false);
     }
     if (isCaretaker === true) {
-
-
       if (initiatorDesi == null || initiatorDesi == "" || initiatorDesi == undefined) {
         validFlag = false;
         setinitiatorDesiError(true);
@@ -182,7 +237,6 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData,isEdi
     }
     if (initiatorAadhar != null || initiatorAadhar != "" || initiatorAadhar != undefined) {
       let adharLength = initiatorAadhar;
-      console.log(adharLength);
       if (adharLength.length < 12 || adharLength.length > 12) {
         validFlag = false;
         setinitiatorAadharError(true);
@@ -239,29 +293,34 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData,isEdi
         initiatorMobile,
         initiatorDesi,
         initiatorAddress,
-        // isInitiatorDeclaration,
+        isInitiatorDeclaration,
         isCaretaker,
       });
     }
   };
-  console.log(formData);
   return (
     <React.Fragment>
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
 
       {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={ !initiatorNameEn || !initiatorAadhar || !initiatorMobile
-      }>
+      <FormStep
+        t={t}
+        config={config}
+        onSelect={goNext}
+        onSkip={onSkip}
+        isDisabled={!initiatorNameEn || !initiatorAadhar || !initiatorMobile || !initiatorAddress}
+      >
+        {/* !isInitiatorDeclaration */}
         {/* <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
               <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
             </h1>
           </div>
-        </div> */}
+        </div>
 
-        {/* <div className="row">
+        <div className="row">
           <div className="col-md-12">
             <div className="col-md-12">
               <CheckBox
@@ -282,62 +341,6 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData,isEdi
             </h1>
           </div>
         </div>
-
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-4">
-              <CardLabel>{`${t("CR_RELATION")}`}</CardLabel>
-              <TextInput
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                name="relation"
-                value={relation}
-                onChange={setSelectrelation}
-                placeholder={`${t("CR_RELATION")}`}
-                disable={isDisableEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_RELATION") })}
-              />
-            </div>
-
-            <div className="col-md-4">
-              <CardLabel>
-                {`${t("CS_COMMON_AADHAAR")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                name="initiatorAadhar"
-                value={initiatorAadhar}
-                onChange={setSelectinitiatorAadhar}
-                disable={isDisableEdit}
-                placeholder={`${t("CS_COMMON_AADHAAR")}`}
-                {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
-              />
-            </div>
-
-            <div className="col-md-4">
-              <CardLabel>
-                {`${t("CR_INITIATOR_NAME")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                name="initiatorNameEn"
-                value={initiatorNameEn}
-                onChange={setSelectinitiatorNameEn}
-                disable={isDisableEdit}
-                placeholder={`${t("CR_INITIATOR_NAME")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INITIATOR_NAME") })}
-              />
-            </div>
-          </div>
-        </div>
-
         <div className="row">
           <div className="col-md-12">
             <div className="row">
@@ -347,9 +350,26 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData,isEdi
                 </div>
               </div>
             </div>
+            {/* <div className="col-md-6">
+              <CardLabel>{`${t("CR_INFORMER_ADDRESS")}`}</CardLabel>
+              <TextArea
+                t={t}
+                type={"text"}
+                optionKey="i18nKey"
+                name="initiatorAddress"
+                value={initiatorAddress}
+                onChange={setSelectinitiatorAddress}
+                placeholder={`${t("CR_INFORMER_ADDRESS")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
+              />
+            </div> */}
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
             {isCaretaker === true && (
               <div>
-                <div className="col-md-6">
+                <div className="col-md-3">
                   <CardLabel>
                     {`${t("CR_INSTITUTION_NAME_DESIGNATION")}`}
                     <span className="mandatorycss">*</span>
@@ -369,8 +389,69 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData,isEdi
                 </div>
               </div>
             )}
+            {isCaretaker === false && (
+              <div className="col-md-3">
+                {/* <CardLabel>{`${t("CR_RELATION")}`}</CardLabel>
+                <TextInput
+                  t={t}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="relation"
+                  value={relation}
+                  onChange={setSelectrelation}
+                  placeholder={`${t("CR_RELATION")}`}
+                  disable={isDisableEdit}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_RELATION") })}
+                /> */}
+                <CardLabel>{`${t("CR_RELATION")}`}</CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="i18nKey"
+                  isMandatory={false}
+                  option={cmbRelation}
+                  selected={relation}
+                  select={setSelectrelation}
+                  disable={isDisableEdit}
+                  placeholder={`${t("CR_RELATION")}`}
+                />
+              </div>
+            )}
+            <div className="col-md-3">
+              <CardLabel>
+                {`${t("CS_COMMON_AADHAAR")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                type={"text"}
+                optionKey="i18nKey"
+                name="initiatorAadhar"
+                value={initiatorAadhar}
+                onChange={setSelectinitiatorAadhar}
+                disable={isDisableEdit}
+                placeholder={`${t("CS_COMMON_AADHAAR")}`}
+                {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+              />
+            </div>
 
-            <div className="col-md-6">
+            <div className="col-md-3">
+              <CardLabel>
+                {`${t("CR_INITIATOR_NAME")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                type={"text"}
+                optionKey="i18nKey"
+                name="initiatorNameEn"
+                value={initiatorNameEn}
+                onChange={setSelectinitiatorNameEn}
+                disable={isDisableEdit}
+                placeholder={`${t("CR_INITIATOR_NAME")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INITIATOR_NAME") })}
+              />
+            </div>
+            <div className="col-md-3">
               <CardLabel>
                 {`${t("CR_MOBILE_NO")}`}
                 <span className="mandatorycss">*</span>
@@ -387,25 +468,15 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData,isEdi
                 {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
               />
             </div>
-            {/* <div className="col-md-6">
-              <CardLabel>{`${t("CR_INFORMER_ADDRESS")}`}</CardLabel>
-              <TextArea
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                name="initiatorAddress"
-                value={initiatorAddress}
-                onChange={setSelectinitiatorAddress}
-                placeholder={`${t("CR_INFORMER_ADDRESS")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
-              />
-            </div> */}
           </div>
         </div>
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
-              <CardLabel>{`${t("CR_INFORMER_ADDRESS")}`}</CardLabel>
+              <CardLabel>
+                {`${t("CR_INFORMER_ADDRESS")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
               <TextArea
                 t={t}
                 type={"text"}
@@ -415,11 +486,12 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData,isEdi
                 onChange={setSelectinitiatorAddress}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_INFORMER_ADDRESS")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
               />
             </div>
           </div>
         </div>
+
         {toast && (
           <Toast
             error={infomantFirstNmeEnError || initiatorAadharError || initiatorMobileError || initiatorDesiError}
@@ -428,12 +500,12 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData,isEdi
                 ? infomantFirstNmeEnError
                   ? t(`BIRTH_ERROR_INFORMANT_NAME_CHOOSE`)
                   : initiatorAadharError
-                    ? t(`BIRTH_ERROR_INFORMANT_AADHAR_CHOOSE`)
-                    : initiatorMobileError
-                      ? t(`BIRTH_ERROR_INFORMANT_MOBILE_CHOOSE`)
-                      : initiatorDesiError
-                        ? t(`BIRTH_ERROR_INFORMANT_DESIGNATION_CHOOSE`)
-                        : setToast(false)
+                  ? t(`BIRTH_ERROR_INFORMANT_AADHAR_CHOOSE`)
+                  : initiatorMobileError
+                  ? t(`BIRTH_ERROR_INFORMANT_MOBILE_CHOOSE`)
+                  : initiatorDesiError
+                  ? t(`BIRTH_ERROR_INFORMANT_DESIGNATION_CHOOSE`)
+                  : setToast(false)
                 : setToast(false)
             }
             onClose={() => setToast(false)}
