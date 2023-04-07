@@ -94,9 +94,6 @@ const CreateDeathEmp = ({ parentUrl }) => {
       <Route path={`${match.path}/acknowledgement`}>
         <DeathAcknowledgement data={params} onSuccess={onSuccess} />
       </Route>
-      <Route>
-        <Redirect to={`${match.path}/${config.indexRoute}`} />
-      </Route>
       </Switch>
     </React.Fragment>
   );
