@@ -468,7 +468,7 @@ export const convertToStillBirthRegistration = (data = {}) => {
           isDeclarationInfo: data?.StillBirthInformarHosInstDetails?.isDeclarationInfo,
         },
         StillBirthInitiatorDetails: {
-          relation: data?.StillBirthInitiatorDetails?.relation,
+          relation: data?.StillBirthInitiatorDetails?.relation ? data?.StillBirthInitiatorDetails?.relation.code : null,          
           initiatorNameEn: data?.StillBirthInitiatorDetails?.initiatorNameEn,
           initiatorAadhar: data?.StillBirthInitiatorDetails?.initiatorAadhar,
           initiatorMobile: data?.StillBirthInitiatorDetails?.initiatorMobile,
@@ -569,8 +569,8 @@ export const convertToEditStillBirthRegistration = (data = {}) => {
             : null,
           orderofChildren: data?.StillBirthChildDetails?.StillBirthParentsDetails?.orderofChildren,
           fatherAadhar: data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherAadhar,
-          ismotherInfo: data?.StillBirthChildDetails?.StillBirthParentsDetails?.isMotherInfo,
-          isfatherInfo: data?.StillBirthChildDetails?.StillBirthParentsDetails?.isFatherInfo,
+          ismotherInfo: data?.StillBirthChildDetails?.StillBirthParentsDetails?.ismotherInfo,
+          isfatherInfo: data?.StillBirthChildDetails?.StillBirthParentsDetails?.isfatherInfo,    
           fatherFirstNameEn: data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherFirstNameEn,
           fatherFirstNameMl: data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherFirstNameMl,
           fatherNationality: data?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherNationality
@@ -738,6 +738,9 @@ export const convertToEditStillBirthRegistration = (data = {}) => {
           initiatorAddress: data?.StillBirthChildDetails?.StillBirthInitiatorDetails?.initiatorAddress,
           isInitiatorDeclaration: data?.StillBirthChildDetails?.StillBirthInitiatorDetails?.isInitiatorDeclaration,
           isCaretaker: data?.StillBirthChildDetails?.StillBirthInitiatorDetails?.isCaretaker,
+
+
+          
         },
       },
     ],

@@ -1,14 +1,10 @@
-import React, { useState, useContext, useEffect, Loader } from "react";
+import React, { useState,  useEffect,  } from "react";
 import {
   FormStep,
   CardLabel,
   TextInput,
   Dropdown,
   BackButton,
-  DatePicker,
-  TextArea,
-  NewRadioButton,
-  RadioButtons,
 } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
@@ -95,7 +91,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
   };
 
   // console.log(formData);
-  const [visible, setVisible] = useState(false);
+  // const [visible, setVisible] = useState(false);
   const stateId = Digit.ULBService.getStateId();
   const minutes = [
     { i18nKey: "Min", code: "CR_MIN" },
@@ -174,14 +170,15 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
   const [isInitialRenderDeathCauseFilterList, setIsInitialRenderDeathCauseFilterList] = useState(false);
   const [DeathCauseFilterList, setDeathCauseFilterList] = useState(null);
 
-  useEffect(() => {
-    if (isInitialRenderDeathCauseFilterList) {
-      if (DeathCauseMain) {
-        setDeathCauseFilterList(cmbDeathsub.filter((cmbDeathsub) => cmbDeathsub.maincode === DeathCauseMain.code));
-        setIsInitialRenderDeathCauseFilterList(false);
-      }
-    }
-  }, [DeathCauseFilterList, isInitialRenderDeathCauseFilterList]);
+ 
+  // useEffect(() => {
+  //   if (isInitialRender) {
+  //     currentMainCause = cmbDeathmain.filter((cmbDeathmain) => cmbDeathmain.code);
+  //     cmbFilterdeathsub = cmbDeathsub.filter((cmbDeathsub) => cmbDeathsub.maincode === currentMainCause[0].code);
+  //     selectDeathCauseSub(cmbFilterdeathsub[0]);
+  //     setIsInitialRender(false);
+  //   }
+  // }, [deathsub, isInitialRender, deathmain]);
   const [DeathCauseMain, setDeathCauseMain] = useState(
     formData?.StatisticalInfo?.DeathCauseMain?.code
       ? formData?.StatisticalInfo?.DeathCauseMain
@@ -474,13 +471,13 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
   let currentMainCause = [];
   let cmbFilterdeathsub = [];
   useEffect(() => {
-    if (isInitialRender) {
-      currentMainCause = cmbDeathmain.filter((cmbDeathmain) => cmbDeathmain.code);
-      cmbFilterdeathsub = cmbDeathsub.filter((cmbDeathsub) => cmbDeathsub.maincode === currentMainCause[0].code);
-      selectDeathCauseSub(cmbFilterdeathsub[0]);
-      setIsInitialRender(false);
+    if (isInitialRenderDeathCauseFilterList) {
+      if (DeathCauseMain) {
+        setDeathCauseFilterList(cmbDeathsub.filter((cmbDeathsub) => cmbDeathsub.maincode === DeathCauseMain.code));
+        setIsInitialRenderDeathCauseFilterList(false);
+      }
     }
-  }, [deathsub, isInitialRender, deathmain]);
+  }, [DeathCauseFilterList, isInitialRenderDeathCauseFilterList]);
 
   const onSkip = () => onSelect();
 

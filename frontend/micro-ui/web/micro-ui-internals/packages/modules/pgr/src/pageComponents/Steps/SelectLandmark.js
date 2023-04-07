@@ -18,7 +18,7 @@ const SelectLandmark = ({ t, config, onSelect, value }) => {
   const stateId = Digit.SessionStorage.get("Citizen.tenantId");
   const tenantId = Digit.SessionStorage.get("Employee.tenantId");
   const { tenants } = Digit.SessionStorage.get("initData");
-
+  const locale = Digit.SessionStorage.get("locale");
 
   const [tenantWard, setTenantWard] = useState(stateId);
   const [districtId, setDistrictId] = useState(complaint_details?.district?.districtid || tenantId);
@@ -126,6 +126,29 @@ const SelectLandmark = ({ t, config, onSelect, value }) => {
     return <Loader></Loader>;
   }
 
+  let ml_pattern = /^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$/;
+  let en_pattern = /^[a-zA-Z-.`'0-9 ]*$/;
+
+  const handleLocality = (e) => {
+    if (locale === "ml_IN") {
+      if (e.target.value.match(ml_pattern)) {
+        setSelected({ ...selected, locality: e.target.value });
+      }
+    } else if (e.target.value.match(en_pattern)) {
+      setSelected({ ...selected, locality: e.target.value });
+    }
+  }
+
+  const handleAddress = (e) => {
+    if (locale === "ml_IN") {
+      if (e.target.value.match(ml_pattern)) {
+        setSelected({ ...selected, street: e.target.value });
+      }
+    } else if (e.target.value.match(en_pattern)) {
+      setSelected({ ...selected, street: e.target.value });
+    }
+  }
+
   return (
     <React.Fragment>
       {window.location.href.includes("/employee") ? <EmpTimeLine currentStep={2} /> : null}
@@ -178,12 +201,12 @@ const SelectLandmark = ({ t, config, onSelect, value }) => {
             <div className="col-md-5">
               <CardLabel> {`${t("CS_ADDCOMPLAINT_LANDMARK")}`} </CardLabel>
               <TextArea t={t} isMandatory={false} type={"text"} name="locality" value={selected.locality}
-                onChange={(e) => setSelected({ ...selected, locality: e.target.value })} placeholder={`${t("CS_ADDCOMPLAINT_COMPLAINT_LOCATION")}`} />
+                onChange={handleLocality} placeholder={`${t("CS_ADDCOMPLAINT_COMPLAINT_LOCATION")}`} />
             </div>
             <div className="col-md-5">
               <CardLabel> {`${t("CS_ADDCOMPLAINT_PROVIDE_COMPLAINT_ADDRESS")}`} </CardLabel>
               <TextArea t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="street" value={selected.street}
-                onChange={(e) => setSelected({ ...selected, street: e.target.value })} placeholder={`${t("CS_ADDCOMPLAINT_PROVIDE_COMPLAINT_ADDRESS")}`} />
+                onChange={handleAddress} placeholder={`${t("CS_ADDCOMPLAINT_PROVIDE_COMPLAINT_ADDRESS")}`} />
             </div>
           </div>
         </div>

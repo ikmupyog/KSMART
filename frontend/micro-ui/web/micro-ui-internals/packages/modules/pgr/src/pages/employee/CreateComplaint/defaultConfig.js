@@ -1,12 +1,3 @@
-// import SelectAddress from "../../../pageComponents/Steps/SelectAddress";
-// import SelectComplaintType from "../../../pageComponents/Steps/SelectComplaintType";
-// import SelectDetails from "../../../pageComponents/Steps/SelectDetails";
-// import SelectImages from "../../../pageComponents/Steps/SelectImages";
-// import SelectLandmark from "../../../pageComponents/Steps/SelectLandmark";
-// import SelectPincode from "../../../pageComponents/Steps/SelectPincode";
-// import SelectSubType from "../../../pageComponents/Steps/SelectSubType";
-// import SelectGeolocation from "../../../pageComponents/Steps/SelectGeolocation";
-
 export const config = {
   routes: {
     "complaint-type": {
@@ -65,13 +56,6 @@ export const config = {
         cardText: "CS_ADDCOMPLAINT_DETAILS_TEXT",
         submitBarLabel: "CS_COMMON_SUBMIT",
       },
-      inputs: [
-        {
-          label: "CS_ADDCOMPLAINT_DETAILS",
-          type: "textarea",
-          name: "details",
-        },
-      ],
       nextStep: null,
     },
   },

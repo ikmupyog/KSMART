@@ -5,7 +5,8 @@ import { useTranslation } from "react-i18next";
 const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCountry, setaddressCountry,
     presentaddressStateName, setaddressStateName, value, setValue, countryvalue, setCountryValue,
     permtaddressCountry, setpermtaddressCountry, permtaddressStateName, setpermtaddressStateName, isPrsentAddress,
-    setIsPrsentAddress, Villagevalues, setLbsVillagevalue, isEditBirth = false, isEditDeath = false, isEditAdoption, isEditStillBirth = false, presentOutsideKeralaDistrict,
+    setIsPrsentAddress, Villagevalues, setLbsVillagevalue, isEditBirth = false, isEditDeath = false, isEditAdoption, isEditStillBirth = false, isEditBirthNAC=false,
+    presentOutsideKeralaDistrict,
     setoutsideKeralaDistrict
 }) => {
     const stateId = Digit.ULBService.getStateId();
@@ -61,9 +62,11 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
                 // setAdrsLBName(currentLB[0]);
                 cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
                 setaddressCountry(cmbFilterCountry[0]);
+                setpermtaddressCountry(cmbFilterCountry[0]);
                 setCountryValue(cmbFilterCountry[0].countrycode)
                 cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
                 setaddressStateName(cmbFilterState[0]);
+                setpermtaddressStateName(cmbFilterState[0]);
                 setValue(cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode)[0].statecode);
                 cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
                 setLbsVillagevalue(cmbFilterVillage);

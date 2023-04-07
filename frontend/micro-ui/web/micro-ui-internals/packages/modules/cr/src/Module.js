@@ -19,6 +19,7 @@ import AddressPermanent from "../src/pageComponents/birthComponents/AddressPerma
 import MultipleBirth from "../src/pageComponents/birthComponents/MultipleBirth";
 import CreateBirthRegistration from "./pages/citizen/BirthRegistration";
 import CreateBirthEmp from "./pages/employee/BirthRegistration";
+import CreateDeathEmp from "./pages/employee/DeathRegistration";
 import CreateBirthNACRegistration from "./pages/citizen/BirthNACRegistration";
 import MarriageCorrection from "./pages/citizen/MarriageCorrection";
 import BirthNACDownloadPage from "./pageComponents/birthNACComponents/BirthNACDownloadPage";
@@ -131,6 +132,8 @@ import AdoptionCheckPage from "./pages/citizen/Adoption/AdoptionCheckPage";
 import BirthCheckPage from "./pages/citizen/BirthRegistration/BirthCheckPage";
 import BirthNACCheckPage from "./pages/citizen/BirthNACRegistration/BirthNACCheckPage";
 import DeathCheckPage from "./pages/citizen/DeathRegistration/DeathCheckPage";
+import DeathNACCheckPage from "./pages/citizen/DeathNACRegistration/DeathNACCheckPage";
+import DeathNACAcknowledgement from "./pages/citizen/DeathNACRegistration/DeathNACAcknowledgement";
 import BirthNACAcknowledgement from "./pages/citizen/BirthNACRegistration/BirthNACAcknowledgement";
 import AdoptionAcknowledgement from "./pages/citizen/Adoption/AdoptionAcknowledgement";
 import BirthAcknowledgement from "./pages/citizen/BirthRegistration/BirthAcknowledgement";
@@ -154,7 +157,9 @@ import FormFieldContainer from "../src/components/FormFieldContainer";
 import MarriageAddressPage from "./pageComponents/marriageComponents/MarriageAddressPage";
 import CreateMarriageRegistration from "./pages/citizen/MarriageRegistration";
 import GroomDetails from "./pageComponents/marriageComponents/GroomDetails";
+import GroomCorrectionDetails from "./pageComponents/marriageComponents/GroomCorrectionDetails";
 import BrideDetails from "./pageComponents/marriageComponents/BrideDetails";
+import BrideCorrectionDetails from "./pageComponents/marriageComponents/BrideCorrectionDetails";
 import MarriageInstitution from "./pageComponents/marriageComponents/MarriageInstitution";
 import MarriagePublicPlace from "./pageComponents/marriageComponents/MarriagePublicPlace";
 import MarriageRegistration from "./pageComponents/marriageComponents/MarriageRegistration";
@@ -190,6 +195,12 @@ import DeathNACAddressPage from "./pageComponents/DeathNACComponents/DeathNACAdd
 import DeathNACParentsDetails from "./pageComponents/DeathNACComponents/DeathNACParentsDetails";
 import DeathNACInitiator from "./pageComponents/DeathNACComponents/DeathNACInitiator";
 import DeathNACDownloadPage from "./pageComponents/DeathNACComponents/DeathNACDownloadPage";
+
+import AddressDeath from "./pageComponents/deathAbandoned/AddressDeath";
+import FamilyAbandonedDeath from "./pageComponents/deathAbandoned/FamilyAbandonedDeath";
+import AbandonedDeathCheckPage from "./pages/employee/AbandonedDeath/AbandonedCheckPage";
+import AbandonedDeathAcknowledgement from "./pages/employee/AbandonedDeath/AbandonedDeathAcknowledgement";
+import StatisticalInfoAbandoned from "./pageComponents/deathAbandoned/StatisticalInfoAbandoned";
 
 export const CRModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
@@ -299,6 +310,7 @@ const componentsToRegister = {
   MultipleBirth,
   CRCreateBirthRegistration: CreateBirthRegistration,
   CreateBirthEmp,
+  CreateDeathEmp,
   CRCreateAdoptions: CreateAdoptions,
   CRCreateStillBirthRegistration: CreateStillBirthRegistration,
   CRCreateBornOutsideRegistration: CreateBornOutsideRegistration,
@@ -312,6 +324,8 @@ const componentsToRegister = {
   DeathNACAddressPage,
   DeathNACParentsDetails,
   BirthNACDownloadPage,
+  DeathNACCheckPage,
+  DeathNACAcknowledgement,
   DeathNACInitiator,
   ParentsDetails,
   BirthNACAddressPage,
@@ -446,6 +460,11 @@ const componentsToRegister = {
   MarriageAddressSameAsAbove,
   FormFieldContainer,
   BornOutsideAcknowledgement,
+  FamilyAbandonedDeath,
+  AbandonedDeathCheckPage,
+  AbandonedDeathAcknowledgement,
+  AddressDeath,
+  StatisticalInfoAbandoned,
   AbandonedBirthAcknowledgement,
   AbandonedBirthCheckPage,
 };

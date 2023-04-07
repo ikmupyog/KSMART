@@ -46,11 +46,11 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
     }
   }, [isInitialRender]);
 
-  function setSelectrelation(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
-      setrelation(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-    }
-  }
+  // function setSelectrelation(e) {
+  //   if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+  //     setrelation(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+  //   }
+  // }
 
   function setSelectinitiatorNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
@@ -292,7 +292,7 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
     if (validFlag == true) {
 
       onSelect(config.key, {
-        relation,
+        // relation,
         initiatorNameEn,
         initiatorAadhar,
         initiatorMobile,

@@ -52,6 +52,7 @@ const ApplicationAdoptionDetails = () => {
 
   const closeToast = () => {
     setShowToast(null);
+    sessionStorage.removeItem("CR_EDIT_UPDATE_STATUS")
   };
 
   useEffect(() => {
@@ -73,6 +74,19 @@ const ApplicationAdoptionDetails = () => {
       setBusinessService(workflowDetails?.data?.applicationBusinessService);
     }
   }, [workflowDetails.data]);
+  useEffect(()=>{
+    if(sessionStorage.getItem("CR_EDIT_UPDATE_STATUS")){
+      // console.log(sessionStorage.getItem("CR_EDIT_UPDATE_STATUS"));
+      let statusMsg =sessionStorage.getItem("CR_EDIT_UPDATE_STATUS")
+      if(statusMsg.includes("Failed")){
+        setShowToast({ key: "error", error: { message: statusMsg }  });
+        setTimeout(closeToast, 3000);
+      }else {
+        setShowToast({ key: "Success", action: statusMsg});
+        setTimeout(closeToast, 3000);
+      }
+    }
+  },[])
 
   useEffect(()=>{
     if(window.location.href.includes("/application-Adoptiondetails")){
