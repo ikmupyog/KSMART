@@ -156,7 +156,9 @@ import FormFieldContainer from "../src/components/FormFieldContainer";
 import MarriageAddressPage from "./pageComponents/marriageComponents/MarriageAddressPage";
 import CreateMarriageRegistration from "./pages/citizen/MarriageRegistration";
 import GroomDetails from "./pageComponents/marriageComponents/GroomDetails";
+import GroomCorrectionDetails from "./pageComponents/marriageComponents/GroomCorrectionDetails";
 import BrideDetails from "./pageComponents/marriageComponents/BrideDetails";
+import BrideCorrectionDetails from "./pageComponents/marriageComponents/BrideCorrectionDetails";
 import MarriageInstitution from "./pageComponents/marriageComponents/MarriageInstitution";
 import MarriagePublicPlace from "./pageComponents/marriageComponents/MarriagePublicPlace";
 import MarriageRegistration from "./pageComponents/marriageComponents/MarriageRegistration";
@@ -185,22 +187,20 @@ import AbandonedBirthCheckPage from "./pages/employee/Abandoned-birth-route/Aban
 import BornOutsideAcknowledgement from "./pages/citizen/BornOutsideReg/BornOutsideAcknowledgement";
 
 import InformationDeathAband from "./pageComponents/deathAbandoned/InformationDeathAband";
-<<<<<<< HEAD
-import AddressDeath from "./pageComponents/deathAbandoned/AddressDeath";
-import FamilyAbandonedDeath from "./pageComponents/deathAbandoned/FamilyAbandonedDeath";
-import AbandonedDeathCheckPage from "./pages/employee/AbandonedDeath/AbandonedCheckPage";
-import AbandonedDeathAcknowledgement from "./pages/employee/AbandonedDeath/AbandonedDeathAcknowledgement";
-import StatisticalInfoAbandoned from "./pageComponents/deathAbandoned/StatisticalInfoAbandoned";
-// StatisticalInfoAbandoned
-
-=======
 import CreateDeathNACRegistration from "./pages/citizen/DeathNACRegistration";
 import DeathNACDetails from "./pageComponents/DeathNACComponents/DeathNACDetails";
 import DeathNACAddressPage from "./pageComponents/DeathNACComponents/DeathNACAddressPage";
 import DeathNACParentsDetails from "./pageComponents/DeathNACComponents/DeathNACParentsDetails";
 import DeathNACInitiator from "./pageComponents/DeathNACComponents/DeathNACInitiator";
 import DeathNACDownloadPage from "./pageComponents/DeathNACComponents/DeathNACDownloadPage";
->>>>>>> 1b207e50b835cd46eb739b11c97214076b0115c2
+
+import AddressDeath from "./pageComponents/deathAbandoned/AddressDeath";
+import FamilyAbandonedDeath from "./pageComponents/deathAbandoned/FamilyAbandonedDeath";
+import AbandonedDeathCheckPage from "./pages/employee/AbandonedDeath/AbandonedCheckPage";
+import AbandonedDeathAcknowledgement from "./pages/employee/AbandonedDeath/AbandonedDeathAcknowledgement";
+import StatisticalInfoAbandoned from "./pageComponents/deathAbandoned/StatisticalInfoAbandoned";
+
+
 export const CRModule = ({ stateCode, userType, tenants }) => {
   
   const { path, url } = useRouteMatch();
