@@ -150,10 +150,10 @@ public class DeathApplnRepository {
                 deathDtl.getDeathBasicInfo().setDeathPlaceInstitutionNameEn(deathPlaceInstitution);
                 deathDtl.getDeathBasicInfo().setDeathPlaceInstitutionNameMl(deathPlaceInstitutionMl);
             } 
-            System.out.println("regStatusNormal:"+deathDtl.getDeathBasicInfo().isNormalRegn());
-            System.out.println("Del30:"+deathDtl.getDeathBasicInfo().isDelayedWithinThirty());
-            System.out.println("Del1:"+deathDtl.getDeathBasicInfo().isDelayedWithinOneyear());
-            System.out.println("Delafter1:"+deathDtl.getDeathBasicInfo().isDelayedAfterOneyear());
+            // System.out.println("regStatusNormal:"+deathDtl.getDeathBasicInfo().isNormalRegn());
+            // System.out.println("Del30:"+deathDtl.getDeathBasicInfo().isDelayedWithinThirty());
+            // System.out.println("Del1:"+deathDtl.getDeathBasicInfo().isDelayedWithinOneyear());
+            // System.out.println("Delafter1:"+deathDtl.getDeathBasicInfo().isDelayedAfterOneyear());
 			});
         }
         return result; 
