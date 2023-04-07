@@ -275,7 +275,7 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
       : ""
   );
   const [HospitalNameMl, selectHospitalNameMl] = useState(
-    formData?.  InformationDeathails?.HospitalNameMl?.code
+    formData?.InformationDeathails?.HospitalNameMl?.code
       ? formData?.InformationDeath?.HospitalNameMl
       : formData?.InformationDeath?.HospitalNameMl
       ? ""
@@ -361,7 +361,7 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
   const [HospitalError, setHospitalError] = useState(formData?.InformationDeath?.DeathPlaceType ? false : false);
   const [InstitutionError, setInstitutionError] = useState(formData?.InformationDeath?.DeathPlaceType ? false : false);
   const [InstitutionNameError, setInstitutionNameError] = useState(formData?.InformationDeath?.DeathPlaceInstId ? false : false);
-  const [AgeError, setAgeError] = useState(formData?.InformationDeath?.Age ? false : false);
+  // const [AgeError, setAgeError] = useState(formData?.InformationDeath?.Age ? false : false);
   const [WardNameError, setWardNameError] = useState(formData?.InformationDeath?.DeathPlaceWardId ? false : false);
   const onSkip = () => onSelect();
   useEffect(() => {
@@ -974,16 +974,16 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
     } else {
       setsexError(false);
     }
-    if (Age == null || Age == "" || Age == undefined) {
-      validFlag = false;
-      setAgeError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      setAgeError(false);
-    }
+    // if (Age == null || Age == "" || Age == undefined) {
+    //   validFlag = false;
+    //   setAgeError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 2000);
+    // } else {
+    //   setAgeError(false);
+    // }
 
     if (DeathPlace.code == "HOSPITAL") {
       if (DeathPlaceType == null) {
@@ -1746,9 +1746,9 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
 
           {toast && (
             <Toast
-              error={DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || AgeError || sexError || WardNameError}
+              error={DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError ||  sexError || WardNameError}
               label={
-                DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || AgeError || sexError || WardNameError
+                DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError ||  sexError || WardNameError
                   ? DOBError
                     ? t(`CR_INVALID_DATE`)
                     : sexError
@@ -1761,8 +1761,8 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
                     ? t(`CR_ERROR_INSTITUTION_TYPE_CHOOSE`)
                     : InstitutionNameError
                     ? t(`CR_ERROR_INSTITUTION_NAME_CHOOSE`)
-                    : AgeError
-                    ? t(`CR_ERROR_AGE_CHOOSE`)
+                    // : AgeError
+                    // ? t(`CR_ERROR_AGE_CHOOSE`)
                     : WardNameError
                     ? t(`CR_ERROR_WARD_CHOOSE`)
                     : setToast(false)

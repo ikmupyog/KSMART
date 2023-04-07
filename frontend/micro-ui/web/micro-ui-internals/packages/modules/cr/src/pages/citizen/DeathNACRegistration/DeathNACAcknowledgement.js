@@ -2,7 +2,7 @@ import { Banner, Card, CardText, LinkButton, Loader, SubmitBar } from "@egovernm
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { convertToBirthRegistration } from "../../../utils";
+import { DeathNACRegistrationData } from "../../../utils/deathnacindex";
 import getPDFData from "../../../utils/getTLAcknowledgementData";
 
 const GetActionMessage = (props) => {
@@ -25,24 +25,24 @@ const BannerPicker = (props) => {
   return (
     <Banner
       message={GetActionMessage(props)}
-      applicationNumber={props.data?.ChildDetails[0]?.applicationNumber}
+      applicationNumber={props.data?.deathNACDtls[0]?.applicationNumber}
       info={props.isSuccess ? props.applicationNumber : ""}
       successful={props.isSuccess}
     />
   );
 };
 
-const DeathNACAcknowledgement = ({ data, onSuccess, userType, isEditBirth = false }) => {
+const DeathNACAcknowledgement = ({ data, onSuccess, userType, }) => {
   const { t } = useTranslation();
   const [mutationHappened, setMutationHappened, clear] = Digit.Hooks.useSessionStorage("CITIZEN_TL_MUTATION_HAPPENED", false);
   const resubmit = window.location.href.includes("edit-application");
   const tenantId = Digit.ULBService.getCurrentTenantId();
-  const isRenewTrade = !window.location.href.includes("renew-trade")
-  const mutation = Digit.Hooks.cr.useCivilRegistrationAPI(
-    data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId,
-    isRenewTrade
+  const isRenewTrade = !window.location.href.includes("renew-trade");
+  const [isEditDeathNAC, setIsEditDeathNAC] = useState(sessionStorage.getItem("CR_DEATH_NAC_EDIT_FLAG")? true : false);
+  
+  const mutation = Digit.Hooks.cr.useCivilRegistrationNACDEATHAPI(
+    tenantId, isEditDeathNAC ? false : true
   );
-lse
   // );
 
   const { data: storeData } = Digit.Hooks.useStore.getInitData();
@@ -58,12 +58,10 @@ lse
         let tenantId1 = data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId;
         data.tenantId = tenantId1;
         if (!resubmit) {
-          let formdata = !isEditBirth ? convertToDeathNACRegistration(data) : [];
-          if (!isEditBirth) {
+          let formdata = !isEditDeathNAC ? DeathNACRegistrationData(data) : [];
             mutation.mutate(formdata, {
               onSuccess,
             })
-          }
         } else {
           // let formdata = convertToResubmitTrade(data);
           // formdata.Licenses[0].tenantId = formdata?.Licenses[0]?.tenantId || tenantId1;
@@ -85,9 +83,10 @@ lse
     const data = getPDFData({ ...res }, tenantInfo, t);
     data.then((ress) => Digit.Utils.pdf.generate(ress));
   };
-  let enableLoader = (mutation.isIdle || mutation.isLoading);
-  if (enableLoader) { return (<Loader />) }
-  else if (((mutation?.isSuccess == false && mutation?.isIdle == false))) {
+  // let enableLoader = (mutation.isIdle || mutation.isLoading);
+  // if (enableLoader) { return (<Loader />) }
+  // else if (((mutation?.isSuccess == false && mutation?.isIdle == false))) {
+    if (((mutation?.isSuccess == false && mutation?.isIdle == false))) {
     return (
       <Card>
         <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation?.isLoading)} />

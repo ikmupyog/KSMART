@@ -340,6 +340,7 @@ export const getEditTradeDocumentUpdate = (data) => {
 };
 
 export const convertToMarriageRegistration = (data = {}) => {
+  console.log(data, "data from marriageIndex");
   let today = new Date();
   today.setHours(0, 0, 0, 0);
   const formData = {
