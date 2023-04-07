@@ -82,6 +82,19 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.AuditDetails.lastModifiedBy
 
+        - query: UPDATE eg_marriage_details SET registrationno = ? ,registration_date = ? 
+            WHERE applicationnumber = ? AND tenantid = ?
+          
+          basePath: MarriageDetails.*
+          jsonMaps:
+            - jsonPath: $.MarriageDetails.*.registrationno
+
+            - jsonPath: $.MarriageDetails.*.registration_date
+
+            - jsonPath: $.MarriageDetails.*.applicationNumber
+
+            - jsonPath: $.MarriageDetails.*.marriageTenantid
+
 
         - query: INSERT INTO public.eg_register_marriage_bride_groom_details(
                 id, residentship, aadharno, passportno, socialsecurityno, firstname_en, firstname_ml, middlename_en, middlename_ml, lastname_en, lastname_ml, 
