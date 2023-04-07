@@ -11,6 +11,8 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData, isEd
   const [isDisableEdit, setisDisableEdit] = useState(isEditStillBirth ? isEditStillBirth : false);
   const { name: name } = Digit.UserService.getUser().info; // window.localStorage.getItem("user-info");
   const { mobileNumber: mobileNumber } = Digit.UserService.getUser().info; // window.localStorage.getItem("user-info");
+ 
+ 
   const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(
     formData?.StillBirthInitiatorDetails?.isInitiatorDeclaration
       ? formData?.StillBirthInitiatorDetails?.isInitiatorDeclaration
@@ -25,6 +27,7 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData, isEd
       ? formData?.StillBirthChildDetails?.StillBirthInitiatorDetails?.isCaretaker
       : false
   );
+   let cmbhospital = [];
   const [relation, setrelation] = useState(
     formData?.StillBirthInitiatorDetails?.relation.code
       ? formData?.StillBirthInitiatorDetails?.relation
