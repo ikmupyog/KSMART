@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { convertToBirthRegistration, convertToEditBirthRegistration } from "../../../utils/birthindex";
 import getPDFData from "../../../utils/getTLAcknowledgementData";
+import { useHistory } from "react-router-dom";
 
 const GetActionMessage = (props) => {
   const { t } = useTranslation();
@@ -43,19 +44,26 @@ const BannerPicker = (props) => {
 const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
   const [toast, setToast] = useState(false);
   const { t } = useTranslation();
+  const history = useHistory();
+  const { data: storeData } = Digit.Hooks.useStore.getInitData();
+  const { tenants } = storeData || {};
+  const stateId = Digit.ULBService.getStateId();
+  const [isInitialRender, setIsInitialRender] = useState(true);
   const [mutationHappened, setMutationHappened, clear] = Digit.Hooks.useSessionStorage("CITIZEN_TL_MUTATION_HAPPENED", false);
   const resubmit = window.location.href.includes("edit-application");
   const tenantId = Digit.ULBService.getCurrentTenantId();
   //console.log(sessionStorage.getItem("CR_BIRTH_EDIT_FLAG"));
-  // const [isEditBirth, setIsEditBirth] = useState(Object.keys(Digit.Hooks.useSessionStorage("CR_BIRTH_EDIT_FLAG", {})[0]).length > 0 ? true : false);
   const [isEditBirth, setIsEditBirth] = useState(sessionStorage.getItem("CR_BIRTH_EDIT_FLAG") ? true : false);
+  let applicationNumber = "";
+  console.log(applicationNumber);
+  const [isRoutingStatus, setRoutingStatus] = useState(applicationNumber!=null ? true :false);
 
   //console.log("isEditBirth" + isEditBirth);
   const mutation = Digit.Hooks.cr.useCivilRegistrationAPI(
     tenantId, isEditBirth ? false : true
   );
 
-  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_CREATE_BIRTH_REG", {});
+  // const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_CREATE_BIRTH_REG", {});
 
 
   // const mutation2 = Digit.Hooks.cr.useCivilRegistrationAPI(
@@ -63,17 +71,13 @@ const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
   //   false
   // );
 
-  const { data: storeData } = Digit.Hooks.useStore.getInitData();
-  const { tenants } = storeData || {};
-  const stateId = Digit.ULBService.getStateId();
-  //  const { isLoading, data: fydata = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "egf-master", "FinancialYear");
-  //let isDirectRenewal = sessionStorage.getItem("isDirectRenewal") ? stringToBoolean(sessionStorage.getItem("isDirectRenewal")) : null;
-  const [isInitialRender, setIsInitialRender] = useState(true);
+
+  // useEffect(() => {
+  //   clearParams();
+  //   console.log(data);
+  // }, [mutation?.isSuccess])
   useEffect(() => {
-    clearParams();
-  }, [mutation?.data])
-  useEffect(() => {
-    if (isInitialRender) {
+    if (isInitialRender && applicationNumber === "") {
       // const onSuccessedit = () => {
       //   setMutationHappened(true);
       // };
@@ -126,6 +130,9 @@ const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
       } catch (err) {
       }
     }
+    // else {
+    //   history.push(`/digit-ui/citizen`)
+    // }
   }, [mutation]);
 
   // useEffect(() => {
@@ -140,6 +147,20 @@ const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
   //     }
   //   }
   // }, [mutation.isSuccess, mutation1.isSuccess]);
+  useEffect(() => {
+    console.log(mutation.data);
+    if (mutation.isSuccess) {
+      console.log(mutation.data?.ChildDetails[0].applicationNumber);
+      applicationNumber = mutation.data?.ChildDetails[0].applicationNumber;
+      console.log(applicationNumber);
+    } else {
+      applicationNumber = "";
+    }
+  }, [mutation.isSuccess]);
+
+  if(isRoutingStatus){
+    history.push(`/digit-ui/citizen`);
+  }
 
   const handleDownloadPdf = async () => {
     const { Licenses = [] } = mutation.data

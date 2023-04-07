@@ -321,6 +321,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   }
 
   function setselectChildDOB(value) {
+   
     setChildDOB(value);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -468,9 +469,9 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     if (typeof value === "string") {
       cb(value);
       console.log(value);
-      let hour = value;
-      let period = hour > 12 ? "PM" : "AM";
-      console.log(period);
+      // let hour = value;
+      // let period = hour > 12 ? "PM" : "AM";
+      // console.log(period);
       setbirthDateTime(value);
     }
   };

@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import Timeline from "../../components/CRTimeline";
 
 const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = false }) => {
+  console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
