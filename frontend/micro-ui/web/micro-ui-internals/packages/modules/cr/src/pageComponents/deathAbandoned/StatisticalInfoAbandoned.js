@@ -1176,7 +1176,7 @@ const StatisticalInfoAbandoned = ({ config, onSelect, userType, formData, isEdit
             </div>
           </div>
         </div>
-        <div className="row">
+        {/* <div className="row">
             <div className="col-md-12">
                 <div className="col-md-6">
                 <input type='text' style={{border:'1px solid black',borderRadius:'3px'}} onChange={(e)=>setMobileNumber(e.target.value)}/>
@@ -1188,21 +1188,21 @@ const StatisticalInfoAbandoned = ({ config, onSelect, userType, formData, isEdit
             </div>
        
          
-        </div>
+        </div> */}
       </FormStep>
-      {
+      {/* {
             modalOpen&&
             <PopUp>
         
-                <div className="popup-module" style={{ padding: "1rem", borderRadius: "1rem" }}>
+                <div className="popup-module" style={{ padding: "1rem", borderRadius: "1rem" }}> */}
         {/* <h1 style={{fontWeight:600,marginBottom:"1rem"}}></h1> */}
-        <h1 className="headingh1">
+        {/* <h1 className="headingh1">
           <span style={{ background: "#fff", padding: "0 10px" }}>{'OTP VERIFICATION'}</span>{" "}
-        </h1>
+        </h1> */}
       
                 {/* <button type="button" onClick={selectMobileNumber}
             style={{backgroundColor:'rgb(234, 61, 50)',color:'white',borderRadius:'3px'}}>Send Otp</button> */}
-                 <OTPInput length={6} onChange={handleOtpChange} value={params.otp} />
+                 {/* <OTPInput length={6} onChange={handleOtpChange} value={params.otp} />
                  <button type='button' onClick={selectOtp}>
                     Verify otp
                  </button>
@@ -1211,7 +1211,7 @@ const StatisticalInfoAbandoned = ({ config, onSelect, userType, formData, isEdit
                 </div>
       
             </PopUp>
-          }
+          } */}
          
     </React.Fragment>
   );

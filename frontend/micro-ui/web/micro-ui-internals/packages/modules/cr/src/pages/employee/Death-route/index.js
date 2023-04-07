@@ -24,9 +24,10 @@ const DeathCrFlowApp = ({ parentUrl,  props, }) => {
   const { pathname } = useLocation();
   const history = useHistory();
   const [isEditDeath, setIsEditDeath] = useState(sessionStorage.getItem("CR_DEATH_EDIT_FLAG")? true : false);
+  const [isEditAbandonedDeath, setIsEditAbandonedDeath] = useState(sessionStorage.getItem("CR_DEATH_AbandonedEDIT_FLAG")? true : false);
   // console.log(sessionStorage.getItem("CR_DEATH_EDIT_FLAG"));
   const [params, setParams, clearParams] = isEditDeath ? Digit.Hooks.useSessionStorage("CR_DEATH_EDIT", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_DEATH", {});
-
+  const [params1, setParams1, clearParams1] = isEditAbandonedDeath ? Digit.Hooks.useSessionStorage("CR_CREATE_ABANDONEDDEATH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_ABANDONEDDEATH", {});
   // console.log(isEditDeath);
   // let params1 = sessionStorage.getItem('CR_DEATH_CORRECTIONS')
   //death-emp-edit
@@ -137,6 +138,12 @@ config = config.concat(abandonedDeathConfig.body.filter((a) => !a. hideInEmploye
     sessionStorage.removeItem("CurrentFinancialYear");
     queryClient.invalidateQueries("CR_CREATE_DEATH");
   };
+
+  const onSuccessAbandoned = () => {
+    sessionStorage.removeItem("CurrentFinancialYear");
+    queryClient.invalidateQueries("CR_CREATE_ABANDONEDDEATH");
+  };
+  
   const handleSkip = () => {};
   const handleMultiple = () => {};
   const DeathCheckPage = Digit?.ComponentRegistryService?.getComponent("DeathCheckPage");
@@ -182,7 +189,7 @@ config = config.concat(abandonedDeathConfig.body.filter((a) => !a. hideInEmploye
         {
           config.indexRouteA?
           <Route path={`${match.path}/acknowledgement`}>
-          <AbandonedDeathAcknowledgement data={params} onSuccess={onSuccess} />
+          <AbandonedDeathAcknowledgement data={params} onSuccess={onSuccessAbandoned} />
         </Route>
           
           :

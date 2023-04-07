@@ -1200,6 +1200,7 @@ const InformationDeathAbandonedAband = ({ config, onSelect, userType, formData, 
                       {...(validation = {
                         pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",
                         type: "text",
+                        isRequired: true,
                         title: t("CR_INVALID_DATE"),
                       })}
                     />
@@ -1531,7 +1532,6 @@ const InformationDeathAbandonedAband = ({ config, onSelect, userType, formData, 
            setpermntInKeralaAdrStreetNameMl={setpermntInKeralaAdrStreetNameMl}
            permntInKeralaWardNo={permntInKeralaWardNo}
            setpermntInKeralaWardNo={setpermntInKeralaWardNo}
-           isEditDeath={isEditDeath}
            isEditDeath={isEditDeath}
            formData={formData}/>
 

@@ -85,7 +85,10 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count }) => {
               <span className="link">
                 <Link
                   onClick={handleLinkClick(row.original)}
-                  to={`/digit-ui/employee/cr/application-deathdetails/${row.original.InformationDeath["DeathACKNo"]}`}
+                  to={row.original.InformationDeath["DeathACKNo"].includes("CRDRNR")?
+                  `/digit-ui/employee/cr/application-abandoneddeathdetails/${row.original.InformationDeath["DeathACKNo"]}`
+                  :
+                    `/digit-ui/employee/cr/application-deathdetails/${row.original.InformationDeath["DeathACKNo"]}`}
                 >
                   {row.original.InformationDeath["DeathACKNo"]}
                 </Link>

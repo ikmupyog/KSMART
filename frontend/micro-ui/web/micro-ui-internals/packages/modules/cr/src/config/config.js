@@ -791,7 +791,7 @@ export const newConfig = [
         },
         withoutLabel: true,
         key: "Initiator",
-        nextStep: "informer",
+        nextStep: null,
         type: "component",
         hideInEmployee: false,
       },

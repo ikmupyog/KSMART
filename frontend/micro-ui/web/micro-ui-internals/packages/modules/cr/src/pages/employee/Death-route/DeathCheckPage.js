@@ -42,11 +42,7 @@ import {
   };
   
   const AbandonedDeathCheckPage = ({ onSubmit, value, userType }) => {
-    React.useEffect(()=>{
-        console.log("AbandonedDeathCheckPage",value);
-    },
-    [])
- 
+
     let isEdit = window.location.href.includes("renew-trade");
     const { t } = useTranslation();
     const history = useHistory();

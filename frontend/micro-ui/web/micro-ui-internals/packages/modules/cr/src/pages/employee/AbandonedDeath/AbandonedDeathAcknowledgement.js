@@ -23,7 +23,7 @@ const rowContainerStyle = {
 
 const BannerPicker = (props) => {
   // console.log(JSON.stringify(props));
-
+  {console.log("props",props)}
   return (
     // <Banner
     //   message={GetActionMessage(props)}
@@ -31,10 +31,10 @@ const BannerPicker = (props) => {
     //   info={props.isSuccess ? props.t("AK-16-2023-CRDRNR-C-KOCHI-KL") : ""}
     //   successful={props.isSuccess}
     // />
-
+   
     <Banner
       message={GetActionMessage(props)}
-      applicationNumber={props.data?.deathCertificateDtls[0]?.InformationDeathAband?.DeathACKNo}
+      applicationNumber={props.data?.deathAbandonedDtls[0]?.InformationDeathAbandoned?.DeathACKNo}
       info={props.isSuccess ? props.applicationNumber : ""}
       successful={props.isSuccess}
     />
@@ -47,7 +47,7 @@ const AbandonedDeathAcknowledgement = ({ data, onSuccess, userType }) => {
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const isRenewTrade = !window.location.href.includes("renew-trade");
 
-  const [isEditAbandonedDeath, setisEditAbandonedDeath] = useState(sessionStorage.getItem("CR_ABANDONEDDEATH_EDIT_FLAG")? true : false);
+  const [isEditAbandonedDeath, setisEditAbandonedDeath] = useState(sessionStorage.getItem("CR_CREATE_ABANDONEDDEATH_REG")? true : false);
   
   //console.log("isEditBirth" + isEditBirth);
   const mutation = Digit.Hooks.cr.useAbandonedDeathCreationAPI(
@@ -81,13 +81,15 @@ const AbandonedDeathAcknowledgement = ({ data, onSuccess, userType }) => {
         if (!resubmit) {
           // let formdata = !isEdit ? convertToDeathRegistration(data) : convertToEditTrade(data, fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter(y => y.module === "CR") : []);
 
-          let formdata = !isEdit? convertToAbandonedDeathRegistration(data) : [];
-          console.log(formdata,"!isEdit? convertToAbandonedDeathRegistration(data)");
+          let formdata =  convertToAbandonedDeathRegistration(data) ;
+          console.log(formdata,"!isEdit? convertToAbandonedDeathRegistration(data)",data);
           // formdata.BirthDetails[0].tenantId = formdata?.BirthDetails[0]?.tenantId || tenantId1;
           
-            mutation.mutate(formdata, {
-              onSuccess,
-            });
+            mutation.mutate(formdata,
+            //    {
+            //   onSuccess,
+            // }
+            );
           
           // else{
           //   if((fydata["egf-master"] && fydata["egf-master"].FinancialYear.length > 0 && isDirectRenewal))
@@ -164,7 +166,7 @@ const AbandonedDeathAcknowledgement = ({ data, onSuccess, userType }) => {
   if (mutation.isSuccess && mutation?.isError === null) {
     return (
       <Card>
-        <BannerPicker t={t} data={mutation.data} isSuccess={"success"} isLoading={mutation.isIdle || mutation.isLoading} />
+        <BannerPicker t={t} data={mutation.data} isSuccess={"success"} isLoading={(mutation.isIdle || mutation.isLoading)} />
         {/* <CardText>{!isDirectRenewal?t("Application Submitted Successfully"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText> */}
 
         <LinkButton
@@ -212,6 +214,7 @@ const AbandonedDeathAcknowledgement = ({ data, onSuccess, userType }) => {
       </Card>
     );
   } else {
+    console.log("else (mutation.isSuccess && mutation?.isError === null)",mutation.data)
     return (
       <Card>
         <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={mutation?.isLoading} />

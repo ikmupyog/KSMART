@@ -244,16 +244,18 @@ const FamilyAbandonedDeath = ({ config, onSelect,  formData, isEditDeath }) => {
     // }
   }
   function setSelectFamilyMobileNo(e) {
+    // const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
     if (e.target.value != null || e.target.value != "") {
-      if (e.target.value.length <= 10) {
-        if (e.target.value < 10) {
-          setFamilyMobileNo(e.target.value);
-          // setMotherAgeMarriageError(true);
-          return false;
-        } else {
-          setFamilyMobileNo(e.target.value);
-          // setMotherAgeMarriageError(false);
-        }
+      if (e.target.value.trim().length >= 0) {
+        setFamilyMobileNo(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10))
+        // if (e.target.value < 10) {
+        //   setFamilyMobileNo(e.target.value);
+        //   // setMotherAgeMarriageError(true);
+        //   return false;
+        // } else {
+        //   setFamilyMobileNo(e.target.value);
+        //   // setMotherAgeMarriageError(false);
+        // }
       } else {
         // setMotherAgeMarriageError(true);
         return false;

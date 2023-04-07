@@ -12,7 +12,7 @@ const CreateAbandonedBirth = ({ parentUrl, isEditAbandonedBirth }) => {
   const history = useHistory();
   const queryClient = useQueryClient();
   // const [params, setParams, clearParams] = isEditAbandonedBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_ABANDONEDBIRTH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_ABANDONEDBIRTH_REG", {});
-  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_CREATE_ABANDONEDBIRTH_REG", {});
+  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_CREATE_ABANDONEDDEATH_REG", {});
 
   // console.log("params"+JSON.stringify(params));
   const stateId = Digit.ULBService.getStateId();
