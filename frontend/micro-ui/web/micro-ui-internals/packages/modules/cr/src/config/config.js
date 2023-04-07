@@ -224,7 +224,7 @@ export const newConfig = [
       },
       {
         route: "nac-death-address-details",
-        component: "DeathNACAddressPage",
+        component: "AddressBasePage",
         texts: {
           headerCaption: "",
           header: "",
