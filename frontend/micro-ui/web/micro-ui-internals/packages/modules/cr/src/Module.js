@@ -131,6 +131,8 @@ import AdoptionCheckPage from "./pages/citizen/Adoption/AdoptionCheckPage";
 import BirthCheckPage from "./pages/citizen/BirthRegistration/BirthCheckPage";
 import BirthNACCheckPage from "./pages/citizen/BirthNACRegistration/BirthNACCheckPage";
 import DeathCheckPage from "./pages/citizen/DeathRegistration/DeathCheckPage";
+import DeathNACCheckPage from "./pages/citizen/DeathNACRegistration/DeathNACCheckPage";
+import DeathNACAcknowledgement from "./pages/citizen/DeathNACRegistration/DeathNACAcknowledgement";
 import BirthNACAcknowledgement from "./pages/citizen/BirthNACRegistration/BirthNACAcknowledgement";
 import AdoptionAcknowledgement from "./pages/citizen/Adoption/AdoptionAcknowledgement";
 import BirthAcknowledgement from "./pages/citizen/BirthRegistration/BirthAcknowledgement";
@@ -312,6 +314,8 @@ const componentsToRegister = {
   DeathNACAddressPage,
   DeathNACParentsDetails,
   BirthNACDownloadPage,
+  DeathNACCheckPage,
+  DeathNACAcknowledgement,
   DeathNACInitiator,
   ParentsDetails,
   BirthNACAddressPage,

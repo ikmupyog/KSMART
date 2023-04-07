@@ -36,10 +36,10 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
       Data.TradeLicense &&
       Data.TradeLicense.TradeType.map((ob) => {
         if (
-          ob.code.split(".")[0] === BusinessCategory.code &&
-          !BusinessTypeMenu.some((BusinessTypeMenu) => BusinessTypeMenu.code === `${ob.code.split(".")[0] + "." + ob.code.split(".")[1]}`)
+          ob?.code.split(".")[0] === BusinessCategory?.code &&
+          !BusinessTypeMenu.some((BusinessTypeMenu) => BusinessTypeMenu?.code === `${ob?.code.split(".")[0] + "." + ob?.code.split(".")[1]}`)
         ) {
-          BusinessTypeMenu.push({ i18nKey: `${ob.code.split(".")[0] + "." + ob.code.split(".")[1]}`, code: `${ob.code.split(".")[0] + "." + ob.code.split(".")[1]}` });
+          BusinessTypeMenu.push({ i18nKey: `${ob?.code.split(".")[0] + "." + ob?.code.split(".")[1]}`, code: `${ob?.code.split(".")[0] + "." + ob?.code.split(".")[1]}` });
         }
       });
     return BusinessTypeMenu;
@@ -103,9 +103,10 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
         new Set(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits.map(type => type.businessType))
       );      
 
-      if(businessType && (fields[0].businessCategory === undefined || fields[0].businessCategory === "")) {
+      if(businessType && (fields[0]?.businessCategory === undefined || fields[0]?.businessCategory === "")) {
         let category = null;
         category = BusinessCategoryMenu.filter((category) => category?.code.includes(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory))[0];
+
         if(businessType){
           businessType.map((bType) => {
             let bussubtyp = null;
@@ -116,8 +117,6 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
               if(bType === unit?.businessType){
                 bustype = getBusinessTypeMenu(category).filter((type) => type?.code.includes(businessType))[0];
                 bussubtyp = getBusinessSubTypeMenu(bustype).filter((type) => type?.code.includes(unit?.businessSubtype))[0];
-                // att = subType.push(bussubtyp.code);
-                // setSubType(att);
               }
               setFeilds([
                 {
@@ -127,8 +126,8 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
                   businessSubtype: bussubtyp,active: true, unit: null, uom: null
                 }
               ]);
+              res.push(bussubtyp);
             })
-            res.push(bussubtyp);
             
             setFillFields([
               {
@@ -151,7 +150,6 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
   //   bustype = getBusinessTypeMenu(category).filter((type) => type?.code.includes(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessType))[0];
   //   bussubtyp = getBusinessSubTypeMenu(bustype).filter((type) => type?.code.includes(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessSubtype))[0];
 
-  //   console.log("sdfsdfsdfsd" + JSON.stringify(bussubtyp));
   //   let res = [];
   //   res.push(bussubtyp);
   //   setFeilds([
@@ -203,11 +201,13 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
     Digit.SessionStorage.set("activityedit", true);
   })
 
+
   useEffect(() => {
     if (Digit.SessionStorage.get("activityedit") && isEditSubType) {
       Digit.SessionStorage.set("activityedit", false);
       setIsEditSubType(false);
       let tradeUnits = fields;
+
       let address = formDataEdit?.TradeDetails?.tradeLicenseDetail?.address
       let tenantId = formDataEdit?.TradeDetails?.tenantId;
       let structurePlace = formDataEdit?.TradeDetails?.tradeLicenseDetail?.structurePlace;
@@ -248,12 +248,12 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
       subUnits.map(subUnit => {
         tempval.some(code => code.code === subUnit.code) ? 
           units.map(unit =>{
-            if(subUnit.code === unit.businessSubtype.code){
+            if(subUnit.code === unit?.businessSubtype?.code){
               tradeUnits.push({
                 "id": unit.id,
-                "businessCategory": unit.businessCategory,
-                "businessType": unit.businessType, 
-                "businessSubtype": unit.businessSubtype,
+                "businessCategory": unit.businessCategory.code,
+                "businessType": unit.businessType.code, 
+                "businessSubtype": unit.businessSubtype.code,
                 "active":true,
                 "unit":null,"uom":null
               });
@@ -262,24 +262,21 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
           : 
           tradeUnits.push({
             "id": null,
-            "businessCategory": units[0].businessCategory,
-            "businessType": {"i18nKey":subUnit.code.split(".")[0] + "." + subUnit.code.split(".")[1],"code":subUnit.code.split(".")[0] + "." + subUnit.code.split(".")[1]}, 
-            "businessSubtype": subUnit,
+            "businessCategory": units[0].businessCategory.code,
+            "businessType": subUnit.code.split(".")[0] + "." + subUnit.code.split(".")[1], 
+            "businessSubtype": subUnit.code,
             "active":true,
             "unit":null,"uom":null
           });
-          
-          
-        
-        // units.map(unit =>{
-        //     let subCode = + "{" +subUnit.code.split(".")[0] + "." + subUnit.code.split(".")[1]+ "}";
-        //     if( subCode === unit.businessType.code){
-        //       if(!subUnits.includes(unit.businessSubtype.code)){
-        //         tradeUnits.splice(unit.id, 1);
-        //         tradeUnits.push({ "id": unit.id,"active":false});
-        //       }
-        //     }
-        //   }) 
+        units.map(unit =>{
+            let subCode = + "{" +subUnit.code.split(".")[0] + "." + subUnit.code.split(".")[1]+ "}";
+            if( subCode === unit.businessType.code){
+              if(!subUnits.includes(unit.businessSubtype.code)){
+                tradeUnits.splice(unit.id, 1);
+                tradeUnits.push({ "id": unit.id,"active":false});
+              }
+            }
+          }) 
       })
       if(tradeUnits[0]?.businessCategory){
         Digit.SessionStorage.set("activityedit", true);
@@ -302,31 +299,72 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
   const onRemoved = (index, key) => {
     let temp =[];
     let unitfill = [...fillFields];
+    let flag = false;
     for (let i=0;i<unitfill.length;i++){
       unitfill[i].businessSubtype.filter(subType =>{
         if(subType.code !== key.code)
+        {
           temp.push(subType);
+          flag = true;
+        }
       });
+
+      if(temp.length===0)
+      unitfill[i].businessSubtype = [];  //{"i18nKey":"0","code":"0"}
+      else
       unitfill[i].businessSubtype = temp;
     }
-
-    if(unitfill[0].businessCategory){
+  //  if(flag === true){
       setFillFields(unitfill);
-    }
 
-    let unit = [...fields];
-    let tempUnit = [];
-    for (let i=0;i<unit.length;i++){
-      !key.code.includes(unit[i].businessSubtype.code) ? tempUnit.push(unit[i]) : "";
-    }
+       let unit = [...fields];
+       let tempUnit = [];
+      for (let i=0;i<unit.length;i++){
+        !key.code.includes(unit[i].businessSubtype.code) ? tempUnit.push(unit[i]) : "";
 
-    if(unit[0].businessCategory){
+        if(temp.length===0){
+          unit[i].businessSubtype={"i18nKey":"","code":""};
+          tempUnit.push(unit[i])
+        }
+      }
+  
       Digit.SessionStorage.set("activityedit", true);
-      setFeilds(tempUnit);
-      setIsEditSubType(true);
-    }
-
+       setFeilds(tempUnit);
+       setIsEditSubType(true);
+   // }
   };
+  const initFn = () => {
+    return formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits;
+  };
+  const storedBusinessTypeData = formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits;
+  const reducerBusinessType = (stateBusinessType, action) => {
+    switch (action.type) {
+      case "ADD_NEW_BUSINESSTYPE":
+        return [
+          ...stateBusinessType,
+          {
+            businessCategory: "", 
+            businessType: "", 
+            businessSubtype: [], 
+            unit: null, 
+            uom: null 
+          },
+        ];
+      case "REMOVE_THIS_BUSINESSTYPE":
+        return stateDoor.filter((e, i) => i !== action?.payload?.index);
+      case "EDIT_CURRENTBUSINESSTYPE":
+        return stateDoor.map((data, __index) => {
+          if (__index === action.payload.index) {
+            return { ...data, [action.payload.key]: action.payload.value };
+          } else {
+            return data;
+          }
+        });
+    }
+  };
+  
+  const [formStateBusinessType, dispatchBusinessType] =  useReducer(reducerBusinessType, storedBusinessTypeData, initFn);
+  
 
   return (
     <div style={{ borderRadius: "5px", borderColor: "#f3f3f3", background: "white", display: "flow-root", }} >
@@ -357,7 +395,7 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
       {fillFields.map((field, index) => {
         return (
           <div className="row" key={index}>
-            <div className="col-md-4" >
+            <div className="col-md-3" >
               <CardLabel>{`${t("TL_LOCALIZATION_SECTOR")}`}<span className="mandatorycss">*</span></CardLabel>
               <Dropdown t={t} option={BusinessCategoryMenu} optionKey="i18nKey" isMandatory={config.isMandatory} value={field?.businessCategory} selected={field?.businessCategory} name={`TradeCategory-${index}`} select={(e) => selectBusinessCategory(index, e)} placeholder="Bussiness Category" {...(validation = { isRequired: true, type: "text", title: t("TL_INVALID_BUSINESS_CATEGORY"), })} />
             </div>
@@ -384,7 +422,17 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
                 })}
               </div>
             </div>
-            
+            <div className="col-md-1">
+              <CardLabel>Add More</CardLabel>
+              <LinkButton
+                label={
+                  <svg class="icon  icon--plus" viewBox="0 0 5 5" fill="green" width="50" height="50">
+                    <path d="M2 1 h1 v1 h1 v1 h-1 v1 h-1 v-1 h-1 v-1 h1 z" />
+                  </svg>
+                }
+                onClick={(e) => dispatchBusinessType({ type: "ADD_NEW_BUSINESSTYPE" })}
+              />
+            </div>
           </div>
           
         )

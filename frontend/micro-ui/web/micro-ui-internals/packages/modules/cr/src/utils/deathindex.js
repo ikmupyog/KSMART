@@ -853,7 +853,7 @@ export const convertToEditDeathRegistration = (data = {}) => {
         applicationType: "new",
         businessService: "CR",
         action: "APPLY",
-        workflowcode: "DEATHHOSP",
+        workflowcode: data?.InformationDeath?.workFlowCode,
         assignee: [data?.InformationDeath?.uuid],
       },
       

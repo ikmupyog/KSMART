@@ -1,5 +1,3 @@
-// import SelectAddress from "../../../pageComponents/Steps/SelectAddress";
-
 export const config = {
   routes: {
     "complaint-type": {
@@ -34,18 +32,6 @@ export const config = {
         submitBarLabel: "CS_COMMON_NEXT",
         skipText: "CORE_COMMON_SKIP_CONTINUE",
       },
-      inputs: [
-        {
-          label: "CORE_COMMON_PINCODE",
-          type: "text",
-          name: "pincode",
-          validation: {
-            minLength: 6,
-            maxLength: 7,
-          },
-          error: "CORE_COMMON_PINCODE_INVALID",
-        },
-      ],
       nextStep: "address",
     },
     address: {
@@ -75,13 +61,6 @@ export const config = {
         cardText: "CS_ADDCOMPLAINT_DETAILS_TEXT",
         submitBarLabel: "CS_COMMON_SUBMIT",
       },
-      inputs: [
-        {
-          label: "CS_ADDCOMPLAINT_DETAILS",
-          type: "textarea",
-          name: "details",
-        },
-      ],
       nextStep: null,
     },
   },
