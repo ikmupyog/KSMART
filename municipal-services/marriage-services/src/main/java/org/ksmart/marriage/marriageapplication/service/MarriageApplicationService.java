@@ -2,6 +2,7 @@ package org.ksmart.marriage.marriageapplication.service;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.egov.common.contract.request.RequestInfo;
 import org.ksmart.marriage.common.producer.MarriageProducer;
 import org.ksmart.marriage.marriageapplication.config.MarriageApplicationConfiguration;
 import org.ksmart.marriage.marriageapplication.enrichment.MarriageDetailsEnrichment;
@@ -105,7 +106,7 @@ public class MarriageApplicationService {
 
     }
 
-    public List<MarriageApplicationDetails> searchMarriageDetails(MarriageApplicationSearchCriteria criteria) {
-        return repository.searchMarriageDetails(criteria);
+    public List<MarriageApplicationDetails> searchMarriageDetails(MarriageApplicationSearchCriteria criteria,RequestInfo requestInfo) {
+        return repository.searchMarriageDetails(criteria,requestInfo);
     }
 }

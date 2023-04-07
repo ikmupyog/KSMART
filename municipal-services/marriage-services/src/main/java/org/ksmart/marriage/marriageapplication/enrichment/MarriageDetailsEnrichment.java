@@ -5,6 +5,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.request.User;
 import org.egov.tracer.model.CustomException;
+import org.ksmart.marriage.common.contract.EncryptionDecryptionUtil;
 import org.ksmart.marriage.common.model.AuditDetails;
 import org.ksmart.marriage.common.repository.IdGenRepository;
 import org.ksmart.marriage.common.repository.ServiceRequestRepository;
@@ -14,9 +15,11 @@ import org.ksmart.marriage.marriageapplication.web.model.MarriageApplicationDeta
 import org.ksmart.marriage.marriageapplication.web.model.Demand.Demand;
 import org.ksmart.marriage.marriageapplication.web.model.Demand.DemandRequest;
 import org.ksmart.marriage.marriageapplication.web.model.Demand.DemandResponse;
+import org.ksmart.marriage.marriageapplication.web.model.marriage.BrideDetails;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.GroomDetails;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageDetailsRequest;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageDocument;
+import org.ksmart.marriage.marriageapplication.web.model.marriage.WitnessDetails;
 import org.ksmart.marriage.utils.IDGenerator;
 import org.ksmart.marriage.utils.MarriageConstants;
 import org.ksmart.marriage.marriageapplication.web.enums.ErrorCodes;
@@ -46,6 +49,9 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 
     @Autowired
     MarriageApplicationRepository repository;
+
+    @Autowired
+    EncryptionDecryptionUtil encryptionDecryptionUtil;
 
     @Autowired
 	@Qualifier("objectMapperBnd")
@@ -79,14 +85,27 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
             setBridePresentAddress(request);
             setGroomPermanentAddress(request);
             setGroomPresentAddress(request);
-            // GroomDetails groomDetails =marriage.getGroomDetails();
-            // GroomDetails groomDetailsEnc =  encryptionDecryptionUtil.encryptObject(groomDetails, "BndDetail", GroomDetails.class);
-            // groomDetails.setAadharno(groomDetailsEnc.getAadharno());
-            // DeathFamilyInfo deathFamilyDtls =deathdtls.getDeathFamilyInfo() ;
-            // DeathFamilyInfo deathFamilyEnc = encryptionDecryptionUtil.encryptObject(deathFamilyDtls, "BndDetail", DeathFamilyInfo.class);
-            // deathFamilyDtls.setFatherAadharNo(deathFamilyEnc.getFatherAadharNo());
-            // deathFamilyDtls.setMotherAadharNo(deathFamilyEnc.getMotherAadharNo());
-            // deathFamilyDtls.setSpouseAadhaar(deathFamilyEnc.getSpouseAadhaar());
+            
+//Jasmine 07.04.2023
+            GroomDetails groomDetails =marriage.getGroomDetails();
+            GroomDetails groomDetailsEnc =  encryptionDecryptionUtil.encryptObject(groomDetails, "BndDetail", GroomDetails.class);
+            groomDetails.setAadharno(groomDetailsEnc.getAadharno());
+            groomDetails.setMotherAadharno(groomDetailsEnc.getMotherAadharno());
+            groomDetails.setFatherAadharno(groomDetailsEnc.getFatherAadharno());
+            groomDetails.setGuardianAadharno(groomDetailsEnc.getGuardianAadharno());
+            
+            BrideDetails brideDetails =marriage.getBrideDetails();
+            BrideDetails brideDetailsEnc =  encryptionDecryptionUtil.encryptObject(brideDetails, "BndDetail", BrideDetails.class);
+            brideDetails.setAadharno(brideDetailsEnc.getAadharno());
+            brideDetails.setMotherAadharno(brideDetailsEnc.getMotherAadharno());
+            brideDetails.setFatherAadharno(brideDetailsEnc.getFatherAadharno());
+            brideDetails.setGuardianAadharno(brideDetailsEnc.getGuardianAadharno());
+
+            WitnessDetails witnessDetails =marriage.getWitnessDetails();
+            WitnessDetails witnessDetailsEnc =  encryptionDecryptionUtil.encryptObject(witnessDetails, "BndDetail", WitnessDetails.class);
+            witnessDetails.setWitness1AadharNo(witnessDetailsEnc.getWitness1AadharNo());
+            witnessDetails.setWitness2AadharNo(witnessDetailsEnc.getWitness2AadharNo());
+
 //Jasmine 06.04.2023
             List <MarriageDocument> marriagedocument = marriage.getMarriageDocuments();
             if (marriagedocument!=null){
@@ -94,19 +113,6 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                 String documentType =  document.getDocumentType();
                 String documentOwner =  document.getDocumentOwner();
                 String applicationNumber =  marriage.getApplicationNumber();
-                // List<MarriageDocument> searchResult = repository.getDocumentDetails(documentType,documentOwner,applicationNumber);
-                // document.setUpdatedFlag( MarriageConstants.VALUE_FALSE);
-                // if(searchResult!=null){
-                //     searchResult.forEach(existingDocument -> {
-                //         if(document.getFileStoreId().equals(existingDocument.getFileStoreId())){
-                //             document.setUpdatedFlag( MarriageConstants.VALUE_FALSE);
-                //         }
-                //         else{
-                //             document.setUpdatedFlag( MarriageConstants.VALUE_TRUE);
-                //             document.setActiveFalse(false);
-                //         }
-                //     });
-                // }
                 document.setId(UUID.randomUUID().toString());
                 document.setMarriageTenantid(marriage.getTenantid());
                 document.setMarriageId(marriage.getId());
@@ -155,8 +161,6 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                         });
                         
                     }
-    
-
 
         setBridePermanentAddress(request);
         setBridePresentAddress(request);
@@ -256,17 +260,9 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 
                                 }
                             }
-
-
-
                     }
 
-
-
                 });
-
-
-
 
     }
 

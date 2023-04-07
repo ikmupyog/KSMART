@@ -4,14 +4,18 @@ package org.ksmart.marriage.marriageapplication.repository;
 //import org.ksmart.marriage.common.producer.BndProducer;
 
 import org.egov.common.contract.request.RequestInfo;
+import org.ksmart.marriage.common.contract.EncryptionDecryptionUtil;
 import org.ksmart.marriage.common.producer.MarriageProducer;
 import org.ksmart.marriage.marriageapplication.config.MarriageApplicationConfiguration;
 import org.ksmart.marriage.marriageapplication.enrichment.MarriageDetailsEnrichment;
 import org.ksmart.marriage.marriageapplication.web.model.MarriageApplicationDetails;
+import org.ksmart.marriage.marriageapplication.web.model.marriage.BrideDetails;
+import org.ksmart.marriage.marriageapplication.web.model.marriage.GroomDetails;
 //import org.ksmart.marriage.common.producer.MarriageProducer;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageApplicationSearchCriteria;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageDetailsRequest;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageDocument;
+import org.ksmart.marriage.marriageapplication.web.model.marriage.WitnessDetails;
 import org.ksmart.marriage.marriageapplication.repository.querybuilder.MarriageApplicationQueryBuilder;
 import org.ksmart.marriage.marriageapplication.repository.rowmapper.MarriageApplicationRowMapper;
 import org.ksmart.marriage.marriageapplication.validator.MarriageMDMSValidator;
@@ -44,7 +48,9 @@ public class MarriageApplicationRepository {
     private final MarriageMDMSValidator mdmsValidator;
     private final MarriageDocumentRowMapper documentRowMapper;
 
-
+    @Autowired
+    EncryptionDecryptionUtil encryptionDecryptionUtil;
+    
     @Autowired
     public MarriageApplicationRepository(MarriageProducer producer, MarriageApplicationConfiguration marriageApplicationConfiguration,
                                          JdbcTemplate jdbcTemplate, MarriageDetailsEnrichment marriageDetailsEnrichment, MarriageApplicationQueryBuilder marriageQueryBuilder,
@@ -85,24 +91,47 @@ public class MarriageApplicationRepository {
         return request.getMarriageDetails();
     }
     //Jasmine 31.03.2023
-    // public List<MarriageDetailsRequest> saveMarriageDetails(MarriageDetailsRequest request) {
 
-    //     marriageDetailsEnrichment.enrichCreate(request);
-    //     producer.push(marriageApplicationConfiguration.getSaveMarriageApplicationTopic(), request);
-    //     return request;
-    // }
-
-    // public List<MarriageApplicationDetails> updateMarriageDetails(MarriageDetailsRequest request) {
-    //     marriageDetailsEnrichment.enrichUpdate(request);
-    //     //workflowIntegrator.callWorkFlow(request);
-    //     producer.push(marriageApplicationConfiguration.getUpdateMarriageApplicationTopic(), request);
-    //     return request.getMarriageDetails();
-    // }
-
-    public List<MarriageApplicationDetails> searchMarriageDetails(MarriageApplicationSearchCriteria criteria) {
+    public List<MarriageApplicationDetails> searchMarriageDetails(MarriageApplicationSearchCriteria criteria,RequestInfo requestInfo) {
         List<Object> preparedStmtValues = new ArrayList<>();
         String query = marriageQueryBuilder.getMarriageApplicationSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
         List<MarriageApplicationDetails> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriageApplicationRowMapper);
+        if(result != null) {
+			result.forEach(marriage -> {
+                              
+                GroomDetails groomDetails =marriage.getGroomDetails();
+                GroomDetails groomDetailsDec =  encryptionDecryptionUtil.decryptObject(groomDetails, "BndDetail", GroomDetails.class, requestInfo);
+                groomDetails.setAadharno(groomDetailsDec.getAadharno());
+                groomDetails.setMotherAadharno(groomDetailsDec.getMotherAadharno());
+                groomDetails.setFatherAadharno(groomDetailsDec.getFatherAadharno());
+                groomDetails.setGuardianAadharno(groomDetailsDec.getGuardianAadharno());
+                
+                BrideDetails brideDetails =marriage.getBrideDetails();
+                BrideDetails brideDetailsDec =  encryptionDecryptionUtil.decryptObject(brideDetails, "BndDetail", BrideDetails.class, requestInfo);
+                brideDetails.setAadharno(brideDetailsDec.getAadharno());
+                brideDetails.setMotherAadharno(brideDetailsDec.getMotherAadharno());
+                brideDetails.setFatherAadharno(brideDetailsDec.getFatherAadharno());
+                brideDetails.setGuardianAadharno(brideDetailsDec.getGuardianAadharno());
+    
+                WitnessDetails witnessDetails =marriage.getWitnessDetails();
+                WitnessDetails witnessDetailsDec =  encryptionDecryptionUtil.decryptObject(witnessDetails, "BndDetail", WitnessDetails.class, requestInfo);
+                witnessDetails.setWitness1AadharNo(witnessDetailsDec.getWitness1AadharNo());
+                witnessDetails.setWitness2AadharNo(witnessDetailsDec.getWitness2AadharNo());
+                // DeathInformantDtls deathInformant =deathDtl.getDeathInformantDtls() ;
+                // if (deathInformant!=null){
+                //     DeathInformantDtls deathInformantEnc = encryptionDecryptionUtil.decryptObject(deathInformant, "BndDetail", DeathInformantDtls.class,requestInfo);
+                //     deathInformant.setInformantAadharNo(deathInformantEnc.getInformantAadharNo());
+                // }
+                // DeathInitiatorDtls deathInitiator =deathDtl.getDeathInitiatorDtls() ;
+                // if (deathInitiator!= null){
+                   
+                //     DeathInitiatorDtls deathInitiatorEnc = encryptionDecryptionUtil.decryptObject(deathInitiator, "BndDetail", DeathInitiatorDtls.class,requestInfo);
+                //     deathInitiator.setInitiatorAadhaar(deathInitiatorEnc.getInitiatorAadhaar());
+                // }
+			});
+        }
+        
+        
         return result;
     }
 
@@ -116,9 +145,7 @@ public class MarriageApplicationRepository {
     public List<MarriageApplicationDetails> getMarriageApplication(MarriageApplicationSearchCriteria criteria, RequestInfo requestInfo) {
         List<Object> preparedStmtValues = new ArrayList<>();
         String query = marriageQueryBuilder.getMarriageApplicationSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
-        // System.out.println("Query:"+query);
         List<MarriageApplicationDetails> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriageApplicationRowMapper);
-
         return result;
     }
 

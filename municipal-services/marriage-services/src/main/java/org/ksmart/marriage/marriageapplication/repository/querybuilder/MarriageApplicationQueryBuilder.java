@@ -117,22 +117,22 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
         addFilter("MD.tenantid", criteria.getTenantId(), query, preparedStmtValues);
         addFilter("MD.applicationNumber", criteria.getApplicationNo(), query, preparedStmtValues);
         addFilter("MD_registrationno", criteria.getRegistrationNo(), query, preparedStmtValues);
-        // addFilter("MD_certificateno", criteria.getCertificateNo(), query, preparedStmtValues);
         addFilter("BD.aadharno", criteria.getBrideAdharNo(), query, preparedStmtValues);
         if (criteria.getBrideFirstnameEn() != null){
           addFilterString("BD.firstname_en", criteria.getBrideFirstnameEn(), query, preparedStmtValues);
         }
-        // addFilter("BD.firstname_en", criteria.getBrideFirstnameEn(), query, preparedStmtValues);
-       // addFilter("BD.middlename_en", criteria.getBrideMiddlenameEn(), query, preparedStmtValues);
-       //addFilter("BD.lastname_en", criteria.getBrideLastnameEn(), query, preparedStmtValues);
         addFilter("GD.aadharno", criteria.getGroomAdharNo(), query, preparedStmtValues);
         if (criteria.getGroomFirstnameEn() != null){
           addFilterString("GD.firstname_en", criteria.getGroomFirstnameEn(), query, preparedStmtValues);
         }
-        //addFilter("GD.firstname_en", criteria.getGroomFirstnameEn(), query, preparedStmtValues);
-       // addFilter("GD.middlename_en", criteria.getGroomMiddlenameEn(), query, preparedStmtValues);
+      //addFilter("GD.firstname_en", criteria.getGroomFirstnameEn(), query, preparedStmtValues);
+      // addFilter("GD.middlename_en", criteria.getGroomMiddlenameEn(), query, preparedStmtValues);
       //  addFilter("GD.lastname_en", criteria.getGroomLastnameEn(), query, preparedStmtValues);
-        //  addFilter("MD_dateofmarriage", criteria.getMarriageDOM(), query, preparedStmtValues);
+      //  addFilter("MD_dateofmarriage", criteria.getMarriageDOM(), query, preparedStmtValues);
+      // addFilter("MD_certificateno", criteria.getCertificateNo(), query, preparedStmtValues);
+      // addFilter("BD.firstname_en", criteria.getBrideFirstnameEn(), query, preparedStmtValues);
+       // addFilter("BD.middlename_en", criteria.getBrideMiddlenameEn(), query, preparedStmtValues);
+       //addFilter("BD.lastname_en", criteria.getBrideLastnameEn(), query, preparedStmtValues);
         addDateRangeFilter("MD.dateofmarriage",
                 criteria.getFromDate(),
                 criteria.getToDate(),

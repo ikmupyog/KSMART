@@ -94,7 +94,7 @@ public class MarriageApplicationController {
     public ResponseEntity<MarriageApplicationResponse> searchMarriageDetails(@RequestBody MarriageDetailsRequest request,
                                                                      @Valid @ModelAttribute MarriageApplicationSearchCriteria criteria) {
         
-        List<MarriageApplicationDetails> marriageDetails = MarriageService.searchMarriageDetails(criteria);
+        List<MarriageApplicationDetails> marriageDetails = MarriageService.searchMarriageDetails(criteria, request.getRequestInfo());
        
         MarriageApplicationResponse response = MarriageApplicationResponse
                                                 .builder()
