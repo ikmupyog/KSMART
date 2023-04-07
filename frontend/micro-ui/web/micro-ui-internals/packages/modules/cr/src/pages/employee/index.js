@@ -139,19 +139,19 @@ const CRBreadCrumb = ({ location }) => {
     },
     {
       path: sessionStorage.getItem("deathApplicationNo") ? `/digit-ui/employee/cr/application-birthdetails/${sessionStorage.getItem("birthApplicationNo")}` : "",
-      content: t("Birth Application Details"),
+      content: t("BIRTH_APPLICATION_DETAILS"),
       show: isApplicationBirthDetails ||
         breadCrumbUrls.includes("home/application-birthdetails")
     },
     {
       path: sessionStorage.getItem("deathApplicationNo") ? `/digit-ui/employee/cr/application-Adoptiondetails/${sessionStorage.getItem("birthApplicationNo")}` : "",
-      content: t("Adoption Application Details"),
+      content: t("ADOPTION_APPLICATION_DETAILS"),
       show: isApplicationAdoptionDetails ||
         breadCrumbUrls.includes("home/application-Adoptiondetails")
     },
     {
       path: sessionStorage.getItem("applicationno") ? `/digit-ui/employee/cr/application-stillbirth/${sessionStorage.getItem("birthApplicationNo")}` : "",
-      content: t("Still Birth Application Details"),
+      content: t("STILL_BIRTH_APPLICATION_DETAILS"),
       show: isApplicationStillBirthDetails ||
         breadCrumbUrls.includes("home/application-stillbirth")
     },
