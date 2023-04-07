@@ -49,14 +49,15 @@ public class MarriageApplicationService {
         this.validatorService = validatorService;
     }
 
-
     public List<MarriageApplicationDetails> saveMarriageDetails(MarriageDetailsRequest request) {
         validatorService.validateCommonFields( request);
         Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getMarriageDetails().get(0).getTenantid());
         mdmsValidator.validateMarriageMDMSData(request,mdmsData);
         marriageDetailsEnrichment.enrichCreate(request);
         producer.push(marriageApplicationConfiguration.getSaveMarriageApplicationTopic(), request);
-        workflowIntegrator.callWorkFlow(request);
+        if (request.getMarriageDetails().get(0).isWorkflow()){
+            workflowIntegrator.callWorkFlow(request);
+        }
     //    request.getMarriageDetails().forEach(marriage->{
     //         if(marriage.getStatus() == MarriageConstants.STATUS_FOR_PAYMENT){
     //             List<Demand> demands = new ArrayList<>();
@@ -72,6 +73,7 @@ public class MarriageApplicationService {
     }
 
     public List<MarriageApplicationDetails> updateMarriageDetails(MarriageDetailsRequest request) {
+
         validatorService.validateCommonFields( request);
         Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getMarriageDetails().get(0).getTenantid());
         mdmsValidator.validateMarriageMDMSData(request,mdmsData);
@@ -83,7 +85,10 @@ public class MarriageApplicationService {
      //  System.out.println("UpdatesearchResult"+searchResult);
         validatorService.validateUpdate(request, searchResult);
         marriageDetailsEnrichment.enrichUpdate(request);
-        workflowIntegrator.callWorkFlow(request);
+        if (request.getMarriageDetails().get(0).isWorkflow()){
+            workflowIntegrator.callWorkFlow(request);
+        }
+
        // List<MarriageApplicationDetails>  marriageApplicationDetails =repository.updateMarriageDetails(request);
         producer.push(marriageApplicationConfiguration.getUpdateMarriageApplicationTopic(), request);
         // request.getMarriageDetails().forEach(marriage->{

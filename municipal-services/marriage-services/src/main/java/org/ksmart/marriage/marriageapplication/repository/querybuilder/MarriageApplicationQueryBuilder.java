@@ -119,13 +119,19 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
         addFilter("MD_registrationno", criteria.getRegistrationNo(), query, preparedStmtValues);
         // addFilter("MD_certificateno", criteria.getCertificateNo(), query, preparedStmtValues);
         addFilter("BD.aadharno", criteria.getBrideAdharNo(), query, preparedStmtValues);
-        addFilter("BD.firstname_en", criteria.getBrideFirstnameEn(), query, preparedStmtValues);
-        addFilter("BD.middlename_en", criteria.getBrideMiddlenameEn(), query, preparedStmtValues);
-        addFilter("BD.lastname_en", criteria.getBrideLastnameEn(), query, preparedStmtValues);
+        if (criteria.getBrideFirstnameEn() != null){
+          addFilterString("BD.firstname_en", criteria.getBrideFirstnameEn(), query, preparedStmtValues);
+        }
+        // addFilter("BD.firstname_en", criteria.getBrideFirstnameEn(), query, preparedStmtValues);
+       // addFilter("BD.middlename_en", criteria.getBrideMiddlenameEn(), query, preparedStmtValues);
+       //addFilter("BD.lastname_en", criteria.getBrideLastnameEn(), query, preparedStmtValues);
         addFilter("GD.aadharno", criteria.getGroomAdharNo(), query, preparedStmtValues);
-        addFilter("GD.firstname_en", criteria.getGroomFirstnameEn(), query, preparedStmtValues);
-        addFilter("GD.middlename_en", criteria.getGroomMiddlenameEn(), query, preparedStmtValues);
-        addFilter("GD.lastname_en", criteria.getGroomLastnameEn(), query, preparedStmtValues);
+        if (criteria.getGroomFirstnameEn() != null){
+          addFilterString("GD.firstname_en", criteria.getGroomFirstnameEn(), query, preparedStmtValues);
+        }
+        //addFilter("GD.firstname_en", criteria.getGroomFirstnameEn(), query, preparedStmtValues);
+       // addFilter("GD.middlename_en", criteria.getGroomMiddlenameEn(), query, preparedStmtValues);
+      //  addFilter("GD.lastname_en", criteria.getGroomLastnameEn(), query, preparedStmtValues);
         //  addFilter("MD_dateofmarriage", criteria.getMarriageDOM(), query, preparedStmtValues);
         addDateRangeFilter("MD.dateofmarriage",
                 criteria.getFromDate(),
@@ -150,6 +156,22 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
         return query.toString();
 
     }
+    private static final String QUERYDOCUMENT = new StringBuilder()
+                                              .append("Select id ,tenantid ,document_name ,document_type ,filestoreid ,marriageid,bride_groom  ,")
+                                              .append("active,applicationnumber , createdby,createdtime,lastmodifiedby, lastmodifiedtime  from eg_marriage_document")
+                                              .toString();
+   
+     public String getMarriageDocumentSearchQuery(String documentType,String documentOwner,String applicationNumber,@NotNull List<Object> preparedStmtValues, Boolean isCount) {
+
+        StringBuilder query = new StringBuilder(QUERYDOCUMENT);
+        StringBuilder orderBy = new StringBuilder();
+                              addFilter("document_type", documentType, query, preparedStmtValues);
+                              addFilter("bride_groom", documentOwner, query, preparedStmtValues);
+                              addFilter("applicationnumber", applicationNumber, query, preparedStmtValues);
+
+      return query.toString();
+    }
+
 
     public String getNextIDQuery() {
         StringBuilder query = new StringBuilder("select fn_next_id(?,?,?)");

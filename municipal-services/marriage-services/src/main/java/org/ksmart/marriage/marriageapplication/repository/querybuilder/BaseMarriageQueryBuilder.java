@@ -62,6 +62,36 @@ public class BaseMarriageQueryBuilder {
             paramValues.add(value);
         }
     }
+
+    
+    void addFilterString(String column, String value, StringBuilder query, List<Object> paramValues) {
+        if (StringUtils.isNotBlank(value)) {
+            addWhereClause(paramValues, query);
+            query.append(column)
+                    .append(" ILIKE ? ");
+            paramValues.add(value);
+        }
+    }
+
+    // private String createQuery(List<String> ids) {
+    //     StringBuilder builder = new StringBuilder();
+    //     int length = ids.size();
+    //     for (int i = 0; i < length; i++) {
+    //         builder.append(" LOWER(?)");
+    //         if (i != length - 1)
+    //             builder.append(",");
+    //     }
+    //     return builder.toString();
+    // }
+
+    // void addFilterStringLower(String column, String value, StringBuilder query, List<Object> paramValues) {
+    //     if (StringUtils.isNotBlank(value)) {
+    //         addWhereClause(paramValues, query);
+    //         query.append(column)
+    //                 .append(" = ? ");
+    //         paramValues.add(value);
+    //     }
+    // }
     // void addDateRangeFilter(String column, Long startDate, Long endDate, StringBuilder query,
     //                         List<Object> paramValues) {
 

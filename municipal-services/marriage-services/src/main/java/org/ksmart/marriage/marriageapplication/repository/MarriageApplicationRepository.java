@@ -11,10 +11,12 @@ import org.ksmart.marriage.marriageapplication.web.model.MarriageApplicationDeta
 //import org.ksmart.marriage.common.producer.MarriageProducer;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageApplicationSearchCriteria;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageDetailsRequest;
+import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageDocument;
 import org.ksmart.marriage.marriageapplication.repository.querybuilder.MarriageApplicationQueryBuilder;
 import org.ksmart.marriage.marriageapplication.repository.rowmapper.MarriageApplicationRowMapper;
 import org.ksmart.marriage.marriageapplication.validator.MarriageMDMSValidator;
 import org.ksmart.marriage.marriageregistry.repository.rowmapper.MarriageRegistryRowMapper;
+import org.ksmart.marriage.marriageapplication.repository.rowmapper.MarriageDocumentRowMapper;
 import org.ksmart.marriage.utils.MarriageMdmsUtil;
  import org.ksmart.marriage.workflow.WorkflowIntegrator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +42,8 @@ public class MarriageApplicationRepository {
     private final WorkflowIntegrator workflowIntegrator;
     private final MarriageMdmsUtil util;
     private final MarriageMDMSValidator mdmsValidator;
+    private final MarriageDocumentRowMapper documentRowMapper;
+
 
     @Autowired
     public MarriageApplicationRepository(MarriageProducer producer, MarriageApplicationConfiguration marriageApplicationConfiguration,
@@ -47,7 +51,7 @@ public class MarriageApplicationRepository {
                                          MarriageApplicationRowMapper marriageApplicationRowMapper,
                                          MarriageRegistryRowMapper marriageRegistryRowMapper, WorkflowIntegrator workflowIntegrator,
                                          MarriageMdmsUtil util,
-                                         MarriageMDMSValidator mdmsValidator) {
+                                         MarriageMDMSValidator mdmsValidator,MarriageDocumentRowMapper documentRowMapper) {
         this.producer = producer;
         this.marriageApplicationConfiguration = marriageApplicationConfiguration;
         this.marriageDetailsEnrichment = marriageDetailsEnrichment;
@@ -58,6 +62,7 @@ public class MarriageApplicationRepository {
         this.workflowIntegrator = workflowIntegrator;
         this.util = util;
         this.mdmsValidator = mdmsValidator;
+        this.documentRowMapper = documentRowMapper;
     }
     // public List<MarriageApplicationDetails> saveMarriageDetails(MarriageDetailsRequest request) {
 
@@ -101,6 +106,12 @@ public class MarriageApplicationRepository {
         return result;
     }
 
+    public List<MarriageDocument> getDocumentDetails(String documentType, String documentOwner ,String applicationNumber) {
+        List<Object> preparedStmtValues = new ArrayList<>();
+        String query = marriageQueryBuilder.getMarriageDocumentSearchQuery(documentType,documentOwner,applicationNumber, preparedStmtValues, Boolean.FALSE);
+        List<MarriageDocument> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), documentRowMapper);
+        return result;
+    }   
 
     public List<MarriageApplicationDetails> getMarriageApplication(MarriageApplicationSearchCriteria criteria, RequestInfo requestInfo) {
         List<Object> preparedStmtValues = new ArrayList<>();

@@ -38,9 +38,7 @@ public class MarriageRegistryService {
     }
 
     public List<MarriageRegistryDetails> createRegistry(MarriageRegistryRequest request) {
-        System.out.println("HiRegistry");
 
-System.out.println("registryApplicationnumber"+request.getMarriageDetails().get(0).getApplicationNumber());
         marriageRegistryEnrichment.enrichCreate(request);
 
         producer.push(marriageApplicationConfiguration.getSaveMarriageRegistryTopic(), request);

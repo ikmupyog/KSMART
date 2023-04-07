@@ -379,16 +379,15 @@ public class MarriageMDMSValidator {
             if (!masterData.get(MarriageConstants.VILLAGE)
                     .contains(
                             request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaAdrVillage()))
-                errorMap.put("BRIDE PERMANENT ADDRESS: VILLAGE NAME INVALID", "Tbride village inside kerala " +
+                errorMap.put("BRIDE PERMANENT ADDRESS: VILLAGE NAME INVALID", "bride village inside kerala " +
                         request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaAdrVillage()
                         + " is invalid");
         }
-
+       System.out.println("LBName"+request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaAdrLBName());
         if (request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaAdrLBName() != null) {
             if (!masterData.get(MarriageConstants.TENANTS)
-                    .contains(
-                            request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaAdrLBName()))
-                errorMap.put("BRIDE PERMANENT ADDRESS: LB NAME INVALID", "bride lbname inside kerala" +
+                    .contains(request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaAdrLBName()))
+                errorMap.put("BRIDE PERMANENT ADDRESS: LB NAME INVALID", "bride lbname inside kerala " +
                         request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaAdrLBName()
                         + " is invalid");
         }

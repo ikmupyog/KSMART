@@ -9,10 +9,12 @@ import org.ksmart.marriage.common.model.AuditDetails;
 import org.ksmart.marriage.common.repository.IdGenRepository;
 import org.ksmart.marriage.common.repository.ServiceRequestRepository;
 import org.ksmart.marriage.marriageapplication.config.MarriageApplicationConfiguration;
+import org.ksmart.marriage.marriageapplication.repository.MarriageApplicationRepository;
 import org.ksmart.marriage.marriageapplication.web.model.MarriageApplicationDetails;
 import org.ksmart.marriage.marriageapplication.web.model.Demand.Demand;
 import org.ksmart.marriage.marriageapplication.web.model.Demand.DemandRequest;
 import org.ksmart.marriage.marriageapplication.web.model.Demand.DemandResponse;
+import org.ksmart.marriage.marriageapplication.web.model.marriage.GroomDetails;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageDetailsRequest;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageDocument;
 import org.ksmart.marriage.utils.IDGenerator;
@@ -25,6 +27,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.UUID;
+
+import javax.swing.text.Document;
 @Component
 public class MarriageDetailsEnrichment implements BaseEnrichment {
     
@@ -39,6 +43,9 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 
     @Autowired
     ServiceRequestRepository serviceRequestRepository;
+
+    @Autowired
+    MarriageApplicationRepository repository;
 
     @Autowired
 	@Qualifier("objectMapperBnd")
@@ -67,39 +74,97 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                 marriage.getWitnessDetails().setSerialNo2(2);
                 marriage.getWitnessDetails().setWitnessAuditDetails(auditDetails);
             }
+            setApplicationNumbers(request);
+            setBridePermanentAddress(request);
+            setBridePresentAddress(request);
+            setGroomPermanentAddress(request);
+            setGroomPresentAddress(request);
+            // GroomDetails groomDetails =marriage.getGroomDetails();
+            // GroomDetails groomDetailsEnc =  encryptionDecryptionUtil.encryptObject(groomDetails, "BndDetail", GroomDetails.class);
+            // groomDetails.setAadharno(groomDetailsEnc.getAadharno());
+            // DeathFamilyInfo deathFamilyDtls =deathdtls.getDeathFamilyInfo() ;
+            // DeathFamilyInfo deathFamilyEnc = encryptionDecryptionUtil.encryptObject(deathFamilyDtls, "BndDetail", DeathFamilyInfo.class);
+            // deathFamilyDtls.setFatherAadharNo(deathFamilyEnc.getFatherAadharNo());
+            // deathFamilyDtls.setMotherAadharNo(deathFamilyEnc.getMotherAadharNo());
+            // deathFamilyDtls.setSpouseAadhaar(deathFamilyEnc.getSpouseAadhaar());
+//Jasmine 06.04.2023
             List <MarriageDocument> marriagedocument = marriage.getMarriageDocuments();
             if (marriagedocument!=null){
                 marriagedocument.forEach(document -> {
+                String documentType =  document.getDocumentType();
+                String documentOwner =  document.getDocumentOwner();
+                String applicationNumber =  marriage.getApplicationNumber();
+                // List<MarriageDocument> searchResult = repository.getDocumentDetails(documentType,documentOwner,applicationNumber);
+                // document.setUpdatedFlag( MarriageConstants.VALUE_FALSE);
+                // if(searchResult!=null){
+                //     searchResult.forEach(existingDocument -> {
+                //         if(document.getFileStoreId().equals(existingDocument.getFileStoreId())){
+                //             document.setUpdatedFlag( MarriageConstants.VALUE_FALSE);
+                //         }
+                //         else{
+                //             document.setUpdatedFlag( MarriageConstants.VALUE_TRUE);
+                //             document.setActiveFalse(false);
+                //         }
+                //     });
+                // }
                 document.setId(UUID.randomUUID().toString());
-                document.setActive(true);
                 document.setMarriageTenantid(marriage.getTenantid());
                 document.setMarriageId(marriage.getId());
+                document.setApplicationNumber(applicationNumber);
                 document.setMarriageDocAuditDetails(auditDetails);
                
                 });
             }
         });
-        setApplicationNumbers(request);
-        setBridePermanentAddress(request);
-        setBridePresentAddress(request);
-        setGroomPermanentAddress(request);
-        setGroomPresentAddress(request);
+
     }
     public void enrichUpdate(MarriageDetailsRequest request) {
 
         RequestInfo requestInfo = request.getRequestInfo();
         User userInfo = requestInfo.getUserInfo();
         AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
-
-        request.getMarriageDetails()
-                .forEach(marriage -> marriage.setAuditDetails(auditDetails));
+        request.getMarriageDetails().
+        forEach(marriage -> {
+                marriage.setAuditDetails(auditDetails);
+                String applicationNumber =  marriage.getApplicationNumber();
+                //Jasmine 07.04.2023
+                List <MarriageDocument> marriagedocument = marriage.getMarriageDocuments();
+                if (marriagedocument!=null){
+                        marriagedocument.forEach(document -> {
+                         String documentType =  document.getDocumentType();
+                         String documentOwner =  document.getDocumentOwner();
+                        document.setActiveFalse(true);
+                         List<MarriageDocument> searchResult = repository.getDocumentDetails(documentType,documentOwner,applicationNumber);
+                         document.setUpdatedFlag( MarriageConstants.VALUE_FALSE);
+                         if(searchResult!=null){
+                             searchResult.forEach(existingDocument -> {
+                                 if(document.getFileStoreId().equals(existingDocument.getFileStoreId())){
+                                     document.setUpdatedFlag( MarriageConstants.VALUE_FALSE);
+                                 }
+                                 else{
+                                    document.setUpdatedFlag( MarriageConstants.VALUE_TRUE);
+                                    document.setActiveFalse(false);
+                                }
+                             });
+                      }
+                        document.setId(UUID.randomUUID().toString());
+                        document.setMarriageTenantid(marriage.getTenantid());
+                        document.setMarriageId(marriage.getId());
+                        document.setApplicationNumber(applicationNumber);
+                        document.setMarriageDocAuditDetails(auditDetails);
+                        });
+                        
+                    }
+    
 
        //  setRegistrationNumber(request);
         setBridePermanentAddress(request);
         setBridePresentAddress(request);
         setGroomPermanentAddress(request);
         setGroomPresentAddress(request);
-    }
+    });
+    
+}
 
     private void setGroomPresentAddress(MarriageDetailsRequest request) {
         request.getMarriageDetails()

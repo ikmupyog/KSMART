@@ -48,7 +48,6 @@ public class MarriageApplicationRowMapper implements ResultSetExtractor<List<Mar
                     .brideAddressDetails(getBrideAddressDetails(rs))
                     .groomAddressDetails(getGroomAddressDetailsRowMapper(rs))
                     .auditDetails(getAuditDetails(rs))
-
                     .build());
         }
 

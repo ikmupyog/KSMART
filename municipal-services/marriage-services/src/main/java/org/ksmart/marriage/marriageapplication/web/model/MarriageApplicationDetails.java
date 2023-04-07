@@ -177,7 +177,11 @@ public class MarriageApplicationDetails {
     @JsonProperty("workflowCode")
     private String workflowcode;
 
+    @JsonProperty("isWorkflow")
+    private boolean isWorkflow;
+
     private String assignuser;
+
     // @Size(max = 200)
     // @JsonProperty("brideurl")
     // private String brideurl;

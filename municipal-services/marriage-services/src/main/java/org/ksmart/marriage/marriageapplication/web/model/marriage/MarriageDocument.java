@@ -28,27 +28,33 @@ public class MarriageDocument {
     private String marriageTenantid ;
 
     @JsonProperty("documentType")
-    private String documentType = null;
+    private String documentType ;
 
     @JsonProperty("documentName")
-    private String documentName = null;
+    private String documentName ;
 
     @JsonProperty("fileStoreId")
-    private String fileStoreId = null;
+    private String fileStoreId ;
 
     @JsonProperty("marriageId")
-    private String marriageId = null;
+    private String marriageId ;
 //bride or groom
     @JsonProperty("documentOwner") 
-    private String documentOwner = null;
+    private String documentOwner ;
 
      @JsonProperty("documentlink")
      private String documentlink;
 
     @JsonProperty("applicationNumber")
-    private String applicationNumber = null;
+    private String applicationNumber ;
 
-    @JsonProperty("AuditDetails")
-    private AuditDetails marriageDocAuditDetails = null;
+    @JsonProperty("updatedFlag")
+    private Integer updatedFlag ;
+
+    @JsonProperty("activeFalse")
+    private boolean activeFalse ;
+
+    @JsonProperty("auditDetails")
+    private AuditDetails marriageDocAuditDetails ;
     
 }

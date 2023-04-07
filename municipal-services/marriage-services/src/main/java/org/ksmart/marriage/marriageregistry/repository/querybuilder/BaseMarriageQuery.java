@@ -64,6 +64,14 @@ import java.util.stream.Collectors;
             paramValues.add(value);
         }
     }
+    void addFilterString(String column, String value, StringBuilder query, List<Object> paramValues) {
+        if (StringUtils.isNotBlank(value)) {
+            addWhereClause(paramValues, query);
+            query.append(column)
+                    .append(" ILIKE ? ");
+            paramValues.add(value);
+        }
+    }
     // void addDateRangeFilter(String column, Long startDate, Long endDate, StringBuilder query,
     //                         List<Object> paramValues) {
 
