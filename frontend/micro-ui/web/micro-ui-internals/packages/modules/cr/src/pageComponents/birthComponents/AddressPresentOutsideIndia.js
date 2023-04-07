@@ -14,7 +14,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
   permntOutsideIndiaprovinceMl, setPermntOutsideIndiaprovinceMl,
   permntOutsideIndiaVillage, setadrsPermntOutsideIndiaVillage, permntOutsideIndiaCityTown, setadrsPermntOutsideIndiaCityTown,
   permanentOutsideIndiaPostCode, setPermantpostCode, permntOutsideIndiaCountry, setPermntOutsideIndiaCountry, isEditBirth = false, isEditDeath = false,isEditAdoption,
-  isEditStillBirth = false,
+  isEditStillBirth = false,isEditBirthNAC=false
   // isInitialRender, setIsInitialRender
 }) => {
   const stateId = Digit.ULBService.getStateId();

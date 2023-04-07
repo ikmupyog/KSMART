@@ -19,7 +19,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     permntInKeralaAdrLocalityNameEn, setpermntInKeralaAdrLocalityNameEn, permntInKeralaAdrLocalityNameMl,
     setpermntInKeralaAdrLocalityNameMl, permntInKeralaAdrStreetNameEn, setpermntInKeralaAdrStreetNameEn, permntInKeralaAdrStreetNameMl,
     setpermntInKeralaAdrStreetNameMl, permntInKeralaWardNo, setpermntInKeralaWardNo, isEditBirth = false, isEditDeath = false, isEditStillBirth = false, isEditAdoption,
-    value, setValue
+    isEditBirthNAC=false,value, setValue
     // isInitialRender, setIsInitialRender
 }) => {
     const stateId = Digit.ULBService.getStateId();
@@ -115,13 +115,10 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
         cmbWardNoFinal.push(wardmst);
     });
 
-    console.log("renderJetheesh");
 
     useEffect(() => {
 
         if (isInitialRender) {
-            console.log("render1");
-
             if (cmbLB.length > 0) {
                 currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
                 // console.log(currentLB[0].city.districtid);
