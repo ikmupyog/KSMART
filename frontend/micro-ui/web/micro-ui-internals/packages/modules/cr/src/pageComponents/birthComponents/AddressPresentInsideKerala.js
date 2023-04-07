@@ -22,6 +22,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     isEditBirthNAC=false,value, setValue
     // isInitialRender, setIsInitialRender
 }) => {
+    console.log(formData);
     const stateId = Digit.ULBService.getStateId();
     const [pofilter, setPofilter] = useState(false);
     const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : isEditStillBirth ? isEditStillBirth : false);

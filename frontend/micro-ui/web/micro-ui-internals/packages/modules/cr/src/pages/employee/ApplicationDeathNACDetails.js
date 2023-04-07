@@ -71,7 +71,7 @@ const ApplicationDeathNACDetails = () => {
     if ((!actions || actions?.length == 0) && workflowDetails?.data?.actionState) workflowDetails.data.actionState.nextActions = [];
 
     workflowDetails?.data?.actionState?.nextActions?.forEach(data => {
-      console.log(data.action);
+      // console.log(data.action);
       if(data.action == "EDIT") {
         data.redirectionUrl = {
           pathname: `/digit-ui/employee/cr/death-flow/information-death`,
