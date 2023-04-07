@@ -79,6 +79,11 @@ public class MarriageApplicationConfiguration {
 
          @Value("${egov.state.level.tenant.id}")
          private String egovStateLevelTenant;
-     
 
+        //Marriage Correction
+        @Value("${persister.save.marriage.correction.topic}")
+        private String SaveMarriageCorrectionTopic;
+
+        @Value("${persister.update.marriage.correction.topic}")
+        private String UpdateMarriageCorrectionTopic;
 }

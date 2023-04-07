@@ -157,7 +157,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                     }
     
 
-       //  setRegistrationNumber(request);
+
         setBridePermanentAddress(request);
         setBridePresentAddress(request);
         setGroomPermanentAddress(request);
@@ -568,6 +568,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
         }
 
 
+
     //  private void setRegistrationNumber(MarriageDetailsRequest request) {
 
     //      RequestInfo requestInfo = request.getRequestInfo();
@@ -592,6 +593,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
     //                 // }
     //              });
     //  }
+
 
 //     private void setFileNumbers(MarriageDetailsRequest request) {
 

@@ -9,7 +9,7 @@ serviceMaps:
         - query:  INSERT INTO public.eg_marriage_details(
                   id, dateofmarriage, dateofreporting, districtid, lbtype, tenantid, placetype, placeid, placename_en, placename_ml, houseno_and_name_en, 
                   houseno_and_name_ml, street_name_en, street_name_ml, ward_code, talukid, village_name, marriage_type, oth_marriage_type, landmark, locality_en,
-                  locality_ml, applicationtype, businessservice, workflowcode, applicationnumber, registrationno, registration_date, action, status, createdtime, createdby,
+                  locality_ml, applicationtype, businessservice, workflowcode, applicationnumber, registrationNo, registration_date, action, status, createdtime, createdby,
                   lastmodifiedtime, lastmodifiedby)
                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );
           basePath: MarriageDetails.*
@@ -66,7 +66,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.applicationNumber
 
-            - jsonPath: $.MarriageDetails.*.registrationno
+            - jsonPath: $.MarriageDetails.*.registrationNo
 
             - jsonPath: $.MarriageDetails.*.registrationDate
 
@@ -694,7 +694,7 @@ serviceMaps:
                 SET  dateofmarriage=?, dateofreporting=?, districtid=?, lbtype=?, placetype=?, placeid=?, placename_en=?, 
                 placename_ml=?, houseno_and_name_en=?, houseno_and_name_ml=?, street_name_en=?, street_name_ml=?, ward_code=?, talukid=?, village_name=?,
                 marriage_type=?, oth_marriage_type=?, landmark=?, locality_en=?, locality_ml=?, applicationtype=?, businessservice=?, workflowcode=?, 
-                 registrationno=?, registration_date=?, action=?, status=?, lastmodifiedtime=?, lastmodifiedby=?
+                 registrationNo=?, registration_date=?, action=?, status=?, lastmodifiedtime=?, lastmodifiedby=?
                  WHERE id=? and applicationnumber=? and  tenantid=?;
           basePath: MarriageDetails.*
           jsonMaps:
@@ -745,7 +745,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.workflowCode
 
-            - jsonPath: $.MarriageDetails.*.registrationno
+            - jsonPath: $.MarriageDetails.*.registrationNo
 
             - jsonPath: $.MarriageDetails.*.registrationDate
 
