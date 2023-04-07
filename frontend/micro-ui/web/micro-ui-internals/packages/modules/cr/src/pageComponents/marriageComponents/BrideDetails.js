@@ -32,8 +32,8 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
   // const { data: Profession = {}, isProfessionLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Profession");
 
   const cmbYesOrNo = [
-    { i18nKey: "Yes", code: "YES" },
-    { i18nKey: "No", code: "NO" },
+    { i18nKey: "Yes", code: true },
+    { i18nKey: "No", code: false },
   ];
   let menu = [];
   let cmbMaritalStatus = [];
@@ -570,6 +570,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
         brideMaritalstatusID,
         brideIsSpouseLiving,
         brideNoOfSpouse,
+        brideParentGuardian,
         brideGuardiannameEn,
         brideGuardianAadharNo,
         brideEmailid,
@@ -577,7 +578,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
       });
     }
   };
-
+  console.log("Bride", formData);
   if (isLoading) {
     return <Loader></Loader>;
   } else
@@ -652,7 +653,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
               <div className="col-md-4">
                 {" "}
                 <CardLabel>
-                  {t("CR_ADHAR_NO")}
+                  {t("CR_BRIDE_AADHAR_NO")}
                   {brideResidentShip === "INDIAN" && <span className="mandatorycss">*</span>}
                 </CardLabel>
                 <TextInput
@@ -664,7 +665,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                   value={brideAadharNo}
                   onChange={setSelectbrideAadharNo}
                   disable={isDisableEdit}
-                  placeholder={`${t("CR_ADHAR_NO")}`}
+                  placeholder={`${t("CR_BRIDE_AADHAR_NO")}`}
                   inputProps={{
                     maxLength: 12,
                   }}
@@ -677,7 +678,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
               <div className="col-md-4">
                 {" "}
                 <CardLabel>
-                  {t("CR_PASSPORT_NO")}
+                  {t("CR_BRIDE_PASSPORT_NO")}
                   {(brideResidentShip === "NRI" || brideResidentShip === "FOREIGN") && <span className="mandatorycss">*</span>}
                 </CardLabel>
                 <TextInput
@@ -687,7 +688,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                   name="bridePassportNo"
                   onChange={setSelectbridePassportNo}
                   disable={isDisableEdit}
-                  placeholder={`${t("CR_PASSPORT_NO")}`}
+                  placeholder={`${t("CR_BRIDE_PASSPORT_NO")}`}
                   inputProps={{
                     maxLength: 12,
                   }}
@@ -700,7 +701,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
               <div className="col-md-4">
                 {" "}
                 <CardLabel>
-                  {t("CR_SOCIAL_SECURITY_NO")}
+                  {t("CR_BRIDE_SOCIAL_SECURITY_NO")}
                   {brideResidentShip === "FOREIGN" && <span className="mandatorycss">*</span>}
                 </CardLabel>
                 <TextInput
@@ -710,7 +711,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                   name="brideSocialSecurityNo"
                   disable={isDisableEdit}
                   onChange={setSelectbrideSocialSecurityNo}
-                  placeholder={`${t("CR_SOCIAL_SECURITY_NO")}`}
+                  placeholder={`${t("CR_BRIDE_SOCIAL_SECURITY_NO")}`}
                   inputProps={{
                     maxLength: 12,
                   }}
@@ -905,7 +906,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                 <div className="col-md-4">
                   {" "}
                   <CardLabel>
-                    {`${t("CR_GENDER")}`}
+                    {`${t("CR_BRIDE_GENDER")}`}
                     <span className="mandatorycss">*</span>
                   </CardLabel>
                   <Dropdown
@@ -916,7 +917,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                     selected={brideGender}
                     select={setSelectbrideGender}
                     disable={isDisableEdit}
-                    placeholder={`${t("CR_GENDER")}`}
+                    placeholder={`${t("CR_BRIDE_GENDER")}`}
                     {...(validation = { isRequired: true })}
                   />
                 </div>
@@ -942,7 +943,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                 </div>
                 <div className="col-md-4">
                   <CardLabel>
-                    {`${t("CR_AGE")}`}
+                    {`${t("CR_BRIDE_AGE")}`}
                     <span className="mandatorycss">*</span>
                   </CardLabel>
                   <TextInput
@@ -954,7 +955,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                     value={brideAge}
                     onChange={setSelectbrideAge}
                     disable={true}
-                    placeholder={`${t("CR_AGE")}`}
+                    placeholder={`${t("CR_BRIDE_AGE")}`}
                     {...(validation = { pattern: "^[0-9]{2}$", type: "text", isRequired: true })}
                   />
                 </div>
@@ -964,7 +965,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
               <div className="col-md-4">
                 {" "}
                 <CardLabel>
-                  {t("CR_MARIATAL_STATUS'")} <span className="mandatorycss">*</span>
+                  {t("CR_BRIDE_MARITAL_STATUS")} <span className="mandatorycss">*</span>
                 </CardLabel>
                 <Dropdown
                   t={t}
@@ -975,7 +976,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                   selected={brideMaritalstatusID}
                   select={setSelectbrideMaritalstatusID}
                   disable={isDisableEdit}
-                  placeholder={t("CR_MARIATAL_STATUS")}
+                  placeholder={t("CR_BRIDE_MARIATAL_STATUS")}
                   {...(validation = { isRequired: true })}
                 />
               </div>
@@ -986,7 +987,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                 <div className="col-md-4">
                   {" "}
                   <CardLabel>
-                    {t("CR_ANY_SPOUSE_IN_LIVING")} <span className="mandatorycss">*</span>
+                    {t("CR_ANY_SPOUSE_LIVING")} <span className="mandatorycss">*</span>
                   </CardLabel>
                   <Dropdown
                     t={t}
@@ -996,7 +997,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                     option={cmbYesOrNo}
                     selected={brideIsSpouseLiving}
                     select={setSelectbrideIsSpouseLiving}
-                    placeholder={t("CR_Y/N")}
+                    placeholder={t("CR_ANY_SPOUSE_LIVING")}
                     {...(validation = { isRequired: true })}
                   />
                 </div>
@@ -1005,11 +1006,11 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                 brideMaritalstatusID?.code === "WIDOWED" ||
                 brideMaritalstatusID?.code === "DIVORCED" ||
                 brideMaritalstatusID?.code === "ANNULELD") &&
-                brideIsSpouseLiving?.code === "YES" && (
+                brideIsSpouseLiving?.code && (
                   <div className="col-md-4">
                     {" "}
                     <CardLabel>
-                      {t("CR_NO_OF_SPOUSE_LIVING")} <span className="mandatorycss">*</span>
+                      {t("CR_NUMBER_OF_SPOUSE_LIVING")} <span className="mandatorycss">*</span>
                     </CardLabel>
                     <TextInput
                       t={t}
@@ -1020,7 +1021,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                       value={brideNoOfSpouse}
                       onChange={setSelectbrideNoOfSpouse}
                       disable={isDisableEdit}
-                      placeholder={t("CR_INT1-3")}
+                      placeholder={t("CR_NUMBER_OF_SPOUSE_LIVING")}
                       {...(validation = { isRequired: true, title: t("CR_INVALID_NO_OF_SPOUSE_LIVING") })}
                     />
                   </div>
@@ -1064,7 +1065,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                   <div className="col-md-12">
                     <div className="col-md-4">
                       <CardLabel>
-                        {`${t("CR_BRIDE_FATHER_ADHAR_NO")}`}
+                        {`${t("CR_BRIDE_FATHER_AADHAR_NO")}`}
                         <span className="mandatorycss">*</span>
                       </CardLabel>
                       <TextInput
@@ -1076,7 +1077,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                         value={brideFatherAadharNo}
                         onChange={setSelectbrideFatherAadharNo}
                         disable={isDisableEdit}
-                        placeholder={`${t("CR_BRIDE_FATHER_ADHAR_NO")}`}
+                        placeholder={`${t("CR_BRIDE_FATHER_AADHAR_NO")}`}
                         inputProps={{
                           maxLength: 12,
                         }}
@@ -1134,7 +1135,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                     <div className="col-md-4">
                       {" "}
                       <CardLabel>
-                        {`${t("CR_BRIDE_MOTHER_ADHAR_NO")}`}
+                        {`${t("CR_BRIDE_MOTHER_AADHAR_NO")}`}
                         <span className="mandatorycss">*</span>
                       </CardLabel>
                       <TextInput
@@ -1146,7 +1147,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                         value={brideMotherAadharNo}
                         onChange={setSelectbrideMotherAadharNo}
                         disable={isDisableEdit}
-                        placeholder={`${t("CR_BRIDE_MOTHER_ADHAR_NO")}`}
+                        placeholder={`${t("CR_BRIDE_MOTHER_AADHAR_NO")}`}
                         inputProps={{
                           maxLength: 12,
                         }}
@@ -1176,7 +1177,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                     <div className="col-md-4">
                       {" "}
                       <CardLabel>
-                        {`${t("CR_BRIDE_MOTHER_NAME_MAL")}`}
+                        {`${t("CR_BRIDE_MOTHER_NAME_ML")}`}
                         <span className="mandatorycss">*</span>
                       </CardLabel>
                       <TextInput
@@ -1188,7 +1189,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                         value={brideMothernameMl}
                         onChange={setSelectbrideMothernameMl}
                         disable={isDisableEdit}
-                        placeholder={`${t("CR_BRIDE_MOTHER_NAME_MAL")}`}
+                        placeholder={`${t("CR_BRIDE_MOTHER_NAME_ML")}`}
                         {...(validation = {
                           pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
                           isRequired: true,
@@ -1209,7 +1210,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                     <div className="col-md-4">
                       {" "}
                       <CardLabel>
-                        {`${t("CR_BRIDE_GUARDIAN_ADHAR")}`}
+                        {`${t("CR_BRIDE_GUARDIAN_AADHAR_NO")}`}
                         <span className="mandatorycss">*</span>
                       </CardLabel>
                       <TextInput
@@ -1221,7 +1222,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                         value={brideGuardianAadharNo}
                         onChange={setSelectbrideGuardianAadharNo}
                         disable={isDisableEdit}
-                        placeholder={`${t("CR_BRIDE_GUARDIAN_ADHAR")}`}
+                        placeholder={`${t("CR_BRIDE_GUARDIAN_AADHAR_NO")}`}
                         inputProps={{
                           maxLength: 12,
                         }}
@@ -1250,7 +1251,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                     <div className="col-md-4">
                       {" "}
                       <CardLabel>
-                        {`${t("CR_BRIDE_GUARDIAN_NAME_MAL")}`}
+                        {`${t("CR_BRIDE_GUARDIAN_NAME_ML")}`}
                         <span className="mandatorycss">*</span>
                       </CardLabel>
                       <TextInput
@@ -1262,7 +1263,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                         value={brideGuardiannameMl}
                         onChange={setSelectbrideGuardiannameMl}
                         disable={isDisableEdit}
-                        placeholder={`${t("CR_BRIDE_GUARDIAN_NAME_MAL")}`}
+                        placeholder={`${t("CR_BRIDE_GUARDIAN_NAME_ML")}`}
                         {...(validation = {
                           pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
                           isRequired: true,

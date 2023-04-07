@@ -184,7 +184,7 @@ export const newConfig = [
         nextStep: null,
         type: "component",
         hideInEmployee: true,
-      }
+      },
     ],
   },
   {
@@ -1099,7 +1099,7 @@ export const newConfig = [
       {
         route: "witness-details",
         isMandatory: true,
-        component: "Witnessdetails",
+        component: "WitnessDetails",
         texts: {
           headerCaption: "",
           // header: "CR_PLACE_OF_DEATH",
@@ -1109,7 +1109,7 @@ export const newConfig = [
           skipText: "",
         },
         withoutLabel: true,
-        key: "Witnessdetails",
+        key: "WitnessDetails",
         nextStep: null,
         type: "component",
         hideInEmployee: false,
