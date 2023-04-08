@@ -257,6 +257,16 @@ public class DeathApplnService {
 
           return result.getDeathNACDtls();
      }
+     
+    //Death NAC Search by Rakhi S ikm on 08.04.2023
+     public List<DeathNACDtls> searchNAC(DeathSearchCriteria criteria, RequestInfo requestInfo) {
+          return repository.getDeathNACDetails(criteria, requestInfo);
+     }
+
+      //Death Abandoned Search by Rakhi S ikm on 08.04.2023
+      public List<DeathAbandonedDtls> searchAbandoned(DeathSearchCriteria criteria, RequestInfo requestInfo) {
+          return repository.getDeathAbandoned(criteria, requestInfo);
+     }
 
   /********************************************* */
 

@@ -240,4 +240,34 @@ public class DeathApplnController {
                             .build();
             return ResponseEntity.ok(response);
         }
+
+    //Death NAC Search by Rakhi S ikm on 08.04.2023
+    @PostMapping("/deathdetails/_searchdeathnac")
+    public ResponseEntity<DeathNACResponse> searchNAC(@RequestBody RequestInfoWrapper request,
+                                                            @ModelAttribute DeathSearchCriteria criteria) {
+
+        List<DeathNACDtls> deathDetails = deathService.searchNAC(criteria, request.getRequestInfo());
+
+        DeathNACResponse response = DeathNACResponse
+                                        .builder()
+                                        .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
+                                        .deathNACDtls(deathDetails)
+                                        .build();
+        return ResponseEntity.ok(response);
+    }
+
+    //Death Abandoned Search by Rakhi S ikm on 08.04.2023
+    @PostMapping("/deathdetails/_searchdeathabandoned")
+    public ResponseEntity<DeathAbandonedResponse> searchAbandoned(@RequestBody RequestInfoWrapper request,
+                                                            @ModelAttribute DeathSearchCriteria criteria) {
+
+        List<DeathAbandonedDtls> deathDetails = deathService.searchAbandoned(criteria, request.getRequestInfo());
+
+        DeathAbandonedResponse response = DeathAbandonedResponse
+                                        .builder()
+                                        .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
+                                        .deathAbandonedDtls(deathDetails)
+                                        .build();
+        return ResponseEntity.ok(response);
+    }
 }
