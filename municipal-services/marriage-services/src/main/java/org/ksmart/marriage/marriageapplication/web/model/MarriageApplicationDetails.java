@@ -164,8 +164,8 @@ public class MarriageApplicationDetails {
     @JsonProperty("applicationType")
     private String applicationtype;
 
-    @JsonProperty("modulecode")
-    private String modulecode;
+    @JsonProperty("moduleCode")
+    private String moduleCode;
 
     @NotNull
     @Size(max = 64)
