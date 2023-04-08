@@ -2,7 +2,7 @@ import { Banner, Card, CardText, LinkButton, Loader, SubmitBar } from "@egovernm
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { convertToAbandonedBirthRegistration } from "../../../utils/abandonedbirthindex";
+import { convertToAbandonedBirthRegistration,convertToEditAbandonedBirthRegistration } from "../../../utils/abandonedbirthindex";
 import getPDFData from "../../../utils/getTLAcknowledgementData";
 
 const GetActionMessage = (props) => {
@@ -39,7 +39,7 @@ const AbandonedBirthAcknowledgement = ({ data, onSuccess, userType }) => {
   const [mutationHappened, setMutationHappened, clear] = Digit.Hooks.useSessionStorage("CITIZEN_TL_MUTATION_HAPPENED", false);
   const resubmit = window.location.href.includes("edit-application");
   const tenantId = Digit.ULBService.getCurrentTenantId();
-  const [isEditAbandonedBirth, setisEditAbandonedBirth] = useState(false);
+  const [isEditAbandonedBirth, setIsEditAbandonedBirth] = useState(sessionStorage.getItem("CR_ABANDONEDBIRTH_EDIT_FLAG")? true : false);
 
   // const [isEditStillBirth, setIsEditStillBirth] = useState(sessionStorage.getItem("CR_STILLBIRTH_EDIT_FLAG")? true : false);
   
@@ -48,25 +48,24 @@ const AbandonedBirthAcknowledgement = ({ data, onSuccess, userType }) => {
     tenantId, isEditAbandonedBirth ? false : true
   );
 
- 
-
+  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_EDIT_ABANDONEDDEATH_REG", {});
   const { data: storeData } = Digit.Hooks.useStore.getInitData();
   const { tenants } = storeData || {};
   const stateId = Digit.ULBService.getStateId();
  
   const [isInitialRender, setIsInitialRender] = useState(true);
-
   useEffect(() => {
-    if (isInitialRender) {
-     
+    clearParams();
+  }, [mutation?.data])
+  useEffect(() => {    
+    if (isInitialRender) {     
       try {
         setIsInitialRender(false);
         let tenantId1 = data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId;
         data.tenantId = tenantId1;
         if (!resubmit) {
       
-          let formdata = !isEditAbandonedBirth ? convertToAbandonedBirthRegistration(data) : [];
-
+          let formdata = !isEditAbandonedBirth ? convertToAbandonedBirthRegistration(data)  : convertToEditAbandonedBirthRegistration(data);
          
             mutation.mutate(formdata, {
               onSuccess,
