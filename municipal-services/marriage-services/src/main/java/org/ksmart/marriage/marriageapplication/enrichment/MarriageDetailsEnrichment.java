@@ -87,31 +87,31 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
             setGroomPresentAddress(request);
             
 //Jasmine 07.04.2023
-            // GroomDetails groomDetails =marriage.getGroomDetails();
-            // GroomDetails groomDetailsEnc =  encryptionDecryptionUtil.encryptObject(groomDetails, "BndDetail", GroomDetails.class);
-            // groomDetails.setAadharno(groomDetailsEnc.getAadharno());
-            // if (groomDetails.getParentGuardian().equals(MarriageConstants.PARENT)){
-            //     groomDetails.setMotherAadharno(groomDetailsEnc.getMotherAadharno());
-            //     groomDetails.setFatherAadharno(groomDetailsEnc.getFatherAadharno());
-            // }
-            // else if(groomDetails.getParentGuardian().equals(MarriageConstants.GUARDIAN)){
-            //     groomDetails.setGuardianAadharno(groomDetailsEnc.getGuardianAadharno());
-            // }
-            // BrideDetails brideDetails =marriage.getBrideDetails();
-            // BrideDetails brideDetailsEnc =  encryptionDecryptionUtil.encryptObject(brideDetails, "BndDetail", BrideDetails.class);
-            // brideDetails.setAadharno(brideDetailsEnc.getAadharno());
-            // if (brideDetails.getParentGuardian().equals(MarriageConstants.PARENT)){
-            //     brideDetails.setMotherAadharno(brideDetailsEnc.getMotherAadharno());
-            //     brideDetails.setFatherAadharno(brideDetailsEnc.getFatherAadharno());
-            // }
-            // else if (brideDetails.getParentGuardian().equals(MarriageConstants.GUARDIAN)){
-            //     brideDetails.setGuardianAadharno(brideDetailsEnc.getGuardianAadharno());
-            // }
+            GroomDetails groomDetails =marriage.getGroomDetails();
+            GroomDetails groomDetailsEnc =  encryptionDecryptionUtil.encryptObject(groomDetails, "BndDetail", GroomDetails.class);
+            groomDetails.setAadharno(groomDetailsEnc.getAadharno());
+            if (groomDetails.getParentGuardian().equals(MarriageConstants.PARENT)){
+                groomDetails.setMotherAadharno(groomDetailsEnc.getMotherAadharno());
+                groomDetails.setFatherAadharno(groomDetailsEnc.getFatherAadharno());
+            }
+            else if(groomDetails.getParentGuardian().equals(MarriageConstants.GUARDIAN)){
+                groomDetails.setGuardianAadharno(groomDetailsEnc.getGuardianAadharno());
+            }
+            BrideDetails brideDetails =marriage.getBrideDetails();
+            BrideDetails brideDetailsEnc =  encryptionDecryptionUtil.encryptObject(brideDetails, "BndDetail", BrideDetails.class);
+            brideDetails.setAadharno(brideDetailsEnc.getAadharno());
+            if (brideDetails.getParentGuardian().equals(MarriageConstants.PARENT)){
+                brideDetails.setMotherAadharno(brideDetailsEnc.getMotherAadharno());
+                brideDetails.setFatherAadharno(brideDetailsEnc.getFatherAadharno());
+            }
+            else if (brideDetails.getParentGuardian().equals(MarriageConstants.GUARDIAN)){
+                brideDetails.setGuardianAadharno(brideDetailsEnc.getGuardianAadharno());
+            }
 
-            // WitnessDetails witnessDetails =marriage.getWitnessDetails();
-            // WitnessDetails witnessDetailsEnc =  encryptionDecryptionUtil.encryptObject(witnessDetails, "BndDetail", WitnessDetails.class);
-            // witnessDetails.setWitness1AadharNo(witnessDetailsEnc.getWitness1AadharNo());
-            // witnessDetails.setWitness2AadharNo(witnessDetailsEnc.getWitness2AadharNo());
+            WitnessDetails witnessDetails =marriage.getWitnessDetails();
+            WitnessDetails witnessDetailsEnc =  encryptionDecryptionUtil.encryptObject(witnessDetails, "BndDetail", WitnessDetails.class);
+            witnessDetails.setWitness1AadharNo(witnessDetailsEnc.getWitness1AadharNo());
+            witnessDetails.setWitness2AadharNo(witnessDetailsEnc.getWitness2AadharNo());
 
 //Jasmine 06.04.2023
             List <MarriageDocument> marriagedocument = marriage.getMarriageDocuments();

@@ -51,9 +51,9 @@ public class MarriageApplicationService {
     }
 
     public List<MarriageApplicationDetails> saveMarriageDetails(MarriageDetailsRequest request) {
-       // validatorService.validateCommonFields( request);
-       // Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getMarriageDetails().get(0).getTenantid());
-      //  mdmsValidator.validateMarriageMDMSData(request,mdmsData);
+        validatorService.validateCommonFields( request);
+        Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getMarriageDetails().get(0).getTenantid());
+        mdmsValidator.validateMarriageMDMSData(request,mdmsData);
         marriageDetailsEnrichment.enrichCreate(request);
         producer.push(marriageApplicationConfiguration.getSaveMarriageApplicationTopic(), request);
         if (request.getMarriageDetails().get(0).isWorkflow()){
@@ -75,22 +75,19 @@ public class MarriageApplicationService {
 
     public List<MarriageApplicationDetails> updateMarriageDetails(MarriageDetailsRequest request) {
 
-       // validatorService.validateCommonFields( request);
-       // Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getMarriageDetails().get(0).getTenantid());
-      //  mdmsValidator.validateMarriageMDMSData(request,mdmsData);
+        validatorService.validateCommonFields( request);
+        Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getMarriageDetails().get(0).getTenantid());
+        mdmsValidator.validateMarriageMDMSData(request,mdmsData);
         String applicationNumber = request.getMarriageDetails().get(0).getApplicationNumber();
         MarriageApplicationSearchCriteria criteria =(MarriageApplicationSearchCriteria.builder()
                                                     .applicationNo(applicationNumber)
                                                     .build());
         List<MarriageApplicationDetails> searchResult = repository.getMarriageApplication(criteria,request.getRequestInfo());
-     //  System.out.println("UpdatesearchResult"+searchResult);
         validatorService.validateUpdate(request, searchResult);
         marriageDetailsEnrichment.enrichUpdate(request);
         if (request.getMarriageDetails().get(0).isWorkflow()){
             workflowIntegrator.callWorkFlow(request);
         }
-
-       // List<MarriageApplicationDetails>  marriageApplicationDetails =repository.updateMarriageDetails(request);
         producer.push(marriageApplicationConfiguration.getUpdateMarriageApplicationTopic(), request);
         // request.getMarriageDetails().forEach(marriage->{
         //     if(marriage.getStatus() == MarriageConstants.STATUS_FOR_PAYMENT){

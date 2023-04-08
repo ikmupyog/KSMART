@@ -80,27 +80,27 @@ public class MarriageApplicationRepository {
         List<Object> preparedStmtValues = new ArrayList<>();
         String query = marriageQueryBuilder.getMarriageApplicationSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
         List<MarriageApplicationDetails> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriageApplicationRowMapper);
-        // if(result != null) {
-		// 	result.forEach(marriage -> {
+        if(result != null) {
+			result.forEach(marriage -> {
                               
-        //         GroomDetails groomDetails =marriage.getGroomDetails();
-        //         GroomDetails groomDetailsDec =  encryptionDecryptionUtil.decryptObject(groomDetails, "BndDetail", GroomDetails.class, requestInfo);
-        //         groomDetails.setAadharno(groomDetailsDec.getAadharno());
-        //         groomDetails.setMotherAadharno(groomDetailsDec.getMotherAadharno());
-        //         groomDetails.setFatherAadharno(groomDetailsDec.getFatherAadharno());
-        //         groomDetails.setGuardianAadharno(groomDetailsDec.getGuardianAadharno());
+                GroomDetails groomDetails =marriage.getGroomDetails();
+                GroomDetails groomDetailsDec =  encryptionDecryptionUtil.decryptObject(groomDetails, "BndDetail", GroomDetails.class, requestInfo);
+                groomDetails.setAadharno(groomDetailsDec.getAadharno());
+                groomDetails.setMotherAadharno(groomDetailsDec.getMotherAadharno());
+                groomDetails.setFatherAadharno(groomDetailsDec.getFatherAadharno());
+                groomDetails.setGuardianAadharno(groomDetailsDec.getGuardianAadharno());
                 
-        //         BrideDetails brideDetails =marriage.getBrideDetails();
-        //         BrideDetails brideDetailsDec =  encryptionDecryptionUtil.decryptObject(brideDetails, "BndDetail", BrideDetails.class, requestInfo);
-        //         brideDetails.setAadharno(brideDetailsDec.getAadharno());
-        //         brideDetails.setMotherAadharno(brideDetailsDec.getMotherAadharno());
-        //         brideDetails.setFatherAadharno(brideDetailsDec.getFatherAadharno());
-        //         brideDetails.setGuardianAadharno(brideDetailsDec.getGuardianAadharno());
+                BrideDetails brideDetails =marriage.getBrideDetails();
+                BrideDetails brideDetailsDec =  encryptionDecryptionUtil.decryptObject(brideDetails, "BndDetail", BrideDetails.class, requestInfo);
+                brideDetails.setAadharno(brideDetailsDec.getAadharno());
+                brideDetails.setMotherAadharno(brideDetailsDec.getMotherAadharno());
+                brideDetails.setFatherAadharno(brideDetailsDec.getFatherAadharno());
+                brideDetails.setGuardianAadharno(brideDetailsDec.getGuardianAadharno());
     
-        //         WitnessDetails witnessDetails =marriage.getWitnessDetails();
-        //         WitnessDetails witnessDetailsDec =  encryptionDecryptionUtil.decryptObject(witnessDetails, "BndDetail", WitnessDetails.class, requestInfo);
-        //         witnessDetails.setWitness1AadharNo(witnessDetailsDec.getWitness1AadharNo());
-        //         witnessDetails.setWitness2AadharNo(witnessDetailsDec.getWitness2AadharNo());
+                WitnessDetails witnessDetails =marriage.getWitnessDetails();
+                WitnessDetails witnessDetailsDec =  encryptionDecryptionUtil.decryptObject(witnessDetails, "BndDetail", WitnessDetails.class, requestInfo);
+                witnessDetails.setWitness1AadharNo(witnessDetailsDec.getWitness1AadharNo());
+                witnessDetails.setWitness2AadharNo(witnessDetailsDec.getWitness2AadharNo());
                 // DeathInformantDtls deathInformant =deathDtl.getDeathInformantDtls() ;
                 // if (deathInformant!=null){
                 //     DeathInformantDtls deathInformantEnc = encryptionDecryptionUtil.decryptObject(deathInformant, "BndDetail", DeathInformantDtls.class,requestInfo);
@@ -112,10 +112,8 @@ public class MarriageApplicationRepository {
                 //     DeathInitiatorDtls deathInitiatorEnc = encryptionDecryptionUtil.decryptObject(deathInitiator, "BndDetail", DeathInitiatorDtls.class,requestInfo);
                 //     deathInitiator.setInitiatorAadhaar(deathInitiatorEnc.getInitiatorAadhaar());
                 // }
-		// 	});
-        // }
-        
-        
+			});
+        }
         return result;
     }
 

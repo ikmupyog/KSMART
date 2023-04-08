@@ -289,8 +289,7 @@ public class MarriageMDMSValidator {
 
         if (request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentInsideKeralaLBName() != null) {
             if (!masterData.get(MarriageConstants.TENANTS)
-                    .contains(request.getMarriageDetails().get(0).getGroomAddressDetails()
-                            .getPresentInsideKeralaLBName()))
+                    .contains(request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentInsideKeralaLBName()))
                 errorMap.put("GROOM PRESENT ADDRESS: LB NAME INVALID", "groom lbname inside kerala " +
                         request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentInsideKeralaLBName()
                         + " is invalid");
