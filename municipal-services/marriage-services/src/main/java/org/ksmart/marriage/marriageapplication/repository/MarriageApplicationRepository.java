@@ -85,12 +85,12 @@ public class MarriageApplicationRepository {
     //     return request.getMarriageDetails();
     // }
 
-    public List<MarriageApplicationDetails> saveMarriageDetails(MarriageDetailsRequest request) {
+    // public List<MarriageApplicationDetails> saveMarriageDetails(MarriageDetailsRequest request) {
 
-        // marriageDetailsEnrichment.enrichCreate(request);
-        producer.push(marriageApplicationConfiguration.getSaveMarriageApplicationTopic(), request);
-        return request.getMarriageDetails();
-    }
+    //     // marriageDetailsEnrichment.enrichCreate(request);
+    //     producer.push(marriageApplicationConfiguration.getSaveMarriageApplicationTopic(), request);
+    //     return request.getMarriageDetails();
+    // }
     //Jasmine 31.03.2023
 
     public List<MarriageApplicationDetails> searchMarriageDetails(MarriageApplicationSearchCriteria criteria,RequestInfo requestInfo) {
