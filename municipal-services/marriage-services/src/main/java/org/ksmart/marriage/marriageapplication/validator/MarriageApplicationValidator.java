@@ -1841,15 +1841,15 @@ public class MarriageApplicationValidator {
                                                                                         witnessDtls.getWitness1NameEn()
                                                                                         + " is invalid");
                                                 }
-                                                if (StringUtils.isEmpty(witnessDtls.getWitness1NameMl())) {
+                                                // if (StringUtils.isEmpty(witnessDtls.getWitness1NameMl())) {
 
-                                                        throw new CustomException(" WITNESS1 NAME  MALAYALAM INVALID ",
-                                                                        "The   Witness1 Name Malayalam " +
-                                                                                        witnessDtls.getWitness1NameMl()
-                                                                                        + " is invalid");
-                                                }
+                                                //         throw new CustomException(" WITNESS1 NAME  MALAYALAM INVALID ",
+                                                //                         "The   Witness1 Name Malayalam " +
+                                                //                                         witnessDtls.getWitness1NameMl()
+                                                //                                         + " is invalid");
+                                                // }
                                                 if ((witnessDtls.getWitness1Age() < 18
-                                                                && witnessDtls.getWitness1Age() == 0)) {
+                                                                || witnessDtls.getWitness1Age() == 0)) {
 
                                                         throw new CustomException(" WITNESS1 AGE INVALID ",
                                                                         "The   Witness1 Age " +
@@ -1863,14 +1863,14 @@ public class MarriageApplicationValidator {
                                                                                         witnessDtls.getWitness1AddresSEn()
                                                                                         + " is invalid");
                                                 }
-                                                if ((StringUtils.isEmpty(witnessDtls.getWitness1AddressMl()))) {
+                                                // if ((StringUtils.isEmpty(witnessDtls.getWitness1AddressMl()))) {
 
-                                                        throw new CustomException(
-                                                                        " WITNESS1 ADDRESS MALAYALAM INVALID ",
-                                                                        "The   Witness1 Address Malayalam " +
-                                                                                        witnessDtls.getWitness1AddressMl()
-                                                                                        + " is invalid");
-                                                }
+                                                //         throw new CustomException(
+                                                //                         " WITNESS1 ADDRESS MALAYALAM INVALID ",
+                                                //                         "The   Witness1 Address Malayalam " +
+                                                //                                         witnessDtls.getWitness1AddressMl()
+                                                //                                         + " is invalid");
+                                                // }
                                                 if ((witnessDtls.getWitness1Mobile() <= 0)) {
 
                                                         throw new CustomException(" WITNESS1 MOBILE NUMBER  INVALID ",
@@ -1878,13 +1878,13 @@ public class MarriageApplicationValidator {
                                                                                         witnessDtls.getWitness1Mobile()
                                                                                         + " is invalid");
                                                 }
-                                                if (!witnessDtls.getWitness1Esigned()) {
+                                                // if (!witnessDtls.getWitness1Esigned()) {
 
-                                                        throw new CustomException(" WITNESS1 E-SIGN INVALID ",
-                                                                        "The   Witness1  E-sign " +
-                                                                                        witnessDtls.getWitness1Esigned()
-                                                                                        + " is invalid");
-                                                }
+                                                //         throw new CustomException(" WITNESS1 E-SIGN INVALID ",
+                                                //                         "The   Witness1  E-sign " +
+                                                //                                         witnessDtls.getWitness1Esigned()
+                                                //                                         + " is invalid");
+                                                // }
 
                                                 // witness2
                                                 if (StringUtils.isEmpty(witnessDtls.getWitness2AadharNo())) {
@@ -1901,15 +1901,15 @@ public class MarriageApplicationValidator {
                                                                                         witnessDtls.getWitness2NameEn()
                                                                                         + " is invalid");
                                                 }
-                                                if (StringUtils.isEmpty(witnessDtls.getWitness2NameMl())) {
+                                                // if (StringUtils.isEmpty(witnessDtls.getWitness2NameMl())) {
 
-                                                        throw new CustomException(" WITNESS2 NAME  MALAYALAM INVALID ",
-                                                                        "The   Witness2 Name Malayalam " +
-                                                                                        witnessDtls.getWitness2NameMl()
-                                                                                        + " is invalid");
-                                                }
+                                                //         throw new CustomException(" WITNESS2 NAME  MALAYALAM INVALID ",
+                                                //                         "The   Witness2 Name Malayalam " +
+                                                //                                         witnessDtls.getWitness2NameMl()
+                                                //                                         + " is invalid");
+                                                // }
                                                 if ((witnessDtls.getWitness2Age() < 18
-                                                                && witnessDtls.getWitness2Age() == 0)) {
+                                                                || witnessDtls.getWitness2Age() == 0)) {
 
                                                         throw new CustomException(" WITNESS2 AGE INVALID",
                                                                         "The   Witness2 Age " +
@@ -1923,14 +1923,14 @@ public class MarriageApplicationValidator {
                                                                                         witnessDtls.getWitness2AddresSEn()
                                                                                         + " is invalid");
                                                 }
-                                                if ((StringUtils.isEmpty(witnessDtls.getWitness2AddressMl()))) {
+                                                // if ((StringUtils.isEmpty(witnessDtls.getWitness2AddressMl()))) {
 
-                                                        throw new CustomException(
-                                                                        " WITNESS2 ADDRESS MALAYALAM INVALID ",
-                                                                        "The   Witness2 Address Malayalam " +
-                                                                                        witnessDtls.getWitness2AddressMl()
-                                                                                        + " is invalid");
-                                                }
+                                                //         throw new CustomException(
+                                                //                         " WITNESS2 ADDRESS MALAYALAM INVALID ",
+                                                //                         "The   Witness2 Address Malayalam " +
+                                                //                                         witnessDtls.getWitness2AddressMl()
+                                                //                                         + " is invalid");
+                                                // }
                                                 if ((witnessDtls.getWitness2Mobile() <= 0)) {
 
                                                         throw new CustomException(" WITNESS2 MOBILE NUMBER  INVALID ",
@@ -1938,13 +1938,13 @@ public class MarriageApplicationValidator {
                                                                                         witnessDtls.getWitness2Mobile()
                                                                                         + " is invalid");
                                                 }
-                                                if (!witnessDtls.getWitness2Esigned()) {
+                                                // if (!witnessDtls.getWitness2Esigned()) {
 
-                                                        throw new CustomException(" WITNESS2 E-SIGN INVALID ",
-                                                                        "The   Witness2  E-sign " +
-                                                                                        witnessDtls.getWitness2Esigned()
-                                                                                        + " is invalid");
-                                                }
+                                                //         throw new CustomException(" WITNESS2 E-SIGN INVALID ",
+                                                //                         "The   Witness2  E-sign " +
+                                                //                                         witnessDtls.getWitness2Esigned()
+                                                //                                         + " is invalid");
+                                                // }
                                         });
                 }
 

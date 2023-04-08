@@ -52,11 +52,13 @@ public class MarriageMdmsUtil {
 
     private MdmsCriteriaReq getMDMSRequest(RequestInfo requestInfo, String tenantId) {
         ModuleDetail tenantIdRequest = getTenantIdRequest(tenantId);
+        ModuleDetail tenantIds = getTenantIds();
         ModuleDetail commomMasterRequest = getCommonMastersRequest();
         List<ModuleDetail> BNDListRequest = getMarriageListRequest();
 
         List<ModuleDetail> moduleDetails = new LinkedList<>();
         moduleDetails.add(tenantIdRequest);
+        moduleDetails.add(tenantIds);
         moduleDetails.add(commomMasterRequest);
        moduleDetails.addAll(BNDListRequest);
 
@@ -76,12 +78,28 @@ public class MarriageMdmsUtil {
         List<MasterDetail> marriageMasterDetails = new ArrayList<>();
         // filter to only get code field from master data    
         final String filterCode = "$.[?(@.code=='"+tenantId+"')].*";
+    //    final String filterCode = "$.[?(@.active==true)].code";
         marriageMasterDetails
                 .add(MasterDetail.builder().name(MarriageConstants.TENANTS).filter(filterCode).build());
 
         ModuleDetail marriageModuleDtls = ModuleDetail.builder().masterDetails(marriageMasterDetails)
                 .moduleName(MarriageConstants.TENANT_MODULE_NAME).build();
        //System.out.println("JasmineTenantId"+marriageModuleDtls);
+
+        return marriageModuleDtls;
+    }
+    private ModuleDetail getTenantIds() {
+
+        // master details for Marriage module
+        List<MasterDetail> marriageMasterDetails = new ArrayList<>();
+        // filter to only get code field from master data    
+        final String filterCode = "$.[*].code";
+        marriageMasterDetails
+                .add(MasterDetail.builder().name(MarriageConstants.TENANTS).filter(filterCode).build());
+
+        ModuleDetail marriageModuleDtls = ModuleDetail.builder().masterDetails(marriageMasterDetails)
+                .moduleName(MarriageConstants.TENANT_MODULE_NAME).build();
+       
         return marriageModuleDtls;
     }
     private ModuleDetail getCommonMastersRequest() {

@@ -540,7 +540,9 @@ public class MarriageMDMSValidator {
 
     // Rakhi S ikm on 14.02.2023
     private Map<String, List<String>> getAttributeValues(Object mdmsdata) {
-        List<String> modulepaths = Arrays.asList(MarriageConstants.TENANT_JSONPATH,
+        List<String> modulepaths = Arrays.asList(
+                //MarriageConstants.CR_MDMS_TENANTS_CODE_JSONPATH,
+                MarriageConstants.TENANT_JSONPATH,
                 MarriageConstants.COMMON_MASTER_JSONPATH,
                 MarriageConstants.BND_LIST_JSONPATH);
         final Map<String, List<String>> mdmsResMap = new HashMap<>();
