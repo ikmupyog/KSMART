@@ -791,10 +791,10 @@ export const newConfig = [
         key: "InformationDeathAband",
         withoutLabel: true,
         hideInEmployee: false,
-        nextStep: "address-death",
+        nextStep: "abandoned-address-death",
       },
       {
-        route: "address-death",
+        route: "abandoned-address-death",
         component: "AddressDeath",
         texts: {
           headerCaption: "",
@@ -805,13 +805,13 @@ export const newConfig = [
         },
         withoutLabel: true,
         key: "AddressBirthDetails",
-        nextStep: "family-information",
+        nextStep: "abandoned-family-information",
         type: "component",
         hideInEmployee: false,
       },
       {
         // 
-            route: "family-information",
+            route: "abandoned-family-information",
             component: "FamilyAbandonedDeath",
             texts: {
              headerCaption: "",
@@ -823,12 +823,12 @@ export const newConfig = [
             },
             withoutLabel: true,
             key: "FamilyAbandonedDeath",
-            nextStep: "statistical-info",
+            nextStep: "abandoned-statistical-info",
             type: "component",
             hideInEmployee: false,
          },
       {
-        route: "statistical-info",
+        route: "abandoned-statistical-info",
         component: "StatisticalInfoAbandoned",
         texts: {
           headerCaption: "",
@@ -840,12 +840,12 @@ export const newConfig = [
         },
         withoutLabel: true,
         key: "StatisticalInfoAbandoned",
-        nextStep: "initiator",
+        nextStep: "abandoned-initiator",
         type: "component",
         hideInEmployee: false,
       },
       {
-        route: "initiator",
+        route: "abandoned-initiator",
         isMandatory: true,
         component: "Initiater",
         texts: {
@@ -863,7 +863,7 @@ export const newConfig = [
         hideInEmployee: false,
       },
       {
-        route: "informer",
+        route: "abandoned-informer",
         isMandatory: true,
         component: "Informer",
         texts: {
@@ -901,7 +901,7 @@ export const newConfig = [
       ////////////////////Death-Stop////////////////////////
       ////////////////////Death-Child-Pages-Stop////////////////////////
       {
-        route: "hospital",
+        route: "abandoned-hospital",
         isMandatory: true,
         component: "Hospital",
         texts: {
@@ -919,7 +919,7 @@ export const newConfig = [
         hideInEmployee: true,
       },
       {
-        route: "institution",
+        route: "abandoned-institution",
         isMandatory: true,
         component: "Institution",
         texts: {
@@ -937,7 +937,7 @@ export const newConfig = [
         hideInEmployee: true,
       },
       {
-        route: "death-place-home",
+        route: "abandoned-death-place-home",
         isMandatory: true,
         component: "DeathPlaceHome",
         texts: {
@@ -955,7 +955,7 @@ export const newConfig = [
         hideInEmployee: true,
       },
       {
-        route: "death-place-vehicle",
+        route: "abandoned-death-place-vehicle",
         isMandatory: true,
         component: "DeathPlaceVehicle",
         texts: {
@@ -973,7 +973,7 @@ export const newConfig = [
         hideInEmployee: true,
       },
       {
-        route: "death-public-place",
+        route: "abandoned-death-public-place",
         isMandatory: true,
         component: "DeathPublicPlace",
         texts: {
@@ -990,7 +990,7 @@ export const newConfig = [
         hideInEmployee: true,
       },
       {
-        route: "death-outside-jurisdiction",
+        route: "abandoned-death-outside-jurisdiction",
         isMandatory: true,
         component: "DeathOutsideJurisdiction",
         texts: {
