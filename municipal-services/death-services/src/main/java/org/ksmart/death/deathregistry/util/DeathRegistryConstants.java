@@ -90,6 +90,7 @@ public class DeathRegistryConstants {
      public static final String REG_NUMBER_CAPTION ="RG";
      public static final String FUN_MODULE_NEWAPPLN= "CRDRNR";
      public static final String CERT_NUMBER_CAPTION="CT";
+     public static final String HOSPITAL_DATA="hospitalList";
 
 
 

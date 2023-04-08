@@ -10,22 +10,28 @@ import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
+import org.egov.common.contract.request.RequestInfo;
 import org.egov.tracer.model.CustomException;
 import org.ksmart.death.deathregistry.config.DeathRegistryConfiguration;
 import org.ksmart.death.deathregistry.kafka.producer.DeathRegistryProducer;
 import org.ksmart.death.deathregistry.repository.querybuilder.DeathRegistryQueryBuilder;
 import org.ksmart.death.deathregistry.repository.rowmapper.DeathCertificateRegistryRowMapper;
 import org.ksmart.death.deathregistry.repository.rowmapper.DeathRegistryCorrectionRowMapper;
+import org.ksmart.death.deathregistry.repository.rowmapper.DeathRegistryNACRowMapper;
 import org.ksmart.death.deathregistry.repository.rowmapper.DeathRegistryRowMapper;
 import org.ksmart.death.deathregistry.util.DeathRegistryConstants;
 import org.ksmart.death.deathregistry.util.DeathRegistryMdmsUtil;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryCriteria;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryDtl;
+import org.ksmart.death.deathregistry.web.models.DeathRegistryNACDtls;
+import org.ksmart.death.deathregistry.web.models.DeathNACCriteria;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryCorrectionDtls;
 import org.ksmart.death.deathregistry.web.models.certmodel.DeathCertRequest;
 import org.ksmart.death.deathregistry.web.models.certmodel.DeathCertificate;
 import org.ksmart.death.deathregistry.web.models.certmodel.DeathPdfApplicationRequest;
 import org.ksmart.death.deathregistry.web.models.certmodel.DeathPdfResp;
+import org.ksmart.death.deathregistry.web.models.naccertmodel.NACPdfApplicationRequest;
+import org.ksmart.death.deathregistry.web.models.naccertmodel.NACPdfResp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -35,6 +41,7 @@ import org.apache.commons.collections4.CollectionUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.google.gson.Gson;
 import com.jayway.jsonpath.JsonPath;
 
 import lombok.extern.slf4j.Slf4j;
@@ -67,19 +74,22 @@ public class DeathRegistryRepository {
     private final DeathCertificateRegistryRowMapper deathCertRowMapper;
     private final DeathRegistryCorrectionRowMapper deathCorrectionRowMapper;
     
+    private final DeathRegistryNACRowMapper deathRegistryNACRowMapper;
 
     @Autowired
     DeathRegistryRepository(JdbcTemplate jdbcTemplate, DeathRegistryQueryBuilder queryBuilder
                                 ,DeathRegistryRowMapper rowMapper
                                 ,DeathRegistryProducer producer
                                 ,DeathCertificateRegistryRowMapper deathCertRowMapper,
-                                DeathRegistryCorrectionRowMapper deathCorrectionRowMapper) {
+                                DeathRegistryCorrectionRowMapper deathCorrectionRowMapper,
+                                DeathRegistryNACRowMapper deathRegistryNACRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.queryBuilder = queryBuilder;
         this.rowMapper = rowMapper;
         this.producer = producer;
         this.deathCertRowMapper = deathCertRowMapper;
         this.deathCorrectionRowMapper = deathCorrectionRowMapper;
+        this.deathRegistryNACRowMapper = deathRegistryNACRowMapper;
     }
     public List<DeathRegistryDtl> getDeathApplication(DeathRegistryCriteria criteria) {
         List<Object> preparedStmtValues = new ArrayList<>();
@@ -1365,5 +1375,90 @@ public class DeathRegistryRepository {
     public void updateCertificate(DeathCertRequest deathCertRequest) {
         producer.push(config.getUpdateDeathCertificateTopic(), deathCertRequest);
   }
+
+
+    //Rakhi S ikm on 07.04.2023
+  public List<DeathRegistryNACDtls> getDeathNACApplication(DeathNACCriteria criteria, RequestInfo requestInfo) {
+    List<Object> preparedStmtValues = new ArrayList<>();
+    String query = queryBuilder.getDeathNACSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
+    List<DeathRegistryNACDtls> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), deathRegistryNACRowMapper);
     
+        if(result != null) {
+            result.forEach(deathDtl -> {
+                if(DeathRegistryConstants.DEATH_PLACE_HOSPITAL.toString().equals(deathDtl.getDeathBasicInfo().getDeathPlace())){
+                    Object mdmsDataHospital = util.mDMSCallHospital(requestInfo    
+                                           , deathDtl.getDeathBasicInfo().getTenantId()                           
+                                           , deathDtl.getDeathBasicInfo().getDeathPlaceType());
+                   Map<String,List<String>> masterDataHospital = getAttributeValuesHospital(mdmsDataHospital);
+
+                   Object mdmsDataHospitalMl = util.mDMSCallHospitalMl(requestInfo  
+                                           , deathDtl.getDeathBasicInfo().getTenantId()                           
+                                           , deathDtl.getDeathBasicInfo().getDeathPlaceType());
+                   Map<String,List<String>> masterDataHospitalMl = getAttributeValuesHospital(mdmsDataHospitalMl);
+
+                   String deathPlaceHospital = masterDataHospital.get(DeathRegistryConstants.HOSPITAL_DATA).toString();
+                   deathPlaceHospital = deathPlaceHospital.replaceAll("[\\[\\]\\(\\)]", "");
+
+                   String deathPlaceHospitalMl = masterDataHospitalMl.get(DeathRegistryConstants.HOSPITAL_DATA).toString();
+                   deathPlaceHospitalMl = deathPlaceHospitalMl.replaceAll("[\\[\\]\\(\\)]", "");
+                    
+                deathDtl.getDeathBasicInfo().setDeathPlaceHospitalNameEn(deathPlaceHospital);
+                deathDtl.getDeathBasicInfo().setDeathPlaceHospitalNameMl(deathPlaceHospitalMl);               
+               }
+               else if(DeathRegistryConstants.DEATH_PLACE_INSTITUTION.toString().equals(deathDtl.getDeathBasicInfo().getDeathPlace())){
+                Object mdmsDataInstitution = util.mDMSCallInstitution(requestInfo  
+                                        , deathDtl.getDeathBasicInfo().getTenantId()                           
+                                        , deathDtl.getDeathBasicInfo().getDeathPlaceType());
+                Map<String,List<String>> masterDataInstitution = getAttributeValuesHospital(mdmsDataInstitution);
+
+                Object mdmsDataInstitutionMl = util.mDMSCallInstitutionMl(requestInfo     
+                                        , deathDtl.getDeathBasicInfo().getTenantId()                           
+                                        , deathDtl.getDeathBasicInfo().getDeathPlaceType());
+                Map<String,List<String>> masterDataInstitutionMl = getAttributeValuesHospital(mdmsDataInstitutionMl);
+
+                String deathPlaceInstitution = masterDataInstitution.get(DeathRegistryConstants.INSTITUTION_NAME).toString();
+                deathPlaceInstitution = deathPlaceInstitution.replaceAll("[\\[\\]\\(\\)]", "");
+
+                String deathPlaceInstitutionMl = masterDataInstitutionMl.get(DeathRegistryConstants.INSTITUTION_NAME).toString();
+                deathPlaceInstitutionMl = deathPlaceInstitutionMl.replaceAll("[\\[\\]\\(\\)]", "");
+                
+                deathDtl.getDeathBasicInfo().setDeathPlaceInstitutionNameEn(deathPlaceInstitution);
+                deathDtl.getDeathBasicInfo().setDeathPlaceInstitutionNameMl(deathPlaceInstitutionMl);
+            } 
+            });
+        }  
+    return result; 
+    }
+
+ //Rakhi S on 08.04.2023
+ public NACPdfResp saveDeathNACPdf(NACPdfApplicationRequest pdfApplicationRequest) {
+    NACPdfResp  result= new NACPdfResp();
+        try {
+            pdfApplicationRequest.getDeathNACCertificate().forEach(cert-> {
+
+            });
+            // log.info(new Gson().toJson(pdfApplicationRequest));
+            NACPdfApplicationRequest req = NACPdfApplicationRequest.builder().deathNACCertificate(pdfApplicationRequest.getDeathNACCertificate()).requestInfo(pdfApplicationRequest.getRequestInfo()).build();
+
+            pdfApplicationRequest.getDeathNACCertificate().forEach(cert-> {
+                String uiHost = config.getEgovPdfHost();
+                String deathCertPath = config.getEgovPdfDeathNACEndPoint();
+                String tenantId = cert.getDeathBasicInfo().getTenantId().split("\\.")[0];
+                deathCertPath = deathCertPath.replace("$tenantId",tenantId);
+                String pdfFinalPath = uiHost + deathCertPath;
+                DeathPdfResp response = restTemplate.postForObject(pdfFinalPath, req, DeathPdfResp.class);
+    
+                if (response != null && CollectionUtils.isEmpty(response.getFilestoreIds())) {
+                    throw new CustomException("EMPTY_FILESTORE_IDS_FROM_PDF_SERVICE",
+                            "No file store id found from pdf service");
+                }
+                result.setFilestoreIds(response.getFilestoreIds());
+                });	
+        }
+        catch(Exception e) {
+			e.printStackTrace();
+			throw new CustomException("PDF_ERROR","Error in generating PDF");
+		}
+		return result;
+    }
 }

@@ -36,6 +36,9 @@ public class DeathRegistryNACDtls {
     @JsonProperty("AddressBirthDetails")
     private DeathRegistryAddressInfo deathAddressInfo; 
 
+    @JsonProperty("DeathApplicantDtls")
+    private DeathRegistryNACApplicantDtls deathApplicantDtls;  
+
     @JsonProperty("AuditDetails")
     private AuditDetails  deathAuditDetails;
 

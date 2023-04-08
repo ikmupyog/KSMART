@@ -109,5 +109,10 @@ public class DeathRegistryConfiguration {
       //Persister Config  RAkhi S ikm on 04.04.2023    
       @Value("${persister.save.deathnacregistry.topic}")
       private String saveDeathRegistryNACTopic;
+
+    //RAkhi S on 08.04.2023 NAC Certificate End point
+    @Value("${egov.pdf.deathnac.createEndPoint}")
+     private String	egovPdfDeathNACEndPoint;   
+      
 	
 }

@@ -497,4 +497,11 @@ public class DeathRegistryBasicInfo {
    @JsonProperty("DeceasedUnIdentified")
    private Integer  deceasedUnIdentified ;
 
+   @JsonProperty("DeathPlaceHospitalNameEn")
+   private String  deathPlaceHospitalNameEn ;
+
+   @JsonProperty("DeathPlaceHospitalNameMl")
+   private String  deathPlaceHospitalNameMl ;
+
+
 }

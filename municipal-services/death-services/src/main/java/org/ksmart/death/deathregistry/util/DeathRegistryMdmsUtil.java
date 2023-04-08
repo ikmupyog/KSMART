@@ -1500,5 +1500,130 @@ public Object mDMSCallCertificateLBDistrictMl(RequestInfo requestInfo
                 .moduleName(DeathRegistryConstants.COMMON_MASTERS_MODULE).build();
                 return Arrays.asList(crDeathModuleDtls);
         }
+        //Rakhi S on 08.04.2023
+        public Object mDMSCallHospital(RequestInfo requestInfo  
+                , String tenantId   
+                , String deathPlace) {
+                MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestHospital(requestInfo   
+                                , tenantId
+                                , deathPlace);
+                Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
+                return result;
+        }
+        private MdmsCriteriaReq getMDMSRequestHospital(RequestInfo requestInfo    
+                        , String tenantId                       
+                        , String deathPlace) {
 
+                // ModuleDetail tenantIdRequest = getTenantIdCertificate(tenantId);
+                ModuleDetail commonMasterRequest = getcommonMasterRequestHospial(
+                        tenantId
+                        ,deathPlace);    
+
+                List<ModuleDetail> moduleDetails = new LinkedList<>();
+                // moduleDetails.add(tenantIdRequest);
+                moduleDetails.add(commonMasterRequest);
+
+                MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(tenantId)
+                .build();
+
+                MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
+                .requestInfo(requestInfo).build();
+
+                // System.out.println("mdmsreq2"+mdmsCriteriaReq);
+                return mdmsCriteriaReq;
+        }
+
+        public Object mDMSCallHospitalMl(RequestInfo requestInfo  
+                        , String tenantId   
+                        , String deathPlace) {
+         MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestHospitalMl(requestInfo   
+                        , tenantId
+                        , deathPlace);
+         Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
+         return result;
+    }
+    private MdmsCriteriaReq getMDMSRequestHospitalMl(RequestInfo requestInfo    
+            , String tenantId                       
+            , String deathPlace) {
+
+        // ModuleDetail tenantIdRequest = getTenantIdCertificate(tenantId);
+        ModuleDetail commonMasterRequest = getcommonMasterRequestHospialMl(
+            tenantId
+            ,deathPlace);    
+
+        List<ModuleDetail> moduleDetails = new LinkedList<>();
+        // moduleDetails.add(tenantIdRequest);
+        moduleDetails.add(commonMasterRequest);
+
+        MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(tenantId)
+        .build();
+
+        MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
+        .requestInfo(requestInfo).build();
+
+        // System.out.println("mdmsreq2"+mdmsCriteriaReq);
+        return mdmsCriteriaReq;
+    }
+
+     //Rakhi S on 08.04.2023
+     public Object mDMSCallInstitution(RequestInfo requestInfo  
+                , String tenantId  
+                , String deathPlaceInstId) {
+         MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestInstitution(requestInfo   
+                , tenantId
+                , deathPlaceInstId);
+        Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
+        return result;
+   }
+   private MdmsCriteriaReq getMDMSRequestInstitution(RequestInfo requestInfo    
+                                , String tenantId                       
+                                , String deathPlaceInstId) {
+
+        // ModuleDetail tenantIdRequest = getTenantIdCertificate(tenantId);
+        ModuleDetail commonMasterRequest = getcommonMasterRequestInstitution(deathPlaceInstId); 
+                 
+                List<ModuleDetail> moduleDetails = new LinkedList<>();
+                // moduleDetails.add(tenantIdRequest);
+                moduleDetails.add(commonMasterRequest);
+
+                MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(tenantId)
+                .build();
+
+                MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
+                .requestInfo(requestInfo).build();
+
+                // System.out.println("mdmsreq2"+mdmsCriteriaReq);
+                return mdmsCriteriaReq;
+        }
+
+        public Object mDMSCallInstitutionMl(RequestInfo requestInfo  
+                                , String tenantId  
+                                , String deathPlaceInstId) {
+                MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestInstitutionMl(requestInfo   
+                , tenantId
+                , deathPlaceInstId);
+                Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);                 
+                return result;
+        }
+        //Rakhi S on 02.04.2023
+        private MdmsCriteriaReq getMDMSRequestInstitutionMl(RequestInfo requestInfo    
+                                , String tenantId                       
+                                , String deathPlaceInstId) {
+
+                // ModuleDetail tenantIdRequest = getTenantIdCertificate(tenantId);
+                ModuleDetail commonMasterRequest = getcommonMasterRequestInstitutionMl(deathPlaceInstId); 
+                 
+                List<ModuleDetail> moduleDetails = new LinkedList<>();
+                // moduleDetails.add(tenantIdRequest);
+                moduleDetails.add(commonMasterRequest);
+
+                MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(tenantId)
+                .build();
+
+                MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
+                .requestInfo(requestInfo).build();
+
+                // System.out.println("mdmsreq2"+mdmsCriteriaReq);
+                return mdmsCriteriaReq;
+        }
 }

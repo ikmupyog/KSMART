@@ -14,6 +14,8 @@ import org.ksmart.death.deathregistry.web.models.DeathRegistryRequest;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryResponse;
 import org.ksmart.death.deathregistry.web.models.certmodel.DeathCertResponse;
 import org.ksmart.death.deathregistry.web.models.certmodel.DeathCertificate;
+import org.ksmart.death.deathregistry.web.models.naccertmodel.DeathNACCertificate;
+import org.ksmart.death.deathregistry.web.models.naccertmodel.NACCertResponse;
 import org.ksmart.death.utils.ResponseInfoFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -155,10 +157,19 @@ public class DeathRegistryController {
                                              .build();
          return ResponseEntity.ok(response);
      }   
-      //Certificate Download NAC by Rakhi S on 07.04.2023
-    // @PostMapping("/deathregistry/_downloaddeathnac")
-    // public ResponseEntity<DeathCertResponse> downloadNAC(@RequestBody RequestInfoWrapper requestInfoWrapper,
-    //                                                 @Valid @ModelAttribute DeathNACCriteria criteria){
+    //   //Certificate Download NAC by Rakhi S on 07.04.2023
+    @PostMapping("/deathregistry/_downloaddeathnac")
+    public ResponseEntity<NACCertResponse> downloadNAC(@RequestBody RequestInfoWrapper requestInfoWrapper,
+                                                    @Valid @ModelAttribute DeathNACCriteria criteria){
+            DeathNACCertificate deathNACCert = deathService.downloadNAC(criteria,requestInfoWrapper.getRequestInfo());
+        
+            NACCertResponse response ;
+            response = NACCertResponse
+                                        .builder()
+                                        .filestoreId(deathNACCert.getFilestoreid())
+                                        .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(requestInfoWrapper.getRequestInfo(), true))
+                                        .build();
+            return ResponseEntity.ok(response);
 
-    // }
+    }
 }

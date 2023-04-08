@@ -18,12 +18,18 @@ import org.ksmart.death.deathregistry.web.models.certmodel.DeathCertRequest;
 import org.ksmart.death.deathregistry.web.models.certmodel.DeathCertificate;
 import org.ksmart.death.deathregistry.web.models.certmodel.DeathPdfApplicationRequest;
 import org.ksmart.death.deathregistry.web.models.certmodel.DeathPdfResp;
+import org.ksmart.death.deathregistry.web.models.naccertmodel.DeathNACCertificate;
+import org.ksmart.death.deathregistry.web.models.naccertmodel.NACCertRequest;
+import org.ksmart.death.deathregistry.web.models.naccertmodel.NACPdfApplicationRequest;
+import org.ksmart.death.deathregistry.web.models.naccertmodel.NACPdfResp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+
+import org.ksmart.death.deathregistry.web.models.DeathNACCriteria;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryCorrectionDtls;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryCorrectionRequest;
 
@@ -199,10 +205,29 @@ public class DeathRegistryService {
    public List<DeathRegistryNACDtls> createNAC(DeathRegistryNACRequest request) { 
      enrichmentService.enrichCreateNAC(request);
     //  enrichmentService.setRegistrationNumberNAC(request); 
-     enrichmentService.setCertificateNumberNAC(request);   
+     enrichmentService.setCertificateNumberNAC(request);      
      producer.push(deathConfig.getSaveDeathRegistryNACTopic(), request);
      return request.getDeathNACDtls();
  }
+ //Certificate NAC download Rakhi S IKM on 07.04.2023
+ public DeathNACCertificate downloadNAC(DeathNACCriteria criteria, RequestInfo requestInfo) {
+    try{
+      DeathNACCertificate nacCertificate = new DeathNACCertificate();
+        nacCertificate.setSource(criteria.getSource().toString());
+        nacCertificate.setDeathDtlId(criteria.getId());
+        nacCertificate.setTenantId(criteria.getTenantId());
+        NACCertRequest nacCertRequest = NACCertRequest.builder().deathNACCertificate(nacCertificate).requestInfo(requestInfo).build();
+               
+        List<DeathRegistryNACDtls> deathDtls = repository.getDeathNACApplication(criteria,requestInfo);     
+        NACPdfApplicationRequest applicationRequest = NACPdfApplicationRequest.builder().requestInfo(requestInfo).deathNACCertificate(deathDtls).build();
+        NACPdfResp pdfResp = repository.saveDeathNACPdf(applicationRequest);
+        return nacCertificate;
+      }
+      catch(Exception e) {
+        e.printStackTrace();
+        throw new CustomException("DOWNLOAD_ERROR","Error in Downloading NAC Certificate");
+  }
+  }
     
 }
  //           /********************************************* */

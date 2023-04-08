@@ -4,6 +4,7 @@ import java.util.List;
 import javax.validation.constraints.NotNull;
 
 import org.ksmart.death.deathregistry.config.DeathRegistryConfiguration;
+import org.ksmart.death.deathregistry.web.models.DeathNACCriteria;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -343,5 +344,54 @@ private static final String REGNOQUERY = new StringBuilder()
        addFilter("dr.registration_no", criteria.getRegistrationNo(), query, preparedStmtValues);      
      return query.toString();                                              
  }  
+ 
+//Rakhi S on 07.04.2023
+private static final String NAC_QUERY = new StringBuilder().append("SELECT id, tenantid, dateofdeath, deceased_firstname_en, deceased_firstname_ml, deceased_middlename_en") 
+                .append("      , deceased_middlename_ml, deceased_lastname_en, deceased_lastname_ml, deceased_aadhar_number, deceased_gender")
+                .append("      , death_place, death_place_inst_type, death_place_inst_id, vehicle_hospital_en, vehicle_fromplace_ml")  
+                .append("      , vehicle_fromplace_en, vehicle_toplace_ml, vehicle_toplace_en, vehicle_number, vehicle_first_halt")
+                .append("      , vehicle_first_halt_ml, death_place_ward_id, death_place_locality_en, death_place_locality_ml, death_place_street_en")
+                .append("      , death_place_street_ml, death_home_locality_en, death_home_locality_ml, death_home_street_en, death_home_street_ml") 
+                .append("      , death_home_housename_en, death_home_housename_ml, death_home_postoffice_id, death_home_pincode, death_home_ward")  
+                .append("      , place_of_burial_en, father_name_en, father_name_ml, father_aadharno, mother_name_en, mother_name_ml, mother_aadharno")
+                .append("      , spouse_unavailable, spouse_type, spouse_name_en, spouse_name_ml, spouse_aadhaar, applicant_name,applicant_aadhar_no,applicant_relation,applicant_address,applicant_mobile_no,applicant_email")  
+                .append("      , ack_no, application_date, funcion_uid, certificate_no, certificate_date, certificate_no_id, filestoreid, dateofissue,created_by,createdtime,lastmodifiedby,lastmodifiedtime") 
+                .append(" FROM eg_death_nac_registry ")                                                             
+                .toString();
 
+//Rakhi S on 07.04.2023
+ public String getDeathNACSearchQuery(@NotNull DeathNACCriteria criteria,
+                  @NotNull List<Object> preparedStmtValues, Boolean isCount) {
+
+StringBuilder query = new StringBuilder(NAC_QUERY);
+StringBuilder orderBy = new StringBuilder();
+                        addFilter("id", criteria.getId(), query, preparedStmtValues);
+                        addFilter("tenantid", criteria.getTenantId(), query, preparedStmtValues);
+                        addFilter("ack_no", criteria.getDeathACKNo(), query, preparedStmtValues);  
+                        addFilter("deceased_firstname_en", criteria.getDeceasedFirstNameEn(), query, preparedStmtValues); 
+                      //   addFilter("dt.registration_no", criteria.getRegistrationNo(), query, preparedStmtValues);
+                      //   addDateRangeFilter("dt.registration_date",
+                      //   criteria.getFromDate(),
+                      //   criteria.getToDate(),
+                      //   query,
+                      //   preparedStmtValues);
+                      // if(criteria.getSortOrder() == null){
+                      //   criteria.setSortOrder(DeathRegistryCriteria.SortOrder.ASC);
+                      // }
+                        // if (StringUtils.isEmpty(criteria.getSortBy()))
+                        // addOrderByColumns("dt.createdtime","ASC", orderBy);
+                        // else if (criteria.getSortBy() == DeathRegistryCriteria.SortBy.DateOfDeath)
+                        // addOrderByColumns("dt.dateofdeath",criteria.getSortOrder().toString(), orderBy);
+                        // else if (criteria.getSortBy() == DeathRegistryCriteria.SortBy.DeathACKNo)
+                        // addOrderByColumns("dt.ack_no",criteria.getSortOrder().toString(),orderBy);
+                        // else if (criteria.getSortBy() == DeathRegistryCriteria.SortBy.DeceasedGender)
+                        // addOrderByColumns("dt.deceased_gender",criteria.getSortOrder().toString(), orderBy);
+                        // else if (criteria.getSortBy() == DeathRegistryCriteria.SortBy.TenantId)
+                        // addOrderByColumns("dt.tenantid",criteria.getSortOrder().toString(), orderBy);
+                        // addOrderToQuery(orderBy, query);
+                        // addLimitAndOffset(criteria.getOffset(),criteria.getLimit(), query, preparedStmtValues);
+
+                        return query.toString();
+                        
+} 
 }

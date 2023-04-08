@@ -8,6 +8,7 @@ import org.ksmart.death.deathapplication.web.models.DeathAbandonedInformantDtls;
 import org.ksmart.death.deathapplication.web.models.DeathAbandonedRequest;
 import org.ksmart.death.deathapplication.web.models.DeathAddressInfo;
 import org.ksmart.death.deathapplication.web.models.DeathInformantDtls;
+import org.ksmart.death.deathapplication.web.models.DeathNACApplicantDtls;
 import org.ksmart.death.deathapplication.web.models.DeathNACDtls;
 import org.ksmart.death.deathapplication.web.models.DeathNACRequest;
 import org.ksmart.death.deathapplication.web.models.DeathFamilyInfo;
@@ -18,6 +19,7 @@ import org.ksmart.death.deathapplication.web.models.DeathDtlRequest;
 import org.ksmart.death.deathapplication.web.models.DeathStatisticalInfo;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryAddressInfo;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryInformantDtls;
+import org.ksmart.death.deathregistry.web.models.DeathRegistryNACApplicantDtls;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryNACDtls;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryNACRequest;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryFamilyInfo;
@@ -63,6 +65,7 @@ public class DeathRegistryRequestService {
         DeathRegistryDtl deathRegistryReading =  new DeathRegistryDtl();
         deathDtls.forEach(deathdet->{  
 
+            
             if  (deathdet.getDeathBasicInfo()!=null){
                 deathRegistryReading.setDeathBasicInfo(createRegistryBasicInfo(deathrequest));
             } 
@@ -711,7 +714,10 @@ public DeathRegistryStatisticalInfo createRegistryStatisticalInfoAbandoned(Death
             }           
             if  (deathdet.getDeathAddressInfo()!=null){
                 deathRegistryReading.setDeathAddressInfo(createRegistryNACAddress(deathrequest));
-            }                    
+            }      
+            if  (deathdet.getDeathApplicantDtls()!=null){
+                deathRegistryReading.setDeathApplicantDtls(createRegistryNACApplicantDtls(deathrequest));
+            }              
             deathRegistryDetails.add(deathRegistryReading);
         });
          request = DeathRegistryNACRequest
@@ -854,4 +860,17 @@ public DeathRegistryStatisticalInfo createRegistryStatisticalInfoAbandoned(Death
         registryAddress.setPermanentAddrPostalCode(deathAddress.getPermanentAddrPostalCode());
         return registryAddress;
     }   
+    //Death NAC Applicant details  Rakhi S ikm on 08.04.2023
+    public DeathRegistryNACApplicantDtls createRegistryNACApplicantDtls(DeathNACRequest deathrequest){
+
+        DeathNACApplicantDtls deathInformantDtls = deathrequest.getDeathNACDtls().get(0).getDeathApplicantDtls();
+        DeathRegistryNACApplicantDtls registryInformantDtls = new DeathRegistryNACApplicantDtls();
+        registryInformantDtls.setApplicantAadhaarNo(deathInformantDtls.getApplicantAadhaarNo());
+        registryInformantDtls.setApplicantName(deathInformantDtls.getApplicantName());
+        registryInformantDtls.setApplicantMobileNo(deathInformantDtls.getApplicantMobileNo());
+        registryInformantDtls.setApplicantEmail(deathInformantDtls.getApplicantEmail());
+        registryInformantDtls.setApplicantAddress(deathInformantDtls.getApplicantAddress());
+        registryInformantDtls.setApplicantRelation(deathInformantDtls.getApplicantRelation());
+        return registryInformantDtls;
+    }
 }
