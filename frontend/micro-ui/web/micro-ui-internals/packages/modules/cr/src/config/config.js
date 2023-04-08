@@ -184,7 +184,7 @@ export const newConfig = [
         nextStep: null,
         type: "component",
         hideInEmployee: true,
-      }
+      },
     ],
   },
   {
@@ -791,10 +791,10 @@ export const newConfig = [
         key: "InformationDeathAband",
         withoutLabel: true,
         hideInEmployee: false,
-        nextStep: "address-death",
+        nextStep: "abandoned-address-death",
       },
       {
-        route: "address-death",
+        route: "abandoned-address-death",
         component: "AddressDeath",
         texts: {
           headerCaption: "",
@@ -805,13 +805,13 @@ export const newConfig = [
         },
         withoutLabel: true,
         key: "AddressBirthDetails",
-        nextStep: "family-information",
+        nextStep: "abandoned-family-information",
         type: "component",
         hideInEmployee: false,
       },
       {
         // 
-            route: "family-information",
+            route: "abandoned-family-information",
             component: "FamilyAbandonedDeath",
             texts: {
              headerCaption: "",
@@ -822,13 +822,13 @@ export const newConfig = [
              skipText: "",
             },
             withoutLabel: true,
-            key: "FamilyInformationDeath",
-            nextStep: "statistical-info",
+            key: "FamilyAbandonedDeath",
+            nextStep: "abandoned-statistical-info",
             type: "component",
             hideInEmployee: false,
          },
       {
-        route: "statistical-info",
+        route: "abandoned-statistical-info",
         component: "StatisticalInfoAbandoned",
         texts: {
           headerCaption: "",
@@ -839,13 +839,13 @@ export const newConfig = [
           skipText: "",
         },
         withoutLabel: true,
-        key: "StatisticalInfo",
-        nextStep: "initiator",
+        key: "StatisticalInfoAbandoned",
+        nextStep: "abandoned-initiator",
         type: "component",
         hideInEmployee: false,
       },
       {
-        route: "initiator",
+        route: "abandoned-initiator",
         isMandatory: true,
         component: "Initiater",
         texts: {
@@ -857,13 +857,13 @@ export const newConfig = [
           skipText: "",
         },
         withoutLabel: true,
-        key: "Initiator",
+        key: "InitiatorAbandoned",
         nextStep: null,
         type: "component",
         hideInEmployee: false,
       },
       {
-        route: "informer",
+        route: "abandoned-informer",
         isMandatory: true,
         component: "Informer",
         texts: {
@@ -875,7 +875,7 @@ export const newConfig = [
           skipText: "",
         },
         withoutLabel: true,
-        key: "InformantDetails",
+        key: "InformantDetailsAbandoned",
         nextStep: null,
         type: "component",
         hideInEmployee: false,
@@ -901,7 +901,7 @@ export const newConfig = [
       ////////////////////Death-Stop////////////////////////
       ////////////////////Death-Child-Pages-Stop////////////////////////
       {
-        route: "hospital",
+        route: "abandoned-hospital",
         isMandatory: true,
         component: "Hospital",
         texts: {
@@ -913,13 +913,13 @@ export const newConfig = [
           skipText: "",
         },
         withoutLabel: true,
-        key: "Hospital",
+        key: "HospitalAbandoned",
         nextStep: "address-death",
         type: "component",
         hideInEmployee: true,
       },
       {
-        route: "institution",
+        route: "abandoned-institution",
         isMandatory: true,
         component: "Institution",
         texts: {
@@ -931,13 +931,13 @@ export const newConfig = [
           skipText: "",
         },
         withoutLabel: true,
-        key: "Institution",
+        key: "InstitutionAbandoned",
         nextStep: "address-death",
         type: "component",
         hideInEmployee: true,
       },
       {
-        route: "death-place-home",
+        route: "abandoned-death-place-home",
         isMandatory: true,
         component: "DeathPlaceHome",
         texts: {
@@ -949,13 +949,13 @@ export const newConfig = [
           skipText: "",
         },
         withoutLabel: true,
-        key: "DeathPlaceHome",
+        key: "DeathPlaceHomeAbandoned",
         nextStep: "address-death",
         type: "component",
         hideInEmployee: true,
       },
       {
-        route: "death-place-vehicle",
+        route: "abandoned-death-place-vehicle",
         isMandatory: true,
         component: "DeathPlaceVehicle",
         texts: {
@@ -967,13 +967,13 @@ export const newConfig = [
           skipText: "",
         },
         withoutLabel: true,
-        key: "DeathPlaceVehicle",
+        key: "DeathPlaceVehicleAbandoned",
         nextStep: "address-death",
         type: "component",
         hideInEmployee: true,
       },
       {
-        route: "death-public-place",
+        route: "abandoned-death-public-place",
         isMandatory: true,
         component: "DeathPublicPlace",
         texts: {
@@ -990,7 +990,7 @@ export const newConfig = [
         hideInEmployee: true,
       },
       {
-        route: "death-outside-jurisdiction",
+        route: "abandoned-death-outside-jurisdiction",
         isMandatory: true,
         component: "DeathOutsideJurisdiction",
         texts: {
@@ -1002,7 +1002,7 @@ export const newConfig = [
           skipText: "",
         },
         withoutLabel: true,
-        key: "DeathOutsideJurisdiction",
+        key: "DeathOutsideJurisdictionAbandoned",
         nextStep: "address-death",
         type: "component",
         hideInEmployee: true,
@@ -1116,7 +1116,7 @@ export const newConfig = [
       {
         route: "witness-details",
         isMandatory: true,
-        component: "Witnessdetails",
+        component: "WitnessDetails",
         texts: {
           headerCaption: "",
           // header: "CR_PLACE_OF_DEATH",
@@ -1126,7 +1126,7 @@ export const newConfig = [
           skipText: "",
         },
         withoutLabel: true,
-        key: "Witnessdetails",
+        key: "WitnessDetails",
         nextStep: null,
         type: "component",
         hideInEmployee: false,

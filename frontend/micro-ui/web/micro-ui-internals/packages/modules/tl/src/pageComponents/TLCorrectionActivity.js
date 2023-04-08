@@ -105,6 +105,8 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
         new Set(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits.map(type => type.businessType))
       );      
 
+      console.log("type"+fields[0]?.businessCategory  );
+      console.log(JSON.stringify( formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits));
       if(businessType && (fields[0]?.businessCategory === undefined || fields[0]?.businessCategory === "")) {
         let category = null;
         category = BusinessCategoryMenu.filter((category) => category?.code.includes(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory))[0];
@@ -120,6 +122,10 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
                 bustype = getBusinessTypeMenu(category).filter((type) => type?.code.includes(businessType))[0];
                 bussubtyp = getBusinessSubTypeMenu(bustype).filter((type) => type?.code.includes(unit?.businessSubtype))[0];
               }
+              if(bussubtyp===undefined || bussubtyp===""){
+                bussubtyp={"i18nKey":"","code":""};
+              }
+              console.log("isssueeeeeeeeeeeeeee firing"+JSON.stringify(bussubtyp));
               setFeilds([
                 {
                   id: unit.id,

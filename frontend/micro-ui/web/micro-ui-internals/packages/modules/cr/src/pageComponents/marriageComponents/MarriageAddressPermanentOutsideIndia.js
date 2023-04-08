@@ -28,10 +28,13 @@ const MarriageAddressPermanentOutsideIndia = ({
   setPermantpostCode,
   isEditBirth = false,
   isEditDeath = false,
+  isEditStillBirth = false,
+  isEditAdoption,
   // isInitialRender, setIsInitialRender
+  //isEditBirth ? isEditBirth : isEditDeath ? false :
   //  permntOutsideIndiaCountry,  setPermntOutsideIndiaCountry, countryvalue, setCountryValue,
 }) => {
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : isEditStillBirth ? isEditStillBirth : false);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let tenantId = "";
@@ -66,6 +69,21 @@ const MarriageAddressPermanentOutsideIndia = ({
     if (formData?.AddressBirthDetails?.permntOutsideIndiaVillage != null) {
       if (cmbVillage.length > 0 && (permntOutsideIndiaVillage === undefined || permntOutsideIndiaVillage === "")) {
         setadrsVillage(cmbVillage.filter((cmbVillage) => cmbVillage.code === formData?.AddressBirthDetails?.permntOutsideIndiaVillage)[0]);
+      }
+    }
+  } else if (isEditStillBirth) {
+    if (formData?.StillBirthChildDetails?.AddressBirthDetails?.permntOutsideIndiaVillage != null) {
+      if (cmbVillage.length > 0 && (permntOutsideIndiaVillage === undefined || permntOutsideIndiaVillage === "")) {
+        setadrsVillage(
+          cmbVillage.filter((cmbVillage) => cmbVillage.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.permntOutsideIndiaVillage)[0]
+        );
+      }
+    }
+  }
+  if (isEditAdoption !== false) {
+    if (formData?.AdoptionAddressBasePage?.permntOutsideIndiaVillage != null) {
+      if (cmbVillage.length > 0 && (permntOutsideIndiaVillage === undefined || permntOutsideIndiaVillage === "")) {
+        setadrsVillage(cmbVillage.filter((cmbVillage) => cmbVillage.code === formData?.AdoptionAddressBasePage?.permntOutsideIndiaVillage)[0]);
       }
     }
   }

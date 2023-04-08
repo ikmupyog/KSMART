@@ -189,8 +189,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     setGroomNoOfSpouse("");
   }
   function setSelectGroomSpouseLiving(value) {
-    console.log({ value });
-    setGroomIsSpouseLiving(value.code);
+    setGroomIsSpouseLiving(value);
     setGroomNoOfSpouse("");
   }
   function setselectGroomGender(value) {
@@ -514,6 +513,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     }
   };
 
+  console.log("Groom", formData);
   console.log({ groomIsSpouseLiving });
 
   if (isLoading || isMaritalStatusLoading) {
@@ -643,13 +643,6 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
               <h1 className="headingh1">
                 <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_GROOM_DETAILS")}`}</span>{" "}
               </h1>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12">
-              <div className="col-md-3">
-                <CardLabel>{t("CR_GROOM_NAME")}</CardLabel>
-              </div>
             </div>
           </div>
           <div className="row">
@@ -899,7 +892,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 groomMaritalstatusID?.code === "WIDOWED" ||
                 groomMaritalstatusID?.code === "DIVORCED" ||
                 groomMaritalstatusID?.code === "ANNULELD") &&
-                groomIsSpouseLiving?.code === "YES" && (
+                groomIsSpouseLiving?.code && (
                   <div className="col-md-4">
                     <CardLabel>{t("CR_NUMBER_OF_SPOUSE_LIVING")}</CardLabel>{" "}
                     <TextInput
