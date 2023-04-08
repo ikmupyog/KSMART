@@ -46,8 +46,8 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
   //     ? cmbspouse.filter((cmbspouse) => cmbspouse.code === formData?.InformationDeath?.SpouseType)[0]
   //     : null
   // );
-  const [SpouseNameEN, setSpouseNameEN] = useState(
-   formData?.FamilyInformationDeath?.SpouseNameEN ? formData?.FamilyInformationDeath?.SpouseNameEN : ""
+  const [SpouseNameEn, setSpouseNameEN] = useState(
+   formData?.FamilyInformationDeath?.SpouseNameEn ? formData?.FamilyInformationDeath?.SpouseNameEn : ""
 
   );
   
@@ -55,8 +55,8 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
   //   formData?.FamilyInformationDeath?.SpouseNameEN ? formData?.FamilyInformationDeath?.SpouseNameEN : ""
   // );
 
-  const [SpouseNameMl, setSpouseNameMl] = useState(
-    formData?.FamilyInformationDeath?.SpouseNameMl ? formData?.FamilyInformationDeath?.SpouseNameMl : ""
+  const [SpouseNameML, setSpouseNameMl] = useState(
+    formData?.FamilyInformationDeath?.SpouseNameML ? formData?.FamilyInformationDeath?.SpouseNameML : ""
   );
   const [SpouseAadhaar, setSpouseAadhaar] = useState(
     formData?.FamilyInformationDeath?.SpouseAadhaar ? formData?.FamilyInformationDeath?.SpouseAadhaar : ""
@@ -284,8 +284,8 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
 
     onSelect(config.key, {
       SpouseType,
-      SpouseNameEN,
-      SpouseNameMl,
+      SpouseNameEn,
+      SpouseNameML,
       SpouseAadhaar,
       FatherNameEn,
       FatherNameMl,
@@ -386,8 +386,8 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
                     isMandatory={false}
                     type={"text"}
                     optionKey="i18nKey"
-                    name="SpouseNameEN"
-                    value={SpouseNameEN}
+                    name="SpouseNameEn"
+                    value={SpouseNameEn}
                     onChange={setSelectSpouseNameEN}
                     placeholder={`${t("CR_NAME")}`}
                     {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_NAME_EN") })}
@@ -402,8 +402,8 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
                     isMandatory={false}
                     type={"text"}
                     optionKey="i18nKey"
-                    name="SpouseNameMl"
-                    value={SpouseNameMl}
+                    name="SpouseNameML"
+                    value={SpouseNameML}
                     onChange={setSelectSpouseNameMl}
                     placeholder={`${t("CR_NAME_ML")}`}
                     {...(validation = {

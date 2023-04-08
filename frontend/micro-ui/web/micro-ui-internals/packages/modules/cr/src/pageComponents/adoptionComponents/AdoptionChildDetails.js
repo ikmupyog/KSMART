@@ -1458,177 +1458,181 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                   {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })}
                 />
               </div>
-
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="col-md-4">
-                    <CardLabel>
-                      {`${t("CR_ADOPTION_DECREE")}`}
-                     {AdoptionDeedNo ==="" &&  <span className="mandatorycss">*</span>}
-                    </CardLabel>
-                    <TextInput
-                      t={t}
-                      isMandatory={false}
-                      type={"text"}
-                      optionKey="i18nKey"
-                      name="adoptdecreeorderno"
-                      value={AdoptionDecreOrderNo}
-                      // onKeyPress={setCheckMalayalamInputField}
-                      onChange={setSelectDeeOrderNo}
-                      disable={isDisableEdit || AdoptionDeedNo !==""}
-                      placeholder={`${t("CR_ADOPTION_DECREE")}`}
-                      {...(validation = {
-                        // pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                        isRequired: AdoptionDeedNo ===""? true : false,
-                        type: "text",
-                        title: t("CR_INVALID_ADOPTION_DECREE"),
-                      })}
-                    />
-                  </div>
-                  <div className="col-md-4">
-                    <CardLabel>{`${t("CR_ADOPTION_DECREE_ORDER_DATE")}`}
-                    {AdoptionDeedNo ==="" &&  <span className="mandatorycss">*</span>}
-                    </CardLabel>
-                    {/* <TextInput
-                      t={t}
-                      isMandatory={false}
-                      type={"text"}
-                      optionKey="i18nKey"
-                      name="adoptdateoforderdecree"
-                      value={childMiddleNameMl}
-                      onKeyPress={setCheckMalayalamInputField}
-                      onChange={setSelectChildMiddleNameMl}
-                      disable={isDisableEdit}
-                      placeholder={`${t("CR_ADOPTION_DECREE_ORDER_DATE")}`}
-                      {...(validation = {
-                        pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                        isRequired: false,
-                        type: "text",
-                        title: t("CR_INVALID_ADOPTION_DECREE_ORDER_DATE"),
-                      })}
-                    /> */}
-                       <DatePicker
-                          date={AdoptionDecreOrderDate}
-                          name="adoptdateoforderdecree"
-                          max={convertEpochToDate(new Date())}
-                          //min={convertEpochToDate("1900-01-01")}
-                          onChange={setSelectDeeOrderDate}
-                          disabled={isDisableEdit || AdoptionDeedNo !==""}
-                          //  inputFormat="DD-MM-YYYY"
-                          placeholder={`${t("CR_ADOPTION_DECREE_ORDER_DATE")}`}
-                          {...(validation = { isRequired: AdoptionDeedNo ===""? true : false, title: t("CR_INVALID_ADOPTION_DECREE_ORDER_DATE") })}
-                      />
-                  </div>
-                  <div className="col-md-4">
-                    <CardLabel>{`${t("CR_ISSUING_AUTHORITY")}`}
-                    {AdoptionDeedNo ==="" &&  <span className="mandatorycss">*</span>}
-                    </CardLabel>
-                    <TextInput
-                      t={t}
-                      isMandatory={false}
-                      type={"text"}
-                      optionKey="i18nKey"
-                      name="adoptissuingauththority"
-                      value={IssuingAuthority}
-                      // onKeyPress={setCheckMalayalamInputField}
-                      onChange={setSelectIssuingAuthority}
-                      disable={isDisableEdit || AdoptionDeedNo !==""}
-                      placeholder={`${t("CR_ISSUING_AUTHORITY")}`}
-                      {...(validation = {
-                        // pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                        isRequired: AdoptionDeedNo ===""? true : false,
-                        type: "text",
-                        title: t("CR_INVALID_ISSUING_AUTHORITY"),
-                      })}
-                    />
-                  </div>
-                </div>
-              </div>
-              
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="col-md-4">
-                    <CardLabel>
-                      {`${t("CR_ADOPTION_DEED_NO")}`}
-                      {AdoptionDecreOrderNo ==="" && <span className="mandatorycss">*</span> }
-                    </CardLabel>
-                    <TextInput
-                      t={t}
-                      isMandatory={false}
-                      type={"text"}
-                      optionKey="i18nKey"
-                      name="adoptdeedorderno"
-                      value={AdoptionDeedNo}
-                      // onKeyPress={setCheckMalayalamInputField}
-                      onChange={setSelectDeedNo}
-                      disable={isDisableEdit ||AdoptionDecreOrderNo !=="" }
-                      placeholder={`${t("CR_ADOPTION_DEED_NO")}`}
-                      {...(validation = {
-                        pattern: "^[0-9`' ]*$",
-                        isRequired: AdoptionDecreOrderNo =="" ?true:false,
-                        type: "text",
-                        title: t("CR_INVALID_ADOPTION_DEED_NO"),
-                      })}
-                    />
-                  </div>
-                  <div className="col-md-4">
-                    <CardLabel>{`${t("CR_DEED_REG_DATE")}`}
-                    {AdoptionDecreOrderNo ==="" && <span className="mandatorycss">*</span> }
-                    </CardLabel>
-                    {/* <TextInput
-                      t={t}
-                      isMandatory={false}
-                      type={"text"}
-                      optionKey="i18nKey"
-                      name="adoptdateoforderdecree"
-                      value={childMiddleNameMl}
-                      onKeyPress={setCheckMalayalamInputField}
-                      onChange={setSelectChildMiddleNameMl}
-                      disable={isDisableEdit}
-                      placeholder={`${t("CR_ADOPTION_DECREE_ORDER_DATE")}`}
-                      {...(validation = {
-                        pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                        isRequired: false,
-                        type: "text",
-                        title: t("CR_INVALID_ADOPTION_DECREE_ORDER_DATE"),
-                      })}
-                    /> */}
-                       <DatePicker
-                          date={AdoptionDeedRegDate}
-                          name="adoptdateoforderdeed"
-                          max={convertEpochToDate(new Date())}
-                          //min={convertEpochToDate("1900-01-01")}
-                          onChange={setSelectDeedRegDate}
-                          disabled={isDisableEdit  ||AdoptionDecreOrderNo !==""}
-                          //  inputFormat="DD-MM-YYYY"
-                          placeholder={`${t("CR_DEED_REG_DATE")}`}
-                          {...(validation = { isRequired: AdoptionDecreOrderNo =="" ?true:false, title: t("CR_INVALID_DEED_REG_DATE") })}
-                      />
-                  </div>
-                  <div className="col-md-4">
-                    <CardLabel>{`${t("CR_REG_AUTHORITY")}`}
-                    {AdoptionDecreOrderNo ==="" && <span className="mandatorycss">*</span> }</CardLabel>
-                    <TextInput
-                      t={t}
-                      isMandatory={false}
-                      type={"text"}
-                      optionKey="i18nKey"
-                      name="adoptissuingauththority"
-                      value={RegistrationAuthority}
-                      // onKeyPress={setCheckMalayalamInputField}
-                      onChange={setSelectRegistrationAuthority}
-                      disable={isDisableEdit  || AdoptionDecreOrderNo !==""}
-                      placeholder={`${t("CR_REG_AUTHORITY")}`}
-                      {...(validation = {
-                        pattern: "^[a-zA-Z-.`' ]*$",
-                        isRequired: AdoptionDecreOrderNo =="" ?true:false,
-                        type: "text",
-                        title: t("CR_INVALID_REG_AUTHORITY"),
-                      })}
-                    />
-                  </div>
-                </div>
-              </div>
+              {AdoptionDeedNo ==="" &&(
+                     <div className="row">
+                     <div className="col-md-12">
+                       <div className="col-md-4">
+                         <CardLabel>
+                           {`${t("CR_ADOPTION_DECREE")}`}
+                          {AdoptionDeedNo ==="" &&  <span className="mandatorycss">*</span>}
+                         </CardLabel>
+                         <TextInput
+                           t={t}
+                           isMandatory={false}
+                           type={"text"}
+                           optionKey="i18nKey"
+                           name="adoptdecreeorderno"
+                           value={AdoptionDecreOrderNo}
+                           // onKeyPress={setCheckMalayalamInputField}
+                           onChange={setSelectDeeOrderNo}
+                           disable={isDisableEdit || AdoptionDeedNo !==""}
+                           placeholder={`${t("CR_ADOPTION_DECREE")}`}
+                           {...(validation = {
+                             // pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                             isRequired: AdoptionDeedNo ===""? true : false,
+                             type: "text",
+                             title: t("CR_INVALID_ADOPTION_DECREE"),
+                           })}
+                         />
+                       </div>
+                       <div className="col-md-4">
+                         <CardLabel>{`${t("CR_ADOPTION_DECREE_ORDER_DATE")}`}
+                         {AdoptionDeedNo ==="" &&  <span className="mandatorycss">*</span>}
+                         </CardLabel>
+                         {/* <TextInput
+                           t={t}
+                           isMandatory={false}
+                           type={"text"}
+                           optionKey="i18nKey"
+                           name="adoptdateoforderdecree"
+                           value={childMiddleNameMl}
+                           onKeyPress={setCheckMalayalamInputField}
+                           onChange={setSelectChildMiddleNameMl}
+                           disable={isDisableEdit}
+                           placeholder={`${t("CR_ADOPTION_DECREE_ORDER_DATE")}`}
+                           {...(validation = {
+                             pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                             isRequired: false,
+                             type: "text",
+                             title: t("CR_INVALID_ADOPTION_DECREE_ORDER_DATE"),
+                           })}
+                         /> */}
+                            <DatePicker
+                               date={AdoptionDecreOrderDate}
+                               name="adoptdateoforderdecree"
+                               max={convertEpochToDate(new Date())}
+                               //min={convertEpochToDate("1900-01-01")}
+                               onChange={setSelectDeeOrderDate}
+                               disabled={isDisableEdit || AdoptionDeedNo !==""}
+                               //  inputFormat="DD-MM-YYYY"
+                               placeholder={`${t("CR_ADOPTION_DECREE_ORDER_DATE")}`}
+                               {...(validation = { isRequired: AdoptionDeedNo ===""? true : false, title: t("CR_INVALID_ADOPTION_DECREE_ORDER_DATE") })}
+                           />
+                       </div>
+                       <div className="col-md-4">
+                         <CardLabel>{`${t("CR_ISSUING_AUTHORITY")}`}
+                         {AdoptionDeedNo ==="" &&  <span className="mandatorycss">*</span>}
+                         </CardLabel>
+                         <TextInput
+                           t={t}
+                           isMandatory={false}
+                           type={"text"}
+                           optionKey="i18nKey"
+                           name="adoptissuingauththority"
+                           value={IssuingAuthority}
+                           // onKeyPress={setCheckMalayalamInputField}
+                           onChange={setSelectIssuingAuthority}
+                           disable={isDisableEdit || AdoptionDeedNo !==""}
+                           placeholder={`${t("CR_ISSUING_AUTHORITY")}`}
+                           {...(validation = {
+                             // pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                             isRequired: AdoptionDeedNo ===""? true : false,
+                             type: "text",
+                             title: t("CR_INVALID_ISSUING_AUTHORITY"),
+                           })}
+                         />
+                       </div>
+                     </div>
+                   </div>
+              )}      
+           
+              {AdoptionDecreOrderNo==="" &&(
+                 <div className="row">
+                 <div className="col-md-12">
+                   <div className="col-md-4">
+                     <CardLabel>
+                       {`${t("CR_ADOPTION_DEED_NO")}`}
+                       {AdoptionDecreOrderNo ==="" && <span className="mandatorycss">*</span> }
+                     </CardLabel>
+                     <TextInput
+                       t={t}
+                       isMandatory={false}
+                       type={"text"}
+                       optionKey="i18nKey"
+                       name="adoptdeedorderno"
+                       value={AdoptionDeedNo}
+                       // onKeyPress={setCheckMalayalamInputField}
+                       onChange={setSelectDeedNo}
+                       disable={isDisableEdit ||AdoptionDecreOrderNo !=="" }
+                       placeholder={`${t("CR_ADOPTION_DEED_NO")}`}
+                       {...(validation = {
+                         pattern: "^[0-9`' ]*$",
+                         isRequired: AdoptionDecreOrderNo =="" ?true:false,
+                         type: "text",
+                         title: t("CR_INVALID_ADOPTION_DEED_NO"),
+                       })}
+                     />
+                   </div>
+                   <div className="col-md-4">
+                     <CardLabel>{`${t("CR_DEED_REG_DATE")}`}
+                     {AdoptionDecreOrderNo ==="" && <span className="mandatorycss">*</span> }
+                     </CardLabel>
+                     {/* <TextInput
+                       t={t}
+                       isMandatory={false}
+                       type={"text"}
+                       optionKey="i18nKey"
+                       name="adoptdateoforderdecree"
+                       value={childMiddleNameMl}
+                       onKeyPress={setCheckMalayalamInputField}
+                       onChange={setSelectChildMiddleNameMl}
+                       disable={isDisableEdit}
+                       placeholder={`${t("CR_ADOPTION_DECREE_ORDER_DATE")}`}
+                       {...(validation = {
+                         pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                         isRequired: false,
+                         type: "text",
+                         title: t("CR_INVALID_ADOPTION_DECREE_ORDER_DATE"),
+                       })}
+                     /> */}
+                        <DatePicker
+                           date={AdoptionDeedRegDate}
+                           name="adoptdateoforderdeed"
+                           max={convertEpochToDate(new Date())}
+                           //min={convertEpochToDate("1900-01-01")}
+                           onChange={setSelectDeedRegDate}
+                           disabled={isDisableEdit  ||AdoptionDecreOrderNo !==""}
+                           //  inputFormat="DD-MM-YYYY"
+                           placeholder={`${t("CR_DEED_REG_DATE")}`}
+                           {...(validation = { isRequired: AdoptionDecreOrderNo =="" ?true:false, title: t("CR_INVALID_DEED_REG_DATE") })}
+                       />
+                   </div>
+                   <div className="col-md-4">
+                     <CardLabel>{`${t("CR_REG_AUTHORITY")}`}
+                     {AdoptionDecreOrderNo ==="" && <span className="mandatorycss">*</span> }</CardLabel>
+                     <TextInput
+                       t={t}
+                       isMandatory={false}
+                       type={"text"}
+                       optionKey="i18nKey"
+                       name="adoptissuingauththority"
+                       value={RegistrationAuthority}
+                       // onKeyPress={setCheckMalayalamInputField}
+                       onChange={setSelectRegistrationAuthority}
+                       disable={isDisableEdit  || AdoptionDecreOrderNo !==""}
+                       placeholder={`${t("CR_REG_AUTHORITY")}`}
+                       {...(validation = {
+                         pattern: "^[a-zA-Z-.`' ]*$",
+                         isRequired: AdoptionDecreOrderNo =="" ?true:false,
+                         type: "text",
+                         title: t("CR_INVALID_REG_AUTHORITY"),
+                       })}
+                     />
+                   </div>
+                 </div>
+               </div>
+              )}
+             
 
               {/* {ChildAadharHIde === true && (
                 <div className="col-md-3">

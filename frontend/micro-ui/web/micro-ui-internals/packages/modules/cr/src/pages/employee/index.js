@@ -164,6 +164,12 @@ const CRBreadCrumb = ({ location }) => {
         breadCrumbUrls.includes("home/application-stillbirth")
     },
     {
+      path: sessionStorage.getItem("applicationno") ? `/digit-ui/employee/cr/application-abandonedbirth/${sessionStorage.getItem("birthApplicationNo")}` : "",
+      content: t("ABANDONED_BIRTH_APPLICATION_DETAILS"),
+      show: isApplicationStillBirthDetails ||
+        breadCrumbUrls.includes("home/application-abandonedbirth")
+    },
+    {
       path: "/digit-ui/employee/cr/death-flow/specify-correction",
       content: t("Specify Correction"),
       show: isSpecifyCorrectSearch ||
