@@ -117,7 +117,7 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
         </div>
         <div className="col-md-12"
           style={{
-            maxWidth: "100%",
+            maxWidth: "auto",
             margin: "25px auto",
             padding: "3rem 2rem",
             border: "none",
