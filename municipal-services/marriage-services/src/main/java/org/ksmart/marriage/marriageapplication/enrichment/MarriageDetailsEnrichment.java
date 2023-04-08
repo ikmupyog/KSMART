@@ -623,7 +623,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
         List<String> filecodes = getIds(requestInfo,
                 tenantId,
                 config.getMarriageApplNumberIdName(),
-                request.getMarriageDetails().get(0).getModulecode(),
+                request.getMarriageDetails().get(0).getModuleCode(),
                 "APPL",
                 marriageDetails.size());
         validateFileCodes(filecodes, marriageDetails.size());
