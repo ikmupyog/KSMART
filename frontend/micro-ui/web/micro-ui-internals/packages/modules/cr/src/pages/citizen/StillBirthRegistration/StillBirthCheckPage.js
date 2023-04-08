@@ -115,17 +115,18 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
             </h1>
           </div>
         </div>
-        <div
+        <div className="col-md-12"
           style={{
-            maxWidth: "80%",
+            maxWidth: "100%",
             margin: "25px auto",
             padding: "3rem 2rem",
             border: "none",
             borderRadius: "8px",
-            height: "800PX",
+            height: "auto",
             backgroundColor: "#f3f0ef",
           }}
         >
+            <div className="col-md-12">
           <div className="row">
             <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_CHILD_SEX")}`}</CardLabel>
@@ -548,6 +549,8 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
         </div>
         {/* <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} /> */}
         <SubmitBar disabled={!isInitiatorDeclaration} label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} />
+        </div>
+
       </Card>
     </React.Fragment>
   );
