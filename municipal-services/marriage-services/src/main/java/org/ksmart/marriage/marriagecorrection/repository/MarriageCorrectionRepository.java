@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.ksmart.marriage.common.producer.MarriageProducer;
 import org.ksmart.marriage.marriageapplication.config.MarriageApplicationConfiguration;
 import org.ksmart.marriage.marriageapplication.enrichment.MarriageDetailsEnrichment;
-import org.ksmart.marriage.marriageapplication.validator.MarriageMDMSValidator;
+//import org.ksmart.marriage.marriageapplication.validator.MarriageMDMSValidator;
 import org.ksmart.marriage.marriageapplication.web.model.MarriageApplicationDetails;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageDetailsRequest;
 import org.ksmart.marriage.utils.MarriageMdmsUtil;
@@ -21,14 +21,14 @@ public class MarriageCorrectionRepository {
 
     private final MarriageDetailsEnrichment marriageDetailsEnrichment;
     private final MarriageMdmsUtil util;
-    private final MarriageMDMSValidator mdmsValidator;
+//    private final MarriageMDMSValidator mdmsValidator;
 
-    public MarriageCorrectionRepository(MarriageProducer producer, MarriageApplicationConfiguration marriageApplicationConfiguration, MarriageDetailsEnrichment marriageDetailsEnrichment, MarriageMdmsUtil util, MarriageMDMSValidator mdmsValidator) {
+    public MarriageCorrectionRepository(MarriageProducer producer, MarriageApplicationConfiguration marriageApplicationConfiguration, MarriageDetailsEnrichment marriageDetailsEnrichment, MarriageMdmsUtil util) {
         this.producer = producer;
         this.marriageApplicationConfiguration = marriageApplicationConfiguration;
         this.marriageDetailsEnrichment = marriageDetailsEnrichment;
         this.util = util;
-        this.mdmsValidator = mdmsValidator;
+//        this.mdmsValidator = mdmsValidator;
     }
 
 
