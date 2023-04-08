@@ -51,6 +51,8 @@ const MarriageAddressPresentOutsideIndia = ({
   setPermntOutsideIndiaCountry,
   isEditBirth = false,
   isEditDeath = false,
+  isEditAdoption,
+  isEditStillBirth = false,
   // isInitialRender, setIsInitialRender
 }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -62,6 +64,7 @@ const MarriageAddressPresentOutsideIndia = ({
   }
   let validation = {};
   const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
+  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : isEditStillBirth ? isEditStillBirth : false);
 
   let cmbCountry = [];
   Country &&
@@ -84,11 +87,29 @@ const MarriageAddressPresentOutsideIndia = ({
         );
       }
     }
+  } else if (isEditAdoption !== false) {
+    if (formData?.AdoptionAddressBasePage?.presentOutSideIndiaadrsVillage != null) {
+      if (cmbUrbanRural.length > 0 && (presentOutSideIndiaadrsVillage === undefined || presentOutSideIndiaadrsVillage === "")) {
+        setadrsVillage(
+          cmbUrbanRural.filter((cmbUrbanRural) => cmbUrbanRural.code === formData?.AdoptionAddressBasePage?.presentOutSideIndiaadrsVillage)[0]
+        );
+      }
+    }
   } else if (isEditDeath) {
     if (formData?.AddressBirthDetails?.presentOutSideIndiaadrsVillage != null) {
       if (cmbUrbanRural.length > 0 && (presentOutSideIndiaadrsVillage === undefined || presentOutSideIndiaadrsVillage === "")) {
         setadrsVillage(
           cmbUrbanRural.filter((cmbUrbanRural) => cmbUrbanRural.code === formData?.AddressBirthDetails?.presentOutSideIndiaadrsVillage)[0]
+        );
+      }
+    }
+  } else if (isEditStillBirth) {
+    if (formData?.StillBirthChildDetails?.AddressBirthDetails?.presentOutSideIndiaadrsVillage != null) {
+      if (cmbUrbanRural.length > 0 && (presentOutSideIndiaadrsVillage === undefined || presentOutSideIndiaadrsVillage === "")) {
+        setadrsVillage(
+          cmbUrbanRural.filter(
+            (cmbUrbanRural) => cmbUrbanRural.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.presentOutSideIndiaadrsVillage
+          )[0]
         );
       }
     }
@@ -268,6 +289,7 @@ const MarriageAddressPresentOutsideIndia = ({
                 value={presentOutSideIndiaProvinceEn}
                 onChange={setSelectProvinceEn}
                 placeholder={`${t("CR_STATE_REGION_PROVINCE_EN")}`}
+                disable={isDisableEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
               />
             </div>
@@ -283,6 +305,7 @@ const MarriageAddressPresentOutsideIndia = ({
                 value={presentOutSideIndiaProvinceMl}
                 onKeyPress={setCheckMalayalamInputField}
                 onChange={setSelectProvinceMl}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_STATE_REGION_PROVINCE_ML")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
               />
@@ -301,6 +324,7 @@ const MarriageAddressPresentOutsideIndia = ({
                 option={cmbUrbanRural}
                 selected={presentOutSideIndiaadrsVillage}
                 select={setSelectadrsVillage}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_TOWN_VILLAGE_EN")}`}
               />
             </div>
@@ -315,6 +339,7 @@ const MarriageAddressPresentOutsideIndia = ({
                 name="presentOutSideIndiaadrsCityTown"
                 value={presentOutSideIndiaadrsCityTown}
                 onChange={setSelectadrsCityTown}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_CITY_TOWN_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_TOWN_EN") })}
               />
@@ -331,6 +356,7 @@ const MarriageAddressPresentOutsideIndia = ({
                 name="presentOutSideIndiaPostCode"
                 value={presentOutSideIndiaPostCode}
                 onChange={setSelectPostCode}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_ZIP_CODE")}`}
                 {...(validation = {
                   pattern: "^[a-zA-Z-.0-9`' ]*$",
@@ -357,6 +383,7 @@ const MarriageAddressPresentOutsideIndia = ({
                 name="presentOutSideIndiaAdressEn"
                 value={presentOutSideIndiaAdressEn}
                 onChange={setSelectAdressEn}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_ADDRES_LINE_ONE_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_ADDRES_LINE_ONE_EN") })}
               />
@@ -370,6 +397,7 @@ const MarriageAddressPresentOutsideIndia = ({
                 name="presentOutSideIndiaAdressEnB"
                 value={presentOutSideIndiaAdressEnB}
                 onChange={setSelectAdressEnB}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_ADDRES_LINE_TWO_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRES_LINE_TWO_EN") })}
               />
@@ -389,6 +417,7 @@ const MarriageAddressPresentOutsideIndia = ({
                 value={presentOutSideIndiaAdressMl}
                 onKeyPress={setCheckMalayalamInputField}
                 onChange={setSelectAdressMl}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_ADDRES_LINE_ONE_ML")}`}
                 {...(validation = {
                   pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -411,6 +440,7 @@ const MarriageAddressPresentOutsideIndia = ({
                 value={presentOutSideIndiaAdressMlB}
                 onKeyPress={setCheckMalayalamInputField}
                 onChange={setSelectAdressMlB}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_ADDRES_LINE_TWO_ML")}`}
                 {...(validation = {
                   pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",

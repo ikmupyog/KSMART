@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 const AbandonedBirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, vehicleRegistrationNo, vehicleFromEn,
   vehicleToEn, vehicleFromMl, vehicleHaltPlace,  vehicleToMl, vehicleDesDetailsEn, setvehicleToEn, setadmittedHospitalEn,
   setvehicleType, setvehicleRegistrationNo, setvehicleFromEn, setvehicleFromMl, setvehicleHaltPlace,
-  setvehicleToMl, setvehicleDesDetailsEn, setSelectedadmittedHospitalEn, setWardNo, wardNo,isEditBirth=false
+  setvehicleToMl, setvehicleDesDetailsEn, setSelectedadmittedHospitalEn, setWardNo, wardNo,isEditAbandonedBirth=false
 }) => {
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
@@ -21,7 +21,7 @@ const AbandonedBirthPlaceVehicle = ({ config, onSelect, userType, formData, vehi
   const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "boundary-data");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [tenantboundary, setTenantboundary] = useState(false);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditAbandonedBirth ? isEditAbandonedBirth : false);
 
   if (tenantboundary) {
     queryClient.removeQueries("CR_HOSPITALMASTER");
@@ -78,20 +78,20 @@ const AbandonedBirthPlaceVehicle = ({ config, onSelect, userType, formData, vehi
       }
     }
   }, [localbodies, isInitialRender]);
-  if (isEditBirth) {
-    if (formData?.ChildDetails?.vehicleType != null) {
+  if (isEditAbandonedBirth) {
+    if (formData?.AbandonedChildDetails?.vehicleType != null) {
       if (cmbVehicle.length > 0 && (vehicleType === undefined || vehicleType === "")) {
-        setvehicleType(cmbVehicle.filter(cmbVehicle => cmbVehicle.code === formData?.ChildDetails?.vehicleType)[0]);
+        setvehicleType(cmbVehicle.filter(cmbVehicle => cmbVehicle.code === formData?.AbandonedChildDetails?.vehicleType)[0]);
        }
     }
-    if (formData?.ChildDetails?.setadmittedHospitalEn != null) {
+    if (formData?.AbandonedChildDetails?.setadmittedHospitalEn != null) {
       if (cmbhospital.length > 0 && (setadmittedHospitalEn === undefined || setadmittedHospitalEn === "")) {
-        setSelectedadmittedHospitalEn(cmbhospital.filter(cmbhospital => cmbhospital.code === formData?.ChildDetails?.setadmittedHospitalEn)[0]);
+        setSelectedadmittedHospitalEn(cmbhospital.filter(cmbhospital => cmbhospital.code === formData?.AbandonedChildDetails?.setadmittedHospitalEn)[0]);
       }
     }
-    if (formData?.ChildDetails?.wardNo != null) {
+    if (formData?.AbandonedChildDetails?.wardNo != null) {
       if (cmbWardNo.length > 0 && (wardNo === undefined || wardNo === "")) {
-        setWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.ChildDetails?.wardNo)[0]);
+        setWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.AbandonedChildDetails?.wardNo)[0]);
       }
     }
   }

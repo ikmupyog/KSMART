@@ -333,25 +333,51 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
       setLbsVillagevalue(cmbFilterVillage);
       setIsInitialRender(false);
     }
+    setmarriageTalukID("");
+    setmarriageVillageName("");
+    setMarriageLBtype("");
+    setMarriageTenantid("");
+    setMarriageWardCode("");
+    setMarriagePlacetype("");
+    setplaceidEn("");
   }
   function setSelectmarriageTalukID(value) {
     setmarriageTalukID(value);
+    setmarriageVillageName("");
+    setMarriageLBtype("");
+    setMarriageTenantid("");
+    setMarriageWardCode("");
+    setMarriagePlacetype("");
+    setplaceidEn("");
   }
   function setSelectmarriageVillageName(value) {
     setmarriageVillageName(value);
+    setMarriageLBtype("");
+    setMarriageTenantid("");
+    setMarriageWardCode("");
+    setMarriagePlacetype("");
+    setplaceidEn("");
   }
   function setSelectmarriageLBtype(value) {
     setMarriageLBtype(value);
+    setMarriageTenantid("");
+    setMarriageWardCode("");
+    setMarriagePlacetype("");
+    setplaceidEn("");
   }
   function setSelectmarriageTenantid(value) {
     setIsWardChange(true);
     setMarriageWardCode(null);
     setTenantWard(value.code);
     setMarriageTenantid(value);
+    setMarriageWardCode("");
+    setMarriagePlacetype("");
+    setplaceidEn("");
   }
   function setSelectmarriagePlacetype(value) {
     setMarriagePlacetype(value);
     setValue(value.code);
+    setplaceidEn("");
     // let currentWorkFlow = workFlowData.filter(
     //   (workFlowData) =>
     //     workFlowData.marriagePlacetype === value.code &&
@@ -386,6 +412,8 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   function setSelectmarriageWardCode(value) {
     setTenantWard(value.code);
     setMarriageWardCode(value);
+    setMarriagePlacetype("");
+    setplaceidEn("");
   }
 
   function setCSLB(selectedLBType) {
@@ -483,7 +511,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     }
   };
 
-  console.log({ marriagePlacetype });
+  console.log("Registration", formData);
 
   if (
     isLoading ||
@@ -738,7 +766,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                       </div>
                     </React.Fragment>
                   )}
-                  {marriagePlacetype.name === "Others" && (
+                  {marriagePlacetype.name === "Other" && (
                     <MarriageInstitution
                       marriagePlacenameEn={marriagePlacenameEn}
                       setmarriagePlacenameEn={setmarriagePlacenameEn}

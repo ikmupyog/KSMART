@@ -6,9 +6,9 @@ import { useQueryClient } from "react-query";
 const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
   institution, setInstitution, institutionIdMl, setInstitutionIdMl, institutionId, setInstitutionId,
   InstitutionFilterList, setInstitutionFilterList, isInitialRenderInstitutionList, setIsInitialRenderInstitutionList,
-  isEditBirth = false
+  isEditAbandonedBirth = false
 }) => {
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditAbandonedBirth ? isEditAbandonedBirth : false);
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -38,16 +38,16 @@ const BirthPlaceInstitution = ({ config, onSelect, userType, formData,
     institutionidList["egov-location"].institutionList.map((ob) => {
       cmbInstitutionList.push(ob);
     });
-  if (isEditBirth) {
-    if (formData?.ChildDetails?.institutionTypeCode != null) {
+  if (isEditAbandonedBirth) {
+    if (formData?.AbandonedChildDetails?.institutionTypeCode != null) {
       if (cmbInstitutionType.length > 0 && (institution === undefined || institution === "")) {
-        setInstitution(cmbInstitutionType.filter(cmbInstitutionType => cmbInstitutionType.code === formData?.ChildDetails?.institutionTypeCode)[0]);
+        setInstitution(cmbInstitutionType.filter(cmbInstitutionType => cmbInstitutionType.code === formData?.AbandonedChildDetails?.institutionTypeCode)[0]);
       }
     }
-    if (formData?.ChildDetails?.institutionNameCode != null) {      
+    if (formData?.AbandonedChildDetails?.institutionNameCode != null) {      
       if (cmbInstitutionList.length > 0 && (institutionId === undefined || institutionId === "")) {
-        setInstitutionId(cmbInstitutionList.filter(cmbInstitutionList => cmbInstitutionList.code === formData?.ChildDetails?.institutionNameCode)[0]);
-        setInstitutionIdMl(cmbInstitutionList.filter(cmbInstitutionList => cmbInstitutionList.code === formData?.ChildDetails?.institutionNameCode)[0]);
+        setInstitutionId(cmbInstitutionList.filter(cmbInstitutionList => cmbInstitutionList.code === formData?.AbandonedChildDetails?.institutionNameCode)[0]);
+        setInstitutionIdMl(cmbInstitutionList.filter(cmbInstitutionList => cmbInstitutionList.code === formData?.AbandonedChildDetails?.institutionNameCode)[0]);
       }
     }
   }
