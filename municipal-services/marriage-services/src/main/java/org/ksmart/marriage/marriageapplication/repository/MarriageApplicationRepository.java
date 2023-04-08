@@ -16,6 +16,7 @@ import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageApplic
 import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageDetailsRequest;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageDocument;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.WitnessDetails;
+import org.ksmart.marriage.utils.MarriageConstants;
 import org.ksmart.marriage.marriageapplication.repository.querybuilder.MarriageApplicationQueryBuilder;
 import org.ksmart.marriage.marriageapplication.repository.rowmapper.MarriageApplicationRowMapper;
 //import org.ksmart.marriage.marriageapplication.validator.MarriageMDMSValidator;
@@ -86,16 +87,23 @@ public class MarriageApplicationRepository {
                 GroomDetails groomDetails =marriage.getGroomDetails();
                 GroomDetails groomDetailsDec =  encryptionDecryptionUtil.decryptObject(groomDetails, "BndDetail", GroomDetails.class, requestInfo);
                 groomDetails.setAadharno(groomDetailsDec.getAadharno());
-                groomDetails.setMotherAadharno(groomDetailsDec.getMotherAadharno());
-                groomDetails.setFatherAadharno(groomDetailsDec.getFatherAadharno());
-                groomDetails.setGuardianAadharno(groomDetailsDec.getGuardianAadharno());
-                
+                if (groomDetails.getParentGuardian().equals(MarriageConstants.PARENT)){
+                    groomDetails.setMotherAadharno(groomDetailsDec.getMotherAadharno());
+                    groomDetails.setFatherAadharno(groomDetailsDec.getFatherAadharno());
+                }
+                else if (groomDetails.getParentGuardian().equals(MarriageConstants.GUARDIAN)){
+                    groomDetails.setGuardianAadharno(groomDetailsDec.getGuardianAadharno());
+                }
                 BrideDetails brideDetails =marriage.getBrideDetails();
                 BrideDetails brideDetailsDec =  encryptionDecryptionUtil.decryptObject(brideDetails, "BndDetail", BrideDetails.class, requestInfo);
                 brideDetails.setAadharno(brideDetailsDec.getAadharno());
-                brideDetails.setMotherAadharno(brideDetailsDec.getMotherAadharno());
-                brideDetails.setFatherAadharno(brideDetailsDec.getFatherAadharno());
-                brideDetails.setGuardianAadharno(brideDetailsDec.getGuardianAadharno());
+                if (brideDetails.getParentGuardian().equals(MarriageConstants.PARENT)){
+                    brideDetails.setMotherAadharno(brideDetailsDec.getMotherAadharno());
+                    brideDetails.setFatherAadharno(brideDetailsDec.getFatherAadharno());
+                }
+                else  if(brideDetails.getParentGuardian().equals(MarriageConstants.GUARDIAN)){
+                    brideDetails.setGuardianAadharno(brideDetailsDec.getGuardianAadharno());
+                }
     
                 WitnessDetails witnessDetails =marriage.getWitnessDetails();
                 WitnessDetails witnessDetailsDec =  encryptionDecryptionUtil.decryptObject(witnessDetails, "BndDetail", WitnessDetails.class, requestInfo);
