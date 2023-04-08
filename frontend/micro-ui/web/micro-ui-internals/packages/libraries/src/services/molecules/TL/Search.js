@@ -94,11 +94,12 @@ export const TLSearch = {
         },
       ],
     };
-
     const tradeUnits = {
       title: "TL_TRADE_UNITS_HEADER",
       additionalDetails: {
+       
         units: response?.tradeLicenseDetail?.tradeUnits?.map((unit, index) => {
+          
           let tradeSubType = stringReplaceAll(unit?.tradeType, ".", "_");
           tradeSubType = stringReplaceAll(tradeSubType, "-", "_");
           return {
@@ -106,15 +107,15 @@ export const TLSearch = {
             values: [
               {
                 title: "TRADELICENSE_TRADECATEGORY_LABEL",
-                value: unit?.businessCategory ? `TRADELICENSE_TRADETYPE_${unit?.businessCategory}` : "NA"
+                value: unit?.businessCategory ? `${unit?.businessCategory}` : "NA"
               },
               {
                 title: "TRADELICENSE_TRADETYPE_LABEL",
-                value: unit?.businessType ? `TRADELICENSE_TRADETYPE_${unit?.businessType}` : "NA"
+                value: unit?.businessType ? `${unit?.businessType}` : "NA"
               },
               {
                 title: "TL_NEW_TRADE_SUB_TYPE_LABEL",
-                value: unit?.businessSubtype ? `TRADELICENSE_TRADETYPE_${stringReplaceAll(unit?.businessSubtype, ".", "_")}` : "NA"
+                value: unit?.businessSubtype ? `${unit?.businessSubtype}` : "NA"
               },
             ],
           };
