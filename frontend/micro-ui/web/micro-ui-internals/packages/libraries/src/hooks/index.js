@@ -122,6 +122,8 @@ import useTLSearch from "./tl/useSearch";
 import useTenantsCR from "./cr/useTenants";
 import useCivilRegistrationMDMS from "./cr/useCivilRegistrationMDMS";
 import useCivilRegistrationAPI from "./cr/useCivilRegistrationAPI";
+import useAbandonedDeathCreationAPI from "./cr/useAbandonedDeathCreationAPI";
+
 import useCivilRegistrationMarriageAPI from "./cr/useCivilRegistrationMarriageAPI";
 import useCvilRegistrationAdoptionApi from "./cr/useCvilRegistrationAdoptionApi";
 import useCivilRegistrationStillBirthAPI from "./cr/useCivilRegistrationStillBirthAPI";
@@ -370,6 +372,7 @@ const cr = {
   getDeathFileSourceDetails,
   useCivilRegMDMS,
   useTenants: useTenantsCR,
+  useAbandonedDeathCreationAPI,
   useCivilRegistrationMDMS,
   useCivilRegistrationAPI,
   useCivilRegistrationAbandonedBirthAPI,

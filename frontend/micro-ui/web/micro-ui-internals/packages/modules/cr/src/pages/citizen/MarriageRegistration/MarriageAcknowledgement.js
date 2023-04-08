@@ -10,9 +10,8 @@ const GetActionMessage = (props) => {
   if (props.isSuccess) {
     return t("CR_CREATE_SUCCESS_MSG");
   } else if (props.isLoading) {
-    return !window.location.href.includes("renew-trade") || !window.location.href.includes("edit-application")
-      ? t("CS_TRADE_APPLICATION_SUCCESS")
-      : t("CS_TRADE_UPDATE_APPLICATION_PENDING");
+    return t("CR_CREATE_APPLICATION_PENDING");
+    // !window.location.href.includes("renew-trade") || !window.location.href.includes("edit-application") ? t("CS_TRADE_APPLICATION_SUCCESS") : t("CS_TRADE_UPDATE_APPLICATION_PENDING");
   } else if (!props.isSuccess) {
     return t("CR_CREATE_APPLICATION_FAILED");
   }
@@ -63,50 +62,50 @@ const MarriageAcknowledgement = ({ data, onSuccess, userType, isEditBirth = fals
       // const onSuccessedit = () => {
       //   setMutationHappened(true);
       // };
-      try {
-        setIsInitialRender(false);
-        let tenantId1 = data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId;
-        data.tenantId = tenantId1;
-        if (!resubmit) {
-          // let formdata = !isEditBirth ? convertToDeathRegistration(data) : convertToEditTrade(data, fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter(y => y.module === "CR") : []);
+      // try {
+      setIsInitialRender(false);
+      let tenantId1 = data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId;
+      data.tenantId = tenantId1;
+      if (!resubmit) {
+        // let formdata = !isEditBirth ? convertToDeathRegistration(data) : convertToEditTrade(data, fydata["egf-master"] ? fydata["egf-master"].FinancialYear.filter(y => y.module === "CR") : []);
 
-          let formdata = convertToMarriageRegistration(data);
-          console.log({ data });
-          console.log({ formdata });
-          // formdata.BirthDetails[0].tenantId = formdata?.BirthDetails[0]?.tenantId || tenantId1;
-          mutation.mutate(formdata, {
-            onSuccess,
-          });
-          // else{
-          //   if((fydata["egf-master"] && fydata["egf-master"].FinancialYear.length > 0 && isDirectRenewal))
-          //   {
-          //     mutation2.mutate(formdata, {
-          //       onSuccess,
-          //     })
-          //   }
-          //   else
-          //   {
-          //     mutation1.mutate(formdata, {
-          //       onSuccess,
-          //     })
-          //   }
-          // }
+        let formdata = !isEditMarriage ? convertToMarriageRegistration(data) : [];
+        console.log({ data });
+        console.log({ formdata });
+        // formdata.BirthDetails[0].tenantId = formdata?.BirthDetails[0]?.tenantId || tenantId1;
+        mutation.mutate(formdata, {
+          onSuccess,
+        });
+        // else{
+        //   if((fydata["egf-master"] && fydata["egf-master"].FinancialYear.length > 0 && isDirectRenewal))
+        //   {
+        //     mutation2.mutate(formdata, {
+        //       onSuccess,
+        //     })
+        //   }
+        //   else
+        //   {
+        //     mutation1.mutate(formdata, {
+        //       onSuccess,
+        //     })
+        //   }
+        // }
 
-          // !isEditBirth ? mutation.mutate(formdata, {
-          //   onSuccess,
-          // }) : (fydata["egf-master"] && fydata["egf-master"].FinancialYear.length > 0 && isDirectRenewal ? mutation2.mutate(formdata, {
-          //   onSuccess,
-          // }) :mutation1.mutate(formdata, {
-          //   onSuccess,
-          // }));
-        } else {
-          // let formdata = convertToResubmitTrade(data);
-          // formdata.Licenses[0].tenantId = formdata?.Licenses[0]?.tenantId || tenantId1;
-          // !mutation2.isLoading && !mutation2.isSuccess &&!mutationHappened && mutation2.mutate(formdata, {
-          //   onSuccessedit,
-          // })
-        }
-      } catch (err) {}
+        // !isEditBirth ? mutation.mutate(formdata, {
+        //   onSuccess,
+        // }) : (fydata["egf-master"] && fydata["egf-master"].FinancialYear.length > 0 && isDirectRenewal ? mutation2.mutate(formdata, {
+        //   onSuccess,
+        // }) :mutation1.mutate(formdata, {
+        //   onSuccess,
+        // }));
+      } else {
+        // let formdata = convertToResubmitTrade(data);
+        // formdata.Licenses[0].tenantId = formdata?.Licenses[0]?.tenantId || tenantId1;
+        // !mutation2.isLoading && !mutation2.isSuccess &&!mutationHappened && mutation2.mutate(formdata, {
+        //   onSuccessedit,
+        // })
+      }
+      // } catch (err) {}
     }
   }, [mutation]);
 

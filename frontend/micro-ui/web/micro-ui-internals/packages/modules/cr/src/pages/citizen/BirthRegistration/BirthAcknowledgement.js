@@ -25,7 +25,11 @@ const rowContainerStyle = {
 const BannerPicker = (props) => {
   if (props.isSuccess && sessionStorage.getItem("CR_BIRTH_EDIT_FLAG")) {
     //console.log(JSON.stringify(props));
-    window.location.assign(`${window.location.origin}/digit-ui/employee/cr/application-details/${props.applicationNumber}`);
+    sessionStorage.setItem("applicationNumber", props.data?.ChildDetails[0]?.applicationNumber);
+    console.log(sessionStorage.getItem("applicationNumber"));
+    // if (sessionStorage.getItem("applicationNumber") != null) {
+    //   window.location.assign(`${window.location.origin}/digit-ui/employee/cr/application-details/${sessionStorage.getItem("applicationNumber")}`);
+    // }
   } else {
     return (
       <Banner

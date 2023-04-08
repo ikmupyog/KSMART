@@ -42,11 +42,12 @@ const getPath = (path, params) => {
 };
 
 const DeathCheckPage = ({ onSubmit, value, userType }) => {
+  console.log("valueee",value);
   let isEdit = window.location.href.includes("renew-trade");
   const { t } = useTranslation();
   const history = useHistory();
   const match = useRouteMatch();
-  const { InformationDeath, FamilyInformationDeath, AddressBirthDetails, isEditProperty, cpt } = value;
+  const { InformationDeathAband, FamilyInformationDeath, AddressBirthDetails, isEditProperty, cpt } = value;
   function getdate(date) {
     let newdate = Date.parse(date);
     return `${
@@ -104,12 +105,12 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
             </div>
             <div className="col-md-6">
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                : {t(InformationDeath.DeceasedFirstNameMl || " CR_NOT_RECORDED")}{" "}
-                {t(InformationDeath.DeceasedMiddleNameMl)}{" "}
-                {t(InformationDeath.DeceasedLastNameMl) +
+                : {t(InformationDeathAband.DeceasedFirstNameMl ? InformationDeathAband?.DeceasedFirstNameMl : " CR_NOT_RECORDED")}{" "}
+                {t(InformationDeathAband.DeceasedMiddleNameMl)}{" "}
+                {t(InformationDeathAband.DeceasedLastNameMl) +
                   " / " +
-                  (InformationDeath.DeceasedFirstNameEn ? InformationDeath?.DeceasedFirstNameEn : " CR_NOT_RECORDED")}{" "}
-                {t(InformationDeath.DeceasedMiddleNameEn)} {t(InformationDeath.DeceasedLastNameEn)}
+                  (InformationDeathAband.DeceasedFirstNameEn ? InformationDeathAband?.DeceasedFirstNameEn : " CR_NOT_RECORDED")}{" "}
+                {t(InformationDeathAband.DeceasedMiddleNameEn)} {t(InformationDeathAband.DeceasedLastNameEn)}
               </CardText>
             </div>
           </div>
@@ -119,7 +120,11 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
             </div>
             <div className="col-md-6">
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                : {t(InformationDeath.DeceasedGender.code + "_ML") + " / " + InformationDeath.DeceasedGender.code}
+                : {t(InformationDeathAband.DeceasedGender.code + "_ML" ) +  " / " +  (InformationDeathAband.DeceasedGender.code )}
+                {/* {" "}
+                {t(InformationDeathAband.DeceasedGender.code + "_ML " ? InformationDeathAband?.DeceasedGender.code + "_ML " : " CR_NOT_RECORDED") +
+                  " / " +
+                  (InformationDeathAband.DeceasedGender.code ? InformationDeathAband?.DeceasedGender.code : " CR_NOT_RECORDED")} */}
               </CardText>
             </div>
           </div>
@@ -129,25 +134,25 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
             </div>
             <div className="col-md-6">
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                : {t(convertEpochToDate(InformationDeath.DateOfDeath) ? convertEpochToDate(InformationDeath.DateOfDeath) : " CR_NOT_RECORDED")}{" "}
+                : {t(convertEpochToDate(InformationDeathAband.DateOfDeath) ? convertEpochToDate(InformationDeathAband.DateOfDeath) : " CR_NOT_RECORDED")}{" "}
               </CardText>
             </div>
           </div>
           <div className="row">
             <div className="col-md-12">
-              {InformationDeath.DeathPlace.code === "HOSPITAL" && (
+              {InformationDeathAband.DeathPlace.code === "HOSPITAL" && (
                 <div className="row">
                   <div className="col-md-6">
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_CR_PLACE_OF_DEATH")}`}</CardLabel>
                   </div>
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                      : {t(InformationDeath.DeathPlaceType.hospitalNamelocal) + "/" + InformationDeath.DeathPlaceType.hospitalName}
+                      : {t(InformationDeathAband.DeathPlaceType.hospitalNamelocal) + "/" + InformationDeathAband.DeathPlaceType.hospitalName}
                     </CardText>
                   </div>
                 </div>
               )}
-              {InformationDeath.DeathPlace.code === "INSTITUTION" && (
+              {InformationDeathAband.DeathPlace.code === "INSTITUTION" && (
                 <div className="row">
                   <div className="col-md-6">
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_CR_PLACE_OF_DEATH")}`}</CardLabel>
@@ -155,18 +160,18 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                       :{" "}
-                      {t(InformationDeath.DeathPlaceType.namelocal) +
+                      {t(InformationDeathAband.DeathPlaceType.namelocal) +
                         "," +
-                        InformationDeath.DeathPlaceInstId.institutionNamelocal +
+                        InformationDeathAband.DeathPlaceInstId.institutionNamelocal +
                         "/" +
-                        InformationDeath.DeathPlaceType.code +
+                        InformationDeathAband.DeathPlaceType.code +
                         "," +
-                        InformationDeath.DeathPlaceInstId.institutionName}
+                        InformationDeathAband.DeathPlaceInstId.institutionName}
                     </CardText>
                   </div>
                 </div>
               )}
-              {InformationDeath.DeathPlace.code === "HOME" && (
+              {InformationDeathAband.DeathPlace.code === "HOME" && (
                 <div className="row">
                   <div className="col-md-6">
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_PLACE_OF_DEATH")}`}</CardLabel>
@@ -174,30 +179,30 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                       :{" "}
-                      {t(InformationDeath.DeathPlaceHomeHoueNameMl) +
+                      {t(InformationDeathAband.DeathPlaceHomeHoueNameMl) +
                         "," +
-                        InformationDeath.DeathPlaceHomeLocalityMl +
+                        InformationDeathAband.DeathPlaceHomeLocalityMl +
                         "," +
-                        InformationDeath.DeathPlaceHomeStreetNameMl +
+                        InformationDeathAband.DeathPlaceHomeStreetNameMl +
                         "," +
-                        InformationDeath.DeathPlaceHomePostofficeId.namelocal +
+                        InformationDeathAband.DeathPlaceHomePostofficeId.namelocal +
                         "," +
-                        InformationDeath.DeathPlaceHomePostofficeId.pincode +
+                        InformationDeathAband.DeathPlaceHomePostofficeId.pincode +
                         "/" +
-                        InformationDeath.DeathPlaceHomeHoueNameEn +
+                        InformationDeathAband.DeathPlaceHomeHoueNameEn +
                         "," +
-                        InformationDeath.DeathPlaceHomeLocalityEn +
+                        InformationDeathAband.DeathPlaceHomeLocalityEn +
                         "," +
-                        InformationDeath.DeathPlaceHomeStreetNameEn +
+                        InformationDeathAband.DeathPlaceHomeStreetNameEn +
                         "," +
-                        InformationDeath.DeathPlaceHomePostofficeId.name +
+                        InformationDeathAband.DeathPlaceHomePostofficeId.name +
                         "," +
-                        InformationDeath.DeathPlaceHomePostofficeId.pincode}
+                        InformationDeathAband.DeathPlaceHomePostofficeId.pincode}
                     </CardText>
                   </div>
                 </div>
               )}
-              {InformationDeath.DeathPlace.code === "VEHICLE" && (
+              {InformationDeathAband.DeathPlace.code === "VEHICLE" && (
                 <div className="row">
                   <div className="col-md-6">
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_PLACE_OF_DEATH")}`}</CardLabel>
@@ -208,35 +213,35 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                       {`${
                         t("PDF_CR_VEHICLE_STATEMENT_ONE") +
                         " " +
-                        InformationDeath.VehicleFromplaceMl +
+                        InformationDeathAband.VehicleFromplaceMl +
                         " " +
                         "PDF_CR_VEHICLE_STATEMENT_TWO" +
                         " " +
-                        InformationDeath.VehicleToPlaceMl +
+                        InformationDeathAband.VehicleToPlaceMl +
                         " " +
                         "PDF_CR_VEHICLE_STATEMENT_THREE" +
                         " " +
-                        InformationDeath.VehicleFirstHaltEn +
+                        InformationDeathAband.VehicleFirstHaltEn +
                         " " +
                         "PDF_CR_VEHICLE_STATEMENT_FOUR" +
                         "/ " +
                         "PDF_CR_VEHICLE_STATEMENT_ONE_EN" +
                         " " +
-                        InformationDeath.VehicleFromplaceEn +
+                        InformationDeathAband.VehicleFromplaceEn +
                         " " +
                         "PDF_CR_VEHICLE_STATEMENT_TWO_EN" +
                         " " +
-                        InformationDeath.VehicleToPlaceEn +
+                        InformationDeathAband.VehicleToPlaceEn +
                         "" +
                         "PDF_CR_VEHICLE_STATEMENT_THREE_EN" +
                         " " +
-                        InformationDeath.VehicleFirstHaltEn
+                        InformationDeathAband.VehicleFirstHaltEn
                       }`}
                     </CardText>
                   </div>
                 </div>
               )}
-              {InformationDeath.DeathPlace.code === "PUBLIC_PLACES" && (
+              {InformationDeathAband.DeathPlace.code === "PUBLIC_PLACES" && (
                 <div className="row">
                   <div className="col-md-6">
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_PLACE_OF_DEATH")}`}</CardLabel>
@@ -244,18 +249,18 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                       :{" "}
-                      {t(InformationDeath.DeathPlaceLocalityMl) +
+                      {t(InformationDeathAband.DeathPlaceLocalityMl) +
                         "," +
-                        InformationDeath.DeathPlaceStreetMl +
+                        InformationDeathAband.DeathPlaceStreetMl +
                         "/" +
-                        InformationDeath.DeathPlaceLocalityEn +
+                        InformationDeathAband.DeathPlaceLocalityEn +
                         "," +
-                        InformationDeath.DeathPlaceStreetEn}
+                        InformationDeathAband.DeathPlaceStreetEn}
                     </CardText>
                   </div>
                 </div>
               )}
-              {InformationDeath.DeathPlace.code === "OUTSIDE_JURISDICTION" && (
+              {InformationDeathAband.DeathPlace.code === "OUTSIDE_JURISDICTION" && (
                 <div className="row">
                   <div className="col-md-6">
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_PLACE_OF_DEATH")}`}</CardLabel>

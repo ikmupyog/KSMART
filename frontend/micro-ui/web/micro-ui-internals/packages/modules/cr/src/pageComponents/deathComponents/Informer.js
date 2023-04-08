@@ -221,12 +221,14 @@ const Informer = ({ config, onSelect, userType, formData, isEditDeath }) => {
 
         <div className="row">
           <div className="col-md-12">
-            <CheckBox
-              label={t("CR_INFORMER_DECLARATION_STATEMENT")}
-              onChange={setDeclarationInfo}
-              value={IsDeclarationInformant}
-              checked={IsDeclarationInformant}
-            />
+            <div className="col-md-12">
+              <CheckBox
+                label={t("CR_INFORMER_DECLARATION_STATEMENT")}
+                onChange={setDeclarationInfo}
+                value={IsDeclarationInformant}
+                checked={IsDeclarationInformant}
+              />
+            </div>
           </div>
         </div>
 

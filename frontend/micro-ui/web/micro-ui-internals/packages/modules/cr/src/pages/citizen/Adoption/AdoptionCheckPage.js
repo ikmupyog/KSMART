@@ -225,7 +225,7 @@ import {
                           " , " +
                           AdoptionChildDetails?.wardNo.namecmb +
                           " , " +
-                          AdoptionChildDetails?.adrsPostOffice.name +
+                          AdoptionChildDetails?.adrsPostOffice?.name +
                           " , " +
                           AdoptionChildDetails?.adrsPincode +
                           " / " +
@@ -237,7 +237,7 @@ import {
                           " , " +
                           AdoptionChildDetails?.wardNo.namecmb +
                           " , " +
-                          AdoptionChildDetails?.adrsPostOffice.name +
+                          AdoptionChildDetails?.adrsPostOffice?.name +
                           " , " +
                           AdoptionChildDetails?.adrsPincode}
                       </CardText>
@@ -381,15 +381,15 @@ import {
                     " , " +
                     AdoptionAddressBasePage?.presentInsideKeralaLocalityNameEn +
                     " , " +
-                    AdoptionAddressBasePage?.presentInsideKeralaPostOffice.name+
+                    AdoptionAddressBasePage?.presentInsideKeralaPostOffice?.name+
                     " , " +
                     AdoptionAddressBasePage?.presentInsideKeralaPincode +
                     " , " +
-                    AdoptionAddressBasePage?.presentInsideKeralaDistrict.name +
+                    AdoptionAddressBasePage?.presentInsideKeralaDistrict?.name +
                     " , " +
-                    AdoptionAddressBasePage?.presentaddressStateName.name +
+                    AdoptionAddressBasePage?.presentaddressStateName?.name +
                     " , " +
-                    AdoptionAddressBasePage?.presentaddressCountry.name }
+                    AdoptionAddressBasePage?.presentaddressCountry?.name }
                       </CardText>
                        <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                   :
@@ -399,15 +399,15 @@ import {
                     " , " +
                     AdoptionAddressBasePage?.presentInsideKeralaLocalityNameMl +
                     " , " +
-                    AdoptionAddressBasePage?.presentInsideKeralaPostOffice.namelocal+
+                    AdoptionAddressBasePage?.presentInsideKeralaPostOffice?.namelocal+
                     " , " +
                     AdoptionAddressBasePage?.presentInsideKeralaPincode +
                     " , " +
-                    AdoptionAddressBasePage?.presentInsideKeralaDistrict.namelocal+
+                    AdoptionAddressBasePage?.presentInsideKeralaDistrict?.namelocal+
                     " , " +
-                    AdoptionAddressBasePage?.presentaddressStateName.namelocal+
+                    AdoptionAddressBasePage?.presentaddressStateName?.namelocal+
                     " , " +
-                    AdoptionAddressBasePage?.presentaddressCountry.namelocal}
+                    AdoptionAddressBasePage?.presentaddressCountry?.namelocal}
                   ,
                 </CardText>
               </div>
@@ -430,15 +430,15 @@ import {
                     " , " +
                     AdoptionAddressBasePage?.presentInsideKeralaLocalityNameEn +
                     " , " +
-                    AdoptionAddressBasePage?.presentInsideKeralaPostOffice.name+
+                    AdoptionAddressBasePage?.presentInsideKeralaPostOffice?.name+
                     " , " +
                     AdoptionAddressBasePage?.presentInsideKeralaPincode +
                     " , " +
-                    AdoptionAddressBasePage?.presentInsideKeralaDistrict.name +
+                    AdoptionAddressBasePage?.presentInsideKeralaDistrict?.name +
                     " , " +
-                    AdoptionAddressBasePage?.presentaddressStateName.name +
+                    AdoptionAddressBasePage?.presentaddressStateName?.name +
                     " , " +
-                    AdoptionAddressBasePage?.presentaddressCountry.name }
+                    AdoptionAddressBasePage?.presentaddressCountry?.name }
                       </CardText>
                        <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                   :
@@ -448,15 +448,15 @@ import {
                     " , " +
                     AdoptionAddressBasePage?.presentInsideKeralaLocalityNameMl +
                     " , " +
-                    AdoptionAddressBasePage?.presentInsideKeralaPostOffice.namelocal+
+                    AdoptionAddressBasePage?.presentInsideKeralaPostOffice?.namelocal+
                     " , " +
                     AdoptionAddressBasePage?.presentInsideKeralaPincode +
                     " , " +
-                    AdoptionAddressBasePage?.presentInsideKeralaDistrict.namelocal+
+                    AdoptionAddressBasePage?.presentInsideKeralaDistrict?.namelocal+
                     " , " +
-                    AdoptionAddressBasePage?.presentaddressStateName.namelocal+
+                    AdoptionAddressBasePage?.presentaddressStateName?.namelocal+
                     " , " +
-                    AdoptionAddressBasePage?.presentaddressCountry.namelocal}
+                    AdoptionAddressBasePage?.presentaddressCountry?.namelocal}
                   ,
                 </CardText>
   
@@ -523,15 +523,15 @@ import {
          " , " +
          AdoptionAddressBasePage?.permntInKeralaAdrLocalityNameEn +
          " , " +
-         AdoptionAddressBasePage?.permntInKeralaAdrPostOffice.name+
+         AdoptionAddressBasePage?.permntInKeralaAdrPostOffice?.name+
          " , " +
          AdoptionAddressBasePage?.permntInKeralaAdrPincode +
          " , " +
-         AdoptionAddressBasePage?.permntInKeralaAdrDistrict.name +
+         AdoptionAddressBasePage?.permntInKeralaAdrDistrict?.name +
          " , " +
-         AdoptionAddressBasePage?.permtaddressStateName.name +
+         AdoptionAddressBasePage?.permtaddressStateName?.name +
          " , " +
-         AdoptionAddressBasePage?.permtaddressCountry.name }
+         AdoptionAddressBasePage?.permtaddressCountry?.name }
         
          </CardText>
          <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
@@ -543,15 +543,15 @@ import {
          " , " +
          AdoptionAddressBasePage?.permntInKeralaAdrLocalityNameMl +
          " , " +
-         AdoptionAddressBasePage?.permntInKeralaAdrPostOffice.name+
+         AdoptionAddressBasePage?.permntInKeralaAdrPostOffice?.name+
          " , " +
          AdoptionAddressBasePage?.permntInKeralaAdrPincode +
          " , " +
-         AdoptionAddressBasePage?.permntInKeralaAdrDistrict.namelocal+
+         AdoptionAddressBasePage?.permntInKeralaAdrDistrict?.namelocal+
          " , " +
-         AdoptionAddressBasePage?.permtaddressStateName.namelocal+
+         AdoptionAddressBasePage?.permtaddressStateName?.namelocal+
          " , " +
-         AdoptionAddressBasePage?.permtaddressCountry.namelocal}
+         AdoptionAddressBasePage?.permtaddressCountry?.namelocal}
        ,
        </CardText>
    </div>

@@ -18,7 +18,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
   setpermntOutsideKeralaLocalityNameMl, permntOutsideKeralaStreetNameEn, setpermntOutsideKeralaStreetNameEn,
   permntOutsideKeralaStreetNameMl, setpermntOutsideKeralaStreetNameMl, permntOutsideKeralaPostOfficeEn,
   setpermntoutsideKeralaPostOfficeEn, permntOutsideKeralaPostOfficeMl, setpermntoutsideKeralaPostOfficeMl,
-  isEditBirth = false, isEditDeath = false, isEditStillBirth = false, isEditAdoption,
+  isEditBirth = false, isEditDeath = false, isEditStillBirth = false, isEditAdoption,isEditBirthNAC=false
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
