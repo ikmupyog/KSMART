@@ -90,16 +90,23 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
             // GroomDetails groomDetails =marriage.getGroomDetails();
             // GroomDetails groomDetailsEnc =  encryptionDecryptionUtil.encryptObject(groomDetails, "BndDetail", GroomDetails.class);
             // groomDetails.setAadharno(groomDetailsEnc.getAadharno());
-            // groomDetails.setMotherAadharno(groomDetailsEnc.getMotherAadharno());
-            // groomDetails.setFatherAadharno(groomDetailsEnc.getFatherAadharno());
-            // groomDetails.setGuardianAadharno(groomDetailsEnc.getGuardianAadharno());
-            
+            // if (groomDetails.getParentGuardian().equals(MarriageConstants.PARENT)){
+            //     groomDetails.setMotherAadharno(groomDetailsEnc.getMotherAadharno());
+            //     groomDetails.setFatherAadharno(groomDetailsEnc.getFatherAadharno());
+            // }
+            // else if(groomDetails.getParentGuardian().equals(MarriageConstants.GUARDIAN)){
+            //     groomDetails.setGuardianAadharno(groomDetailsEnc.getGuardianAadharno());
+            // }
             // BrideDetails brideDetails =marriage.getBrideDetails();
             // BrideDetails brideDetailsEnc =  encryptionDecryptionUtil.encryptObject(brideDetails, "BndDetail", BrideDetails.class);
             // brideDetails.setAadharno(brideDetailsEnc.getAadharno());
-            // brideDetails.setMotherAadharno(brideDetailsEnc.getMotherAadharno());
-            // brideDetails.setFatherAadharno(brideDetailsEnc.getFatherAadharno());
-            // brideDetails.setGuardianAadharno(brideDetailsEnc.getGuardianAadharno());
+            // if (brideDetails.getParentGuardian().equals(MarriageConstants.PARENT)){
+            //     brideDetails.setMotherAadharno(brideDetailsEnc.getMotherAadharno());
+            //     brideDetails.setFatherAadharno(brideDetailsEnc.getFatherAadharno());
+            // }
+            // else if (brideDetails.getParentGuardian().equals(MarriageConstants.GUARDIAN)){
+            //     brideDetails.setGuardianAadharno(brideDetailsEnc.getGuardianAadharno());
+            // }
 
             // WitnessDetails witnessDetails =marriage.getWitnessDetails();
             // WitnessDetails witnessDetailsEnc =  encryptionDecryptionUtil.encryptObject(witnessDetails, "BndDetail", WitnessDetails.class);

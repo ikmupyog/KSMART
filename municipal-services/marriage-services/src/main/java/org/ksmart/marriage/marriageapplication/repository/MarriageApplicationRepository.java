@@ -43,7 +43,7 @@ public class MarriageApplicationRepository {
     private final MarriageRegistryRowMapper marriageRegistryRowMapper;
 
     private final JdbcTemplate jdbcTemplate;
-    private final WorkflowIntegrator workflowIntegrator;
+   // private final WorkflowIntegrator workflowIntegrator;
     private final MarriageMdmsUtil util;
     private final MarriageMDMSValidator mdmsValidator;
     private final MarriageDocumentRowMapper documentRowMapper;
@@ -55,7 +55,8 @@ public class MarriageApplicationRepository {
     public MarriageApplicationRepository(MarriageProducer producer, MarriageApplicationConfiguration marriageApplicationConfiguration,
                                          JdbcTemplate jdbcTemplate, MarriageDetailsEnrichment marriageDetailsEnrichment, MarriageApplicationQueryBuilder marriageQueryBuilder,
                                          MarriageApplicationRowMapper marriageApplicationRowMapper,
-                                         MarriageRegistryRowMapper marriageRegistryRowMapper, WorkflowIntegrator workflowIntegrator,
+                                         MarriageRegistryRowMapper marriageRegistryRowMapper,
+                                         // WorkflowIntegrator workflowIntegrator,
                                          MarriageMdmsUtil util,
                                          MarriageMDMSValidator mdmsValidator,MarriageDocumentRowMapper documentRowMapper) {
         this.producer = producer;
@@ -65,7 +66,7 @@ public class MarriageApplicationRepository {
         this.marriageQueryBuilder = marriageQueryBuilder;
         this.marriageApplicationRowMapper = marriageApplicationRowMapper;
         this.marriageRegistryRowMapper = marriageRegistryRowMapper;
-        this.workflowIntegrator = workflowIntegrator;
+       // this.workflowIntegrator = workflowIntegrator;
         this.util = util;
         this.mdmsValidator = mdmsValidator;
         this.documentRowMapper = documentRowMapper;

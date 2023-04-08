@@ -132,7 +132,9 @@ public class MarriageConstants {
 
        public static final String WARD="TenantBoundary";
 
-public static final String PARENT="PARENT";
+       public static final String PARENT="PARENT";
+
+       public static final String GUARDIAN="GUARDIAN";
 
        public static final String BND_MODULE_NAME = "birth-death-service";
 
