@@ -171,7 +171,7 @@ const DeathOutsideJurisdiction = ({
 
   return (
     <React.Fragment>
-      <FormStep
+      {/* <FormStep
         t={t}
         config={config}
         onSelect={goNext}
@@ -185,7 +185,8 @@ const DeathOutsideJurisdiction = ({
           !PlaceOfBurialMl ||
           !PlaceOfBurialEn
         }
-      >
+      > */}
+      <div className="col-md-12">
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-3">
@@ -206,14 +207,7 @@ const DeathOutsideJurisdiction = ({
             </div>
             <div className="col-md-3">
               <CardLabel>{t("CR_STATE_REGION_PROVINCE")}</CardLabel>
-              <Dropdown
-                t={t}
-                optionKey="name"
-                isMandatory={false}
-                option={cmbState}
-                selected={DeathPlaceState}
-                select={setSelectDeathPlaceState}
-              />
+              <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbState} selected={DeathPlaceState} select={setSelectDeathPlaceState} />
             </div>
             <div className="col-md-3">
               <CardLabel>
@@ -363,7 +357,8 @@ const DeathOutsideJurisdiction = ({
             </div>
           </div>
         </div>
-      </FormStep>
+      </div>
+      {/* </FormStep> */}
     </React.Fragment>
   );
 };

@@ -194,7 +194,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     }
     setBrideImage(event.target.files[0]);
   };
-
+  const [AgeValidationMsg, setAgeValidationMsg] = useState(false);
   const onSkip = () => onSelect();
 
   function setSelectExpirationTypeHusband(value) {
@@ -210,6 +210,8 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
       setExpirationType(value.code);
     }
   }
+
+  console.log({ expirationType });
 
   // function setSelectmarraigeDOM(value) {
   //   setmarraigeDOM(value);
@@ -231,32 +233,42 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   //   }
   // }
   function setSelectwitness1AadharNo(e) {
-    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12)
-   
-    if (newValue === witness2AdharNo) {
-      setwitness1AadharNo("");
-      setAadharError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 3000);
-    } else {
-      setwitness1AadharNo(newValue);
+    if (e.target.value.trim().length >= 0) {
+      setwitness1AadharNo(
+        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
+      );
     }
+    // const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12)
+
+    // if (newValue === witness2AdharNo) {
+    //   setwitness1AadharNo("");
+    //   setAadharError(true);
+    //     setToast(true);
+    //     setTimeout(() => {
+    //       setToast(false);
+    //     }, 3000);
+    // } else {
+    //   setwitness1AadharNo(newValue);
+    // }
   }
   function setSelectwitness2AdharNo(e) {
-    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12)
-   
-    if (newValue === witness1AadharNo) {
-      setwitness2AdharNo("");
-      setAadharError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 3000);
-    } else {
-      setwitness2AdharNo(newValue);
+    if (e.target.value.trim().length >= 0) {
+      setwitness2AadharNo(
+        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
+      );
     }
+    // const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12)
+
+    // if (newValue === witness1AadharNo) {
+    //   setwitness2AdharNo("");
+    //   setAadharError(true);
+    //     setToast(true);
+    //     setTimeout(() => {
+    //       setToast(false);
+    //     }, 3000);
+    // } else {
+    //   setwitness2AdharNo(newValue);
+    // }
     // if (e.target.value.trim().length >= 0) {
     //   setwitness2AdharNo(
     //     e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
@@ -292,25 +304,25 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     // }
   }
   function setSelectwitness1NameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setwitness1NameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setwitness1NameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
-    // if (e.target.value.length === 51) {
-    //   return false;
-    //   // window.alert("Username shouldn't exceed 10 characters")
-    // } else {
-    //   setwitness1NameEn(
-    //     e.target.value.replace(
-    //       /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
-    //       ""
-    //     )
-    //   );
-    // }
-  
+  // if (e.target.value.length === 51) {
+  //   return false;
+  //   // window.alert("Username shouldn't exceed 10 characters")
+  // } else {
+  //   setwitness1NameEn(
+  //     e.target.value.replace(
+  //       /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
+  //       ""
+  //     )
+  //   );
+  // }
+
   function setSelectwitness2NameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setwitness2NameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setwitness2NameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
     // if (e.target.value.length === 51) {
     //   return false;
@@ -324,26 +336,67 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     //   );
     // }
   }
+
   function setSelectwitness1Age(e) {
-    if (e.target.value.length === 3) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
+    setwitness1Age(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 2));
+    if (e.target.value < 18) {
+      setAgeValidationMsg(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+      setwitness1Age(null);
     } else {
-      setwitness1Age(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' a-zA-Z]/gi, ""));
+      setAgeValidationMsg(false);
     }
-    
+    // if (e.target.value.length === 3) {
+    //   return false;
+    //   // window.alert("Username shouldn't exceed 10 characters")
+    // } else {
+    //   if(e.target.value >= 18){
+    //    setwitness1Age(e.target.value);
+    //   }
+    //   else{
+    //     return false;
+    //   }
+    // }
+    // if (e.target.value.length ===3 ) {
+    //   console.log("length="+e.target.value.length);
+    //   return false;
+    //   // window.alert("Username shouldn't exceed 10 characters")
+    // } else {
+    //   if(e.target.value >= 18){
+    //     console.log("value="+e.target.value);
+    //     setwitness1Age(e.target.value);
+    //   }
+    //   else{
+    //     return false;
+    //   }
+
+    // }
   }
   function setSelectwitness2Age(e) {
-    if (e.target.value.length === 3) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
+    setwitness2Age(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 2));
+    if (e.target.value < 18) {
+      setAgeValidationMsg(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+      setwitness2Age(null);
     } else {
-      setwitness2Age(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' a-zA-Z]/gi, ""));
+      setAgeValidationMsg(false);
     }
+    // if (e.target.value.length === 3) {
+    //   return false;
+    //   // window.alert("Username shouldn't exceed 10 characters")
+    // } else {
+    //   setwitness2Age(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' a-zA-Z]/gi, ""));
+    // }
   }
   function setSelectwitness1AddresSEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setwitness1AddresSEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setwitness1AddresSEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
     // if (e.target.value.length === 51) {
     //   return false;
@@ -358,8 +411,8 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     // }
   }
   function setSelectwitness2AddresSEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setwitness2AddresSEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setwitness2AddresSEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
     // if (e.target.value.length === 51) {
     //   return false;
@@ -375,7 +428,9 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   }
   function setSelectwitness1Mobile(e) {
     if (e.target.value.trim().length >= 0) {
-      setwitness1Mobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
+      setwitness1Mobile(
+        e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 10)
+      );
     }
     // setwitness1Mobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 10));
     // // if (e.target.value.length === 11) {
@@ -387,7 +442,9 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   }
   function setSelectwitness2Mobile(e) {
     if (e.target.value.trim().length >= 0) {
-      setwitness2Mobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
+      setwitness2Mobile(
+        e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 10)
+      );
     }
     // setwitness2Mobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 10));
     // // if (e.target.value.length === 11) {
@@ -479,10 +536,12 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     setPreviewGroomImage(previewGroomUrl);
   }, [groomImage]);
 
-  console.log({ groomImage });
+  // console.log({ groomImage });
   // console.log({ brideImage })
-  console.log({ previewGroomImage });
+  // console.log({ previewGroomImage });
   // console.log({ previewBrideImage })
+
+  console.log("Witness", formData);
 
   if (isLoading || isTalukLoading || isVillageLoading || isLBTypeLoading) {
     return <Loader></Loader>;
@@ -528,7 +587,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                         inputProps={{
                           maxLength: 12,
                         }}
-                        {...(validation = { pattern: "^[0-9]{12}$", isRequired: true, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                        {...(validation = { pattern: "^[0-9]{12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                       />
                     </div>
                     <div className="col-md-4">
@@ -565,6 +624,9 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                         onChange={setSelectwitness1Age}
                         disable={isDisableEdit}
                         placeholder={`${t("CR_WITNESS1_AGE")}`}
+                        inputProps={{
+                          maxLength: 2,
+                        }}
                         {...(validation = { pattern: "^[0-9]{2}$", type: "text", isRequired: true, title: t("CS_INVALID_AGE") })}
                       />
                     </div>
@@ -604,7 +666,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                         onChange={setSelectwitness1Mobile}
                         disable={isDisableEdit}
                         placeholder={`${t("CR_WITNESS1_MOBILE_NO")}`}
-                        {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })}
+                        {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })}
                       />
                     </div>
                     <div className="col-md-2">
@@ -730,7 +792,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                         onChange={setSelectwitness2Mobile}
                         disable={isDisableEdit}
                         placeholder={`${t("CR_WITNESS2_MOBILE_NO")}`}
-                        {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })}
+                        {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })}
                       />
                     </div>
                     <div className="col-md-2">
@@ -772,6 +834,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                         type={"text"}
                         optionKey="i18nKey"
                         name="husbandname"
+                        value={`${formData?.GroomDetails?.groomFirstnameEn} ${formData?.GroomDetails?.groomMiddlenameEn} ${formData?.GroomDetails?.groomLastnameEn}`}
                         placeholder={t("CR_HUSBAND_NAME")}
                         {...(validation = { isRequired: true })}
                       />
@@ -803,6 +866,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                         type={"text"}
                         optionKey="i18nKey"
                         name="wifename"
+                        value={`${formData?.BrideDetails?.brideFirstnameEn} ${formData?.BrideDetails?.brideMiddlenameEn} ${formData?.BrideDetails?.brideLastnameEn}`}
                         placeholder={t("CR_WIFE_NAME")}
                         {...(validation = { isRequired: true })}
                       />
@@ -896,12 +960,23 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                 </div>
               </div>
               {toast && (
-          <Toast
-            error={AadharError}
-            label={AadharError ? (AadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`) : setToast(false)) : setToast(false)}
-            onClose={() => setToast(false)}
-          />
-        )}
+                <Toast
+                  error={AadharError || AgeValidationMsg}
+                  label={
+                    AadharError || AgeValidationMsg
+                      ? AadharError
+                        ? t(`CS_COMMON_INVALID_AADHAR_NO`)
+                        : AgeValidationMsg
+                        ? t(`CR_INVALID_AGE`)
+                        : setToast(false)
+                      : setToast(false)
+                  }
+                  onClose={() => setToast(false)}
+                  // error={AadharError}
+                  // label={AadharError ? (AadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`) : setToast(false)) : setToast(false)}
+                  // onClose={() => setToast(false)}
+                />
+              )}
             </FormStep>
           </div>
         </div>
@@ -909,7 +984,15 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
           <PopUp>
             <div className="popup-module" style={{ borderRadius: "8px" }}>
               <div style={{ margin: "20px", padding: "20px", border: "1px solid grey", borderRadius: "8px" }}>
-                <div style={{ fontSize: "18px", margin: "10px" }}>Do you want to Continue?</div>
+                <div style={{ fontSize: "18px", margin: "10px" }}>
+                  You opted that{" "}
+                  {isExpiredHusband &&
+                    `${formData?.GroomDetails?.groomFirstnameEn} ${formData?.GroomDetails?.groomMiddlenameEn} ${formData?.GroomDetails?.groomLastnameEn} `}
+                  {isExpiredWife &&
+                    `${formData?.BrideDetails?.brideFirstnameEn} ${formData?.BrideDetails?.brideMiddlenameEn} ${formData?.BrideDetails?.brideLastnameEn} `}
+                  has {expirationType === "ALIVE" && "Alive"}
+                  {expirationType === "EXPIRED" && "Expired"}, Do you want to continue?
+                </div>
                 <div style={{ display: "flex", justifyContent: "flex-end", columnGap: "8px" }}>
                   <button
                     style={{
@@ -920,11 +1003,20 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                     }}
                     onClick={() => {
                       if (isExpiredHusband) {
-                        setExpirationTypeHusband(expirationType);
+                        if (expirationType === "EXPIRED") {
+                          setExpirationTypeHusband(true);
+                        } else {
+                          setExpirationTypeHusband(false);
+                        }
                         setIsExpiredHusband(false);
                         setIsExpiredWife(false);
                       } else {
-                        setExpirationTypeWife(expirationType);
+                        if (expirationType === "EXPIRED") {
+                          setExpirationTypeWife(true);
+                        } else {
+                          setExpirationTypeWife(false);
+                        }
+
                         setIsExpiredHusband(false);
                         setIsExpiredWife(false);
                       }

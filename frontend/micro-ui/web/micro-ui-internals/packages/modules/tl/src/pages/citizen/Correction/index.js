@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react"
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
 import { Redirect, Route, Switch, useHistory, useLocation, useRouteMatch } from "react-router-dom";
@@ -19,22 +19,26 @@ const CorrectionTradeLicence = ({ parentRoute,isRenewal }) => {
   let isReneworEditTrade = window.location.href.includes("/renew-trade/") || window.location.href.includes("/edit-application/")
 
   const stateId = Digit.ULBService.getStateId();
+  const [errorMessage, setErrorMessage] = useState("");
   let { data: newConfig, isLoading } = Digit.Hooks.tl.useMDMS.getFormConfig(stateId, {});
 
   const goNext = (skipStep, index, isAddMultiple, key, isPTCreateSkip) => {
+    console.log("safmsdkssssfff");
     let currentPath = pathname.split("/").pop(),
       nextPage;
     let { nextStep = {} } = config.find((routeObj) => routeObj.route === currentPath);
     let { isCreateEnabled : enableCreate = true } = config.find((routeObj) => routeObj.route === currentPath);
     if (typeof nextStep == "object" && nextStep != null) {
       let validation = true;
+      console.log("safmsdkfff");
       paramscorrected?.TradeDetails?.tradeLicenseDetail?.tradeUnits.map(tUnit => {
-        if(tUnit?.businessType.lenth === 0){
+        console.log("safmsdkf"+JSON.stringify(tUnit));
+        if(tUnit?.businessType.code === ""){
           setErrorMessage(t("TL_INVALID_BUSINESS_TYPE"));
           validation = false;
           return validation;
         }
-        if(tUnit?.businessSubtype.lenth === 0){
+        if(tUnit?.businessSubtype.code === ""){
           setErrorMessage(t("TL_INVALID_BUSINESS_SUBTYPE"));
           validation = false;
           return validation;

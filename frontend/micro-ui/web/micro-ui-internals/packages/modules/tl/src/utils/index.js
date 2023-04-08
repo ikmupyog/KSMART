@@ -734,7 +734,7 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
           unitFlag = true;         
         }
       }
-      else if(unitNew.hasOwnProperty('id') === false) {
+      else if(unitNew.id === null) {
         tradeUnitCorr.push({
             id : null,
             active: true,
@@ -895,14 +895,13 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
   
   applicationDocuments =  dataCorr?.tradeLicenseDetail?.applicationDocuments;
 
-  if((data?.tradeName !== dataCorr?.tradeName)||(data?.licenseUnitNameLocal !== dataCorr?.licenseUnitNameLocal)){
-    tradeNameCorr = dataCorr?.tradeName;
+  if((data?.tradeName !== dataCorr?.licenseUnitName)||(data?.licenseUnitNameLocal !== dataCorr?.licenseUnitNameLocal)){
+    tradeNameCorr = dataCorr?.licenseUnitName;
     licenseUnitNameLocalCorr = dataCorr?.licenseUnitNameLocal;
-    tradeNameHistory = data?.tradeName;
+    tradeNameHistory = data?.licenseUnitName;
     licenseUnitNameLocalHistory = data?.licenseUnitNameLocal;
     isEdit = true;
   }
-  
   const formdata = {
     LicenseCorrection: [
       {

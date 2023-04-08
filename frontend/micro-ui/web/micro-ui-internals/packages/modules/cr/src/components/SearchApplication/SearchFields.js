@@ -67,7 +67,7 @@ const SearchFields = ({register, control, reset, tenantId, t,previousPage ,appli
                     />
         </SearchField>} */}
         <SearchField>
-            <label  style={mystyle}>{t("CR_SEARCH_FROM_DATE")}</label>
+            <label  style={mystyle}>{t("CR_FROM_DATE")}</label>
             <Controller
            
                 render={(props) => <DatePicker  date={props.value} onChange={props.onChange} />}
@@ -76,7 +76,7 @@ const SearchFields = ({register, control, reset, tenantId, t,previousPage ,appli
                 />
         </SearchField>
         <SearchField>
-            <label style={mystyle}>{t("CR_SEARCH_TO_DATE")}</label>
+            <label style={mystyle}>{t("CR_TO_DATE")}</label>
             <Controller
                 render={(props) => <DatePicker   date={props.value} onChange={props.onChange} />}
                 name="toDate"
@@ -105,7 +105,7 @@ const SearchFields = ({register, control, reset, tenantId, t,previousPage ,appli
             />
         </SearchField>} */}
         <SearchField>
-            <label>{t("CR_SEARCH_MOTHER_NAME")}</label>
+            <label>{t("CR_BIRTH_MOTHERNAME_LABEL")}</label>
             <TextInput  name="tradeName" inputRef={register({})}/>
         </SearchField>
         <SearchField className="submit">

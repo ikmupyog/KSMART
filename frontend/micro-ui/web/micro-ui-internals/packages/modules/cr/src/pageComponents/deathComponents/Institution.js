@@ -111,7 +111,8 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
   }
   return (
     <React.Fragment>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled = {!DeathPlaceType}>  
+      {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled = {!DeathPlaceType}>   */}
+      <div>
       <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -160,7 +161,8 @@ const Institution = ({ config, onSelect, userType, formData, DeathPlaceType, sel
           </div>
         </div>
         </div>
-      </FormStep>
+      {/* </FormStep> */}
+      </div>
     </React.Fragment>
   );
 };

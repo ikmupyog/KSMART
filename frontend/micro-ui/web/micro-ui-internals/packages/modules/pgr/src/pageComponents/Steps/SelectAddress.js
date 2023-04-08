@@ -4,7 +4,9 @@ import PGRTimeline from "../../components/PGRTimeline";
 
 const SelectAddress = ({ t, config, onSelect, value }) => {
   const allCities = Digit.Hooks.pgr.useTenants();
-  const cities = value?.pincode ? allCities.filter((city) => city?.pincode?.some((pin) => pin == value["pincode"])) : allCities;
+  const cities = value.pincode ? allCities.filter((city) => city.pincode.some(pin => pin == value.pincode)) : allCities;
+
+  const { locality_complaint } = value;
 
   const [selectedCity, setSelectedCity] = useState(() => {
     const { city_complaint } = value;
@@ -14,24 +16,26 @@ const SelectAddress = ({ t, config, onSelect, value }) => {
   const locale = Digit.SessionStorage.get("locale");
 
   const [localities, setLocalities] = useState(null);
-  const [landmark, setLandmark] = useState("");
+  const [landmark, setLandmark] = useState(value?.landmark || "");
 
   const [selectedLocality, setSelectedLocality] = useState(() => {
-    const { locality_complaint } = value;
     return locality_complaint ? locality_complaint : null;
   });
 
+  const pinCity = allCities.find((city) => city.pincode.some(pin => pin == value.pincode))
   const CitizenCityId = Digit.ULBService.getCitizenCurrentTenant(true);
-
 
   useEffect(() => {
     const city = allCities.find(item => item.code === CitizenCityId)
-    if (CitizenCityId) {
+    if (value.pincode) {
+      setSelectedCity(pinCity)
+    } else {
       setSelectedCity(city)
+
     }
   }, [])
 
-  const { data: fetchedLocalities } = Digit.Hooks.useBoundaryLocalities(CitizenCityId || selectedCity?.code, "revenue", { enabled: !!selectedCity, }, t);
+  const { data: fetchedLocalities } = Digit.Hooks.useBoundaryLocalities(pinCity?.code || CitizenCityId, "revenue", { enabled: !!selectedCity, }, t);
 
   useEffect(() => {
     if (fetchedLocalities) {
@@ -71,7 +75,7 @@ const SelectAddress = ({ t, config, onSelect, value }) => {
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <PGRTimeline currentStep={3} /> : null}
-      <FormStep config={config} onSelect={onSubmit} t={t} isDisabled={selectedLocality ? false : true}>
+      <FormStep config={config} onSelect={onSubmit} t={t} isDisabled={selectedLocality && landmark ? false : true}>
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">

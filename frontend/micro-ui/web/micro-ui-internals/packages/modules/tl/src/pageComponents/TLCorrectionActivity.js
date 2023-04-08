@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useReducer, useEffect } from "react";
-import { CardLabel, TextInput, Dropdown, LinkButton, RadioButtons, CardText, DatePicker, MultiSelectDropdown, RemoveableTag } from "@egovernments/digit-ui-react-components";
+import { CardLabel, TextInput, Dropdown, LinkButton, RadioButtons, CardText, DatePicker, MultiSelectDropdown, RemoveableTag, Toast } from "@egovernments/digit-ui-react-components";
 import { sortDropdownNames } from "../utils/index";
 import { convertEpochToDate } from '../utils/index';
 import { isUndefined } from "lodash";
@@ -11,6 +11,8 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
   const stateId = Digit.ULBService.getStateId();
   const [subType, setSubType] = useState([]);
   const [minDate, setMinDate] = useState('2018-01-01');
+  const [toast, setToast] = useState(false);
+  
   let validation = {};
   let BusinessCategoryMenu = [];
   let BusinessTypeMenu = [];
@@ -103,6 +105,8 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
         new Set(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits.map(type => type.businessType))
       );      
 
+      console.log("type"+fields[0]?.businessCategory  );
+      console.log(JSON.stringify( formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits));
       if(businessType && (fields[0]?.businessCategory === undefined || fields[0]?.businessCategory === "")) {
         let category = null;
         category = BusinessCategoryMenu.filter((category) => category?.code.includes(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory))[0];
@@ -118,6 +122,10 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
                 bustype = getBusinessTypeMenu(category).filter((type) => type?.code.includes(businessType))[0];
                 bussubtyp = getBusinessSubTypeMenu(bustype).filter((type) => type?.code.includes(unit?.businessSubtype))[0];
               }
+              if(bussubtyp===undefined || bussubtyp===""){
+                bussubtyp={"i18nKey":"","code":""};
+              }
+              console.log("isssueeeeeeeeeeeeeee firing"+JSON.stringify(bussubtyp));
               setFeilds([
                 {
                   id: unit.id,
@@ -268,15 +276,15 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
             "active":true,
             "unit":null,"uom":null
           });
-        units.map(unit =>{
-            let subCode = + "{" +subUnit.code.split(".")[0] + "." + subUnit.code.split(".")[1]+ "}";
-            if( subCode === unit.businessType.code){
-              if(!subUnits.includes(unit.businessSubtype.code)){
-                tradeUnits.splice(unit.id, 1);
-                tradeUnits.push({ "id": unit.id,"active":false});
-              }
-            }
-          }) 
+        // units.map(unit =>{
+        //     let subCode = + "{" +subUnit.code.split(".")[0] + "." + subUnit.code.split(".")[1]+ "}";
+        //     if( subCode === unit.businessType.code){
+        //       if(!subUnits.includes(unit.businessSubtype.code)){
+        //         tradeUnits.splice(unit.id, 1);
+        //         tradeUnits.push({ "id": unit.id,"active":false});
+        //       }
+        //     }
+        //   }) 
       })
       if(tradeUnits[0]?.businessCategory){
         Digit.SessionStorage.set("activityedit", true);
@@ -422,7 +430,14 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
                 })}
               </div>
             </div>
-            <div className="col-md-1">
+            {toast && (
+                    <Toast
+                        error={toast}
+                        label={errorMessage}
+                        onClose={() => setToast(false)}
+                    />
+                )}{""}
+            {/* <div className="col-md-1">
               <CardLabel>Add More</CardLabel>
               <LinkButton
                 label={
@@ -432,7 +447,7 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
                 }
                 onClick={(e) => dispatchBusinessType({ type: "ADD_NEW_BUSINESSTYPE" })}
               />
-            </div>
+            </div> */}
           </div>
           
         )

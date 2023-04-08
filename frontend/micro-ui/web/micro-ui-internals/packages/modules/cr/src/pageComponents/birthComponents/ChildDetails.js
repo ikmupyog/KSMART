@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton, Loader, Toast, SubmitBar } from "@egovernments/digit-ui-react-components";
+import { CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton, Loader, Toast } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
@@ -13,7 +13,8 @@ import FormStep from "../../../../../react-components/src/molecules/FormStep";
 const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = false }) => {
   // console.log(JSON.stringify(formData));  
   // console.log(formData);
-  // console.log(isEditBirth);
+  // console.log(isEditBirth);  
+  sessionStorage.removeItem("applicationNumber");
   const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
   const [workFlowCode, setWorkFlowCode] = useState(formData?.ChildDetails?.workFlowCode);

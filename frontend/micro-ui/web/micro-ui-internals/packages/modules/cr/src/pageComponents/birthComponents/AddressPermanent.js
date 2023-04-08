@@ -6,6 +6,7 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
     permtaddressStateName, setpermtaddressStateName, value, setValue, countryvalue, setCountryValue,
     isPrsentAddress, setIsPrsentAddress, countryValuePermanent, setCountryValuePermanent,
     valuePermanent, setValuePermanent, isEditBirth = false, isEditDeath = false,isEditStillBirth = false,isEditAdoption,
+    isEditBirthNAC=false
     // isInitialRender, setIsInitialRender
 }) => {
     const stateId = Digit.ULBService.getStateId();

@@ -15,6 +15,8 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
     Spouse["birth-death-service"].spouseType.map((ob) => {
       cmbspouse.push(ob);
     });
+    const [isEditDeathPageComponents, setIsEditDeathPageComponents] = useState(false);
+
   const [SpouseType, setSpouseType] = useState(
     formData?.FamilyInformationDeath?.SpouseType?.code
       ? formData?.FamilyInformationDeath?.SpouseType
@@ -256,7 +258,13 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
   function setSelectFamilyEmailId(e) {
     setFamilyEmailId(e.target.value);
   }
-
+  if (isEditDeath) {
+    if (formData?.FamilyInformationDeath?.SpouseType != null) {
+      if (cmbspouse.length > 0 && (SpouseType === undefined || SpouseType === "")) {
+        setSpouseType(cmbspouse.filter((cmbspouse) => cmbspouse.code === formData?.FamilyInformationDeath?.SpouseType));
+      }
+    }
+  }
   const goNext = () => {
     // sessionStorage.setItem("SpouseType", SpouseType ? SpouseType.code : null);
     // sessionStorage.setItem("SpouseNameEN", SpouseNameEN ? SpouseNameEN : null);
@@ -299,6 +307,14 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
   //       setSpouseType(cmbspouse.filter((cmbspouse) => cmbspouse.code === formData?.FamilyInformationDeath?.SpouseType)[0]);
   //     }
   //   }
+  // }
+ 
+  // if (
+  //   isEditDeath &&
+  //   isEditDeathPageComponents === false &&
+  //   (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
+  // ) {
+    
   // }
 
   // const handleBlur = (event) => {
