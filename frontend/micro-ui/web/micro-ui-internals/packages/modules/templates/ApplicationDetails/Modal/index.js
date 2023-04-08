@@ -3,9 +3,11 @@ import FSMActionModal from "./FSMActionModal";
 import PTActionModal from "./PTActionModal";
 import TLActionModal from "./TLActionModal";
 import BirthActionModal from "./BirthActionModal";
+import StillBirthActionModal from "./StillBirthActionModal";
 import AdoptionActionModal from "./AdoptionActionModal";
 import AbandonedActionModal from "./AbandonedActionModal";
 import DeathActionModal from "./DeathActionModal";
+import DeathNACActionModal from "./DeathNACActionModal";
 import DFMActionModal from "./DFMActionModal";
 import BPAREGActionModal from "./BPAREGActionModal";
 import BPAActionModal from "./BPAActionModal";
@@ -20,6 +22,10 @@ const ActionModal = (props) => {
   || props?.businessService.includes("21BIRTHHOME") || props?.businessService.includes("BIRTHHOME30") || props?.businessService.includes("BIRTHHOMEONEYEAR")) {
     return <BirthActionModal {...props} />;
   }
+  if (props?.businessService.includes("STILLBIRTHHOSP")
+  || props?.businessService.includes("STILLBIRTHHOME") ){
+    return <StillBirthActionModal {...props} />;
+  }
   if(props?.businessService.includes("ADOPTIONHOME")){
     return <AdoptionActionModal {...props} />;
   }
@@ -29,6 +35,9 @@ const ActionModal = (props) => {
   }
   if (props?.businessService.includes("DEATHABANDONED") || props?.businessService.includes("DEATHHOSP")) {
     return <AbandonedActionModal {...props} />;
+  }
+  if (props?.businessService.includes("NACAPP")) {
+    return <DeathNACActionModal {...props} />;
   }
   if (props?.businessService.includes("NewDFM")) {
     return <DFMActionModal {...props} />;

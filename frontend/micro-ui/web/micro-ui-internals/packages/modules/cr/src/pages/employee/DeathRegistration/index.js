@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Route, Switch, useRouteMatch,useLocation,useHistory,Redirect } from "react-router-dom";
-import { PrivateRoute, BreadCrumb,Component } from "@egovernments/digit-ui-react-components";
+import { Route, Switch, useRouteMatch, useLocation, useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { newConfig as newConfigCR } from "../../../config/config";
 import { useQueryClient } from "react-query";
 
-const CreateDeathRegistration = ({ parentUrl }) => {
+const CreateDeathEmp = ({ parentUrl }) => {
   const { t } = useTranslation();
   const { path } = useRouteMatch();
   const match = useRouteMatch();  
@@ -83,7 +82,7 @@ const CreateDeathRegistration = ({ parentUrl }) => {
               t={t}
               formData={params}
               onAdd={handleMultiple}
-              userType="citizen"
+              userType="employee"
             />
            </Route>  
           
@@ -95,12 +94,9 @@ const CreateDeathRegistration = ({ parentUrl }) => {
       <Route path={`${match.path}/acknowledgement`}>
         <DeathAcknowledgement data={params} onSuccess={onSuccess} />
       </Route>
-      <Route>
-        <Redirect to={`${match.path}/${config.indexRoute}`} />
-      </Route>
       </Switch>
     </React.Fragment>
   );
 };
 
-export default CreateDeathRegistration;
+export default CreateDeathEmp;

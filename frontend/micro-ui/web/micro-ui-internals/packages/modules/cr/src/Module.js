@@ -19,14 +19,15 @@ import AddressPermanent from "../src/pageComponents/birthComponents/AddressPerma
 import MultipleBirth from "../src/pageComponents/birthComponents/MultipleBirth";
 import CreateBirthRegistration from "./pages/citizen/BirthRegistration";
 import CreateBirthEmp from "./pages/employee/BirthRegistration";
+import CreateDeathEmp from "./pages/employee/DeathRegistration";
 import CreateBirthNACRegistration from "./pages/citizen/BirthNACRegistration";
 import MarriageCorrection from "./pages/citizen/MarriageCorrection";
 import BirthNACDownloadPage from "./pageComponents/birthNACComponents/BirthNACDownloadPage";
 import BirthInclusion from "./pages/citizen/BirthInclusion";
 import BirthInclusionEditPage from "./pageComponents/birthComponents/BirthInclusionPage/BirthInclusionEditPage";
 import BirthInclusionPage from "./pageComponents/birthComponents/BirthInclusionPage/index";
-import SearchBirthInclusion from './components/SearchBirthInclusion';
-import BirthInclusionModal from './components/BirthInclusionModal';
+import SearchBirthInclusion from "./components/SearchBirthInclusion";
+import BirthInclusionModal from "./components/BirthInclusionModal";
 
 import SearchMarriageInclusion from "./components/SearchMarriageInclusion";
 import SearchApplicationMarriage from "./components/SearchApplicationMarriage";
@@ -163,7 +164,7 @@ import MarriageInstitution from "./pageComponents/marriageComponents/MarriageIns
 import MarriagePublicPlace from "./pageComponents/marriageComponents/MarriagePublicPlace";
 import MarriageRegistration from "./pageComponents/marriageComponents/MarriageRegistration";
 import HouseMarriageRegistration from "./pageComponents/marriageComponents/HouseMarriageRegistration";
-import Witnessdetails from "./pageComponents/marriageComponents/Witnessdetails";
+
 import MarriageCorrectionEditPage from "./pageComponents/marriageComponents/MarriageCorrectionPage/MarriageCorrectionEditPage";
 import MarriageCorrectionLoadPage from "./pageComponents/marriageComponents/MarriageCorrectionPage/index";
 import MarriageCheckPage from "./pages/citizen/MarriageRegistration/MarriageCheckPage";
@@ -178,6 +179,7 @@ import MarriageAddressPresentInsideKerala from "./pageComponents/marriageCompone
 import MarriageAddressPresentOutsideIndia from "./pageComponents/marriageComponents/MarriageAddressPresentOutsideIndia";
 import MarriageAddressPresentOutsideKerala from "./pageComponents/marriageComponents/MarriageAddressPresentOutsideKerala";
 import MarriageAddressSameAsAbove from "./pageComponents/marriageComponents/MarriageAddressSameAsAbove";
+import WitnessDetails from "./pageComponents/marriageComponents/Witnessdetails";
 
 import AbandonedChildDetails from "./pageComponents/abandonedBirthComponents/AbandonedChildDetails";
 import AbandonedBirthInformarDetails from "./pageComponents/abandonedBirthComponents/AbandonedBirthInformarDetails";
@@ -200,9 +202,7 @@ import AbandonedDeathCheckPage from "./pages/employee/AbandonedDeath/AbandonedCh
 import AbandonedDeathAcknowledgement from "./pages/employee/AbandonedDeath/AbandonedDeathAcknowledgement";
 import StatisticalInfoAbandoned from "./pageComponents/deathAbandoned/StatisticalInfoAbandoned";
 
-
 export const CRModule = ({ stateCode, userType, tenants }) => {
-  
   const { path, url } = useRouteMatch();
 
   const moduleCode = "CR";
@@ -218,12 +218,11 @@ export const CRModule = ({ stateCode, userType, tenants }) => {
 };
 
 export const CRLinks = ({ matchPath, userType }) => {
-
   const { t } = useTranslation();
   const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_CREATE_BIRTH_REG", {});
 
   useEffect(() => {
-    console.log('cleare');
+    console.log("cleare");
     clearParams();
   }, []);
 
@@ -311,6 +310,7 @@ const componentsToRegister = {
   MultipleBirth,
   CRCreateBirthRegistration: CreateBirthRegistration,
   CreateBirthEmp,
+  CreateDeathEmp,
   CRCreateAdoptions: CreateAdoptions,
   CRCreateStillBirthRegistration: CreateStillBirthRegistration,
   CRCreateBornOutsideRegistration: CreateBornOutsideRegistration,
@@ -333,7 +333,7 @@ const componentsToRegister = {
   CRBirthInclusions: BirthInclusion,
   CRMarriageCorrection: MarriageCorrection,
   CRBirthInclusionEditPage: BirthInclusionEditPage,
-  CRBirthInclusionPage:BirthInclusionPage, 
+  CRBirthInclusionPage: BirthInclusionPage,
   SearchBirthInclusion,
   BirthInclusionModal,
   BirthPlaceHospital,
@@ -384,7 +384,7 @@ const componentsToRegister = {
   BirthParentsAddress,
   AdoptionStatisticalInformation,
   AdoptionParentsAddress,
-  CRDeathCorrectionEditPage:DeathCorrectionEditPage,
+  CRDeathCorrectionEditPage: DeathCorrectionEditPage,
   SearchMarriageInclusion,
   SearchApplicationMarriage,
   CRDeathcorrection,
@@ -409,7 +409,7 @@ const componentsToRegister = {
   Hospital,
   DeathPublicPlace,
   DeathOutsideJurisdiction,
-  CRDeathInclusions:DeathInclusion,
+  CRDeathInclusions: DeathInclusion,
   // SearchDeathInclusion:
   Informer,
   Initiater,
@@ -425,8 +425,8 @@ const componentsToRegister = {
   BirthAcknowledgement,
   DeathAcknowledgement,
   MarriageAcknowledgement,
-  CRMarriageCorrectionEditPage:MarriageCorrectionEditPage,
-  CRMarriageCorrectionLoadPage:MarriageCorrectionLoadPage,
+  CRMarriageCorrectionEditPage: MarriageCorrectionEditPage,
+  CRMarriageCorrectionLoadPage: MarriageCorrectionLoadPage,
   StillBirthAcknowledgement,
   BirthCertificate,
   CRCreateDeathRegistration: CreateDeathRegistration,
@@ -447,7 +447,7 @@ const componentsToRegister = {
   MarriageRegistration,
   MarriageAddressPage,
   HouseMarriageRegistration,
-  Witnessdetails,
+  WitnessDetails,
   MarriageAddressBasePage,
   MarriageAddressPermanent,
   MarriageAddressPermanentInsideKerala,

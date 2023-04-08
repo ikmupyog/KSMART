@@ -268,77 +268,104 @@ export const gettradeupdateaccessories = (data) => {
   }
   return TLaccessories;
 };
-export const convertToDeathRegistration = (data = {}) => {
+
+
+// let document =[];
+//       let doc= {"documentType": "" ,
+//           "fileStoreId":"",
+//           "documentName":"", 
+//           "size":"",
+//           "type" :"" };
+
+//       let doc1= {"documentType": "" ,
+//           "fileStoreId":"",
+//           "documentName":"", 
+//           "size":"",
+//           "type" :"" }; 
+
+// document.push(doc);
+// document.push(doc1);
+// console.log(document);
+// // }
+
+export const convertToAbandonedDeathRegistration = (data = {}) => {
   // let Financialyear = sessionStorage.getItem("CurrentFinancialYear");
   const empTenantId = Digit.ULBService.getCurrentUlb();
   // let tenantId = "";
   // tenantId = empTenantId["code"];
   const formdata = {
-    deathCertificateDtls: [
+    deathAbandonedDtls: [
       {
-        InformationDeath: {
+        InformationDeathAbandoned: {
           Id: null,
           RegistrationUnit: null,
-          TenantId: data?.InformationDeath?.tenantId,
-          DeathDateUnavailable: data?.InformationDeath?.DeathDateUnavailable,
-          DateOfDeath: Date.parse(data?.InformationDeath?.DateOfDeath),
-          TimeOfDeath: parseInt(data?.InformationDeath?.TimeOfDeath),
+          TenantId: data?.InformationDeathAband?.tenantId,
+          DeathDateUnavailable: data?.InformationDeathAband?.DeathDateUnavailable,
+          DateOfDeath: Date.parse(data?.InformationDeathAband?.DateOfDeath),
+          TimeOfDeath: parseInt(data?.InformationDeathAband?.TimeOfDeath),
           TimeOfDeathUnit: "AM",
-          DateOfDeath1: Date.parse(data?.InformationDeath?.DateOfDeath1),
-          DeathPlace: data?.InformationDeath?.DeathPlace.code,
-          DeathPlaceType: data?.InformationDeath?.DeathPlaceType ? data?.InformationDeath?.DeathPlaceType.code : null,
-          DeathPlaceInstId: data?.InformationDeath?.DeathPlaceInstId ? data?.InformationDeath?.DeathPlaceInstId.code : null,
-          VehicleNumber: data?.InformationDeath?.VehicleNumber,
-          VehicleFromplaceEn: data?.InformationDeath?.VehicleFromplaceEn,
-          VehicleFromplaceMl: data?.InformationDeath?.VehicleFromplaceMl,
-          VehicleToPlaceEn: data?.InformationDeath?.VehicleToPlaceEn,
-          VehicleToPlaceMl: data?.InformationDeath?.VehicleToPlaceMl,
-          VehicleFirstHalt: data?.InformationDeath?.VehicleFirstHalt,
-          VehicleFirstHaltMl: data?.InformationDeath?.VehicleFirstHaltMl,
-          VehicleHospitalEn: data?.InformationDeath?.VehicleHospitalEn ? data?.InformationDeath?.VehicleHospitalEn.code : null,
-          DeathPlaceCountry: data?.InformationDeath?.DeathPlaceCountry ? data?.InformationDeath?.DeathPlaceCountry.code : null,
-          DeathPlaceState: data?.InformationDeath?.DeathPlaceState ? data?.InformationDeath?.DeathPlaceState.code : null,
-          DeathPlaceDistrict: data?.InformationDeath?.DeathPlaceState ? data?.InformationDeath?.DeathPlaceState.code : null,
-          DeathPlaceCity: data?.InformationDeath?.DeathPlaceCity,
-          DeathPlaceRemarksEn: data?.InformationDeath?.DeathPlaceRemarksEn,
-          DeathPlaceRemarksMl: data?.InformationDeath?.DeathPlaceRemarksMl,
-          DeathPlaceWardId: data?.InformationDeath?.DeathPlaceWardId ? data?.InformationDeath?.DeathPlaceWardId.code : null,
-          PlaceOfBurialEn: data?.InformationDeath?.PlaceOfBurialEn,
-          PlaceOfBurialMl: data?.InformationDeath?.PlaceOfBurialMl,
-          DeathPlaceLocalityEn: data?.InformationDeath?.DeathPlaceLocalityEn,
-          DeathPlaceLocalityMl: data?.InformationDeath?.DeathPlaceLocalityMl,
-          DeathPlaceStreetEn: data?.InformationDeath?.DeathPlaceStreetEn,
-          DeathPlaceStreetMl: data?.InformationDeath?.DeathPlaceStreetMl,
-          GeneralRemarks: data?.InformationDeath?.GeneralRemarks,
-          DeathPlaceHomeWardId: data?.InformationDeath?.DeathPlaceHomeWardId ? data?.InformationDeath?.DeathPlaceHomeWardId.code : null,
-          DeathPlaceHomePostofficeId: data?.InformationDeath?.DeathPlaceHomePostofficeId
-            ? data?.InformationDeath.DeathPlaceHomePostofficeId.code
+          DateOfDeath1: Date.parse(data?.InformationDeathAband?.DateOfDeath1),
+          DeathPlace: data?.InformationDeathAband?.DeathPlace.code,
+          DeathPlaceType: data?.InformationDeathAband?.DeathPlaceType ? data?.InformationDeathAband?.DeathPlaceType.code : null,
+          DeathPlaceInstId: data?.InformationDeathAband?.DeathPlaceInstId ? data?.InformationDeathAband?.DeathPlaceInstId.code : null,
+          VehicleNumber: data?.InformationDeathAband?.VehicleNumber,
+          VehicleFromplaceEn: data?.InformationDeathAband?.VehicleFromplaceEn,
+          VehicleFromplaceMl: data?.InformationDeathAband?.VehicleFromplaceMl,
+          VehicleToPlaceEn: data?.InformationDeathAband?.VehicleToPlaceEn,
+          VehicleToPlaceMl: data?.InformationDeathAband?.VehicleToPlaceMl,
+          VehicleFirstHalt: data?.InformationDeathAband?.VehicleFirstHalt,
+          VehicleFirstHaltMl: data?.InformationDeathAband?.VehicleFirstHaltMl,
+          VehicleHospitalEn: data?.InformationDeathAband?.VehicleHospitalEn ? data?.InformationDeathAband?.VehicleHospitalEn.code : null,
+          DeathPlaceCountry: data?.InformationDeathAband?.DeathPlaceCountry ? data?.InformationDeathAband?.DeathPlaceCountry.code : null,
+          DeathPlaceState: data?.InformationDeathAband?.DeathPlaceState ? data?.InformationDeathAband?.DeathPlaceState.code : null,
+          DeathPlaceDistrict: data?.InformationDeathAband?.DeathPlaceState ? data?.InformationDeathAband?.DeathPlaceState.code : null,
+          DeathPlaceCity: data?.InformationDeathAband?.DeathPlaceCity,
+          DeathPlaceRemarksEn: data?.InformationDeathAband?.DeathPlaceRemarksEn,
+          DeathPlaceRemarksMl: data?.InformationDeathAband?.DeathPlaceRemarksMl,
+          DeathPlaceWardId: data?.InformationDeathAband?.DeathPlaceWardId ? data?.InformationDeathAband?.DeathPlaceWardId.code : null,
+          PlaceOfBurialEn: data?.InformationDeathAband?.PlaceOfBurialEn,
+          PlaceOfBurialMl: data?.InformationDeathAband?.PlaceOfBurialMl,
+          DeathPlaceLocalityEn: data?.InformationDeathAband?.DeathPlaceLocalityEn,
+          DeathPlaceLocalityMl: data?.InformationDeathAband?.DeathPlaceLocalityMl,
+          DeathPlaceStreetEn: data?.InformationDeathAband?.DeathPlaceStreetEn,
+          DeathPlaceStreetMl: data?.InformationDeathAband?.DeathPlaceStreetMl,
+          GeneralRemarks: data?.InformationDeathAband?.GeneralRemarks,
+          DeathPlaceHomeWardId: data?.InformationDeathAband?.DeathPlaceHomeWardId ? data?.InformationDeathAband?.DeathPlaceHomeWardId.code : null,
+          DeathPlaceHomePostofficeId: data?.InformationDeathAband?.DeathPlaceHomePostofficeId
+            ? data?.InformationDeathAband.DeathPlaceHomePostofficeId.code
             : null,
-          DeathPlaceHomePincode: data?.InformationDeath?.DeathPlaceHomePincode ? data?.InformationDeath?.DeathPlaceHomePincode.code : null,
-          DeathPlaceHomeLocalityEn: data?.InformationDeath?.DeathPlaceHomeLocalityEn ? data?.InformationDeath?.DeathPlaceHomeLocalityEn : null,
-          DeathPlaceHomeLocalityMl: data?.InformationDeath?.DeathPlaceHomeLocalityMl ? data?.InformationDeath?.DeathPlaceHomeLocalityMl : null,
-          DeathPlaceHomeStreetNameEn: data?.InformationDeath?.DeathPlaceHomeStreetNameEn ? data?.InformationDeath?.DeathPlaceHomeStreetNameEn : null,
-          DeathPlaceHomeStreetNameMl: data?.InformationDeath?.DeathPlaceHomeStreetNameMl ? data?.InformationDeath?.DeathPlaceHomeStreetNameMl : null,
-          DeathPlaceHomeHoueNameEn: data?.InformationDeath?.DeathPlaceHomeHoueNameEn ? data?.InformationDeath?.DeathPlaceHomeHoueNameEn : null,
-          DeathPlaceHomeHoueNameMl: data?.InformationDeath?.DeathPlaceHomeHoueNameMl ? data?.InformationDeath?.DeathPlaceHomeHoueNameMl : null,
-          DeceasedAadharNotAvailable: data?.InformationDeath?.DeceasedAadharNotAvailable ? data?.InformationDeath?.DeceasedAadharNotAvailable : false,
-          DeceasedAadharNumber: data?.InformationDeath?.DeceasedAadharNumber,
-          DeceasedIdproofType: data?.InformationDeath?.DeceasedIdproofType ? data?.InformationDeath.DeceasedIdproofType.code : null,
-          DeceasedIdproofNo: data?.InformationDeath?.DeceasedIdproofNo,
-          DeceasedFirstNameEn: data?.InformationDeath?.DeceasedFirstNameEn,
-          DeceasedMiddleNameEn: data?.InformationDeath?.DeceasedMiddleNameEn,
-          DeceasedLastNameEn: data?.InformationDeath?.DeceasedLastNameEn,
-          DeceasedFirstNameMl: data?.InformationDeath?.DeceasedFirstNameMl,
-          DeceasedMiddleNameMl: data?.InformationDeath?.DeceasedMiddleNameMl,
-          DeceasedLastNameMl: data?.InformationDeath?.DeceasedLastNameMl,
-          Age: parseInt(data?.InformationDeath?.Age),
-          AgeUnit: data?.InformationDeath?.AgeUnit.code,
-          DeceasedGender: data?.InformationDeath?.DeceasedGender.code,
-          Nationality: data?.InformationDeath?.Nationality.code,
-          Religion: data?.InformationDeath?.Religion.code,
-          Occupation: data?.InformationDeath?.Occupation ? data?.InformationDeath?.Occupation.code : null,
+          DeathPlaceHomePincode: data?.InformationDeathAband?.DeathPlaceHomePincode ? data?.InformationDeathAband?.DeathPlaceHomePincode.code : null,
+          DeathPlaceHomeLocalityEn: data?.InformationDeathAband?.DeathPlaceHomeLocalityEn ? data?.InformationDeathAband?.DeathPlaceHomeLocalityEn : null,
+          DeathPlaceHomeLocalityMl: data?.InformationDeathAband?.DeathPlaceHomeLocalityMl ? data?.InformationDeathAband?.DeathPlaceHomeLocalityMl : null,
+          DeathPlaceHomeStreetNameEn: data?.InformationDeathAband?.DeathPlaceHomeStreetNameEn ? data?.InformationDeathAband?.DeathPlaceHomeStreetNameEn : null,
+          DeathPlaceHomeStreetNameMl: data?.InformationDeathAband?.DeathPlaceHomeStreetNameMl ? data?.InformationDeathAband?.DeathPlaceHomeStreetNameMl : null,
+          DeathPlaceHomeHoueNameEn: data?.InformationDeathAband?.DeathPlaceHomeHoueNameEn ? data?.InformationDeathAband?.DeathPlaceHomeHoueNameEn : null,
+          DeathPlaceHomeHoueNameMl: data?.InformationDeathAband?.DeathPlaceHomeHoueNameMl ? data?.InformationDeathAband?.DeathPlaceHomeHoueNameMl : null,
+          DeceasedAadharNotAvailable: data?.InformationDeathAband?.DeceasedAadharNotAvailable ? data?.InformationDeathAband?.DeceasedAadharNotAvailable : false,
+          DeceasedAadharNumber: data?.InformationDeathAband?.DeceasedAadharNumber,
+          DeceasedIdproofType: data?.InformationDeathAband?.DeceasedIdproofType ? data?.InformationDeathAband.DeceasedIdproofType.code : null,
+          DeceasedIdproofNo: data?.InformationDeathAband?.DeceasedIdproofNo,
+          DeceasedFirstNameEn: data?.InformationDeathAband?.DeceasedFirstNameEn,
+          DeceasedMiddleNameEn: data?.InformationDeathAband?.DeceasedMiddleNameEn,
+          DeceasedLastNameEn: data?.InformationDeathAband?.DeceasedLastNameEn,
+          DeceasedFirstNameMl: data?.InformationDeathAband?.DeceasedFirstNameMl,
+          DeceasedMiddleNameMl: data?.InformationDeathAband?.DeceasedMiddleNameMl,
+          DeceasedLastNameMl: data?.InformationDeathAband?.DeceasedLastNameMl,
+          Age: parseInt(data?.InformationDeathAband?.Age),
+          AgeUnit: data?.InformationDeathAband?.AgeUnit.code,
+          DeceasedGender: data?.InformationDeathAband?.DeceasedGender?.code,
+          Nationality: data?.InformationDeathAband?.Nationality.code,
+          Religion: data?.InformationDeathAband?.Religion.code,
+          Occupation: data?.InformationDeathAband?.Occupation ? data?.InformationDeathAband?.Occupation.code : null,
           funcionUID: "CRDRNR",
           registrationNo: null,
+          BurialDistrict: data?.InformationDeathAband?.BurialDistrict ? data?.InformationDeathAband?.BurialDistrict.code : null,
+          BurialLBType: data?.InformationDeathAband?.BurialLBType ? data?.InformationDeathAband?.BurialLBType.code : null,
+          BurialLBName: data?.InformationDeathAband?.BurialLBName ? data?.InformationDeathAband?.BurialLBName.code : null,
+          BurialLBWard: data?.InformationDeathAband?.BurialLBWard ? data?.InformationDeathAband?.BurialLBWard.code : null,
+          PlaceOfBurialEn: data?.InformationDeathAband?.PlaceOfBurialEn ? data?.InformationDeathAband?.PlaceOfBurialEn.code : null,
+          PlaceOfBurialMl: data?.InformationDeathAband?.PlaceOfBurialMl ? data?.InformationDeathAband?.PlaceOfBurialMl.code : null,
+          BurialDescription: data?.InformationDeathAband?.BurialDescription ? data?.InformationDeathAband?.BurialDescription.code : null,
         },
         AddressBirthDetails: {
           presentaddressCountry: data?.AddressBirthDetails?.presentaddressCountry ? data?.AddressBirthDetails?.presentaddressCountry.code : null,
@@ -459,102 +486,81 @@ export const convertToDeathRegistration = (data = {}) => {
           PresentAddrTypeId: "P",
           PermanentAddrTypeId: "R",
         },
-        FamilyInformationDeath: {
-          SpouseUnavailable: data?.FamilyInformationDeath?.SpouseUnavailable,
-          SpouseType: data?.FamilyInformationDeath?.SpouseType ? data?.FamilyInformationDeath?.SpouseType.code : null,
-          SpouseNameEn: data?.FamilyInformationDeath?.SpouseNameEN ? data?.FamilyInformationDeath?.SpouseNameEN : null,
-          SpouseNameML: data?.FamilyInformationDeath?.SpouseNameMl ? data?.FamilyInformationDeath?.SpouseNameMl : null,
-          FatherUnavailable: data?.FamilyInformationDeath?.FatherUnavailable,
-          FatherNameEn: data?.FamilyInformationDeath?.FatherNameEn,
-          FatherNameMl: data?.FamilyInformationDeath?.FatherNameMl,
-          MotherUnavailable: data?.FamilyInformationDeath?.MotherUnavailable,
-          MotherNameEn: data?.FamilyInformationDeath?.MotherNameEn,
-          MotherNameMl: data?.FamilyInformationDeath?.MotherNameMl,
-          FamilyMobileNo: parseInt(data?.FamilyInformationDeath?.FamilyMobileNo),
-          FamilyEmailId: data?.FamilyInformationDeath?.FamilyEmailId,
-          SpouseAadhaar: data?.FamilyInformationDeath?.SpouseAadhaar ? data?.FamilyInformationDeath?.SpouseAadhaar : null,
-          FatherAadharNo: data?.FamilyInformationDeath?.FatherAadharNo ? data?.FamilyInformationDeath?.FatherAadharNo : null,
-          MotherAadharNo: data?.FamilyInformationDeath?.MotherAadharNo ? data?.FamilyInformationDeath?.MotherAadharNo : null,
+        FamilyInfoDeathAbandoned: {
+          SpouseUnavailable: data?.FamilyInfoDeathAbandoned?.SpouseUnavailable,
+          SpouseType: data?.FamilyInfoDeathAbandoned?.SpouseType ? data?.FamilyInfoDeathAbandoned?.SpouseType.code : null,
+          SpouseNameEn: data?.FamilyInfoDeathAbandoned?.SpouseNameEN ? data?.FamilyInfoDeathAbandoned?.SpouseNameEN : null,
+          SpouseNameML: data?.FamilyInfoDeathAbandoned?.SpouseNameMl ? data?.FamilyInfoDeathAbandoned?.SpouseNameMl : null,
+          FatherUnavailable: data?.FamilyInfoDeathAbandoned?.FatherUnavailable,
+          FatherNameEn: data?.FamilyInfoDeathAbandoned?.FatherNameEn,
+          FatherNameMl: data?.FamilyInfoDeathAbandoned?.FatherNameMl,
+          MotherUnavailable: data?.FamilyInfoDeathAbandoned?.MotherUnavailable,
+          MotherNameEn: data?.FamilyInfoDeathAbandoned?.MotherNameEn,
+          MotherNameMl: data?.FamilyInfoDeathAbandoned?.MotherNameMl,
+          FamilyMobileNo: parseInt(data?.FamilyInfoDeathAbandoned?.FamilyMobileNo),
+          FamilyEmailId: data?.FamilyInfoDeathAbandoned?.FamilyEmailId,
+          SpouseAadhaar: data?.FamilyInfoDeathAbandoned?.SpouseAadhaar ? data?.FamilyInfoDeathAbandoned?.SpouseAadhaar : null,
+          FatherAadharNo: data?.FamilyInfoDeathAbandoned?.FatherAadharNo ? data?.FamilyInfoDeathAbandoned?.FatherAadharNo : null,
+          MotherAadharNo: data?.FamilyInfoDeathAbandoned?.MotherAadharNo ? data?.FamilyInfoDeathAbandoned?.MotherAadharNo : null,
         },
-        StatisticalInfo: {
+        StatisticalInfoDeathAbandoned: {
           StatisticalId: null,
           TenantId: data?.InformationDeath?.tenantId,
-          MedicalAttentionType: data?.StatisticalInfo?.MedicalAttentionType ? data?.StatisticalInfo?.MedicalAttentionType.code : null,
-          IsAutopsyPerformed: data?.StatisticalInfo?.IsAutopsyPerformed,
-          IsAutopsyCompleted: data?.StatisticalInfo?.IsAutopsyCompleted,
-          MannerOfDeath: data?.StatisticalInfo?.MannerOfDeath ? data?.StatisticalInfo?.MannerOfDeath.code : null,
-          DeathMedicallyCertified: data?.StatisticalInfo?.DeathMedicallyCertified ? data?.StatisticalInfo?.DeathMedicallyCertified.code : null,
-          DeathCauseMain: data?.StatisticalInfo?.DeathCauseMain ? data?.StatisticalInfo?.DeathCauseMain.code : null,
-          DeathCauseMainCustom: data?.StatisticalInfo?.DeathCauseMainCustom,
-          DeathCauseMainInterval: data?.StatisticalInfo?.DeathCauseMainInterval,
-          DeathCauseMainTimeUnit: data?.StatisticalInfo?.DeathCauseMainTimeUnit ? data?.StatisticalInfo?.DeathCauseMainTimeUnit.code : null,
-          DeathCauseSub: data?.StatisticalInfo?.DeathCauseSub ? data?.StatisticalInfo?.DeathCauseSub.code : null,
-          DeathCauseSubCustom: data?.StatisticalInfo?.DeathCauseSubCustom,
-          DeathCauseSubInterval: data?.StatisticalInfo?.DeathCauseSubInterval,
-          DeathCauseSubTimeUnit: data?.StatisticalInfo?.DeathCauseSubTimeUnit ? data?.StatisticalInfo?.DeathCauseSubTimeUnit.code : null,
-          DeathCauseSub2: data?.StatisticalInfo?.DeathCauseSub2 ? data?.StatisticalInfo?.DeathCauseSub2.code : null,
-          DeathCauseSubCustom2: data?.StatisticalInfo?.DeathCauseSubCustom2,
-          DeathCauseSubInterval2: data?.StatisticalInfo?.DeathCauseSubInterval2,
-          DeathCauseSubTimeUnit2: data?.StatisticalInfo?.DeathCauseSubTimeUnit2 ? data?.StatisticalInfo?.DeathCauseSubTimeUnit2.code : null,
-          DeathCauseOther: data?.StatisticalInfo?.DeathCauseOther ? data?.StatisticalInfo?.DeathCauseOther.code : null,
-          IsdeceasedPregnant: data?.StatisticalInfo?.IsdeceasedPregnant ? data?.StatisticalInfo?.IsdeceasedPregnant.code : null,
-          IsDelivery: data?.StatisticalInfo?.IsDelivery ? data?.StatisticalInfo?.IsDelivery.code : null,
-          DeathDuringDelivery: data?.StatisticalInfo?.DeathDuringDelivery,
-          SmokingType: data?.StatisticalInfo?.SmokingType,
-          TobaccoType: data?.StatisticalInfo?.TobaccoType,
-          AlcoholType: data?.StatisticalInfo?.AlcoholType,
+          MedicalAttentionType: data?.StatisticalInfoDeathAbandoned?.MedicalAttentionType ? data?.StatisticalInfoDeathAbandoned?.MedicalAttentionType.code : null,
+          IsAutopsyPerformed: data?.StatisticalInfoDeathAbandoned?.IsAutopsyPerformed,
+          IsAutopsyCompleted: data?.StatisticalInfoDeathAbandoned?.IsAutopsyCompleted,
+          MannerOfDeath: data?.StatisticalInfoDeathAbandoned?.MannerOfDeath ? data?.StatisticalInfoDeathAbandoned?.MannerOfDeath.code : null,
+          DeathMedicallyCertified: data?.StatisticalInfoDeathAbandoned?.DeathMedicallyCertified ? data?.StatisticalInfoDeathAbandoned?.DeathMedicallyCertified.code : null,
+          DeathCauseMain: data?.StatisticalInfoDeathAbandoned?.DeathCauseMain ? data?.StatisticalInfoDeathAbandoned?.DeathCauseMain.code : null,
+          DeathCauseMainCustom: data?.StatisticalInfoDeathAbandoned?.DeathCauseMainCustom,
+          DeathCauseMainInterval: data?.StatisticalInfoDeathAbandoned?.DeathCauseMainInterval,
+          DeathCauseMainTimeUnit: data?.StatisticalInfoDeathAbandoned?.DeathCauseMainTimeUnit ? data?.StatisticalInfoDeathAbandoned?.DeathCauseMainTimeUnit.code : null,
+          DeathCauseSub: data?.StatisticalInfoDeathAbandoned?.DeathCauseSub ? data?.StatisticalInfoDeathAbandoned?.DeathCauseSub.code : null,
+          DeathCauseSubCustom: data?.StatisticalInfoDeathAbandoned?.DeathCauseSubCustom,
+          DeathCauseSubInterval: data?.StatisticalInfoDeathAbandoned?.DeathCauseSubInterval,
+          DeathCauseSubTimeUnit: data?.StatisticalInfoDeathAbandoned?.DeathCauseSubTimeUnit ? data?.StatisticalInfoDeathAbandoned?.DeathCauseSubTimeUnit.code : null,
+          DeathCauseSub2: data?.StatisticalInfoDeathAbandoned?.DeathCauseSub2 ? data?.StatisticalInfoDeathAbandoned?.DeathCauseSub2.code : null,
+          DeathCauseSubCustom2: data?.StatisticalInfoDeathAbandoned?.DeathCauseSubCustom2,
+          DeathCauseSubInterval2: data?.StatisticalInfoDeathAbandoned?.DeathCauseSubInterval2,
+          DeathCauseSubTimeUnit2: data?.StatisticalInfoDeathAbandoned?.DeathCauseSubTimeUnit2 ? data?.StatisticalInfoDeathAbandoned?.DeathCauseSubTimeUnit2.code : null,
+          DeathCauseOther: data?.StatisticalInfoDeathAbandoned?.DeathCauseOther ? data?.StatisticalInfoDeathAbandoned?.DeathCauseOther.code : null,
+          IsdeceasedPregnant: data?.StatisticalInfoDeathAbandoned?.IsdeceasedPregnant ? data?.StatisticalInfoDeathAbandoned?.IsdeceasedPregnant.code : null,
+          IsDelivery: data?.StatisticalInfoDeathAbandoned?.IsDelivery ? data?.StatisticalInfoDeathAbandoned?.IsDelivery.code : null,
+          DeathDuringDelivery: data?.StatisticalInfoDeathAbandoned?.DeathDuringDelivery,
+          SmokingType: data?.StatisticalInfoDeathAbandoned?.SmokingType,
+          TobaccoType: data?.StatisticalInfoDeathAbandoned?.TobaccoType,
+          AlcoholType: data?.StatisticalInfoDeathAbandoned?.AlcoholType,
         },
-        InformantDetails: {
+        InformantDetailsDeathAbandoned: {
           InformantAadharSubmitted: null,
-          InformantAadharNo: data?.InformantDetails?.InformantAadharNo,
-          InformantNameEn: data?.InformantDetails?.InformantNameEn,
-          DeathSignedOfficerDesignation: data?.InformantDetails?.DeathSignedOfficerDesignation,
-          InformantMobileNo: parseInt(data?.InformantDetails?.InformantMobileNo),
-          InformantAddress: data?.InformantDetails?.InformantAddress ? data?.InformantDetails?.InformantAddress : null,
-          IsDeclarationInformant: data?.InformantDetails?.IsDeclarationInformant,
+          InformantAadharNo: data?.InformantDetailsDeathAbandoned?.InformantAadharNo,
+          InformantNameEn: data?.InformantDetailsDeathAbandoned?.InformantNameEn,
+          DeathSignedOfficerDesignation: data?.InformantDetailsDeathAbandoned?.DeathSignedOfficerDesignation,
+          InformantMobileNo: parseInt(data?.InformantDetailsDeathAbandoned?.InformantMobileNo),
+          InformantAddress: data?.InformantDetailsDeathAbandoned?.InformantAddress ? data?.InformantDetailsDeathAbandoned?.InformantAddress : null,
+          IsDeclarationInformant: data?.InformantDetailsDeathAbandoned?.IsDeclarationInformant,
           InformantDocumentId: null,
           InformantDocumentDeathDtlId: null,
-          InformantDocumentTenantId: data?.InformationDeath?.tenantId,
+          InformantDocumentTenantId: data?.InformantDetailsDeathAbandoned?.tenantId,
           InformantDocumentAckNo: null,
           InformantDocumentType: null,
           InformantDocumentUserType: null,
           InformantDocumentFileStoreId: null,
         },
-        Initiator: {
-          IsDeclarationInitiator: data?.Initiator?.IsDeclarationInitiator,
-          InitiatorRelation: data?.Initiator?.InitiatorRelation,
-          InitiatorAadhaar: data?.Initiator?.InitiatorAadhaar,
-          InitiatorName: data?.Initiator?.InitiatorName,
-          InitiatorMobile: parseInt(data?.Initiator?.InitiatorMobile),
-          InitiatorAddress: data?.Initiator?.InitiatorAddress,
-          InitiatorDocumentId: null,
-          InitiatorDocumentTenantId: data?.InformationDeath?.tenantId,
-          InitiatorDocumentAckNo: null,
-          InitiatorDocumentType: null,
-          InitiatorDocumentUserType: null,
-          InitiatorDocumentFileStoreId: null,
-        },
-        Demands: [
-          {
-            tenantId: data?.InformationDeath?.tenantId,
-            consumerCode: data?.InformationDeath?.DeathACKNo,
-            consumerType: "FEE",
-            businessService: "CR",
-            taxPeriodFrom: "1554076800000",
-            taxPeriodTo: "1901145600000",
-            demandDetails: [
-              {
-                taxHeadMasterCode: "CRB_FEES",
-                taxAmount: 12,
-                collectionAmount: 0,
-              },
-            ],
-            minimumAmountPayable: 12,
-            additionalDetails: {
-              HI: "hi",
-            },
-          },
-        ],
+        // Initiator: {
+        //   IsDeclarationInitiator: data?.Initiator?.IsDeclarationInitiator,
+        //   InitiatorRelation: data?.Initiator?.InitiatorRelation,
+        //   InitiatorAadhaar: data?.Initiator?.InitiatorAadhaar,
+        //   InitiatorName: data?.Initiator?.InitiatorName,
+        //   InitiatorMobile: parseInt(data?.Initiator?.InitiatorMobile),
+        //   InitiatorAddress: data?.Initiator?.InitiatorAddress,
+        //   InitiatorDocumentId: null,
+        //   InitiatorDocumentTenantId: data?.InformationDeath?.tenantId,
+        //   InitiatorDocumentAckNo: null,
+        //   InitiatorDocumentType: null,
+        //   InitiatorDocumentUserType: null,
+        //   InitiatorDocumentFileStoreId: null,
+        // },
         AuditDetails: {
           createdBy: null,
           lastModifiedBy: null,
@@ -562,305 +568,17 @@ export const convertToDeathRegistration = (data = {}) => {
           lastModifiedTime: null,
         },
         applicationType: "new",
+        // applicationStatus: "Workflow_appl_status",
         businessService: "CR",
         action: "INITIATE",
         assignee: [],
-        workflowcode: data?.InformationDeath?.workFlowCode,
-        taxHeadMasterCode: "CRB_FEES",
-        taxAmount: data?.InformationDeath?.workFlowAmount,
+        workflowcode: "DEATHABANDONED"
       },
     ],
   };
   return formdata;
 };
-export const convertToEditDeathRegistration = (data = {}) => {
-  // let Financialyear = sessionStorage.getItem("CurrentFinancialYear");
-  const empTenantId = Digit.ULBService.getCurrentUlb();
-  // let tenantId = "";
-  // tenantId = empTenantId["code"];
-  // console.log(data);
-  // console.log(data?.InformationDeath?.workFlowCode);
 
-  const formdata = {
-    deathCertificateDtls: [
-      {
-        InformationDeath: {
-          Id: null,
-          RegistrationUnit: null,
-          TenantId: data?.InformationDeath?.tenantId,
-          DeathDateUnavailable: data?.InformationDeath?.DeathDateUnavailable,
-          DateOfDeath: Date.parse(data?.InformationDeath?.DateOfDeath),
-          TimeOfDeath: parseInt(data?.InformationDeath?.TimeOfDeath),
-          TimeOfDeathUnit: "AM",
-          DateOfDeath1: Date.parse(data?.InformationDeath?.DateOfDeath1),
-          DeathPlace: data?.InformationDeath?.DeathPlace?.code,
-          DeathPlaceType: data?.InformationDeath?.DeathPlaceType ? data?.InformationDeath?.DeathPlaceType?.code : null,
-          DeathPlaceInstId: data?.InformationDeath?.DeathPlaceInstId ? data?.InformationDeath?.DeathPlaceInstId?.code : null,
-          VehicleNumber: data?.InformationDeath?.VehicleNumber,
-          VehicleFromplaceEn: data?.InformationDeath?.VehicleFromplaceEn,
-          VehicleFromplaceMl: data?.InformationDeath?.VehicleFromplaceMl,
-          VehicleToPlaceEn: data?.InformationDeath?.VehicleToPlaceEn,
-          VehicleToPlaceMl: data?.InformationDeath?.VehicleToPlaceMl,
-          VehicleFirstHalt: data?.InformationDeath?.VehicleFirstHalt,
-          VehicleFirstHaltMl: data?.InformationDeath?.VehicleFirstHaltMl,
-          VehicleHospitalEn: data?.InformationDeath?.VehicleHospitalEn ? data?.InformationDeath?.VehicleHospitalEn?.code : null,
-          DeathPlaceCountry: data?.InformationDeath?.DeathPlaceCountry ? data?.InformationDeath?.DeathPlaceCountry?.code : null,
-          DeathPlaceState: data?.InformationDeath?.DeathPlaceState ? data?.InformationDeath?.DeathPlaceState?.code : null,
-          DeathPlaceDistrict: data?.InformationDeath?.DeathPlaceState ? data?.InformationDeath?.DeathPlaceState?.code : null,
-          DeathPlaceCity: data?.InformationDeath?.DeathPlaceCity,
-          DeathPlaceRemarksEn: data?.InformationDeath?.DeathPlaceRemarksEn,
-          DeathPlaceRemarksMl: data?.InformationDeath?.DeathPlaceRemarksMl,
-          DeathPlaceWardId: data?.InformationDeath?.DeathPlaceWardId ? data?.InformationDeath?.DeathPlaceWardId?.code : null,
-          PlaceOfBurialEn: data?.InformationDeath?.PlaceOfBurialEn,
-          PlaceOfBurialMl: data?.InformationDeath?.PlaceOfBurialMl,
-          DeathPlaceLocalityEn: data?.InformationDeath?.DeathPlaceLocalityEn,
-          DeathPlaceLocalityMl: data?.InformationDeath?.DeathPlaceLocalityMl,
-          DeathPlaceStreetEn: data?.InformationDeath?.DeathPlaceStreetEn,
-          DeathPlaceStreetMl: data?.InformationDeath?.DeathPlaceStreetMl,
-          GeneralRemarks: data?.InformationDeath?.GeneralRemarks,
-          DeathPlaceHomeWardId: data?.InformationDeath?.DeathPlaceHomeWardId ? data?.InformationDeath?.DeathPlaceHomeWardId?.code : null,
-          DeathPlaceHomePostofficeId: data?.InformationDeath?.DeathPlaceHomePostofficeId
-            ? data?.InformationDeath.DeathPlaceHomePostofficeId?.code
-            : null,
-          DeathPlaceHomePincode: data?.InformationDeath?.DeathPlaceHomePincode ? data?.InformationDeath?.DeathPlaceHomePincode?.code : null,
-          DeathPlaceHomeLocalityEn: data?.InformationDeath?.DeathPlaceHomeLocalityEn ? data?.InformationDeath?.DeathPlaceHomeLocalityEn : null,
-          DeathPlaceHomeLocalityMl: data?.InformationDeath?.DeathPlaceHomeLocalityMl ? data?.InformationDeath?.DeathPlaceHomeLocalityMl : null,
-          DeathPlaceHomeStreetNameEn: data?.InformationDeath?.DeathPlaceHomeStreetNameEn ? data?.InformationDeath?.DeathPlaceHomeStreetNameEn : null,
-          DeathPlaceHomeStreetNameMl: data?.InformationDeath?.DeathPlaceHomeStreetNameMl ? data?.InformationDeath?.DeathPlaceHomeStreetNameMl : null,
-          DeathPlaceHomeHoueNameEn: data?.InformationDeath?.DeathPlaceHomeHoueNameEn ? data?.InformationDeath?.DeathPlaceHomeHoueNameEn : null,
-          DeathPlaceHomeHoueNameMl: data?.InformationDeath?.DeathPlaceHomeHoueNameMl ? data?.InformationDeath?.DeathPlaceHomeHoueNameMl : null,
-          DeceasedAadharNotAvailable: data?.InformationDeath?.DeceasedAadharNotAvailable ? data?.InformationDeath?.DeceasedAadharNotAvailable : false,
-          DeceasedAadharNumber: data?.InformationDeath?.DeceasedAadharNumber,
-          DeceasedIdproofType: data?.InformationDeath?.DeceasedIdproofType ? data?.InformationDeath.DeceasedIdproofType?.code : null,
-          DeceasedIdproofNo: data?.InformationDeath?.DeceasedIdproofNo,
-          DeceasedFirstNameEn: data?.InformationDeath?.DeceasedFirstNameEn,
-          DeceasedMiddleNameEn: data?.InformationDeath?.DeceasedMiddleNameEn,
-          DeceasedLastNameEn: data?.InformationDeath?.DeceasedLastNameEn,
-          DeceasedFirstNameMl: data?.InformationDeath?.DeceasedFirstNameMl,
-          DeceasedMiddleNameMl: data?.InformationDeath?.DeceasedMiddleNameMl,
-          DeceasedLastNameMl: data?.InformationDeath?.DeceasedLastNameMl,
-          Age: parseInt(data?.InformationDeath?.Age),
-          AgeUnit: data?.InformationDeath?.AgeUnit?.code,
-          DeceasedGender: data?.InformationDeath?.DeceasedGender?.code,
-          Nationality: data?.InformationDeath?.Nationality?.code,
-          Religion: data?.InformationDeath?.Religion?.code,
-          Occupation: data?.InformationDeath?.Occupation ? data?.InformationDeath?.Occupation?.code : null,
-          funcionUID: "CRDRNR",
-          registrationNo: null,
-          DeathACKNo: data?.InformationDeath?.DeathACKNo,
-        },
-        AddressBirthDetails: {
-          presentaddressCountry: data?.AddressBirthDetails?.presentaddressCountry ? data?.AddressBirthDetails?.presentaddressCountry?.code : null,
-          presentaddressStateName: data?.AddressBirthDetails?.presentaddressStateName
-            ? data?.AddressBirthDetails?.presentaddressStateName?.code
-            : null,
-          presentInsideKeralaLBName: data?.AddressBirthDetails?.presentInsideKeralaLBName
-            ? data?.AddressBirthDetails?.presentInsideKeralaLBName?.code
-            : null,
-          presentInsideKeralaDistrict: data?.AddressBirthDetails?.presentInsideKeralaDistrict
-            ? data?.AddressBirthDetails?.presentInsideKeralaDistrict?.code
-            : null,
-          presentInsideKeralaTaluk: data?.AddressBirthDetails?.presentInsideKeralaTaluk
-            ? data?.AddressBirthDetails?.presentInsideKeralaTaluk?.code
-            : null,
-          presentInsideKeralaVillage: data?.AddressBirthDetails?.presentInsideKeralaVillage
-            ? data?.AddressBirthDetails?.presentInsideKeralaVillage?.code
-            : null,
-          presentInsideKeralaLocalityNameEn: data?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn,
-          presentInsideKeralaStreetNameEn: data?.AddressBirthDetails?.presentInsideKeralaStreetNameEn,
-          presentInsideKeralaHouseNameEn: data?.AddressBirthDetails?.presentInsideKeralaHouseNameEn,
-          presentInsideKeralaLocalityNameMl: data?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl,
-          presentInsideKeralaStreetNameMl: data?.AddressBirthDetails?.presentInsideKeralaStreetNameMl,
-          presentInsideKeralaHouseNameMl: data?.AddressBirthDetails?.presentInsideKeralaHouseNameMl,
-          presentInsideKeralaPincode: data?.AddressBirthDetails?.presentInsideKeralaPincode
-            ? data?.AddressBirthDetails?.presentInsideKeralaPincode?.code
-            : null,
-          presentInsideKeralaPostOffice: data?.AddressBirthDetails?.presentInsideKeralaPostOffice
-            ? data?.AddressBirthDetails?.presentInsideKeralaPostOffice?.code
-            : null,
-          presentWardNo: data?.AddressBirthDetails?.presentWardNo ? data?.AddressBirthDetails?.presentWardNo?.code : null,
-          presentOutsideKeralaDistrict: data?.AddressBirthDetails?.presentOutsideKeralaDistrict
-            ? data?.AddressBirthDetails?.presentOutsideKeralaDistrict?.code
-            : null,
-          presentOutsideKeralaTaluk: data?.AddressBirthDetails?.presentOutsideKeralaTaluk
-            ? data?.AddressBirthDetails?.presentOutsideKeralaTaluk
-            : null,
-          presentOutsideKeralaVillage: data?.AddressBirthDetails?.presentOutsideKeralaVillage
-            ? data?.AddressBirthDetails?.presentOutsideKeralaVillage?.code
-            : null,
-          presentOutsideKeralaCityVilgeEn: data?.AddressBirthDetails?.presentOutsideKeralaCityVilgeEn,
-          presentOutsideKeralaPincode: data?.AddressBirthDetails?.presentOutsideKeralaPincode
-            ? data?.AddressBirthDetails?.presentOutsideKeralaPincode?.code
-            : null,
-          presentOutsideKeralaPostOfficeEn: data?.AddressBirthDetails?.presentOutsideKeralaPostOfficeEn,
-          presentOutsideKeralaPostOfficeMl: data?.AddressBirthDetails?.presentOutsideKeralaPostOfficeMl,
-          presentOutsideKeralaLocalityNameEn: data?.AddressBirthDetails?.presentOutsideKeralaLocalityNameEn,
-          presentOutsideKeralaStreetNameEn: data?.AddressBirthDetails?.presentOutsideKeralaStreetNameEn,
-          presentOutsideKeralaHouseNameEn: data?.AddressBirthDetails?.presentOutsideKeralaHouseNameEn,
-          presentOutsideKeralaLocalityNameMl: data?.AddressBirthDetails?.presentOutsideKeralaLocalityNameMl,
-          presentOutsideKeralaStreetNameMl: data?.AddressBirthDetails?.presentOutsideKeralaStreetNameMl,
-          presentOutsideKeralaHouseNameMl: data?.AddressBirthDetails?.presentOutsideKeralaHouseNameMl,
-          presentOutSideIndiaAdressEn: data?.AddressBirthDetails?.presentOutSideIndiaAdressEn,
-          presentOutSideIndiaAdressMl: data?.AddressBirthDetails?.presentOutSideIndiaAdressMl,
-          presentOutSideIndiaAdressEnB: data?.AddressBirthDetails?.presentOutSideIndiaAdressEnB,
-          presentOutSideIndiaAdressMlB: data?.AddressBirthDetails?.presentOutSideIndiaAdressMlB,
-          presentOutSideIndiaProvinceEn: data?.AddressBirthDetails?.presentOutSideIndiaProvinceEn,
-          presentOutSideCountry: data?.AddressBirthDetails?.presentOutSideCountry ? data?.AddressBirthDetails?.presentOutSideCountry?.code : null,
-          presentOutSideIndiaadrsVillage: data?.AddressBirthDetails?.presentOutSideIndiaadrsVillage
-            ? data?.AddressBirthDetails?.presentOutSideIndiaadrsVillage?.code
-            : null,
-          presentOutSideIndiaadrsCityTown: data?.AddressBirthDetails?.presentOutSideIndiaadrsCityTown,
-          isPrsentAddress: data?.AddressBirthDetails?.isPrsentAddress,
-          permtaddressCountry: data?.AddressBirthDetails?.permtaddressCountry ? data?.AddressBirthDetails?.permtaddressCountry?.code : null,
-          permtaddressStateName: data?.AddressBirthDetails?.permtaddressStateName ? data?.AddressBirthDetails?.permtaddressStateName?.code : null,
-          permntInKeralaAdrLBName: data?.AddressBirthDetails?.permntInKeralaAdrLBName
-            ? data?.AddressBirthDetails?.permntInKeralaAdrLBName?.code
-            : null,
-          permntInKeralaAdrDistrict: data?.AddressBirthDetails?.permntInKeralaAdrDistrict
-            ? data?.AddressBirthDetails?.permntInKeralaAdrDistrict?.code
-            : null,
-          permntInKeralaAdrTaluk: data?.AddressBirthDetails?.permntInKeralaAdrTaluk ? data?.AddressBirthDetails?.permntInKeralaAdrTaluk?.code : null,
-          permntInKeralaAdrVillage: data?.AddressBirthDetails?.permntInKeralaAdrVillage
-            ? data?.AddressBirthDetails?.permntInKeralaAdrVillage?.code
-            : null,
-          permntInKeralaAdrLocalityNameEn: data?.AddressBirthDetails?.permntInKeralaAdrLocalityNameEn,
-          permntInKeralaAdrStreetNameEn: data?.AddressBirthDetails?.permntInKeralaAdrStreetNameEn,
-          permntInKeralaAdrHouseNameEn: data?.AddressBirthDetails?.permntInKeralaAdrHouseNameEn,
-          permntInKeralaAdrLocalityNameMl: data?.AddressBirthDetails?.permntInKeralaAdrLocalityNameMl,
-          permntInKeralaAdrStreetNameMl: data?.AddressBirthDetails?.permntInKeralaAdrStreetNameMl,
-          permntInKeralaAdrHouseNameMl: data?.AddressBirthDetails?.permntInKeralaAdrHouseNameMl,
-          permntInKeralaAdrPincode: data?.AddressBirthDetails?.permntInKeralaAdrPincode
-            ? data?.AddressBirthDetails?.permntInKeralaAdrPincode?.code
-            : null,
-          permntInKeralaAdrPostOffice: data?.AddressBirthDetails?.permntInKeralaAdrPostOffice
-            ? data?.AddressBirthDetails?.permntInKeralaAdrPostOffice?.code
-            : null,
-          permntInKeralaWardNo: data?.AddressBirthDetails?.permntInKeralaWardNo ? data?.AddressBirthDetails?.permntInKeralaWardNo?.code : null,
-          permntOutsideKeralaDistrict: data?.AddressBirthDetails?.permntOutsideKeralaDistrict
-            ? data?.AddressBirthDetails?.permntOutsideKeralaDistrict?.code
-            : null,
-          permntOutsideKeralaTaluk: data?.AddressBirthDetails?.permntOutsideKeralaTaluk
-            ? data?.AddressBirthDetails?.permntOutsideKeralaTaluk.code
-            : null,
-          permntOutsideKeralaVillage: data?.AddressBirthDetails?.permntOutsideKeralaVillage
-            ? data?.AddressBirthDetails?.permntOutsideKeralaVillage?.code
-            : null,
-          permntOutsideKeralaCityVilgeEn: data?.AddressBirthDetails?.permntOutsideKeralaCityVilgeEn,
-          permntOutsideKeralaPincode: data?.AddressBirthDetails?.permntOutsideKeralaPincode,
-          permntOutsideKeralaLocalityNameEn: data?.AddressBirthDetails?.permntOutsideKeralaLocalityNameEn,
-          permntOutsideKeralaStreetNameEn: data?.AddressBirthDetails?.permntOutsideKeralaStreetNameEn,
-          permntOutsideKeralaHouseNameEn: data?.AddressBirthDetails?.permntOutsideKeralaHouseNameEn,
-          permntOutsideKeralaLocalityNameMl: data?.AddressBirthDetails?.permntOutsideKeralaLocalityNameMl,
-          permntOutsideKeralaStreetNameMl: data?.AddressBirthDetails?.permntOutsideKeralaStreetNameMl,
-          permntOutsideKeralaHouseNameMl: data?.AddressBirthDetails?.permntOutsideKeralaHouseNameMl,
-          permntOutsideKeralaPostOfficeEn: data?.AddressBirthDetails?.permntOutsideKeralaPostOfficeEn,
-          permntOutsideKeralaPostOfficeMl: data?.AddressBirthDetails?.permntOutsideKeralaPostOfficeMl,
-          permntOutsideIndiaLineoneEn: data?.AddressBirthDetails?.permntOutsideIndiaLineoneEn,
-          permntOutsideIndiaLineoneMl: data?.AddressBirthDetails?.permntOutsideIndiaLineoneMl,
-          permntOutsideIndiaLinetwoEn: data?.AddressBirthDetails?.permntOutsideIndiaLinetwoEn,
-          permntOutsideIndiaLinetwoMl: data?.AddressBirthDetails?.permntOutsideIndiaLinetwoMl,
-          permntOutsideIndiaprovinceEn: data?.AddressBirthDetails?.permntOutsideIndiaprovinceEn,
-          permntOutsideIndiaVillage: data?.AddressBirthDetails?.permntOutsideIndiaVillage
-            ? data?.AddressBirthDetails?.permntOutsideIndiaVillage?.code
-            : null,
-          permntOutsideIndiaCityTown: data?.AddressBirthDetails?.permntOutsideIndiaCityTown,
-          permanentOutsideIndiaPostCode: data?.AddressBirthDetails?.permanentOutsideIndiaPostCode,
-          PresentAddrTypeId: "P",
-          PermanentAddrTypeId: "R",
-        },
-        FamilyInformationDeath: {
-          SpouseUnavailable: data?.FamilyInformationDeath?.SpouseUnavailable,
-          SpouseType: data?.FamilyInformationDeath?.SpouseType ? data?.FamilyInformationDeath?.SpouseType?.code : null,
-          SpouseNameEn: data?.FamilyInformationDeath?.SpouseNameEN ? data?.FamilyInformationDeath?.SpouseNameEN : null,
-          SpouseNameML: data?.FamilyInformationDeath?.SpouseNameMl ? data?.FamilyInformationDeath?.SpouseNameMl : null,
-          FatherUnavailable: data?.FamilyInformationDeath?.FatherUnavailable,
-          FatherNameEn: data?.FamilyInformationDeath?.FatherNameEn,
-          FatherNameMl: data?.FamilyInformationDeath?.FatherNameMl,
-          MotherUnavailable: data?.FamilyInformationDeath?.MotherUnavailable,
-          MotherNameEn: data?.FamilyInformationDeath?.MotherNameEn,
-          MotherNameMl: data?.FamilyInformationDeath?.MotherNameMl,
-          FamilyMobileNo: parseInt(data?.FamilyInformationDeath?.FamilyMobileNo),
-          FamilyEmailId: data?.FamilyInformationDeath?.FamilyEmailId,
-          SpouseAadhaar: data?.FamilyInformationDeath?.SpouseAadhaar ? data?.FamilyInformationDeath?.SpouseAadhaar : null,
-          FatherAadharNo: data?.FamilyInformationDeath?.FatherAadharNo ? data?.FamilyInformationDeath?.FatherAadharNo : null,
-          MotherAadharNo: data?.FamilyInformationDeath?.MotherAadharNo ? data?.FamilyInformationDeath?.MotherAadharNo : null,
-        },
-        StatisticalInfo: {
-          StatisticalId: null,
-          TenantId: data?.InformationDeath?.tenantId,
-          MedicalAttentionType: data?.StatisticalInfo?.MedicalAttentionType ? data?.StatisticalInfo?.MedicalAttentionType?.code : null,
-          IsAutopsyPerformed: data?.StatisticalInfo?.IsAutopsyPerformed,
-          IsAutopsyCompleted: data?.StatisticalInfo?.IsAutopsyCompleted,
-          MannerOfDeath: data?.StatisticalInfo?.MannerOfDeath ? data?.StatisticalInfo?.MannerOfDeath?.code : null,
-          DeathMedicallyCertified: data?.StatisticalInfo?.DeathMedicallyCertified ? data?.StatisticalInfo?.DeathMedicallyCertified?.code : null,
-          DeathCauseMain: data?.StatisticalInfo?.DeathCauseMain ? data?.StatisticalInfo?.DeathCauseMain?.code : null,
-          DeathCauseMainCustom: data?.StatisticalInfo?.DeathCauseMainCustom,
-          DeathCauseMainInterval: data?.StatisticalInfo?.DeathCauseMainInterval,
-          DeathCauseMainTimeUnit: data?.StatisticalInfo?.DeathCauseMainTimeUnit ? data?.StatisticalInfo?.DeathCauseMainTimeUnit?.code : null,
-          DeathCauseSub: data?.StatisticalInfo?.DeathCauseSub ? data?.StatisticalInfo?.DeathCauseSub?.code : null,
-          DeathCauseSubCustom: data?.StatisticalInfo?.DeathCauseSubCustom,
-          DeathCauseSubInterval: data?.StatisticalInfo?.DeathCauseSubInterval,
-          DeathCauseSubTimeUnit: data?.StatisticalInfo?.DeathCauseSubTimeUnit ? data?.StatisticalInfo?.DeathCauseSubTimeUnit?.code : null,
-          DeathCauseSub2: data?.StatisticalInfo?.DeathCauseSub2 ? data?.StatisticalInfo?.DeathCauseSub2?.code : null,
-          DeathCauseSubCustom2: data?.StatisticalInfo?.DeathCauseSubCustom2,
-          DeathCauseSubInterval2: data?.StatisticalInfo?.DeathCauseSubInterval2,
-          DeathCauseSubTimeUnit2: data?.StatisticalInfo?.DeathCauseSubTimeUnit2 ? data?.StatisticalInfo?.DeathCauseSubTimeUnit2?.code : null,
-          DeathCauseOther: data?.StatisticalInfo?.DeathCauseOther ? data?.StatisticalInfo?.DeathCauseOther?.code : null,
-          IsdeceasedPregnant: data?.StatisticalInfo?.IsdeceasedPregnant ? data?.StatisticalInfo?.IsdeceasedPregnant?.code : null,
-          IsDelivery: data?.StatisticalInfo?.IsDelivery ? data?.StatisticalInfo?.IsDelivery?.code : null,
-          DeathDuringDelivery: data?.StatisticalInfo?.DeathDuringDelivery,
-          SmokingType: data?.StatisticalInfo?.SmokingType,
-          TobaccoType: data?.StatisticalInfo?.TobaccoType,
-          AlcoholType: data?.StatisticalInfo?.AlcoholType,
-        },
-        InformantDetails: {
-          InformantAadharSubmitted: null,
-          InformantAadharNo: data?.InformantDetails?.InformantAadharNo,
-          InformantNameEn: data?.InformantDetails?.InformantNameEn,
-          DeathSignedOfficerDesignation: data?.InformantDetails?.DeathSignedOfficerDesignation,
-          InformantMobileNo: parseInt(data?.InformantDetails?.InformantMobileNo),
-          InformantAddress: data?.InformantDetails?.InformantAddress ? data?.InformantDetails?.InformantAddress : null,
-          IsDeclarationInformant: data?.InformantDetails?.IsDeclarationInformant,
-          InformantDocumentId: null,
-          InformantDocumentDeathDtlId: null,
-          InformantDocumentTenantId: data?.InformationDeath?.tenantId,
-          InformantDocumentAckNo: null,
-          InformantDocumentType: null,
-          InformantDocumentUserType: null,
-          InformantDocumentFileStoreId: null,
-        },
-        Initiator: {
-          IsDeclarationInitiator: data?.Initiator?.IsDeclarationInitiator,
-          InitiatorRelation: data?.Initiator?.InitiatorRelation,
-          InitiatorAadhaar: data?.Initiator?.InitiatorAadhaar,
-          InitiatorName: data?.Initiator?.InitiatorName,
-          InitiatorMobile: parseInt(data?.Initiator?.InitiatorMobile),
-          InitiatorAddress: data?.Initiator?.InitiatorAddress,
-          InitiatorDocumentId: null,
-          InitiatorDocumentTenantId: data?.InformationDeath?.tenantId,
-          InitiatorDocumentAckNo: null,
-          InitiatorDocumentType: null,
-          InitiatorDocumentUserType: null,
-          InitiatorDocumentFileStoreId: null,
-        },
-       
-        AuditDetails: {
-          createdBy: null,
-          lastModifiedBy: null,
-          createdTime: null,
-          lastModifiedTime: null,
-        },
-        applicationType: "new",
-        businessService: "CR",
-        action: "APPLY",
-        workflowcode: data?.InformationDeath?.workFlowCode,
-        assignee: [data?.InformationDeath?.uuid],
-      },
-      
-    ],
-  };
-  return formdata;
-};
 export const getwfdocuments = (data) => {
   let wfdoc = [];
   let doc = data ? data.owners.documents : [];
@@ -1072,8 +790,8 @@ export const convertToEditTrade = (data, fy = []) => {
           structureType: isDirectrenewal
             ? data.tradeLicenseDetail.structureType
             : data?.TradeDetails?.VehicleType
-            ? data?.TradeDetails?.VehicleType.code
-            : data?.TradeDetails?.BuildingType.code,
+              ? data?.TradeDetails?.VehicleType.code
+              : data?.TradeDetails?.BuildingType.code,
           subOwnerShipCategory: data?.ownershipCategory?.code.includes("INSTITUTIONAL")
             ? data?.owners?.owners?.[0]?.subOwnerShipCategory.code
             : data?.ownershipCategory?.code,
@@ -1140,12 +858,12 @@ export const convertToResubmitTrade = (data) => {
           id: data.tradeLicenseDetail.id,
           institution: data?.ownershipCategory?.code.includes("INSTITUTIONAL")
             ? {
-                designation: data?.owners?.owners?.[0]?.designation,
-                ContactNo: data?.owners?.owners?.[0]?.altContactNumber,
-                mobileNumber: data?.owners?.owners?.[0]?.mobilenumber,
-                instituionName: data?.owners?.owners?.[0]?.institutionName,
-                name: data?.owners?.owners?.[0]?.name,
-              }
+              designation: data?.owners?.owners?.[0]?.designation,
+              ContactNo: data?.owners?.owners?.[0]?.altContactNumber,
+              mobileNumber: data?.owners?.owners?.[0]?.mobilenumber,
+              instituionName: data?.owners?.owners?.[0]?.institutionName,
+              name: data?.owners?.owners?.[0]?.name,
+            }
             : null,
         },
         calculation: null,
@@ -1334,10 +1052,10 @@ export const convertDateToEpoch = (dateString, dayStartOrEnd = "dayend") => {
 export const getQueryStringParams = (query) => {
   return query
     ? (/^[?#]/.test(query) ? query.slice(1) : query).split("&").reduce((params, param) => {
-        let [key, value] = param.split("=");
-        params[key] = value ? decodeURIComponent(value.replace(/\+/g, " ")) : "";
-        return params;
-      }, {})
+      let [key, value] = param.split("=");
+      params[key] = value ? decodeURIComponent(value.replace(/\+/g, " ")) : "";
+      return params;
+    }, {})
     : {};
 };
 

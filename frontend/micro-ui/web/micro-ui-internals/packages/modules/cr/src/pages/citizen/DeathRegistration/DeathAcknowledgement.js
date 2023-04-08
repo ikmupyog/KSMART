@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { convertToDeathRegistration, convertToEditDeathRegistration } from "../../../utils/deathindex";
 import getPDFData from "../../../utils/getTLAcknowledgementData";
 import { useHistory } from "react-router-dom";
-
+  
 const GetActionMessage = (props) => {
   // const history = useHistory();
 

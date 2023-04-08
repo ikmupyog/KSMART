@@ -71,7 +71,8 @@ const Hospital = ({
     return (
       <React.Fragment>
       
-        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!DeathPlaceType}>
+        {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!DeathPlaceType}> */}
+        <div className="col-md-12">
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
@@ -114,7 +115,9 @@ const Hospital = ({
               </div>
             </div>
           </div>
-        </FormStep>
+          </div>
+
+        {/* </FormStep> */}
       </React.Fragment>
     );
 };

@@ -1,5 +1,6 @@
 import { BackButton } from "@egovernments/digit-ui-react-components";
 import React, { useContext } from "react";
+import { useTranslation } from "react-i18next";
 
 const CitizenHome = ({ modules }) => {
   const ComponentProvider = Digit.Contexts.ComponentProvider;
@@ -28,13 +29,14 @@ const CitizenHome = ({ modules }) => {
 };
 
 const EmployeeHome = ({ modules }) => {
+  const { t } = useTranslation();
   return (
     <div className="file-manager-content">
-       <div style={{fontWeight:"600"}}>
-        Home/Dashboard
+      <div style={{ fontWeight: "600" }}>
+        {t("HOME_DASHBOARD")}
       </div>
       <div className="file-wrapper m-t-20 moduleCardWrapper file-wrapper m-t-20">
-     
+
         {modules.map(({ code }, index) => {
           const Card = Digit.ComponentRegistryService.getComponent(`${code}Card`) || (() => <React.Fragment />);
           return <Card key={index} />;

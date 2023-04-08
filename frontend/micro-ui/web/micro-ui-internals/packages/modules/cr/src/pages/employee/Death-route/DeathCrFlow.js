@@ -2,7 +2,7 @@ import React from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker,TextArea } from "@egovernments/digit-ui-react-components";
 import { Switch, useLocation, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { convertToAbandonedDeathRegistration } from "../../../utils";
+import { convertToAbandonedDeathRegistration } from "../../../utils/abandoneddeathindex";
 
 
 const DeathCrFlow = ({ data, path }) => {
@@ -13,7 +13,7 @@ const DeathCrFlow = ({ data, path }) => {
       title: "New Registration",
       subTitle: "New Death Registration",
       // img: <BankIcon />,
-      link: `${path}/information-death`,
+      link: `/digit-ui/employee/cr/create-death/information-death`,
     },
     {
       title: "New Registration",
