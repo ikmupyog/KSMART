@@ -138,7 +138,7 @@ public class MarriageCorrectionEnrichment implements BaseEnrichment {
         List<String> filecodes = getIds(requestInfo,
                 tenantId,
                 config.getMarriageApplNumberIdName(),
-                marriageApplicationDetails.getModulecode(),
+                marriageApplicationDetails.getModuleCode(),
                 "CRN",
                 marriageCorrection.size());
         validateFileCodes(filecodes, marriageCorrection.size());
