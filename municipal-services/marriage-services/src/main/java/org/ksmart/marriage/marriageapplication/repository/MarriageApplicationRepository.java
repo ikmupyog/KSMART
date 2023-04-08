@@ -22,7 +22,7 @@ import org.ksmart.marriage.marriageapplication.validator.MarriageMDMSValidator;
 import org.ksmart.marriage.marriageregistry.repository.rowmapper.MarriageRegistryRowMapper;
 import org.ksmart.marriage.marriageapplication.repository.rowmapper.MarriageDocumentRowMapper;
 import org.ksmart.marriage.utils.MarriageMdmsUtil;
- import org.ksmart.marriage.workflow.WorkflowIntegrator;
+// import org.ksmart.marriage.workflow.WorkflowIntegrator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

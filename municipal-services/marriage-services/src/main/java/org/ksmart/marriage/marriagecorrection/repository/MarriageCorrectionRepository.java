@@ -34,7 +34,7 @@ public class MarriageCorrectionRepository {
 
     public List<MarriageApplicationDetails> saveCorrectionDetails(MarriageDetailsRequest request) {
 
-        Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getMarriageDetails().get(0).getTenantid());
+      //  Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getMarriageDetails().get(0).getTenantid());
         //mdmsValidator.validateMarriageMDMSData(request,mdmsData);
         marriageDetailsEnrichment.enrichCreate(request);
 
