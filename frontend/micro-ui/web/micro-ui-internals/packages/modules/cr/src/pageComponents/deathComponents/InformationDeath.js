@@ -48,10 +48,13 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   const { data: State = {}, isStateLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
   const convertEpochToDate = (dateEpoch) => {
     if (dateEpoch) {
-      const dateFromApi = new Date(dateEpoch);
+      const dateFromApi = new Date(dateEpoch); 
       let month = dateFromApi.getMonth() + 1;
+      console.log(month);
       let day = dateFromApi.getDate();
-      let year = dateFromApi.getFullYear();
+      console.log(day);
+      let year = dateFromApi.getFullYear()
+      console.log(year );;
       month = (month > 9 ? "" : "0") + month;
       day = (day > 9 ? "" : "0") + day;
       return `${year}-${month}-${day}`;
@@ -59,6 +62,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
       return null;
     }
   };
+  
   let workFlowData = [];
   let cmbAgeUnit = [];
   let cmbPlace = [];
@@ -139,6 +143,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
       ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath)
       : formData?.InformationDeath?.DateOfDeath
   );
+console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
   const [FromDate, setFromDate] = useState(
     isEditDeath &&
       isEditDeathPageComponents === false &&
@@ -601,7 +606,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
 
   // }
   function selectDeathDate(value) {
-    console.log("value",value)
     setDateOfDeath(value);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -1264,12 +1268,12 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
         setValue(formData?.InformationDeath?.AgeUnit);
       }
     }
-    if (formData?.InformationDeath?.AgeUnit != null) {
-      if (cmbPlace.length > 0 && (AgeUnit === undefined || AgeUnit === "")) {
-        setSelectedAgeUnit(cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.code === formData?.InformationDeath?.AgeUnit)[0]);
-        setValue(formData?.InformationDeath?.AgeUnit);
-      }
-    }
+    // if (formData?.InformationDeath?.AgeUnit != null) {
+    //   if (cmbPlace.length > 0 && (AgeUnit === undefined || AgeUnit === "")) {
+    //     setSelectedAgeUnit(cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.code === formData?.InformationDeath?.AgeUnit)[0]);
+    //     setValue(formData?.InformationDeath?.AgeUnit);
+    //   }
+    // }
     if (formData?.InformationDeath?.Religion != null) {
       if (cmbReligion.length > 0 && (Religion === undefined || Religion === "")) {
         setSelectedReligion(cmbReligion.filter((cmbReligion) => cmbReligion.code === formData?.InformationDeath?.Religion)[0]);
