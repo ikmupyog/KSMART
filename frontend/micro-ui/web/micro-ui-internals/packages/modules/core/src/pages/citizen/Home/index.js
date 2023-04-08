@@ -1,5 +1,6 @@
 import {
-  Calender, CardBasedOptions, CaseIcon, DropIcon, ComplaintIcon, InboxIcon, DocumentIcon, HomeIcon, Loader, EditIcon, OBPSIcon, PTIcon, StandaloneSearchBar, WhatsNewCard
+  Calender, CardBasedOptions, CaseIcon, DropIcon, ComplaintIcon, InboxIcon, 
+  DocumentIcon, HomeIcon, Loader, EditIcon, OBPSIcon, PTIcon, StandaloneSearchBar, WhatsNewCard
 } from "@egovernments/digit-ui-react-components";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -61,7 +62,7 @@ const Home = () => {
       // },
       {
         name: t("CIVIL_REGISTRATION"),
-        Icon: <OBPSIcon />,
+        Icon: <OBPSIcon className="fill-path-primary-main" />,
         onClick: () => history.push("/digit-ui/citizen/cr-home"),
         // onClick: () => history.push({
         //   pathname: '/digit-ui/citizen/cr-home',
