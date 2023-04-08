@@ -9,7 +9,7 @@ import org.ksmart.marriage.common.contract.EncryptionDecryptionUtil;
 import org.ksmart.marriage.common.model.AuditDetails;
 import org.ksmart.marriage.common.repository.IdGenRepository;
 import org.ksmart.marriage.common.repository.ServiceRequestRepository;
-import org.ksmart.marriage.marriageapplication.config.MarriageApplicationConfiguration;
+import org.ksmart.marriage.marriageapplication.config.MarriageApplicationConfiguration; 
 import org.ksmart.marriage.marriageapplication.repository.MarriageApplicationRepository;
 import org.ksmart.marriage.marriageapplication.web.model.MarriageApplicationDetails;
 import org.ksmart.marriage.marriageapplication.web.model.Demand.Demand;
