@@ -151,6 +151,7 @@ const Urls = {
   crnacdeath: {
     create: "/death-services/v1/deathdetails/_createdeathnac",
     update: "/death-services/v1/deathdetails/_updatedeathnac",
+    search: "/death-services/v1/deathdetails/_searchdeathnac",
   },
   crdeath: {
     create: "/death-services/v1/deathdetails/_createdeath",

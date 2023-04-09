@@ -28,7 +28,7 @@ const ApplicationDeathNACDetails = () => {
     data: updateResponse,
     error: updateError,
     mutate,
-  } = Digit.Hooks.cr.useCRDeathApplicationActions(tenantId);
+  } = Digit.Hooks.cr.useApplicationDEATHNACActions(tenantId);
 
   // let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
   console.log(applicationDetails);
