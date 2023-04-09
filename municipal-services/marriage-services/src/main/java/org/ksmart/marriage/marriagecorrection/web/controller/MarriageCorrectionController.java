@@ -34,11 +34,6 @@ public class MarriageCorrectionController {
 
     @PostMapping("/_createmarriagecorrection")
     public ResponseEntity<MarriageCorrectionResponse> create(@Valid @RequestBody MarriageCorrectionRequest request) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-        System.out.println(new Gson().toJson(request));
-
-        String filename = "D:/some folder/001.docx";
-        String extensionRemoved = filename.split("\\.")[filename.split("\\.").length-1];
-        System.out.println("&&&&&&&&&&&&&&&"+extensionRemoved);
 
         List<MarriageCorrectionDetails> marriageCorrectionDetailsList = marriageCorrectionService.createCorrection(request);
         MarriageCorrectionResponse response = MarriageCorrectionResponse

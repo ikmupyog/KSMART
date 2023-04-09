@@ -30,20 +30,15 @@ public class CorrectionDocument {
     private String id;
     @JsonProperty("correctionId")
     private String correctionId;
-    @Size(max=128)
-    @SafeHtml
-    @JsonProperty("correctionFieldName")
+     @JsonProperty("correctionFieldName")
     private String correctionFieldName = null;
-    @Size(max=128)
-    @SafeHtml
     @JsonProperty("documentType")
     private String documentType = null;
-    @Size(max=1024)
-    @SafeHtml
+    @JsonProperty("documentName")
+    private String documentName = null;
     @JsonProperty("fileStoreId")
     private String fileStoreId = null;
-    @Size(max=64)
-    @SafeHtml
+
     @JsonProperty("active")
     private Boolean active = true;
     @JsonProperty("auditDetails")

@@ -21,6 +21,9 @@ public class MarriageCorrectionDetails {
     @JsonProperty("id")
     private String id;
     @Size(max = 64)
+    @JsonProperty("marriageId")
+    private String marriageId;
+    @Size(max = 64)
     @JsonProperty("tenantid")
     private String tenantid;
     @Size(max = 64)

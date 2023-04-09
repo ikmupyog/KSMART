@@ -56,5 +56,10 @@ public class MarriageDocument {
 
     @JsonProperty("auditDetails")
     private AuditDetails marriageDocAuditDetails ;
-    
+
+    @JsonProperty("correctionId")
+    private String correctionId;
+
+    @JsonProperty("correctionFieldName")
+    private String correctionFieldName ;
 }
