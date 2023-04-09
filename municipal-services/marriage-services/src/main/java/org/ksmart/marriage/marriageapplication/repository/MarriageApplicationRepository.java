@@ -37,17 +37,18 @@ import java.util.List;
 @Repository
 public class MarriageApplicationRepository {
     private final MarriageProducer producer;
-    // private final MarriageApplicationConfiguration marriageApplicationConfiguration;
-    // private final MarriageDetailsEnrichment marriageDetailsEnrichment;
     private final MarriageApplicationQueryBuilder marriageQueryBuilder;
     private final MarriageApplicationRowMapper marriageApplicationRowMapper;
-   // private final MarriageRegistryRowMapper marriageRegistryRowMapper;
-
     private final JdbcTemplate jdbcTemplate;
+    private final MarriageDocumentRowMapper documentRowMapper;
+    
+   // private final MarriageRegistryRowMapper marriageRegistryRowMapper;
+    // private final MarriageApplicationConfiguration marriageApplicationConfiguration;
+    // private final MarriageDetailsEnrichment marriageDetailsEnrichment;
    // private final WorkflowIntegrator workflowIntegrator;
    // private final MarriageMdmsUtil util;
    // private final MarriageMDMSValidator mdmsValidator;
-    private final MarriageDocumentRowMapper documentRowMapper;
+
 
     @Autowired
     EncryptionDecryptionUtil encryptionDecryptionUtil;
@@ -55,24 +56,13 @@ public class MarriageApplicationRepository {
     @Autowired
     public MarriageApplicationRepository(MarriageProducer producer, MarriageApplicationConfiguration marriageApplicationConfiguration,
                                          JdbcTemplate jdbcTemplate, 
-                                       //  MarriageDetailsEnrichment marriageDetailsEnrichment, 
                                          MarriageApplicationQueryBuilder marriageQueryBuilder,
                                          MarriageApplicationRowMapper marriageApplicationRowMapper,
-                                        // MarriageRegistryRowMapper marriageRegistryRowMapper,
-                                         // WorkflowIntegrator workflowIntegrator,
-                                       //  MarriageMdmsUtil util,
-                                        // MarriageMDMSValidator mdmsValidator,
                                          MarriageDocumentRowMapper documentRowMapper) {
         this.producer = producer;
-       // this.marriageApplicationConfiguration = marriageApplicationConfiguration;
-       // this.marriageDetailsEnrichment = marriageDetailsEnrichment;
         this.jdbcTemplate = jdbcTemplate;
         this.marriageQueryBuilder = marriageQueryBuilder;
         this.marriageApplicationRowMapper = marriageApplicationRowMapper;
-       // this.marriageRegistryRowMapper = marriageRegistryRowMapper;
-       // this.workflowIntegrator = workflowIntegrator;
-       // this.util = util;
-       // this.mdmsValidator = mdmsValidator;
         this.documentRowMapper = documentRowMapper;
     }
     //Jasmine 31.03.2023
@@ -109,17 +99,6 @@ public class MarriageApplicationRepository {
                 WitnessDetails witnessDetailsDec =  encryptionDecryptionUtil.decryptObject(witnessDetails, "BndDetail", WitnessDetails.class, requestInfo);
                 witnessDetails.setWitness1AadharNo(witnessDetailsDec.getWitness1AadharNo());
                 witnessDetails.setWitness2AadharNo(witnessDetailsDec.getWitness2AadharNo());
-                // DeathInformantDtls deathInformant =deathDtl.getDeathInformantDtls() ;
-                // if (deathInformant!=null){
-                //     DeathInformantDtls deathInformantEnc = encryptionDecryptionUtil.decryptObject(deathInformant, "BndDetail", DeathInformantDtls.class,requestInfo);
-                //     deathInformant.setInformantAadharNo(deathInformantEnc.getInformantAadharNo());
-                // }
-                // DeathInitiatorDtls deathInitiator =deathDtl.getDeathInitiatorDtls() ;
-                // if (deathInitiator!= null){
-                   
-                //     DeathInitiatorDtls deathInitiatorEnc = encryptionDecryptionUtil.decryptObject(deathInitiator, "BndDetail", DeathInitiatorDtls.class,requestInfo);
-                //     deathInitiator.setInitiatorAadhaar(deathInitiatorEnc.getInitiatorAadhaar());
-                // }
 			});
         }
         return result;

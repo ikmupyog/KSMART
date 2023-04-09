@@ -1,25 +1,27 @@
 
-ALTER TABLE IF EXISTS public.eg_marriage_document
-    ADD COLUMN correction_id character varying(64);
 
 ALTER TABLE IF EXISTS public.eg_marriage_document
-    ADD COLUMN correction_field_name character varying(1024);
+    ADD COLUMN IF NOT EXISTS  correction_id character varying(64);
 
+ALTER TABLE IF EXISTS public.eg_marriage_document
+    ADD COLUMN  IF NOT EXISTS correction_field_name character varying(1024);
 
 
 ALTER TABLE IF EXISTS public.eg_marriage_document_audit
-    ADD COLUMN correction_id character varying(64);
+    ADD COLUMN IF NOT EXISTS  correction_id character varying(64);
 
 ALTER TABLE IF EXISTS public.eg_marriage_document_audit
-    ADD COLUMN correction_field_name character varying(1024);
+    ADD COLUMN IF NOT EXISTS  correction_field_name character varying(1024);
+
+ALTER TABLE IF EXISTS public.eg_marriage_document
+    ADD COLUMN IF NOT EXISTS  applicationtype character varying(64);
+
+ALTER TABLE IF EXISTS public.eg_marriage_document_audit
+    ADD COLUMN IF NOT EXISTS  applicationtype character varying(64);
 
 
-
-
-
-
-	CREATE TABLE public.eg_marriage_correction
-(
+CREATE TABLE  IF NOT EXISTS public.eg_marriage_correction
+   (
     id character varying(64) NOT NULL,
     marriageid character varying(64) NOT NULL,
     correction_field_name character varying(1024) NOT NULL,
@@ -30,14 +32,14 @@ ALTER TABLE IF EXISTS public.eg_marriage_document_audit
     lastmodifiedby character varying(64),
     lastmodifiedtime bigint,
     CONSTRAINT eg_marriage_correction_pkey PRIMARY KEY (id)
-);
+  );
 
-ALTER TABLE IF EXISTS public.eg_marriage_correction
-    OWNER to postgres;
+  -- ALTER TABLE IF EXISTS public.eg_marriage_correction
+  --     OWNER to postgres;
 
 
 
-		CREATE TABLE public.eg_marriage_correction_audit
+CREATE TABLE   IF NOT EXISTS public.eg_marriage_correction_audit
 (
     id character varying(64) NOT NULL,
     marriageid character varying(64) NOT NULL,
@@ -51,13 +53,13 @@ ALTER TABLE IF EXISTS public.eg_marriage_correction
     CONSTRAINT eg_marriage_correction_audit_pkey PRIMARY KEY (id)
 );
 
-ALTER TABLE IF EXISTS public.eg_marriage_correction_audit
-    OWNER to postgres;
+  -- ALTER TABLE IF EXISTS public.eg_marriage_correction_audit
+  --     OWNER to postgres;
 
 
 
 
-	CREATE TABLE public.eg_marriage_correction_child
+CREATE TABLE  IF NOT EXISTS public.eg_marriage_correction_child
 (
     id character varying(64) NOT NULL,
     marriageid character varying(64) NOT NULL,
@@ -75,12 +77,12 @@ ALTER TABLE IF EXISTS public.eg_marriage_correction_audit
     CONSTRAINT eg_marriage_correction_child_pkey PRIMARY KEY (id)
 );
 
-ALTER TABLE IF EXISTS public.eg_marriage_correction_child
-    OWNER to postgres;
+ -- ALTER TABLE IF EXISTS public.eg_marriage_correction_child
+ --     OWNER to postgres;
 
 
 
-	CREATE TABLE public.eg_marriage_correction_child_audit
+CREATE TABLE  IF NOT EXISTS public.eg_marriage_correction_child_audit
 (
     id character varying(64) NOT NULL,
     marriageid character varying(64) NOT NULL,
@@ -98,5 +100,5 @@ ALTER TABLE IF EXISTS public.eg_marriage_correction_child
     CONSTRAINT eg_marriage_correction_child_audit_pkey PRIMARY KEY (id)
 );
 
-ALTER TABLE IF EXISTS public.eg_marriage_correction_child_audit
-    OWNER to postgres;
+-- ALTER TABLE IF EXISTS public.eg_marriage_correction_child_audit
+--     OWNER to postgres;
