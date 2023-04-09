@@ -18,12 +18,11 @@ const CreateDeathRegistration = ({ parentUrl }) => {
   const stateId = Digit.ULBService.getStateId();
   let config = [];
   let { data: newConfig, isLoading } = true;
-
   newConfig = newConfigCR;
-  const deathConfig = newConfig.find((item)=> item.head === "Death Routing");
-  config = config.concat(deathConfig.body.filter((a) => !a.hideInCitizen));
+  newConfig?.forEach((obj) => {
+    config = config.concat(obj.body.filter((a) => !a.hideInCitizen));
+  });
   config.indexRoute = "information-death";
-
   const goNext = (skipStep, index, isAddMultiple, key, isPTCreateSkip) => {
     let currentPath = pathname.split("/").pop(),
       nextPage;

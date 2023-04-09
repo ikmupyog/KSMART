@@ -41,7 +41,7 @@ const CRBreadCrumb = ({ location }) => {
   const isBirthInboxFlow = location?.pathname?.includes("birthinbox");
   const isDeathInboxFlow = location?.pathname?.includes("deathinbox");
   const isCrFlow = location?.pathname?.includes("cr-flow");
-  const isChildDetails = location?.pathname?.includes("create-birth/child-details");
+  const isChildDetails = location?.pathname?.includes("/create-birth/child-details");
   const isDeathFlow = location?.pathname?.includes("death-flow");
   const isDeathDetails = location?.pathname?.includes("information-death");
   const isAbandonedDeathDetails = location?.pathname?.includes("abandoned-information-death");
@@ -162,6 +162,12 @@ const CRBreadCrumb = ({ location }) => {
       content: t("STILL_BIRTH_APPLICATION_DETAILS"),
       show: isApplicationStillBirthDetails ||
         breadCrumbUrls.includes("home/application-stillbirth")
+    },
+    {
+      path: sessionStorage.getItem("applicationno") ? `/digit-ui/employee/cr/application-abandonedbirth/${sessionStorage.getItem("birthApplicationNo")}` : "",
+      content: t("ABANDONED_BIRTH_APPLICATION_DETAILS"),
+      show: isApplicationStillBirthDetails ||
+        breadCrumbUrls.includes("home/application-abandonedbirth")
     },
     {
       path: "/digit-ui/employee/cr/death-flow/specify-correction",

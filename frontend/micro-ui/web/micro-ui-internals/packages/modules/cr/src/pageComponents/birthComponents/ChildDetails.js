@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton, Loader, Toast, SubmitBar } from "@egovernments/digit-ui-react-components";
+import { CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton, Loader, Toast } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
@@ -16,8 +16,10 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   // console.log(isEditBirth);  
   sessionStorage.removeItem("applicationNumber");
   const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(false);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth  ? isEditBirth : false);
   const [workFlowCode, setWorkFlowCode] = useState(formData?.ChildDetails?.workFlowCode);
+  const [isPayment, setIsPayment] = useState(formData?.ChildDetails?.isPayment);
+  const [Amount, setAmount] = useState(formData?.ChildDetails?.Amount);
 
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
@@ -145,7 +147,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isInitialRenderPlace, setIsInitialRenderPlace] = useState(true);
   const [isInitialRenderFormData, setisInitialRenderFormData] = useState(false);
-  const [birthDateTime, setbirthDateTime] = useState(""); //formData?.ChildDetails?.birthDateTime ? formData?.ChildDetails?.birthDateTime :
+  const [birthDateTime, setbirthDateTime] = useState(formData?.ChildDetails?.birthDateTime ? formData?.ChildDetails?.birthDateTime : ""); //formData?.ChildDetails?.birthDateTime ? formData?.ChildDetails?.birthDateTime :
   const [isChildName, setIsChildName] = useState(formData?.ChildDetails?.isChildName ? formData?.ChildDetails?.isChildName : false);
   // const [birthPlace, selectBirthPlace] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.ChildDetails?.birthPlace)[0]) : formData?.ChildDetails?.birthPlace);
   const [birthPlace, selectBirthPlace] = useState(formData?.ChildDetails?.birthPlace?.code ? formData?.ChildDetails?.birthPlace : formData?.ChildDetails?.birthPlace ?
@@ -322,7 +324,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   }
 
   function setselectChildDOB(value) {
-   
+
     setChildDOB(value);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -341,10 +343,11 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
       if (birthPlace) {
         let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
-        console.log("currentWorgFlowDOB" + currentWorgFlow);
         if (currentWorgFlow.length > 0) {
-          // console.log(currentWorgFlow[0].WorkflowCode);
+          console.log(currentWorgFlow);
           setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+          setIsPayment(currentWorgFlow[0].payment);
+          setAmount(currentWorgFlow[0].amount);
         }
       }
       if (Difference_In_Days >= 365) {
@@ -505,6 +508,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     if (currentWorgFlow.length > 0) {
       // console.log(currentWorgFlow[0].WorkflowCode);
       setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+      setIsPayment(currentWorgFlow[0].payment);
+      setAmount(currentWorgFlow[0].amount);
     }
   }
   function setSelectBirthWeight(e) {
@@ -880,7 +885,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
         vehicleToMl, setadmittedHospitalEn, vehicleDesDetailsEn,
         publicPlaceType, localityNameEn, localityNameMl, streetNameEn, streetNameMl, publicPlaceDecpEn,
         birthWeight, pregnancyDuration, medicalAttensionSub, deliveryMethods, IsEditChangeScreen,
-        uuid, DifferenceInTime, isWorkflow
+        uuid, DifferenceInTime, isWorkflow,isPayment,Amount
       });
     }
   };

@@ -37,14 +37,16 @@ const BannerPicker = (props) => {
     // return (
     //   <Loader />
     //  ) 
-    
-    <Banner
-    message={GetActionMessage(props)}
-    applicationNumber={props?.data?.ChildDetailsAdoption?.length>0?props?.data?.ChildDetailsAdoption[0]?.applicationNumber:null}
-    info={props.isSuccess ? props.applicationNumber : ""}
-    successful={props.isSuccess}
-    error={props.isError}
-  />
+    return(
+      <Banner
+          message={GetActionMessage(props)}
+          applicationNumber={props?.data?.ChildDetailsAdoption?.length>0?props?.data?.ChildDetailsAdoption[0]?.applicationNumber:null}
+          info={props.isSuccess ? props.applicationNumber : ""}
+          successful={props.isSuccess}
+          error={props.isError}
+        />
+    )
+   
      
   }else{
     props?.setIsLoader(false)

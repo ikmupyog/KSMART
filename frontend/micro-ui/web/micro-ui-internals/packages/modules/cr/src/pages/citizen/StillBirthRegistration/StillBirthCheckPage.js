@@ -115,17 +115,18 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
             </h1>
           </div>
         </div>
-        <div
+        <div className="col-md-12"
           style={{
-            maxWidth: "80%",
+            maxWidth: "auto",
             margin: "25px auto",
             padding: "3rem 2rem",
             border: "none",
             borderRadius: "8px",
-            height: "800PX",
+            height: "auto",
             backgroundColor: "#f3f0ef",
           }}
         >
+            <div className="col-md-12">
           <div className="row">
             <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_CHILD_SEX")}`}</CardLabel>
@@ -516,11 +517,11 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
         </div>
 
 
-
+        <div className="row">
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
+              <span style={{ background: "#f3f0ef", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
             </h1>
           </div>
         </div>
@@ -540,7 +541,7 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
 
 
 
-        <div className="row">
+     
           <div className="col-md-12">
             <h1 className="headingh1">{/* <span style={{ background: "#fff", padding: "0 10px" }}>                
                 </span> */}</h1>
@@ -548,6 +549,8 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
         </div>
         {/* <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} /> */}
         <SubmitBar disabled={!isInitiatorDeclaration} label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} />
+        </div>
+
       </Card>
     </React.Fragment>
   );

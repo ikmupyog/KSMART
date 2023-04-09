@@ -208,8 +208,8 @@ const Informer = ({ config, onSelect, userType, formData, isEditDeath }) => {
   return (
     <React.Fragment>
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-      {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
-
+      {window.location.href.includes("/citizen/cr-death-creation/informer") || window.location.href.includes("/employee/cr-death-creation/informer") ? <Timeline currentStep={6} /> : null}
+      
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!IsDeclarationInformant}>
         <div className="row">
           <div className="col-md-12">
