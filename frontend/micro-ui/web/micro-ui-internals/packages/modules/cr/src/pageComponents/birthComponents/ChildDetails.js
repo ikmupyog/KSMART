@@ -232,8 +232,10 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const [PregnancyDurationStError, setPregnancyDurationStError] = useState(formData?.ChildDetails?.pregnancyDuration ? false : false);
   const [PregnancyDurationInvalidError, setPregnancyDurationInvalidError] = useState(formData?.ChildDetails?.pregnancyDuration ? false : false);
   const [ChildFirstNameEnError, setChildFirstNameEnError] = useState(false);
+  const [ChildMiddleNameEnError, setChildMiddleNameEnError] = useState(false);
   const [ChildLastNameEnError, setChildLastNameEnError] = useState(false);
   const [ChildFirstNameMlError, setChildFirstNameMlError] = useState(false);
+  const [ChildMiddleNameMlError, setChildMiddleNameMlError] = useState(false);
   const [ChildLastNameMlError, setChildLastNameMlError] = useState(false);
 
   const [access, setAccess] = React.useState(true);
@@ -1011,9 +1013,33 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       }
       if (childMiddleNameEn.trim() == null || childMiddleNameEn.trim() == '' || childMiddleNameEn.trim() == undefined) {
         setChildMiddleNameEn("");
+      } else {
+        if (childMiddleNameMl.trim() == null || childMiddleNameMl.trim() == '' || childMiddleNameMl.trim() == undefined) {
+          validFlag = false;
+          setChildMiddleNameMl("");
+          setChildMiddleNameMlError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } else {
+          setChildMiddleNameMlError(false);
+        }
       }
       if (childLastNameEn.trim() == null || childLastNameEn.trim() == '' || childLastNameEn.trim() == undefined) {
         setChildLastNameEn("");
+      } else {
+        if (childLastNameMl.trim() == null || childLastNameMl.trim() == '' || childLastNameMl.trim() == undefined) {
+          validFlag = false;
+          setChildLastNameMl("");
+          setChildLastNameMlError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } else {
+          setChildLastNameMlError(false);
+        }
       }
       if (childFirstNameMl.trim() === null || childFirstNameMl.trim() === '' || childFirstNameMl.trim() === undefined) {
         validFlag = false;
@@ -1028,9 +1054,35 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       }
       if (childMiddleNameMl.trim() == null || childMiddleNameMl.trim() == '' || childMiddleNameMl.trim() == undefined) {
         setChildMiddleNameMl("");
+        setChildMiddleNameEnError(false);
+      } else {
+        if (childMiddleNameEn.trim() == null || childMiddleNameEn.trim() == '' || childMiddleNameEn.trim() == undefined) {
+          validFlag = false;
+          setChildMiddleNameEn("");
+          setChildMiddleNameEnError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } else {
+          setChildMiddleNameEnError(false);
+        }
       }
       if (childLastNameMl.trim() == null || childLastNameMl.trim() == '' || childLastNameMl.trim() == undefined) {
         setChildLastNameMl("");
+        setChildLastNameEnError(false);
+      } else {
+        if (childLastNameEn.trim() == null || childLastNameEn.trim() == '' || childLastNameEn.trim() == undefined) {
+          validFlag = false;
+          setChildLastNameEn("");
+          setChildLastNameEnError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } else {
+          setChildLastNameEnError(false);
+        }
       }
     }
     if (validFlag == true) {
@@ -1576,8 +1628,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                 admittedHospitalEnError || vehiDesDetailsEnError ||
                 placeTypepEnError || localNameEnError || localNameMlError ||
                 MedicalAttensionSubStError || DeliveryMethodStError || BirthWeightError
-                || PregnancyDurationStError || PregnancyDurationInvalidError || ChildFirstNameEnError
-                || ChildFirstNameMlError
+                || PregnancyDurationStError || PregnancyDurationInvalidError || ChildFirstNameEnError || ChildMiddleNameEnError
+                || ChildLastNameEnError|| ChildFirstNameMlError || ChildMiddleNameMlError || ChildLastNameMlError
 
               }
               label={
@@ -1595,8 +1647,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                   admittedHospitalEnError || vehiDesDetailsEnError ||
                   placeTypepEnError || localNameEnError || localNameMlError ||
                   MedicalAttensionSubStError || DeliveryMethodStError || BirthWeightError
-                  || PregnancyDurationStError || PregnancyDurationInvalidError || ChildFirstNameEnError
-                  || ChildFirstNameMlError
+                  || PregnancyDurationStError || PregnancyDurationInvalidError || ChildFirstNameEnError || ChildMiddleNameEnError
+                  || ChildLastNameEnError|| ChildFirstNameMlError || ChildMiddleNameMlError || ChildLastNameMlError
                   ?
                   AadharError
                     ? t(`CS_COMMON_INVALID_AADHAR_NO`) : DOBError ? t(`BIRTH_DOB_VALIDATION_MSG`)
@@ -1625,8 +1677,11 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                                                                 : PregnancyDurationInvalidError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_INVALID_CHOOSE`)
                                                                   : DeliveryMethodStError ? t(`BIRTH_ERROR_DELIVERY_METHOD_CHOOSE`)
                                                                     : ChildFirstNameEnError ? t(`BIRTH_ERROR_CHILD_FIRST_NAME_EN`)
+                                                                    : ChildMiddleNameEnError ? t(`BIRTH_ERROR_CHILD_MIDDLE_NAME_EN`)
+                                                                    : ChildLastNameEnError ? t(`BIRTH_ERROR_CHILD_LAST_NAME_EN`)
                                                                       : ChildFirstNameMlError ? t(`BIRTH_ERROR_CHILD_FIRST_NAME_ML`)
-
+                                                                      : ChildMiddleNameMlError ? t(`BIRTH_ERROR_CHILD_MIDDLE_NAME_ML`)
+                                                                      : ChildLastNameMlError ? t(`BIRTH_ERROR_CHILD_LAST_NAME_ML`)
                                                                         : setToast(false)
                   : setToast(false)
               }
