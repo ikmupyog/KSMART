@@ -12,6 +12,7 @@ import ApplicationAbandonedDeathDetails from "./ApplicationAbandonedDeathDetails
 import ApplicationDeathDetails from "./ApplicationDeathDetails";
 import ApplicationDeathNACDetails from "./ApplicationDeathNACDetails";
 import ApplicationStillBirthDetails from "./ApplicationStillBirthDetails";
+import ApplicationBornOutsideIndiaDetails from "./ApplicationBornOutsideIndiaDetails";
 import ApplicationAbandonedBirthDetails from "./ApplicationAbandonedBirthDetails";
 import DeathCrFlow from "./Death-route";
 import SearchFlow from "./Search-route";
@@ -32,6 +33,7 @@ const CRBreadCrumb = ({ location }) => {
   const isApplicationBirthDetails = location?.pathname?.includes("cr/application-birthdetails");
   const isApplicationAdoptionDetails = location?.pathname?.includes("cr/application-Adoptiondetails");
   const isApplicationStillBirthDetails = location?.pathname?.includes("cr/application-stillbirth");
+  const isApplicationBornOutsideIndiaDetails = location?.pathname?.includes("cr/application-bornOutsideIndia");
   const isApplicationAbandonedBirthDetails = location?.pathname?.includes("cr/application-abandonedbirth");
   const isNewApplication = location?.pathname?.includes("tl/new-application");
   const isResponse = location?.pathname?.includes("tl/response");
@@ -164,6 +166,12 @@ const CRBreadCrumb = ({ location }) => {
         breadCrumbUrls.includes("home/application-stillbirth")
     },
     {
+      path: sessionStorage.getItem("applicationno") ? `/digit-ui/employee/cr/application-bornOutsideIndia/${sessionStorage.getItem("birthApplicationNo")}` : "",
+      content: t("Born Outside India Application Details"),
+      show: isApplicationBornOutsideIndiaDetails ||
+        breadCrumbUrls.includes("home/application-bornOutsideIndia")
+      },
+      {
       path: sessionStorage.getItem("applicationno") ? `/digit-ui/employee/cr/application-abandonedbirth/${sessionStorage.getItem("birthApplicationNo")}` : "",
       content: t("ABANDONED_BIRTH_APPLICATION_DETAILS"),
       show: isApplicationStillBirthDetails ||
@@ -238,6 +246,7 @@ const EmployeeApp = ({ path, url, userType }) => {
          
           <PrivateRoute path={`${path}/application-details/:id`} component={() => <ApplicationDetails parentRoute={path} />} />
           <PrivateRoute path={`${path}/application-stillbirth/:id`} component={() => <ApplicationStillBirthDetails parentRoute={path} />} />
+          <PrivateRoute path={`${path}/application-bornOutsideIndia/:id`} component={() => <ApplicationBornOutsideIndiaDetails parentRoute={path} />} />
           <PrivateRoute path={`${path}/application-abandonedbirth/:id`} component={() => <ApplicationAbandonedBirthDetails parentRoute={path} />} />
           <PrivateRoute path={`${path}/application-Adoptiondetails/:id`} component={() => <ApplicationAdoptionDetails parentRoute={path} />} />
           <PrivateRoute path={`${path}/application-deathdetails/:id`} component={() => <ApplicationDeathDetails parentRoute={path} />} />

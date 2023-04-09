@@ -226,7 +226,7 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count,applicationType, 
       ]), [] )
 
       const handleStillBirthLinkClick = (finaldata) => {  
-        console.log(finaldata);
+        // console.log(finaldata);
         let temp={};
         temp.StillBirthChildDetails =finaldata;
          Digit.SessionStorage.set("CR_EDIT_STILLBIRTH_REG", temp);      
@@ -312,12 +312,13 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count,applicationType, 
             accessor: "applicationNumber",
             disableSortBy: true,
             Cell: ({ row }) => {
+              console.log("row",row)
               return (
                 <div>
                   <span className="link">
                     <Link
                       onClick={(event) => handleBornOutsideBirthLinkClick(row.original)}
-                      to={`/digit-ui/employee/cr/application-bornoutsidebirth/${row.original.applicationNumber}`}
+                      to={`/digit-ui/employee/cr/application-bornOutsideIndia/${row.original.applicationNumber}`}
                     >
                       {/* {row.original.applicationNumber} */}
                       {row.original.applicationNumber}
@@ -330,7 +331,9 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count,applicationType, 
           {
             Header: t("CR_COMMON_COL_APP_DATE"),
             disableSortBy: true,
-            accessor: (row) => GetCell(row.auditDetails.createdTime ? convertEpochToDateDMY(row.auditDetails.createdTime) : ""),
+            
+            accessor: (row) => 
+            GetCell(row.auditDetails.createdTime ? convertEpochToDateDMY(row.auditDetails.createdTime) : ""),
           },
           {
             Header: t("CR_COMMON_COL_DOB"),
@@ -345,12 +348,12 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count,applicationType, 
           {
             Header: t("CR_COMMON_COL_MOTHER_NAME"),
             disableSortBy: true,
-            accessor: (row) => GetCell(row.StillBirthParentsDetails["motherFirstNameEn"] || "-"),
+            accessor: (row) => GetCell(row.BornOutsideParentsDetails["motherFirstNameEn"] || "-"),
           },
           {
             Header: t("CR_COMMON_COL_FATHER_NAME"),
             disableSortBy: true,
-            accessor: (row) => GetCell(row.StillBirthParentsDetails["fatherFirstNameEn"] || "-"),
+            accessor: (row) => GetCell(row.BornOutsideParentsDetails["fatherFirstNameEn"] || "-"),
           },
     
           // {
