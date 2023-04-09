@@ -1033,18 +1033,18 @@ public class MarriageApplicationValidator {
                                                                                                                 groomaddressInfo.getPresentInsideKeralaPostOffice()
                                                                                                                 + " is invalid");
                                                                         }
-                                                                        // if (StringUtils.isEmpty(groomaddressInfo
-                                                                        // .getPresentInsideKeralaPincode())) {
-                                                                        // System.out.println("pincode is
-                                                                        // "+groomaddressInfo
-                                                                        // .getPresentInsideKeralaPincode());
-                                                                        // throw new CustomException(
-                                                                        // "GROOM PRESENT ADDRESS INSIDE KERALA: PINCODE
-                                                                        // INVALID ",
-                                                                        // "The Pincode " +
-                                                                        // groomaddressInfo.getPresentInsideKeralaPincode()
-                                                                        // + " is invalid");
-                                                                        // }
+                                                                        if (StringUtils.isEmpty(groomaddressInfo
+                                                                        .getPresentInsideKeralaPincode())) {
+                                                                       
+                                                                        
+                                                                       
+                                                                        throw new CustomException(
+                                                                        "GROOM PRESENT ADDRESS INSIDE KERALA: PINCODE INVALID ",
+                                                                        
+                                                                        "The Pincode " +
+                                                                        groomaddressInfo.getPresentInsideKeralaPincode()
+                                                                        + " is invalid");
+                                                                        }
 
                                                                         // if (StringUtils.isEmpty(groomaddressInfo
                                                                         //                 .getPresentInsideKeralaLocalityNameEn())) {
@@ -1613,15 +1613,15 @@ public class MarriageApplicationValidator {
                                                                                                                 brideaddressInfo.getPresentInsideKeralaPostOffice()
                                                                                                                 + " is invalid");
                                                                         }
-                                                                        // if (StringUtils.isEmpty(brideaddressInfo
-                                                                        // .getPresentInsideKeralaPincode())) {
-                                                                        // throw new CustomException(
-                                                                        // "BRIDE PRESENT ADDRESS INSIDE KERALA: PINCODE
-                                                                        // INVALID ",
-                                                                        // "The Pincode " +
-                                                                        // brideaddressInfo.getPresentInsideKeralaPincode()
-                                                                        // + " is invalid");
-                                                                        // }
+                                                                        if (StringUtils.isEmpty(brideaddressInfo
+                                                                        .getPresentInsideKeralaPincode())) {
+                                                                        throw new CustomException(
+                                                                        "BRIDE PRESENT ADDRESS INSIDE KERALA: PINCODE  INVALID ",
+                                                                       
+                                                                        "The Pincode " +
+                                                                        brideaddressInfo.getPresentInsideKeralaPincode()
+                                                                        + " is invalid");
+                                                                        }
                                                                         // if (StringUtils.isEmpty(brideaddressInfo
                                                                         //                 .getPresentInsideKeralaLocalityNameEn())) {
                                                                         //         throw new CustomException(
