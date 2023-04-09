@@ -4,7 +4,7 @@ import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
 const AddressSameAsAbove = ({ config, onSelect, userType, formData, isPrsentAddress, setIsPrsentAddress,
-  isEditBirth = false, isEditDeath = false,isEditStillBirth = false,
+  isEditBirth = false, isEditDeath = false,isEditStillBirth = false,isEditBirthNAC=false
   // isInitialRender, setIsInitialRender
 }) => {
   const stateId = Digit.ULBService.getStateId();

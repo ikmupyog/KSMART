@@ -3,11 +3,11 @@ import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, TextAre
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
-const Informer = ({ config, onSelect, userType, formData,isEditDeath }) => {
+const Informer = ({ config, onSelect, userType, formData, isEditDeath }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
-
+  console.log(formData);
 
   const [IsDeclarationInformant, setIsDeclarationInformant] = useState(
     formData?.InformantDetails?.IsDeclarationInformant ? formData?.InformantDetails?.IsDeclarationInformant : false
@@ -17,7 +17,7 @@ const Informer = ({ config, onSelect, userType, formData,isEditDeath }) => {
   // );
   const [InformantAadharNo, setInformantAadharNo] = useState(
     formData?.InformantDetails?.InformantAadharNo ? formData?.InformantDetails?.InformantAadharNo : ""
-  );  
+  );
   const [InformantNameEn, setInformantNameEn] = useState(
     formData?.InformantDetails?.InformantNameEn ? formData?.InformantDetails?.InformantNameEn : ""
   );
@@ -26,7 +26,7 @@ const Informer = ({ config, onSelect, userType, formData,isEditDeath }) => {
   );
   const [DeathSignedOfficerDesignation, setDeathSignedOfficerDesignation] = useState(
     formData?.InformantDetails?.DeathSignedOfficerDesignation ? formData?.InformantDetails?.DeathSignedOfficerDesignation : ""
-  );  
+  );
   const [InformantAddress, setInformantAddress] = useState(
     formData?.InformantDetails?.InformantAddress ? formData?.InformantDetails?.InformantAddress : ""
   );
@@ -50,7 +50,7 @@ const Informer = ({ config, onSelect, userType, formData,isEditDeath }) => {
       // }
     }
   }, [isInitialRender]);
- 
+
   function setDeclarationInfo(e) {
     if (e.target.checked == true) {
       setIsDeclarationInformant(e.target.checked);
@@ -67,7 +67,9 @@ const Informer = ({ config, onSelect, userType, formData,isEditDeath }) => {
   // }
   function setSelectInformantAadharNo(e) {
     if (e.target.value.trim().length >= 0) {
-      setInformantAadharNo(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
+      setInformantAadharNo(
+        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
+      );
     }
     // if (e.target.value.length != 0) {
     //   if (e.target.value.length > 12) {
@@ -84,17 +86,23 @@ const Informer = ({ config, onSelect, userType, formData,isEditDeath }) => {
   }
   function setSelectInformantNameEn(e) {
     if (e.target.value.length === 51) {
-      return false;      
+      return false;
     } else {
-      setInformantNameEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+      setInformantNameEn(
+        e.target.value.replace(
+          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
+          ""
+        )
+      );
     }
-    
   }
- 
+
   function setSelectInformantMobileNo(e) {
     if (e.target.value.trim().length >= 0) {
-      setInformantMobileNo(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
-    } 
+      setInformantMobileNo(
+        e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 10)
+      );
+    }
     // if (e.target.value.length != 0) {
     //   if (e.target.value.length > 10) {
     //     return false;
@@ -112,16 +120,26 @@ const Informer = ({ config, onSelect, userType, formData,isEditDeath }) => {
     if (e.target.value.length === 51) {
       return false;
     } else {
-      setDeathSignedOfficerDesignation(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
-    }    
-  } 
+      setDeathSignedOfficerDesignation(
+        e.target.value.replace(
+          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
+          ""
+        )
+      );
+    }
+  }
   function setSelectInformantAddress(e) {
     if (e.target.value.length === 251) {
-      return false;      
+      return false;
     } else {
-      setInformantAddress(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/ig, ''));
+      setInformantAddress(
+        e.target.value.replace(
+          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
+          ""
+        )
+      );
     }
-  }  
+  }
 
   let validFlag = true;
   const goNext = () => {
@@ -175,7 +193,7 @@ const Informer = ({ config, onSelect, userType, formData,isEditDeath }) => {
 
       sessionStorage.setItem("InformantMobileNo", InformantMobileNo ? InformantMobileNo : null);
       sessionStorage.setItem("DeathSignedOfficerDesignation", DeathSignedOfficerDesignation ? DeathSignedOfficerDesignation : null);
-      sessionStorage.setItem("InformantAddress", InformantAddress ? InformantAddress : null);   
+      sessionStorage.setItem("InformantAddress", InformantAddress ? InformantAddress : null);
       onSelect(config.key, {
         IsDeclarationInformant,
         // isDeclarationInfotwo,
@@ -183,14 +201,14 @@ const Informer = ({ config, onSelect, userType, formData,isEditDeath }) => {
         InformantAadharNo,
         InformantMobileNo,
         DeathSignedOfficerDesignation,
-        InformantAddress,       
+        InformantAddress,
       });
     }
   };
   return (
     <React.Fragment>
-      <BackButton >{t("CS_COMMON_BACK")}</BackButton>
-      {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
+      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+      {window.location.href.includes("/citizen/cr-death-creation/informer") || window.location.href.includes("/employee/cr-death-creation/informer") ? <Timeline currentStep={6} /> : null}
       
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!IsDeclarationInformant}>
         <div className="row">
@@ -203,10 +221,16 @@ const Informer = ({ config, onSelect, userType, formData,isEditDeath }) => {
 
         <div className="row">
           <div className="col-md-12">
-            <CheckBox label={t("CR_INFORMER_DECLARATION_STATEMENT")} onChange={setDeclarationInfo} value={IsDeclarationInformant} checked={IsDeclarationInformant} />
+            <div className="col-md-12">
+              <CheckBox
+                label={t("CR_INFORMER_DECLARATION_STATEMENT")}
+                onChange={setDeclarationInfo}
+                value={IsDeclarationInformant}
+                checked={IsDeclarationInformant}
+              />
+            </div>
           </div>
         </div>
-        
 
         <div className="row">
           <div className="col-md-12">
@@ -245,7 +269,7 @@ const Informer = ({ config, onSelect, userType, formData,isEditDeath }) => {
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMANT_NAME") })}
               />
             </div>
-             
+
             <div className="col-md-3">
               <CardLabel>
                 {`${t("CR_INFORMER_DESIGNATION")}`}
@@ -280,12 +304,11 @@ const Informer = ({ config, onSelect, userType, formData,isEditDeath }) => {
                 {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
               />
             </div>
-           
           </div>
         </div>
         <div className="row">
           <div className="col-md-12">
-          <div className="col-md-6">
+            <div className="col-md-6">
               <CardLabel>{`${t("CR_ADDRESS")}`}</CardLabel>
               <TextArea
                 t={t}
@@ -300,7 +323,7 @@ const Informer = ({ config, onSelect, userType, formData,isEditDeath }) => {
               />
             </div>
           </div>
-        </div> 
+        </div>
 
         {toast && (
           <Toast

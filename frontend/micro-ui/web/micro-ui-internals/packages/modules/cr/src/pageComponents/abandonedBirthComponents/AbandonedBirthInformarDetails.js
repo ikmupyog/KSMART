@@ -4,13 +4,14 @@ import { useTranslation } from "react-i18next";
 // import Timeline from "../../components/CRTimeline";
 import Timeline from "../../components/CRABTimeline";
 
-const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,isEditBirth=false }) => {
+const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,isEditAbandonedBirth=false }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
   // console.log(Digit.UserService.getUser().info);
-  // const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : true);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditAbandonedBirth ? isEditAbandonedBirth : true);
   const {name:name,} =Digit.UserService.getUser().info ; // window.localStorage.getItem("user-info");
+  const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
 
   // let extraStyles = {};
   // extraStyles = getStyle();
@@ -40,7 +41,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
   // const [error, setError] = useState(null);
   // let acceptFormat = ".jpg,.png,.pdf,.jpeg"
 
-  const [uploadedFiles, setUploadedFiles] = useState(formData?.AbandonedBirthInformarDetails?.document? formData?.AbandonedDocumentUpload?.document: []);
+  const [uploadedFiles, setUploadedFiles] = useState(formData?.AbandonedBirthInformarDetails?.document? formData?.AbandonedBirthInformarDetails?.document: []);
   const [docuploadedId, setDocuploadedId] = useState();
   const [docuploadedName, setDocuploadedName] = useState();
   const [uploadedFile, setUploadedFile] = useState(formData?.AbandonedBirthInformarDetails?.documents?.ProofOfIdentity?.fileStoreId || null);
@@ -119,11 +120,17 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
     }
   } 
   function selectfile(e) {
+    console.log({e});
     let result = documentList.filter(obj => obj.code == e?.target?.id);
     setDocuploadedName(result[0].description);
     setDocuploadedId(e?.target?.id);
     setUploadedFile(null);
     setFile(e.target.files[0]);
+    console.log(uploadedFiles);  
+    // console.log(uploadedFile);  
+  
+
+
   }
   function onDeleteown(e) {
     const removeindex = uploadedFiles.findIndex(element => {
@@ -291,7 +298,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                 name="institutionName"
                 value={institutionName}
                 onChange={setSelectinstitutionName}
-                // disable={isDisableEdit}
+                disable={isEdit}
                 placeholder={`${t("CR_INSTITUTION_NAME_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_ERROR_INSTITUTION_NAME_CHOOSE") })}
               />
@@ -307,7 +314,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                 name="caretakerName"
                 value={caretakerName}
                 onChange={setSelectcaretakerName}
-                // disable={isDisableEdit}
+                disable={isEdit}
                 placeholder={`${t("CR_CARE_TAKER_NAME")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_ERROR_CARE_TAKER_NAME") })}
               />
@@ -323,7 +330,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                 name="caretakerDesignation"
                 value={caretakerDesignation}
                 onChange={setSelectcaretakerDesignation}
-                // disable={isDisableEdit}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_CARE_TAKER_DESIGNATION")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_ERROR_CARE_TAKER_DESIGNATION") })}
               />
@@ -339,7 +346,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                 name="caretakerMobile"
                 value={caretakerMobile}
                 onChange={setSelectcaretakerMobile}
-                // disable={isDisableEdit}
+                disable={isEdit}
                 placeholder={`${t("CR_MOBILE_NO")}`}
                 {...(validation = { pattern: "^([0-9]){10}$", isRequired: false, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
               />
@@ -354,7 +361,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                 name="caretakerAddress"
                 value={caretakerAddress}
                 onChange={setSelectcaretakerAddress}
-                // disable={isDisableEdit}
+                disable={isEdit}
                 placeholder={`${t("CR_CARE_TAKER_ADDRESS")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRESS") })}
               />
@@ -383,7 +390,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                 name="infomantinstitution"
                 value={infomantinstitution}
                 onChange={setSelectinfomantinstitution}
-                // disable={isDisableEdit}
+                disable={isEdit}
                 placeholder={`${t("CR_OFFICE_INSTITUTION")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_OFFICE_INSTITUTION_NAME") })}
               />
@@ -397,7 +404,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                 name="informerDesi"
                 value={informerDesi}
                 onChange={setSelectinformerDesi}
-                // disable={isDisableEdit}
+                disable={isEdit}
                 placeholder={`${t("CR_INFORMANT_DESIGNATION")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMER_DESIGNATION") })}
               />
@@ -415,7 +422,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                 name="infomantAadhar"
                 value={infomantAadhar}
                 onChange={setSelectinfomantAadhar}
-                // disable={isDisableEdit}
+                disable={isEdit}
                 placeholder={`${t("CS_COMMON_AADHAAR")}`}
                 {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
               />
@@ -433,6 +440,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
               optionKey="i18nKey" 
               name="infomantFirstNameEn"              
               value={infomantFirstNameEn} 
+              disable={isEdit}
               onChange={setSelectinfomantFirstNameEn}  placeholder={`${t("CR_INFORMANT_NAME_EN")}`}
              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMANT_NAME") })} />
             </div>
@@ -450,7 +458,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                 name="infomantMobile"
                 value={infomantMobile}
                 onChange={setSelectinfomantMobile }
-                // disable={isDisableEdit}
+                disable={isEdit}
                 placeholder={`${t("CR_MOBILE_NO")}`}
                 {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
               />
@@ -463,6 +471,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                 optionKey="i18nKey"
                 name="informerAddress"
                 value={informerAddress}
+                disable={isEdit}
                 onChange={setSelectinformerAddress}
                 placeholder={`${t("CR_INFORMER_ADDRESS")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}

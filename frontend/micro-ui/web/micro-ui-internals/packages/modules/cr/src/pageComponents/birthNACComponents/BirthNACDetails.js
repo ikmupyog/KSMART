@@ -21,7 +21,6 @@ import BirthPlaceVehicle from "../../pageComponents/birthComponents/BirthPlaceVe
 import BirthPlacePublicPlace from "../../pageComponents/birthComponents/BirthPlacePublicPlace";
 
 const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) => {
-  // console.log(JSON.stringify(formData));
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -67,7 +66,6 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
     WorkFlowDetails["birth-death-service"] && WorkFlowDetails["birth-death-service"].WorkFlowBirth &&
     WorkFlowDetails["birth-death-service"].WorkFlowBirth.map((ob) => {
       workFlowData.push(ob);
-      // console.log(workFlowData);
     });
   let cmbCountry = [];
   Country &&
@@ -76,7 +74,6 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
       cmbCountry.push(ob);
     });
   let menu = [];
-  // let workFlowCode = "BIRTHHOSP21";
   Menu &&
     Menu.map((genderDetails) => {
       menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
@@ -95,7 +92,6 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
   const [childAadharNo, setChildAadharNo] = useState(
     formData?. BirthNACDetails?.childAadharNo ? formData?. BirthNACDetails?.childAadharNo : ""
   );
-  console.log(formData, "formData");
   const [childFirstNameEn, setChildFirstNameEn] = useState(
     formData?. BirthNACDetails?.childFirstNameEn ? formData?. BirthNACDetails?.childFirstNameEn : ""
   );
@@ -156,12 +152,10 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
   const [streetNameMl, setstreetNameMl] = useState(formData?. BirthNACDetails?.streetNameMl ? formData?. BirthNACDetails?.streetNameMl : "");
   const [publicPlaceDecpEn, setpublicPlaceDecpEn] = useState(formData?. BirthNACDetails?.publicPlaceDecpEn ? formData?. BirthNACDetails?.publicPlaceDecpEn : "");
 
-  const [orderOfBirth, setorderOfBirth] = useState(
+  const [nacorderofChildren, setorderOfBirth] = useState(
     formData?.BirthNACDetails?.nacorderofChildren ? formData?.BirthNACDetails?.nacorderofChildren : null
   );
   const [toast, setToast] = useState(false);
-  //const [AadharError, setAadharError] = useState(formData?. BirthNACDetails?.childAadharNo ? false : false);
-   const [ChildAadharHIde, setChildAadharHIde] = useState(formData?. BirthNACDetails?.childAadharNo ? true : false);
   const [DOBError, setDOBError] = useState(formData?. BirthNACDetails?.childDOB ? false : true);
   const [HospitalError, setHospitalError] = useState(formData?. BirthNACDetails?.hospitalName ? false : true);
   const [InstitutionError, setInstitutionError] = useState(formData?. BirthNACDetails?.institution ? false : true);
@@ -186,7 +180,6 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
   const [localNameEnError, setlocalNameEnError] = useState(formData?. BirthNACDetails?.localityNameEn ? false : true);
   const [localNameMlError, setlocalNameMlError] = useState(formData?. BirthNACDetails?.localityNameMl ? false : true);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  console.log(formData, "formdata");
 
   const [access, setAccess] = React.useState(true);
 
@@ -230,9 +223,7 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
 
   }
   function setSelectOrderOfBirth(e) {
-    if(e.target.value){
-      setorderOfBirth(e.target.value);      
-    }
+    setorderOfBirth(e.target.value);      
   }
   function setSelectChildFirstNameMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
@@ -269,28 +260,7 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
       setChildAadharNo(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
     }
   }
-  // function setSelectChildAadharNo(e) {
-  //   // setContactno(e.target.value.length<=10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
-  //   if (e.target.value.length != 0) {
-  //     if (e.target.value.length > 12) {
-  //       // setChildAadharNo(e.target.value);
-  //       setAadharError(true);
-  //       return false;
-  //     } else if (e.target.value.length < 12) {
-  //       setAadharError(true);
-  //       setChildAadharNo(e.target.value);
-  //       return false;
-  //     } else {
-  //       setAadharError(false);
-  //       setChildAadharNo(e.target.value);
-  //       return true;
-  //     }
-  //   } else {
-  //     setAadharError(false);
-  //     setChildAadharNo(e.target.value);
-  //     return true;
-  //   }
-  // }
+
   React.useEffect(() => {
     if (isInitialRenderPlace) {
       if (birthPlace) {
@@ -363,20 +333,11 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
     selectBirthPlace(value);
     setValue(value.code);
     let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === value.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
-    console.log(currentWorgFlow);
     if (currentWorgFlow.length > 0) {
-      // console.log(currentWorgFlow[0].WorkflowCode);
       setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
     }
   }
-  // function setselectBirthPlace(value) {
-  //   selectBirthPlace(value);
-  //   setValue(value.code);
-  //   let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === value.code && (workFlowData.startdateperiod <= Difference_In_DaysRounded && workFlowData.enddateperiod >= Difference_In_DaysRounded));
-  //   // console.log(currentWorgFlow[0].WorkflowCode);
-  //   // workFlowCode=currentWorgFlow[0].WorkflowCode;
-  //   setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
-  // }
+
   let validFlag = true;
   const goNext = () => {
     if (birthPlace.code === "HOSPITAL") {
@@ -388,7 +349,7 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
           setToast(false);
         }, 2000);
       } else {
-        hospitalCode = hospitalName.code;
+        //hospitalCode = hospitalName.code;
         setHospitalError(false);
       }
     } else if (birthPlace.code === "INSTITUTION") {
@@ -552,16 +513,7 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
       } else {
         setvehicleHaltPlaceError(false);
       }
-      // if (vehicleHaltPlaceMl == null || vehicleHaltPlaceMl == "" || vehicleHaltPlaceMl == undefined) {
-      //   validFlag = false;
-      //   setvehiHaltPlaceMlError(true);
-      //   setToast(true);
-      //   setTimeout(() => {
-      //     setToast(false);
-      //   }, 2000);
-      // } else {
-      //   setvehiHaltPlaceMlError(false);
-      // }
+
       if (vehicleDesDetailsEn == null || vehicleDesDetailsEn == "" || vehicleDesDetailsEn == undefined) {
         validFlag = false;
         setvehiDesDetailsEnError(true);
@@ -640,6 +592,7 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
         birthDateTime,
         gender,
         childAadharNo,
+        nacorderofChildren,
         birthPlace, hospitalCode, hospitalName, hospitalNameMl,
         institutionTypeCode, institution, institutionNameCode, institutionId, institutionIdMl,
         wardNo, wardNameEn, wardNameMl, wardNumber, adrsHouseNameEn, adrsHouseNameMl, adrsLocalityNameEn, adrsLocalityNameMl, adrsStreetNameEn, adrsStreetNameMl, adrsPostOffice, adrsPincode,
@@ -679,7 +632,7 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
         <BackButton>{t("CS_COMMON_BACK")}</BackButton>
         {window.location.href.includes("/citizen") ? <Timeline currentStep={2}/> : null}
         {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
-        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={false}>
+        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!childFirstNameEn || !childFirstNameMl || !childDOB || !gender || !birthPlace }>
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-12">
@@ -889,14 +842,11 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
                   isMandatory={false}
                   type={"number"}
                   optionKey="i18nKey"
-                  name="orderOfBirth"
-                  value={orderOfBirth}
+                  name="nacorderofChildren"
+                  value={nacorderofChildren}
                   disable={isEdit}
                   onChange={setSelectOrderOfBirth}            
                   placeholder={`${t("ORDER_OF_BIRTH")}`}
-                  inputProps={{
-                    maxLength: 12,
-                  }}
                 />
               </div>
             </div>

@@ -25,7 +25,7 @@ const BannerPicker = (props) => {
   return (
     <Banner
       message={GetActionMessage(props)}
-      applicationNumber={props.data?.Licenses[0]?.applicationNumber}
+      applicationNumber={props.data?.LicenseCorrection[0]?.applicationNumber}
       info={props.isSuccess ? props.t("TL_REF_NO_LABEL") : ""}
       successful={props.isSuccess}
     />
@@ -58,13 +58,13 @@ const TLCorrectionAcknowledgement = ({ data, datanew, onSuccess }) => {
     };
     try {
       setIsInitialRender(false);
-      let tenantId1 = data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId;
-      data.tenantId = tenantId1;
+      //let tenantId1 = data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId;
+     // data.tenantId = tenantId1;
       console.log("resubmit"+resubmit);
       console.log("isEdit"+isEdit);
       if (!resubmit) {
          let formdata =  convertToTradeCorrection(data,datanew.TradeDetails);   
-        formdata.LicenseCorrection[0].tenantId = formdata?.LicenseCorrection[0]?.tenantId || tenantId1;
+      //  formdata.LicenseCorrection[0].tenantId = formdata?.LicenseCorrection[0]?.tenantId || tenantId1;
         if(!isEdit)
         {
           mutation.mutate(formdata, {
@@ -99,12 +99,16 @@ const TLCorrectionAcknowledgement = ({ data, datanew, onSuccess }) => {
   let enableLoader = !resubmit ? (mutation.isIdle || mutation.isLoading ):false;
   if(enableLoader)
   {return (<Loader />)}
-  else if( ((mutation?.isSuccess == false && mutation?.isIdle == false) ))
+  else if(mutation.isLoading || mutation.isIdle ){
+    return (<Loader />)
+  }
+  else if( ((mutation?.isSuccess == true && mutation?.isIdle == false) ))
   {
     return (
     <Card>
-      <BannerPicker t={t} data={mutation.data } isSuccess={mutation.isSuccess} isLoading={(mutation?.isLoading)} />
-      {<CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>}
+      <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation.isIdle || mutation.isLoading)} />
+      {(mutation.isSuccess) && <CardText>{t("TL_FILE_TRADE_RESPONSE")}</CardText>}
+      {(!mutation.isSuccess) && <CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>}
       <Link to={`/digit-ui/citizen`}>
         <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
       </Link>

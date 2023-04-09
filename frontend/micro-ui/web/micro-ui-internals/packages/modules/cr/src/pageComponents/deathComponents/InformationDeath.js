@@ -9,16 +9,20 @@ import DeathPlaceHome from "./DeathPlaceHome";
 import DeathPlaceVehicle from "./DeathPlaceVehicle";
 import DeathPublicPlace from "./DeathPublicPlace";
 import DeathOutsideJurisdiction from "./DeathOutsideJurisdiction ";
-import { useParams } from "react-router-dom";
+import _ from "lodash";
+import { STATE_CODE } from "../../config/constants";
 
 const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath }) => {
-  // console.log(formData);
+  console.log(formData);
   // console.log(isEditDeath);
   const [isEditDeathPageComponents, setIsEditDeathPageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
   const stateId = Digit.ULBService.getStateId();
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
   const [workFlowCode, setWorkFlowCode] = useState(formData?.InformationDeath?.workFlowCode);
+  const [workFlowAmount, setWorkFlowAmount] = useState(formData?.InformationDeath?.workFlowAmount);
+  const [isPayment, setIsPayment] = useState(formData?.ChildDetails?.isPayment);
+
   const { uuid: uuid } = Digit.UserService.getUser().info;
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -27,12 +31,9 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   }
   const { t } = useTranslation();
   let validation = {};
+  // const [cmbAgeUnitFilter, setcmbAgeUnitFilter] = useState();
 
-  const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
-    stateId,
-    "birth-death-service",
-    "WorkFlowDeath"
-  );
+  const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId,"birth-death-service","WorkFlowDeath");
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const { data: Menu, isGenderLoad } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
   const { data: religion = {}, isreligionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Religion");
@@ -43,10 +44,13 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   const { data: State = {}, isStateLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
   const convertEpochToDate = (dateEpoch) => {
     if (dateEpoch) {
-      const dateFromApi = new Date(dateEpoch);
+      const dateFromApi = new Date(dateEpoch); 
       let month = dateFromApi.getMonth() + 1;
+      console.log(month);
       let day = dateFromApi.getDate();
-      let year = dateFromApi.getFullYear();
+      console.log(day);
+      let year = dateFromApi.getFullYear()
+      console.log(year );;
       month = (month > 9 ? "" : "0") + month;
       day = (day > 9 ? "" : "0") + day;
       return `${year}-${month}-${day}`;
@@ -54,6 +58,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
       return null;
     }
   };
+  
   let workFlowData = [];
   let cmbAgeUnit = [];
   let cmbPlace = [];
@@ -67,7 +72,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   let institutionNameCode = "";
   let naturetypecmbvalue = null;
   const maxDate = new Date();
-  // let workFlowCode = "";
   let Difference_In_DaysRounded = "";
   let cmbfilterNation = [];
   let cmbfilterReligion = [];
@@ -135,6 +139,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
       ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath)
       : formData?.InformationDeath?.DateOfDeath
   );
+console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
   const [FromDate, setFromDate] = useState(
     isEditDeath &&
       isEditDeathPageComponents === false &&
@@ -218,6 +223,25 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
     formData?.InformationDeath?.DeceasedLastNameMl ? formData?.InformationDeath?.DeceasedLastNameMl : ""
   );
   const [Age, setAge] = useState(formData?.InformationDeath?.Age ? formData?.InformationDeath?.Age : "");
+
+  // useEffect(()=>{
+  //   getAgeUnitOptions
+  // },[Age])
+
+  const getAgeUnitOptions = () => {
+    if (Age <= 11) {
+      return cmbAgeUnit;
+    } else if (Age > 11 && Age <= 23) {
+      return cmbAgeUnit.filter(
+        (cmbAgeUnit) => cmbAgeUnit.code === "AGE_UNIT_YEARS" || cmbAgeUnit.code === "AGE_UNIT_DAYS" || cmbAgeUnit.code === "AGE_UNIT_HOURS"
+      );
+    } else if (Age > 23 && Age <= 29) {
+      return cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.code === "AGE_UNIT_YEARS" || cmbAgeUnit.code === "AGE_UNIT_DAYS");
+    } else if (Age > 29 && Age <= 120) {
+      return cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.code === "AGE_UNIT_YEARS");
+    }
+  };
+
   const [Nationality, setSelectedNationality] = useState(
     formData?.InformationDeath?.Nationality?.code
       ? formData?.InformationDeath?.Nationality
@@ -243,13 +267,12 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   const [CommencementDate, setCommencementDate] = useState(
     formData?.InformationDeath?.CommencementDate ? formData?.InformationDeath?.CommencementDate : ""
   );
-  const [cmbAgeUnitFilter, setcmbAgeUnitFilter] = useState();
 
   const [AgeUnit, setSelectedAgeUnit] = useState(
     formData?.InformationDeath?.AgeUnit?.code
       ? formData?.InformationDeath?.AgeUnit
       : formData?.InformationDeath?.AgeUnit
-      ? cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.code === formData?.InformationDeath?.DeceasedGender)[0]
+      ? cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.code === formData?.InformationDeath?.AgeUnit)[0]
       : ""
   );
 
@@ -285,7 +308,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
       : ""
   );
   const [HospitalNameMl, selectHospitalNameMl] = useState(
-    formData?.  InformationDeathails?.HospitalNameMl?.code
+    formData?.InformationDeathails?.HospitalNameMl?.code
       ? formData?.InformationDeath?.HospitalNameMl
       : formData?.InformationDeath?.HospitalNameMl
       ? ""
@@ -382,14 +405,15 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
           setSelectedNationality(cmbfilterNation[0]);
         }
       }
-      if (!isEditDeath) {
-        if (Religion == null || Religion == "") {
-          if (stateId === "kl" && cmbReligion.length > 0) {
-            cmbfilterReligion = cmbReligion.filter((cmbReligion) => cmbReligion.name.includes("No Religion"));
-            setSelectedReligion(cmbfilterReligion[0]);
-          }
-        }
-      }
+
+      // if (Religion == null || Religion == "") {
+      //   if (stateId === "kl" && cmbReligion.length > 0) {
+      //     cmbfilterReligion = cmbReligion.filter((cmbReligion) => cmbReligion.name.includes("No Religion"));
+      //     setSelectedReligion(cmbfilterReligion[0]);
+      //   }
+      // }
+
+      // }
 
       if (DeathPlaceCountry == null || DeathPlaceCountry == "") {
         if (stateId === "kl" && cmbNation.length > 0) {
@@ -591,7 +615,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
       // console.log("Difference_In_Time" + Difference_In_Time);
       setDifferenceInTime(today.getTime() - deathDate.getTime());
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-      // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
       setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
       if (DeathPlace) {
         let currentWorgFlow = workFlowData.filter(
@@ -599,29 +622,18 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
             workFlowData.BirtPlace === DeathPlace.code &&
             workFlowData.startdateperiod <= DifferenceInTime &&
             workFlowData.enddateperiod >= DifferenceInTime
+
         );
         // console.log("currentWorgFlowDOB" + currentWorgFlow);
         if (currentWorgFlow.length > 0) {
           // console.log(currentWorgFlow[0].WorkflowCode);
           setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+          setIsPayment(currentWorgFlow[0].payment);
+          setWorkFlowAmount(currentWorgFlow[0].amount);
+
         }
       }
     }
-    // const today = new Date();
-    // const deathDate = new Date(value);
-    // if (deathDate.getTime() <= today.getTime()) {
-    //   let Difference_In_Time = today.getTime() - deathDate.getTime();
-    //   let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-    //   Difference_In_DaysRounded = Math.floor(Difference_In_Days);
-    // }
-    // else {
-    //   setDateOfDeath(null);
-    //   setDOBError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 3000);
-    // }
   }
   function selectReligion(value) {
     setSelectedReligion(value);
@@ -674,26 +686,9 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
       setDeceasedLastNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
-  function setSelectAge(e) {
-    if (e.target.value != null || e.target.value != "") {
-      if (e.target.value <= 120) {
-        setAge(e.target.value);
-      }
-    }
-    if (e.target.value <= 11) {
-      setcmbAgeUnitFilter(cmbAgeUnit);
-    } else if (e.target.value > 11 && e.target.value <= 23) {
-      setcmbAgeUnitFilter(
-        cmbAgeUnit.filter(
-          (cmbAgeUnit) => cmbAgeUnit.code === "AGE_UNIT_YEARS" || cmbAgeUnit.code === "AGE_UNIT_DAYS" || cmbAgeUnit.code === "AGE_UNIT_HOURS"
-        )
-      );
-    } else if (e.target.value > 23 && e.target.value <= 29) {
-      setcmbAgeUnitFilter(cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.code === "AGE_UNIT_YEARS" || cmbAgeUnit.code === "AGE_UNIT_DAYS"));
-    } else if (e.target.value > 29 && e.target.value <= 120) {
-      setcmbAgeUnitFilter(cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.code === "AGE_UNIT_YEARS"));
-    }
-  }
+  // function setSelectAge(e) {
+  //   getAgeUnitOptions(e.target.value);
+  // }
   // function setSelectDeceasedAadharNumber(e) {
   //   if (e.target.value.length != 0) {
   //     if (e.target.value.length > 12) {
@@ -757,6 +752,8 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
     if (currentWorgFlow.length > 0) {
       // console.log(currentWorgFlow[0].WorkflowCode);
       setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+      setIsPayment(currentWorgFlow[0].payment);
+      setWorkFlowAmount(currentWorgFlow[0].amount);
     }
     // if (value.code === "HOSPITAL") {
     //   //Institution
@@ -951,6 +948,11 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
     //   setDeathPlaceWardId(null);
     // }
   }
+  function setSelectAge(e) {
+    setAge(e.target.value);
+    getAgeUnitOptions(e.target.value);
+  }
+
   function selectAgeUnit(value) {
     setSelectedAgeUnit(value);
   }
@@ -993,14 +995,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   //   // }
   // };
   const goNext = () => {
-    if (Difference_In_DaysRounded <= 21) {
-      if (DeathPlace.code == "HOSPITAL") {
-        workFlowCode = "DEATHHOSP";
-        // console.log(workFlowCode);
-      } else {
-        workFlowCode = "21DEATHHHOME";
-      }
-    }
     if (DeceasedGender == null || DeceasedGender == "" || DeceasedGender == undefined) {
       validFlag = false;
       setsexError(true);
@@ -1108,8 +1102,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
       // // sessionStorage.setItem("Occupation", Occupation ? Occupation.code : null);
       // // sessionStorage.setItem("DeathPlace", DeathPlace ? DeathPlace.code : null);
 
-      // // sessionStorage.setItem("workFlowCode", workFlowCode);
-
       // // sessionStorage.setItem("DeathPlaceTypecode", DeathPlaceType ? DeathPlaceType.code : null);
       // // sessionStorage.setItem("institutionNameCode", DeathPlaceInstId ? DeathPlaceInstId.code : null);
       // // sessionStorage.setItem("DeathPlaceInstId", DeathPlaceInstId ? DeathPlaceInstId.code : null);
@@ -1211,6 +1203,8 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
         // checked,
         DeathPlace,
         workFlowCode,
+        workFlowAmount,
+        isPayment,
         DeathPlaceType,
         HospitalNameMl,
         DeathPlaceTypecode,
@@ -1268,6 +1262,31 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
         setValue(formData?.InformationDeath?.DeathPlace);
       }
     }
+    if (formData?.InformationDeath?.AgeUnit != null) {
+      if (cmbPlace.length > 0 && (AgeUnit === undefined || AgeUnit === "")) {
+        setSelectedAgeUnit(cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.code === formData?.InformationDeath?.AgeUnit)[0]);
+        setValue(formData?.InformationDeath?.AgeUnit);
+      }
+    }
+    // if (formData?.InformationDeath?.AgeUnit != null) {
+    //   if (cmbPlace.length > 0 && (AgeUnit === undefined || AgeUnit === "")) {
+    //     setSelectedAgeUnit(cmbAgeUnit.filter((cmbAgeUnit) => cmbAgeUnit.code === formData?.InformationDeath?.AgeUnit)[0]);
+    //     setValue(formData?.InformationDeath?.AgeUnit);
+    //   }
+    // }
+    if (formData?.InformationDeath?.Religion != null) {
+      if (cmbReligion.length > 0 && (Religion === undefined || Religion === "")) {
+        setSelectedReligion(cmbReligion.filter((cmbReligion) => cmbReligion.code === formData?.InformationDeath?.Religion)[0]);
+        setValue(formData?.InformationDeath?.Religion);
+      }
+    }
+    if (formData?.InformationDeath?.Occupation != null) {
+      if (cmbOccupationMain.length > 0 && (Occupation === undefined || Occupation === "")) {
+        setSelectedReligion(cmbOccupationMain.filter((cmbOccupationMain) => cmbOccupationMain.code === formData?.InformationDeath?.Occupation)[0]);
+        setValue(formData?.InformationDeath?.Occupation);
+      }
+    }
+
     // if (formData?.ChildDetails?.medicalAttensionSub != null) {
     //   if (cmbAttDeliverySub.length > 0 && (medicalAttensionSub === undefined || medicalAttensionSub === "")) {
     //     setMedicalAttensionSub(cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.ChildDetails?.medicalAttensionSub)[0]);
@@ -1385,7 +1404,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
             {DeathDateUnavailable === false && (
               <div className="row">
                 <div className="col-md-12">
-                  <div className="col-md-6">
+                  <div className="col-md-3">
                     <CardLabel>
                       {t("CR_DATE_OF_DEATH")}
                       <span className="mandatorycss">*</span>
@@ -1403,7 +1422,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
                       })}
                     />
                   </div>
-                  <div className="col-md-2">
+                  <div className="col-md-3">
                     <CardLabel>{t("CR_TIME_OF_DEATH")}</CardLabel>
                     <CustomTimePicker name="TimeOfDeath" onChange={(val) => handleTimeChange(val, setDeathTime)} value={TimeOfDeath} />
                   </div>
@@ -1456,7 +1475,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
 
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-6">
+              <div className="col-md-4">
                 <CardLabel>
                   {t("CR_PLACE_OF_DEATH")}
                   <span className="mandatorycss">*</span>
@@ -1472,9 +1491,8 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
                 />
               </div>
             </div>
-          </div>
-          {value === "HOSPITAL" && (
-            <div>
+
+            {value === "HOSPITAL" && (
               <Hospital
                 formData={formData}
                 isEditDeath={isEditDeath}
@@ -1483,135 +1501,134 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
                 HospitalNameMl={HospitalNameMl}
                 selectHospitalNameMl={selectHospitalNameMl}
               />
-            </div>
-          )}
-          {value === "INSTITUTION" && (
-            <div>
-              <Institution
-                formData={formData}
-                isEditDeath={isEditDeath}
-                selectDeathPlaceType={selectDeathPlaceType}
-                DeathPlaceType={DeathPlaceType}
-                DeathPlaceInstId={DeathPlaceInstId}
-                setSelectedDeathPlaceInstId={setSelectedDeathPlaceInstId}
-                InstitutionIdMl={InstitutionIdMl}
-                setInstitutionIdMl={setInstitutionIdMl}
-                InstitutionFilterList={InstitutionFilterList}
-                setInstitutionFilterList={setInstitutionFilterList}
-                isInitialRenderInstitutionList={isInitialRenderInstitutionList}
-                setIsInitialRenderInstitutionList={setIsInitialRenderInstitutionList}
-              />
-            </div>
-          )}
-          {value === "HOME" && (
-            <div>
-              <DeathPlaceHome
-                formData={formData}
-                isEditDeath={isEditDeath}
-                DeathPlaceWardId={DeathPlaceWardId}
-                setDeathPlaceWardId={setDeathPlaceWardId}
-                DeathPlaceHomePostofficeId={DeathPlaceHomePostofficeId}
-                setDeathPlaceHomepostofficeId={setDeathPlaceHomepostofficeId}
-                DeathPlaceHomepincode={DeathPlaceHomepincode}
-                setDeathPlaceHomepincode={setDeathPlaceHomepincode}
-                DeathPlaceHomeHoueNameEn={DeathPlaceHomeHoueNameEn}
-                setDeathPlaceHomehoueNameEn={setDeathPlaceHomehoueNameEn}
-                DeathPlaceHomeHoueNameMl={DeathPlaceHomeHoueNameMl}
-                setDeathPlaceHomehoueNameMl={setDeathPlaceHomehoueNameMl}
-                DeathPlaceHomeLocalityEn={DeathPlaceHomeLocalityEn}
-                setDeathPlaceHomelocalityEn={setDeathPlaceHomelocalityEn}
-                DeathPlaceHomeLocalityMl={DeathPlaceHomeLocalityMl}
-                setDeathPlaceHomelocalityMl={setDeathPlaceHomelocalityMl}
-                DeathPlaceHomeStreetNameEn={DeathPlaceHomeStreetNameEn}
-                setDeathPlaceHomestreetNameEn={setDeathPlaceHomestreetNameEn}
-                DeathPlaceHomeStreetNameMl={DeathPlaceHomeStreetNameMl}
-                setDeathPlaceHomestreetNameMl={setDeathPlaceHomestreetNameMl}
-                PostOfficevalues={PostOfficevalues}
-                setPostOfficevalues={setPostOfficevalues}
-              />
-            </div>
-          )}
-          {value === "VEHICLE" && (
-            <div>
-              <DeathPlaceVehicle
-                formData={formData}
-                isEditDeath={isEditDeath}
-                DeathPlaceType={DeathPlaceType}
-                selectDeathPlaceType={selectDeathPlaceType}
-                VehicleNumber={VehicleNumber}
-                setVehicleNumber={setVehicleNumber}
-                VehicleFromplaceEn={VehicleFromplaceEn}
-                setVehicleFromplaceEn={setVehicleFromplaceEn}
-                VehicleToPlaceEn={VehicleToPlaceEn}
-                setVehicleToPlaceEn={setVehicleToPlaceEn}
-                GeneralRemarks={GeneralRemarks}
-                setGeneralRemarks={setGeneralRemarks}
-                VehicleFirstHaltEn={VehicleFirstHaltEn}
-                setVehicleFirstHaltEn={setVehicleFirstHaltEn}
-                VehicleFirstHaltMl={VehicleFirstHaltMl}
-                setVehicleFirstHaltMl={setVehicleFirstHaltMl}
-                VehicleHospitalEn={VehicleHospitalEn}
-                setSelectedVehicleHospitalEn={setSelectedVehicleHospitalEn}
-                DeathPlaceWardId={DeathPlaceWardId}
-                setDeathPlaceWardId={setDeathPlaceWardId}
-                VehicleFromplaceMl={VehicleFromplaceMl}
-                setVehicleFromplaceMl={setVehicleFromplaceMl}
-                VehicleToPlaceMl={VehicleToPlaceMl}
-                setVehicleToPlaceMl={setVehicleToPlaceMl}
-              />
-            </div>
-          )}
-          {value === "PUBLIC_PLACES" && (
-            <div>
-              <DeathPublicPlace
-                formData={formData}
-                isEditDeath={isEditDeath}
-                DeathPlaceType={DeathPlaceType}
-                selectDeathPlaceType={selectDeathPlaceType}
-                DeathPlaceLocalityEn={DeathPlaceLocalityEn}
-                setDeathPlaceLocalityEn={setDeathPlaceLocalityEn}
-                DeathPlaceLocalityMl={DeathPlaceLocalityMl}
-                setDeathPlaceLocalityMl={setDeathPlaceLocalityMl}
-                DeathPlaceStreetEn={DeathPlaceStreetEn}
-                setDeathPlaceStreetEn={setDeathPlaceStreetEn}
-                DeathPlaceStreetMl={DeathPlaceStreetMl}
-                setDeathPlaceStreetMl={setDeathPlaceStreetMl}
-                DeathPlaceWardId={DeathPlaceWardId}
-                setDeathPlaceWardId={setDeathPlaceWardId}
-                GeneralRemarks={GeneralRemarks}
-                setGeneralRemarks={setGeneralRemarks}
-              />
-            </div>
-          )}
-          {value === "OUTSIDE_JURISDICTION" && (
-            <div>
-              <DeathOutsideJurisdiction
-                formData={formData}
-                isEditDeath={isEditDeath}
-                DeathPlaceCountry={DeathPlaceCountry}
-                setSelectDeathPlaceCountry={setSelectDeathPlaceCountry}
-                DeathPlaceState={DeathPlaceState}
-                SelectDeathPlaceState={SelectDeathPlaceState}
-                DeathPlaceDistrict={DeathPlaceDistrict}
-                SelectDeathPlaceDistrict={SelectDeathPlaceDistrict}
-                DeathPlaceCity={DeathPlaceCity}
-                SelectDeathPlaceCity={SelectDeathPlaceCity}
-                DeathPlaceRemarksEn={DeathPlaceRemarksEn}
-                SelectDeathPlaceRemarksEn={SelectDeathPlaceRemarksEn}
-                DeathPlaceRemarksMl={DeathPlaceRemarksMl}
-                SelectDeathPlaceRemarksMl={SelectDeathPlaceRemarksMl}
-                PlaceOfBurialMl={PlaceOfBurialMl}
-                SelectPlaceOfBurialMl={SelectPlaceOfBurialMl}
-                PlaceOfBurialEn={PlaceOfBurialEn}
-                SelectPlaceOfBurialEn={SelectPlaceOfBurialEn}
-                GeneralRemarks={GeneralRemarks}
-                setGeneralRemarks={setGeneralRemarks}
-                DeathPlaceWardId={DeathPlaceWardId}
-                setDeathPlaceWardId={setDeathPlaceWardId}
-              />
-            </div>
-          )}
-
+            )}
+            {value === "INSTITUTION" && (
+              <div>
+                <Institution
+                  formData={formData}
+                  isEditDeath={isEditDeath}
+                  selectDeathPlaceType={selectDeathPlaceType}
+                  DeathPlaceType={DeathPlaceType}
+                  DeathPlaceInstId={DeathPlaceInstId}
+                  setSelectedDeathPlaceInstId={setSelectedDeathPlaceInstId}
+                  InstitutionIdMl={InstitutionIdMl}
+                  setInstitutionIdMl={setInstitutionIdMl}
+                  InstitutionFilterList={InstitutionFilterList}
+                  setInstitutionFilterList={setInstitutionFilterList}
+                  isInitialRenderInstitutionList={isInitialRenderInstitutionList}
+                  setIsInitialRenderInstitutionList={setIsInitialRenderInstitutionList}
+                />
+              </div>
+            )}
+            {value === "HOME" && (
+              <div>
+                <DeathPlaceHome
+                  formData={formData}
+                  isEditDeath={isEditDeath}
+                  DeathPlaceWardId={DeathPlaceWardId}
+                  setDeathPlaceWardId={setDeathPlaceWardId}
+                  DeathPlaceHomePostofficeId={DeathPlaceHomePostofficeId}
+                  setDeathPlaceHomepostofficeId={setDeathPlaceHomepostofficeId}
+                  DeathPlaceHomepincode={DeathPlaceHomepincode}
+                  setDeathPlaceHomepincode={setDeathPlaceHomepincode}
+                  DeathPlaceHomeHoueNameEn={DeathPlaceHomeHoueNameEn}
+                  setDeathPlaceHomehoueNameEn={setDeathPlaceHomehoueNameEn}
+                  DeathPlaceHomeHoueNameMl={DeathPlaceHomeHoueNameMl}
+                  setDeathPlaceHomehoueNameMl={setDeathPlaceHomehoueNameMl}
+                  DeathPlaceHomeLocalityEn={DeathPlaceHomeLocalityEn}
+                  setDeathPlaceHomelocalityEn={setDeathPlaceHomelocalityEn}
+                  DeathPlaceHomeLocalityMl={DeathPlaceHomeLocalityMl}
+                  setDeathPlaceHomelocalityMl={setDeathPlaceHomelocalityMl}
+                  DeathPlaceHomeStreetNameEn={DeathPlaceHomeStreetNameEn}
+                  setDeathPlaceHomestreetNameEn={setDeathPlaceHomestreetNameEn}
+                  DeathPlaceHomeStreetNameMl={DeathPlaceHomeStreetNameMl}
+                  setDeathPlaceHomestreetNameMl={setDeathPlaceHomestreetNameMl}
+                  PostOfficevalues={PostOfficevalues}
+                  setPostOfficevalues={setPostOfficevalues}
+                />
+              </div>
+            )}
+            {value === "VEHICLE" && (
+              <div>
+                <DeathPlaceVehicle
+                  formData={formData}
+                  isEditDeath={isEditDeath}
+                  DeathPlaceType={DeathPlaceType}
+                  selectDeathPlaceType={selectDeathPlaceType}
+                  VehicleNumber={VehicleNumber}
+                  setVehicleNumber={setVehicleNumber}
+                  VehicleFromplaceEn={VehicleFromplaceEn}
+                  setVehicleFromplaceEn={setVehicleFromplaceEn}
+                  VehicleToPlaceEn={VehicleToPlaceEn}
+                  setVehicleToPlaceEn={setVehicleToPlaceEn}
+                  GeneralRemarks={GeneralRemarks}
+                  setGeneralRemarks={setGeneralRemarks}
+                  VehicleFirstHaltEn={VehicleFirstHaltEn}
+                  setVehicleFirstHaltEn={setVehicleFirstHaltEn}
+                  VehicleFirstHaltMl={VehicleFirstHaltMl}
+                  setVehicleFirstHaltMl={setVehicleFirstHaltMl}
+                  VehicleHospitalEn={VehicleHospitalEn}
+                  setSelectedVehicleHospitalEn={setSelectedVehicleHospitalEn}
+                  DeathPlaceWardId={DeathPlaceWardId}
+                  setDeathPlaceWardId={setDeathPlaceWardId}
+                  VehicleFromplaceMl={VehicleFromplaceMl}
+                  setVehicleFromplaceMl={setVehicleFromplaceMl}
+                  VehicleToPlaceMl={VehicleToPlaceMl}
+                  setVehicleToPlaceMl={setVehicleToPlaceMl}
+                />
+              </div>
+            )}
+            {value === "PUBLIC_PLACES" && (
+              <div>
+                <DeathPublicPlace
+                  formData={formData}
+                  isEditDeath={isEditDeath}
+                  DeathPlaceType={DeathPlaceType}
+                  selectDeathPlaceType={selectDeathPlaceType}
+                  DeathPlaceLocalityEn={DeathPlaceLocalityEn}
+                  setDeathPlaceLocalityEn={setDeathPlaceLocalityEn}
+                  DeathPlaceLocalityMl={DeathPlaceLocalityMl}
+                  setDeathPlaceLocalityMl={setDeathPlaceLocalityMl}
+                  DeathPlaceStreetEn={DeathPlaceStreetEn}
+                  setDeathPlaceStreetEn={setDeathPlaceStreetEn}
+                  DeathPlaceStreetMl={DeathPlaceStreetMl}
+                  setDeathPlaceStreetMl={setDeathPlaceStreetMl}
+                  DeathPlaceWardId={DeathPlaceWardId}
+                  setDeathPlaceWardId={setDeathPlaceWardId}
+                  GeneralRemarks={GeneralRemarks}
+                  setGeneralRemarks={setGeneralRemarks}
+                />
+              </div>
+            )}
+            {value === "OUTSIDE_JURISDICTION" && (
+              <div>
+                <DeathOutsideJurisdiction
+                  formData={formData}
+                  isEditDeath={isEditDeath}
+                  DeathPlaceCountry={DeathPlaceCountry}
+                  setSelectDeathPlaceCountry={setSelectDeathPlaceCountry}
+                  DeathPlaceState={DeathPlaceState}
+                  SelectDeathPlaceState={SelectDeathPlaceState}
+                  DeathPlaceDistrict={DeathPlaceDistrict}
+                  SelectDeathPlaceDistrict={SelectDeathPlaceDistrict}
+                  DeathPlaceCity={DeathPlaceCity}
+                  SelectDeathPlaceCity={SelectDeathPlaceCity}
+                  DeathPlaceRemarksEn={DeathPlaceRemarksEn}
+                  SelectDeathPlaceRemarksEn={SelectDeathPlaceRemarksEn}
+                  DeathPlaceRemarksMl={DeathPlaceRemarksMl}
+                  SelectDeathPlaceRemarksMl={SelectDeathPlaceRemarksMl}
+                  PlaceOfBurialMl={PlaceOfBurialMl}
+                  SelectPlaceOfBurialMl={SelectPlaceOfBurialMl}
+                  PlaceOfBurialEn={PlaceOfBurialEn}
+                  SelectPlaceOfBurialEn={SelectPlaceOfBurialEn}
+                  GeneralRemarks={GeneralRemarks}
+                  setGeneralRemarks={setGeneralRemarks}
+                  DeathPlaceWardId={DeathPlaceWardId}
+                  setDeathPlaceWardId={setDeathPlaceWardId}
+                />
+              </div>
+            )}
+          </div>
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
@@ -1621,7 +1638,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
           </div>
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-6">
+              <div className="col-md-4">
                 <CheckBox
                   label={t("CR_AADHAR_NOT_AVAILABLE")}
                   onChange={setCheckedAdhar}
@@ -1635,7 +1652,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
             // {checkedAdhar ? (
             <div className="row">
               <div className="col-md-12">
-                <div className="col-md-6">
+                <div className="col-md-4">
                   <CardLabel>{t("CR_ID_DETAILS_OF_DECEASED")}</CardLabel>
                   <Dropdown
                     t={t}
@@ -1649,7 +1666,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
                     // {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "Text", title: t("CR_INVALID_ID") })}
                   />
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-4">
                   <CardLabel>{t("CR_ID_NO")}</CardLabel>
                   <TextInput
                     t={t}
@@ -1670,7 +1687,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
           {DeceasedAadharNotAvailable === false && (
             <div className="row">
               <div className="col-md-12">
-                <div className="col-md-6">
+                <div className="col-md-4">
                   <CardLabel>{t("CR_AADHAR")}</CardLabel>
                   <TextInput
                     t={t}
@@ -1818,7 +1835,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
                   onChange={setSelectAge}
                   value={Age}
                   placeholder={`${t("CR_AGE")}`}
-                  {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "number", title: t("CS_COMMON_INVALID_AGE") })}
+                  validation={{ pattern: "^[.0-9`' ]*$", isRequired: true, type: "number", title: t("CS_COMMON_INVALID_AGE") }}
                 />
               </div>
               <div className="col-md-2">
@@ -1830,7 +1847,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
                   t={t}
                   optionKey="name"
                   isMandatory={false}
-                  option={cmbAgeUnitFilter}
+                  option={getAgeUnitOptions()}
                   selected={AgeUnit}
                   select={selectAgeUnit}
                   placeholder={`${t("CR_AGE_UNIT")}`}
@@ -1931,4 +1948,5 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
     );
   }
 };
+//anzar
 export default InformationDeath;

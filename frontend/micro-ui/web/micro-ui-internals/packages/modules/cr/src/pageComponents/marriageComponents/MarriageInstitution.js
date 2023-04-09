@@ -9,10 +9,10 @@ const MarriageInstitution = ({
   onSelect,
   userType,
   formData,
-  otherMarriagePlacenameEn,
-  setotherMarriagePlacenameEn,
-  otherMarriagePlacenameMl,
-  setotherMarriagePlacenameMl,
+  marriagePlacenameEn,
+  setmarriagePlacenameEn,
+  marriagePlacenameMl,
+  setmarriagePlacenameMl,
   marriageLocalityEn,
   setmarriageLocalityEn,
   marriageLocalityMl,
@@ -76,18 +76,18 @@ const MarriageInstitution = ({
       setMarriageReligiousInstitutionOther(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
-  function selectSetotherMarriagePlacenameMl(e) {
+  function selectSetmarriagePlacenameMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setMarriageLocalityMal('');
+      setmarriageLocalityMl("");
     } else {
-      setotherMarriagePlacenameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setmarriagePlacenameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectOtherMarriagePlacenameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setotherMarriagePlacenameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setmarriagePlacenameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectMarriageLandmark(e) {
@@ -142,14 +142,14 @@ const MarriageInstitution = ({
         marriageReligiousInstitutionOtherNameEn ? marriageReligiousInstitutionOtherNameEn : null
       );
       onSelect(config.key, {
-        marriageReligiousInstitutionOther,
-        marriageLocalityMal,
-        marriageLocalityEn,
-        marriageLandmark,
-        marriageReligiousInstitutionOtherNameMal,
-        marriageReligiousInstitutionOtherNameEn,
-        marriageStreetEn,
-        marriageStreetMal,
+        // marriageReligiousInstitutionOther,
+        // marriageLocalityMal,
+        // marriageLocalityEn,
+        // marriageLandmark,
+        // marriageReligiousInstitutionOtherNameMal,
+        // marriageReligiousInstitutionOtherNameEn,
+        // marriageStreetEn,
+        // marriageStreetMal,
       });
     }
   };
@@ -168,8 +168,8 @@ const MarriageInstitution = ({
               isMandatory={false}
               type={"text"}
               optionKey="i18nKey"
-              name="otherMarriagePlacenameEn"
-              value={otherMarriagePlacenameEn}
+              name="marriagePlacenameEn"
+              value={marriagePlacenameEn}
               onChange={setSelectOtherMarriagePlacenameEn}
               placeholder={`${t("CR_RELIGIOUS_INST_OTHER_NAME_EN")}`}
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_RELIGIOUS_INST_OTHER_EN") })}
@@ -185,7 +185,7 @@ const MarriageInstitution = ({
               value={marriageStreetEn}
               onChange={setSelectMarriageStreetEn}
               placeholder={`${t("CR_STREET_NAME_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
             />
           </div>
           <div className="col-md-3">
@@ -206,19 +206,19 @@ const MarriageInstitution = ({
             />
           </div>
           <div className="col-md-3">
-          <CardLabel>{t("CR_LANDMARK")}</CardLabel>
-          <TextInput
-            t={t}
-            isMandatory={false}
-            type={"text"}
-            optionKey="i18nKey"
-            //name="marriageLandmark"
-            value={marriageLandmark}
-            onChange={setSelectMarriageLandmark}
-            placeholder={`${t("CR_LANDMARK")}`}
-            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LANDMARK") })}
-          />
-        </div>
+            <CardLabel>{t("CR_LANDMARK")}</CardLabel>
+            <TextInput
+              t={t}
+              isMandatory={false}
+              type={"text"}
+              optionKey="i18nKey"
+              //name="marriageLandmark"
+              value={marriageLandmark}
+              onChange={setSelectMarriageLandmark}
+              placeholder={`${t("CR_LANDMARK")}`}
+              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LANDMARK") })}
+            />
+          </div>
         </div>
       </div>
       <div className="row">
@@ -234,8 +234,8 @@ const MarriageInstitution = ({
               type={"text"}
               optionKey="i18nKey"
               name="marriageReligiousInstitutionOtherNameMal"
-              value={otherMarriagePlacenameMl}
-              onChange={selectSetotherMarriagePlacenameMl}
+              value={marriagePlacenameMl}
+              onChange={selectSetmarriagePlacenameMl}
               placeholder={`${t("CR_RELIGIOUS_INST_OTHER_NAME_ML")}`}
               {...(validation = {
                 pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -257,7 +257,7 @@ const MarriageInstitution = ({
               placeholder={`${t("CR_STREET_NAME_ML")}`}
               {...(validation = {
                 pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                isRequired: true,
+                isRequired: false,
                 type: "text",
                 title: t("CR_INVALID_STREET_NAME_ML"),
               })}

@@ -37,18 +37,18 @@ const MyCRApplications = ({ view }) => {
   };
 
     const { mobileNumber, tenantId } = Digit.UserService.getUser()?.info || {}
-    const { isLoading, isError, data, error, ...rest } = view === "bills" ? Digit.Hooks.cr.useFetchBill(
+    const { isLoading, isSuccess, isError, data, error, Count, ...rest } = view === "bills" ? Digit.Hooks.cr.useFetchBill(
       {
         params: { businessService: "CR", tenantId, mobileNumber },
         config: { enabled: view === "bills" }
       }
-    ) : Digit.Hooks.cr.useCRSearchApplication({}, {
+    ) : Digit.Hooks.cr.useCRSearchApplication(payload, {
       enabled: view !== "bills"
     },t);
     if (isLoading) {
       return <Loader />;
     }
-    
+    console.log('Count', Count)
   return (
     <React.Fragment>
       {/* <Header>{`${t("TL_MY_APPLICATIONS_HEADER")}`}</Header>
@@ -69,12 +69,12 @@ const MyCRApplications = ({ view }) => {
       <BackButton>{t("CS_COMMON_BACK2")}</BackButton>
       <SearchBirthApplication
         t={t}
-        data={data}
+        data={data || []}
         onSubmit={onSubmit}
         // filestoreId={storeId}
-        // isSuccess={isSuccess}
-        // isLoading={isLoading}
-        count={50}
+        isSuccess={isSuccess}
+        isLoading={isLoading}
+        count={Count}
       />
 
     </React.Fragment>

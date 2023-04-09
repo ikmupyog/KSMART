@@ -9,6 +9,7 @@ import {
   StatusTable,
   SubmitBar,
   BackButton,
+  CheckBox,
 } from "@egovernments/digit-ui-react-components";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -44,7 +45,8 @@ const getPath = (path, params) => {
 
 const AbandonedBirthCheckPage = ({ onSubmit, value, userType }) => {
   let isEdit = window.location.href.includes("renew-trade");
-  console.log("checkpage");
+  // console.log("checkpage");
+  const [isInitiatorDeclaration, setisInitiatorDeclaration] = React.useState( false);
   const { t } = useTranslation();
   const history = useHistory();
   const match = useRouteMatch();
@@ -70,6 +72,13 @@ const AbandonedBirthCheckPage = ({ onSubmit, value, userType }) => {
     return `${
       new Date(newdate).getDate().toString() + "/" + (new Date(newdate).getMonth() + 1).toString() + "/" + new Date(newdate).getFullYear().toString()
     }`;
+  }
+  function setDeclarationInfo(e) {
+    if (e.target.checked == false) {
+      setisInitiatorDeclaration(e.target.checked);
+    } else {
+      setisInitiatorDeclaration(e.target.checked);
+    }
   }
   // const typeOfApplication = !isEditProperty ? `new-application` : `renew-trade`;
   let routeLink = "";
@@ -146,10 +155,7 @@ const AbandonedBirthCheckPage = ({ onSubmit, value, userType }) => {
             <div className="col-md-6">
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>:{t(convertEpochToDate(AbandonedChildDetails.childDOB) ? convertEpochToDate(AbandonedChildDetails.childDOB) : " CR_NOT_RECORDED")}{" "} </CardText>
             </div>
-          </div>
-
-          <div className="row">
-            <div className="col-md-12">
+          </div>          
               {AbandonedChildDetails.birthPlace.code === "HOSPITAL" && (
                 <div className="row">
                   <div className="col-md-6">
@@ -287,10 +293,64 @@ const AbandonedBirthCheckPage = ({ onSubmit, value, userType }) => {
                     </CardText>
                   </div>
                 </div>
-              )}
+              )}              
+      
+      <div className="row">
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}> {`${t("PDF_BIRTH_NAME_OF_MOTHER")}`} </CardLabel>
+            </div>
+
+            {AbandonedChildDetails?.isMotherInfo ? (
+              <div className="col-md-6">
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                :{" "}  {t("CR_NOT_RECORDED")}{" "}
+               </CardText>
+               </div> 
+             ) : (  
+            <div className="col-md-6">
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                :{" "}
+                {t(AbandonedChildDetails?.motherFirstNameMl ? AbandonedChildDetails?.motherFirstNameMl : "CR_NOT_RECORDED") +
+                  "/" +
+                  " " +
+                  (AbandonedChildDetails?.motherFirstNameEn ? AbandonedChildDetails?.motherFirstNameEn : "CR_NOT_RECORDED")
+                  }
+              </CardText>
+            </div>
+            )}
+          </div>
+          <div className="row">
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}> {`${t("PDF_BIRTH_ADDRESS_OF_MOTHER")}`} </CardLabel>
+            </div>
+           
+            <div className="col-md-6">
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                :{" "}
+                {t(AbandonedChildDetails?.addressOfMother ? AbandonedChildDetails?.addressOfMother : "CR_NOT_RECORDED")  }
+              </CardText>
+            </div>          
+          </div>          
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
+            </h1>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-12">
+              <CheckBox
+                label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
+                onChange={setDeclarationInfo}
+                value={isInitiatorDeclaration}
+                checked={isInitiatorDeclaration}
+               // disable={isDisableEdit}
+              />
             </div>
           </div>
-          
         </div>
 
         <div className="row">
@@ -299,7 +359,7 @@ const AbandonedBirthCheckPage = ({ onSubmit, value, userType }) => {
                 </span> */}</h1>
           </div>
         </div>
-        <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} />
+        <SubmitBar  disabled={!isInitiatorDeclaration} label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} />
       </Card>
     </React.Fragment>
   );

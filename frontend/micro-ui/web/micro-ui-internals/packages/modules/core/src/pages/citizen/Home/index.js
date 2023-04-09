@@ -1,5 +1,6 @@
 import {
-    Calender, CardBasedOptions, CaseIcon,DropIcon, ComplaintIcon,InboxIcon, DocumentIcon, HomeIcon, Loader,EditIcon, OBPSIcon, PTIcon, StandaloneSearchBar, WhatsNewCard
+  Calender, CardBasedOptions, CaseIcon, DropIcon, ComplaintIcon, InboxIcon, 
+  DocumentIcon, HomeIcon, Loader, EditIcon, OBPSIcon, PTIcon, StandaloneSearchBar, WhatsNewCard
 } from "@egovernments/digit-ui-react-components";
 import React from "react";
 import { useTranslation } from "react-i18next";
@@ -35,7 +36,7 @@ const Home = () => {
   const allCitizenServicesProps = {
     header: t("DASHBOARD_CITIZEN_SERVICES_LABEL"),
     sideOption: {
-    //  name: t("DASHBOARD_VIEW_ALL_LABEL"),
+      //  name: t("DASHBOARD_VIEW_ALL_LABEL"),
       onClick: () => history.push("/digit-ui/citizen/all-services"),
     },
     options: [
@@ -45,12 +46,12 @@ const Home = () => {
         onClick: () => history.push("/digit-ui/citizen/pgr-home"),
       },
       //{
-       // name: t("MODULE_PT"),
-       // Icon: <PTIcon className="fill-path-primary-main" />,
-       // onClick: () => history.push("/digit-ui/citizen/pt-home"),
-     // },
+      // name: t("MODULE_PT"),
+      // Icon: <PTIcon className="fill-path-primary-main" />,
+      // onClick: () => history.push("/digit-ui/citizen/pt-home"),
+      // },
       {
-        name: t("MODULE_TL"),
+        name: t("TL_TRADE_LICENSE"),
         Icon: <CaseIcon className="fill-path-primary-main" />,
         onClick: () => history.push("/digit-ui/citizen/tl-home"),
       },
@@ -60,8 +61,8 @@ const Home = () => {
       //     onClick: () => history.push("/digit-ui/citizen")
       // },
       {
-        name: t("Civil Registration"),
-        Icon: <OBPSIcon />,
+        name: t("CIVIL_REGISTRATION"),
+        Icon: <OBPSIcon className="fill-path-primary-main" />,
         onClick: () => history.push("/digit-ui/citizen/cr-home"),
         // onClick: () => history.push({
         //   pathname: '/digit-ui/citizen/cr-home',
@@ -90,7 +91,7 @@ const Home = () => {
 
       // },
       {
-        name: t("File Management"),
+        name: t("FILE_MANAGEMENT"),
         Icon: <EditIcon className="fill-path-primary-main" />,
         onClick: () => history.push("/digit-ui/citizen/dfm-home"),
       },
@@ -100,8 +101,8 @@ const Home = () => {
   const allInfoAndUpdatesProps = {
     header: t("CS_COMMON_DASHBOARD_INFO_UPDATES"),
     sideOption: {
-     // name: t("DASHBOARD_VIEW_ALL_LABEL"),
-      onClick: () => {},
+      // name: t("DASHBOARD_VIEW_ALL_LABEL"),
+      onClick: () => { },
     },
     options: [
       {
@@ -133,43 +134,43 @@ const Home = () => {
       //     Icon: <HelpIcon/>
       // }
     ],
-  //   styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
-  // };
-  // const allInfoMyProfileProps = {
-   // header: t("My Space"),
+    //   styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
+    // };
+    // const allInfoMyProfileProps = {
+    // header: t("My Space"),
     //sideOption: {
-      //name: t("DASHBOARD_VIEW_ALL_LABEL"),
+    //name: t("DASHBOARD_VIEW_ALL_LABEL"),
     //   onClick: () => {},
     // },
     // options: [
-      // {
-      //   name: t("My Profile"),
-      //   Icon: <HomeIcon />,
-      // },
-      // {
-      //   name: t("My DashBoard"),
-      //   Icon: <InboxIcon />,
-      //   // onClick: () => history.push("/digit-ui/citizen/engagement/events"),
-      // },
-      // {
-      //   name: t("My Family"),
-      //   Icon: <HomeIcon />,
-      //   // onClick: () => history.push("/digit-ui/citizen/engagement/docs"),
-      // },
-      // {
-      //   name: t("My Certificates"),
-      //   Icon: <DocumentIcon />,
-      //   // onClick: () => history.push("/digit-ui/citizen/engagement/surveys/list"),
-      // },
-      // {
-      //   name: t("CS_COMMON_INBOX_BPA"),
-      //   Icon: <OBPSIcon />,
-      //   onClick: () => history.push("/digit-ui/citizen/obps-home"),
-      // },
-      // // {
-      // //     name: t("CS_COMMON_HELP"),
-      // //     Icon: <HelpIcon/>
-      // // }
+    // {
+    //   name: t("My Profile"),
+    //   Icon: <HomeIcon />,
+    // },
+    // {
+    //   name: t("My DashBoard"),
+    //   Icon: <InboxIcon />,
+    //   // onClick: () => history.push("/digit-ui/citizen/engagement/events"),
+    // },
+    // {
+    //   name: t("My Family"),
+    //   Icon: <HomeIcon />,
+    //   // onClick: () => history.push("/digit-ui/citizen/engagement/docs"),
+    // },
+    // {
+    //   name: t("My Certificates"),
+    //   Icon: <DocumentIcon />,
+    //   // onClick: () => history.push("/digit-ui/citizen/engagement/surveys/list"),
+    // },
+    // {
+    //   name: t("CS_COMMON_INBOX_BPA"),
+    //   Icon: <OBPSIcon />,
+    //   onClick: () => history.push("/digit-ui/citizen/obps-home"),
+    // },
+    // // {
+    // //     name: t("CS_COMMON_HELP"),
+    // //     Icon: <HelpIcon/>
+    // // }
     //],
     styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
   };
