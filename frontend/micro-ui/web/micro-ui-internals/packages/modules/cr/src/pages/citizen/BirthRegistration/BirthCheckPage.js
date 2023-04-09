@@ -124,6 +124,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
       {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
       <Card>
         {/* <label style={{ fontSize: "17px", fontWeight: "bold" }}>{t("CR_REG_SUMMARY_HEADING")}</label> */}
+       
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -131,19 +132,19 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
             </h1>
           </div>
         </div>
-        <div
+        <div className="col-md-12"
           style={{
-            maxWidth: "80%",
+            maxWidth: "auto",
             margin: "25px auto",
             padding: "3rem 2rem",
             border: "none",
             borderRadius: "8px",
-            height: "800PX",
+            height: "auto",
             backgroundColor: "#f3f0ef",
           }}
         >
           {/* class="site-wrap" */}
-
+          <div className="col-md-12">
           <div className="row">
             <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}> {`${t("PDF_BIRTH_CHILD_NAME")}`} </CardLabel>
@@ -563,7 +564,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
+              <span style={{ background: "#f3f0ef", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
             </h1>
           </div>
         </div>
@@ -580,7 +581,8 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
               />
             </div>
           </div>
-        </div>
+      
+
         {toast && (
           <Toast
             error={InitiatorDeclareError}
@@ -595,6 +597,8 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
         )}
         {""}
         <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onBirthSubmit} />
+        </div>
+        </div>
       </Card>
     </React.Fragment>
   );
