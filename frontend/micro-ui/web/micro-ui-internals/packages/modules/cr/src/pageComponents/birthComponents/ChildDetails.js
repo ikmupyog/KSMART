@@ -16,7 +16,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   // console.log(isEditBirth);  
   sessionStorage.removeItem("applicationNumber");
   const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(false);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth  ? isEditBirth : false);
   const [workFlowCode, setWorkFlowCode] = useState(formData?.ChildDetails?.workFlowCode);
   const [isPayment, setIsPayment] = useState(formData?.ChildDetails?.isPayment);
   const [Amount, setAmount] = useState(formData?.ChildDetails?.Amount);

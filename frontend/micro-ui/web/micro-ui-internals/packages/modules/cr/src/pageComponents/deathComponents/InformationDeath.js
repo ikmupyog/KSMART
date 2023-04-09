@@ -9,7 +9,6 @@ import DeathPlaceHome from "./DeathPlaceHome";
 import DeathPlaceVehicle from "./DeathPlaceVehicle";
 import DeathPublicPlace from "./DeathPublicPlace";
 import DeathOutsideJurisdiction from "./DeathOutsideJurisdiction ";
-import { useParams } from "react-router-dom";
 import _ from "lodash";
 import { STATE_CODE } from "../../config/constants";
 
@@ -26,18 +25,14 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   const { uuid: uuid } = Digit.UserService.getUser().info;
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
-  if (tenantId === STATE_CODE.KL) {
+  if (tenantId === "kl") {
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
   const { t } = useTranslation();
   let validation = {};
   // const [cmbAgeUnitFilter, setcmbAgeUnitFilter] = useState();
 
-  const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
-    stateId,
-    "birth-death-service",
-    "WorkFlowDeath"
-  );
+  const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId,"birth-death-service","WorkFlowDeath");
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const { data: Menu, isGenderLoad } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
   const { data: religion = {}, isreligionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Religion");
@@ -1404,7 +1399,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
             {DeathDateUnavailable === false && (
               <div className="row">
                 <div className="col-md-12">
-                  <div className="col-md-6">
+                  <div className="col-md-3">
                     <CardLabel>
                       {t("CR_DATE_OF_DEATH")}
                       <span className="mandatorycss">*</span>
@@ -1422,7 +1417,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
                       })}
                     />
                   </div>
-                  <div className="col-md-2">
+                  <div className="col-md-3">
                     <CardLabel>{t("CR_TIME_OF_DEATH")}</CardLabel>
                     <CustomTimePicker name="TimeOfDeath" onChange={(val) => handleTimeChange(val, setDeathTime)} value={TimeOfDeath} />
                   </div>
@@ -1475,7 +1470,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
 
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-6">
+              <div className="col-md-4">
                 <CardLabel>
                   {t("CR_PLACE_OF_DEATH")}
                   <span className="mandatorycss">*</span>
@@ -1638,7 +1633,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
           </div>
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-6">
+              <div className="col-md-4">
                 <CheckBox
                   label={t("CR_AADHAR_NOT_AVAILABLE")}
                   onChange={setCheckedAdhar}
@@ -1652,7 +1647,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
             // {checkedAdhar ? (
             <div className="row">
               <div className="col-md-12">
-                <div className="col-md-6">
+                <div className="col-md-4">
                   <CardLabel>{t("CR_ID_DETAILS_OF_DECEASED")}</CardLabel>
                   <Dropdown
                     t={t}
@@ -1666,7 +1661,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
                     // {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "Text", title: t("CR_INVALID_ID") })}
                   />
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-4">
                   <CardLabel>{t("CR_ID_NO")}</CardLabel>
                   <TextInput
                     t={t}
@@ -1687,7 +1682,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
           {DeceasedAadharNotAvailable === false && (
             <div className="row">
               <div className="col-md-12">
-                <div className="col-md-6">
+                <div className="col-md-4">
                   <CardLabel>{t("CR_AADHAR")}</CardLabel>
                   <TextInput
                     t={t}
