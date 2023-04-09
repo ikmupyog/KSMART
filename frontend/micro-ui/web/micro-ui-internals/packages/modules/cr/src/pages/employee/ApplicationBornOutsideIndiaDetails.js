@@ -13,7 +13,7 @@ const ApplicationBornOutsideIndiaDetails = () => {
   const { id: applicationNumber } = useParams();
   const [showToast, setShowToast] = useState(null);
   // const [callUpdateService, setCallUpdateValve] = useState(false);
-  const [businessService, setBusinessService] = useState("BIRTHHOSP21"); //DIRECTRENEWAL BIRTHHOSP21
+  const [businessService, setBusinessService] = useState("BORNOUTSIDE60"); //DIRECTRENEWAL BIRTHHOSP21
   const [numberOfApplications, setNumberOfApplications] = useState([]);
   const [allowedToNextYear, setAllowedToNextYear] = useState(false);
   sessionStorage.setItem("applicationNumber", applicationNumber);

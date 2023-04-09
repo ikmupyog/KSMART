@@ -30,7 +30,7 @@ const CRBreadCrumb = ({ location }) => {
   const isApplicationBirthDetails = location?.pathname?.includes("cr/application-birthdetails");
   const isApplicationAdoptionDetails = location?.pathname?.includes("cr/application-Adoptiondetails");
   const isApplicationStillBirthDetails = location?.pathname?.includes("cr/application-stillbirth");
-  const isApplicationBornOutsideIndiaDetails = location?.pathname?.includes("cr/application-stillbirth");
+  const isApplicationBornOutsideIndiaDetails = location?.pathname?.includes("cr/application-bornOutsideIndia");
   const isNewApplication = location?.pathname?.includes("tl/new-application");
   const isResponse = location?.pathname?.includes("tl/response");
   const isMobile = window.Digit.Utils.browser.isMobile();
