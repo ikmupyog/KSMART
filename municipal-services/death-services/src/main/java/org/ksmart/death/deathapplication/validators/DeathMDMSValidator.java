@@ -6,6 +6,7 @@ import java.util.Map;
 import org.egov.tracer.model.CustomException;
 import org.ksmart.death.deathapplication.util.DeathConstants;
 import org.ksmart.death.deathapplication.web.models.DeathDtlRequest;
+import org.ksmart.death.deathapplication.web.models.DeathNACRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import com.jayway.jsonpath.JsonPath;
@@ -104,6 +105,34 @@ public class DeathMDMSValidator {
             }
         }
         if(!errorMap.isEmpty())
+            throw new CustomException(errorMap);
+    }
+    //Rakhi S ikm on 09.04.2023
+    public void validateNACMDMSData(DeathNACRequest request,Object mdmsdata){
+        Map<String,String> errorMap = new HashMap<>();
+        Map<String,List<String>> masterData = getAttributeValues(mdmsdata);
+        
+        String[] masterArray = {DeathConstants.TENANTS,DeathConstants.GENDERTYPE
+                            ,DeathConstants.DEATH_PLACE_LIST};
+        validateIfMasterPresent(masterArray,masterData);
+
+        if(!masterData.get(DeathConstants.TENANTS)
+                .contains(request.getDeathNACDtls().get(0).getDeathBasicInfo().getTenantId()))
+        errorMap.put("INVALID TENAND ID", "The tenand id  "+ request.getDeathNACDtls().get(0).getDeathBasicInfo().getTenantId() +
+                    " does not exists");
+
+        if(request.getDeathNACDtls().get(0).getDeathBasicInfo().getDeceasedGender() != null) {   
+            if(!masterData.get(DeathConstants.GENDERTYPE)
+                    .contains(request.getDeathNACDtls().get(0).getDeathBasicInfo().getDeceasedGender()))
+            errorMap.put("INVALID GENDER TYPE", "The gender of the deceased " +
+                        request.getDeathNACDtls().get(0).getDeathBasicInfo().getDeceasedGender()+ " is invalid");     
+        } 
+        if(!masterData.get(DeathConstants.DEATH_PLACE_LIST)
+                        .contains(request.getDeathNACDtls().get(0).getDeathBasicInfo().getDeathPlace()))
+            errorMap.put("DEATH PLACE DETAILS INVALID", "The deceased death place details " +
+                            request.getDeathNACDtls().get(0).getDeathBasicInfo().getDeathPlace()+ " is invalid");
+
+        if(!CollectionUtils.isEmpty(errorMap))
             throw new CustomException(errorMap);
     }
 }

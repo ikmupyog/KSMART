@@ -22,6 +22,7 @@ import org.ksmart.death.deathapplication.web.models.DeathDtlRequest;
 import org.ksmart.death.deathapplication.web.models.DeathFamilyInfo;
 import org.ksmart.death.deathapplication.web.models.DeathInformantDtls;
 import org.ksmart.death.deathapplication.web.models.DeathInitiatorDtls;
+import org.ksmart.death.deathapplication.web.models.DeathNACApplicantDtls;
 import org.ksmart.death.deathapplication.web.models.DeathNACDtls;
 import org.ksmart.death.deathapplication.web.models.DeathNACRequest;
 import org.ksmart.death.deathapplication.web.models.DeathStatisticalInfo;
@@ -156,7 +157,7 @@ public void validateCommonFields(DeathDtlRequest request) {
             if (basicInfo.getDeathPlace()==DeathConstants.DEATH_PLACE_HOSPITAL){
                 if(StringUtils.isEmpty(basicInfo.getDeathPlaceType())){
                     throw new CustomException("HOSPITAL NAME IS INVALID", "The Hospital name " +
-                    basicInfo.getDeathPlace()+ " is invalid");  
+                    basicInfo.getDeathPlaceType()+ " is invalid");  
                 } 
                 //INFORMANT DETAILS
                 if(StringUtils.isEmpty(informantDtls.getInformantAadharNo())){
@@ -179,11 +180,11 @@ public void validateCommonFields(DeathDtlRequest request) {
 //DEATH PLACE INSTITUTION
             if (basicInfo.getDeathPlace()==DeathConstants.DEATH_PLACE_INSTITUTION){
                 if(StringUtils.isEmpty(basicInfo.getDeathPlaceType())){
-                    throw new CustomException("INSTITUTION NAME IS INVALID", "The Hospital name " +
-                    basicInfo.getDeathPlace()+ " is invalid");  
+                    throw new CustomException("INSTITUTION NAME IS INVALID", "The Institution name " +
+                    basicInfo.getDeathPlaceType()+ " is invalid");  
                 } 
                 if(StringUtils.isEmpty(basicInfo.getDeathPlaceInstId())){
-                    throw new CustomException("INSTITUTION TYPE IS INVALID", "The Hospital name " +
+                    throw new CustomException("INSTITUTION TYPE IS INVALID", "The Institution id " +
                     basicInfo.getDeathPlaceInstId()+ " is invalid");  
                 } 
                 //INFORMANT DETAILS
@@ -1029,9 +1030,14 @@ public void validateNACUpdate(DeathNACRequest request, List<DeathNACDtls> search
         Long dod = basicInfo.getDateOfDeath();          
           java.sql.Date dodDate=new java.sql.Date(dod); 
           int diffDays= getDaysDiff(dodDate);
+
+          Long startdateperiod=(long) 0;
+          Long enddateperiod=(long) 0;
+
           if(diffDays <= 21){
             System.out.println("Normal Registration");
             basicInfo.setNormalRegn(true);
+
           }
           else if(diffDays > 21 && diffDays <= 30){
             System.out.println("Delayed within 30days");
@@ -1058,5 +1064,173 @@ public void validateNACUpdate(DeathNACRequest request, List<DeathNACDtls> search
         double diffDays = diffHours / 24;
             
         return (int) Math.round(diffDays);
+    }
+//Rakhi S on 09.04.2023  - Death NAC Common Field Validation
+public void validateNACCommonFieldss(DeathNACRequest request) {
+      
+    List<DeathNACDtls> deathApplication = request.getDeathNACDtls();
+        if (deathApplication!=null){
+        deathApplication
+                        .forEach(deathdtls -> {
+            DeathBasicInfo  basicInfo = deathdtls.getDeathBasicInfo();
+            DeathNACApplicantDtls  applicantInfo = deathdtls.getDeathApplicantDtls();
+
+            //Deceased Name Validation
+            if(StringUtils.isEmpty(basicInfo.getDeceasedFirstNameEn()) ){
+                throw new CustomException("DECEASED NAME INVALID", "The deceased name in english" +
+                basicInfo.getDeceasedFirstNameEn()+ " is invalid");
+            }
+            if(StringUtils.isEmpty(basicInfo.getDeceasedFirstNameMl()) ){
+                throw new CustomException("DECEASED NAME INVALID", "The deceased name in malayalam" +
+                basicInfo.getDeceasedFirstNameMl()+ " is invalid");
+            }
+            //Deceased Gender Validation
+            if(StringUtils.isEmpty(basicInfo.getDeceasedGender()) ){
+                throw new CustomException("DECEASED GENDER INVALID", "The deceased  gender" +
+                basicInfo.getDeceasedGender()+ " is invalid");
+            }
+
+            //Date of Death Validation
+            Long dod = basicInfo.getDateOfDeath();          
+            java.sql.Date dodDate=new java.sql.Date(dod); 
+            int diffDays= getDaysDiff(dodDate);
+            if(diffDays < 365){
+                throw new CustomException("DECEASED DATE OF DEATH INVALID FOR NAC", "The deceased  date of death below 1 year " +
+                basicInfo.getDateOfDeath()+ " no need for nac");
+            }
+            //Place of Burial
+            if(StringUtils.isEmpty(basicInfo.getPlaceOfBurialEn()) ){
+                throw new CustomException("DECEASED PLACE OF BURIAL INVALID", "The deceased  place of burial " +
+                basicInfo.getPlaceOfBurialEn()+ " details invalid");
+            }
+            //Deceased Mother Name
+            if(StringUtils.isEmpty(basicInfo.getMotherNameEn()) ){
+                throw new CustomException("DECEASED MOTHER NAME INVALID", "The deceased mother name " +
+                basicInfo.getMotherNameEn()+ " is invalid");
+            }
+            //Deceased Father Name
+            if(StringUtils.isEmpty(basicInfo.getFatherNameEn()) ){
+                throw new CustomException("DECEASED FATHER NAME INVALID", "The deceased father name " +
+                basicInfo.getFatherNameEn()+ " is invalid");
+            }
+            //DEATH PLACE HOSPITAL
+            if (basicInfo.getDeathPlace()==DeathConstants.DEATH_PLACE_HOSPITAL){
+                if(StringUtils.isEmpty(basicInfo.getDeathPlaceType())){
+                    throw new CustomException("HOSPITAL NAME IS INVALID", "The Hospital name " +
+                    basicInfo.getDeathPlaceType()+ " is invalid");  
+                } 
+            }
+            //DEATH PLACE INSTITUTION
+            if (basicInfo.getDeathPlace()==DeathConstants.DEATH_PLACE_INSTITUTION){
+                if(StringUtils.isEmpty(basicInfo.getDeathPlaceType())){
+                    throw new CustomException("INSTITUTION NAME IS INVALID", "The Institution name " +
+                    basicInfo.getDeathPlaceType()+ " is invalid");  
+                } 
+                if(StringUtils.isEmpty(basicInfo.getDeathPlaceInstId())){
+                    throw new CustomException("INSTITUTION TYPE IS INVALID", "The Institution type " +
+                    basicInfo.getDeathPlaceInstId()+ " is invalid");  
+                } 
+            }
+            //DEATH PLACE HOME
+            if (basicInfo.getDeathPlace()==DeathConstants.DEATH_PLACE_HOME){
+                if(StringUtils.isEmpty(basicInfo.getDeathPlaceHomeWardId())){
+                    throw new CustomException("DEATH PLACE WARD IS INVALID", "The ward name " +
+                    basicInfo.getDeathPlaceHomeWardId()+ " is invalid");  
+                } 
+                if(StringUtils.isEmpty(basicInfo.getDeathPlaceHomePostofficeId())){
+                    throw new CustomException("DEATH PLACE POSTOFFICE IS INVALID", "The postoffice name " +
+                    basicInfo.getDeathPlaceHomePostofficeId()+ " is invalid");  
+                } 
+                if(StringUtils.isEmpty(basicInfo.getDeathPlaceHomePincode())){
+                    throw new CustomException("DEATH PLACE POSTOFFICE PINCODE IS INVALID", "The postoffice pincode " +
+                    basicInfo.getDeathPlaceHomePincode()+ " is invalid");  
+                } 
+                if(StringUtils.isEmpty(basicInfo.getDeathPlaceHomeLocalityEn())) {
+                    throw new CustomException("DEATH PLACE LOCALITY IS INVALID", "The locality name in english" +
+                    basicInfo.getDeathPlaceHomeLocalityEn()+ " is invalid");  
+                } 
+                if(StringUtils.isEmpty(basicInfo.getDeathPlaceHomeLocalityMl())  ){
+                    throw new CustomException("DEATH PLACE LOCALITY IS INVALID", "The locality name in malayalam" +
+                    basicInfo.getDeathPlaceHomeLocalityMl()+ " is invalid");  
+                } 
+                if(StringUtils.isEmpty(basicInfo.getDeathPlaceHomeHoueNameEn())){
+                    throw new CustomException("DEATH PLACE HOUSE NAME IS INVALID", "The House name in english " +
+                    basicInfo.getDeathPlaceHomeHoueNameEn()+ " is invalid");  
+                } 
+                if(StringUtils.isEmpty(basicInfo.getDeathPlaceHomeHoueNameMl())){
+                    throw new CustomException("DEATH PLACE HOUSE NAME IS INVALID", "The House name in malayalam " +
+                    basicInfo.getDeathPlaceHomeHoueNameMl()+ " is invalid");  
+                } 
+            }
+            //DEATH PLACE VEHICLE
+            if (basicInfo.getDeathPlace()==DeathConstants.DEATH_PLACE_VEHICLE){
+                if(StringUtils.isEmpty(basicInfo.getDeathPlaceType())){
+                    throw new CustomException("DEATH PLACE VEHICLE TYPE IS INVALID", "The vehicle type " +
+                    basicInfo.getDeathPlaceType()+ " is invalid");  
+                } 
+                if(StringUtils.isEmpty(basicInfo.getVehicleNumber())){
+                    throw new CustomException("DEATH PLACE VEHICLE NUMBER IS INVALID", "The Vehicle number " +
+                    basicInfo.getVehicleNumber()+ " is invalid");  
+                } 
+                if(StringUtils.isEmpty(basicInfo.getVehicleFirstHaltEn())){
+                    throw new CustomException("DEATH PLACE VEHICLE FIRST HALT IS INVALID", "The vehicle first halt in english " +
+                    basicInfo.getVehicleFirstHaltEn()+ " is invalid");  
+                } 
+                if(StringUtils.isEmpty(basicInfo.getVehicleFirstHaltMl())) {
+                    throw new CustomException("DEATH PLACE VEHICLE FIRST HALT IS INVALID", "The vehicle first halt in malayalam " +
+                    basicInfo.getVehicleFirstHaltMl()+ " is invalid");  
+                }
+                if(StringUtils.isEmpty(basicInfo.getVehicleHospitalEn())  ){
+                    throw new CustomException("DEATH PLACE ADMITTED HOSPITAL IS INVALID", "The name of admitted hospital " +
+                    basicInfo.getVehicleHospitalEn()+ " is invalid");  
+                }  
+                if(StringUtils.isEmpty(basicInfo.getDeathPlaceWardId())){
+                    throw new CustomException("DEATH PLACE WARD IS INVALID", "The ward name " +
+                    basicInfo.getDeathPlaceWardId()+ " is invalid");  
+                } 
+            }
+            //DEATH PLACE PUBLIC PLACES
+            if (basicInfo.getDeathPlace()==DeathConstants.DEATH_PLACE_PUBLICPLACES){
+                if(StringUtils.isEmpty(basicInfo.getDeathPlaceType())){
+                    throw new CustomException("DEATH PLACE TYPE IS INVALID", "The Publicplace type " +
+                    basicInfo.getDeathPlaceType()+ " is invalid");  
+                } 
+ 
+                if(StringUtils.isEmpty(basicInfo.getDeathPlaceWardId())){
+                    throw new CustomException("DEATH PLACE WARD IS INVALID", "The ward name " +
+                    basicInfo.getDeathPlaceWardId()+ " is invalid");  
+                } 
+                if(StringUtils.isEmpty(basicInfo.getDeathPlaceLocalityEn())){
+                    throw new CustomException("DEATH PLACE LOCALITY IS INVALID", "The locality name in english " +
+                    basicInfo.getDeathPlaceLocalityEn()+ " is invalid");  
+                } 
+                if(StringUtils.isEmpty(basicInfo.getDeathPlaceLocalityMl())){
+                    throw new CustomException("DEATH PLACE LOCALITY IS INVALID", "The locality name in malayalam " +
+                    basicInfo.getDeathPlaceLocalityMl()+ " is invalid");  
+                }                
+            }            
+            //APPLICANT DETAILS
+            if(StringUtils.isEmpty(applicantInfo.getApplicantName())){
+                throw new CustomException("APPLICANT NAME IS INVALID", "The Applicant Name " +
+                applicantInfo.getApplicantName()+ " is invalid");  
+            } 
+            if(StringUtils.isEmpty(applicantInfo.getApplicantAadhaarNo())){
+                throw new CustomException("APPLICANT AADHAR IS INVALID", "The Applicant Aadhar " +
+                applicantInfo.getApplicantAadhaarNo()+ " is invalid");  
+            } 
+            if(StringUtils.isEmpty(applicantInfo.getApplicantRelation())){
+                throw new CustomException("APPLICANT RELATION IS INVALID", "The Applicant Relation " +
+                applicantInfo.getApplicantRelation()+ " is invalid");  
+            } 
+            if(StringUtils.isEmpty(applicantInfo.getApplicantAddress())){
+                throw new CustomException("APPLICANT ADDRESS IS INVALID", "The Applicant Address " +
+                applicantInfo.getApplicantAddress()+ " is invalid");  
+            }            
+            if(applicantInfo.getApplicantMobileNo()<=0){
+                throw new CustomException("APPLICANT MOBILE NO IS INVALID", "The Applicant Mobile No " +
+                applicantInfo.getApplicantMobileNo()+ " is invalid");
+            }
+        });        
+      }
     }
 }

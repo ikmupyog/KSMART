@@ -96,17 +96,17 @@ public class DeathApplnRepository {
 
                 deathFamilyDtls.setMotherAadharNo(deathFamilyDcr.getMotherAadharNo());
                 deathFamilyDtls.setSpouseAadhaar(deathFamilyDcr.getSpouseAadhaar()); 
-                // DeathInformantDtls deathInformant =deathDtl.getDeathInformantDtls() ;
-                // if (deathInformant!=null){
-                //     DeathInformantDtls deathInformantEnc = encryptionDecryptionUtil.decryptObject(deathInformant, "BndDetail", DeathInformantDtls.class,requestInfo);
-                //     deathInformant.setInformantAadharNo(deathInformantEnc.getInformantAadharNo());
-                // }
-                // DeathInitiatorDtls deathInitiator =deathDtl.getDeathInitiatorDtls() ;
-                // if (deathInitiator!= null){
+                DeathInformantDtls deathInformant =deathDtl.getDeathInformantDtls() ;
+                if (deathInformant!=null){
+                    DeathInformantDtls deathInformantEnc = encryptionDecryptionUtil.decryptObject(deathInformant, "BndDetail", DeathInformantDtls.class,requestInfo);
+                    deathInformant.setInformantAadharNo(deathInformantEnc.getInformantAadharNo());
+                }
+                DeathInitiatorDtls deathInitiator =deathDtl.getDeathInitiatorDtls() ;
+                if (deathInitiator!= null){
                    
-                //     DeathInitiatorDtls deathInitiatorEnc = encryptionDecryptionUtil.decryptObject(deathInitiator, "BndDetail", DeathInitiatorDtls.class,requestInfo);
-                //     deathInitiator.setInitiatorAadhaar(deathInitiatorEnc.getInitiatorAadhaar());
-                // }
+                    DeathInitiatorDtls deathInitiatorEnc = encryptionDecryptionUtil.decryptObject(deathInitiator, "BndDetail", DeathInitiatorDtls.class,requestInfo);
+                    deathInitiator.setInitiatorAadhaar(deathInitiatorEnc.getInitiatorAadhaar());
+                }
                 //Rakhi S on 02.03.2023 Mdms call  
                 if(DeathConstants.DEATH_PLACE_HOSPITAL.toString().equals(deathDtl.getDeathBasicInfo().getDeathPlace())){
                     Object mdmsDataHospital = util.mDMSCallHospital(requestInfo    
@@ -311,11 +311,11 @@ public class DeathApplnRepository {
                 deathBasicDtls.setMotherAadharNo(dec.getMotherAadharNo());
                 deathBasicDtls.setSpouseAadhaar(dec.getSpouseAadhaar());   
                 
-                // DeathNACApplicantDtls deathInformant =deathDtl.getDeathApplicantDtls() ;
-                // if (deathInformant!=null){
-                //     DeathNACApplicantDtls deathInformantEnc = encryptionDecryptionUtil.decryptObject(deathInformant, "BndDetail", DeathNACApplicantDtls.class,requestInfo);
-                //     deathInformant.setApplicantAadhaarNo(deathInformantEnc.getApplicantAadhaarNo());
-                // }            
+                DeathNACApplicantDtls deathInformant =deathDtl.getDeathApplicantDtls() ;
+                if (deathInformant!=null){
+                    DeathNACApplicantDtls deathInformantEnc = encryptionDecryptionUtil.decryptObject(deathInformant, "BndDetail", DeathNACApplicantDtls.class,requestInfo);
+                    deathInformant.setApplicantAadhaarNo(deathInformantEnc.getApplicantAadhaarNo());
+                }            
 
                 if(DeathConstants.DEATH_PLACE_HOSPITAL.toString().equals(deathDtl.getDeathBasicInfo().getDeathPlace())){
                     Object mdmsDataHospital = util.mDMSCallHospital(requestInfo    

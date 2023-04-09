@@ -221,6 +221,9 @@ public class DeathApplnService {
      } 
      // //RAkhi S ikm  on 27.03.2023 - Service to create NAC request
       public List<DeathNACDtls> createNAC(DeathNACRequest request) {
+          Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathNACDtls().get(0).getDeathBasicInfo().getTenantId());          
+          validatorService.validateNACCommonFieldss(request);
+          mdmsValidator.validateNACMDMSData(request,mdmsData);
 
           enrichmentService.setNACPresentAddress(request);
           enrichmentService.setNACPermanentAddress(request);
