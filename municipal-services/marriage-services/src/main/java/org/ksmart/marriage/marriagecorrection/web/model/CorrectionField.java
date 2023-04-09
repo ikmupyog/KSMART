@@ -11,6 +11,10 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class CorrectionField {
+    @JsonProperty("id")
+    private String id;
+    @JsonProperty("marriageId")
+    private String marriageId;
     @JsonProperty("correctionFieldName")
     private String correctionFieldName;
 

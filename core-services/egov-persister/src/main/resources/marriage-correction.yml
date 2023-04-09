@@ -66,9 +66,9 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.applicationNumber
 
-            - jsonPath: $.MarriageDetails.*.registrationno
+            - jsonPath: $.MarriageDetails.*.registrationNo
 
-            - jsonPath: $.MarriageDetails.*.registration_date
+            - jsonPath: $.MarriageDetails.*.registrationDate
 
             - jsonPath: $.MarriageDetails.*.action
 
@@ -403,41 +403,101 @@ serviceMaps:
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.townOrVillagePermanent
 
 
-#        - query: INSERT INTO public.eg_marriage_document( id ,tenantid ,document_name ,document_type ,filestoreid ,
-#            document_link ,marriageid ,bride_groom ,active ,applicationnumber ,createdby ,createdtime,lastmodifiedby , lastmodifiedtime)
-#            VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? , ?, ?, ?, ?);
-#
-#
-#          basePath: MarriageDetails.*.MarriageDocuments.*
-#          jsonMaps:
-#
-#            - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.id
-#
-#            - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.marriageTenantid
-#
-#            - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.documentName
-#
-#            - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.documentType
-#
-#            - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.fileStoreId
-#
-#            - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.documentlink
-#
-#            - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.marriageId
-#
-#            - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.documentOwner
-#
-#            - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.active
-#
-#            - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.applicationNumber
-#
-#            - jsonPath: $.MarriageDetails[*][?({id} in @.MarriageDocuments[*].id)].auditDetails.createdBy
-#
-#            - jsonPath: $.MarriageDetails[*][?({id} in @.MarriageDocuments[*].id)].auditDetails.createdTime
-#
-#            - jsonPath: $.MarriageDetails[*][?({id} in @.MarriageDocuments[*].id)].auditDetails.lastModifiedBy
-#
-#            - jsonPath: $.MarriageDetails[*][?({id} in @.MarriageDocuments[*].id)].auditDetails.lastModifiedTime
+        - query: INSERT INTO public.eg_marriage_document( id ,tenantid ,document_name ,document_type ,filestoreid ,
+            document_link ,marriageid ,bride_groom ,active ,applicationnumber ,createdby ,createdtime,lastmodifiedby , lastmodifiedtime, correction_id, correction_field_name)
+            VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? , ?, ?, ?, ?, ?, ?);
+
+
+          basePath: MarriageDetails.*.MarriageDocuments.*
+          jsonMaps:
+
+            - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.id
+
+            - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.marriageTenantid
+
+            - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.documentName
+
+            - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.documentType
+
+            - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.fileStoreId
+
+            - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.documentlink
+
+            - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.marriageId
+
+            - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.documentOwner
+
+            - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.active
+
+            - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.applicationNumber
+
+            - jsonPath: $.MarriageDetails[*][?({id} in @.MarriageDocuments[*].id)].auditDetails.createdBy
+
+            - jsonPath: $.MarriageDetails[*][?({id} in @.MarriageDocuments[*].id)].auditDetails.createdTime
+
+            - jsonPath: $.MarriageDetails[*][?({id} in @.MarriageDocuments[*].id)].auditDetails.lastModifiedBy
+
+            - jsonPath: $.MarriageDetails[*][?({id} in @.MarriageDocuments[*].id)].auditDetails.lastModifiedTime
+
+            - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.correctionId
+
+            - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.correctionFieldName
+
+
+        - query: INSERT INTO public.eg_marriage_correction( id, marriageid, correction_field_name, condition_code, specific_condition, createdtime, createdby, lastmodifiedtime, lastmodifiedby)
+            VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+          basePath: CorrectionField.*
+          jsonMaps:
+
+            - jsonPath: $.CorrectionField.*.id
+
+            - jsonPath: $.CorrectionField.*.marriageId
+
+            - jsonPath: $.CorrectionField.*.correctionFieldName
+
+            - jsonPath: $.CorrectionField.*.conditionCode
+
+            - jsonPath: $.CorrectionField.*.specificCondition
+
+            - jsonPath: $.CorrectionField.*.auditDetails.createdTime
+
+            - jsonPath: $.CorrectionField.*.auditDetails.createdBy
+
+            - jsonPath: $.CorrectionField.*.auditDetails.lastModifiedTime
+
+            - jsonPath: $.CorrectionField.*.auditDetails.lastModifiedBy
+
+
+        - query: INSERT INTO public.eg_marriage_correction_child( id, marriageid, correctionid, correction_field_name, column_name, old_value, new_value,
+            createdtime, createdby, lastmodifiedtime,  lastmodifiedby)
+            VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+
+          basePath: CorrectionFieldValue.*
+          jsonMaps:
+
+            - jsonPath: $.CorrectionFieldValue.*.id
+
+            - jsonPath: $.CorrectionFieldValue.*.marriageId
+
+            - jsonPath: $.CorrectionFieldValue.*.correctionId
+
+            - jsonPath: $.CorrectionFieldValue.*.correctionFieldName
+
+            - jsonPath: $.CorrectionFieldValue.*.columnName
+
+            - jsonPath: $.CorrectionFieldValue.*.oldValue
+
+            - jsonPath: $.CorrectionFieldValue.*.newValue
+
+            - jsonPath: $.CorrectionFieldValue.*.auditDetails.createdTime
+
+            - jsonPath: $.CorrectionFieldValue.*.auditDetails.createdBy
+
+            - jsonPath: $.CorrectionFieldValue.*.auditDetails.lastModifiedTime
+
+            - jsonPath: $.CorrectionFieldValue.*.auditDetails.lastModifiedBy
 
 
 #    - version: 1.0
