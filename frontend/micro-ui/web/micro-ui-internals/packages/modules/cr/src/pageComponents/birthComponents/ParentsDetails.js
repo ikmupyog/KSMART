@@ -164,7 +164,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
 
   function setSelectMotherFirstNameMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
-    if (!(e.target.value.match(pattern))) {
+    if (!(e.target.value.match(pattern)) && e.target.value.trim() !== " ") {
       e.preventDefault();
       setMotherFirstNameMl('');
     }
@@ -242,6 +242,10 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
 
   }
   function setSelectOrderofChildren(e) {
+    console.log(e.target.value);
+    let pattern = /^[0-9]*$/;
+    console.log(e.target.value.match(pattern));
+
     if (e.target.value < 10) {
       if (e.target.value > 4) {
         setOrderofChildren(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
@@ -254,6 +258,9 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
         setOrderofChildrenValidationMsg(false);
         setOrderofChildren(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
       }
+    }
+    else {
+      e.preventDefault();
     }
 
     if (e.target.value.trim().length === 3) {
@@ -338,6 +345,24 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
       e.preventDefault();
     }
   }
+  function setCheckSpecialCharSpace(e) {
+    let pattern = /^[a-zA-Z-.`' ]*$/;
+    if (!(e.key.match(pattern)) && e.code === 'Space') {
+      e.preventDefault();
+    }
+  }
+  function setCheckSpecialChar(e) {
+    let pattern = /^[0-9]*$/;
+    if (!(e.key.match(pattern))) {
+      e.preventDefault();
+    }
+  }
+  function setCheckMalayalamInputField(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
+    if (!(e.key.match(pattern))) {
+      e.preventDefault();
+    }
+  }
   if (isEditBirth) {
 
     if (formData?.ChildDetails?.ParentsDetails?.motherNationality != null) {
@@ -385,6 +410,18 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
   let validFlag = true;
   const goNext = () => {
     if (isMotherInfo === false) {
+      console.log("motherFirstNameEn" , motherFirstNameEn);
+      if (motherFirstNameEn == null || motherEducation == '' || motherEducation == undefined) {
+        validFlag = false;
+        setMotherEducationError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+
+      } else {
+        setMotherEducationError(false);
+      }      
       if (motherEducation == null || motherEducation == '' || motherEducation == undefined) {
         validFlag = false;
         setMotherEducationError(true);
@@ -645,6 +682,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                       name="motherFirstNameEn"
                       value={motherFirstNameEn}
                       onChange={setSelectMotherFirstNameEn}
+                      onKeyPress={setCheckSpecialCharSpace}
                       disable={isDisableEdit}
                       placeholder={`${t("CR_MOTHER_NAME_EN")}`}
                       {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_MOTHER_NAME_EN") })}
@@ -757,6 +795,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
                       optionKey="i18nKey"
                       name="orderofChildren"
                       value={orderofChildren}
+                      onKeyPress={setCheckSpecialChar}
                       onChange={setSelectOrderofChildren}
                       disable={isDisableEdit}
                       placeholder={`${t("CR_ORDER_CURRENT_DELIVERY")}`}

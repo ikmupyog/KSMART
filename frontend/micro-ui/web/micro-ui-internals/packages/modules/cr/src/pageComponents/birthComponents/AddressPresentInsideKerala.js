@@ -66,32 +66,32 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     // let cmbFilterPostOffice = [];
 
     localbodies &&
-        localbodies["tenant"] &&
+        localbodies["tenant"] && localbodies["tenant"].tenants &&
         localbodies["tenant"].tenants.map((ob) => {
             cmbLB.push(ob);
         });
     Taluk &&
-        Taluk["common-masters"] &&
+        Taluk["common-masters"] && Taluk["common-masters"].Taluk && 
         Taluk["common-masters"].Taluk.map((ob) => {
             cmbTaluk.push(ob);
         });
     Village &&
-        Village["common-masters"] &&
+        Village["common-masters"] && Village["common-masters"].Village &&
         Village["common-masters"].Village.map((ob) => {
             cmbVillage.push(ob);
         });
     District &&
-        District["common-masters"] &&
+        District["common-masters"] && District["common-masters"].District &&
         District["common-masters"].District.map((ob) => {
             cmbDistrict.push(ob);
         });
     PostOffice &&
-        PostOffice["common-masters"] &&
+        PostOffice["common-masters"] && PostOffice["common-masters"].PostOffice &&
         PostOffice["common-masters"].PostOffice.map((ob) => {
             cmbPostOffice.push(ob);
         });
     LBType &&
-        LBType["common-masters"] &&
+        LBType["common-masters"] && LBType["common-masters"].LBType &&
         LBType["common-masters"].LBType.map((ob) => {
             cmbLBType.push(ob);
         });
@@ -100,7 +100,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     let cmbWardNoFinal = [];
     let currentLB = [];
     boundaryList &&
-        boundaryList["egov-location"] &&
+        boundaryList["egov-location"] && boundaryList["egov-location"].TenantBoundary &&
         boundaryList["egov-location"].TenantBoundary.map((ob) => {
             // console.log(ob);
             // if(ob?.boundary){

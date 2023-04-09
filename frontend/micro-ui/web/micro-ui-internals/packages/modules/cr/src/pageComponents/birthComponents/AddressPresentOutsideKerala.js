@@ -55,12 +55,12 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
   //     cmbTaluk.push(ob);
   //   });
   Village &&
-    Village["common-masters"] &&
+    Village["common-masters"] && Village["common-masters"].Village &&
     Village["common-masters"].Village.map((ob) => {
       cmbVillage.push(ob);
     });
   District &&
-    District["common-masters"] &&
+    District["common-masters"] && District["common-masters"].District &&
     District["common-masters"].District.map((ob) => {
       cmbDistrict.push(ob);
     });
