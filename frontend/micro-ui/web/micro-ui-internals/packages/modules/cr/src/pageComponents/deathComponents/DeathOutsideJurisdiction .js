@@ -276,7 +276,7 @@ const DeathOutsideJurisdiction = ({
                 value={DeathPlaceRemarksMl}
                 onChange={setSelectDeathPlaceRemarksMl}
                 placeholder={`${t("CR_PLACE_DEATH_ML")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_PLACE_DEATH_ML") })}
+                {...(validation = { pattern:  "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: true, type: "text", title: t("CR_PLACE_DEATH_ML") })}
               />
             </div>
           </div>
@@ -335,7 +335,7 @@ const DeathOutsideJurisdiction = ({
                 value={PlaceOfBurialMl}
                 onChange={setSelectPlaceOfBurialMl}
                 placeholder={`${t("CR_PLACE_BURIAL_ML")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_PLACE_BURIAL_ML") })}
+                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_PLACE_BURIAL_ML") })}
               />
             </div>
             <div className="col-md-6">
