@@ -60,7 +60,7 @@ public class MarriageMdmsUtil {
         moduleDetails.add(tenantIdRequest);
         moduleDetails.add(tenantIds);
         moduleDetails.add(commomMasterRequest);
-       moduleDetails.addAll(BNDListRequest);
+        moduleDetails.addAll(BNDListRequest);
 
         MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(config.getEgovStateLevelTenant())
                                     .build();
