@@ -1243,10 +1243,10 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
             </div>
           </div>
           <div>
-            <div className="row">
+            {/* <div className="row">
               <div className="col-md-12">
                 <div className="col-md-6">
-                  {/* <CheckBox label={t("CR_EXACT_DEATH_DATE_NOT_AVAILABLE")} onChange={() => setChecked((checked) => !checked)} value={checked} /> */}
+                  <CheckBox label={t("CR_EXACT_DEATH_DATE_NOT_AVAILABLE")} onChange={() => setChecked((checked) => !checked)} value={checked} />
                   <CheckBox
                     label={t("CR_EXACT_DEATH_DATE_NOT_AVAILABLE")}
                     onChange={setCheckedDate}
@@ -1255,9 +1255,9 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
                   />
                 </div>
               </div>
-            </div>
+            </div> */}
             {/* {inside && ( */}
-            {DeathDateUnavailable === true && (
+            {/* {DeathDateUnavailable === true && (
               <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-3">
@@ -1278,10 +1278,10 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
                       })}
                     />
                   </div>
-                  {/* <div className="col-md-3">
+                  <div className="col-md-3">
                     <CardLabel>{t("CR_FROM_TIME")}</CardLabel>
                     <CustomTimePicker name="DeathTimeFrom" onChange={(val) => handleFromTimeChange(val, setDeathTimeFrom)} value={DeathTimeFrom} />
-                  </div> */}
+                  </div>
 
                   <div className="col-md-3">
                     <CardLabel>
@@ -1301,14 +1301,14 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
                       })}
                     />
                   </div>
-                  {/* <div className="col-md-3">
+                  <div className="col-md-3">
                     <CardLabel>{t("CR_TO_TIME")}</CardLabel>
                     <CustomTimePicker name="DeathTimeTo" onChange={(val) => handleToTimeChange(val, setDeathTimeTo)} value={DeathTimeTo} />
-                  </div> */}
+                  </div>
                 </div>
               </div>
-            )}
-            {DeathDateUnavailable === false && (
+            )} */}
+            {/* {DeathDateUnavailable === false && ( */}
               <div className="row">
                 <div className="col-md-12">
                   <div className="col-md-6">
@@ -1330,13 +1330,13 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
                       })}
                     />
                   </div>
-                  <div className="col-md-2">
+                  {/* <div className="col-md-2">
                     <CardLabel>{t("CR_TIME_OF_DEATH")}</CardLabel>
                     <CustomTimePicker name="TimeOfDeath" onChange={(val) => handleTimeChange(val, setDeathTime)} value={TimeOfDeath} />
-                  </div>
+                  </div> */}
                 </div>
               </div>
-            )}
+            {/* )} */}
           </div>
           {/* <div>
             <div className="row">
@@ -1546,7 +1546,7 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
               </h1>
             </div>
           </div>
-          <div className="row">
+          {/* <div className="row">
             <div className="col-md-12">
               <div className="col-md-6">
                 <CheckBox
@@ -1557,8 +1557,8 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
                 />
               </div>
             </div>
-          </div>
-          {DeceasedAadharNotAvailable === true && (
+          </div> */}
+          {/* {DeceasedAadharNotAvailable === true && (
             // {checkedAdhar ? (
             <div className="row">
               <div className="col-md-12">
@@ -1593,8 +1593,8 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
                 </div>
               </div>
             </div>
-          )}
-          {DeceasedAadharNotAvailable === false && (
+          )} */}
+          {/* {DeceasedAadharNotAvailable === false && ( */}
             <div className="row">
               <div className="col-md-12">
                 <div className="col-md-6">
@@ -1614,7 +1614,7 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
                 </div>
               </div>
             </div>
-          )}
+          {/* )} */}
 
           <div className="row">
             <div className="col-md-12">
