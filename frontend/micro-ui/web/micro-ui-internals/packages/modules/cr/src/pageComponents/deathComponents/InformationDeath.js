@@ -21,6 +21,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath })
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
   const [workFlowCode, setWorkFlowCode] = useState(formData?.InformationDeath?.workFlowCode);
   const [workFlowAmount, setWorkFlowAmount] = useState(formData?.InformationDeath?.workFlowAmount);
+  const [isPayment, setIsPayment] = useState(formData?.ChildDetails?.isPayment);
 
   const { uuid: uuid } = Digit.UserService.getUser().info;
   let tenantId = "";
@@ -627,6 +628,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
         if (currentWorgFlow.length > 0) {
           // console.log(currentWorgFlow[0].WorkflowCode);
           setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+          setIsPayment(currentWorgFlow[0].payment);
           setWorkFlowAmount(currentWorgFlow[0].amount);
 
         }
@@ -750,6 +752,8 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
     if (currentWorgFlow.length > 0) {
       // console.log(currentWorgFlow[0].WorkflowCode);
       setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+      setIsPayment(currentWorgFlow[0].payment);
+      setWorkFlowAmount(currentWorgFlow[0].amount);
     }
     // if (value.code === "HOSPITAL") {
     //   //Institution
@@ -1200,6 +1204,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
         DeathPlace,
         workFlowCode,
         workFlowAmount,
+        isPayment,
         DeathPlaceType,
         HospitalNameMl,
         DeathPlaceTypecode,
