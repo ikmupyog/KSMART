@@ -410,7 +410,7 @@ export const convertToMarriageRegistration = (data = {}) => {
           groomGuardiannameMl: data?.GroomDetails?.groomGuardiannameMl ? data?.GroomDetails?.groomGuardiannameMl : null,
           groomGuardianAadharNo: data?.GroomDetails?.groomGuardianAadharNo ? data?.GroomDetails?.groomGuardianAadharNo : null,
           groomMaritalstatusID: data?.GroomDetails?.groomMaritalstatusID ? data?.GroomDetails?.groomMaritalstatusID?.code : null,
-          groomIsSpouseLiving: data?.GroomDetails?.groomIsSpouseLiving ? data?.GroomDetails?.groomIsSpouseLiving : null,
+          groomIsSpouseLiving: data?.GroomDetails?.groomIsSpouseLiving ? data?.GroomDetails?.groomIsSpouseLiving?.code : null,
           groomNoOfSpouse: data?.GroomDetails?.groomNoOfSpouse ? data?.GroomDetails?.groomNoOfSpouse : null,
         },
         BrideDetails: {
@@ -440,7 +440,7 @@ export const convertToMarriageRegistration = (data = {}) => {
           brideGuardiannameMl: data?.BrideDetails?.brideGuardiannameMl ? data?.BrideDetails?.brideGuardiannameMl : null,
           brideGuardianAadharNo: data?.BrideDetails?.brideGuardianAadharNo ? data?.BrideDetails?.brideGuardianAadharNo : null,
           brideMaritalstatusID: data?.BrideDetails?.brideMaritalstatusID ? data?.BrideDetails?.brideMaritalstatusID?.code : null,
-          brideIsSpouseLiving: data?.BrideDetails?.brideIsSpouseLiving ? data?.BrideDetails?.brideIsSpouseLiving : null,
+          brideIsSpouseLiving: data?.BrideDetails?.brideIsSpouseLiving ? data?.BrideDetails?.brideIsSpouseLiving?.code : null,
           brideNoOfSpouse: data?.BrideDetails?.brideNoOfSpouse ? data?.BrideDetails?.brideNoOfSpouse : null,
         },
         WitnessDetails: {
