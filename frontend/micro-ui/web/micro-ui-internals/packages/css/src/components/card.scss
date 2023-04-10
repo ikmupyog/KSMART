@@ -284,15 +284,16 @@
 
     .field-container {
       span {
-        border: 2px solid black;
+        border: 1px solid #c9cccf;        ;
         background: rgb(247, 247, 247);
         width: 40px;
         height: 40px;
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: -16px;
+        margin-top: -23px;
         border-right: none;
+        border-radius:5px;
       }
     }
   }

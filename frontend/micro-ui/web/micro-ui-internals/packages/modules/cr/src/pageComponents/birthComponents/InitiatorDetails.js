@@ -1,19 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, TextArea, Toast } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, TextArea, Toast, LanguageIcon } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import Timeline from "../../components/CRTimeline";
 
-const InitiatorDetails = ({ config, onSelect, userType, formData,isEditBirth=false }) => {
+const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = false }) => {
+  console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
-  console.log(Digit.UserService.getUser().info);
+  const cmbRelation = [
+    { i18nKey: "Father", code: "FATHER" },
+    { i18nKey: "Mother", code: "MOTHER" },
+    { i18nKey: "Others", code: "OTHERS" },
+  ];  
+  // console.log(Digit.UserService.getUser().info);
   const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
-  const {name:name,} =Digit.UserService.getUser().info ; // window.localStorage.getItem("user-info");
-  const {mobileNumber:mobileNumber,} =Digit.UserService.getUser().info ; // window.localStorage.getItem("user-info");
+  const { name: name, } = Digit.UserService.getUser().info; // window.localStorage.getItem("user-info");
+  const { mobileNumber: mobileNumber, } = Digit.UserService.getUser().info; // window.localStorage.getItem("user-info");
   const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.InitiatorinfoDetails?.isInitiatorDeclaration : formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration : false);
   const [isCaretaker, setIsCaretaker] = useState(formData?.InitiatorinfoDetails?.isCaretaker ? formData?.InitiatorinfoDetails?.isCaretaker : formData?.ChildDetails?.InitiatorinfoDetails?.isCaretaker ? formData?.ChildDetails?.InitiatorinfoDetails?.isCaretaker : false);
-  const [relation, setrelation] = useState(formData?.InitiatorinfoDetails?.relation ? formData?.InitiatorinfoDetails?.relation : formData?.ChildDetails?.InitiatorinfoDetails?.relation ? formData?.ChildDetails?.InitiatorinfoDetails?.relation : "");
+  const [relation, setrelation] = useState(formData?.InitiatorinfoDetails?.relation.code ? formData?.InitiatorinfoDetails?.relation : formData?.ChildDetails?.InitiatorinfoDetails?.relation ? cmbRelation.filter(cmbRelation => cmbRelation.code === formData?.ChildDetails?.InitiatorinfoDetails?.relation)[0] : "");
   const [initiatorNameEn, setinitiatorNameEn] = useState(formData?.InitiatorinfoDetails?.initiatorNameEn ? formData?.InitiatorinfoDetails?.initiatorNameEn : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorNameEn ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorNameEn : name);
   const [initiatorAadhar, setinitiatorAadhar] = useState(formData?.InitiatorinfoDetails?.initiatorAadhar ? formData?.InitiatorinfoDetails?.initiatorAadhar : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAadhar ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAadhar : "");
   const [initiatorMobile, setinitiatorMobile] = useState(formData?.InitiatorinfoDetails?.initiatorMobile ? formData?.InitiatorinfoDetails?.initiatorMobile : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorMobile ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorMobile : mobileNumber);
@@ -28,7 +34,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData,isEditBirth=fal
   const [initiatorDesiError, setinitiatorDesiError] = useState(formData?.InitiatorinfoDetails?.initiatorDesi ? false : false);
 
   const onSkip = () => onSelect();
-
+  
   useEffect(() => {
     if (isInitialRender) {
       if (formData?.InitiatorinfoDetails?.isInitiatorDeclaration != null) {
@@ -42,12 +48,15 @@ const InitiatorDetails = ({ config, onSelect, userType, formData,isEditBirth=fal
     }
   }, [isInitialRender]);
 
-
-  function setSelectrelation(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setrelation(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-    }
+  function setSelectrelation(value) {
+    setrelation(value);
   }
+
+  // function setSelectrelation(e) {
+  //   if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+  //     setrelation(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+  //   }
+  // }
 
   function setSelectinitiatorNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
@@ -182,7 +191,6 @@ const InitiatorDetails = ({ config, onSelect, userType, formData,isEditBirth=fal
     }
     if (initiatorAadhar != null || initiatorAadhar != "" || initiatorAadhar != undefined) {
       let adharLength = initiatorAadhar;
-      console.log(adharLength);
       if (adharLength.length < 12 || adharLength.length > 12) {
         validFlag = false;
         setinitiatorAadharError(true);
@@ -244,16 +252,16 @@ const InitiatorDetails = ({ config, onSelect, userType, formData,isEditBirth=fal
       });
     }
   };
-  console.log(formData);
   return (
     <React.Fragment>
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
 
       {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!isInitiatorDeclaration || !initiatorNameEn || !initiatorAadhar || !initiatorMobile
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!initiatorNameEn || !initiatorAadhar || !initiatorMobile || !initiatorAddress
       }>
-        <div className="row">
+        {/* !isInitiatorDeclaration */}
+        {/* <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
               <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
@@ -273,7 +281,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData,isEditBirth=fal
               />
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="row">
           <div className="col-md-12">
@@ -282,62 +290,6 @@ const InitiatorDetails = ({ config, onSelect, userType, formData,isEditBirth=fal
             </h1>
           </div>
         </div>
-
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-4">
-              <CardLabel>{`${t("CR_RELATION")}`}</CardLabel>
-              <TextInput
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                name="relation"
-                value={relation}
-                onChange={setSelectrelation}
-                placeholder={`${t("CR_RELATION")}`}
-                disable={isDisableEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_RELATION") })}
-              />
-            </div>
-
-            <div className="col-md-4">
-              <CardLabel>
-                {`${t("CS_COMMON_AADHAAR")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                name="initiatorAadhar"
-                value={initiatorAadhar}
-                onChange={setSelectinitiatorAadhar}
-                disable={isDisableEdit}
-                placeholder={`${t("CS_COMMON_AADHAAR")}`}
-                {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
-              />
-            </div>
-
-            <div className="col-md-4">
-              <CardLabel>
-                {`${t("CR_INITIATOR_NAME")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                name="initiatorNameEn"
-                value={initiatorNameEn}
-                onChange={setSelectinitiatorNameEn}
-                disable={isDisableEdit}
-                placeholder={`${t("CR_INITIATOR_NAME")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INITIATOR_NAME") })}
-              />
-            </div>
-          </div>
-        </div>
-
         <div className="row">
           <div className="col-md-12">
             <div className="row">
@@ -347,9 +299,26 @@ const InitiatorDetails = ({ config, onSelect, userType, formData,isEditBirth=fal
                 </div>
               </div>
             </div>
+            {/* <div className="col-md-6">
+              <CardLabel>{`${t("CR_INFORMER_ADDRESS")}`}</CardLabel>
+              <TextArea
+                t={t}
+                type={"text"}
+                optionKey="i18nKey"
+                name="initiatorAddress"
+                value={initiatorAddress}
+                onChange={setSelectinitiatorAddress}
+                placeholder={`${t("CR_INFORMER_ADDRESS")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
+              />
+            </div> */}
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
             {isCaretaker === true && (
               <div>
-                <div className="col-md-6">
+                <div className="col-md-3">
                   <CardLabel>
                     {`${t("CR_INSTITUTION_NAME_DESIGNATION")}`}
                     <span className="mandatorycss">*</span>
@@ -369,8 +338,69 @@ const InitiatorDetails = ({ config, onSelect, userType, formData,isEditBirth=fal
                 </div>
               </div>
             )}
+            {isCaretaker === false && (
+              <div className="col-md-3">
+                {/* <CardLabel>{`${t("CR_RELATION")}`}</CardLabel>
+                <TextInput
+                  t={t}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="relation"
+                  value={relation}
+                  onChange={setSelectrelation}
+                  placeholder={`${t("CR_RELATION")}`}
+                  disable={isDisableEdit}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_RELATION") })}
+                /> */}
+                <CardLabel>{`${t("CR_RELATION")}`}</CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="i18nKey"
+                  isMandatory={false}
+                  option={cmbRelation}
+                  selected={relation}
+                  select={setSelectrelation}
+                  disable={isDisableEdit}
+                  placeholder={`${t("CR_RELATION")}`}
+                />
+              </div>
+            )}
+            <div className="col-md-3">
+              <CardLabel>
+                {`${t("CS_COMMON_AADHAAR")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                type={"text"}
+                optionKey="i18nKey"
+                name="initiatorAadhar"
+                value={initiatorAadhar}
+                onChange={setSelectinitiatorAadhar}
+                disable={isDisableEdit}
+                placeholder={`${t("CS_COMMON_AADHAAR")}`}
+                {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+              />
+            </div>
 
-            <div className="col-md-6">
+            <div className="col-md-3">
+              <CardLabel>
+                {`${t("CR_INITIATOR_NAME")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                type={"text"}
+                optionKey="i18nKey"
+                name="initiatorNameEn"
+                value={initiatorNameEn}
+                onChange={setSelectinitiatorNameEn}
+                disable={isDisableEdit}
+                placeholder={`${t("CR_INITIATOR_NAME")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INITIATOR_NAME") })}
+              />
+            </div>
+            <div className="col-md-3">
               <CardLabel>
                 {`${t("CR_MOBILE_NO")}`}
                 <span className="mandatorycss">*</span>
@@ -387,25 +417,12 @@ const InitiatorDetails = ({ config, onSelect, userType, formData,isEditBirth=fal
                 {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
               />
             </div>
-            {/* <div className="col-md-6">
-              <CardLabel>{`${t("CR_INFORMER_ADDRESS")}`}</CardLabel>
-              <TextArea
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                name="initiatorAddress"
-                value={initiatorAddress}
-                onChange={setSelectinitiatorAddress}
-                placeholder={`${t("CR_INFORMER_ADDRESS")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
-              />
-            </div> */}
           </div>
         </div>
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
-              <CardLabel>{`${t("CR_INFORMER_ADDRESS")}`}</CardLabel>
+              <CardLabel>{`${t("CR_INFORMER_ADDRESS")}`}<span className="mandatorycss">*</span></CardLabel>
               <TextArea
                 t={t}
                 type={"text"}
@@ -415,11 +432,13 @@ const InitiatorDetails = ({ config, onSelect, userType, formData,isEditBirth=fal
                 onChange={setSelectinitiatorAddress}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_INFORMER_ADDRESS")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
               />
             </div>
           </div>
         </div>
+
+
         {toast && (
           <Toast
             error={infomantFirstNmeEnError || initiatorAadharError || initiatorMobileError || initiatorDesiError}

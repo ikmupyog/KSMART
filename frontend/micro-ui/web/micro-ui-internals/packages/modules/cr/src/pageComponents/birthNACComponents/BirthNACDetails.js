@@ -630,8 +630,8 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
     return (
       <React.Fragment>
         <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-        {window.location.href.includes("/citizen") ? <Timeline currentStep={2}/> : null}
-        {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
+        {window.location.href.includes("/citizen") ? <Timeline currentStep={1}/> : null}
+        {window.location.href.includes("/employee") ? <Timeline currentStep={1} /> : null}
         <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!childFirstNameEn || !childFirstNameMl || !childDOB || !gender || !birthPlace || !nacorderofChildren}>
           <div className="row">
             <div className="col-md-12">

@@ -292,9 +292,9 @@ export const convertToBornOutsideBirthRegistration = (data = {}) => {
         outsideBirthPlace: data?.BornOutsideChildDetails?.outsideBirthPlace,
         country: data?.BornOutsideChildDetails?.country ? data?.BornOutsideChildDetails?.country.code : null,
         action: "INITIATE",
-        applicationtype: "CRBRNR",
-        businessservice: "birth-services",
-        workflowcode: data?.BornOutsideChildDetails?.workFlowCode,
+        applicationtype: "CRBRBO",
+        businessservice: "CR",
+        workflowcode: "BORNOUTSIDE60",
         BornOutsideParentsDetails: {
           motherFirstNameEn: data?.BornOutsideParentsDetails?.motherFirstNameEn,
           motherFirstNameMl: data?.BornOutsideParentsDetails?.motherFirstNameMl,
@@ -323,22 +323,30 @@ export const convertToBornOutsideBirthRegistration = (data = {}) => {
           presentOutSideIndiaAdressMlB: data?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressMlB,
           presentOutSideIndiaProvinceEn: data?.BornOutsideAddressBirthDetails?.presentOutSideIndiaProvinceEn,
           // presentOutSideIndiaProvinceMl: data?.BornOutsideAddressBirthDetails?.presentOutSideIndiaProvinceMl,
-          presentOutSideCountry: data?.BornOutsideAddressBirthDetails?.presentOutSideCountry ? data?.BornOutsideAddressBirthDetails?.presentOutSideCountry.code : null,
+          presentOutSideCountry: data?.BornOutsideAddressBirthDetails?.presentOutSideCountry
+            ? data?.BornOutsideAddressBirthDetails?.presentOutSideCountry.code
+            : null,
           presentOutSideIndiaadrsVillage: data?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsVillage
             ? data?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsVillage.code
             : null,
           presentOutSideIndiaadrsCityTown: data?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsCityTown,
           presentOutSideIndiaPostCode: data?.BornOutsideAddressBirthDetails?.presentOutSideIndiaPostCode,
           isPrsentAddress: data?.AddressBirthDetails?.isPrsentAddress,
-          permtaddressCountry: data?.BornOutsideAddressBirthDetails?.permtaddressCountry ? data?.BornOutsideAddressBirthDetails?.permtaddressCountry.code : null,
-          permtaddressStateName: data?.BornOutsideAddressBirthDetails?.permtaddressStateName ? data?.BornOutsideAddressBirthDetails?.permtaddressStateName.code : null,
+          permtaddressCountry: data?.BornOutsideAddressBirthDetails?.permtaddressCountry
+            ? data?.BornOutsideAddressBirthDetails?.permtaddressCountry.code
+            : null,
+          permtaddressStateName: data?.BornOutsideAddressBirthDetails?.permtaddressStateName
+            ? data?.BornOutsideAddressBirthDetails?.permtaddressStateName.code
+            : null,
           permntInKeralaAdrLBName: data?.BornOutsideAddressBirthDetails?.permntInKeralaAdrLBName
             ? data?.BornOutsideAddressBirthDetails?.permntInKeralaAdrLBName.code
             : null,
           permntInKeralaAdrDistrict: data?.BornOutsideAddressBirthDetails?.permntInKeralaAdrDistrict
             ? data?.BornOutsideAddressBirthDetails?.permntInKeralaAdrDistrict.code
             : null,
-          permntInKeralaAdrTaluk: data?.BornOutsideAddressBirthDetails?.permntInKeralaAdrTaluk ? data?.BornOutsideAddressBirthDetails?.permntInKeralaAdrTaluk.code : null,
+          permntInKeralaAdrTaluk: data?.BornOutsideAddressBirthDetails?.permntInKeralaAdrTaluk
+            ? data?.BornOutsideAddressBirthDetails?.permntInKeralaAdrTaluk.code
+            : null,
           permntInKeralaAdrVillage: data?.BornOutsideAddressBirthDetails?.permntInKeralaAdrVillage
             ? data?.BornOutsideAddressBirthDetails?.permntInKeralaAdrVillage.code
             : null,
@@ -354,10 +362,12 @@ export const convertToBornOutsideBirthRegistration = (data = {}) => {
           permntInKeralaAdrPostOffice: data?.BornOutsideAddressBirthDetails?.permntInKeralaAdrPostOffice
             ? data?.BornOutsideAddressBirthDetails?.permntInKeralaAdrPostOffice.code
             : null,
-          permntInKeralaWardNo: data?.BornOutsideAddressBirthDetails?.permntInKeralaWardNo ? data?.BornOutsideAddressBirthDetails?.permntInKeralaWardNo.code : null,
+          permntInKeralaWardNo: data?.BornOutsideAddressBirthDetails?.permntInKeralaWardNo
+            ? data?.BornOutsideAddressBirthDetails?.permntInKeralaWardNo.code
+            : null,
         },
         BornOutsideStaticInfn: {
-          birthWeight: data ?.BornOutsideStaticInfn?.birthWeight,
+          birthWeight: data?.BornOutsideStaticInfn?.birthWeight,
           pregnancyDuration: data?.BornOutsideStaticInfn?.pregnancyDuration ? data?.BornOutsideStaticInfn?.pregnancyDuration : null,
           medicalAttensionSub: data?.BornOutsideStaticInfn?.medicalAttensionSub ? data?.BornOutsideStaticInfn?.medicalAttensionSub.code : null,
           deliveryMethods: data?.BornOutsideStaticInfn?.deliveryMethods ? data?.BornOutsideStaticInfn?.deliveryMethods.code : null,

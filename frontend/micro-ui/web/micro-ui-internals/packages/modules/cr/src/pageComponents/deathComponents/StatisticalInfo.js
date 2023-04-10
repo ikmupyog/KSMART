@@ -1,14 +1,10 @@
-import React, { useState, useContext, useEffect, Loader } from "react";
+import React, { useState,  useEffect,  } from "react";
 import {
   FormStep,
   CardLabel,
   TextInput,
   Dropdown,
   BackButton,
-  DatePicker,
-  TextArea,
-  NewRadioButton,
-  RadioButtons,
 } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
@@ -95,7 +91,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
   };
 
   // console.log(formData);
-  const [visible, setVisible] = useState(false);
+  // const [visible, setVisible] = useState(false);
   const stateId = Digit.ULBService.getStateId();
   const minutes = [
     { i18nKey: "Min", code: "CR_MIN" },
@@ -133,7 +129,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
   );
   const { data: birthStatus = {}, isLoadingBirthStatus } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "BirthStatus");
   const [isInitialRender, setIsInitialRender] = useState(true);
- 
+
   let cmbbirthstatus = [];
   birthStatus &&
     birthStatus["birth-death-service"] &&
@@ -174,16 +170,16 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
   const [isInitialRenderDeathCauseFilterList, setIsInitialRenderDeathCauseFilterList] = useState(false);
   const [DeathCauseFilterList, setDeathCauseFilterList] = useState(null);
 
-  useEffect(() => {
-    if (isInitialRenderDeathCauseFilterList) {
-      if (DeathCauseMain) {
-        setDeathCauseFilterList(cmbDeathsub.filter((cmbDeathsub) => cmbDeathsub.maincode === DeathCauseMain.code));
-        setIsInitialRenderDeathCauseFilterList(false);
-      }
-    }
-  }, [DeathCauseFilterList, isInitialRenderDeathCauseFilterList]);
+ 
+  // useEffect(() => {
+  //   if (isInitialRender) {
+  //     currentMainCause = cmbDeathmain.filter((cmbDeathmain) => cmbDeathmain.code);
+  //     cmbFilterdeathsub = cmbDeathsub.filter((cmbDeathsub) => cmbDeathsub.maincode === currentMainCause[0].code);
+  //     selectDeathCauseSub(cmbFilterdeathsub[0]);
+  //     setIsInitialRender(false);
+  //   }
+  // }, [deathsub, isInitialRender, deathmain]);
   const [DeathCauseMain, setDeathCauseMain] = useState(
-
     formData?.StatisticalInfo?.DeathCauseMain?.code
       ? formData?.StatisticalInfo?.DeathCauseMain
       : formData?.StatisticalInfo?.DeathCauseMain
@@ -197,7 +193,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
       ? cmbDeathsub.filter((cmbDeathsub) => cmbDeathsub.code === formData?.StatisticalInfo?.DeathCauseSub)[0]
       : ""
   );
- 
+
   // const { data: deathsub = {}, isLoadingB } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeathCauseSub");
   const [MedicalAttentionType, setMedicalAttentionType] = useState(
     formData?.StatisticalInfo?.MedicalAttentionType?.code
@@ -236,7 +232,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
       ? menub.filter((menub) => menub.code === formData?.StatisticalInfo?.DeathMedicallyCertified)[0]
       : ""
   );
- 
+
   // const [DeathCauseMain, setDeathCauseMain] = useState(formData?.StatisticalInfo?.DeathCauseMain ? formData?.StatisticalInfo?.DeathCauseMain : null);
   const [DeathCauseMainCustom, setDeathCauseMainCustom] = useState(
     formData?.StatisticalInfo?.DeathCauseMainCustom ? formData?.StatisticalInfo?.DeathCauseMainCustom : null
@@ -254,7 +250,7 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
   // const [DeathCauseMainTimeUnit, setDeathCauseMainTimeUnit] = useState(
   //   formData?.StatisticalInfo?.DeathCauseMainTimeUnit ? formData?.StatisticalInfo?.DeathCauseMainTimeUnit : null
   // );
- 
+
   // const [DeathCauseSub, setDeathCauseSub] = useState(formData?.StatisticalInfo?.DeathCauseSub ? formData?.StatisticalInfo?.DeathCauseSub : null);
   const [DeathCauseSubCustom, setDeathCauseSubCustom] = useState(
     formData?.StatisticalInfo?.DeathCauseSubCustom ? formData?.StatisticalInfo?.DeathCauseSubCustom : null
@@ -403,17 +399,17 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
   }
   function selectDeathCauseMain(value) {
     setDeathCauseMain(value);
-    setIsInitialRenderDeathCauseFilterList(true)
-
+    setIsInitialRenderDeathCauseFilterList(true);
   }
   function selectDeathCauseMainCustom(e) {
     setDeathCauseMainCustom(e.target.value);
   }
   function selectDeathCauseMainInterval(e) {
     if (e.target.value.trim().length >= 0) {
-      setDeathCauseMainInterval(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
+      setDeathCauseMainInterval(
+        e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 2)
+      );
     }
-   
   }
   function selectDeathCauseMainTimeUnit(value) {
     setDeathCauseMainTimeUnit(value);
@@ -426,7 +422,9 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
   }
   function selectDeathCauseSubInterval(e) {
     if (e.target.value.trim().length >= 0) {
-      setDeathCauseSubInterval(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
+      setDeathCauseSubInterval(
+        e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 2)
+      );
     }
   }
   function selectDeathCauseSubTimeUnit(value) {
@@ -440,7 +438,9 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
   }
   function selectDeathCauseSubInterval2(e) {
     if (e.target.value.trim().length >= 0) {
-      setDeathCauseSubInterval2(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
+      setDeathCauseSubInterval2(
+        e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 2)
+      );
     }
   }
   function selectDeathCauseSubTimeUnit2(value) {
@@ -471,13 +471,13 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
   let currentMainCause = [];
   let cmbFilterdeathsub = [];
   useEffect(() => {
-    if (isInitialRender) {
-      currentMainCause = cmbDeathmain.filter((cmbDeathmain) => cmbDeathmain.code);
-      cmbFilterdeathsub = cmbDeathsub.filter((cmbDeathsub) => cmbDeathsub.maincode === currentMainCause[0].code);
-      selectDeathCauseSub(cmbFilterdeathsub[0]);
-      setIsInitialRender(false);
+    if (isInitialRenderDeathCauseFilterList) {
+      if (DeathCauseMain) {
+        setDeathCauseFilterList(cmbDeathsub.filter((cmbDeathsub) => cmbDeathsub.maincode === DeathCauseMain.code));
+        setIsInitialRenderDeathCauseFilterList(false);
+      }
     }
-  }, [deathsub, isInitialRender, deathmain]);
+  }, [DeathCauseFilterList, isInitialRenderDeathCauseFilterList]);
 
   const onSkip = () => onSelect();
 
@@ -902,62 +902,60 @@ const StatisticalInfo = ({ config, onSelect, userType, formData, isEditDeath }) 
             </div>
           </div>
         </div>
-        {formData?.InformationDeath?.DeceasedGender.code == "FEMALE" &&
-          (console.log(formData?.InformationDeath?.DeceasedGender.code)
-          (
-            <div>
-              <div className="row">
-                <div className="col-md-12">
-                  <h1 className="headingh1">
-                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PREGNANCY_STATUS_DECEASED")}`}</span>{" "}
-                  </h1>
-                </div>
+        {formData?.InformationDeath?.DeceasedGender.code == "FEMALE" && (
+          <div>
+            <div className="row">
+              <div className="col-md-12">
+                <h1 className="headingh1">
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PREGNANCY_STATUS_DECEASED")}`}</span>{" "}
+                </h1>
               </div>
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="col-md-3">
-                    <CardLabel>{t("CR_DECEASED_PREGNANT")}</CardLabel>
-                    <Dropdown
-                      t={t}
-                      optionKey="name"
-                      isMandatory={false}
-                      option={cmbbirthstatus}
-                      selected={IsDelivery}
-                      select={selectIsDelivery}
-                      disabled={isEdit}
-                      placeholder={`${t("CR_DECEASED_PREGNANT")}`}
-                    />
-                  </div>
-                  <div className="col-md-3">
-                    <CardLabel>{t("CR_WAS_THERE_DELIVARY")}</CardLabel>
-                    {/* <div className="col-md-6 "> */}
-                    <Dropdown
-                      t={t}
-                      optionKey="i18nKey"
-                      isMandatory={false}
-                      option={cmbDelivary}
-                      selected={IsdeceasedPregnant}
-                      select={selectIsdeceasedPregnant}
-                      disabled={isEdit}
-                      placeholder={`${t("CR_WAS_THERE_DELIVARY")}`}
-                    />
-                  </div>
-                  <div className="col-md-6">
-                    <CardLabel>{t("CR_DURING_DELIVERY")}</CardLabel>
-                    <RadioButton
-                      t={t}
-                      // optionsKey="i18nKey"
-                      // onChange={setOptionkey}
-                      // isMandatory={config.isMandatory}
-                      selected={DeathDuringDelivery}
-                      Select={selectDeathDuringDelivery}
-                      handleChange={handleDeathDuringDelivery}
-                    />
-                  </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <div className="col-md-3">
+                  <CardLabel>{t("CR_DECEASED_PREGNANT")}</CardLabel>
+                  <Dropdown
+                    t={t}
+                    optionKey="name"
+                    isMandatory={false}
+                    option={cmbbirthstatus}
+                    selected={IsDelivery}
+                    select={selectIsDelivery}
+                    disabled={isEdit}
+                    placeholder={`${t("CR_DECEASED_PREGNANT")}`}
+                  />
+                </div>
+                <div className="col-md-3">
+                  <CardLabel>{t("CR_WAS_THERE_DELIVARY")}</CardLabel>
+                  {/* <div className="col-md-6 "> */}
+                  <Dropdown
+                    t={t}
+                    optionKey="i18nKey"
+                    isMandatory={false}
+                    option={cmbDelivary}
+                    selected={IsdeceasedPregnant}
+                    select={selectIsdeceasedPregnant}
+                    disabled={isEdit}
+                    placeholder={`${t("CR_WAS_THERE_DELIVARY")}`}
+                  />
+                </div>
+                <div className="col-md-6">
+                  <CardLabel>{t("CR_DURING_DELIVERY")}</CardLabel>
+                  <RadioButton
+                    t={t}
+                    // optionsKey="i18nKey"
+                    // onChange={setOptionkey}
+                    // isMandatory={config.isMandatory}
+                    selected={DeathDuringDelivery}
+                    Select={selectDeathDuringDelivery}
+                    handleChange={handleDeathDuringDelivery}
+                  />
                 </div>
               </div>
             </div>
-          ))}
+          </div>
+        )}
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">

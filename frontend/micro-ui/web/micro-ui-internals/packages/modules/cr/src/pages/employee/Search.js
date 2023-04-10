@@ -10,11 +10,11 @@ const Search = ({ path }) => {
     const tenantId = Digit.ULBService.getCurrentTenantId();
     const [payload, setPayload] = useState({})
     const [applicationType, setApplicationType] = React.useState([])
+    const [applicationDeathType, setApplicationDeathType] = React.useState([])
     // const Search = Digit.ComponentRegistryService.getComponent( variant === "death-correction" ? "DeathCorrection" : "SearchCrApplication" )
 
     const Search = Digit.ComponentRegistryService.getComponent('SearchCrApplication')
     const SearchDeath = Digit.ComponentRegistryService.getComponent('SearchDeathApplication')
-
     function onSubmit(_data) {
         var fromDate = new Date(_data?.fromDate)
         fromDate?.setSeconds(fromDate?.getSeconds() - 19800)
@@ -54,10 +54,27 @@ const Search = ({ path }) => {
         return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} setApplicationType={setApplicationType} applicationType={applicationType} data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
     }  
     else if(window.location.href.includes("/deathsearch") == true ) {
+    } 
+    else if(window.location.href.includes("/birthsearch") == true && applicationType?.value == "abandonedbirthsearch"){
+        const { data: { AbandonedChildDetails: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useAbandonedBirthSearch({ tenantId, filters: payload, config })
+        return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} setApplicationType={setApplicationType} applicationType={applicationType} data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
+    } 
+    else if(window.location.href.includes("/deathsearch") == true && applicationDeathType?.value == "death") {
         const { data: { deathCertificateDtls: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useSearchDeath({ tenantId, filters: payload, config })
 
-        return <SearchDeath t={t} tenantId={tenantId} onSubmit={onSubmit} data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
-    } else {
+        return <SearchDeath t={t} tenantId={tenantId} onSubmit={onSubmit} setApplicationDeathType={setApplicationDeathType} applicationDeathType={applicationDeathType}  data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
+    }
+    // else if(window.location.href.includes("/deathsearch") == true && applicationType?.value == "death") {
+    //     const { data: { deathCertificateDtls: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useSearchDeath({ tenantId, filters: payload, config })
+
+    //     return <SearchDeath t={t} tenantId={tenantId} onSubmit={onSubmit} data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
+    // }
+    // else if(window.location.href.includes("/deathsearch") == true && applicationType?.value == "deathnac") {
+    //     const { data: { deathCertificateDtls: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useSearchDeathNAC({ tenantId, filters: payload, config })
+
+    //     return <SearchDeath t={t} tenantId={tenantId} onSubmit={onSubmit} data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
+    // }
+    else {
         const { data: { ChildDetails: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useSearch({ tenantId, filters: payload, config })
         return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} setApplicationType={setApplicationType} applicationType={applicationType} data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} />
     }

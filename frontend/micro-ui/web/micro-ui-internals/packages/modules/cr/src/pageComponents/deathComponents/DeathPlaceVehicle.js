@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, TextArea } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, Loader, TextArea } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 
 const DeathPlaceVehicle = ({
@@ -51,19 +51,22 @@ const DeathPlaceVehicle = ({
   }
   let cmbhospital = [];
   hospital &&
-    hospital["egov-location"] && hospital["egov-location"].hospitalList &&
+    hospital["egov-location"] &&
+    hospital["egov-location"].hospitalList &&
     hospital["egov-location"].hospitalList.map((ob) => {
       cmbhospital.push(ob);
     });
   let cmbLB = [];
   localbodies &&
-    localbodies["tenant"] && localbodies["tenant"].tenants &&
+    localbodies["tenant"] &&
+    localbodies["tenant"].tenants &&
     localbodies["tenant"].tenants.map((ob) => {
       cmbLB.push(ob);
     });
   let cmbVehicle = [];
   Vehicle &&
-    Vehicle["birth-death-service"] && Vehicle["birth-death-service"].VehicleType &&
+    Vehicle["birth-death-service"] &&
+    Vehicle["birth-death-service"].VehicleType &&
     Vehicle["birth-death-service"].VehicleType.map((ob) => {
       cmbVehicle.push(ob);
     });
@@ -71,7 +74,8 @@ const DeathPlaceVehicle = ({
   let cmbWardNo = [];
   let cmbWardNoFinal = [];
   boundaryList &&
-    boundaryList["egov-location"] && boundaryList["egov-location"].TenantBoundary &&
+    boundaryList["egov-location"] &&
+    boundaryList["egov-location"].TenantBoundary &&
     boundaryList["egov-location"].TenantBoundary.map((ob) => {
       if (ob?.hierarchyType.code === "REVENUE") {
         Zonal.push(...ob.boundary.children);
@@ -103,17 +107,22 @@ const DeathPlaceVehicle = ({
   function setselectDeathPlaceType(value) {
     selectDeathPlaceType(value);
   }
+  // function setSelectVehicleNumber(e) {
+  //   setVehicleNumber(e.target.value);
+  // }
   function setSelectVehicleNumber(e) {
-    setVehicleNumber(e.target.value);
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z0-9\-]*$") != null)) {
+      setVehicleNumber(e.target.value.length <= 15 ? e.target.value : (e.target.value).substring(0, 15));
+    }
   }
-  function setSelectVehicleFromplaceEn(e) {    
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setVehicleFromplaceEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+  function setSelectVehicleFromplaceEn(e) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setVehicleFromplaceEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectVehicleToPlaceEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setVehicleToPlaceEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setVehicleToPlaceEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
 
@@ -134,27 +143,30 @@ const DeathPlaceVehicle = ({
 
   function setSelectVehicleFromplaceMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
-    if(!(e.target.value.match(pattern))){
+    if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setVehicleFromplaceMl('');
+      setVehicleFromplaceMl("");
+    } else {
+      setVehicleFromplaceMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
-    else{
-      setVehicleFromplaceMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-    }   
   }
   function setSelectVehicleToPlaceMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
-    if(!(e.target.value.match(pattern))){
+    if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setVehicleToPlaceMl('');
+      setVehicleToPlaceMl("");
+    } else {
+      setVehicleToPlaceMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
-    else{
-      setVehicleToPlaceMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-    }   
   }
   function setSelectGeneralRemarks(e) {
-    setGeneralRemarks(e.target.value);
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+      setGeneralRemarks(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    }
   }
+  // function setSelectGeneralRemarks(e) {
+  //   setGeneralRemarks(e.target.value);
+  // }
 
   function setSelectDeathPlaceWardId(value) {
     setDeathPlaceWardId(value);
@@ -163,16 +175,22 @@ const DeathPlaceVehicle = ({
   function selectVehicleHospitalEn(value) {
     setSelectedVehicleHospitalEn(value);
   }
-
+  function setCheckMalayalamInputField(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
+    if (!(e.key.match(pattern))) {
+      e.preventDefault();
+    }
+  }
   const goNext = () => {
     onSelect(config.key, {});
   };
-  if (islocalbodiesLoading) {
+  if (isLoad || isLoading || islocalbodiesLoading || isWardLoaded) {
     return <Loader></Loader>;
-  }
+  } else
   return (
     <React.Fragment>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
+      {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}> */}
+      <div className="col-md-12">
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -357,7 +375,8 @@ const DeathPlaceVehicle = ({
             </div>
           </div>
         </div>
-      </FormStep>
+      </div>
+      {/* </FormStep> */}
     </React.Fragment>
   );
 };

@@ -14,51 +14,35 @@ import {
   UploadFile,
   EditIcon,
 } from "@egovernments/digit-ui-react-components";
-// import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 import FormFieldContainer from "../../../components/FormFieldContainer";
+import HouseMarriageRegistration from "../HouseMarriageRegistration";
 import BirthInclusionModal from "../../../components/BirthInclusionModal";
-import { BIRTH_INCLUSION_FIELD_NAMES } from "../../../config/constants";
-import { useLocation } from "react-router-dom";
+import { MARRIAGE_INCLUSION_FIELD_NAMES } from "../../../config/constants";
+import { initializeMarriageCorrectionObject } from "../../../business-objects/globalObject";
 import { useForm } from "react-hook-form";
-import { getFormattedBirthInclusionData } from "../../../config/utils";
 import MarriageAddressPage from "../MarriageAddressPage";
 
 const types = ["HUSBAND DETAILS", "WIFE DETAILS"];
 
-const MarriageCorrectionEditPage = ({ navigationData,cmbPlace}) => {
+const MarriageCorrectionEditPage = ({ navigationData,cmbPlace,cmbWardNoFinal,BirthCorrectionDocuments}) => {
   const { t } = useTranslation();
   let formData = {};
   let validation = {};
-  let BirthCorrectionDocuments = [];
-  const stateId = Digit.ULBService.getStateId();
   const [showModal, setShowModal] = useState(false);
-  const [uploadStatus, setUploadStatus] = useState({
-    hospitalCorrectionLetter: false,
-  });
+  let marriageCorrectionFormData = [];
   const [value, setValue1] = useState(0);
   const [active, setActive] = useState(types[0]);
-  const [selectedInclusionItem, setSelectedInclusionItem] = useState([]);
+  const [marriageCorrectionFormsObj, setMarriageCorrectionFormsObj] = useState(false);
   const [marriageWardCode, setmarriageWardCode] = useState(
     formData?.MarriageDetails?.marriageWardCode ? formData?.MarriageDetails?.marriageWardCode : ""
   );
-
+  const [selectedCorrectionItem, setSelectedCorrectionItem] = useState([]);
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
   if (tenantId === "kl") {
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
-
-  //   let cmbPlace = [];
-  //   let menu = [];
-  //   let cmbNation = [];
-  let cmbWardNo = [];
-  //   let cmbWardNoFinal = [];
-  let Zonal = [];
-  //   let cmbState = [];
-  //   let cmbfilterNation = [];
-  //   let cmbfilterNationI = [];
-
   const [marriagePlace, setMarriagePlace] = useState(
     formData?.InformationDeath?.marriagePlace?.code
       ? formData?.InformationDeath?.marriagePlace
@@ -67,10 +51,33 @@ const MarriageCorrectionEditPage = ({ navigationData,cmbPlace}) => {
       : ""
   );
 
+  const [marriagePlacenameEn, setmarriagePlacenameEn] = useState(
+    formData?.MarriageDetails?.marriagePlacenameEn ? formData?.MarriageDetails?.marriagePlacenameEn : ""
+  );
+  const [marriagePlacenameMl, setmarriagePlacenameMl] = useState(
+    formData?.MarriageDetails?.marriagePlacenameMl ? formData?.MarriageDetails?.marriagePlacenameMl : ""
+  );
+  // const [marriageOthersSpecify, setmarriageOthersSpecify] = useState(
+  //   formData?.MarriageDetails?.marriageOthersSpecify ? formData?.MarriageDetails?.marriageOthersSpecify : ""
+  // );
+  const [marriageLocalityEn, setmarriageLocalityEn] = useState(
+    formData?.MarriageDetails?.marriageLocalityEn ? formData?.MarriageDetails?.marriageLocalityEn : ""
+  );
+  const [marriageLocalityMl, setmarriageLocalityMl] = useState(
+    formData?.MarriageDetails?.marriageLocalityMl ? formData?.MarriageDetails?.marriageLocalityMl : ""
+  );
+  const [marriageStreetEn, setmarriageStreetEn] = useState(
+    formData?.MarriageDetails?.marriageStreetEn ? formData?.MarriageDetails?.marriageStreetEn : ""
+  );
+  const [marriageStreetMl, setmarriageStreetMl] = useState(
+    formData?.MarriageDetails?.marriageStreetMl ? formData?.MarriageDetails?.marriageStreetMl : ""
+  );
+  const [marriageLandmark, setmarriageLandmark] = useState(
+    formData?.MarriageDetails?.marriageLandmark ? formData?.MarriageDetails?.marriageLandmark : ""
+  );
   const setBirthInclusionFilterQuery = (fieldId) => {
-    const birthInclusionData = correctionsData["birth-death-service"]?.BirthCorrectionDocuments;
-    let selectedData = getFormattedBirthInclusionData(fieldId, navigationData, birthInclusionData);
-    setSelectedInclusionItem(selectedData);
+    const birthInclusionData = BirthCorrectionDocuments;
+    setSelectedInclusionItem(birthInclusionData);
     setShowModal(true);
   };
 
@@ -93,6 +100,19 @@ const MarriageCorrectionEditPage = ({ navigationData,cmbPlace}) => {
     mode: "all",
   });
 
+  useEffect(async()=>{
+    marriageCorrectionFormData = await initializeMarriageCorrectionObject(BirthCorrectionDocuments,navigationData);
+    await setMarriageCorrectionFormsObj(marriageCorrectionFormData);
+ },[navigationData,BirthCorrectionDocuments])
+
+
+ const setMarriageCorrecvtionFilterQuery = (fieldId) => {
+   let selectedMarriageCorrectionData = marriageCorrectionFormObj[fieldId];
+   setSelectedCorrectionItem(selectedMarriageCorrectionData);
+   setShowModal(true);
+ };
+ 
+
   function setSelectmarriageWardCode(value) {
     // setTenantWard(value.code);
     setmarriageWardCode(value);
@@ -112,6 +132,8 @@ const MarriageCorrectionEditPage = ({ navigationData,cmbPlace}) => {
       return { margin: "2rem", padding: "1rem 1rem 1rem 1rem", color: "black", cursor: "pointer", fontWeight: "bold" };
     }
   };
+  
+if(Object.keys(marriageCorrectionFormsObj)?.length > 0){
 
   return (
     <React.Fragment>
@@ -135,8 +157,11 @@ const MarriageCorrectionEditPage = ({ navigationData,cmbPlace}) => {
                 </CardLabel>
                 <DatePicker
                   // date={childDOB}
-                  datePickerRef={register}
+                  // datePickerRef={register}
                   name="marriageDOM"
+                  disabled={marriageCorrectionFormsObj.CHILD_DOB?.isDisabled}
+                  autofocus={marriageCorrectionFormsObj.CHILD_DOB?.isFocused}
+                  date={marriageCorrectionFormsObj?.CHILD_DOB?.curValue}
                   // max={convertEpochToDate(new Date())}
                   //min={convertEpochToDate("1900-01-01")}
                   // onChange={setselectChildDOB}
@@ -149,7 +174,7 @@ const MarriageCorrectionEditPage = ({ navigationData,cmbPlace}) => {
             </FieldComponentContainer>
             <div style={{ marginTop: "2.8rem" }}>
               <ButtonContainer>
-                <span onClick={() => setBirthInclusionFilterQuery(BIRTH_INCLUSION_FIELD_NAMES.CHILD_DOB)}>
+                <span onClick={() => setBirthInclusionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.CHILD_DOB)}>
                   <EditIcon selected={true} label={"Edit"} />
                 </span>
               </ButtonContainer>
@@ -171,17 +196,30 @@ const MarriageCorrectionEditPage = ({ navigationData,cmbPlace}) => {
                   {t("CS_COMMON_WARD")}
                   <span className="mandatorycss">*</span>
                 </CardLabel>
-                {/* <Dropdown
+                <Dropdown
                   t={t}
                   optionKey="namecmb"
                   isMandatory={true}
-                  placeholder={t("CS_COMMON_WARD'")}
+                  placeholder={t("CS_COMMON_WARD")}
                   option={cmbWardNoFinal}
                   selected={marriageWardCode}
+                  disabled={marriageCorrectionFormsObj.CHILD_WARD?.isDisabled}
+                  autofocus={marriageCorrectionFormsObj.CHILD_WARD?.isFocused}
                   select={setSelectmarriageWardCode}
                   {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
-                /> */}
+                />
               </div>
+              </FieldComponentContainer>
+              <div style={{ marginTop: "2.8rem" }}>
+              <ButtonContainer>
+                <span onClick={() => setBirthInclusionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES.CHILD_DOB)}>
+                  <EditIcon selected={true} label={"Edit"} />
+                </span>
+              </ButtonContainer>
+            </div>
+            </FormFieldContainer>
+            <FormFieldContainer>
+              <FieldComponentContainer>
               <div className="col-md-5">
                 <CardLabel>
                   {t("CR_MARRIAGE_PLACE_TYPE")}
@@ -203,16 +241,16 @@ const MarriageCorrectionEditPage = ({ navigationData,cmbPlace}) => {
                     {t("CS_NAME_OF_PLACE")}
                     <span className="mandatorycss">*</span>
                   </CardLabel>
-                  {/* <Dropdown
+                  <Dropdown
                     t={t}
                     optionKey="namecmb"
                     isMandatory={true}
                     placeholder={t("CS_NAME_OF_PLACE'")}
-                    option={cmbPlaceNameReligious.name}
+                    option={cmbWardNoFinal}
                     selected={marriageWardCode}
                     select={setSelectmarriageWardCode}
                     {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
-                  /> */}
+                  />
                 </div>
               )}
               {marriagePlace?.code === "MANDAPAM_HALL_AND_OTHER" && (
@@ -221,7 +259,7 @@ const MarriageCorrectionEditPage = ({ navigationData,cmbPlace}) => {
                     {t("CS_NAME_OF_PLACE")}
                     <span className="mandatorycss">*</span>
                   </CardLabel>
-                  {/* <Dropdown
+                  <Dropdown
                     t={t}
                     optionKey="namecmb"
                     isMandatory={true}
@@ -230,25 +268,27 @@ const MarriageCorrectionEditPage = ({ navigationData,cmbPlace}) => {
                     selected={marriageWardCode}
                     select={setSelectmarriageWardCode}
                     {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
-                  /> */}
+                  />
                 </div>
               )}
               {marriagePlace?.code === "SUB_REGISTRAR_OFFICE" && (
                 <div className="col-md-5">
-                  <CardLabel>
-                    {t("CS_NAME_OF_PLACE")}
-                    <span className="mandatorycss">*</span>
-                  </CardLabel>
-                  {/* <Dropdown
-                    t={t}
-                    optionKey="namecmb"
-                    isMandatory={true}
-                    placeholder={t("CS_NAME_OF_PLACE'")}
-                    option={cmbWardNoFinal}
-                    selected={marriageWardCode}
-                    select={setSelectmarriageWardCode}
-                    {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
-                  /> */}
+                  <HouseMarriageRegistration
+                      marriagePlacenameEn={marriagePlacenameEn}
+                      setmarriagePlacenameEn={setmarriagePlacenameEn}
+                      marriagePlacenameMl={marriagePlacenameMl}
+                      setmarriagePlacenameMl={setmarriagePlacenameMl}
+                      marriageLocalityEn={marriageLocalityEn}
+                      setmarriageLocalityEn={setmarriageLocalityEn}
+                      marriageLocalityMl={marriageLocalityMl}
+                      setmarriageLocalityMl={setmarriageLocalityMl}
+                      marriageStreetEn={marriageStreetEn}
+                      setmarriageStreetEn={setmarriageStreetEn}
+                      marriageStreetMl={marriageStreetMl}
+                      setmarriageStreetMl={setmarriageStreetMl}
+                      marriageLandmark={marriageLandmark}
+                      setmarriageLandmark={setmarriageLandmark}
+                    />
                 </div>
               )}
             </FieldComponentContainer>
@@ -295,9 +335,9 @@ const MarriageCorrectionEditPage = ({ navigationData,cmbPlace}) => {
                         inputRef={register({})}
                         // isMandatory={false}
                         type={"text"}
-                        // optionKey="i18nKey"
-                        name="groomFirstNameEn"
-                        // value={DeceasedFirstNameEn}
+                        optionKey="i18nKey"
+                        name="groomFirstnameEn"
+                        value={marriageCorrectionFormsObj?.CHILD_NAME?.curValue}
                         // onChange={setSelectDeceasedFirstNameEn}
                         placeholder={`${t("CR_FIRST_NAME_EN")}`}
                         // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -911,9 +951,13 @@ const MarriageCorrectionEditPage = ({ navigationData,cmbPlace}) => {
             )}
           </FormFieldContainer>
         </form>
-        <BirthInclusionModal showModal={showModal} selectedConfig={selectedInclusionItem} hideModal={_hideModal} />
+        <BirthInclusionModal showModal={showModal} selectedConfig={selectedCorrectionItem} hideModal={_hideModal} />
       </FormStep>
     </React.Fragment>
-  );
-};
+);
+ } else{
+   return (<Loader/>)
+ }
+ };
+ 
 export default MarriageCorrectionEditPage;

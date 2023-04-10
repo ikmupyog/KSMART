@@ -111,7 +111,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
       {
         slNo: "",
         sex: "",
-        dob: "dob",
+        dob: null,
         childNameEn: "",
         childNameMl:"",
         orderOfBirth: "",
@@ -121,7 +121,6 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
   }
 
   const reducerowner = (state, action) => {
-    console.log("state changes==",state);
     switch (action.type) {
       case "ADD_OWNER":
         return [
@@ -129,7 +128,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
           {
             slNo: "",
             sex: "",
-            dob: "dob",
+            dob: null,
             childNameEn: "",
             childNameMl:"",
             orderOfBirth: "",
@@ -165,7 +164,6 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
 
   const [appState, dispatchapplicant] = formDatalocal?.tradeLicenseDetail?.owners?.length > 0 ? useReducer(reducer, storedAppData, initapplicantedit) : useReducer(reducer, storedAppData, initapplicant);
   const [ownerState, disptachowner] =  useReducer(reducerowner, storedOwnerData,initowner)
-  console.log(ownerState, 'ownerState');
 
   
   const handleOwnerInputField = useCallback((index, e, key, length = 100) => {
@@ -173,9 +171,13 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
       disptachowner({ type: "EDIT_CURRENT_OWNER", payload: { index, key, value: "" } });
       return;
     }
-    if(e.trim()==="" || e.trim()==="."){
-      return;
+    if (typeof e === "object") {
+      disptachowner({ type: "EDIT_CURRENT_OWNER", payload: { index, key, value: e } });
+      
     }
+    // if(e.trim()==="" || e.trim()==="."){
+    //   return;
+    // }
     if (e.length <= length)
       disptachowner({ type: "EDIT_CURRENT_OWNER", payload: { index, key, value: e } });
     else
@@ -550,11 +552,6 @@ function selectfile5(e) {
       return;
   }, [disptachowner]); 
 
-  const setIsAliveField = (data) =>{
-    console.log("changed value==",data);
-    ownerState[0].isAlive = data.value;
-  }
-
   const convertEpochToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
@@ -572,8 +569,8 @@ function selectfile5(e) {
     return (
     <React.Fragment>
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-      {window.location.href.includes("/citizen") ? <Timeline currentStep={5} /> : null}
-      {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
+      {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
+      {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
       <FormStep
         t={t}
         config={config}
@@ -582,40 +579,7 @@ function selectfile5(e) {
         isDisabled={!isInitiatorDeclaration || !initiatorNameEn || !initiatorAadhar || !initiatorMobile || !initiatorAddress}
       >
         <div>
-                  
-        <div className="row">
-          <div className="col-md-12">
-            <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
-            </h1>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-12">
-              <CheckBox
-                label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
-                onChange={setDeclarationInfo}
-                value={isInitiatorDeclaration}
-                checked={isInitiatorDeclaration}
-                disable={isDisableEdit}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-12">
-              <CheckBox
-                label="I do understand that NAC/NIA issue will be subject to the genuiness of documents produced and enquiry done by the registrar"
-                onChange={setDeclarationStatement}
-                value={isDeclaration}
-                checked={isDeclaration}
-                disable={isDisableEdit}
-              />
-            </div>
-          </div>
-        </div>
+
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -723,7 +687,8 @@ function selectfile5(e) {
             </h1>
           </div>
         </div>
-        {ownerState.map((field, index) => {
+            {ownerState.map((field, index) => {
+          console.log("first val",field)
           return (
             <div key={`${field}-${index}`}>
               <div style={{
@@ -753,7 +718,7 @@ function selectfile5(e) {
                   date={field?.dob}
                   name="dob"
                   max={convertEpochToDate(new Date())}
-                  onChange={(e)=>handleOwnerInputField(index, e.target.value, "dob")}
+                  onChange={(e)=>handleOwnerInputField(index, e, "dob")}
                   inputFormat="DD-MM-YYYY"
                   placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
                   {...(validation = { isRequired: false, title: t("CR_DATE_OF_BIRTH_TIME") })}
@@ -810,7 +775,7 @@ function selectfile5(e) {
                         selected={field?.sex}
                         // select={setselectGender}
                         placeholder={`${t("CR_GENDER")}`}
-                        onChange={(e) => handleOwnerInputField(index, e.target.value, 'sex')}/>
+                        select={(e) => handleOwnerInputField(index, e, 'sex')}/>
                     </div>
                 </div>
                                 
@@ -834,10 +799,10 @@ function selectfile5(e) {
                       options={orderMenu}
                       optionsKey="code"
                       name="isAlive"
-                      value={field?.isAlive}
-                      selectedOption={true} 
-                      onSelect={setIsAliveField}
-                      isDependent={true}
+                      selectedOption={field?.isAlive}
+                      //selectedOption={true} 
+                      onSelect={(e) => handleOwnerInputField(index, e, "isAlive")}
+                      //isDependent={true}
                       labelKey=""
                     />
                     </div>
@@ -988,7 +953,40 @@ function selectfile5(e) {
               </div> 
               </div>
               </div>
-    
+                      
+              <div className="row">
+          <div className="col-md-12">
+            <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
+            </h1>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-12">
+              <CheckBox
+                label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
+                onChange={setDeclarationInfo}
+                value={isInitiatorDeclaration}
+                checked={isInitiatorDeclaration}
+                disable={isDisableEdit}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-12">
+              <CheckBox
+                label="I do understand that NAC/NIA issue will be subject to the genuiness of documents produced and enquiry done by the registrar"
+                onChange={setDeclarationStatement}
+                value={isDeclaration}
+                checked={isDeclaration}
+                disable={isDisableEdit}
+              />
+            </div>
+          </div>
+        </div>
          
         {toast && (
           <Toast

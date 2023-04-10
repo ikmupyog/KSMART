@@ -576,7 +576,7 @@ const RupeeIcon = ({ className }) => (
 );
 
 const ComplaintIcon = ({ className }) => (
-  <svg width="48" height="48" className={className} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="88" height="88" className={className} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       d="M42.6667 0.666748H5.33335C2.76669 0.666748 0.69002 2.76675 0.69002 5.33342L0.666687 47.3334L10 38.0001H42.6667C45.2334 38.0001 47.3334 35.9001 47.3334 33.3334V5.33342C47.3334 2.76675 45.2334 0.666748 42.6667 0.666748ZM26.3334 21.6667H21.6667V7.66675H26.3334V21.6667ZM26.3334 31.0001H21.6667V26.3334H26.3334V31.0001Z"
       fill="#F47738"
@@ -606,17 +606,17 @@ const DropIcon = ({ className }) => (
 
 const Person = (style) => (
   <svg
-    style={{ display: "inline-block", fontSize: "16px", ...style }}
+    // style={{ display: "inline-block", fontSize: "16px", ...style }}
     width="24"
     height="24"
     viewBox="0 0 40 40"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <path d="M13.6167 9.5L1.66667 17.4667V35H10V21.6667H16.6667V35H25V17.0833L13.6167 9.5Z" fill="white" />
+    {/* <path d="M13.6167 9.5L1.66667 17.4667V35H10V21.6667H16.6667V35H25V17.0833L13.6167 9.5Z" fill="#F47738" /> */}
     <path
       d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"
-      fill="white"
+      fill="#F47738"
     />
   </svg>
 );

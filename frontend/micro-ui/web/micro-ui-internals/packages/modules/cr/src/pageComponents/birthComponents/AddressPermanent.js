@@ -5,7 +5,8 @@ import { useTranslation } from "react-i18next";
 const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCountry, setpermtaddressCountry,
     permtaddressStateName, setpermtaddressStateName, value, setValue, countryvalue, setCountryValue,
     isPrsentAddress, setIsPrsentAddress, countryValuePermanent, setCountryValuePermanent,
-    valuePermanent, setValuePermanent, isEditBirth = false, isEditDeath = false,isEditStillBirth = false,
+    valuePermanent, setValuePermanent, isEditBirth = false, isEditDeath = false,isEditStillBirth = false,isEditAdoption,
+    isEditBirthNAC=false
     // isInitialRender, setIsInitialRender
 }) => {
     const stateId = Digit.ULBService.getStateId();
@@ -27,17 +28,17 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
     let cmbState = [];
 
     Country &&
-        Country["common-masters"] &&
+        Country["common-masters"] && Country["common-masters"].Country &&
         Country["common-masters"].Country.map((ob) => {
             cmbCountry.push(ob);
         });
     State &&
-        State["common-masters"] &&
+        State["common-masters"] && State["common-masters"].State &&
         State["common-masters"].State.map((ob) => {
             cmbState.push(ob);
         });
     localbodies &&
-        localbodies["tenant"] &&
+        localbodies["tenant"] && localbodies["tenant"].tenants &&
         localbodies["tenant"].tenants.map((ob) => {
             cmbLB.push(ob);
         });
@@ -87,7 +88,20 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
                 setValuePermanent(value.formData?.ChildDetails?.AddressBirthDetails?.permtaddressStateName);
             }
         }
-    } else if (isEditDeath) {
+    } else if (isEditAdoption !==false){
+        if (formData?.AdoptionAddressBasePage?.permtaddressCountry != null) {
+            if (cmbCountry.length > 0 && (permtaddressCountry === undefined || permtaddressCountry === "")) {
+                setpermtaddressCountry(cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.AdoptionAddressBasePage?.permtaddressCountry)[0]);
+                setCountryValuePermanent(value.formData?.AdoptionAddressBasePage?.permtaddressCountry);
+            }
+        }
+        if (formData?.AdoptionAddressBasePage?.permtaddressStateName != null) {
+            if (cmbState.length > 0 && (permtaddressStateName === undefined || permtaddressStateName === "")) {
+                setpermtaddressStateName(cmbState.filter(cmbState => cmbState.code === formData?.AdoptionAddressBasePage?.permtaddressStateName)[0]);
+                setValuePermanent(value.formData?.AdoptionAddressBasePage?.permtaddressStateName);
+            }
+        }
+    }else if (isEditDeath) {
         if (formData?.AddressBirthDetails?.permtaddressCountry != null) {
             if (cmbCountry.length > 0 && (permtaddressCountry === undefined || permtaddressCountry === "")) {
                 setpermtaddressCountry(cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.AddressBirthDetails?.permtaddressCountry)[0]);

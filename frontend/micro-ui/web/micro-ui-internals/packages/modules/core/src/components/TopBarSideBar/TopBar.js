@@ -88,24 +88,25 @@ const TopBar = ({
         userDetails={userDetails}
         notificationCount={unreadNotificationCount < 99 ? unreadNotificationCount : 99}
         notificationCountLoaded={notificationCountLoaded}
-        cityOfCitizenShownBesideLogo={t(CitizenHomePageTenantId)} 
+        cityOfCitizenShownBesideLogo={t(CitizenHomePageTenantId)}
         onNotificationIconClick={onNotificationIconClick}
         hideNotificationIconOnSomeUrlsWhenNotLoggedIn={urlsToDisableNotificationIcon(pathname)}
         cityDetails={cityDetails}
-        t={t} 
+        t={t}
       />
     );
   }
   const loggedin = userDetails?.access_token ? true : false;
+  const user = { name: userDetails?.info?.name }
   return (
 
-     <div className="topbar">
+    <div className="topbar">
       {mobileView ? <Hamburger handleClick={toggleSidebar} color="#9E9E9E" /> : null}
-      <div style={{borderRight:"1px solid #edf2f9", width:"3%"}}>
-      <img className="city" src={loggedin ? cityDetails?.logoId : stateInfo?.statelogo} />
+      <div style={{ borderRight: "1px solid #edf2f9", width: "3%" }}>
+        <img className="city" src={loggedin ? cityDetails?.logoId : stateInfo?.statelogo} />
       </div>
-      
-      <span style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%",paddingLeft:"120px" }}>
+
+      <span style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", paddingLeft: "120px" }}>
         {loggedin &&
           (cityDetails?.city?.ulbGrade ? (
             <p className="ulb" style={mobileView ? { fontSize: "14px", display: "inline-block" } : {}}>
@@ -136,12 +137,17 @@ const TopBar = ({
                   select={handleUserDropdownSelection}
                   showArrow={true}
                   freeze={true}
+                  selected={user}
                   style={mobileView ? { right: 0 } : {}}
                   optionCardStyles={{ overflow: "revert" }}
                   customSelector={
-                    profilePic == null ? (
+                    profilePic == null ? (<React.Fragment>
                       <TextToImg name={userDetails?.info?.name || userDetails?.info?.userInfo?.name || "Employee"} />
-                    ) : (
+                      <div style={{ display: "block" }}>
+                        <p>{userDetails?.info?.name}</p>
+                        <p><small>{userDetails?.info?.roles[0]?.name}</small></p>
+                      </div>
+                    </React.Fragment>) : (
                       <img src={profilePic} style={{ height: "48px", width: "48px", borderRadius: "50%" }} />
                     )
                   }
@@ -151,7 +157,7 @@ const TopBar = ({
           </div>
         )}
       </span>
-    </div> 
+    </div>
   );
 };
 

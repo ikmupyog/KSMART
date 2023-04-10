@@ -16,7 +16,17 @@ const MobileNumber = (props) => {
     <React.Fragment>
       <div className="field-container">
         {!props.hideSpan ? (
-          <span style={{ maxWidth: "50px", marginTop: "unset", ...props.labelStyle }} className="citizen-card-input citizen-card-input--front">
+         
+          <span style={{ maxWidth: "50px", marginTop: "unset", background: "#f7f7f7",
+          width: "40px",
+          height: "40px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: "-23px",
+          border: "1px solid #c9cccf",
+          borderRight: "none",
+          borderRadius: "5px",  ...props.labelStyle }} className="citizen-card-input citizen-card-input--front">
             +91
           </span>
         ) : null}

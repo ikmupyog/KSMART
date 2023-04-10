@@ -4,17 +4,19 @@ import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
 const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => {
-  // console.log(formData);
+  console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
   const { data: Spouse = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "SpouseType");
   let cmbspouse = [];
   Spouse &&
-    Spouse["birth-death-service"] &&
-    Spouse["birth-death-service"].SpouseType.map((ob) => {
+    Spouse["birth-death-service"] && Spouse["birth-death-service"].spouseType &&
+    Spouse["birth-death-service"].spouseType.map((ob) => {
       cmbspouse.push(ob);
     });
+    const [isEditDeathPageComponents, setIsEditDeathPageComponents] = useState(false);
+
   const [SpouseType, setSpouseType] = useState(
     formData?.FamilyInformationDeath?.SpouseType?.code
       ? formData?.FamilyInformationDeath?.SpouseType
@@ -22,6 +24,7 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
       ? cmbspouse.filter((cmbspouse) => cmbspouse.code === formData?.FamilyInformationDeath?.SpouseType)[0]
       : ""
   );
+
   const [SpouseUnavailable, setSpouseUnavailable] = useState(
     formData?.FamilyInformationDeath?.SpouseUnavailable
       ? formData?.FamilyInformationDeath?.SpouseUnavailable
@@ -43,8 +46,8 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
   //     ? cmbspouse.filter((cmbspouse) => cmbspouse.code === formData?.InformationDeath?.SpouseType)[0]
   //     : null
   // );
-  const [SpouseNameEN, setSpouseNameEN] = useState(
-   formData?.FamilyInformationDeath?.SpouseNameEN ? formData?.FamilyInformationDeath?.SpouseNameEN : ""
+  const [SpouseNameEn, setSpouseNameEN] = useState(
+   formData?.FamilyInformationDeath?.SpouseNameEn ? formData?.FamilyInformationDeath?.SpouseNameEn : ""
 
   );
   
@@ -52,8 +55,8 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
   //   formData?.FamilyInformationDeath?.SpouseNameEN ? formData?.FamilyInformationDeath?.SpouseNameEN : ""
   // );
 
-  const [SpouseNameMl, setSpouseNameMl] = useState(
-    formData?.FamilyInformationDeath?.SpouseNameMl ? formData?.FamilyInformationDeath?.SpouseNameMl : ""
+  const [SpouseNameML, setSpouseNameMl] = useState(
+    formData?.FamilyInformationDeath?.SpouseNameML ? formData?.FamilyInformationDeath?.SpouseNameML : ""
   );
   const [SpouseAadhaar, setSpouseAadhaar] = useState(
     formData?.FamilyInformationDeath?.SpouseAadhaar ? formData?.FamilyInformationDeath?.SpouseAadhaar : ""
@@ -248,14 +251,20 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
   function setSelectFamilyMobileNo(e) {
     if (e.target.value.trim().length >= 0) {
       setFamilyMobileNo(
-        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
+        e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 10)
       );
     }
   }
   function setSelectFamilyEmailId(e) {
     setFamilyEmailId(e.target.value);
   }
-
+  if (isEditDeath) {
+    if (formData?.FamilyInformationDeath?.SpouseType != null) {
+      if (cmbspouse.length > 0 && (SpouseType === undefined || SpouseType === "")) {
+        setSpouseType(cmbspouse.filter((cmbspouse) => cmbspouse.code === formData?.FamilyInformationDeath?.SpouseType));
+      }
+    }
+  }
   const goNext = () => {
     // sessionStorage.setItem("SpouseType", SpouseType ? SpouseType.code : null);
     // sessionStorage.setItem("SpouseNameEN", SpouseNameEN ? SpouseNameEN : null);
@@ -275,8 +284,8 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
 
     onSelect(config.key, {
       SpouseType,
-      SpouseNameEN,
-      SpouseNameMl,
+      SpouseNameEn,
+      SpouseNameML,
       SpouseAadhaar,
       FatherNameEn,
       FatherNameMl,
@@ -298,6 +307,14 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
   //       setSpouseType(cmbspouse.filter((cmbspouse) => cmbspouse.code === formData?.FamilyInformationDeath?.SpouseType)[0]);
   //     }
   //   }
+  // }
+ 
+  // if (
+  //   isEditDeath &&
+  //   isEditDeathPageComponents === false &&
+  //   (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
+  // ) {
+    
   // }
 
   // const handleBlur = (event) => {
@@ -369,8 +386,8 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
                     isMandatory={false}
                     type={"text"}
                     optionKey="i18nKey"
-                    name="SpouseNameEN"
-                    value={SpouseNameEN}
+                    name="SpouseNameEn"
+                    value={SpouseNameEn}
                     onChange={setSelectSpouseNameEN}
                     placeholder={`${t("CR_NAME")}`}
                     {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_NAME_EN") })}
@@ -385,8 +402,8 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
                     isMandatory={false}
                     type={"text"}
                     optionKey="i18nKey"
-                    name="SpouseNameMl"
-                    value={SpouseNameMl}
+                    name="SpouseNameML"
+                    value={SpouseNameML}
                     onChange={setSelectSpouseNameMl}
                     placeholder={`${t("CR_NAME_ML")}`}
                     {...(validation = {
@@ -592,14 +609,15 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={false}
                 type={"number"}
                 optionKey="i18nKey"
                 name="FamilyMobileNo"
                 value={FamilyMobileNo}
                 onChange={setSelectFamilyMobileNo}
                 placeholder={`${t("CR_FAMILY_MOBILE_NO")}`}
-                {...(validation = { pattern: "^[0-9 ]*$", isRequired: false, type: "text", title: t("CR_INVALID_PHONE_NO") })}
+                {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "number", title: t("CS_COMMON_INVALID_AGE") })}
+
+                // {...(validation = { pattern: "^[0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_PHONE_NO") })}
               />
             </div>
             <div className="col-md-4">
