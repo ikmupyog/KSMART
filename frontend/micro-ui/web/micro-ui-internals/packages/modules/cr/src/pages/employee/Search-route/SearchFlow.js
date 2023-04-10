@@ -1,8 +1,6 @@
 import React from "react";
-import { Switch, useLocation, Link } from "react-router-dom";
-import { PrivateRoute, BreadCrumb,DocumentIcon,CardLabel } from "@egovernments/digit-ui-react-components";
-import { ReactComponent as BankIcon } from "../Img/BankIcon.svg";
-import { ReactComponent as FileProtected } from "../Img/FileProtected.svg";
+import { Link } from "react-router-dom";
+import { CardLabel,SearchIconSvg } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 
 const SearchFlow = ({ path }) => {
@@ -11,14 +9,13 @@ const SearchFlow = ({ path }) => {
     {
       title: "Birth Search",
       subTitle: "Birth Applications Search",
-      img: <BankIcon />,
+      img: <SearchIconSvg />,
       link: `${path}/birthsearch/application`,
     },
-
     {
       title: "Death Search",
       subTitle: "Death Applications Search",
-      img: <FileProtected />,
+      img: <SearchIconSvg />,
       link: `${path}/deathsearch/application`,
     },
    

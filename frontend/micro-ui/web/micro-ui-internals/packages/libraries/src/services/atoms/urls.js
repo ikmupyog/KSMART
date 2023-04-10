@@ -151,9 +151,18 @@ const Urls = {
   crnacdeath: {
     create: "/death-services/v1/deathdetails/_createdeathnac",
     update: "/death-services/v1/deathdetails/_updatedeathnac",
+    search: "/death-services/v1/deathdetails/_searchdeathnac",
   },
   crdeath: {
-    create: "/death-services/v1/deathdetails/_createdeath ",
+    create: "/death-services/v1/deathdetails/_createdeath",
+    search: "/death-services/v1/deathdetails/_searchdeath",
+    download_pdf: "/egov-pdf/download/CR/",
+    update: "/death-services/v1/deathdetails/_updatedeath",
+    registry_search: "/death-services/v1/deathregistry/_searchdeath",
+    registry_download: "/death-services/v1/deathregistry/_downloaddeath",
+  },
+  crabandoneddeath: {
+    create: "/death-services/v1/deathdetails/_createdeathabandoned",
     search: "/death-services/v1/deathdetails/_searchdeath",
     download_pdf: "/egov-pdf/download/CR/",
     update: "/death-services/v1/deathdetails/_updatedeath",

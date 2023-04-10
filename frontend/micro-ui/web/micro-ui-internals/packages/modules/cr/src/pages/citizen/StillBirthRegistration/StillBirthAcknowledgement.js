@@ -45,14 +45,16 @@ const StillBirthAcknowledgement = ({ data, onSuccess, userType }) => {
     tenantId, isEditStillBirth ? false : true
   );
 
- 
+  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_CREATE_STILLBIRTH_REG", {});
 
   const { data: storeData } = Digit.Hooks.useStore.getInitData();
   const { tenants } = storeData || {};
   const stateId = Digit.ULBService.getStateId();
  
   const [isInitialRender, setIsInitialRender] = useState(true);
-
+  useEffect(() => {
+    clearParams();
+  }, [mutation?.data])
   useEffect(() => {
     if (isInitialRender) {
      

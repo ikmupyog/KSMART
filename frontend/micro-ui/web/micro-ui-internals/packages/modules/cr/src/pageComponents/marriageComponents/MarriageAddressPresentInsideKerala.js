@@ -44,6 +44,8 @@ const MarriageAddressPresentInsideKerala = ({
   setLbsVillagevalue,
   PostOfficevalues,
   setPostOfficevalues,
+  Districtvalues,
+  setDistrictvalue,
   isPrsentAddress,
   setIsPrsentAddress,
   permntInKeralaAdrDistrict,
@@ -74,11 +76,15 @@ const MarriageAddressPresentInsideKerala = ({
   setpermntInKeralaWardNo,
   isEditBirth = false,
   isEditDeath = false,
+  isEditStillBirth = false,
+  isEditAdoption,
+  value,
+  setValue,
   // isInitialRender, setIsInitialRender
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const [pofilter, setPofilter] = useState(false);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : isEditStillBirth ? isEditStillBirth : false);
   const { t } = useTranslation();
   let validation = {};
   let tenantId = "";
@@ -168,16 +174,26 @@ const MarriageAddressPresentInsideKerala = ({
     wardmst.namecmb = wardmst.wardno + " ( " + wardmst.name + " )";
     cmbWardNoFinal.push(wardmst);
   });
+
   useEffect(() => {
     if (isInitialRender) {
       if (cmbLB.length > 0) {
         currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
+        // console.log(currentLB[0].city.districtid);
         setinsideKeralaLBName(currentLB[0]);
-        setLbs(cmbLB.filter((cmbLB) => cmbLB.code === tenantId));
+        // console.log(cmbLB.filter((cmbLB) => cmbLB.city.districtid === currentLB[0].city.districtid));
+        setLbs(cmbLB.filter((cmbLB) => cmbLB.city.districtid === currentLB[0].city.districtid));
         setpermntInKeralaAdrLBName(currentLB[0]);
-        cmbFilterDistrict = cmbDistrict.filter((cmbDistrict) => cmbDistrict.code === currentLB[0].city.distCodeStr);
-        setinsideKeralaDistrict(cmbFilterDistrict[0]);
-        setpermntInKeralaAdrDistrict(cmbFilterDistrict[0]);
+        // console.log(currentLB[0]);
+        cmbFilterDistrict = cmbDistrict.filter((cmbDistrict) => cmbDistrict.statecode === currentLB[0].city.statecode);
+        //console.log(cmbFilterDistrict);
+        setDistrictvalue(cmbFilterDistrict);
+        //console.log(cmbFilterDistrict.filter((cmbFilterDistrict) => cmbFilterDistrict.code === currentLB[0].city.distCodeStr)[0]);
+        // setinsideKeralaDistrict(null);
+        setinsideKeralaDistrict(cmbFilterDistrict.filter((cmbFilterDistrict) => cmbFilterDistrict.code === currentLB[0].city.distCodeStr)[0]);
+
+        // setinsideKeralaDistrict(cmbFilterDistrict.filter((cmbFilterDistrict) => cmbFilterDistrict.code === currentLB[0].city.distCodeStr)[0]);
+        setpermntInKeralaAdrDistrict(cmbFilterDistrict.filter((cmbFilterDistrict) => cmbFilterDistrict.code === currentLB[0].city.distCodeStr)[0]);
         cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === currentLB[0].city.districtid);
         setLbsTalukvalue(cmbFilterTaluk);
         cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
@@ -188,7 +204,7 @@ const MarriageAddressPresentInsideKerala = ({
         setIsInitialRender(false);
       }
     }
-  }, [District, LBType, localbodies, Talukvalues, Villagevalues, PostOfficevalues, lbs, isInitialRender]);
+  }, [District, LBType, localbodies, Districtvalues, Talukvalues, Villagevalues, PostOfficevalues, lbs, isInitialRender]);
 
   if (isEditBirth) {
     if (formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaDistrict != null) {
@@ -272,6 +288,100 @@ const MarriageAddressPresentInsideKerala = ({
         );
         let pin = cmbFilterPostOffice.filter(
           (cmbFilterPostOffice) => cmbFilterPostOffice.code === formData?.AddressBirthDetails?.presentInsideKeralaPostOffice
+        )[0];
+        setinsideKeralaPincode(pin.pincode);
+      }
+    }
+  } else if (isEditStillBirth) {
+    if (formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaDistrict != null) {
+      if (cmbDistrict.length > 0 && (presentInsideKeralaDistrict === undefined || presentInsideKeralaDistrict === "")) {
+        setinsideKeralaDistrict(
+          cmbDistrict.filter(
+            (cmbDistrict) => cmbDistrict.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaDistrict
+          )[0]
+        );
+      }
+    }
+    if (formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaLBName != null) {
+      if (cmbLB.length > 0 && (presentInsideKeralaLBName === undefined || presentInsideKeralaLBName === "")) {
+        setinsideKeralaLBName(
+          cmbLB.filter((cmbLB) => cmbLB.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaLBName)[0]
+        );
+      }
+    }
+    if (formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaTaluk != null) {
+      //console.log("presentInsideKeralaTaluk" + formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaTaluk);
+      if (cmbTaluk.length > 0 && (presentInsideKeralaTaluk === undefined || presentInsideKeralaTaluk === "")) {
+        setinsideKeralaTaluk(
+          cmbTaluk.filter((cmbTaluk) => cmbTaluk.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaTaluk)[0]
+        );
+      }
+    }
+    if (formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaVillage != null) {
+      if (cmbVillage.length > 0 && (presentInsideKeralaVillage === undefined || presentInsideKeralaVillage === "")) {
+        setinsideKeralaVillage(
+          cmbVillage.filter((cmbVillage) => cmbVillage.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaVillage)[0]
+        );
+      }
+    }
+    if (formData?.StillBirthChildDetails?.AddressBirthDetails?.presentWardNo != null) {
+      if (cmbWardNo.length > 0 && (presentWardNo === undefined || presentWardNo === "")) {
+        setPresentWardNo(cmbWardNo.filter((cmbWardNo) => cmbWardNo.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.presentWardNo)[0]);
+      }
+    }
+    if (formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaPostOffice != null) {
+      if (cmbFilterPostOffice.length > 0 && (presentInsideKeralaPostOffice === undefined || presentInsideKeralaPostOffice === "")) {
+        setinsideKeralaPostOffice(
+          cmbFilterPostOffice.filter(
+            (cmbFilterPostOffice) => cmbFilterPostOffice.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaPostOffice
+          )[0]
+        );
+        let pin = cmbFilterPostOffice.filter(
+          (cmbFilterPostOffice) => cmbFilterPostOffice.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaPostOffice
+        )[0];
+        setinsideKeralaPincode(pin.pincode);
+      }
+    }
+  } else if (isEditAdoption !== false) {
+    if (formData?.AdoptionAddressBasePage?.presentInsideKeralaDistrict != null) {
+      if (cmbDistrict.length > 0 && (presentInsideKeralaDistrict === undefined || presentInsideKeralaDistrict === "")) {
+        setinsideKeralaDistrict(
+          cmbDistrict.filter((cmbDistrict) => cmbDistrict.code === formData?.AdoptionAddressBasePage?.presentInsideKeralaDistrict)[0]
+        );
+      }
+    }
+    if (formData?.AdoptionAddressBasePage?.presentInsideKeralaLBName != null) {
+      if (cmbLB.length > 0 && (presentInsideKeralaLBName === undefined || presentInsideKeralaLBName === "")) {
+        setinsideKeralaLBName(cmbLB.filter((cmbLB) => cmbLB.code === formData?.AdoptionAddressBasePage?.presentInsideKeralaLBName)[0]);
+      }
+    }
+    if (formData?.AdoptionAddressBasePage?.presentInsideKeralaTaluk != null) {
+      if (cmbTaluk.length > 0 && (presentInsideKeralaTaluk === undefined || presentInsideKeralaTaluk === "")) {
+        setinsideKeralaTaluk(cmbTaluk.filter((cmbTaluk) => cmbTaluk.code === formData?.AdoptionAddressBasePage?.presentInsideKeralaTaluk)[0]);
+      }
+    }
+    if (formData?.AdoptionAddressBasePage?.presentInsideKeralaVillage != null) {
+      if (cmbVillage.length > 0 && (presentInsideKeralaVillage === undefined || presentInsideKeralaVillage === "")) {
+        setinsideKeralaVillage(
+          cmbVillage.filter((cmbVillage) => cmbVillage.code === formData?.AdoptionAddressBasePage?.presentInsideKeralaVillage)[0]
+        );
+      }
+    }
+    if (formData?.AdoptionAddressBasePage?.presentWardNo != null) {
+      if (cmbWardNo.length > 0 && (presentWardNo === undefined || presentWardNo === "")) {
+        //console.log('dash2', formData?.AdoptionAddressBasePage?.presentWardNo.toString(), cmbWardNo, cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.AdoptionAddressBasePage?.presentWardNo)[0]);
+        setPresentWardNo(cmbWardNo.filter((cmbWardNo) => cmbWardNo.code == formData?.AdoptionAddressBasePage?.presentWardNo)[0]);
+      }
+    }
+    if (formData?.AdoptionAddressBasePage?.presentInsideKeralaPostOffice != null) {
+      if (cmbFilterPostOffice.length > 0 && (presentInsideKeralaPostOffice === undefined || presentInsideKeralaPostOffice === "")) {
+        setinsideKeralaPostOffice(
+          cmbFilterPostOffice.filter(
+            (cmbFilterPostOffice) => cmbFilterPostOffice.code === formData?.AdoptionAddressBasePage?.presentInsideKeralaPostOffice
+          )[0]
+        );
+        let pin = cmbFilterPostOffice.filter(
+          (cmbFilterPostOffice) => cmbFilterPostOffice.code === formData?.AdoptionAddressBasePage?.presentInsideKeralaPostOffice
         )[0];
         setinsideKeralaPincode(pin.pincode);
       }
@@ -506,7 +616,7 @@ const MarriageAddressPresentInsideKerala = ({
               <Dropdown
                 t={t}
                 optionKey="name"
-                option={cmbDistrict}
+                option={Districtvalues}
                 selected={presentInsideKeralaDistrict}
                 select={setSelectinsideKeralaDistrict}
                 disable={isDisableEdit}

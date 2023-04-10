@@ -8,12 +8,14 @@ import Header from "../../../components/Header";
 const ForgotPassword = ({ config: propsConfig, t }) => {
   const { data: cities, isLoading } = Digit.Hooks.useTenants();
   const [user, setUser] = useState(null);
+  const { data: storeData, isLoading: isStoreLoading } = Digit.Hooks.useStore.getInitData();
+  const { stateInfo } = storeData || {};
   const history = useHistory();
   const [showToast, setShowToast] = useState(null);
   const getUserType = () => Digit.UserService.getType();
   let sourceUrl = "https://s3.ap-south-1.amazonaws.com/egov-qa-assets";
   const pdfUrl = "https://pg-egov-assets.s3.ap-south-1.amazonaws.com/Upyog+Code+and+Copyright+License_v1.pdf";
-  
+
   useEffect(() => {
     if (!user) {
       Digit.UserService.setType("employee");
@@ -91,7 +93,23 @@ const ForgotPassword = ({ config: propsConfig, t }) => {
       ],
     },
   ];
-
+  const mystyle = {
+    background: "#bc5bfc",
+    backgroundImage: "-webkit-linear-gradient(top, #bc5bfc, #2980b9)",
+    backgroundImage: "-moz-linear-gradient(top, #bc5bfc, #2980b9)",
+    backgroundImage: "-ms-linear-gradient(top, #bc5bfc, #2980b9)",
+    backgroundImage: "-o-linear-gradient(top, #bc5bfc, #2980b9)",
+    backgroundImage: "linear-gradient(to bottom, #bc5bfc, #2980b9)",
+    webkitBorderRadius: "5",
+    mozBorderRadius: "5",
+    borderRadius: "5px",
+    color: "#ffffff",
+    fontSize: "17px !important",
+    fontWeight: "400 !important",
+    textDecoration: "none",
+    lineHeight: "0 !important",
+    fontFamily: "system-ui !important",
+  };
   if (isLoading) {
     return <Loader />;
   }
@@ -101,23 +119,71 @@ const ForgotPassword = ({ config: propsConfig, t }) => {
       <div className="employeeBackbuttonAlign">
         <BackButton variant="white" style={{ borderBottom: "none" }} />
       </div>
-      <FormComposer
-        onSubmit={onForgotPassword}
-        noBoxShadow
-        inline
-        submitInForm
-        config={config}
-        label={propsConfig.texts.submitButtonLabel}
-        secondaryActionLabel={propsConfig.texts.secondaryButtonLabel}
-        onSecondayActionClick={navigateToLogin}
-        heading={propsConfig.texts.header}
-        description={propsConfig.texts.description}
-        headingStyle={{ textAlign: "center" }}
-        cardStyle={{ maxWidth: "408px", margin: "auto" }}
-        className="employeeForgotPassword"
-      >
-        <Header />
-      </FormComposer>
+      <div className="leftdiv">
+        <div className="leftflex">
+          <h1 className="logostyle">
+            <img src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/logo-white.png" alt="No Image" style={{ maxWidth: "450px" }} />
+
+            <a href="" src={stateInfo?.logoUrl}>
+              {/* <img className="bannerLogo" src={stateInfo?.logoUrl} alt="Digit" /> */}
+              {/* KSMART */}
+            </a>
+          </h1>
+          <div style={{ textAlign: "center", margin: "0 auto" }}>
+            <div>
+              <img
+                src="https://s3.ap-south-1.amazonaws.com/ikm-egov-assets/login-img.png"
+                alt="No Image"
+                style={{ maxWidth: "450px", marginLeft: "80px", marginRight: "80px" }}
+              />
+              <label style={{ fontSize: "32px" }}>Exploring K-Smart</label>
+              <br></br>
+              <label style={{ fontSize: "17px" }}>Kerala - Solutions for Managing Administrative Reformation and Transformation.</label>
+            </div>
+          </div>
+          <div style={{ justifyContent: "space-between !important" }}>
+            <span style={{ justifyContent: "space-between !important" }}>2023&copy;K-Smart</span>&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span style={{ justifyContent: "space-between !important" }}>Powered By UPYOG</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span style={{ justifyContent: "space-between !important", marginLeft: "20px" }}>
+              <a className="text-white text-link" href="#">
+                Legal
+              </a>
+              &nbsp;&nbsp;
+              <a className="text-white text-link" href="#">
+                Privacy
+              </a>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div className="rightdiv">
+        <div className="rightflex">
+          <FormComposer
+            onSubmit={onForgotPassword}
+            noBoxShadow
+            inline
+            submitInForm
+            config={config}
+            label={propsConfig.texts.submitButtonLabel}
+            secondaryActionLabel={propsConfig.texts.secondaryButtonLabel}
+            onSecondayActionClick={navigateToLogin}
+            heading={"Forgot Password"}
+            // heading={propsConfig.texts.header}
+            // description={propsConfig.texts.description}
+            headingStyle={{ textAlign: "left" }}
+            cardStyle={{ maxWidth: "408px", margin: "auto" }}
+            // className="employeeForgotPassword"
+            className="loginFormStyleEmployee"
+            buttonStyle={mystyle}
+          >
+            <Header />
+          </FormComposer>
+        </div>
+      </div>
       {showToast && <Toast error={true} label={t(showToast)} onClose={closeToast} />}
       {/* <div style={{ width: '100%', position: "absolute", bottom: 0 }}>
         <div style={{ display: 'flex', justifyContent: 'center', color:"white" }}>

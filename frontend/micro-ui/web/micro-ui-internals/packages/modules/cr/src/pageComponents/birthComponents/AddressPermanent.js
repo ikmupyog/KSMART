@@ -6,6 +6,7 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
     permtaddressStateName, setpermtaddressStateName, value, setValue, countryvalue, setCountryValue,
     isPrsentAddress, setIsPrsentAddress, countryValuePermanent, setCountryValuePermanent,
     valuePermanent, setValuePermanent, isEditBirth = false, isEditDeath = false,isEditStillBirth = false,isEditAdoption,
+    isEditBirthNAC=false
     // isInitialRender, setIsInitialRender
 }) => {
     const stateId = Digit.ULBService.getStateId();
@@ -27,17 +28,17 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
     let cmbState = [];
 
     Country &&
-        Country["common-masters"] &&
+        Country["common-masters"] && Country["common-masters"].Country &&
         Country["common-masters"].Country.map((ob) => {
             cmbCountry.push(ob);
         });
     State &&
-        State["common-masters"] &&
+        State["common-masters"] && State["common-masters"].State &&
         State["common-masters"].State.map((ob) => {
             cmbState.push(ob);
         });
     localbodies &&
-        localbodies["tenant"] &&
+        localbodies["tenant"] && localbodies["tenant"].tenants &&
         localbodies["tenant"].tenants.map((ob) => {
             cmbLB.push(ob);
         });

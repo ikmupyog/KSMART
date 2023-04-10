@@ -65,9 +65,11 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
     WorkFlowDetails["birth-death-service"].WorkFlowBirth.map((ob) => {
       workFlowData.push(ob);
     });
-
-  const [childDOB, setChildDOB] = useState(formData?.BornOutsideChildDetails?.childDOB ? formData?.BornOutsideChildDetails?.childDOB : "");
-  const [gender, selectGender] = useState(formData?.BornOutsideChildDetails?.gender);
+    const [isEditBornOutsidePageComponents, setIsEditBornOutsidePageComponents] = useState(false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditBornOutsideIndia ? isEditBornOutsideIndia : false);
+  const [childDOB, setChildDOB] = useState(isEditBornOutsideIndia && isEditBornOutsidePageComponents === false && (formData?.BornOutsideChildDetails?.IsEditChangeScreen === false || formData?.BornOutsideChildDetails?.IsEditChangeScreen === undefined) ? convertEpochToDate(formData?.BornOutsideChildDetails?.childDOB) : formData?.BornOutsideChildDetails?.childDOB);
+  const [gender, selectGender] = useState(formData?.BornOutsideChildDetails?.gender?.code ? formData?.BornOutsideChildDetails?.gender : formData?.BornOutsideChildDetails?.gender ?
+    (menu.filter(menu => menu.code === formData?.BornOutsideChildDetails?.gender)[0]) : "");
 
   const [childAadharNo, setChildAadharNo] = useState(
     formData?.BornOutsideChildDetails?.childAadharNo ? formData?.BornOutsideChildDetails?.childAadharNo : null
@@ -104,7 +106,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
     formData?.BornOutsideChildDetails?.childArrivalDate ? formData?.BornOutsideChildDetails?.childArrivalDate : ""
   );
   const [outsideBirthPlace, setoutsideBirthPlace] = useState(
-    formData?.BornOutsideChildDetails?.outsideBirthPlace ? formData?.BornOutsideChildDetails?.outsideBirthPlace : null
+    formData?.BornOutsideChildDetails?.outsideBirthPlace ? formData?.BornOutsideChildDetails?.outsideBirthPlace : ""
   );
   const [country, setcountry] = useState(formData?.BornOutsideChildDetails?.country ? formData?.BornOutsideChildDetails?.country : null);
   const [provinceEn, setprovinceEn] = useState(formData?.BornOutsideChildDetails?.provinceEn ? formData?.BornOutsideChildDetails?.provinceEn : "");
@@ -225,16 +227,13 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
       setDOBError(false);
       // To calculate the time difference of two dates
       let Difference_In_Time = today.getTime() - childArrivalDate.getTime();
-      // console.log("Difference_In_Time" + Difference_In_Time);
+
       setDifferenceInTime(today.getTime() - childArrivalDate.getTime());
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-      // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
       setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
       if (birthPlace) {
         let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
-        console.log("currentWorgFlowDOB" + currentWorgFlow);
         if (currentWorgFlow.length > 0) {
-          // console.log(currentWorgFlow[0].WorkflowCode);
           setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
         }
       }

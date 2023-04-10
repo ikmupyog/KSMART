@@ -89,6 +89,12 @@ const CRCard = () => {
         
         },
         {
+            label: t("CR_BIRTH_REGISTRATION"),
+            link: `/digit-ui/employee/cr/cr-flow`,
+            role: "OFFICIAL_NOTIFIER"
+        
+        },
+        {
             label: t("CR_DEATH_REGISTRATION"),
             link: `/digit-ui/employee/cr/death-flow`,
             role: "BND_CEMP"
@@ -132,6 +138,11 @@ const CRCard = () => {
             label: t("CR_DEATH_REGISTRATION"),
             link: `/digit-ui/employee/cr/death-flow`,
             role: "INSTITUTION_APPROVER"
+        },
+        {
+            label: t("CR_DEATH_REGISTRATION"),
+            link: `/digit-ui/employee/cr/death-flow`,
+            role: "OFFICIAL_NOTIFIER"
         },
         {
             label: t("CR_SEARCH_APPLICATIONS"),

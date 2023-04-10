@@ -19,6 +19,7 @@ const SelectSubType = ({ t, config, onSelect, value }) => {
 
   function selectedValue(value) {
     setSubType(value);
+    onSelect({ subType: value });
   }
 
   const configNew = {

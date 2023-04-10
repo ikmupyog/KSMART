@@ -292,9 +292,9 @@ export const convertToBornOutsideBirthRegistration = (data = {}) => {
         outsideBirthPlace: data?.BornOutsideChildDetails?.outsideBirthPlace,
         country: data?.BornOutsideChildDetails?.country ? data?.BornOutsideChildDetails?.country.code : null,
         action: "INITIATE",
-        applicationtype: "CRBRNR",
-        businessservice: "birth-services",
-        workflowcode: data?.BornOutsideChildDetails?.workFlowCode,
+        applicationtype: "CRBRBO",
+        businessservice: "CR",
+        workflowcode: "BORNOUTSIDE60",
         BornOutsideParentsDetails: {
           motherFirstNameEn: data?.BornOutsideParentsDetails?.motherFirstNameEn,
           motherFirstNameMl: data?.BornOutsideParentsDetails?.motherFirstNameMl,

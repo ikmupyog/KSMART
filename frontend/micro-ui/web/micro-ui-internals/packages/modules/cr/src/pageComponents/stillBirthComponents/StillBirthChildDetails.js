@@ -859,6 +859,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
       // sessionStorage.setItem("deliveryMethods", deliveryMethods ? deliveryMethods.code : null);
       //   sessionStorage.setItem("causeFoetalDeath", causeFoetalDeath ? causeFoetalDeath.code : null);
       let IsEditChangeScreen = isEditStillBirth ? isEditStillBirth : false;
+      let isWorkflow = isEditStillBirth ? false : true;
       onSelect(config.key, {
         stateId,
         tenantId,
@@ -910,6 +911,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
         IsEditChangeScreen,
         uuid,
         DifferenceInTime,
+        isWorkflow,
       });
     }
   };

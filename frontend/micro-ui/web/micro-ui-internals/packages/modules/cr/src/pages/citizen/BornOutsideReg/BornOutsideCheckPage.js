@@ -42,6 +42,7 @@ const getPath = (path, params) => {
 };
 
 const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
+  console.log({ value });
   let isEdit = window.location.href.includes("renew-trade");
   const { t } = useTranslation();
   const history = useHistory();
@@ -98,8 +99,8 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
   };
 
   return (
-   <React.Fragment>
-        <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+    <React.Fragment>
+      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       {window.location.href.includes("/citizen") ? <Timeline currentStep={5} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
       <Card>
@@ -123,205 +124,234 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
           }}
         >
           {/* class="site-wrap" */}
-        {BornOutsideChildDetails &&
-          (<div>
-          <div className="row">
-            <div className="col-md-6">
-              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}> {`${t("PDF_BIRTH_CHILD_NAME")}`} </CardLabel>
-            </div>
-            <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                :
-                {/* {t(BornOutsideChildDetails.childFirstNameEn ? BornOutsideChildDetails.childFirstNameEn : ' CR_NOT_RECORDED')} {t(BornOutsideChildDetails.childMiddleNameEn  )} {t(BornOutsideChildDetails.childLastNameEn  )} */}
-                {t(BornOutsideChildDetails.childFirstNameEn ? BornOutsideChildDetails.childFirstNameEn : " CR_NOT_RECORDED") +
-                  " " +
-                  BornOutsideChildDetails.childMiddleNameEn +
-                  " " +
-                  BornOutsideChildDetails.childLastNameEn +
-                  " / " +
-                  t(BornOutsideChildDetails.childFirstNameMl) +
-                  " " +
-                  BornOutsideChildDetails.childMiddleNameMl +
-                  " " +
-                  BornOutsideChildDetails.childLastNameMl}
-              </CardText>
-              {/* {t(BornOutsideChildDetails.institutionId.institutionName) + " / " + t(BornOutsideChildDetails.institutionId.institutionNamelocal)}  */}
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-6">
-              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_CHILD_SEX")}`}</CardLabel>
-            </div>
-            <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                : {t(BornOutsideChildDetails.gender.code) + " / " + t(BornOutsideChildDetails.gender.code + "_ML")}
-              </CardText>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-6">
-              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_DATE_OF_BIRTH")}`}</CardLabel>
-            </div>
-            <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>:{t(convertEpochToDate(BornOutsideChildDetails.childDOB) ? convertEpochToDate(BornOutsideChildDetails.childDOB) : " CR_NOT_RECORDED")}{" "} </CardText>
-            </div>
-          </div>
-          </div>
-          )}
-<div className="row">
-                  <div className="col-md-6">
-                    <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PLACE_OF_BIRTH")}`}</CardLabel>
-                  </div>
-                  <div className="col-md-6">
-                    <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                      : {t(BornOutsideChildDetails?.outsideBirthPlace)}
-                    </CardText>
-                  </div>
+          {BornOutsideChildDetails && (
+            <div>
+              <div className="row">
+                <div className="col-md-6">
+                  <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}> {`${t("PDF_BIRTH_CHILD_NAME")}`} </CardLabel>
                 </div>
-
-          {BornOutsideParentsDetails &&
-          (<div>
-          <div className="row">
-            <div className="col-md-6">
-              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_NAME_OF_MOTHER")}`}</CardLabel>
+                <div className="col-md-6">
+                  <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                    :
+                    {/* {t(BornOutsideChildDetails.childFirstNameEn ? BornOutsideChildDetails.childFirstNameEn : ' CR_NOT_RECORDED')} {t(BornOutsideChildDetails.childMiddleNameEn  )} {t(BornOutsideChildDetails.childLastNameEn  )} */}
+                    {t(BornOutsideChildDetails.childFirstNameEn ? BornOutsideChildDetails.childFirstNameEn : " CR_NOT_RECORDED") +
+                      " " +
+                      BornOutsideChildDetails.childMiddleNameEn +
+                      " " +
+                      BornOutsideChildDetails.childLastNameEn +
+                      " / " +
+                      t(BornOutsideChildDetails.childFirstNameMl) +
+                      " " +
+                      BornOutsideChildDetails.childMiddleNameMl +
+                      " " +
+                      BornOutsideChildDetails.childLastNameMl}
+                  </CardText>
+                  {/* {t(BornOutsideChildDetails.institutionId.institutionName) + " / " + t(BornOutsideChildDetails.institutionId.institutionNamelocal)}  */}
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-6">
+                  <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_CHILD_SEX")}`}</CardLabel>
+                </div>
+                <div className="col-md-6">
+                  <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                    : {t(BornOutsideChildDetails.gender.code) + " / " + t(BornOutsideChildDetails.gender.code + "_ML")}
+                  </CardText>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-6">
+                  <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_DATE_OF_BIRTH")}`}</CardLabel>
+                </div>
+                <div className="col-md-6">
+                  <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                    :
+                    {t(
+                      convertEpochToDate(BornOutsideChildDetails.childDOB) ? convertEpochToDate(BornOutsideChildDetails.childDOB) : " CR_NOT_RECORDED"
+                    )}{" "}
+                  </CardText>
+                </div>
+              </div>
             </div>
-            <div className="col-md-6">
-              {/* <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_HOSPITAL")}`}</CardLabel> */}
-              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                :
-                {t(BornOutsideParentsDetails.motherFirstNameEn ? BornOutsideParentsDetails.motherFirstNameEn : "CR_NOT_RECORDED") +
-                  " / " +
-                  t(BornOutsideParentsDetails.motherFirstNameMl)}
-              </CardText>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-6">
-              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_NAME_OF_FATHER")}`}</CardLabel>
-            </div>
-            <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                :
-                {t(BornOutsideParentsDetails.fatherFirstNameEn ? BornOutsideParentsDetails.fatherFirstNameEn : "CR_NOT_RECORDED") +
-                  " / " +
-                  t(BornOutsideParentsDetails.fatherFirstNameMl)}
-              </CardText>
-            </div>
-          </div>
-          </div>
           )}
-         {BornOutsideAddressBirthDetails &&
-          (<div>
           <div className="row">
             <div className="col-md-6">
-              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PERMANENT_ADDRESS")}`}</CardLabel>
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PLACE_OF_BIRTH")}`}</CardLabel>
             </div>
             <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                :
-                {t(BornOutsideAddressBirthDetails.permntInKeralaAdrHouseNameEn ? BornOutsideAddressBirthDetails.permntInKeralaAdrHouseNameEn : "CR_NOT_RECORDED") +
-                  " , " +
-                 ( BornOutsideAddressBirthDetails.permntInKeralaAdrStreetNameEn ? BornOutsideAddressBirthDetails.permntInKeralaAdrStreetNameEn : " CR_NOT_RECORDED") +
-                  " , " +
-                  (BornOutsideAddressBirthDetails.permntInKeralaAdrLocalityNameEn ? BornOutsideAddressBirthDetails.permntInKeralaAdrLocalityNameEn :"CR_NOT_RECORDED") +
-                   " , "+
-                  BornOutsideAddressBirthDetails.permntInKeralaAdrPostOffice.name+
-                  " , " +
-                  BornOutsideAddressBirthDetails.permntInKeralaAdrPincode +
-                  " , " +
-                  BornOutsideAddressBirthDetails.permntInKeralaAdrDistrict.name +
-                  " , " +
-                  BornOutsideAddressBirthDetails.permtaddressStateName.name +
-                  " , " +
-                  BornOutsideAddressBirthDetails.permtaddressCountry.name }
-                    </CardText>
-                    </div>
-                    </div>
-                    <div className="row">
-                    <div className="col-md-6">
-                      <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PERMANENT_ADDRESS_ML")}`}</CardLabel>
-                    </div>
-                    <div className="col-md-6">
-                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                :
-                {t(BornOutsideAddressBirthDetails.permntInKeralaAdrHouseNameMl ? BornOutsideAddressBirthDetails.permntInKeralaAdrHouseNameMl : "CR_NOT_RECORDED") +
-                  " , " +
-                 ( BornOutsideAddressBirthDetails.permntInKeralaAdrStreetNameMl ? BornOutsideAddressBirthDetails.permntInKeralaAdrStreetNameMl : "CR_NOT_RECORDED") +
-                  " , " +
-                  BornOutsideAddressBirthDetails.permntInKeralaAdrLocalityNameMl +
-                  " , " +
-                  BornOutsideAddressBirthDetails.permntInKeralaAdrPostOffice.namelocal+
-                  " , " +
-                  BornOutsideAddressBirthDetails.permntInKeralaAdrPincode +
-                  " , " +
-                  BornOutsideAddressBirthDetails.permntInKeralaAdrDistrict.namelocal+
-                  " , " +
-                  BornOutsideAddressBirthDetails.permtaddressStateName.namelocal+
-                  " , " +
-                  BornOutsideAddressBirthDetails.permtaddressCountry.namelocal}
-                ,
-              </CardText>
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>: {t(BornOutsideChildDetails?.outsideBirthPlace)}</CardText>
+            </div>
+          </div>
+
+          {BornOutsideParentsDetails && (
+            <div>
+              <div className="row">
+                <div className="col-md-6">
+                  <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_NAME_OF_MOTHER")}`}</CardLabel>
+                </div>
+                <div className="col-md-6">
+                  {/* <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_HOSPITAL")}`}</CardLabel> */}
+                  <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                    :
+                    {t(BornOutsideParentsDetails.motherFirstNameEn ? BornOutsideParentsDetails.motherFirstNameEn : "CR_NOT_RECORDED") +
+                      " / " +
+                      t(BornOutsideParentsDetails.motherFirstNameMl)}
+                  </CardText>
+                </div>
               </div>
+              <div className="row">
+                <div className="col-md-6">
+                  <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_NAME_OF_FATHER")}`}</CardLabel>
+                </div>
+                <div className="col-md-6">
+                  <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                    :
+                    {t(BornOutsideParentsDetails.fatherFirstNameEn ? BornOutsideParentsDetails.fatherFirstNameEn : "CR_NOT_RECORDED") +
+                      " / " +
+                      t(BornOutsideParentsDetails.fatherFirstNameMl)}
+                  </CardText>
+                </div>
               </div>
+            </div>
+          )}
+          {BornOutsideAddressBirthDetails && (
+            <div>
+              <div className="row">
+                <div className="col-md-6">
+                  <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PERMANENT_ADDRESS")}`}</CardLabel>
+                </div>
+                <div className="col-md-6">
+                  <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                    :
+                    {t(
+                      BornOutsideAddressBirthDetails.permntInKeralaAdrHouseNameEn
+                        ? BornOutsideAddressBirthDetails.permntInKeralaAdrHouseNameEn
+                        : "CR_NOT_RECORDED"
+                    ) +
+                      " , " +
+                      (BornOutsideAddressBirthDetails.permntInKeralaAdrStreetNameEn
+                        ? BornOutsideAddressBirthDetails.permntInKeralaAdrStreetNameEn
+                        : " CR_NOT_RECORDED") +
+                      " , " +
+                      (BornOutsideAddressBirthDetails.permntInKeralaAdrLocalityNameEn
+                        ? BornOutsideAddressBirthDetails.permntInKeralaAdrLocalityNameEn
+                        : "CR_NOT_RECORDED") +
+                      " , " +
+                      BornOutsideAddressBirthDetails.permntInKeralaAdrPostOffice.name +
+                      " , " +
+                      BornOutsideAddressBirthDetails.permntInKeralaAdrPincode +
+                      " , " +
+                      BornOutsideAddressBirthDetails.permntInKeralaAdrDistrict.name +
+                      " , " +
+                      BornOutsideAddressBirthDetails.permtaddressStateName.name +
+                      " , " +
+                      BornOutsideAddressBirthDetails.permtaddressCountry.name}
+                  </CardText>
+                </div>
               </div>
+              <div className="row">
+                <div className="col-md-6">
+                  <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PERMANENT_ADDRESS_ML")}`}</CardLabel>
+                </div>
+                <div className="col-md-6">
+                  <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                    :
+                    {t(
+                      BornOutsideAddressBirthDetails.permntInKeralaAdrHouseNameMl
+                        ? BornOutsideAddressBirthDetails.permntInKeralaAdrHouseNameMl
+                        : "CR_NOT_RECORDED"
+                    ) +
+                      " , " +
+                      (BornOutsideAddressBirthDetails.permntInKeralaAdrStreetNameMl
+                        ? BornOutsideAddressBirthDetails.permntInKeralaAdrStreetNameMl
+                        : "CR_NOT_RECORDED") +
+                      " , " +
+                      BornOutsideAddressBirthDetails.permntInKeralaAdrLocalityNameMl +
+                      " , " +
+                      BornOutsideAddressBirthDetails.permntInKeralaAdrPostOffice.namelocal +
+                      " , " +
+                      BornOutsideAddressBirthDetails.permntInKeralaAdrPincode +
+                      " , " +
+                      BornOutsideAddressBirthDetails.permntInKeralaAdrDistrict.namelocal +
+                      " , " +
+                      BornOutsideAddressBirthDetails.permtaddressStateName.namelocal +
+                      " , " +
+                      BornOutsideAddressBirthDetails.permtaddressCountry.namelocal}
+                    ,
+                  </CardText>
+                </div>
+              </div>
+            </div>
           )}
 
-{BornOutsideAddressBirthDetails &&
-          (<div>
-          <div className="row">
-            <div className="col-md-6">
-              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PRESENT_ADDRESS")}`}</CardLabel>
+          {BornOutsideAddressBirthDetails && (
+            <div>
+              <div className="row">
+                <div className="col-md-6">
+                  <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PRESENT_ADDRESS")}`}</CardLabel>
+                </div>
+                <div className="col-md-6">
+                  <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                    :
+                    {t(
+                      BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEn
+                        ? BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEn
+                        : "CR_NOT_RECORDED"
+                    ) +
+                      " , " +
+                      (BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEnB
+                        ? BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEnB
+                        : " CR_NOT_RECORDED") +
+                      " , " +
+                      //  ( BornOutsideAddressBirthDetails?.presentOutSideIndiaVillage ? BornOutsideAddressBirthDetails?.presentOutSideIndiaVillage : "CR_NOT_RECORDED") +
+                      // " , " +
+                      // BornOutsideAddressBirthDetails.permntInKeralaAdrPostOffice.name+
+                      // " , " +
+
+                      BornOutsideAddressBirthDetails.presentOutSideIndiaadrsCityTown +
+                      " , " +
+                      BornOutsideAddressBirthDetails?.presentOutSideIndiaProvinceEn +
+                      " , " +
+                      // BornOutsideAddressBirthDetails?.presentOutSideIndiaPostCode +
+                      // " , " +
+                      BornOutsideAddressBirthDetails?.presentOutSideCountry?.name}
+                  </CardText>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-6">
+                  <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PRESENT_ADDRESS_ML")}`}</CardLabel>
+                </div>
+                <div className="col-md-6">
+                  <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                    :
+                    {t(
+                      BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressMl
+                        ? BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressMl
+                        : "CR_NOT_RECORDED"
+                    ) +
+                      " , " +
+                      (BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressMlB
+                        ? BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressMlB
+                        : "CR_NOT_RECORDED") +
+                      " , " +
+                      // BornOutsideAddressBirthDetails.presentOutsideIndiaadrsVillage +
+                      // " , " +
+                      // BornOutsideAddressBirthDetails.permntInKeralaAdrPostOffice.namelocal+
+                      // " , " +
+
+                      BornOutsideAddressBirthDetails.presentOutSideIndiaadrsCityTown +
+                      " , " +
+                      BornOutsideAddressBirthDetails?.presentOutSideIndiaProvinceMl +
+                      " , " +
+                      // BornOutsideAddressBirthDetails.presentOutsideIndiaPostCode +
+                      // " , " +
+                      BornOutsideAddressBirthDetails?.presentOutSideCountry?.namelocal}
+                    ,
+                  </CardText>
+                </div>
+              </div>
             </div>
-            <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                :
-                {t(BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEn  ? BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEn : "CR_NOT_RECORDED") +
-                  " , " +
-                 ( BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEnB ? BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEnB : " CR_NOT_RECORDED") +
-                  " , " +
-                //  ( BornOutsideAddressBirthDetails?.presentOutSideIndiaVillage ? BornOutsideAddressBirthDetails?.presentOutSideIndiaVillage : "CR_NOT_RECORDED") +
-                  // " , " +
-                  // BornOutsideAddressBirthDetails.permntInKeralaAdrPostOffice.name+
-                  // " , " +
-                 
-                  BornOutsideAddressBirthDetails.presentOutSideIndiaadrsCityTown+
-                  " , " +
-                  BornOutsideAddressBirthDetails?.presentOutSideIndiaProvinceEn+
-                  " , " +
-                  // BornOutsideAddressBirthDetails?.presentOutSideIndiaPostCode +
-                  // " , " +
-                  BornOutsideAddressBirthDetails?.presentOutSideCountry?.name}
-                    </CardText>
-                    </div>
-                    </div>
-                    <div className="row">
-                    <div className="col-md-6">
-                      <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PRESENT_ADDRESS_ML")}`}</CardLabel>
-                    </div>
-                    <div className="col-md-6">
-                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                :
-                {t(BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressMl ? BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressMl : "CR_NOT_RECORDED") +
-                  " , " +
-                 ( BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressMlB ? BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressMlB : "CR_NOT_RECORDED") +
-                  " , " +
-                  // BornOutsideAddressBirthDetails.presentOutsideIndiaadrsVillage +
-                  // " , " +
-                  // BornOutsideAddressBirthDetails.permntInKeralaAdrPostOffice.namelocal+
-                  // " , " +
-                  
-                  BornOutsideAddressBirthDetails.presentOutSideIndiaadrsCityTown+
-                  " , " +
-                  BornOutsideAddressBirthDetails?.presentOutSideIndiaProvinceMl+
-                  " , " +
-                  // BornOutsideAddressBirthDetails.presentOutsideIndiaPostCode +
-                  // " , " +
-                  BornOutsideAddressBirthDetails?.presentOutSideCountry?.namelocal}
-                ,
-              </CardText>
-              </div>
-              </div>
-              </div>
           )}
 
           {/* <div className="row">
@@ -338,10 +368,8 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
               
             </div>
           </div>  */}
-     
-        
 
-{/* {BornOutsideAddressBirthDetails.isPrsentAddress === false && (
+          {/* {BornOutsideAddressBirthDetails.isPrsentAddress === false && (
  <div className="row">
           
  <div className="col-md-6">
@@ -394,7 +422,7 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
  </div>
 </div>
 )} */}
-</div>
+        </div>
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">{/* <span style={{ background: "#fff", padding: "0 10px" }}>                
@@ -404,7 +432,7 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
         <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} />
       </Card>
     </React.Fragment>
-  )
+  );
 };
 
 export default BornOutsideCheckPage;

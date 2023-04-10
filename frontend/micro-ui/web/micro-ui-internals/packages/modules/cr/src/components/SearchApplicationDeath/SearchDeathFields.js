@@ -8,7 +8,7 @@ const mystyle = {
   };
 
 
-const SearchDeathFields = ({register, control, reset, tenantId, t }) => {
+const SearchDeathFields = ({register, control, reset, tenantId, t, previousPage ,applicationDeathType}) => {
     // const { data: applicationTypes, isLoading: applicationTypesLoading } = Digit.Hooks.cr.useMDMS.applicationTypes(tenantId)
 
     // const applicationType = useWatch({ control, name: "applicationType" });
@@ -36,6 +36,8 @@ const SearchDeathFields = ({register, control, reset, tenantId, t }) => {
     // })
 
     return <>
+    {applicationDeathType?.value && (
+        <>
         <SearchField>
             <label>{t("CR_SEARCH_ACK_NO")}</label>
             <TextInput name="DeathACKNo" inputRef={register({})} />
@@ -118,6 +120,8 @@ const SearchDeathFields = ({register, control, reset, tenantId, t }) => {
                 previousPage();
             }}>{t(`ES_COMMON_CLEAR_ALL`)}</p>
         </SearchField>
+        </>
+        )}
     </>
 }
 export default SearchDeathFields
