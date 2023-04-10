@@ -107,13 +107,23 @@ const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBo
     const [permntInKeralaAdrTaluk, setpermntInKeralaAdrTaluk] = useState(formData?.BornOutsideAddressBirthDetails?.permntInKeralaAdrTaluk ? formData?.BornOutsideAddressBirthDetails?.permntInKeralaAdrTaluk : formData?.BornOutsideChildDetails?.BornOutsideAddressBirthDetails?.permntInKeralaAdrTaluk ? "" : "");
     const [permntInKeralaAdrVillage, setpermntInKeralaAdrVillage] = useState(formData?.BornOutsideAddressBirthDetails?.permntInKeralaAdrVillage ? formData?.BornOutsideAddressBirthDetails?.permntInKeralaAdrVillage : formData?.BornOutsideChildDetails?.BornOutsideAddressBirthDetails?.permntInKeralaAdrVillage ? "" : "");
     const [permntInKeralaAdrPostOffice, setpermntInKeralaAdrPostOffice] = useState(formData?.BornOutsideAddressBirthDetails?.permntInKeralaAdrPostOffice ? formData?.BornOutsideAddressBirthDetails?.permntInKeralaAdrPostOffice : formData?.BornOutsideChildDetails?.BornOutsideAddressBirthDetails?.permntInKeralaAdrPostOffice ? "" : "");
-    const [permntInKeralaAdrPincode, setpermntInKeralaAdrPincode] = useState(formData?.BornOutsideAddressBirthDetails?.permntInKeralaAdrPincode ? formData?.BornOutsideAddressBirthDetails?.permntInKeralaAdrPincode : "");
-    const [permntInKeralaAdrHouseNameEn, setpermntInKeralaAdrHouseNameEn] = useState(formData?.BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameEn ? formData?.BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameEn : "");
-    const [permntInKeralaAdrHouseNameMl, setpermntInKeralaAdrHouseNameMl] = useState(formData?.BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameMl ? formData?.BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameMl : "");
-    const [permntInKeralaAdrLocalityNameEn, setpermntInKeralaAdrLocalityNameEn] = useState(formData?.BornOutsideAddressBirthDetails?.permntInKeralaAdrLocalityNameEn ? formData?.BornOutsideAddressBirthDetails?.permntInKeralaAdrLocalityNameEn : "");
-    const [permntInKeralaAdrLocalityNameMl, setpermntInKeralaAdrLocalityNameMl] = useState(formData?.BornOutsideAddressBirthDetails?.permntInKeralaAdrLocalityNameMl ? formData?.BornOutsideAddressBirthDetails?.permntInKeralaAdrLocalityNameMl : "");
-    const [permntInKeralaAdrStreetNameEn, setpermntInKeralaAdrStreetNameEn] = useState(formData?.BornOutsideAddressBirthDetails?.permntInKeralaAdrStreetNameEn ? formData?.BornOutsideAddressBirthDetails?.permntInKeralaAdrStreetNameEn : "");
-    const [permntInKeralaAdrStreetNameMl, setpermntInKeralaAdrStreetNameMl] = useState(formData?.BornOutsideAddressBirthDetails?.permntInKeralaAdrStreetNameMl ? formData?.BornOutsideAddressBirthDetails?.permntInKeralaAdrStreetNameMl : "");
+    const [permntInKeralaAdrPincode, setpermntInKeralaAdrPincode] = useState(formData?.BornOutsideAddressBirthDetails?.permntInKeralaAdrPincode ? formData?.BornOutsideAddressBirthDetails?.permntInKeralaAdrPincode :
+        formData?.BornOutsideChildDetails?.BornOutsideAddressBirthDetails?.permntInKeralaAdrPincode ? formData?.BornOutsideChildDetails?.BornOutsideAddressBirthDetails?.permntInKeralaAdrPincode : "");
+    const [permntInKeralaAdrHouseNameEn, setpermntInKeralaAdrHouseNameEn] = useState(formData?.BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameEn ? formData?.BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameEn :
+        formData?.BornOutsideChildDetails?.BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameEn ? formData?.BornOutsideChildDetails?.BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameEn : "");
+    const [permntInKeralaAdrHouseNameMl, setpermntInKeralaAdrHouseNameMl] = useState(formData?.BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameMl ? formData?.BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameMl :
+        formData?.BornOutsideChildDetails?.BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameMl ? formData?.BornOutsideChildDetails?.BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameMl : "");
+    const [permntInKeralaAdrLocalityNameEn, setpermntInKeralaAdrLocalityNameEn] =  useState(formData?.BornOutsideAddressBirthDetails?.permntInKeralaAdrLocalityNameEn ? formData?.BornOutsideAddressBirthDetails?.permntInKeralaAdrLocalityNameEn :
+        formData?.BornOutsideChildDetails?.BornOutsideAddressBirthDetails?.permntInKeralaAdrLocalityNameEn ? formData?.BornOutsideChildDetails?.BornOutsideAddressBirthDetails?.permntInKeralaAdrLocalityNameEn : "");
+    const [permntInKeralaAdrLocalityNameMl, setpermntInKeralaAdrLocalityNameMl] =  useState(formData?.BornOutsideAddressBirthDetails?.permntInKeralaAdrLocalityNameMl ? formData?.BornOutsideAddressBirthDetails?.permntInKeralaAdrLocalityNameMl :
+        formData?.BornOutsideChildDetails?.BornOutsideAddressBirthDetails?.permntInKeralaAdrLocalityNameMl ? formData?.BornOutsideChildDetails?.BornOutsideAddressBirthDetails?.permntInKeralaAdrLocalityNameMl : "");
+
+    const [permntInKeralaAdrStreetNameEn, setpermntInKeralaAdrStreetNameEn] =  useState(formData?.BornOutsideAddressBirthDetails?.permntInKeralaAdrStreetNameEn ? formData?.BornOutsideAddressBirthDetails?.permntInKeralaAdrStreetNameEn :
+        formData?.BornOutsideChildDetails?.BornOutsideAddressBirthDetails?.permntInKeralaAdrStreetNameEn ? formData?.BornOutsideChildDetails?.BornOutsideAddressBirthDetails?.permntInKeralaAdrStreetNameEn : "");
+
+    const [permntInKeralaAdrStreetNameMl, setpermntInKeralaAdrStreetNameMl] = useState(formData?.AddressBirthDetails?.permntInKeralaAdrStreetNameMl ? formData?.BornOutsideAddressBirthDetails?.permntInKeralaAdrStreetNameMl :
+        formData?.BornOutsideChildDetails?.BornOutsideAddressBirthDetails?.permntInKeralaAdrStreetNameMl ? formData?.BornOutsideChildDetails?.BornOutsideAddressBirthDetails?.permntInKeralaAdrStreetNameMl : "");
+
     const [permntInKeralaWardNo, setpermntInKeralaWardNo] = useState(formData?.BornOutsideAddressBirthDetails?.permntInKeralaWardNo ? formData?.BornOutsideAddressBirthDetails?.permntInKeralaWardNo : formData?.BornOutsideChildDetails?.BornOutsideAddressBirthDetails?.permntInKeralaWardNo ? "" : "");
 
  

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton, Loader, Toast, SubmitBar } from "@egovernments/digit-ui-react-components";
+import { CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton, Loader, Toast } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
@@ -13,10 +13,13 @@ import FormStep from "../../../../../react-components/src/molecules/FormStep";
 const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = false }) => {
   // console.log(JSON.stringify(formData));  
   // console.log(formData);
-  // console.log(isEditBirth);
+  // console.log(isEditBirth);  
+  sessionStorage.removeItem("applicationNumber");
   const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
   const [workFlowCode, setWorkFlowCode] = useState(formData?.ChildDetails?.workFlowCode);
+  const [isPayment, setIsPayment] = useState(formData?.ChildDetails?.isPayment);
+  const [Amount, setAmount] = useState(formData?.ChildDetails?.Amount);
 
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
@@ -134,7 +137,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const [gender, selectGender] = useState(formData?.ChildDetails?.gender?.code ? formData?.ChildDetails?.gender : formData?.ChildDetails?.gender ?
     (menu.filter(menu => menu.code === formData?.ChildDetails?.gender)[0]) : "");
 
-  const [childAadharNo, setChildAadharNo] = useState(formData?.ChildDetails?.childAadharNo ? formData?.ChildDetails?.childAadharNo : null);
+  const [childAadharNo, setChildAadharNo] = useState(formData?.ChildDetails?.childAadharNo ? formData?.ChildDetails?.childAadharNo : "");
   const [childFirstNameEn, setChildFirstNameEn] = useState(formData?.ChildDetails?.childFirstNameEn ? formData?.ChildDetails?.childFirstNameEn : "");
   const [childMiddleNameEn, setChildMiddleNameEn] = useState(formData?.ChildDetails?.childMiddleNameEn ? formData?.ChildDetails?.childMiddleNameEn : "");
   const [childLastNameEn, setChildLastNameEn] = useState(formData?.ChildDetails?.childLastNameEn ? formData?.ChildDetails?.childLastNameEn : "");
@@ -144,7 +147,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isInitialRenderPlace, setIsInitialRenderPlace] = useState(true);
   const [isInitialRenderFormData, setisInitialRenderFormData] = useState(false);
-  const [birthDateTime, setbirthDateTime] = useState(""); //formData?.ChildDetails?.birthDateTime ? formData?.ChildDetails?.birthDateTime :
+  const [birthDateTime, setbirthDateTime] = useState(formData?.ChildDetails?.birthDateTime ? formData?.ChildDetails?.birthDateTime : ""); //formData?.ChildDetails?.birthDateTime ? formData?.ChildDetails?.birthDateTime :
   const [isChildName, setIsChildName] = useState(formData?.ChildDetails?.isChildName ? formData?.ChildDetails?.isChildName : false);
   // const [birthPlace, selectBirthPlace] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.ChildDetails?.birthPlace)[0]) : formData?.ChildDetails?.birthPlace);
   const [birthPlace, selectBirthPlace] = useState(formData?.ChildDetails?.birthPlace?.code ? formData?.ChildDetails?.birthPlace : formData?.ChildDetails?.birthPlace ?
@@ -228,6 +231,12 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const [DeliveryMethodStError, setDeliveryMethodStError] = useState(formData?.ChildDetails?.deliveryMethods ? false : false);
   const [PregnancyDurationStError, setPregnancyDurationStError] = useState(formData?.ChildDetails?.pregnancyDuration ? false : false);
   const [PregnancyDurationInvalidError, setPregnancyDurationInvalidError] = useState(formData?.ChildDetails?.pregnancyDuration ? false : false);
+  const [ChildFirstNameEnError, setChildFirstNameEnError] = useState(false);
+  const [ChildMiddleNameEnError, setChildMiddleNameEnError] = useState(false);
+  const [ChildLastNameEnError, setChildLastNameEnError] = useState(false);
+  const [ChildFirstNameMlError, setChildFirstNameMlError] = useState(false);
+  const [ChildMiddleNameMlError, setChildMiddleNameMlError] = useState(false);
+  const [ChildLastNameMlError, setChildLastNameMlError] = useState(false);
 
   const [access, setAccess] = React.useState(true);
 
@@ -321,6 +330,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   }
 
   function setselectChildDOB(value) {
+
     setChildDOB(value);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -339,17 +349,18 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
       if (birthPlace) {
         let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
-        console.log("currentWorgFlowDOB" + currentWorgFlow);
         if (currentWorgFlow.length > 0) {
-          // console.log(currentWorgFlow[0].WorkflowCode);
+          console.log(currentWorgFlow);
           setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+          setIsPayment(currentWorgFlow[0].payment);
+          setAmount(currentWorgFlow[0].amount);
         }
       }
       if (Difference_In_Days >= 365) {
         setChildAadharHIde(true);
       } else {
         setChildAadharHIde(false);
-        setChildAadharNo(null);
+        setChildAadharNo("");
       }
     }
     // else {
@@ -388,7 +399,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   }
   function setCheckMalayalamInputField(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
-    if (!(e.key.match(pattern))) {
+    if (!(e.key.match(pattern)) && e.code === 'Space') {
       e.preventDefault();
     }
   }
@@ -396,7 +407,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!(e.target.value.match(pattern))) {
       e.preventDefault();
-      setChildFirstNameMl('');
+      setChildFirstNameMl("");
     }
     else {
       setChildFirstNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
@@ -406,7 +417,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!(e.target.value.match(pattern))) {
       e.preventDefault();
-      setChildMiddleNameMl('');
+      setChildMiddleNameMl("");
     }
     else {
       setChildMiddleNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
@@ -416,7 +427,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!(e.target.value.match(pattern))) {
       e.preventDefault();
-      setChildLastNameMl('');
+      setChildLastNameMl("");
     }
     else {
       setChildLastNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
@@ -468,9 +479,9 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     if (typeof value === "string") {
       cb(value);
       console.log(value);
-      let hour = value;
-      let period = hour > 12 ? "PM" : "AM";
-      console.log(period);
+      // let hour = value;
+      // let period = hour > 12 ? "PM" : "AM";
+      // console.log(period);
       setbirthDateTime(value);
     }
   };
@@ -503,6 +514,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     if (currentWorgFlow.length > 0) {
       // console.log(currentWorgFlow[0].WorkflowCode);
       setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+      setIsPayment(currentWorgFlow[0].payment);
+      setAmount(currentWorgFlow[0].amount);
     }
   }
   function setSelectBirthWeight(e) {
@@ -528,9 +541,17 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
 
     // }
   }
+  function setCheckSpecialChar(e) {
+    let pattern = /^[0-9]*$/;
+    if (!(e.key.match(pattern))) {
+      e.preventDefault();
+    }
+  }
   let validFlag = true;
   const goNext = () => {
-    if (childAadharNo != null) {
+    if (childAadharNo.trim() == null || childAadharNo.trim() == '' || childAadharNo.trim() == undefined) {
+      setChildAadharNo("");
+    } else if (childAadharNo != null && childAadharNo != "") {
       let adharLength = childAadharNo;
       if (adharLength.length < 12 || adharLength.length > 12) {
         validFlag = false;
@@ -546,6 +567,33 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       setAadharError(false);
     }
     if (birthPlace.code === "HOSPITAL") {
+      setInstitution("");
+      setInstitutionId("");
+      setInstitutionIdMl("");
+      setAdrsPostOffice("");
+      setAdrsPincode(null);
+      setAdrsHouseNameEn("");
+      setAdrsHouseNameMl("");
+      setAdrsLocalityNameEn("");
+      setAdrsLocalityNameMl("");
+      setAdrsStreetNameEn("");
+      setAdrsStreetNameMl("");
+      setWardNo("");
+      setvehicleType("");
+      setvehicleRegistrationNo("");
+      setvehicleFromEn("");
+      setvehicleToEn("");
+      setvehicleFromMl("");
+      setvehicleHaltPlace("");
+      setvehicleToMl("");
+      setvehicleDesDetailsEn("");
+      setSelectedadmittedHospitalEn("");
+      setpublicPlaceType("");
+      setlocalityNameEn("");
+      setlocalityNameMl("");
+      setstreetNameEn("");
+      setstreetNameMl("");
+      setpublicPlaceDecpEn("");
       if (hospitalName == null || hospitalNameMl === null) {
         setHospitalError(true);
         validFlag = false;
@@ -558,6 +606,32 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
         setHospitalError(false);
       }
     } else if (birthPlace.code === "INSTITUTION") {
+      selectHospitalName("");
+      selectHospitalNameMl("");
+      setAdrsPostOffice("");
+      setAdrsPincode(null);
+      setAdrsHouseNameEn("");
+      setAdrsHouseNameMl("");
+      setAdrsLocalityNameEn("");
+      setAdrsLocalityNameMl("");
+      setAdrsStreetNameEn("");
+      setAdrsStreetNameMl("");
+      setWardNo("");
+      setvehicleType("");
+      setvehicleRegistrationNo("");
+      setvehicleFromEn("");
+      setvehicleToEn("");
+      setvehicleFromMl("");
+      setvehicleHaltPlace("");
+      setvehicleToMl("");
+      setvehicleDesDetailsEn("");
+      setSelectedadmittedHospitalEn("");
+      setpublicPlaceType("");
+      setlocalityNameEn("");
+      setlocalityNameMl("");
+      setstreetNameEn("");
+      setstreetNameMl("");
+      setpublicPlaceDecpEn("");
       if (institution == null) {
         setInstitutionError(true);
         validFlag = false;
@@ -581,6 +655,26 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
         }
       }
     } else if (birthPlace.code === "HOME") {
+      selectHospitalName("");
+      selectHospitalNameMl("");
+      setInstitution("");
+      setInstitutionId("");
+      setInstitutionIdMl("");
+      setvehicleType("");
+      setvehicleRegistrationNo("");
+      setvehicleFromEn("");
+      setvehicleToEn("");
+      setvehicleFromMl("");
+      setvehicleHaltPlace("");
+      setvehicleToMl("");
+      setvehicleDesDetailsEn("");
+      setSelectedadmittedHospitalEn("");
+      setpublicPlaceType("");
+      setlocalityNameEn("");
+      setlocalityNameMl("");
+      setstreetNameEn("");
+      setstreetNameMl("");
+      setpublicPlaceDecpEn("");
       if (wardNo === null) {
         validFlag = false;
         setAdsWardError(true);
@@ -674,6 +768,25 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
         setAdsHomeHouseNameMlError(false);
       }
     } else if (birthPlace.code === "VEHICLE") {
+      selectHospitalName("");
+      selectHospitalNameMl("");
+      setInstitution("");
+      setInstitutionId("");
+      setInstitutionIdMl("");
+      setAdrsPostOffice("");
+      setAdrsPincode(null);
+      setAdrsHouseNameEn("");
+      setAdrsHouseNameMl("");
+      setAdrsLocalityNameEn("");
+      setAdrsLocalityNameMl("");
+      setAdrsStreetNameEn("");
+      setAdrsStreetNameMl("");
+      setpublicPlaceType("");
+      setlocalityNameEn("");
+      setlocalityNameMl("");
+      setstreetNameEn("");
+      setstreetNameMl("");
+      setpublicPlaceDecpEn("");
       if (wardNo === null) {
         validFlag = false;
         setAdsWardError(true);
@@ -749,6 +862,28 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
         setadmittedHospitalEnError(false);
       }
     } else if (birthPlace.code === "PUBLIC_PLACES") {
+      selectHospitalName("");
+      selectHospitalNameMl("");
+      setInstitution("");
+      setInstitutionId("");
+      setInstitutionIdMl("");
+      setAdrsPostOffice("");
+      setAdrsPincode(null);
+      setAdrsHouseNameEn("");
+      setAdrsHouseNameMl("");
+      setAdrsLocalityNameEn("");
+      setAdrsLocalityNameMl("");
+      setAdrsStreetNameEn("");
+      setAdrsStreetNameMl("");
+      setvehicleType("");
+      setvehicleRegistrationNo("");
+      setvehicleFromEn("");
+      setvehicleToEn("");
+      setvehicleFromMl("");
+      setvehicleHaltPlace("");
+      setvehicleToMl("");
+      setvehicleDesDetailsEn("");
+      setSelectedadmittedHospitalEn("");
       if (wardNo === null) {
         validFlag = false;
         setAdsWardError(true);
@@ -864,6 +999,92 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     } else {
       setDeliveryMethodStError(false);
     }
+    if (isChildName) {
+      if (childFirstNameEn.trim() == null || childFirstNameEn.trim() == '' || childFirstNameEn.trim() == undefined) {
+        validFlag = false;
+        setChildFirstNameEn("");
+        setChildFirstNameEnError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setChildFirstNameEnError(false);
+      }
+      if (childMiddleNameEn.trim() == null || childMiddleNameEn.trim() == '' || childMiddleNameEn.trim() == undefined) {
+        setChildMiddleNameEn("");
+      } else {
+        if (childMiddleNameMl.trim() == null || childMiddleNameMl.trim() == '' || childMiddleNameMl.trim() == undefined) {
+          validFlag = false;
+          setChildMiddleNameMl("");
+          setChildMiddleNameMlError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } else {
+          setChildMiddleNameMlError(false);
+        }
+      }
+      if (childLastNameEn.trim() == null || childLastNameEn.trim() == '' || childLastNameEn.trim() == undefined) {
+        setChildLastNameEn("");
+      } else {
+        if (childLastNameMl.trim() == null || childLastNameMl.trim() == '' || childLastNameMl.trim() == undefined) {
+          validFlag = false;
+          setChildLastNameMl("");
+          setChildLastNameMlError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } else {
+          setChildLastNameMlError(false);
+        }
+      }
+      if (childFirstNameMl.trim() === null || childFirstNameMl.trim() === '' || childFirstNameMl.trim() === undefined) {
+        validFlag = false;
+        setChildFirstNameMl('');
+        setChildFirstNameMlError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setChildFirstNameMlError(false);
+      }
+      if (childMiddleNameMl.trim() == null || childMiddleNameMl.trim() == '' || childMiddleNameMl.trim() == undefined) {
+        setChildMiddleNameMl("");
+        setChildMiddleNameEnError(false);
+      } else {
+        if (childMiddleNameEn.trim() == null || childMiddleNameEn.trim() == '' || childMiddleNameEn.trim() == undefined) {
+          validFlag = false;
+          setChildMiddleNameEn("");
+          setChildMiddleNameEnError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } else {
+          setChildMiddleNameEnError(false);
+        }
+      }
+      if (childLastNameMl.trim() == null || childLastNameMl.trim() == '' || childLastNameMl.trim() == undefined) {
+        setChildLastNameMl("");
+        setChildLastNameEnError(false);
+      } else {
+        if (childLastNameEn.trim() == null || childLastNameEn.trim() == '' || childLastNameEn.trim() == undefined) {
+          validFlag = false;
+          setChildLastNameEn("");
+          setChildLastNameEnError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } else {
+          setChildLastNameEnError(false);
+        }
+      }
+    }
     if (validFlag == true) {
 
       let IsEditChangeScreen = (isEditBirth ? isEditBirth : false);
@@ -878,7 +1099,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
         vehicleToMl, setadmittedHospitalEn, vehicleDesDetailsEn,
         publicPlaceType, localityNameEn, localityNameMl, streetNameEn, streetNameMl, publicPlaceDecpEn,
         birthWeight, pregnancyDuration, medicalAttensionSub, deliveryMethods, IsEditChangeScreen,
-        uuid, DifferenceInTime, isWorkflow
+        uuid, DifferenceInTime, isWorkflow, isPayment, Amount
       });
     }
   };
@@ -993,6 +1214,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                     value={childAadharNo}
                     disable={isDisableEdit}
                     onChange={setSelectChildAadharNo}
+                    onKeyPress={setCheckSpecialChar}
                     placeholder={`${t("CS_COMMON_CHILD_AADHAAR")}`}
                     inputProps={{
                       maxLength: 12,
@@ -1406,8 +1628,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                 admittedHospitalEnError || vehiDesDetailsEnError ||
                 placeTypepEnError || localNameEnError || localNameMlError ||
                 MedicalAttensionSubStError || DeliveryMethodStError || BirthWeightError
-                || PregnancyDurationStError || PregnancyDurationInvalidError
-
+                || PregnancyDurationStError || PregnancyDurationInvalidError || ChildFirstNameEnError || ChildMiddleNameEnError
+                || ChildLastNameEnError|| ChildFirstNameMlError || ChildMiddleNameMlError || ChildLastNameMlError
 
               }
               label={
@@ -1425,7 +1647,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                   admittedHospitalEnError || vehiDesDetailsEnError ||
                   placeTypepEnError || localNameEnError || localNameMlError ||
                   MedicalAttensionSubStError || DeliveryMethodStError || BirthWeightError
-                  || PregnancyDurationStError || PregnancyDurationInvalidError
+                  || PregnancyDurationStError || PregnancyDurationInvalidError || ChildFirstNameEnError || ChildMiddleNameEnError
+                  || ChildLastNameEnError|| ChildFirstNameMlError || ChildMiddleNameMlError || ChildLastNameMlError
                   ?
                   AadharError
                     ? t(`CS_COMMON_INVALID_AADHAR_NO`) : DOBError ? t(`BIRTH_DOB_VALIDATION_MSG`)
@@ -1453,9 +1676,13 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                                                               : PregnancyDurationStError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_CHOOSE`)
                                                                 : PregnancyDurationInvalidError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_INVALID_CHOOSE`)
                                                                   : DeliveryMethodStError ? t(`BIRTH_ERROR_DELIVERY_METHOD_CHOOSE`)
-
-
-                                                                    : setToast(false)
+                                                                    : ChildFirstNameEnError ? t(`BIRTH_ERROR_CHILD_FIRST_NAME_EN`)
+                                                                    : ChildMiddleNameEnError ? t(`BIRTH_ERROR_CHILD_MIDDLE_NAME_EN`)
+                                                                    : ChildLastNameEnError ? t(`BIRTH_ERROR_CHILD_LAST_NAME_EN`)
+                                                                      : ChildFirstNameMlError ? t(`BIRTH_ERROR_CHILD_FIRST_NAME_ML`)
+                                                                      : ChildMiddleNameMlError ? t(`BIRTH_ERROR_CHILD_MIDDLE_NAME_ML`)
+                                                                      : ChildLastNameMlError ? t(`BIRTH_ERROR_CHILD_LAST_NAME_ML`)
+                                                                        : setToast(false)
                   : setToast(false)
               }
               onClose={() => setToast(false)}

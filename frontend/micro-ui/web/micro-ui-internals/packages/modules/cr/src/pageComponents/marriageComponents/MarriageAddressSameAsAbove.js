@@ -12,15 +12,16 @@ const MarriageAddressSameAsAbove = ({
   setIsPrsentAddress,
   isEditBirth = false,
   isEditDeath = false,
+  isEditStillBirth = false,
   // isInitialRender, setIsInitialRender
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : isEditStillBirth ? isEditStillBirth : false);
 
-  // const [isPrsentAddress, setIsPrsentAddress] = useState(formData?.AddressSameAsAboveDetails?.isPrsentAddress);
+  // const [isPrsentAddress, setIsPrsentAddress] = useState(formData?.MarriageAddressSameAsAboveDetails?.isPrsentAddress);
 
   const onSkip = () => onSelect();
 

@@ -1148,7 +1148,7 @@ const getCRcauseOfSpouseTypelist = (tenantId, moduleCode) => ({
         moduleName: moduleCode,
         masterDetails: [
           {
-            name: "SpouseType",
+            name: "spouseType",
           },
         ],
       },

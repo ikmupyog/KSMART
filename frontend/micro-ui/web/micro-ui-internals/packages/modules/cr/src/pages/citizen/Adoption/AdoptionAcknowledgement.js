@@ -25,15 +25,43 @@ const rowContainerStyle = {
 const BannerPicker = (props) => {
   // console.log(JSON.stringify(props));
   // console.log(props);
-  return (
-    <Banner
-      message={GetActionMessage(props)}
-      applicationNumber={props?.data?.ChildDetailsAdoption?.length>0?props?.data?.ChildDetailsAdoption[0]?.applicationNumber:null}
-      info={props.isSuccess ? props.applicationNumber : ""}
-      successful={props.isSuccess}
-      error={props.isError}
-    />
-  );
+  const [editFlag, setEditFlag, clearParams1] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false);
+  console.log(props, sessionStorage.getItem("CR_EDIT_ADOPTION_FLAG"),editFlag);
+  if ((props.isError || props?.isSuccess) && editFlag !==false){
+    // console.log('logged',props);
+    // let applicationNumber = props?.editData?.AdoptionChildDetails?.applicationNumber
+    // props?.setIsLoader(true)
+    // sessionStorage.setItem("CR_EDIT_UPDATE_STATUS",GetActionMessage(props))
+    // window.location.assign(`${window.location.origin}/digit-ui/employee/cr/application-Adoptiondetails/${applicationNumber}`);
+    
+    // return (
+    //   <Loader />
+    //  ) 
+    return(
+      <Banner
+          message={GetActionMessage(props)}
+          applicationNumber={props?.data?.ChildDetailsAdoption?.length>0?props?.data?.ChildDetailsAdoption[0]?.applicationNumber:null}
+          info={props.isSuccess ? props.applicationNumber : ""}
+          successful={props.isSuccess}
+          error={props.isError}
+        />
+    )
+   
+     
+  }else{
+    props?.setIsLoader(false)
+    return (  
+      <Banner
+        message={GetActionMessage(props)}
+        applicationNumber={props?.data?.ChildDetailsAdoption?.length>0?props?.data?.ChildDetailsAdoption[0]?.applicationNumber:null}
+        info={props.isSuccess ? props.applicationNumber : ""}
+        successful={props.isSuccess}
+        error={props.isError}
+      />
+     
+    );
+  }
+
 };
 
 const AdoptionAcknowledgement = ({ data, onSuccess,userType,isEditBirth=false }) => {
@@ -68,6 +96,8 @@ const AdoptionAcknowledgement = ({ data, onSuccess,userType,isEditBirth=false })
   const { data: storeData } = Digit.Hooks.useStore.getInitData();
   const { tenants } = storeData || {};
   const stateId = Digit.ULBService.getStateId();
+  const [isLoader,setIsLoader]=useState(false)
+  const [editData,setEditData] =useState(editParams)
 //  const { isLoading, data: fydata = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "egf-master", "FinancialYear");
   //let isDirectRenewal = sessionStorage.getItem("isDirectRenewal") ? stringToBoolean(sessionStorage.getItem("isDirectRenewal")) : null;
   const [isInitialRender, setIsInitialRender] = useState(true);
@@ -170,13 +200,13 @@ const AdoptionAcknowledgement = ({ data, onSuccess,userType,isEditBirth=false })
   // }
   // else
 // console.log(JSON.stringify(mutation));
-let enableLoader = (mutation.isIdle || mutation.isLoading);
+let enableLoader = (mutation.isIdle || mutation.isLoading || isLoader);
 if (enableLoader) { return (<Loader />) }
 else if (((mutation?.isSuccess == false && mutation?.isIdle == false))) {
 // if(mutation.isSuccess && mutation?.isError===null){
   return(
     <Card>
-      <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess }  isError={mutation?.isError} isLoading={(mutation.isIdle || mutation.isLoading)} />
+      <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess }  isError={mutation?.isError} isLoading={(mutation.isIdle || mutation.isLoading)} setIsLoader={setIsLoader} editData={editData}/>
        {/* <CardText>{!isDirectRenewal?t("Application Submitted Successfully"):t("TL_FILE_TRADE_RESPONSE_DIRECT_REN")}</CardText>
      */}
      <Link to={editFlag?`/digit-ui/employee`:`/digit-ui/citizen`}>
@@ -231,7 +261,7 @@ else if (((mutation?.isSuccess == false && mutation?.isIdle == false))) {
   return(
 
     <Card>
-    <BannerPicker t={t} data={mutation.data } isSuccess={mutation.isSuccess } isLoading={mutation?.isLoading } isError={mutation?.isError}/>
+    <BannerPicker t={t} data={mutation.data } isSuccess={mutation.isSuccess } isLoading={mutation?.isLoading } isError={mutation?.isError} setIsLoader={setIsLoader} editData={editData}/>
     {/* {<CardText>{t("TL_FILE_TRADE_FAILED_RESPONSE")}</CardText>} */}
     <Link to={editFlag?`/digit-ui/employee`:`/digit-ui/citizen`}>
       <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />

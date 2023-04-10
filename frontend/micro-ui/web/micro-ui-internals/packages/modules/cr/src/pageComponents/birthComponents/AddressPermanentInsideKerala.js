@@ -8,7 +8,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   permntInKeralaAdrLBName, setpermntInKeralaAdrLBName,
   permntInKeralaAdrTaluk, setpermntInKeralaAdrTaluk, permntInKeralaAdrVillage, setpermntInKeralaAdrVillage,
   permntInKeralaAdrPostOffice, setpermntInKeralaAdrPostOffice, permntInKeralaAdrPincode, setpermntInKeralaAdrPincode,
-  permntInKeralaAdrHouseNameEn, setpermntInKeralaAdrHouseNameEn,
+  permntInKeralaAdrHouseNameEn, setpermntInKeralaAdrHouseNameEn,Districtvalues, setDistrictvalue,
   permntInKeralaAdrHouseNameMl, setpermntInKeralaAdrHouseNameMl, permntInKeralaAdrLocalityNameEn, setpermntInKeralaAdrLocalityNameEn,
   permntInKeralaAdrLocalityNameMl, setpermntInKeralaAdrLocalityNameMl, permntInKeralaAdrStreetNameEn, setpermntInKeralaAdrStreetNameEn,
   permntInKeralaAdrStreetNameMl, setpermntInKeralaAdrStreetNameMl, lbs, setLbs, Talukvalues, setLbsTalukvalue, Villagevalues, setLbsVillagevalue, permntInKeralaWardNo,
@@ -60,32 +60,32 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   let cmbFilterPostOffice = [];
 
   localbodies &&
-    localbodies["tenant"] &&
+    localbodies["tenant"] && localbodies["tenant"].tenants &&
     localbodies["tenant"].tenants.map((ob) => {
       cmbLB.push(ob);
     });
   Taluk &&
-    Taluk["common-masters"] &&
+    Taluk["common-masters"] && Taluk["common-masters"].Taluk &&
     Taluk["common-masters"].Taluk.map((ob) => {
       cmbTaluk.push(ob);
     });
   Village &&
-    Village["common-masters"] &&
+    Village["common-masters"] && Village["common-masters"].Village &&
     Village["common-masters"].Village.map((ob) => {
       cmbVillage.push(ob);
     });
   District &&
-    District["common-masters"] &&
+    District["common-masters"] && District["common-masters"].District &&
     District["common-masters"].District.map((ob) => {
       cmbDistrict.push(ob);
     });
   PostOffice &&
-    PostOffice["common-masters"] &&
+    PostOffice["common-masters"] && PostOffice["common-masters"].PostOffice &&
     PostOffice["common-masters"].PostOffice.map((ob) => {
       cmbPostOffice.push(ob);
     });
   LBType &&
-    LBType["common-masters"] &&
+    LBType["common-masters"] && LBType["common-masters"].LBType &&
     LBType["common-masters"].LBType.map((ob) => {
       cmbLBType.push(ob);
     });

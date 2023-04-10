@@ -977,75 +977,76 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
       setAdoptionDecreErr(false)
     }
     if (validFlag == true) {
-      sessionStorage.setItem("stateId", stateId ? stateId : null);
-      sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
-      sessionStorage.setItem("workFlowCode", workFlowCode);
-      sessionStorage.setItem("childDOB", childDOB ? childDOB : null);
-      sessionStorage.setItem("birthDateTime", birthDateTime ? birthDateTime : null);
-      sessionStorage.setItem("gender", gender ? gender.code : null);
-      sessionStorage.setItem("childAadharNo", childAadharNo ? childAadharNo : null);
-      sessionStorage.setItem("childFirstNameEn", childFirstNameEn ? childFirstNameEn : null);
-      sessionStorage.setItem("childMiddleNameEn", childMiddleNameEn ? childMiddleNameEn : null);
-      sessionStorage.setItem("childLastNameEn", childLastNameEn ? childLastNameEn : null);
-      sessionStorage.setItem("childFirstNameMl", childFirstNameMl ? childFirstNameMl : null);
-      sessionStorage.setItem("childMiddleNameMl", childMiddleNameMl ? childMiddleNameMl : null);
-      sessionStorage.setItem("childLastNameMl", childLastNameMl ? childLastNameMl : null);
-      sessionStorage.setItem("isChildName", isChildName);
-      sessionStorage.setItem("adoptionAgency", adoptionAgency);
-      sessionStorage.setItem("birthRegistered", birthRegistered);
-      sessionStorage.setItem("SearchRegId", SearchRegId);
-      sessionStorage.setItem("AdoptionAgencyName", AdoptionAgencyName);
-      sessionStorage.setItem("AdoptionAgencyAddress", AdoptionAgencyAddress);
-      sessionStorage.setItem("AdoptionContractPersonName", AdoptionContractPersonName);
-      sessionStorage.setItem("AdoptionContactNo", AdoptionContactNo);
-      sessionStorage.setItem("AdoptionDecreOrderDate", AdoptionDecreOrderDate);
-      sessionStorage.setItem("AdoptionDecreOrderNo", AdoptionDecreOrderNo);
-      sessionStorage.setItem("IssuingAuthority", IssuingAuthority);
-      sessionStorage.setItem("AdoptionDeedNo", AdoptionDeedNo);
-      sessionStorage.setItem("AdoptionDeedRegDate", AdoptionDeedRegDate);
-      sessionStorage.setItem("RegistrationAuthority", RegistrationAuthority);
-      sessionStorage.setItem("birthPlace", birthPlace.code);
-      sessionStorage.setItem("hospitalCode", hospitalName ? hospitalName.code : null);
-      sessionStorage.setItem("hospitalName", hospitalName ? hospitalName.hospitalName : null);
-      sessionStorage.setItem("hospitalNameMl", hospitalName ? hospitalNameMl.hospitalNamelocal : null);
-      sessionStorage.setItem("institutionTypeCode", institution ? institution.code : null);
-      sessionStorage.setItem("institution", institution ? institution.name : null);
-      sessionStorage.setItem("institutionNameCode", institutionId ? institutionId.code : null);
-      sessionStorage.setItem("institutionId", institutionId ? institutionId.institutionName : null);
-      sessionStorage.setItem("institutionIdMl", institutionIdMl ? institutionIdMl.institutionNamelocal : null);
-      sessionStorage.setItem("adrsHouseNameEn", adrsHouseNameEn ? adrsHouseNameEn : null);
-      sessionStorage.setItem("adrsHouseNameMl", adrsHouseNameMl ? adrsHouseNameMl : null);
-      sessionStorage.setItem("adrsLocalityNameEn", adrsLocalityNameEn ? adrsLocalityNameEn : null);
-      sessionStorage.setItem("adrsLocalityNameMl", adrsLocalityNameMl ? adrsLocalityNameMl : null);
-      sessionStorage.setItem("adrsStreetNameEn", adrsStreetNameEn ? adrsStreetNameEn : null);
-      sessionStorage.setItem("adrsStreetNameMl", adrsStreetNameMl ? adrsStreetNameMl : null);
-      sessionStorage.setItem("adrsPostOffice", adrsPostOffice ? adrsPostOffice.code : null);
-      sessionStorage.setItem("adrsPincode", adrsPincode ? adrsPincode.code : null);
-      sessionStorage.setItem("wardNo", wardNo ? wardNo.code : null);
-      sessionStorage.setItem("wardNameEn", wardNo ? wardNo.name : null);
-      sessionStorage.setItem("wardNameMl", wardNo ? wardNo.localname : null);
-      sessionStorage.setItem("wardNumber", wardNo ? wardNo.wardno : null);
-      sessionStorage.setItem("vehicleType", vehicleType ? vehicleType : null);
-      sessionStorage.setItem("vehicleRegistrationNo", vehicleRegistrationNo ? vehicleRegistrationNo : null);
-      sessionStorage.setItem("vehicleFromEn", vehicleFromEn ? vehicleFromEn : null);
-      sessionStorage.setItem("vehicleToEn", vehicleToEn ? vehicleToEn : null);
-      sessionStorage.setItem("vehicleFromMl", vehicleFromMl ? vehicleFromMl : null);
-      sessionStorage.setItem("vehicleToMl", vehicleToMl ? vehicleToMl : null);
-      sessionStorage.setItem("vehicleHaltPlace", vehicleHaltPlace ? vehicleHaltPlace : null);
-      // sessionStorage.setItem("vehicleHaltPlaceMl", vehicleHaltPlaceMl ? vehicleHaltPlaceMl : null);
-      sessionStorage.setItem("setadmittedHospitalEn", setadmittedHospitalEn ? setadmittedHospitalEn.code : null);
-      sessionStorage.setItem("vehicleDesDetailsEn", vehicleDesDetailsEn ? vehicleDesDetailsEn : null);
-      sessionStorage.setItem("publicPlaceType", publicPlaceType ? publicPlaceType.code : null);
-      sessionStorage.setItem("localityNameEn", localityNameEn ? localityNameEn : null);
-      sessionStorage.setItem("localityNameMl", localityNameMl ? localityNameMl : null);
-      sessionStorage.setItem("streetNameEn", streetNameEn ? streetNameEn : null);
-      sessionStorage.setItem("streetNameMl", streetNameMl ? streetNameMl : null);
-      sessionStorage.setItem("publicPlaceDecpEn", publicPlaceDecpEn ? publicPlaceDecpEn : null);
-      sessionStorage.setItem("birthWeight", birthWeight ? birthWeight : null);
-      sessionStorage.setItem("pregnancyDuration", pregnancyDuration ? pregnancyDuration.code : null);
-      sessionStorage.setItem("medicalAttensionSub", medicalAttensionSub ? medicalAttensionSub.code : null);
-      sessionStorage.setItem("deliveryMethods", deliveryMethods ? deliveryMethods.code : null);
+      // sessionStorage.setItem("stateId", stateId ? stateId : null);
+      // sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
+      // sessionStorage.setItem("workFlowCode", workFlowCode);
+      // sessionStorage.setItem("childDOB", childDOB ? childDOB : null);
+      // sessionStorage.setItem("birthDateTime", birthDateTime ? birthDateTime : null);
+      // sessionStorage.setItem("gender", gender ? gender.code : null);
+      // sessionStorage.setItem("childAadharNo", childAadharNo ? childAadharNo : null);
+      // sessionStorage.setItem("childFirstNameEn", childFirstNameEn ? childFirstNameEn : null);
+      // sessionStorage.setItem("childMiddleNameEn", childMiddleNameEn ? childMiddleNameEn : null);
+      // sessionStorage.setItem("childLastNameEn", childLastNameEn ? childLastNameEn : null);
+      // sessionStorage.setItem("childFirstNameMl", childFirstNameMl ? childFirstNameMl : null);
+      // sessionStorage.setItem("childMiddleNameMl", childMiddleNameMl ? childMiddleNameMl : null);
+      // sessionStorage.setItem("childLastNameMl", childLastNameMl ? childLastNameMl : null);
+      // sessionStorage.setItem("isChildName", isChildName);
+      // sessionStorage.setItem("adoptionAgency", adoptionAgency);
+      // sessionStorage.setItem("birthRegistered", birthRegistered);
+      // sessionStorage.setItem("SearchRegId", SearchRegId);
+      // sessionStorage.setItem("AdoptionAgencyName", AdoptionAgencyName);
+      // sessionStorage.setItem("AdoptionAgencyAddress", AdoptionAgencyAddress);
+      // sessionStorage.setItem("AdoptionContractPersonName", AdoptionContractPersonName);
+      // sessionStorage.setItem("AdoptionContactNo", AdoptionContactNo);
+      // sessionStorage.setItem("AdoptionDecreOrderDate", AdoptionDecreOrderDate);
+      // sessionStorage.setItem("AdoptionDecreOrderNo", AdoptionDecreOrderNo);
+      // sessionStorage.setItem("IssuingAuthority", IssuingAuthority);
+      // sessionStorage.setItem("AdoptionDeedNo", AdoptionDeedNo);
+      // sessionStorage.setItem("AdoptionDeedRegDate", AdoptionDeedRegDate);
+      // sessionStorage.setItem("RegistrationAuthority", RegistrationAuthority);
+      // sessionStorage.setItem("birthPlace", birthPlace.code);
+      // sessionStorage.setItem("hospitalCode", hospitalName ? hospitalName.code : null);
+      // sessionStorage.setItem("hospitalName", hospitalName ? hospitalName.hospitalName : null);
+      // sessionStorage.setItem("hospitalNameMl", hospitalName ? hospitalNameMl.hospitalNamelocal : null);
+      // sessionStorage.setItem("institutionTypeCode", institution ? institution.code : null);
+      // sessionStorage.setItem("institution", institution ? institution.name : null);
+      // sessionStorage.setItem("institutionNameCode", institutionId ? institutionId.code : null);
+      // sessionStorage.setItem("institutionId", institutionId ? institutionId.institutionName : null);
+      // sessionStorage.setItem("institutionIdMl", institutionIdMl ? institutionIdMl.institutionNamelocal : null);
+      // sessionStorage.setItem("adrsHouseNameEn", adrsHouseNameEn ? adrsHouseNameEn : null);
+      // sessionStorage.setItem("adrsHouseNameMl", adrsHouseNameMl ? adrsHouseNameMl : null);
+      // sessionStorage.setItem("adrsLocalityNameEn", adrsLocalityNameEn ? adrsLocalityNameEn : null);
+      // sessionStorage.setItem("adrsLocalityNameMl", adrsLocalityNameMl ? adrsLocalityNameMl : null);
+      // sessionStorage.setItem("adrsStreetNameEn", adrsStreetNameEn ? adrsStreetNameEn : null);
+      // sessionStorage.setItem("adrsStreetNameMl", adrsStreetNameMl ? adrsStreetNameMl : null);
+      // sessionStorage.setItem("adrsPostOffice", adrsPostOffice ? adrsPostOffice.code : null);
+      // sessionStorage.setItem("adrsPincode", adrsPincode ? adrsPincode.code : null);
+      // sessionStorage.setItem("wardNo", wardNo ? wardNo.code : null);
+      // sessionStorage.setItem("wardNameEn", wardNo ? wardNo.name : null);
+      // sessionStorage.setItem("wardNameMl", wardNo ? wardNo.localname : null);
+      // sessionStorage.setItem("wardNumber", wardNo ? wardNo.wardno : null);
+      // sessionStorage.setItem("vehicleType", vehicleType ? vehicleType : null);
+      // sessionStorage.setItem("vehicleRegistrationNo", vehicleRegistrationNo ? vehicleRegistrationNo : null);
+      // sessionStorage.setItem("vehicleFromEn", vehicleFromEn ? vehicleFromEn : null);
+      // sessionStorage.setItem("vehicleToEn", vehicleToEn ? vehicleToEn : null);
+      // sessionStorage.setItem("vehicleFromMl", vehicleFromMl ? vehicleFromMl : null);
+      // sessionStorage.setItem("vehicleToMl", vehicleToMl ? vehicleToMl : null);
+      // sessionStorage.setItem("vehicleHaltPlace", vehicleHaltPlace ? vehicleHaltPlace : null);
+      // // sessionStorage.setItem("vehicleHaltPlaceMl", vehicleHaltPlaceMl ? vehicleHaltPlaceMl : null);
+      // sessionStorage.setItem("setadmittedHospitalEn", setadmittedHospitalEn ? setadmittedHospitalEn.code : null);
+      // sessionStorage.setItem("vehicleDesDetailsEn", vehicleDesDetailsEn ? vehicleDesDetailsEn : null);
+      // sessionStorage.setItem("publicPlaceType", publicPlaceType ? publicPlaceType.code : null);
+      // sessionStorage.setItem("localityNameEn", localityNameEn ? localityNameEn : null);
+      // sessionStorage.setItem("localityNameMl", localityNameMl ? localityNameMl : null);
+      // sessionStorage.setItem("streetNameEn", streetNameEn ? streetNameEn : null);
+      // sessionStorage.setItem("streetNameMl", streetNameMl ? streetNameMl : null);
+      // sessionStorage.setItem("publicPlaceDecpEn", publicPlaceDecpEn ? publicPlaceDecpEn : null);
+      // sessionStorage.setItem("birthWeight", birthWeight ? birthWeight : null);
+      // sessionStorage.setItem("pregnancyDuration", pregnancyDuration ? pregnancyDuration.code : null);
+      // sessionStorage.setItem("medicalAttensionSub", medicalAttensionSub ? medicalAttensionSub.code : null);
+      // sessionStorage.setItem("deliveryMethods", deliveryMethods ? deliveryMethods.code : null);
       let IsEditChangeScreen = (isEditAdoption ? isEditAdoption : false);
+      let isWorkflow = isEditAdoption ? false : true;
       onSelect(config.key, {
         stateId, tenantId, workFlowCode, childDOB, birthDateTime, gender, childAadharNo,
         isChildName,SearchRegId,birthRegistered,adoptionAgency,AdoptionAgencyName,AdoptionAgencyAddress,AdoptionContractPersonName,AdoptionContactNo,
@@ -1056,7 +1057,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
         vehicleType, vehicleHaltPlace, vehicleRegistrationNo, vehicleFromEn, vehicleToEn, vehicleFromMl,
         vehicleToMl, setadmittedHospitalEn, vehicleDesDetailsEn,
         publicPlaceType, localityNameEn, localityNameMl, streetNameEn, streetNameMl, publicPlaceDecpEn,
-        birthWeight, pregnancyDuration, medicalAttensionSub, deliveryMethods, IsEditChangeScreen
+        birthWeight, pregnancyDuration, medicalAttensionSub, deliveryMethods, IsEditChangeScreen,isWorkflow
       });
     }
   };
@@ -1457,177 +1458,181 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                   {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })}
                 />
               </div>
-
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="col-md-4">
-                    <CardLabel>
-                      {`${t("CR_ADOPTION_DECREE")}`}
-                     {AdoptionDeedNo ==="" &&  <span className="mandatorycss">*</span>}
-                    </CardLabel>
-                    <TextInput
-                      t={t}
-                      isMandatory={false}
-                      type={"text"}
-                      optionKey="i18nKey"
-                      name="adoptdecreeorderno"
-                      value={AdoptionDecreOrderNo}
-                      // onKeyPress={setCheckMalayalamInputField}
-                      onChange={setSelectDeeOrderNo}
-                      disable={isDisableEdit || AdoptionDeedNo !==""}
-                      placeholder={`${t("CR_ADOPTION_DECREE")}`}
-                      {...(validation = {
-                        // pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                        isRequired: AdoptionDeedNo ===""? true : false,
-                        type: "text",
-                        title: t("CR_INVALID_ADOPTION_DECREE"),
-                      })}
-                    />
-                  </div>
-                  <div className="col-md-4">
-                    <CardLabel>{`${t("CR_ADOPTION_DECREE_ORDER_DATE")}`}
-                    {AdoptionDeedNo ==="" &&  <span className="mandatorycss">*</span>}
-                    </CardLabel>
-                    {/* <TextInput
-                      t={t}
-                      isMandatory={false}
-                      type={"text"}
-                      optionKey="i18nKey"
-                      name="adoptdateoforderdecree"
-                      value={childMiddleNameMl}
-                      onKeyPress={setCheckMalayalamInputField}
-                      onChange={setSelectChildMiddleNameMl}
-                      disable={isDisableEdit}
-                      placeholder={`${t("CR_ADOPTION_DECREE_ORDER_DATE")}`}
-                      {...(validation = {
-                        pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                        isRequired: false,
-                        type: "text",
-                        title: t("CR_INVALID_ADOPTION_DECREE_ORDER_DATE"),
-                      })}
-                    /> */}
-                       <DatePicker
-                          date={AdoptionDecreOrderDate}
-                          name="adoptdateoforderdecree"
-                          max={convertEpochToDate(new Date())}
-                          //min={convertEpochToDate("1900-01-01")}
-                          onChange={setSelectDeeOrderDate}
-                          disabled={isDisableEdit || AdoptionDeedNo !==""}
-                          //  inputFormat="DD-MM-YYYY"
-                          placeholder={`${t("CR_ADOPTION_DECREE_ORDER_DATE")}`}
-                          {...(validation = { isRequired: AdoptionDeedNo ===""? true : false, title: t("CR_INVALID_ADOPTION_DECREE_ORDER_DATE") })}
-                      />
-                  </div>
-                  <div className="col-md-4">
-                    <CardLabel>{`${t("CR_ISSUING_AUTHORITY")}`}
-                    {AdoptionDeedNo ==="" &&  <span className="mandatorycss">*</span>}
-                    </CardLabel>
-                    <TextInput
-                      t={t}
-                      isMandatory={false}
-                      type={"text"}
-                      optionKey="i18nKey"
-                      name="adoptissuingauththority"
-                      value={IssuingAuthority}
-                      // onKeyPress={setCheckMalayalamInputField}
-                      onChange={setSelectIssuingAuthority}
-                      disable={isDisableEdit || AdoptionDeedNo !==""}
-                      placeholder={`${t("CR_ISSUING_AUTHORITY")}`}
-                      {...(validation = {
-                        // pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                        isRequired: AdoptionDeedNo ===""? true : false,
-                        type: "text",
-                        title: t("CR_INVALID_ISSUING_AUTHORITY"),
-                      })}
-                    />
-                  </div>
-                </div>
-              </div>
-              
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="col-md-4">
-                    <CardLabel>
-                      {`${t("CR_ADOPTION_DEED_NO")}`}
-                      {AdoptionDecreOrderNo ==="" && <span className="mandatorycss">*</span> }
-                    </CardLabel>
-                    <TextInput
-                      t={t}
-                      isMandatory={false}
-                      type={"text"}
-                      optionKey="i18nKey"
-                      name="adoptdeedorderno"
-                      value={AdoptionDeedNo}
-                      // onKeyPress={setCheckMalayalamInputField}
-                      onChange={setSelectDeedNo}
-                      disable={isDisableEdit ||AdoptionDecreOrderNo !=="" }
-                      placeholder={`${t("CR_ADOPTION_DEED_NO")}`}
-                      {...(validation = {
-                        pattern: "^[0-9`' ]*$",
-                        isRequired: AdoptionDecreOrderNo =="" ?true:false,
-                        type: "text",
-                        title: t("CR_INVALID_ADOPTION_DEED_NO"),
-                      })}
-                    />
-                  </div>
-                  <div className="col-md-4">
-                    <CardLabel>{`${t("CR_DEED_REG_DATE")}`}
-                    {AdoptionDecreOrderNo ==="" && <span className="mandatorycss">*</span> }
-                    </CardLabel>
-                    {/* <TextInput
-                      t={t}
-                      isMandatory={false}
-                      type={"text"}
-                      optionKey="i18nKey"
-                      name="adoptdateoforderdecree"
-                      value={childMiddleNameMl}
-                      onKeyPress={setCheckMalayalamInputField}
-                      onChange={setSelectChildMiddleNameMl}
-                      disable={isDisableEdit}
-                      placeholder={`${t("CR_ADOPTION_DECREE_ORDER_DATE")}`}
-                      {...(validation = {
-                        pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                        isRequired: false,
-                        type: "text",
-                        title: t("CR_INVALID_ADOPTION_DECREE_ORDER_DATE"),
-                      })}
-                    /> */}
-                       <DatePicker
-                          date={AdoptionDeedRegDate}
-                          name="adoptdateoforderdeed"
-                          max={convertEpochToDate(new Date())}
-                          //min={convertEpochToDate("1900-01-01")}
-                          onChange={setSelectDeedRegDate}
-                          disabled={isDisableEdit  ||AdoptionDecreOrderNo !==""}
-                          //  inputFormat="DD-MM-YYYY"
-                          placeholder={`${t("CR_DEED_REG_DATE")}`}
-                          {...(validation = { isRequired: AdoptionDecreOrderNo =="" ?true:false, title: t("CR_INVALID_DEED_REG_DATE") })}
-                      />
-                  </div>
-                  <div className="col-md-4">
-                    <CardLabel>{`${t("CR_REG_AUTHORITY")}`}
-                    {AdoptionDecreOrderNo ==="" && <span className="mandatorycss">*</span> }</CardLabel>
-                    <TextInput
-                      t={t}
-                      isMandatory={false}
-                      type={"text"}
-                      optionKey="i18nKey"
-                      name="adoptissuingauththority"
-                      value={RegistrationAuthority}
-                      // onKeyPress={setCheckMalayalamInputField}
-                      onChange={setSelectRegistrationAuthority}
-                      disable={isDisableEdit  || AdoptionDecreOrderNo !==""}
-                      placeholder={`${t("CR_REG_AUTHORITY")}`}
-                      {...(validation = {
-                        pattern: "^[a-zA-Z-.`' ]*$",
-                        isRequired: AdoptionDecreOrderNo =="" ?true:false,
-                        type: "text",
-                        title: t("CR_INVALID_REG_AUTHORITY"),
-                      })}
-                    />
-                  </div>
-                </div>
-              </div>
+              {AdoptionDeedNo ==="" &&(
+                     <div className="row">
+                     <div className="col-md-12">
+                       <div className="col-md-4">
+                         <CardLabel>
+                           {`${t("CR_ADOPTION_DECREE")}`}
+                          {AdoptionDeedNo ==="" &&  <span className="mandatorycss">*</span>}
+                         </CardLabel>
+                         <TextInput
+                           t={t}
+                           isMandatory={false}
+                           type={"text"}
+                           optionKey="i18nKey"
+                           name="adoptdecreeorderno"
+                           value={AdoptionDecreOrderNo}
+                           // onKeyPress={setCheckMalayalamInputField}
+                           onChange={setSelectDeeOrderNo}
+                           disable={isDisableEdit || AdoptionDeedNo !==""}
+                           placeholder={`${t("CR_ADOPTION_DECREE")}`}
+                           {...(validation = {
+                             // pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                             isRequired: AdoptionDeedNo ===""? true : false,
+                             type: "text",
+                             title: t("CR_INVALID_ADOPTION_DECREE"),
+                           })}
+                         />
+                       </div>
+                       <div className="col-md-4">
+                         <CardLabel>{`${t("CR_ADOPTION_DECREE_ORDER_DATE")}`}
+                         {AdoptionDeedNo ==="" &&  <span className="mandatorycss">*</span>}
+                         </CardLabel>
+                         {/* <TextInput
+                           t={t}
+                           isMandatory={false}
+                           type={"text"}
+                           optionKey="i18nKey"
+                           name="adoptdateoforderdecree"
+                           value={childMiddleNameMl}
+                           onKeyPress={setCheckMalayalamInputField}
+                           onChange={setSelectChildMiddleNameMl}
+                           disable={isDisableEdit}
+                           placeholder={`${t("CR_ADOPTION_DECREE_ORDER_DATE")}`}
+                           {...(validation = {
+                             pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                             isRequired: false,
+                             type: "text",
+                             title: t("CR_INVALID_ADOPTION_DECREE_ORDER_DATE"),
+                           })}
+                         /> */}
+                            <DatePicker
+                               date={AdoptionDecreOrderDate}
+                               name="adoptdateoforderdecree"
+                               max={convertEpochToDate(new Date())}
+                               //min={convertEpochToDate("1900-01-01")}
+                               onChange={setSelectDeeOrderDate}
+                               disabled={isDisableEdit || AdoptionDeedNo !==""}
+                               //  inputFormat="DD-MM-YYYY"
+                               placeholder={`${t("CR_ADOPTION_DECREE_ORDER_DATE")}`}
+                               {...(validation = { isRequired: AdoptionDeedNo ===""? true : false, title: t("CR_INVALID_ADOPTION_DECREE_ORDER_DATE") })}
+                           />
+                       </div>
+                       <div className="col-md-4">
+                         <CardLabel>{`${t("CR_ISSUING_AUTHORITY")}`}
+                         {AdoptionDeedNo ==="" &&  <span className="mandatorycss">*</span>}
+                         </CardLabel>
+                         <TextInput
+                           t={t}
+                           isMandatory={false}
+                           type={"text"}
+                           optionKey="i18nKey"
+                           name="adoptissuingauththority"
+                           value={IssuingAuthority}
+                           // onKeyPress={setCheckMalayalamInputField}
+                           onChange={setSelectIssuingAuthority}
+                           disable={isDisableEdit || AdoptionDeedNo !==""}
+                           placeholder={`${t("CR_ISSUING_AUTHORITY")}`}
+                           {...(validation = {
+                             // pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                             isRequired: AdoptionDeedNo ===""? true : false,
+                             type: "text",
+                             title: t("CR_INVALID_ISSUING_AUTHORITY"),
+                           })}
+                         />
+                       </div>
+                     </div>
+                   </div>
+              )}      
+           
+              {AdoptionDecreOrderNo==="" &&(
+                 <div className="row">
+                 <div className="col-md-12">
+                   <div className="col-md-4">
+                     <CardLabel>
+                       {`${t("CR_ADOPTION_DEED_NO")}`}
+                       {AdoptionDecreOrderNo ==="" && <span className="mandatorycss">*</span> }
+                     </CardLabel>
+                     <TextInput
+                       t={t}
+                       isMandatory={false}
+                       type={"text"}
+                       optionKey="i18nKey"
+                       name="adoptdeedorderno"
+                       value={AdoptionDeedNo}
+                       // onKeyPress={setCheckMalayalamInputField}
+                       onChange={setSelectDeedNo}
+                       disable={isDisableEdit ||AdoptionDecreOrderNo !=="" }
+                       placeholder={`${t("CR_ADOPTION_DEED_NO")}`}
+                       {...(validation = {
+                         pattern: "^[0-9`' ]*$",
+                         isRequired: AdoptionDecreOrderNo =="" ?true:false,
+                         type: "text",
+                         title: t("CR_INVALID_ADOPTION_DEED_NO"),
+                       })}
+                     />
+                   </div>
+                   <div className="col-md-4">
+                     <CardLabel>{`${t("CR_DEED_REG_DATE")}`}
+                     {AdoptionDecreOrderNo ==="" && <span className="mandatorycss">*</span> }
+                     </CardLabel>
+                     {/* <TextInput
+                       t={t}
+                       isMandatory={false}
+                       type={"text"}
+                       optionKey="i18nKey"
+                       name="adoptdateoforderdecree"
+                       value={childMiddleNameMl}
+                       onKeyPress={setCheckMalayalamInputField}
+                       onChange={setSelectChildMiddleNameMl}
+                       disable={isDisableEdit}
+                       placeholder={`${t("CR_ADOPTION_DECREE_ORDER_DATE")}`}
+                       {...(validation = {
+                         pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                         isRequired: false,
+                         type: "text",
+                         title: t("CR_INVALID_ADOPTION_DECREE_ORDER_DATE"),
+                       })}
+                     /> */}
+                        <DatePicker
+                           date={AdoptionDeedRegDate}
+                           name="adoptdateoforderdeed"
+                           max={convertEpochToDate(new Date())}
+                           //min={convertEpochToDate("1900-01-01")}
+                           onChange={setSelectDeedRegDate}
+                           disabled={isDisableEdit  ||AdoptionDecreOrderNo !==""}
+                           //  inputFormat="DD-MM-YYYY"
+                           placeholder={`${t("CR_DEED_REG_DATE")}`}
+                           {...(validation = { isRequired: AdoptionDecreOrderNo =="" ?true:false, title: t("CR_INVALID_DEED_REG_DATE") })}
+                       />
+                   </div>
+                   <div className="col-md-4">
+                     <CardLabel>{`${t("CR_REG_AUTHORITY")}`}
+                     {AdoptionDecreOrderNo ==="" && <span className="mandatorycss">*</span> }</CardLabel>
+                     <TextInput
+                       t={t}
+                       isMandatory={false}
+                       type={"text"}
+                       optionKey="i18nKey"
+                       name="adoptissuingauththority"
+                       value={RegistrationAuthority}
+                       // onKeyPress={setCheckMalayalamInputField}
+                       onChange={setSelectRegistrationAuthority}
+                       disable={isDisableEdit  || AdoptionDecreOrderNo !==""}
+                       placeholder={`${t("CR_REG_AUTHORITY")}`}
+                       {...(validation = {
+                         pattern: "^[a-zA-Z-.`' ]*$",
+                         isRequired: AdoptionDecreOrderNo =="" ?true:false,
+                         type: "text",
+                         title: t("CR_INVALID_REG_AUTHORITY"),
+                       })}
+                     />
+                   </div>
+                 </div>
+               </div>
+              )}
+             
 
               {/* {ChildAadharHIde === true && (
                 <div className="col-md-3">

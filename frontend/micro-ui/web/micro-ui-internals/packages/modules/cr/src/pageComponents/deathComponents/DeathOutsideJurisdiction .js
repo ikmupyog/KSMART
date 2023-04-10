@@ -171,7 +171,7 @@ const DeathOutsideJurisdiction = ({
 
   return (
     <React.Fragment>
-      <FormStep
+      {/* <FormStep
         t={t}
         config={config}
         onSelect={goNext}
@@ -185,7 +185,8 @@ const DeathOutsideJurisdiction = ({
           !PlaceOfBurialMl ||
           !PlaceOfBurialEn
         }
-      >
+      > */}
+      <div className="col-md-12">
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-3">
@@ -206,14 +207,7 @@ const DeathOutsideJurisdiction = ({
             </div>
             <div className="col-md-3">
               <CardLabel>{t("CR_STATE_REGION_PROVINCE")}</CardLabel>
-              <Dropdown
-                t={t}
-                optionKey="name"
-                isMandatory={false}
-                option={cmbState}
-                selected={DeathPlaceState}
-                select={setSelectDeathPlaceState}
-              />
+              <Dropdown t={t} optionKey="name" isMandatory={false} option={cmbState} selected={DeathPlaceState} select={setSelectDeathPlaceState} />
             </div>
             <div className="col-md-3">
               <CardLabel>
@@ -282,7 +276,7 @@ const DeathOutsideJurisdiction = ({
                 value={DeathPlaceRemarksMl}
                 onChange={setSelectDeathPlaceRemarksMl}
                 placeholder={`${t("CR_PLACE_DEATH_ML")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_PLACE_DEATH_ML") })}
+                {...(validation = { pattern:  "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: true, type: "text", title: t("CR_PLACE_DEATH_ML") })}
               />
             </div>
           </div>
@@ -341,7 +335,7 @@ const DeathOutsideJurisdiction = ({
                 value={PlaceOfBurialMl}
                 onChange={setSelectPlaceOfBurialMl}
                 placeholder={`${t("CR_PLACE_BURIAL_ML")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_PLACE_BURIAL_ML") })}
+                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_PLACE_BURIAL_ML") })}
               />
             </div>
             <div className="col-md-6">
@@ -363,7 +357,8 @@ const DeathOutsideJurisdiction = ({
             </div>
           </div>
         </div>
-      </FormStep>
+      </div>
+      {/* </FormStep> */}
     </React.Fragment>
   );
 };

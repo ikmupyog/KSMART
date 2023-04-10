@@ -22,6 +22,7 @@ const navStyleCR = {
   position: "relative",
   left: "70px",
   bottom: "0px",
+  margin: "10px",
 };
 const navLi = {
   marginBottom: "5px",
@@ -72,14 +73,8 @@ const EmployeeSideBar = () => {
       className={click ? "display" : "sidebar"}
     >
       <div>
-        <Link
-          onClick={() => {
-            setClick(click);
-          }}
-          to="/digit-ui/employee"
-        >
-          <div
-            className="actions active"
+        <Link onClick={() => { setClick(click); }} to="/digit-ui/employee" >
+          <div className="actions active"
             onClick={() => {
               if (first === "") {
                 setfirst("Home");
@@ -107,19 +102,13 @@ const EmployeeSideBar = () => {
                 t={t}
                 label={"ACTION_TEST_HOME"}
               />
-              {click ? <span style={{ display: "inline-block" }}>Home</span> : null}
+              {click ? <span style={{ display: "inline-block" }}>{t("CS_COMMON_HOME")} </span> : null}
             </div>
           </div>
           {first === "Home" ? <div style={navStyle} className="nav_drop"></div> : null}
         </Link>
-        <Link
-          onClick={() => {
-            setClick(click);
-          }}
-          to="/digit-ui/employee/pgr/inbox"
-        >
-          <div
-            className="actions active"
+        <Link onClick={() => { setClick(click); }} to="/digit-ui/employee/pgr/inbox" >
+          <div className="actions active"
             onClick={() => {
               if (first === "") {
                 setfirst("Home1");
@@ -147,22 +136,17 @@ const EmployeeSideBar = () => {
                 t={t}
                 label={"ACTION_TEST_HOME"}
               />
-              {click ? <span style={{ display: "inline-block" }}>Complaints</span> : null}
+              {click ? <span style={{ display: "inline-block" }}>{t("ES_PGR_HEADER_COMPLAINT")} </span> : null}
             </div>
           </div>
           {first === "Home1" ? (
             <div style={navStyle} className="nav_drop">
-              <li style={navLi}>Open Complaints</li>
-              <li style={navLi}>Closed Complaints</li>
+              <li style={navLi}>{t("reports.rainmaker-pgr.status.open")}</li>
+              <li style={navLi}>{t("reports.rainmaker-pgr.status.closed")} </li>
             </div>
           ) : null}
         </Link>
-        <Link
-          onClick={() => {
-            setClick(click);
-          }}
-          to="/digit-ui/employee/"
-        >
+        <Link onClick={() => { setClick(click); }} to="/digit-ui/employee/" >
           <div
             className="actions active"
             onClick={() => {
@@ -190,37 +174,32 @@ const EmployeeSideBar = () => {
                 t={t}
                 label={"ACTION_TEST_HOME"}
               />
-              {click ? <span style={{ display: "inline-block" }}>Trade Licence</span> : null}
+              {click ? <span style={{ display: "inline-block" }}>{t("TL_TRADE_LICENSE")} </span> : null}
             </div>
           </div>
           {first === "Home9" ? (
             <div style={navStyle} className="nav_drop">
               <li style={navLi}>
-                <Link to="/digit-ui/employee/tl/inbox">Trade License</Link>
+                <Link to="/digit-ui/employee/tl/inbox">{t("TL_TRADE_LICENSE")}</Link>
               </li>
               <li style={navLi}>
-                <Link to="/digit-ui/employee/tl/search/application">Search</Link>
+                <Link to="/digit-ui/employee/tl/search/application">{t("ES_COMMON_CLEAR_SEARCH")}</Link>
               </li>
               <li style={navLi}>
-                <Link to="/digit-ui/employee//tl/new-application">Apply TL</Link>
+                <Link to="/digit-ui/employee//tl/new-application"> {t("TL_TRADE_APPLY")}</Link>
               </li>
-              <li style={navLi}>Apply for TL</li>
+              <li style={navLi}>{t("TL_TRADE_APPLY")}</li>
             </div>
           ) : null}
         </Link>
-        <Link
-          onClick={() => {
-            setClick(click);
-          }}
-        >
-          <div
-            className="actions active"
+        <Link onClick={() => { setClick(click); }} to="/digit-ui/employee/">
+          <div className="actions active"
             onClick={() => {
-              if (first === "") {
-                setfirst("Home11");
-              } else {
-                setfirst("");
-              }
+              // if (first === "") {
+              //   setfirst("Home11");
+              // } else {
+              //   setfirst("");
+              // }
             }}
           >
             <div style={mystyle}>
@@ -242,23 +221,18 @@ const EmployeeSideBar = () => {
                 t={t}
                 label={"ACTION_TEST_HOME"}
               />
-              {click ? <span style={{ display: "inline-block" }}>File Management</span> : null}
+              {click ? <span style={{ display: "inline-block" }}>{t("FILE_MANAGEMENT")} </span> : null}
             </div>
           </div>
-          {first === "Home11" ? (
+          {/* {first === "Home11" ? (
             <div style={navStyleCR} className="nav_drop">
               <li style={navLi}>
                 <Link to="/digit-ui/employee/cr/death-flow">New Registration</Link>
               </li>
             </div>
-          ) : null}
+          ) : null} */}
         </Link>
-        <Link
-          onClick={() => {
-            setClick(click);
-          }}
-          to="/digit-ui/employee/"
-        >
+        <Link onClick={() => { setClick(click); }} to="/digit-ui/employee/" >
           <div
             className="actions active"
             onClick={() => {
@@ -288,22 +262,24 @@ const EmployeeSideBar = () => {
                 t={t}
                 label={"ACTION_TEST_HOME"}
               />
-              {click ? <span style={{ display: "inline-block" }}>Citizen Registration</span> : null}
+              {click ? <span style={{ display: "inline-block" }}>{t("CIVIL_REGISTRATION")} </span> : null}
             </div>
             {first === "Home4" ? (
               <div style={navStyleCR} className="nav_drop">
                 <li style={navLi}>
-                  <Link to="/digit-ui/employee/cr/cr-flow">Birth Registration</Link>
+                  <Link to="/digit-ui/employee/cr/cr-flow">{t("CR_BIRTH_REGISTRATION")} </Link>
                 </li>
                 <li style={navLi}>
-                  <Link to="/digit-ui/employee/cr/death-flow">Death Registration</Link>
+                  <Link to="/digit-ui/employee/cr/death-flow">{t("CR_DEATH_REGISTRATION")}</Link>
                 </li>
               </div>
             ) : null}
           </div>
           {first === "Home4" ? <div style={navStyle} className="nav_drop"></div> : null}
         </Link>
-        <Link
+
+
+        {/* <Link
           onClick={() => {
             setClick(click);
           }}
@@ -350,7 +326,9 @@ const EmployeeSideBar = () => {
               <li style={navLi}>Trade Liscense</li>
             </div>
           ) : null}
-        </Link>
+        </Link> */}
+
+
         {/* <Link
           onClick={() => {
             setClick(click);

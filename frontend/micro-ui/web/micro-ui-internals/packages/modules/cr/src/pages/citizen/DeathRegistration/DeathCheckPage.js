@@ -47,6 +47,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
   const history = useHistory();
   const match = useRouteMatch();
   const { InformationDeath, FamilyInformationDeath, AddressBirthDetails, isEditProperty, cpt } = value;
+  const [IsDeclarationInitiator, setIsDeclarationInitiator] = useState(false);
   function getdate(date) {
     let newdate = Date.parse(date);
     return `${
@@ -72,7 +73,13 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
       return null;
     }
   };
-
+  function setselectIsDeclarationInitiator(e) {
+    if (e.target.checked == true) {
+      setIsDeclarationInitiator(e.target.checked);
+    } else {
+      setIsDeclarationInitiator(e.target.checked);
+    }
+  }
   return (
     <React.Fragment>
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
@@ -524,6 +531,25 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
               </div>
             </div>
           )}
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
+            </h1>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-12">
+              <CheckBox
+                label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
+                onChange={setselectIsDeclarationInitiator}
+                value={IsDeclarationInitiator}
+                checked={IsDeclarationInitiator}
+              />
+            </div>
+          </div>
         </div>
         <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} />
       </Card>
