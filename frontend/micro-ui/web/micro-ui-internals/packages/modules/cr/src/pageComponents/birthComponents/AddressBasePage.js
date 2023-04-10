@@ -454,9 +454,11 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                 }
                 if (presentInsideKeralaStreetNameEn.trim() == null || presentInsideKeralaStreetNameEn.trim() == '' || presentInsideKeralaStreetNameEn.trim() == undefined) {
                     setinsideKeralaStreetNameEn("");
+                    setPresentInsideKeralaStreetNameEnError(false);
                 } 
                 if (presentInsideKeralaStreetNameMl.trim() == null || presentInsideKeralaStreetNameMl.trim() == '' || presentInsideKeralaStreetNameMl.trim() == undefined) {
                     setinsideKeralaStreetNameMl("");
+                    setPresentInsideKeralaStreetNameMlError(false);
                 } 
                 if (presentInsideKeralaStreetNameEn != null && (presentInsideKeralaStreetNameMl.trim() == null || presentInsideKeralaStreetNameMl.trim() == '' || presentInsideKeralaStreetNameMl.trim() == undefined)) {
                     setPresentInsideKeralaStreetNameMlError(true);
