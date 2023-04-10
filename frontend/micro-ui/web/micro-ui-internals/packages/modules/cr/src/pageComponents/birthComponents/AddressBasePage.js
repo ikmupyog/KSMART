@@ -107,13 +107,13 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
     const [presentInsideKeralaHouseNameMl, setinsideKeralaHouseNameMl] = useState(formData?.AddressBirthDetails?.presentInsideKeralaHouseNameMl ? formData?.AddressBirthDetails?.presentInsideKeralaHouseNameMl : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaHouseNameMl ? formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaHouseNameMl :
         formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaHouseNameMl ? formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaHouseNameMl : "");
     const [presentInsideKeralaLocalityNameEn, setinsideKeralaLocalityNameEn] = useState(formData?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn ? formData?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn ? formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn :
-        formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaHouseNameMl ? formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaHouseNameMl : null);
+        formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaHouseNameMl ? formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaHouseNameMl : "");
     const [presentInsideKeralaLocalityNameMl, setinsideKeralaLocalityNameMl] = useState(formData?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl ? formData?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl ? formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl :
-        formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl ? formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl : null);
+        formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl ? formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl : "");
     const [presentInsideKeralaStreetNameEn, setinsideKeralaStreetNameEn] = useState(formData?.AddressBirthDetails?.presentInsideKeralaStreetNameEn ? formData?.AddressBirthDetails?.presentInsideKeralaStreetNameEn : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameEn ? formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameEn :
-        formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameEn ? formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameEn : null);
+        formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameEn ? formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameEn : "");
     const [presentInsideKeralaStreetNameMl, setinsideKeralaStreetNameMl] = useState(formData?.AddressBirthDetails?.presentInsideKeralaStreetNameMl ? formData?.AddressBirthDetails?.presentInsideKeralaStreetNameMl : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameMl ? formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameMl :
-        formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameMl ? formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameMl : null);
+        formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameMl ? formData?.StillBirthChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameMl : "");
 
     const [Districtvalues, setDistrictvalue] = useState(null);
     const [Talukvalues, setLbsTalukvalue] = useState(null);
@@ -452,14 +452,19 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                 } else {
                     setPresentInsideKeralaHouseNameMlError(false);
                 }
-                if (presentInsideKeralaStreetNameEn.trim() == null || presentInsideKeralaStreetNameEn.trim() == '' || presentInsideKeralaStreetNameEn.trim() == undefined) {
-                    setinsideKeralaStreetNameEn("");
-                } 
-                if (presentInsideKeralaStreetNameMl.trim() == null || presentInsideKeralaStreetNameMl.trim() == '' || presentInsideKeralaStreetNameMl.trim() == undefined) {
-                    setinsideKeralaStreetNameMl("");
-                } 
-                if (presentInsideKeralaStreetNameEn != null && (presentInsideKeralaStreetNameMl.trim() == null || presentInsideKeralaStreetNameMl.trim() == '' || presentInsideKeralaStreetNameMl.trim() == undefined)) {
+                // if (presentInsideKeralaStreetNameEn.trim() == null || presentInsideKeralaStreetNameEn.trim() == '' || presentInsideKeralaStreetNameEn.trim() == undefined) {
+                //     setinsideKeralaStreetNameEn("");
+                //     //setPresentInsideKeralaStreetNameEnError(false);
+                // } 
+                // if (presentInsideKeralaStreetNameMl.trim() == null || presentInsideKeralaStreetNameMl.trim() == '' || presentInsideKeralaStreetNameMl.trim() == undefined) {
+                //     setinsideKeralaStreetNameMl("");
+                //     //setPresentInsideKeralaStreetNameMlError(false);
+                // } 
+                if (presentInsideKeralaStreetNameEn === null || presentInsideKeralaStreetNameEn.trim() == '' || presentInsideKeralaStreetNameEn.trim() == undefined) {
+                    setinsideKeralaStreetNameEn("");                   
+                } else if (presentInsideKeralaStreetNameEn != null && (presentInsideKeralaStreetNameMl.trim() == null || presentInsideKeralaStreetNameMl.trim() == '' || presentInsideKeralaStreetNameMl.trim() == undefined)) {
                     setPresentInsideKeralaStreetNameMlError(true);
+                    setinsideKeralaStreetNameMl("");
                     validFlag = false;
                     setToast(true);
                     setTimeout(() => {
@@ -468,8 +473,11 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                 } else {
                     setPresentInsideKeralaStreetNameMlError(false);
                 }
-                if (presentInsideKeralaStreetNameMl != null && (presentInsideKeralaStreetNameEn.trim() == null || presentInsideKeralaStreetNameEn.trim() == '' || presentInsideKeralaStreetNameEn.trim() == undefined)) {
+                if (presentInsideKeralaStreetNameMl === null || presentInsideKeralaStreetNameMl.trim() == '' || presentInsideKeralaStreetNameMl.trim() == undefined) {
+                    setinsideKeralaStreetNameMl("");                   
+                } else if (presentInsideKeralaStreetNameMl != null && (presentInsideKeralaStreetNameEn.trim() == null || presentInsideKeralaStreetNameEn.trim() == '' || presentInsideKeralaStreetNameEn.trim() == undefined)) {
                     setPresentInsideKeralaStreetNameEnError(true);
+                    setinsideKeralaStreetNameEn("");
                     validFlag = false;
                     setToast(true);
                     setTimeout(() => {
