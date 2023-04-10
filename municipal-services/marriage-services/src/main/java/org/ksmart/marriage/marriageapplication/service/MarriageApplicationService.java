@@ -56,6 +56,7 @@ public class MarriageApplicationService {
         mdmsValidator.validateMarriageMDMSData(request,mdmsData);
         marriageDetailsEnrichment.enrichCreate(request);
         producer.push(marriageApplicationConfiguration.getSaveMarriageApplicationTopic(), request);
+       // System.out.println("CheckWorkFlow"+request.getMarriageDetails().get(0).isWorkflow());
         if (request.getMarriageDetails().get(0).isWorkflow()){
             workflowIntegrator.callWorkFlow(request);
         }

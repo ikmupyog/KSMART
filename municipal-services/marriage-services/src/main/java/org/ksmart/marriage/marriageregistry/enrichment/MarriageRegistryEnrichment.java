@@ -63,18 +63,18 @@ public class MarriageRegistryEnrichment implements BaseEnrichment {
             }
             if(marriage.getBrideDetails()!=null){
                 marriage.getBrideDetails().setBrideId((UUID.randomUUID().toString()));
-                // marriage.getBrideDetails().setBrideGroom("B");
+                 marriage.getBrideDetails().setBrideGroom("B");
             }
             if(marriage.getGroomDetails()!=null){
                 marriage.getGroomDetails().setGroomId((UUID.randomUUID().toString()));
-                // marriage.getGroomDetails().setBrideGroom("G");
+                 marriage.getGroomDetails().setBrideGroom("G");
 
             }
             if(marriage.getWitnessDetails()!=null){
                 marriage.getWitnessDetails().setWitnessId1(UUID.randomUUID().toString());
                 marriage.getWitnessDetails().setWitnessId2(UUID.randomUUID().toString());
-                // marriage.getWitnessDetails().setSerial_no1(1);
-                // marriage.getWitnessDetails().setSerial_no2(2);
+                 marriage.getWitnessDetails().setSerial_no1(1);
+                 marriage.getWitnessDetails().setSerial_no2(2);
                 marriage.getWitnessDetails().setWitnessAuditDetails(auditDetails);
             }
         });
