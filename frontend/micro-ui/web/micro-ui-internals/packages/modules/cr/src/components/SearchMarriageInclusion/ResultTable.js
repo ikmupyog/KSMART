@@ -9,7 +9,8 @@ const ResultTable = ({
                          handleSubmit,
                          t,
                          onSubmit,
-                         goToLink
+                         goToLink,
+                         searchType
                      }) => {
     const GetCell = (value) => <span className="cell-text">{value}</span>;
 
@@ -17,13 +18,13 @@ const ResultTable = ({
         () => [
             {
                 Header: t("CR_SEARCH_APP_NO_LABEL"),
-                accessor: "marriageApplicationNo",
+                accessor: "marriageRecordNo",
                 disableSortBy: true,
                 Cell: ({ row }) => {
                     return (
                         <div>
                             <span className="link" onClick={() => goToLink(row.original)}>
-                                {row.original.applicationNumber}
+                                {searchType == 'application' ? row.original.applicationNumber : row.original.registrationno}
                             </span>
                         </div>
                     );

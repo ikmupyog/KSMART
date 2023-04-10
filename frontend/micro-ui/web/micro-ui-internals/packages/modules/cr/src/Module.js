@@ -30,6 +30,7 @@ import BirthInclusionModal from "./components/BirthInclusionModal";
 
 import SearchMarriageInclusion from "./components/SearchMarriageInclusion";
 import SearchApplicationMarriage from "./components/SearchApplicationMarriage";
+import DownloadMarriageCertificate from "./components/DownloadMarriageCertificate";
 import CreateAdoptions from "./pages/citizen/Adoption";
 import CreateStillBirthRegistration from "./pages/citizen/StillBirthRegistration";
 import CreateBornOutsideRegistration from "./pages/citizen/BornOutsideReg";
@@ -385,6 +386,7 @@ const componentsToRegister = {
   CRDeathCorrectionEditPage: DeathCorrectionEditPage,
   SearchMarriageInclusion,
   SearchApplicationMarriage,
+  DownloadMarriageCertificate,
   CRDeathcorrection,
   CRSearchdeathcorrection,
   CRSearchDeathCorrectionRoute,
