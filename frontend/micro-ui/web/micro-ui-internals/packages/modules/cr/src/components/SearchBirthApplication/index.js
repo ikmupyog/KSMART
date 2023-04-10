@@ -35,18 +35,18 @@ const SearchBirthApplication = ({ onSubmit, data, filestoreId, isSuccess, isLoad
         defaultValues: {
             offset: 0,
             limit: 10,
-            // sortBy: "dateOfBirth",
+            sortBy: "TL_COMMON_TABLE_COL_APP_NO",
             sortOrder: "DESC",
         },
     });
     const { t } = useTranslation();
 
-    useEffect(() => {
-        register("offset", 0);
-        register("limit", 10);
-        //register("sortBy", "dateOfBirth");
-        register("sortOrder", "DESC");
-    }, [register]);
+    // useEffect(() => {
+    //     register("offset", 0);
+    //     register("limit", 10);
+    //     register("sortBy", "TL_COMMON_TABLE_COL_APP_NO");
+    //     register("sortOrder", "DESC");
+    // }, [register]);
     const onSort = useCallback((args) => {
         if (args.length === 0) return;
         setValue("sortBy", args.id);
@@ -70,21 +70,21 @@ const SearchBirthApplication = ({ onSubmit, data, filestoreId, isSuccess, isLoad
     const columns = useMemo(
         () => [
             {
-                Header: t("CR_RGISTRATION_NUMBER"),
-                accessor: "birthApplicationNo",
-                disableSortBy: true,
-                Cell: ({ row }) => {
-                    return (
-                        <div>
-                            <span className="link">
-                                {/* <Link to={`/digit-ui/employee/cr/application-deathdetails/${row.original.deathApplicationNo}`}>
-                        {row.original.deathApplicationNo}
-                      </Link> */}
-                                {row.original.TL_COMMON_TABLE_COL_APP_NO}
-                            </span>
-                        </div>
-                    );
-                },
+                Header: t("CR_COMMON_COL_ACKNO"),
+                accessor: (row) => GetCell(row.TL_COMMON_TABLE_COL_APP_NO),
+                // disableSortBy: true,
+                // Cell: ({ row }) => {
+                //     return (
+                //         <div>
+                //             <span className="link">
+                //                 {/* <Link to={`/digit-ui/employee/cr/application-deathdetails/${row.original.deathApplicationNo}`}>
+                //         {row.original.deathApplicationNo}
+                //       </Link> */}
+                //                 {row.original.TL_COMMON_TABLE_COL_APP_NO}
+                //             </span>
+                //         </div>
+                //     );
+                // },
             },
             {
                 Header: t("CR_COMMON_MOTHER_NAME"),
@@ -125,13 +125,13 @@ const SearchBirthApplication = ({ onSubmit, data, filestoreId, isSuccess, isLoad
         []
     );
     let tmpData = data;
-    // let temData1 = _.head(data)||{};
+   
     useEffect(() => {
-        if (filestoreId && isSuccess === true) {
-            tmpData[0] = { ...data[0], filestoreId, isSuccess };
+        if ( isSuccess === true) {
+            tmpData[0] = { ...data[0], isSuccess };
         }
         setFileData(tmpData);
-    }, [filestoreId]);
+    });
     return (
         <React.Fragment>
             <div style={mystyle}>
@@ -153,7 +153,7 @@ const SearchBirthApplication = ({ onSubmit, data, filestoreId, isSuccess, isLoad
             ) : isLoading && !FileData === true ? (
                 <Loader />
             ) : (
-                FileData !== [] && (
+                FileData !== "" && (
                     <React.Fragment>
                         {/* {(filestoreId && isSuccess === true )? <div style={registyBtnStyle}>
         <SubmitBar label={t("Download Certificate")} onSubmit={() => downloadDocument(filestoreId)} />
@@ -174,7 +174,7 @@ const SearchBirthApplication = ({ onSubmit, data, filestoreId, isSuccess, isLoad
                                 };
                             }}
                             onPageSizeChange={onPageSizeChange}
-                            currentPage={getValues("offset") / getValues("limit")}
+                            // currentPage={getValues("offset") / getValues("limit")}
                             onNextPage={nextPage}
                             onPrevPage={previousPage}
                             pageSizeLimit={getValues("limit")}
@@ -184,7 +184,7 @@ const SearchBirthApplication = ({ onSubmit, data, filestoreId, isSuccess, isLoad
                         />
                     </React.Fragment>
                 )
-            )}
+            )} 
         </React.Fragment>
     )
 }

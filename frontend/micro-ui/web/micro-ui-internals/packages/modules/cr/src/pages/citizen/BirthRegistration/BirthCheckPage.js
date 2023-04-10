@@ -1,27 +1,29 @@
-import {  Card,  CardLabel,  CardSubHeader,  CardText,  CitizenInfoLabel,
-  LinkButton,  Row,  StatusTable,  SubmitBar,  BackButton,  CheckBox } from "@egovernments/digit-ui-react-components";
+import {
+  Card, CardLabel, CardSubHeader, CardText, CitizenInfoLabel,
+  LinkButton, Row, StatusTable, SubmitBar, BackButton, CheckBox,Toast
+} from "@egovernments/digit-ui-react-components";
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useRouteMatch } from "react-router-dom";
 //import TLDocument from "../../../pageComponents/TLDocumets";
 import Timeline from "../../../components/CRTimeline";
 
-const ActionButton = ({ jumpTo }) => {
-  const { t } = useTranslation();
-  const history = useHistory();
-  function routeTo() {
-    sessionStorage.setItem("isDirectRenewal", false);
-    history.push(jumpTo);
-  }
-  return (
-    <LinkButton
-      label={t("CS_COMMON_CHANGE")}
-      className="check-page-link-button"
-      style={jumpTo.includes("proof-of-identity") ? { textAlign: "right", marginTop: "-32px" } : {}}
-      onClick={routeTo}
-    />
-  );
-};
+// const ActionButton = ({ jumpTo }) => {
+//   const { t } = useTranslation();
+//   const history = useHistory();
+//   function routeTo() {
+//     sessionStorage.setItem("isDirectRenewal", false);
+//     history.push(jumpTo);
+//   }
+//   return (
+//     <LinkButton
+//       label={t("CS_COMMON_CHANGE")}
+//       className="check-page-link-button"
+//       style={jumpTo.includes("proof-of-identity") ? { textAlign: "right", marginTop: "-32px" } : {}}
+//       onClick={routeTo}
+//     />
+//   );
+// };
 
 const getPath = (path, params) => {
   params &&
@@ -35,6 +37,10 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
   const { t } = useTranslation();
   const history = useHistory();
   const match = useRouteMatch();
+  const [InitiatorDeclareError, setInitiatorDeclareError] = useState(false);
+  const [isInitialRender, setIsInitialRender] = useState(true);
+  const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(false);
+  const [toast, setToast] = useState(false);
   const {
     ChildDetails,
     ParentsDetails,
@@ -52,9 +58,8 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
   } = value;
   function getdate(date) {
     let newdate = Date.parse(date);
-    return `${
-      new Date(newdate).getDate().toString() + "/" + (new Date(newdate).getMonth() + 1).toString() + "/" + new Date(newdate).getFullYear().toString()
-    }`;
+    return `${new Date(newdate).getDate().toString() + "/" + (new Date(newdate).getMonth() + 1).toString() + "/" + new Date(newdate).getFullYear().toString()
+      }`;
   }
   // const typeOfApplication = !isEditProperty ? `new-application` : `renew-trade`;
   let routeLink = "";
@@ -68,6 +73,18 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
     userType = "citizen";
   } else {
     userType = "employee";
+  }
+  function onBirthSubmit() {
+    if (!isInitiatorDeclaration) {
+      setInitiatorDeclareError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setInitiatorDeclareError(false);
+      onSubmit();
+    }
   }
   const convertEpochToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
@@ -83,9 +100,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
       return null;
     }
   };
-  const [isInitialRender, setIsInitialRender] = useState(true);
-  const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(false);
-
+ 
   // useEffect(() => {
   //   if (isInitialRender) {
   //     if (formData?.InitiatorinfoDetails?.isInitiatorDeclaration != null) {
@@ -109,6 +124,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
       {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
       <Card>
         {/* <label style={{ fontSize: "17px", fontWeight: "bold" }}>{t("CR_REG_SUMMARY_HEADING")}</label> */}
+       
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -116,19 +132,19 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
             </h1>
           </div>
         </div>
-        <div
+        <div className="col-md-12"
           style={{
-            maxWidth: "80%",
+            maxWidth: "auto",
             margin: "25px auto",
             padding: "3rem 2rem",
             border: "none",
             borderRadius: "8px",
-            height: "800PX",
+            height: "auto",
             backgroundColor: "#f3f0ef",
           }}
         >
           {/* class="site-wrap" */}
-
+          <div className="col-md-12">
           <div className="row">
             <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}> {`${t("PDF_BIRTH_CHILD_NAME")}`} </CardLabel>
@@ -247,27 +263,27 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                       :
                       {
                         t(ChildDetails?.vehicleType.name ? ChildDetails?.vehicleType.name : "CR_NOT_RECORDED") +
-                          " , " +
-                          // ChildDetails?.vehicleRegistrationNo +
-                          // " , " +
-                          ChildDetails?.vehicleFromEn +
-                          " , " +
-                          ChildDetails?.vehicleToEn +
-                          // ChildDetails?.vehicleHaltPlace +
-                          // " , " +
-                          // ChildDetails?.vehicleDesDetailsEn +
-                          // " , " +
-                          // ChildDetails?.setadmittedHospitalEn +
-                          // " , " +
-                          // ChildDetails?.wardNo +
-                          " / " +
-                          t(ChildDetails?.vehicleType.namelocal ? ChildDetails?.vehicleType.namelocal : "CR_NOT_RECORDED") +
-                          " , " +
-                          // ChildDetails?.vehicleRegistrationNo +
-                          // " , " +
-                          ChildDetails?.vehicleFromMl +
-                          " , " +
-                          ChildDetails?.vehicleToMl
+                        " , " +
+                        // ChildDetails?.vehicleRegistrationNo +
+                        // " , " +
+                        ChildDetails?.vehicleFromEn +
+                        " , " +
+                        ChildDetails?.vehicleToEn +
+                        // ChildDetails?.vehicleHaltPlace +
+                        // " , " +
+                        // ChildDetails?.vehicleDesDetailsEn +
+                        // " , " +
+                        // ChildDetails?.setadmittedHospitalEn +
+                        // " , " +
+                        // ChildDetails?.wardNo +
+                        " / " +
+                        t(ChildDetails?.vehicleType.namelocal ? ChildDetails?.vehicleType.namelocal : "CR_NOT_RECORDED") +
+                        " , " +
+                        // ChildDetails?.vehicleRegistrationNo +
+                        // " , " +
+                        ChildDetails?.vehicleFromMl +
+                        " , " +
+                        ChildDetails?.vehicleToMl
                         //  +
                         // " , " +
                         // ChildDetails?.vehicleHaltPlace +
@@ -548,7 +564,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
+              <span style={{ background: "#f3f0ef", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
             </h1>
           </div>
         </div>
@@ -561,12 +577,28 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
                 onChange={setDeclarationInfo}
                 value={isInitiatorDeclaration}
                 checked={isInitiatorDeclaration}
-                // disable={isDisableEdit}
+              // disable={isDisableEdit}
               />
             </div>
           </div>
+      
+
+        {toast && (
+          <Toast
+            error={InitiatorDeclareError}
+            label={
+              InitiatorDeclareError
+                ? InitiatorDeclareError
+                  ? t(`BIRTH_DECLARATION_CHOOSE`) : setToast(false)
+                : setToast(false)
+            }
+            onClose={() => setToast(false)}
+          />
+        )}
+        {""}
+        <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onBirthSubmit} />
         </div>
-        <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} isDisabled={!initiatorNameEn} />
+        </div>
       </Card>
     </React.Fragment>
   );

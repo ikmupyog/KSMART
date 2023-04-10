@@ -71,34 +71,31 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
       cmbReligion.push(ob);
     });
   const [motherFirstNameEn, setMotherFirstNameEn] = useState(
-    formData?.BornOutsideParentsDetails?.motherFirstNameEn ? formData?.BornOutsideParentsDetails?.motherFirstNameEn : ""
-  );
+    formData?.BornOutsideParentsDetails?.motherFirstNameEn ? formData?.BornOutsideParentsDetails?.motherFirstNameEn : formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.motherFirstNameEn ? formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.motherFirstNameEn : "");
+
   const [motherFirstNameMl, setMotherFirstNameMl] = useState(
-    formData?.BornOutsideParentsDetails?.motherFirstNameMl ? formData?.BornOutsideParentsDetails?.motherFirstNameMl : ""
-  );
+    formData?.BornOutsideParentsDetails?.motherFirstNameMl ? formData?.BornOutsideParentsDetails?.motherFirstNameMl : formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.motherFirstNameMl ? formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.motherFirstNameMl : "");
 
   const [motherPassportNo, setmotherPassportNo] = useState(
-    formData?.BornOutsideParentsDetails?.motherPassportNo ? formData?.BornOutsideParentsDetails?.motherPassportNo : ""
-  );
+    formData?.BornOutsideParentsDetails?.motherPassportNo ? formData?.BornOutsideParentsDetails?.motherPassportNo : formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.motherPassportNo ? formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.motherPassportNo : "");
+  
   const [motherMarriageAge, setMotherMarriageAge] = useState(
     formData?.BornOutsideParentsDetails?.motherMarriageAge ? formData?.BornOutsideParentsDetails?.motherMarriageAge : ""
   );
-  const [motherEmail, setMotherEmail] = useState(
-    formData?.BornOutsideParentsDetails?.motherEmail ? formData?.BornOutsideParentsDetails?.motherEmail : ""
-  );
-  const [motherMarriageBirth, setMotherMarriageBirth] = useState(
-    formData?.BornOutsideParentsDetails?.motherMarriageBirth ? formData?.BornOutsideParentsDetails?.motherMarriageBirth : ""
-  );
-  const [motherEducation, setMotherEducation] = useState(
-    formData?.BornOutsideParentsDetails?.motherEducation ? formData?.BornOutsideParentsDetails?.motherEducation : null
-  );
-  const [motherProfession, setMotherProfession] = useState(
-    formData?.BornOutsideParentsDetails?.motherProfession ? formData?.BornOutsideParentsDetails?.motherProfession : null
-  );
+  // const [motherEmail, setMotherEmail] = useState(
+  //   formData?.BornOutsideParentsDetails?.motherEmail ? formData?.BornOutsideParentsDetails?.motherEmail : ""
+  // );
+  const [motherMarriageBirth, setMotherMarriageBirth] = useState(formData?.BornOutsideParentsDetails?.motherMarriageBirth ? formData?.BornOutsideParentsDetails?.motherMarriageBirth :
+    formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.motherMarriageBirth ? formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.motherMarriageBirth : "");
 
-  const [motherNationality, setMotherNationality] = useState(
-    formData?.BornOutsideParentsDetails?.motherNationality ? formData?.BornOutsideParentsDetails?.motherNationality : null
-  );
+  const [motherEducation, setMotherEducation] = useState(formData?.BornOutsideParentsDetails?.motherEducation?.code ? formData?.BornOutsideParentsDetails?.motherEducation : formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.motherEducation ?
+    (cmbQualification.filter(cmbQualification => cmbQualification.code === formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.motherEducation)[0]) : "");
+
+  const [motherProfession, setMotherProfession] =  useState(formData?.BornOutsideParentsDetails?.motherProfession?.code ? formData?.BornOutsideParentsDetails?.motherProfession : formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.motherProfession ?
+    (cmbProfession.filter(cmbProfession => cmbProfession.code === formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.motherProfession)[0]) : "");
+
+  const [motherNationality, setMotherNationality] = useState(formData?.BornOutsideParentsDetails?.motherNationality?.code ? formData?.BornOutsideParentsDetails?.motherNationality : formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.motherNationality ?
+    (cmbNation.filter(cmbNation => cmbNation.code === formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.motherNationality)[0]) : "");
 
   const [ismotherInfo, setIsmotherInfo] = useState(false);
 
@@ -111,31 +108,32 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
   const [MotherProfessionError, setMotherProfessionError] = useState(formData?.BornOutsideParentsDetails?.motherProfession ? false : false);
   const [MotherNationalityError, setMotherNationalityError] = useState(formData?.BornOutsideParentsDetails?.motherNationality ? false : false);
 
-  const [fatherFirstNameEn, setFatherFirstNameEn] = useState(
-    formData?.BornOutsideParentsDetails?.fatherFirstNameEn ? formData?.BornOutsideParentsDetails?.fatherFirstNameEn : ""
-  );
-  const [fatherFirstNameMl, setFatherFirstNameMl] = useState(
-    formData?.BornOutsideParentsDetails?.fatherFirstNameMl ? formData?.BornOutsideParentsDetails?.fatherFirstNameMl : ""
-  );
-  const [fatherNationality, setFatherNationality] = useState(
-    formData?.BornOutsideParentsDetails?.fatherNationality ? formData?.BornOutsideParentsDetails?.fatherNationality : null
-  );
+  const [fatherFirstNameEn, setFatherFirstNameEn] = useState(formData?.BornOutsideParentsDetails?.fatherFirstNameEn ? formData?.BornOutsideParentsDetails?.fatherFirstNameEn :
+    formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.fatherFirstNameEn ? formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.fatherFirstNameEn : "");
+
+  const [fatherFirstNameMl, setFatherFirstNameMl] = useState(formData?.BornOutsideParentsDetails?.fatherFirstNameMl ? formData?.BornOutsideParentsDetails?.fatherFirstNameMl :
+    formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.fatherFirstNameMl ? formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.fatherFirstNameMl : "");
+
+  const [fatherNationality, setFatherNationality] = useState(formData?.BornOutsideParentsDetails?.fatherNationality?.code ? formData?.BornOutsideParentsDetails?.fatherNationality : formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.fatherNationality ?
+    (cmbNation.filter(cmbNation => cmbNation.code === formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.fatherNationality)[0]) : "");
+
   const [fatherPassportNo, setfatherPassportNo] = useState(
-    formData?.BornOutsideParentsDetails?.fatherPassportNo ? formData?.BornOutsideParentsDetails?.fatherPassportNo : ""
-  );
-  const [fatherEducation, setFatherEducation] = useState(
-    formData?.BornOutsideParentsDetails?.fatherEducation ? formData?.BornOutsideParentsDetails?.fatherEducation : null
-  );
-  const [fatherProfession, setFatherProfession] = useState(
-    formData?.BornOutsideParentsDetails?.fatherProfession ? formData?.BornOutsideParentsDetails?.fatherProfession : null
-  );
-  const [Religion, setReligion] = useState(formData?.BornOutsideParentsDetails?.Religion ? formData?.BornOutsideParentsDetails?.Religion : null);
-  const [fatherEmail, setFatherEmail] = useState(
-    formData?.BornOutsideParentsDetails?.fatherEmail ? formData?.BornOutsideParentsDetails?.fatherEmail : ""
-  );
-  const [fatherMobile, setFatherMobile] = useState(
-    formData?.BornOutsideParentsDetails?.fatherMobile ? formData?.BornOutsideParentsDetails?.fatherMobile : ""
-  );
+    formData?.BornOutsideParentsDetails?.fatherPassportNo ? formData?.BornOutsideParentsDetails?.fatherPassportNo : formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.fatherPassportNo ? formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.fatherPassportNo : "");
+
+  const [fatherEducation, setFatherEducation] = useState(formData?.BornOutsideParentsDetails?.fatherEducation?.code ? formData?.BornOutsideParentsDetails?.fatherEducation : formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.fatherEducation ?
+    (cmbQualification.filter(cmbQualification => cmbQualification.code === formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.fatherEducation)[0]) : "");
+
+  const [fatherProfession, setFatherProfession] = useState(formData?.BornOutsideParentsDetails?.fatherProfession?.code ? formData?.BornOutsideParentsDetails?.fatherProfession : formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.fatherProfession ?
+    (cmbProfession.filter(cmbProfession => cmbProfession.code === formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.fatherProfession)[0]) : "");
+
+  const [Religion, setReligion] = useState(formData?.BornOutsideParentsDetails?.Religion?.code ? formData?.BornOutsideParentsDetails?.Religion : formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.Religion ?
+    (cmbReligion.filter(cmbReligion => cmbReligion.code === formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.Religion)[0]) : "");
+
+  const [fatherEmail, setFatherEmail] = useState(formData?.BornOutsideParentsDetails?.fatherEmail ? formData?.BornOutsideParentsDetails?.fatherEmail :
+    formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.fatherEmail ? formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.fatherEmail : "");
+
+  const [fatherMobile, setFatherMobile] = useState(formData?.BornOutsideParentsDetails?.fatherMobile ? formData?.BornOutsideParentsDetails?.fatherMobile :
+    formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.fatherMobile ? formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.fatherMobile : "");
 
   const [FatherFirstNmeEnError, setFatherFirstNmeEnError] = useState(formData?.BornOutsideParentsDetails?.fatherFirstNameEn ? false : false);
   const [FatherFirstNmeMlError, setFatherFirstNmeMlError] = useState(formData?.BornOutsideParentsDetails?.fatherFirstNameMl ? false : false);
@@ -198,9 +196,11 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
   }
 
   function setSelectFatherMobile(e) {
+    if (e.target.value != null || e.target.value != "") {
     if (e.target.value.trim().length != 0) {
-      setFatherMobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 10));
+      setFatherMobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
     }
+  }
   }
   function setSelectFatherEmail(e) {
     if (e.target.value.trim().length === 51 || e.target.value.trim() === ".") {
@@ -489,7 +489,9 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                 </div>
                 <div className="col-md-3">
                   {" "}
-                  <CardLabel>{`${t("CR_PASSPORT_NO")}`}</CardLabel>
+                  <CardLabel>{`${t("CR_PASSPORT_NO")}`}
+                  <span className="mandatorycss">*</span>
+                  </CardLabel>
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -568,7 +570,9 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                 </div>
                 <div className="col-md-3">
                   {" "}
-                  <CardLabel>{`${t("CR_PASSPORT_NO")}`}</CardLabel>
+                  <CardLabel>{`${t("CR_PASSPORT_NO")}`}
+                  <span className="mandatorycss">*</span>
+                  </CardLabel>
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -736,7 +740,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                     onChange={setSelectFatherMobile}
                     // disable={isFatherInfo}
                     placeholder={`${t("CR_PARENTS_CONTACT_NO")}`}
-                    {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: true, title: t("CR_INVALID_PARENTS_CONTACT_NO") })}
+                    {...(validation = { pattern: "^[0-9 ]*$", type: "text", isRequired: true, title: t("CR_INVALID_PARENTS_CONTACT_NO") })}
                   />
                 </div>
                 <div className="col-md-4">

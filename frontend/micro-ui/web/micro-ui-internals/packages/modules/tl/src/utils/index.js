@@ -690,8 +690,6 @@ export const convertToResubmitTrade = (data) => {
   return formdata;
 }
 export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
-  console.log("Anju dataCorr" + JSON.stringify(dataCorr));
-  console.log("Anju data" + JSON.stringify(data));
   let tradeUnitCorr = [];
   let tradeUnitHistory = [];
   let ownersCorr = [];
@@ -720,6 +718,7 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
     wardIdHistory = data?.tradeLicenseDetail?.address?.wardId;
     isEdit = true;
   }
+  
   dataCorr?.tradeLicenseDetail?.tradeUnits.map((unitNew) => {
     data?.tradeLicenseDetail?.tradeUnits.map((unitOld) => {
       if (unitOld.id === unitNew.id) {
@@ -730,12 +729,12 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
             businessCategory: unitNew.businessCategory,
             businessType: unitNew.businessType,
             businessSubtype: unitNew.businessSubtype
-          });         
+          });
+          isEdit = true;
+          unitFlag = true;         
         }
-        isEdit = true;
-        unitFlag = true;
       }
-      else if(unitNew.hasOwnProperty('id') === false) {
+      else if(unitNew.id === null) {
         tradeUnitCorr.push({
             id : null,
             active: true,
@@ -748,19 +747,20 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
       }
     })
   })
-  data?.tradeLicenseDetail?.tradeUnits.map((unitOld) => {
-    if(!dataCorr?.tradeLicenseDetail?.tradeUnits.id.includes(unitOld.id) ){
-      tradeUnitCorr.push({id : ownerOld.id, active : false});
-      isEdit = true;
-      unitFlag = true;
-    } 
-  })
-
+  for(let i=0; i>dataCorr?.tradeLicenseDetail?.tradeUnits.length; i++)
+    data?.tradeLicenseDetail?.tradeUnits.map((unitOld) => {
+      if(!dataCorr?.tradeLicenseDetail?.tradeUnits[i].id.includes(unitOld.id) ){
+        tradeUnitCorr.push({id : unitOld.id, active : false});
+        isEdit = true;
+        unitFlag = true;
+      }
+    });
+   
   if(unitFlag === true){
     ownersHistory = data?.tradeLicenseDetail?.tradeUnits;
   }
-
-
+  
+  
   dataCorr?.tradeLicenseDetail?.owners.map((ownerNew) => {
     data?.tradeLicenseDetail?.owners.map((ownerOld) => {
       if (ownerOld.uuid === ownerNew.uuid) {
@@ -813,20 +813,22 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
         ownerFlag = true;
       }
     })
-  })
-  data?.tradeLicenseDetail?.owners.map((ownerOld) => {
-    if(!dataCorr?.tradeLicenseDetail?.owners.uuid.includes(ownerOld.uuid) ){
-      ownersCorr.push({uuid : ownerOld.uuid, active : false});
-      isEdit = true;
-      ownerFlag = true;
-    } 
-  })
+  });
+  
+  for(let i=0; i>dataCorr?.tradeLicenseDetail?.owners.length; i++)
+    data?.tradeLicenseDetail?.owners.map((ownerOld) => {
+      if(!dataCorr?.tradeLicenseDetail?.owners[i].uuid.includes(ownerOld.uuid) ){
+        ownersCorr.push({uuid : ownerOld.uuid, active : false});
+        isEdit = true;
+        ownerFlag = true;
+      } 
+    })
 
   if(ownerFlag === true){
     ownersHistory = data?.tradeLicenseDetail?.owners;
   }
-
-
+  
+  
   dataCorr?.tradeLicenseDetail?.structurePlace.map((placeNew) => {
     data?.tradeLicenseDetail?.structurePlace.map((placeOld) => {
       if (placeOld.id === placeNew.id) {
@@ -878,27 +880,28 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
       }
     })
   })
-  data?.tradeLicenseDetail?.structurePlace.map((placeOld) => {
-    if(!dataCorr?.tradeLicenseDetail?.structurePlace.id.includes(placeOld.id) ){
-      structurePlaceCorr.push({id : placeOld.id, active : false});
-      isEdit = true;
-      structureplaceFlag = true;
-    } 
-  })
+  for(let i=0; i>dataCorr?.tradeLicenseDetail?.structurePlace.length; i++)
+    data?.tradeLicenseDetail?.structurePlace.map((placeOld) => {
+      if(!dataCorr?.tradeLicenseDetail?.structurePlace[i].id.includes(placeOld.id) ){
+        structurePlaceCorr.push({id : placeOld.id, active : false});
+        isEdit = true;
+        structureplaceFlag = true;
+      } 
+    });
+
   if(structureplaceFlag === true){
     structurePlaceHistory = data?.tradeLicenseDetail?.structurePlace;
   }
+  
+  applicationDocuments =  dataCorr?.tradeLicenseDetail?.applicationDocuments;
 
-  applicationDocuments = dataCorr?.tradeLicenseDetail?.applicationDocuments;
-
-  if((data?.tradeName !== dataCorr?.tradeName)||(data?.licenseUnitNameLocal !== dataCorr?.licenseUnitNameLocal)){
-    tradeNameCorr = dataCorr?.tradeName;
+  if((data?.tradeName !== dataCorr?.licenseUnitName)||(data?.licenseUnitNameLocal !== dataCorr?.licenseUnitNameLocal)){
+    tradeNameCorr = dataCorr?.licenseUnitName;
     licenseUnitNameLocalCorr = dataCorr?.licenseUnitNameLocal;
-    tradeNameHistory = data?.tradeName;
+    tradeNameHistory = data?.licenseUnitName;
     licenseUnitNameLocalHistory = data?.licenseUnitNameLocal;
     isEdit = true;
   }
-
   const formdata = {
     LicenseCorrection: [
       {

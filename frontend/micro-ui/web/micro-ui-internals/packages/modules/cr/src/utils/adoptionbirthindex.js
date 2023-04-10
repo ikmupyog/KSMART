@@ -569,7 +569,8 @@ export const convertToAdoptionUpdation = (data = {}) => {
         pregnancyDuration: data?.AdoptionChildDetails?.pregnancyDuration ? data?.AdoptionChildDetails?.pregnancyDuration : null,
         medicalAttensionSub: data?.AdoptionChildDetails?.medicalAttensionSub ? data?.AdoptionChildDetails?.medicalAttensionSub.code : null,
         deliveryMethods: data?.AdoptionChildDetails?.deliveryMethods ? data?.AdoptionChildDetails?.deliveryMethods.code : null,
-        action: "INITIATE",
+        action: "APPLY",
+        isWorkflow: data?.AdoptionChildDetails.isWorkflow,
         adoptdeedorderno: data?.AdoptionChildDetails?.AdoptionDeedNo ? data?.AdoptionChildDetails?.AdoptionDeedNo : null,
         adoptdateoforderdeed: data?.AdoptionChildDetails?.AdoptionDeedRegDate ? Date.parse(data?.AdoptionChildDetails?.AdoptionDeedRegDate) : null,
         adoptissuingauththority: data?.AdoptionChildDetails?.IssuingAuthority ? data?.AdoptionChildDetails?.IssuingAuthority : null,
@@ -589,7 +590,7 @@ export const convertToAdoptionUpdation = (data = {}) => {
           : "",
         applicationtype: "CRBRAD",
         businessservice: "birth-services",
-        workflowcode: data?.AdoptionChildDetails?.workFlowCode,
+        workflowcode: data?.AdoptionChildDetails?.workflowcode,
         applicationnumber: data?.AdoptionChildDetails?.applicationNumber ? data?.AdoptionChildDetails?.applicationNumber : "",
         id: data?.AdoptionChildDetails?.id ? data?.AdoptionChildDetails?.id : "",
         ParentsDetails: {

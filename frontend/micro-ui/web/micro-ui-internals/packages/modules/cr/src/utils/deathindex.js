@@ -462,8 +462,8 @@ export const convertToDeathRegistration = (data = {}) => {
         FamilyInformationDeath: {
           SpouseUnavailable: data?.FamilyInformationDeath?.SpouseUnavailable,
           SpouseType: data?.FamilyInformationDeath?.SpouseType ? data?.FamilyInformationDeath?.SpouseType.code : null,
-          SpouseNameEn: data?.FamilyInformationDeath?.SpouseNameEN ? data?.FamilyInformationDeath?.SpouseNameEN : null,
-          SpouseNameML: data?.FamilyInformationDeath?.SpouseNameMl ? data?.FamilyInformationDeath?.SpouseNameMl : null,
+          SpouseNameEn: data?.FamilyInformationDeath?.SpouseNameEn ? data?.FamilyInformationDeath?.SpouseNameEn : null,
+          SpouseNameML: data?.FamilyInformationDeath?.SpouseNameML ? data?.FamilyInformationDeath?.SpouseNameML : null,
           FatherUnavailable: data?.FamilyInformationDeath?.FatherUnavailable,
           FatherNameEn: data?.FamilyInformationDeath?.FatherNameEn,
           FatherNameMl: data?.FamilyInformationDeath?.FatherNameMl,
@@ -522,7 +522,7 @@ export const convertToDeathRegistration = (data = {}) => {
         },
         Initiator: {
           IsDeclarationInitiator: data?.Initiator?.IsDeclarationInitiator,
-          InitiatorRelation: data?.Initiator?.InitiatorRelation,
+          InitiatorRelation: data?.Initiator?.InitiatorRelation.code,
           InitiatorAadhaar: data?.Initiator?.InitiatorAadhaar,
           InitiatorName: data?.Initiator?.InitiatorName,
           InitiatorMobile: parseInt(data?.Initiator?.InitiatorMobile),
@@ -545,13 +545,13 @@ export const convertToDeathRegistration = (data = {}) => {
             demandDetails: [
               {
                 taxHeadMasterCode: "CRB_FEES",
-                taxAmount: 12,
+                taxAmount: data?.InformationDeath?.workFlowAmount,
                 collectionAmount: 0,
               },
             ],
-            minimumAmountPayable: 12,
+            minimumAmountPayable: data?.InformationDeath?.workFlowAmount,
             additionalDetails: {
-              HI: "hi",
+              HI: "Death Digital Payment",
             },
           },
         ],
@@ -567,7 +567,9 @@ export const convertToDeathRegistration = (data = {}) => {
         assignee: [],
         workflowcode: data?.InformationDeath?.workFlowCode,
         taxHeadMasterCode: "CRB_FEES",
-        taxAmount: 12,
+        taxAmount: data?.InformationDeath?.workFlowAmount,
+        isPayment:data?.InformationDeath?.isPayment,
+        applicationStatus: data?.InformationDeath?.isPayment ? "PENDINGPAYEMNT" : "INITIATED",
       },
     ],
   };
@@ -853,7 +855,7 @@ export const convertToEditDeathRegistration = (data = {}) => {
         applicationType: "new",
         businessService: "CR",
         action: "APPLY",
-        workflowcode: "DEATHHOSP",
+        workflowcode: data?.InformationDeath?.workFlowCode,
         assignee: [data?.InformationDeath?.uuid],
       },
       

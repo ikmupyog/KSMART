@@ -127,7 +127,8 @@ const DeathPublicPlace = ({
   };
   return (
     <React.Fragment>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!DeathPlaceType}>
+      {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!DeathPlaceType}> */}
+      <div className="col-md-12">
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -137,34 +138,36 @@ const DeathPublicPlace = ({
         </div>
 
         <div className="row">
-          <div className="col-md-6">
-            <CardLabel>
-              {`${t("CR_PUBLIC_PLACE_TYPE")}`}
-              <span className="mandatorycss">*</span>
-            </CardLabel>
-            <Dropdown
-              t={t}
-              optionKey="name"
-              option={cmbOtherplace}
-              selected={DeathPlaceType}
-              select={setSelectDeathPlaceType}
-              placeholder={`${t("CR_PUBLIC_PLACE_TYPE")}`}
-            />
-          </div>
-          <div className="col-md-6">
-            <CardLabel>
-              {`${t("CS_COMMON_WARD")}`}
-              <span className="mandatorycss">*</span>
-            </CardLabel>
-            <Dropdown
-              t={t}
-              optionKey="namecmb"
-              option={cmbWardNoFinal}
-              selected={DeathPlaceWardId}
-              select={setSelectDeathPlaceWardId}
-              placeholder={`${t("CS_COMMON_WARD")}`}
-              {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
-            />
+          <div className="col-md-12">
+            <div className="col-md-6">
+              <CardLabel>
+                {`${t("CR_PUBLIC_PLACE_TYPE")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="name"
+                option={cmbOtherplace}
+                selected={DeathPlaceType}
+                select={setSelectDeathPlaceType}
+                placeholder={`${t("CR_PUBLIC_PLACE_TYPE")}`}
+              />
+            </div>
+            <div className="col-md-6">
+              <CardLabel>
+                {`${t("CS_COMMON_WARD")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="namecmb"
+                option={cmbWardNoFinal}
+                selected={DeathPlaceWardId}
+                select={setSelectDeathPlaceWardId}
+                placeholder={`${t("CS_COMMON_WARD")}`}
+                {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
+              />
+            </div>
           </div>
         </div>
 
@@ -258,7 +261,8 @@ const DeathPublicPlace = ({
             </div>
           </div>
         </div>
-      </FormStep>
+        {/* </FormStep> */}
+      </div>
     </React.Fragment>
   );
 };

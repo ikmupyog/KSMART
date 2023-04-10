@@ -268,7 +268,7 @@ export const gettradeupdateaccessories = (data) => {
   }
   return TLaccessories;
 };
-export const convertToBornOutsideBirthRegistration = (data = {}) => {
+export const convertToEditBornOutsideBirthRegistration = (data = {}) => {
   const formdata = {
     BornOutsideChildDetails: [
       {
@@ -292,9 +292,9 @@ export const convertToBornOutsideBirthRegistration = (data = {}) => {
         outsideBirthPlace: data?.BornOutsideChildDetails?.outsideBirthPlace,
         country: data?.BornOutsideChildDetails?.country ? data?.BornOutsideChildDetails?.country.code : null,
         action: "INITIATE",
-        applicationtype: "CRBRNR",
-        businessservice: "birth-services",
-        workflowcode: data?.BornOutsideChildDetails?.workFlowCode,
+        applicationtype: "CRBRBO",
+        businessservice: "CR",
+        workflowcode: "BORNOUTSIDE60",
         BornOutsideParentsDetails: {
           motherFirstNameEn: data?.BornOutsideParentsDetails?.motherFirstNameEn,
           motherFirstNameMl: data?.BornOutsideParentsDetails?.motherFirstNameMl,
@@ -405,6 +405,145 @@ export const convertToBornOutsideBirthRegistration = (data = {}) => {
 
   return formdata;
 };
+
+export const convertToBornOutsideBirthRegistration = (data = {}) => {
+  const formdata = {
+    BornOutsideChildDetails: [
+      {
+        childDOB: Date.parse(data?.BornOutsideChildDetails?.childDOB),
+        birthDateTime: parseInt(data?.BornOutsideChildDetails?.birthDateTime),
+        gender: data?.BornOutsideChildDetails?.gender ? data?.BornOutsideChildDetails?.gender.code : null,
+        birthPlace: data?.BornOutsideChildDetails?.birthPlace,
+        childAadharNo: data?.BornOutsideChildDetails?.childAadharNo,
+        childPassportNo: data?.BornOutsideChildDetails?.childPassportNo,
+        childArrivalDate: Date.parse(data?.BornOutsideChildDetails?.childArrivalDate),
+        tenantid: data?.BornOutsideChildDetails?.tenantId,
+        childFirstNameEn: data?.BornOutsideChildDetails?.childFirstNameEn,
+        childMiddleNameEn: data?.BornOutsideChildDetails?.childMiddleNameEn,
+        childLastNameEn: data?.BornOutsideChildDetails?.childLastNameEn,
+        childFirstNameMl: data?.BornOutsideChildDetails?.childFirstNameMl,
+        childMiddleNameMl: data?.BornOutsideChildDetails?.childMiddleNameMl,
+        childLastNameMl: data?.BornOutsideChildDetails?.childLastNameMl,
+        provinceEn: data?.BornOutsideChildDetails?.provinceEn,
+        cityTown: data?.BornOutsideChildDetails?.cityTown,
+        postCode: data?.BornOutsideChildDetails?.postCode,
+        outsideBirthPlace: data?.BornOutsideChildDetails?.outsideBirthPlace,
+        country: data?.BornOutsideChildDetails?.country ? data?.BornOutsideChildDetails?.country.code : null,
+        action: "INITIATE",
+        applicationtype: "CRBRBO",
+        businessservice: "CR",
+        workflowcode: "BORNOUTSIDE60",
+        BornOutsideParentsDetails: {
+          motherFirstNameEn: data?.BornOutsideParentsDetails?.motherFirstNameEn,
+          motherFirstNameMl: data?.BornOutsideParentsDetails?.motherFirstNameMl,
+          motherPassportNo: data?.BornOutsideParentsDetails?.motherPassportNo,
+          motherMarriageAge: data?.BornOutsideParentsDetails?.motherMarriageAge,
+          motherMarriageBirth: data?.BornOutsideParentsDetails?.motherMarriageBirth,
+          motherEducation: data?.BornOutsideParentsDetails?.motherEducation ? data?.BornOutsideParentsDetails?.motherEducation.code : null,
+          motherProfession: data?.BornOutsideParentsDetails?.motherProfession ? data?.BornOutsideParentsDetails?.motherProfession.code : null,
+          motherNationality: data?.BornOutsideParentsDetails?.motherNationality ? data?.BornOutsideParentsDetails?.motherNationality.code : null,
+          ismotherInfo: false,
+          isfatherInfo: false,
+          fatherFirstNameEn: data?.BornOutsideParentsDetails?.fatherFirstNameEn,
+          fatherFirstNameMl: data?.BornOutsideParentsDetails?.fatherFirstNameMl,
+          fatherNationality: data?.BornOutsideParentsDetails?.fatherNationality ? data?.BornOutsideParentsDetails?.fatherNationality.code : null,
+          fatherPassportNo: data?.BornOutsideParentsDetails?.fatherPassportNo,
+          fatherEducation: data?.BornOutsideParentsDetails?.fatherEducation ? data?.BornOutsideParentsDetails?.fatherEducation.code : null,
+          fatherProfession: data?.BornOutsideParentsDetails?.fatherProfession ? data?.BornOutsideParentsDetails?.fatherProfession.code : null,
+          Religion: data?.BornOutsideParentsDetails?.Religion ? data?.BornOutsideParentsDetails?.Religion.code : null,
+          fatherMobile: data?.BornOutsideParentsDetails?.fatherMobile,
+          fatherEmail: data?.BornOutsideParentsDetails?.fatherEmail,
+        },
+        BornOutsideAddressBirthDetails: {
+          presentOutSideIndiaAdressEn: data?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEn,
+          presentOutSideIndiaAdressMl: data?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressMl,
+          presentOutSideIndiaAdressEnB: data?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEnB,
+          presentOutSideIndiaAdressMlB: data?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressMlB,
+          presentOutSideIndiaProvinceEn: data?.BornOutsideAddressBirthDetails?.presentOutSideIndiaProvinceEn,
+          // presentOutSideIndiaProvinceMl: data?.BornOutsideAddressBirthDetails?.presentOutSideIndiaProvinceMl,
+          presentOutSideCountry: data?.BornOutsideAddressBirthDetails?.presentOutSideCountry
+            ? data?.BornOutsideAddressBirthDetails?.presentOutSideCountry.code
+            : null,
+          presentOutSideIndiaadrsVillage: data?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsVillage
+            ? data?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsVillage.code
+            : null,
+          presentOutSideIndiaadrsCityTown: data?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsCityTown,
+          presentOutSideIndiaPostCode: data?.BornOutsideAddressBirthDetails?.presentOutSideIndiaPostCode,
+          isPrsentAddress: data?.AddressBirthDetails?.isPrsentAddress,
+          permtaddressCountry: data?.BornOutsideAddressBirthDetails?.permtaddressCountry
+            ? data?.BornOutsideAddressBirthDetails?.permtaddressCountry.code
+            : null,
+          permtaddressStateName: data?.BornOutsideAddressBirthDetails?.permtaddressStateName
+            ? data?.BornOutsideAddressBirthDetails?.permtaddressStateName.code
+            : null,
+          permntInKeralaAdrLBName: data?.BornOutsideAddressBirthDetails?.permntInKeralaAdrLBName
+            ? data?.BornOutsideAddressBirthDetails?.permntInKeralaAdrLBName.code
+            : null,
+          permntInKeralaAdrDistrict: data?.BornOutsideAddressBirthDetails?.permntInKeralaAdrDistrict
+            ? data?.BornOutsideAddressBirthDetails?.permntInKeralaAdrDistrict.code
+            : null,
+          permntInKeralaAdrTaluk: data?.BornOutsideAddressBirthDetails?.permntInKeralaAdrTaluk
+            ? data?.BornOutsideAddressBirthDetails?.permntInKeralaAdrTaluk.code
+            : null,
+          permntInKeralaAdrVillage: data?.BornOutsideAddressBirthDetails?.permntInKeralaAdrVillage
+            ? data?.BornOutsideAddressBirthDetails?.permntInKeralaAdrVillage.code
+            : null,
+          permntInKeralaAdrLocalityNameEn: data?.BornOutsideAddressBirthDetails?.permntInKeralaAdrLocalityNameEn,
+          permntInKeralaAdrStreetNameEn: data?.BornOutsideAddressBirthDetails?.permntInKeralaAdrStreetNameEn,
+          permntInKeralaAdrHouseNameEn: data?.BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameEn,
+          permntInKeralaAdrLocalityNameMl: data?.BornOutsideAddressBirthDetails?.permntInKeralaAdrLocalityNameMl,
+          permntInKeralaAdrStreetNameMl: data?.BornOutsideAddressBirthDetails?.permntInKeralaAdrStreetNameMl,
+          permntInKeralaAdrHouseNameMl: data?.BornOutsideAddressBirthDetails?.permntInKeralaAdrHouseNameMl,
+          permntInKeralaAdrPincode: data?.BornOutsideAddressBirthDetails?.permntInKeralaAdrPincode
+            ? data?.BornOutsideAddressBirthDetails?.permntInKeralaAdrPincode
+            : null,
+          permntInKeralaAdrPostOffice: data?.BornOutsideAddressBirthDetails?.permntInKeralaAdrPostOffice
+            ? data?.BornOutsideAddressBirthDetails?.permntInKeralaAdrPostOffice.code
+            : null,
+          permntInKeralaWardNo: data?.BornOutsideAddressBirthDetails?.permntInKeralaWardNo
+            ? data?.BornOutsideAddressBirthDetails?.permntInKeralaWardNo.code
+            : null,
+        },
+        BornOutsideStaticInfn: {
+          birthWeight: data?.BornOutsideStaticInfn?.birthWeight,
+          pregnancyDuration: data?.BornOutsideStaticInfn?.pregnancyDuration ? data?.BornOutsideStaticInfn?.pregnancyDuration : null,
+          medicalAttensionSub: data?.BornOutsideStaticInfn?.medicalAttensionSub ? data?.BornOutsideStaticInfn?.medicalAttensionSub.code : null,
+          deliveryMethods: data?.BornOutsideStaticInfn?.deliveryMethods ? data?.BornOutsideStaticInfn?.deliveryMethods.code : null,
+          orderofChildren: data?.BornOutsideStaticInfn?.orderofChildren,
+          relation: data?.BornOutsideStaticInfn?.relation,
+          informarNameEn: data?.BornOutsideStaticInfn?.informarNameEn,
+          informarAadhar: data?.BornOutsideStaticInfn?.informarAadhar,
+          informarMobile: data?.BornOutsideStaticInfn?.informarMobile,
+          informarAddress: data?.BornOutsideStaticInfn?.informarAddress,
+        },
+        Demands: [
+          {
+            tenantId: "kl.cochin",
+            consumerCode: data?.BornOutSideChildDetails?.applicationNumber,
+            consumerType: "FEE",
+            businessService: "CR",
+            taxPeriodFrom: "1554076800000",
+            taxPeriodTo: "1901145600000",
+            demandDetails: [
+              {
+                taxHeadMasterCode: "CRB_FEES",
+                taxAmount: 12,
+                collectionAmount: 0,
+              },
+            ],
+            minimumAmountPayable: 12,
+            additionalDetails: {
+              HI: "hi",
+            },
+          },
+        ],
+      },
+    ],
+  };
+
+  return formdata;
+};
+
 export const getwfdocuments = (data) => {
   let wfdoc = [];
   let doc = data ? data.owners.documents : [];

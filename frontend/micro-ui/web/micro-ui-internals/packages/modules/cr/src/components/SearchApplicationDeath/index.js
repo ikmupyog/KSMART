@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { SearchForm, Table, Card, Header } from "@egovernments/digit-ui-react-components";
+import { SearchForm, Table, Card, Header,SearchField,Dropdown } from "@egovernments/digit-ui-react-components";
 import { Link } from "react-router-dom";
 import { convertEpochToDateDMY } from "../../utils";
 import SearchFields from "./SearchDeathFields";
@@ -21,8 +21,14 @@ const hstyle = {
   marginBottom: ".5rem",
   lineHieght: "1.5rem",
 };
+const selectedDeathSearch=[
+  {label:"Death", value:"death"},
+  {label:"Death NAC", value:"deathnac"},
+  
+]
+let  validation =''
 
-const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count }) => {
+const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count, applicationDeathType, setApplicationDeathType }) => {
   console.log(data);
 
   const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
@@ -60,6 +66,23 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count }) => {
     setValue("offset", getValues("offset") - getValues("limit"));
     handleSubmit(onSubmit)();
   }
+  const setDeathSelectSearch =(value)=>{
+    setApplicationDeathType(value)
+    reset({ 
+      searchAppllication:[],
+      applicationNumber: "", 
+      fromDate: "", 
+      toDate: "",
+      licenseNumbers: "",
+      status: "",
+      tradeName: "",
+      offset: 0,
+      limit: 10,
+      sortBy: "DateOfDeath",
+      sortOrder: "DESC"
+  });
+  previousPage();
+  }
 
   const isMobile = window.Digit.Utils.browser.isMobile();
 
@@ -85,7 +108,17 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count }) => {
               <span className="link">
                 <Link
                   onClick={handleLinkClick(row.original)}
-                  to={`/digit-ui/employee/cr/application-deathdetails/${row.original.InformationDeath["DeathACKNo"]}`}
+                  to={row.original.InformationDeath["DeathACKNo"].includes("CRDRNR") ?
+                    `/digit-ui/employee/cr/application-deathdetails/${row.original.InformationDeath["DeathACKNo"]}`
+                    :
+                    row.original.InformationDeath["DeathACKNo"].includes("CRDRNA") ?
+                      `/digit-ui/employee/cr/application-deathnacdetails/${row.original.InformationDeath["DeathACKNo"]}` 
+                    :
+                      row.original.InformationDeath["DeathACKNo"].includes("CRDRAB") ?
+                      `/digit-ui/employee/cr/application-abandoneddeathdetails/${row.original.InformationDeath["DeathACKNo"]}`
+
+                    : "/digit-ui/employee/cr/search-flow/deathsearch/application"
+                  }
                 >
                   {row.original.InformationDeath["DeathACKNo"]}
                 </Link>
@@ -106,7 +139,7 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count }) => {
         accessor: (row) =>
           GetCell(
             row.InformationDeath?.DeceasedFirstNameEn + row.InformationDeath?.DeceasedMiddleNameEn + row.InformationDeath?.DeceasedLastNameEn ||
-              t("CR_NOT_RECORDED")
+            t("CR_NOT_RECORDED")
           ),
       },
       {
@@ -137,8 +170,25 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count }) => {
     <React.Fragment>
       <div style={mystyle}>
         <h1 style={hstyle}>{t("TL_SEARCH_APPLICATIONS")}</h1>
+        <SearchField>
+            <label>
+              {t("Application Type")}
+              <span className="mandatorycss">*</span>
+            </label>
+            <Dropdown
+              t={t}
+              optionKey="label"
+              isMandatory={true}
+              option={selectedDeathSearch}
+              selected={applicationDeathType}
+              select={setDeathSelectSearch}
+              // disable={}
+              placeholder={`${t("applicationDeathType")}`}
+              {...(validation = { isRequired: true, title: t("applicationDeathType") })}
+            />
+          </SearchField>
         <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
-          <SearchFields {...{ register, control, reset, tenantId, t }} />
+          <SearchFields {...{ register, control, reset, tenantId, t,previousPage, applicationDeathType  }} />
         </SearchForm>
       </div>
 
@@ -158,7 +208,7 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count }) => {
             t={t}
             data={data}
             totalRecords={count}
-            columns={columns}
+            columns={applicationDeathType?.value ? columns : null}
             getCellProps={(cellInfo) => {
               return {
                 style: {

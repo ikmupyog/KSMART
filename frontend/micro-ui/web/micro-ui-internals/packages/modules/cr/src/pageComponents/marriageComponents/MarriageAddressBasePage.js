@@ -13,7 +13,7 @@ import MarriageAddressPermanentInsideKerala from "./MarriageAddressPermanentInsi
 import MarriageAddressPermanentOutsideKerala from "./MarriageAddressPermanentOutsideKerala";
 import MarriageAddressPermanentOutsideIndia from "./MarriageAddressPermanentOutsideIndia";
 
-const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = false, isEditDeath = false }) => {
+const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = false, isEditDeath = false, isEditStillBirth = false }) => {
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -42,17 +42,17 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
   let cmbVillage = [];
 
   Country &&
-    Country["common-masters"] &&
+    Country["common-masters"] && Country["common-masters"].Country &&
     Country["common-masters"].Country.map((ob) => {
       cmbCountry.push(ob);
     });
   State &&
-    State["common-masters"] &&
+    State["common-masters"] && State["common-masters"].State &&
     State["common-masters"].State.map((ob) => {
       cmbState.push(ob);
     });
   localbodies &&
-    localbodies["tenant"] &&
+    localbodies["tenant"] && localbodies["tenant"].tenants &&
     localbodies["tenant"].tenants.map((ob) => {
       cmbLB.push(ob);
     });
@@ -62,12 +62,12 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
       cmbDistrict.push(ob);
     });
   Taluk &&
-    Taluk["common-masters"] &&
+    Taluk["common-masters"] && District["common-masters"].District &&
     Taluk["common-masters"].Taluk.map((ob) => {
       cmbTaluk.push(ob);
     });
   Village &&
-    Village["common-masters"] &&
+    Village["common-masters"] && Village["common-masters"].Village &&
     Village["common-masters"].Village.map((ob) => {
       cmbVillage.push(ob);
     });
@@ -167,11 +167,14 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
         : formData?.BrideAddressDetails?.presentInsideKeralaVillage
       : ""
   );
+  console.log(window.location.href.includes("address-bride"));
+  console.log(formData?.BrideAddressDetails?.presentInsideKeralaPostOffice);
+
   const [presentInsideKeralaPostOffice, setinsideKeralaPostOffice] = useState(
     window.location.href.includes("address-groom")
       ? formData?.GroomAddressDetails?.presentInsideKeralaPostOffice?.code
         ? formData?.GroomAddressDetails?.presentInsideKeralaPostOffice
-        : window.location.href.includes("address-bride")
+        : window.location.href.includes("address-bride") 
         ? formData?.BrideAddressDetails?.presentInsideKeralaPostOffice?.code
         : formData?.BrideAddressDetails?.presentInsideKeralaPostOffice
       : null
@@ -239,6 +242,8 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
         : formData?.BrideAddressDetails?.presentInsideKeralaStreetNameMl
       : null
   );
+
+  const [Districtvalues, setDistrictvalue] = useState(null);
   const [Talukvalues, setLbsTalukvalue] = useState(null);
   const [Villagevalues, setLbsVillagevalue] = useState(null);
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
@@ -446,11 +451,20 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
         : formData?.BrideAddressDetails?.presentOutSideIndiaPostCode
       : ""
   );
-  //const [presentOutSideCountry, setOutSideCountry] = useState(formData?.AddressBirthDetails?.presentOutSideCountry ? formData?.AddressBirthDetails?.presentOutSideCountry : null);
+
+  const [presentOutSideCountry, setOutSideCountry] = useState(
+    window.location.href.includes("address-groom")
+      ? formData?.GroomAddressDetails?.presentOutSideCountry
+        ? formData?.GroomAddressDetails?.presentOutSideCountry
+        : window.location.href.includes("address-bride")
+        ? formData?.BrideAddressDetails?.presentOutSideCountry
+        : formData?.BrideAddressDetails?.presentOutSideCountry
+      : ""
+  );
 
   //############################################### Same As Above ##################################################################################################
 
-  const [isPrsentAddress, setIsPrsentAddress] = useState(true);
+  const [isPrsentAddress, setIsPrsentAddress] = useState(false);
 
   //################################################### Country State Permanent ###########################################################################
 
@@ -732,6 +746,7 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
         : formData?.BrideAddressDetails?.permntOutsideKeralaPostOfficeMl
       : ""
   );
+
   //######################################################################## Permanent Ouside Country #############################################################################################
 
   const [permntOutsideIndiaLineoneEn, setadrsPermntOutsideIndiaLineoneEn] = useState(
@@ -815,7 +830,10 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
         : formData?.BrideAddressDetails?.permanentOutsideIndiaPostCode
       : ""
   );
-  //const [permntOutsideIndiaCountry, setPermntOutsideIndiaCountry] = useState(formData?.AddressBirthDetails?.permntOutsideIndiaCountry ? formData?.AddressBirthDetails?.permntOutsideIndiaCountry : null);
+
+  const [permntOutsideIndiaCountry, setPermntOutsideIndiaCountry] = useState(
+    formData?.AddressBirthDetails?.permntOutsideIndiaCountry ? formData?.AddressBirthDetails?.permntOutsideIndiaCountry : null
+  );
 
   //############################################################# Error Constants #####################################################################################
 
@@ -919,7 +937,6 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
         } else {
           setPresentInsideKeralaWardNoError(false);
         }
-        console.log(presentInsideKeralaPostOffice);
         if (presentInsideKeralaPostOffice === null || presentInsideKeralaPostOffice === undefined || presentInsideKeralaPostOffice === "") {
           setPresentInsideKeralaPostOfficeError(true);
           validFlag = false;
@@ -940,7 +957,6 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
         } else {
           setPresentInsideKeralaPincodeError(false);
         }
-        console.log(presentInsideKeralaLocalityNameEn);
         if (presentInsideKeralaLocalityNameEn === null) {
           setPresentInsideKeralaLocalityNameEnError(true);
           validFlag = false;
@@ -981,34 +997,25 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
         } else {
           setPresentInsideKeralaHouseNameMlError(false);
         }
-        console.log(presentInsideKeralaStreetNameEn);
-        if (presentInsideKeralaStreetNameEn != null) {
-          if (presentInsideKeralaStreetNameMl == null) {
-            setPresentInsideKeralaStreetNameMlError(true);
-            validFlag = false;
-            setToast(true);
-            setTimeout(() => {
-              setToast(false);
-            }, 2000);
-          } else {
-            setPresentInsideKeralaStreetNameMlError(false);
-          }
-        } else {
-          setPresentInsideKeralaStreetNameEnError(false);
-        }
-        if (presentInsideKeralaStreetNameMl != null) {
-          if (presentInsideKeralaStreetNameEn == null) {
-            setPresentInsideKeralaStreetNameEnError(true);
-            validFlag = false;
-            setToast(true);
-            setTimeout(() => {
-              setToast(false);
-            }, 2000);
-          } else {
-            setPresentInsideKeralaStreetNameEnError(false);
-          }
+        if (presentInsideKeralaStreetNameEn != null && presentInsideKeralaStreetNameMl === null) {
+          setPresentInsideKeralaStreetNameMlError(true);
+          validFlag = false;
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
         } else {
           setPresentInsideKeralaStreetNameMlError(false);
+        }
+        if (presentInsideKeralaStreetNameMl != null && presentInsideKeralaStreetNameEn === null) {
+          setPresentInsideKeralaStreetNameEnError(true);
+          validFlag = false;
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } else {
+          setPresentInsideKeralaStreetNameEnError(false);
         }
       }
       if (countryvalue === "IND" && value != "KL") {
@@ -1395,7 +1402,7 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
         presentOutSideIndiaAdressMlB,
         presentOutSideIndiaAdressMlB,
         presentOutSideIndiaProvinceEn,
-        // presentOutSideCountry,
+        presentOutSideCountry,
         isPrsentAddress,
 
         permtaddressCountry,
@@ -1434,11 +1441,10 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
         permntOutsideIndiaVillage,
         permntOutsideIndiaCityTown,
         permanentOutsideIndiaPostCode,
-        // permntOutsideIndiaCountry
+        permntOutsideIndiaCountry,
       });
     }
   };
-  console.log({ isPrsentAddress });
   if (
     isCountryLoading ||
     isStateLoading ||
@@ -1487,6 +1493,7 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
               setIsPrsentAddress={setIsPrsentAddress}
               isEditBirth={isEditBirth}
               isEditDeath={isEditDeath}
+              isEditStillBirth={isEditStillBirth}
               formData={formData}
             />
           </div>
@@ -1521,6 +1528,8 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
                 setinsideKeralaStreetNameEn={setinsideKeralaStreetNameEn}
                 presentInsideKeralaStreetNameMl={presentInsideKeralaStreetNameMl}
                 setinsideKeralaStreetNameMl={setinsideKeralaStreetNameMl}
+                Districtvalues={Districtvalues}
+                setDistrictvalue={setDistrictvalue}
                 lbs={lbs}
                 setLbs={setLbs}
                 Talukvalues={Talukvalues}
@@ -1559,7 +1568,10 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
                 setpermntInKeralaWardNo={setpermntInKeralaWardNo}
                 isEditBirth={isEditBirth}
                 isEditDeath={isEditDeath}
+                isEditStillBirth={isEditStillBirth}
                 formData={formData}
+                value={value}
+                setValue={setValue}
               />
             </div>
           )}
@@ -1624,6 +1636,7 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
                 setpermntoutsideKeralaPostOfficeMl={setpermntoutsideKeralaPostOfficeMl}
                 isEditBirth={isEditBirth}
                 isEditDeath={isEditDeath}
+                isEditStillBirth={isEditStillBirth}
                 formData={formData}
               />
             </div>
@@ -1649,8 +1662,8 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
                 setadrsCityTown={setadrsCityTown}
                 presentOutSideIndiaPostCode={presentOutSideIndiaPostCode}
                 setPostCode={setPostCode}
-                // presentOutSideCountry={presentOutSideCountry}
-                // setOutSideCountry={setOutSideCountry}
+                presentOutSideCountry={presentOutSideCountry}
+                setOutSideCountry={setOutSideCountry}
                 countryvalue={countryvalue}
                 setCountryValue={setCountryValue}
                 isPrsentAddress={isPrsentAddress}
@@ -1673,10 +1686,11 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
                 setadrsPermntOutsideIndiaCityTown={setadrsPermntOutsideIndiaCityTown}
                 permanentOutsideIndiaPostCode={permanentOutsideIndiaPostCode}
                 setPermantpostCode={setPermantpostCode}
-                // permntOutsideIndiaCountry={permntOutsideIndiaCountry}
-                // setPermntOutsideIndiaCountry={setPermntOutsideIndiaCountry}
+                permntOutsideIndiaCountry={permntOutsideIndiaCountry}
+                setPermntOutsideIndiaCountry={setPermntOutsideIndiaCountry}
                 isEditBirth={isEditBirth}
                 isEditDeath={isEditDeath}
+                isEditStillBirth={isEditStillBirth}
                 formData={formData}
               />
             </div>
@@ -1687,6 +1701,7 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
               setIsPrsentAddress={setIsPrsentAddress}
               isEditBirth={isEditBirth}
               isEditDeath={isEditDeath}
+              isEditStillBirth={isEditStillBirth}
               formData={formData}
             />
           </div>
@@ -1709,6 +1724,7 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
                 setValuePermanent={setValuePermanent}
                 isEditBirth={isEditBirth}
                 isEditDeath={isEditDeath}
+                isEditStillBirth={isEditStillBirth}
                 formData={formData}
               />
             </div>
@@ -1742,6 +1758,8 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
                 setpermntInKeralaAdrStreetNameMl={setpermntInKeralaAdrStreetNameMl}
                 permntInKeralaWardNo={permntInKeralaWardNo}
                 setpermntInKeralaWardNo={setpermntInKeralaWardNo}
+                Districtvalues={Districtvalues}
+                setDistrictvalue={setDistrictvalue}
                 lbs={lbs}
                 setLbs={setLbs}
                 Talukvalues={Talukvalues}
@@ -1752,6 +1770,7 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
                 setPostOfficevalues={setPostOfficevalues}
                 isEditBirth={isEditBirth}
                 isEditDeath={isEditDeath}
+                isEditStillBirth={isEditStillBirth}
                 formData={formData}
               />
             </div>
@@ -1789,6 +1808,7 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
                 setValue={setValue}
                 isEditBirth={isEditBirth}
                 isEditDeath={isEditDeath}
+                isEditStillBirth={isEditStillBirth}
                 formData={formData}
               />
             </div>
@@ -1814,12 +1834,13 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
                 setPermantpostCode={setPermantpostCode}
                 permntOutsideIndiaprovinceMl={permntOutsideIndiaprovinceMl}
                 setPermntOutsideIndiaprovinceMl={setPermntOutsideIndiaprovinceMl}
-                // permntOutsideIndiaCountry={permntOutsideIndiaCountry}
-                // setPermntOutsideIndiaCountry={setPermntOutsideIndiaCountry}
+                permntOutsideIndiaCountry={permntOutsideIndiaCountry}
+                setPermntOutsideIndiaCountry={setPermntOutsideIndiaCountry}
                 countryvalue={countryvalue}
                 setCountryValue={setCountryValue}
                 isEditBirth={isEditBirth}
                 isEditDeath={isEditDeath}
+                isEditStillBirth={isEditStillBirth}
                 formData={formData}
               />
             </div>

@@ -74,7 +74,7 @@ const BirthInclusion = () => {
           <SearchBirthInclusion
             t={t}
             onSubmit={onSubmit}
-            data={!isLoading && isSuccess ? (searchReult?.length > 0 ? searchReult : { display: "ES_COMMON_NO_DATA" }) : ""}
+            data={!isLoading && isSuccess ? (searchReult?.length > 0 ? searchReult : []) : ""}
             // filestoreId={storeId}
             // isSuccess={isSuccess}
             // isLoading={isLoading}

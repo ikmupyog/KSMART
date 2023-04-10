@@ -1,28 +1,35 @@
-import { DropIcon, EmployeeModuleCard, PopUp, EditButton, UploadFile } from "@egovernments/digit-ui-react-components";
+import { DropIcon, EmployeeModuleCard, PopUp, EditButton, UploadFile, RadioButtons } from "@egovernments/digit-ui-react-components";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { checkForEmployee } from "../utils";
 import UploadDoc from "../../../../react-components/src/atoms/UploadDoc";
-import { BIRTH_INCLUSION_FIELD_NAMES } from "../config/constants";
+import { BIRTH_INCLUSION_FIELD_NAMES, BIRTH_INCLUSION_DOC_FLAGS } from "../config/constants";
 
 const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedConfig, selectedDocs }) => {
   const { t } = useTranslation();
   let formData = {};
   let docIdDetails = [];
-
+  console.log("selectedConfig==in modal", selectedConfig);
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [uploadDoc, setUploadDoc] = useState({});
-  const fieldName = BIRTH_INCLUSION_FIELD_NAMES[selectedConfig?.CorrectionField];
+  const fieldName = BIRTH_INCLUSION_FIELD_NAMES[selectedConfig?.documentData?.[0]?.CorrectionField];
   const [docuploadedId, setDocuploadedId] = useState();
   const [docuploadedName, setDocuploadedName] = useState();
   const [docuploadedType, setDocuploadedType] = useState();
+  const [selectedDocuments, setSelectedDocuments] = useState([]);
   const [uploadedFile, setUploadedFile] = useState(null);
   const [file, setFile] = useState(formData?.owners?.documents?.ProofOfIdentity);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [conditionalProperty, setConditionalProperty] = useState("");
   let acceptFormat = ".jpg,.png,.pdf,.jpeg";
+  let conditionalComponent = "";
 
-  console.log("selectedConfig",selectedConfig);
+  useEffect(() => {
+    setSelectedDocuments(selectedConfig?.documentData);
+  }, [selectedConfig?.documentData]);
+
+  console.log("selectedConfig", selectedConfig);
   const handleUploadDoc = (file, docType) => {
     let tempObj = { [docType]: [...file] };
     console.log("uploadedd===files--", docType, [...file], tempObj);
@@ -44,7 +51,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
 
   function selectfile(e) {
     console.log("select file===", e.target.files);
-    let result = selectedConfig?.Documents?.filter((obj) => obj.DocumentId == e?.target?.id);
+    let result = selectedDocuments?.[0]?.Documents?.filter((obj) => obj.DocumentId == e?.target?.id);
     console.log("select file==22", result);
     setDocuploadedName(result[0].DocumentList);
     setDocuploadedType(result[0].DocumentType);
@@ -110,45 +117,122 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     })();
   }, [file, uploadedFiles]);
 
+  const getDocumentName = (doc) => {
+    console.log("doc item==", doc);
+    const documentNameArray = doc.DocumentList && doc.DocumentList?.[0]?.split(",");
+    const documents = documentNameArray.map((name) => {
+      return t(name);
+    });
+    console.log("document list==");
+    const documentName = documents.join(` or `);
+
+    return documentName;
+  };
+
+  const getFilteredInclusionDocs = (selectedObj) => {
+    let filteredDocs = [];
+
+    filteredDocs = selectedConfig.documentData?.filter((item) => item.conditionCode == selectedObj.condition);
+    console.log("selectedObj==", selectedConfig.documentData, selectedObj, filteredDocs);
+    return filteredDocs;
+  };
+
+  function selectConditionalProperty(value) {
+    setConditionalProperty(value);
+    const filterInclusionDocs = getFilteredInclusionDocs(value);
+    setSelectedDocuments(filterInclusionDocs);
+  }
+
   if (!showModal) {
     return null;
   }
+
+  const renderConditionalComponent = () => {
+    let selectedMenu = [];
+    let menu = [];
+    console.log("reached modal==", selectedConfig);
+    switch (selectedConfig.docFlag) {
+      case BIRTH_INCLUSION_DOC_FLAGS.STUDENT:
+        selectedMenu = [
+          { i18nKey: "CR_COMMON_STUDENT", code: "STUDENT", condition: "NAME_INCLUSION_GREATER_THAN_SIX_NON_STUDENT" },
+          { i18nKey: "CR_COMMON_NONSTUDENT", code: "NONSTUDENT", condition: "NAME_INCLUSION_GREATER_THAN_SIX_STUDENT" },
+        ];
+        break;
+      case BIRTH_INCLUSION_DOC_FLAGS.NAME_CORRECTION:
+        selectedMenu = [
+          { i18nKey: "CR_COMMON_CORRECTION", code: "CORRECTION", condition: "NAME_CORRECTION_AGE_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE" },
+          { i18nKey: "CR_COMMON_CHANGE", code: "CHANGE", condition: "NAME_CHANGE_AGE_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE" },
+        ];
+        break;
+        case BIRTH_INCLUSION_DOC_FLAGS.SEX_CHANGE:
+        selectedMenu = [
+          { i18nKey: "CR_COMMON_CORRECTION", code: "CORRECTION", condition: "NAME_CORRECTION_AGE_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE" },
+          { i18nKey: "CR_COMMON_CHANGE", code: "CHANGE", condition: "NAME_CHANGE_AGE_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE" },
+        ];
+        break;
+        case BIRTH_INCLUSION_DOC_FLAGS.NON_INSTITUTIONAL_SEX_CHANGE:
+        selectedMenu = [
+          { i18nKey: "CR_COMMON_CORRECTION", code: "CORRECTION", condition: "NAME_CORRECTION_AGE_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE" },
+          { i18nKey: "CR_COMMON_CHANGE", code: "CHANGE", condition: "NAME_CHANGE_AGE_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE" },
+        ];
+        break;
+    }
+    return (
+      <div>
+        <h2>Select one of the field</h2>
+        <RadioButtons
+          t={t}
+          optionsKey="i18nKey"
+          // isMandatory={config.isMandatory}
+          options={selectedMenu}
+          selectedOption={conditionalProperty}
+          onSelect={selectConditionalProperty}
+        />
+      </div>
+    );
+  };
+
   return (
     <PopUp>
       <div className="popup-module" style={{ padding: "1rem", borderRadius: "1rem" }}>
         <h1 className="headingh1">
           <span style={{ background: "#fff", padding: "0 10px" }}>{`${fieldName} CHANGE`}</span>{" "}
         </h1>
-        <h2 style={{ marginBottom: "1rem" }}>{`You have to upload the following documents to edit ${fieldName?.toLowerCase()}.`}</h2>
-        {selectedConfig?.Documents?.map((item, index) => (
+        {selectedConfig?.documentData?.length > 1 && renderConditionalComponent()}
+        {selectedDocuments?.length == 1 && (
           <div>
-            {!selectedDocs.includes(item.DocumentId) && (
-              <div style={{ padding: ".5rem, 0,.5rem, 0" }}>
-                <h1 style={{ fontWeight: "bold" }}>{item.DocumentType}</h1>
-                <div style={{ padding: "1rem 0 1.5rem 1rem" }}>
-                  <UploadFile
-                    key={item.DocumentId}
-                    id={item.DocumentId}
-                    name={item.DocumentType}
-                    extraStyleName={"propertyCreate"}
-                    accept=".jpg,.png,.pdf"
-                    onUpload={selectfile}
-                    onDelete={() => {
-                      onDeleteown(item.DocumentId);
-                      setUploadedFile(null);
-                    }}
-                    message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-                    error={error}
-                  />
-                </div>
+            <h2 style={{ marginBottom: "1rem" }}>{`You have to upload the following documents to edit ${fieldName?.toLowerCase()}.`}</h2>
+            {selectedDocuments?.[0]?.Documents?.map((item, index) => (
+              <div>
+                {!selectedDocs.includes(item.DocumentId) && (
+                  <div style={{ padding: ".5rem, 0,.5rem, 0" }}>
+                    <h1 style={{ fontWeight: "bold" }}>{getDocumentName(item)}</h1>
+                    <div style={{ padding: "1rem 0 1.5rem 1rem" }}>
+                      <UploadFile
+                        key={item.DocumentId}
+                        id={item.DocumentId}
+                        name={item.DocumentType}
+                        extraStyleName={"propertyCreate"}
+                        accept=".jpg,.png,.pdf"
+                        onUpload={selectfile}
+                        onDelete={() => {
+                          onDeleteown(item.DocumentId);
+                          setUploadedFile(null);
+                        }}
+                        // message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                        error={error}
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
-            )}
+            ))}
           </div>
-        ))}
+        )}
 
         <EditButton
           selected={true}
-          label={"Submit"}
+          label={"Save"}
           onClick={() => {
             onSubmit(uploadedFiles, error);
           }}
