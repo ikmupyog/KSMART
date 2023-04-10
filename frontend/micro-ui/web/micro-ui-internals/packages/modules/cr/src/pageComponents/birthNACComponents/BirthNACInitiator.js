@@ -688,7 +688,6 @@ function selectfile5(e) {
           </div>
         </div>
             {ownerState.map((field, index) => {
-          console.log("first val",field)
           return (
             <div key={`${field}-${index}`}>
               <div style={{
