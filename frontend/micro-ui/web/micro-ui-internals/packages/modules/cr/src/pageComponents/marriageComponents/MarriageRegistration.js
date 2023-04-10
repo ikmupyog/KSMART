@@ -77,29 +77,30 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     { i18nKey: "Not Applicable", code: "NOT Applicable" },
   ];
 
-  const cmbPlaceNameReligious = [
-    { i18nKey: "Religious Institution 1", code: "RELIGIOUSINSTITUTION1", namelocal: "മത സ്ഥാപനം 1" },
-    { i18nKey: "Religious Institution 2", code: "RELIGIOUSINSTITUTION2", namelocal: "മത സ്ഥാപനം 2" },
-    { i18nKey: "Others", name: "OTHERS", namelocal: "മറ്റുള്ളവ" },
-  ];
+  // const cmbPlaceNameReligious = [
+  //   { i18nKey: "Religious Institution 1", code: "RELIGIOUSINSTITUTION1", namelocal: "മത സ്ഥാപനം 1" },
+  //   { i18nKey: "Religious Institution 2", code: "RELIGIOUSINSTITUTION2", namelocal: "മത സ്ഥാപനം 2" },
+  //   { i18nKey: "Others", name: "OTHERS", namelocal: "മറ്റുള്ളവ" },
+  // ];
 
-  const cmbPlaceNameMandapam = [
-    {
-      i18nKey: "Mandapam 1",
-      code: "RELIGIOUSINSTITUTION1",
-      namelocal: "മണ്ഡപം 1",
-    },
-    {
-      i18nKey: "Mandapam 2",
-      code: "RELIGIOUSINSTITUTION2",
-      namelocal: "മണ്ഡപം 2",
-    },
-    {
-      i18nKey: "Others",
-      code: "OTHERS",
-      namelocal: "മറ്റുള്ളവ",
-    },
-  ];
+  // const cmbPlaceNameMandapam = [
+  //   {
+  //     i18nKey: "Mandapam 1",
+  //     code: "RELIGIOUSINSTITUTION1",
+  //     namelocal: "മണ്ഡപം 1",
+  //   },
+  //   {
+  //     i18nKey: "Mandapam 2",
+  //     code: "RELIGIOUSINSTITUTION2",
+  //     namelocal: "മണ്ഡപം 2",
+  //   },
+  //   {
+  //     i18nKey: "Others",
+  //     code: "OTHERS",
+  //     namelocal: "മറ്റുള്ളവ",
+  //   },
+  // ];
+
   const cmbSubRegistarOffice = [
     {
       i18nKey: "SubRegistrar Office 1",
@@ -187,13 +188,17 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     });
 
   marriagePlaceId &&
-    marriagePlaceId["birth-death-service"] &&
-    marriagePlaceId["birth-death-service"].MarriagePlace &&
-    marriagePlaceId["birth-death-service"].MarriagePlace.map((ob) => {
+    marriagePlaceId["egov-location"] &&
+    marriagePlaceId["egov-location"].MarriagePlace &&
+    marriagePlaceId["egov-location"].MarriagePlace.map((ob) => {
       cmbMarriagePlaceIds.push(ob);
     });
 
   let currentLB = [];
+  const cmbPlaceNameReligious = cmbMarriagePlaceIds?.filter((placeId) => placeId.placeTpe === "RELIGIOUS_INSTITUTION");
+  console.log({ cmbPlaceNameReligious });
+  const cmbPlaceNameMandapam = cmbMarriagePlaceIds?.filter((placeId) => placeId.placeTpe === "MANDAPAM_HALL_AND_OTHER");
+
   const [marriageDOM, setmarriageDOM] = useState(formData?.MarriageDetails?.marriageDOM ? formData?.MarriageDetails?.marriageDOM : "");
   const [marriageDistrictid, setMarriageDistrictid] = useState(
     formData?.MarriageDetails?.marriageDistrictid.code ? formData?.MarriageDetails?.marriageDistrictid : ""
@@ -747,7 +752,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                         <Dropdown
                           t={t}
                           type={"text"}
-                          optionKey="i18nKey"
+                          optionKey="name"
                           option={setMarriagePlace(marriagePlacetype)}
                           selected={placeidEn}
                           select={setSelectPlaceidEn}
