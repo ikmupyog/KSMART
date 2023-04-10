@@ -7,20 +7,20 @@ import { Header, CardHeader } from "@egovernments/digit-ui-react-components";
 import get from "lodash/get";
 import orderBy from "lodash/orderBy";
 
-const ApplicationBornOutsideIndiaDetails = () => {
+const ApplicationDetails = () => {
   const { t } = useTranslation();
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const { id: applicationNumber } = useParams();
   const [showToast, setShowToast] = useState(null);
   // const [callUpdateService, setCallUpdateValve] = useState(false);
-  const [businessService, setBusinessService] = useState("BORNOUTSIDE60"); //DIRECTRENEWAL BIRTHHOSP21
+  //   const [businessService, setBusinessService] = useState("BIRTHHOSP21"); //DIRECTRENEWAL BIRTHHOSP21
   const [numberOfApplications, setNumberOfApplications] = useState([]);
   const [allowedToNextYear, setAllowedToNextYear] = useState(false);
   sessionStorage.setItem("applicationNumber", applicationNumber);
   // const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
   const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDetail(t, tenantId, applicationNumber);
-  const [params, setParams, clearParams] =  Digit.Hooks.useSessionStorage("CR_EDIT_BORNOUTSIDEBIRTH_REG", {}) 
-  const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_BORNOUTSIDEBIRTH_EDIT_FLAG", false) 
+  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_EDIT_MARRIAGE_REG", {});
+  const [editFlag, setFlag] = Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false);
   const stateId = Digit.ULBService.getStateId();
 
   const {
@@ -72,15 +72,15 @@ const ApplicationBornOutsideIndiaDetails = () => {
     let actions = orderBy(filteredActions, ["action"], ["desc"]);
     if ((!actions || actions?.length == 0) && workflowDetails?.data?.actionState) workflowDetails.data.actionState.nextActions = [];
 
-    workflowDetails?.data?.actionState?.nextActions?.forEach(data => {
+    workflowDetails?.data?.actionState?.nextActions?.forEach((data) => {
+      // console.log(data.action);
       if (data.action == "EDIT") {
-        // /digit-ui/employee/cr/cr-flow/child-details/${applicationNumber}      
-          data.redirectionUrl = {
-            pathname: `/digit-ui/employee/cr/create-bornOutsideIndia/born-outside-child-details`,
-            state: applicationDetails,
-          },
-            data.tenantId = stateId
-        
+        // /digit-ui/employee/cr/cr-flow/child-details/${applicationNumber}
+        (data.redirectionUrl = {
+          pathname: `/digit-ui/employee/cr/create-birth/child-details`,
+          state: applicationDetails,
+        }),
+          (data.tenantId = stateId);
       }
     });
   }
@@ -182,7 +182,7 @@ const ApplicationBornOutsideIndiaDetails = () => {
         {/* <label style={{ fontSize: "19px", fontWeight: "bold",marginLeft:"15px" }}>{`${t("Birth Application Summary Details")}`}</label> */}
       </div>
       <ApplicationDetailsTemplate
-        header={"CR_STILLBIRTH_SUMMARY_DETAILS"}
+        header={"CR_BIRTH_SUMMARY_DETAILS"}
         applicationDetails={applicationDetails}
         isLoading={isLoading}
         isDataLoading={isLoading}
@@ -200,6 +200,4 @@ const ApplicationBornOutsideIndiaDetails = () => {
   );
 };
 
-
-
-export default ApplicationBornOutsideIndiaDetails;
+export default ApplicationDetails;

@@ -47,7 +47,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
   const [isParent, setIsParent] = useState(formData?.GroomDetails?.isParent ? formData?.GroomDetails?.isParent : false);
   const [isGuardian, setIsGuardian] = useState(formData?.GroomDetails?.isGuardian ? formData?.GroomDetails?.isGuardian : false);
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [isInitialRenderRadioButtons, setisInitialRenderRadioButtons] = useState(true);
+  // const [isInitialRenderRadioButtons, setisInitialRenderRadioButtons] = useState(true);
   const [groomGender, selectGroomGender] = useState(formData?.GroomDetails?.groomGender);
   const [groomDOB, setGroomDOB] = useState(formData?.GroomDetails?.groomDOB ? formData?.GroomDetails?.groomDOB : "");
   const [groomFathernameEn, setGroomFathernameEn] = useState(
@@ -143,9 +143,10 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     { i18nKey: "No", code: false },
   ];
   function selectgroomResidenship(event) {
+    console.log(event.target.value, "e");
     setGroomResidentShip(event.target.value);
     // setValueRad(value.code);
-    setisInitialRenderRadioButtons(true);
+    // setisInitialRenderRadioButtons(true);
   }
   // useEffect(() => {
   //   if (isInitialRenderRadioButtons) {
@@ -196,10 +197,14 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     selectGroomGender(value);
   }
   function setSelectGroomPassportNo(e) {
-    setGroomPassportNo(e.target.value.length<=12 ? e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '') : (e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '').substring(0, 12)))
+    setGroomPassportNo(
+      e.target.value.length <= 12
+        ? e.target.value.replace("[A-PR-WY][1-9]ds?d{4}[1-9]$", "")
+        : e.target.value.replace("[A-PR-WY][1-9]ds?d{4}[1-9]$", "").substring(0, 12)
+    );
   }
   function setSelectGroomSocialSecurityNo(e) {
-  //setGroomSocialSecurityNo(e.target.value.length<=9 ? e.target.value.replace('(?!666|000|9\\d{2})\\d{3}-(?!00)\\d{2}-(?!0{4})\\d{4}$', '') : (e.target.value.replace('(?!666|000|9\\d{2})\\d{3}-(?!00)\\d{2}-(?!0{4})\\d{4}$', '').substring(0, 9)))
+    //setGroomSocialSecurityNo(e.target.value.length<=9 ? e.target.value.replace('(?!666|000|9\\d{2})\\d{3}-(?!00)\\d{2}-(?!0{4})\\d{4}$', '') : (e.target.value.replace('(?!666|000|9\\d{2})\\d{3}-(?!00)\\d{2}-(?!0{4})\\d{4}$', '').substring(0, 9)))
     if (e.target.value.length > 9) {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
@@ -227,7 +232,8 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       }
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setGroomNoOfSpouse(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' a-zA-Z]/gi, ""));
+      setGroomNoOfSpouse(e.target.value);
+      // .replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' a-zA-Z]/gi, ""));
     }
   }
   function setSelectGroomAge(e) {
@@ -313,7 +319,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setGroomLastnameMal('');
+      setGroomLastnameMal("");
     } else {
       setGroomLastnameMal(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
@@ -383,7 +389,9 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
 
   function setSelectGroomAadharNo(e) {
     if (e.target.value.trim().length >= 0) {
-      setGroomAadharNo(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
+      setGroomAadharNo(
+        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
+      );
     }
     // const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
@@ -400,7 +408,9 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
   }
   function setSelectGroomFatherAdharNo(e) {
     if (e.target.value.trim().length >= 0) {
-      setGroomFatherAadharNo(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
+      setGroomFatherAadharNo(
+        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
+      );
     }
     // const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
@@ -417,7 +427,9 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
   }
   function setSelectGroomGardianAdhar(e) {
     if (e.target.value.trim().length >= 0) {
-      setGroomGuardianAadharNo(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
+      setGroomGuardianAadharNo(
+        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
+      );
     }
     // const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
@@ -434,7 +446,9 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
   }
   function setSelectGroomMotherAdharNo(e) {
     if (e.target.value.trim().length >= 0) {
-      setGroomMotherAadharNo(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
+      setGroomMotherAadharNo(
+        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
+      );
     }
     // const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
@@ -514,7 +528,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
   };
 
   console.log("Groom", formData);
-  console.log({ groomIsSpouseLiving });
+  console.log({ groomResidentShip });
 
   if (isLoading || isMaritalStatusLoading) {
     return <Loader></Loader>;
@@ -524,16 +538,31 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
         <BackButton>{t("CS_COMMON_BACK")}</BackButton>
         {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
         {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
-        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}
-        isDisabled={!groomFirstnameEn || !groomMobile || !groomFirstnameMl || !groomEmailid || !groomGender
-        || !groomDOB || !groomMaritalstatusID
-        || groomResidentShip === "INDIAN" ? !groomAadharNo : false
-        || groomResidentShip === "NRI" ? !groomPassportNo : false
-        || groomResidentShip === "FOREIGN" ? (!groomSocialSecurityNo || !groomPassportNo) : false
-        // || groomParentGuardian === "PARENT" ? (!groomFathernameEn || !groomFathernameMl || !groomMothernameEn
-        // || !groomMothernameMl || !groomFatherAadharNo || !groomMotherAadharNo) : false
-        // || groomParentGuardian === "GUARDIAN" ? (!groomGuardiannameEn || !groomGuardiannameMl || !groomGuardianAadharNo) : false
-        }>
+        <FormStep
+          t={t}
+          config={config}
+          onSelect={goNext}
+          onSkip={onSkip}
+          isDisabled={
+            !groomFirstnameEn ||
+            !groomMobile ||
+            !groomFirstnameMl ||
+            !groomEmailid ||
+            !groomGender ||
+            !groomDOB ||
+            !groomMaritalstatusID ||
+            groomResidentShip === "INDIAN"
+              ? !groomAadharNo
+              : false || groomResidentShip === "NRI"
+              ? !groomPassportNo
+              : false || groomResidentShip === "FOREIGN"
+              ? !groomSocialSecurityNo || !groomPassportNo
+              : false
+            // || groomParentGuardian === "PARENT" ? (!groomFathernameEn || !groomFathernameMl || !groomMothernameEn
+            // || !groomMothernameMl || !groomFatherAadharNo || !groomMotherAadharNo) : false
+            // || groomParentGuardian === "GUARDIAN" ? (!groomGuardiannameEn || !groomGuardiannameMl || !groomGuardianAadharNo) : false
+          }
+        >
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
@@ -548,9 +577,9 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 {groomTypes.map((type, index) => (
                   <div style={{ display: "flex", alignItems: "center", columnGap: "8px" }}>
                     <input
-                      className="form-check-input"
+                      className="groom-residentship"
                       type="radio"
-                      name="groomType"
+                      name="groomResidentship"
                       style={{ height: "20px", width: "20px" }}
                       onChange={selectgroomResidenship}
                       value={type}
@@ -932,6 +961,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                       onChange={selectParentType}
                       value={type}
                       defaultChecked={index === 0}
+                      // checked={groomParentGuardian}
                     />
                     <label class="form-check-label" for="flexRadioDefault1">
                       {type}

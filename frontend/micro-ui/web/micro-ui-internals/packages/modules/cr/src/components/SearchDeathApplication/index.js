@@ -55,11 +55,11 @@ const SearchDeathApplication = ({  t, onSubmit, data, count, isSuccess, isLoadin
             accessor: (row) => GetCell(row.CR_DECEASED_NAME),
         },
         {
-            Header: "Father Name",
+            Header: t("CR_COMMON_FATHER_NAME"),
             accessor : (row) => GetCell(row.CR_DECEASED_FATHER_NAME),
         },
         {
-            Header: "Mother Name",
+            Header: t("CR_COMMON_MOTHER_NAME"),
             accessor : (row) => GetCell(row.CR_DECEASED_MOTHER_NAME),
         },
         {
@@ -134,7 +134,7 @@ const SearchDeathApplication = ({  t, onSubmit, data, count, isSuccess, isLoadin
                             columns={columns}
                             onPageSizeChange={onPageSizeChange}
                             onNextPage={nextPage}
-                            onPreviousPage={previousPage}
+                            onPrevPage={previousPage}
                             onSort={onSort}
                             getCellProps={() => {
                             return {
