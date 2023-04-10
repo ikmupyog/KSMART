@@ -253,7 +253,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   }
   function setSelectwitness2AdharNo(e) {
     if (e.target.value.trim().length >= 0) {
-      setwitness2AadharNo(
+      setwitness2AdharNo(
         e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
       );
     }

@@ -71,9 +71,8 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
   } = value;
   function getdate(date) {
     let newdate = Date.parse(date);
-    return `${
-      new Date(newdate).getDate().toString() + "/" + (new Date(newdate).getMonth() + 1).toString() + "/" + new Date(newdate).getFullYear().toString()
-    }`;
+    return `${new Date(newdate).getDate().toString() + "/" + (new Date(newdate).getMonth() + 1).toString() + "/" + new Date(newdate).getFullYear().toString()
+      }`;
   }
   // const typeOfApplication = !isEditProperty ? `new-application` : `renew-trade`;
   let routeLink = "";
@@ -102,7 +101,6 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
       return null;
     }
   };
-
   return (
     <React.Fragment>
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
@@ -151,7 +149,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
             </div>
             <div className="col-md-6">
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                : {t(DeathNACDetails.DeceasedGender.code + "_ML" ) +  " / " +  (DeathNACDetails.DeceasedGender.code )}
+                : {t(DeathNACDetails.DeceasedGender.code + "_ML") + " / " + (DeathNACDetails.DeceasedGender.code)}
                 {/* {" "}
                 {t(InformationDeath.DeceasedGender.code + "_ML " ? InformationDeath?.DeceasedGender.code + "_ML " : " CR_NOT_RECORDED") +
                   " / " +
@@ -241,8 +239,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                       :
-                      {`${
-                        t("PDF_CR_VEHICLE_STATEMENT_ONE") +
+                      {`${t("PDF_CR_VEHICLE_STATEMENT_ONE") +
                         " " +
                         DeathNACDetails.VehicleFromplaceMl +
                         " " +
@@ -254,7 +251,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                         " " +
                         DeathNACDetails.VehicleFirstHaltEn +
                         " " +
-                        "PDF_CR_VEHICLE_STATEMENT_FOUR"  +
+                        "PDF_CR_VEHICLE_STATEMENT_FOUR" +
                         "/ " +
                         "PDF_CR_VEHICLE_STATEMENT_ONE_EN" +
                         " " +
@@ -264,10 +261,10 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                         " " +
                         DeathNACDetails.VehicleToPlaceEn +
                         "" +
-                        "PDF_CR_VEHICLE_STATEMENT_THREE_EN"+
+                        "PDF_CR_VEHICLE_STATEMENT_THREE_EN" +
                         " " +
                         DeathNACDetails.VehicleFirstHaltEn
-                      }`}
+                        }`}
                     </CardText>
                   </div>
                 </div>
@@ -349,63 +346,63 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
               </div>
             )}
           </div>           */}
-            <div className="row">
+          <div className="row">
             <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}> {`${t("PDF_BIRTH_NAME_OF_MOTHER")}`} </CardLabel>
             </div>
 
-            {DeathNACParentsDetails.MotherUnavailable ? (
+            {/* {DeathNACParentsDetails.motherFirstNameEn ? ( */}
               <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                :{" "}
-                {t(DeathNACParentsDetails.MotherNameMl ? DeathNACParentsDetails?.MotherNameMl : "CR_NOT_RECORDED") +
-                  "/" +
-                  " " +
-                  (DeathNACParentsDetails.MotherNameEn ? DeathNACParentsDetails?.MotherNameEn : "CR_NOT_RECORDED")
-                  // (FamilyInformationDeath.MotherNameEn ? FamilyInformationDeath?.MotherNameEn : "CR_NOT_RECORDED")
+                <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                  :{" "}
+                  {t(DeathNACParentsDetails.motherFirstNameMl ? DeathNACParentsDetails?.motherFirstNameMl : "CR_NOT_RECORDED") +
+                    "/" +
+                    " " +
+                    (DeathNACParentsDetails.motherFirstNameEn ? DeathNACParentsDetails?.motherFirstNameEn : "CR_NOT_RECORDED")
+                    // (FamilyInformationDeath.MotherNameEn ? FamilyInformationDeath?.MotherNameEn : "CR_NOT_RECORDED")
                   }
-              </CardText>
-            </div>
-              
-             ) : (  
+                </CardText>
+              </div>
+
+            {/* ) : (
               <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                :{" "}  {t("CR_NOT_RECORDED")}{" "}
-               </CardText>
-               </div> 
-            )}
+                <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                  :{" "}  {t("CR_NOT_RECORDED")}{" "}
+                </CardText>
+              </div>
+            )} */}
           </div>
           <div className="row">
             <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}> {`${t("PDF_BIRTH_NAME_OF_FATHER")}`} </CardLabel>
             </div>
-            {DeathNACParentsDetails.FatherNameMl ? (
+            {/* {DeathNACParentsDetails.fatherFirstNameEn ? ( */}
 
-<div className="col-md-6">
-<CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-  :{" "}
-  {t(DeathNACParentsDetails.FatherNameMl ? DeathNACParentsDetails?.FatherNameMl : "CR_NOT_RECORDED") +
-    "/" +
-    " " +
-    (DeathNACParentsDetails.FatherNameEn ? DeathNACParentsDetails?.FatherNameEn : "CR_NOT_RECORDED")}
-</CardText>
-</div>
-              
-               
-             ) : (  
-
-              
               <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                :{" "}  {t("CR_NOT_RECORDED")}{" "}
-               </CardText>
-               </div>
-             )}
-          </div>          
-            
+                <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                  :{" "}
+                  {t(DeathNACParentsDetails.fatherFirstNameMl ? DeathNACParentsDetails?.fatherFirstNameMl : "CR_NOT_RECORDED") +
+                    "/" +
+                    " " +
+                    (DeathNACParentsDetails.fatherFirstNameEn ? DeathNACParentsDetails?.fatherFirstNameEn : "CR_NOT_RECORDED")}
+                </CardText>
+              </div>
+
+
+            {/* ) : (
+
+
+              <div className="col-md-6">
+                <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                  :{" "}  {t("CR_NOT_RECORDED")}{" "}
+                </CardText>
+              </div>
+            )} */}
+          </div>
+
           <div className="row">
             <div className="col-md-6">
-              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold",  fontSize: "14px" }}>{`${t("PDF_PRESENT_ADDRESS_DECEASED_ML")}`}</CardLabel>
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold", fontSize: "14px" }}>{`${t("PDF_PRESENT_ADDRESS_DECEASED_ML")}`}</CardLabel>
             </div>
             <div className="col-md-6">
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
@@ -416,21 +413,21 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                   " , " +
                   DeathNACAddressPage.presentInsideKeralaLocalityNameMl +
                   " , " +
-                  DeathNACAddressPage.presentInsideKeralaPostOffice.namelocal+
+                  DeathNACAddressPage.presentInsideKeralaPostOffice.namelocal +
                   " , " +
                   DeathNACAddressPage.presentInsideKeralaPincode +
                   " , " +
-                  DeathNACAddressPage.presentInsideKeralaDistrict.namelocal+
+                  DeathNACAddressPage.presentInsideKeralaDistrict.namelocal +
                   " , " +
-                  DeathNACAddressPage.presentaddressStateName.namelocal+
+                  DeathNACAddressPage.presentaddressStateName.namelocal +
                   " , " +
                   DeathNACAddressPage.presentaddressCountry.namelocal}{" "}
                 ,
               </CardText>
             </div>
-        
-          <div className="col-md-6">
-              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold", fontSize: "17px"}}>{`${t("PDF_PRESENT_ADDRESS_DECEASED_EN")}`}</CardLabel>
+
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold", fontSize: "17px" }}>{`${t("PDF_PRESENT_ADDRESS_DECEASED_EN")}`}</CardLabel>
             </div>
             <div className="col-md-6">
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
@@ -454,124 +451,124 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
               </CardText>
             </div>
           </div>
-        
+
           {DeathNACAddressPage.isPrsentAddress === true && (
             <div>
-          <div className="row">
-            <div className="col-md-6">
-              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_PERMANENT_ADDRESS_DECEASED_ML")}`}</CardLabel>
+              <div className="row">
+                <div className="col-md-6">
+                  <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_PERMANENT_ADDRESS_DECEASED_ML")}`}</CardLabel>
+                </div>
+                <div className="col-md-6">
+                  <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                    :
+                    {t(DeathNACAddressPage.presentInsideKeralaHouseNameMl ? DeathNACAddressPage.presentInsideKeralaHouseNameMl : "CR_NOT_RECORDED") +
+                      " , " +
+                      DeathNACAddressPage.presentInsideKeralaStreetNameMl +
+                      " , " +
+                      DeathNACAddressPage.presentInsideKeralaLocalityNameMl +
+                      " , " +
+                      DeathNACAddressPage.presentInsideKeralaPostOffice.namelocal +
+                      " , " +
+                      DeathNACAddressPage.presentInsideKeralaPincode +
+                      " , " +
+                      DeathNACAddressPage.presentInsideKeralaDistrict.namelocal +
+                      " , " +
+                      DeathNACAddressPage.presentaddressStateName.namelocal +
+                      " , " +
+                      DeathNACAddressPage.presentaddressCountry.namelocal}{" "}
+                    ,
+                  </CardText>
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="col-md-6">
+                  <CardLabel style={{ lineHeight: "auto", fontWeight: "bold", fontSize: "17px" }}>{`${t("PDF_PERMANENT_ADDRESS_DECEASED_EN")}`}</CardLabel>
+                </div>
+                <div className="col-md-6">
+                  <CardText style={{ fontSize: "17px", Colour: "black", fontWeight: "bold" }}>
+                    :
+                    {t(DeathNACAddressPage.presentInsideKeralaHouseNameEn ? DeathNACAddressPage.presentInsideKeralaHouseNameEn : "CR_NOT_RECORDED") +
+                      " , " +
+                      DeathNACAddressPage.presentInsideKeralaStreetNameEn +
+                      " , " +
+                      DeathNACAddressPage.presentInsideKeralaLocalityNameEn +
+                      " , " +
+                      DeathNACAddressPage.presentInsideKeralaPostOffice.name +
+                      " , " +
+                      DeathNACAddressPage.presentInsideKeralaPincode +
+                      " , " +
+                      DeathNACAddressPage.presentInsideKeralaDistrict.name +
+                      " , " +
+                      DeathNACAddressPage.presentaddressStateName.name +
+                      " , " +
+                      DeathNACAddressPage.presentaddressCountry.name}{" "}
+                    ,
+                  </CardText>
+                </div>
+              </div>
             </div>
-            <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                :
-                {t(DeathNACAddressPage.presentInsideKeralaHouseNameMl ? DeathNACAddressPage.presentInsideKeralaHouseNameMl : "CR_NOT_RECORDED") +
-                  " , " +
-                  DeathNACAddressPage.presentInsideKeralaStreetNameMl +
-                  " , " +
-                  DeathNACAddressPage.presentInsideKeralaLocalityNameMl +
-                  " , " +
-                  DeathNACAddressPage.presentInsideKeralaPostOffice.namelocal+
-                  " , " +
-                  DeathNACAddressPage.presentInsideKeralaPincode +
-                  " , " +
-                  DeathNACAddressPage.presentInsideKeralaDistrict.namelocal+
-                  " , " +
-                  DeathNACAddressPage.presentaddressStateName.namelocal+
-                  " , " +
-                  DeathNACAddressPage.presentaddressCountry.namelocal}{" "}
-                ,
-              </CardText>
-            </div>
-          </div>
-     
-          <div className="row">
-            <div className="col-md-6">
-              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold", fontSize: "17px"}}>{`${t("PDF_PERMANENT_ADDRESS_DECEASED_EN")}`}</CardLabel>
-            </div>
-            <div className="col-md-6">
-              <CardText style={{ fontSize: "17px", Colour: "black", fontWeight: "bold" }}>
-                :
-                {t(DeathNACAddressPage.presentInsideKeralaHouseNameEn ? DeathNACAddressPage.presentInsideKeralaHouseNameEn : "CR_NOT_RECORDED") +
-                  " , " +
-                  DeathNACAddressPage.presentInsideKeralaStreetNameEn +
-                  " , " +
-                  DeathNACAddressPage.presentInsideKeralaLocalityNameEn +
-                  " , " +
-                  DeathNACAddressPage.presentInsideKeralaPostOffice.name+
-                  " , " +
-                  DeathNACAddressPage.presentInsideKeralaPincode +
-                  " , " +
-                  DeathNACAddressPage.presentInsideKeralaDistrict.name +
-                  " , " +
-                  DeathNACAddressPage.presentaddressStateName.name +
-                  " , " +
-                  DeathNACAddressPage.presentaddressCountry.name }{" "}
-                ,
-              </CardText>
-            </div>
-          </div>
-          </div>
           )}
 
-{DeathNACAddressPage.isPrsentAddress === false && (
-  <div>
-          <div className="row">
-            <div className="col-md-6">
-              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_PERMANENT_ADDRESS_DECEASED_ML")}`}</CardLabel>
+          {DeathNACAddressPage.isPrsentAddress === false && (
+            <div>
+              <div className="row">
+                <div className="col-md-6">
+                  <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_PERMANENT_ADDRESS_DECEASED_ML")}`}</CardLabel>
+                </div>
+                <div className="col-md-6">
+                  <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                    :
+                    {
+                      t(DeathNACAddressPage.permntInKeralaAdrHouseNameMl ? DeathNACAddressPage.permntInKeralaAdrHouseNameMl : "CR_NOT_RECORDED") +
+                      " , " +
+                      DeathNACAddressPage.permntInKeralaAdrStreetNameMl +
+                      " , " +
+                      DeathNACAddressPage.permntInKeralaAdrLocalityNameMl +
+                      " , " +
+                      DeathNACAddressPage.permntInKeralaAdrPostOffice.name +
+                      " , " +
+                      DeathNACAddressPage.permntInKeralaAdrPincode +
+                      " , " +
+                      DeathNACAddressPage.permntInKeralaAdrDistrict.namelocal +
+                      " , " +
+                      DeathNACAddressPage.permtaddressStateName.namelocal +
+                      " , " +
+                      DeathNACAddressPage.permtaddressCountry.namelocal}
+                    ,
+                  </CardText>
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="col-md-6">
+                  <CardLabel style={{ lineHeight: "auto", fontWeight: "bold", fontSize: "17px" }}>{`${t("PDF_PERMANENT_ADDRESS_DECEASED_EN")}`}</CardLabel>
+                </div>
+                <div className="col-md-6">
+                  <CardText style={{ fontSize: "17px", Colour: "black", fontWeight: "bold" }}>
+                    :
+                    {t(DeathNACAddressPage.permntInKeralaAdrHouseNameEn ? DeathNACAddressPage.permntInKeralaAdrHouseNameEn : "CR_NOT_RECORDED") +
+                      " , " +
+                      DeathNACAddressPage.permntInKeralaAdrStreetNameEn +
+                      " , " +
+                      DeathNACAddressPage.permntInKeralaAdrLocalityNameEn +
+                      " , " +
+                      DeathNACAddressPage.permntInKeralaAdrPostOffice.name +
+                      " , " +
+                      DeathNACAddressPage.permntInKeralaAdrPincode +
+                      " , " +
+                      DeathNACAddressPage.permntInKeralaAdrDistrict.name +
+                      " , " +
+                      DeathNACAddressPage.permtaddressStateName.name +
+                      " , " +
+                      DeathNACAddressPage.permtaddressCountry.name}{" "}
+                    ,
+                  </CardText>
+                </div>
+              </div>
             </div>
-            <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                :
-                {  
-     t(DeathNACAddressPage.permntInKeralaAdrHouseNameMl ? DeathNACAddressPage.permntInKeralaAdrHouseNameMl : "CR_NOT_RECORDED") +
-       " , " +
-       DeathNACAddressPage.permntInKeralaAdrStreetNameMl +
-       " , " +
-       DeathNACAddressPage.permntInKeralaAdrLocalityNameMl +
-       " , " +
-       DeathNACAddressPage.permntInKeralaAdrPostOffice.name+
-       " , " +
-       DeathNACAddressPage.permntInKeralaAdrPincode +
-       " , " +
-       DeathNACAddressPage.permntInKeralaAdrDistrict.namelocal+
-       " , " +
-       DeathNACAddressPage.permtaddressStateName.namelocal+
-       " , " +
-       DeathNACAddressPage.permtaddressCountry.namelocal}
-                            ,
-              </CardText>
-            </div>
-          </div>
-    
-          <div className="row">
-            <div className="col-md-6">
-              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold", fontSize: "17px"}}>{`${t("PDF_PERMANENT_ADDRESS_DECEASED_EN")}`}</CardLabel>
-            </div>
-            <div className="col-md-6">
-              <CardText style={{ fontSize: "17px", Colour: "black", fontWeight: "bold" }}>
-                :
-                {t(DeathNACAddressPage.permntInKeralaAdrHouseNameEn ? DeathNACAddressPage.permntInKeralaAdrHouseNameEn : "CR_NOT_RECORDED") +
-       " , " +
-       DeathNACAddressPage.permntInKeralaAdrStreetNameEn +
-       " , " +
-       DeathNACAddressPage.permntInKeralaAdrLocalityNameEn +
-       " , " +
-       DeathNACAddressPage.permntInKeralaAdrPostOffice.name+
-       " , " +
-       DeathNACAddressPage.permntInKeralaAdrPincode +
-       " , " +
-       DeathNACAddressPage.permntInKeralaAdrDistrict.name +
-       " , " +
-       DeathNACAddressPage.permtaddressStateName.name +
-       " , " +
-       DeathNACAddressPage.permtaddressCountry.name }{" "}
-                ,
-              </CardText>
-            </div>
-          </div>
-          </div>
           )}
-          
+
         </div>
 
         <div className="row">

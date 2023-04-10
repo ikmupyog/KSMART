@@ -25,7 +25,7 @@ const BannerPicker = (props) => {
   return (
     <Banner
       message={GetActionMessage(props)}
-      applicationNumber={props.data?.deathNACDtls[0]?.applicationNumber}
+      applicationNumber={props.data?.deathNACDtls[0]?.InformationDeath?.DeathACKNo}
       info={props.isSuccess ? props.applicationNumber : ""}
       successful={props.isSuccess}
     />
@@ -83,10 +83,10 @@ const DeathNACAcknowledgement = ({ data, onSuccess, userType, }) => {
     const data = getPDFData({ ...res }, tenantInfo, t);
     data.then((ress) => Digit.Utils.pdf.generate(ress));
   };
-  // let enableLoader = (mutation.isIdle || mutation.isLoading);
-  // if (enableLoader) { return (<Loader />) }
-  // else if (((mutation?.isSuccess == false && mutation?.isIdle == false))) {
-    if (((mutation?.isSuccess == false && mutation?.isIdle == false))) {
+  let enableLoader = (mutation.isIdle || mutation.isLoading);
+  if (enableLoader) { return (<Loader />) }
+  else if (((mutation?.isSuccess == false && mutation?.isIdle == false))) {
+    // if (((mutation?.isSuccess == false && mutation?.isIdle == false))) {
     return (
       <Card>
         <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation?.isLoading)} />

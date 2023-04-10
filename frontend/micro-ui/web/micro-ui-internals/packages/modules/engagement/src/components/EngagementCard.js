@@ -6,10 +6,10 @@ import { EmployeeModuleCard, DocumentIconSolid, EventsIconSolid, PMBIconSolid, S
 const EngagementCard = () => {
   const userRoles = Digit.SessionStorage.get('User')?.info?.roles
   const isEmployee = userRoles.find((role) => role.code === 'EMPLOYEE');
-  
+
   useEffect(() => {
     Digit.SessionStorage.set("CITIZENSURVEY.INBOX", null)
-  },[])
+  }, [])
 
   if (!isEmployee) return null;
   const tenantId = Digit.ULBService.getCurrentTenantId();
@@ -42,7 +42,8 @@ const EngagementCard = () => {
 
   const propsForSurveyModuleCard = {
     Icon: <SurveyIconSolid />,
-    moduleName: t("CS_COMMON_SURVEYS"),
+    moduleName: 'Survey',
+    moduleHeader: t("CS_COMMON_SURVEYS"),
     kpis: [
       {
         count: totalSurveysCount,
@@ -65,7 +66,8 @@ const EngagementCard = () => {
 
   const propsForPMBModuleCard = {
     Icon: <PMBIconSolid />,
-    moduleName: t("ACTION_TEST_PUBLIC_MESSAGE_BROADCAST"),
+    moduleName: 'Public Message Broadcast',
+    moduleHeader: t("ACTION_TEST_PUBLIC_MESSAGE_BROADCAST"),
     kpis: [
       {
         count: totalMessagesCount,
@@ -88,7 +90,8 @@ const EngagementCard = () => {
   }
   const propsForEventsModuleCard = {
     Icon: <EventsIconSolid />,
-    moduleName: t("TOTAL_EVENTS"),
+    moduleName: 'Events',
+    moduleHeader: t("TOTAL_EVENTS"),
     kpis: [
       {
         count: totalEventsCount,
@@ -111,7 +114,8 @@ const EngagementCard = () => {
   }
   const propsForDocumentModuleCard = {
     Icon: <DocumentIconSolid />,
-    moduleName: t("ES_TITLE_DOCS"),
+    moduleName: 'Documents',
+    moduleHeader: t("ES_TITLE_DOCS"),
     kpis: [
       {
         count: totalDocsCount,
@@ -136,11 +140,11 @@ const EngagementCard = () => {
 
 
   if (isEmployee) result = (
-      <>
+    <>
       {engagementSubModulesProps.map((propsForModuleCard, index) => <EmployeeModuleCard key={index} {...propsForModuleCard} />)
       }
-      </>
-    );
+    </>
+  );
 
   return result;
 };

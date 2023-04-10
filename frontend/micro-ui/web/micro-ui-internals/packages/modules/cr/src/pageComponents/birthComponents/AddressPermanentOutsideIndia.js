@@ -25,7 +25,7 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
 
   let cmbCountry = [];
   Country &&
-    Country["common-masters"] &&
+    Country["common-masters"] && Country["common-masters"].Country &&
     Country["common-masters"].Country.map((ob) => {
       cmbCountry.push(ob);
     });
