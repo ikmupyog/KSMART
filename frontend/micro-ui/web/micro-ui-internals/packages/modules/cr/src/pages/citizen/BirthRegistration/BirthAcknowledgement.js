@@ -26,7 +26,7 @@ const BannerPicker = (props) => {
   if (props.isSuccess && sessionStorage.getItem("CR_BIRTH_EDIT_FLAG")) {
     //console.log(JSON.stringify(props));
     sessionStorage.setItem("applicationNumber", props.data?.ChildDetails[0]?.applicationNumber);
-    console.log(sessionStorage.getItem("applicationNumber"));
+    // console.log(sessionStorage.getItem("applicationNumber"));
     // if (sessionStorage.getItem("applicationNumber") != null) {
     //   window.location.assign(`${window.location.origin}/digit-ui/employee/cr/application-details/${sessionStorage.getItem("applicationNumber")}`);
     // }
@@ -146,7 +146,7 @@ const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
   };
 
   let enableLoader = (mutation.isIdle || mutation.isLoading);
-  console.log(JSON.stringify(mutation));
+  // console.log(JSON.stringify(mutation));
   if (enableLoader) {
     if (mutation?.isLoading === false && mutation?.isSuccess === false && mutation?.isError == false && mutation?.isIdle === true && applicationNumber != null) {
       return (

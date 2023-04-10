@@ -59,7 +59,9 @@ const CreateBirthNACRegistration = ({data, parentUrl, isEditBirth }) => {
   };
 
   const onSuccess = () => {
-    sessionStorage.removeItem("CurrentFinancialYear");
+    if(isEditBirthNAC === false){
+      clearParams();
+    }   
     queryClient.invalidateQueries("CR_CREATE_NAC_BIRTH_REG");
   };
   const handleSkip = () => { };
