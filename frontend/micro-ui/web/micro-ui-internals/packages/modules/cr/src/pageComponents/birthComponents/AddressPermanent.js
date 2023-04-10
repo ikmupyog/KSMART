@@ -47,7 +47,7 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
     let cmbFilterState = [];
     useEffect(() => {
 
-        if (isInitialRender && isPrsentAddress) {
+        if (isPrsentAddress) {
             if (cmbLB.length > 0) {
                 currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
                 // setAdrsLBName(currentLB[0]);
@@ -59,7 +59,7 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
                 setpermtaddressStateName(cmbFilterState[0]);
                 setValue(cmbFilterState[0].statecode);
                 setValuePermanent(cmbFilterState[0].statecode);
-                setIsInitialRender(false);
+                // setIsInitialRender(false);
             }
         } else {
             if (cmbLB.length > 0) {
@@ -71,10 +71,10 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
                 cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
                 setpermtaddressStateName(cmbFilterState[0]);
                 setValuePermanent(cmbFilterState[0].statecode);
-                setIsInitialRender(false);
+                // setIsInitialRender(false);
             }
         }
-    }, [Country, State, localbodies, isInitialRender]);
+    }, [cmbLB]);
     if (isEditBirth) {
         if (formData?.ChildDetails?.AddressBirthDetails?.permtaddressCountry != null) {
             if (cmbCountry.length > 0 && (permtaddressCountry === undefined || permtaddressCountry === "")) {
