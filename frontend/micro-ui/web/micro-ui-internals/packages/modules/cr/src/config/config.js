@@ -164,7 +164,7 @@ export const newConfig = [
           skipText: "",
         },
         withoutLabel: true,
-        key: "BirthNACAddressPage",
+        key: "AddressBirthDetails",
         nextStep: "nac-initiator-details",
         type: "component",
         hideInEmployee: false,

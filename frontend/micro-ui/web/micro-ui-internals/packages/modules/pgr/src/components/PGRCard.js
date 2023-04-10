@@ -16,7 +16,7 @@ const PGRCard = () => {
     tenantId,
     filters: { ...inboxSearchParams },
     config: {}
-});
+  });
   if (!Digit.Utils.pgrAccess()) {
     return null;
   }
@@ -26,7 +26,7 @@ const PGRCard = () => {
     <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z" fill="white"></path>
   </svg>
 
-  let propsForCSR =[
+  let propsForCSR = [
     {
       label: t("ES_PGR_NEW_COMPLAINT"),
       link: `/digit-ui/employee/pgr/complaint/create`,
@@ -59,30 +59,31 @@ const PGRCard = () => {
     }
   ]
 
-  propsForCSR = propsForCSR.filter(link => link.role && Digit.Utils.didEmployeeHasRole(link.role) );
+  propsForCSR = propsForCSR.filter(link => link.role && Digit.Utils.didEmployeeHasRole(link.role));
 
   const propsForModuleCard = {
     Icon: <Icon />,
-    moduleName: t("ES_PGR_HEADER_COMPLAINT"),
+    moduleName: 'Complaints',
+    moduleHeader: t("ES_PGR_HEADER_COMPLAINT"),
     kpis: [
-        {
-          count: isLoading ? "-" : inboxData?.length,
-            label: t("TOTAL_PGR"),
-            link: `/digit-ui/employee/pgr/inbox`
-        },
-        {
-            label: t("TOTAL_NEARING_SLA"),
-            link: `/digit-ui/employee/pgr/inbox`
-        }
+      {
+        count: isLoading ? "-" : inboxData?.length,
+        label: t("TOTAL_TL"),
+        link: `/digit-ui/employee/pgr/inbox`
+      },
+      {
+        label: t("TOTAL_NEARING_SLA"),
+        link: `/digit-ui/employee/pgr/inbox`
+      }
     ],
     links: [
-    {
+      {
         label: t("ES_PGR_INBOX"),
         link: `/digit-ui/employee/pgr/inbox`
-    },
-    ...propsForCSR
+      },
+      ...propsForCSR
     ]
-}
+  }
 
   return <EmployeeModuleCard {...propsForModuleCard} />
 };

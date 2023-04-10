@@ -33,7 +33,7 @@ const BannerPicker = (props) => {
   );
 };
 
-const MarriageAcknowledgement = ({ data, onSuccess, userType, isEditBirth = false }) => {
+const MarriageAcknowledgement = ({ data, onSuccess, userType }) => {
   const { t } = useTranslation();
   const [mutationHappened, setMutationHappened, clear] = Digit.Hooks.useSessionStorage("CITIZEN_TL_MUTATION_HAPPENED", false);
   const resubmit = window.location.href.includes("edit-application");
@@ -131,6 +131,7 @@ const MarriageAcknowledgement = ({ data, onSuccess, userType, isEditBirth = fals
     data.then((ress) => Digit.Utils.pdf.generate(ress));
   };
   let enableLoader = mutation.isIdle || mutation.isLoading;
+  console.log({ enableLoader });
   if (enableLoader) {
     return <Loader />;
   } else if (mutation?.isSuccess == false && mutation?.isIdle == false) {

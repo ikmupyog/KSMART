@@ -1,7 +1,7 @@
 import moment from "moment";
 
-export const getFilteredFatherData = (selectedData, inclusionData) => {
- 
+export const getFilteredSpouseData = (selectedData, inclusionData) => {
+  console.log("selectedData==dob", selectedData);
   let filteredDocuments = getFilteredDocuments(selectedData, inclusionData);
   const computedCurrentValue = computeCurrentValue(selectedData);
   const computedInitialValue = computeInitialValue(selectedData);
@@ -19,21 +19,13 @@ export const getFilteredFatherData = (selectedData, inclusionData) => {
   return { ...selectedDobObj };
 };
 
-
-// _onDobchange = (field,data,dataObj = {}) =>{
-//   const tempData = {...dataObj}
-//   if(tempData){
-//     tempData[field]?.curValue = data;
-//   }
-//    return tempData
-// }
-
 //TODO need validation to check dob is null
 const computeInitialValue = (data) => {
+  console.log("initial value---",data);
   const initialValue = {
-    fatherNameEn: data?.registerBirthFather?.firstname_en,
-    fatherNameMl: data?.registerBirthFather?.firstname_ml,
-    fatherAdhar: data?.registerBirthFather?.aadharno
+    spouseNameEn: data?.registerBirthMother?.firstname_en,
+    spouseNameMl: data?.registerBirthMother?.firstname_ml,
+    spouseAdhar: data?.registerBirthMother?.aadharno
   };
 
   return initialValue;
@@ -41,9 +33,9 @@ const computeInitialValue = (data) => {
 
 const computeCurrentValue = (data) => {
   const currentValue = {
-    fatherNameEn: data?.registerBirthFather?.firstname_en,
-    fatherNameMl: data?.registerBirthFather?.firstname_ml,
-    fatherAdhar: data?.registerBirthFather?.aadharno
+    spouseNameEn: data?.registerBirthMother?.firstname_en,
+    spouseNameMl: data?.registerBirthMother?.firstname_ml,
+    spouseAdhar: data?.registerBirthMother?.aadharno
   };
   return currentValue;
 };
@@ -55,5 +47,6 @@ const getFilteredDocuments = (selectedData, inclusionData) => {
   } else {
     filteredData = inclusionData?.filter((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
   }
+  console.log("dob filter==",filteredData);
   return {documentData:filteredData};
 };

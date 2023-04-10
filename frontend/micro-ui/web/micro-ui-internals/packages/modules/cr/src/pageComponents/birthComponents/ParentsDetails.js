@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isEditBirthPageComponents }) => {
   // console.log(JSON.stringify(formData));
-  //console.log(formData);
+  console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -454,7 +454,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
       } else {
         setMotherProfessionError(false);
       }
-      if(motherAadhar.trim() == null || motherAadhar.trim() == '' || motherAadhar.trim() == undefined){
+      if (motherAadhar.trim() == null || motherAadhar.trim() == '' || motherAadhar.trim() == undefined) {
         setMotherAadhar("");
       } else if (motherAadhar != null && motherAadhar != "") {
         let adharLength = motherAadhar;
@@ -537,9 +537,9 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
       } else {
         setFatherProfError(false);
       }
-      if(fatherAadhar.trim() == null || fatherAadhar.trim() == '' || fatherAadhar.trim() == undefined){
-        setFatherAadhar(null);
-      } else if (fatherAadhar != null && motherAadhar != "") {
+      if (fatherAadhar.trim() == null || fatherAadhar.trim() == '' || fatherAadhar.trim() == undefined) {
+        setFatherAadhar("");
+      } else if (fatherAadhar != null && fatherAadhar != "") {
         let adharLength = fatherAadhar;
         if (adharLength.length < 12 || adharLength.length > 12) {
           validFlag = false;
@@ -588,16 +588,21 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
       }
     }
     if (isFatherInfo === false && isMotherInfo === false) {
-      if (motherAadhar != null && fatherAadhar != null) {
-        if (motherAadhar === fatherAadhar) {
-          validFlag = false;
-          setAdhaarDuplicationError(true);
-          setToast(true);
-          setTimeout(() => {
-            setToast(false);
-          }, 2000);
-        } else {
-          setAdhaarDuplicationError(false);
+      if ((motherAadhar.trim() == null || motherAadhar.trim() == '') && (fatherAadhar.trim() != null || fatherAadhar.trim() == '')) {
+        setMotherAadhar('');
+        setFatherAadhar('');
+      } else {
+        if (motherAadhar.trim() != null && fatherAadhar.trim() != null) {
+          if (motherAadhar === fatherAadhar) {
+            validFlag = false;
+            setAdhaarDuplicationError(true);
+            setToast(true);
+            setTimeout(() => {
+              setToast(false);
+            }, 2000);
+          } else {
+            setAdhaarDuplicationError(false);
+          }
         }
       }
     }
