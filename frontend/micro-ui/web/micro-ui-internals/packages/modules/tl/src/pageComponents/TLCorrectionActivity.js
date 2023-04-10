@@ -105,9 +105,7 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
         new Set(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits.map(type => type.businessType))
       );      
 
-      console.log("type"+fields[0]?.businessCategory  );
-      console.log(JSON.stringify( formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits));
-      if(businessType && (fields[0]?.businessCategory === undefined || fields[0]?.businessCategory === "")) {
+     if(businessType && (fields[0]?.businessCategory === undefined || fields[0]?.businessCategory === "")) {
         let category = null;
         category = BusinessCategoryMenu.filter((category) => category?.code.includes(formDataEdit?.TradeDetails?.tradeLicenseDetail?.tradeUnits[0]?.businessCategory))[0];
 
@@ -125,7 +123,6 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
               if(bussubtyp===undefined || bussubtyp===""){
                 bussubtyp={"i18nKey":"","code":""};
               }
-              console.log("isssueeeeeeeeeeeeeee firing"+JSON.stringify(bussubtyp));
               setFeilds([
                 {
                   id: unit.id,
@@ -180,9 +177,14 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
   }
   const selectBusinessType = (i, value) => {
     let units = [...fields];
+    let fillUnits = [...fillFields];
     units[i].businessType = value;
+    fillUnits[i].businessType = value;
     selectBusinessSubType(i, null);
+    fillUnits[i].businessSubtype = [];
+    setFillFields(fillUnits);
     setFeilds(units);
+    Digit.SessionStorage.set("activityedit", true);
   }
   const selectBusinessSubType = (i, value) => {
     let units = [...fields];
@@ -249,56 +251,85 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
     let tradeUnits = [];
     let tempval=[]
     for (let i=0;i<units.length;i++){
-      tempval.push(units[i].businessSubtype)
+      units[i].businessSubtype !== null ? tempval.push(units[i].businessSubtype) : "" ;
     }
 
-    if(subUnits){
+    if(subUnits.length > 0){
       subUnits.map(subUnit => {
-        tempval.some(code => code.code === subUnit.code) ? 
-          units.map(unit =>{
-            if(subUnit.code === unit?.businessSubtype?.code){
-              tradeUnits.push({
-                "id": unit.id,
-                "businessCategory": unit.businessCategory.code,
-                "businessType": unit.businessType.code, 
-                "businessSubtype": unit.businessSubtype.code,
-                "active":true,
-                "unit":null,"uom":null
-              });
-            }
-          })
-          : 
-          tradeUnits.push({
-            "id": null,
-            "businessCategory": units[0].businessCategory.code,
-            "businessType": subUnit.code.split(".")[0] + "." + subUnit.code.split(".")[1], 
-            "businessSubtype": subUnit.code,
-            "active":true,
-            "unit":null,"uom":null
-          });
-        // units.map(unit =>{
-        //     let subCode = + "{" +subUnit.code.split(".")[0] + "." + subUnit.code.split(".")[1]+ "}";
-        //     if( subCode === unit.businessType.code){
-        //       if(!subUnits.includes(unit.businessSubtype.code)){
-        //         tradeUnits.splice(unit.id, 1);
-        //         tradeUnits.push({ "id": unit.id,"active":false});
-        //       }
-        //     }
-        //   }) 
-      })
+        tempval.length > 0 ?
+          tempval.some(code => code.code === subUnit.code) ? 
+            units.map(unit =>{
+              if(subUnit.code === unit?.businessSubtype?.code){
+                tradeUnits.push({
+                  "id": unit.id,
+                  "businessCategory": unit.businessCategory.code,
+                  "businessType": unit.businessType.code, 
+                  "businessSubtype": unit.businessSubtype.code,
+                  "active":true,
+                  "unit":null,"uom":null
+                });
+              }
+            })
+            : 
+            tradeUnits.push({
+              "id": null,
+              "businessCategory": units[0].businessCategory.code,
+              "businessType": subUnit.code.split(".")[0] + "." + subUnit.code.split(".")[1], 
+              "businessSubtype": subUnit.code,
+              "active":true,
+              "unit":null,"uom":null
+            })
+          // units.map(unit =>{
+          //     let subCode = + "{" +subUnit.code.split(".")[0] + "." + subUnit.code.split(".")[1]+ "}";
+          //     if( subCode === unit.businessType.code){
+          //       if(!subUnits.includes(unit.businessSubtype.code)){
+          //         tradeUnits.splice(unit.id, 1);
+          //         tradeUnits.push({ "id": unit.id,"active":false});
+          //       }
+          //     }
+          //   }) 
+       :
+        tradeUnits.push({
+          "id": null,
+          "businessCategory": units[0].businessCategory.code,
+          "businessType": subUnit.code.split(".")[0] + "." + subUnit.code.split(".")[1], 
+          "businessSubtype": subUnit.code,
+          "active":true,
+          "unit":null,"uom":null
+        });
+      });
       if(tradeUnits[0]?.businessCategory){
         Digit.SessionStorage.set("activityedit", true);
         setIsEditSubType(true);
         setFeilds(tradeUnits);
       }
     }
+    else{
+      units[0].businessSubtype = [];
+      setFillFields(units);
+      Digit.SessionStorage.set("activityedit", true);
+      setIsEditSubType(true);
+      units.map(unit =>{
+        tradeUnits.push({
+          "id": unit.id,
+          "businessCategory": unit.businessCategory.code,
+          "businessType": unit.businessType.code, 
+          "businessSubtype": "",
+          "active":true,
+          "unit":null,"uom":null
+        });
+      })
+      setFeilds(tradeUnits);
+    }
     let tempvalSub=[];
     for (let i=0;i<units.length;i++){
-      subUnits.map(subUnit => {
-        if(units[i].businessType.code === subUnit.code.split(".")[0] + "." + subUnit.code.split(".")[1]){
-          tempvalSub.push(subUnit);
-        }
-      });
+      if(subUnits.length > 0){
+        subUnits.map(subUnit => {
+          if(units[i].businessType.code === subUnit.code.split(".")[0] + "." + subUnit.code.split(".")[1]){
+            tempvalSub.push(subUnit);
+          }
+        });
+      }
       units[i].businessSubtype = tempvalSub;
     }
     setFillFields(units);
@@ -331,8 +362,10 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
         !key.code.includes(unit[i].businessSubtype.code) ? tempUnit.push(unit[i]) : "";
 
         if(temp.length===0){
-          unit[i].businessSubtype={"i18nKey":"","code":""};
-          tempUnit.push(unit[i])
+          unit[i].businessCategory=unit[i].businessCategory.code;
+          unit[i].businessType=unit[i].businessType.code;
+          unit[i].businessSubtype=null;
+          tempUnit.push(unit[i]);
         }
       }
   
@@ -375,6 +408,7 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
   
 
   return (
+   
     <div style={{ borderRadius: "5px", borderColor: "#f3f3f3", background: "white", display: "flow-root", }} >
       <div className="row">
         <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("TL_NEW_TRADE_DETAILS_TRADE_CAT_LABEL")}`}</span> </h1>
