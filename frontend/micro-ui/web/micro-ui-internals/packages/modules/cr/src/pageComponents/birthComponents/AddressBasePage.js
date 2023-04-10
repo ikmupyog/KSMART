@@ -910,6 +910,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                 {window.location.href.includes("/citizen/cr/cr-birth-creation/address-birth") ? <Timeline currentStep={3} /> : null || window.location.href.includes("employee/cr/cr-flow") ? <Timeline currentStep={3} /> : null}
                 {window.location.href.includes("/citizen/cr-adoptionflow/adoption-address-birth") ? <AdoptionTimeline currentStep={3} /> : null || window.location.href.includes("employee/cr/cr-adoptionflow") ? <AdoptionTimeline currentStep={3} /> : null}
                 {window.location.href.includes("/citizen/cr/cr-death-creation/address-death") ? <DRTimeline currentStep={2} /> : null || window.location.href.includes("employee/cr/death-flow") ? <DRTimeline currentStep={2} /> : null}
+                {window.location.href.includes("/citizen/cr/cr-stillbirth-creation/stillbirth-address") ? <Timeline currentStep={3} /> : null || window.location.href.includes("employee/cr/cr-flow") ? <Timeline currentStep={3} /> : null}
                 <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
 
                     <div className="accordion-wrapper">

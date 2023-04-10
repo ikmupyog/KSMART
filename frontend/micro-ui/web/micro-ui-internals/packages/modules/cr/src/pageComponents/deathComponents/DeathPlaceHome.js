@@ -179,6 +179,24 @@ const DeathPlaceHome = ({
       e.preventDefault();
     }
   }
+  function setCheckSpecialCharSpace(e) {
+    let pattern = /^[a-zA-Z-.`' ]*$/;
+    if (!(e.key.match(pattern)) && e.code === 'Space') {
+      e.preventDefault();
+    }
+  }
+  function setCheckSpecialChar(e) {
+    let pattern = /^[0-9]*$/;
+    if (!(e.key.match(pattern))) {
+      e.preventDefault();
+    }
+  }
+  function setCheckMalayalamInputField(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
+    if (!(e.key.match(pattern))) {
+      e.preventDefault();
+    }
+  }
   function setSelectDeathPlaceWardId(value) {
     setDeathPlaceWardId(value);
   }
@@ -274,6 +292,7 @@ const DeathPlaceHome = ({
                 optionKey="i18nKey"
                 name="DeathPlaceHomeLocalityEn"
                 value={DeathPlaceHomeLocalityEn}
+                onKeyPress={setCheckSpecialCharSpace}
                 onChange={setSelectDeathPlaceHomelocalityEn}
                 placeholder={`${t("CR_LOCALITY_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
@@ -290,6 +309,7 @@ const DeathPlaceHome = ({
                 name="DeathPlaceHomeStreetNameEn"
                 value={DeathPlaceHomeStreetNameEn}
                 onChange={setSelectDeathPlaceHomestreetNameEn}
+                onKeyPress={setCheckSpecialCharSpace}
                 placeholder={`${t("CR_STREET_NAME_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
               />
@@ -308,6 +328,7 @@ const DeathPlaceHome = ({
                 name="DeathPlaceHomeHoueNameEn"
                 value={DeathPlaceHomeHoueNameEn}
                 onChange={setSelectDeathPlaceHomehoueNameEn}
+                onKeyPress={setCheckSpecialCharSpace}
                 placeholder={`${t("CR_HOUSE_NAME_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z- 0-9]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
               />
@@ -329,6 +350,7 @@ const DeathPlaceHome = ({
                 name="DeathPlaceHomeLocalityMl"
                 value={DeathPlaceHomeLocalityMl}
                 onChange={setSelectDeathPlaceHomelocalityMl}
+                onKeyPress={setCheckMalayalamInputField}
                 placeholder={`${t("CR_LOCALITY_ML")}`}
                 {...(validation = {
                   pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]*$",
@@ -348,6 +370,7 @@ const DeathPlaceHome = ({
                 name="DeathPlaceHomeStreetNameMl"
                 value={DeathPlaceHomeStreetNameMl}
                 onChange={setSelectDeathPlaceHomestreetNameMl}
+                onKeyPress={setCheckMalayalamInputField}
                 placeholder={`${t("CR_STREET_NAME_ML")}`}
                 {...(validation = {
                   pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -368,9 +391,9 @@ const DeathPlaceHome = ({
                 type={"text"}
                 optionKey="i18nKey"
                 name="DeathPlaceHomehoueNameMl"
-                value={DeathPlaceHomehoueNameMl}
-                onKeyPress={setCheckMalayalamInputField}
+                value={DeathPlaceHomehoueNameMl}               
                 onChange={setSelectDeathPlaceHomehoueNameMl}
+                onKeyPress={setCheckMalayalamInputField}
                 placeholder={`${t("CR_HOUSE_NAME_ML")}`}
                 {...(validation = {
                   pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9`' ]*$",
