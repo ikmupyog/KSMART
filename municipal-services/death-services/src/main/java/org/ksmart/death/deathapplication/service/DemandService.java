@@ -14,6 +14,7 @@ import org.egov.mdms.model.ModuleDetail;
 import org.ksmart.death.common.repository.ServiceRequestRepository;
 import org.ksmart.death.deathapplication.config.DeathConfiguration;
 import org.ksmart.death.deathapplication.enrichment.DeathEnrichment;
+import org.ksmart.death.deathapplication.web.models.WorkFlowCheck;
 import org.ksmart.death.deathapplication.web.models.Demand.Demand;
 import org.ksmart.death.deathapplication.web.models.Demand.DemandDetail;
 import org.ksmart.death.utils.BirthDeathConstants;
@@ -43,17 +44,17 @@ public class DemandService {
     @Autowired
     DeathEnrichment enrichmentService;
 
-    public List<Demand> saveDemandDetails(List<Demand> demands, RequestInfo requestInfo) {
-        demands.forEach(demand -> setDemandParamsLateFee(demand, requestInfo));
+    public List<Demand> saveDemandDetails(List<Demand> demands, RequestInfo requestInfo, WorkFlowCheck wfc) {
+        demands.forEach(demand -> setDemandParamsLateFee(demand, requestInfo, wfc));
         return  enrichmentService.saveDemand(requestInfo,demands);
     }
-    public void setDemandParamsLateFee(Demand demand, RequestInfo requestInfo) {
+    public void setDemandParamsLateFee(Demand demand, RequestInfo requestInfo, WorkFlowCheck wfc) {
         demand.setConsumerType("FEE");
         demand.setBusinessService("CR");
         ArrayList<DemandDetail> demandDetails = new ArrayList<>();
         DemandDetail demandDetail=new DemandDetail();
         demandDetail.setTaxHeadMasterCode("CRB_FEES");
-        demandDetail.setTaxAmount(new BigDecimal(12));
+        demandDetail.setTaxAmount(new BigDecimal(wfc.getAmount()));
         demandDetail.setTenantId(demand.getTenantId());
         setGLCode(demandDetail, requestInfo);
         demandDetails.add(demandDetail);

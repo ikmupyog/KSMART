@@ -150,4 +150,7 @@ public class DeathConstants {
     //Rakhi S  on 04.04.2023
     public static final String APPLICATION_TYPE = "nac";
 
+    public static final String CR_MDMS_DEATH_NEW_WF_JSONPATH = "$.MdmsRes.birth-death-service.WorkFlowDeath";
+    public static final String CR_MDMS_WORKFLOW_NEW = "WorkFlowDeath";
+
 }

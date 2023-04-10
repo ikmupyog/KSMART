@@ -24,10 +24,9 @@ public enum ErrorCodes {
  
 //  Search
     INVALID_SEARCH("INVALID_SEARCH"),
- 
 //  Idgen Service
     IDGEN_ERROR("IDGEN_ERROR");
- 
+
       private String code;
     
 }

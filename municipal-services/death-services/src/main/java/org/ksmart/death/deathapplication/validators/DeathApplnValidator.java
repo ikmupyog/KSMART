@@ -2,8 +2,10 @@ package org.ksmart.death.deathapplication.validators;
 
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +28,7 @@ import org.ksmart.death.deathapplication.web.models.DeathNACApplicantDtls;
 import org.ksmart.death.deathapplication.web.models.DeathNACDtls;
 import org.ksmart.death.deathapplication.web.models.DeathNACRequest;
 import org.ksmart.death.deathapplication.web.models.DeathStatisticalInfo;
+import org.ksmart.death.deathapplication.web.models.WorkFlowCheck;
 import org.ksmart.death.deathapplication.web.models.DeathBasicInfo;
 import org.ksmart.death.deathapplication.web.models.DeathCorrectionBasicInfo;
 import org.ksmart.death.deathapplication.web.models.DeathCorrectionRequest;
@@ -34,6 +37,9 @@ import org.ksmart.death.deathapplication.web.models.DeathCorrectionDtls;
 
 import org.egov.tracer.model.CustomException;
 import org.springframework.stereotype.Component;
+
+import com.jayway.jsonpath.JsonPath;
+
 import org.apache.commons.lang3.StringUtils;
 /**
      * Creates Jasmine
@@ -1020,35 +1026,42 @@ public void validateNACUpdate(DeathNACRequest request, List<DeathNACDtls> search
     }
 }
  //Rakhi S on 06.04.2023 
- public void ruleEngineDeath(DeathDtlRequest request){
-    
+ public void ruleEngineDeath(DeathDtlRequest request, WorkFlowCheck wfc,Object mdmsdata){
+    Long dateOfDeath = 0L;
+    String deathPlace = null;
+    String wfCode = null;
+    String applicationType = null;
+
     List<DeathDtl> deathApplication = request.getDeathCertificateDtls();
+    for (DeathDtl death : deathApplication) {
+        dateOfDeath = death.getDeathBasicInfo().getDateOfDeath();
+        deathPlace = death.getDeathBasicInfo().getDeathPlace();
+        wfCode = death.getWorkflowcode();
+        applicationType = death.getDeathBasicInfo().getFuncionUID();
+    }
+    if (dateOfDeath == null) {
+        throw new CustomException(DEATH_DETAILS_INVALID_CREATE.getCode(),
+                "Date of birth is required for create request.");
+    } else {
+        validateDoD(dateOfDeath, deathPlace, wfCode,applicationType,mdmsdata, wfc);
+    }
     if (deathApplication!=null){
         deathApplication
                 .forEach(deathdtls -> {
         DeathBasicInfo  basicInfo = deathdtls.getDeathBasicInfo();
         Long dod = basicInfo.getDateOfDeath();          
           java.sql.Date dodDate=new java.sql.Date(dod); 
-          int diffDays= getDaysDiff(dodDate);
-
-          Long startdateperiod=(long) 0;
-          Long enddateperiod=(long) 0;
-
+          int diffDays= getDaysDiff(dodDate);        
           if(diffDays <= 21){
-            System.out.println("Normal Registration");
             basicInfo.setNormalRegn(true);
-
           }
           else if(diffDays > 21 && diffDays <= 30){
-            System.out.println("Delayed within 30days");
             basicInfo.setDelayedWithinThirty(true);
           }
           else if(diffDays > 30 && diffDays < 365){
-            System.out.println("Delayed less than 1 year");
             basicInfo.setDelayedWithinOneyear(true);
           }
           else if(diffDays >= 365){
-            System.out.println("Delayed Greater than 1 year");
             basicInfo.setDelayedAfterOneyear(true);
           }
         });
@@ -1065,6 +1078,53 @@ public void validateNACUpdate(DeathNACRequest request, List<DeathNACDtls> search
             
         return (int) Math.round(diffDays);
     }
+//RAkhi S on 10.04.2023 - VAlidate DAte of Death
+private void validateDoD(Long dateOfDeath, String deathPlace, String wfCode, String applicationType,Object mdmsData, WorkFlowCheck wfc) {
+    Calendar calendar = Calendar.getInstance();
+    Long currentDate = calendar.getTimeInMillis();
+
+    if (dateOfDeath > currentDate) {
+        throw new CustomException(DEATH_DETAILS_INVALID_CREATE.getCode(),
+                "Date of death should be less than or same as  current date.");
+    } else {
+        wfc = checkValidation(mdmsData, deathPlace, dateOfDeath, wfc);
+
+        if(!wfc.getWorkflowCode().equals(wfCode)) {
+            throw new CustomException(DEATH_DETAILS_INVALID_CREATE.getCode(),
+                    "Workflow code from the application request is wrong.");
+        }
+        if(!wfc.getApplicationType().equals(applicationType)) {
+            throw new CustomException(DEATH_DETAILS_INVALID_CREATE.getCode(),
+                    "Application type from the application request is wrong.");
+        }
+    }
+}
+//RAkhi S on 10.04.2023 - VAlidate DAte of Death MDMS data
+public WorkFlowCheck checkValidation(Object mdmsData, String deathPlace, Long dateOfDeath, WorkFlowCheck wfc) {
+    // WorkFlowCheck wfc = new WorkFlowCheck();
+    Calendar calendar = Calendar.getInstance();
+    Long currentDate = calendar.getTimeInMillis();
+    List<LinkedHashMap<String, Object>> wfLists = JsonPath.read(mdmsData, DeathConstants.CR_MDMS_DEATH_NEW_WF_JSONPATH + "[*]");
+    for (int n = 0; n < wfLists.size(); n++) {
+        String startStr = wfLists.get(n).get("startdateperiod").toString();
+        String endStr = wfLists.get(n).get("enddateperiod").toString();
+        Long start = Long.parseLong(startStr);
+        Long end = Long.parseLong(endStr);
+        if (wfLists.get(n).get("DeathPlace").equals(deathPlace)) {
+            if (end > 0L) {
+                Long comp = currentDate - dateOfDeath;
+                if (comp <= end && comp >= start) {
+                    wfc.setApplicationType(wfLists.get(n).get("ApplicationType").toString());
+                    wfc.setWorkflowCode(wfLists.get(n).get("WorkflowCode").toString());
+                    wfc.setPayment(Boolean.getBoolean(wfLists.get(n).get("payment").toString()));
+                    wfc.setAmount(Integer.parseInt(wfLists.get(n).get("amount").toString()));
+                    wfc.setActive(Boolean.getBoolean(wfLists.get(n).get("active").toString()));
+                }
+            }
+        }
+    }
+    return wfc;
+}
 //Rakhi S on 09.04.2023  - Death NAC Common Field Validation
 public void validateNACCommonFieldss(DeathNACRequest request) {
       

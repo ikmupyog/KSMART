@@ -27,6 +27,7 @@ import org.ksmart.death.deathapplication.web.models.DeathDtlRequest;
 import org.ksmart.death.deathapplication.web.models.DeathNACDtls;
 import org.ksmart.death.deathapplication.web.models.DeathNACRequest;
 import org.ksmart.death.deathapplication.web.models.DeathSearchCriteria;
+import org.ksmart.death.deathapplication.web.models.WorkFlowCheck;
 import org.ksmart.death.deathapplication.web.models.Demand.Demand;
 import org.ksmart.death.deathapplication.web.models.Demand.DemandDetail;
 import org.ksmart.death.workflow.WorkflowIntegrator;
@@ -89,8 +90,9 @@ public class DeathApplnService {
      //RAkhi S ikm  on 06.02.2023
      public List<DeathDtl> create(DeathDtlRequest request) {
           // Rakhi S IKM validate mdms data on 14.02.2023
+          WorkFlowCheck wfc = new WorkFlowCheck();
           Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getTenantId());
-          validatorService.ruleEngineDeath(request);
+          validatorService.ruleEngineDeath(request, wfc, mdmsData);
           validatorService.validateCommonFields( request);
           mdmsValidator.validateDeathMDMSData(request,mdmsData);
           //Rakhi S ikm on 08.02.2023
@@ -101,18 +103,19 @@ public class DeathApplnService {
          //RAkhi S ikm  on 06.02.2023         
           producer.push(deathConfig.getSaveDeathDetailsTopic(), request);
           workflowIntegrator.callWorkFlow(request);
-          //Rakhi S on 21.03.2023
-          // request.getDeathCertificateDtls().forEach(death->{
-          //      if(death.getApplicationStatus().equals(DeathConstants.STATUS_FOR_PAYMENT)){    
-          //           // System.out.println("PaymentGateway");               
-          //          List<Demand> demands = new ArrayList<>();
-          //          Demand demand = new Demand();
-          //          demand.setTenantId(death.getDeathBasicInfo().getTenantId());
-          //          demand.setConsumerCode(death.getDeathBasicInfo().getDeathACKNo());
-          //          demands.add(demand);
-          //          death.setDemands(demandService.saveDemandDetails(demands,request.getRequestInfo()));
-          //      }
-          //  });         
+          //Rakhi S on 10.04.2023
+          request.getDeathCertificateDtls().forEach(death->{
+               if(wfc.getPayment()!= null){
+                   if(death.getApplicationStatus().equals(DeathConstants.STATUS_FOR_PAYMENT)){
+                       List<Demand> demands = new ArrayList<>();
+                       Demand demand = new Demand();
+                       demand.setTenantId(death.getDeathBasicInfo().getTenantId());
+                       demand.setConsumerCode(death.getDeathBasicInfo().getDeathACKNo());
+                       demands.add(demand);
+                       death.setDemands(demandService.saveDemandDetails(demands,request.getRequestInfo(), wfc));
+                   }
+               }
+          });     
  
           return request.getDeathCertificateDtls();
      }

@@ -211,17 +211,22 @@ public class DeathMdmsUtil {
                     .add(MasterDetail.builder().name(DeathConstants.DEATH_CAUSE_MAIN).filter(filterCodeDeathCauseMain).build());
                     
         final String filterCodeDeathCauseSub = "$.[?(@.active==true)].code";
-                    crDeathMasterDetails
-                               .add(MasterDetail.builder().name(DeathConstants.DEATH_CAUSE_SUB).filter(filterCodeDeathCauseSub).build());        
+        crDeathMasterDetails
+                           .add(MasterDetail.builder().name(DeathConstants.DEATH_CAUSE_SUB).filter(filterCodeDeathCauseSub).build());        
 
         final String filterCodeAgeUnit = "$.[?(@.active==true)].code";
-                                          crDeathMasterDetails
-                                                     .add(MasterDetail.builder().name(DeathConstants.AGE_UNIT).filter(filterCodeAgeUnit).build());
+         crDeathMasterDetails
+                              .add(MasterDetail.builder().name(DeathConstants.AGE_UNIT).filter(filterCodeAgeUnit).build());
 
         final String filterCodeMedicalAttention = "$.[?(@.active==true)].code";
-                                           crDeathMasterDetails
-                                                     .add(MasterDetail.builder().name(DeathConstants.MEDICAL_ATTENTION_TYPE).filter(filterCodeMedicalAttention).build());
+        crDeathMasterDetails
+                            .add(MasterDetail.builder().name(DeathConstants.MEDICAL_ATTENTION_TYPE).filter(filterCodeMedicalAttention).build());
        
+        // Add Module workflow
+        crDeathMasterDetails.add(MasterDetail.builder()
+                                                        .name(DeathConstants.CR_MDMS_WORKFLOW_NEW)
+                                                        .build());
+
         ModuleDetail crDeathModuleDtls = ModuleDetail.builder().masterDetails(crDeathMasterDetails)
                 .moduleName(DeathConstants.BND_MODULE_NAME).build();
 
