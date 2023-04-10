@@ -3,11 +3,12 @@ import { pdfDocumentName, pdfDownloadLink, stringReplaceAll,getTransaltedLocalit
 const capitalize = (text) => text.substr(0, 1).toUpperCase() + text.substr(1);
 const ulbCamel = (ulb) => ulb.toLowerCase().split(" ").map(capitalize).join(" ");
 
-const getOwnerDetails = (application, t) => {
+const getChildDetails = (application, t) => {
+  console.log(application);
   application.owners = application?.ChildDetails?.filter((applicationNumber) => applicationNumber.active == true) || [];
   //if (application?.ChildDetails?.applicationNumber == "TL_COMMON_TABLE_COL_APP_NO") {
     return {
-      title: t("TL_OWNERSHIP_DETAILS_HEADER"),
+      title: t("CR_CHILD_DEATILS"),
       values: [
         { title: t("TL_OWNER_S_NAME_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.name || t("CS_NA") },
         { title: t("TL_OWNER_S_MOBILE_NUM_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.mobileNumber || t("CS_NA") },
@@ -119,7 +120,7 @@ const getOwnerDetails = (application, t) => {
 //   };
 // };
 
-// const getCRBirthAcknowledgementData = async (application, tenantInfo, t) => {
+const getCRBirthAcknowledgementData = async (application, tenantInfo, t) => {
 //   const filesArray = application?.tradeLicenseDetail?.applicationDocuments?.map((value) => value?.fileStoreId);
 //   let res;
 //   if (filesArray) {
@@ -164,6 +165,6 @@ const getOwnerDetails = (application, t) => {
 //       },
 //     ],
 //   };
-// };
+};
 
 export default getCRBirthAcknowledgementData;

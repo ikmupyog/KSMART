@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { convertToBirthRegistration, convertToEditBirthRegistration } from "../../../utils/birthindex";
-import getPDFData from "../../../utils/getTLAcknowledgementData";
+import getPDFData from "../../../utils/getCRBirthAcknowledgementData";
 import { useHistory } from "react-router-dom";
 
 const GetActionMessage = (props) => {
@@ -137,10 +137,10 @@ const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
   }, [mutation.isSuccess]);
 
   const handleDownloadPdf = async () => {
-    const { Licenses = [] } = mutation.data
-    const License = (Licenses && Licenses[0]) || {};
-    const tenantInfo = tenants.find((tenant) => tenant.code === License.tenantId);
-    let res = License;
+    const { ChildDetails = [] } = mutation.data
+    const ChildDet = (ChildDetails && ChildDetails[0]) || {};
+    const tenantInfo = tenants.find((tenant) => tenant.code === ChildDet.tenantId);
+    let res = ChildDet;
     const data = getPDFData({ ...res }, tenantInfo, t);
     data.then((ress) => Digit.Utils.pdf.generate(ress));
   };
@@ -171,7 +171,7 @@ const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
       </Card>)
   }
   else
-    // console.log(JSON.stringify(mutation));
+    console.log(JSON.stringify(mutation));
     if (mutation.isSuccess && mutation?.isError === false && mutation?.isLoading === false) {
       return (
         <Card>
