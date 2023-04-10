@@ -22,6 +22,7 @@ import { BIRTH_INCLUSION_FIELD_NAMES } from "../../../config/constants";
 import { initializeBirthInclusionObject } from "../../../business-objects/globalObject";
 import { useParams, useHistory, useRouteMatch, useLocation } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
+import { convertEpochToDate  } from "../../../utils";
 import moment from "moment";
 import { formatApiParams } from "../../../utils/birthInclusionParams";
 let birthInclusionFormData = {};
@@ -74,8 +75,8 @@ const BirthInclusionEditPage = ({ cmbNation, menu, cmbPlace, BirthCorrectionDocu
       const selectedDocIds = fileData.map((item) => item.documentId);
       setSelectedDocs(selectedDocIds);
     }
-    selectedDocs;
-    let tempObj = { ...birthInclusionFormsObj };
+   
+    let tempObj = {...birthInclusionFormsObj };
     let { CHILD_DOB } = tempObj;
     tempObj = { ...tempObj, CHILD_DOB: { ...CHILD_DOB, Documents: fileData, isFocused: true, isDisabled: false } };
 
@@ -95,7 +96,7 @@ const BirthInclusionEditPage = ({ cmbNation, menu, cmbPlace, BirthCorrectionDocu
     },
   });
 
-  const mutation = Digit.Hooks.cr.useBirthCorrectionAction(tenantId) 
+  const mutation = Digit.Hooks.cr.useBirthCorrectionAction(tenantId);
 
   const _hideModal = () => {
     setShowModal(false);
@@ -105,11 +106,18 @@ const BirthInclusionEditPage = ({ cmbNation, menu, cmbPlace, BirthCorrectionDocu
     console.log(data);
   };
 
-  const onDobChange = () => {};
+  const onDobChange = (value) => {
+    console.log("value==",value);
+    let tempObj = {...birthInclusionFormsObj };
+    let { CHILD_DOB } = tempObj;
+    tempObj = { ...tempObj, CHILD_DOB: { ...CHILD_DOB,curValue: value && moment(value,"YYYY-MM-DD").format("DD/MM/YYYY")} };
+    setbirthInclusionFormsObj(tempObj);
+  };
 
   const onSubmitBirthInclusion = () => {
-    const formattedResp = formatApiParams(birthInclusionFormsObj);
+    const formattedResp = formatApiParams(birthInclusionFormsObj,navigationData);
     console.log("formattedResp", formattedResp);
+    mutation.mutate(formattedResp);
   };
 
   if (Object.keys(birthInclusionFormsObj)?.length > 0) {
@@ -126,7 +134,7 @@ const BirthInclusionEditPage = ({ cmbNation, menu, cmbPlace, BirthCorrectionDocu
               </div>
             </div>
           </div>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          {/* <form onSubmit={handleSubmit(onSubmit)}> */}
             <FormFieldContainer>
               <FieldComponentContainer>
                 <div className="col-md-5">
@@ -137,15 +145,15 @@ const BirthInclusionEditPage = ({ cmbNation, menu, cmbPlace, BirthCorrectionDocu
                   <DatePicker
                     // {...register('childDOB')}
                     // datePickerRef ={register}
-                    name="childDOB"
+                    name="dateofbirth"
                     disabled={birthInclusionFormsObj?.CHILD_DOB?.isDisabled}
                     autofocus={birthInclusionFormsObj?.CHILD_DOB?.isFocused}
                     date={birthInclusionFormsObj?.CHILD_DOB?.curValue}
-                    // max={convertEpochToDate(new Date())}
-                    //min={convertEpochToDate("1900-01-01")}
+                    max={convertEpochToDate(new Date())}
+                    min={convertEpochToDate("1900-01-01")}
                     onChange={onDobChange}
                     // disable={true}
-                    //  inputFormat="DD-MM-YYYY"
+                    // inputFormat="DD/MM/YYYY"
                     // inputRef={register}
                     // date={birthInclusionFormsObj.CHILD_DOB?.curValue && moment(birthInclusionFormsObj.CHILD_DOB?.curValue).format("DD-MM-YYYY")}
                     // onChange={props.onChange}
@@ -206,7 +214,7 @@ const BirthInclusionEditPage = ({ cmbNation, menu, cmbPlace, BirthCorrectionDocu
                     type={"text"}
                     // optionKey="i18nKey"
                     name="DeceasedFirstNameEn"
-                    value={birthInclusionFormsObj?.CHILD_NAME.curValue.firstName}
+                    value={birthInclusionFormsObj?.CHILD_NAME?.curValue?.firstName}
                     // onChange={setSelectDeceasedFirstNameEn}
                     placeholder={`${t("CR_FIRST_NAME_EN")}`}
                     // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -701,7 +709,7 @@ const BirthInclusionEditPage = ({ cmbNation, menu, cmbPlace, BirthCorrectionDocu
                 </div>
               </ButtonContainer>
             </FormFieldContainer>
-          </form>
+          {/* </form> */}
           <BirthInclusionModal
             showModal={showModal}
             selectedDocs={selectedDocs}

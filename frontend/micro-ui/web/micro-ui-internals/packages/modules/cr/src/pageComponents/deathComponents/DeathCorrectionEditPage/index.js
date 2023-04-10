@@ -11,7 +11,7 @@ function DeathCorrectionPage() {
   const { data: correctionsData = {}, isSuccess, isError, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
     stateId,
     "birth-death-service",
-    "BirthCorrectionDocuments"
+    "DeathCorrectionDocuments"
   );
 
   const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PlaceMasterDeath");
@@ -21,9 +21,9 @@ function DeathCorrectionPage() {
   let cmbPlace = [];
   let menu = [];
   let cmbNation = [];
-  let BirthCorrectionDocuments = [];
+  let DeathCorrectionDocuments = [];
   
-  BirthCorrectionDocuments = correctionsData["birth-death-service"]?.BirthCorrectionDocuments;
+  DeathCorrectionDocuments = correctionsData["birth-death-service"]?.DeathCorrectionDocuments;
 
   place &&
     place["common-masters"] &&
@@ -49,14 +49,14 @@ function DeathCorrectionPage() {
     cmbNation?.length > 0 &&
     menu?.length > 0 &&
     cmbPlace?.length > 0 &&
-    BirthCorrectionDocuments?.length > 0 
+    DeathCorrectionDocuments?.length > 0 
   ) {
     return (
       <DeathCorrectionEditPage
         cmbNation={cmbNation}
         menu={menu}
         cmbPlace={cmbPlace}
-        BirthCorrectionDocuments={BirthCorrectionDocuments}
+        DeathCorrectionDocuments={DeathCorrectionDocuments}
         navigationData={navigationData}
       />
     );

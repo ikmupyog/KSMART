@@ -28,7 +28,7 @@ export const initializeBirthInclusionObject = (birthInclusionDocData, selectedDa
   for (let field_key in BIRTH_INCLUSION_FIELD_NAMES) {
     const filteredData = birthInclusionDocData?.filter((item) => item.CorrectionField === field_key);
     let inclusionsDocsData = birthInclusionFilterFieldsObj[field_key]?.(selectedData, filteredData);
-    let tempObj = { ...inclusionsDocsData, isDisabled: true, isEditable: false, isFocused: false };
+    let tempObj = { ...inclusionsDocsData};
     Object.assign(formObj, { [field_key]: tempObj });
   }
   return formObj;
@@ -49,7 +49,7 @@ export const initializeMarriageCorrectionObject = (marriageCorrectionDocData, se
   for (let field_key in MARRIAGE_INCLUSION_FIELD_NAMES) {
     const filteredData = marriageCorrectionDocData?.filter((item) => item.CorrectionField === field_key);
     let inclusionsDocsData = marriageCorrectionFilterFieldsObj[field_key]?.(selectedData, filteredData);
-    let tempObj = { ...inclusionsDocsData, isDisable: true, isEditable: false, isFocused: false };
+    let tempObj = { ...inclusionsDocsData };
     Object.assign(formObj, { [field_key]: tempObj });
   }
   return formObj;

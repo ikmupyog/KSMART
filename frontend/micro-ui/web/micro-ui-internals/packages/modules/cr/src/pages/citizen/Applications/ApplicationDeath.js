@@ -10,6 +10,10 @@ const MyCRDeathApplications = ({view}) => {
 
   const { mobileNumber, tenantId } = Digit.UserService.getUser()?.info || {}
 
+  const response = Digit.Hooks.cr.useCRDeathSearchApplication(payload,{
+    enabled: view !== "bills"
+  }, t);
+
   const onSubmit = (_data) => {
     console.log('_data', _data)
     var fromDate = new Date(_data?.fromDate)
@@ -21,38 +25,40 @@ const MyCRDeathApplications = ({view}) => {
         ...(_data.toDate ? { toDate: toDate?.getTime() } : {}),
         ...(_data.fromDate ? { fromDate: fromDate?.getTime() } : {})
     }
-
-    setPayload(Object.keys(data).filter(k => data[k]).reduce((acc, key) => ({ ...acc, [key]: typeof data[key] === "object" ? data[key].code : data[key] }), {}))
+    let params =Object.keys(data).filter(k => data[k]).reduce((acc, key) => ({ ...acc, [key]: typeof data[key] === "object" ? data[key].code : data[key] }), {});
+    setPayload(params)
   }
+
   const config = {
     enabled: !!(payload && Object.keys(payload).length > 0)
-}
-
-
+  }
   
-  const { isLoading, isSuccess, isError, data, error, Count: count, ...rest } = view === "bills" ? Digit.Hooks.cr.useDeathFetchBill(
-    {
-      params: { businessService: "CR", tenantId, mobileNumber },
-      config: { enabled: view === "bills" }
-    }
-  ) : Digit.Hooks.cr.useCRDeathSearchApplication({}, {
-     enabled: view !== "bills"
-  },t);
+  // const { isLoading, isSuccess, data, Count, ...rest } = view === "bills" ? Digit.Hooks.cr.useDeathFetchBill(
+  //   {
+  //     params: { businessService: "CR", tenantId, mobileNumber },
+  //     config: { enabled: view === "bills" }
+  //   }
+  // ) : Digit.Hooks.cr.useCRDeathSearchApplication(payload, {
+  //    enabled: view !== "bills"
+  // },t);
+  
+  
+  const {isSuccess,isLoading,data,Count} = response;
+
   if (isLoading) {
     return <Loader />;
   }
- 
   return (
     <React.Fragment>
-     
+     <BackButton>{t("CS_COMMON_BACK2")}</BackButton>
      <Header>{`${t("TL_MY_APPLICATIONS_HEADER")}`}</Header>
      <SearchDeathApplication
       t = {t}
       onSubmit = {onSubmit}
-      data={data}
+      data={data ||[]}
       isSuccess={isSuccess}
       isLoading={isLoading}
-      count={count}
+      count={Count}
      />
      
       {/* {data?.map((application) => {

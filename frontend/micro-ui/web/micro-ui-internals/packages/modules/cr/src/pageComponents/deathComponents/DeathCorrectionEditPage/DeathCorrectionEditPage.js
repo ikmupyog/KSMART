@@ -23,10 +23,12 @@ import DeathCorrectionModal from "../../../components/DeathCorrectionModal";
 import { DEATH_CORRECTION_FIELD_NAMES } from "../../../config/constants";
 import { initializedDeathCorrectionObject } from "../../../business-objects/globalObject";
 import { useLocation } from "react-router-dom";
+import moment from "moment";
+import { convertEpochToDate  } from "../../../utils";
 import { useForm } from "react-hook-form";
 import { formatApiParams } from "../../../utils/birthInclusionParams";
 
-function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, menu, cmbPlace , BirthCorrectionDocuments,navigationData}) {
+function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, menu, cmbPlace , DeathCorrectionDocuments ,navigationData}) {
   const { t } = useTranslation();
   const [showModal, setShowModal] = useState(false);
   const stateId = Digit.ULBService.getStateId();
@@ -167,10 +169,10 @@ console.log("menu---", menu);
 
   
   useEffect(async()=>{
-    deathCorrectionFormData = await initializedDeathCorrectionObject(BirthCorrectionDocuments,navigationData);
+    deathCorrectionFormData = await initializedDeathCorrectionObject(DeathCorrectionDocuments,navigationData);
     await setDeathCorrectionFormsObj(deathCorrectionFormData);
 
- },[navigationData,BirthCorrectionDocuments])
+ },[navigationData,DeathCorrectionDocuments])
 
 
   const setDeathCorrectionFilterQuery = (fieldId) => {
@@ -534,6 +536,15 @@ console.log("menu---", menu);
   };
   console.log(cmbPlace);
 
+  const onDodChange = (value) => {
+    console.log("value==",value);
+    let tempObj = {...deathCorrectionFormsObj };
+    let { CHILD_DOB } = tempObj;
+    tempObj = { ...tempObj, CHILD_DOB: { ...CHILD_DOB,curValue: value && moment(value,"YYYY-MM-DD").format("DD/MM/YYYY")} };
+    setDeathCorrectionFormsObj(tempObj);
+  };
+
+
   const onSubmitDeathCorrection = () => {
     const formattedResp = formatApiParams(deathCorrectionFormsObj);
     console.log("formattedResp", formattedResp);
@@ -710,10 +721,13 @@ console.log("menu---", menu);
                 <DatePicker
                   // {...register('DateOfDeath')}
                   // datePickerRef={register}
-                  name="DateOfDeath"
+                  name="dateOfDeath"
                   disabled={deathCorrectionFormsObj.CHILD_DOB?.isDisabled}
                   autofocus={deathCorrectionFormsObj.CHILD_DOB?.isFocused}
-                  date={deathCorrectionFormsObj?.CHILD_DOB?.curValue} 
+                  date={deathCorrectionFormsObj?.CHILD_DOB?.curValue}
+                  max={convertEpochToDate(new Date())}
+                  min={convertEpochToDate("1900-01-01")} 
+                  onChange={onDodChange}
                   // max={convertEpochToDate(new Date())}
                   // onChange={selectDeathDate}
                   // {...(validation = {

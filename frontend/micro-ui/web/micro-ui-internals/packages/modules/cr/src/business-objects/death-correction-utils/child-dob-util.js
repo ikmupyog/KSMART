@@ -2,10 +2,12 @@ import moment from "moment";
 
 export const getFilteredDodData = (selectedData, correctionData) => {
   let filteredDocuments = getFilteredDocuments(selectedData,correctionData);
-  const computedValue = computeInitialValue(selectedData?.InformationDeath?.DateofDeath);
+  const computedCurrentValue = computeCurrentValue(selectedData?.InformationDeath?.DateofDeath);
+  const computedInitialValue = computeInitialValue(selectedData?.InformationDeath?.DateofDeath);
+  console.log("c==omputedInitialValue",computedInitialValue);
   let selectedDodObj = {
-    initialValue: computedValue,
-    curValue: computedValue,
+    initialValue: computedInitialValue,
+    curValue: computedCurrentValue,
     isDisabled: true,
     isEditable: false,
     isFocused: false,
@@ -16,8 +18,16 @@ export const getFilteredDodData = (selectedData, correctionData) => {
 
 //TODO need validation to check dob is null
 const computeInitialValue = (dod) => {
-  const initialValue = dod && moment(dod).format("DD/MM/YYYY");
+  console.log("initial value---",dod);
+  const initialValue = dod;
+
   return initialValue;
+};
+
+const computeCurrentValue = (dod) => {
+  const currentValue = dod && moment(dod).format("DD/MM/YYYY");
+
+  return currentValue;
 };
 
 const getFilteredDocuments = (selectedData,correctionData) => {

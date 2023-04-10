@@ -22,7 +22,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
   const [isLoading, setIsLoading] = useState(false);
   let acceptFormat = ".jpg,.png,.pdf,.jpeg";
 
-  console.log("selectedConfig",selectedConfig);
+  console.log("selectedConfig", selectedConfig);
   const handleUploadDoc = (file, docType) => {
     let tempObj = { [docType]: [...file] };
     console.log("uploadedd===files--", docType, [...file], tempObj);
@@ -110,6 +110,18 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     })();
   }, [file, uploadedFiles]);
 
+  const getDocumentName = (doc) => {
+    console.log("doc item==",doc);
+    const documentNameArray = doc.DocumentList && doc.DocumentList?.[0]?.split(",");
+    const documents = documentNameArray.map((name) => {
+      return t(name);
+    });
+  console.log("document list==",);
+    const documentName = documents.join(` or `);
+    
+    return documentName;
+  };
+
   if (!showModal) {
     return null;
   }
@@ -124,7 +136,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
           <div>
             {!selectedDocs.includes(item.DocumentId) && (
               <div style={{ padding: ".5rem, 0,.5rem, 0" }}>
-                <h1 style={{ fontWeight: "bold" }}>{item.DocumentType}</h1>
+                <h1 style={{ fontWeight: "bold" }}>{getDocumentName(item)}</h1>
                 <div style={{ padding: "1rem 0 1.5rem 1rem" }}>
                   <UploadFile
                     key={item.DocumentId}
