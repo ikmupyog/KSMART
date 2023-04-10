@@ -200,6 +200,8 @@ public class MarriageRegistryDetails {
     @JsonProperty("AuditDetails")
     private AuditDetails auditDetails;
 
+    @JsonProperty("certificateNo")
+    private  String certificateNo;
 
 
 

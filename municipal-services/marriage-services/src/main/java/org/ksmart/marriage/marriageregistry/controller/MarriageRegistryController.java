@@ -3,10 +3,13 @@ package org.ksmart.marriage.marriageregistry.controller;
 
 // import lombok.extern.slf4j.Slf4j;
 
+import org.egov.common.contract.request.RequestInfo;
 import org.ksmart.marriage.marriageregistry.model.MarriageRegistryDetails;
 import org.ksmart.marriage.marriageregistry.model.MarriageRegistryRequest;
 import org.ksmart.marriage.marriageregistry.model.MarriageRegistryResponse;
 import org.ksmart.marriage.marriageregistry.model.MarriageRegistrySearchCriteria;
+import org.ksmart.marriage.marriageregistry.model.certmodel.MarriageCertResponse;
+import org.ksmart.marriage.marriageregistry.model.certmodel.MarriageCertificate;
 import org.ksmart.marriage.marriageregistry.service.MarriageRegistryService;
 import org.ksmart.marriage.utils.ResponseInfoFactory;
 import org.springframework.http.HttpStatus;
@@ -55,6 +58,31 @@ public class MarriageRegistryController {
                                             .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
                                             .marriageApplicationDetails(marriageDetails)
                                             .build();
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("_certificate")
+    public  ResponseEntity<MarriageCertResponse> certificateDownload(@RequestBody MarriageRegistryRequest request,
+                                                                     @Valid @ModelAttribute MarriageRegistrySearchCriteria criteria) {
+        List<MarriageCertificate> marriageCertResponseList = marriageService.searchCertificate(criteria);
+        MarriageCertResponse response;
+//        if(null!=marriageCertResponseList&&!marriageCertResponseList.isEmpty()){
+//            response = MarriageCertResponse
+//                    .builder()
+//                    .filestoreId(marriageCertResponseList.get(0).getFilestoreid())
+//                    .tenantId(marriageCertResponseList.get(0).getMarriageRegistryDetails().getTenantid())
+//                    .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), true))
+//                    .build();
+//            return ResponseEntity.ok(response);
+//        }else{
+            MarriageCertificate marriageCertificate = marriageService.download(criteria,request.getRequestInfo());
+
+            response = MarriageCertResponse
+                    .builder()
+                    .filestoreId(marriageCertificate.getFilestoreid())
+                    .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), true))
+                    .build();
+//        }
         return ResponseEntity.ok(response);
     }
 
