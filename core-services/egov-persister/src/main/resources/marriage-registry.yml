@@ -11,7 +11,7 @@ serviceMaps:
                   housenameno_ml, street_name_en, street_name_ml, ward_code, talukid, village_name, marriage_type, oth_marriage_type, landmark, locality_en,
                   locality_ml, applicationnumber, registrationno, registration_date, registration_status, createdtime, createdby,
                   lastmodifiedtime, lastmodifiedby,module_code,brideurl, groomurl, imageuuid, bride_filestoreid, groom_filestoreid, bride_expired, groom_expired, is_backward)
-                  VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,? );
+                  VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,? );
           basePath: MarriageDetails.*
           jsonMaps:
             - jsonPath: $.MarriageDetails.*.id
@@ -113,15 +113,6 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.marriageTenantid
 
-        - query: UPDATE eg_marriage_document SET registrationno = ?  WHERE applicationnumber = ? AND tenantid = ?
-          
-          basePath: MarriageDetails.*
-          jsonMaps:
-            - jsonPath: $.MarriageDetails.*.registrationno
-
-            - jsonPath: $.MarriageDetails.*.applicationNumber
-
-            - jsonPath: $.MarriageDetails.*.marriageTenantid
 
         - query: INSERT INTO public.eg_register_marriage_bride_groom_details(
                 id, residentship, aadharno, passportno, socialsecurityno, firstname_en, firstname_ml, middlename_en, middlename_ml, lastname_en, lastname_ml, 
