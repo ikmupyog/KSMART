@@ -10,8 +10,8 @@ serviceMaps:
                   id, dateofmarriage, dateofreporting, districtid, lbtype, tenantid, placetype, placeid, placename_en, placename_ml, houseno_and_name_en, 
                   houseno_and_name_ml, street_name_en, street_name_ml, ward_code, talukid, village_name, marriage_type, oth_marriage_type, landmark, locality_en,
                   locality_ml, applicationtype, businessservice, workflowcode, applicationnumber, registrationNo, registration_date, action, status, createdtime, createdby,
-                  lastmodifiedtime, lastmodifiedby,module_code)
-                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );
+                  lastmodifiedtime, lastmodifiedby,module_code,brideurl, groomurl, imageuuid, bride_filestoreid, groom_filestoreid, bride_expired, groom_expired, is_backward)            
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,? ,?, ?, ?, ? );
           basePath: MarriageDetails.*
           jsonMaps:
             - jsonPath: $.MarriageDetails.*.id
@@ -83,6 +83,22 @@ serviceMaps:
             - jsonPath: $.MarriageDetails.*.auditDetails.lastModifiedBy
 
             - jsonPath: $.MarriageDetails.*.moduleCode
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.brideUrl
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.groomUrl
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.imageUuid
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.brideFilestoreId
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.groomFilestoreId
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.brideExpired
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.groomExpired
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.isBackward
 
         - query:  INSERT INTO public.eg_marriage_bride_groom_details(
                   id, residentship, aadharno, passportno, socialsecurityno, firstname_en, firstname_ml, middlename_en, middlename_ml, lastname_en, lastname_ml,
@@ -228,7 +244,6 @@ serviceMaps:
             - jsonPath: $.MarriageDetails.*.GroomDetails.groomMaritalstatusID
 
             - jsonPath: $.MarriageDetails.*.BrideDetails.groomIsSpouseLiving
-
 
             - jsonPath: $.MarriageDetails.*.id
 
@@ -697,7 +712,8 @@ serviceMaps:
                 SET  dateofmarriage=?, dateofreporting=?, districtid=?, lbtype=?, placetype=?, placeid=?, placename_en=?, 
                 placename_ml=?, houseno_and_name_en=?, houseno_and_name_ml=?, street_name_en=?, street_name_ml=?, ward_code=?, talukid=?, village_name=?,
                 marriage_type=?, oth_marriage_type=?, landmark=?, locality_en=?, locality_ml=?, applicationtype=?, businessservice=?, workflowcode=?, 
-                 registrationNo=?, registration_date=?, action=?, status=?, lastmodifiedtime=?, lastmodifiedby=? , module_code=?
+                 registrationNo=?, registration_date=?, action=?, status=?, lastmodifiedtime=?, lastmodifiedby=? , module_code=?,brideurl=?, groomurl=?,
+                 imageuuid=?, bride_filestoreid=?, groom_filestoreid=?, bride_expired=?, groom_expired=?, is_backward=?
                  WHERE id=? and applicationnumber=? and  tenantid=?;
           basePath: MarriageDetails.*
           jsonMaps:
@@ -761,6 +777,22 @@ serviceMaps:
             - jsonPath: $.MarriageDetails.*.auditDetails.lastModifiedBy
 
             - jsonPath: $.MarriageDetails.*.moduleCode
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.brideUrl
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.groomUrl
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.imageUuid
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.brideFilestoreId
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.groomFilestoreId
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.brideExpired
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.groomExpired
+
+            - jsonPath: $.MarriageDetails.*.WitnessDetails.isBackward
 
             - jsonPath: $.MarriageDetails.*.id
 

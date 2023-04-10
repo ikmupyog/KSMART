@@ -253,7 +253,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                                 }
                             }
                             } else {
-                                if (marriage.getGroomAddressDetails().getPresentOutSideCountry() != null) {
+//                                if (marriage.getGroomAddressDetails().getPresentOutSideCountry() != null) {
                                     marriage.getGroomAddressDetails().setCountryIdPresent(marriage.getGroomAddressDetails().getPresentOutSideCountry());
                                     marriage.getGroomAddressDetails().setVillageNamePresent(marriage.getGroomAddressDetails().getPresentOutSideIndiaadrsVillage());
                                     marriage.getGroomAddressDetails().setTownOrVillagePresent(marriage.getGroomAddressDetails().getPresentOutSideIndiaadrsCityTown());
@@ -268,7 +268,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 
                                     marriage.getGroomAddressDetails().setPresentOthrIndiaProvinceEn(marriage.getGroomAddressDetails().getPresentOutSideIndiaProvinceEn());
                                     marriage.getGroomAddressDetails().setPresentOthrIndiaProvinceMl(marriage.getGroomAddressDetails().getPresentOutSideIndiaProvinceMl());
-                                }
+//                                }
                             }
                     }
                 });
@@ -337,7 +337,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                                 }
                             }
                             else {
-                                if (marriage.getGroomAddressDetails().getPermtaddressCountry() != COUNTRY_CODE) {
+//                                if (marriage.getGroomAddressDetails().getPermtaddressCountry() != COUNTRY_CODE) {
                                     marriage.getGroomAddressDetails().setCountryIdPresent(marriage.getGroomAddressDetails().getPermtaddressCountry());
 
                                     marriage.getGroomAddressDetails().setVillageNamePermanent(marriage.getGroomAddressDetails().getPermntOutsideIndiaVillage());
@@ -354,7 +354,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                                     marriage.getGroomAddressDetails().setPermntOthrIndiaprovinceMl(marriage.getGroomAddressDetails().getPermntOutSideIndiaProvinceMl());
 
                                     marriage.getGroomAddressDetails().setOutSideIndiaPostCodepermanent(marriage.getGroomAddressDetails().getPermanentOutsideIndiaPostCode());
-                                }
+//                                }
                             }
                         }
                     }
@@ -434,8 +434,8 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 
                                 }
                             } else {
-                                if (marriage.getBrideAddressDetails().getPermtaddressCountry() != COUNTRY_CODE) {
-                                    marriage.getBrideAddressDetails().setCountryIdPresent(marriage.getBrideAddressDetails().getPresentOutSideCountry());
+//                                if (marriage.getBrideAddressDetails().getPermtaddressCountry() != COUNTRY_CODE) {
+                                    marriage.getBrideAddressDetails().setCountryIdPresent(marriage.getBrideAddressDetails().getPresentaddressCountry());
                                     marriage.getBrideAddressDetails().setVillageNamePresent(marriage.getBrideAddressDetails().getPresentOutSideIndiaadrsVillage());
                                     marriage.getBrideAddressDetails().setTownOrVillagePresent(marriage.getBrideAddressDetails().getPresentOutSideIndiaadrsCityTown());
 
@@ -450,7 +450,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                                     marriage.getBrideAddressDetails().setPresentOthrIndiaProvinceMl(marriage.getBrideAddressDetails().getPresentOutSideIndiaProvinceMl());
 
                                     marriage.getBrideAddressDetails().setOutSideIndiaPostCodePresent(marriage.getBrideAddressDetails().getPresentOutSideIndiaPostCode());
-                                }
+//                                }
                             }
 
                         }

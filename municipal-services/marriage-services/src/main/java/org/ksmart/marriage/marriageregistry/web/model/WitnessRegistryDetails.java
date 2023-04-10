@@ -100,7 +100,34 @@ public class WitnessRegistryDetails {
 
     @JsonProperty("witness2Esigned")
     private  Boolean witness2Esigned;
-    
+    @Size(max = 200)
+    @JsonProperty("brideUrl")
+    private String brideUrl;
+
+    @Size(max = 200)
+    @JsonProperty("groomUrl")
+    private String groomUrl;
+
+    @Size(max = 64)
+    @JsonProperty("imageUuid")
+    private String imageUuid;
+
+    @Size(max = 256)
+    @JsonProperty("brideFilestoreId")
+    private String brideFilestoreId;
+
+    @Size(max = 256)
+    @JsonProperty("groomFilestoreId")
+    private String groomFilestoreId;
+
+    @JsonProperty("brideExpired")
+    private boolean brideExpired;
+
+    @JsonProperty("groomExpired")
+    private boolean groomExpired;
+
+    @JsonProperty("isBackward")
+    private boolean isBackward;
    @JsonProperty("AuditDetails")
    private AuditDetails WitnessAuditDetails;
 
