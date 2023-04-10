@@ -13,6 +13,7 @@ const Hospital = ({
   isEditDeath,
 }) => {
   const { t } = useTranslation();  
+  const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
   if (tenantId === "kl") {
@@ -42,16 +43,19 @@ const Hospital = ({
       }
     }
   }
+  
   useEffect(() => {
     if (isInitialRender) {
       if (formData?.InformationDeath?.DeathPlaceType) {
         selectHospitalNameMl(HospitalNameMl);
         setIsInitialRender(false);
       } else {
+        if (DeathPlaceType != null) {
         cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.hospitalName === DeathPlaceType.hospitalName);
         selectHospitalNameMl(cmbhospitalMl[0]);
         setIsInitialRender(false);
       }
+     }
     }
   }, [cmbhospitalMl, isInitialRender]);
 
@@ -94,18 +98,19 @@ const Hospital = ({
                   option={cmbhospital}
                   selected={DeathPlaceType}
                   select={setselectDeathPlaceType}
+                  disable={isDisableEdit}
                   placeholder={`${t("CR_HOSPITAL_EN")}`}
                 />
               </div>
               <div className="col-md-6">
                 <CardLabel>
                   {`${t("CR_HOSPITAL_ML")}`}
-                  {/* <span className="mandatorycss">*</span> */}
+                 <span className="mandatorycss">*</span> 
                 </CardLabel>
                 <Dropdown
                   t={t}
                   optionKey="hospitalNamelocal"
-                  isMandatory={false}
+                  isMandatory={true}
                   option={cmbhospital}
                   selected={HospitalNameMl}
                   select={setselectHospitalNameMl}

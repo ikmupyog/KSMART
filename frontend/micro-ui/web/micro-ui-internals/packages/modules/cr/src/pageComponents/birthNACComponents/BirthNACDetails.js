@@ -86,7 +86,7 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
     const [workFlowCode, setWorkFlowCode] = useState(); 
 
   const [childDOB, setChildDOB] = useState(formData?. BirthNACDetails?.childDOB ? formData?. BirthNACDetails?.childDOB : "");
-  const [gender, selectGender] = useState(formData?. BirthNACDetails?.gender);
+  const [gender, selectGender] = useState(formData?. BirthNACDetails?.gender ? formData?. BirthNACDetails?.gender : "" );
 
   
   const [childAadharNo, setChildAadharNo] = useState(
@@ -630,9 +630,9 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
     return (
       <React.Fragment>
         <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-        {window.location.href.includes("/citizen") ? <Timeline currentStep={2}/> : null}
-        {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
-        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!childFirstNameEn || !childFirstNameMl || !childDOB || !gender || !birthPlace }>
+        {window.location.href.includes("/citizen") ? <Timeline currentStep={1}/> : null}
+        {window.location.href.includes("/employee") ? <Timeline currentStep={1} /> : null}
+        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!childFirstNameEn || !childFirstNameMl || !childDOB || !gender || !birthPlace || !nacorderofChildren}>
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-12">
@@ -836,10 +836,9 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
                 />
               </div>
               <div className="col-md-4">
-                <CardLabel>Order of Birth</CardLabel>
+                <CardLabel>Order of Birth<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
-                  isMandatory={false}
                   type={"number"}
                   optionKey="i18nKey"
                   name="nacorderofChildren"

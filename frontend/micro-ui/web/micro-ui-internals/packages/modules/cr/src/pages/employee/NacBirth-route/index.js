@@ -1,36 +1,36 @@
-import React, { useState } from "react";
-import { Route, Switch, useRouteMatch, useLocation, useHistory } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Route, Switch, useRouteMatch, useLocation, useHistory, Redirect } from "react-router-dom";
+import { PrivateRoute, BreadCrumb, Component } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import { newConfig as newConfigCR } from "../../../config/config";
 import { useQueryClient } from "react-query";
-const ScrFlowApp = ({ parentUrl }) => {
+import { convertToNACRegistration } from "../../../utils";
+
+const CreateNACBirth = ({data, parentUrl, isEditBirth }) => {
   const { t } = useTranslation();
   const { path } = useRouteMatch();
   const match = useRouteMatch();
   const { pathname } = useLocation();
   const history = useHistory();
   const queryClient = useQueryClient();
-  //console.log(sessionStorage.getItem("CR_STILLBIRTH_EDIT_FLAG"));
-  const [isEditStillBirth, setIsEditStillBirth] = useState(sessionStorage.getItem("CR_STILLBIRTH_EDIT_FLAG")? true : false);  
-  const [params, setParams, clearParams] = isEditStillBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_STILLBIRTH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_STILLBIRTH_REG", {});
-  // console.log("isEditBirth" + isEditBirth);
-  // console.log("params"+JSON.stringify(params));
+  const [isEditBirthNAC, setIsEditBirthNAC] = useState(sessionStorage.getItem("CR_BIRTH_NAC_EDIT_FLAG")? true : false);
+  const [params, setParams, clearParams] = isEditBirthNAC ? Digit.Hooks.useSessionStorage("CR_EDIT_NAC_BIRTH", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_NAC_BIRTH_REG", {});
+
   const stateId = Digit.ULBService.getStateId();
-  // let { data: newConfig, isLoading } = Digit.Hooks.tl.useMDMS.getFormConfig(stateId, {});
   let config = [];
   let { data: newConfig, isLoading } = true;
   newConfig = newConfigCR;
-  const stillbirthConfig = newConfig.find((item)=> item.head === "StillBirth Routing");
-
-  config = config.concat(stillbirthConfig.body.filter((a) => !a.hideInCitizen));
-
-  config.indexRoute = "stillbirth-child-details";
+  const newNacBirthConfig = newConfig.find((item)=> item.head === "Birth-NAC Routing")
+ 
+    config = config.concat(newNacBirthConfig.body.filter((a) => !a.hideInCitizen));
+    
+  config.indexRoute = "nac-download-details";
   const goNext = (skipStep, index, isAddMultiple, key, isPTCreateSkip) => {
     let currentPath = pathname.split("/").pop(),
       nextPage;
     let { nextStep = {} } = config.find((routeObj) => routeObj.route === currentPath);
     let { isCreateEnabled: enableCreate = true } = config.find((routeObj) => routeObj.route === currentPath);
-    
+
     let redirectWithHistory = history.push;
     if (skipStep) {
       redirectWithHistory = history.replace;
@@ -39,7 +39,7 @@ const ScrFlowApp = ({ parentUrl }) => {
       nextStep = key;
     }
     if (nextStep === null) {
-      return redirectWithHistory(`${match.path}/check`);
+      return redirectWithHistory(`${match.path}/nac-birth-summary`);
     }
     nextPage = `${match.path}/${nextStep}`;
     redirectWithHistory(nextPage);
@@ -60,12 +60,12 @@ const ScrFlowApp = ({ parentUrl }) => {
 
   const onSuccess = () => {
     sessionStorage.removeItem("CurrentFinancialYear");
-    queryClient.invalidateQueries("CR_CREATE_STILLBIRTH_REG");
+    queryClient.invalidateQueries("CR_CREATE_NAC_BIRTH_REG");
   };
   const handleSkip = () => { };
   const handleMultiple = () => { };
-  const CheckPage = Digit?.ComponentRegistryService?.getComponent("StillBirthCheckPage");
-  const StillBirthAcknowledgement = Digit?.ComponentRegistryService?.getComponent("StillBirthAcknowledgement");
+  const CheckPage = Digit?.ComponentRegistryService?.getComponent("BirthNACCheckPage");
+  const BirthNACAcknowledgement = Digit?.ComponentRegistryService?.getComponent("BirthNACAcknowledgement");
   return (
 
     <React.Fragment>
@@ -75,6 +75,7 @@ const ScrFlowApp = ({ parentUrl }) => {
           const Component = typeof component === "string" ? Digit.ComponentRegistryService.getComponent(component) : component;
           return (
             <Route path={`${match.path}/${routeObj.route}`} key={index}>
+              
               <Component
                 config={{ texts, inputs, key, isSkipEnabled }}
                 onSelect={handleSelect}
@@ -82,23 +83,24 @@ const ScrFlowApp = ({ parentUrl }) => {
                 t={t}
                 formData={params}
                 onAdd={handleMultiple}
-                userType="employee"
-                isEditBirth={isEditStillBirth}
+                userType="citizen"
               />
             </Route>
 
           );
         })}
-        <Route path={`${match.path}/check`}>
+        <Route path={`${match.path}/nac-birth-summary`}>
           <CheckPage onSubmit={createProperty} value={params} />
         </Route>
         <Route path={`${match.path}/acknowledgement`}>
-          <StillBirthAcknowledgement data={params} onSuccess={onSuccess} />
+          <BirthNACAcknowledgement data={params} onSuccess={onSuccess} />
         </Route>
-
+        <Route>
+          <Redirect to={`${match.path}/${config.indexRoute}`} />
+        </Route>
       </Switch>
     </React.Fragment>
   );
 };
 
-export default ScrFlowApp;
+export default CreateNACBirth;

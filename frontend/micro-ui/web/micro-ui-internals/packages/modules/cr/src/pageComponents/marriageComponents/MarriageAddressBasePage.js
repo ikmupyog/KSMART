@@ -42,17 +42,17 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
   let cmbVillage = [];
 
   Country &&
-    Country["common-masters"] &&
+    Country["common-masters"] && Country["common-masters"].Country &&
     Country["common-masters"].Country.map((ob) => {
       cmbCountry.push(ob);
     });
   State &&
-    State["common-masters"] &&
+    State["common-masters"] && State["common-masters"].State &&
     State["common-masters"].State.map((ob) => {
       cmbState.push(ob);
     });
   localbodies &&
-    localbodies["tenant"] &&
+    localbodies["tenant"] && localbodies["tenant"].tenants &&
     localbodies["tenant"].tenants.map((ob) => {
       cmbLB.push(ob);
     });
@@ -62,12 +62,12 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
       cmbDistrict.push(ob);
     });
   Taluk &&
-    Taluk["common-masters"] &&
+    Taluk["common-masters"] && District["common-masters"].District &&
     Taluk["common-masters"].Taluk.map((ob) => {
       cmbTaluk.push(ob);
     });
   Village &&
-    Village["common-masters"] &&
+    Village["common-masters"] && Village["common-masters"].Village &&
     Village["common-masters"].Village.map((ob) => {
       cmbVillage.push(ob);
     });
@@ -167,11 +167,14 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
         : formData?.BrideAddressDetails?.presentInsideKeralaVillage
       : ""
   );
+  console.log(window.location.href.includes("address-bride"));
+  console.log(formData?.BrideAddressDetails?.presentInsideKeralaPostOffice);
+
   const [presentInsideKeralaPostOffice, setinsideKeralaPostOffice] = useState(
     window.location.href.includes("address-groom")
       ? formData?.GroomAddressDetails?.presentInsideKeralaPostOffice?.code
         ? formData?.GroomAddressDetails?.presentInsideKeralaPostOffice
-        : window.location.href.includes("address-bride")
+        : window.location.href.includes("address-bride") 
         ? formData?.BrideAddressDetails?.presentInsideKeralaPostOffice?.code
         : formData?.BrideAddressDetails?.presentInsideKeralaPostOffice
       : null

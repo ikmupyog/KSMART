@@ -10,7 +10,6 @@ import AdoptionInitiatorDetails from "../src/pageComponents/adoptionComponents/A
 import ChildDetails from "../src/pageComponents/birthComponents/ChildDetails";
 import BirthNACDetails from "./pageComponents/birthNACComponents/BirthNACDetails";
 import BirthNACParentsDetails from "./pageComponents/birthNACComponents/BirthNACParentsDetails";
-import BirthNACAddressPage from "./pageComponents/birthNACComponents/BirthNACAddressPage";
 import BirthNACInitiator from "./pageComponents/birthNACComponents/BirthNACInitiator";
 import AddressOne from "./pageComponents/birthComponents/OldAddressOne";
 import AddressInsideIndia from "./pageComponents/birthComponents/OldAddressInsideIndia";
@@ -328,7 +327,6 @@ const componentsToRegister = {
   DeathNACAcknowledgement,
   DeathNACInitiator,
   ParentsDetails,
-  BirthNACAddressPage,
   BirthNACInitiator,
   CRBirthInclusions: BirthInclusion,
   CRMarriageCorrection: MarriageCorrection,

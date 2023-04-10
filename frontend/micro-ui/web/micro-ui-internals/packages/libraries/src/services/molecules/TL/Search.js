@@ -62,6 +62,8 @@ export const TLSearch = {
     //   propertyAddress = getAddress(propertyDetails?.Properties[0]?.address, t);
     // }
     // console.log("response"+response);
+
+   
     let employeeResponse = [];
 
     const tradedetails = {
@@ -97,9 +99,9 @@ export const TLSearch = {
     const tradeUnits = {
       title: "TL_TRADE_UNITS_HEADER",
       additionalDetails: {
-       
+
         units: response?.tradeLicenseDetail?.tradeUnits?.map((unit, index) => {
-          
+
           let tradeSubType = stringReplaceAll(unit?.tradeType, ".", "_");
           tradeSubType = stringReplaceAll(tradeSubType, "-", "_");
           return {
@@ -168,10 +170,10 @@ export const TLSearch = {
 
     }
 
-    
-    strucutreplacedet.map((ob)=>{
+
+    strucutreplacedet.map((ob) => {
       structurePlace1.values.push(ob)
-     // return (ob)
+      // return (ob)
     })
     // const PropertyDetail = {
     //   title: "PT_DETAILS",
@@ -290,6 +292,46 @@ export const TLSearch = {
         },
       };
 
+      let correctiontag =JSON.parse(response?.correction);
+      const correctionbasedet = correctiontag?.tradeName != "" ? {
+      title: "TL_CORRECTION_DET",
+      values:
+        [
+          { title: "TL_COMMON_TABLE_COL_TRD_NAME", value: correctiontag?.tradeName || "NA" },
+          { title: "TL_COMMON_TABLE_COL_TRD_NAME", value: correctiontag?.licenseUnitNameLocal || "NA" },
+          { title: "TL_LOCALIZATION_WARD_NO", value: correctiontag?.wardNo || "NA" },
+        ]
+    } : "";
+
+
+    const correctiontradeUnits = {
+      title: "TL_TRADE_UNITS_HEADER",
+      additionalDetails: {
+        units:correctiontag?.tradeUnits?.map((unit, index) => {
+          let tradeSubType = stringReplaceAll(unit?.tradeType, ".", "_");
+          tradeSubType = stringReplaceAll(tradeSubType, "-", "_");
+          return {
+            title: "TL_UNIT_HEADER",
+            values: [
+              {
+                title: "TRADELICENSE_TRADECATEGORY_LABEL",
+                value: unit?.businessCategory ? `${unit?.businessCategory}` : "NA"
+              },
+              {
+                title: "TRADELICENSE_TRADETYPE_LABEL",
+                value: unit?.businessType ? `${unit?.businessType}` : "NA"
+              },
+              {
+                title: "TL_NEW_TRADE_SUB_TYPE_LABEL",
+                value: unit?.businessSubtype ? `${unit?.businessSubtype}` : "NA"
+              },
+            ],
+          };
+        }),
+      },
+    };
+
+
     if (response?.workflowCode == "NewTL" && response?.status !== "APPROVED") {
       const details = {
         title: "",
@@ -312,6 +354,15 @@ export const TLSearch = {
     // response && !(propertyDetails?.Properties?.length > 0) && employeeResponse.push(tradeAddress);
     response?.tradeLicenseDetail?.address && employeeResponse.push(tradeAddress);
     response?.tradeLicenseDetail?.owners && employeeResponse.push(owners);
+    if ((response?.correctionId !== null && response?.correctionId !== "" &&
+      response?.correctionAppNumber !== null && response?.correctionAppNumber !== "")) {
+      if(correctionbasedet!==""){
+        response && employeeResponse.push(correctionbasedet);
+      }
+      if(correctiontag?.tradeUnits.length>0){
+        response && employeeResponse.push(correctiontradeUnits);
+      }
+    }
 
     return {
       tenantId: response.tenantId,

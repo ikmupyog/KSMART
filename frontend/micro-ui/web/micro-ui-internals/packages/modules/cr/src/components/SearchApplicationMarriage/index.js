@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import SearchFields from "./SearchFields";
 import { useForm } from "react-hook-form";
 import ResultTable from "../SearchMarriageInclusion/ResultTable";
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const SearchApplicationMarriage = () => {
     let history = useHistory();
@@ -20,7 +20,15 @@ const SearchApplicationMarriage = () => {
     const tenantId = Digit.ULBService.getCurrentTenantId();
     const { mutate, isLoading } = Digit.Hooks.cr.useSearchMarriage(tenantId);
     const { t } = useTranslation();
-    const { register, control, handleSubmit, reset } = useForm();
+    const { register, control, handleSubmit, reset } = useForm({
+        defaultValues: {
+            applicationNo: "",
+            marriageDOM: "",
+            groomFirstnameEn: "",
+            brideFirstnameEn: "",
+            placeOfMarriage: "",
+        }
+    });
 
     const getValue = (type) => {
         return defaultValue[type];
@@ -56,7 +64,7 @@ const SearchApplicationMarriage = () => {
         mutate(params, { onSuccess })
     };
     function previousPage() {
-        setValue("offset", getValues("offset") - getValues("limit"));
+        setValue("offset", getValue("offset") - getValue("limit"));
         handleSubmit(onSubmit)();
     }
 

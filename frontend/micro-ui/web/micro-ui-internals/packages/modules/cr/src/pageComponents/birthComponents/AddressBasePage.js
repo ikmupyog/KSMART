@@ -14,7 +14,7 @@ import AddressPermanentInsideKerala from "./AddressPermanentInsideKerala";
 import AddressPermanentOutsideKerala from "./AddressPermanentOutsideKerala";
 import AddressPermanentOutsideIndia from "./AddressPermanentOutsideIndia";
 
-const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = false, isEditDeath = false, isEditStillBirth = false,isEditAdoption=false, isEditBirthNAC=false  }) => {
+const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = false, isEditDeath = false, isEditStillBirth = false, isEditAdoption = false, isEditBirthNAC = false }) => {
 
     const stateId = Digit.ULBService.getStateId();
     let tenantId = "";
@@ -44,32 +44,32 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
     let cmbVillage = [];
 
     Country &&
-        Country["common-masters"] &&
+        Country["common-masters"] && Country["common-masters"].Country &&
         Country["common-masters"].Country.map((ob) => {
             cmbCountry.push(ob);
         });
     State &&
-        State["common-masters"] &&
+        State["common-masters"] && State["common-masters"].State &&
         State["common-masters"].State.map((ob) => {
             cmbState.push(ob);
         });
     localbodies &&
-        localbodies["tenant"] &&
+        localbodies["tenant"] && localbodies["tenant"].tenants &&
         localbodies["tenant"].tenants.map((ob) => {
             cmbLB.push(ob);
         });
     District &&
-        District["common-masters"] &&
+        District["common-masters"] && District["common-masters"].District &&
         District["common-masters"].District.map((ob) => {
             cmbDistrict.push(ob);
         });
     Taluk &&
-        Taluk["common-masters"] &&
+        Taluk["common-masters"] && Taluk["common-masters"].Taluk &&
         Taluk["common-masters"].Taluk.map((ob) => {
             cmbTaluk.push(ob);
         });
     Village &&
-        Village["common-masters"] &&
+        Village["common-masters"] && Village["common-masters"].Village &&
         Village["common-masters"].Village.map((ob) => {
             cmbVillage.push(ob);
         });
@@ -398,9 +398,10 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                 } else {
                     setPresentInsideKeralaPincodeError(false);
                 }
-                if (presentInsideKeralaLocalityNameEn === null) {
-                    setPresentInsideKeralaLocalityNameEnError(true);
+                if (presentInsideKeralaLocalityNameEn.trim() == null || presentInsideKeralaLocalityNameEn.trim() == '' || presentInsideKeralaLocalityNameEn.trim() == undefined) {
                     validFlag = false;
+                    setinsideKeralaLocalityNameEn("");
+                    setPresentInsideKeralaLocalityNameEnError(true);
                     setToast(true);
                     setTimeout(() => {
                         setToast(false);
@@ -408,7 +409,18 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                 } else {
                     setPresentInsideKeralaLocalityNameEnError(false);
                 }
-                if (presentInsideKeralaLocalityNameMl == null || presentInsideKeralaLocalityNameMl == undefined || presentInsideKeralaLocalityNameMl == "") {
+                // if (presentInsideKeralaLocalityNameEn === null) {
+                //     setPresentInsideKeralaLocalityNameEnError(true);
+                //     validFlag = false;
+                //     setToast(true);
+                //     setTimeout(() => {
+                //         setToast(false);
+                //     }, 2000);
+                // } else {
+                //     setPresentInsideKeralaLocalityNameEnError(false);
+                // }
+                if (presentInsideKeralaLocalityNameMl.trim() == null || presentInsideKeralaLocalityNameMl.trim() == '' || presentInsideKeralaLocalityNameMl.trim() == undefined) {
+                    setinsideKeralaLocalityNameMl("");
                     setPresentInsideKeralaLocalityNameMlError(true);
                     validFlag = false;
                     setToast(true);
@@ -418,7 +430,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                 } else {
                     setPresentInsideKeralaLocalityNameMlError(false);
                 }
-                if (presentInsideKeralaHouseNameEn == null || presentInsideKeralaHouseNameEn == undefined || presentInsideKeralaHouseNameEn == "") {
+                if (presentInsideKeralaHouseNameEn.trim() == null || presentInsideKeralaHouseNameEn.trim() == '' || presentInsideKeralaHouseNameEn.trim() == undefined) {
+                    setinsideKeralaHouseNameEn("");
                     setPresentInsideKeralaHouseNameEnError(true);
                     validFlag = false;
                     setToast(true);
@@ -428,7 +441,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                 } else {
                     setPresentInsideKeralaHouseNameEnError(false);
                 }
-                if (presentInsideKeralaHouseNameMl == null || presentInsideKeralaHouseNameMl == undefined || presentInsideKeralaHouseNameMl == "") {
+                if (presentInsideKeralaHouseNameMl.trim() == null || presentInsideKeralaHouseNameMl.trim() == '' || presentInsideKeralaHouseNameMl.trim() == undefined) {
+                    setinsideKeralaHouseNameMl("");
                     setPresentInsideKeralaHouseNameMlError(true);
                     validFlag = false;
                     setToast(true);
@@ -438,7 +452,15 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                 } else {
                     setPresentInsideKeralaHouseNameMlError(false);
                 }
-                if (presentInsideKeralaStreetNameEn != null && presentInsideKeralaStreetNameMl === null) {
+                if (presentInsideKeralaStreetNameEn.trim() == null || presentInsideKeralaStreetNameEn.trim() == '' || presentInsideKeralaStreetNameEn.trim() == undefined) {
+                    setinsideKeralaStreetNameEn("");
+                    setPresentInsideKeralaStreetNameEnError(false);
+                } 
+                if (presentInsideKeralaStreetNameMl.trim() == null || presentInsideKeralaStreetNameMl.trim() == '' || presentInsideKeralaStreetNameMl.trim() == undefined) {
+                    setinsideKeralaStreetNameMl("");
+                    setPresentInsideKeralaStreetNameMlError(false);
+                } 
+                if (presentInsideKeralaStreetNameEn != null && (presentInsideKeralaStreetNameMl.trim() == null || presentInsideKeralaStreetNameMl.trim() == '' || presentInsideKeralaStreetNameMl.trim() == undefined)) {
                     setPresentInsideKeralaStreetNameMlError(true);
                     validFlag = false;
                     setToast(true);
@@ -448,8 +470,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                 } else {
                     setPresentInsideKeralaStreetNameMlError(false);
                 }
-                if (presentInsideKeralaStreetNameMl != null && presentInsideKeralaStreetNameEn === null) {
-
+                if (presentInsideKeralaStreetNameMl != null && (presentInsideKeralaStreetNameEn.trim() == null || presentInsideKeralaStreetNameEn.trim() == '' || presentInsideKeralaStreetNameEn.trim() == undefined)) {
                     setPresentInsideKeralaStreetNameEnError(true);
                     validFlag = false;
                     setToast(true);
@@ -891,6 +912,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                 {window.location.href.includes("/citizen/cr/cr-birth-creation/address-birth") ? <Timeline currentStep={3} /> : null || window.location.href.includes("employee/cr/cr-flow") ? <Timeline currentStep={3} /> : null}
                 {window.location.href.includes("/citizen/cr-adoptionflow/adoption-address-birth") ? <AdoptionTimeline currentStep={3} /> : null || window.location.href.includes("employee/cr/cr-adoptionflow") ? <AdoptionTimeline currentStep={3} /> : null}
                 {window.location.href.includes("/citizen/cr/cr-death-creation/address-death") ? <DRTimeline currentStep={2} /> : null || window.location.href.includes("employee/cr/death-flow") ? <DRTimeline currentStep={2} /> : null}
+                {window.location.href.includes("/citizen/cr/cr-stillbirth-creation/stillbirth-address") ? <Timeline currentStep={3} /> : null || window.location.href.includes("employee/cr/cr-flow") ? <Timeline currentStep={3} /> : null}
                 <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
 
                     <div className="accordion-wrapper">
@@ -917,8 +939,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                             isEditBirth={isEditBirth}
                             isEditDeath={isEditDeath}
                             isEditStillBirth={isEditStillBirth}
-                            isEditAdoption={isEditAdoption}         
-                            isEditBirthNAC={isEditBirthNAC}                   
+                            isEditAdoption={isEditAdoption}
+                            isEditBirthNAC={isEditBirthNAC}
                             formData={formData}
                             Districtvalues={Districtvalues}
                             setDistrictvalue={setDistrictvalue}
@@ -996,8 +1018,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 isEditBirth={isEditBirth}
                                 isEditDeath={isEditDeath}
                                 isEditStillBirth={isEditStillBirth}
-                                isEditAdoption={isEditAdoption}    
-                                isEditBirthNAC={isEditBirthNAC}        
+                                isEditAdoption={isEditAdoption}
+                                isEditBirthNAC={isEditBirthNAC}
                                 formData={formData}
                                 value={value}
                                 setValue={setValue}
@@ -1066,8 +1088,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 isEditBirth={isEditBirth}
                                 isEditDeath={isEditDeath}
                                 isEditStillBirth={isEditStillBirth}
-                                isEditAdoption={isEditAdoption}      
-                                isEditBirthNAC={isEditBirthNAC}      
+                                isEditAdoption={isEditAdoption}
+                                isEditBirthNAC={isEditBirthNAC}
                                 formData={formData}
                             />
                         </div>
@@ -1122,8 +1144,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 isEditBirth={isEditBirth}
                                 isEditDeath={isEditDeath}
                                 isEditStillBirth={isEditStillBirth}
-                                isEditAdoption={isEditAdoption}      
-                                isEditBirthNAC={isEditBirthNAC}    
+                                isEditAdoption={isEditAdoption}
+                                isEditBirthNAC={isEditBirthNAC}
                                 formData={formData}
                             />
                         </div>
@@ -1135,8 +1157,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                             isEditBirth={isEditBirth}
                             isEditDeath={isEditDeath}
                             isEditStillBirth={isEditStillBirth}
-                            isEditAdoption={isEditAdoption}      
-                            isEditBirthNAC={isEditBirthNAC}    
+                            isEditAdoption={isEditAdoption}
+                            isEditBirthNAC={isEditBirthNAC}
                             formData={formData}
                         />
                     </div>
@@ -1160,8 +1182,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 isEditBirth={isEditBirth}
                                 isEditDeath={isEditDeath}
                                 isEditStillBirth={isEditStillBirth}
-                                isEditAdoption={isEditAdoption}     
-                                isEditBirthNAC={isEditBirthNAC}     
+                                isEditAdoption={isEditAdoption}
+                                isEditBirthNAC={isEditBirthNAC}
                                 formData={formData}
                             />
                         </div>
@@ -1208,8 +1230,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 isEditBirth={isEditBirth}
                                 isEditDeath={isEditDeath}
                                 isEditStillBirth={isEditStillBirth}
-                                isEditAdoption={isEditAdoption}      
-                                isEditBirthNAC={isEditBirthNAC}    
+                                isEditAdoption={isEditAdoption}
+                                isEditBirthNAC={isEditBirthNAC}
                                 formData={formData}
                             />
                         </div>
@@ -1248,8 +1270,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 isEditBirth={isEditBirth}
                                 isEditDeath={isEditDeath}
                                 isEditStillBirth={isEditStillBirth}
-                                isEditAdoption={isEditAdoption}     
-                                isEditBirthNAC={isEditBirthNAC}     
+                                isEditAdoption={isEditAdoption}
+                                isEditBirthNAC={isEditBirthNAC}
                                 formData={formData}
                             />
                         </div>
@@ -1282,8 +1304,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 isEditBirth={isEditBirth}
                                 isEditDeath={isEditDeath}
                                 isEditStillBirth={isEditStillBirth}
-                                isEditAdoption={isEditAdoption}   
-                                isEditBirthNAC={isEditBirthNAC}       
+                                isEditAdoption={isEditAdoption}
+                                isEditBirthNAC={isEditBirthNAC}
                                 formData={formData}
                             />
                         </div>
