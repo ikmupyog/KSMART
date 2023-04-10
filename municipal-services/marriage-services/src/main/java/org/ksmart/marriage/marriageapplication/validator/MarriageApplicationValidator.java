@@ -86,7 +86,7 @@ public class MarriageApplicationValidator {
                                                                         marriagedtls.getLbtype() + " is invalid");
                                                 }
 
-                                                System.out.println("marriageward" + marriagedtls.getWardCode());
+                                              //  System.out.println("marriageward" + marriagedtls.getWardCode());
                                                 if (StringUtils.isEmpty(marriagedtls.getWardCode())) {
                                                         throw new CustomException(" WARD INVALID ", "The  Ward " +
                                                                         marriagedtls.getWardCode() + " is invalid");
@@ -883,9 +883,7 @@ public class MarriageApplicationValidator {
                                                                                                                 groomaddressInfo.getPermntOutsideKeralaHouseNameMl()
                                                                                                                 + " is invalid");
                                                                         }
-
                                                                 }
-
                                                         }
                                                 } else {
                                                         if (StringUtils.isEmpty(groomaddressInfo
@@ -1170,7 +1168,6 @@ public class MarriageApplicationValidator {
                                                                                                                 groomaddressInfo.getPresentOutsideKeralaHouseNameMl()
                                                                                                                 + " is invalid");
                                                                         }
-
                                                                 }
                                                         }
                                                 } else {
