@@ -460,7 +460,9 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                 //     setinsideKeralaStreetNameMl("");
                 //     //setPresentInsideKeralaStreetNameMlError(false);
                 // } 
-                if (presentInsideKeralaStreetNameEn != null && (presentInsideKeralaStreetNameMl.trim() == null || presentInsideKeralaStreetNameMl.trim() == '' || presentInsideKeralaStreetNameMl.trim() == undefined)) {
+                if (presentInsideKeralaStreetNameEn === null || presentInsideKeralaStreetNameEn.trim() == '' || presentInsideKeralaStreetNameEn.trim() == undefined) {
+                    setinsideKeralaStreetNameEn("");                   
+                } else if (presentInsideKeralaStreetNameEn != null && (presentInsideKeralaStreetNameMl.trim() == null || presentInsideKeralaStreetNameMl.trim() == '' || presentInsideKeralaStreetNameMl.trim() == undefined)) {
                     setPresentInsideKeralaStreetNameMlError(true);
                     setinsideKeralaStreetNameMl("");
                     validFlag = false;
@@ -471,7 +473,9 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                 } else {
                     setPresentInsideKeralaStreetNameMlError(false);
                 }
-                if (presentInsideKeralaStreetNameMl != null && (presentInsideKeralaStreetNameEn.trim() == null || presentInsideKeralaStreetNameEn.trim() == '' || presentInsideKeralaStreetNameEn.trim() == undefined)) {
+                if (presentInsideKeralaStreetNameMl === null || presentInsideKeralaStreetNameMl.trim() == '' || presentInsideKeralaStreetNameMl.trim() == undefined) {
+                    setinsideKeralaStreetNameMl("");                   
+                } else if (presentInsideKeralaStreetNameMl != null && (presentInsideKeralaStreetNameEn.trim() == null || presentInsideKeralaStreetNameEn.trim() == '' || presentInsideKeralaStreetNameEn.trim() == undefined)) {
                     setPresentInsideKeralaStreetNameEnError(true);
                     setinsideKeralaStreetNameEn("");
                     validFlag = false;
