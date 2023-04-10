@@ -196,9 +196,11 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
   }
 
   function setSelectFatherMobile(e) {
+    if (e.target.value != null || e.target.value != "") {
     if (e.target.value.trim().length != 0) {
-      setFatherMobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 10));
+      setFatherMobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
     }
+  }
   }
   function setSelectFatherEmail(e) {
     if (e.target.value.trim().length === 51 || e.target.value.trim() === ".") {
@@ -487,7 +489,9 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                 </div>
                 <div className="col-md-3">
                   {" "}
-                  <CardLabel>{`${t("CR_PASSPORT_NO")}`}</CardLabel>
+                  <CardLabel>{`${t("CR_PASSPORT_NO")}`}
+                  <span className="mandatorycss">*</span>
+                  </CardLabel>
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -566,7 +570,9 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                 </div>
                 <div className="col-md-3">
                   {" "}
-                  <CardLabel>{`${t("CR_PASSPORT_NO")}`}</CardLabel>
+                  <CardLabel>{`${t("CR_PASSPORT_NO")}`}
+                  <span className="mandatorycss">*</span>
+                  </CardLabel>
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -734,7 +740,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                     onChange={setSelectFatherMobile}
                     // disable={isFatherInfo}
                     placeholder={`${t("CR_PARENTS_CONTACT_NO")}`}
-                    {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: true, title: t("CR_INVALID_PARENTS_CONTACT_NO") })}
+                    {...(validation = { pattern: "^[0-9 ]*$", type: "text", isRequired: true, title: t("CR_INVALID_PARENTS_CONTACT_NO") })}
                   />
                 </div>
                 <div className="col-md-4">
