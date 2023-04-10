@@ -80,7 +80,7 @@ const Home = ({
       },
       options: [
         {
-          name: t("CR_BIRTH_CODE"),
+          name: t("CR_BIRTH_REGISTRATION"),
           Icon: <OBPSIcon />,
           onClick: () => history.push({
             pathname: '/digit-ui/citizen/cr-birth-home',
@@ -99,7 +99,7 @@ const Home = ({
       },
       options: [
         {
-          name: t("CR_MARRIAGE_CODE"),
+          name: t("CR_MARRIAGE_REGISTRATION"),
           Icon: <OBPSIcon />,
           onClick: () => history.push({
             pathname: '/digit-ui/citizen/cr-marriage-home',
@@ -150,7 +150,7 @@ const Home = ({
           }),
         },
         {
-          name: t("CR_NAC"),
+          name: t("CR_BIRTH_NAC"),
           Icon: <OBPSIcon />,
           onClick: () => history.push({
             pathname: `${matchPath}/cr-birth-nac`,
@@ -212,28 +212,16 @@ const Home = ({
             state: { module: "cr-death" }
           }),
         },
-
+        // {
+        //   name: t("CR_COMMON_ABANDONED_DEATH"),
+        //   Icon: <OBPSIcon />,
+        //   onClick: () => history.push({
+        //     pathname: `${matchPath}/cr/`,
+        //     state: { module: "cr-death" }
+        //   }),
+        // },
         {
-          name: t("CR_DEATH_CORRECTIONS"),
-          Icon: <OBPSIcon />,
-          onClick: () => history.push({
-            pathname: `${matchPath}/cr-death-inclusion`,
-            state: { module: "cr-death" }
-          }),
-
-        },
-
-
-        {
-          name: t("CR_COMMON_ABANDONED_DEATH"),
-          Icon: <OBPSIcon />,
-          onClick: () => history.push({
-            pathname: `${matchPath}/cr/`,
-            state: { module: "cr-death" }
-          }),
-        },
-        {
-          name: t("CR_NAC"),
+          name: t("CR_DEATH_NAC"),
           Icon: <OBPSIcon />,
           onClick: () => history.push({
             pathname: `${matchPath}/cr-death-nac`,
@@ -250,6 +238,15 @@ const Home = ({
         onClick: () => history.push("/digit-ui/citizen/all-services"),
       },
       options: [
+        {
+          name: t("CR_DEATH_CORRECTIONS"),
+          Icon: <OBPSIcon />,
+          onClick: () => history.push({
+            pathname: `${matchPath}/cr-death-inclusion`,
+            state: { module: "cr-death" }
+          }),
+
+        },
         {
           name: t("CR_COMMON_CERT_DOWNLOAD"),
           Icon: <OBPSIcon />,
@@ -333,7 +330,7 @@ const Home = ({
       },
       options: [
         {
-          name: t("CR_DEATH_CODE"),
+          name: t("CR_DEATH_REGISTRATION"),
           Icon: <OBPSIcon />,
           onClick: () => history.push({
             pathname: '/digit-ui/citizen/cr-death-home',

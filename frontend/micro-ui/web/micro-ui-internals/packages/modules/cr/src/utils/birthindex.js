@@ -328,8 +328,10 @@ export const convertToBirthRegistration = (data = {}) => {
         action: "INITIATE",
         applicationtype: "CRBRNR",
         businessservice: "CR",
-        workflowcode: data?.ChildDetails?.workFlowCode,
-        //applicationStatus:"PENDINGPAYEMNT",
+        workflowcode: data?.ChildDetails?.workFlowCode,        
+        isPayment:data?.ChildDetails?.isPayment,
+        Amount:data?.ChildDetails?.Amount,
+        applicationStatus: data?.ChildDetails?.isPayment ? "PENDINGPAYEMNT" : "INITIATED",
         ParentsDetails: {
           motherFirstNameEn: data?.ParentsDetails?.motherFirstNameEn,
           motherFirstNameMl: data?.ParentsDetails?.motherFirstNameMl,
@@ -499,13 +501,13 @@ export const convertToBirthRegistration = (data = {}) => {
             demandDetails: [
               {
                 taxHeadMasterCode: "CRB_FEES",
-                taxAmount: 12,
+                taxAmount: data?.ChildDetails?.Amount,
                 collectionAmount: 0,
               },
             ],
-            minimumAmountPayable: 12,
+            minimumAmountPayable: data?.ChildDetails?.Amount,
             additionalDetails: {
-              HI: "hi",
+              HI: "New Birth Digital Payment",
             },
           },
         ],

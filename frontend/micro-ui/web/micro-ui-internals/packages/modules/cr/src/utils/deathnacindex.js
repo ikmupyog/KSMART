@@ -3,6 +3,7 @@ import get from "lodash/get";
 import set from "lodash/set";
 
 export const DeathNACRegistrationData = (data = {}) => {
+    console.log(data, "data  in json field");
     const {DeathNACDetails = {}, DeceasedMiddleNameMl="", Id=null, DeathNACAddressPage={}, DeathNACInitiator={}} = data;
 
     let InformationDeath={
@@ -38,7 +39,7 @@ export const DeathNACRegistrationData = (data = {}) => {
         DeathPlaceStreetEn:_.get(DeathNACDetails, "DeathPlaceStreetEn",null),
         DeathPlaceStreetMl:_.get(DeathNACDetails, "DeathPlaceStreetMl",null),
         DeathPlaceHomeWardId:_.get(DeathNACDetails, "DeathPlaceHomeWardId",null),
-        DeathPlaceHomePostofficeId:_.get(DeathNACDetails, "DeathPlaceHomePostofficeId",null),
+        DeathPlaceHomePostofficeId: data.DeathNACDetails.DeathPlace.code === "HOME" ? _.get(DeathNACDetails, "DeathPlaceHomePostofficeId.code",null) : _.get(DeathNACDetails, "DeathPlaceHomePostofficeId",null),
         DeathPlaceHomepincode:_.get(DeathNACDetails, "DeathPlaceHomepincode",null),
         DeathPlaceHomeLocalityEn:_.get(DeathNACDetails, "DeathPlaceHomeLocalityEn",null),
         DeathPlaceHomeLocalityMl:_.get(DeathNACDetails, "DeathPlaceHomeLocalityMl",null),

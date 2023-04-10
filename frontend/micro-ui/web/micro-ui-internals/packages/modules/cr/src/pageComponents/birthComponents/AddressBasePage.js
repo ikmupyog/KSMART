@@ -44,32 +44,32 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
     let cmbVillage = [];
 
     Country &&
-        Country["common-masters"] &&
+        Country["common-masters"] && Country["common-masters"].Country &&
         Country["common-masters"].Country.map((ob) => {
             cmbCountry.push(ob);
         });
     State &&
-        State["common-masters"] &&
+        State["common-masters"] && State["common-masters"].State && 
         State["common-masters"].State.map((ob) => {
             cmbState.push(ob);
         });
     localbodies &&
-        localbodies["tenant"] &&
+        localbodies["tenant"] && localbodies["tenant"].tenants &&
         localbodies["tenant"].tenants.map((ob) => {
             cmbLB.push(ob);
         });
     District &&
-        District["common-masters"] &&
+        District["common-masters"] && District["common-masters"].District &&
         District["common-masters"].District.map((ob) => {
             cmbDistrict.push(ob);
         });
     Taluk &&
-        Taluk["common-masters"] &&
+        Taluk["common-masters"] && Taluk["common-masters"].Taluk &&
         Taluk["common-masters"].Taluk.map((ob) => {
             cmbTaluk.push(ob);
         });
     Village &&
-        Village["common-masters"] &&
+        Village["common-masters"] && Village["common-masters"].Village &&
         Village["common-masters"].Village.map((ob) => {
             cmbVillage.push(ob);
         });

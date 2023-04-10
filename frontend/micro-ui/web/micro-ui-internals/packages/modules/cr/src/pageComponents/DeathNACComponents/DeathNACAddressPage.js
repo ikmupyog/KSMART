@@ -96,6 +96,7 @@ const DeathNACAddressPage = ({ config, onSelect, userType, formData, isEditBirth
     const [presentInsideKeralaStreetNameEn, setinsideKeralaStreetNameEn] = useState(formData?.AddressBirthDetails?.presentInsideKeralaStreetNameEn ? formData?.AddressBirthDetails?.presentInsideKeralaStreetNameEn : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameEn ? formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameEn : "");
     const [presentInsideKeralaStreetNameMl, setinsideKeralaStreetNameMl] = useState(formData?.AddressBirthDetails?.presentInsideKeralaStreetNameMl ? formData?.AddressBirthDetails?.presentInsideKeralaStreetNameMl : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameMl ? formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameMl : "");
     const [Talukvalues, setLbsTalukvalue] = useState(null);
+    const [Districtvalues, setDistrictvalue] = useState(null);
     const [Villagevalues, setLbsVillagevalue] = useState(null);
     const [PostOfficevalues, setPostOfficevalues] = useState(null);
     //################################# Present Outside Kerala ##########################################################################################################
@@ -871,6 +872,8 @@ const DeathNACAddressPage = ({ config, onSelect, userType, formData, isEditBirth
                                 lbs={lbs}
                                 setLbs={setLbs}
                                 Talukvalues={Talukvalues}
+                                Districtvalues={Districtvalues}
+                                setDistrictvalue={setDistrictvalue}
                                 setLbsTalukvalue={setLbsTalukvalue}
                                 Villagevalues={Villagevalues}
                                 setLbsVillagevalue={setLbsVillagevalue}

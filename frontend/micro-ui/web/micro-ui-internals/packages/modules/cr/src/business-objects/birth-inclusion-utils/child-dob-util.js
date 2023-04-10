@@ -9,6 +9,8 @@ export const getFilteredChildDobData = (selectedData, inclusionData) => {
   let selectedDobObj = {
     initialValue: computedInitialValue,
     curValue: computedCurrentValue,
+    docFlag: null,
+    // onDobchange: (field,data,dataObj) => _onDobchange(field,data,dataObj),
     isDisabled: true,
     isEditable: false,
     isFocused: false,
@@ -16,6 +18,15 @@ export const getFilteredChildDobData = (selectedData, inclusionData) => {
   };
   return { ...selectedDobObj };
 };
+
+
+// _onDobchange = (field,data,dataObj = {}) =>{
+//   const tempData = {...dataObj}
+//   if(tempData){
+//     tempData[field]?.curValue = data;
+//   }
+//    return tempData
+// }
 
 //TODO need validation to check dob is null
 const computeInitialValue = (dob) => {
@@ -27,16 +38,16 @@ const computeInitialValue = (dob) => {
 
 const computeCurrentValue = (dob) => {
   const currentValue = dob && moment(dob).format("DD/MM/YYYY");
-
   return currentValue;
 };
 
 const getFilteredDocuments = (selectedData, inclusionData) => {
-  let filteredData = {};
+  let filteredData = [];
   if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
-    filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
+    filteredData = inclusionData?.filter((item) => item.conditionCode === "DOB_INSTITUTIONAL");
   } else {
-    filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
+    filteredData = inclusionData?.filter((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
   }
-  return filteredData;
+  console.log("dob filter==",filteredData);
+  return {documentData:filteredData};
 };

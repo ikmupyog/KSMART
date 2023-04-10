@@ -2405,6 +2405,7 @@ export const MdmsService = {
     return responseValue;
   },
   getCommonDbmsService: (tenantId, moduleCode, type) => {
+    console.log("reached common",tenantId, moduleCode, type);
     return MdmsService.getDataByCriteria(tenantId, getCommonDbmsServiceCriteria(tenantId, moduleCode,type), moduleCode);
   },
   getTypeOfMarriageMaster: (tenantId, moduleCode) => {
