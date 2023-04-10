@@ -96,7 +96,7 @@ const SearchParent = ({
                 </SearchForm>
             </div>
             {isLoading && <Loader/>}
-            { results.length == 0 && (
+            { results && results.length > 0 && (
                 <React.Fragment>
                     <ResultTable
                         setValue={setValue}
