@@ -10,6 +10,7 @@ import ApplicationDetails from "./ApplicationDetails";
 import ApplicationAdoptionDetails from './ApplicationAdoptionDetails'
 import ApplicationDeathDetails from "./ApplicationDeathDetails";
 import ApplicationStillBirthDetails from "./ApplicationStillBirthDetails";
+import ApplicationNACBirthDetails from "./ApplicationNACBirthDetails"
 import DeathCrFlow from "./Death-route";
 import SearchFlow from "./Search-route";
 import SearchInbox from './Inbox-route';
@@ -29,6 +30,7 @@ const CRBreadCrumb = ({ location }) => {
   const isApplicationBirthDetails = location?.pathname?.includes("cr/application-birthdetails");
   const isApplicationAdoptionDetails = location?.pathname?.includes("cr/application-Adoptiondetails");
   const isApplicationStillBirthDetails = location?.pathname?.includes("cr/application-stillbirth");
+  const isApplicationNACBirthDetails = location?.pathname?.includes("cr/application-nacbirth");
   const isNewApplication = location?.pathname?.includes("tl/new-application");
   const isResponse = location?.pathname?.includes("tl/response");
   const isMobile = window.Digit.Utils.browser.isMobile();
@@ -154,6 +156,13 @@ const CRBreadCrumb = ({ location }) => {
         breadCrumbUrls.includes("home/application-stillbirth")
     },
     {
+      path: sessionStorage.getItem("applicationno") ? `/digit-ui/employee/cr/application-nacbirth/${sessionStorage.getItem("birthApplicationNo")}` : "",
+      content: t("NAC Birth Application Details"),
+      show: isApplicationNACBirthDetails ||
+        breadCrumbUrls.includes("home/application-nacbirth")
+    },
+    
+    {
       path: "/digit-ui/employee/cr/death-flow/specify-correction",
       content: t("Specify Correction"),
       show: isSpecifyCorrectSearch ||
@@ -195,6 +204,7 @@ const EmployeeApp = ({ path, url, userType }) => {
   const ScrFlowApp = Digit?.ComponentRegistryService?.getComponent('ScrFlowApp');
   const CreateAbandonedBirth = Digit?.ComponentRegistryService?.getComponent('CreateAbandonedBirth');
   const CreateBornOutsideEmp = Digit?.ComponentRegistryService?.getComponent('CreateBornOutsideEmp');
+  const CreateNACBirth = Digit?.ComponentRegistryService?.getComponent('CreateNACBirth');
 
   return (
     <Switch>
@@ -214,11 +224,13 @@ const EmployeeApp = ({ path, url, userType }) => {
           <PrivateRoute path={`${path}/create-stillbirth`} component={ScrFlowApp} />
           <PrivateRoute path={`${path}/create-abandonedbirth`} component={CreateAbandonedBirth} />
           <PrivateRoute path={`${path}/create-bornoutsidebirth`} component={CreateBornOutsideEmp} />
+          <PrivateRoute path={`${path}/create-nacbirthsearch`} component={CreateNACBirth} />
          
           <PrivateRoute path={`${path}/application-details/:id`} component={() => <ApplicationDetails parentRoute={path} />} />
           <PrivateRoute path={`${path}/application-stillbirth/:id`} component={() => <ApplicationStillBirthDetails parentRoute={path} />} />
           <PrivateRoute path={`${path}/application-Adoptiondetails/:id`} component={() => <ApplicationAdoptionDetails parentRoute={path} />} />
           <PrivateRoute path={`${path}/application-deathdetails/:id`} component={() => <ApplicationDeathDetails parentRoute={path} />} />
+          <PrivateRoute path={`${path}/application-nacbirth/:id`} component={() => <ApplicationNACBirthDetails parentRoute={path} />} />
         </div>
       </React.Fragment>
     </Switch>

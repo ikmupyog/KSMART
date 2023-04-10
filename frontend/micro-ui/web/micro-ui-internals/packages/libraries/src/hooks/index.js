@@ -128,7 +128,8 @@ import useCivilRegistrationStillBirthAPI from "./cr/useCivilRegistrationStillBir
 import useCivilRegistrationNACBIRTHAPI from "./cr/useCivilRegistrationNACBIRTHAPI";
 import useCivilRegistrationBornOutsideIndiaBirthAPI from "./cr/useCivilRegistrationBornOutsideIndiaBirthAPI";
 import useCivilRegistrationAbandonedBirthAPI from "./cr/useCivilRegistrationAbandonedBirthAPI";
-import useApplicationBornOutsideIndiaBirthDetail from "./cr/useApplicationBornOutsideIndiaBirthDetail"; 
+import useApplicationBornOutsideIndiaBirthDetail from "./cr/useApplicationBornOutsideIndiaBirthDetail";
+import useApplicationBIRTHNACDetail from "./cr/useApplicationBIRTHNACDetail"; 
 
 import useCivilRegistrationDeathAPI from "./cr/useCivilRegistrationDeathAPI";
 // import useTradeLicenseSearch from "./tl/useTradeLicenseSearch";
@@ -162,8 +163,6 @@ import useRegistrySearchBirth from "./cr/useRegistrySearchBirth";
 import useRegistrySearchDeath from "./cr/useRegistrySearchDeath";
 import useSearchMarriage from "./cr/useSearchMarriage";
 import useRegistrySearchMarriage from "./cr/useRegistrySearchMarriage";
-import useApplicationBIRTHNACDetail from "./cr/useApplicationBIRTHNACDetail";
-
 
 import useSearchDeath  from "./cr/useSearchDeath";
 import useSearchStillBirth  from "./cr/useSearchStillBirth";
@@ -388,6 +387,7 @@ const cr = {
   useApplicationAbandondBirthDetail,
   useApplicationBIRTHNACDetail,
   useApplicationBornOutsideIndiaBirthDetail,
+  
   useApplicationActions: useCRApplicationActions,
   useAdoptionApplActions:useCRAdoptionApplicationActions,
   useCRStillBirthApplicationActions:useCRStillBirthApplicationActions,

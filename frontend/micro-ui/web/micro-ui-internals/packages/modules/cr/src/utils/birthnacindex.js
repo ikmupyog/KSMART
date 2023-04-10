@@ -328,9 +328,9 @@ export const convertToNACRegistration = (data = {}) => {
         medicalAttensionSub: null,
         deliveryMethods: null,
         action: "INITIATE",
-        applicationtype: "CRBRNR",
+        applicationtype: "CRBRNC",
         businessservice: "birth-services",
-        workflowcode: data?.BirthNACDetails?.workFlowCode,
+        workflowcode: "NACAPP",
 
         ParentsDetails: {
           motherFirstNameEn: data?.BirthNACParentsDetails?.motherFirstNameEn,
@@ -491,14 +491,14 @@ export const convertToNACRegistration = (data = {}) => {
           declarationId: data?.BirthNACInitiator?.declarationId,
           isEsigned: data?.BirthNACInitiator?.declarationId
         },
-        OtherChildren: {
+        OtherChildren: [{
           childNameEn: data?.BirthNACInitiator?.childNameEn,
           childNameMl: data?.BirthNACInitiator?.childNameMl,
           sex: data?.BirthNACInitiator?.sex?.value,
-          orderOfBirth: data?.BirthNACInitiator?.orderOfBirth,
+          nacorderofChildren: data?.BirthNACInitiator?.nacorderofChildren,
           dob:  Date.parse(data?.BirthNACInitiator?.dob),
           isAlive: data?.BirthNACInitiator?.isAlive?.value,
-        }
+        }]
       },
     ],
   };
