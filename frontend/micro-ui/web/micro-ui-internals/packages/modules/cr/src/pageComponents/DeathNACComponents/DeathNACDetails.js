@@ -83,7 +83,9 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
     place["common-masters"] &&
     place["common-masters"].PlaceMasterDeath &&
     place["common-masters"].PlaceMasterDeath.map((ob) => {
-      cmbPlace.push(ob);
+      if(ob.code !== "OUTSIDE_JURISDICTION"){
+        cmbPlace.push(ob);
+      }
     });
   AgeUnitvalue &&
     AgeUnitvalue["birth-death-service"] &&
@@ -196,6 +198,9 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
   const handleDropdownChange = () => {
     setIsTextboxEnabled(true);
   };
+  const [placeofBurial, setPlaceofBurial] = useState(
+    formData?.InformationDeath?.placeofBurial ? formData?.InformationDeath?.placeofBurial : ""
+  );
   const [DeceasedFirstNameEn, setDeceasedFirstNameEn] = useState(
     formData?.InformationDeath?.DeceasedFirstNameEn ? formData?.InformationDeath?.DeceasedFirstNameEn : ""
   );
@@ -461,20 +466,20 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
             GeneralRemarks={GeneralRemarks}
           />;
         }
-        if (naturetype === "OUTSIDE_JURISDICTION") {
-          <DeathOutsideJurisdiction
-            DeathPlaceCountry={DeathPlaceCountry}
-            DeathPlaceState={DeathPlaceState}
-            DeathPlaceDistrict={DeathPlaceDistrict}
-            DeathPlaceCity={DeathPlaceCity}
-            DeathPlaceRemarksEn={DeathPlaceRemarksEn}
-            DeathPlaceRemarksMl={DeathPlaceRemarksMl}
-            PlaceOfBurialMl={PlaceOfBurialMl}
-            PlaceOfBurialEn={PlaceOfBurialEn}
-            GeneralRemarks={GeneralRemarks}
-            DeathPlaceWardId={DeathPlaceWardId}
-          />;
-        }
+        // if (naturetype === "OUTSIDE_JURISDICTION") {
+        //   <DeathOutsideJurisdiction
+        //     DeathPlaceCountry={DeathPlaceCountry}
+        //     DeathPlaceState={DeathPlaceState}
+        //     DeathPlaceDistrict={DeathPlaceDistrict}
+        //     DeathPlaceCity={DeathPlaceCity}
+        //     DeathPlaceRemarksEn={DeathPlaceRemarksEn}
+        //     DeathPlaceRemarksMl={DeathPlaceRemarksMl}
+        //     PlaceOfBurialMl={PlaceOfBurialMl}
+        //     PlaceOfBurialEn={PlaceOfBurialEn}
+        //     GeneralRemarks={GeneralRemarks}
+        //     DeathPlaceWardId={DeathPlaceWardId}
+        //   />;
+        // }
       }
     }
   }, [isInitialRenderDeathPlace]);
@@ -618,6 +623,11 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
       setDeceasedFirstNameMl("");
     } else {
       setDeceasedFirstNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    }
+  }
+  function setSelectPlaceofBurial(e) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setPlaceofBurial(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectDeceasedFirstNameEn(e) {
@@ -1130,6 +1140,7 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
         tenantid,
         DateOfDeath,
         TimeOfDeath,
+        placeofBurial,
         DeceasedFirstNameEn,
         DeceasedMiddleNameEn,
         DeceasedLastNameEn,
@@ -1510,7 +1521,7 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
               />
             </div>
           )}
-          {value === "OUTSIDE_JURISDICTION" && (
+          {/* {value === "OUTSIDE_JURISDICTION" && (
             <div>
               <DeathOutsideJurisdiction
                 formData={formData}
@@ -1537,8 +1548,33 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
                 setDeathPlaceWardId={setDeathPlaceWardId}
               />
             </div>
-          )}
-
+          )} */}
+          <div className="row">
+            <div className="col-md-12">
+              <h1 className="headingh1">
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_BURIAL_INFO")}`}</span>
+              </h1>
+            </div>
+          </div>
+          <div className="row">
+              <div className="col-md-12">
+                <div className="col-md-6">
+                  <CardLabel>{`${t("CR_BURIAL_PLACE")}`}</CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type="number"
+                    max="12"
+                    optionKey="i18nKey"
+                    name="placeofBurial"
+                    value={placeofBurial}
+                    onChange={setSelectPlaceofBurial}
+                    placeholder="Place of Burial"
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: "Invalid Place of Burial" })}
+                  />
+                </div>
+              </div>
+            </div>
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
