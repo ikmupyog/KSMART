@@ -55,7 +55,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
 
     useEffect(() => {
 
-        if (isInitialRender) {
+        // if (isInitialRender) {
             if (cmbLB.length > 0) {
                 currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
                 //console.log(currentLB);
@@ -72,14 +72,14 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
                     setpermtaddressStateName(cmbFilterState[0]);
                     setValue(cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode)[0].statecode);
                 }
-                if (cmbVillage.length > 0 && currentLB.length > 0) {
-                    cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
-                    setLbsVillagevalue(cmbFilterVillage);
-                }
-                setIsInitialRender(false);
+                // if (cmbVillage.length > 0 && currentLB.length > 0) {
+                //     cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
+                //     setLbsVillagevalue(cmbFilterVillage);
+                // }
+                // setIsInitialRender(false);
             }
-        }
-    }, [Country, State, localbodies, Villagevalues, isInitialRender]);
+        // }
+    }, [cmbLB]);
 
     if (isEditBirth) {
         if (formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry != null) {
