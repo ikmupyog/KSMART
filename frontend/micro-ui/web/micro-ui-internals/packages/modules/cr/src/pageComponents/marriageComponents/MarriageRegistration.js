@@ -546,7 +546,8 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     islocalbodiesLoading ||
     isWardLoaded ||
     isTypeOfMarriageLoading ||
-    isMarriagePlaceTypeLoading
+    isMarriagePlaceTypeLoading ||
+    isMarriagePlaceId
   ) {
     return <Loader></Loader>;
   } else
