@@ -21,6 +21,9 @@ import java.util.ListIterator;
 import java.util.UUID;
 
 import lombok.extern.slf4j.Slf4j;
+
+import static org.ksmart.marriage.utils.MarriageConstants.COUNTRY_CODE;
+
 /**
      * Created by Jasmine
      * on 24.03.2023
@@ -272,8 +275,8 @@ private void setGroomPermanentAddress(MarriageRegistryRequest request) {
 
                         }
                         else {
-                            if (marriage.getGroomAddressDetails().getPermntOutsideIndiaCountry() != null) {
-                                marriage.getGroomAddressDetails().setCountryIdPresent(marriage.getGroomAddressDetails().getPermntOutsideIndiaCountry());
+                            if (marriage.getGroomAddressDetails().getPermtaddressCountry() != COUNTRY_CODE) {
+                                marriage.getGroomAddressDetails().setCountryIdPresent(marriage.getGroomAddressDetails().getPermtaddressCountry());
                                 marriage.getGroomAddressDetails().setVillageNamePermanent(marriage.getGroomAddressDetails().getPermntOutsideIndiaVillage());
                                 marriage.getGroomAddressDetails().setTownOrVillagePermanent(marriage.getGroomAddressDetails().getPermntOutsideIndiaCityTown());
 
@@ -470,8 +473,8 @@ private void setBridePermanentAddress(MarriageRegistryRequest request) {
                                }
                             }
                            else {
-                               if (marriage.getBrideAddressDetails().getPermntOutsideIndiaCountry() != null) {
-                                   marriage.getBrideAddressDetails().setCountryIdPresent(marriage.getBrideAddressDetails().getPermntOutsideIndiaCountry());
+                               if (marriage.getBrideAddressDetails().getPermtaddressCountry() != COUNTRY_CODE) {
+                                   marriage.getBrideAddressDetails().setCountryIdPresent(marriage.getBrideAddressDetails().getPermtaddressCountry());
                                    marriage.getBrideAddressDetails().setVillageNamePermanent(marriage.getBrideAddressDetails().getPermntOutsideIndiaVillage());
                                    marriage.getBrideAddressDetails().setTownOrVillagePermanent(marriage.getBrideAddressDetails().getPermntOutsideIndiaCityTown());
 
