@@ -9,14 +9,16 @@ import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryRequest;
 import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryResponse;
 import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistrySearchCriteria;
 import org.ksmart.marriage.marriageregistry.service.MarriageRegistryService;
+import org.ksmart.marriage.marriageregistry.web.model.certmodel.MarriageCertResponse;
+import org.ksmart.marriage.marriageregistry.web.model.certmodel.MarriageCertificate;
 import org.ksmart.marriage.utils.ResponseInfoFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.ksmart.marriage.marriageregistry.web.model.certmodel.MarriageCertResponse.java;
 
 import lombok.extern.slf4j.Slf4j;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -60,7 +62,7 @@ public class MarriageRegistryController {
     }
 
     @PostMapping("_certificate")
-    public  ResponseEntity<MarriageCertRespons> certificateDownload(@RequestBody MarriageRegistryRequest request,
+    public  ResponseEntity<MarriageCertResponse> certificateDownload(@RequestBody MarriageRegistryRequest request,
                                                                      @Valid @ModelAttribute MarriageRegistrySearchCriteria criteria) {
         List<MarriageCertificate> marriageCertResponseList = marriageService.searchCertificate(criteria);
         MarriageCertResponse response;

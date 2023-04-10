@@ -2,19 +2,25 @@ package org.ksmart.marriage.marriageregistry.service;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.apache.commons.lang3.StringUtils;
+import org.egov.common.contract.request.RequestInfo;
+import org.egov.tracer.model.CustomException;
 import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryDetails;
 import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryRequest;
 import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistrySearchCriteria;
 import org.ksmart.marriage.marriageregistry.repository.MarriageRegistryRepository;
+import org.ksmart.marriage.marriageregistry.web.model.certmodel.MarriageCertPDFRequest;
+import org.ksmart.marriage.marriageregistry.web.model.certmodel.MarriageCertPdfResponse;
+import org.ksmart.marriage.marriageregistry.web.model.certmodel.MarriageCertRequest;
+import org.ksmart.marriage.marriageregistry.web.model.certmodel.MarriageCertificate;
 import org.springframework.stereotype.Service;
 import org.ksmart.marriage.common.producer.MarriageProducer;
 import org.ksmart.marriage.marriageapplication.config.MarriageApplicationConfiguration;
 import org.ksmart.marriage.marriageregistry.enrichment.MarriageRegistryEnrichment;
-import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryDetails;
-import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryRequest;
-import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistrySearchCriteria;
-import org.ksmart.marriage.marriageregistry.repository.querybuilder.MarriageRegistryQueryBuilder;
-import org.ksmart.marriage.marriageregistry.repository.rowmapper.MarriageRegistryRowMapper;
+
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 /**
      * Created by Jasmine
@@ -37,7 +43,7 @@ public class MarriageRegistryService {
             this.marriageRegistryEnrichment = marriageRegistryEnrichment;
             this.repository = repository;
     }
-    private final MarriageApplicationConfiguration marriageApplicationConfiguration;
+//    private final MarriageApplicationConfiguration marriageApplicationConfiguration;
     public List<MarriageRegistryDetails> createRegistry(MarriageRegistryRequest request) {
 
         marriageRegistryEnrichment.enrichCreate(request);

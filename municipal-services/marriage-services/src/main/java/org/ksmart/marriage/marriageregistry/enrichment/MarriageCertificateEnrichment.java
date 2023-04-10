@@ -5,7 +5,7 @@ import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.request.User;
 import org.ksmart.marriage.common.model.AuditDetails;
 import org.ksmart.marriage.common.repository.IdGenRepository;
-import org.ksmart.marriage.config.MarriageApplicationConfiguration;
+import org.ksmart.marriage.marriageapplication.config.MarriageApplicationConfiguration;
 import org.ksmart.marriage.marriageregistry.web.model.certmodel.MarriageCertPDFRequest;
 import org.ksmart.marriage.marriageregistry.web.model.certmodel.MarriageCertRequest;
 import org.ksmart.marriage.marriageregistry.web.model.certmodel.MarriageCertificate;
