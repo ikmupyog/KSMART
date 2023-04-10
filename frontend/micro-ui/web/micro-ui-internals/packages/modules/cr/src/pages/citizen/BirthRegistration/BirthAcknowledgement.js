@@ -139,8 +139,10 @@ const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
   const handleDownloadPdf = async () => {
     const { ChildDetails = [] } = mutation.data
     const ChildDet = (ChildDetails && ChildDetails[0]) || {};
-    const tenantInfo = tenants.find((tenant) => tenant.code === ChildDet.tenantId);
+    const tenantInfo = tenants.find((tenant) => tenant.code === ChildDet.tenantid);
+    console.log(tenantInfo);
     let res = ChildDet;
+    console.log(res);
     const data = getPDFData({ ...res }, tenantInfo, t);
     data.then((ress) => Digit.Utils.pdf.generate(ress));
   };

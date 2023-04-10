@@ -1,4 +1,4 @@
-import { pdfDocumentName, pdfDownloadLink, stringReplaceAll,getTransaltedLocality } from "./index";
+import { pdfDocumentName, pdfDownloadLink, stringReplaceAll, getTransaltedLocality } from "./index";
 
 const capitalize = (text) => text.substr(0, 1).toUpperCase() + text.substr(1);
 const ulbCamel = (ulb) => ulb.toLowerCase().split(" ").map(capitalize).join(" ");
@@ -7,20 +7,42 @@ const getChildDetails = (application, t) => {
   console.log(application);
   application.owners = application?.ChildDetails?.filter((applicationNumber) => applicationNumber.active == true) || [];
   //if (application?.ChildDetails?.applicationNumber == "TL_COMMON_TABLE_COL_APP_NO") {
-    return {
-      title: t("CR_CHILD_DEATILS"),
-      values: [
-        { title: t("TL_OWNER_S_NAME_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.name || t("CS_NA") },
-        { title: t("TL_OWNER_S_MOBILE_NUM_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.mobileNumber || t("CS_NA") },
-        // { title: t("TL_GUARDIAN_S_NAME_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.fatherOrHusbandName || t("CS_NA") },
-        // { title: t("TL_RELATIONSHIP_WITH_GUARDIAN_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.relationship || t("CS_NA") },
-        { title: t("TL_NEW_OWNER_DETAILS_GENDER_LABEL"), value: t(application?.tradeLicenseDetail?.owners[0]?.gender) || t("CS_NA") },
-        { title: t("TL_NEW_OWNER_DETAILS_EMAIL_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.emailId || t("CS_NA") },
-        { title: t("TL_OWNER_SPECIAL_CATEGORY"), value: application?.tradeLicenseDetail?.owners[0]?.ownerType ? t(`COMMON_MASTERS_OWNERTYPE_${application?.tradeLicenseDetail?.owners[0]?.ownerType}`) : t("CS_NA") },
-        { title: t("TL_NEW_OWNER_DETAILS_ADDR_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.permanentAddress || t("CS_NA") },
-      ],
-    };
-    
+  // "dateofreport": 1681143816135,
+  //     "childDOB": 1680566400000,
+  //     "birthDateTime": null,
+  //     "gender": "MALE",
+  //     "childAadharNo": "",
+  //     "isChildName": false,
+  //     "childFirstNameEn": "",
+  //     "childMiddleNameEn": "",
+  //     "childLastNameEn": "",
+  //     "childFirstNameMl": "",
+  //     "childMiddleNameMl": "",
+  //     "childLastNameMl": "",
+  //     "birthPlace": "HOSPITAL",
+  //     "hospitalCode": "HOSPITAL_8377",
+  //     "hospitalName": "M A J Hospital, Ernakulam",
+  //     "hospitalNameMl": "എം എ ജെ ഹോസ്പിറ്റല്‍",
+  return {
+    title: t("CR_BIRTH_APPLICATION_SUMMARY"),
+    values: [
+      { title: t("CR_BIRTH_APPL_NO"), value: application?.applicationNumber ? application?.applicationNumber : t("CS_NA") },
+      { title: t("CR_CHILD DOB"), value: application?.childDOB ? Digit.DateUtils.ConvertTimestampToDate(application?.childDOB, "dd/MM/yyyy") : t("CS_NA") },
+      { title: t("CR_BIRTH_APPL_NO"), value: application?.gender ? application?.gender : t("CS_NA") },
+      { title: t("CR_BIRTH_PLACE"), value: application?.birthPlace ? application?.birthPlace : t("CS_NA") },
+      { title: t("CR_BIRTH_PLACE_NAME"), value: application?.hospitalName ? application?.hospitalName : t("CS_NA") },
+
+      // { title: t("TL_OWNER_S_NAME_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.name || t("CS_NA") },
+      // { title: t("TL_OWNER_S_MOBILE_NUM_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.mobileNumber || t("CS_NA") },
+      // // { title: t("TL_GUARDIAN_S_NAME_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.fatherOrHusbandName || t("CS_NA") },
+      // // { title: t("TL_RELATIONSHIP_WITH_GUARDIAN_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.relationship || t("CS_NA") },
+      // { title: t("TL_NEW_OWNER_DETAILS_GENDER_LABEL"), value: t(application?.tradeLicenseDetail?.owners[0]?.gender) || t("CS_NA") },
+      // { title: t("TL_NEW_OWNER_DETAILS_EMAIL_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.emailId || t("CS_NA") },
+      // { title: t("TL_OWNER_SPECIAL_CATEGORY"), value: application?.tradeLicenseDetail?.owners[0]?.ownerType ? t(`COMMON_MASTERS_OWNERTYPE_${application?.tradeLicenseDetail?.owners[0]?.ownerType}`) : t("CS_NA") },
+      // { title: t("TL_NEW_OWNER_DETAILS_ADDR_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.permanentAddress || t("CS_NA") },
+    ],
+  };
+
   // } else { //if (application?.subOwnerShipCategory?.includes("INDIVIDUAL"))
   //   let values = [];
   //   application?.tradeLicenseDetail.owners.map((owner) => {
@@ -121,19 +143,19 @@ const getChildDetails = (application, t) => {
 // };
 
 const getCRBirthAcknowledgementData = async (application, tenantInfo, t) => {
-//   const filesArray = application?.tradeLicenseDetail?.applicationDocuments?.map((value) => value?.fileStoreId);
-//   let res;
-//   if (filesArray) {
-//     res = await Digit.UploadServices.Filefetch(filesArray, Digit.ULBService.getStateId());
-//   }
-//   return {
-//     t: t,
-//     tenantId: tenantInfo?.code,
-//     title: `${t(tenantInfo?.i18nKey)} ${ulbCamel(t(`ULBGRADE_${tenantInfo?.city?.ulbGrade.toUpperCase().replace(" ", "_").replace(".", "_")}`))}`,
-//     name: `${t(tenantInfo?.i18nKey)} ${ulbCamel(t(`ULBGRADE_${tenantInfo?.city?.ulbGrade.toUpperCase().replace(" ", "_").replace(".", "_")}`))}`,
-//     email: "",
-//     phoneNumber: "",
-//     details: [
+  //   const filesArray = application?.tradeLicenseDetail?.applicationDocuments?.map((value) => value?.fileStoreId);
+  //   let res;
+  //   if (filesArray) {
+  //     res = await Digit.UploadServices.Filefetch(filesArray, Digit.ULBService.getStateId());
+  //   }
+  return {
+    t: t,
+    tenantId: tenantInfo?.code,
+    title: `${t(tenantInfo?.i18nKey)} ${ulbCamel(t(`ULBGRADE_${tenantInfo?.city?.ulbGrade.toUpperCase().replace(" ", "_").replace(".", "_")}`))}`,
+    name: `${t(tenantInfo?.i18nKey)} ${ulbCamel(t(`ULBGRADE_${tenantInfo?.city?.ulbGrade.toUpperCase().replace(" ", "_").replace(".", "_")}`))}`,
+    email: "",
+    phoneNumber: "",
+    details: [
       // {
       //   title: t("NOC_TASK_DETAILS_HEADER"),
       //   values: [
@@ -145,26 +167,27 @@ const getCRBirthAcknowledgementData = async (application, tenantInfo, t) => {
       //     },
       //   ],
       // },
-//       getTradeDetails(application, t),
-//       getTradeUnitsDetails(application, t),
-//       getAccessoriesDetails(application, t),
-//       getAddressDetails(application, t),
-//       getOwnerDetails(application, t),
-//       {
-//         title: t("TL_COMMON_DOCS"),
-//         values:
-//           application?.tradeLicenseDetail?.applicationDocuments?.length > 0
-//             ? application?.tradeLicenseDetail?.applicationDocuments.map((document, index) => {
-//               let documentLink = pdfDownloadLink(res?.data, document?.fileStoreId);
-//               return {
-//                 title: t(`TL_NEW_${document?.documentType}` || t("CS_NA")),
-//                 value: pdfDocumentName(documentLink, index) || t("CS_NA"),
-//               };
-//             })
-//             : [],
-//       },
-//     ],
-//   };
+      getChildDetails(application, t),
+      //       getTradeDetails(application, t),
+      //       getTradeUnitsDetails(application, t),
+      //       getAccessoriesDetails(application, t),
+      //       getAddressDetails(application, t),
+      //       getOwnerDetails(application, t),
+      //       {
+      //         title: t("TL_COMMON_DOCS"),
+      //         values:
+      //           application?.tradeLicenseDetail?.applicationDocuments?.length > 0
+      //             ? application?.tradeLicenseDetail?.applicationDocuments.map((document, index) => {
+      //               let documentLink = pdfDownloadLink(res?.data, document?.fileStoreId);
+      //               return {
+      //                 title: t(`TL_NEW_${document?.documentType}` || t("CS_NA")),
+      //                 value: pdfDocumentName(documentLink, index) || t("CS_NA"),
+      //               };
+      //             })
+      //             : [],
+      //       },
+    ],
+  };
 };
 
 export default getCRBirthAcknowledgementData;

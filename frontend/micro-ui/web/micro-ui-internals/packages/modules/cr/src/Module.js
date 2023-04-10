@@ -430,7 +430,7 @@ const componentsToRegister = {
   StillBirthAcknowledgement,
   BirthCertificate,
   CRCreateDeathRegistration: CreateDeathRegistration,
-  TLResponse: Response,
+  CRResponse: Response,
   CRDocuments,
   CRDDocuments,
   CRWFApplicationTimeline,

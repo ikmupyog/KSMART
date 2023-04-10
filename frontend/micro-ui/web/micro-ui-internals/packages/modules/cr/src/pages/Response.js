@@ -22,8 +22,8 @@ const Response = (props) => {
 
   const printReciept = async () => {
     const ChildDetails = state?.data || [];
-    const license = (ChildDetails && ChildDetails[0]) || {};
-    const tenantInfo = tenants.find((tenant) => tenant.code === ChildDet.tenantId);
+    const ChildDet = (ChildDetails && ChildDetails[0]) || {};
+    const tenantInfo = tenants.find((tenant) => tenant.code === ChildDet.tenantid);
     const data = await getCRBirthAcknowledgementData({ ...ChildDet }, tenantInfo, t);
     Digit.Utils.pdf.generate(data);
   };
