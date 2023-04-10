@@ -226,14 +226,8 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     }
   }
   function setSelectGroomNoOfSpouse(e) {
-    if (e.target.value.length === 2) {
-      if (e.target.value > 3) {
-        return false;
-      }
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setGroomNoOfSpouse(e.target.value);
-      // .replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' a-zA-Z]/gi, ""));
+    if (e.target.value.trim().length >= 0) {
+      setGroomNoOfSpouse(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
     }
   }
   function setSelectGroomAge(e) {
@@ -243,6 +237,9 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     } else {
       setGroomAge(e.target.value);
     }
+    // if (e.target.value.trim().length >= 0) {
+    //   setGroomAge(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
+    // }
   }
 
   function setselectGroomDOB(value) {
