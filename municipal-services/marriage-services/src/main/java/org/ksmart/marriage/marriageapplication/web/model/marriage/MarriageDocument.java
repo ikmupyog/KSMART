@@ -48,6 +48,12 @@ public class MarriageDocument {
     @JsonProperty("applicationNumber")
     private String applicationNumber ;
 
+    @JsonProperty("registrationNumber")
+    private String registrationNumber ;
+
+    @JsonProperty("applicationType")
+    private String applicationType ;
+
     @JsonProperty("updatedFlag")
     private Integer updatedFlag ;
 

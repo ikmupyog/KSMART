@@ -16,6 +16,8 @@ public interface BaseEnrichment {
                     .build();
         } else {
             auditDetails = AuditDetails.builder()
+                    .createdBy(by)
+                    .createdTime(currentTime)
                     .lastModifiedBy(by)
                     .lastModifiedTime(currentTime)
                     .build();

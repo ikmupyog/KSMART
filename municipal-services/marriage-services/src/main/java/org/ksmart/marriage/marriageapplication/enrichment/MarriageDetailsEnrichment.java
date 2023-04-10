@@ -120,16 +120,17 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                 String documentType =  document.getDocumentType();
                 String documentOwner =  document.getDocumentOwner();
                 String applicationNumber =  marriage.getApplicationNumber();
+                String applicationType =  marriage.getApplicationtype();
                 document.setId(UUID.randomUUID().toString());
                 document.setMarriageTenantid(marriage.getTenantid());
                 document.setMarriageId(marriage.getId());
                 document.setApplicationNumber(applicationNumber);
+                document.setApplicationType(applicationType);
                 document.setMarriageDocAuditDetails(auditDetails);
                
                 });
             }
         });
-
     }
     public void enrichUpdate(MarriageDetailsRequest request) {
 
@@ -140,15 +141,17 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
         forEach(marriage -> {
                 marriage.setAuditDetails(auditDetails);
                 String applicationNumber =  marriage.getApplicationNumber();
+                String applicationType =  marriage.getApplicationtype();
+               // String registrationNumber = marriage.getRegistrationNo();
                 //Jasmine 07.04.2023
                 List <MarriageDocument> marriagedocument = marriage.getMarriageDocuments();
                 if (marriagedocument!=null){
                         marriagedocument.forEach(document -> {
                          String documentType =  document.getDocumentType();
-                         String documentOwner =  document.getDocumentOwner();
+                         String documentOwner =  document.getDocumentOwner();  
                         document.setActiveFalse(true);
                          List<MarriageDocument> searchResult = repository.getDocumentDetails(documentType,documentOwner,applicationNumber);
-                         document.setUpdatedFlag( MarriageConstants.VALUE_FALSE);
+                        // document.setUpdatedFlag( MarriageConstants.VALUE_FALSE);
                          if(searchResult!=null){
                              searchResult.forEach(existingDocument -> {
                                  if(document.getFileStoreId().equals(existingDocument.getFileStoreId())){
@@ -164,19 +167,17 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                         document.setMarriageTenantid(marriage.getTenantid());
                         document.setMarriageId(marriage.getId());
                         document.setApplicationNumber(applicationNumber);
+                        document.setApplicationType(applicationType);
                         document.setMarriageDocAuditDetails(auditDetails);
-                        });
-                        
+                     // document.setRegistrationNumber(registrationNumber);
+                        });    
                     }
-
         setBridePermanentAddress(request);
         setBridePresentAddress(request);
         setGroomPermanentAddress(request);
         setGroomPresentAddress(request);
-    });
-    
+    });   
 }
-
     private void setGroomPresentAddress(MarriageDetailsRequest request) {
         request.getMarriageDetails()
                 .forEach(marriage ->{
@@ -264,15 +265,11 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 
                                     marriage.getGroomAddressDetails().setPresentOthrIndiaProvinceEn(marriage.getGroomAddressDetails().getPresentOutSideIndiaProvinceEn());
                                     marriage.getGroomAddressDetails().setPresentOthrIndiaProvinceMl(marriage.getGroomAddressDetails().getPresentOutSideIndiaProvinceMl());
-
                                 }
                             }
                     }
-
                 });
-
     }
-
     private void setGroomPermanentAddress(MarriageDetailsRequest request) {
         request.getMarriageDetails()
                 .forEach(marriage-> {
@@ -335,8 +332,6 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                                     marriage.getGroomAddressDetails().setPinNoPermanent(marriage.getGroomAddressDetails().getPermntOutsideKeralaPincode());
 
                                 }
-
-
                             }
                             else {
                                 if (marriage.getGroomAddressDetails().getPermntOutsideIndiaCountry() != null) {
@@ -356,18 +351,11 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                                     marriage.getGroomAddressDetails().setPermntOthrIndiaprovinceMl(marriage.getGroomAddressDetails().getPermntOutSideIndiaProvinceMl());
 
                                     marriage.getGroomAddressDetails().setOutSideIndiaPostCodepermanent(marriage.getGroomAddressDetails().getPermanentOutsideIndiaPostCode());
-
-
-
                                 }
                             }
-
                         }
-
                     }
-
                 });
-
     }
 
     private void setBridePresentAddress(MarriageDetailsRequest request) {
@@ -459,21 +447,12 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                                     marriage.getBrideAddressDetails().setPresentOthrIndiaProvinceMl(marriage.getBrideAddressDetails().getPresentOutSideIndiaProvinceMl());
 
                                     marriage.getBrideAddressDetails().setOutSideIndiaPostCodePresent(marriage.getBrideAddressDetails().getPresentOutSideIndiaPostCode());
-
-
                                 }
                             }
 
                         }
-
-
                     }
-
-
         });
-
-
-
     }
 
     private void setBridePermanentAddress(MarriageDetailsRequest request) {
