@@ -400,6 +400,14 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
   const [InstitutionNameError, setInstitutionNameError] = useState(formData?.InformationDeath?.DeathPlaceInstId ? false : false);
   const [AgeError, setAgeError] = useState(formData?.InformationDeath?.Age ? false : false);
   const [WardNameError, setWardNameError] = useState(formData?.InformationDeath?.DeathPlaceWardId ? false : false);
+
+  const [DeathPlaceHomelocalityEnError, setDeathPlaceHomelocalityEnError] = useState(formData?.InformationDeath?.DeathPlaceHomeLocalityEn ? false : false);
+  const [DeathPlaceHomehoueNameEnError, setDeathPlaceHomehoueNameEnError] = useState(formData?.InformationDeath?.DeathPlaceHomehoueNameEn ? false : false);
+  const [DeathPlaceHomeStreetNameEnError, setDeathPlaceHomeStreetNameEnError] = useState(formData?.InformationDeath?.DeathPlaceHomestreetNameEn ? false : false);
+  const [DeathPlaceHomelocalityMlError, setDeathPlaceHomelocalityMlError] = useState(formData?.InformationDeath?.DeathPlaceHomelocalityMl ? false : false);
+  const [DeathPlaceHomestreetNameMlError, setDeathPlaceHomestreetNameMlError] = useState(formData?.InformationDeath?.DeathPlaceHomestreetNameMl ? false : false);
+  const [DeathPlaceHomehoueNameMlError, setDeathPlaceHomehoueNameMlError] = useState(formData?.InformationDeath?.DeathPlaceHomehoueNameMl ? false : false);
+
   const onSkip = () => onSelect();
   useEffect(() => {
     if (isInitialRender) {
@@ -749,6 +757,9 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
   function selectOccupation(value) {
     setSelectedOccupation(value);
   }
+ 
+
+
   // function selectDateOfDeath(value) {
   //   setDateOfDeath(value);
   //   const today = new Date();
@@ -979,7 +990,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
   // }
   function setSelectAge(e) {
     if (e.target.value.trim().length >= 0) {
-      setAge(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
+      setAge(e.target.value.length <= 3 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 3));
       // getAgeUnitOptions(e.target.value);
     }
   }
@@ -1122,7 +1133,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
         setHospitalError(false);
       }   
 
-
+    
       
     } else if (DeathPlace.code === "INSTITUTION") {
       if (DeathPlaceType == null) {
@@ -1148,7 +1159,76 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
         }
       }
     }
-
+    else if (DeathPlace.code === "HOME") {
+      if (DeathPlaceHomeLocalityEn.trim() == null || DeathPlaceHomeLocalityEn.trim() == '' || DeathPlaceHomeLocalityEn.trim() == undefined) {
+        validFlag = false;
+        setDeathPlaceHomelocalityEn("");
+        setDeathPlaceHomelocalityEnError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setDeathPlaceHomelocalityEnError(false);
+      }
+      // if (DeathPlaceHomeStreetNameEn.trim() == null || DeathPlaceHomeStreetNameEn.trim() == '' || DeathPlaceHomeStreetNameEn.trim() == undefined) {
+      //   validFlag = false;
+      //   setDeathPlaceHomestreetNameEn("");
+      //   setDeathPlaceHomeStreetNameEnError(true);
+      //   setToast(true);
+      //   setTimeout(() => {
+      //     setToast(false);
+      //   }, 2000);
+      // } else {
+      //   setDeathPlaceHomeStreetNameEnError(false);
+      // }
+   
+      if (DeathPlaceHomeHoueNameEn.trim() == null || DeathPlaceHomeHoueNameEn.trim() == '' || DeathPlaceHomeHoueNameEn.trim() == undefined) {
+        validFlag = false;
+        setDeathPlaceHomehoueNameEn("");
+        setDeathPlaceHomehoueNameEnError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setDeathPlaceHomehoueNameEnError(false);
+      }
+      if (DeathPlaceHomeLocalityMl.trim() == null || DeathPlaceHomeLocalityMl.trim() == '' || DeathPlaceHomeLocalityMl.trim() == undefined) {
+        validFlag = false;
+        setDeathPlaceHomelocalityMl("");
+        setDeathPlaceHomelocalityMlError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setDeathPlaceHomelocalityMlError(false);
+      }
+      // if (DeathPlaceHomeStreetNameMl.trim() == null || DeathPlaceHomeStreetNameMl.trim() == '' || DeathPlaceHomeStreetNameMl.trim() == undefined) {
+      //   validFlag = false;
+      //   setDeathPlaceHomestreetNameMl("");
+      //   setDeathPlaceHomestreetNameMlError(true);
+      //   setToast(true);
+      //   setTimeout(() => {
+      //     setToast(false);
+      //   }, 2000);
+      // } else {
+      //   setDeathPlaceHomestreetNameMlError(false);
+      // }
+  //    // if (DeathPlaceHomeHoueNameMl == null || DeathPlaceHomeHoueNameMl == "" || DeathPlaceHomeHoueNameMl == undefined) {
+     if (DeathPlaceHomeHoueNameMl.trim() == null || DeathPlaceHomeHoueNameMl.trim() == '' || DeathPlaceHomeHoueNameMl.trim() == undefined) {
+        validFlag = false;
+        setDeathPlaceHomehoueNameMl("");
+        setDeathPlaceHomehoueNameMlError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setDeathPlaceHomehoueNameMlError(false);
+      }
+  }
     if (validFlag == true) {
       // // sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
       // // sessionStorage.setItem("DeathDateUnavailable", DeathDateUnavailable ? DeathDateUnavailable : false);

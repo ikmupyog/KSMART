@@ -697,6 +697,8 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
   let structurePlaceCorr = [];
   let structurePlaceHistory = [];
   let applicationDocuments = [];
+  let addressCorr = [];
+  let addressHistory = [];
   let tradeNameCorr = data?.tradeName;
   let licenseUnitNameLocalCorr = data?.licenseUnitNameLocal;
   let tradeNameHistory = data?.tradeName;
@@ -704,11 +706,7 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
   let ownerFlag = false;
   let structureplaceFlag = false;
   let unitFlag = false;
-  
-  let wardNoCorr = data?.tradeLicenseDetail?.address?.wardNo;
-  let wardIdCorr = data?.tradeLicenseDetail?.address?.wardId;
-  let wardNoHistory = data?.tradeLicenseDetail?.address?.wardNo;
-  let wardIdHistory = data?.tradeLicenseDetail?.address?.wardId;
+  let addressFlag = false;
   let isEdit = false;
 
   if(data?.tradeLicenseDetail?.address?.wardId !== dataCorr?.tradeLicenseDetail?.address?.wardId){
@@ -716,23 +714,28 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
     wardIdCorr = dataCorr?.tradeLicenseDetail?.address?.wardId;
     wardNoHistory = data?.tradeLicenseDetail?.address?.wardNo;
     wardIdHistory = data?.tradeLicenseDetail?.address?.wardId;
+    addressCorr.push({
+      id : data?.tradeLicenseDetail?.address?.id,
+      wardNo : dataCorr?.tradeLicenseDetail?.address?.wardNo,
+      wardId : dataCorr?.tradeLicenseDetail?.address?.wardId
+    });
     isEdit = true;
+    addressFlag = true;
   }
+  addressHistory = addressFlag === true ?  data?.tradeLicenseDetail?.address : [];
   
   dataCorr?.tradeLicenseDetail?.tradeUnits.map((unitNew) => {
     data?.tradeLicenseDetail?.tradeUnits.map((unitOld) => {
-      if (unitOld.id === unitNew.id) {
-        if ((unitOld.businessType !== unitNew.businessType)||(unitOld.businessSubtype !== unitNew.businessSubtype)){
-          tradeUnitCorr.push({
-            id : unitNew.id,
-            active: true,
-            businessCategory: unitNew.businessCategory,
-            businessType: unitNew.businessType,
-            businessSubtype: unitNew.businessSubtype
-          });
-          isEdit = true;
-          unitFlag = true;         
-        }
+      if ((unitOld.id === unitNew.id) && (unitOld.businessType !== unitNew.businessType) && (unitOld.businessSubtype !== unitNew.businessSubtype)){
+        tradeUnitCorr.push({
+          id : unitNew.id,
+          active: true,
+          businessCategory: unitNew.businessCategory,
+          businessType: unitNew.businessType,
+          businessSubtype: unitNew.businessSubtype
+        });
+        isEdit = true;
+        unitFlag = true;         
       }
       else if(unitNew.id === null) {
         tradeUnitCorr.push({
@@ -747,9 +750,12 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
       }
     })
   })
+  let Subtype = dataCorr?.tradeLicenseDetail?.tradeUnits.length > 0 ? 
+  Array.from(new Set(dataCorr?.tradeLicenseDetail?.tradeUnits.map(type => type.businessSubtype))) : [];
+
   for(let i=0; i>dataCorr?.tradeLicenseDetail?.tradeUnits.length; i++)
     data?.tradeLicenseDetail?.tradeUnits.map((unitOld) => {
-      if(!dataCorr?.tradeLicenseDetail?.tradeUnits[i].id.includes(unitOld.id) ){
+      if(!Subtype.includes(unitOld) ){
         tradeUnitCorr.push({id : unitOld.id, active : false});
         isEdit = true;
         unitFlag = true;
@@ -757,7 +763,7 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
     });
    
   if(unitFlag === true){
-    ownersHistory = data?.tradeLicenseDetail?.tradeUnits;
+    tradeUnitHistory = data?.tradeLicenseDetail?.tradeUnits;
   }
   
   
@@ -911,28 +917,25 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
         licenseNumber : data.licenseNumber,
         correction : {
           tradeUnits : tradeUnitCorr,
-          applicationDocuments : applicationDocuments,
           structurePlace : structurePlaceCorr,
           owners : ownersCorr,
-          tradeName : tradeNameCorr,
+          licenseUnitName : tradeNameCorr,
           licenseUnitNameLocal : licenseUnitNameLocalCorr,
-          wardId : wardIdCorr,
-          wardNo : wardNoCorr
+          address : addressCorr
         },
         history : {
           tradeUnits : tradeUnitHistory,
           structurePlace : structurePlaceHistory,
           owners : ownersHistory,
-          tradeName : tradeNameHistory,
+          licenseUnitName : tradeNameHistory,
           licenseUnitNameLocal : licenseUnitNameLocalHistory,
-          wardId : wardIdHistory,
-          wardNo : wardNoHistory
+          address : addressHistory
         },
+        applicationDocuments : applicationDocuments,
         status: "INITIATED"
       }
     ]
   };
-  console.log("Anju " + JSON.stringify(formdata));
   return formdata;
 };
 
