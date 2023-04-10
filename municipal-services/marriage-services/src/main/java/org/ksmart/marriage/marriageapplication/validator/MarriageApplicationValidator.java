@@ -813,15 +813,7 @@ public class MarriageApplicationValidator {
                                                                                                                 groomaddressInfo.getPermntOutsideKeralaVillage()
                                                                                                                 + " is invalid");
                                                                         }
-                                                                        if (StringUtils.isEmpty(groomaddressInfo
-                                                                                        .getPermntInKeralaAdrLBName())) {
-                                                                                throw new CustomException(
-                                                                                                "GROOM PERMANENT ADDRESS OUTSIDE KERALA: LOCALBODY NAME INVALID ",
-                                                                                                "The   Localbody Name "
-                                                                                                                +
-                                                                                                                groomaddressInfo.getPermntInKeralaAdrLBName()
-                                                                                                                + " is invalid");
-                                                                        }
+                                                                        
                                                                         if (StringUtils.isEmpty(groomaddressInfo
                                                                                         .getPermntOutsideKeralaCityVilgeEn())) {
                                                                                 throw new CustomException(
@@ -944,14 +936,14 @@ public class MarriageApplicationValidator {
                                                                                                 groomaddressInfo.getPermntOutsideIndiaLineoneEn()
                                                                                                 + " is invalid");
                                                         }
-                                                        if (StringUtils.isEmpty(groomaddressInfo
-                                                                        .getPermntOutsideIndiaLinetwoEn())) {
-                                                                throw new CustomException(
-                                                                                "GROOM PERMANENT ADDRESS OUSIDE INDIA: ADDRESS LINE Two ENGLISH INVALID ",
-                                                                                "The   Adress Line Two English " +
-                                                                                                groomaddressInfo.getPermntOutsideIndiaLinetwoEn()
-                                                                                                + " is invalid");
-                                                        }
+                                                        // if (StringUtils.isEmpty(groomaddressInfo
+                                                        //                 .getPermntOutsideIndiaLinetwoEn())) {
+                                                        //         throw new CustomException(
+                                                        //                         "GROOM PERMANENT ADDRESS OUSIDE INDIA: ADDRESS LINE Two ENGLISH INVALID ",
+                                                        //                         "The   Adress Line Two English " +
+                                                        //                                         groomaddressInfo.getPermntOutsideIndiaLinetwoEn()
+                                                        //                                         + " is invalid");
+                                                        // }
                                                         if (StringUtils.isEmpty(groomaddressInfo
                                                                         .getPermntOutsideIndiaLineoneMl())) {
                                                                 throw new CustomException(
@@ -960,14 +952,14 @@ public class MarriageApplicationValidator {
                                                                                                 groomaddressInfo.getPermntOutsideIndiaLineoneMl()
                                                                                                 + " is invalid");
                                                         }
-                                                        if (StringUtils.isEmpty(groomaddressInfo
-                                                                        .getPermntOutsideIndiaLinetwoMl())) {
-                                                                throw new CustomException(
-                                                                                "GROOM PERMANENT ADDRESS OUSIDE INDIA: ADDRESS LINE TWO MALAYALAM INVALID ",
-                                                                                "The   Adress Line Two Malayalam " +
-                                                                                                groomaddressInfo.getPermntOutsideIndiaLinetwoMl()
-                                                                                                + " is invalid");
-                                                        }
+                                                        // if (StringUtils.isEmpty(groomaddressInfo
+                                                        //                 .getPermntOutsideIndiaLinetwoMl())) {
+                                                        //         throw new CustomException(
+                                                        //                         "GROOM PERMANENT ADDRESS OUSIDE INDIA: ADDRESS LINE TWO MALAYALAM INVALID ",
+                                                        //                         "The   Adress Line Two Malayalam " +
+                                                        //                                         groomaddressInfo.getPermntOutsideIndiaLinetwoMl()
+                                                        //                                         + " is invalid");
+                                                        // }
 
                                                 }
                                                 // groom permanent address end
@@ -976,7 +968,7 @@ public class MarriageApplicationValidator {
                                                                 .equals(MarriageConstants.ADDRESS_INDIA)) {
                                                         if (StringUtils.isEmpty(groomaddressInfo
                                                                         .getPresentaddressStateName())) {
-                                                                throw new CustomException(" STATE INVALID ",
+                                                                throw new CustomException("GROOM PRESENT ADDRESS INSIDE INDIA: STATE INVALID ",
                                                                                 "The   State " +
                                                                                                 groomaddressInfo.getPresentaddressStateName()
                                                                                                 + " is invalid");
@@ -1134,23 +1126,23 @@ public class MarriageApplicationValidator {
                                                                                                                 groomaddressInfo.getPresentOutsideKeralaPincode()
                                                                                                                 + " is invalid");
                                                                         }
-                                                                        if (StringUtils.isEmpty(groomaddressInfo
-                                                                                        .getPresentOutsideKeralaLocalityNameEn())) {
-                                                                                throw new CustomException(
-                                                                                                "GROOM PRESENT ADDRESS OUTSIDE KERALA: POSTOFFICE INVALID ",
-                                                                                                "The Postofficef " +
-                                                                                                                groomaddressInfo.getPresentOutsideKeralaLocalityNameEn()
-                                                                                                                + " is invalid");
-                                                                        }
-                                                                        if (StringUtils.isEmpty(groomaddressInfo
-                                                                                        .getPresentOutsideKeralaLocalityNameMl())) {
-                                                                                throw new CustomException(
-                                                                                                "GROOM PRESENT ADDRESS OUTSIDE KERALA: LOCALITY NAME MALAYALAM IS INVALID ",
-                                                                                                "The Locality Malayalam "
-                                                                                                                +
-                                                                                                                groomaddressInfo.getPresentOutsideKeralaLocalityNameMl()
-                                                                                                                + " is invalid");
-                                                                        }
+                                                                        // if (StringUtils.isEmpty(groomaddressInfo
+                                                                        //                 .getPresentOutsideKeralaLocalityNameEn())) {
+                                                                        //         throw new CustomException(
+                                                                        //                         "GROOM PRESENT ADDRESS OUTSIDE KERALA: POSTOFFICE INVALID ",
+                                                                        //                         "The Postofficef " +
+                                                                        //                                         groomaddressInfo.getPresentOutsideKeralaLocalityNameEn()
+                                                                        //                                         + " is invalid");
+                                                                        // }
+                                                                        // if (StringUtils.isEmpty(groomaddressInfo
+                                                                        //                 .getPresentOutsideKeralaLocalityNameMl())) {
+                                                                        //         throw new CustomException(
+                                                                        //                         "GROOM PRESENT ADDRESS OUTSIDE KERALA: LOCALITY NAME MALAYALAM IS INVALID ",
+                                                                        //                         "The Locality Malayalam "
+                                                                        //                                         +
+                                                                        //                                         groomaddressInfo.getPresentOutsideKeralaLocalityNameMl()
+                                                                        //                                         + " is invalid");
+                                                                        // }
                                                                         // if (StringUtils.isEmpty(groomaddressInfo
                                                                         //                 .getPresentOutsideKeralaLocalityNameEn())) {
                                                                         //         throw new CustomException(
@@ -1392,15 +1384,7 @@ public class MarriageApplicationValidator {
                                                                                                                 brideaddressInfo.getPermntOutsideKeralaVillage()
                                                                                                                 + " is invalid");
                                                                         }
-                                                                        if (StringUtils.isEmpty(brideaddressInfo
-                                                                                        .getPermntInKeralaAdrLBName())) {
-                                                                                throw new CustomException(
-                                                                                                "BRIDE PERMANENT ADDRESS OUTSIDE KERALA: LOCALBODY NAME INVALID ",
-                                                                                                "The   Localbody Name "
-                                                                                                                +
-                                                                                                                brideaddressInfo.getPermntInKeralaAdrLBName()
-                                                                                                                + " is invalid");
-                                                                        }
+                                                                       
                                                                         if (StringUtils.isEmpty(brideaddressInfo
                                                                                         .getPermntOutsideKeralaCityVilgeEn())) {
                                                                                 throw new CustomException(
