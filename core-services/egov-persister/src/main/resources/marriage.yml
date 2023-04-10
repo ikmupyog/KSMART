@@ -641,8 +641,8 @@ serviceMaps:
  
 
         - query: INSERT INTO public.eg_marriage_document( id ,tenantid ,document_name ,document_type ,filestoreid ,
-            document_link ,marriageid ,bride_groom ,active ,applicationnumber  , createdby ,createdtime,lastmodifiedby , lastmodifiedtime)
-            VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? , ?, ?, ?, ? );
+            document_link ,marriageid ,bride_groom ,active ,applicationnumber  , createdby ,createdtime,lastmodifiedby , lastmodifiedtime ,applicationtype)
+            VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? , ?, ?, ?, ? , ? );
 
 
           basePath: MarriageDetails.*.MarriageDocuments.*
@@ -675,6 +675,8 @@ serviceMaps:
             - jsonPath: $.MarriageDetails[*][?({id} in @.MarriageDocuments[*].id)].auditDetails.lastModifiedBy
 
             - jsonPath: $.MarriageDetails[*][?({id} in @.MarriageDocuments[*].id)].auditDetails.lastModifiedTime 
+
+            - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.applicationType
 
 
     - version: 1.0
@@ -1342,7 +1344,7 @@ serviceMaps:
              - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntInKeralaAdrLBName
 
 
-        - query: UPDATE public.eg_marriage_document  SET active = ? ,lastmodifiedby = ? , lastmodifiedtime = ? WHERE bride_groom=? AND applicationnumber=? AND document_type=?
+        - query: UPDATE public.eg_marriage_document  SET active = ? ,lastmodifiedby = ? , lastmodifiedtime = ? ,applicationtype = ? WHERE bride_groom=? AND applicationnumber=? AND document_type=?
                  AND tenantid = ? 
 
           basePath: MarriageDetails.*.MarriageDocuments.*
@@ -1354,6 +1356,8 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails[*][?({id} in @.MarriageDocuments[*].id)].auditDetails.lastModifiedTime
 
+            - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.applicationType
+
             - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.documentOwner
 
             - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.applicationNumber            
@@ -1364,8 +1368,8 @@ serviceMaps:
  
 
         - query: INSERT INTO public.eg_marriage_document( id ,tenantid ,document_name ,document_type ,filestoreid ,
-            document_link ,marriageid ,bride_groom ,active ,applicationnumber  , createdby ,createdtime,lastmodifiedby , lastmodifiedtime)
-            VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? , ?, ?, ?, ? );
+            document_link ,marriageid ,bride_groom ,active ,applicationnumber  , createdby ,createdtime , lastmodifiedby , lastmodifiedtime ,applicationtype)
+            VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? , ?, ?, ?, ? ,? );
 
 
           basePath: MarriageDetails.*.MarriageDocuments.*
@@ -1398,6 +1402,10 @@ serviceMaps:
             - jsonPath: $.MarriageDetails[*][?({id} in @.MarriageDocuments[*].id)].auditDetails.lastModifiedBy
 
             - jsonPath: $.MarriageDetails[*][?({id} in @.MarriageDocuments[*].id)].auditDetails.lastModifiedTime 
+
+            - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.applicationType
+
+
 
 
 
