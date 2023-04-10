@@ -187,8 +187,8 @@ private void setGroomPresentAddress(MarriageRegistryRequest request) {
                         }
 
                         else {
-                            if (marriage.getGroomAddressDetails().getPresentOutSideCountry() != null) {
-                                marriage.getGroomAddressDetails().setCountryIdPresent(marriage.getGroomAddressDetails().getPresentOutSideCountry());
+//                            if (marriage.getGroomAddressDetails().getPresentOutSideCountry() != null) {
+                                marriage.getGroomAddressDetails().setCountryIdPresent(marriage.getGroomAddressDetails().getPresentaddressCountry());
                                 marriage.getGroomAddressDetails().setVillageNamePresent(marriage.getGroomAddressDetails().getPresentOutSideIndiaadrsVillage());
                                 marriage.getGroomAddressDetails().setTownOrVillagePresent(marriage.getGroomAddressDetails().getPresentOutSideIndiaadrsCityTown());
 
@@ -205,7 +205,7 @@ private void setGroomPresentAddress(MarriageRegistryRequest request) {
 
 
 
-                            }
+//                            }
                         }
                     }
                 }
@@ -275,7 +275,7 @@ private void setGroomPermanentAddress(MarriageRegistryRequest request) {
 
                         }
                         else {
-                            if (marriage.getGroomAddressDetails().getPermtaddressCountry() != COUNTRY_CODE) {
+//                            if (marriage.getGroomAddressDetails().getPermtaddressCountry() != COUNTRY_CODE) {
                                 marriage.getGroomAddressDetails().setCountryIdPresent(marriage.getGroomAddressDetails().getPermtaddressCountry());
                                 marriage.getGroomAddressDetails().setVillageNamePermanent(marriage.getGroomAddressDetails().getPermntOutsideIndiaVillage());
                                 marriage.getGroomAddressDetails().setTownOrVillagePermanent(marriage.getGroomAddressDetails().getPermntOutsideIndiaCityTown());
@@ -292,7 +292,7 @@ private void setGroomPermanentAddress(MarriageRegistryRequest request) {
 
 
 
-                            }
+//                            }
                         }
 
                     }
@@ -379,8 +379,8 @@ private void setBridePresentAddress(MarriageRegistryRequest request) {
                         }
 
                         else {
-                            if (marriage.getBrideAddressDetails().getPresentOutSideCountry() != null) {
-                                marriage.getBrideAddressDetails().setCountryIdPresent(marriage.getBrideAddressDetails().getPresentOutSideCountry());
+//                            if (marriage.getBrideAddressDetails().getPresentOutSideCountry() != null) {
+                                marriage.getBrideAddressDetails().setCountryIdPresent(marriage.getBrideAddressDetails().getPresentaddressCountry());
                                 marriage.getBrideAddressDetails().setVillageNamePresent(marriage.getBrideAddressDetails().getPresentOutSideIndiaadrsVillage());
                                 marriage.getBrideAddressDetails().setTownOrVillagePresent(marriage.getBrideAddressDetails().getPresentOutSideIndiaadrsCityTown());
 
@@ -397,7 +397,7 @@ private void setBridePresentAddress(MarriageRegistryRequest request) {
 
 
 
-                            }
+//                            }
                         }
                             }
 
