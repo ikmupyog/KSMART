@@ -2,8 +2,7 @@ package org.ksmart.marriage.marriageregistry.repository.querybuilder;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.ksmart.marriage.config.MarriageApplicationConfiguration;
-import org.ksmart.marriage.marriageapplication.model.marriage.MarriageApplicationSearchCriteria;
+import org.ksmart.marriage.marriageapplication.config.MarriageApplicationConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.util.Collections;
@@ -62,6 +61,14 @@ import java.util.stream.Collectors;
             addWhereClause(paramValues, query);
             query.append(column)
                     .append("=? ");
+            paramValues.add(value);
+        }
+    }
+    void addFilterString(String column, String value, StringBuilder query, List<Object> paramValues) {
+        if (StringUtils.isNotBlank(value)) {
+            addWhereClause(paramValues, query);
+            query.append(column)
+                    .append(" ILIKE ? ");
             paramValues.add(value);
         }
     }

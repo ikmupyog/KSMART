@@ -1,13 +1,16 @@
 package org.ksmart.marriage.marriageapplication.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.ksmart.marriage.marriageapplication.model.marriage.MarriageDetailsRequest;
+import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageDetailsRequest;
 import org.ksmart.marriage.marriageapplication.repository.MarriageApplicationRepository;
-import org.ksmart.marriage.marriageregistry.model.*;
+import org.ksmart.marriage.marriageregistry.web.model.*;
 import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class MarriageRegistryRequestService {
@@ -32,25 +35,25 @@ public class MarriageRegistryRequestService {
         registerMarriageDetail.setPlacetype(Marriagerequest.getMarriageDetails().get(0).getPlacetype());
         registerMarriageDetail.setPlacenameEn(Marriagerequest.getMarriageDetails().get(0).getPlacenameEn());
         registerMarriageDetail.setPlacenameMl(Marriagerequest.getMarriageDetails().get(0).getPlacenameMl());
-        registerMarriageDetail.setWard_code(Marriagerequest.getMarriageDetails().get(0).getWard_code());
-        registerMarriageDetail.setStreet_name_en(Marriagerequest.getMarriageDetails().get(0).getStreet_name_en());
-        registerMarriageDetail.setStreet_name_ml(Marriagerequest.getMarriageDetails().get(0).getStreet_name_ml());
+        registerMarriageDetail.setWard_code(Marriagerequest.getMarriageDetails().get(0).getWardCode());
+        registerMarriageDetail.setStreet_name_en(Marriagerequest.getMarriageDetails().get(0).getStreetNameEn());
+        registerMarriageDetail.setStreet_name_ml(Marriagerequest.getMarriageDetails().get(0).getStreetNameMl());
         registerMarriageDetail.setTalukid(Marriagerequest.getMarriageDetails().get(0).getTalukid());
-        registerMarriageDetail.setVillage_name(Marriagerequest.getMarriageDetails().get(0).getVillage_name());
+        registerMarriageDetail.setVillage_name(Marriagerequest.getMarriageDetails().get(0).getVillageName());
         registerMarriageDetail.setLandmark(Marriagerequest.getMarriageDetails().get(0).getLandmark());
-        registerMarriageDetail.setLocality_en(Marriagerequest.getMarriageDetails().get(0).getLocality_en());
-        registerMarriageDetail.setLocality_ml(Marriagerequest.getMarriageDetails().get(0).getLocality_ml());
-        registerMarriageDetail.setMarriage_type(Marriagerequest.getMarriageDetails().get(0).getMarriage_type());
-        registerMarriageDetail.setOth_marriage_type(Marriagerequest.getMarriageDetails().get(0).getOth_marriage_type());
+        registerMarriageDetail.setLocality_en(Marriagerequest.getMarriageDetails().get(0).getLocalityEn());
+        registerMarriageDetail.setLocality_ml(Marriagerequest.getMarriageDetails().get(0).getLocalityMl());
+        registerMarriageDetail.setMarriage_type(Marriagerequest.getMarriageDetails().get(0).getMarriageType());
+        registerMarriageDetail.setOth_marriage_type(Marriagerequest.getMarriageDetails().get(0).getOthMarriageType());
         registerMarriageDetail.setRegistrationDate(Marriagerequest.getMarriageDetails().get(0).getRegistrationDate());
-        registerMarriageDetail.setRegistrationno(Marriagerequest.getMarriageDetails().get(0).getRegistrationno());
+        registerMarriageDetail.setRegistrationno(Marriagerequest.getMarriageDetails().get(0).getRegistrationNo());
         registerMarriageDetail.setMarriageHouseNoAndNameEn(Marriagerequest.getMarriageDetails().get(0).getMarriageHouseNoAndNameEn());
         registerMarriageDetail.setMarriageHouseNoAndNameMl(Marriagerequest.getMarriageDetails().get(0).getMarriageHouseNoAndNameMl());
         registerMarriageDetail.setApplicationNumber(Marriagerequest.getMarriageDetails().get(0).getApplicationNumber());
         registerMarriageDetail.setAction(Marriagerequest.getMarriageDetails().get(0).getAction());
         registerMarriageDetail.setStatus(Marriagerequest.getMarriageDetails().get(0).getStatus());
         registerMarriageDetail.setApplicationtype(Marriagerequest.getMarriageDetails().get(0).getApplicationtype());
-        registerMarriageDetail.setModulecode(Marriagerequest.getMarriageDetails().get(0).getModulecode());
+        registerMarriageDetail.setModulecode(Marriagerequest.getMarriageDetails().get(0).getModuleCode());
         registerMarriageDetail.setBrideDetails(brideRegistryDetails(Marriagerequest));
         registerMarriageDetail.setGroomDetails(groomRegistryDetails(Marriagerequest));
         registerMarriageDetail.setWitnessDetails(witnessRegistryDetails(Marriagerequest));
@@ -59,6 +62,16 @@ public class MarriageRegistryRequestService {
         registerMarriageDetails.add(registerMarriageDetail);
         request.setRequestInfo(Marriagerequest.getRequestInfo());
         request.setMarriageDetails(registerMarriageDetails);
+
+        
+  try {
+     ObjectMapper mapper = new ObjectMapper();
+     Object obj = request;
+     mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+    System.out.println("JasmineRegistryRequest "+ mapper.writeValueAsString(obj));
+        }catch(Exception e) {
+        log.error("Exception while fetching from searcher: ",e);
+    }
 
         return request;
     }
@@ -171,8 +184,8 @@ public class MarriageRegistryRequestService {
         witnessRegistryDetails.setWitness1AddresSEn(marriageWitnessrequest.getMarriageDetails().get(0).getWitnessDetails().getWitness1AddresSEn());
         witnessRegistryDetails.setWitness1AddressMl(marriageWitnessrequest.getMarriageDetails().get(0).getWitnessDetails().getWitness1AddressMl());
         witnessRegistryDetails.setWitness1Mobile(marriageWitnessrequest.getMarriageDetails().get(0).getWitnessDetails().getWitness1Mobile());
-        witnessRegistryDetails.setSerial_no2(marriageWitnessrequest.getMarriageDetails().get(0).getWitnessDetails().getSerial_no2());
-        witnessRegistryDetails.setSerial_no1(marriageWitnessrequest.getMarriageDetails().get(0).getWitnessDetails().getSerial_no1());
+        witnessRegistryDetails.setSerial_no2(marriageWitnessrequest.getMarriageDetails().get(0).getWitnessDetails().getSerialNo2());
+        witnessRegistryDetails.setSerial_no1(marriageWitnessrequest.getMarriageDetails().get(0).getWitnessDetails().getSerialNo1());
         witnessRegistryDetails.setWitness2Age(marriageWitnessrequest.getMarriageDetails().get(0).getWitnessDetails().getWitness2Age());
         witnessRegistryDetails.setWitness2NameEn(marriageWitnessrequest.getMarriageDetails().get(0).getWitnessDetails().getWitness2NameEn());
         witnessRegistryDetails.setWitness2NameMl(marriageWitnessrequest.getMarriageDetails().get(0).getWitnessDetails().getWitness2NameMl());
@@ -194,27 +207,27 @@ public class MarriageRegistryRequestService {
         groomRegistryDetails.setAadharno(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getAadharno());
         groomRegistryDetails.setPassportno(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getPassportno());
         groomRegistryDetails.setSocialsecurityno(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getSocialsecurityno());
-        groomRegistryDetails.setFather_aadharno(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getFather_aadharno());
-        groomRegistryDetails.setFathername_en(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getFathername_en());
-        groomRegistryDetails.setFathername_ml(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getFathername_ml());
-        groomRegistryDetails.setFirstname_en(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getFirstname_en());
-        groomRegistryDetails.setFirstname_ml(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getFirstname_ml());
-        groomRegistryDetails.setMiddlename_en(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getMiddlename_en());
-        groomRegistryDetails.setMiddlename_ml(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getMiddlename_ml());
-        groomRegistryDetails.setLastname_en(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getLastname_en());
-        groomRegistryDetails.setLastname_ml(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getLastname_ml());
+        groomRegistryDetails.setFather_aadharno(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getFatherAadharno());
+        groomRegistryDetails.setFathername_en(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getFathernameEn());
+        groomRegistryDetails.setFathername_ml(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getFathernameMl());
+        groomRegistryDetails.setFirstname_en(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getFirstnameEn());
+        groomRegistryDetails.setFirstname_ml(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getFirstnameMl());
+        groomRegistryDetails.setMiddlename_en(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getMiddlenameEn());
+        groomRegistryDetails.setMiddlename_ml(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getMiddlenameMl());
+        groomRegistryDetails.setLastname_en(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getLastnameEn());
+        groomRegistryDetails.setLastname_ml(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getLastnameMl());
         groomRegistryDetails.setMobile(Long.valueOf(String.valueOf(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getMobile())));
         groomRegistryDetails.setEmailid(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getEmailid());
         groomRegistryDetails.setGender(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getGender());
         groomRegistryDetails.setDateofbirth(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getDateofbirth());
         groomRegistryDetails.setAge(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getAge());
-        groomRegistryDetails.setParent_guardian(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getParent_guardian());
-        groomRegistryDetails.setMothername_en(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getMothername_en());
-        groomRegistryDetails.setMothername_ml(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getMothername_ml());
-        groomRegistryDetails.setMother_aadharno(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getMother_aadharno());
-        groomRegistryDetails.setGuardian_aadharno(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getGuardian_aadharno());
-        groomRegistryDetails.setGuardianname_en(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getGuardianname_en());
-        groomRegistryDetails.setGuardianname_ml(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getGuardianname_ml());
+        groomRegistryDetails.setParent_guardian(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getParentGuardian());
+        groomRegistryDetails.setMothername_en(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getMothernameEn());
+        groomRegistryDetails.setMothername_ml(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getMothernameMl());
+        groomRegistryDetails.setMother_aadharno(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getMotherAadharno());
+        groomRegistryDetails.setGuardian_aadharno(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getGuardianAadharno());
+        groomRegistryDetails.setGuardianname_en(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getGuardiannameEn());
+        groomRegistryDetails.setGuardianname_ml(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getGuardiannameMl());
         groomRegistryDetails.setMaritalstatusid(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getMaritalstatusid());
         groomRegistryDetails.setGroomNoOfSpouse(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getGroomNoOfSpouse());
         groomRegistryDetails.setGroomIsSpouseLiving(marriageGroomrequest.getMarriageDetails().get(0).getGroomDetails().getGroomIsSpouseLiving());
@@ -230,27 +243,27 @@ public class MarriageRegistryRequestService {
         brideRegistryDetails.setAadharno(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getAadharno());
         brideRegistryDetails.setPassportno(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getPassportno());
         brideRegistryDetails.setSocialsecurityno(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getSocialsecurityno());
-        brideRegistryDetails.setFather_aadharno(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getFather_aadharno());
-        brideRegistryDetails.setFathername_en(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getFathername_en());
-        brideRegistryDetails.setFathername_ml(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getFathername_ml());
-        brideRegistryDetails.setFirstname_en(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getFirstname_en());
-        brideRegistryDetails.setFirstname_ml(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getFirstname_ml());
-        brideRegistryDetails.setMiddlename_en(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getMiddlename_en());
-        brideRegistryDetails.setMiddlename_ml(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getMiddlename_ml());
-        brideRegistryDetails.setLastname_en(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getLastname_en());
-        brideRegistryDetails.setLastname_ml(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getLastname_ml());
+        brideRegistryDetails.setFather_aadharno(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getFatherAadharno());
+        brideRegistryDetails.setFathername_en(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getFathernameEn());
+        brideRegistryDetails.setFathername_ml(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getFathernameMl());
+        brideRegistryDetails.setFirstname_en(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getFirstnameEn());
+        brideRegistryDetails.setFirstname_ml(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getFirstnameMl());
+        brideRegistryDetails.setMiddlename_en(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getMiddlenameEn());
+        brideRegistryDetails.setMiddlename_ml(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getMiddlenameMl());
+        brideRegistryDetails.setLastname_en(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getLastnameEn());
+        brideRegistryDetails.setLastname_ml(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getLastnameMl());
         brideRegistryDetails.setMobile(Long.valueOf(String.valueOf(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getMobile())));
         brideRegistryDetails.setEmailid(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getEmailid());
         brideRegistryDetails.setGender(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getGender());
         brideRegistryDetails.setDateofbirth(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getDateofbirth());
         brideRegistryDetails.setAge(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getAge());
-        brideRegistryDetails.setParent_guardian(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getParent_guardian());
-        brideRegistryDetails.setMothername_en(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getMothername_en());
-        brideRegistryDetails.setMothername_ml(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getMothername_ml());
-        brideRegistryDetails.setMother_aadharno(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getMother_aadharno());
-        brideRegistryDetails.setGuardian_aadharno(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getGuardian_aadharno());
-        brideRegistryDetails.setGuardianname_en(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getGuardianname_en());
-        brideRegistryDetails.setGuardianname_ml(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getGuardianname_ml());
+        brideRegistryDetails.setParent_guardian(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getParentGuardian());
+        brideRegistryDetails.setMothername_en(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getMothernameEn());
+        brideRegistryDetails.setMothername_ml(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getMothernameMl());
+        brideRegistryDetails.setMother_aadharno(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getMotherAadharno());
+        brideRegistryDetails.setGuardian_aadharno(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getGuardianAadharno());
+        brideRegistryDetails.setGuardianname_en(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getGuardiannameEn());
+        brideRegistryDetails.setGuardianname_ml(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getGuardiannameMl());
         brideRegistryDetails.setMaritalstatusid(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getMaritalstatusid());
         brideRegistryDetails.setBrideNoOfSpouse(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getBrideNoOfSpouse());
      //  brideRegistryDetails.setBrideIsSpouseLiving(MarriageBriderequest.getMarriageDetails().get(0).getBrideDetails().getbrideIsSpouseLiving());

@@ -4,13 +4,13 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.egov.tracer.model.CustomException;
 import org.ksmart.marriage.common.producer.MarriageProducer;
- import org.ksmart.marriage.config.MarriageApplicationConfiguration;
+
+ import org.ksmart.marriage.marriageapplication.config.MarriageApplicationConfiguration;
 import org.ksmart.marriage.marriageregistry.enrichment.MarriageCertificateEnrichment;
 import org.ksmart.marriage.marriageregistry.enrichment.MarriageRegistryEnrichment;
-import org.ksmart.marriage.marriageregistry.model.MarriageRegistryDetails;
-import org.ksmart.marriage.marriageregistry.model.MarriageRegistryRequest;
-import org.ksmart.marriage.marriageregistry.model.MarriageRegistrySearchCriteria;
-import org.ksmart.marriage.marriageregistry.model.certmodel.*;
+import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryDetails;
+import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryRequest;
+import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistrySearchCriteria;
 import org.ksmart.marriage.marriageregistry.repository.querybuilder.MarriageRegistryQueryBuilder;
 import org.ksmart.marriage.marriageregistry.repository.rowmapper.MarriageCertificateRowMapper;
 import org.ksmart.marriage.marriageregistry.repository.rowmapper.MarriageRegistryRowMapper;
@@ -58,20 +58,25 @@ public class MarriageRegistryRepository {
     }
 
 
-    public List<MarriageRegistryDetails> createMarriageRegistry(MarriageRegistryRequest request) {
+    // public List<MarriageRegistryDetails> createMarriageRegistry(MarriageRegistryRequest request) {
+        // marriageRegistryEnrichment.enrichCreate(request);
 
-        marriageRegistryEnrichment.enrichCreate(request);
-        producer.push(marriageApplicationConfiguration.getSaveMarriageRegistryTopic(), request);
-        MarriageRegistryRequest result = MarriageRegistryRequest
-                                .builder()
-                                .requestInfo(request.getRequestInfo())
-                                .marriageDetails(request.getMarriageDetails())
-                                .build();
-        return result.getMarriageDetails();
-    }
+        // producer.push(marriageApplicationConfiguration.getSaveMarriageRegistryTopic(), request);
+
+        // MarriageRegistryRequest result = MarriageRegistryRequest
+        //                         .builder()
+        //                         .requestInfo(request.getRequestInfo())
+        //                         .marriageDetails(request.getMarriageDetails())
+        //                         .build();
+        // return result.getMarriageDetails();
+
+    // }
     public List<MarriageRegistryDetails> searchMarriageRegistry(MarriageRegistrySearchCriteria criteria) {
+
         List<Object> preparedStmtValues = new ArrayList<>();
+
         String query = queryBuilder.getMarriageRegistrySearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
+        
         List<MarriageRegistryDetails> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriageRegistryRowMapper);
  
         return result; 

@@ -6,9 +6,9 @@ import java.util.Map;
 import java.util.Collections;
 import org.apache.commons.collections4.CollectionUtils;
 import org.egov.tracer.model.CustomException;
-import org.ksmart.marriage.config.MarriageApplicationConfiguration;
-import org.ksmart.marriage.marriageapplication.model.MarriageApplicationDetails;
-import org.ksmart.marriage.marriageapplication.model.marriage.MarriageDetailsRequest;
+import org.ksmart.marriage.marriageapplication.config.MarriageApplicationConfiguration;
+import org.ksmart.marriage.marriageapplication.web.model.MarriageApplicationDetails;
+import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageDetailsRequest;
 //import org.ksmart.marriage.marriageapplication.repository.MarriageApplicationRepository;
 import org.ksmart.marriage.utils.MarriageConstants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +21,10 @@ import com.jayway.jsonpath.PathNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 /**
      * Created by Jasmine
      * on 29.03.2023
@@ -31,12 +35,13 @@ public class WorkflowIntegrator {
 
     private   final MarriageApplicationConfiguration bndConfig;
     private   final RestTemplate restTemplate;
-    //private final MarriageApplicationRepository repository;
+   // private final MarriageApplicationRepository repository;
     @Autowired
     public WorkflowIntegrator(RestTemplate restTemplate, MarriageApplicationConfiguration bndConfig
+ //   MarriageApplicationRepository repository
                                 ) {
-    //  MarriageApplicationRepository repository
-  
+     
+       
         this.restTemplate = restTemplate;
         this.bndConfig = bndConfig; 
        // this.repository = repository;
@@ -54,11 +59,23 @@ public class WorkflowIntegrator {
      * @param request the {@link MarriageDetailsRequest}
      */
     public  void callWorkFlow(MarriageDetailsRequest request) {
-      
-        List<MarriageApplicationDetails> currentFile = request.getMarriageDetails();     
+
+       // System.out.println("HiWorkflow");
+        List<MarriageApplicationDetails> currentFile = request.getMarriageDetails();  
+
+    // try {
+    //         ObjectMapper mapper = new ObjectMapper();
+    //         Object obj = currentFile;
+    //         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+    //        System.out.println("RegistryUpdate "+ mapper.writeValueAsString(obj));
+    // }catch(Exception e) {
+    //     log.error("Exception while fetching from searcher: ",e);
+    // }
+
         JSONArray array = new JSONArray();
         for (MarriageApplicationDetails marriageDtl : request.getMarriageDetails()) {
             String  businessServiceFromMDMS=marriageDtl.getBusinessservice();
+           // System.out.println("Jasmine-BusinessService"+businessServiceFromMDMS);
             if (businessServiceFromMDMS == null) {
             businessServiceFromMDMS = MarriageConstants.BUSINESS_SERVICE_BND;
         }
@@ -66,7 +83,7 @@ public class WorkflowIntegrator {
            .get(0).getAction().equalsIgnoreCase(MarriageConstants.TRIGGER_NOWORKFLOW)) {
 
                 JSONObject obj = new JSONObject();
-                //  System.out.println("businessServiceFromMDMS"+businessServiceFromMDMS);    
+                 // System.out.println("Jasmine-Hi-Inside");    
                 // Adding assignes to processInstance  assignees
                 // List<Map<String, String>> uuidMaps = buildUUIDList(deathDtl.getAssignees());
                 // System.out.println(uuidMaps);
@@ -98,8 +115,8 @@ public class WorkflowIntegrator {
             workFlowRequest.put(MarriageConstants.REQUESTINFOKEY, request.getRequestInfo());
             workFlowRequest.put(MarriageConstants.WORKFLOWREQUESTARRAYKEY, array);
             String response = null;
-           // System.out.println("workflow Check  :" + workFlowRequest);
-            log.info("workflow integrator request " + workFlowRequest);
+            //System.out.println("workflow Check  :" + workFlowRequest);
+           // log.info("workflow integrator request " + workFlowRequest);
 
             try {
                 response = restTemplate.postForObject(bndConfig.getWfHost().concat(bndConfig.getWfTransitionPath()),
@@ -150,8 +167,6 @@ public class WorkflowIntegrator {
 
     }
 // //Jasmine 08.03.2023
-
-   
 
     private List<Map<String, String>> buildUUIDList(List<String> assignees) {
         List<Map<String, String>> result = new LinkedList<>();

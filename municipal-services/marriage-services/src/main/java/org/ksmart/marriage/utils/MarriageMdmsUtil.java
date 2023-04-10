@@ -7,7 +7,7 @@ import org.egov.mdms.model.MdmsCriteria;
 import org.egov.mdms.model.MdmsCriteriaReq;
 import org.egov.mdms.model.ModuleDetail;
 import org.ksmart.marriage.common.repository.ServiceRequestRepository;
-import org.ksmart.marriage.config.MarriageApplicationConfiguration;
+import org.ksmart.marriage.marriageapplication.config.MarriageApplicationConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -15,7 +15,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -53,13 +52,15 @@ public class MarriageMdmsUtil {
 
     private MdmsCriteriaReq getMDMSRequest(RequestInfo requestInfo, String tenantId) {
         ModuleDetail tenantIdRequest = getTenantIdRequest(tenantId);
+        ModuleDetail tenantIds = getTenantIds();
         ModuleDetail commomMasterRequest = getCommonMastersRequest();
         List<ModuleDetail> BNDListRequest = getMarriageListRequest();
 
         List<ModuleDetail> moduleDetails = new LinkedList<>();
         moduleDetails.add(tenantIdRequest);
+        moduleDetails.add(tenantIds);
         moduleDetails.add(commomMasterRequest);
-       moduleDetails.addAll(BNDListRequest);
+        moduleDetails.addAll(BNDListRequest);
 
         MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(config.getEgovStateLevelTenant())
                                     .build();
@@ -77,12 +78,28 @@ public class MarriageMdmsUtil {
         List<MasterDetail> marriageMasterDetails = new ArrayList<>();
         // filter to only get code field from master data    
         final String filterCode = "$.[?(@.code=='"+tenantId+"')].*";
+    //    final String filterCode = "$.[?(@.active==true)].code";
         marriageMasterDetails
                 .add(MasterDetail.builder().name(MarriageConstants.TENANTS).filter(filterCode).build());
 
         ModuleDetail marriageModuleDtls = ModuleDetail.builder().masterDetails(marriageMasterDetails)
                 .moduleName(MarriageConstants.TENANT_MODULE_NAME).build();
        //System.out.println("JasmineTenantId"+marriageModuleDtls);
+
+        return marriageModuleDtls;
+    }
+    private ModuleDetail getTenantIds() {
+
+        // master details for Marriage module
+        List<MasterDetail> marriageMasterDetails = new ArrayList<>();
+        // filter to only get code field from master data    
+        final String filterCode = "$.[*].code";
+        marriageMasterDetails
+                .add(MasterDetail.builder().name(MarriageConstants.TENANTS).filter(filterCode).build());
+
+        ModuleDetail marriageModuleDtls = ModuleDetail.builder().masterDetails(marriageMasterDetails)
+                .moduleName(MarriageConstants.TENANT_MODULE_NAME).build();
+       
         return marriageModuleDtls;
     }
     private ModuleDetail getCommonMastersRequest() {

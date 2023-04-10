@@ -1,24 +1,28 @@
 package org.ksmart.marriage.marriageapplication.enrichment;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.primitives.ImmutableDoubleArray;
 import org.apache.commons.collections4.CollectionUtils;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.common.contract.request.User;
 import org.egov.tracer.model.CustomException;
+import org.ksmart.marriage.common.contract.EncryptionDecryptionUtil;
 import org.ksmart.marriage.common.model.AuditDetails;
 import org.ksmart.marriage.common.repository.IdGenRepository;
 import org.ksmart.marriage.common.repository.ServiceRequestRepository;
-import org.ksmart.marriage.config.MarriageApplicationConfiguration;
-import org.ksmart.marriage.marriageapplication.model.MarriageApplicationDetails;
-import org.ksmart.marriage.marriageapplication.model.Demand.Demand;
-import org.ksmart.marriage.marriageapplication.model.Demand.DemandRequest;
-import org.ksmart.marriage.marriageapplication.model.Demand.DemandResponse;
-import org.ksmart.marriage.marriageapplication.model.marriage.MarriageDetailsRequest;
-import org.ksmart.marriage.marriageapplication.model.marriage.MarriageDocument;
+import org.ksmart.marriage.marriageapplication.config.MarriageApplicationConfiguration; 
+import org.ksmart.marriage.marriageapplication.repository.MarriageApplicationRepository;
+import org.ksmart.marriage.marriageapplication.web.model.MarriageApplicationDetails;
+import org.ksmart.marriage.marriageapplication.web.model.Demand.Demand;
+import org.ksmart.marriage.marriageapplication.web.model.Demand.DemandRequest;
+import org.ksmart.marriage.marriageapplication.web.model.Demand.DemandResponse;
+import org.ksmart.marriage.marriageapplication.web.model.marriage.BrideDetails;
+import org.ksmart.marriage.marriageapplication.web.model.marriage.GroomDetails;
+import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageDetailsRequest;
+import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageDocument;
+import org.ksmart.marriage.marriageapplication.web.model.marriage.WitnessDetails;
 import org.ksmart.marriage.utils.IDGenerator;
 import org.ksmart.marriage.utils.MarriageConstants;
-import org.ksmart.marriage.utils.enums.ErrorCodes;
+import org.ksmart.marriage.marriageapplication.web.enums.ErrorCodes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -26,6 +30,11 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.UUID;
+
+import javax.swing.text.Document;
+
+import static org.ksmart.marriage.utils.MarriageConstants.COUNTRY_CODE;
+
 @Component
 public class MarriageDetailsEnrichment implements BaseEnrichment {
     
@@ -40,6 +49,12 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 
     @Autowired
     ServiceRequestRepository serviceRequestRepository;
+
+    @Autowired
+    MarriageApplicationRepository repository;
+
+    @Autowired
+    EncryptionDecryptionUtil encryptionDecryptionUtil;
 
     @Autowired
 	@Qualifier("objectMapperBnd")
@@ -64,43 +79,106 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
             if(marriage.getWitnessDetails()!=null){
                 marriage.getWitnessDetails().setWitnessId1(UUID.randomUUID().toString());
                 marriage.getWitnessDetails().setWitnessId2(UUID.randomUUID().toString());
-                marriage.getWitnessDetails().setSerial_no1(1);
-                marriage.getWitnessDetails().setSerial_no2(2);
+                marriage.getWitnessDetails().setSerialNo1(1);
+                marriage.getWitnessDetails().setSerialNo2(2);
                 marriage.getWitnessDetails().setWitnessAuditDetails(auditDetails);
             }
+            setApplicationNumbers(request);
+            setBridePermanentAddress(request);
+            setBridePresentAddress(request);
+            setGroomPermanentAddress(request);
+            setGroomPresentAddress(request);
+            
+//Jasmine 07.04.2023
+            GroomDetails groomDetails =marriage.getGroomDetails();
+            GroomDetails groomDetailsEnc =  encryptionDecryptionUtil.encryptObject(groomDetails, "BndDetail", GroomDetails.class);
+            groomDetails.setAadharno(groomDetailsEnc.getAadharno());
+            if (groomDetails.getParentGuardian().equals(MarriageConstants.PARENT)){
+                groomDetails.setMotherAadharno(groomDetailsEnc.getMotherAadharno());
+                groomDetails.setFatherAadharno(groomDetailsEnc.getFatherAadharno());
+            }
+            else if(groomDetails.getParentGuardian().equals(MarriageConstants.GUARDIAN)){
+                groomDetails.setGuardianAadharno(groomDetailsEnc.getGuardianAadharno());
+            }
+            BrideDetails brideDetails =marriage.getBrideDetails();
+            BrideDetails brideDetailsEnc =  encryptionDecryptionUtil.encryptObject(brideDetails, "BndDetail", BrideDetails.class);
+            brideDetails.setAadharno(brideDetailsEnc.getAadharno());
+            if (brideDetails.getParentGuardian().equals(MarriageConstants.PARENT)){
+                brideDetails.setMotherAadharno(brideDetailsEnc.getMotherAadharno());
+                brideDetails.setFatherAadharno(brideDetailsEnc.getFatherAadharno());
+            }
+            else if (brideDetails.getParentGuardian().equals(MarriageConstants.GUARDIAN)){
+                brideDetails.setGuardianAadharno(brideDetailsEnc.getGuardianAadharno());
+            }
+
+            WitnessDetails witnessDetails =marriage.getWitnessDetails();
+            WitnessDetails witnessDetailsEnc =  encryptionDecryptionUtil.encryptObject(witnessDetails, "BndDetail", WitnessDetails.class);
+            witnessDetails.setWitness1AadharNo(witnessDetailsEnc.getWitness1AadharNo());
+            witnessDetails.setWitness2AadharNo(witnessDetailsEnc.getWitness2AadharNo());
+
+//Jasmine 06.04.2023
             List <MarriageDocument> marriagedocument = marriage.getMarriageDocuments();
             if (marriagedocument!=null){
                 marriagedocument.forEach(document -> {
+                String documentType =  document.getDocumentType();
+                String documentOwner =  document.getDocumentOwner();
+                String applicationNumber =  marriage.getApplicationNumber();
                 document.setId(UUID.randomUUID().toString());
-                document.setActive(true);
                 document.setMarriageTenantid(marriage.getTenantid());
                 document.setMarriageId(marriage.getId());
+                document.setApplicationNumber(applicationNumber);
                 document.setMarriageDocAuditDetails(auditDetails);
                
                 });
             }
         });
-        setApplicationNumbers(request);
-        setBridePermanentAddress(request);
-        setBridePresentAddress(request);
-        setGroomPermanentAddress(request);
-        setGroomPresentAddress(request);
+
     }
     public void enrichUpdate(MarriageDetailsRequest request) {
 
         RequestInfo requestInfo = request.getRequestInfo();
         User userInfo = requestInfo.getUserInfo();
         AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
+        request.getMarriageDetails().
+        forEach(marriage -> {
+                marriage.setAuditDetails(auditDetails);
+                String applicationNumber =  marriage.getApplicationNumber();
+                //Jasmine 07.04.2023
+                List <MarriageDocument> marriagedocument = marriage.getMarriageDocuments();
+                if (marriagedocument!=null){
+                        marriagedocument.forEach(document -> {
+                         String documentType =  document.getDocumentType();
+                         String documentOwner =  document.getDocumentOwner();
+                        document.setActiveFalse(true);
+                         List<MarriageDocument> searchResult = repository.getDocumentDetails(documentType,documentOwner,applicationNumber);
+                         document.setUpdatedFlag( MarriageConstants.VALUE_FALSE);
+                         if(searchResult!=null){
+                             searchResult.forEach(existingDocument -> {
+                                 if(document.getFileStoreId().equals(existingDocument.getFileStoreId())){
+                                     document.setUpdatedFlag( MarriageConstants.VALUE_FALSE);
+                                 }
+                                 else{
+                                    document.setUpdatedFlag( MarriageConstants.VALUE_TRUE);
+                                    document.setActiveFalse(false);
+                                }
+                             });
+                      }
+                        document.setId(UUID.randomUUID().toString());
+                        document.setMarriageTenantid(marriage.getTenantid());
+                        document.setMarriageId(marriage.getId());
+                        document.setApplicationNumber(applicationNumber);
+                        document.setMarriageDocAuditDetails(auditDetails);
+                        });
+                        
+                    }
 
-        request.getMarriageDetails()
-                .forEach(marriage -> marriage.setAuditDetails(auditDetails));
-
-         setRegistrationNumber(request);
         setBridePermanentAddress(request);
         setBridePresentAddress(request);
         setGroomPermanentAddress(request);
         setGroomPresentAddress(request);
-    }
+    });
+    
+}
 
     private void setGroomPresentAddress(MarriageDetailsRequest request) {
         request.getMarriageDetails()
@@ -116,17 +194,17 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                         if (marriage.getGroomAddressDetails().getIsPermanentAddress()) {
                             marriage.getGroomAddressDetails().setCountryIdPresent(marriage.getGroomAddressDetails().getCountryIdPermanent());
                             marriage.getGroomAddressDetails().setStateIdPresent(marriage.getGroomAddressDetails().getStateIdPermanent());
-                            if (marriage.getGroomAddressDetails().getCountryIdPermanent().contains(MarriageConstants.COUNTRY_CODE)) {
+                            if (marriage.getGroomAddressDetails().getCountryIdPermanent().equals(COUNTRY_CODE)) {
                                 marriage.getGroomAddressDetails().setCountryIdPresent(marriage.getGroomAddressDetails().getPermtaddressCountry());
-                                if (marriage.getGroomAddressDetails().getStateIdPresent().contains(MarriageConstants.STATE_CODE_SMALL)) {
+                                if (marriage.getGroomAddressDetails().getStateIdPresent().equals(MarriageConstants.STATE_CODE_SMALL)) {
                                     marriage.getGroomAddressDetails().setPresentaddressStateName(marriage.getGroomAddressDetails().getStateIdPresent());
                                 }
                             }
                         }
 
                         if (marriage.getGroomAddressDetails().getPresentaddressCountry() != null && marriage.getGroomAddressDetails().getPresentaddressStateName() != null) {
-                            if (marriage.getGroomAddressDetails().getPresentaddressCountry().contains(MarriageConstants.COUNTRY_CODE)) {
-                                if (marriage.getGroomAddressDetails().getPresentaddressStateName().contains(MarriageConstants.STATE_CODE_SMALL)) {
+                            if (marriage.getGroomAddressDetails().getPresentaddressCountry().equals(COUNTRY_CODE)) {
+                                if (marriage.getGroomAddressDetails().getPresentaddressStateName().equals(MarriageConstants.STATE_CODE_SMALL)) {
                                     if (!marriage.getGroomAddressDetails().getIsPermanentAddress()) {
                                         marriage.getGroomAddressDetails().setCountryIdPresent(marriage.getGroomAddressDetails().getPresentaddressCountry());
                                         marriage.getGroomAddressDetails().setStateIdPresent(marriage.getGroomAddressDetails().getPresentaddressStateName());
@@ -192,17 +270,9 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 
                                 }
                             }
-
-
-
                     }
 
-
-
                 });
-
-
-
 
     }
 
@@ -220,8 +290,8 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                         }
 
                         if(marriage.getGroomAddressDetails().getPermtaddressCountry()!=null && marriage.getGroomAddressDetails().getPermtaddressStateName() != null){
-                            if (marriage.getGroomAddressDetails().getPermtaddressCountry().contains(MarriageConstants.COUNTRY_CODE)) {
-                                if (marriage.getGroomAddressDetails().getPermtaddressStateName().contains(MarriageConstants.STATE_CODE_SMALL)) {
+                            if (marriage.getGroomAddressDetails().getPermtaddressCountry().equals(COUNTRY_CODE)) {
+                                if (marriage.getGroomAddressDetails().getPermtaddressStateName().equals(MarriageConstants.STATE_CODE_SMALL)) {
 
                                     marriage.getGroomAddressDetails().setCountryIdPermanent(marriage.getGroomAddressDetails().getPermtaddressCountry());
                                     marriage.getGroomAddressDetails().setPermanentAddrTalukId(marriage.getGroomAddressDetails().getPermntInKeralaAdrTaluk());
@@ -272,8 +342,8 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 
                             }
                             else {
-                                if (marriage.getGroomAddressDetails().getPermntOutsideIndiaCountry() != null) {
-                                    marriage.getGroomAddressDetails().setCountryIdPresent(marriage.getGroomAddressDetails().getPermntOutsideIndiaCountry());
+                                if (marriage.getGroomAddressDetails().getPermtaddressCountry() != COUNTRY_CODE) {
+                                    marriage.getGroomAddressDetails().setCountryIdPresent(marriage.getGroomAddressDetails().getPermtaddressCountry());
 
                                     marriage.getGroomAddressDetails().setVillageNamePermanent(marriage.getGroomAddressDetails().getPermntOutsideIndiaVillage());
 
@@ -317,9 +387,9 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                         if(marriage.getBrideAddressDetails().getIsPermanentAddress()) {
                             marriage.getBrideAddressDetails().setCountryIdPresent(marriage.getBrideAddressDetails().getCountryIdPermanent());
                             marriage.getBrideAddressDetails().setStateIdPresent(marriage.getBrideAddressDetails().getStateIdPermanent());
-                            if (marriage.getBrideAddressDetails().getCountryIdPermanent().contains(MarriageConstants.COUNTRY_CODE)) {
+                            if (marriage.getBrideAddressDetails().getCountryIdPermanent().equals(COUNTRY_CODE)) {
                                 marriage.getBrideAddressDetails().setCountryIdPresent(marriage.getBrideAddressDetails().getPermtaddressCountry());
-                                if (marriage.getBrideAddressDetails().getStateIdPresent().contains(MarriageConstants.STATE_CODE_SMALL)) {
+                                if (marriage.getBrideAddressDetails().getStateIdPresent().equals(MarriageConstants.STATE_CODE_SMALL)) {
                                         marriage.getBrideAddressDetails().setPresentaddressStateName(marriage.getBrideAddressDetails().getStateIdPresent());
 
                                 }
@@ -327,8 +397,8 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                         }
 
                         if (marriage.getBrideAddressDetails().getPresentaddressCountry() != null && marriage.getBrideAddressDetails().getPresentaddressStateName() != null) {
-                            if (marriage.getBrideAddressDetails().getPresentaddressCountry().contains(MarriageConstants.COUNTRY_CODE)) {
-                                if (marriage.getBrideAddressDetails().getPresentaddressStateName().contains(MarriageConstants.STATE_CODE_SMALL)) {
+                            if (marriage.getBrideAddressDetails().getPresentaddressCountry().equals(COUNTRY_CODE)) {
+                                if (marriage.getBrideAddressDetails().getPresentaddressStateName().equals(MarriageConstants.STATE_CODE_SMALL)) {
                                     if (!marriage.getBrideAddressDetails().getIsPermanentAddress()) {
                                         marriage.getBrideAddressDetails().setCountryIdPresent(marriage.getBrideAddressDetails().getPresentaddressCountry());
                                         marriage.getBrideAddressDetails().setStateIdPresent(marriage.getBrideAddressDetails().getPresentaddressStateName());
@@ -376,7 +446,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 
                                 }
                             } else {
-                                if (marriage.getBrideAddressDetails().getPresentOutSideCountry() != null) {
+                                if (marriage.getBrideAddressDetails().getPermtaddressCountry() != COUNTRY_CODE) {
                                     marriage.getBrideAddressDetails().setCountryIdPresent(marriage.getBrideAddressDetails().getPresentOutSideCountry());
                                     marriage.getBrideAddressDetails().setVillageNamePresent(marriage.getBrideAddressDetails().getPresentOutSideIndiaadrsVillage());
                                     marriage.getBrideAddressDetails().setTownOrVillagePresent(marriage.getBrideAddressDetails().getPresentOutSideIndiaadrsCityTown());
@@ -423,8 +493,8 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                            }
 
                            if(marriage.getBrideAddressDetails().getPermtaddressCountry()!=null && marriage.getBrideAddressDetails().getPermtaddressStateName() != null){
-                               if (marriage.getBrideAddressDetails().getPermtaddressCountry().contains(MarriageConstants.COUNTRY_CODE)) {
-                                   if (marriage.getBrideAddressDetails().getPermtaddressStateName().contains(MarriageConstants.STATE_CODE_SMALL)) {
+                               if (marriage.getBrideAddressDetails().getPermtaddressCountry().equals(COUNTRY_CODE)) {
+                                   if (marriage.getBrideAddressDetails().getPermtaddressStateName().equals(MarriageConstants.STATE_CODE_SMALL)) {
 
                                        marriage.getBrideAddressDetails().setCountryIdPermanent(marriage.getBrideAddressDetails().getPermtaddressCountry());
 
@@ -474,8 +544,8 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 
                                    }
                                else {
-                                   if (marriage.getBrideAddressDetails().getPermntOutsideIndiaCountry() != null) {
-                                       marriage.getBrideAddressDetails().setCountryIdPresent(marriage.getBrideAddressDetails().getPermntOutsideIndiaCountry());
+//                                   if (marriage.getBrideAddressDetails().getPermtaddressCountry() != COUNTRY_CODE) {
+                                       marriage.getBrideAddressDetails().setCountryIdPresent(marriage.getBrideAddressDetails().getPermtaddressCountry());
                                        marriage.getBrideAddressDetails().setVillageNamePermanent(marriage.getBrideAddressDetails().getPermntOutsideIndiaVillage());
                                        marriage.getBrideAddressDetails().setTownOrVillagePermanent(marriage.getBrideAddressDetails().getPermntOutsideIndiaCityTown());
 
@@ -492,7 +562,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                                        marriage.getBrideAddressDetails().setOutSideIndiaPostCodepermanent(marriage.getBrideAddressDetails().getPermanentOutsideIndiaPostCode());
 
 
-                                   }
+//                                   }
                                }
 
                                }
@@ -504,30 +574,32 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
         }
 
 
-     private void setRegistrationNumber(MarriageDetailsRequest request) {
 
-         RequestInfo requestInfo = request.getRequestInfo();
-         List<MarriageApplicationDetails> marriageDetails = request.getMarriageDetails();
-         String tenantId = marriageDetails.get(0)
-                 .getTenantid();
+    //  private void setRegistrationNumber(MarriageDetailsRequest request) {
 
-         List<String> filecodes = getIds(requestInfo,
-                 tenantId,
-                 config.getGetMarriageRegisNumberName(),
-                 request.getMarriageDetails().get(0).getApplicationtype(),
-                 "REG",
-                 marriageDetails.size());
-         validateFileCodes(filecodes, marriageDetails.size());
-         Long currentTime = Long.valueOf(System.currentTimeMillis());
-         ListIterator<String> itr = filecodes.listIterator();
-         request.getMarriageDetails()
-                 .forEach(marriage -> {
-                    // if((marriage.getStatus().equals("APPROVED"))&&(marriage.getAction().equals("APPROVE"))) {
-                         marriage.setRegistrationno(itr.next());
-                         marriage.setRegistrationDate(currentTime);
-                    // }
-                 });
-     }
+    //      RequestInfo requestInfo = request.getRequestInfo();
+    //      List<MarriageApplicationDetails> marriageDetails = request.getMarriageDetails();
+    //      String tenantId = marriageDetails.get(0)
+    //              .getTenantid();
+
+    //      List<String> filecodes = getIds(requestInfo,
+    //              tenantId,
+    //              config.getGetMarriageRegisNumberName(),
+    //              request.getMarriageDetails().get(0).getApplicationtype(),
+    //              "REG",
+    //              marriageDetails.size());
+    //      validateFileCodes(filecodes, marriageDetails.size());
+    //      Long currentTime = Long.valueOf(System.currentTimeMillis());
+    //      ListIterator<String> itr = filecodes.listIterator();
+    //      request.getMarriageDetails()
+    //              .forEach(marriage -> {
+    //                 // if((marriage.getStatus().equals("APPROVED"))&&(marriage.getAction().equals("APPROVE"))) {
+    //                      marriage.setRegistrationno(itr.next());
+    //                      marriage.setRegistrationDate(currentTime);
+    //                 // }
+    //              });
+    //  }
+
 
 //     private void setFileNumbers(MarriageDetailsRequest request) {
 
@@ -561,7 +633,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
         List<String> filecodes = getIds(requestInfo,
                 tenantId,
                 config.getMarriageApplNumberIdName(),
-                request.getMarriageDetails().get(0).getModulecode(),
+                request.getMarriageDetails().get(0).getModuleCode(),
                 "APPL",
                 marriageDetails.size());
         validateFileCodes(filecodes, marriageDetails.size());

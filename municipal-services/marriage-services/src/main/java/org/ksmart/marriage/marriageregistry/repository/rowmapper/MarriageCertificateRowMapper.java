@@ -1,7 +1,6 @@
 package org.ksmart.marriage.marriageregistry.repository.rowmapper;
 
-import org.ksmart.marriage.marriageregistry.model.MarriageRegistryDetails;
-import org.ksmart.marriage.marriageregistry.model.certmodel.MarriageCertificate;
+
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;

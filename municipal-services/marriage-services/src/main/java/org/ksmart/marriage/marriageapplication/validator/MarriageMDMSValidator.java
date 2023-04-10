@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.egov.tracer.model.CustomException;
-import org.ksmart.marriage.marriageapplication.model.marriage.MarriageDetailsRequest;
+import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageDetailsRequest;
 import org.ksmart.marriage.utils.MarriageConstants;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -50,11 +50,11 @@ public class MarriageMDMSValidator {
                         request.getMarriageDetails().get(0).getGroomDetails().getMaritalstatusid() + " is invalid");
         }
 
-        if (request.getMarriageDetails().get(0).getMarriage_type() != null) {
+        if (request.getMarriageDetails().get(0).getMarriageType() != null) {
             if (!masterData.get(MarriageConstants.MARRIAGE_TYPE)
-                    .contains(request.getMarriageDetails().get(0).getMarriage_type()))
+                    .contains(request.getMarriageDetails().get(0).getMarriageType()))
                 errorMap.put("GROOM:TYPE OF MARRIAGE INVALID", "The marriage type " +
-                        request.getMarriageDetails().get(0).getMarriage_type() + " is invalid");
+                        request.getMarriageDetails().get(0).getMarriageType() + " is invalid");
         }
 
         if (request.getMarriageDetails().get(0).getPlacetype() != null) {
@@ -94,11 +94,11 @@ public class MarriageMDMSValidator {
                         request.getMarriageDetails().get(0).getTalukid() + " is invalid");
         }
         // have to change as villageId
-        if (request.getMarriageDetails().get(0).getVillage_name() != null) {
+        if (request.getMarriageDetails().get(0).getVillageName() != null) {
             if (!masterData.get(MarriageConstants.VILLAGE)
-                    .contains(request.getMarriageDetails().get(0).getVillage_name()))
+                    .contains(request.getMarriageDetails().get(0).getVillageName()))
                 errorMap.put(" VILLAGE NAME INVALID", "The village name of marriage place " +
-                        request.getMarriageDetails().get(0).getVillage_name() + " is invalid");
+                        request.getMarriageDetails().get(0).getVillageName() + " is invalid");
         }
         if (request.getMarriageDetails().get(0).getLbtype() != null) {
             if (!masterData.get(MarriageConstants.LBTYPE)
@@ -115,7 +115,7 @@ public class MarriageMDMSValidator {
 
         // ADDRESS VALIDATION
         // Anu.l.s
-        // groom PERMANENT address details//////////////////////
+        // ***********************************groom PERMANENT address detail*********************************************************//
         if (request.getMarriageDetails().get(0).getGroomAddressDetails().getPermtaddressCountry() != null) {
             if (!masterData.get(MarriageConstants.COUNTRY)
                     .contains(request.getMarriageDetails().get(0).getGroomAddressDetails().getPermtaddressCountry()))
@@ -217,9 +217,9 @@ public class MarriageMDMSValidator {
                                 + " is invalid");
         }
 
-        // GROOM PRESENT ADDRESS////////////
+        //************************************************* */ GROOM PRESENT ADDRESS***************************************************//
         if (request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentaddressCountry() != null) {
-            System.out.println("isExists");
+          //  System.out.println("isExists");
             if (!masterData.get(MarriageConstants.COUNTRY)
                     .contains(request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentaddressCountry()))
                 errorMap.put("GROOM PRESENT ADDRESS: COUNTRY NAME INVALID", "The country name of  groom " +
@@ -289,8 +289,7 @@ public class MarriageMDMSValidator {
 
         if (request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentInsideKeralaLBName() != null) {
             if (!masterData.get(MarriageConstants.TENANTS)
-                    .contains(request.getMarriageDetails().get(0).getGroomAddressDetails()
-                            .getPresentInsideKeralaLBName()))
+                    .contains(request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentInsideKeralaLBName()))
                 errorMap.put("GROOM PRESENT ADDRESS: LB NAME INVALID", "groom lbname inside kerala " +
                         request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentInsideKeralaLBName()
                         + " is invalid");
@@ -318,9 +317,8 @@ public class MarriageMDMSValidator {
                         request.getMarriageDetails().get(0).getGroomAddressDetails().getPresentInsideKeralaPostOffice()
                         + " is invalid");
         }
-        ///////////////////////////// end of groom address
-        ///////////////////////////// details/////////////////////////////////////////////
-        // bride PERMANENT address details//////////////////////
+        //****************************** */ end of groom address details***************************************//
+        //****************************** */ bride PERMANENT address details********************************************//
         if (request.getMarriageDetails().get(0).getBrideAddressDetails().getPermtaddressCountry() != null) {
             if (!masterData.get(MarriageConstants.COUNTRY)
                     .contains(request.getMarriageDetails().get(0).getBrideAddressDetails().getPermtaddressCountry()))
@@ -380,29 +378,28 @@ public class MarriageMDMSValidator {
             if (!masterData.get(MarriageConstants.VILLAGE)
                     .contains(
                             request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaAdrVillage()))
-                errorMap.put("BRIDE PERMANENT ADDRESS: VILLAGE NAME INVALID", "Tbride village inside kerala " +
+                errorMap.put("BRIDE PERMANENT ADDRESS: VILLAGE NAME INVALID", "bride village inside kerala " +
                         request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaAdrVillage()
                         + " is invalid");
         }
-
+       System.out.println("LBName"+request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaAdrLBName());
         if (request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaAdrLBName() != null) {
             if (!masterData.get(MarriageConstants.TENANTS)
-                    .contains(
-                            request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaAdrLBName()))
-                errorMap.put("BRIDE PERMANENT ADDRESS: LB NAME INVALID", "bride lbname inside kerala" +
+                    .contains(request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaAdrLBName()))
+                errorMap.put("BRIDE PERMANENT ADDRESS: LB NAME INVALID", "bride lbname inside kerala " +
                         request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaAdrLBName()
                         + " is invalid");
         }
         // //
-        // System.out.println("ousidetaluk"+request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaWardNo()
+        // System.out.println("ousidetaluk"+request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentWardNo()
         // // );
         // // if
-        // (request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaWardNo()
+        // (request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentWardNo()
         // != null) {
         // if (!masterData.get(MarriageConstants.WARD)
-        // .contains(request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaWardNo()))
-        // errorMap.put("GROOM PERMANENT ADDRESS: WARD INVALID", "The ward of bride " +
-        // request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaWardNo()
+        // .contains(request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentWardNo()))
+        // errorMap.put("BRIDE PERMANENT ADDRESS: WARD INVALID", "The ward of bride " +
+        // request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentWardNo()
         // + " is invalid");
         // }
         if (request.getMarriageDetails().get(0).getBrideAddressDetails().getPermntInKeralaAdrPostOffice() != null) {
@@ -416,7 +413,7 @@ public class MarriageMDMSValidator {
 
         // BRIDE PRESENT ADDRESS////////////
         if (request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentaddressCountry() != null) {
-            System.out.println("isExists");
+          //  System.out.println("isExists");
             if (!masterData.get(MarriageConstants.COUNTRY)
                     .contains(request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentaddressCountry()))
                 errorMap.put("BRIDE PRESENT ADDRESS: COUNTRY NAME INVALID", "The country name of  bride " +
@@ -515,8 +512,7 @@ public class MarriageMDMSValidator {
                         request.getMarriageDetails().get(0).getBrideAddressDetails().getPresentInsideKeralaPostOffice()
                         + " is invalid");
         }
-        ///////////////////////////// end of bride address
-        ///////////////////////////// details/////////////////////////////////////////////
+        //********************************* * end of bride address details************************************************//
 
         // if(request.getMarriageDetails().get(0).getTalukid() != null) {
         // if(!masterData.get(MarriageConstants.TALUK)
@@ -544,7 +540,9 @@ public class MarriageMDMSValidator {
 
     // Rakhi S ikm on 14.02.2023
     private Map<String, List<String>> getAttributeValues(Object mdmsdata) {
-        List<String> modulepaths = Arrays.asList(MarriageConstants.TENANT_JSONPATH,
+        List<String> modulepaths = Arrays.asList(
+                //MarriageConstants.CR_MDMS_TENANTS_CODE_JSONPATH,
+                MarriageConstants.TENANT_JSONPATH,
                 MarriageConstants.COMMON_MASTER_JSONPATH,
                 MarriageConstants.BND_LIST_JSONPATH);
         final Map<String, List<String>> mdmsResMap = new HashMap<>();
@@ -552,7 +550,7 @@ public class MarriageMDMSValidator {
         modulepaths.forEach(modulepath -> {
             try {
                 mdmsResMap.putAll(JsonPath.read(mdmsdata, modulepath));
-                log.error("jsonpath1" + JsonPath.read(mdmsdata, modulepath));
+               // log.error("jsonpath1" + JsonPath.read(mdmsdata, modulepath));
             } catch (Exception e) {
                 log.error("Error while fetching MDMS data", e);
                 throw new CustomException(MarriageConstants.INVALID_TENANT_ID_MDMS_KEY,

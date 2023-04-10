@@ -1,6 +1,6 @@
 package org.ksmart.marriage.marriageapplication.repository.rowmapper;
 
-import org.ksmart.marriage.marriageapplication.model.MarriageApplicationDetails;
+import org.ksmart.marriage.marriageapplication.web.model.MarriageApplicationDetails;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
@@ -29,18 +29,18 @@ public class MarriageApplicationRowMapper implements ResultSetExtractor<List<Mar
                     .marriageHouseNoAndNameMl(rs.getString("MD_housenameno_ml"))
                     .placenameEn(rs.getString("MD_placename_en"))
                     .placenameMl(rs.getString("MD_placename_ml"))
-                    .street_name_en(rs.getString("MD_street_name_en"))
-                    .street_name_ml(rs.getString("MD_street_name_ml"))
-                    .ward_code(rs.getString("MD_ward_code"))
+                    .streetNameEn(rs.getString("MD_street_name_en"))
+                    .streetNameMl(rs.getString("MD_street_name_ml"))
+                    .wardCode(rs.getString("MD_ward_code"))
                     .talukid(rs.getString("MD_talukid"))
-                    .village_name(rs.getString("MD_village_name"))
-                    .marriage_type(rs.getString("MD_marriage_type"))
+                    .villageName(rs.getString("MD_village_name"))
+                    .marriageType(rs.getString("MD_marriage_type"))
                     .landmark(rs.getString("MD_landmark"))
-                    .locality_en(rs.getString("MD_locality_en"))
-                    .locality_ml(rs.getString("MD_locality_ml"))
+                    .localityEn(rs.getString("MD_locality_en"))
+                    .localityMl(rs.getString("MD_locality_ml"))
                     .applicationNumber(rs.getString("MD_applicationnumber"))
                     .registrationDate(rs.getLong("MD_registration_date"))
-                    .registrationno(rs.getString("MD_registrationno"))
+                    .registrationNo(rs.getString("MD_registrationno"))
                     //.status(rs.getString("MD_registration_status"))
                     .brideDetails(getBrideDetails(rs))
                     .groomDetails(getGroomDetails(rs))
@@ -48,7 +48,6 @@ public class MarriageApplicationRowMapper implements ResultSetExtractor<List<Mar
                     .brideAddressDetails(getBrideAddressDetails(rs))
                     .groomAddressDetails(getGroomAddressDetailsRowMapper(rs))
                     .auditDetails(getAuditDetails(rs))
-
                     .build());
         }
 
