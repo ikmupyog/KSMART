@@ -1,8 +1,6 @@
-import moment from "moment";
-
-export const getFilteredMarriageDOMData = (selectedData, inclusionData) => {
+export const getFilteredMarriagePlaceTypeData = (selectedData, inclusionData) => {
   let filteredDocuments = getFilteredDocuments(selectedData,inclusionData);
-  const computedValue = computeInitialValue(selectedData?.marriageDOM);
+  const computedValue = computeInitialValue(selectedData?.marriagePlacetype);
   let selectedDomObj = {
     initialValue: computedValue,
     curValue: computedValue,
@@ -15,9 +13,10 @@ export const getFilteredMarriageDOMData = (selectedData, inclusionData) => {
 };
 
 //TODO need validation to check dob is null
-const computeInitialValue = (dom) => {
-  const initialValue = dom && moment(dom).format("DD/MM/YYYY");
+const computeInitialValue = (place) => {
+  const initialValue = place;
   return initialValue;
+//   return {firstName:"sdsa",middleNmae:"dsasd",lastNma:'"d'};
 };
 
 const getFilteredDocuments = (selectedData,inclusionData) => {
