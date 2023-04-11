@@ -126,9 +126,9 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
               setFeilds([
                 {
                   id: unit.id,
-                  businessCategory: category,
-                  businessType: bustype,
-                  businessSubtype: bussubtyp,active: true, unit: null, uom: null
+                  businessCategory: category?.code ? category.code : null,
+                  businessType: bustype?.code ? bustype.code : null,
+                  businessSubtype: bussubtyp?.code ? bussubtyp.code : null,active: true, unit: null, uom: null
                 }
               ]);
               res.push(bussubtyp);
@@ -136,7 +136,6 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
             
             setFillFields([
               {
-                id: null,
                 businessCategory: category,
                 businessType: bustype,
                 businessSubtype: res, unit: null, uom: null
@@ -170,7 +169,7 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
 
   const selectBusinessCategory = (i, value) => {
     let units = [...fields];
-    units[i].businessCategory = value;
+    units[i].businessCategory =  value?.code ? value.code : null;
     selectBusinessType(i, null);
     selectBusinessSubType(i, null);
     setFeilds(units);
@@ -178,7 +177,7 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
   const selectBusinessType = (i, value) => {
     let units = [...fields];
     let fillUnits = [...fillFields];
-    units[i].businessType = value;
+    units[i].businessType = value?.code ? value.code : null;
     fillUnits[i].businessType = value;
     selectBusinessSubType(i, null);
     fillUnits[i].businessSubtype = [];
@@ -188,7 +187,7 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
   }
   const selectBusinessSubType = (i, value) => {
     let units = [...fields];
-    units[i].businessSubtype = value;
+    units[i].businessSubtype =  value?.code ? value.code : null;
     setFeilds(units);
     Digit.SessionStorage.set("activityedit", true);
   }
@@ -241,30 +240,76 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
     }
   });
   const selectCategorysubtype = (e) => {
+      let subUnitSelect = [];
+      let tempUnitFill = [];
+      e && e?.map((ob) => {
+        subUnitSelect.push(ob?.[1]);   
+      });
+
+      let tradeUnitJSON = [...fields];
+      let tradeUnitFill = [...fillFields];
+      const businessSubtype = Array.from(
+        new Set(tradeUnitFill.map(type => type.businessSubtype))
+      ); 
+
+      for(let i=0; i<tradeUnitFill.length; i++){
+        subUnitSelect.length > 0 ?
+            subUnitSelect.map(subType => {
+                tempUnitFill.push(subType)
+            })
+        : tempUnitFill.push([]);
+        tradeUnitFill[i].businessSubtype = tempUnitFill;
+      }
+      let unitLength = tradeUnitJSON.length;
+      for(let i = 0; i < unitLength; i++){
+        subUnitSelect.length > 0 ?
+          subUnitSelect.map((selUnit,index) => {
+           tradeUnitJSON[index] =  (selUnit.code === tradeUnitJSON[i].businessSubtype) ? tradeUnitJSON[i]
+            : ({
+                "id": null,
+                "businessCategory": tradeUnitJSON[i].businessCategory,
+                "businessType": tradeUnitJSON[i].businessType, 
+                "businessSubtype": selUnit.code,
+                "active":true,
+                "unit":null,"uom":null
+              })
+          })
+        : tradeUnitJSON[i].businessSubtype = null;
+      }
+
+      for(let i=0; i<tradeUnitJSON.length; i++){
+        subUnitSelect.length > 0 ? ((subUnitSelect.filter(subUnit => subUnit?.code.includes(tradeUnitJSON[i]?.businessSubtype))).length === 0) ? delete tradeUnitJSON[i] : "" :"" ;
+      }
+
+      setFillFields(tradeUnitFill);
+      setFeilds(tradeUnitJSON);
+      Digit.SessionStorage.set("activityedit", true);
+      setIsEditSubType(true);
+  }  
+  const selectCategorysubtype1 = (e) => {
     let subUnits = [];
     let att = [];
     e && e?.map((ob) => {
       subUnits.push(ob?.[1]);   
     });
-    
-    let units = [...fields];
+
+    let unitsfields = [...fields];
     let tradeUnits = [];
     let tempval=[]
-    for (let i=0;i<units.length;i++){
-      units[i].businessSubtype !== null ? tempval.push(units[i].businessSubtype) : "" ;
+    for (let i=0;i<unitsfields.length;i++){
+      unitsfields[i].businessSubtype !== null ? tempval.push(unitsfields[i].businessSubtype) : "" ;
     }
 
     if(subUnits.length > 0){
       subUnits.map(subUnit => {
-        tempval.length > 0 ?
           tempval.some(code => code.code === subUnit.code) ? 
-            units.map(unit =>{
-              if(subUnit.code === unit?.businessSubtype?.code){
+          unitsfields.map(unitfield =>{
+              if(subUnit.code === unitfield?.businessSubtype?.code){
                 tradeUnits.push({
-                  "id": unit.id,
-                  "businessCategory": unit.businessCategory.code,
-                  "businessType": unit.businessType.code, 
-                  "businessSubtype": unit.businessSubtype.code,
+                  "id": unitfield.id,
+                  "businessCategory": unitfield.businessCategory.code,
+                  "businessType": unitfield.businessType.code, 
+                  "businessSubtype": unitfield.businessSubtype.code,
                   "active":true,
                   "unit":null,"uom":null
                 });
@@ -273,7 +318,7 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
             : 
             tradeUnits.push({
               "id": null,
-              "businessCategory": units[0].businessCategory.code,
+              "businessCategory": unitsfields[0].businessCategory.code,
               "businessType": subUnit.code.split(".")[0] + "." + subUnit.code.split(".")[1], 
               "businessSubtype": subUnit.code,
               "active":true,
@@ -288,15 +333,6 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
           //       }
           //     }
           //   }) 
-       :
-        tradeUnits.push({
-          "id": null,
-          "businessCategory": units[0].businessCategory.code,
-          "businessType": subUnit.code.split(".")[0] + "." + subUnit.code.split(".")[1], 
-          "businessSubtype": subUnit.code,
-          "active":true,
-          "unit":null,"uom":null
-        });
       });
       if(tradeUnits[0]?.businessCategory){
         Digit.SessionStorage.set("activityedit", true);
@@ -305,15 +341,15 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
       }
     }
     else{
-      units[0].businessSubtype = [];
-      setFillFields(units);
+      unitsfields[0].businessSubtype = [];
+      setFillFields(unitsfields);
       Digit.SessionStorage.set("activityedit", true);
       setIsEditSubType(true);
-      units.map(unit =>{
+      unitsfields.map(unitfield =>{
         tradeUnits.push({
-          "id": unit.id,
-          "businessCategory": unit.businessCategory.code,
-          "businessType": unit.businessType.code, 
+          "id": unitfield.id,
+          "businessCategory": unitfield.businessCategory.code,
+          "businessType": unitfield.businessType.code, 
           "businessSubtype": "",
           "active":true,
           "unit":null,"uom":null
@@ -322,18 +358,20 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
       setFeilds(tradeUnits);
     }
     let tempvalSub=[];
-    for (let i=0;i<units.length;i++){
+    for (let i=0;i<unitsfields.length;i++){
       if(subUnits.length > 0){
         subUnits.map(subUnit => {
-          if(units[i].businessType.code === subUnit.code.split(".")[0] + "." + subUnit.code.split(".")[1]){
+          if(unitsfields[i].businessType.code === subUnit.code.split(".")[0] + "." + subUnit.code.split(".")[1]){
             tempvalSub.push(subUnit);
           }
         });
       }
-      units[i].businessSubtype = tempvalSub;
+      unitsfields[i].businessSubtype = tempvalSub;
     }
-    setFillFields(units);
+    setFillFields(unitsfields);
   };
+
+
 
   const onRemoved = (index, key) => {
     let temp =[];
@@ -348,10 +386,7 @@ const TLCorrectionActivity = ({ t, config, formData, onEditSelect, formDataEdit 
         }
       });
 
-      if(temp.length===0)
-      unitfill[i].businessSubtype = [];  //{"i18nKey":"0","code":"0"}
-      else
-      unitfill[i].businessSubtype = temp;
+      unitfill[i].businessSubtype = temp.length===0 ?  [] : temp;
     }
   //  if(flag === true){
       setFillFields(unitfill);
