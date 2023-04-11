@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, Loader, Toast } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/CRTimeline";
+import Timeline from "../../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 // import { sleep } from "react-query/types/core/utils";
 
-const MarriageAddressPermanentOutsideKerala = ({
+const GroomAddressPermanentOutsideKerala = ({
   config,
   onSelect,
   userType,
@@ -41,6 +41,7 @@ const MarriageAddressPermanentOutsideKerala = ({
   isEditDeath = false,
   isEditStillBirth = false,
   isEditAdoption,
+  isEditBirthNAC = false,
   // isInitialRender, setIsInitialRender
 }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -79,16 +80,19 @@ const MarriageAddressPermanentOutsideKerala = ({
   console.log(value);
   Taluk &&
     Taluk["common-masters"] &&
+    Taluk["common-masters"].Taluk &&
     Taluk["common-masters"].Taluk.map((ob) => {
       cmbTaluk.push(ob);
     });
   Village &&
     Village["common-masters"] &&
+    Village["common-masters"].Village &&
     Village["common-masters"].Village.map((ob) => {
       cmbVillage.push(ob);
     });
   District &&
     District["common-masters"] &&
+    District["common-masters"].District &&
     District["common-masters"].District.map((ob) => {
       cmbDistrict.push(ob);
     });
@@ -579,4 +583,4 @@ const MarriageAddressPermanentOutsideKerala = ({
     </React.Fragment>
   );
 };
-export default MarriageAddressPermanentOutsideKerala;
+export default GroomAddressPermanentOutsideKerala;

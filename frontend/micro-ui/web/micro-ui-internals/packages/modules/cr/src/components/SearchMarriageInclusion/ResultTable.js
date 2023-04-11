@@ -9,42 +9,62 @@ const ResultTable = ({
                          handleSubmit,
                          t,
                          onSubmit,
-                         goToLink
+                         goToLink,
+                         searchType
                      }) => {
     const GetCell = (value) => <span className="cell-text">{value}</span>;
 
     const columns = useMemo(
-        () => [
-            {
-                Header: t("CR_SEARCH_APP_NO_LABEL"),
-                accessor: "marriageApplicationNo",
-                disableSortBy: true,
-                Cell: ({ row }) => {
-                    return (
-                        <div>
+        () => {
+            const cols = [
+                {
+                    Header: t("CR_SEARCH_APP_NO_LABEL"),
+                    accessor: "marriageRecordNo",
+                    disableSortBy: true,
+                    Cell: ({ row }) => {
+                        return (
+                            <div>
                             <span className="link" onClick={() => goToLink(row.original)}>
-                                {row.original.applicationNumber}
+                                {searchType == 'application' ? row.original.applicationNumber : row.original.registrationno}
                             </span>
-                        </div>
-                    );
+                            </div>
+                        );
+                    },
                 },
-            },
-            {
-                Header: t("CR_DATE_OF_MARRIAGE"),
-                disableSortBy: true,
-                accessor: (row) => GetCell(row.marriageDOM ? convertEpochToDateDMY(row.marriageDOM) : ""),
-            },
-            {
-                Header: t("CR_NAME_OF_HUSBAND"),
-                disableSortBy: true,
-                accessor: (row) => GetCell(`${row.GroomDetails.groomFirstnameEn || ""} ${row.GroomDetails.groomMiddlenameEn || ""} ${row.GroomDetails.groomLastnameEn || ""}` || "-"),
-            },
-            {
-                Header: t("TL_NAME_OF_WIFE"),
-                disableSortBy: true,
-                accessor: (row) => GetCell(`${row.BrideDetails.brideFirstnameEn || ""} ${row.BrideDetails.brideMiddlenameEn || ""} ${row.BrideDetails.brideLastnameEn || ""}` || "-"),
+                {
+                    Header: t("CR_DATE_OF_MARRIAGE"),
+                    disableSortBy: true,
+                    accessor: (row) => GetCell(row.marriageDOM ? convertEpochToDateDMY(row.marriageDOM) : ""),
+                },
+                {
+                    Header: t("CR_NAME_OF_HUSBAND"),
+                    disableSortBy: true,
+                    accessor: (row) => GetCell(`${row.GroomDetails.groomFirstnameEn || ""} ${row.GroomDetails.groomMiddlenameEn || ""} ${row.GroomDetails.groomLastnameEn || ""}` || "-"),
+                },
+                {
+                    Header: t("TL_NAME_OF_WIFE"),
+                    disableSortBy: true,
+                    accessor: (row) => GetCell(`${row.BrideDetails.brideFirstnameEn || ""} ${row.BrideDetails.brideMiddlenameEn || ""} ${row.BrideDetails.brideLastnameEn || ""}` || "-"),
+                }
+            ];
+            if (searchType == 'certificate') {
+                cols.push({
+                    Header: t("ACTION"),
+                    accessor: "action",
+                    disableSortBy: true,
+                    Cell: ({ row }) => {
+                        return (
+                            <div>
+                            <span className="link" onClick={() => goToLink(row.original)}>
+                                Download
+                            </span>
+                            </div>
+                        );
+                    },
+                })
             }
-        ],
+            return cols;
+        },
         []
     );
 

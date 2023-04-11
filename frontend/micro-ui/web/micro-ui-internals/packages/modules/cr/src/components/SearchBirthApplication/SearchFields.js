@@ -37,8 +37,8 @@ const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
   return (
     <>
       <SearchField>
-        <label>{t("REGISTRATION_NUMBER")}</label>
-        <TextInput name="applicationNumber" inputRef={register({})} />
+        <label>{t("CR_SEARCH_ACK_NO")}</label>
+        <TextInput name="applicationNumber" placeholder={`${t("CR_SEARCH_ACK_NO")}`} inputRef={register({})} />
       </SearchField>
       <SearchField>
         <label>
@@ -149,11 +149,11 @@ const SearchFields = ({ register, control, reset, tenantId, previousPage }) => {
           onClick={() => {
             reset({
               id: "",
-              fullName:"",
-              dateofbirth:"",
-              gender:"",
-              mother_fullname:"",
-              hospitalid:"",
+              // fullName:"",
+              // dateofbirth:"",
+              // gender:"",
+              // mother_fullname:"",
+              // hospitalid:"",
             });
             previousPage();
           }}

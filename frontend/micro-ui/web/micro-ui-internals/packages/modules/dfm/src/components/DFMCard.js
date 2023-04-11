@@ -28,36 +28,17 @@ const DFMCard = () => {
 
 
     let links = [
-        // {
-        //     count: isLoading ? "-" : inboxData?.totalCount,
-        //     label: t("ES_COMMON_INBOX"),
-        //     link: `/digit-ui/employee/tl/inbox`,
-        // },
-        // {
-        //     label: t("TL_NEW_APPLICATION"),
-        //     link: "/digit-ui/employee/tl/new-application",
-        //     role: "TL_CEMP"
-        // },
-        // {
-        //     label: t("TL_SEARCH_APPLICATIONS"),
-        //     link: `/digit-ui/employee/tl/search/application`
-        // },
-        // {
-        //     label: t("TL_SEARCH_LICENSE"),
-        //     link: `/digit-ui/employee/tl/search/license`,
-        //     role: "TL_CEMP"
-        // }
-         {
+        {
             count: isLoading ? "-" : inboxData?.totalCount,
             label: t("ES_COMMON_INBOX"),
             link: `/digit-ui/employee/tl/inbox`,
         },
         {
-            label: t("New Application"),
+            label: t("NEW_APPLICATION"),
             link: `/digit-ui/employee/dfm/file-flow`,
         },
         {
-            label: t("Search Application"),
+            label: t("CR_SEARCH_APPLICATIONS"),
             link: `/digit-ui/employee/dfm/search/application`,
         },
     ]
@@ -66,7 +47,8 @@ const DFMCard = () => {
 
     const propsForModuleCard = {
         Icon: <DocumentIconSolid />,
-        moduleName: t("File Management"),
+        moduleName: 'File Management',
+        moduleHeader: t('FILE_MANAGEMENT'),
         kpis: [
             {
                 count: isLoading ? "-" : inboxData?.totalCount,

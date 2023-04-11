@@ -14,20 +14,29 @@ const CreateStillBirthRegistration =({ parentUrl }) => {
   const { pathname } = useLocation();
   const history = useHistory();
   const queryClient = useQueryClient();
-  console.log(sessionStorage.getItem("CR_STILLBIRTH_EDIT_FLAG"));
+  //console.log(sessionStorage.getItem("CR_BIRTH_EDIT_FLAG"));
+  // const [isEditBirth, setIsEditBirth] = useState(Object.keys(Digit.Hooks.useSessionStorage("CR_BIRTH_EDIT_FLAG", {})[0]).length > 0 ? true : false);
   const [isEditStillBirth, setIsEditStillBirth] = useState(sessionStorage.getItem("CR_STILLBIRTH_EDIT_FLAG")? true : false);
-  const [params, setParams, clearParams] = isEditStillBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_STILLBIRTH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_STILLBIRTH_REG", {});
-console.log(isEditStillBirth);
+ const [params, setParams, clearParams] = isEditStillBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_STILLBIRTH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_STILLBIRTH_REG", {});
+//console.log(isEditStillBirth);
   // console.log("params"+JSON.stringify(params));
   const stateId = Digit.ULBService.getStateId();
   // let { data: newConfig, isLoading } = Digit.Hooks.tl.useMDMS.getFormConfig(stateId, {});
   let config = [];
   let { data: newConfig, isLoading } = true;
+
+  // newConfig = newConfigCR;
+  // newConfig?.forEach((obj) => {
+  //   config = config.concat(obj.body.filter((a) => !a.hideInCitizen));
+  // });
+  // config.indexRoute = "stillbirth-child-details";
+
   newConfig = newConfigCR;
-  newConfig?.forEach((obj) => {
-    config = config.concat(obj.body.filter((a) => !a.hideInCitizen));
-  });
+  const stillbirthConfig = newConfig.find((item)=> item.head === "StillBirth Routing");
+  config = config.concat(stillbirthConfig.body.filter((a) => !a.hideInCitizen));
   config.indexRoute = "stillbirth-child-details";
+
+ 
   const goNext = (skipStep, index, isAddMultiple, key, isPTCreateSkip) => {
     let currentPath = pathname.split("/").pop(),
       nextPage;
@@ -60,9 +69,15 @@ console.log(isEditStillBirth);
     history.push(`${match.path}/acknowledgement`);
   };
 
-  const onSuccess = () => {
-    sessionStorage.removeItem("CurrentFinancialYear");
+  const onSuccess = (data) => {
+    // console.log(data);
+    // console.log(data?.ChildDetails[0].applicationNumber);
+    if(isEditStillBirth === false){
+      clearParams();
+    }    
+    // sessionStorage.removeItem("CurrentFinancialYear");
     queryClient.invalidateQueries("CR_CREATE_STILLBIRTH_REG");
+
   };
   const handleSkip = () => { };
   const handleMultiple = () => { };
