@@ -13,9 +13,9 @@ import DeathOutsideJurisdiction from "./DeathOutsideJurisdiction ";
 // import { STATE_CODE } from "../../config/constants";
 
 const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  = false }) => {
- // console.log(formData);
+ console.log(formData);
   // console.log(isEditDeath);
-  console.log(JSON.stringify(formData));  
+  // console.log(JSON.stringify(formData));  
   sessionStorage.removeItem("applicationNumber");
   const [isEditDeathPageComponents, setIsEditDeathPageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
@@ -48,11 +48,11 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
     if (dateEpoch) {
       const dateFromApi = new Date(dateEpoch); 
       let month = dateFromApi.getMonth() + 1;
-      console.log(month);
+      //console.log(month);
       let day = dateFromApi.getDate();
-      console.log(day);
+      //console.log(day);
       let year = dateFromApi.getFullYear()
-      console.log(year );;
+      //console.log(year );;
       month = (month > 9 ? "" : "0") + month;
       day = (day > 9 ? "" : "0") + day;
       return `${year}-${month}-${day}`;
@@ -141,7 +141,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
       ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath)
       : formData?.InformationDeath?.DateOfDeath
   );
-console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
+// console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
   const [FromDate, setFromDate] = useState(
     isEditDeath &&
       isEditDeathPageComponents === false &&
@@ -1058,7 +1058,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
       setsexError(false);
     }
 
-    if(DeceasedAadharNumber.trim() == null || DeceasedAadharNumber.trim() == '' || DeceasedAadharNumber.trim() == undefined){
+    if(DeceasedAadharNumber === null || DeceasedAadharNumber.trim() === '' || DeceasedAadharNumber.trim() === undefined){
       setDeceasedAadharNumber("");
     } else if (DeceasedAadharNumber != null && DeceasedAadharNumber != "") {
       let adharLength = DeceasedAadharNumber;

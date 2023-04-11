@@ -45,19 +45,23 @@ const Hospital = ({
   }
   
   useEffect(() => {
-    if (isInitialRender) {
+   
+    // if (isInitialRender) {
       if (formData?.InformationDeath?.DeathPlaceType) {
-        selectHospitalNameMl(HospitalNameMl);
+        // selectHospitalNameMl(HospitalNameMl);
+        cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.InformationDeath?.DeathPlaceType.code);
+        selectHospitalNameMl(cmbhospitalMl[0]);
         setIsInitialRender(false);
       } else {
         if (DeathPlaceType != null) {
-        cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.hospitalName === DeathPlaceType.hospitalName);
+          console.log(DeathPlaceType);
+        cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === DeathPlaceType.code);
         selectHospitalNameMl(cmbhospitalMl[0]);
         setIsInitialRender(false);
       }
      }
-    }
-  }, [cmbhospitalMl, isInitialRender]);
+    // }
+  }, [cmbhospitalMl]);
 
   const onSkip = () => onSelect();
   function setselectDeathPlaceType(value) {
