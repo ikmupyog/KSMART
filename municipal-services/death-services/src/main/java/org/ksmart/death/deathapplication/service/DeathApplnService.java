@@ -122,6 +122,7 @@ public class DeathApplnService {
 
     //Jasmine Search 06.02.2023
     public List<DeathDtl> search(DeathSearchCriteria criteria, RequestInfo requestInfo) {
+          criteria.setFuncionUID(DeathConstants.FUN_MODULE_NEWAPPLN);
           return repository.getDeathApplication(criteria, requestInfo);
      }
 
@@ -266,11 +267,13 @@ public class DeathApplnService {
      
     //Death NAC Search by Rakhi S ikm on 08.04.2023
      public List<DeathNACDtls> searchNAC(DeathSearchCriteria criteria, RequestInfo requestInfo) {
+          criteria.setFuncionUID(DeathConstants.FUN_MODULE_NAC);
           return repository.getDeathNACDetails(criteria, requestInfo);
      }
 
       //Death Abandoned Search by Rakhi S ikm on 08.04.2023
       public List<DeathAbandonedDtls> searchAbandoned(DeathSearchCriteria criteria, RequestInfo requestInfo) {
+          criteria.setFuncionUID(DeathConstants.FUN_MODULE_ABANDONED);
           return repository.getDeathAbandoned(criteria, requestInfo);
      }
 

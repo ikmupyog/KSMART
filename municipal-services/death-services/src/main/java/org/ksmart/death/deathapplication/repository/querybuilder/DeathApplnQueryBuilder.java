@@ -268,6 +268,7 @@ StringBuilder orderBy = new StringBuilder();
                         addFilter("dt.death_place_ward_id", criteria.getDeathPlaceWardId(), query, preparedStmtValues);
                         addFilter("dt.death_place_inst_type", criteria.getHospitalName(), query, preparedStmtValues);
                         addFilter("dt.created_by", criteria.getCreatedBy(), query, preparedStmtValues);
+                        addFilter("dt.funcion_uid", criteria.getFuncionUID(), query, preparedStmtValues);
                         addDateRangeFilter("dt.application_date",
                         criteria.getFromDate(),
                         criteria.getToDate(),

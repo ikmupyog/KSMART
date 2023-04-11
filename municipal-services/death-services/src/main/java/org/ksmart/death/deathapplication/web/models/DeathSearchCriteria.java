@@ -153,4 +153,7 @@ public class DeathSearchCriteria {
 //RAkhi S on 18.03.2023
     @JsonProperty("createdBy")
     private String  createdBy ;
+
+    @JsonProperty("funcionUID")
+    private String funcionUID;
 }

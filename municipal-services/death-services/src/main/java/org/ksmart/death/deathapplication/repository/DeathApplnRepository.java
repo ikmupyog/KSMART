@@ -259,6 +259,11 @@ public class DeathApplnRepository {
                 DeathBasicInfo deathBasicDtls =deathDtl.getDeathBasicInfo();                
                 DeathBasicInfo dec = encryptionDecryptionUtil.decryptObject(deathBasicDtls, "BndDetail", DeathBasicInfo.class, requestInfo);
                 deathBasicDtls.setDeceasedAadharNumber(dec.getDeceasedAadharNumber());
+
+                deathBasicDtls.setFatherAadharNo(dec.getFatherAadharNo());
+                deathBasicDtls.setMotherAadharNo(dec.getMotherAadharNo());
+                deathBasicDtls.setSpouseAadhaar(dec.getSpouseAadhaar());
+                
                 DeathFamilyInfo deathFamilyDtls =deathDtl.getDeathFamilyInfo() ;
                 DeathFamilyInfo deathFamilyDcr = encryptionDecryptionUtil.decryptObject(deathFamilyDtls, "BndDetail", DeathFamilyInfo.class,requestInfo);
                 deathFamilyDtls.setFatherAadharNo(deathFamilyDcr.getFatherAadharNo());
@@ -313,8 +318,8 @@ public class DeathApplnRepository {
                 
                 DeathNACApplicantDtls deathInformant =deathDtl.getDeathApplicantDtls() ;
                 if (deathInformant!=null){
-                    DeathNACApplicantDtls deathInformantEnc = encryptionDecryptionUtil.decryptObject(deathInformant, "BndDetail", DeathNACApplicantDtls.class,requestInfo);
-                    deathInformant.setApplicantAadhaarNo(deathInformantEnc.getApplicantAadhaarNo());
+                    DeathNACApplicantDtls deathInformantDecrypt = encryptionDecryptionUtil.decryptObject(deathInformant, "BndDetail", DeathNACApplicantDtls.class,requestInfo);
+                    deathInformant.setApplicantAadhaarNo(deathInformantDecrypt.getApplicantAadhaarNo());
                 }            
 
                 if(DeathConstants.DEATH_PLACE_HOSPITAL.toString().equals(deathDtl.getDeathBasicInfo().getDeathPlace())){

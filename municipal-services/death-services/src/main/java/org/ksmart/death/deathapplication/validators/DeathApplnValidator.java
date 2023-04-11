@@ -1041,7 +1041,7 @@ public void validateNACUpdate(DeathNACRequest request, List<DeathNACDtls> search
     }
     if (dateOfDeath == null) {
         throw new CustomException(DEATH_DETAILS_INVALID_CREATE.getCode(),
-                "Date of birth is required for create request.");
+                "Date of death is required for create request.");
     } else {
         validateDoD(dateOfDeath, deathPlace, wfCode,applicationType,mdmsdata, wfc);
     }

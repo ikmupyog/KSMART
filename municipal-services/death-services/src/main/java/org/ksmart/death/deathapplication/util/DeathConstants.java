@@ -128,7 +128,9 @@ public class DeathConstants {
 
     public static final String REG_UNIT_CAPTION = "RG";
 
-    public static final String FUN_MODULE_NEWAPPLN= "CRDRNR";
+    public static final String FUN_MODULE_NEWAPPLN = "CRDRNR";
+    public static final String FUN_MODULE_NAC = "CRDRNA";
+    public static final String FUN_MODULE_ABANDONED = "CRDRAB";
 
     // public static final String FUN_MODULE_CORRECTION = "BFIFLN";
 
