@@ -18,7 +18,8 @@ public interface WitnessDetailsRowMapper {
                 .witness1AddresSEn(rs.getString("WD1_address_en"))
                 .witness1AddressMl(rs.getString("WD1_address_ml"))
                 .witness1Mobile(rs.getLong("WD1_mobile"))
-                .witness1Esigned(Boolean.valueOf(rs.getString("WD1_is_esigned")))
+                .witness1Esigned(rs.getBoolean("WD1_is_esigned"))
+                .serialNo1(rs.getInt("WD1_serial_no"))
                 .witnessId2(rs.getString("WD2_id"))
                 .witness2AadharNo(rs.getString("WD2_aadharno"))
                 .witness2NameEn(rs.getString("WD2_name_en"))
@@ -27,7 +28,8 @@ public interface WitnessDetailsRowMapper {
                 .witness2AddresSEn(rs.getString("WD2_address_en"))
                 .witness2AddressMl(rs.getString("WD2_address_ml"))
                 .witness2Mobile(rs.getLong("WD2_mobile"))
-                .witness2Esigned(Boolean.valueOf(rs.getString("WD2_is_esigned")))
+                .witness2Esigned(rs.getBoolean("WD2_is_esigned"))
+                .serialNo2(rs.getInt("WD2_serial_no"))
                 .build();
     }
 

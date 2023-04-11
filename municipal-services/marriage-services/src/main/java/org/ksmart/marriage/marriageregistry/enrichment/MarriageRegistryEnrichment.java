@@ -245,8 +245,7 @@ private void setGroomPermanentAddress(MarriageRegistryRequest request) {
                                 marriage.getGroomAddressDetails().setHouseNameNoMlPermanent(marriage.getGroomAddressDetails().getPermntInKeralaAdrHouseNameMl());
                                 marriage.getGroomAddressDetails().setPinNoPermanent(marriage.getGroomAddressDetails().getPermntInKeralaAdrPincode());
                                 marriage.getGroomAddressDetails().setVillageNamePermanent(marriage.getGroomAddressDetails().getPermntInKeralaAdrPostOffice());
-                            }
-                            else {
+                            } else {
                                 marriage.getGroomAddressDetails().setCountryIdPermanent(marriage.getGroomAddressDetails().getPermtaddressCountry());
 
                                 marriage.getGroomAddressDetails().setStateIdPermanent(marriage.getGroomAddressDetails().getPermtaddressStateName());
@@ -271,12 +270,12 @@ private void setGroomPermanentAddress(MarriageRegistryRequest request) {
                                 marriage.getGroomAddressDetails().setPinNoPermanent(marriage.getGroomAddressDetails().getPermntOutsideKeralaPincode());
 
                             }
-
+                        }
 
                         }
                         else {
 //                            if (marriage.getGroomAddressDetails().getPermtaddressCountry() != COUNTRY_CODE) {
-                                marriage.getGroomAddressDetails().setCountryIdPresent(marriage.getGroomAddressDetails().getPermtaddressCountry());
+                                marriage.getGroomAddressDetails().setCountryIdPermanent(marriage.getGroomAddressDetails().getPermtaddressCountry());
                                 marriage.getGroomAddressDetails().setVillageNamePermanent(marriage.getGroomAddressDetails().getPermntOutsideIndiaVillage());
                                 marriage.getGroomAddressDetails().setTownOrVillagePermanent(marriage.getGroomAddressDetails().getPermntOutsideIndiaCityTown());
 
@@ -295,7 +294,7 @@ private void setGroomPermanentAddress(MarriageRegistryRequest request) {
 //                            }
                         }
 
-                    }
+
 
                 }
 
@@ -464,17 +463,17 @@ private void setBridePermanentAddress(MarriageRegistryRequest request) {
 
                                    marriage.getBrideAddressDetails().setVillageNamePermanent(marriage.getBrideAddressDetails().getPermntOutsideKeralaVillage());
 
-                                    marriage.getBrideAddressDetails().setPermntOthrTalukName(marriage.getBrideAddressDetails().getPermntOutsideKeralaTaluk());
+                                   marriage.getBrideAddressDetails().setPermntOthrTalukName(marriage.getBrideAddressDetails().getPermntOutsideKeralaTaluk());
                                    marriage.getBrideAddressDetails().setPermntOthPostOfficeEn(marriage.getBrideAddressDetails().getPermntOutsideKeralaPostOfficeEn());
 
 
                                    marriage.getBrideAddressDetails().setPinNoPermanent(marriage.getBrideAddressDetails().getPermntOutsideKeralaPincode());
-
+                               }
                                }
                             }
                            else {
 //                               if (marriage.getBrideAddressDetails().getPermtaddressCountry() != COUNTRY_CODE) {
-                                   marriage.getBrideAddressDetails().setCountryIdPresent(marriage.getBrideAddressDetails().getPermtaddressCountry());
+                                   marriage.getBrideAddressDetails().setCountryIdPermanent(marriage.getBrideAddressDetails().getPermtaddressCountry());
                                    marriage.getBrideAddressDetails().setVillageNamePermanent(marriage.getBrideAddressDetails().getPermntOutsideIndiaVillage());
                                    marriage.getBrideAddressDetails().setTownOrVillagePermanent(marriage.getBrideAddressDetails().getPermntOutsideIndiaCityTown());
 
@@ -488,7 +487,7 @@ private void setBridePermanentAddress(MarriageRegistryRequest request) {
                                    marriage.getBrideAddressDetails().setPermntOthrIndiaprovinceMl(marriage.getBrideAddressDetails().getPermntOutSideIndiaProvinceMl());
 //                               }
                            }
-                        }
+
                    }
             });
     }

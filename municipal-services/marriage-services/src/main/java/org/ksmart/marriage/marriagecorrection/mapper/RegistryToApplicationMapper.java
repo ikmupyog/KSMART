@@ -27,7 +27,7 @@ public class RegistryToApplicationMapper {
         MarriageRegistryDetails marriageRegistryDetails=registry.get(0);
 
         marriageApplicationDetails.setDateofmarriage(marriageRegistryDetails.getDateofmarriage());
-        marriageApplicationDetails.setDateofreporting(marriageRegistryDetails.getDateofreporting());
+        //marriageApplicationDetails.setDateofreporting(marriageRegistryDetails.getDateofreporting());
         marriageApplicationDetails.setDistrictid(marriageRegistryDetails.getDistrictid());
         marriageApplicationDetails.setLbtype(marriageRegistryDetails.getLbtype());
         marriageApplicationDetails.setTenantid(marriageRegistryDetails.getTenantid());
@@ -36,6 +36,8 @@ public class RegistryToApplicationMapper {
         marriageApplicationDetails.setPlaceid(marriageRegistryDetails.getPlaceid());
         marriageApplicationDetails.setPlacenameEn(marriageRegistryDetails.getPlacenameEn());
         marriageApplicationDetails.setPlacenameMl(marriageRegistryDetails.getPlacenameMl());
+        marriageApplicationDetails.setMarriageHouseNoAndNameEn(marriageRegistryDetails.getMarriageHouseNoAndNameEn());
+        marriageApplicationDetails.setMarriageHouseNoAndNameMl(marriageRegistryDetails.getMarriageHouseNoAndNameMl());
         marriageApplicationDetails.setStreetNameEn(marriageRegistryDetails.getStreet_name_en());
         marriageApplicationDetails.setStreetNameMl(marriageRegistryDetails.getStreet_name_ml());
         marriageApplicationDetails.setWardCode(marriageRegistryDetails.getWard_code());
@@ -142,6 +144,8 @@ public class RegistryToApplicationMapper {
         marriageApplicationDetails.getBrideAddressDetails().setPermntOutsideIndiaLinetwoMl(marriageRegistryDetails.getBrideAddressDetails().getPermntOutsideIndiaLinetwoMl());
         marriageApplicationDetails.getBrideAddressDetails().setPermntOutSideIndiaProvinceEn(marriageRegistryDetails.getBrideAddressDetails().getPermntOutSideIndiaProvinceEn());
         marriageApplicationDetails.getBrideAddressDetails().setPermanentOutsideIndiaPostCode(marriageRegistryDetails.getBrideAddressDetails().getPermanentOutsideIndiaPostCode());
+        marriageApplicationDetails.getBrideAddressDetails().setPinNoPermanent(marriageRegistryDetails.getBrideAddressDetails().getPinNoPermanent());
+
 
         marriageApplicationDetails.getGroomAddressDetails().setCountryIdPermanent(marriageRegistryDetails.getGroomAddressDetails().getCountryIdPermanent());
         marriageApplicationDetails.getGroomAddressDetails().setStateIdPermanent(marriageRegistryDetails.getGroomAddressDetails().getStateIdPermanent());
@@ -169,6 +173,7 @@ public class RegistryToApplicationMapper {
         marriageApplicationDetails.getGroomAddressDetails().setPermntOutsideIndiaLinetwoMl(marriageRegistryDetails.getGroomAddressDetails().getPermntOutsideIndiaLinetwoMl());
         marriageApplicationDetails.getGroomAddressDetails().setPermntOutSideIndiaProvinceEn(marriageRegistryDetails.getGroomAddressDetails().getPermntOutSideIndiaProvinceEn());
         marriageApplicationDetails.getGroomAddressDetails().setPermanentOutsideIndiaPostCode(marriageRegistryDetails.getGroomAddressDetails().getPermanentOutsideIndiaPostCode());
+        marriageApplicationDetails.getGroomAddressDetails().setPinNoPermanent(marriageRegistryDetails.getGroomAddressDetails().getPinNoPermanent());
 
         return marriageApplicationDetails;
     }

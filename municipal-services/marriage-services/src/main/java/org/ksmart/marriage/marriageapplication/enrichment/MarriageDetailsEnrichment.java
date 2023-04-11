@@ -103,6 +103,11 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                 groomDetails.setMotherAadharno(null);
                 groomDetails.setFatherAadharno(null);
             }
+            else{
+                groomDetails.setMotherAadharno(null);
+                groomDetails.setFatherAadharno(null);
+                groomDetails.setGuardianAadharno(null);
+            }
             BrideDetails brideDetails =marriage.getBrideDetails();
             BrideDetails brideDetailsEnc =  encryptionDecryptionUtil.encryptObject(brideDetails, "BndDetail", BrideDetails.class);
             brideDetails.setAadharno(brideDetailsEnc.getAadharno());
@@ -115,6 +120,11 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                 brideDetails.setGuardianAadharno(brideDetailsEnc.getGuardianAadharno());
                 brideDetails.setMotherAadharno(null);
                 brideDetails.setFatherAadharno(null);
+            }
+            else{
+                brideDetails.setMotherAadharno(null);
+                brideDetails.setFatherAadharno(null);
+                brideDetails.setGuardianAadharno(null);
             }
 
             WitnessDetails witnessDetails =marriage.getWitnessDetails();
@@ -185,6 +195,47 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
         setBridePresentAddress(request);
         setGroomPermanentAddress(request);
         setGroomPresentAddress(request);
+        GroomDetails groomDetails =marriage.getGroomDetails();
+        GroomDetails groomDetailsEnc =  encryptionDecryptionUtil.encryptObject(groomDetails, "BndDetail", GroomDetails.class);
+        groomDetails.setAadharno(groomDetailsEnc.getAadharno());
+        if (groomDetails.getParentGuardian().equals(MarriageConstants.PARENT)){
+            groomDetails.setMotherAadharno(groomDetailsEnc.getMotherAadharno());
+            groomDetails.setFatherAadharno(groomDetailsEnc.getFatherAadharno());
+            groomDetails.setGuardianAadharno(null);
+        }
+        else if(groomDetails.getParentGuardian().equals(MarriageConstants.GUARDIAN)){
+            groomDetails.setGuardianAadharno(groomDetailsEnc.getGuardianAadharno());
+            groomDetails.setMotherAadharno(null);
+            groomDetails.setFatherAadharno(null);
+        }
+        else{
+            groomDetails.setMotherAadharno(null);
+            groomDetails.setFatherAadharno(null);
+            groomDetails.setGuardianAadharno(null);
+        }
+        BrideDetails brideDetails =marriage.getBrideDetails();
+        BrideDetails brideDetailsEnc =  encryptionDecryptionUtil.encryptObject(brideDetails, "BndDetail", BrideDetails.class);
+        brideDetails.setAadharno(brideDetailsEnc.getAadharno());
+        if (brideDetails.getParentGuardian().equals(MarriageConstants.PARENT)){
+            brideDetails.setMotherAadharno(brideDetailsEnc.getMotherAadharno());
+            brideDetails.setFatherAadharno(brideDetailsEnc.getFatherAadharno());
+            brideDetails.setGuardianAadharno(null);
+        }
+        else if (brideDetails.getParentGuardian().equals(MarriageConstants.GUARDIAN)){
+            brideDetails.setGuardianAadharno(brideDetailsEnc.getGuardianAadharno());
+            brideDetails.setMotherAadharno(null);
+            brideDetails.setFatherAadharno(null);
+        }        
+        else{
+            brideDetails.setMotherAadharno(null);
+            brideDetails.setFatherAadharno(null);
+            brideDetails.setGuardianAadharno(null);
+        }
+
+        WitnessDetails witnessDetails =marriage.getWitnessDetails();
+        WitnessDetails witnessDetailsEnc =  encryptionDecryptionUtil.encryptObject(witnessDetails, "BndDetail", WitnessDetails.class);
+        witnessDetails.setWitness1AadharNo(witnessDetailsEnc.getWitness1AadharNo());
+        witnessDetails.setWitness2AadharNo(witnessDetailsEnc.getWitness2AadharNo());
     });   
 }
     private void setGroomPresentAddress(MarriageDetailsRequest request) {
@@ -339,12 +390,12 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 
 
                                     marriage.getGroomAddressDetails().setPinNoPermanent(marriage.getGroomAddressDetails().getPermntOutsideKeralaPincode());
-
+                                }
                                 }
                             }
                             else {
-//                                if (marriage.getGroomAddressDetails().getPermtaddressCountry() != COUNTRY_CODE) {
-                                    marriage.getGroomAddressDetails().setCountryIdPresent(marriage.getGroomAddressDetails().getPermtaddressCountry());
+                                //if (marriage.getGroomAddressDetails().getPermtaddressCountry() != (MarriageConstants.COUNTRY_CODE)) {
+                                    marriage.getGroomAddressDetails().setCountryIdPermanent(marriage.getGroomAddressDetails().getPermtaddressCountry());
 
                                     marriage.getGroomAddressDetails().setVillageNamePermanent(marriage.getGroomAddressDetails().getPermntOutsideIndiaVillage());
 
@@ -360,9 +411,9 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                                     marriage.getGroomAddressDetails().setPermntOthrIndiaprovinceMl(marriage.getGroomAddressDetails().getPermntOutSideIndiaProvinceMl());
 
                                     marriage.getGroomAddressDetails().setOutSideIndiaPostCodepermanent(marriage.getGroomAddressDetails().getPermanentOutsideIndiaPostCode());
-//                                }
+                                //}
                             }
-                        }
+
                     }
                 });
     }
@@ -439,6 +490,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                                     marriage.getBrideAddressDetails().setTownOrVillagePresent(marriage.getBrideAddressDetails().getPresentOutsideKeralaCityVilgeEn());
 
                                 }
+                            }
                             } else {
 //                                if (marriage.getBrideAddressDetails().getPermtaddressCountry() != COUNTRY_CODE) {
                                     marriage.getBrideAddressDetails().setCountryIdPresent(marriage.getBrideAddressDetails().getPresentaddressCountry());
@@ -459,7 +511,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 //                                }
                             }
 
-                        }
+
                     }
         });
     }
@@ -499,8 +551,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                                        marriage.getBrideAddressDetails().setHouseNameNoMlPermanent(marriage.getBrideAddressDetails().getPermntInKeralaAdrHouseNameMl());
                                        marriage.getBrideAddressDetails().setPinNoPermanent(marriage.getBrideAddressDetails().getPermntInKeralaAdrPincode());
                                        marriage.getBrideAddressDetails().setPoNoPermanent(marriage.getBrideAddressDetails().getPermntInKeralaAdrPostOffice());
-                                   }
-                                   else {
+                                   } else {
                                        marriage.getBrideAddressDetails().setCountryIdPermanent(marriage.getBrideAddressDetails().getPermtaddressCountry());
 
                                        marriage.getBrideAddressDetails().setStateIdPermanent(marriage.getBrideAddressDetails().getPermtaddressStateName());
@@ -518,19 +569,19 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 
                                        marriage.getBrideAddressDetails().setVillageNamePermanent(marriage.getBrideAddressDetails().getPermntOutsideKeralaVillage());
 
-                                        marriage.getBrideAddressDetails().setPermntOthrTalukName(marriage.getBrideAddressDetails().getPermntOutsideKeralaTaluk());
+                                       marriage.getBrideAddressDetails().setPermntOthrTalukName(marriage.getBrideAddressDetails().getPermntOutsideKeralaTaluk());
                                        marriage.getBrideAddressDetails().setPermntOthPostOfficeEn(marriage.getBrideAddressDetails().getPermntOutsideKeralaPostOfficeEn());
 
 
                                        marriage.getBrideAddressDetails().setPinNoPermanent(marriage.getBrideAddressDetails().getPermntOutsideKeralaPincode());
 
                                    }
-
+                               }
 
                                    }
                                else {
-//                                   if (marriage.getBrideAddressDetails().getPermtaddressCountry() != COUNTRY_CODE) {
-                                       marriage.getBrideAddressDetails().setCountryIdPresent(marriage.getBrideAddressDetails().getPermtaddressCountry());
+//                                    if (marriage.getBrideAddressDetails().getPermtaddressCountry() != COUNTRY_CODE) {
+                                       marriage.getBrideAddressDetails().setCountryIdPermanent(marriage.getBrideAddressDetails().getPermtaddressCountry());
                                        marriage.getBrideAddressDetails().setVillageNamePermanent(marriage.getBrideAddressDetails().getPermntOutsideIndiaVillage());
                                        marriage.getBrideAddressDetails().setTownOrVillagePermanent(marriage.getBrideAddressDetails().getPermntOutsideIndiaCityTown());
 
@@ -550,7 +601,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 //                                   }
                                }
 
-                               }
+
 
                        }
 
