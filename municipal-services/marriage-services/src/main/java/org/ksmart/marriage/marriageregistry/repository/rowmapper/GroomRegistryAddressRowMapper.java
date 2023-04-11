@@ -24,6 +24,7 @@ public interface GroomRegistryAddressRowMapper {
                 .presentInsideKeralaLBName(rs.getString("GPSA_tenantid"))
                 .presentInsideKeralaTaluk(rs.getString("GPSA_talukid"))
                 .presentInsideKeralaPostOffice(rs.getString("GPSA_poid"))
+                .presentInsideKeralaPincode(rs.getString("GPSA_pinno"))
                 .presentInsideKeralaVillage(rs.getString("GPSA_villageid"))
                 .presentWardNo(rs.getString("GPSA_ward_code"))
                 .presentOutsideKeralaPostOfficeEn(rs.getString("GPSA_poname_en"))

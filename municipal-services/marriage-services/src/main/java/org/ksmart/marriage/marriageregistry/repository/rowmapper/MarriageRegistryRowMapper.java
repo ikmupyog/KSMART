@@ -31,6 +31,8 @@ public class MarriageRegistryRowMapper implements ResultSetExtractor<List<Marria
             .tenantid(rs.getString("MD_tenantid"))
             .placetype(rs.getString("MD_placetype"))
             .placeid(rs.getString("MD_placeid"))
+            .marriageHouseNoAndNameEn(rs.getString("MD_housenameno_en"))
+            .marriageHouseNoAndNameMl(rs.getString("MD_housenameno_ml"))
             .placenameEn(rs.getString("MD_placename_en"))
             .placenameMl(rs.getString("MD_placename_ml"))
             .street_name_en(rs.getString("MD_street_name_en"))

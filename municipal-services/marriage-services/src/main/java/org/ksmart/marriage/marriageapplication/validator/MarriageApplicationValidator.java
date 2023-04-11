@@ -86,7 +86,7 @@ public class MarriageApplicationValidator {
                                                                         marriagedtls.getLbtype() + " is invalid");
                                                 }
 
-                                                System.out.println("marriageward" + marriagedtls.getWardCode());
+                                              //  System.out.println("marriageward" + marriagedtls.getWardCode());
                                                 if (StringUtils.isEmpty(marriagedtls.getWardCode())) {
                                                         throw new CustomException(" WARD INVALID ", "The  Ward " +
                                                                         marriagedtls.getWardCode() + " is invalid");
@@ -883,9 +883,7 @@ public class MarriageApplicationValidator {
                                                                                                                 groomaddressInfo.getPermntOutsideKeralaHouseNameMl()
                                                                                                                 + " is invalid");
                                                                         }
-
                                                                 }
-
                                                         }
                                                 } else {
                                                         if (StringUtils.isEmpty(groomaddressInfo
@@ -1170,7 +1168,6 @@ public class MarriageApplicationValidator {
                                                                                                                 groomaddressInfo.getPresentOutsideKeralaHouseNameMl()
                                                                                                                 + " is invalid");
                                                                         }
-
                                                                 }
                                                         }
                                                 } else {
@@ -1222,14 +1219,14 @@ public class MarriageApplicationValidator {
                                                                                                 groomaddressInfo.getPresentOutSideIndiaAdressEn()
                                                                                                 + " is invalid");
                                                         }
-                                                        if (StringUtils.isEmpty(groomaddressInfo
-                                                                        .getPresentOutSideIndiaAdressEnB())) {
-                                                                throw new CustomException(
-                                                                                " GROOM PRESENT ADDRESS OUTSIDE INDIA: ADDRESS LINE TWO ENGLISH INVALID ",
-                                                                                "The   Adress Line Two English " +
-                                                                                                groomaddressInfo.getPresentOutSideIndiaAdressEnB()
-                                                                                                + " is invalid");
-                                                        }
+                                                        // if (StringUtils.isEmpty(groomaddressInfo
+                                                        //                 .getPresentOutSideIndiaAdressEnB())) {
+                                                        //         throw new CustomException(
+                                                        //                         " GROOM PRESENT ADDRESS OUTSIDE INDIA: ADDRESS LINE TWO ENGLISH INVALID ",
+                                                        //                         "The   Adress Line Two English " +
+                                                        //                                         groomaddressInfo.getPresentOutSideIndiaAdressEnB()
+                                                        //                                         + " is invalid");
+                                                        // }
                                                         if (StringUtils.isEmpty(groomaddressInfo
                                                                         .getPresentOutSideIndiaAdressMl())) {
                                                                 throw new CustomException(
@@ -1238,14 +1235,14 @@ public class MarriageApplicationValidator {
                                                                                                 groomaddressInfo.getPresentOutSideIndiaAdressMl()
                                                                                                 + " is invalid");
                                                         }
-                                                        if (StringUtils.isEmpty(groomaddressInfo
-                                                                        .getPresentOutSideIndiaAdressMlB())) {
-                                                                throw new CustomException(
-                                                                                " GROOM PRESENT ADDRESS OUTSIDE INDIA: ADDRESS LINE TWO MALAYALAM INVALID ",
-                                                                                "The   Adress Line Two Malayalam " +
-                                                                                                groomaddressInfo.getPresentOutSideIndiaAdressMlB()
-                                                                                                + " is invalid");
-                                                        }
+                                                        // if (StringUtils.isEmpty(groomaddressInfo
+                                                        //                 .getPresentOutSideIndiaAdressMlB())) {
+                                                        //         throw new CustomException(
+                                                        //                         " GROOM PRESENT ADDRESS OUTSIDE INDIA: ADDRESS LINE TWO MALAYALAM INVALID ",
+                                                        //                         "The   Adress Line Two Malayalam " +
+                                                        //                                         groomaddressInfo.getPresentOutSideIndiaAdressMlB()
+                                                        //                                         + " is invalid");
+                                                        // }
 
                                                 }
                                                 // groom present address end
