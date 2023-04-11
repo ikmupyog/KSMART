@@ -10,6 +10,7 @@ import {
   Toast,
   SubmitBar,
 } from "@egovernments/digit-ui-react-components";
+import moment from "moment";
 import Timeline from "../../components/NACTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
@@ -805,16 +806,13 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
                 <DatePicker
                   date={childDOB}
                   name="childDOB"
-                  max={convertEpochToDate(new Date())}
+                  max={moment().subtract(1, "year").format("YYYY-MM-DD")}
                   onChange={setselectChildDOB}
                   inputFormat="DD-MM-YYYY"
                   placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
                   {...(validation = { isRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
                 />
               </div>
-
-
-              
               <div className="col-md-2">
                 <CardLabel>{t("CR_TIME_OF_BIRTH")}</CardLabel>
                 <CustomTimePicker name="birthDateTime" onChange={(val) => handleTimeChange(val, setbirthDateTime)} value={birthDateTime} />
