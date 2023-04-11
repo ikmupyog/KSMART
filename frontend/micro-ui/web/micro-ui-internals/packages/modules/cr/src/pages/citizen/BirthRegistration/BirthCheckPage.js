@@ -560,11 +560,11 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
             </div>
           )}
         </div>
-
+        </div>
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
-              <span style={{ background: "#f3f0ef", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
             </h1>
           </div>
         </div>
@@ -598,7 +598,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
         {""}
         <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onBirthSubmit} />
         </div>
-        </div>
+       
       </Card>
     </React.Fragment>
   );

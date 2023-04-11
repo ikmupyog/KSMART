@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, Loader } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 
-const MarriageAddressPresentOutsideKerala = ({
+const BrideAddressPresentOutsideKerala = ({
   config,
   onSelect,
   userType,
@@ -67,6 +67,7 @@ const MarriageAddressPresentOutsideKerala = ({
   isEditDeath = false,
   isEditStillBirth = false,
   isEditAdoption,
+  isEditBirthNAC = false,
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
@@ -104,11 +105,13 @@ const MarriageAddressPresentOutsideKerala = ({
   //   });
   Village &&
     Village["common-masters"] &&
+    Village["common-masters"].Village &&
     Village["common-masters"].Village.map((ob) => {
       cmbVillage.push(ob);
     });
   District &&
     District["common-masters"] &&
+    District["common-masters"].District &&
     District["common-masters"].District.map((ob) => {
       cmbDistrict.push(ob);
     });
@@ -673,4 +676,4 @@ const MarriageAddressPresentOutsideKerala = ({
     );
   }
 };
-export default MarriageAddressPresentOutsideKerala;
+export default BrideAddressPresentOutsideKerala;

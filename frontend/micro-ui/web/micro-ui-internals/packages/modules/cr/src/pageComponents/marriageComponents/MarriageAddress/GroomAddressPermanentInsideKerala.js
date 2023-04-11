@@ -3,20 +3,53 @@ import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, Loader,
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
 
-const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
-  permntInKeralaAdrDistrict, setpermntInKeralaAdrDistrict,
-  permntInKeralaAdrLBName, setpermntInKeralaAdrLBName,
-  permntInKeralaAdrTaluk, setpermntInKeralaAdrTaluk, permntInKeralaAdrVillage, setpermntInKeralaAdrVillage,
-  permntInKeralaAdrPostOffice, setpermntInKeralaAdrPostOffice, permntInKeralaAdrPincode, setpermntInKeralaAdrPincode,
-  permntInKeralaAdrHouseNameEn, setpermntInKeralaAdrHouseNameEn,Districtvalues, setDistrictvalue,
-  permntInKeralaAdrHouseNameMl, setpermntInKeralaAdrHouseNameMl, permntInKeralaAdrLocalityNameEn, setpermntInKeralaAdrLocalityNameEn,
-  permntInKeralaAdrLocalityNameMl, setpermntInKeralaAdrLocalityNameMl, permntInKeralaAdrStreetNameEn, setpermntInKeralaAdrStreetNameEn,
-  permntInKeralaAdrStreetNameMl, setpermntInKeralaAdrStreetNameMl, lbs, setLbs, Talukvalues, setLbsTalukvalue, Villagevalues, setLbsVillagevalue, permntInKeralaWardNo,
-  setpermntInKeralaWardNo, PostOfficevalues, setPostOfficevalues, isEditBirth = false, isEditDeath = false,isEditAdoption,
+const GroomAddressPermanentInsideKerala = ({
+  config,
+  onSelect,
+  userType,
+  formData,
+  permntInKeralaAdrDistrict,
+  setpermntInKeralaAdrDistrict,
+  permntInKeralaAdrLBName,
+  setpermntInKeralaAdrLBName,
+  permntInKeralaAdrTaluk,
+  setpermntInKeralaAdrTaluk,
+  permntInKeralaAdrVillage,
+  setpermntInKeralaAdrVillage,
+  permntInKeralaAdrPostOffice,
+  setpermntInKeralaAdrPostOffice,
+  permntInKeralaAdrPincode,
+  setpermntInKeralaAdrPincode,
+  permntInKeralaAdrHouseNameEn,
+  setpermntInKeralaAdrHouseNameEn,
+  Districtvalues,
+  setDistrictvalue,
+  permntInKeralaAdrHouseNameMl,
+  setpermntInKeralaAdrHouseNameMl,
+  permntInKeralaAdrLocalityNameEn,
+  setpermntInKeralaAdrLocalityNameEn,
+  permntInKeralaAdrLocalityNameMl,
+  setpermntInKeralaAdrLocalityNameMl,
+  permntInKeralaAdrStreetNameEn,
+  setpermntInKeralaAdrStreetNameEn,
+  permntInKeralaAdrStreetNameMl,
+  setpermntInKeralaAdrStreetNameMl,
+  lbs,
+  setLbs,
+  Talukvalues,
+  setLbsTalukvalue,
+  Villagevalues,
+  setLbsVillagevalue,
+  permntInKeralaWardNo,
+  setpermntInKeralaWardNo,
+  PostOfficevalues,
+  setPostOfficevalues,
+  isEditBirth = false,
+  isEditDeath = false,
+  isEditAdoption,
   isEditStillBirth = false,
   // isInitialRender, setIsInitialRender
   // isInitialRender, setIsInitialRender isEditBirth ? isEditBirth : isEditDeath ? false :
-
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
@@ -60,32 +93,38 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   let cmbFilterPostOffice = [];
 
   localbodies &&
-    localbodies["tenant"] && localbodies["tenant"].tenants &&
+    localbodies["tenant"] &&
+    localbodies["tenant"].tenants &&
     localbodies["tenant"].tenants.map((ob) => {
       cmbLB.push(ob);
     });
   Taluk &&
-    Taluk["common-masters"] && Taluk["common-masters"].Taluk &&
+    Taluk["common-masters"] &&
+    Taluk["common-masters"].Taluk &&
     Taluk["common-masters"].Taluk.map((ob) => {
       cmbTaluk.push(ob);
     });
   Village &&
-    Village["common-masters"] && Village["common-masters"].Village &&
+    Village["common-masters"] &&
+    Village["common-masters"].Village &&
     Village["common-masters"].Village.map((ob) => {
       cmbVillage.push(ob);
     });
   District &&
-    District["common-masters"] && District["common-masters"].District &&
+    District["common-masters"] &&
+    District["common-masters"].District &&
     District["common-masters"].District.map((ob) => {
       cmbDistrict.push(ob);
     });
   PostOffice &&
-    PostOffice["common-masters"] && PostOffice["common-masters"].PostOffice &&
+    PostOffice["common-masters"] &&
+    PostOffice["common-masters"].PostOffice &&
     PostOffice["common-masters"].PostOffice.map((ob) => {
       cmbPostOffice.push(ob);
     });
   LBType &&
-    LBType["common-masters"] && LBType["common-masters"].LBType &&
+    LBType["common-masters"] &&
+    LBType["common-masters"].LBType &&
     LBType["common-masters"].LBType.map((ob) => {
       cmbLBType.push(ob);
     });
@@ -111,7 +150,6 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
     cmbWardNoFinal.push(wardmst);
   });
   useEffect(() => {
-
     if (isInitialRender) {
       if (cmbLB.length > 0) {
         currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
@@ -132,132 +170,184 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   if (isEditBirth) {
     if (formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrDistrict != null) {
       if (cmbDistrict.length > 0 && (permntInKeralaAdrDistrict === undefined || permntInKeralaAdrDistrict === "")) {
-        setpermntInKeralaAdrDistrict(cmbDistrict.filter(cmbDistrict => cmbDistrict.code === formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrDistrict)[0]);
+        setpermntInKeralaAdrDistrict(
+          cmbDistrict.filter((cmbDistrict) => cmbDistrict.code === formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrDistrict)[0]
+        );
       }
     }
     if (formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrLBName != null) {
       if (cmbLB.length > 0 && (permntInKeralaAdrLBName === undefined || permntInKeralaAdrLBName === "")) {
-        setpermntInKeralaAdrLBName(cmbLB.filter(cmbLB => cmbLB.code === formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrLBName)[0]);
+        setpermntInKeralaAdrLBName(cmbLB.filter((cmbLB) => cmbLB.code === formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrLBName)[0]);
       }
     }
     if (formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrTaluk != null) {
       if (cmbTaluk.length > 0 && (permntInKeralaAdrTaluk === undefined || permntInKeralaAdrTaluk === "")) {
-        setpermntInKeralaAdrTaluk(cmbTaluk.filter(cmbTaluk => cmbTaluk.code === formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrTaluk)[0]);
+        setpermntInKeralaAdrTaluk(
+          cmbTaluk.filter((cmbTaluk) => cmbTaluk.code === formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrTaluk)[0]
+        );
       }
     }
     if (formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrVillage != null) {
       if (cmbVillage.length > 0 && (permntInKeralaAdrVillage === undefined || permntInKeralaAdrVillage === "")) {
-        setpermntInKeralaAdrVillage(cmbVillage.filter(cmbVillage => cmbVillage.code === formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrVillage)[0]);
+        setpermntInKeralaAdrVillage(
+          cmbVillage.filter((cmbVillage) => cmbVillage.code === formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrVillage)[0]
+        );
       }
     }
     if (formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaWardNo != null) {
       if (cmbWardNo.length > 0 && (permntInKeralaWardNo === undefined || permntInKeralaWardNo === "")) {
-        setpermntInKeralaWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaWardNo)[0]);
+        setpermntInKeralaWardNo(
+          cmbWardNo.filter((cmbWardNo) => cmbWardNo.code === formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaWardNo)[0]
+        );
       }
     }
     if (formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrPostOffice != null) {
       if (cmbFilterPostOffice.length > 0 && (permntInKeralaAdrPostOffice === undefined || permntInKeralaAdrPostOffice === "")) {
-        setpermntInKeralaAdrPostOffice(cmbFilterPostOffice.filter(cmbFilterPostOffice => cmbFilterPostOffice.code === formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrPostOffice)[0]);
-        let pin = cmbFilterPostOffice.filter(cmbFilterPostOffice => cmbFilterPostOffice.code === formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrPostOffice)[0];
+        setpermntInKeralaAdrPostOffice(
+          cmbFilterPostOffice.filter(
+            (cmbFilterPostOffice) => cmbFilterPostOffice.code === formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrPostOffice
+          )[0]
+        );
+        let pin = cmbFilterPostOffice.filter(
+          (cmbFilterPostOffice) => cmbFilterPostOffice.code === formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrPostOffice
+        )[0];
         setpermntInKeralaAdrPincode(pin.pincode);
       }
     }
   } else if (isEditDeath) {
     if (formData?.AddressBirthDetails?.permntInKeralaAdrDistrict != null) {
       if (cmbDistrict.length > 0 && (permntInKeralaAdrDistrict === undefined || permntInKeralaAdrDistrict === "")) {
-        setpermntInKeralaAdrDistrict(cmbDistrict.filter(cmbDistrict => cmbDistrict.code === formData?.AddressBirthDetails?.permntInKeralaAdrDistrict)[0]);
+        setpermntInKeralaAdrDistrict(
+          cmbDistrict.filter((cmbDistrict) => cmbDistrict.code === formData?.AddressBirthDetails?.permntInKeralaAdrDistrict)[0]
+        );
       }
     }
     if (formData?.AddressBirthDetails?.permntInKeralaAdrLBName != null) {
       if (cmbLB.length > 0 && (permntInKeralaAdrLBName === undefined || permntInKeralaAdrLBName === "")) {
-        setpermntInKeralaAdrLBName(cmbLB.filter(cmbLB => cmbLB.code === formData?.AddressBirthDetails?.permntInKeralaAdrLBName)[0]);
+        setpermntInKeralaAdrLBName(cmbLB.filter((cmbLB) => cmbLB.code === formData?.AddressBirthDetails?.permntInKeralaAdrLBName)[0]);
       }
     }
     if (formData?.AddressBirthDetails?.permntInKeralaAdrTaluk != null) {
       if (cmbTaluk.length > 0 && (permntInKeralaAdrTaluk === undefined || permntInKeralaAdrTaluk === "")) {
-        setpermntInKeralaAdrTaluk(cmbTaluk.filter(cmbTaluk => cmbTaluk.code === formData?.AddressBirthDetails?.permntInKeralaAdrTaluk)[0]);
+        setpermntInKeralaAdrTaluk(cmbTaluk.filter((cmbTaluk) => cmbTaluk.code === formData?.AddressBirthDetails?.permntInKeralaAdrTaluk)[0]);
       }
     }
     if (formData?.AddressBirthDetails?.permntInKeralaAdrVillage != null) {
       if (cmbVillage.length > 0 && (permntInKeralaAdrVillage === undefined || permntInKeralaAdrVillage === "")) {
-        setpermntInKeralaAdrVillage(cmbVillage.filter(cmbVillage => cmbVillage.code === formData?.AddressBirthDetails?.permntInKeralaAdrVillage)[0]);
+        setpermntInKeralaAdrVillage(
+          cmbVillage.filter((cmbVillage) => cmbVillage.code === formData?.AddressBirthDetails?.permntInKeralaAdrVillage)[0]
+        );
       }
     }
     if (formData?.AddressBirthDetails?.permntInKeralaWardNo != null) {
       if (cmbWardNo.length > 0 && (permntInKeralaWardNo === undefined || permntInKeralaWardNo === "")) {
-        setpermntInKeralaWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.AddressBirthDetails?.permntInKeralaWardNo)[0]);
+        setpermntInKeralaWardNo(cmbWardNo.filter((cmbWardNo) => cmbWardNo.code === formData?.AddressBirthDetails?.permntInKeralaWardNo)[0]);
       }
     }
     if (formData?.AddressBirthDetails?.permntInKeralaAdrPostOffice != null) {
       if (cmbFilterPostOffice.length > 0 && (permntInKeralaAdrPostOffice === undefined || permntInKeralaAdrPostOffice === "")) {
-        setpermntInKeralaAdrPostOffice(cmbFilterPostOffice.filter(cmbFilterPostOffice => cmbFilterPostOffice.code === formData?.AddressBirthDetails?.permntInKeralaAdrPostOffice)[0]);
-        let pin = cmbFilterPostOffice.filter(cmbFilterPostOffice => cmbFilterPostOffice.code === formData?.AddressBirthDetails?.permntInKeralaAdrPostOffice)[0];
+        setpermntInKeralaAdrPostOffice(
+          cmbFilterPostOffice.filter(
+            (cmbFilterPostOffice) => cmbFilterPostOffice.code === formData?.AddressBirthDetails?.permntInKeralaAdrPostOffice
+          )[0]
+        );
+        let pin = cmbFilterPostOffice.filter(
+          (cmbFilterPostOffice) => cmbFilterPostOffice.code === formData?.AddressBirthDetails?.permntInKeralaAdrPostOffice
+        )[0];
         setpermntInKeralaAdrPincode(pin.pincode);
       }
     }
   } else if (isEditStillBirth) {
     if (formData?.StillBirthChildDetails?.AddressBirthDetails?.permntInKeralaAdrDistrict != null) {
       if (cmbDistrict.length > 0 && (permntInKeralaAdrDistrict === undefined || permntInKeralaAdrDistrict === "")) {
-        setpermntInKeralaAdrDistrict(cmbDistrict.filter(cmbDistrict => cmbDistrict.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.permntInKeralaAdrDistrict)[0]);
+        setpermntInKeralaAdrDistrict(
+          cmbDistrict.filter(
+            (cmbDistrict) => cmbDistrict.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.permntInKeralaAdrDistrict
+          )[0]
+        );
       }
     }
     if (formData?.StillBirthChildDetails?.AddressBirthDetails?.permntInKeralaAdrLBName != null) {
       if (cmbLB.length > 0 && (permntInKeralaAdrLBName === undefined || permntInKeralaAdrLBName === "")) {
-        setpermntInKeralaAdrLBName(cmbLB.filter(cmbLB => cmbLB.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.permntInKeralaAdrLBName)[0]);
+        setpermntInKeralaAdrLBName(
+          cmbLB.filter((cmbLB) => cmbLB.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.permntInKeralaAdrLBName)[0]
+        );
       }
     }
     if (formData?.StillBirthChildDetails?.AddressBirthDetails?.permntInKeralaAdrTaluk != null) {
       if (cmbTaluk.length > 0 && (permntInKeralaAdrTaluk === undefined || permntInKeralaAdrTaluk === "")) {
-        setpermntInKeralaAdrTaluk(cmbTaluk.filter(cmbTaluk => cmbTaluk.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.permntInKeralaAdrTaluk)[0]);
+        setpermntInKeralaAdrTaluk(
+          cmbTaluk.filter((cmbTaluk) => cmbTaluk.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.permntInKeralaAdrTaluk)[0]
+        );
       }
     }
     if (formData?.StillBirthChildDetails?.AddressBirthDetails?.permntInKeralaAdrVillage != null) {
       if (cmbVillage.length > 0 && (permntInKeralaAdrVillage === undefined || permntInKeralaAdrVillage === "")) {
-        setpermntInKeralaAdrVillage(cmbVillage.filter(cmbVillage => cmbVillage.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.permntInKeralaAdrVillage)[0]);
+        setpermntInKeralaAdrVillage(
+          cmbVillage.filter((cmbVillage) => cmbVillage.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.permntInKeralaAdrVillage)[0]
+        );
       }
     }
     if (formData?.StillBirthChildDetails?.AddressBirthDetails?.permntInKeralaWardNo != null) {
       if (cmbWardNo.length > 0 && (permntInKeralaWardNo === undefined || permntInKeralaWardNo === "")) {
-        setpermntInKeralaWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.permntInKeralaWardNo)[0]);
+        setpermntInKeralaWardNo(
+          cmbWardNo.filter((cmbWardNo) => cmbWardNo.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.permntInKeralaWardNo)[0]
+        );
       }
     }
     if (formData?.StillBirthChildDetails?.AddressBirthDetails?.permntInKeralaAdrPostOffice != null) {
       if (cmbFilterPostOffice.length > 0 && (permntInKeralaAdrPostOffice === undefined || permntInKeralaAdrPostOffice === "")) {
-        setpermntInKeralaAdrPostOffice(cmbFilterPostOffice.filter(cmbFilterPostOffice => cmbFilterPostOffice.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.permntInKeralaAdrPostOffice)[0]);
-        let pin = cmbFilterPostOffice.filter(cmbFilterPostOffice => cmbFilterPostOffice.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.permntInKeralaAdrPostOffice)[0];
+        setpermntInKeralaAdrPostOffice(
+          cmbFilterPostOffice.filter(
+            (cmbFilterPostOffice) => cmbFilterPostOffice.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.permntInKeralaAdrPostOffice
+          )[0]
+        );
+        let pin = cmbFilterPostOffice.filter(
+          (cmbFilterPostOffice) => cmbFilterPostOffice.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.permntInKeralaAdrPostOffice
+        )[0];
         setpermntInKeralaAdrPincode(pin.pincode);
       }
     }
-  } else if (isEditAdoption !==false) {
+  } else if (isEditAdoption !== false) {
     if (formData?.AdoptionAddressBasePage?.permntInKeralaAdrDistrict != null) {
       if (cmbDistrict.length > 0 && (permntInKeralaAdrDistrict === undefined || permntInKeralaAdrDistrict === "")) {
-        setpermntInKeralaAdrDistrict(cmbDistrict.filter(cmbDistrict => cmbDistrict.code === formData?.AddressBirthDetails?.permntInKeralaAdrDistrict)[0]);
+        setpermntInKeralaAdrDistrict(
+          cmbDistrict.filter((cmbDistrict) => cmbDistrict.code === formData?.AddressBirthDetails?.permntInKeralaAdrDistrict)[0]
+        );
       }
     }
     if (formData?.AdoptionAddressBasePage?.permntInKeralaAdrLBName != null) {
       if (cmbLB.length > 0 && (permntInKeralaAdrLBName === undefined || permntInKeralaAdrLBName === "")) {
-        setpermntInKeralaAdrLBName(cmbLB.filter(cmbLB => cmbLB.code === formData?.AdoptionAddressBasePage?.permntInKeralaAdrLBName)[0]);
+        setpermntInKeralaAdrLBName(cmbLB.filter((cmbLB) => cmbLB.code === formData?.AdoptionAddressBasePage?.permntInKeralaAdrLBName)[0]);
       }
     }
     if (formData?.AdoptionAddressBasePage?.permntInKeralaAdrTaluk != null) {
       if (cmbTaluk.length > 0 && (permntInKeralaAdrTaluk === undefined || permntInKeralaAdrTaluk === "")) {
-        setpermntInKeralaAdrTaluk(cmbTaluk.filter(cmbTaluk => cmbTaluk.code === formData?.AdoptionAddressBasePage?.permntInKeralaAdrTaluk)[0]);
+        setpermntInKeralaAdrTaluk(cmbTaluk.filter((cmbTaluk) => cmbTaluk.code === formData?.AdoptionAddressBasePage?.permntInKeralaAdrTaluk)[0]);
       }
     }
     if (formData?.AdoptionAddressBasePage?.permntInKeralaAdrVillage != null) {
       if (cmbVillage.length > 0 && (permntInKeralaAdrVillage === undefined || permntInKeralaAdrVillage === "")) {
-        setpermntInKeralaAdrVillage(cmbVillage.filter(cmbVillage => cmbVillage.code === formData?.AdoptionAddressBasePage?.permntInKeralaAdrVillage)[0]);
+        setpermntInKeralaAdrVillage(
+          cmbVillage.filter((cmbVillage) => cmbVillage.code === formData?.AdoptionAddressBasePage?.permntInKeralaAdrVillage)[0]
+        );
       }
     }
     if (formData?.AdoptionAddressBasePage?.permntInKeralaWardNo != null) {
       if (cmbWardNo.length > 0 && (permntInKeralaWardNo === undefined || permntInKeralaWardNo === "")) {
-        setpermntInKeralaWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.AdoptionAddressBasePage?.permntInKeralaWardNo)[0]);
+        setpermntInKeralaWardNo(cmbWardNo.filter((cmbWardNo) => cmbWardNo.code === formData?.AdoptionAddressBasePage?.permntInKeralaWardNo)[0]);
       }
     }
     if (formData?.AdoptionAddressBasePage?.permntInKeralaAdrPostOffice != null) {
       if (cmbFilterPostOffice.length > 0 && (permntInKeralaAdrPostOffice === undefined || permntInKeralaAdrPostOffice === "")) {
-        setpermntInKeralaAdrPostOffice(cmbFilterPostOffice.filter(cmbFilterPostOffice => cmbFilterPostOffice.code === formData?.AdoptionAddressBasePage?.permntInKeralaAdrPostOffice)[0]);
-        let pin = cmbFilterPostOffice.filter(cmbFilterPostOffice => cmbFilterPostOffice.code === formData?.AdoptionAddressBasePage?.permntInKeralaAdrPostOffice)[0];
+        setpermntInKeralaAdrPostOffice(
+          cmbFilterPostOffice.filter(
+            (cmbFilterPostOffice) => cmbFilterPostOffice.code === formData?.AdoptionAddressBasePage?.permntInKeralaAdrPostOffice
+          )[0]
+        );
+        let pin = cmbFilterPostOffice.filter(
+          (cmbFilterPostOffice) => cmbFilterPostOffice.code === formData?.AdoptionAddressBasePage?.permntInKeralaAdrPostOffice
+        )[0];
         setpermntInKeralaAdrPincode(pin.pincode);
       }
     }
@@ -289,8 +379,6 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   }
   function setSelectpermntInKeralaAdrLBName(value) {
     setTenantWard(value.code);
-    setpermntInKeralaWardNo(null);
-    setTenantboundary(true);
     setpermntInKeralaAdrLBName(value);
   }
   function setSelectpermntInKeralaAdrVillage(value) {
@@ -318,52 +406,49 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
     }
   }
   function setSelectpermntInKeralaAdrHouseNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9 ]*$") != null)) {
-      setpermntInKeralaAdrHouseNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setpermntInKeralaAdrHouseNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectpermntInKeralaAdrHouseNameMl(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$/;
-    if (!(e.target.value.match(pattern))) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setpermntInKeralaAdrHouseNameMl('');
-    }
-    else {
-      setpermntInKeralaAdrHouseNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setpermntInKeralaAdrHouseNameMl("");
+    } else {
+      setpermntInKeralaAdrHouseNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
 
   function setSelectpermntInKeralaAdrLocalityNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setpermntInKeralaAdrLocalityNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setpermntInKeralaAdrLocalityNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
 
   function setSelectpermntInKeralaAdrLocalityNameMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
-    if (!(e.target.value.match(pattern))) {
+    if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setpermntInKeralaAdrLocalityNameMl('');
-    }
-    else {
-      setpermntInKeralaAdrLocalityNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setpermntInKeralaAdrLocalityNameMl("");
+    } else {
+      setpermntInKeralaAdrLocalityNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
 
   function setSelectpermntInKeralaAdrStreetNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setpermntInKeralaAdrStreetNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setpermntInKeralaAdrStreetNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
 
   function setSelectpermntInKeralaAdrStreetNameMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
-    if (!(e.target.value.match(pattern))) {
+    if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setpermntInKeralaAdrStreetNameMl('');
-    }
-    else {
-      setpermntInKeralaAdrStreetNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setpermntInKeralaAdrStreetNameMl("");
+    } else {
+      setpermntInKeralaAdrStreetNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
 
@@ -372,7 +457,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   }
   function setCheckMalayalamInputField(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
-    if (!(e.key.match(pattern))) {
+    if (!e.key.match(pattern)) {
       e.preventDefault();
     }
   }
@@ -386,17 +471,14 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   //         }
   //     }
   // }, [lbs, isInitialRender]);
-  const goNext = () => {
-
-  };
+  const goNext = () => {};
 
   if (islocalbodiesLoading || isPostOfficeLoading || isDistrictLoading || isTalukLoading || isVillageLoading || isWardLoaded) {
     return <Loader></Loader>;
   }
   return (
     <React.Fragment>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
-
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
         <div className="row">
           <div className="col-md-3">
             <CardLabel>
@@ -527,7 +609,6 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
               })}
             />
           </div>
-
         </div>
         <div className="row">
           <div className="col-md-4">
@@ -648,11 +729,9 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
           </div>
         </div>
 
-        <div className="row">
-
-        </div>
+        <div className="row"></div>
       </FormStep>
     </React.Fragment>
   );
 };
-export default AddressPermanentInsideKerala;
+export default GroomAddressPermanentInsideKerala;

@@ -20,7 +20,7 @@ const hstyle = {
     fontWeight: "500",
     color: "#2B2F3E",
     marginBottom: ".5rem",
-    lineHieght: "1.5rem",
+    lineHeight: "1.5rem",
 };
 const registyBtnStyle = {
     display: "flex",
@@ -35,18 +35,19 @@ const SearchBirthApplication = ({ onSubmit, data, filestoreId, isSuccess, isLoad
         defaultValues: {
             offset: 0,
             limit: 10,
-            sortBy: "TL_COMMON_TABLE_COL_APP_NO",
+            sortBy: "applicationNumber",
             sortOrder: "DESC",
         },
     });
     const { t } = useTranslation();
 
-    // useEffect(() => {
-    //     register("offset", 0);
-    //     register("limit", 10);
-    //     register("sortBy", "TL_COMMON_TABLE_COL_APP_NO");
-    //     register("sortOrder", "DESC");
-    // }, [register]);
+    useEffect(() => {
+        register("offset", 0);
+        register("limit", 10);
+        register("sortBy", "applicationNumber");
+        register("sortOrder", "DESC");
+    }, [register]);
+
     const onSort = useCallback((args) => {
         if (args.length === 0) return;
         setValue("sortBy", args.id);
@@ -55,16 +56,24 @@ const SearchBirthApplication = ({ onSubmit, data, filestoreId, isSuccess, isLoad
 
     function onPageSizeChange(e) {
         setValue("limit", Number(e.target.value));
+        console.log('e.target.value', e.target.value)
+        // setValue("limit", 10);
         handleSubmit(onSubmit)();
+    }
+
+    function onCurrentPage() {
+        setValue("offset", getValues("offset") / getValues("limit"))
     }
 
     function nextPage() {
         setValue("offset", getValues("offset") + getValues("limit"));
         handleSubmit(onSubmit)();
+        console.log('next');
     }
     function previousPage() {
         setValue("offset", getValues("offset") - getValues("limit"));
         handleSubmit(onSubmit)();
+        console.log('prev');
     }
     const GetCell = (value) => <span className="cell-text">{value}</span>;
     const columns = useMemo(
@@ -140,7 +149,7 @@ const SearchBirthApplication = ({ onSubmit, data, filestoreId, isSuccess, isLoad
                     <SearchFields {...{ register, control, reset, previousPage, t }} />
                 </SearchForm>
             </div>
-            { FileData?.display ? (
+            {/* { FileData?.display ? (
                 <Card style={{ marginTop: 20 }}>
                     {t(FileData.display)
                         .split("\\n")
@@ -152,8 +161,8 @@ const SearchBirthApplication = ({ onSubmit, data, filestoreId, isSuccess, isLoad
                 </Card>
             ) : isLoading && !FileData === true ? (
                 <Loader />
-            ) : (
-                FileData !== "" && (
+            ) : ( */}
+                {FileData !== [] && (
                     <React.Fragment>
                         {/* {(filestoreId && isSuccess === true )? <div style={registyBtnStyle}>
         <SubmitBar label={t("Download Certificate")} onSubmit={() => downloadDocument(filestoreId)} />
@@ -174,7 +183,7 @@ const SearchBirthApplication = ({ onSubmit, data, filestoreId, isSuccess, isLoad
                                 };
                             }}
                             onPageSizeChange={onPageSizeChange}
-                            // currentPage={getValues("offset") / getValues("limit")}
+                            // currentPage={getValues("offset")}
                             onNextPage={nextPage}
                             onPrevPage={previousPage}
                             pageSizeLimit={getValues("limit")}
@@ -183,8 +192,8 @@ const SearchBirthApplication = ({ onSubmit, data, filestoreId, isSuccess, isLoad
                             sortParams={[{ id: getValues("sortBy"), desc: getValues("sortOrder") === "DESC" ? true : false }]}
                         />
                     </React.Fragment>
-                )
-            )} 
+                )}
+            {/* )}  */}
         </React.Fragment>
     )
 }

@@ -125,15 +125,7 @@ const DeathPlaceHome = ({
       setDeathPlaceHomehoueNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
-  function setSelectDeathPlaceHomehoueNameMl(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$/;
-    if (!e.target.value.match(pattern)) {
-      e.preventDefault();
-      setDeathPlaceHomehoueNameMl("");
-    } else {
-      setDeathPlaceHomehoueNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
-    }
-  }
+ 
 
   // function setSelectDeathPlaceHomehoueNameMl(e) {
   //   if (e.target.value.length === 51) {
@@ -156,6 +148,15 @@ const DeathPlaceHome = ({
       setDeathPlaceHomelocalityMl("");
     } else {
       setDeathPlaceHomelocalityMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    }
+  }
+  function setSelectDeathPlaceHomehoueNameMl(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$/;
+    if (!e.target.value.match(pattern)) {
+      e.preventDefault();
+      setDeathPlaceHomehoueNameMl("");
+    } else {
+      setDeathPlaceHomehoueNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
 
@@ -191,12 +192,7 @@ const DeathPlaceHome = ({
       e.preventDefault();
     }
   }
-  function setCheckMalayalamInputField(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
-    if (!(e.key.match(pattern))) {
-      e.preventDefault();
-    }
-  }
+
   function setSelectDeathPlaceWardId(value) {
     setDeathPlaceWardId(value);
   }
@@ -308,8 +304,7 @@ const DeathPlaceHome = ({
                 optionKey="i18nKey"
                 name="DeathPlaceHomeStreetNameEn"
                 value={DeathPlaceHomeStreetNameEn}
-                onChange={setSelectDeathPlaceHomestreetNameEn}
-                onKeyPress={setCheckSpecialCharSpace}
+                onChange={setSelectDeathPlaceHomestreetNameEn}                
                 placeholder={`${t("CR_STREET_NAME_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
               />
@@ -369,8 +364,7 @@ const DeathPlaceHome = ({
                 optionKey="i18nKey"
                 name="DeathPlaceHomeStreetNameMl"
                 value={DeathPlaceHomeStreetNameMl}
-                onChange={setSelectDeathPlaceHomestreetNameMl}
-                onKeyPress={setCheckMalayalamInputField}
+                onChange={setSelectDeathPlaceHomestreetNameMl}              
                 placeholder={`${t("CR_STREET_NAME_ML")}`}
                 {...(validation = {
                   pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -380,6 +374,7 @@ const DeathPlaceHome = ({
                 })}
               />
             </div>
+            
             <div className="col-md-4">
               <CardLabel>
                 {t("CR_HOUSE_NAME_ML")}
@@ -391,12 +386,12 @@ const DeathPlaceHome = ({
                 type={"text"}
                 optionKey="i18nKey"
                 name="DeathPlaceHomehoueNameMl"
-                value={DeathPlaceHomehoueNameMl}               
+                value={DeathPlaceHomehoueNameMl}
                 onChange={setSelectDeathPlaceHomehoueNameMl}
                 onKeyPress={setCheckMalayalamInputField}
                 placeholder={`${t("CR_HOUSE_NAME_ML")}`}
                 {...(validation = {
-                  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9`' ]*$",
+                  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]*$",
                   isRequired: true,
                   type: "text",
                   title: t("CR_INVALID_LOCALITY_ML"),

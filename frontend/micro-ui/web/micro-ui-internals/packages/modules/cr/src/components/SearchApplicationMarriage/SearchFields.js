@@ -7,7 +7,8 @@ const SearchFields = ({
                           register,
                           control,
                           reset,
-                          previousPage
+                          previousPage,
+                          searchType
                       }) => {
 
     let validation = {};
@@ -28,12 +29,12 @@ const SearchFields = ({
     return (
         <>
             <SearchField>
-                <label> {t("APPLICATION NO")}</label>
-                <TextInput name="applicationNo"
+                <label> {searchType == 'application' ? t("APPLICATION NO") : t("REGISTRATION NO")}</label>
+                <TextInput name={searchType == 'application' ? "applicationNo" : "registrationNo"}
                            inputRef={register({})}
                            control={control}
                            {...(validation = { isRequired: false, type: "text" })}
-                           placeholder={`${t("Application No")}`} />
+                           placeholder={`${searchType == 'application' ? t("Application No") : t("Registration No")}`} />
             </SearchField>
             <SearchField>
                 <label><span className="mandatorycss">*</span> {t("DATE OF MARRIAGE")}</label>
@@ -79,6 +80,7 @@ const SearchFields = ({
                 <SubmitBar label={t("ES_COMMON_SEARCH")} submit />
                 <p onClick={() => {
                     reset();
+                    previousPage();
                 }}>{t(`ES_COMMON_CLEAR_ALL`)}</p>
             </SearchField>
         </>
