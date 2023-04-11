@@ -3,67 +3,7 @@ import { pdfDocumentName, pdfDownloadLink, stringReplaceAll, getTransaltedLocali
 const capitalize = (text) => text.substr(0, 1).toUpperCase() + text.substr(1);
 const ulbCamel = (ulb) => ulb.toLowerCase().split(" ").map(capitalize).join(" ");
 
-const getChildDetails = (application, t) => {
-  console.log(application);
-  application.owners = application?.ChildDetails?.filter((applicationNumber) => applicationNumber.active == true) || [];
-  //if (application?.ChildDetails?.applicationNumber == "TL_COMMON_TABLE_COL_APP_NO") {
-  // "dateofreport": 1681143816135,
-  //     "childDOB": 1680566400000,
-  //     "birthDateTime": null,
-  //     "gender": "MALE",
-  //     "childAadharNo": "",
-  //     "isChildName": false,
-  //     "childFirstNameEn": "",
-  //     "childMiddleNameEn": "",
-  //     "childLastNameEn": "",
-  //     "childFirstNameMl": "",
-  //     "childMiddleNameMl": "",
-  //     "childLastNameMl": "",
-  //     "birthPlace": "HOSPITAL",
-  //     "hospitalCode": "HOSPITAL_8377",
-  //     "hospitalName": "M A J Hospital, Ernakulam",
-  //     "hospitalNameMl": "എം എ ജെ ഹോസ്പിറ്റല്‍",
-  return {
-    title: t("CR_BIRTH_APPLICATION_SUMMARY"),
-    values: [
-      { title: t("CR_BIRTH_APPL_NO"), value: application?.applicationNumber ? application?.applicationNumber : t("CS_NA") },
-      { title: t("CR_CHILD DOB"), value: application?.childDOB ? Digit.DateUtils.ConvertTimestampToDate(application?.childDOB, "dd/MM/yyyy") : t("CS_NA") },
-      { title: t("CR_BIRTH_APPL_NO"), value: application?.gender ? application?.gender : t("CS_NA") },
-      { title: t("CR_BIRTH_PLACE"), value: application?.birthPlace ? application?.birthPlace : t("CS_NA") },
-      { title: t("CR_BIRTH_PLACE_NAME"), value: application?.hospitalName ? application?.hospitalName : t("CS_NA") },
 
-      // { title: t("TL_OWNER_S_NAME_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.name || t("CS_NA") },
-      // { title: t("TL_OWNER_S_MOBILE_NUM_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.mobileNumber || t("CS_NA") },
-      // // { title: t("TL_GUARDIAN_S_NAME_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.fatherOrHusbandName || t("CS_NA") },
-      // // { title: t("TL_RELATIONSHIP_WITH_GUARDIAN_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.relationship || t("CS_NA") },
-      // { title: t("TL_NEW_OWNER_DETAILS_GENDER_LABEL"), value: t(application?.tradeLicenseDetail?.owners[0]?.gender) || t("CS_NA") },
-      // { title: t("TL_NEW_OWNER_DETAILS_EMAIL_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.emailId || t("CS_NA") },
-      // { title: t("TL_OWNER_SPECIAL_CATEGORY"), value: application?.tradeLicenseDetail?.owners[0]?.ownerType ? t(`COMMON_MASTERS_OWNERTYPE_${application?.tradeLicenseDetail?.owners[0]?.ownerType}`) : t("CS_NA") },
-      // { title: t("TL_NEW_OWNER_DETAILS_ADDR_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.permanentAddress || t("CS_NA") },
-    ],
-  };
-
-  // } else { //if (application?.subOwnerShipCategory?.includes("INDIVIDUAL"))
-  //   let values = [];
-  //   application?.tradeLicenseDetail.owners.map((owner) => {
-  //     let indOwner = [
-  //       { title: t("TL_OWNER_S_NAME_LABEL"), value: owner?.name || t("CS_NA") },
-  //       { title: t("TL_OWNER_S_MOBILE_NUM_LABEL"), value: owner?.mobileNumber || t("CS_NA") },
-  //       // { title: t("TL_GUARDIAN_S_NAME_LABEL"), value: owner?.fatherOrHusbandName || t("CS_NA") },
-  //       // { title: t("TL_RELATIONSHIP_WITH_GUARDIAN_LABEL"), value: owner?.relationship || t("CS_NA") },
-  //       { title: t("TL_NEW_OWNER_DETAILS_GENDER_LABEL"), value: t(owner?.gender) || t("CS_NA") },
-  //       { title: t("TL_NEW_OWNER_DETAILS_EMAIL_LABEL"), value: owner?.emailId || t("CS_NA") },
-  //       { title: t("TL_OWNER_SPECIAL_CATEGORY"), value: owner?.ownerType ? t(`COMMON_MASTERS_OWNERTYPE_${owner?.ownerType}`) : t("CS_NA") },
-  //       { title: t("TL_NEW_OWNER_DETAILS_ADDR_LABEL"), value: owner?.permanentAddress || t("CS_NA") },
-  //     ];
-  //     values.push(...indOwner);
-  //   });
-  //   return {
-  //     title: t("TL_OWNERSHIP_DETAILS_HEADER"),
-  //     values: values,
-  //   };
-  // }
-};
 //  const getTradeDetails = (application, t) => {
 //   return {
 //     title: t("TL_COMMON_TR_DETAILS"),
@@ -128,19 +68,63 @@ const getChildDetails = (application, t) => {
 //     values: values,
 //   };
 // };
+const getChildDetails = (application, t) => {
+  console.log(application);
+  application.owners = application?.ChildDetails?.filter((applicationNumber) => applicationNumber.active == true) || [];
+  //if (application?.ChildDetails?.applicationNumber == "TL_COMMON_TABLE_COL_APP_NO") {
+ 
+  return {
+    title: "",
+    values: [
+      { title: t("Date of Birth"), value: application?.childDOB ? Digit.DateUtils.ConvertTimestampToDate(application?.childDOB, "dd/MM/yyyy") : t("CS_NA") },
+      { title: t("Gender"), value: application?.gender ? application?.gender : t("CS_NA") },
+      { title: t("Birth Place"), value: application?.birthPlace ? application?.birthPlace : t("CS_NA") },
+      { title: t("Birth Place Name"), value: application?.hospitalName ? application?.hospitalName : t("CS_NA") },
 
-// const getAddressDetails = (application, t) => {
-//   return {
-//     title: "",
-//     values: [
-//       { title: t("CORE_COMMON_PINCODE"), value: application?.tradeLicenseDetail?.address?.pincode || t("CS_NA") },
-//       { title: t("MYCITY_CODE_LABEL"), value: t(application?.tradeLicenseDetail?.address?.city) || t("CS_NA") },
-//       { title: t("TL_LOCALIZATION_LOCALITY"), value: t(getTransaltedLocality(application?.tradeLicenseDetail?.address)) || t("CS_NA") },
-//       { title: t("TL_LOCALIZATION_BUILDING_NO"), value: application?.tradeLicenseDetail?.address?.doorNo || t("CS_NA") },
-//       { title: t("TL_LOCALIZATION_STREET_NAME"), value: application?.tradeLicenseDetail?.address?.street || t("CS_NA") }
-//     ],
-//   };
-// };
+      // { title: t("TL_OWNER_S_NAME_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.name || t("CS_NA") },
+      // { title: t("TL_OWNER_S_MOBILE_NUM_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.mobileNumber || t("CS_NA") },
+      // // { title: t("TL_GUARDIAN_S_NAME_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.fatherOrHusbandName || t("CS_NA") },
+      // // { title: t("TL_RELATIONSHIP_WITH_GUARDIAN_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.relationship || t("CS_NA") },
+      // { title: t("TL_NEW_OWNER_DETAILS_GENDER_LABEL"), value: t(application?.tradeLicenseDetail?.owners[0]?.gender) || t("CS_NA") },
+      // { title: t("TL_NEW_OWNER_DETAILS_EMAIL_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.emailId || t("CS_NA") },
+      // { title: t("TL_OWNER_SPECIAL_CATEGORY"), value: application?.tradeLicenseDetail?.owners[0]?.ownerType ? t(`COMMON_MASTERS_OWNERTYPE_${application?.tradeLicenseDetail?.owners[0]?.ownerType}`) : t("CS_NA") },
+      // { title: t("TL_NEW_OWNER_DETAILS_ADDR_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.permanentAddress || t("CS_NA") },
+    ],
+  };
+
+  // } else { //if (application?.subOwnerShipCategory?.includes("INDIVIDUAL"))
+  //   let values = [];
+  //   application?.tradeLicenseDetail.owners.map((owner) => {
+  //     let indOwner = [
+  //       { title: t("TL_OWNER_S_NAME_LABEL"), value: owner?.name || t("CS_NA") },
+  //       { title: t("TL_OWNER_S_MOBILE_NUM_LABEL"), value: owner?.mobileNumber || t("CS_NA") },
+  //       // { title: t("TL_GUARDIAN_S_NAME_LABEL"), value: owner?.fatherOrHusbandName || t("CS_NA") },
+  //       // { title: t("TL_RELATIONSHIP_WITH_GUARDIAN_LABEL"), value: owner?.relationship || t("CS_NA") },
+  //       { title: t("TL_NEW_OWNER_DETAILS_GENDER_LABEL"), value: t(owner?.gender) || t("CS_NA") },
+  //       { title: t("TL_NEW_OWNER_DETAILS_EMAIL_LABEL"), value: owner?.emailId || t("CS_NA") },
+  //       { title: t("TL_OWNER_SPECIAL_CATEGORY"), value: owner?.ownerType ? t(`COMMON_MASTERS_OWNERTYPE_${owner?.ownerType}`) : t("CS_NA") },
+  //       { title: t("TL_NEW_OWNER_DETAILS_ADDR_LABEL"), value: owner?.permanentAddress || t("CS_NA") },
+  //     ];
+  //     values.push(...indOwner);
+  //   });
+  //   return {
+  //     title: t("TL_OWNERSHIP_DETAILS_HEADER"),
+  //     values: values,
+  //   };
+  // }
+};
+const getAddressDetails = (application, t) => {
+  return {
+    title: "",
+    values: [
+      // { title: t("CORE_COMMON_PINCODE"), value: application?.tradeLicenseDetail?.address?.pincode || t("CS_NA") },
+      // { title: t("MYCITY_CODE_LABEL"), value: t(application?.tradeLicenseDetail?.address?.city) || t("CS_NA") },
+      // { title: t("TL_LOCALIZATION_LOCALITY"), value: t(getTransaltedLocality(application?.tradeLicenseDetail?.address)) || t("CS_NA") },
+      { title: t("Locality"), value: application?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn || t("CS_NA") },
+      { title: t("House Name"), value: application?.AddressBirthDetails?.presentInsideKeralaHouseNameEn || t("CS_NA") }
+    ],
+  };
+};
 
 const getCRBirthAcknowledgementData = async (application, tenantInfo, t) => {
   //   const filesArray = application?.tradeLicenseDetail?.applicationDocuments?.map((value) => value?.fileStoreId);
@@ -156,18 +140,18 @@ const getCRBirthAcknowledgementData = async (application, tenantInfo, t) => {
     email: "",
     phoneNumber: "",
     details: [
-      // {
-      //   title: t("NOC_TASK_DETAILS_HEADER"),
-      //   values: [
-      //     { title: t("TL_COMMON_TABLE_COL_LIC_NO"), value: application?.licenseNumber || t("CS_NA") },
-      //     { title: t("TL_COMMON_TABLE_COL_APP_NO"), value: application?.applicationNumber },
-      //     {
-      //       title: t("TL_COMMON_TABLE_COL_APP_DATE"),
-      //       value: Digit.DateUtils.ConvertTimestampToDate(application?.applicationDate, "dd/MM/yyyy"),
-      //     },
-      //   ],
-      // },
+      {
+        title:t("Acknowledgment Details"),
+        values: [
+          { title: t("Application No"), value: application?.applicationNumber },
+          {
+            title: t("Application Date"),
+            value: Digit.DateUtils.ConvertTimestampToDate(application?.dateofreport, "dd/MM/yyyy"),
+          },
+        ],
+      },
       getChildDetails(application, t),
+      getAddressDetails(application, t),
       //       getTradeDetails(application, t),
       //       getTradeUnitsDetails(application, t),
       //       getAccessoriesDetails(application, t),
