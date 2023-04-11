@@ -25,12 +25,14 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
   const [uploadedFile3, setUploadedFile3] = useState(null);
   const [uploadedFile4, setUploadedFile4] = useState(null);
   const [uploadedFile5, setUploadedFile5] = useState(null);
+  const [uploadedFile6, setUploadedFile6] = useState(null);
   const [file, setFile] = useState(formData?.owners?.documents?.ProofOfIdentity);
   const [file1, setFile1] = useState(formData?.owners?.documents?.ProofOfIdentity);
   const [file2, setFile2] = useState(formData?.owners?.documents?.ProofOfIdentity);
   const [file3, setFile3] = useState(formData?.owners?.documents?.ProofOfIdentity);
   const [file4, setFile4] = useState(formData?.owners?.documents?.ProofOfIdentity);
   const [file5, setFile5] = useState(formData?.owners?.documents?.ProofOfIdentity);
+  const [file6, setFile6] = useState(formData?.owners?.documents?.ProofOfIdentity);
   const [toast, setToast] = useState(false);
   const [infomantFirstNmeEnError, setinfomantFirstNmeEnError] = useState(formData?.InitiatorinfoDetails?.initiatorNameEn ? false : false);
   const [initiatorAadharError, setinitiatorAadharError] = useState(formData?.InitiatorinfoDetails?.initiatorAadhar ? false : false);
@@ -141,6 +143,9 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
   }
   function selectfile5(e) {
     setFile5(e.target.files[0]);
+  }
+  function selectfile6(e) {
+    setFile6(e.target.files[0]);
   }
   useEffect(() => {
     (async () => {
@@ -262,6 +267,26 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
       }
     })();
   }, [file5]);
+  useEffect(() => {
+    (async () => {
+      setError(null);
+      if (file6) {
+        if (file6.size >= 2000000) {
+          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+        } else {
+          try {
+            const response = await Digit.UploadServices.Filestorage("citizen-profile", file6, Digit.ULBService.getStateId());
+            if (response?.data?.files?.length > 0) {
+              setUploadedFile6(response?.data?.files[0]?.fileStoreId);
+            } else {
+              setError(t("FILE_UPLOAD_ERROR"));
+            }
+          } catch (err) {
+          }
+        }
+      }
+    })();
+  }, [file6]);
   let validFlag = true;
   const goNext = () => {
     if (initiatorNameEn == null || initiatorNameEn == "" || initiatorNameEn == undefined) {
@@ -471,7 +496,7 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
         <div className="row">
           <div className="col-md-12">
             <div className="row">
-              <div className="col-md-5">
+              <div className="col-md-6">
                 <CardLabel>Address proof of deceased at the time of death<span className="mandatorycss">*</span></CardLabel>
               </div>
               <div className="col-md-3">
@@ -488,7 +513,7 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
               </div>
             </div>
             <div className="row">
-              <div className="col-md-5">
+              <div className="col-md-6">
                 <CardLabel>ID card of applicant<span className="mandatorycss">*</span></CardLabel>
               </div>
               <div className="col-md-3">
@@ -505,7 +530,7 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
               </div>
             </div>
             <div className="row">
-              <div className="col-md-5">
+              <div className="col-md-6">
                 <CardLabel>ID proof of father/mother/spouse<span className="mandatorycss">*</span></CardLabel>
               </div>
               <div className="col-md-3">
@@ -522,8 +547,25 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
               </div>
             </div>
             <div className="row">
-              <div className="col-md-5">
+              <div className="col-md-6">
                 <CardLabel>ID Proof of death <span className="mandatorycss">*</span></CardLabel>
+              </div>
+              <div className="col-md-3">
+                <UploadFile
+                  extraStyleName={"propertyCreate"}
+                  accept=".jpg,.png,.pdf"
+                  onUpload={selectfile3}
+                  onDelete={() => {
+                    setUploadedFile3(null);
+                  }}
+                  message={uploadedFile3 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+
+                />
+              </div>
+            </div>
+            <div className="row" >
+              <div className="col-md-6">
+                <CardLabel>Declaration by Applicant  Stating that death occured in this ulb area, DOD. <span className="mandatorycss">*</span></CardLabel>
               </div>
               <div className="col-md-3">
                 <UploadFile
@@ -539,92 +581,39 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
               </div>
             </div>
             <div className="row">
-              <div className="col-md-5">
-                <CardLabel>Declaration by Applicant  Stating that death occured in this ulb area, DOD. Place of Death, and address at the time of death counter signed by gazetted officer<span className="mandatorycss">*</span></CardLabel>
+              <div className="col-md-6">
+                <CardLabel>Declaration by a credible person stating the event occured with in the jurisdiction<span className="mandatorycss">*</span></CardLabel>
               </div>
               <div className="col-md-3">
                 <UploadFile
                   extraStyleName={"propertyCreate"}
                   accept=".jpg,.png,.pdf"
-                  onUpload={selectfile}
+                  onUpload={selectfile5}
                   onDelete={() => {
-                    setUploadedFile(null);
+                    setUploadedFile5(null);
                   }}
-                  message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-
-                />
-              </div>
-            </div>
-            {/* <div className="row">
-              <div className="col-md-5">
-                <CardLabel>Declaration by a credible person stating the event occured with in the jurisdiction of local body concerned<span className="mandatorycss">*</span></CardLabel>
-              </div>
-              <div className="col-md-3">
-                <UploadFile
-                  extraStyleName={"propertyCreate"}
-                  accept=".jpg,.png,.pdf"
-                  onUpload={selectfile}
-                  onDelete={() => {
-                    setUploadedFile(null);
-                  }}
-                  message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                  message={uploadedFile5 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
 
                 />
               </div>
             </div>
             <div className="row">
-              <div className="col-md-5">
+              <div className="col-md-6">
                 <CardLabel>Declaration by another credible person stating the event occured with in the jurisdiction of local body concerned<span className="mandatorycss">*</span></CardLabel>
               </div>
               <div className="col-md-3">
                 <UploadFile
                   extraStyleName={"propertyCreate"}
                   accept=".jpg,.png,.pdf"
-                  onUpload={selectfile3}
+                  onUpload={selectfile6}
                   onDelete={() => {
-                    setUploadedFile3(null);
+                    setUploadedFile6(null);
                   }}
-                  message={uploadedFile3 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                  message={uploadedFile6 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
 
                 />
               </div>
-            </div> */}
-            
-
-            {/* <div className="row">
-              <div className="col-md-5">
-                <CardLabel>Declaration by a credible person stating the event occured with in the jurisdiction of local body concerned <span className="mandatorycss">*</span></CardLabel>
-              </div>
-              <div className="col-md-3">
-                <UploadFile
-                  extraStyleName={"propertyCreate"}
-                  accept=".jpg,.png,.pdf"
-                  onUpload={selectfile3}
-                  onDelete={() => {
-                    setUploadedFile3(null);
-                  }}
-                  message={uploadedFile3 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-
-                />
-              </div>
-            </div> */}
-            {/* <div className="row">
-              <div className="col-md-5">
-                <CardLabel>Declaration by another credible person stating the event occured with in the jurisdiction of local body concerned<span className="mandatorycss">*</span></CardLabel>
-              </div>
-              <div className="col-md-3">
-                <UploadFile
-                  extraStyleName={"propertyCreate"}
-                  accept=".jpg,.png,.pdf"
-                  onUpload={selectfile3}
-                  onDelete={() => {
-                    setUploadedFile3(null);
-                  }}
-                  message={uploadedFile3 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-
-                />
-              </div>
-            </div> */}
+            </div>
           </div>
         </div>
         <div className="row">

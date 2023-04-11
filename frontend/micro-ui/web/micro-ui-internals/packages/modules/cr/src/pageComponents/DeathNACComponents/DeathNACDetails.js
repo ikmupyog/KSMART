@@ -10,6 +10,8 @@ import DeathPlaceVehicle from "../deathComponents/DeathPlaceVehicle";
 import DeathPublicPlace from "../deathComponents/DeathPublicPlace";
 import DeathOutsideJurisdiction from "../deathComponents/DeathOutsideJurisdiction ";
 import { useParams } from "react-router-dom";
+import moment from "moment";
+
 
 const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath }) => {
   const [isEditDeathPageComponents, setIsEditDeathPageComponents] = useState(false);
@@ -83,7 +85,7 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
     place["common-masters"] &&
     place["common-masters"].PlaceMasterDeath &&
     place["common-masters"].PlaceMasterDeath.map((ob) => {
-      if(ob.code !== "OUTSIDE_JURISDICTION"){
+      if (ob.code !== "OUTSIDE_JURISDICTION") {
         cmbPlace.push(ob);
       }
     });
@@ -1320,33 +1322,33 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
               </div>
             )} */}
             {/* {DeathDateUnavailable === false && ( */}
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="col-md-6">
-                    <CardLabel>
-                      {t("CR_DATE_OF_DEATH")}
-                      <span className="mandatorycss">*</span>
-                    </CardLabel>
-                    {/* date={CommencementDate} */}
-                    <DatePicker
-                      date={DateOfDeath}
-                      max={convertEpochToDate(new Date())}
-                      name="DateOfDeath"
-                      onChange={selectDeathDate}
-                      {...(validation = {
-                        pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",
-                        isRequired: true,
-                        type: "text",
-                        title: t("CR_INVALID_DATE"),
-                      })}
-                    />
-                  </div>
-                  {/* <div className="col-md-2">
+            <div className="row">
+              <div className="col-md-12">
+                <div className="col-md-6" >
+                  <CardLabel>
+                    {t("CR_DATE_OF_DEATH")}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
+                  {/* date={CommencementDate} */}
+                  <DatePicker
+                    date={DateOfDeath}
+                    max={moment().subtract(1, "year").format("YYYY-MM-DD")}
+                    name="DateOfDeath"
+                    onChange={selectDeathDate}
+                    {...(validation = {
+                      pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",
+                      isRequired: true,
+                      type: "text",
+                      title: t("CR_INVALID_DATE"),
+                    })}
+                  />
+                </div>
+                {/* <div className="col-md-2">
                     <CardLabel>{t("CR_TIME_OF_DEATH")}</CardLabel>
                     <CustomTimePicker name="TimeOfDeath" onChange={(val) => handleTimeChange(val, setDeathTime)} value={TimeOfDeath} />
                   </div> */}
-                </div>
               </div>
+            </div>
             {/* )} */}
           </div>
           {/* <div>
@@ -1557,24 +1559,24 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
             </div>
           </div>
           <div className="row">
-              <div className="col-md-12">
-                <div className="col-md-6">
-                  <CardLabel>{`${t("CR_BURIAL_PLACE")}`}</CardLabel>
-                  <TextInput
-                    t={t}
-                    isMandatory={false}
-                    type="number"
-                    max="12"
-                    optionKey="i18nKey"
-                    name="placeofBurial"
-                    value={placeofBurial}
-                    onChange={setSelectPlaceofBurial}
-                    placeholder="Place of Burial"
-                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: "Invalid Place of Burial" })}
-                  />
-                </div>
+            <div className="col-md-12">
+              <div className="col-md-6">
+                <CardLabel>{`${t("CR_BURIAL_PLACE")}`}</CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type="number"
+                  max="12"
+                  optionKey="i18nKey"
+                  name="placeofBurial"
+                  value={placeofBurial}
+                  onChange={setSelectPlaceofBurial}
+                  placeholder="Place of Burial"
+                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: "Invalid Place of Burial" })}
+                />
               </div>
             </div>
+          </div>
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
@@ -1631,25 +1633,25 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
             </div>
           )} */}
           {/* {DeceasedAadharNotAvailable === false && ( */}
-            <div className="row">
-              <div className="col-md-12">
-                <div className="col-md-6">
-                  <CardLabel>{t("CR_AADHAR")}</CardLabel>
-                  <TextInput
-                    t={t}
-                    isMandatory={false}
-                    type="number"
-                    max="12"
-                    optionKey="i18nKey"
-                    name="DeceasedAadharNumber"
-                    value={DeceasedAadharNumber}
-                    onChange={setSelectDeceasedAadharNumber}
-                    placeholder={`${t("CR_AADHAR")}`}
-                    {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
-                  />
-                </div>
+          <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-6">
+                <CardLabel>{t("CR_AADHAR")}</CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type="number"
+                  max="12"
+                  optionKey="i18nKey"
+                  name="DeceasedAadharNumber"
+                  value={DeceasedAadharNumber}
+                  onChange={setSelectDeceasedAadharNumber}
+                  placeholder={`${t("CR_AADHAR")}`}
+                  {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                />
               </div>
             </div>
+          </div>
           {/* )} */}
 
           <div className="row">
@@ -1782,26 +1784,26 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
 
           {toast && (
             <Toast
-              error={DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError ||  sexError || WardNameError}
+              error={DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || sexError || WardNameError}
               label={
-                DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError ||  sexError || WardNameError
+                DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || sexError || WardNameError
                   ? DOBError
                     ? t(`CR_INVALID_DATE`)
                     : sexError
-                    ? t(`DEATH_ERROR_SEX_CHOOSE`)
-                    : AadharError
-                    ? t(`CS_COMMON_INVALID_AADHAR_NO`)
-                    : HospitalError
-                    ? t(`CR_ERROR_HOSPITAL_CHOOSE`)
-                    : InstitutionError
-                    ? t(`CR_ERROR_INSTITUTION_TYPE_CHOOSE`)
-                    : InstitutionNameError
-                    ? t(`CR_ERROR_INSTITUTION_NAME_CHOOSE`)
-                    // : AgeError
-                    // ? t(`CR_ERROR_AGE_CHOOSE`)
-                    : WardNameError
-                    ? t(`CR_ERROR_WARD_CHOOSE`)
-                    : setToast(false)
+                      ? t(`DEATH_ERROR_SEX_CHOOSE`)
+                      : AadharError
+                        ? t(`CS_COMMON_INVALID_AADHAR_NO`)
+                        : HospitalError
+                          ? t(`CR_ERROR_HOSPITAL_CHOOSE`)
+                          : InstitutionError
+                            ? t(`CR_ERROR_INSTITUTION_TYPE_CHOOSE`)
+                            : InstitutionNameError
+                              ? t(`CR_ERROR_INSTITUTION_NAME_CHOOSE`)
+                              // : AgeError
+                              // ? t(`CR_ERROR_AGE_CHOOSE`)
+                              : WardNameError
+                                ? t(`CR_ERROR_WARD_CHOOSE`)
+                                : setToast(false)
                   : setToast(false)
               }
               onClose={() => setToast(false)}
