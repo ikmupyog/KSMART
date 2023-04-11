@@ -164,7 +164,7 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                 </div>
               )}
 
-              {/* {StillBirthChildDetails.birthPlace.code === "INSTITUTION" && (
+              {StillBirthChildDetails.birthPlace.code === "INSTITUTION" && (
                 <div className="row">
                   <div className="col-md-6">
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PLACE_OF_BIRTH")}`}</CardLabel>
@@ -175,9 +175,9 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                     </CardText>
                   </div>
                 </div>
-              )} */}
+              )}
 
-              {/* {StillBirthChildDetails.birthPlace.code === "HOME" && (
+              {StillBirthChildDetails.birthPlace.code === "HOME" && (
                 <div className="row">
                   <div className="col-md-6">
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PLACE_OF_BIRTH")}`}</CardLabel>
@@ -211,8 +211,8 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                     </CardText>
                   </div>
                 </div>
-              )} */}
-              {/* {StillBirthChildDetails.birthPlace.code === "VEHICLE" && (
+              )}
+              {StillBirthChildDetails.birthPlace.code === "VEHICLE" && (
                 <div className="row">
                   <div className="col-md-6">
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PLACE_OF_BIRTH")}`}</CardLabel>
@@ -255,8 +255,8 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                     </CardText>
                   </div>
                 </div>
-              )} */}
-              {/* {StillBirthChildDetails.birthPlace.code === "PUBLIC_PLACES" && (
+              )}
+              {StillBirthChildDetails.birthPlace.code === "PUBLIC_PLACES" && (
                 <div className="row">
                   <div className="col-md-6">
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PLACE_OF_BIRTH")}`}</CardLabel>
@@ -288,7 +288,7 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                     </CardText>
                   </div>
                 </div>
-              )} */}
+              )}
             </div>
           </div>
 
