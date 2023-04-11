@@ -1,11 +1,13 @@
 package org.egov.filemgmnt.web.models.arisingfile;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
+import org.egov.filemgmnt.web.models.ApplicantAddress;
 import org.egov.filemgmnt.web.models.AuditDetails;
 import org.springframework.validation.annotation.Validated;
 
@@ -115,7 +117,9 @@ public class ArisingFile {
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
 
-
-
+    @Valid
+    @NotNull(message = "Arising file Applicant detail is required")
+    @JsonProperty("arisingFileApplicant")
+    private ArisingFileApplicant arisingFileApplicant;
 
 }

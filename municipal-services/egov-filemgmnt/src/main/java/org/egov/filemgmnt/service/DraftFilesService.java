@@ -68,7 +68,7 @@ public class DraftFilesService {
         List<DraftFiles> searchResult = repository.searchDrafting(DraftFilesSearchCriteria.builder()
                                                                                           .draftType(dType)
                                                                                           .fileCode(fCode)
-                                                                                          .uuid(assignerUid)
+                                                                                          .assigner(assignerUid)
                                                                                           .build());
         // validate request
         validator.validateUpdate(request, searchResult);
@@ -88,19 +88,19 @@ public class DraftFilesService {
                                                 .collect(Collectors.toCollection(LinkedList::new));
         String fCode = null;
         String dType = null;
-        String assignerUid = statusrequest.getRequestInfo()
-                                          .getUserInfo()
-                                          .getUuid();
+        String assignerUid = null;
+
 
         for (DraftFiles newDrafts : statusrequest.getDrafting()) {
             fCode = newDrafts.getFileCode();
             dType = newDrafts.getDraftType();
+            assignerUid = newDrafts.getAssigner();
         }
         // search database
         List<DraftFiles> searchResult = repository.searchDrafting(DraftFilesSearchCriteria.builder()
                                                                                           .draftType(dType)
                                                                                           .fileCode(fCode)
-                                                                                          .uuid(assignerUid)
+                                                                                          .assigner(assignerUid)
                                                                                           .build());
         // validate request
         validator.validateUpdate(statusrequest, searchResult);

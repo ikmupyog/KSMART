@@ -653,6 +653,63 @@ serviceMaps:
         - jsonPath: $.ArisingFile.*.auditDetails.applicationDetails
 
 
+        - query: INSERT INTO public.eg_fm_arisingfileapplicantdetails (id, tenantid, arisingfileid, filecode, wardno, applicantnameeng, applicantnamemal, housenameeng, housenamemal, localplaceeng, localplacemal, mainplaceeng, mainplacemal, pincode, postofficeeng, postofficemal, districteng, districtmal, stateeng, statemal, documentfilestoreid, createdby, createdtime, lastmodifiedby, lastmodifiedtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+          basePath: ArisingFile.*ArisingFileApplicant.*
+          jsonMaps:
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.id
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.tenantId
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.arisingFileId
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.fileCode
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.wardNo
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.applicantNameEng
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.applicantNameMal
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.houseNameEng
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.houseNameMal
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.localPlaceEng
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.localPlaceMal
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.mainPlaceEng
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.mainPlaceMal
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.pinCode
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.postOfficeEng
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.postOfficeMal
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.districtEng
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.districtMal
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.stateEng
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.stateMal
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.documentFileStoreId
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.auditDetails.createdBy
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.auditDetails.createdTime
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.auditDetails.lastModifiedBy
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.auditDetails.lastModifiedTime
+
+
+
+
 
   - version: 1.0
     description: Update arising file  details in egov_filemgmnt database, eg_fm_arisingfile table
