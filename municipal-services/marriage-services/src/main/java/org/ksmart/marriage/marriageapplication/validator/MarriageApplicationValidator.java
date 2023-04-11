@@ -1302,11 +1302,11 @@ public class MarriageApplicationValidator {
                                                                                                                 + " is invalid");
                                                                         }
                                                                         if (StringUtils.isEmpty(brideaddressInfo
-                                                                                        .getPermntInKeralaAdrPostOffice())) {
+                                                                                        .getPresentOutsideKeralaPostOfficeEn())) {
                                                                                 throw new CustomException(
                                                                                                 " BRIDE PERMANENT ADDRESS INSIDE KERALA: POSTOFFICE INVALID ",
                                                                                                 "The   Postofficef " +
-                                                                                                                brideaddressInfo.getPermntInKeralaAdrPostOffice()
+                                                                                                                brideaddressInfo.getPresentOutsideKeralaPostOfficeEn()
                                                                                                                 + " is invalid");
                                                                         }
                                                                         if (StringUtils.isEmpty(brideaddressInfo
@@ -1662,7 +1662,7 @@ public class MarriageApplicationValidator {
                                                                                         .getPresentOutsideKeralaVillageName())) {
                                                                                 throw new CustomException(
                                                                                                 "BRIDE PRESENT ADDRESS OUTSIDE KERALA: VILLAGE INVALID ",
-                                                                                                "The   Village " +
+                                                                                                "The   Village  " +
                                                                                                                 brideaddressInfo.getPresentOutsideKeralaVillageName()
                                                                                                                 + " is invalid");
                                                                         }
@@ -1685,7 +1685,7 @@ public class MarriageApplicationValidator {
                                                                                                                 + " is invalid");
                                                                         }
                                                                         if (StringUtils.isEmpty(brideaddressInfo
-                                                                                        .getPresentOutsideKeralaLocalityNameEn())) {
+                                                                                        .getPresentOutsideKeralaPostOfficeEn())) {
                                                                                 throw new CustomException(
                                                                                                 "BRIDE PRESENT ADDRESS OUTSIDE KERALA: POSTOFFICE INVALID ",
                                                                                                 "The Postofficef " +
@@ -1781,14 +1781,14 @@ public class MarriageApplicationValidator {
                                                                                                 brideaddressInfo.getPresentOutSideIndiaAdressEn()
                                                                                                 + " is invalid");
                                                         }
-                                                        if (StringUtils.isEmpty(brideaddressInfo
-                                                                        .getPresentOutSideIndiaAdressEnB())) {
-                                                                throw new CustomException(
-                                                                                "BRIDE PRESENT ADDRESS OUTSIDE INDIA: ADDRESS LINE Two ENGLISH INVALID ",
-                                                                                "The   Adress Line Two English " +
-                                                                                                brideaddressInfo.getPresentOutSideIndiaAdressEnB()
-                                                                                                + " is invalid");
-                                                        }
+                                                        // if (StringUtils.isEmpty(brideaddressInfo
+                                                        //                 .getPresentOutSideIndiaAdressEnB())) {
+                                                        //         throw new CustomException(
+                                                        //                         "BRIDE PRESENT ADDRESS OUTSIDE INDIA: ADDRESS LINE Two ENGLISH INVALID ",
+                                                        //                         "The   Adress Line Two English " +
+                                                        //                                         brideaddressInfo.getPresentOutSideIndiaAdressEnB()
+                                                        //                                         + " is invalid");
+                                                        // }
                                                         if (StringUtils.isEmpty(brideaddressInfo
                                                                         .getPresentOutSideIndiaAdressMl())) {
                                                                 throw new CustomException(
@@ -1797,14 +1797,14 @@ public class MarriageApplicationValidator {
                                                                                                 brideaddressInfo.getPresentOutSideIndiaAdressMl()
                                                                                                 + " is invalid");
                                                         }
-                                                        if (StringUtils.isEmpty(brideaddressInfo
-                                                                        .getPresentOutSideIndiaAdressMlB())) {
-                                                                throw new CustomException(
-                                                                                "BRIDE PRESENT ADDRESS OUTSIDE INDIA: ADDRESS LINE TWO MALAYALAM INVALID ",
-                                                                                "The   Adress Line Two Malayalam " +
-                                                                                                brideaddressInfo.getPresentOutSideIndiaAdressMlB()
-                                                                                                + " is invalid");
-                                                        }
+                                                        // if (StringUtils.isEmpty(brideaddressInfo
+                                                        //                 .getPresentOutSideIndiaAdressMlB())) {
+                                                        //         throw new CustomException(
+                                                        //                         "BRIDE PRESENT ADDRESS OUTSIDE INDIA: ADDRESS LINE TWO MALAYALAM INVALID ",
+                                                        //                         "The   Adress Line Two Malayalam " +
+                                                        //                                         brideaddressInfo.getPresentOutSideIndiaAdressMlB()
+                                                        //                                         + " is invalid");
+                                                        // }
 
                                                 }
                                                 // witness1
