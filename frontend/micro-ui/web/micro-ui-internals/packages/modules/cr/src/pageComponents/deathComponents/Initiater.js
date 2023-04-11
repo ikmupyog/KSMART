@@ -16,14 +16,15 @@ const Initiater = ({ config, onSelect, userType, formData, isEditDeath }) => {
     { i18nKey: "Mother", code: "MOTHER" },
     { i18nKey: "Others", code: "OTHERS" },
   ];  
-  // const [IsDeclarationInitiator, setIsDeclarationInitiator] = useState(
-  //   formData?.Initiator?.IsDeclarationInitiator ? formData?.Initiator?.IsDeclarationInitiator : false
-  // );
+  const [IsDeclarationInitiator, setIsDeclarationInitiator] = useState(
+ formData?.Initiator?.IsDeclarationInitiator ? formData?.Initiator?.IsDeclarationInitiator : false
+   );
   // const [isDeclarationInfotwo, setIsDeclarationInfotwo] = useState(
   //   formData?.Initiator?.isDeclarationInfotwo ? formData?.Initiator?.isDeclarationInfotwo : false
   // );
   const { name: name, } = Digit.UserService.getUser().info;
   const { mobileNumber: mobileNumber, } = Digit.UserService.getUser().info; 
+ // const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.Initiator?.isInitiatorDeclaration ? formData?.Initiator?.isInitiatorDeclaration :  false);
   const [isCaretaker, setIsCaretaker] = useState(formData?.Initiator?.isCaretaker ? formData?.Initiator?.isCaretaker :  false);
   const [InitiatorAadhaar, setInitiatorAadhaar] = useState(formData?.Initiator?.InitiatorAadhaar ? formData?.Initiator?.InitiatorAadhaar : "");
   const [InitiatorName, setInitiatorName] = useState(formData?.Initiator?.InitiatorName ? formData?.Initiator?.InitiatorName : name);
