@@ -9,6 +9,12 @@ import {
   getFilteredGroomGuardianNameData,
   getFilteredGroomDOBData,
   getFilteredGroomAgeData,
+  getFilteredBrideNameData,
+  getFilteredBrideFatherNameData,
+  getFilteredBrideGuardianNameData,
+  getFilteredBrideMotherNameData,
+  getFilteredBrideAgeData,
+  getFilteredBrideDOBData,
 } from "./marriage-correction-utils";
 import {
   getFilteredChildDobData,
@@ -67,10 +73,6 @@ export const initializeMarriageCorrectionObject = (marriageCorrectionDocData, se
   return formObj;
 };
 
-
-
-
-
 export const birthInclusionFilterFieldsObj = {
   CHILD_DOB: ({data, inclusionData}) => getFilteredChildDobData(data, inclusionData),
   CHILD_NAME: ({data, inclusionData}) => getFilteredChildNameData(data, inclusionData),
@@ -105,5 +107,11 @@ export const marriageCorrectionFilterFieldsObj = {
   GROOM_GUARDIAN_NAME_EN: (data, inclusionData) => getFilteredGroomGuardianNameData(data, inclusionData),
   GROOM_DOB: (data, inclusionData) => getFilteredGroomDOBData(data, inclusionData),
   GROOM_AGE: (data, inclusionData) => getFilteredGroomAgeData(data, inclusionData),
+  BRIDE_NAME: (data, inclusionData) => getFilteredBrideNameData(data, inclusionData),
+  BRIDE_MOTHER_NAME: (data, inclusionData) => getFilteredBrideMotherNameData(data, inclusionData),
+  BRIDE_FATHER_NAME: (data, inclusionData) => getFilteredBrideFatherNameData(data, inclusionData),
+  BRIDE_GUARDIAN_NAME: (data, inclusionData) => getFilteredBrideGuardianNameData(data, inclusionData),
+  BRIDE_AGE: (data, inclusionData) => getFilteredBrideAgeData(data, inclusionData),
+  BRIDE_DOB: (data, inclusionData) => getFilteredBrideDOBData(data, inclusionData),
 };
 

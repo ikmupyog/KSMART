@@ -1,6 +1,6 @@
-export const getFilteredGroomNameData = (selectedData, inclusionData) => {
+export const getFilteredBrideNameData = (selectedData, inclusionData) => {
     let filteredDocuments = getFilteredDocuments(selectedData,inclusionData);
-    const computedValue = computeInitialValue(selectedData?.GroomDetails);
+    const computedValue = computeInitialValue(selectedData?.BrideDetails);
     let selectedDomObj = {
       initialValue: computedValue,
       curValue: computedValue,
@@ -13,15 +13,15 @@ export const getFilteredGroomNameData = (selectedData, inclusionData) => {
   };
   
   //TODO need validation to check dob is null
-  const computeInitialValue = (groomDetails) => {
-    const groomName = {firstNameEn:groomDetails?.groomFirstnameEn,
-        middleNameEn:groomDetails?.groomMiddlenameEn,
-        lastNameEn:groomDetails?.groomLastnameEn,
-        firstNameMl:groomDetails?.groomFirstnameMl,
-        middleNameMl:groomDetails?.groomMiddlenameMl,
-        lastNameMl:groomDetails?.groomLastnameMl,
+  const computeInitialValue = (brideDetails) => {
+    const brideName = {firstNameEn:brideDetails?.brideFirstnameEn,
+        middleNameEn:brideDetails?.brideMiddlenameEn,
+        lastNameEn:brideDetails?.brideLastnameEn,
+        firstNameMl:brideDetails?.brideFirstnameMl,
+        middleNameMl:brideDetails?.brideMiddlenameMl,
+        lastNameMl:brideDetails?.brideLastnameMl,
       };
-    return groomName;
+    return brideName;
   };
   
   const getFilteredDocuments = (selectedData,inclusionData) => {

@@ -14,7 +14,10 @@ export const getFilteredGroomGuardianNameData = (selectedData, inclusionData) =>
   
   //TODO need validation to check dob is null
   const computeInitialValue = (groomDetails) => {
-    const initialValue = groomDetails?.groomGuardiannameEn;
+    const initialValue = {
+      groomGuardianNameEn: groomDetails?.groomGuardiannameEn,
+      groomGuardianNameMl: groomDetails?.groomGuardiannameMl,
+    };
     return initialValue;
   };
   

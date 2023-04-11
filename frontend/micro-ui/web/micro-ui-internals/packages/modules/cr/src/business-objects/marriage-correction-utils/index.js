@@ -7,6 +7,12 @@ import { getFilteredGroomMotherNameData } from './groom-mother-name-util';
 import { getFilteredGroomGuardianNameData } from './groom-guardian-name-util';
 import { getFilteredGroomDOBData } from './groom-dob-util';
 import { getFilteredGroomAgeData } from './groom-age-util';
+import { getFilteredBrideNameData } from './bride-name-util';
+import { getFilteredBrideFatherNameData } from './bride-father-name-util';
+import { getFilteredBrideMotherNameData } from './bride-mother-name-util';
+import { getFilteredBrideGuardianNameData } from './bride-guardian-name-util';
+import { getFilteredBrideAgeData } from './bride-age-util';
+import { getFilteredBrideDOBData } from './bride-dob-util';
 
 
 export const getFilteredChildNameData = (selectedData, inclusionData) =>{
@@ -32,4 +38,20 @@ export const getFilteredChildNameData = (selectedData, inclusionData) =>{
   return {...filteredData,...currentValue};
 }
 
-  export { getFilteredMarriageDOMData, getFilteredMarriagePlaceWardData, getFilteredMarriagePlaceTypeData, getFilteredGroomNameData, getFilteredGroomFatherNameData, getFilteredGroomMotherNameData, getFilteredGroomGuardianNameData, getFilteredGroomDOBData, getFilteredGroomAgeData };
+  export { 
+    getFilteredMarriageDOMData,
+    getFilteredMarriagePlaceWardData,
+    getFilteredMarriagePlaceTypeData,
+    getFilteredGroomNameData,
+    getFilteredGroomFatherNameData,
+    getFilteredGroomMotherNameData,
+    getFilteredGroomGuardianNameData, 
+    getFilteredGroomDOBData,
+    getFilteredGroomAgeData,
+    getFilteredBrideNameData,
+    getFilteredBrideFatherNameData,
+    getFilteredBrideMotherNameData,
+    getFilteredBrideGuardianNameData,
+    getFilteredBrideAgeData,
+    getFilteredBrideDOBData,
+  };
