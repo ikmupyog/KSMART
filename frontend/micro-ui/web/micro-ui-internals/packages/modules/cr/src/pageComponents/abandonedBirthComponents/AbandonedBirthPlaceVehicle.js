@@ -173,7 +173,8 @@ const AbandonedBirthPlaceVehicle = ({ config, onSelect, userType, formData, vehi
   } else
   return (
     <React.Fragment>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
+      {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} > */}
+      <div className="col-md-12" >
         <div className="row">
           <div className="col-md-12" >
             <h1 className="headingh1" >
@@ -349,8 +350,8 @@ const AbandonedBirthPlaceVehicle = ({ config, onSelect, userType, formData, vehi
             />
           </div>
         </div>
-
-      </FormStep>
+        </div>
+      {/* </FormStep> */}
     </React.Fragment>
   );
 };
