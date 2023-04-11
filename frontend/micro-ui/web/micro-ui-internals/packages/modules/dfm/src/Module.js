@@ -27,6 +27,9 @@ import EmployeeApp from "./pages/employee";
 import NoteAndDrafting from "./components/NoteAndDrafting";
 import DraftingFile from "./components/DraftingFile";
 import LegacyFile from "./components/LegacyFile";
+import DraftTemplate from "./components/DraftTemplate";
+import Templates from "./components/Templates";
+import TemplateSec from "./components/TemplateSec";
 
 export const DFMModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
@@ -55,7 +58,7 @@ export const DFMLinks = ({ matchPath, userType }) => {
   const links = [
     {
       link: `${matchPath}/sub-type`,
-      i18nKey: t("Apply for new Service"), 
+      i18nKey: t("Apply for new Service"),
     },
     {
       link: `${matchPath}/my-application`,
@@ -68,7 +71,7 @@ export const DFMLinks = ({ matchPath, userType }) => {
   ];
 
   return <CitizenHomeCard header={t("MODULE_DFM")} links={links} Icon={() => <EditPencilIcon className="fill-path-primary-main" />} />;
-}; 
+};
 
 const componentsToRegister = {
   DFMModule,
@@ -86,13 +89,16 @@ const componentsToRegister = {
   DFMEmployeeAcknowledgement,
   DFMCheckPage,
   DFMEmployeeCheckPage,
-  TLResponse : Response,
+  TLResponse: Response,
   SearchDfmApplication,
   DFMEmployeeSearch,
   EmployeeDetails,
-    NoteAndDrafting,
+  NoteAndDrafting,
   DraftingFile,
-   LegacyFile
+  LegacyFile,
+  DraftTemplate,
+  Templates,
+  TemplateSec
 };
 
 export const initDFMComponents = () => {

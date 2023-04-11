@@ -36,7 +36,7 @@ const DFMBreadCrumb = ({ location }) => {
 
   const locationsForTLEmployee = window.location.href;
   const breadCrumbUrl = sessionStorage.getItem("breadCrumbUrl") || "";
-  console.log(locationsForTLEmployee,breadCrumbUrl);
+  // console.log(locationsForTLEmployee, breadCrumbUrl);
 
   // if (locationsForTLEmployee.includes("inbox")) {
   //   sessionStorage.setItem("breadCrumbUrl", "inbox");
@@ -151,13 +151,13 @@ const DFMBreadCrumb = ({ location }) => {
       path: "/digit-ui/employee/dfm/search/application",
       content: t("ES_COMMON_SEARCH_APPLICATION"),
       show: isApplicationSearch ||
-      breadCrumbUrls.includes("home/search") 
+        breadCrumbUrls.includes("home/search")
     },
     {
       path: "/digit-ui/employee/dfm/searchDetails",
       content: t("TL_DETAILS_HEADER_LABEL"),
       show: isApplicationDetailsPage ||
-      breadCrumbUrls.includes("home/search/Details") 
+        breadCrumbUrls.includes("home/search/Details")
     },
     // {
     //   path: "/digit-ui/employee/tl/inbox",
@@ -220,7 +220,7 @@ const DFMBreadCrumb = ({ location }) => {
     // }
   ];
 
-  return <BreadCrumb style={isMobile?{display:"flex"}:{}}  spanStyle={{maxWidth:"min-content"}} crumbs={crumbs} />;
+  return <BreadCrumb style={isMobile ? { display: "flex" } : {}} spanStyle={{ maxWidth: "min-content" }} crumbs={crumbs} />;
 };
 
 
@@ -236,23 +236,29 @@ const EmployeeApp = ({ path, url, userType }) => {
   // const Response = Digit?.ComponentRegistryService?.getComponent('TLResponse');
   const Search = Digit?.ComponentRegistryService?.getComponent('DFMEmployeeSearch');
   const EmployeeDetails = Digit?.ComponentRegistryService?.getComponent('EmployeeDetails')
-    const NoteAndDrafting = Digit?.ComponentRegistryService?.getComponent('NoteAndDrafting')
-   const LegacyFile = Digit?.ComponentRegistryService?.getComponent('LegacyFile')
-   const DraftingFile = Digit?.ComponentRegistryService?.getComponent('DraftingFile')
+  const NoteAndDrafting = Digit?.ComponentRegistryService?.getComponent('NoteAndDrafting')
+  const LegacyFile = Digit?.ComponentRegistryService?.getComponent('LegacyFile')
+  const DraftingFile = Digit?.ComponentRegistryService?.getComponent('DraftingFile')
+  const DraftTemplate = Digit?.ComponentRegistryService?.getComponent('DraftTemplate')
+  const Templates = Digit?.ComponentRegistryService?.getComponent('Templates')
+  const TemplateSec = Digit?.ComponentRegistryService?.getComponent('TemplateSec')
 
   return (
     <Switch>
       <React.Fragment>
-        <div className="ground-container" style={locationCheck ? {width: "100%", marginLeft: "0px"} : {marginLeft: "0px"}}>
-          <div style={locationCheck ? {marginLeft: "15px"} : {}}>
+        <div className="ground-container" style={locationCheck ? { width: "100%", marginLeft: "0px" } : { marginLeft: "0px" }}>
+          <div style={locationCheck ? { marginLeft: "15px" } : {}}>
             <DFMBreadCrumb location={location} />
           </div>
           <PrivateRoute parentRoute={path} path={`${path}/file-flow`} component={() => <FileFlow parentUrl={url} />} />
           <PrivateRoute path={`${path}/search/:variant`} component={(props) => <Search {...props} parentRoute={path} />} />
           <PrivateRoute path={`${path}/searchDetails/:id`} component={() => <EmployeeDetails parentRoute={path} />} />
-           <PrivateRoute path={`${path}/note-drafting`} component={() => <NoteAndDrafting parentRoute={path} />} />
+          <PrivateRoute path={`${path}/note-drafting`} component={() => <NoteAndDrafting parentRoute={path} />} />
           <PrivateRoute path={`${path}/drafting`} component={() => <DraftingFile parentRoute={path} />} />
           <PrivateRoute path={`${path}/legacy-file`} component={() => <LegacyFile parentRoute={path} />} />
+          <PrivateRoute path={`${path}/draft-template`} component={() => <DraftTemplate parentRoute={path} />} />
+          <PrivateRoute path={`${path}/templates`} component={() => <Templates parentRoute={path} />} />
+          <PrivateRoute path={`${path}/templateSec`} component={() => <TemplateSec parentRoute={path} />} />
         </div>
       </React.Fragment>
     </Switch>

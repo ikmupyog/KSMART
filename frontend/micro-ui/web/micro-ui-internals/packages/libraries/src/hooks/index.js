@@ -176,6 +176,7 @@ import useDFMMDMS from "./dfm/useMDMS";
 import useDFMSearch from "./dfm/useSearch";
 import useApplicationDrafting from "./dfm/useApplicationDrafting";
 import useApplicationNoteDrafting from "./dfm/useApplicationNoteDrafting";
+import useApplicationFetchDraft from "./dfm/useApplicationFetchDraft";
 
 import useHRMSSearch from "./hrms/useHRMSsearch";
 import useHrmsMDMS from "./hrms/useHRMSMDMS";
@@ -413,7 +414,8 @@ const dfm = {
   useApplicationDetail: useDFMApplicationDetail,
   useApplicationActions: useDFMApplicationActions,
   useApplicationDrafting,
-  useApplicationNoteDrafting
+  useApplicationNoteDrafting,
+  useApplicationFetchDraft
 };
 const receipts = {
   useReceiptsMDMS,

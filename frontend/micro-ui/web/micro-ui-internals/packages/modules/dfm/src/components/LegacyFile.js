@@ -68,22 +68,22 @@ const LegacyFile = ({ path, handleNext, formData, config, onSelect }) => {
         ],
         []
     );
- 
+
     return (
         <React.Fragment>
 
             <div className="moduleLinkHomePageModuleLinks">
-         
-                  
-                <div className="FileFlowWrapper draft-file legacy">
-              
 
-                <div className="row legacy-section" >
+
+                <div className="FileFlowWrapper draft-file legacy">
+
+
+                    <div className="row legacy-section" >
                         <div className="col-md-12" >
 
-                                <h1 >{t("LEGACY_FILE_ENTRY_OPERATOR")}</h1>
-                            </div>
-                     
+                            <h1 >{t("LEGACY_FILE_ENTRY_OPERATOR")}</h1>
+                        </div>
+
 
 
                     </div>
@@ -110,12 +110,12 @@ const LegacyFile = ({ path, handleNext, formData, config, onSelect }) => {
                             </div>
                             <div className="col-md-1"  >
 
-                                <h4>{t("ENTER_FILE_NO.")}</h4>
+                                <h4 class="enter-file">{t("ENTER_FILE_NO.")}</h4>
                             </div>
                             <div className="col-md-3"  >
                                 <div className="row" >
-                                    <div className="col-md-12">
-                                        <div className="col-md-2">
+                                    <div className="col-md-12 col-sm-12">
+                                        <div className="col-md-2 col-sm-3">
                                             <CardLabel className="label" >{`${t("PW/")}`}</CardLabel>
                                             <TextInput
 
@@ -126,7 +126,7 @@ const LegacyFile = ({ path, handleNext, formData, config, onSelect }) => {
 
                                             />
                                         </div>
-                                        <div className="col-md-2">
+                                        <div className="col-md-2 col-sm-3">
                                             <CardLabel className="label" >{`${t("3")}`}</CardLabel>
                                             <TextInput
 
@@ -137,7 +137,7 @@ const LegacyFile = ({ path, handleNext, formData, config, onSelect }) => {
 
                                             />
                                         </div>
-                                        <div className="col-md-2">
+                                        <div className="col-md-2 col-sm-3">
                                             <CardLabel className="label" >{`${t("100")}`}</CardLabel>
                                             <TextInput
 
@@ -148,7 +148,7 @@ const LegacyFile = ({ path, handleNext, formData, config, onSelect }) => {
 
                                             />
                                         </div>
-                                        <div className="col-md-5">
+                                        <div className="col-md-5 col-sm-3">
                                             <Dropdown
 
                                                 t={t}
@@ -300,6 +300,7 @@ const LegacyFile = ({ path, handleNext, formData, config, onSelect }) => {
                             <div className="col-md-3 file-section" >
 
                                 <UploadFile
+                                    style={{ width: "300px" }}
                                     id={"tl-doc"}
                                     extraStyleName={"propertyCreate"}
                                     accept=".jpg,.png,.pdf"
@@ -337,31 +338,31 @@ const LegacyFile = ({ path, handleNext, formData, config, onSelect }) => {
 
                     </div>
                     <div class="save-legacy" >
-                        <SubmitBar label={t("SAVE")}  className="save-button"/>
-                    </div>
-
+                        <SubmitBar label={t("SAVE")} className="save-button" />
                     </div>
 
                 </div>
-                
-                <div className="moduleLinkHomePageModuleLinks">
-                <div className="FileFlowWrapper">
-                <Table
 
-                    t={t}
-                    data={[]}
-                    columns={columns}
-              
-                />
-                <div  >
-                     </div>
+            </div>
+
+            <div className="moduleLinkHomePageModuleLinks">
+                <div className="FileFlowWrapper">
+                    <Table
+
+                        t={t}
+                        data={[]}
+                        columns={columns}
+
+                    />
+                    <div  >
+                    </div>
                     <SubmitBar label={t("PERSONAL_REGISTER_VIEW")} className="personal_register_view" />
                 </div>
-                </div>
+            </div>
         </React.Fragment>
-     
+
     );
-   
+
 };
 
 export default LegacyFile;

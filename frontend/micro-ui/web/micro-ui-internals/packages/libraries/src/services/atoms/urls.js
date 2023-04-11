@@ -168,6 +168,7 @@ const Urls = {
     update: "/filemgmnt/v1/applicantpersonals/_update",
     create_draft: "/filemgmnt/v1/applicantservices/_createDraftingMain",
     create_note:"/filemgmnt/v1/applicantservices/_createDraftProcessInstance",
+    fetch_draft:"/filemgmnt/v1/applicantservices/_searchDrafting",
   },
   receipts: {
     receipt_download: "/egov-pdf/download/PAYMENT/consolidatedreceipt",

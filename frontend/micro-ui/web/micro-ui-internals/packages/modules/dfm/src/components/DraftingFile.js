@@ -29,6 +29,8 @@ import Search from "../pages/employee/Search";
 import BirthSearchInbox from "../../../cr/src/components/inbox/search";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import '@ckeditor/ckeditor5-build-classic/build/translations/de';
+import viewToPlainText from '@ckeditor/ckeditor5-clipboard/src/utils/viewtoplaintext';
 
 const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
     const stateId = Digit.ULBService.getStateId();
@@ -37,10 +39,15 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
     const { t } = useTranslation();
     const history = useHistory();
     const state = useSelector((state) => state);
-  
-
+    const locale = Digit.SessionStorage.get("locale");
+    let ml_pattern = /^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$/;
+    let en_pattern = /^[a-zA-Z-.`'0-9 ]*$/;
     const mutation = Digit.Hooks.dfm.useApplicationDrafting(tenantId);
-    console.log("mutation", mutation)
+    const payload = "KL-KOCHI-C-000017- FMARISING-2023-AR";
+    const { data, isLoading } = Digit.Hooks.dfm.useApplicationFetchDraft({ tenantId, id: payload });
+
+    const draftTextValue = data?.Drafting[0]?.draftText;
+
     const saveDraft = () => {
         const formData = {
             RequestInfo: {
@@ -94,20 +101,21 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
         }
     }, [mutation.isSuccess])
 
+
     return (
         <React.Fragment>
 
             <div className="moduleLinkHomePageModuleLinks">
-        
-                <div className="FileFlowWrapper draft-editor" >
-                   
-                    <div className="row wrapper-file" >
-                        <div className="col-md-12">
-                            <div className="col-md-2"  >
 
-                                <h3>{t("TYPE_OF_CORRESPONDENCE")}</h3>
+                <div className="FileFlowWrapper draft-editor" >
+
+                    <div className="row wrapper-file" >
+                        <div className="col-md-12 col-sm-12 col-xs-12">
+                            <div className="col-md-2 col-sm-12 col-xs-12"  >
+
+                                <h3 class="type">{t("TYPE_OF_CORRESPONDENCE")}</h3>
                             </div>
-                            <div className="col-md-4"  >
+                            <div className="col-md-5 col-sm-12 col-xs-12"  >
 
                                 <Dropdown
 
@@ -119,7 +127,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
                                 />
 
                             </div>
-                            <div className="col-md-4"  >
+                            <div className="col-md-5 col-sm-12 col-xs-12"  >
 
                                 <TextInput
 
@@ -137,7 +145,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
 
                     </div>
 
-                        
+
                     <div className="row card-file-draft">
                         <div className="col-md-12">
                             <div className="col-md-6 search-file"  >
@@ -182,39 +190,47 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
                             <CKEditor
                                 editor={ClassicEditor}
                                 data={draftText}
+
                                 config={{
-                                    removePlugins: ["EasyImage","ImageUpload","MediaEmbed","Table"],
+                                    removePlugins: ["EasyImage", "ImageUpload", "MediaEmbed", "Table", "htmlwriter"],
+
+
                                 }}
+
                                 onChange={(event, editor) => {
                                     const data = editor.getData()
+
                                     setDraftText(data)
                                 }}
-                                
-                           
+
+
                             />
-                    
+
 
                         </div>
                         <div class="custom-draft-button">
 
-                            <CustomButton
+                            {!draftTextValue ? <CustomButton
                                 onClick={saveDraft}
 
                                 text={t("SAVE_&_GENERATE_DRAFT_REPORT")}
 
-                            ></CustomButton>
+                            ></CustomButton> :
+                                ""}
                         </div>
                     </div>
 
 
                     <div className="row">
-                        <div className="col-md-12 button-column" >
-                         
-                            <div className="col-md-8 forward-button" >
-                                <SubmitBar label={t("SAVE")} className="save-button-drafing" />
-                                <SubmitBar label={t("FORWARD")} />
+                        <div className="col-md-12" >
+
+                            <div className="col-md-3 col-sm-4" >
+                                <SubmitBar label={t("SAVE")} style={{ marginBottom: "10px" }} />
                             </div>
-                            <div className="col-md-4"  >
+                            <div className="col-md-3 col-sm-4 " >
+                                <SubmitBar label={t("FORWARD")} style={{ marginBottom: "10px" }} />
+                            </div>
+                            <div className="col-md-3  col-sm-4"  >
                                 <Dropdown
                                     t={t}
                                     type={"text"}
@@ -228,14 +244,14 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
 
                     </div>
 
-                
+
 
                 </div>
             </div>
         </React.Fragment>
-     
+
     );
-   
+
 };
 
 export default DraftingFile;

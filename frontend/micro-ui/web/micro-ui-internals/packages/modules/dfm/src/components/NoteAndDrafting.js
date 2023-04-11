@@ -153,11 +153,11 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
         <React.Fragment>
 
             <div className="moduleLinkHomePageModuleLinks">
-         
+
                 <div className="FileFlowWrapper">
 
                     <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-md-12 col-sm-12" >
                             <h1 className="headingh1" style={{ marginTop: "40px", marginBottom: "40px" }}>
                                 <span style={{ background: "#fff", padding: "0 10px", color: "black" }}>{`${t("CHILD_INFORMATION")}`}</span>
                             </h1>
@@ -165,9 +165,9 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
                     </div>
 
                     <div className="row subject-section"  >
-                        <div className="col-md-12">
+                        <div className="col-md-12 col-sm-12">
                             <div className="col-md-2" >
-                                <h6 style={{ marginLeft: "20px" }}>{t("APPLICATION_NUMBER")}</h6>
+                                <h6 class="mLeft" >{t("APPLICATION_NUMBER")}</h6>
                             </div>
                             <div className="col-md-2"  >
 
@@ -198,8 +198,8 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
                                 />
 
                             </div>
-                            <div className="col-md-1"  >
-                                <h6 class="date-picker">{t("SEX")}</h6>
+                            <div className="col-md-1 thirdColumn"  >
+                                <h6 >{t("SEX")}</h6>
                             </div>
                             <div className="col-md-2"  >
 
@@ -223,9 +223,9 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
 
                     <div className="row subject-section"  >
-                        <div className="col-md-12">
+                        <div className="col-md-12 col-sm-12">
                             <div className="col-md-2"  >
-                                <h6 style={{ marginLeft: "20px" }}>{t("DATE_OF_BIRTH")}</h6>
+                                <h6 class="mLeft">{t("DATE_OF_BIRTH")}</h6>
                             </div>
                             <div className="col-md-2"  >
 
@@ -246,7 +246,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
                             </div>
                             <div className="col-md-2"  >
 
-                                <DatePicker
+                                <TextInput
 
                                     t={t}
                                     type={"text"}
@@ -264,7 +264,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
                     </div>
                     <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-md-12 col-sm-12">
                             <h1 className="headingh1" style={{ marginTop: "40px", marginBottom: "40px" }}>
                                 <span style={{ background: "#fff", padding: "0 10px", color: "black" }}>{`${t("PARENT_INFORMATION")}`}</span>
                             </h1>
@@ -272,9 +272,9 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
                     </div>
 
                     <div className="row subject-section"  >
-                        <div className="col-md-12">
+                        <div className="col-md-12 col-sm-12">
                             <div className="col-md-2"  >
-                                <h6 style={{ marginLeft: "20px" }}>{t("NAME_OF_MOTHER")}</h6>
+                                <h6 class="mLeft">{t("NAME_OF_MOTHER")}</h6>
                             </div>
                             <div className="col-md-2"  >
 
@@ -318,7 +318,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
 
                     <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-md-12 col-sm-12">
                             <h1 className="headingh1" style={{ marginTop: "40px", marginBottom: "40px" }}>
                                 <span style={{ background: "#fff", padding: "0 10px", color: "black", fontSize: "12px" }}>{`${t("ADDRESS_OF_THE_PARENT_AT_THE_TIME_OF_BIRTH")}`}</span>
                             </h1>
@@ -326,9 +326,9 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
                     </div>
 
                     <div className="row subject-section"  >
-                        <div className="col-md-12">
+                        <div className="col-md-12 col-sm-12">
                             <div className="col-md-2" >
-                                <h6 style={{ marginLeft: "20px" }}>{t("WARD_NO")}</h6>
+                                <h6 class="mLeft">{t("WARD_NO")}</h6>
                             </div>
                             <div className="col-md-2"  >
 
@@ -359,8 +359,8 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
                                 />
 
                             </div>
-                            <div className="col-md-2"  >
-                                <h6 class="date-picker">{t("LOCAL_PLACE")}</h6>
+                            <div className="col-md-1 thirdColumn"  >
+                                <h6 >{t("LOCAL_PLACE")}</h6>
                             </div>
                             <div className="col-md-2"  >
 
@@ -382,9 +382,9 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
                     </div>
 
                     <div className="row subject-section"  >
-                        <div className="col-md-12">
+                        <div className="col-md-12 col-sm-12">
                             <div className="col-md-2" >
-                                <h6 style={{ marginLeft: "20px" }}>{t("POST_OFFICE")}</h6>
+                                <h6 class="mLeft">{t("POST_OFFICE")}</h6>
                             </div>
                             <div className="col-md-2"  >
 
@@ -415,8 +415,8 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
                                 />
 
                             </div>
-                            <div className="col-md-2"  >
-                                <h6 class="date-picker">{t("DISTRICT")}</h6>
+                            <div className="col-md-1 thirdColumn"  >
+                                <h6 >{t("DISTRICT")}</h6>
                             </div>
                             <div className="col-md-2"  >
 
@@ -440,7 +440,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
 
                     <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-md-12 col-sm-12">
                             <h1 className="headingh1" style={{ marginTop: "40px", marginBottom: "40px" }}>
                                 <span style={{ background: "#fff", padding: "0 10px", color: "black", fontSize: "12px" }}>{`${t("PERMANENT_ADDRESS_OF_THE_PARENTS")}`}</span>
                             </h1>
@@ -448,9 +448,9 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
                     </div>
 
                     <div className="row subject-section" >
-                        <div className="col-md-12">
+                        <div className="col-md-12 col-sm-12">
                             <div className="col-md-2" >
-                                <h6 style={{ marginLeft: "20px" }}>{t("WARD_NO")}</h6>
+                                <h6 class="mLeft">{t("WARD_NO")}</h6>
                             </div>
                             <div className="col-md-2"  >
 
@@ -481,8 +481,8 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
                                 />
 
                             </div>
-                            <div className="col-md-2"  >
-                                <h6 class="date-picker">{t("LOCAL_PLACE")}</h6>
+                            <div className="col-md-1 thirdColumn" >
+                                <h6>{t("LOCAL_PLACE")}</h6>
                             </div>
                             <div className="col-md-2"  >
 
@@ -503,9 +503,9 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
                     </div>
                     <div className="row subject-section"  >
-                        <div className="col-md-12">
+                        <div className="col-md-12 col-sm-12">
                             <div className="col-md-2" >
-                                <h6 style={{ marginLeft: "20px" }}>{t("POST_OFFICE")}</h6>
+                                <h6 class="mLeft">{t("POST_OFFICE")}</h6>
                             </div>
                             <div className="col-md-2"  >
 
@@ -536,8 +536,8 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
                                 />
 
                             </div>
-                            <div className="col-md-2"  >
-                                <h6 class="date-picker">{t("DISTRICT")}</h6>
+                            <div className="col-md-1 thirdColumn"  >
+                                <h6 >{t("DISTRICT")}</h6>
                             </div>
                             <div className="col-md-2"  >
 
@@ -557,17 +557,17 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
 
                     </div>
-                    
-                  
+
+
                     <div className="row card-document"   >
-                      
-                        <div className="col-md-12 card-document-column">
-                        <h2 style={{marginTop:"40px"}} >{t("DOCUMENTS_INFORMATION")}</h2>
-                            <div className="col-md-4">
+
+                        <div className="col-md-12 col-sm-12 col-xs-12 card-document-column">
+                            <h2 style={{ marginTop: "40px" }} >{t("DOCUMENTS_INFORMATION")}</h2>
+                            <div className="col-md-4 col-sm-4 col-xs-4">
 
                                 <h3 class="document">{t("DOCUMENT")} 1</h3>
                             </div>
-                            <div className="col-md-4 link-view">
+                            <div className="col-md-4 col-sm-4 col-xs-4 link-view">
 
                                 <LinkButton
                                     label={t("VIEW")}
@@ -576,18 +576,18 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
                                 />
                             </div>
-                            <div className="col-md-4" >
+                            <div className="col-md-4 col-sm-4 col-xs-4" >
 
                                 <h3 class="check-mark" >&#10003;</h3>
                             </div>
                         </div>
-                        <div className="col-md-12 card-document-column">
+                        <div className="col-md-12 col-sm-12  col-xs-12 card-document-column">
 
-                            <div className="col-md-4">
+                            <div className="col-md-4 col-sm-4  col-xs-4">
 
                                 <h3 class="document">{t("DOCUMENT")} 2</h3>
                             </div>
-                            <div className="col-md-4 link-view" >
+                            <div className="col-md-4 col-sm-4  col-xs-4 link-view" >
 
                                 <LinkButton
                                     label={t("VIEW")}
@@ -596,18 +596,18 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
                                 />
                             </div>
-                            <div className="col-md-4">
+                            <div className="col-md-4 col-sm-4  col-xs-4">
 
                                 <h3 class="check-mark">&#10003;</h3>
                             </div>
                         </div>
-                        <div className="col-md-12" >
+                        <div className="col-md-12 col-sm-12  col-xs-12" >
 
-                            <div className="col-md-4">
+                            <div className="col-md-4 col-sm-4  col-xs-4">
 
                                 <h3 class="document card-document-column">{t("DOCUMENT")} 3</h3>
                             </div>
-                            <div className="col-md-4 link-view">
+                            <div className="col-md-4 col-sm-4  col-xs-4 link-view">
 
                                 <LinkButton
                                     label={t("VIEW")}
@@ -616,7 +616,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
                                 />
                             </div>
-                            <div className="col-md-4">
+                            <div className="col-md-4 col-sm-4  col-xs-4">
 
                                 <h3 class="check-mark">&#10003;</h3>
                             </div>
@@ -625,14 +625,15 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
 
 
-                    <div className="row reference-row" style={{ marginTop: "800px" }}>
-                    
-                        <div className="col-md-12 reference-div"  >
-                            <div class="reference-column" >
+                    <div className="row reference-row">
 
-                                <h3 class="reference" >{t("REFERENCE")} 1</h3>
+
+                        <div className="col-md-12 col-sm-12 col-xs-12 reference-div" >
+                            <div className="col-md-2 col-sm-3 col-xs-6" >
+
+                                <h3>{t("REFERENCE")} 1</h3>
                             </div>
-                            <div class="link-file">
+                            <div className="col-md-1 col-sm-1 col-xs-2 link-file">
                                 <LinkButton
                                     label={t("VIEW")}
                                     className="file-link-button"
@@ -640,56 +641,56 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
                                 />
                             </div>
-                            <div class="reference-column">
+                            <div className="col-md-2 col-sm-3 col-xs-6" >
 
-                                <h3 class="reference">{t("DRAFTING")} 1</h3>
+                                <h3>{t("DRAFTING")} 1</h3>
                             </div>
-                            <div class="link-file-sec"  >
+                            <div className="col-md-1 col-sm-1 col-xs-2 link-file"  >
+                                <LinkButton
+                                    label={t("VIEW")}
+                                    className="file-link-button"
+                                    onClick={() => history.push("/digit-ui/employee/dfm/draft-template")}
+
+                                />
+                            </div>
+
+                        </div>
+                        <div className="col-md-12 col-sm-12 col-xs-12 reference-div" >
+                            <div className="col-md-2  col-sm-3  col-xs-6" >
+
+                                <h3>{t("REFERENCE")} 2</h3>
+                            </div>
+                            <div className="col-md-1 col-sm-1  col-xs-2 link-file">
                                 <LinkButton
                                     label={t("VIEW")}
                                     className="file-link-button"
 
+
+                                />
+                            </div>
+                            <div className="col-md-2  col-sm-3  col-xs-6" >
+
+                                <h3>{t("DRAFTING")} 2</h3>
+                            </div>
+                            <div className="col-md-1  col-sm-1  col-xs-2 link-file view-all"  >
+                                <LinkButton
+                                    label={t("VIEW")}
+                                    className="file-link-button"
+                                    onClick={() => history.push("/digit-ui/employee/dfm/draft-template")}
 
                                 />
                             </div>
 
                         </div>
 
-                        <div className="col-md-12 reference-div" >
-                            <div class="reference-column" >
-
-                                <h3 class="reference">{t("REFERENCE")} 2</h3>
-                            </div>
-                            <div class="link-file">
-                                <LinkButton
-                                    label={t("VIEW")}
-                                    className="file-link-button"
-
-
-                                />
-                            </div>
-                            <div class="reference-column" >
-
-                                <h3 class="reference">{t("DRAFTING")} 2</h3>
-                            </div>
-                            <div class="link-file-sec"  >
-                                <LinkButton
-                                    label={t("VIEW")}
-                                    className="file-link-button"
-
-
-                                />
-                            </div>
-
-                        </div>
 
 
                     </div>
 
-                    <div class="custom-draft-button" style={{ marginTop: "-20px" }}>
+                    <div class="custom-draft-button" >
 
                         <CustomButton
-
+                            class="customCardButton"
                             text="View all notes"
 
                         ></CustomButton>
@@ -698,7 +699,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
                     {showGeoLocation && <div className="row geo-location">
 
-                        <div className="col-md-12 geo-column">
+                        <div className="col-md-12  col-sm-12 geo-column">
 
                             <div className="col-md-2">
 
@@ -738,7 +739,31 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
                     </div>}
 
 
-                    <div class="card-checkbox" >
+                    <div className="row" >
+
+                        <div className="col-md-12 col-sm-12  col-xs-12" style={{ marginTop: "40px" }} >
+                            <div className="col-md-3  col-sm-3  col-xs-12" >
+
+                                <CardLabel className="card-label-file">{`${t("NOTE")}`}</CardLabel>
+                                <CheckBox t={t} optionKey="name" checked={checkNote}
+                                    value={checkNote} onChange={(e) => handleNoteChange(e)} disable={checkNote} />
+                            </div>
+                            <div className="col-md-3 col-sm-3  col-xs-12 link-file">
+                                <CardLabel className="card-label-file" >{`${t("ENQUIRY")}`}</CardLabel>  <CheckBox t={t} optionKey="name" checked={checkEnquiry}
+                                    value={checkEnquiry} onChange={(e) => handleEnquiryChange(e)} />
+                            </div>
+                            <div className="col-md-3  col-sm-3  col-xs-12" >
+
+                                <CardLabel className="card-label-file"  >{`${t("DRAFTING")}`} </CardLabel> <CheckBox t={t} optionKey="name" checked={checkDraft}
+                                    value={checkDraft} onChange={(e) => handleDraftChange(e)} />
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    {/* <div class="card-checkbox" >
 
                         <CardLabel className="card-label-file">{`${t("NOTE")}`}</CardLabel>
                         <CheckBox t={t} optionKey="name" checked={checkNote}
@@ -753,9 +778,9 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
                         <CardLabel className="card-label-file"  >{`${t("DRAFTING")}`} </CardLabel> <CheckBox t={t} optionKey="name" checked={checkDraft}
                             value={checkDraft} onChange={(e) => handleDraftChange(e)} />
 
-                    </div>
+                    </div> */}
                     <div className="row card-file"  >
-                        <div className="col-md-12">
+                        <div className="col-md-12 col-sm-12">
                             <div className="col-md-6 search-file">
 
                                 <TextInput
@@ -826,13 +851,14 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
                         id={"tl-doc"}
                         extraStyleName={"propertyCreate"}
                         accept=".jpg,.png,.pdf"
+
                     />
 
 
                 </div>
             </div>
         </React.Fragment>
-     
+
     );
 
 };

@@ -34,7 +34,7 @@ export const DFMService = {
   //     //params: { tenantId, ...filters },
   //   }),
   DFMsearch: ({ tenantId, filters }) =>
-     Request({
+    Request({
       url: Urls.dfm.search,
       useCache: false,
       method: "POST",
@@ -53,7 +53,7 @@ export const DFMService = {
       params: {},
       auth: true,
     }),
-    drafting: (details, tenantId) =>
+  drafting: (details, tenantId) =>
     Request({
       url: Urls.dfm.create_draft,
       data: details,
@@ -64,7 +64,7 @@ export const DFMService = {
       params: {},
       auth: true,
     }),
-    note_drafting: (details, tenantId) =>
+  note_drafting: (details, tenantId) =>
     Request({
       url: Urls.dfm.create_note,
       data: details,
@@ -74,6 +74,15 @@ export const DFMService = {
       method: "POST",
       params: {},
       auth: true,
+    }),
+  fetch_draft: (tenantId, fileCode) =>
+    Request({
+      url: Urls.dfm.fetch_draft,
+      useCache: false,
+      method: "POST",
+      auth: true,
+      userService: true,
+      params: { fileCode },
     }),
   // billingslab: ({ tenantId, filters, auth }) =>
   //   Request({
