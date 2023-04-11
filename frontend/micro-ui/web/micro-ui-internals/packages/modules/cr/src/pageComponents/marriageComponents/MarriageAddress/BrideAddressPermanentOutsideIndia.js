@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, Loader } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/CRTimeline";
+import Timeline from "../../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-const MarriageAddressPermanentOutsideIndia = ({
+const BrideAddressPermanentOutsideIndia = ({
   config,
   onSelect,
   userType,
@@ -30,6 +30,7 @@ const MarriageAddressPermanentOutsideIndia = ({
   isEditDeath = false,
   isEditStillBirth = false,
   isEditAdoption,
+  isEditBirthNAC = false,
   // isInitialRender, setIsInitialRender
   //isEditBirth ? isEditBirth : isEditDeath ? false :
   //  permntOutsideIndiaCountry,  setPermntOutsideIndiaCountry, countryvalue, setCountryValue,
@@ -48,6 +49,7 @@ const MarriageAddressPermanentOutsideIndia = ({
   let cmbCountry = [];
   Country &&
     Country["common-masters"] &&
+    Country["common-masters"].Country &&
     Country["common-masters"].Country.map((ob) => {
       cmbCountry.push(ob);
     });
@@ -410,4 +412,4 @@ const MarriageAddressPermanentOutsideIndia = ({
     </React.Fragment>
   );
 };
-export default MarriageAddressPermanentOutsideIndia;
+export default BrideAddressPermanentOutsideIndia;

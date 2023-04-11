@@ -1,19 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Toast, BackButton, Loader } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/CRTimeline";
-import DRTimeline from "../../components/DRTimeline";
+import Timeline from "../../../components/CRTimeline";
+import DRTimeline from "../../../components/DRTimeline";
+import AdoptionTimeline from "../../../components/AdoptionTimeline";
 import { useTranslation } from "react-i18next";
-import MarriageAddressPresent from "./MarriageAddressPresent";
-import MarriageAddressPresentInsideKerala from "./MarriageAddressPresentInsideKerala";
-import MarriageAddressPresentOutsideKerala from "./MarriageAddressPresentOutsideKerala";
-import MarriageAddressPresentOutsideIndia from "./MarriageAddressPresentOutsideIndia";
-import MarriageAddressSameAsAbove from "./MarriageAddressSameAsAbove";
-import MarriageAddressPermanent from "./MarriageAddressPermanent";
-import MarriageAddressPermanentInsideKerala from "./MarriageAddressPermanentInsideKerala";
-import MarriageAddressPermanentOutsideKerala from "./MarriageAddressPermanentOutsideKerala";
-import MarriageAddressPermanentOutsideIndia from "./MarriageAddressPermanentOutsideIndia";
+import GroomAddressPresent from "./GroomAddressPresent";
+import GroomAddressPresentInsideKerala from "./GroomAddressPresentInsideKerala";
+import GroomAddressPresentOutsideKerala from "./GroomAddressPresentOutsideKerala";
+import GroomAddressPresentOutsideIndia from "./GroomAddressPresentOutsideIndia";
+import GroomAddressSameAsAbove from "./GroomAddressSameAsAbove";
+import GroomAddressPermanent from "./GroomAddressPermanent";
+import GroomAddressPermanentInsideKerala from "./GroomAddressPermanentInsideKerala";
+import GroomAddressPermanentOutsideKerala from "./GroomAddressPermanentOutsideKerala";
+import GroomAddressPermanentOutsideIndia from "./GroomAddressPermanentOutsideIndia";
 
-const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = false, isEditDeath = false, isEditStillBirth = false }) => {
+const GroomAddressBasePage = ({
+  config,
+  onSelect,
+  userType,
+  formData,
+  isEditBirth = false,
+  isEditDeath = false,
+  isEditStillBirth = false,
+  isEditAdoption = false,
+  isEditBirthNAC = false,
+}) => {
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -61,12 +72,13 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
     });
   District &&
     District["common-masters"] &&
+    District["common-masters"].District &&
     District["common-masters"].District.map((ob) => {
       cmbDistrict.push(ob);
     });
   Taluk &&
     Taluk["common-masters"] &&
-    District["common-masters"].District &&
+    Taluk["common-masters"].Taluk &&
     Taluk["common-masters"].Taluk.map((ob) => {
       cmbTaluk.push(ob);
     });
@@ -80,792 +92,354 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
   //################################### Present Country State ############################################################################################
 
   const [presentaddressCountry, setaddressCountry] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentaddressCountry?.code
-        ? formData?.GroomAddressDetails?.presentaddressCountry
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentaddressCountry?.code
-        : formData?.BrideAddressDetails?.presentaddressCountry
-      : ""
+    formData?.GroomAddressDetails?.presentaddressCountry ? formData?.GroomAddressDetails?.presentaddressCountry : ""
   );
   const [presentaddressStateName, setaddressStateName] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentaddressStateName?.code
-        ? formData?.GroomAddressDetails?.presentaddressStateName
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentaddressStateName?.code
-        : formData?.BrideAddressDetails?.presentaddressStateName
-      : ""
+    formData?.GroomAddressDetails?.presentaddressStateName ? formData?.GroomAddressDetails?.presentaddressStateName : ""
   );
-  const [countryvalue, setCountryValue] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentaddressCountry?.code
-        ? formData?.GroomAddressDetails?.presentaddressCountry
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentaddressCountry?.code
-        : formData?.BrideAddressDetails?.presentaddressCountry
-      : ""
-  );
+  const [countryvalue, setCountryValue] = useState(formData?.GroomAddressDetails?.countryvalue ? formData?.GroomAddressDetails?.countryvalue : "");
   const [value, setValue] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentaddressStateName?.code
-        ? formData?.GroomAddressDetails?.presentaddressStateName
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentaddressStateName?.code
-        : formData?.BrideAddressDetails?.presentaddressStateName
-      : ""
+    formData?.GroomAddressDetails?.presentaddressStateName?.code ? formData?.GroomAddressDetails?.presentaddressStateName?.code : ""
   );
 
   //################################# Present Inside Kerala #########################################################################################################
 
   const [presentWardNo, setPresentWardNo] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentWardNo?.code
-        ? formData?.GroomAddressDetails?.presentWardNo
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentWardNo?.code
-        : formData?.BrideAddressDetails?.presentWardNo
-      : ""
+    formData?.GroomAddressDetails?.presentWardNo?.code ? formData?.GroomAddressDetails?.presentWardNo : ""
   );
+
   const [presentInsideKeralaDistrict, setinsideKeralaDistrict] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentInsideKeralaDistrict?.code
-        ? formData?.GroomAddressDetails?.presentInsideKeralaDistrict
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentInsideKeralaDistrict?.code
-        : formData?.BrideAddressDetails?.presentInsideKeralaDistrict
-      : ""
+    formData?.GroomAddressDetails?.presentInsideKeralaDistrict?.code ? formData?.GroomAddressDetails?.presentInsideKeralaDistrict : ""
   );
   const [presentInsideKeralaLBTypeName, setinsideKeralaLBTypeName] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentInsideKeralaLBTypeName
-        ? formData?.GroomAddressDetails?.presentInsideKeralaLBTypeName
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentInsideKeralaLBTypeName
-        : formData?.BrideAddressDetails?.presentInsideKeralaLBTypeName
-      : null
+    formData?.GroomAddressDetails?.presentInsideKeralaLBTypeName ? formData?.GroomAddressDetails?.presentInsideKeralaLBTypeName : ""
   );
   const [presentInsideKeralaLBName, setinsideKeralaLBName] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentInsideKeralaLBName?.code
-        ? formData?.GroomAddressDetails?.presentInsideKeralaLBName
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentInsideKeralaLBName?.code
-        : formData?.BrideAddressDetails?.presentInsideKeralaLBName
-      : ""
+    formData?.GroomAddressDetails?.presentInsideKeralaLBName?.code ? formData?.GroomAddressDetails?.presentInsideKeralaLBName : ""
   );
   const [presentInsideKeralaTaluk, setinsideKeralaTaluk] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentInsideKeralaTaluk?.code
-        ? formData?.GroomAddressDetails?.presentInsideKeralaTaluk
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentInsideKeralaTaluk?.code
-        : formData?.BrideAddressDetails?.presentInsideKeralaTaluk
-      : ""
+    formData?.GroomAddressDetails?.presentInsideKeralaTaluk ? formData?.GroomAddressDetails?.presentInsideKeralaTaluk : ""
   );
   const [presentInsideKeralaVillage, setinsideKeralaVillage] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentInsideKeralaVillage?.code
-        ? formData?.GroomAddressDetails?.presentInsideKeralaVillage
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentInsideKeralaVillage?.code
-        : formData?.BrideAddressDetails?.presentInsideKeralaVillage
-      : ""
+    formData?.GroomAddressDetails?.presentInsideKeralaVillage?.code ? formData?.GroomAddressDetails?.presentInsideKeralaVillage : ""
   );
-  console.log(window.location.href.includes("address-bride"));
-  console.log(formData?.BrideAddressDetails?.presentInsideKeralaPostOffice);
-
   const [presentInsideKeralaPostOffice, setinsideKeralaPostOffice] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentInsideKeralaPostOffice?.code
-        ? formData?.GroomAddressDetails?.presentInsideKeralaPostOffice
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentInsideKeralaPostOffice?.code
-        : formData?.BrideAddressDetails?.presentInsideKeralaPostOffice
-      : null
+    formData?.GroomAddressDetails?.presentInsideKeralaPostOffice?.code ? formData?.GroomAddressDetails?.presentInsideKeralaPostOffice : ""
   );
   const [presentInsideKeralaPincode, setinsideKeralaPincode] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentInsideKeralaPincode
-        ? formData?.GroomAddressDetails?.presentInsideKeralaPincode
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentInsideKeralaPincode
-        : formData?.BrideAddressDetails?.presentInsideKeralaPincode
-      : null
+    formData?.GroomAddressDetails?.presentInsideKeralaPincode ? formData?.GroomAddressDetails?.presentInsideKeralaPincode : ""
   );
   const [presentInsideKeralaHouseNameEn, setinsideKeralaHouseNameEn] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentInsideKeralaHouseNameEn
-        ? formData?.GroomAddressDetails?.presentInsideKeralaHouseNameEn
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentInsideKeralaHouseNameEn
-        : formData?.BrideAddressDetails?.presentInsideKeralaHouseNameEn
-      : null
+    formData?.GroomAddressDetails?.presentInsideKeralaHouseNameEn ? formData?.GroomAddressDetails?.presentInsideKeralaHouseNameEn : ""
   );
   const [presentInsideKeralaHouseNameMl, setinsideKeralaHouseNameMl] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentInsideKeralaHouseNameMl
-        ? formData?.GroomAddressDetails?.presentInsideKeralaHouseNameMl
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentInsideKeralaHouseNameMl
-        : formData?.BrideAddressDetails?.presentInsideKeralaHouseNameMl
-      : null
+    formData?.GroomAddressDetails?.presentInsideKeralaHouseNameMl ? formData?.GroomAddressDetails?.presentInsideKeralaHouseNameMl : ""
   );
   const [presentInsideKeralaLocalityNameEn, setinsideKeralaLocalityNameEn] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentInsideKeralaLocalityNameEn
-        ? formData?.GroomAddressDetails?.presentInsideKeralaLocalityNameEn
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentInsideKeralaLocalityNameEn
-        : formData?.BrideAddressDetails?.presentInsideKeralaLocalityNameEn
-      : null
+    formData?.GroomAddressDetails?.presentInsideKeralaLocalityNameEn ? formData?.GroomAddressDetails?.presentInsideKeralaLocalityNameEn : ""
   );
   const [presentInsideKeralaLocalityNameMl, setinsideKeralaLocalityNameMl] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentInsideKeralaLocalityNameMl
-        ? formData?.GroomAddressDetails?.presentInsideKeralaLocalityNameMl
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentInsideKeralaLocalityNameMl
-        : formData?.BrideAddressDetails?.presentInsideKeralaLocalityNameMl
-      : null
+    formData?.GroomAddressDetails?.presentInsideKeralaLocalityNameMl ? formData?.GroomAddressDetails?.presentInsideKeralaLocalityNameMl : ""
   );
   const [presentInsideKeralaStreetNameEn, setinsideKeralaStreetNameEn] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentInsideKeralaStreetNameEn
-        ? formData?.GroomAddressDetails?.presentInsideKeralaStreetNameEn
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentInsideKeralaStreetNameEn
-        : formData?.BrideAddressDetails?.presentInsideKeralaStreetNameEn
-      : null
+    formData?.GroomAddressDetails?.presentInsideKeralaStreetNameEn ? formData?.GroomAddressDetails?.presentInsideKeralaStreetNameEn : ""
   );
   const [presentInsideKeralaStreetNameMl, setinsideKeralaStreetNameMl] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentInsideKeralaStreetNameMl
-        ? formData?.GroomAddressDetails?.presentInsideKeralaStreetNameMl
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentInsideKeralaStreetNameMl
-        : formData?.BrideAddressDetails?.presentInsideKeralaStreetNameMl
-      : null
+    formData?.GroomAddressDetails?.presentInsideKeralaStreetNameMl ? formData?.GroomAddressDetails?.presentInsideKeralaStreetNameMl : ""
   );
-
-  const [Districtvalues, setDistrictvalue] = useState(null);
   const [Talukvalues, setLbsTalukvalue] = useState(null);
   const [Villagevalues, setLbsVillagevalue] = useState(null);
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
   //################################# Present Outside Kerala ##########################################################################################################
   const [presentOutsideKeralaDistrict, setoutsideKeralaDistrict] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentOutsideKeralaDistrict
-        ? formData?.GroomAddressDetails?.presentOutsideKeralaDistrict
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentOutsideKeralaDistrict
-        : formData?.BrideAddressDetails?.presentOutsideKeralaDistrict
-      : null
+    formData?.GroomAddressDetails?.presentOutsideKeralaDistrict?.code ? formData?.GroomAddressDetails?.presentOutsideKeralaDistrict : ""
   );
   const [presentOutsideKeralaTaluk, setoutsideKeralaTaluk] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentOutsideKeralaTaluk
-        ? formData?.GroomAddressDetails?.presentOutsideKeralaTaluk
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentOutsideKeralaTaluk
-        : formData?.BrideAddressDetails?.presentOutsideKeralaTaluk
-      : null
+    formData?.GroomAddressDetails?.presentOutsideKeralaTaluk ? formData?.GroomAddressDetails?.presentOutsideKeralaTaluk : ""
   );
-  // const [presentOutsideKeralaTaluk, setoutsideKeralaTaluk] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaTaluk?.code ? formData?.AddressBirthDetails?.presentOutsideKeralaTaluk : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaTaluk ? "" : "");
+  // const [presentOutsideKeralaTaluk, setoutsideKeralaTaluk] = useState(formData?.GroomAddressDetails?.presentOutsideKeralaTaluk?.code ? formData?.GroomAddressDetails?.presentOutsideKeralaTaluk : formData?.ChildDetails?.GroomAddressDetails?.presentOutsideKeralaTaluk ? "" : "");
   const [presentOutsideKeralaCityVilgeEn, setoutsideKeralaCityVilgeEn] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentOutsideKeralaCityVilgeEn
-        ? formData?.GroomAddressDetails?.presentOutsideKeralaCityVilgeEn
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentOutsideKeralaCityVilgeEn
-        : formData?.BrideAddressDetails?.presentOutsideKeralaCityVilgeEn
-      : null
+    formData?.GroomAddressDetails?.presentOutsideKeralaCityVilgeEn ? formData?.GroomAddressDetails?.presentOutsideKeralaCityVilgeEn : ""
   );
   const [presentOutsideKeralaVillage, setoutsideKeralaVillage] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentOutsideKeralaVillage
-        ? formData?.GroomAddressDetails?.presentOutsideKeralaVillage
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentOutsideKeralaVillage
-        : formData?.BrideAddressDetails?.presentOutsideKeralaVillage
-      : null
+    formData?.GroomAddressDetails?.presentOutsideKeralaVillage?.code ? formData?.GroomAddressDetails?.presentOutsideKeralaVillage : ""
   );
-  // const [presentOutsideKeralaPostOffice, setoutsideKeralaPostOffice] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaPostOffice);
+  // const [presentOutsideKeralaPostOffice, setoutsideKeralaPostOffice] = useState(formData?.GroomAddressDetails?.presentOutsideKeralaPostOffice);
   const [presentOutsideKeralaPincode, setoutsideKeralaPincode] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentOutsideKeralaPincode
-        ? formData?.GroomAddressDetails?.presentOutsideKeralaPincode
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentOutsideKeralaPincode
-        : formData?.BrideAddressDetails?.presentOutsideKeralaPincode
-      : null
+    formData?.GroomAddressDetails?.presentOutsideKeralaPincode ? formData?.GroomAddressDetails?.presentOutsideKeralaPincode : ""
   );
   const [presentOutsideKeralaHouseNameEn, setoutsideKeralaHouseNameEn] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentOutsideKeralaHouseNameEn
-        ? formData?.GroomAddressDetails?.presentOutsideKeralaHouseNameEn
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentOutsideKeralaHouseNameEn
-        : formData?.BrideAddressDetails?.presentOutsideKeralaHouseNameEn
-      : ""
+    formData?.GroomAddressDetails?.presentOutsideKeralaHouseNameEn ? formData?.GroomAddressDetails?.presentOutsideKeralaHouseNameEn : ""
   );
   const [presentOutsideKeralaHouseNameMl, setoutsideKeralaHouseNameMl] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentOutsideKeralaHouseNameMl
-        ? formData?.GroomAddressDetails?.presentOutsideKeralaHouseNameMl
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentOutsideKeralaHouseNameMl
-        : formData?.BrideAddressDetails?.presentOutsideKeralaHouseNameMl
-      : ""
+    formData?.GroomAddressDetails?.presentOutsideKeralaHouseNameMl ? formData?.GroomAddressDetails?.presentOutsideKeralaHouseNameMl : ""
   );
   const [presentOutsideKeralaLocalityNameEn, setoutsideKeralaLocalityNameEn] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentOutsideKeralaLocalityNameEn
-        ? formData?.GroomAddressDetails?.presentOutsideKeralaLocalityNameEn
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentOutsideKeralaLocalityNameEn
-        : formData?.BrideAddressDetails?.presentOutsideKeralaLocalityNameEn
-      : ""
+    formData?.GroomAddressDetails?.presentOutsideKeralaLocalityNameEn ? formData?.GroomAddressDetails?.presentOutsideKeralaLocalityNameEn : ""
   );
   const [presentOutsideKeralaLocalityNameMl, setoutsideKeralaLocalityNameMl] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentOutsideKeralaLocalityNameMl
-        ? formData?.GroomAddressDetails?.presentOutsideKeralaLocalityNameMl
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentOutsideKeralaLocalityNameMl
-        : formData?.BrideAddressDetails?.presentOutsideKeralaLocalityNameMl
-      : ""
+    formData?.GroomAddressDetails?.presentOutsideKeralaLocalityNameMl ? formData?.GroomAddressDetails?.presentOutsideKeralaLocalityNameMl : ""
   );
   const [presentOutsideKeralaStreetNameEn, setoutsideKeralaStreetNameEn] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentOutsideKeralaStreetNameEn
-        ? formData?.GroomAddressDetails?.presentOutsideKeralaStreetNameEn
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentOutsideKeralaStreetNameEn
-        : formData?.BrideAddressDetails?.presentOutsideKeralaStreetNameEn
-      : ""
+    formData?.GroomAddressDetails?.presentOutsideKeralaStreetNameEn ? formData?.GroomAddressDetails?.presentOutsideKeralaStreetNameEn : ""
   );
   const [presentOutsideKeralaStreetNameMl, setoutsideKeralaStreetNameMl] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentOutsideKeralaStreetNameMl
-        ? formData?.GroomAddressDetails?.presentOutsideKeralaStreetNameMl
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentOutsideKeralaStreetNameMl
-        : formData?.BrideAddressDetails?.presentOutsideKeralaStreetNameMl
-      : ""
+    formData?.GroomAddressDetails?.presentOutsideKeralaStreetNameMl ? formData?.GroomAddressDetails?.presentOutsideKeralaStreetNameMl : ""
   );
   const [presentOutsideKeralaPostOfficeEn, setoutsideKeralaPostOfficeEn] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentOutsideKeralaPostOfficeEn
-        ? formData?.GroomAddressDetails?.presentOutsideKeralaPostOfficeEn
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentOutsideKeralaPostOfficeEn
-        : formData?.BrideAddressDetails?.presentOutsideKeralaPostOfficeEn
-      : ""
+    formData?.GroomAddressDetails?.presentOutsideKeralaPostOfficeEn ? formData?.GroomAddressDetails?.presentOutsideKeralaPostOfficeEn : ""
   );
   const [presentOutsideKeralaPostOfficeMl, setoutsideKeralaPostOfficeMl] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentOutsideKeralaPostOfficeMl
-        ? formData?.GroomAddressDetails?.presentOutsideKeralaPostOfficeMl
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentOutsideKeralaPostOfficeMl
-        : formData?.BrideAddressDetails?.presentOutsideKeralaPostOfficeMl
-      : ""
+    formData?.GroomAddressDetails?.presentOutsideKeralaPostOfficeMl ? formData?.GroomAddressDetails?.presentOutsideKeralaPostOfficeMl : ""
   );
 
   //############################################### Present Out Side India ###########################################################################################################
 
   const [presentOutSideIndiaAdressEn, setAdressEn] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentOutSideIndiaAdressEn
-        ? formData?.GroomAddressDetails?.presentOutSideIndiaAdressEn
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentOutSideIndiaAdressEn
-        : formData?.BrideAddressDetails?.presentOutSideIndiaAdressEn
-      : ""
+    formData?.GroomAddressDetails?.presentOutSideIndiaAdressEn ? formData?.GroomAddressDetails?.presentOutSideIndiaAdressEn : ""
   );
   const [presentOutSideIndiaAdressMl, setAdressMl] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentOutSideIndiaAdressMl
-        ? formData?.GroomAddressDetails?.presentOutSideIndiaAdressMl
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentOutSideIndiaAdressMl
-        : formData?.BrideAddressDetails?.presentOutSideIndiaAdressMl
-      : ""
+    formData?.GroomAddressDetails?.presentOutSideIndiaAdressMl ? formData?.GroomAddressDetails?.presentOutSideIndiaAdressMl : ""
   );
   const [presentOutSideIndiaAdressEnB, setAdressEnB] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentOutSideIndiaAdressEnB
-        ? formData?.GroomAddressDetails?.presentOutSideIndiaAdressEnB
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentOutSideIndiaAdressEnB
-        : formData?.BrideAddressDetails?.presentOutSideIndiaAdressEnB
-      : ""
+    formData?.GroomAddressDetails?.presentOutSideIndiaAdressEnB ? formData?.GroomAddressDetails?.presentOutSideIndiaAdressEnB : ""
   );
   const [presentOutSideIndiaAdressMlB, setAdressMlB] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentOutSideIndiaAdressMlB
-        ? formData?.GroomAddressDetails?.presentOutSideIndiaAdressMlB
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentOutSideIndiaAdressMlB
-        : formData?.BrideAddressDetails?.presentOutSideIndiaAdressMlB
-      : ""
+    formData?.GroomAddressDetails?.presentOutSideIndiaAdressMlB ? formData?.GroomAddressDetails?.presentOutSideIndiaAdressMlB : ""
   );
   const [presentOutSideIndiaProvinceEn, setProvinceEn] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentOutSideIndiaProvinceEn
-        ? formData?.GroomAddressDetails?.presentOutSideIndiaProvinceEn
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentOutSideIndiaProvinceEn
-        : formData?.BrideAddressDetails?.presentOutSideIndiaProvinceEn
-      : ""
+    formData?.GroomAddressDetails?.presentOutSideIndiaProvinceEn ? formData?.GroomAddressDetails?.presentOutSideIndiaProvinceEn : ""
   );
   const [presentOutSideIndiaProvinceMl, setProvinceMl] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentOutSideIndiaProvinceMl
-        ? formData?.GroomAddressDetails?.presentOutSideIndiaProvinceMl
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentOutSideIndiaProvinceMl
-        : formData?.BrideAddressDetails?.presentOutSideIndiaProvinceMl
-      : ""
+    formData?.GroomAddressDetails?.presentOutSideIndiaProvinceMl ? formData?.GroomAddressDetails?.presentOutSideIndiaProvinceMl : ""
   );
   const [presentOutSideIndiaadrsVillage, setadrsVillage] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentOutSideIndiaadrsVillage?.code
-        ? formData?.GroomAddressDetails?.presentOutSideIndiaadrsVillage
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentOutSideIndiaadrsVillage?.code
-        : formData?.BrideAddressDetails?.presentOutSideIndiaadrsVillage
-      : ""
+    formData?.GroomAddressDetails?.presentOutSideIndiaadrsVillage ? formData?.GroomAddressDetails?.presentOutSideIndiaadrsVillage : ""
   );
   const [presentOutSideIndiaadrsCityTown, setadrsCityTown] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentOutSideIndiaadrsCityTown
-        ? formData?.GroomAddressDetails?.presentOutSideIndiaadrsCityTown
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentOutSideIndiaadrsCityTown
-        : formData?.BrideAddressDetails?.presentOutSideIndiaadrsCityTown
-      : ""
+    formData?.GroomAddressDetails?.presentOutSideIndiaadrsCityTown ? formData?.GroomAddressDetails?.presentOutSideIndiaadrsCityTown : ""
   );
   const [presentOutSideIndiaPostCode, setPostCode] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentOutSideIndiaPostCode
-        ? formData?.GroomAddressDetails?.presentOutSideIndiaPostCode
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentOutSideIndiaPostCode
-        : formData?.BrideAddressDetails?.presentOutSideIndiaPostCode
-      : ""
+    formData?.GroomAddressDetails?.presentOutSideIndiaPostCode ? formData?.GroomAddressDetails?.presentOutSideIndiaPostCode : ""
   );
-
   const [presentOutSideCountry, setOutSideCountry] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentOutSideCountry
-        ? formData?.GroomAddressDetails?.presentOutSideCountry
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentOutSideCountry
-        : formData?.BrideAddressDetails?.presentOutSideCountry
-      : ""
+    formData?.GroomAddressDetails?.presentOutSideCountry ? formData?.GroomAddressDetails?.presentOutSideCountry : ""
   );
 
   //############################################### Same As Above ##################################################################################################
 
-  const [isPrsentAddress, setIsPrsentAddress] = useState(true);
+  const [isPrsentAddress, setIsPrsentAddress] = useState(
+    formData?.GroomAddressDetails?.isPrsentAddress ? formData?.GroomAddressDetails?.isPrsentAddress : true
+  );
 
   //################################################### Country State Permanent ###########################################################################
 
   const [permtaddressCountry, setpermtaddressCountry] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permtaddressCountry?.code
-        ? formData?.GroomAddressDetails?.permtaddressCountry
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.permtaddressCountry?.code
-        : formData?.BrideAddressDetails?.permtaddressCountry
-      : ""
+    formData?.GroomAddressDetails?.permtaddressCountry ? formData?.GroomAddressDetails?.permtaddressCountry : ""
   );
   const [permtaddressStateName, setpermtaddressStateName] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permtaddressStateName?.code
-        ? formData?.GroomAddressDetails?.permtaddressStateName
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.permtaddressStateName?.code
-        : formData?.BrideAddressDetails?.permtaddressStateName
-      : ""
+    formData?.GroomAddressDetails?.permtaddressStateName?.code ? formData?.GroomAddressDetails?.permtaddressStateName : ""
   );
   const [countryValuePermanent, setCountryValuePermanent] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permtaddressCountry?.code
-        ? formData?.GroomAddressDetails?.permtaddressCountry
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.permtaddressCountry?.code
-        : formData?.BrideAddressDetails?.permtaddressCountry
-      : ""
+    formData?.GroomAddressDetails?.countryValuePermanent?.code ? formData?.GroomAddressDetails?.countryValuePermanent : ""
   );
   const [valuePermanent, setValuePermanent] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.presentaddressStateName?.code
-        ? formData?.GroomAddressDetails?.presentaddressStateName?.code
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.presentaddressStateName?.code
-        : formData?.BrideAddressDetails?.presentaddressStateName?.code
-      : ""
+    formData?.GroomAddressDetails?.presentaddressStateName?.code ? formData?.GroomAddressDetails?.presentaddressStateName : ""
   );
 
   //################################################# Permanent Inside Kerala ##########################################################################################
 
   const [permntInKeralaAdrDistrict, setpermntInKeralaAdrDistrict] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permntInKeralaAdrDistrict?.code
-        ? formData?.GroomAddressDetails?.permntInKeralaAdrDistrict
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.permntInKeralaAdrDistrict?.code
-        : formData?.BrideAddressDetails?.permntInKeralaAdrDistrict
-      : ""
+    formData?.GroomAddressDetails?.permntInKeralaAdrDistrict?.code ? formData?.GroomAddressDetails?.permntInKeralaAdrDistrict : ""
   );
-  // const [permntInKeralaAdrLBTypeName, setpermntInKeralaAdrLBTypeName] = useState(formData?.AddressBirthDetails?.permntInKeralaAdrLBTypeName ? formData?.AddressBirthDetails?.permntInKeralaAdrLBTypeName : null);
+  // const [permntInKeralaAdrLBTypeName, setpermntInKeralaAdrLBTypeName] = useState(formData?.GroomAddressDetails?.permntInKeralaAdrLBTypeName ? formData?.GroomAddressDetails?.permntInKeralaAdrLBTypeName : null);
   const [permntInKeralaAdrLBName, setpermntInKeralaAdrLBName] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permntInKeralaAdrLBName?.code
-        ? formData?.GroomAddressDetails?.permntInKeralaAdrLBName
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.permntInKeralaAdrLBName?.code
-        : formData?.BrideAddressDetails?.permntInKeralaAdrLBName
-      : ""
+    formData?.GroomAddressDetails?.permntInKeralaAdrLBName?.code ? formData?.GroomAddressDetails?.permntInKeralaAdrLBName : ""
   );
   const [permntInKeralaAdrTaluk, setpermntInKeralaAdrTaluk] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permntInKeralaAdrTaluk
-        ? formData?.GroomAddressDetails?.permntInKeralaAdrTaluk
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.permntInKeralaAdrTaluk
-        : formData?.BrideAddressDetails?.permntInKeralaAdrTaluk
-      : ""
+    formData?.GroomAddressDetails?.permntInKeralaAdrTaluk ? formData?.GroomAddressDetails?.permntInKeralaAdrTaluk : ""
   );
   const [permntInKeralaAdrVillage, setpermntInKeralaAdrVillage] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permntInKeralaAdrVillage
-        ? formData?.GroomAddressDetails?.permntInKeralaAdrVillage
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.permntInKeralaAdrVillage
-        : formData?.BrideAddressDetails?.permntInKeralaAdrVillage
-      : ""
+    formData?.GroomAddressDetails?.permntInKeralaAdrVillage ? formData?.GroomAddressDetails?.permntInKeralaAdrVillage : ""
   );
   const [permntInKeralaAdrPostOffice, setpermntInKeralaAdrPostOffice] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permntInKeralaAdrPostOffice
-        ? formData?.GroomAddressDetails?.permntInKeralaAdrPostOffice
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.permntInKeralaAdrPostOffice
-        : formData?.BrideAddressDetails?.permntInKeralaAdrPostOffice
-      : ""
+    formData?.GroomAddressDetails?.permntInKeralaAdrPostOffice ? formData?.GroomAddressDetails?.permntInKeralaAdrPostOffice : ""
   );
   const [permntInKeralaAdrPincode, setpermntInKeralaAdrPincode] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permntInKeralaAdrPincode
-        ? formData?.GroomAddressDetails?.permntInKeralaAdrPincode
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.permntInKeralaAdrPincode
-        : formData?.BrideAddressDetails?.permntInKeralaAdrPincode
-      : ""
+    formData?.GroomAddressDetails?.permntInKeralaAdrPincode ? formData?.GroomAddressDetails?.permntInKeralaAdrPincode : ""
   );
   const [permntInKeralaAdrHouseNameEn, setpermntInKeralaAdrHouseNameEn] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permntInKeralaAdrHouseNameEn
-        ? formData?.GroomAddressDetails?.permntInKeralaAdrHouseNameEn
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.permntInKeralaAdrHouseNameEn
-        : formData?.BrideAddressDetails?.permntInKeralaAdrHouseNameEn
-      : ""
+    formData?.GroomAddressDetails?.permntInKeralaAdrHouseNameEn ? formData?.GroomAddressDetails?.permntInKeralaAdrHouseNameEn : ""
   );
   const [permntInKeralaAdrHouseNameMl, setpermntInKeralaAdrHouseNameMl] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permntInKeralaAdrHouseNameMl
-        ? formData?.GroomAddressDetails?.permntInKeralaAdrHouseNameMl
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.permntInKeralaAdrHouseNameMl
-        : formData?.BrideAddressDetails?.permntInKeralaAdrHouseNameMl
-      : ""
+    formData?.GroomAddressDetails?.permntInKeralaAdrHouseNameMl ? formData?.GroomAddressDetails?.permntInKeralaAdrHouseNameMl : ""
   );
   const [permntInKeralaAdrLocalityNameEn, setpermntInKeralaAdrLocalityNameEn] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permntInKeralaAdrLocalityNameEn
-        ? formData?.GroomAddressDetails?.permntInKeralaAdrLocalityNameEn
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.permntInKeralaAdrLocalityNameEn
-        : formData?.BrideAddressDetails?.permntInKeralaAdrLocalityNameEn
-      : ""
+    formData?.GroomAddressDetails?.permntInKeralaAdrLocalityNameEn ? formData?.GroomAddressDetails?.permntInKeralaAdrLocalityNameEn : ""
   );
   const [permntInKeralaAdrLocalityNameMl, setpermntInKeralaAdrLocalityNameMl] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permntInKeralaAdrLocalityNameMl
-        ? formData?.GroomAddressDetails?.permntInKeralaAdrLocalityNameMl
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.permntInKeralaAdrLocalityNameMl
-        : formData?.BrideAddressDetails?.permntInKeralaAdrLocalityNameMl
-      : ""
+    formData?.GroomAddressDetails?.permntInKeralaAdrLocalityNameMl ? formData?.GroomAddressDetails?.permntInKeralaAdrLocalityNameMl : ""
   );
   const [permntInKeralaAdrStreetNameEn, setpermntInKeralaAdrStreetNameEn] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permntInKeralaAdrStreetNameEn
-        ? formData?.GroomAddressDetails?.permntInKeralaAdrStreetNameEn
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.permntInKeralaAdrStreetNameEn
-        : formData?.BrideAddressDetails?.permntInKeralaAdrStreetNameEn
-      : ""
+    formData?.GroomAddressDetails?.permntInKeralaAdrStreetNameEn ? formData?.GroomAddressDetails?.permntInKeralaAdrStreetNameEn : ""
   );
   const [permntInKeralaAdrStreetNameMl, setpermntInKeralaAdrStreetNameMl] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permntInKeralaAdrStreetNameMl
-        ? formData?.GroomAddressDetails?.permntInKeralaAdrStreetNameMl
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.permntInKeralaAdrStreetNameMl
-        : formData?.BrideAddressDetails?.permntInKeralaAdrStreetNameMl
-      : ""
+    formData?.GroomAddressDetails?.permntInKeralaAdrStreetNameMl ? formData?.GroomAddressDetails?.permntInKeralaAdrStreetNameMl : ""
   );
   const [permntInKeralaWardNo, setpermntInKeralaWardNo] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permntInKeralaWardNo
-        ? formData?.GroomAddressDetails?.permntInKeralaWardNo
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.permntInKeralaWardNo
-        : formData?.BrideAddressDetails?.permntInKeralaWardNo
-      : ""
+    formData?.GroomAddressDetails?.permntInKeralaWardNo ? formData?.GroomAddressDetails?.permntInKeralaWardNo : ""
   );
 
   //############################################################################### Permanent Outside Kerala ############################################################################
 
   const [permntOutsideKeralaDistrict, setpermntOutsideKeralaDistrict] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permntOutsideKeralaDistrict?.code
-        ? formData?.GroomAddressDetails?.permntOutsideKeralaDistrict
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.permntOutsideKeralaDistrict?.code
-        : formData?.BrideAddressDetails?.permntOutsideKeralaDistrict
-      : ""
+    formData?.GroomAddressDetails?.permntOutsideKeralaDistrict?.code ? formData?.GroomAddressDetails?.permntOutsideKeralaDistrict : ""
   );
   const [permntOutsideKeralaTaluk, setpermntOutsideKeralaTaluk] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permntOutsideKeralaTaluk
-        ? formData?.GroomAddressDetails?.permntOutsideKeralaTaluk
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.permntOutsideKeralaTaluk
-        : formData?.BrideAddressDetails?.permntOutsideKeralaTaluk
-      : ""
+    formData?.GroomAddressDetails?.permntOutsideKeralaTaluk ? formData?.GroomAddressDetails?.permntOutsideKeralaTaluk : ""
   );
   const [permntOutsideKeralaCityVilgeEn, setpermntOutsideKeralaCityVilgeEn] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permntOutsideKeralaCityVilgeEn
-        ? formData?.GroomAddressDetails?.permntOutsideKeralaCityVilgeEn
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.permntOutsideKeralaCityVilgeEn
-        : formData?.BrideAddressDetails?.permntOutsideKeralaCityVilgeEn
-      : ""
+    formData?.GroomAddressDetails?.permntOutsideKeralaCityVilgeEn ? formData?.GroomAddressDetails?.permntOutsideKeralaCityVilgeEn : ""
   );
   const [permntOutsideKeralaVillage, setpermntOutsideKeralaVillage] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permntOutsideKeralaVillage
-        ? formData?.GroomAddressDetails?.permntOutsideKeralaVillage
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.permntOutsideKeralaVillage
-        : formData?.BrideAddressDetails?.permntOutsideKeralaVillage
-      : ""
+    formData?.GroomAddressDetails?.permntOutsideKeralaVillage ? formData?.GroomAddressDetails?.permntOutsideKeralaVillage : ""
   );
-  // const [presentOutsideKeralaPostOffice, setoutsideKeralaPostOffice] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaPostOffice);
+  // const [presentOutsideKeralaPostOffice, setoutsideKeralaPostOffice] = useState(formData?.GroomAddressDetails?.presentOutsideKeralaPostOffice);
   const [permntOutsideKeralaPincode, setpermntOutsideKeralaPincode] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permntOutsideKeralaPincode
-        ? formData?.GroomAddressDetails?.permntOutsideKeralaPincode
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.permntOutsideKeralaPincode
-        : formData?.BrideAddressDetails?.permntOutsideKeralaPincode
-      : ""
+    formData?.GroomAddressDetails?.permntOutsideKeralaPincode ? formData?.GroomAddressDetails?.permntOutsideKeralaPincode : ""
   );
   const [permntOutsideKeralaHouseNameEn, setpermntOutsideKeralaHouseNameEn] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permntOutsideKeralaHouseNameEn
-        ? formData?.GroomAddressDetails?.permntOutsideKeralaHouseNameEn
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.permntOutsideKeralaHouseNameEn
-        : formData?.BrideAddressDetails?.permntOutsideKeralaHouseNameEn
-      : ""
+    formData?.GroomAddressDetails?.permntOutsideKeralaHouseNameEn ? formData?.GroomAddressDetails?.permntOutsideKeralaHouseNameEn : ""
   );
   const [permntOutsideKeralaHouseNameMl, setpermntOutsideKeralaHouseNameMl] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permntOutsideKeralaHouseNameMl
-        ? formData?.GroomAddressDetails?.permntOutsideKeralaHouseNameMl
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.permntOutsideKeralaHouseNameMl
-        : formData?.BrideAddressDetails?.permntOutsideKeralaHouseNameMl
-      : ""
+    formData?.GroomAddressDetails?.permntOutsideKeralaHouseNameMl ? formData?.GroomAddressDetails?.permntOutsideKeralaHouseNameMl : ""
   );
   const [permntOutsideKeralaLocalityNameEn, setpermntOutsideKeralaLocalityNameEn] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permntOutsideKeralaLocalityNameEn
-        ? formData?.GroomAddressDetails?.permntOutsideKeralaLocalityNameEn
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.permntOutsideKeralaLocalityNameEn
-        : formData?.BrideAddressDetails?.permntOutsideKeralaLocalityNameEn
-      : ""
+    formData?.GroomAddressDetails?.permntOutsideKeralaLocalityNameEn ? formData?.GroomAddressDetails?.permntOutsideKeralaLocalityNameEn : ""
   );
   const [permntOutsideKeralaLocalityNameMl, setpermntOutsideKeralaLocalityNameMl] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permntOutsideKeralaLocalityNameMl
-        ? formData?.GroomAddressDetails?.permntOutsideKeralaLocalityNameMl
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.permntOutsideKeralaLocalityNameMl
-        : formData?.BrideAddressDetails?.permntOutsideKeralaLocalityNameMl
-      : ""
+    formData?.GroomAddressDetails?.permntOutsideKeralaLocalityNameMl ? formData?.GroomAddressDetails?.permntOutsideKeralaLocalityNameMl : ""
   );
   const [permntOutsideKeralaStreetNameEn, setpermntOutsideKeralaStreetNameEn] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permntOutsideKeralaStreetNameEn
-        ? formData?.GroomAddressDetails?.permntOutsideKeralaStreetNameEn
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.permntOutsideKeralaStreetNameEn
-        : formData?.BrideAddressDetails?.permntOutsideKeralaStreetNameEn
-      : ""
+    formData?.GroomAddressDetails?.permntOutsideKeralaStreetNameEn ? formData?.GroomAddressDetails?.permntOutsideKeralaStreetNameEn : ""
   );
   const [permntOutsideKeralaStreetNameMl, setpermntOutsideKeralaStreetNameMl] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permntOutsideKeralaStreetNameMl
-        ? formData?.GroomAddressDetails?.permntOutsideKeralaStreetNameMl
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.permntOutsideKeralaStreetNameMl
-        : formData?.BrideAddressDetails?.permntOutsideKeralaStreetNameMl
-      : ""
+    formData?.GroomAddressDetails?.permntOutsideKeralaStreetNameMl ? formData?.GroomAddressDetails?.permntOutsideKeralaStreetNameMl : ""
   );
   const [permntOutsideKeralaPostOfficeEn, setpermntoutsideKeralaPostOfficeEn] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permntOutsideKeralaPostOfficeEn
-        ? formData?.GroomAddressDetails?.permntOutsideKeralaPostOfficeEn
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.permntOutsideKeralaPostOfficeEn
-        : formData?.BrideAddressDetails?.permntOutsideKeralaPostOfficeEn
-      : ""
+    formData?.GroomAddressDetails?.permntOutsideKeralaPostOfficeEn ? formData?.GroomAddressDetails?.permntOutsideKeralaPostOfficeEn : ""
   );
   const [permntOutsideKeralaPostOfficeMl, setpermntoutsideKeralaPostOfficeMl] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permntOutsideKeralaPostOfficeMl
-        ? formData?.GroomAddressDetails?.permntOutsideKeralaPostOfficeMl
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.permntOutsideKeralaPostOfficeMl
-        : formData?.BrideAddressDetails?.permntOutsideKeralaPostOfficeMl
-      : ""
+    formData?.GroomAddressDetails?.permntOutsideKeralaPostOfficeMl ? formData?.GroomAddressDetails?.permntOutsideKeralaPostOfficeMl : ""
   );
 
   //######################################################################## Permanent Ouside Country #############################################################################################
 
   const [permntOutsideIndiaLineoneEn, setadrsPermntOutsideIndiaLineoneEn] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permntOutsideIndiaLineoneEn
-        ? formData?.GroomAddressDetails?.permntOutsideIndiaLineoneEn
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.permntOutsideIndiaLineoneEn
-        : formData?.BrideAddressDetails?.permntOutsideIndiaLineoneEn
-      : ""
+    formData?.GroomAddressDetails?.permntOutsideIndiaLineoneEn ? formData?.GroomAddressDetails?.permntOutsideIndiaLineoneEn : ""
   );
   const [permntOutsideIndiaLineoneMl, setadrsPermntOutsideIndiaLineoneMl] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permntOutsideIndiaLineoneMl
-        ? formData?.GroomAddressDetails?.permntOutsideIndiaLineoneMl
-        : window.location.href.includes("address-bride")
-        ? formData?.BrideAddressDetails?.permntOutsideIndiaLineoneMl
-        : formData?.BrideAddressDetails?.permntOutsideIndiaLineoneMl
-      : ""
+    formData?.GroomAddressDetails?.permntOutsideIndiaLineoneMl ? formData?.GroomAddressDetails?.permntOutsideIndiaLineoneMl : ""
   );
   const [permntOutsideIndiaLinetwoEn, setadrsPermntOutsideIndiaLinetwoEn] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permntOutsideIndiaLinetwoEn
-        ? formData?.GroomAddressDetails?.permntOutsideIndiaLinetwoEn
-        : window.location.href.includes("address-bridepermntOutsideIndiaLinetwoEn")
-        ? formData?.BrideAddressDetails?.permntOutsideIndiaLinetwoEn
-        : formData?.BrideAddressDetails?.permntOutsideIndiaLinetwoEn
-      : ""
+    formData?.GroomAddressDetails?.permntOutsideIndiaLinetwoEn ? formData?.GroomAddressDetails?.permntOutsideIndiaLinetwoEn : ""
   );
   const [permntOutsideIndiaLinetwoMl, setadrsPermntOutsideIndiaLinetwoMl] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permntOutsideIndiaLinetwoMl
-        ? formData?.GroomAddressDetails?.permntOutsideIndiaLinetwoMl
-        : window.location.href.includes("address-bridepermntOutsideIndiaLinetwoEn")
-        ? formData?.BrideAddressDetails?.permntOutsideIndiaLinetwoMl
-        : formData?.BrideAddressDetails?.permntOutsideIndiaLinetwoMl
-      : ""
+    formData?.GroomAddressDetails?.permntOutsideIndiaLinetwoMl ? formData?.GroomAddressDetails?.permntOutsideIndiaLinetwoMl : ""
   );
   const [permntOutsideIndiaprovinceEn, setPermntOutsideIndiaprovinceEn] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permntOutsideIndiaprovinceEn
-        ? formData?.GroomAddressDetails?.permntOutsideIndiaprovinceEn
-        : window.location.href.includes("address-bridepermntOutsideIndiaLinetwoEn")
-        ? formData?.BrideAddressDetails?.permntOutsideIndiaprovinceEn
-        : formData?.BrideAddressDetails?.permntOutsideIndiaprovinceEn
-      : ""
+    formData?.GroomAddressDetails?.permntOutsideIndiaprovinceEn ? formData?.GroomAddressDetails?.permntOutsideIndiaprovinceEn : ""
   );
   const [permntOutsideIndiaprovinceMl, setPermntOutsideIndiaprovinceMl] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permntOutsideIndiaprovinceMl
-        ? formData?.GroomAddressDetails?.permntOutsideIndiaprovinceMl
-        : window.location.href.includes("address-bridepermntOutsideIndiaLinetwoEn")
-        ? formData?.BrideAddressDetails?.permntOutsideIndiaprovinceMl
-        : formData?.BrideAddressDetails?.permntOutsideIndiaprovinceMl
-      : ""
+    formData?.GroomAddressDetails?.permntOutsideIndiaprovinceMl ? formData?.GroomAddressDetails?.permntOutsideIndiaprovinceMl : ""
   );
   const [permntOutsideIndiaVillage, setadrsPermntOutsideIndiaVillage] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permntOutsideIndiaVillage?.code
-        ? formData?.GroomAddressDetails?.permntOutsideIndiaVillage
-        : window.location.href.includes("address-bridepermntOutsideIndiaLinetwoEn")
-        ? formData?.BrideAddressDetails?.permntOutsideIndiaVillage?.code
-        : formData?.BrideAddressDetails?.permntOutsideIndiaVillage
-      : ""
+    formData?.GroomAddressDetails?.permntOutsideIndiaVillage ? formData?.GroomAddressDetails?.permntOutsideIndiaVillage : ""
   );
   const [permntOutsideIndiaCityTown, setadrsPermntOutsideIndiaCityTown] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permntOutsideIndiaCityTown
-        ? formData?.GroomAddressDetails?.permntOutsideIndiaCityTown
-        : window.location.href.includes("address-bridepermntOutsideIndiaLinetwoEn")
-        ? formData?.BrideAddressDetails?.permntOutsideIndiaCityTown
-        : formData?.BrideAddressDetails?.permntOutsideIndiaCityTown
-      : ""
+    formData?.GroomAddressDetails?.permntOutsideIndiaCityTown ? formData?.GroomAddressDetails?.permntOutsideIndiaCityTown : ""
   );
   const [permanentOutsideIndiaPostCode, setPermantpostCode] = useState(
-    window.location.href.includes("address-groom")
-      ? formData?.GroomAddressDetails?.permanentOutsideIndiaPostCode
-        ? formData?.GroomAddressDetails?.permanentOutsideIndiaPostCode
-        : window.location.href.includes("address-bridepermntOutsideIndiaLinetwoEn")
-        ? formData?.BrideAddressDetails?.permanentOutsideIndiaPostCode
-        : formData?.BrideAddressDetails?.permanentOutsideIndiaPostCode
-      : ""
+    formData?.GroomAddressDetails?.permanentOutsideIndiaPostCode ? formData?.GroomAddressDetails?.permanentOutsideIndiaPostCode : ""
   );
-
   const [permntOutsideIndiaCountry, setPermntOutsideIndiaCountry] = useState(
-    formData?.AddressBirthDetails?.permntOutsideIndiaCountry ? formData?.AddressBirthDetails?.permntOutsideIndiaCountry : null
+    formData?.GroomAddressDetails?.permntOutsideIndiaCountry ? formData?.GroomAddressDetails?.permntOutsideIndiaCountry : ""
   );
 
   //############################################################# Error Constants #####################################################################################
 
-  const [PresentAddressCountryError, setPresentAddressCountryError] = useState(false);
-  const [PresentAddressStateNameError, setPresentAddressStateNameError] = useState(false);
-  const [PresentInsideKeralaDistrictError, setPresentInsideKeralaDistrictError] = useState(false);
-  const [PresentInsideKeralaTalukError, setPresentInsideKeralaTalukError] = useState(false);
-  const [PresentInsideKeralaVillageError, setPresentInsideKeralaVillageError] = useState(false);
-  const [PresentInsideKeralaLBNameError, setPresentInsideKeralaLBNameError] = useState(false);
-  const [PresentInsideKeralaWardNoError, setPresentInsideKeralaWardNoError] = useState(false);
-  const [PresentInsideKeralaHouseNameEnError, setPresentInsideKeralaHouseNameEnError] = useState(false);
-  const [PresentInsideKeralaHouseNameMlError, setPresentInsideKeralaHouseNameMlError] = useState(false);
-  const [PresentInsideKeralaLocalityNameEnError, setPresentInsideKeralaLocalityNameEnError] = useState(false);
-  const [PresentInsideKeralaLocalityNameMlError, setPresentInsideKeralaLocalityNameMlError] = useState(false);
-  const [PresentInsideKeralaStreetNameEnError, setPresentInsideKeralaStreetNameEnError] = useState(false);
-  const [PresentInsideKeralaStreetNameMlError, setPresentInsideKeralaStreetNameMlError] = useState(false);
-  const [PresentInsideKeralaPostOfficeError, setPresentInsideKeralaPostOfficeError] = useState(false);
-  const [PresentInsideKeralaPincodeError, setPresentInsideKeralaPincodeError] = useState(false);
-  const [PresentCityVillageError, setCityVillageError] = useState(false);
-  const [PresentOutSideIndiaProvinceEnError, setPresentOutSideIndiaProvinceEnError] = useState(false);
-  const [PresentOutSideIndiaProvinceMlError, setPresentOutSideIndiaProvinceMlError] = useState(false);
-  const [PresentOutSideIndiaCityError, setPresentOutSideIndiaCityError] = useState(false);
-  const [PresentOutSideIndiaPostCodeError, setPresentOutSideIndiaPostCodeError] = useState(false);
-  const [PresentOutSideIndiaLineOneEnError, setPresentOutSideIndiaLineOneEnError] = useState(false);
-  const [PresentOutSideIndiaLineOneMlError, setPresentOutSideIndiaLineOneMlError] = useState(false);
-  const [PresentOutSideIndiaLineTwoEnError, setPresentOutSideIndiaLineTwoEnError] = useState(false);
-  const [PresentOutSideIndiaLineTwoMlError, setPresentOutSideIndiaLineTwoMlError] = useState(false);
+  const [PresentAddressCountryError, setPresentAddressCountryError] = useState(
+    formData?.GroomAddressDetails?.PresentAddressCountryError ? false : false
+  );
+  const [PresentAddressStateNameError, setPresentAddressStateNameError] = useState(
+    formData?.GroomAddressDetails?.PresentAddressStateNameError ? false : false
+  );
+  const [PresentInsideKeralaDistrictError, setPresentInsideKeralaDistrictError] = useState(
+    formData?.GroomAddressDetails?.PresentInsideKeralaDistrictError ? false : false
+  );
+  const [PresentInsideKeralaTalukError, setPresentInsideKeralaTalukError] = useState(
+    formData?.GroomAddressDetails?.PresentInsideKeralaTalukError ? false : false
+  );
+  const [PresentInsideKeralaVillageError, setPresentInsideKeralaVillageError] = useState(
+    formData?.GroomAddressDetails?.PresentInsideKeralaVillageError ? false : false
+  );
+  const [PresentInsideKeralaLBNameError, setPresentInsideKeralaLBNameError] = useState(
+    formData?.GroomAddressDetails?.PresentInsideKeralaLBNameError ? false : false
+  );
+  const [PresentInsideKeralaWardNoError, setPresentInsideKeralaWardNoError] = useState(
+    formData?.GroomAddressDetails?.PresentInsideKeralaWardNoError ? false : false
+  );
+  const [PresentInsideKeralaHouseNameEnError, setPresentInsideKeralaHouseNameEnError] = useState(
+    formData?.GroomAddressDetails?.PresentInsideKeralaHouseNameEnError ? false : false
+  );
+  const [PresentInsideKeralaHouseNameMlError, setPresentInsideKeralaHouseNameMlError] = useState(
+    formData?.GroomAddressDetails?.PresentInsideKeralaHouseNameMlError ? false : false
+  );
+  const [PresentInsideKeralaLocalityNameEnError, setPresentInsideKeralaLocalityNameEnError] = useState(
+    formData?.GroomAddressDetails?.PresentInsideKeralaLocalityNameEnError ? false : false
+  );
+  const [PresentInsideKeralaLocalityNameMlError, setPresentInsideKeralaLocalityNameMlError] = useState(
+    formData?.GroomAddressDetails?.PresentInsideKeralaLocalityNameMlError ? false : false
+  );
+
+  const [PresentInsideKeralaStreetNameEnError, setPresentInsideKeralaStreetNameEnError] = useState(
+    formData?.GroomAddressDetails?.PresentInsideKeralaStreetNameEnError ? false : false
+  );
+  const [PresentInsideKeralaStreetNameMlError, setPresentInsideKeralaStreetNameMlError] = useState(
+    formData?.GroomAddressDetails?.PresentInsideKeralaStreetNameMlError ? false : false
+  );
+
+  const [PresentInsideKeralaPostOfficeError, setPresentInsideKeralaPostOfficeError] = useState(
+    formData?.GroomAddressDetails?.PresentInsideKeralaPostOfficeError ? false : false
+  );
+  const [PresentInsideKeralaPincodeError, setPresentInsideKeralaPincodeError] = useState(
+    formData?.GroomAddressDetails?.PresentInsideKeralaPincodeError ? false : false
+  );
+  const [PresentCityVillageError, setCityVillageError] = useState(formData?.GroomAddressDetails?.PresentCityVillageError ? false : false);
+  const [PresentOutSideIndiaProvinceEnError, setPresentOutSideIndiaProvinceEnError] = useState(
+    formData?.GroomAddressDetails?.PresentOutSideIndiaProvinceEnError ? false : false
+  );
+  const [PresentOutSideIndiaProvinceMlError, setPresentOutSideIndiaProvinceMlError] = useState(
+    formData?.GroomAddressDetails?.PresentOutSideIndiaProvinceMlError ? false : false
+  );
+  const [PresentOutSideIndiaCityError, setPresentOutSideIndiaCityError] = useState(
+    formData?.GroomAddressDetails?.PresentOutSideIndiaCityError ? false : false
+  );
+  const [PresentOutSideIndiaPostCodeError, setPresentOutSideIndiaPostCodeError] = useState(
+    formData?.GroomAddressDetails?.PresentOutSideIndiaPostCodeError ? false : false
+  );
+  const [PresentOutSideIndiaLineOneEnError, setPresentOutSideIndiaLineOneEnError] = useState(
+    formData?.GroomAddressDetails?.PresentOutSideIndiaLineOneEnError ? false : false
+  );
+  const [PresentOutSideIndiaLineOneMlError, setPresentOutSideIndiaLineOneMlError] = useState(
+    formData?.GroomAddressDetails?.PresentOutSideIndiaLineOneMlError ? false : false
+  );
+  const [PresentOutSideIndiaLineTwoEnError, setPresentOutSideIndiaLineTwoEnError] = useState(
+    formData?.GroomAddressDetails?.PresentOutSideIndiaLineTwoEnError ? false : false
+  );
+  const [PresentOutSideIndiaLineTwoMlError, setPresentOutSideIndiaLineTwoMlError] = useState(
+    formData?.GroomAddressDetails?.PresentOutSideIndiaLineTwoMlError ? false : false
+  );
 
   const onSkip = () => onSelect();
   let validFlag = true;
@@ -962,9 +536,14 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
         } else {
           setPresentInsideKeralaPincodeError(false);
         }
-        if (presentInsideKeralaLocalityNameEn === null) {
-          setPresentInsideKeralaLocalityNameEnError(true);
+        if (
+          presentInsideKeralaLocalityNameEn.trim() == null ||
+          presentInsideKeralaLocalityNameEn.trim() == "" ||
+          presentInsideKeralaLocalityNameEn.trim() == undefined
+        ) {
           validFlag = false;
+          setinsideKeralaLocalityNameEn("");
+          setPresentInsideKeralaLocalityNameEnError(true);
           setToast(true);
           setTimeout(() => {
             setToast(false);
@@ -972,7 +551,22 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
         } else {
           setPresentInsideKeralaLocalityNameEnError(false);
         }
-        if (presentInsideKeralaLocalityNameMl == null || presentInsideKeralaLocalityNameMl == undefined || presentInsideKeralaLocalityNameMl == "") {
+        // if (presentInsideKeralaLocalityNameEn === null) {
+        //     setPresentInsideKeralaLocalityNameEnError(true);
+        //     validFlag = false;
+        //     setToast(true);
+        //     setTimeout(() => {
+        //         setToast(false);
+        //     }, 2000);
+        // } else {
+        //     setPresentInsideKeralaLocalityNameEnError(false);
+        // }
+        if (
+          presentInsideKeralaLocalityNameMl.trim() == null ||
+          presentInsideKeralaLocalityNameMl.trim() == "" ||
+          presentInsideKeralaLocalityNameMl.trim() == undefined
+        ) {
+          setinsideKeralaLocalityNameMl("");
           setPresentInsideKeralaLocalityNameMlError(true);
           validFlag = false;
           setToast(true);
@@ -982,7 +576,12 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
         } else {
           setPresentInsideKeralaLocalityNameMlError(false);
         }
-        if (presentInsideKeralaHouseNameEn == null || presentInsideKeralaHouseNameEn == undefined || presentInsideKeralaHouseNameEn == "") {
+        if (
+          presentInsideKeralaHouseNameEn.trim() == null ||
+          presentInsideKeralaHouseNameEn.trim() == "" ||
+          presentInsideKeralaHouseNameEn.trim() == undefined
+        ) {
+          setinsideKeralaHouseNameEn("");
           setPresentInsideKeralaHouseNameEnError(true);
           validFlag = false;
           setToast(true);
@@ -992,7 +591,12 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
         } else {
           setPresentInsideKeralaHouseNameEnError(false);
         }
-        if (presentInsideKeralaHouseNameMl == null || presentInsideKeralaHouseNameMl == undefined || presentInsideKeralaHouseNameMl == "") {
+        if (
+          presentInsideKeralaHouseNameMl.trim() == null ||
+          presentInsideKeralaHouseNameMl.trim() == "" ||
+          presentInsideKeralaHouseNameMl.trim() == undefined
+        ) {
+          setinsideKeralaHouseNameMl("");
           setPresentInsideKeralaHouseNameMlError(true);
           validFlag = false;
           setToast(true);
@@ -1002,8 +606,28 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
         } else {
           setPresentInsideKeralaHouseNameMlError(false);
         }
-        if (presentInsideKeralaStreetNameEn != null && presentInsideKeralaStreetNameMl === null) {
+        // if (presentInsideKeralaStreetNameEn.trim() == null || presentInsideKeralaStreetNameEn.trim() == '' || presentInsideKeralaStreetNameEn.trim() == undefined) {
+        //     setinsideKeralaStreetNameEn("");
+        //     //setPresentInsideKeralaStreetNameEnError(false);
+        // }
+        // if (presentInsideKeralaStreetNameMl.trim() == null || presentInsideKeralaStreetNameMl.trim() == '' || presentInsideKeralaStreetNameMl.trim() == undefined) {
+        //     setinsideKeralaStreetNameMl("");
+        //     //setPresentInsideKeralaStreetNameMlError(false);
+        // }
+        if (
+          presentInsideKeralaStreetNameEn === null ||
+          presentInsideKeralaStreetNameEn.trim() == "" ||
+          presentInsideKeralaStreetNameEn.trim() == undefined
+        ) {
+          setinsideKeralaStreetNameEn("");
+        } else if (
+          presentInsideKeralaStreetNameEn != null &&
+          (presentInsideKeralaStreetNameMl.trim() == null ||
+            presentInsideKeralaStreetNameMl.trim() == "" ||
+            presentInsideKeralaStreetNameMl.trim() == undefined)
+        ) {
           setPresentInsideKeralaStreetNameMlError(true);
+          setinsideKeralaStreetNameMl("");
           validFlag = false;
           setToast(true);
           setTimeout(() => {
@@ -1012,8 +636,20 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
         } else {
           setPresentInsideKeralaStreetNameMlError(false);
         }
-        if (presentInsideKeralaStreetNameMl != null && presentInsideKeralaStreetNameEn === null) {
+        if (
+          presentInsideKeralaStreetNameMl === null ||
+          presentInsideKeralaStreetNameMl.trim() == "" ||
+          presentInsideKeralaStreetNameMl.trim() == undefined
+        ) {
+          setinsideKeralaStreetNameMl("");
+        } else if (
+          presentInsideKeralaStreetNameMl != null &&
+          (presentInsideKeralaStreetNameEn.trim() == null ||
+            presentInsideKeralaStreetNameEn.trim() == "" ||
+            presentInsideKeralaStreetNameEn.trim() == undefined)
+        ) {
           setPresentInsideKeralaStreetNameEnError(true);
+          setinsideKeralaStreetNameEn("");
           validFlag = false;
           setToast(true);
           setTimeout(() => {
@@ -1407,7 +1043,7 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
         presentOutSideIndiaAdressMlB,
         presentOutSideIndiaAdressMlB,
         presentOutSideIndiaProvinceEn,
-        presentOutSideCountry,
+        // presentOutSideCountry,
         isPrsentAddress,
 
         permtaddressCountry,
@@ -1446,7 +1082,7 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
         permntOutsideIndiaVillage,
         permntOutsideIndiaCityTown,
         permanentOutsideIndiaPostCode,
-        permntOutsideIndiaCountry,
+        // permntOutsideIndiaCountry
       });
     }
   };
@@ -1470,14 +1106,24 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
         ) : null || window.location.href.includes("employee/cr/cr-flow") ? (
           <Timeline currentStep={3} />
         ) : null}
+        {window.location.href.includes("/citizen/cr-adoptionflow/adoption-address-birth") ? (
+          <AdoptionTimeline currentStep={3} />
+        ) : null || window.location.href.includes("employee/cr/cr-adoptionflow") ? (
+          <AdoptionTimeline currentStep={3} />
+        ) : null}
         {window.location.href.includes("/citizen/cr/cr-death-creation/address-death") ? (
           <DRTimeline currentStep={2} />
         ) : null || window.location.href.includes("employee/cr/death-flow") ? (
           <DRTimeline currentStep={2} />
         ) : null}
+        {window.location.href.includes("/citizen/cr/cr-stillbirth-creation/stillbirth-address") ? (
+          <Timeline currentStep={3} />
+        ) : null || window.location.href.includes("employee/cr/cr-flow") ? (
+          <Timeline currentStep={3} />
+        ) : null}
         <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
           <div className="accordion-wrapper">
-            <MarriageAddressPresent
+            <GroomAddressPresent
               presentaddressCountry={presentaddressCountry}
               setaddressCountry={setaddressCountry}
               presentaddressStateName={presentaddressStateName}
@@ -1499,12 +1145,16 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
               isEditBirth={isEditBirth}
               isEditDeath={isEditDeath}
               isEditStillBirth={isEditStillBirth}
+              isEditAdoption={isEditAdoption}
+              isEditBirthNAC={isEditBirthNAC}
               formData={formData}
+              Districtvalues={Districtvalues}
+              setDistrictvalue={setDistrictvalue}
             />
           </div>
           {countryvalue === "IND" && value === "KL" && (
             <div>
-              <MarriageAddressPresentInsideKerala
+              <GroomAddressPresentInsideKerala
                 presentWardNo={presentWardNo}
                 setPresentWardNo={setPresentWardNo}
                 presentInsideKeralaDistrict={presentInsideKeralaDistrict}
@@ -1574,6 +1224,8 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
                 isEditBirth={isEditBirth}
                 isEditDeath={isEditDeath}
                 isEditStillBirth={isEditStillBirth}
+                isEditAdoption={isEditAdoption}
+                isEditBirthNAC={isEditBirthNAC}
                 formData={formData}
                 value={value}
                 setValue={setValue}
@@ -1582,7 +1234,7 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
           )}
           {countryvalue === "IND" && value != "KL" && (
             <div>
-              <MarriageAddressPresentOutsideKerala
+              <GroomAddressPresentOutsideKerala
                 value={value}
                 setValue={setValue}
                 presentOutsideKeralaDistrict={presentOutsideKeralaDistrict}
@@ -1642,13 +1294,15 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
                 isEditBirth={isEditBirth}
                 isEditDeath={isEditDeath}
                 isEditStillBirth={isEditStillBirth}
+                isEditAdoption={isEditAdoption}
+                isEditBirthNAC={isEditBirthNAC}
                 formData={formData}
               />
             </div>
           )}
           {countryvalue != "IND" && (
             <div>
-              <MarriageAddressPresentOutsideIndia
+              <GroomAddressPresentOutsideIndia
                 presentOutSideIndiaAdressEn={presentOutSideIndiaAdressEn}
                 setAdressEn={setAdressEn}
                 presentOutSideIndiaAdressMl={presentOutSideIndiaAdressMl}
@@ -1667,8 +1321,8 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
                 setadrsCityTown={setadrsCityTown}
                 presentOutSideIndiaPostCode={presentOutSideIndiaPostCode}
                 setPostCode={setPostCode}
-                presentOutSideCountry={presentOutSideCountry}
-                setOutSideCountry={setOutSideCountry}
+                // presentOutSideCountry={presentOutSideCountry}
+                // setOutSideCountry={setOutSideCountry}
                 countryvalue={countryvalue}
                 setCountryValue={setCountryValue}
                 isPrsentAddress={isPrsentAddress}
@@ -1691,28 +1345,32 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
                 setadrsPermntOutsideIndiaCityTown={setadrsPermntOutsideIndiaCityTown}
                 permanentOutsideIndiaPostCode={permanentOutsideIndiaPostCode}
                 setPermantpostCode={setPermantpostCode}
-                permntOutsideIndiaCountry={permntOutsideIndiaCountry}
-                setPermntOutsideIndiaCountry={setPermntOutsideIndiaCountry}
+                // permntOutsideIndiaCountry={permntOutsideIndiaCountry}
+                // setPermntOutsideIndiaCountry={setPermntOutsideIndiaCountry}
                 isEditBirth={isEditBirth}
                 isEditDeath={isEditDeath}
                 isEditStillBirth={isEditStillBirth}
+                isEditAdoption={isEditAdoption}
+                isEditBirthNAC={isEditBirthNAC}
                 formData={formData}
               />
             </div>
           )}
           <div>
-            <MarriageAddressSameAsAbove
+            <GroomAddressSameAsAbove
               isPrsentAddress={isPrsentAddress}
               setIsPrsentAddress={setIsPrsentAddress}
               isEditBirth={isEditBirth}
               isEditDeath={isEditDeath}
               isEditStillBirth={isEditStillBirth}
+              isEditAdoption={isEditAdoption}
+              isEditBirthNAC={isEditBirthNAC}
               formData={formData}
             />
           </div>
           {isPrsentAddress === false && (
             <div>
-              <MarriageAddressPermanent
+              <GroomAddressPermanent
                 permtaddressCountry={permtaddressCountry}
                 setpermtaddressCountry={setpermtaddressCountry}
                 permtaddressStateName={permtaddressStateName}
@@ -1730,13 +1388,15 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
                 isEditBirth={isEditBirth}
                 isEditDeath={isEditDeath}
                 isEditStillBirth={isEditStillBirth}
+                isEditAdoption={isEditAdoption}
+                isEditBirthNAC={isEditBirthNAC}
                 formData={formData}
               />
             </div>
           )}
           {countryValuePermanent === "IND" && valuePermanent === "KL" && isPrsentAddress === false && (
             <div>
-              <MarriageAddressPermanentInsideKerala
+              <GroomAddressPermanentInsideKerala
                 permntInKeralaAdrDistrict={permntInKeralaAdrDistrict}
                 setpermntInKeralaAdrDistrict={setpermntInKeralaAdrDistrict}
                 permntInKeralaAdrLBName={permntInKeralaAdrLBName}
@@ -1776,13 +1436,15 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
                 isEditBirth={isEditBirth}
                 isEditDeath={isEditDeath}
                 isEditStillBirth={isEditStillBirth}
+                isEditAdoption={isEditAdoption}
+                isEditBirthNAC={isEditBirthNAC}
                 formData={formData}
               />
             </div>
           )}
           {countryValuePermanent === "IND" && valuePermanent !== "KL" && isPrsentAddress === false && (
             <div>
-              <MarriageAddressPermanentOutsideKerala
+              <GroomAddressPermanentOutsideKerala
                 permntOutsideKeralaDistrict={permntOutsideKeralaDistrict}
                 setpermntOutsideKeralaDistrict={setpermntOutsideKeralaDistrict}
                 permntOutsideKeralaTaluk={permntOutsideKeralaTaluk}
@@ -1814,13 +1476,15 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
                 isEditBirth={isEditBirth}
                 isEditDeath={isEditDeath}
                 isEditStillBirth={isEditStillBirth}
+                isEditAdoption={isEditAdoption}
+                isEditBirthNAC={isEditBirthNAC}
                 formData={formData}
               />
             </div>
           )}
           {countryValuePermanent != "IND" && isPrsentAddress === false && (
             <div>
-              <MarriageAddressPermanentOutsideIndia
+              <GroomAddressPermanentOutsideIndia
                 permntOutsideIndiaLineoneEn={permntOutsideIndiaLineoneEn}
                 setadrsPermntOutsideIndiaLineoneEn={setadrsPermntOutsideIndiaLineoneEn}
                 permntOutsideIndiaLineoneMl={permntOutsideIndiaLineoneMl}
@@ -1839,13 +1503,15 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
                 setPermantpostCode={setPermantpostCode}
                 permntOutsideIndiaprovinceMl={permntOutsideIndiaprovinceMl}
                 setPermntOutsideIndiaprovinceMl={setPermntOutsideIndiaprovinceMl}
-                permntOutsideIndiaCountry={permntOutsideIndiaCountry}
-                setPermntOutsideIndiaCountry={setPermntOutsideIndiaCountry}
+                // permntOutsideIndiaCountry={permntOutsideIndiaCountry}
+                // setPermntOutsideIndiaCountry={setPermntOutsideIndiaCountry}
                 countryvalue={countryvalue}
                 setCountryValue={setCountryValue}
                 isEditBirth={isEditBirth}
                 isEditDeath={isEditDeath}
                 isEditStillBirth={isEditStillBirth}
+                isEditAdoption={isEditAdoption}
+                isEditBirthNAC={isEditBirthNAC}
                 formData={formData}
               />
             </div>
@@ -1962,4 +1628,4 @@ const MarriageAddressBasePage = ({ config, onSelect, userType, formData, isEditB
       </React.Fragment>
     );
 };
-export default MarriageAddressBasePage;
+export default GroomAddressBasePage;

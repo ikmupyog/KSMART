@@ -3,7 +3,7 @@ import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, Loader,
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
 
-const MarriageAddressPermanentInsideKerala = ({
+const BrideAddressPermanentInsideKerala = ({
   config,
   onSelect,
   userType,
@@ -22,6 +22,8 @@ const MarriageAddressPermanentInsideKerala = ({
   setpermntInKeralaAdrPincode,
   permntInKeralaAdrHouseNameEn,
   setpermntInKeralaAdrHouseNameEn,
+  Districtvalues,
+  setDistrictvalue,
   permntInKeralaAdrHouseNameMl,
   setpermntInKeralaAdrHouseNameMl,
   permntInKeralaAdrLocalityNameEn,
@@ -92,31 +94,37 @@ const MarriageAddressPermanentInsideKerala = ({
 
   localbodies &&
     localbodies["tenant"] &&
+    localbodies["tenant"].tenants &&
     localbodies["tenant"].tenants.map((ob) => {
       cmbLB.push(ob);
     });
   Taluk &&
     Taluk["common-masters"] &&
+    Taluk["common-masters"].Taluk &&
     Taluk["common-masters"].Taluk.map((ob) => {
       cmbTaluk.push(ob);
     });
   Village &&
     Village["common-masters"] &&
+    Village["common-masters"].Village &&
     Village["common-masters"].Village.map((ob) => {
       cmbVillage.push(ob);
     });
   District &&
     District["common-masters"] &&
+    District["common-masters"].District &&
     District["common-masters"].District.map((ob) => {
       cmbDistrict.push(ob);
     });
   PostOffice &&
     PostOffice["common-masters"] &&
+    PostOffice["common-masters"].PostOffice &&
     PostOffice["common-masters"].PostOffice.map((ob) => {
       cmbPostOffice.push(ob);
     });
   LBType &&
     LBType["common-masters"] &&
+    LBType["common-masters"].LBType &&
     LBType["common-masters"].LBType.map((ob) => {
       cmbLBType.push(ob);
     });
@@ -726,4 +734,4 @@ const MarriageAddressPermanentInsideKerala = ({
     </React.Fragment>
   );
 };
-export default MarriageAddressPermanentInsideKerala;
+export default BrideAddressPermanentInsideKerala;
