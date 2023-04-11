@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, CardLabel, TextInput, Toast, BackButton, Loader } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Toast, BackButton, Loader,CheckBox  } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import DRTimeline from "../../components/DRTimeline";
 import AdoptionTimeline from '../../components/AdoptionTimeline'
@@ -304,6 +304,91 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
     const [PresentOutSideIndiaLineTwoMlError, setPresentOutSideIndiaLineTwoMlError] = useState(formData?.AddressBirthDetails?.PresentOutSideIndiaLineTwoMlError ? false : false);
 
     const onSkip = () => onSelect();
+    function setSameAsPresent(e) {
+        setIsPrsentAddress(e.target.checked);
+        if (e.target.checked == true) {
+            setpermtaddressCountry(presentaddressCountry);
+            setpermtaddressStateName(presentaddressStateName);
+            setCountryValuePermanent(countryvalue);
+            setValuePermanent(value);
+            setpermntInKeralaAdrDistrict(presentInsideKeralaDistrict);
+            setpermntInKeralaAdrLBName(presentInsideKeralaLBName);
+            setpermntInKeralaAdrTaluk(presentInsideKeralaTaluk);
+            setpermntInKeralaAdrVillage(presentInsideKeralaVillage);
+            setpermntInKeralaAdrPostOffice(presentInsideKeralaPostOffice);
+            setpermntInKeralaAdrPincode(presentInsideKeralaPincode);
+            setpermntInKeralaAdrHouseNameEn(presentInsideKeralaHouseNameEn);
+            setpermntInKeralaAdrHouseNameMl(presentInsideKeralaHouseNameMl);
+            setpermntInKeralaAdrLocalityNameEn(presentInsideKeralaLocalityNameEn);
+            setpermntInKeralaAdrLocalityNameMl(presentInsideKeralaLocalityNameMl);
+            setpermntInKeralaAdrStreetNameEn(presentInsideKeralaStreetNameEn);
+            setpermntInKeralaAdrStreetNameMl(presentInsideKeralaStreetNameMl);
+            setpermntInKeralaWardNo(presentWardNo);
+            setpermntOutsideKeralaDistrict(presentOutsideKeralaDistrict);
+            setpermntOutsideKeralaTaluk(presentOutsideKeralaTaluk);
+            setpermntOutsideKeralaCityVilgeEn(presentOutsideKeralaCityVilgeEn);
+            setpermntOutsideKeralaVillage(presentOutsideKeralaVillage);
+            setpermntOutsideKeralaPincode(presentOutsideKeralaPincode);
+            setpermntOutsideKeralaHouseNameEn(presentOutsideKeralaHouseNameEn);
+            setpermntOutsideKeralaHouseNameMl(presentOutsideKeralaHouseNameMl);
+            setpermntOutsideKeralaLocalityNameEn(presentOutsideKeralaLocalityNameEn);
+            setpermntOutsideKeralaLocalityNameMl(presentOutsideKeralaLocalityNameMl);
+            setpermntOutsideKeralaStreetNameEn(presentOutsideKeralaStreetNameEn);
+            setpermntOutsideKeralaStreetNameMl(presentOutsideKeralaStreetNameMl);
+            setpermntoutsideKeralaPostOfficeEn(presentOutsideKeralaPostOfficeEn);
+            setpermntoutsideKeralaPostOfficeMl(presentOutsideKeralaPostOfficeMl);
+            setadrsPermntOutsideIndiaLineoneEn(presentOutSideIndiaAdressEn);
+            setadrsPermntOutsideIndiaLineoneMl(presentOutSideIndiaAdressMl);
+            setadrsPermntOutsideIndiaLinetwoEn(presentOutSideIndiaAdressEnB);
+            setadrsPermntOutsideIndiaLinetwoMl(presentOutSideIndiaAdressMlB);
+            setPermntOutsideIndiaprovinceEn(presentOutSideIndiaProvinceEn);
+            setPermntOutsideIndiaprovinceMl(presentOutSideIndiaProvinceMl);
+            setadrsPermntOutsideIndiaVillage(presentOutSideIndiaadrsVillage);
+            setadrsPermntOutsideIndiaCityTown(presentOutSideIndiaadrsCityTown);
+            setPermantpostCode(presentOutSideIndiaPostCode);
+
+        } else {
+            // setpermtaddressCountry(presentaddressCountry);
+            // setpermtaddressStateName(presentaddressStateName);
+            // setCountryValuePermanent(countryvalue);
+            // setValuePermanent(value);
+            setpermntInKeralaAdrDistrict("");
+            setpermntInKeralaAdrLBName("");
+            setpermntInKeralaAdrTaluk("");
+            setpermntInKeralaAdrVillage("");
+            setpermntInKeralaAdrPostOffice("");
+            setpermntInKeralaAdrPincode("");
+            setpermntInKeralaAdrHouseNameEn("");
+            setpermntInKeralaAdrHouseNameMl("");
+            setpermntInKeralaAdrLocalityNameEn("");
+            setpermntInKeralaAdrLocalityNameMl("");
+            setpermntInKeralaAdrStreetNameEn("");
+            setpermntInKeralaAdrStreetNameMl("");
+            setpermntInKeralaWardNo("");
+            setpermntOutsideKeralaDistrict("");
+            setpermntOutsideKeralaTaluk("");
+            setpermntOutsideKeralaCityVilgeEn("");
+            setpermntOutsideKeralaVillage("");
+            setpermntOutsideKeralaPincode("");
+            setpermntOutsideKeralaHouseNameEn("");
+            setpermntOutsideKeralaHouseNameMl("");
+            setpermntOutsideKeralaLocalityNameEn("");
+            setpermntOutsideKeralaLocalityNameMl("");
+            setpermntOutsideKeralaStreetNameEn("");
+            setpermntOutsideKeralaStreetNameMl("");
+            setpermntoutsideKeralaPostOfficeEn("");
+            setpermntoutsideKeralaPostOfficeMl("");
+            setadrsPermntOutsideIndiaLineoneEn("");
+            setadrsPermntOutsideIndiaLineoneMl("");
+            setadrsPermntOutsideIndiaLinetwoEn("");
+            setadrsPermntOutsideIndiaLinetwoMl("");
+            setPermntOutsideIndiaprovinceEn("");
+            setPermntOutsideIndiaprovinceMl("");
+            setadrsPermntOutsideIndiaVillage("");
+            setadrsPermntOutsideIndiaCityTown("");
+            setPermantpostCode("");
+        }
+    }
     let validFlag = true;
     const goNext = () => {
         if (isPrsentAddress === true || isPrsentAddress === false) {
@@ -461,7 +546,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                 //     //setPresentInsideKeralaStreetNameMlError(false);
                 // } 
                 if (presentInsideKeralaStreetNameEn === null || presentInsideKeralaStreetNameEn.trim() == '' || presentInsideKeralaStreetNameEn.trim() == undefined) {
-                    setinsideKeralaStreetNameEn("");                   
+                    setinsideKeralaStreetNameEn("");
                 } else if (presentInsideKeralaStreetNameEn != null && (presentInsideKeralaStreetNameMl.trim() == null || presentInsideKeralaStreetNameMl.trim() == '' || presentInsideKeralaStreetNameMl.trim() == undefined)) {
                     setPresentInsideKeralaStreetNameMlError(true);
                     setinsideKeralaStreetNameMl("");
@@ -474,7 +559,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                     setPresentInsideKeralaStreetNameMlError(false);
                 }
                 if (presentInsideKeralaStreetNameMl === null || presentInsideKeralaStreetNameMl.trim() == '' || presentInsideKeralaStreetNameMl.trim() == undefined) {
-                    setinsideKeralaStreetNameMl("");                   
+                    setinsideKeralaStreetNameMl("");
                 } else if (presentInsideKeralaStreetNameMl != null && (presentInsideKeralaStreetNameEn.trim() == null || presentInsideKeralaStreetNameEn.trim() == '' || presentInsideKeralaStreetNameEn.trim() == undefined)) {
                     setPresentInsideKeralaStreetNameEnError(true);
                     setinsideKeralaStreetNameEn("");
@@ -1156,7 +1241,26 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                             />
                         </div>
                     )}
+                    <div className="row">
+                        <div className="col-md-12">
+                            <h1 className="headingh1">
+                                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PERMANENT_ADDRESS")}`}</span>{" "}
+                            </h1>
+                        </div>
+                    </div>
                     <div>
+                        <div className="row">
+                            <div className="col-md-12" >
+                                <div className="col-md-12" >
+                                    <CheckBox label={t("CR_SAME_AS_ABOVE")} onChange={setSameAsPresent} value={isPrsentAddress}
+                                        checked={isPrsentAddress}
+                                        // disable={isDisableEdit}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {/* <div>
                         <AddressSameAsAbove
                             isPrsentAddress={isPrsentAddress}
                             setIsPrsentAddress={setIsPrsentAddress}
@@ -1167,7 +1271,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                             isEditBirthNAC={isEditBirthNAC}
                             formData={formData}
                         />
-                    </div>
+                    </div> */}
                     {isPrsentAddress === false && (
                         <div>
                             <AddressPermanent
