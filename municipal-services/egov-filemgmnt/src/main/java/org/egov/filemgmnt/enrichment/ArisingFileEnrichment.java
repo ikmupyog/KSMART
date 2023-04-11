@@ -2,7 +2,6 @@ package org.egov.filemgmnt.enrichment;
 
 import static org.egov.filemgmnt.web.enums.ErrorCodes.IDGEN_ERROR;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -27,10 +26,13 @@ public class ArisingFileEnrichment extends BaseEnrichment {
         User userInfo = requestInfo.getUserInfo();
         AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
 
-        final ArisingFile arisingFile= request.getArisingFileDetail();
-        final AuditDetails arisingAuditDetails=arisingFile.getAuditDetails();
+        final ArisingFile arisingFile = request.getArisingFileDetail();
+        final AuditDetails arisingAuditDetails = arisingFile.getAuditDetails();
+        arisingFile.setId(UUID.randomUUID()
+                              .toString());
         arisingFile.setAuditDetails(arisingAuditDetails);
-        arisingFile.getAuditDetails().setLastModifiedBy(auditDetails.getLastModifiedBy());
+        arisingFile.getAuditDetails()
+                   .setLastModifiedBy(auditDetails.getLastModifiedBy());
         arisingAuditDetails.setLastModifiedTime(auditDetails.getLastModifiedTime());
         setFileCodes(request);
     }
@@ -50,16 +52,17 @@ public class ArisingFileEnrichment extends BaseEnrichment {
     private void setFileCodes(final ArisingFileRequest request) {
         final RequestInfo requestInfo = request.getRequestInfo();
         final ArisingFile files = request.getArisingFileDetail();
-       final  String tenantId =files.getTenantId();
+        final String tenantId = files.getTenantId();
 //        for (ArisingFile arising : files) {
 //            tenantId = arising.getTenantId();
 //        }
 
-        final List<String> filescodes = generateIds(requestInfo,
-                                                    tenantId,
-                                                    fmConfig.getFilemgmntFileCodeName(),
-                                                    " FMARISING",
-                                                    "AR",
+        final List<String> filescodes = generateIds(requestInfo, tenantId, "fm.filecode",
+//                                                    request.getArisingFileDetail()
+//                                                           .getFileCode(),
+                                                    "FM",
+                                                    "APP",
+                                                    // FMConstants.FMMODULENAMEVALUE,
                                                     1);
         validateFileCodes(filescodes, 1);
 
@@ -67,7 +70,7 @@ public class ArisingFileEnrichment extends BaseEnrichment {
 //        for (ArisingFile arisefilecode : files) {
 //            arisefilecode.setFileCode(filescodes.get(0));
 //        }
-       final ArisingFile fileDetail= request.getArisingFileDetail();
+        final ArisingFile fileDetail = request.getArisingFileDetail();
         System.out.println("Filecode=: " + filescodes.get(0));
 
     }

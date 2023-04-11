@@ -40,4 +40,8 @@ public class IdRequest {
     @NotNull
     private String fnType;
 
+    @JsonProperty("count")
+    @NotNull
+    private Integer count;
+
 }
