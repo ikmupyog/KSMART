@@ -640,7 +640,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
       setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
       if (DeathPlace) {
         let currentWorgFlow = workFlowData.filter((workFlowData) => workFlowData.DeathPlace === DeathPlace.code && workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime );
-        // console.log("currentWorgFlowDOB" + currentWorgFlow);
+        console.log("currentWorgFlowDOB" + currentWorgFlow);
         if (currentWorgFlow.length > 0) {
           // console.log(currentWorgFlow[0].WorkflowCode);
           setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
@@ -789,7 +789,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
       (workFlowData) =>
         workFlowData.DeathPlace === value.code && workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime
     );
-    // console.log(currentWorgFlow);
+    console.log(currentWorgFlow);
     if (currentWorgFlow.length > 0) {
       // console.log(currentWorgFlow[0].WorkflowCode);
       setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
