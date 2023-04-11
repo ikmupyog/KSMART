@@ -7,7 +7,8 @@ const SearchFields = ({
                           register,
                           control,
                           reset,
-                          previousPage
+                          previousPage,
+                          searchType
                       }) => {
 
     let validation = {};
@@ -28,34 +29,40 @@ const SearchFields = ({
     return (
         <>
             <SearchField>
-                <label> {t("APPLICATION NO")}</label>
-                <TextInput name="applicationNo" inputRef={register({})}
-                           placeholder={`${t("Application No")}`}
-                           {...(validation = { isRequired: false, type: "text", title: t("Invalid Application No.") })}/>
+                <label> {searchType == 'application' ? t("APPLICATION NO") : t("REGISTRATION NO")}</label>
+                <TextInput name={searchType == 'application' ? "applicationNo" : "registrationNo"}
+                           inputRef={register({})}
+                           control={control}
+                           {...(validation = { isRequired: false, type: "text" })}
+                           placeholder={`${searchType == 'application' ? t("Application No") : t("Registration No")}`} />
             </SearchField>
             <SearchField>
                 <label><span className="mandatorycss">*</span> {t("DATE OF MARRIAGE")}</label>
                 <Controller
-                    render={(props) => <DatePicker date={props.value} onChange={props.onChange} {...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: false, title: t("CR_INVALID_DATE") })} />}
+                    render={(props) => <DatePicker date={props.value} onChange={props.onChange} />}
                     name="marriageDOM"
+                    defaultValue={""}
+                    rules={{ required: true }}
                     control={control}
                 />
             </SearchField>
             <SearchField>
                 <label><span className="mandatorycss">*</span> {t("FIRST NAME OF HUSBAND")}</label>
-                <TextInput name="groomFirstnameEn" inputRef={register({})} placeholder={`${t("Name Of Husband")}`}
-                           {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("Invalid Husband name") })} />
+                <TextInput name="groomFirstnameEn" inputRef={register({})}
+                           {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: true, title: t("Invalid name of husband") })} placeholder={`${t("Invalid name of husband")}`}/>
             </SearchField>
             <SearchField>
                 <label><span className="mandatorycss">*</span> {t("FIRST NAME OF WIFE")}</label>
-                <TextInput name="brideFirstnameEn" inputRef={register({})} placeholder={`${t("Name Of Wife")}`}
-                           {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("Invalid Wife name") })} />
+                <TextInput name="brideFirstnameEn" inputRef={register({})}
+                           {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: true, title: t("Invalid name of wife") })} placeholder={`${t("Name of Wife")}`} />
             </SearchField>
             <SearchField>
                 <label> {t("PLACE OF MARRIAGE")}</label>
                 <Controller
                     control={control}
                     name="placeOfMarriage"
+                    rules={{ required: false}}
+                    defaultValue={""}
                     render={(props) => (
                         <Dropdown
                             selected={props.value}
@@ -65,7 +72,6 @@ const SearchFields = ({
                             optionKey="i18nKey"
                             t={t}
                             placeholder={`${t("CR_MARRIAGE_PLACE_TYPE")}`}
-                            {...(validation = { isRequired: false, title: t("CS_INVALID_MARRIAGE_PLACE_TYPE") })}
                         />
                     )}
                 />
@@ -73,13 +79,7 @@ const SearchFields = ({
             <SearchField className="submit">
                 <SubmitBar label={t("ES_COMMON_SEARCH")} submit />
                 <p onClick={() => {
-                    reset({
-                        applicationNo: "",
-                        marriageDOM: "",
-                        groomFirstnameEn: "",
-                        brideFirstnameEn: "",
-                        placeOfMarriage: "",
-                    });
+                    reset();
                     previousPage();
                 }}>{t(`ES_COMMON_CLEAR_ALL`)}</p>
             </SearchField>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, Loader } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 
-const MarriageAddressPresent = ({
+const BrideAddressPresent = ({
   config,
   onSelect,
   userType,
@@ -27,6 +27,7 @@ const MarriageAddressPresent = ({
   isEditDeath = false,
   isEditAdoption,
   isEditStillBirth = false,
+  isEditBirthNAC = false,
   presentOutsideKeralaDistrict,
   setoutsideKeralaDistrict,
 }) => {
@@ -50,22 +51,26 @@ const MarriageAddressPresent = ({
   let cmbState = [];
   let cmbVillage = [];
   Country &&
-    Country["common-masters"] && Country["common-masters"].Country &&
+    Country["common-masters"] &&
+    Country["common-masters"].Country &&
     Country["common-masters"].Country.map((ob) => {
       cmbCountry.push(ob);
     });
   State &&
-    State["common-masters"] && State["common-masters"].State &&
+    State["common-masters"] &&
+    State["common-masters"].State &&
     State["common-masters"].State.map((ob) => {
       cmbState.push(ob);
     });
   localbodies &&
     localbodies["tenant"] &&
+    localbodies["tenant"].tenants &&
     localbodies["tenant"].tenants.map((ob) => {
       cmbLB.push(ob);
     });
   Village &&
-    Village["common-masters"] && localbodies["tenant"].tenants &&
+    Village["common-masters"] &&
+    Village["common-masters"].Village &&
     Village["common-masters"].Village.map((ob) => {
       cmbVillage.push(ob);
     });
@@ -75,8 +80,8 @@ const MarriageAddressPresent = ({
   let cmbFilterVillage = [];
 
   useEffect(() => {
+    // if (isInitialRender) {
     if (cmbLB.length > 0) {
-
       currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
       //console.log(currentLB);
       // setAdrsLBName(currentLB[0]);
@@ -92,7 +97,13 @@ const MarriageAddressPresent = ({
         setpermtaddressStateName(cmbFilterState[0]);
         setValue(cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode)[0].statecode);
       }
+      // if (cmbVillage.length > 0 && currentLB.length > 0) {
+      //     cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
+      //     setLbsVillagevalue(cmbFilterVillage);
+      // }
+      // setIsInitialRender(false);
     }
+    // }
   }, [cmbLB]);
 
   if (isEditBirth) {
@@ -158,7 +169,7 @@ const MarriageAddressPresent = ({
 
   function setSelectaddressCountry(value) {
     setaddressCountry(value);
-    setCountryValue(value?.countrycode);
+    setCountryValue(value.countrycode);
     if (isPrsentAddress) {
       setpermtaddressCountry(value);
     } else {
@@ -184,7 +195,7 @@ const MarriageAddressPresent = ({
     }
   }
 
-  const goNext = () => { };
+  const goNext = () => {};
   if (isCountryLoading || isStateLoading || islocalbodiesLoading) {
     return <Loader></Loader>;
   } else
@@ -236,4 +247,4 @@ const MarriageAddressPresent = ({
       </React.Fragment>
     );
 };
-export default MarriageAddressPresent;
+export default BrideAddressPresent;
