@@ -9,6 +9,7 @@ import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryDetails;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Getter
 @Setter
@@ -55,6 +56,21 @@ public class MarriageCertificate {
     @Size(max = 64)
     @JsonProperty("marriageTenantid")
     private String tenantid;
+
+    @Size(max = 64)
+    @JsonProperty("marriageTenantNameEn")
+    private String tenantNameEn;
+
+    @JsonProperty("talukNameEn")
+    private String talukNameEn;
+
+
+    @JsonProperty("districtNameEn")
+    private String districtNameEn;
+
+
+    @JsonProperty("villageNameEn")
+    private String villageNameEn;
 //
 //    @Size(max = 64)
 //    @JsonProperty("marriagePlacetype")
@@ -204,6 +220,11 @@ public class MarriageCertificate {
 
     @JsonProperty("certificateStatus")
     private StatusEnum certificateStatus = null;
+
+
+
+
+
     public enum StatusEnum {
         ACTIVE("ACTIVE"),
 
