@@ -80,6 +80,37 @@ public class MarriageApplicationConfiguration {
          @Value("${egov.state.level.tenant.id}")
          private String egovStateLevelTenant;
 
+    @Value("${egov.ui.app.host}")
+    private String uiAppHost;
+
+    @Value("${egov.bnd.marriagecert.link}")
+    private String marriageCertLink;
+
+    @Value("${egov.url.shortner.host}")
+    private String urlShortnerHost;
+
+    @Value("${egov.url.shortner.endpoint}")
+    private String urlShortnerEndpoint;
+
+    @Value("${egov.pdf.marriagecert.createEndPoint}")
+    private String egovPdfMarriageEndPoint;
+
+    @Value("${egov.pdf.marriagecert.postendpoint}")
+    private String saveMarriageCertEndpoint;
+
+    @Value("${egov.pdfservice.host}")
+    private String	egovPdfHost;
+
+    @Value("${persister.save.marriagecertificate.topic}")
+    private String saveMarriageCertificateTopic;
+
+    @Value("${persister.update.marriagecertificate.topic}")
+    private String updateMarriageCertificateTopic;
+
+    @Value("${egov.idgen.marriageapplncertno.name}")
+    private String marriageCertNumberIdName;
+
+
         //Marriage Correction
         @Value("${persister.save.marriage.correction.topic}")
         private String SaveMarriageCorrectionTopic;

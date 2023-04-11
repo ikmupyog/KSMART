@@ -318,7 +318,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permanentAddrVillageId
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.outSideIndiaPostCodepermanent
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permanentOutsideIndiaPostCode
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutsideKeralaPostOfficeMl
 
@@ -396,7 +396,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permanentAddrVillageId
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.outSideIndiaPostCodepermanent
+            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permanentOutsideIndiaPostCode
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOutsideKeralaPostOfficeMl
 
@@ -404,8 +404,8 @@ serviceMaps:
 
 
         - query: INSERT INTO public.eg_marriage_document( id ,tenantid ,document_name ,document_type ,filestoreid ,
-            document_link ,marriageid ,bride_groom ,active ,applicationnumber ,createdby ,createdtime,lastmodifiedby , lastmodifiedtime, correction_id, correction_field_name)
-            VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? , ?, ?, ?, ?, ?, ?);
+            document_link ,marriageid ,bride_groom ,active ,applicationnumber ,createdby ,createdtime,lastmodifiedby , lastmodifiedtime, correction_id, correction_field_name, registrationno, applicationtype)
+            VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? , ?, ?, ?, ?, ?, ?, ?, ?);
 
 
           basePath: MarriageDetails.*.MarriageDocuments.*
@@ -442,6 +442,10 @@ serviceMaps:
             - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.correctionId
 
             - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.correctionFieldName
+
+            - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.registrationNo
+
+            - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.applicationType
 
 
         - query: INSERT INTO public.eg_marriage_correction( id, marriageid, correction_field_name, condition_code, specific_condition, createdtime, createdby, lastmodifiedtime, lastmodifiedby)

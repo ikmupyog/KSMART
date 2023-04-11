@@ -512,4 +512,6 @@ private void setBridePermanentAddress(MarriageRegistryRequest request) {
         }
 
     }
+
+
 }

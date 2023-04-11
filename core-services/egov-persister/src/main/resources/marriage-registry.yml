@@ -10,8 +10,8 @@ serviceMaps:
                   id, dateofmarriage, dateofreporting, districtid, lbtype, tenantid, placetype, placeid, placename_en, placename_ml, housenameno_en, 
                   housenameno_ml, street_name_en, street_name_ml, ward_code, talukid, village_name, marriage_type, oth_marriage_type, landmark, locality_en,
                   locality_ml, applicationnumber, registrationno, registration_date, registration_status, createdtime, createdby,
-                  lastmodifiedtime, lastmodifiedby,module_code,brideurl, groomurl, imageuuid, bride_filestoreid, groom_filestoreid, bride_expired, groom_expired, is_backward)
-                  VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,? );
+                  lastmodifiedtime, lastmodifiedby,module_code,brideurl, groomurl, imageuuid, bride_filestoreid, groom_filestoreid, bride_expired, groom_expired, is_backward,certificateno)
+                  VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,? ,?);
           basePath: MarriageDetails.*
           jsonMaps:
             - jsonPath: $.MarriageDetails.*.id
@@ -99,6 +99,8 @@ serviceMaps:
             - jsonPath: $.MarriageDetails.*.WitnessDetails.groomExpired
 
             - jsonPath: $.MarriageDetails.*.WitnessDetails.isBackward
+
+            - jsonPath: $.MarriageDetails.*.certificateNo
 
         - query: UPDATE eg_marriage_details SET registrationno = ? ,registration_date = ? 
             WHERE applicationnumber = ? AND tenantid = ?
@@ -654,6 +656,63 @@ serviceMaps:
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOutsideKeralaPincode
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOutsideKeralaPostOfficeMl            
+
+    - version: 1.0
+      description: Persists save marriage certificate details in marriage certificate table
+      fromTopic: save-marriagecertificate-topic
+      isTransaction: true
+      queryMaps:
+        - query: INSERT INTO public.eg_marriage_certificate
+                  (id, registrationno, registrydetailsid, filestoreid, status,embeddedurl, dateofissue, tenantid, createdtime, createdby, lastmodifiedtime, lastmodifiedby)
+                  VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?);
+          basePath: marriageCertificate
+          jsonMaps:
+            - jsonPath: $.marriageCertificate.id
+
+            - jsonPath: $.marriageCertificate.registrationno
+
+            - jsonPath: $.marriageCertificate.marriageRegistryDetails.id
+
+            - jsonPath: $.marriageCertificate.filestoreid
+
+            - jsonPath: $.marriageCertificate.certificateStatus
+
+            - jsonPath: $.marriageCertificate.embeddedUrl
+
+            - jsonPath: $.marriageCertificate.dateOfIssue
+
+            - jsonPath: $.marriageCertificate.marriageRegistryDetails.marriageTenantid
+
+            - jsonPath: $.marriageCertificate.AuditDetails.createdTime
+
+            - jsonPath: $.marriageCertificate.AuditDetails.createdBy
+
+            - jsonPath: $.marriageCertificate.AuditDetails.lastModifiedTime
+
+            - jsonPath: $.marriageCertificate.AuditDetails.lastModifiedBy
+
+    - version: 1.0
+      description: Persists update marriage certificate details in marriage certificate table
+      fromTopic: update-marriagecertificate-topic
+      isTransaction: true
+      queryMaps:
+        - query: UPDATE public.eg_marriage_certificate
+            set filestoreid=? , embeddedurl=?, dateofissue=?, lastmodifiedtime=?, lastmodifiedby=? where id=? and registrydetailsid=?;
+          basePath: marriageCertificate
+          jsonMaps:
+            - jsonPath: $.marriageCertificate.filestoreid
+
+            - jsonPath: $.marriageCertificate.embeddedUrl
+
+            - jsonPath: $.marriageCertificate.dateOfIssue
+
+            - jsonPath: $.marriageCertificate.AuditDetails.lastModifiedTime
+
+            - jsonPath: $.marriageCertificate.AuditDetails.lastModifiedBy
+
+            - jsonPath: $.marriageCertificate.id
+
+            - jsonPath: $.marriageCertificate.marriageRegistryId
 
 
 
