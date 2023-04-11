@@ -240,8 +240,8 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     formData?.MarriageDetails?.marriageHouseNoAndNameMl ? formData?.MarriageDetails?.marriageHouseNoAndNameMl : ""
   );
 
-  const [placeidEn, setplaceidEn] = useState(formData?.MarriageDetails?.placeidEn?.i18nKey ? formData?.MarriageDetails?.placeidEn : "");
-  const [placeidMl, setplaceidMl] = useState(formData?.MarriageDetails?.placeidMl?.i18nKey ? formData?.MarriageDetails?.placeidMl : "");
+  const [placeidEn, setplaceidEn] = useState(formData?.MarriageDetails?.placeidEn?.code ? formData?.MarriageDetails?.placeidEn : "");
+  const [placeidMl, setplaceidMl] = useState(formData?.MarriageDetails?.placeidMl?.code ? formData?.MarriageDetails?.placeidMl : "");
   const [marriagePlacenameEn, setmarriagePlacenameEn] = useState(
     formData?.MarriageDetails?.marriagePlacenameEn ? formData?.MarriageDetails?.marriagePlacenameEn : ""
   );
@@ -316,6 +316,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     setMarriageWardCode("");
     setMarriagePlacetype("");
     setplaceidEn("");
+    setplaceidMl("");
     setmarriageDOM(value);
     const today = new Date();
     const birthDate = new Date(value);
@@ -354,6 +355,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     setMarriageWardCode("");
     setMarriagePlacetype("");
     setplaceidEn("");
+    setplaceidMl("");
   }
   function setSelectmarriageTalukID(value) {
     setmarriageTalukID(value);
@@ -363,6 +365,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     setMarriageWardCode("");
     setMarriagePlacetype("");
     setplaceidEn("");
+    setplaceidMl("");
   }
   function setSelectmarriageVillageName(value) {
     setmarriageVillageName(value);
@@ -371,6 +374,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     setMarriageWardCode("");
     setMarriagePlacetype("");
     setplaceidEn("");
+    setplaceidMl("");
   }
   function setSelectmarriageLBtype(value) {
     setMarriageLBtype(value);
@@ -378,6 +382,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     setMarriageWardCode("");
     setMarriagePlacetype("");
     setplaceidEn("");
+    setplaceidMl("");
   }
   function setSelectmarriageTenantid(value) {
     setIsWardChange(true);
@@ -387,11 +392,13 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     setMarriageWardCode("");
     setMarriagePlacetype("");
     setplaceidEn("");
+    setplaceidMl("");
   }
   function setSelectmarriagePlacetype(value) {
     setMarriagePlacetype(value);
     setValue(value.code);
     setplaceidEn("");
+    setplaceidMl("");
     // let currentWorkFlow = workFlowData.filter(
     //   (workFlowData) =>
     //     workFlowData.marriagePlacetype === value.code &&
@@ -428,6 +435,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     setMarriageWardCode(value);
     setMarriagePlacetype("");
     setplaceidEn("");
+    setplaceidMl("");
   }
 
   function setCSLB(selectedLBType) {
@@ -538,7 +546,8 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     islocalbodiesLoading ||
     isWardLoaded ||
     isTypeOfMarriageLoading ||
-    isMarriagePlaceTypeLoading
+    isMarriagePlaceTypeLoading ||
+    isMarriagePlaceId
   ) {
     return <Loader></Loader>;
   } else
@@ -770,7 +779,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                         <Dropdown
                           t={t}
                           type={"text"}
-                          optionKey="namelocal"
+                          optionKey="nameLocal"
                           option={setMarriagePlace(marriagePlacetype)}
                           selected={placeidMl}
                           // select={setSelectPlaceidMl}

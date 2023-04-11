@@ -30,6 +30,7 @@ import BirthInclusionModal from "./components/BirthInclusionModal";
 
 import SearchMarriageInclusion from "./components/SearchMarriageInclusion";
 import SearchApplicationMarriage from "./components/SearchApplicationMarriage";
+import DownloadMarriageCertificate from "./components/DownloadMarriageCertificate";
 import CreateAdoptions from "./pages/citizen/Adoption";
 import CreateStillBirthRegistration from "./pages/citizen/StillBirthRegistration";
 import CreateBornOutsideRegistration from "./pages/citizen/BornOutsideReg";
@@ -168,16 +169,26 @@ import MarriageCorrectionEditPage from "./pageComponents/marriageComponents/Marr
 import MarriageCorrectionLoadPage from "./pageComponents/marriageComponents/MarriageCorrectionPage/index";
 import MarriageCheckPage from "./pages/citizen/MarriageRegistration/MarriageCheckPage";
 import MarriageAcknowledgement from "./pages/citizen/MarriageRegistration/MarriageAcknowledgement";
-import MarriageAddressBasePage from "./pageComponents/marriageComponents/MarriageAddressBasePage";
-import MarriageAddressPermanent from "./pageComponents/marriageComponents/MarriageAddressPermanent";
-import MarriageAddressPermanentInsideKerala from "./pageComponents/marriageComponents/MarriageAddressPermanentInsideKerala";
-import MarriageAddressPermanentOutsideIndia from "./pageComponents/marriageComponents/MarriageAddressPermanentOutsideIndia";
-import MarriageAddressPermanentOutsideKerala from "./pageComponents/marriageComponents/MarriageAddressPermanentOutsideKerala";
-import MarriageAddressPresent from "./pageComponents/marriageComponents/MarriageAddressPresent";
-import MarriageAddressPresentInsideKerala from "./pageComponents/marriageComponents/MarriageAddressPresentInsideKerala";
-import MarriageAddressPresentOutsideIndia from "./pageComponents/marriageComponents/MarriageAddressPresentOutsideIndia";
-import MarriageAddressPresentOutsideKerala from "./pageComponents/marriageComponents/MarriageAddressPresentOutsideKerala";
-import MarriageAddressSameAsAbove from "./pageComponents/marriageComponents/MarriageAddressSameAsAbove";
+import BrideAddressBasePage from "./pageComponents/marriageComponents/MarriageAddress/BrideAddressBasePage";
+import BrideAddressPermanent from "./pageComponents/marriageComponents/MarriageAddress/BrideAddressPermanent";
+import BrideAddressPermanentInsideKerala from "./pageComponents/marriageComponents/MarriageAddress/BrideAddressPermanentInsideKerala";
+import BrideAddressPermanentOutsideIndia from "./pageComponents/marriageComponents/MarriageAddress/BrideAddressPermanentOutsideIndia";
+import BrideAddressPermanentOutsideKerala from "./pageComponents/marriageComponents/MarriageAddress/BrideAddressPermanentOutsideKerala";
+import BrideAddressPresent from "./pageComponents/marriageComponents/MarriageAddress/BrideAddressPresent";
+import BrideAddressPresentInsideKerala from "./pageComponents/marriageComponents/MarriageAddress/BrideAddressPresentInsideKerala";
+import BrideAddressPresentOutsideIndia from "./pageComponents/marriageComponents/MarriageAddress/BrideAddressPresentOutsideIndia";
+import BrideAddressPresentOutsideKerala from "./pageComponents/marriageComponents/MarriageAddress/BrideAddressPresentOutsideKerala";
+import BrideAddressSameAsAbove from "./pageComponents/marriageComponents/MarriageAddress/BrideAddressSameAsAbove";
+import GroomAddressBasePage from "./pageComponents/marriageComponents/MarriageAddress/GroomAddressBasePage";
+import GroomAddressPermanent from "./pageComponents/marriageComponents/MarriageAddress/GroomAddressPermanent";
+import GroomAddressPermanentInsideKerala from "./pageComponents/marriageComponents/MarriageAddress/GroomAddressPermanentInsideKerala";
+import GroomAddressPermanentOutsideIndia from "./pageComponents/marriageComponents/MarriageAddress/GroomAddressPermanentOutsideIndia";
+import GroomAddressPermanentOutsideKerala from "./pageComponents/marriageComponents/MarriageAddress/GroomAddressPermanentOutsideKerala";
+import GroomAddressPresent from "./pageComponents/marriageComponents/MarriageAddress/GroomAddressPresent";
+import GroomAddressPresentInsideKerala from "./pageComponents/marriageComponents/MarriageAddress/GroomAddressPresentInsideKerala";
+import GroomAddressPresentOutsideIndia from "./pageComponents/marriageComponents/MarriageAddress/GroomAddressPresentOutsideIndia";
+import GroomAddressPresentOutsideKerala from "./pageComponents/marriageComponents/MarriageAddress/GroomAddressPresentOutsideKerala";
+import GroomAddressSameAsAbove from "./pageComponents/marriageComponents/MarriageAddress/GroomAddressSameAsAbove";
 import WitnessDetails from "./pageComponents/marriageComponents/Witnessdetails";
 
 import AbandonedChildDetails from "./pageComponents/abandonedBirthComponents/AbandonedChildDetails";
@@ -385,6 +396,7 @@ const componentsToRegister = {
   CRDeathCorrectionEditPage: DeathCorrectionEditPage,
   SearchMarriageInclusion,
   SearchApplicationMarriage,
+  DownloadMarriageCertificate,
   CRDeathcorrection,
   CRSearchdeathcorrection,
   CRSearchDeathCorrectionRoute,
@@ -428,7 +440,7 @@ const componentsToRegister = {
   StillBirthAcknowledgement,
   BirthCertificate,
   CRCreateDeathRegistration: CreateDeathRegistration,
-  TLResponse: Response,
+  CRResponse: Response,
   CRDocuments,
   CRDDocuments,
   CRWFApplicationTimeline,
@@ -446,16 +458,26 @@ const componentsToRegister = {
   MarriageAddressPage,
   HouseMarriageRegistration,
   WitnessDetails,
-  MarriageAddressBasePage,
-  MarriageAddressPermanent,
-  MarriageAddressPermanentInsideKerala,
-  MarriageAddressPermanentOutsideIndia,
-  MarriageAddressPermanentOutsideKerala,
-  MarriageAddressPresent,
-  MarriageAddressPresentInsideKerala,
-  MarriageAddressPresentOutsideIndia,
-  MarriageAddressPresentOutsideKerala,
-  MarriageAddressSameAsAbove,
+  BrideAddressBasePage,
+  BrideAddressPermanent,
+  BrideAddressPermanentInsideKerala,
+  BrideAddressPermanentOutsideIndia,
+  BrideAddressPermanentOutsideKerala,
+  BrideAddressPresent,
+  BrideAddressPresentInsideKerala,
+  BrideAddressPresentOutsideIndia,
+  BrideAddressPresentOutsideKerala,
+  BrideAddressSameAsAbove,
+  GroomAddressBasePage,
+  GroomAddressPermanent,
+  GroomAddressPermanentInsideKerala,
+  GroomAddressPermanentOutsideIndia,
+  GroomAddressPermanentOutsideKerala,
+  GroomAddressPresent,
+  GroomAddressPresentInsideKerala,
+  GroomAddressPresentOutsideIndia,
+  GroomAddressPresentOutsideKerala,
+  GroomAddressSameAsAbove,
   FormFieldContainer,
   BornOutsideAcknowledgement,
   FamilyAbandonedDeath,

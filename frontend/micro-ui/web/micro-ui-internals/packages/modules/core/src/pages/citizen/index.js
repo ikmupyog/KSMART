@@ -305,8 +305,8 @@ const Home = ({
           name: t("CR_COMMON_CERT_DOWNLOAD"),
           Icon: <OBPSIcon />,
           onClick: () => history.push({
-            pathname: `${matchPath}/create-death-certificate`,
-            state: { module: "cr-death" }
+            pathname: `${matchPath}/cr/marriage/download-certificate`,
+            state: { module: "cr-marriage" }
           }),
         },
         {
