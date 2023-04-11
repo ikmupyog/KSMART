@@ -230,7 +230,7 @@ const EmployeeApp = ({ path, url, userType }) => {
   const CreateNACBirth = Digit?.ComponentRegistryService?.getComponent('CreateNACBirth');
 
   const CreateDeathEmp = Digit?.ComponentRegistryService?.getComponent('CreateDeathEmp');
-
+  const Response = Digit?.ComponentRegistryService?.getComponent('CRResponse');
 
   return (
     <Switch>
@@ -253,6 +253,7 @@ const EmployeeApp = ({ path, url, userType }) => {
           <PrivateRoute path={`${path}/create-nacbirthsearch`} component={CreateNACBirth} />
 
           <PrivateRoute path={`${path}/create-death`} component={CreateDeathEmp} />
+          <PrivateRoute path={`${path}/response`} component={(props) => <Response {...props} parentRoute={path} />} />
          
           <PrivateRoute path={`${path}/application-details/:id`} component={() => <ApplicationDetails parentRoute={path} />} />
           <PrivateRoute path={`${path}/application-stillbirth/:id`} component={() => <ApplicationStillBirthDetails parentRoute={path} />} />
