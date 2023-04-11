@@ -7,6 +7,7 @@ import {
   LinkButton,
   Row,
   StatusTable,
+  CheckBox,
   SubmitBar,
   BackButton,
 } from "@egovernments/digit-ui-react-components";
@@ -43,6 +44,7 @@ const getPath = (path, params) => {
 
 const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
   let isEdit = window.location.href.includes("renew-trade");
+   const [isInitiatorDeclaration, setisInitiatorDeclaration] = React.useState( false);
   const { t } = useTranslation();
   const history = useHistory();
   const match = useRouteMatch();
@@ -60,6 +62,15 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
     return `${
       new Date(newdate).getDate().toString() + "/" + (new Date(newdate).getMonth() + 1).toString() + "/" + new Date(newdate).getFullYear().toString()
     }`;
+  }
+
+
+  function setDeclarationInfo(e) {
+    if (e.target.checked == false) {
+      setisInitiatorDeclaration(e.target.checked);
+    } else {
+      setisInitiatorDeclaration(e.target.checked);
+    }
   }
   // const typeOfApplication = !isEditProperty ? `new-application` : `renew-trade`;
   let routeLink = "";
@@ -104,17 +115,18 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
             </h1>
           </div>
         </div>
-        <div
+        <div className="col-md-12"
           style={{
-            maxWidth: "80%",
+            maxWidth: "auto",
             margin: "25px auto",
             padding: "3rem 2rem",
             border: "none",
             borderRadius: "8px",
-            height: "800PX",
+            height: "auto",
             backgroundColor: "#f3f0ef",
           }}
         >
+            <div className="col-md-12">
           <div className="row">
             <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_CHILD_SEX")}`}</CardLabel>
@@ -152,7 +164,7 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                 </div>
               )}
 
-              {/* {StillBirthChildDetails.birthPlace.code === "INSTITUTION" && (
+              {StillBirthChildDetails.birthPlace.code === "INSTITUTION" && (
                 <div className="row">
                   <div className="col-md-6">
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PLACE_OF_BIRTH")}`}</CardLabel>
@@ -163,9 +175,9 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                     </CardText>
                   </div>
                 </div>
-              )} */}
+              )}
 
-              {/* {StillBirthChildDetails.birthPlace.code === "HOME" && (
+              {StillBirthChildDetails.birthPlace.code === "HOME" && (
                 <div className="row">
                   <div className="col-md-6">
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PLACE_OF_BIRTH")}`}</CardLabel>
@@ -199,8 +211,8 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                     </CardText>
                   </div>
                 </div>
-              )} */}
-              {/* {StillBirthChildDetails.birthPlace.code === "VEHICLE" && (
+              )}
+              {StillBirthChildDetails.birthPlace.code === "VEHICLE" && (
                 <div className="row">
                   <div className="col-md-6">
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PLACE_OF_BIRTH")}`}</CardLabel>
@@ -243,8 +255,8 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                     </CardText>
                   </div>
                 </div>
-              )} */}
-              {/* {StillBirthChildDetails.birthPlace.code === "PUBLIC_PLACES" && (
+              )}
+              {StillBirthChildDetails.birthPlace.code === "PUBLIC_PLACES" && (
                 <div className="row">
                   <div className="col-md-6">
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PLACE_OF_BIRTH")}`}</CardLabel>
@@ -276,7 +288,7 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                     </CardText>
                   </div>
                 </div>
-              )} */}
+              )}
             </div>
           </div>
 
@@ -504,13 +516,41 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
           )}
         </div>
 
+
         <div className="row">
+        <div className="row">
+          <div className="col-md-12">
+            <h1 className="headingh1">
+              <span style={{ background: "#f3f0ef", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
+            </h1>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-12">
+              <CheckBox
+                label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
+                onChange={setDeclarationInfo}
+                value={isInitiatorDeclaration}
+                checked={isInitiatorDeclaration}
+               // disable={isDisableEdit}
+              />
+            </div>
+          </div>
+        </div>
+
+
+
+     
           <div className="col-md-12">
             <h1 className="headingh1">{/* <span style={{ background: "#fff", padding: "0 10px" }}>                
                 </span> */}</h1>
           </div>
         </div>
-        <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} />
+        {/* <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} /> */}
+        <SubmitBar disabled={!isInitiatorDeclaration} label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} />
+        </div>
+
       </Card>
     </React.Fragment>
   );

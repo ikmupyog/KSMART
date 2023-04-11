@@ -70,18 +70,27 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
   const [ownershipCategoryMenu,setOwnershipCategoryMenu] =useState([]);
   const stateId = Digit.ULBService.getStateId();
   let validation = {};
-  let BusinessCategoryMenu = [];
-  
+  const[BusinessCategoryMenu,setBusinessCategoryMenu] = useState([]);
+  let BusinessCategoryMenutemp=[]
   const { isLoading, data: Data = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "TradeUnits", "[?(@.type=='TL')]");
 
+  // Data &&
+  // Data.TradeLicense &&
+  // Data.TradeLicense.TradeType.map((ob) => {
+  //   if (!BusinessCategoryMenu.some((BusinessCategoryMenu) => BusinessCategoryMenu.code === `${ob.code.split(".")[0]}`)) {
+  //     BusinessCategoryMenu.push({ i18nKey: `${ob.code.split(".")[0]}`, code: `${ob.code.split(".")[0]}` });
+      
+  //   }
+  // });
   Data &&
   Data.TradeLicense &&
   Data.TradeLicense.TradeType.map((ob) => {
-    if (!BusinessCategoryMenu.some((BusinessCategoryMenu) => BusinessCategoryMenu.code === `${ob.code.split(".")[0]}`)) {
-      BusinessCategoryMenu.push({ i18nKey: `${ob.code.split(".")[0]}`, code: `${ob.code.split(".")[0]}` });
+    if (!BusinessCategoryMenutemp.some((BusinessCategoryMenutemp) => BusinessCategoryMenutemp.code === `${ob.code.split(".")[0]}`)) {
+      BusinessCategoryMenutemp.push({ i18nKey: `${ob.code.split(".")[0]}`, code: `${ob.code.split(".")[0]}`,categoryType:ob.categoryType });
+     // BusinessCategoryMenu.push({i18nKey: `${ob.code.split(".")[0]}`, code: `${ob.code.split(".")[0]}` });
     }
   });
-  
+
   const { data: Districts = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "common-masters", "District");
   const { data: PostOffice = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "common-masters", "PostOffice");
   const { data: LBTypes = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "common-masters", "LBType");
@@ -570,6 +579,8 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
    });
 
   const selectBusinessSector = (value => {
+    setFeilds([{ businessCategory: "", businessType: "", businessSubtype: "", unit: null, uom: null }]);
+    setBusinessCategoryMenu(BusinessCategoryMenutemp.filter((category) => category.categoryType === value.code));
     setBusinessSector(value);
     setIsInitialRender(true);
   });
@@ -893,7 +904,6 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
       let licenseeType=formDataPage?.tradeLicenseDetail?.licenseeType;
 
       let tradeLicenseDetail = { licenseeType, owners, ownerspremise,institution,businessSector, capitalInvestment, enterpriseType, structureType, structurePlaceSubtype, businessActivityDesc, noOfEmployees, ownershipCategory, address, tradeUnits, structurePlace, }
-      console.log("tradeLicenseDetail : "+tradeLicenseDetail);
       onSelect(config.key, { districtid, localbodytype, localbody, commencementDate, tradeLicenseDetail, licenseUnitName, licenseUnitNameLocal, desiredLicensePeriod });
     } 
     else {

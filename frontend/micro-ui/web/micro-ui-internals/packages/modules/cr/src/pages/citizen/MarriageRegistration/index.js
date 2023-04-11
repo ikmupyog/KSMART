@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { Route, Switch, useRouteMatch,useLocation,useHistory,Redirect } from "react-router-dom";
-import { PrivateRoute, BreadCrumb,Component } from "@egovernments/digit-ui-react-components";
+import { Route, Switch, useRouteMatch, useLocation, useHistory, Redirect } from "react-router-dom";
+import { PrivateRoute, BreadCrumb, Component } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import { newConfig as newConfigCR } from "../../../config/config";
+import { useQueryClient } from "react-query";
 
 const CreateMarriageRegistration = ({ parentUrl }) => {
   const { t } = useTranslation();
   const { path } = useRouteMatch();
-  const match = useRouteMatch();  
+  const match = useRouteMatch();
   const { pathname } = useLocation();
   const history = useHistory();
-  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_CREATE_BIRTH_TRADE", {});
+  const [isEditMarriage, setIsEditMarriage] = useState(sessionStorage.getItem("CR_MARRIAGE_EDIT_FLAG") ? true : false);
+  const [params, setParams, clearParams] = isEditMarriage
+    ? Digit.Hooks.useSessionStorage("CR_EDIT_MARRIAGE_REG", {})
+    : Digit.Hooks.useSessionStorage("CR_CREATE_MARRIAGE_REG", {});
+  const queryClient = useQueryClient();
 
   const stateId = Digit.ULBService.getStateId();
   // let { data: newConfig, isLoading } = Digit.Hooks.tl.useMDMS.getFormConfig(stateId, {});
@@ -25,7 +30,7 @@ const CreateMarriageRegistration = ({ parentUrl }) => {
     let currentPath = pathname.split("/").pop(),
       nextPage;
     let { nextStep = {} } = config.find((routeObj) => routeObj.route === currentPath);
-    let { isCreateEnabled : enableCreate = true } = config.find((routeObj) => routeObj.route === currentPath);
+    let { isCreateEnabled: enableCreate = true } = config.find((routeObj) => routeObj.route === currentPath);
     // if (typeof nextStep == "object" && nextStep != null) {
     //   if((params?.cptId?.id || params?.cpt?.details?.propertyId || (isReneworEditTrade && params?.cpt?.details?.propertyId ))  && (nextStep[sessionStorage.getItem("isAccessories")] && nextStep[sessionStorage.getItem("isAccessories")] === "know-your-property")  )
     //   {
@@ -35,7 +40,7 @@ const CreateMarriageRegistration = ({ parentUrl }) => {
     //     nextStep[sessionStorage.getItem("isAccessories")] &&
     //     (nextStep[sessionStorage.getItem("isAccessories")] === "accessories-details" ||
     //       nextStep[sessionStorage.getItem("isAccessories")] === "map" ||
-    //       nextStep[sessionStorage.getItem("isAccessories")] === "owner-ship-details" || 
+    //       nextStep[sessionStorage.getItem("isAccessories")] === "owner-ship-details" ||
     //       nextStep[sessionStorage.getItem("isAccessories")] === "know-your-property")
     //   ) {
     //     nextStep = `${nextStep[sessionStorage.getItem("isAccessories")]}`;
@@ -61,7 +66,7 @@ const CreateMarriageRegistration = ({ parentUrl }) => {
     //   }
     // }
     // if( (params?.cptId?.id || params?.cpt?.details?.propertyId || (isReneworEditTrade && params?.cpt?.details?.propertyId ))  && nextStep === "know-your-property" )
-    // { 
+    // {
     //   nextStep = "property-details";
     // }
     // let redirectWithHistory = history.push;
@@ -94,19 +99,16 @@ const CreateMarriageRegistration = ({ parentUrl }) => {
 
   function handleSelect(key, data, skipStep, index, isAddMultiple = false) {
     setParams({ ...params, ...{ [key]: { ...params[key], ...data } } });
-    if(key === "isSkip" && data === true)
-    {
+    if (key === "isSkip" && data === true) {
       goNext(skipStep, index, isAddMultiple, key, true);
-    }
-    else
-    {
+    } else {
       goNext(skipStep, index, isAddMultiple, key);
     }
   }
   const createProperty = async () => {
     history.push(`${match.path}/acknowledgement`);
   };
-  
+
   const onSuccess = () => {
     sessionStorage.removeItem("CurrentFinancialYear");
     queryClient.invalidateQueries("CR_CREATE_MARRIAGE");
@@ -116,36 +118,34 @@ const CreateMarriageRegistration = ({ parentUrl }) => {
   const CheckPage = Digit?.ComponentRegistryService?.getComponent("MarriageCheckPage");
   const MarriageAcknowledgement = Digit?.ComponentRegistryService?.getComponent("MarriageAcknowledgement");
   return (
-    
     <React.Fragment>
       <Switch>
-       {config.map((routeObj, index) => {
-        const { component, texts, inputs, key, isSkipEnabled } = routeObj;
-        const Component = typeof component === "string" ? Digit.ComponentRegistryService.getComponent(component) : component;
-        return (
-          <Route path={`${match.path}/${routeObj.route}`} key={index}>
-            <Component
-              config={{ texts, inputs, key, isSkipEnabled }}
-              onSelect={handleSelect}
-              onSkip={handleSkip}
-              t={t}
-              formData={params}
-              onAdd={handleMultiple}
-              userType="citizen"
-            />
-           </Route>  
-          
-        );
-      })}
-       <Route path={`${match.path}/check`}>
-        <CheckPage onSubmit={createProperty} value={params} />
-      </Route>
-      <Route path={`${match.path}/acknowledgement`}>
-        <MarriageAcknowledgement data={params} onSuccess={onSuccess} />
-      </Route>
-      <Route>
-        <Redirect to={`${match.path}/${config.indexRoute}`} />
-      </Route>
+        {config.map((routeObj, index) => {
+          const { component, texts, inputs, key, isSkipEnabled } = routeObj;
+          const Component = typeof component === "string" ? Digit.ComponentRegistryService.getComponent(component) : component;
+          return (
+            <Route path={`${match.path}/${routeObj.route}`} key={index}>
+              <Component
+                config={{ texts, inputs, key, isSkipEnabled }}
+                onSelect={handleSelect}
+                onSkip={handleSkip}
+                t={t}
+                formData={params}
+                onAdd={handleMultiple}
+                userType="citizen"
+              />
+            </Route>
+          );
+        })}
+        <Route path={`${match.path}/check`}>
+          <CheckPage onSubmit={createProperty} value={params} />
+        </Route>
+        <Route path={`${match.path}/acknowledgement`}>
+          <MarriageAcknowledgement data={params} onSuccess={onSuccess} />
+        </Route>
+        <Route>
+          <Redirect to={`${match.path}/${config.indexRoute}`} />
+        </Route>
       </Switch>
     </React.Fragment>
   );

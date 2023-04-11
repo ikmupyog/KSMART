@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { LocationSearchCard } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/PGRTimeline";
+import PGRTimeline from "../../components/PGRTimeline";
 
 const SelectGeolocation = ({ onSelect, onSkip, value, t }) => {
   const [location, setLocation] = useState({});
@@ -17,8 +17,6 @@ const SelectGeolocation = ({ onSelect, onSkip, value, t }) => {
   const stateId = Digit.ULBService.getStateId();
   const { data: PostOffice = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
   let postOffices = []
-
-  console.log("first", PostOffice)
 
   PostOffice &&
     PostOffice["common-masters"] &&
@@ -38,7 +36,7 @@ const SelectGeolocation = ({ onSelect, onSkip, value, t }) => {
 
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
+      {window.location.href.includes("/citizen") ? <PGRTimeline currentStep={2} /> : null}
       <LocationSearchCard
         header={t("CS_ADDCOMPLAINT_SELECT_GEOLOCATION_HEADER")}
         cardText={t("CS_ADDCOMPLAINT_SELECT_GEOLOCATION_TEXT")}

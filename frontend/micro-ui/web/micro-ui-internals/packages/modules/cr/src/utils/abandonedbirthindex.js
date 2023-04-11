@@ -339,14 +339,15 @@ export const convertToAbandonedBirthRegistration = (data = {}) => {
         medicalAttensionSub: data?.AbandonedChildDetails?.medicalAttensionSub ? data?.AbandonedChildDetails?.medicalAttensionSub.code : null,
         deliveryMethods: data?.AbandonedChildDetails?.deliveryMethods ? data?.AbandonedChildDetails?.deliveryMethods.code : null,
         action: "INITIATE",
-        applicationtype: "CRBRNR",
+        applicationtype: "CRBRAB",
         businessservice: "birth-services",
-        workflowcode: data?.AbandonedChildDetails?.workFlowCode,
+        workflowcode: "21BIRTHHOME",
         ParentsDetails: {
           motherFirstNameEn: data?.AbandonedChildDetails?.motherFirstNameEn,
           motherFirstNameMl: data?.AbandonedChildDetails?.motherFirstNameMl,
           motherAadhar: data?.AbandonedChildDetails?.motherAadhar,
           ismotherInfo: data?.AbandonedChildDetails?.isMotherInfo,
+          isfatherInfo: data?.AbandonedChildDetails?.isMotherInfo,
           addressOfMother: data?.AbandonedChildDetails?.addressOfMother,
         },
         InformarHosInstDetails: {
@@ -363,6 +364,99 @@ export const convertToAbandonedBirthRegistration = (data = {}) => {
           caretakerDesignation: data?.AbandonedBirthInformarDetails?.caretakerDesignation,
           caretakerMobile: data?.AbandonedBirthInformarDetails?.caretakerMobile,
           caretakerAddress: data?.AbandonedBirthInformarDetails?.caretakerAddress,
+        },
+        documentDetails: {
+
+          tenantId: data?.AbandonedBirthInformarDetails?.tenantId,         
+          document : data?.AbandonedBirthInformarDetails?.document,
+
+
+        // appplicantDocument : document
+      
+
+        },
+      },
+    ],
+  };
+
+  return formdata;
+};
+
+export const convertToEditAbandonedBirthRegistration = (data = {}) => {
+  const formdata = {
+    AbandonedDetails: [
+      {
+        childDOB: Date.parse(data?.AbandonedChildDetails?.childDOB),
+        birthDateTime: parseInt(data?.AbandonedChildDetails?.birthDateTime),
+        gender: data?.AbandonedChildDetails?.gender ? data?.AbandonedChildDetails?.gender.code : null,
+        tenantid: data?.AbandonedChildDetails?.tenantId,
+        hospitalCode: data?.AbandonedChildDetails?.hospitalName ? data?.AbandonedChildDetails?.hospitalName.code : null,
+        birthPlace: data?.AbandonedChildDetails?.birthPlace ? data?.AbandonedChildDetails?.birthPlace.code : null,
+        hospitalName: data?.AbandonedChildDetails?.hospitalName ? data?.AbandonedChildDetails?.hospitalName.hospitalName : null,
+        hospitalNameMl: data?.AbandonedChildDetails?.hospitalName ? data?.AbandonedChildDetails?.hospitalName.hospitalNamelocal : null,
+        institutionTypeCode: data?.AbandonedChildDetails?.institution ? data?.AbandonedChildDetails?.institution.code : null,
+        institution: data?.AbandonedChildDetails?.institution ? data?.AbandonedChildDetails?.institution.name : null,
+        institutionNameCode: data?.AbandonedChildDetails?.institutionId ? data?.AbandonedChildDetails?.institutionId.code : null,
+        institutionId: data?.AbandonedChildDetails?.institutionId ? data?.AbandonedChildDetails?.institutionId.institutionName : null,
+        institutionIdMl: data?.AbandonedChildDetails?.institutionIdMl ? data?.AbandonedChildDetails?.institutionIdMl.institutionNamelocal : null,
+        wardNo: data?.AbandonedChildDetails?.wardNo ? data?.AbandonedChildDetails?.wardNo.code : null,
+        wardNameEn: data?.AbandonedChildDetails?.wardNameEn ? data?.AbandonedChildDetails?.wardNameEn : null,
+        wardNameMl: data?.AbandonedChildDetails?.wardNameMl ? data?.AbandonedChildDetails?.wardNameMl : null,
+        wardNumber: data?.AbandonedChildDetails?.wardNumber ? data?.AbandonedChildDetails?.wardNumber : null,
+        adrsHouseNameEn: data?.AbandonedChildDetails?.adrsHouseNameEn,
+        adrsHouseNameMl: data?.AbandonedChildDetails?.adrsHouseNameMl,
+        adrsLocalityNameEn: data?.AbandonedChildDetails?.adrsLocalityNameEn,
+        adrsLocalityNameMl: data?.AbandonedChildDetails?.adrsLocalityNameMl,
+        adrsStreetNameEn: data?.AbandonedChildDetails?.adrsStreetNameEn,
+        adrsStreetNameMl: data?.AbandonedChildDetails?.adrsStreetNameMl,
+        adrsPostOffice: data?.AbandonedChildDetails?.adrsPostOffice ? data?.AbandonedChildDetails?.adrsPostOffice : null,
+        adrsPincode: data?.AbandonedChildDetails?.adrsPincode ? data?.AbandonedChildDetails?.adrsPincode : null,
+        vehicleType: data?.AbandonedChildDetails?.vehicleType ? data?.AbandonedChildDetails?.vehicleType : null,
+        vehicleHaltPlace: data?.AbandonedChildDetails?.vehicleHaltPlace,
+        vehicleHaltPlaceMl: data?.AbandonedChildDetails?.vehicleHaltPlaceMl,
+        vehicleRegistrationNo: data?.AbandonedChildDetails?.vehicleRegistrationNo,
+        vehicleFromEn: data?.AbandonedChildDetails?.vehicleFromEn,
+        vehicleToEn: data?.AbandonedChildDetails?.vehicleToEn,
+        vehicleFromMl: data?.AbandonedChildDetails?.vehicleFromMl,
+        vehicleToMl: data?.AbandonedChildDetails?.vehicleToMl,
+        setadmittedHospitalEn: data?.AbandonedChildDetails?.setadmittedHospitalEn ? data?.AbandonedChildDetails?.setadmittedHospitalEn: null,
+        vehicleDesDetailsEn: data?.AbandonedChildDetails?.vehicleDesDetailsEn ? data?.AbandonedChildDetails?.vehicleDesDetailsEn : null,
+        publicPlaceType: data?.AbandonedChildDetails?.publicPlaceType ? data?.AbandonedChildDetails?.publicPlaceType: null,
+        localityNameEn: data?.AbandonedChildDetails?.localityNameEn,
+        localityNameMl: data?.AbandonedChildDetails?.localityNameMl,
+        streetNameEn: data?.AbandonedChildDetails?.streetNameEn,
+        streetNameMl: data?.AbandonedChildDetails?.streetNameMl,
+        publicPlaceDecpEn: data?.AbandonedChildDetails?.publicPlaceDecpEn,
+        birthWeight: data?.AbandonedChildDetails?.birthWeight,
+        pregnancyDuration: data?.AbandonedChildDetails?.pregnancyDuration ? data?.AbandonedChildDetails?.pregnancyDuration : null,
+        medicalAttensionSub: data?.AbandonedChildDetails?.medicalAttensionSub ? data?.AbandonedChildDetails?.medicalAttensionSub.code : null,
+        deliveryMethods: data?.AbandonedChildDetails?.deliveryMethods ? data?.AbandonedChildDetails?.deliveryMethods.code : null,
+        action: "APPLY",
+        applicationtype: "CRBRAB",
+        businessservice: "birth-services",
+        workflowcode: "21BIRTHHOME",
+        ParentsDetails: {
+          motherFirstNameEn: data?.AbandonedChildDetails?.AbandonedChildDetails?.motherFirstNameEn,
+          motherFirstNameMl: data?.AbandonedChildDetails?.AbandonedChildDetails?.motherFirstNameMl,
+          motherAadhar: data?.AbandonedChildDetails?.AbandonedChildDetails?.motherAadhar,
+          ismotherInfo: data?.AbandonedChildDetails?.AbandonedChildDetails?.isMotherInfo,
+          isfatherInfo: data?.AbandonedChildDetails?.AbandonedChildDetails?.isMotherInfo,
+          addressOfMother: data?.AbandonedChildDetails?.AbandonedChildDetails?.addressOfMother,
+        },
+        InformarHosInstDetails: {
+          infomantFirstNameEn: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.infomantFirstNameEn,
+          infomantAadhar: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.infomantAadhar,
+          infomantMobile: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.infomantMobile,
+          informerAddress: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.informerAddress,
+          informerDesi: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.informerDesi,
+          // isDeclarationInfo: data?.AbandonedBirthInformarDetails?.isDeclarationInfo,
+        },
+        caretakerDetails: {
+          institutionName: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.institutionName,
+          caretakerName: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.caretakerName,
+          caretakerDesignation: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.caretakerDesignation,
+          caretakerMobile: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.caretakerMobile,
+          caretakerAddress: data?.AbandonedBirthInformarDetails?.AbandonedChildDetails?.caretakerAddress,
         },
         documentDetails: {
 

@@ -30,8 +30,18 @@ const SearchDeathApplication = ({  t, onSubmit, data, count, isSuccess, isLoadin
         defaultValues: {
             offset: 0,
             limit: 10,
+            sortBy: "TL_COMMON_TABLE_COL_APP_NO",
+            sortOrder: "DESC",
         },
     });
+
+    // useEffect(() => {
+    //     register("offset", 0);
+    //     register("limit", 10);
+    //     register("sortBy", "TL_COMMON_TABLE_COL_APP_NO");
+    //     register("sortOrder", "DESC");
+    //   }, [register]);
+
     const GetCell = (value) => <span className="cell-text">{value}</span>;
 
     const columns = [
@@ -45,21 +55,21 @@ const SearchDeathApplication = ({  t, onSubmit, data, count, isSuccess, isLoadin
             accessor: (row) => GetCell(row.CR_DECEASED_NAME),
         },
         {
-            Header: "Father Name",
+            Header: t("CR_COMMON_FATHER_NAME"),
             accessor : (row) => GetCell(row.CR_DECEASED_FATHER_NAME),
         },
         {
-            Header: "Mother Name",
+            Header: t("CR_COMMON_MOTHER_NAME"),
             accessor : (row) => GetCell(row.CR_DECEASED_MOTHER_NAME),
         },
         {
             Header: "Address",
             accessor : (row) => GetCell(row.CR_ADDRESS),
         },
-        {
-            Header: "City",
-            accessor : (row) => GetCell(row.TL_COMMON_CITY_NAME),
-        },
+        // {
+        //     Header: "City",
+        //     accessor : (row) => GetCell(row.TL_COMMON_CITY_NAME),
+        // },
         {
             Header: "Status",
             disableSortBy: true,
@@ -115,7 +125,7 @@ const SearchDeathApplication = ({  t, onSubmit, data, count, isSuccess, isLoadin
                 </SearchForm>
             </div>
             {
-                fileData !== "" && (
+                fileData !== [] && (
                     <React.Fragment>
                         <Table 
                             t={t}
@@ -123,9 +133,13 @@ const SearchDeathApplication = ({  t, onSubmit, data, count, isSuccess, isLoadin
                             totalRecords={count}
                             columns={columns}
                             onPageSizeChange={onPageSizeChange}
+                            currentPage={getValues("offset") / getValues("limit")}
                             onNextPage={nextPage}
-                            onPreviousPage={previousPage}
+                            onPrevPage={previousPage}
+                            pageSizeLimit={getValues("limit")}
                             onSort={onSort}
+                            disableSort={false}
+                            sortParams={[{ id: getValues("sortBy"), desc: getValues("sortOrder") === "DESC" ? true : false }]}
                             getCellProps={() => {
                             return {
                               style: {

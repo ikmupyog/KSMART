@@ -101,28 +101,6 @@ const NACParentsDetails =({ config, onSelect, userType, formData, isEditStillBir
 
   const onSkip = () => onSelect();
 
-  // useEffect(() => {
-  //   if (stateId === "kl" && cmbNation.length > 0) {
-  //     cmbfilterNation = cmbNation.filter((cmbNation) => cmbNation.nationalityname.includes("Indian"));
-  //     setFatherNationality(cmbfilterNation[0]);
-  //     setMotherNationality(cmbfilterNation[0]);
-  //   }
-  // }, [Nation]);
-
-  // useEffect(() => {
-  //   if (isInitialRender) {
-  //     if (formData?. BirthNACParentsDetails?.ismotherInfo != null) {
-  //       setIsInitialRender(false);
-  //       setIsMotherInfo(formData?. BirthNACParentsDetails?.ismotherInfo);
-  //     }
-  //   }
-
-  //   if (formData?. BirthNACParentsDetails?.isfatherInfo != null) {
-  //     setIsInitialRender(false);
-  //     setIsFatherInfo(formData?. BirthNACParentsDetails?.isfatherInfo);
-  //   }
-  // }, [isInitialRender]);
-
   function setSelectMotherFirstNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z]*$") != null) {
       setMotherFirstNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
@@ -193,17 +171,15 @@ const NACParentsDetails =({ config, onSelect, userType, formData, isEditStillBir
  
   let validFlag = true;
   const goNext = () => {
-    // if (isMotherInfo === false) {
-      if (motherAadhar != null || motherAadhar != "" || motherAadhar != undefined) {
-        if (MotherAadharError) {
+    if (motherAadhar != null || motherAadhar != "" || motherAadhar != undefined) {
+      let adharLength = motherAadhar;
+        if (adharLength.length < 12 || adharLength.length > 12) {
           validFlag = false;
           setMotherAadharError(true);
           setToast(true);
           setTimeout(() => {
             setToast(false);
           }, 2000);
-          // return false;
-          // window.alert("Username shouldn't exceed 10 characters")
         } else {
           setMotherAadharError(false);
         }
@@ -242,8 +218,8 @@ const NACParentsDetails =({ config, onSelect, userType, formData, isEditStillBir
     return (
       <React.Fragment>
         <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-        {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
-        {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
+        {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
+        {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
         <FormStep
           t={t}
           config={config}

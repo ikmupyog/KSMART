@@ -1,16 +1,8 @@
 import {
-  Card,
-  CardLabel,
-  CardSubHeader,
-  CardText,
-  CitizenInfoLabel,
-  LinkButton,
-  Row,
-  StatusTable,
-  SubmitBar,
-  BackButton,
+  Card, CardLabel, CardSubHeader, CardText, CitizenInfoLabel,
+  LinkButton, Row, StatusTable, SubmitBar, BackButton, CheckBox,Toast
 } from "@egovernments/digit-ui-react-components";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useRouteMatch } from "react-router-dom";
 //import TLDocument from "../../../pageComponents/TLDocumets";
@@ -47,6 +39,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
   const history = useHistory();
   const match = useRouteMatch();
   const { InformationDeath, FamilyInformationDeath, AddressBirthDetails, isEditProperty, cpt } = value;
+  const [IsDeclarationInitiator, setIsDeclarationInitiator] = useState(false);
   function getdate(date) {
     let newdate = Date.parse(date);
     return `${
@@ -72,7 +65,13 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
       return null;
     }
   };
-
+  function setselectIsDeclarationInitiator(e) {
+    if (e.target.checked == true) {
+      setIsDeclarationInitiator(e.target.checked);
+    } else {
+      setIsDeclarationInitiator(e.target.checked);
+    }
+  }
   return (
     <React.Fragment>
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
@@ -87,24 +86,25 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
             </h1>
           </div>
         </div>
-        <div
+        <div className="col-md-12"
           style={{
-            maxWidth: "80%",
+            maxWidth: "auto",
             margin: "25px auto",
             padding: "3rem 2rem",
             border: "none",
             borderRadius: "8px",
-            height: "820px",
+            height: "auto",
             backgroundColor: "#f3f0ef",
           }}
         >
+            <div className="col-md-12">
           <div className="row">
             <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}> {`${t("PDF_BIRTH_CHILD_NAME")}`} </CardLabel>
             </div>
             <div className="col-md-6">
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                : {t(InformationDeath.DeceasedFirstNameMl ? InformationDeath?.DeceasedFirstNameMl : " CR_NOT_RECORDED")}{" "}
+                : {t(InformationDeath.DeceasedFirstNameMl || " CR_NOT_RECORDED")}{" "}
                 {t(InformationDeath.DeceasedMiddleNameMl)}{" "}
                 {t(InformationDeath.DeceasedLastNameMl) +
                   " / " +
@@ -263,17 +263,17 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                       :{" "}
-                      {t(InformationDeath.DeathPlaceDistrict.namelocal) +
+                      {t(InformationDeath.DeathPlaceDistrict.namelocal|| "CR_NOT_RECORDED") +
                         "," +
-                        InformationDeath.DeathPlaceState.namelocal +
+                        InformationDeath.DeathPlaceState.namelocal || "CR_NOT_RECORDED"+
                         "," +
-                        InformationDeath.DeathPlaceCountry.namelocal +
+                        InformationDeath.DeathPlaceCountry.namelocal || "CR_NOT_RECORDED" + 
                         "/" +
-                        InformationDeath.DeathPlaceDistrict.name +
+                        InformationDeath.DeathPlaceDistrict.name || "CR_NOT_RECORDED" +
                         "," +
-                        InformationDeath.DeathPlaceState.name +
+                        InformationDeath.DeathPlaceState.name || "CR_NOT_RECORDED"+
                         "," +
-                        InformationDeath.DeathPlaceCountry.name}
+                        InformationDeath.DeathPlaceCountry.name || "CR_NOT_RECORDED"}
                     </CardText>
                   </div>
                 </div>
@@ -524,6 +524,26 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
               </div>
             </div>
           )}
+        </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
+            </h1>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-12">
+              <CheckBox
+                label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
+                onChange={setselectIsDeclarationInitiator}
+                value={IsDeclarationInitiator}
+                checked={IsDeclarationInitiator}
+              />
+            </div>
+          </div>
         </div>
         <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} />
       </Card>

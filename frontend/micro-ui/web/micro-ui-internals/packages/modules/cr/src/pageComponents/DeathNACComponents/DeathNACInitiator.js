@@ -11,7 +11,7 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
   const { name: name, } = Digit.UserService.getUser().info; // window.localStorage.getItem("user-info");
   const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.InitiatorinfoDetails?.isInitiatorDeclaration : formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration : false);
   const [isDeclaration, setDeclaration] = useState(formData?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.InitiatorinfoDetails?.isInitiatorDeclaration : formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration : false);
-  const [initiatorNameEn, setinitiatorNameEn] = useState(formData?.InitiatorinfoDetails?.initiatorNameEn ? formData?.InitiatorinfoDetails?.initiatorNameEn : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorNameEn ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorNameEn : name);
+  const [initiatorNameEn, setinitiatorNameEn] = useState(formData?.InitiatorinfoDetails?.initiatorNameEn ? formData?.InitiatorinfoDetails?.initiatorNameEn : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorNameEn ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorNameEn : "");
   const [initiatorAadhar, setinitiatorAadhar] = useState(formData?.InitiatorinfoDetails?.initiatorAadhar ? formData?.InitiatorinfoDetails?.initiatorAadhar : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAadhar ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAadhar : "");
   const [initiatorMobile, setinitiatorMobile] = useState(formData?.InitiatorinfoDetails?.initiatorMobile ? formData?.InitiatorinfoDetails?.initiatorMobile : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorMobile ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorMobile : "");
   const [initiatorDesi, setinitiatorDesi] = useState(formData?.InitiatorinfoDetails?.initiatorDesi ? formData?.InitiatorinfoDetails?.initiatorDesi : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorDesi ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorDesi : "");
@@ -46,11 +46,11 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
     }
   }, [isInitialRender]);
 
-  function setSelectrelation(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
-      setrelation(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-    }
-  }
+  // function setSelectrelation(e) {
+  //   if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+  //     setrelation(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+  //   }
+  // }
 
   function setSelectinitiatorNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
@@ -292,7 +292,7 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
     if (validFlag == true) {
 
       onSelect(config.key, {
-        relation,
+        // relation,
         initiatorNameEn,
         initiatorAadhar,
         initiatorMobile,
@@ -316,39 +316,6 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
         isDisabled={!isInitiatorDeclaration || !initiatorNameEn || !initiatorAadhar || !initiatorMobile}
       >
 
-        <div className="row">
-          <div className="col-md-12">
-            <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
-            </h1>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-12">
-              <CheckBox
-                label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
-                onChange={setDeclarationInfo}
-                value={isInitiatorDeclaration}
-                checked={isInitiatorDeclaration}
-                disable={isDisableEdit}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-12">
-              <CheckBox
-                label="I do understand that NAC/NIA issue will be subject to the genuiness of documents produced and enquiry done by the registrar"
-                onChange={setDeclarationStatement}
-                value={isDeclaration}
-                checked={isDeclaration}
-                disable={isDisableEdit}
-              />
-            </div>
-          </div>
-        </div>
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -379,7 +346,8 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
 
             <div className="col-md-4">
               <CardLabel>
-                {`${t("CR_INITIATOR_NAME")}`}
+                {/* {`${t("CR_INITIATOR_NAME")}`} */}
+                Applicant Name
                 <span className="mandatorycss">*</span>
               </CardLabel>
               <TextInput
@@ -447,7 +415,7 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
           <div className="col-md-12">
             <div className="row">
               <div className="col-md-5">
-                <CardLabel>Address proof of deceased at the time of birth<span className="mandatorycss">*</span></CardLabel>
+                <CardLabel>Address proof of deceased at the time of death<span className="mandatorycss">*</span></CardLabel>
               </div>
               <div className="col-md-3">
                 <UploadFile
@@ -498,23 +466,6 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
             </div>
             <div className="row">
               <div className="col-md-5">
-                <CardLabel>ID Proof of Mother at the time of birth <span className="mandatorycss">*</span></CardLabel>
-              </div>
-              <div className="col-md-3">
-                <UploadFile
-                  extraStyleName={"propertyCreate"}
-                  accept=".jpg,.png,.pdf"
-                  onUpload={selectfile3}
-                  onDelete={() => {
-                    setUploadedFile3(null);
-                  }}
-                  message={uploadedFile3 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-
-                />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-5">
                 <CardLabel>ID Proof of death <span className="mandatorycss">*</span></CardLabel>
               </div>
               <div className="col-md-3">
@@ -529,6 +480,91 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
 
                 />
               </div>
+            </div>
+            <div className="row">
+              <div className="col-md-5">
+                <CardLabel>Declaration by Applicant  Stating that death occured in this ulb area, DOD. Place of Death, and address at the time of death counter signed by gazetted officer <span className="mandatorycss">*</span></CardLabel>
+              </div>
+              <div className="col-md-3">
+                <UploadFile
+                  extraStyleName={"propertyCreate"}
+                  accept=".jpg,.png,.pdf"
+                  onUpload={selectfile3}
+                  onDelete={() => {
+                    setUploadedFile3(null);
+                  }}
+                  message={uploadedFile3 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+
+                />
+              </div>
+            </div>
+
+            {/* <div className="row">
+              <div className="col-md-5">
+                <CardLabel>Declaration by a credible person stating the event occured with in the jurisdiction of local body concerned <span className="mandatorycss">*</span></CardLabel>
+              </div>
+              <div className="col-md-3">
+                <UploadFile
+                  extraStyleName={"propertyCreate"}
+                  accept=".jpg,.png,.pdf"
+                  onUpload={selectfile3}
+                  onDelete={() => {
+                    setUploadedFile3(null);
+                  }}
+                  message={uploadedFile3 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+
+                />
+              </div>
+            </div> */}
+            {/* <div className="row">
+              <div className="col-md-5">
+                <CardLabel>Declaration by another credible person stating the event occured with in the jurisdiction of local body concerned<span className="mandatorycss">*</span></CardLabel>
+              </div>
+              <div className="col-md-3">
+                <UploadFile
+                  extraStyleName={"propertyCreate"}
+                  accept=".jpg,.png,.pdf"
+                  onUpload={selectfile3}
+                  onDelete={() => {
+                    setUploadedFile3(null);
+                  }}
+                  message={uploadedFile3 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+
+                />
+              </div>
+            </div> */}
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
+            </h1>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-12">
+              <CheckBox
+                label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
+                onChange={setDeclarationInfo}
+                value={isInitiatorDeclaration}
+                checked={isInitiatorDeclaration}
+                disable={isDisableEdit}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-12">
+              <CheckBox
+                label="I do understand that NAC/NIA issue will be subject to the genuiness of documents produced and enquiry done by the registrar"
+                onChange={setDeclarationStatement}
+                value={isDeclaration}
+                checked={isDeclaration}
+                disable={isDisableEdit}
+              />
             </div>
           </div>
         </div>

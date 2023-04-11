@@ -441,10 +441,11 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
               :
               {t(
                 GroomDetails?.groomFathernameEn
-                  ? GroomDetails?.groomFathernameEn + " / " + GroomDetails?.groomFathernameMl
-                    ? GroomDetails?.groomFathernameMl
-                    : "CR_NOT_RECORDED"
-                  : "CR_NOT_RECORDED"
+                  ? GroomDetails?.groomFathernameEn
+                  : //+ " / " + GroomDetails?.groomFathernameMl
+                    //   ? GroomDetails?.groomFathernameMl
+                    //   : "CR_NOT_RECORDED"
+                    "CR_NOT_RECORDED"
               )}
             </CardText>
           </div>
@@ -483,7 +484,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
               {t(
                 BrideDetails?.brideMothernameEn
                   ? BrideDetails?.brideMothernameEn + " / " + BrideDetails?.brideMothernameMl
-                    ? BrideDetails?.bridrMothernameMl
+                    ? BrideDetails?.brideMothernameMl
                     : "CR_NOT_RECORDED"
                   : "CR_NOT_RECORDED"
               )}
@@ -651,6 +652,52 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>Not Applicable</CardText>
             </div>
           )}
+        </div>
+        <div className="row">
+          <div className="col-md-4">
+            <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("CR_MARRIAGE_REG_SUMMARY_PASSPORT_NUMBER")}`}</CardLabel>
+          </div>
+          <div className="col-md-4">
+            {GroomDetails?.groomResidentShip === "NRI" ? (
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                :{t(GroomDetails?.groomPassportNo ? GroomDetails?.groomPassportNo : "CR_NOT_RECORDED")}
+              </CardText>
+            ) : (
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>Not Applicable</CardText>
+            )}
+          </div>
+          <div className="col-md-4">
+            {BrideDetails?.brideResidentShip === "NRI" ? (
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                :{t(BrideDetails?.bridePassportNo ? BrideDetails?.bridePassportNo : "CR_NOT_RECORDED")}
+              </CardText>
+            ) : (
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>Not Applicable</CardText>
+            )}
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-4">
+            <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("CR_MARRIAGE_REG_SUMMARY_SECURITY_NUMBER")}`}</CardLabel>
+          </div>
+          <div className="col-md-4">
+            {GroomDetails?.groomResidentShip === "FOREIGN" ? (
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                :{t(GroomDetails?.groomSocialSecurityNo ? GroomDetails?.groomSocialSecurityNo : "CR_NOT_RECORDED")}
+              </CardText>
+            ) : (
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>Not Applicable</CardText>
+            )}
+          </div>
+          <div className="col-md-4">
+            {BrideDetails?.brideResidentShip === "FOREIGN" ? (
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                :{t(BrideDetails?.brideSocialSecurityNo ? BrideDetails?.brideSocialSecurityNo : "CR_NOT_RECORDED")}
+              </CardText>
+            ) : (
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>Not Applicable</CardText>
+            )}
+          </div>
         </div>
         <div className="row">
           <div className="col-md-12">

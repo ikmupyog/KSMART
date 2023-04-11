@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
 
 const AbandonedBirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospitalName, hospitalName, hospitalNameMl,
-  selectHospitalNameMl, isEditBirth
+  selectHospitalNameMl, isEditAbandonedBirth
 }) => {
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
@@ -16,7 +16,7 @@ const AbandonedBirthPlaceHospital = ({ config, onSelect, userType, formData, sel
   let validation = {};
   const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "hospital");
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditAbandonedBirth ? isEditAbandonedBirth : false);
 
   const [tenantboundary, setTenantboundary] = useState(false);
   const queryClient = useQueryClient();
@@ -32,11 +32,11 @@ const AbandonedBirthPlaceHospital = ({ config, onSelect, userType, formData, sel
       cmbhospital.push(ob);
     });
 
-  if (isEditBirth) {
-    if (formData?.ChildDetails?.hospitalCode != null) {
+  if (isEditAbandonedBirth) {
+    if (formData?.AbandonedChildDetails?.hospitalCode != null) {
       if (cmbhospital.length > 0 && (hospitalName === undefined || hospitalName === "")) {
-        selectHospitalName(cmbhospital.filter(cmbhospital => cmbhospital.code === formData?.ChildDetails?.hospitalCode)[0]);
-        cmbhospitalMl = cmbhospital.filter(cmbhospital => cmbhospital.code === formData?.ChildDetails?.hospitalCode)[0];
+        selectHospitalName(cmbhospital.filter(cmbhospital => cmbhospital.code === formData?.AbandonedChildDetails?.hospitalCode)[0]);
+        cmbhospitalMl = cmbhospital.filter(cmbhospital => cmbhospital.code === formData?.AbandonedChildDetails?.hospitalCode)[0];
         selectHospitalNameMl(cmbhospitalMl);
       }
     }
@@ -45,7 +45,7 @@ const AbandonedBirthPlaceHospital = ({ config, onSelect, userType, formData, sel
   useEffect(() => {
 
     if (isInitialRender) {
-      if (formData?.ChildDetails?.hospitalName) {
+      if (formData?.AbandonedChildDetails?.hospitalName) {
         selectHospitalNameMl(hospitalNameMl);
         setIsInitialRender(false);
       } else {
@@ -75,7 +75,8 @@ const AbandonedBirthPlaceHospital = ({ config, onSelect, userType, formData, sel
   } else
     return (
       <React.Fragment>
-        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!hospitalName}>
+        {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!hospitalName}> */}
+        <div className="col-md-12">
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
@@ -117,8 +118,8 @@ const AbandonedBirthPlaceHospital = ({ config, onSelect, userType, formData, sel
               />
             </div>
           </div>
-
-        </FormStep>
+          </div>
+        {/* </FormStep> */}
       </React.Fragment>
     );
 };
