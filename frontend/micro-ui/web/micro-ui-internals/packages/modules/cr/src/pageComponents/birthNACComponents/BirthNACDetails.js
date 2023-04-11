@@ -10,6 +10,7 @@ import {
   Toast,
   SubmitBar,
 } from "@egovernments/digit-ui-react-components";
+import moment from "moment";
 import Timeline from "../../components/NACTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
@@ -86,7 +87,7 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
     const [workFlowCode, setWorkFlowCode] = useState(); 
 
   const [childDOB, setChildDOB] = useState(formData?. BirthNACDetails?.childDOB ? formData?. BirthNACDetails?.childDOB : "");
-  const [gender, selectGender] = useState(formData?. BirthNACDetails?.gender);
+  const [gender, selectGender] = useState(formData?. BirthNACDetails?.gender ? formData?. BirthNACDetails?.gender : "" );
 
   
   const [childAadharNo, setChildAadharNo] = useState(
@@ -630,9 +631,9 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
     return (
       <React.Fragment>
         <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-        {window.location.href.includes("/citizen") ? <Timeline currentStep={2}/> : null}
-        {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
-        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!childFirstNameEn || !childFirstNameMl || !childDOB || !gender || !birthPlace }>
+        {window.location.href.includes("/citizen") ? <Timeline currentStep={1}/> : null}
+        {window.location.href.includes("/employee") ? <Timeline currentStep={1} /> : null}
+        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!childFirstNameEn || !childFirstNameMl || !childDOB || !gender || !birthPlace || !nacorderofChildren}>
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-12">
@@ -805,16 +806,13 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
                 <DatePicker
                   date={childDOB}
                   name="childDOB"
-                  max={convertEpochToDate(new Date())}
+                  max={moment().subtract(1, "year").format("YYYY-MM-DD")}
                   onChange={setselectChildDOB}
                   inputFormat="DD-MM-YYYY"
                   placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
                   {...(validation = { isRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
                 />
               </div>
-
-
-              
               <div className="col-md-2">
                 <CardLabel>{t("CR_TIME_OF_BIRTH")}</CardLabel>
                 <CustomTimePicker name="birthDateTime" onChange={(val) => handleTimeChange(val, setbirthDateTime)} value={birthDateTime} />
@@ -836,10 +834,9 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
                 />
               </div>
               <div className="col-md-4">
-                <CardLabel>Order of Birth</CardLabel>
+                <CardLabel>Order of Birth<span className="mandatorycss">*</span></CardLabel>
                 <TextInput
                   t={t}
-                  isMandatory={false}
                   type={"number"}
                   optionKey="i18nKey"
                   name="nacorderofChildren"

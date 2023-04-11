@@ -50,17 +50,17 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
   let cmbLB = [];
   console.log(value);
   Taluk &&
-    Taluk["common-masters"] &&
+    Taluk["common-masters"] && Taluk["common-masters"].Taluk &&
     Taluk["common-masters"].Taluk.map((ob) => {
       cmbTaluk.push(ob);
     });
   Village &&
-    Village["common-masters"] &&
+    Village["common-masters"] && Village["common-masters"].Village &&
     Village["common-masters"].Village.map((ob) => {
       cmbVillage.push(ob);
     });
   District &&
-    District["common-masters"] &&
+    District["common-masters"] && District["common-masters"].District &&
     District["common-masters"].District.map((ob) => {
       cmbDistrict.push(ob);
     });

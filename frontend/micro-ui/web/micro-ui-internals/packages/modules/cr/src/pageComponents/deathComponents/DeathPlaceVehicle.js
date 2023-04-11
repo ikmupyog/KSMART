@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, TextArea } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, Loader, TextArea } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 
 const DeathPlaceVehicle = ({
@@ -107,8 +107,13 @@ const DeathPlaceVehicle = ({
   function setselectDeathPlaceType(value) {
     selectDeathPlaceType(value);
   }
+  // function setSelectVehicleNumber(e) {
+  //   setVehicleNumber(e.target.value);
+  // }
   function setSelectVehicleNumber(e) {
-    setVehicleNumber(e.target.value);
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z0-9\-]*$") != null)) {
+      setVehicleNumber(e.target.value.length <= 15 ? e.target.value : (e.target.value).substring(0, 15));
+    }
   }
   function setSelectVehicleFromplaceEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
@@ -120,6 +125,25 @@ const DeathPlaceVehicle = ({
       setVehicleToPlaceEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
+  function setCheckMalayalamInputField(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
+    if (!e.key.match(pattern)) {
+      e.preventDefault();
+    }
+  }
+  function setCheckSpecialCharSpace(e) {
+    let pattern = /^[a-zA-Z-.`' ]*$/;
+    if (!(e.key.match(pattern)) && e.code === 'Space') {
+      e.preventDefault();
+    }
+  }
+  function setCheckSpecialChar(e) {
+    let pattern = /^[0-9]*$/;
+    if (!(e.key.match(pattern))) {
+      e.preventDefault();
+    }
+  }
+
 
   function setSelectVehicleFirstHaltEn(e) {
     if (e.target.value.length === 51) {
@@ -155,8 +179,13 @@ const DeathPlaceVehicle = ({
     }
   }
   function setSelectGeneralRemarks(e) {
-    setGeneralRemarks(e.target.value);
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+      setGeneralRemarks(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    }
   }
+  // function setSelectGeneralRemarks(e) {
+  //   setGeneralRemarks(e.target.value);
+  // }
 
   function setSelectDeathPlaceWardId(value) {
     setDeathPlaceWardId(value);
@@ -169,9 +198,9 @@ const DeathPlaceVehicle = ({
   const goNext = () => {
     onSelect(config.key, {});
   };
-  if (islocalbodiesLoading) {
+  if (isLoad || isLoading || islocalbodiesLoading || isWardLoaded) {
     return <Loader></Loader>;
-  }
+  } else
   return (
     <React.Fragment>
       {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}> */}

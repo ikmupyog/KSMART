@@ -62,11 +62,13 @@ const ComplaintInformer = ({ t, config, onSelect, value }) => {
     }
   }
 
+  const isDisabled = selected.anonymous ? false : selected.address && selected.name && selected.mobileNumber?.length === 10 ? false : true;
+
   return (
     <React.Fragment>
       {window.location.href.includes("/employee") ? <EmpTimeLine currentStep={4} /> : null}
 
-      <FormStep config={config} onSelect={goNext} isDisabled={isTrue}>
+      <FormStep config={config} onSelect={goNext} isDisabled={isDisabled}>
         <CheckBox className="form-field" label={`${t("CS_ADDCOMPLAINT_ANONYMOUS")}`}
           onChange={(e) => setSelected({
             ...selected, anonymous: !selected.anonymous, name: "", mobileNumber: "", address: ""
@@ -75,19 +77,19 @@ const ComplaintInformer = ({ t, config, onSelect, value }) => {
 
         {!selected.anonymous && <div className="row">
           <div className="col-md-4">
-            <CardLabel> {`${t("CS_ADDCOMPLAINT_INFORMER_NAME")}`} </CardLabel>
+            <CardLabel> {`${t("CS_ADDCOMPLAINT_INFORMER_NAME")}`} <span className="mandatorycss">*</span></CardLabel>
             <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="name" value={selected.name} disable={selected.anonymous}
               onChange={handleName} placeholder={`${t("CS_ADDCOMPLAINT_INFORMER_NAME")}`} />
           </div>
           <div className="col-md-4">
-            <CardLabel> {`${t("CS_ADDCOMPLAINT_INFORMER_PHONE")}`} </CardLabel>
+            <CardLabel> {`${t("CS_ADDCOMPLAINT_INFORMER_PHONE")}`} <span className="mandatorycss">*</span></CardLabel>
             <TextInput t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="mobileNumber" value={selected.mobileNumber}
               // onChange={(e) => { setSelected({ ...selected, mobileNumber: e.target.value.replace(/[^0-9]/ig, '') }) }}
               placeholder={`${t("CS_ADDCOMPLAINT_INFORMER_PHONE")}`} onChange={handleMobile} {...(validation = { pattern: "^[0-9]{10}$", isRequired: true, type: "text" })}
             />
           </div>
           <div className="col-md-4">
-            <CardLabel> {`${t("CS_ADDCOMPLAINT_INFORMER_ADDRESS")}`} </CardLabel>
+            <CardLabel> {`${t("CS_ADDCOMPLAINT_INFORMER_ADDRESS")}`} <span className="mandatorycss">*</span></CardLabel>
             <TextArea t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="name" value={selected.address} disable={selected.anonymous}
               onChange={handleAddress} placeholder={`${t("CS_ADDCOMPLAINT_INFORMER_ADDRESS")}`} />
           </div>

@@ -55,11 +55,11 @@ const SearchDeathApplication = ({  t, onSubmit, data, count, isSuccess, isLoadin
             accessor: (row) => GetCell(row.CR_DECEASED_NAME),
         },
         {
-            Header: "Father Name",
+            Header: t("CR_COMMON_FATHER_NAME"),
             accessor : (row) => GetCell(row.CR_DECEASED_FATHER_NAME),
         },
         {
-            Header: "Mother Name",
+            Header: t("CR_COMMON_MOTHER_NAME"),
             accessor : (row) => GetCell(row.CR_DECEASED_MOTHER_NAME),
         },
         {
@@ -125,7 +125,7 @@ const SearchDeathApplication = ({  t, onSubmit, data, count, isSuccess, isLoadin
                 </SearchForm>
             </div>
             {
-                fileData !== "" && (
+                fileData !== [] && (
                     <React.Fragment>
                         <Table 
                             t={t}
@@ -133,9 +133,13 @@ const SearchDeathApplication = ({  t, onSubmit, data, count, isSuccess, isLoadin
                             totalRecords={count}
                             columns={columns}
                             onPageSizeChange={onPageSizeChange}
+                            currentPage={getValues("offset") / getValues("limit")}
                             onNextPage={nextPage}
-                            onPreviousPage={previousPage}
+                            onPrevPage={previousPage}
+                            pageSizeLimit={getValues("limit")}
                             onSort={onSort}
+                            disableSort={false}
+                            sortParams={[{ id: getValues("sortBy"), desc: getValues("sortOrder") === "DESC" ? true : false }]}
                             getCellProps={() => {
                             return {
                               style: {

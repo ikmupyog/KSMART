@@ -507,7 +507,7 @@ export const convertToBirthRegistration = (data = {}) => {
             ],
             minimumAmountPayable: data?.ChildDetails?.Amount,
             additionalDetails: {
-              HI: "Digital Payment",
+              HI: "New Birth Digital Payment",
             },
           },
         ],

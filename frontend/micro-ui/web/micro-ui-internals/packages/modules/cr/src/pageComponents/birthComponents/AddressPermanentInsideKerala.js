@@ -60,32 +60,32 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   let cmbFilterPostOffice = [];
 
   localbodies &&
-    localbodies["tenant"] &&
+    localbodies["tenant"] && localbodies["tenant"].tenants &&
     localbodies["tenant"].tenants.map((ob) => {
       cmbLB.push(ob);
     });
   Taluk &&
-    Taluk["common-masters"] &&
+    Taluk["common-masters"] && Taluk["common-masters"].Taluk &&
     Taluk["common-masters"].Taluk.map((ob) => {
       cmbTaluk.push(ob);
     });
   Village &&
-    Village["common-masters"] &&
+    Village["common-masters"] && Village["common-masters"].Village &&
     Village["common-masters"].Village.map((ob) => {
       cmbVillage.push(ob);
     });
   District &&
-    District["common-masters"] &&
+    District["common-masters"] && District["common-masters"].District &&
     District["common-masters"].District.map((ob) => {
       cmbDistrict.push(ob);
     });
   PostOffice &&
-    PostOffice["common-masters"] &&
+    PostOffice["common-masters"] && PostOffice["common-masters"].PostOffice &&
     PostOffice["common-masters"].PostOffice.map((ob) => {
       cmbPostOffice.push(ob);
     });
   LBType &&
-    LBType["common-masters"] &&
+    LBType["common-masters"] && LBType["common-masters"].LBType &&
     LBType["common-masters"].LBType.map((ob) => {
       cmbLBType.push(ob);
     });
@@ -289,6 +289,8 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   }
   function setSelectpermntInKeralaAdrLBName(value) {
     setTenantWard(value.code);
+    setpermntInKeralaWardNo(null);
+    setTenantboundary(true);
     setpermntInKeralaAdrLBName(value);
   }
   function setSelectpermntInKeralaAdrVillage(value) {
@@ -316,12 +318,12 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
     }
   }
   function setSelectpermntInKeralaAdrHouseNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9 ]*$") != null)) {
       setpermntInKeralaAdrHouseNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectpermntInKeralaAdrHouseNameMl(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$/;
     if (!(e.target.value.match(pattern))) {
       e.preventDefault();
       setpermntInKeralaAdrHouseNameMl('');

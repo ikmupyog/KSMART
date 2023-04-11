@@ -3,6 +3,7 @@ import { Route, Switch, useRouteMatch, useLocation, useHistory, Redirect } from 
 import { PrivateRoute, BreadCrumb, Component } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import { newConfig as newConfigCR } from "../../../config/config";
+import { useQueryClient } from "react-query";
 
 const CreateMarriageRegistration = ({ parentUrl }) => {
   const { t } = useTranslation();
@@ -14,6 +15,7 @@ const CreateMarriageRegistration = ({ parentUrl }) => {
   const [params, setParams, clearParams] = isEditMarriage
     ? Digit.Hooks.useSessionStorage("CR_EDIT_MARRIAGE_REG", {})
     : Digit.Hooks.useSessionStorage("CR_CREATE_MARRIAGE_REG", {});
+  const queryClient = useQueryClient();
 
   const stateId = Digit.ULBService.getStateId();
   // let { data: newConfig, isLoading } = Digit.Hooks.tl.useMDMS.getFormConfig(stateId, {});

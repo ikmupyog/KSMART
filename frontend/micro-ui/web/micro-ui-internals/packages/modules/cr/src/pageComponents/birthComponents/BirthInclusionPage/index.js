@@ -20,12 +20,12 @@ const BirthInclusionPage = () => {
     "BirthCorrectionDocuments"
   );
   const { data: place = {}, isLoading: isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PlaceMasterDeath");
-  const { data: Menu, isLoading: isGenderLoad } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
-  const { data: Nation = {}, isLoading: isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
+  const { data: Sex, isLoading: isGenderLoad } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
+  // const { data: Nation = {}, isLoading: isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
 
   let cmbPlace = [];
-  let menu = [];
-  let cmbNation = [];
+  let sex = [];
+  // let cmbNation = [];
   let BirthCorrectionDocuments = [];
 
   BirthCorrectionDocuments = correctionsData["birth-death-service"]?.BirthCorrectionDocuments;
@@ -37,26 +37,27 @@ const BirthInclusionPage = () => {
       cmbPlace.push(ob);
     });
 
-  Menu &&
-    Menu.map((genderDetails) => {
-      menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
+    Sex &&
+    Sex.map((genderDetails) => {
+      sex.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
     });
 
-  Nation &&
-    Nation["common-masters"] &&
-    Nation["common-masters"].Country &&
-    Nation["common-masters"].Country.map((ob) => {
-      cmbNation.push(ob);
-    });
+  // Nation &&
+  //   Nation["common-masters"] &&
+  //   Nation["common-masters"].Country &&
+  //   Nation["common-masters"].Country.map((ob) => {
+  //     cmbNation.push(ob);
+  //   });
+  console.log("loader index",sex?.length > 0 , cmbPlace?.length > 0 , BirthCorrectionDocuments?.length > 0);
 
-  if (isLoad || isGenderLoad || isNationLoad || isLoading) {
+  if (isLoad || isGenderLoad || isLoading) {
     return <Loader />;
   }
-  if (cmbNation?.length > 0 && menu?.length > 0 && cmbPlace?.length > 0 && BirthCorrectionDocuments?.length > 0) {
+  if ( sex?.length > 0 && cmbPlace?.length > 0 && BirthCorrectionDocuments?.length > 0) {
     return (
       <BirthInclusionEditPage
-        cmbNation={cmbNation}
-        menu={menu}
+        // cmbNation={cmbNation}
+        sex={sex}
         cmbPlace={cmbPlace}
         BirthCorrectionDocuments={BirthCorrectionDocuments}
         navigationData={navigationData}

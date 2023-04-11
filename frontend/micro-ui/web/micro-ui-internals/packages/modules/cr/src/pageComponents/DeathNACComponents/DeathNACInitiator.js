@@ -11,9 +11,10 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
   const { name: name, } = Digit.UserService.getUser().info; // window.localStorage.getItem("user-info");
   const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.InitiatorinfoDetails?.isInitiatorDeclaration : formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration : false);
   const [isDeclaration, setDeclaration] = useState(formData?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.InitiatorinfoDetails?.isInitiatorDeclaration : formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration : false);
-  const [initiatorNameEn, setinitiatorNameEn] = useState(formData?.InitiatorinfoDetails?.initiatorNameEn ? formData?.InitiatorinfoDetails?.initiatorNameEn : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorNameEn ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorNameEn : name);
+  const [initiatorNameEn, setinitiatorNameEn] = useState(formData?.InitiatorinfoDetails?.initiatorNameEn ? formData?.InitiatorinfoDetails?.initiatorNameEn : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorNameEn ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorNameEn : "");
   const [initiatorAadhar, setinitiatorAadhar] = useState(formData?.InitiatorinfoDetails?.initiatorAadhar ? formData?.InitiatorinfoDetails?.initiatorAadhar : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAadhar ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAadhar : "");
   const [initiatorMobile, setinitiatorMobile] = useState(formData?.InitiatorinfoDetails?.initiatorMobile ? formData?.InitiatorinfoDetails?.initiatorMobile : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorMobile ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorMobile : "");
+  const [initiatorEmail, setinitiatorEmail] = useState(formData?.InitiatorinfoDetails?.initiatorEmail ? formData?.InitiatorinfoDetails?.initiatorEmail : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorEmail ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorEmail : "");
   const [initiatorDesi, setinitiatorDesi] = useState(formData?.InitiatorinfoDetails?.initiatorDesi ? formData?.InitiatorinfoDetails?.initiatorDesi : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorDesi ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorDesi : "");
   const [initiatorAddress, setinitiatorAddress] = useState(formData?.InitiatorinfoDetails?.initiatorAddress ? formData?.InitiatorinfoDetails?.initiatorAddress : formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAddress ? formData?.ChildDetails?.InitiatorinfoDetails?.initiatorAddress : "");
   const [isInitialRender, setIsInitialRender] = useState(true);
@@ -24,18 +25,31 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
   const [uploadedFile3, setUploadedFile3] = useState(null);
   const [uploadedFile4, setUploadedFile4] = useState(null);
   const [uploadedFile5, setUploadedFile5] = useState(null);
+  const [uploadedFile6, setUploadedFile6] = useState(null);
   const [file, setFile] = useState(formData?.owners?.documents?.ProofOfIdentity);
   const [file1, setFile1] = useState(formData?.owners?.documents?.ProofOfIdentity);
   const [file2, setFile2] = useState(formData?.owners?.documents?.ProofOfIdentity);
   const [file3, setFile3] = useState(formData?.owners?.documents?.ProofOfIdentity);
   const [file4, setFile4] = useState(formData?.owners?.documents?.ProofOfIdentity);
   const [file5, setFile5] = useState(formData?.owners?.documents?.ProofOfIdentity);
+  const [file6, setFile6] = useState(formData?.owners?.documents?.ProofOfIdentity);
   const [toast, setToast] = useState(false);
   const [infomantFirstNmeEnError, setinfomantFirstNmeEnError] = useState(formData?.InitiatorinfoDetails?.initiatorNameEn ? false : false);
   const [initiatorAadharError, setinitiatorAadharError] = useState(formData?.InitiatorinfoDetails?.initiatorAadhar ? false : false);
   const [initiatorMobileError, setinitiatorMobileError] = useState(formData?.InitiatorinfoDetails?.initiatorMobile ? false : false);
+  const [initiatorEmailError, setinitiatorEmailError] = useState(formData?.InitiatorinfoDetails?.initiatorEmail ? false : false);
   const [initiatorDesiError, setinitiatorDesiError] = useState(formData?.InitiatorinfoDetails?.initiatorDesi ? false : false);
+  const [RelationwithDeceased, setRelationwithDeceased] = useState(formData?.InitiatorinfoDetails?.RelationwithDeceased ? formData?.InitiatorinfoDetails?.RelationwithDeceased :  "");
   const onSkip = () => onSelect();
+  const selectedRelation = [
+    { label: "Father", value: "FATHER" },
+    { label: "Mother", value: "MOTHER" },
+    { label: "Son", value: "SON" },
+    { label: "Daughter", value: "DAUGHTER" },
+    { label: "Wife", value: "WIFE" },
+    { label: "Husband", value: "HUSBAND" },
+    { label: "other", value: "OTHER" },
+  ]
 
   useEffect(() => {
     if (isInitialRender) {
@@ -67,7 +81,9 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
       setinitiatorAddress(e.target.value.length <= 250 ? e.target.value : (e.target.value).substring(0, 250));
     }
   }
-
+  const selectRelationwithDeceased = (value) => {
+    setRelationwithDeceased(value.value);
+  }
 
 
   function setSelectinitiatorAadhar(e) {
@@ -79,6 +95,21 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
     if (e.target.value.trim().length != 0) {
       setinitiatorMobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
     }
+  }
+  function setSelectinitiatorEmail(e) {
+    if (e.target.value.trim().length != 0 && !(e.target.value.includes("@") && e.target.value.includes("."))) {
+      setinitiatorEmail(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    }
+    // setinitiatorEmail(e.target.value);
+
+    // if(value.length && !(value.includes("@") && value.includes("."))){
+    //   setErrors({...errors, emailAddress: {type: "pattern", message: "CORE_COMMON_PROFILE_EMAIL_INVALID"}})
+    // }else{
+    //   setErrors({...errors, emailAddress : null})
+    // }
+    // if (e.target.value.trim().length != 0) {
+    //   setinitiatorEmail(e.target.value, '')).substring(0, 10));
+    // }
   }
 
   function setDeclarationInfo(e) {
@@ -95,7 +126,6 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
       setDeclaration(e.target.checked);
     }
   }
-    
   function selectfile(e) {
     setFile(e.target.files[0]);
   }
@@ -113,6 +143,9 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
   }
   function selectfile5(e) {
     setFile5(e.target.files[0]);
+  }
+  function selectfile6(e) {
+    setFile6(e.target.files[0]);
   }
   useEffect(() => {
     (async () => {
@@ -222,8 +255,8 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
           setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
         } else {
           try {
-            const response = await Digit.UploadServices.Filestorage("citizen-profile", file5, Digit.ULBService.getStateId());       
-                     if (response?.data?.files?.length > 0) {
+            const response = await Digit.UploadServices.Filestorage("citizen-profile", file5, Digit.ULBService.getStateId());
+            if (response?.data?.files?.length > 0) {
               setUploadedFile5(response?.data?.files[0]?.fileStoreId);
             } else {
               setError(t("FILE_UPLOAD_ERROR"));
@@ -234,6 +267,26 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
       }
     })();
   }, [file5]);
+  useEffect(() => {
+    (async () => {
+      setError(null);
+      if (file6) {
+        if (file6.size >= 2000000) {
+          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+        } else {
+          try {
+            const response = await Digit.UploadServices.Filestorage("citizen-profile", file6, Digit.ULBService.getStateId());
+            if (response?.data?.files?.length > 0) {
+              setUploadedFile6(response?.data?.files[0]?.fileStoreId);
+            } else {
+              setError(t("FILE_UPLOAD_ERROR"));
+            }
+          } catch (err) {
+          }
+        }
+      }
+    })();
+  }, [file6]);
   let validFlag = true;
   const goNext = () => {
     if (initiatorNameEn == null || initiatorNameEn == "" || initiatorNameEn == undefined) {
@@ -299,6 +352,8 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
         initiatorDesi,
         initiatorAddress,
         isInitiatorDeclaration,
+        initiatorEmail,
+        RelationwithDeceased,
       });
     }
   };
@@ -316,6 +371,251 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
         isDisabled={!isInitiatorDeclaration || !initiatorNameEn || !initiatorAadhar || !initiatorMobile}
       >
 
+        <div className="row">
+          <div className="col-md-12">
+            <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}>Applicant</span>{" "}
+            </h1>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-6">
+              <CardLabel>
+                {`${t("CS_COMMON_AADHAAR")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                type={"text"}
+                optionKey="i18nKey"
+                name="initiatorAadhar"
+                value={initiatorAadhar}
+                onChange={setSelectinitiatorAadhar}
+                disable={isDisableEdit}
+                placeholder={`${t("CS_COMMON_AADHAAR")}`}
+                {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+              />
+            </div>
+
+            <div className="col-md-6">
+              <CardLabel>
+                {`${t("CR_APPLICANT_NAME")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                type={"text"}
+                optionKey="i18nKey"
+                name="initiatorNameEn"
+                value={initiatorNameEn}
+                onChange={setSelectinitiatorNameEn}
+                disable={isDisableEdit}
+                placeholder={`${t("CR_APPLICANT_NAME")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INITIATOR_NAME") })}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>
+              {`${t("CR_RELATION_WITH_DECEASED")}`}<span className="mandatorycss">*</span>
+              </CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="label"
+                isMandatory={false}
+                option={selectedRelation}
+                selected={RelationwithDeceased}
+                select={selectRelationwithDeceased}
+                placeholder={`${t("CR_RELATION_WITH_APPLICANT_AND_DECEASED")}`}
+                {...(validation = { isRequired: true, type: "text", title: t("CR_RELATION_WITH_DECEASED") })}
+              />
+            </div>
+
+            <div className="col-md-4">
+              <CardLabel>
+                {`${t("CR_MOBILE_NO")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                type={"number"}
+                optionKey="i18nKey"
+                name="initiatorMobile"
+                value={initiatorMobile}
+                onChange={setSelectinitiatorMobile}
+                disable={isDisableEdit}
+                placeholder={`${t("CR_MOBILE_NO")}`}
+                {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>
+              {`${t("CR_MOBILE_EMAIL")}`}
+              </CardLabel>
+              <TextInput
+                t={t}
+                type={"email"}
+                optionKey="i18nKey"
+                isMandatory={false}
+                name="initiatorEmail"
+                value={initiatorEmail}
+                onChange={setSelectinitiatorEmail}
+                disable={isDisableEdit}
+                placeholder={`${t("CR_MOBILE_EMAIL")}`}
+              // {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-6">
+              <CardLabel>{`${t("CR_INFORMER_ADDRESS")}`}</CardLabel>
+              <TextArea
+                t={t}
+                type={"text"}
+                optionKey="i18nKey"
+                name="initiatorAddress"
+                value={initiatorAddress}
+                onChange={setSelectinitiatorAddress}
+                disable={isDisableEdit}
+                placeholder={`${t("CR_INFORMER_ADDRESS")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <h1 className="headingh1" style={{ marginTop: "30px" }}>
+              <span style={{ background: "#fff", padding: "0 10px" }}>File Upload</span>{" "}
+            </h1>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="row">
+              <div className="col-md-6">
+                <CardLabel>Address proof of deceased at the time of death<span className="mandatorycss">*</span></CardLabel>
+              </div>
+              <div className="col-md-3">
+                <UploadFile
+                  extraStyleName={"propertyCreate"}
+                  accept=".jpg,.png,.pdf"
+                  onUpload={selectfile}
+                  onDelete={() => {
+                    setUploadedFile(null);
+                  }}
+                  message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-6">
+                <CardLabel>ID card of applicant<span className="mandatorycss">*</span></CardLabel>
+              </div>
+              <div className="col-md-3">
+                <UploadFile
+                  extraStyleName={"propertyCreate"}
+                  accept=".jpg,.png,.pdf"
+                  onUpload={selectfile1}
+                  onDelete={() => {
+                    setUploadedFile1(null);
+                  }}
+                  message={uploadedFile1 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-6">
+                <CardLabel>ID proof of father/mother/spouse<span className="mandatorycss">*</span></CardLabel>
+              </div>
+              <div className="col-md-3">
+                <UploadFile
+                  extraStyleName={"propertyCreate"}
+                  accept=".jpg,.png,.pdf"
+                  onUpload={selectfile2}
+                  onDelete={() => {
+                    setUploadedFile2(null);
+                  }}
+                  message={uploadedFile2 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-6">
+                <CardLabel>ID Proof of death <span className="mandatorycss">*</span></CardLabel>
+              </div>
+              <div className="col-md-3">
+                <UploadFile
+                  extraStyleName={"propertyCreate"}
+                  accept=".jpg,.png,.pdf"
+                  onUpload={selectfile3}
+                  onDelete={() => {
+                    setUploadedFile3(null);
+                  }}
+                  message={uploadedFile3 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+
+                />
+              </div>
+            </div>
+            <div className="row" >
+              <div className="col-md-6">
+                <CardLabel>Declaration by Applicant  Stating that death occured in this ulb area, DOD. <span className="mandatorycss">*</span></CardLabel>
+              </div>
+              <div className="col-md-3">
+                <UploadFile
+                  extraStyleName={"propertyCreate"}
+                  accept=".jpg,.png,.pdf"
+                  onUpload={selectfile4}
+                  onDelete={() => {
+                    setUploadedFile4(null);
+                  }}
+                  message={uploadedFile4 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-6">
+                <CardLabel>Declaration by a credible person stating the event occured with in the jurisdiction<span className="mandatorycss">*</span></CardLabel>
+              </div>
+              <div className="col-md-3">
+                <UploadFile
+                  extraStyleName={"propertyCreate"}
+                  accept=".jpg,.png,.pdf"
+                  onUpload={selectfile5}
+                  onDelete={() => {
+                    setUploadedFile5(null);
+                  }}
+                  message={uploadedFile5 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-6">
+                <CardLabel>Declaration by another credible person stating the event occured with in the jurisdiction of local body concerned<span className="mandatorycss">*</span></CardLabel>
+              </div>
+              <div className="col-md-3">
+                <UploadFile
+                  extraStyleName={"propertyCreate"}
+                  accept=".jpg,.png,.pdf"
+                  onUpload={selectfile6}
+                  onDelete={() => {
+                    setUploadedFile6(null);
+                  }}
+                  message={uploadedFile6 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+
+                />
+              </div>
+            </div>
+          </div>
+        </div>
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -346,189 +646,6 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
                 checked={isDeclaration}
                 disable={isDisableEdit}
               />
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>Applicant</span>{" "}
-            </h1>
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-4">
-              <CardLabel>
-                {`${t("CS_COMMON_AADHAAR")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                name="initiatorAadhar"
-                value={initiatorAadhar}
-                onChange={setSelectinitiatorAadhar}
-                disable={isDisableEdit}
-                placeholder={`${t("CS_COMMON_AADHAAR")}`}
-                {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
-              />
-            </div>
-
-            <div className="col-md-4">
-              <CardLabel>
-                {`${t("CR_INITIATOR_NAME")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                name="initiatorNameEn"
-                value={initiatorNameEn}
-                onChange={setSelectinitiatorNameEn}
-                disable={isDisableEdit}
-                placeholder={`${t("CR_INITIATOR_NAME")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INITIATOR_NAME") })}
-              />
-            </div>
-
-            <div className="col-md-3">
-              <CardLabel>
-                {`${t("CR_MOBILE_NO")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-              <TextInput
-                t={t}
-                type={"number"}
-                optionKey="i18nKey"
-                name="initiatorMobile"
-                value={initiatorMobile}
-                onChange={setSelectinitiatorMobile}
-                disable={isDisableEdit}
-                placeholder={`${t("CR_MOBILE_NO")}`}
-                {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="row">
-
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-6">
-              <CardLabel>{`${t("CR_INFORMER_ADDRESS")}`}</CardLabel>
-              <TextArea
-                t={t}
-                type={"text"}
-                optionKey="i18nKey"
-                name="initiatorAddress"
-                value={initiatorAddress}
-                onChange={setSelectinitiatorAddress}
-                disable={isDisableEdit}
-                placeholder={`${t("CR_INFORMER_ADDRESS")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <h1 className="headingh1" style={{ marginTop: "30px" }}>
-              <span style={{ background: "#fff", padding: "0 10px" }}>File Upload</span>{" "}
-            </h1>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="row">
-              <div className="col-md-5">
-                <CardLabel>Address proof of deceased at the time of birth<span className="mandatorycss">*</span></CardLabel>
-              </div>
-              <div className="col-md-3">
-                <UploadFile
-                  extraStyleName={"propertyCreate"}
-                  accept=".jpg,.png,.pdf"
-                  onUpload={selectfile}
-                  onDelete={() => {
-                    setUploadedFile(null);
-                  }}
-                  message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-
-                />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-5">
-                <CardLabel>ID card of applicant<span className="mandatorycss">*</span></CardLabel>
-              </div>
-              <div className="col-md-3">
-                <UploadFile
-                  extraStyleName={"propertyCreate"}
-                  accept=".jpg,.png,.pdf"
-                  onUpload={selectfile1}
-                  onDelete={() => {
-                    setUploadedFile1(null);
-                  }}
-                  message={uploadedFile1 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-
-                />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-5">
-                <CardLabel>ID proof of father/mother/spouse<span className="mandatorycss">*</span></CardLabel>
-              </div>
-              <div className="col-md-3">
-                <UploadFile
-                  extraStyleName={"propertyCreate"}
-                  accept=".jpg,.png,.pdf"
-                  onUpload={selectfile2}
-                  onDelete={() => {
-                    setUploadedFile2(null);
-                  }}
-                  message={uploadedFile2 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-
-                />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-5">
-                <CardLabel>ID Proof of Mother at the time of birth <span className="mandatorycss">*</span></CardLabel>
-              </div>
-              <div className="col-md-3">
-                <UploadFile
-                  extraStyleName={"propertyCreate"}
-                  accept=".jpg,.png,.pdf"
-                  onUpload={selectfile3}
-                  onDelete={() => {
-                    setUploadedFile3(null);
-                  }}
-                  message={uploadedFile3 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-
-                />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-5">
-                <CardLabel>ID Proof of death <span className="mandatorycss">*</span></CardLabel>
-              </div>
-              <div className="col-md-3">
-                <UploadFile
-                  extraStyleName={"propertyCreate"}
-                  accept=".jpg,.png,.pdf"
-                  onUpload={selectfile4}
-                  onDelete={() => {
-                    setUploadedFile4(null);
-                  }}
-                  message={uploadedFile4 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-
-                />
-              </div>
             </div>
           </div>
         </div>

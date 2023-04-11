@@ -273,6 +273,8 @@ export const convertToDeathRegistration = (data = {}) => {
   const empTenantId = Digit.ULBService.getCurrentUlb();
   // let tenantId = "";
   // tenantId = empTenantId["code"];
+
+  console.log(data);
   const formdata = {
     deathCertificateDtls: [
       {
@@ -522,7 +524,7 @@ export const convertToDeathRegistration = (data = {}) => {
         },
         Initiator: {
           IsDeclarationInitiator: data?.Initiator?.IsDeclarationInitiator,
-          InitiatorRelation: data?.Initiator?.InitiatorRelation,
+          InitiatorRelation: data?.Initiator?.InitiatorRelation.code,
           InitiatorAadhaar: data?.Initiator?.InitiatorAadhaar,
           InitiatorName: data?.Initiator?.InitiatorName,
           InitiatorMobile: parseInt(data?.Initiator?.InitiatorMobile),
@@ -545,13 +547,13 @@ export const convertToDeathRegistration = (data = {}) => {
             demandDetails: [
               {
                 taxHeadMasterCode: "CRB_FEES",
-                taxAmount: 12,
+                taxAmount: data?.InformationDeath?.workFlowAmount,
                 collectionAmount: 0,
               },
             ],
-            minimumAmountPayable: 12,
+            minimumAmountPayable: data?.InformationDeath?.workFlowAmount,
             additionalDetails: {
-              HI: "hi",
+              HI: "Death Digital Payment",
             },
           },
         ],
@@ -568,6 +570,8 @@ export const convertToDeathRegistration = (data = {}) => {
         workflowcode: data?.InformationDeath?.workFlowCode,
         taxHeadMasterCode: "CRB_FEES",
         taxAmount: data?.InformationDeath?.workFlowAmount,
+        isPayment:data?.InformationDeath?.isPayment,
+        applicationStatus: data?.InformationDeath?.isPayment ? "PENDINGPAYEMNT" : "INITIATED",
       },
     ],
   };

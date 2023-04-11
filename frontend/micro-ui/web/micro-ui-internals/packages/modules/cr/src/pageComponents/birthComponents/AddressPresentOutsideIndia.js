@@ -30,7 +30,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
 
   let cmbCountry = [];
   Country &&
-    Country["common-masters"] &&
+    Country["common-masters"] && Country["common-masters"].Country &&
     Country["common-masters"].Country.map((ob) => {
       cmbCountry.push(ob);
     });
