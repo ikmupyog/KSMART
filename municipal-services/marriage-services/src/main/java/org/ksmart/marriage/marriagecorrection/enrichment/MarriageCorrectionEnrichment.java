@@ -23,6 +23,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.function.Consumer;
 
@@ -54,8 +56,9 @@ public class MarriageCorrectionEnrichment implements BaseEnrichment {
             marriageApplicationDetails.getGroomDetails().setGroomId((UUID.randomUUID().toString()));
             marriageApplicationDetails.getGroomDetails().setBrideGroom("G");
         }
-        setApplicationNumbers(correctionRequest, marriageApplicationDetails);
 
+        DateFormat formatter = new SimpleDateFormat("ddMMyyyy");
+        marriageApplicationDetails.setDateofreporting(Long.valueOf(formatter.format(new Date())));
 
         correctionRequest.getMarriageCorrectionDetails().forEach(correction -> {
 
@@ -69,6 +72,8 @@ public class MarriageCorrectionEnrichment implements BaseEnrichment {
             marriageApplicationDetails.setWorkflowcode(correction.getWorkflowcode());
             marriageApplicationDetails.setId(UUID.randomUUID().toString());
             correction.setMarriageId(marriageApplicationDetails.getId());
+
+            setApplicationNumbers(correctionRequest, marriageApplicationDetails);
 
             Map<String, String> marriageApplnDetailsFieldMap = getJsonFieldNames(MarriageApplicationDetails.class.getDeclaredFields());
             Map<String, String> brideDetailsFieldMap = getJsonFieldNames(BrideDetails.class.getDeclaredFields());
@@ -249,8 +254,8 @@ public class MarriageCorrectionEnrichment implements BaseEnrichment {
         List<String> filecodes = getIds(requestInfo,
                 tenantId,
                 config.getMarriageApplNumberIdName(),
-                marriageApplicationDetails.getModuleCode(),
-                "CRN",
+                marriageApplicationDetails.getApplicationtype(),
+                "APPL",
                 marriageCorrection.size());
         validateFileCodes(filecodes, marriageCorrection.size());
 

@@ -27,7 +27,7 @@ public class RegistryToApplicationMapper {
         MarriageRegistryDetails marriageRegistryDetails=registry.get(0);
 
         marriageApplicationDetails.setDateofmarriage(marriageRegistryDetails.getDateofmarriage());
-        marriageApplicationDetails.setDateofreporting(marriageRegistryDetails.getDateofreporting());
+        //marriageApplicationDetails.setDateofreporting(marriageRegistryDetails.getDateofreporting());
         marriageApplicationDetails.setDistrictid(marriageRegistryDetails.getDistrictid());
         marriageApplicationDetails.setLbtype(marriageRegistryDetails.getLbtype());
         marriageApplicationDetails.setTenantid(marriageRegistryDetails.getTenantid());

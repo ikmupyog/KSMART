@@ -390,12 +390,12 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 
 
                                     marriage.getGroomAddressDetails().setPinNoPermanent(marriage.getGroomAddressDetails().getPermntOutsideKeralaPincode());
-
+                                }
                                 }
                             }
                             else {
-//                                if (marriage.getGroomAddressDetails().getPermtaddressCountry() != COUNTRY_CODE) {
-                                    marriage.getGroomAddressDetails().setCountryIdPresent(marriage.getGroomAddressDetails().getPermtaddressCountry());
+                                //if (marriage.getGroomAddressDetails().getPermtaddressCountry() != (MarriageConstants.COUNTRY_CODE)) {
+                                    marriage.getGroomAddressDetails().setCountryIdPermanent(marriage.getGroomAddressDetails().getPermtaddressCountry());
 
                                     marriage.getGroomAddressDetails().setVillageNamePermanent(marriage.getGroomAddressDetails().getPermntOutsideIndiaVillage());
 
@@ -411,9 +411,9 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                                     marriage.getGroomAddressDetails().setPermntOthrIndiaprovinceMl(marriage.getGroomAddressDetails().getPermntOutSideIndiaProvinceMl());
 
                                     marriage.getGroomAddressDetails().setOutSideIndiaPostCodepermanent(marriage.getGroomAddressDetails().getPermanentOutsideIndiaPostCode());
-//                                }
+                                //}
                             }
-                        }
+
                     }
                 });
     }
@@ -490,6 +490,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                                     marriage.getBrideAddressDetails().setTownOrVillagePresent(marriage.getBrideAddressDetails().getPresentOutsideKeralaCityVilgeEn());
 
                                 }
+                            }
                             } else {
 //                                if (marriage.getBrideAddressDetails().getPermtaddressCountry() != COUNTRY_CODE) {
                                     marriage.getBrideAddressDetails().setCountryIdPresent(marriage.getBrideAddressDetails().getPresentaddressCountry());
@@ -510,7 +511,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 //                                }
                             }
 
-                        }
+
                     }
         });
     }
@@ -550,8 +551,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                                        marriage.getBrideAddressDetails().setHouseNameNoMlPermanent(marriage.getBrideAddressDetails().getPermntInKeralaAdrHouseNameMl());
                                        marriage.getBrideAddressDetails().setPinNoPermanent(marriage.getBrideAddressDetails().getPermntInKeralaAdrPincode());
                                        marriage.getBrideAddressDetails().setPoNoPermanent(marriage.getBrideAddressDetails().getPermntInKeralaAdrPostOffice());
-                                   }
-                                   else {
+                                   } else {
                                        marriage.getBrideAddressDetails().setCountryIdPermanent(marriage.getBrideAddressDetails().getPermtaddressCountry());
 
                                        marriage.getBrideAddressDetails().setStateIdPermanent(marriage.getBrideAddressDetails().getPermtaddressStateName());
@@ -569,19 +569,19 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 
                                        marriage.getBrideAddressDetails().setVillageNamePermanent(marriage.getBrideAddressDetails().getPermntOutsideKeralaVillage());
 
-                                        marriage.getBrideAddressDetails().setPermntOthrTalukName(marriage.getBrideAddressDetails().getPermntOutsideKeralaTaluk());
+                                       marriage.getBrideAddressDetails().setPermntOthrTalukName(marriage.getBrideAddressDetails().getPermntOutsideKeralaTaluk());
                                        marriage.getBrideAddressDetails().setPermntOthPostOfficeEn(marriage.getBrideAddressDetails().getPermntOutsideKeralaPostOfficeEn());
 
 
                                        marriage.getBrideAddressDetails().setPinNoPermanent(marriage.getBrideAddressDetails().getPermntOutsideKeralaPincode());
 
                                    }
-
+                               }
 
                                    }
                                else {
-//                                   if (marriage.getBrideAddressDetails().getPermtaddressCountry() != COUNTRY_CODE) {
-                                       marriage.getBrideAddressDetails().setCountryIdPresent(marriage.getBrideAddressDetails().getPermtaddressCountry());
+//                                    if (marriage.getBrideAddressDetails().getPermtaddressCountry() != COUNTRY_CODE) {
+                                       marriage.getBrideAddressDetails().setCountryIdPermanent(marriage.getBrideAddressDetails().getPermtaddressCountry());
                                        marriage.getBrideAddressDetails().setVillageNamePermanent(marriage.getBrideAddressDetails().getPermntOutsideIndiaVillage());
                                        marriage.getBrideAddressDetails().setTownOrVillagePermanent(marriage.getBrideAddressDetails().getPermntOutsideIndiaCityTown());
 
@@ -601,7 +601,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 //                                   }
                                }
 
-                               }
+
 
                        }
 

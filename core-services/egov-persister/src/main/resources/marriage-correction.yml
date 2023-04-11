@@ -443,7 +443,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.correctionFieldName
 
-            - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.registrationNo
+            - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.registrationNumber
 
             - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.applicationType
 
