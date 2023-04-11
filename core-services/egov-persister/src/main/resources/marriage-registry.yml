@@ -10,8 +10,8 @@ serviceMaps:
                   id, dateofmarriage, dateofreporting, districtid, lbtype, tenantid, placetype, placeid, placename_en, placename_ml, housenameno_en, 
                   housenameno_ml, street_name_en, street_name_ml, ward_code, talukid, village_name, marriage_type, oth_marriage_type, landmark, locality_en,
                   locality_ml, applicationnumber, registrationno, registration_date, registration_status, createdtime, createdby,
-                  lastmodifiedtime, lastmodifiedby,module_code,brideurl, groomurl, imageuuid, bride_filestoreid, groom_filestoreid, bride_expired, groom_expired, is_backward,certificateno)
-                  VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?,? ,?);
+                  lastmodifiedtime, lastmodifiedby,module_code,brideurl, groomurl, imageuuid, bride_filestoreid, groom_filestoreid, bride_expired, groom_expired, is_backward)
+                  VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ,?,? );
           basePath: MarriageDetails.*
           jsonMaps:
             - jsonPath: $.MarriageDetails.*.id
