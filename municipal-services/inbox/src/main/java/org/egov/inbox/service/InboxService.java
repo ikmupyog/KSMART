@@ -471,7 +471,7 @@ public class InboxService {
                     StringUtils.arrayToDelimitedString(processInstanceMap.keySet().toArray(), ","));
             moduleSearchCriteria.put("tenantId", criteria.getTenantId());
             // moduleSearchCriteria.put("offset", criteria.getOffset());
-            moduleSearchCriteria.put("limit", -1);
+            moduleSearchCriteria.put("limit", 10);
             businessObjects = fetchModuleObjects(moduleSearchCriteria, businessServiceName, criteria.getTenantId(), requestInfo,
                     srvMap);
             Map<String, Object> businessMap = StreamSupport.stream(businessObjects.spliterator(), false)
