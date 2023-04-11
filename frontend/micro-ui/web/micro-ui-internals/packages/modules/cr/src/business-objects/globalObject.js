@@ -60,11 +60,7 @@ export const initializeMarriageCorrectionObject = (marriageCorrectionDocData, se
   let formObj = {};
   for (let field_key in MARRIAGE_INCLUSION_FIELD_NAMES) {
     const filteredData = marriageCorrectionDocData?.filter((item) => item.CorrectionField === field_key);
-<<<<<<< HEAD
     let inclusionsDocsData = marriageCorrectionFilterFieldsObj[field_key]?.(selectedData, filteredData,cmbWardNo);
-=======
-    let inclusionsDocsData = marriageCorrectionFilterFieldsObj[field_key]?.(selectedData, filteredData);
->>>>>>> f45103c8f3e82aca7b4cab924f1684f7746a67ec
     let tempObj = { ...inclusionsDocsData };
     Object.assign(formObj, { [field_key]: tempObj });
   }
