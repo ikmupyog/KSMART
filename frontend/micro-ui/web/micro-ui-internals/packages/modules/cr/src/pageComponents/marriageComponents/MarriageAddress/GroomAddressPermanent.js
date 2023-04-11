@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, Loader } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 
-const MarriageAddressPermanent = ({
+const GroomAddressPermanent = ({
   config,
   onSelect,
   userType,
@@ -25,6 +25,7 @@ const MarriageAddressPermanent = ({
   isEditDeath = false,
   isEditStillBirth = false,
   isEditAdoption,
+  isEditBirthNAC = false,
   // isInitialRender, setIsInitialRender
 }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -47,16 +48,19 @@ const MarriageAddressPermanent = ({
 
   Country &&
     Country["common-masters"] &&
+    Country["common-masters"].Country &&
     Country["common-masters"].Country.map((ob) => {
       cmbCountry.push(ob);
     });
   State &&
     State["common-masters"] &&
+    State["common-masters"].State &&
     State["common-masters"].State.map((ob) => {
       cmbState.push(ob);
     });
   localbodies &&
     localbodies["tenant"] &&
+    localbodies["tenant"].tenants &&
     localbodies["tenant"].tenants.map((ob) => {
       cmbLB.push(ob);
     });
@@ -64,34 +68,34 @@ const MarriageAddressPermanent = ({
   let cmbFilterCountry = [];
   let cmbFilterState = [];
   useEffect(() => {
-    if (isInitialRender && isPrsentAddress) {
+    if (isPrsentAddress) {
       if (cmbLB.length > 0) {
         currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
         // setAdrsLBName(currentLB[0]);
-        cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0]?.city?.countrycode);
+        cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
         setpermtaddressCountry(cmbFilterCountry[0]);
-        setCountryValue(cmbFilterCountry[0]?.countrycode);
-        setCountryValuePermanent(cmbFilterCountry[0]?.countrycode);
-        cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0]?.city?.statecode);
+        setCountryValue(cmbFilterCountry[0].countrycode);
+        setCountryValuePermanent(cmbFilterCountry[0].countrycode);
+        cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
         setpermtaddressStateName(cmbFilterState[0]);
-        setValue(cmbFilterState[0]?.statecode);
-        setValuePermanent(cmbFilterState[0]?.statecode);
-        setIsInitialRender(false);
+        setValue(cmbFilterState[0].statecode);
+        setValuePermanent(cmbFilterState[0].statecode);
+        // setIsInitialRender(false);
       }
     } else {
       if (cmbLB.length > 0) {
         currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
         // setAdrsLBName(currentLB[0]);
-        cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry?.code === currentLB[0]?.city?.countrycode);
+        cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
         setpermtaddressCountry(cmbFilterCountry[0]);
-        setCountryValuePermanent(cmbFilterCountry[0]?.countrycode);
-        cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0]?.city?.statecode);
+        setCountryValuePermanent(cmbFilterCountry[0].countrycode);
+        cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
         setpermtaddressStateName(cmbFilterState[0]);
-        setValuePermanent(cmbFilterState[0]?.statecode);
-        setIsInitialRender(false);
+        setValuePermanent(cmbFilterState[0].statecode);
+        // setIsInitialRender(false);
       }
     }
-  }, [Country, State, localbodies, isInitialRender]);
+  }, [cmbLB]);
   if (isEditBirth) {
     if (formData?.ChildDetails?.AddressBirthDetails?.permtaddressCountry != null) {
       if (cmbCountry.length > 0 && (permtaddressCountry === undefined || permtaddressCountry === "")) {
@@ -158,7 +162,7 @@ const MarriageAddressPermanent = ({
   function setSelectaddressCountry(value) {
     setpermtaddressCountry(value);
     // setCountryValue(value.countrycode);
-    setCountryValuePermanent(value?.countrycode);
+    setCountryValuePermanent(value.countrycode);
   }
   function setSelectaddressStateName(value) {
     setpermtaddressStateName(value);
@@ -211,4 +215,4 @@ const MarriageAddressPermanent = ({
       </React.Fragment>
     );
 };
-export default MarriageAddressPermanent;
+export default GroomAddressPermanent;
