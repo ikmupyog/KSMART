@@ -1,29 +1,33 @@
   export const getFilteredDeceasedMothersName = (selectedData, correctionData) => {
-    let filteredDocuments = getFilteredDocuments(selectedData,correctionData);
-    const computedValue = computeInitialValue({mothersNameEn: selectedData?.FamilyInformationDeath?.MotherNameEn, mothersNameMl: selectedData?.FamilyInformationDeath?.MotherNameMl});
+    let filteredDocuments = getFilteredDocuments(correctionData);
+    const computedCurrentValue = computeCurrentValue({mothersNameEn: selectedData?.FamilyInformationDeath?.MotherNameEn, mothersNameMl: selectedData?.FamilyInformationDeath?.MotherNameMl});
+    const computedInitialValue = computeInitialValue({mothersNameEn: selectedData?.FamilyInformationDeath?.MotherNameEn, mothersNameMl: selectedData?.FamilyInformationDeath?.MotherNameMl});
     let selectedDodObj = {
-      initialValue: computedValue,
-      curValue: computedValue,
+      initialValue: computedInitialValue,
+      curValue: computedCurrentValue,
       isDisabled: true,
+      isEditable: false,
       isFocused: false,
       ...filteredDocuments,
     };
-    return { ...selectedDodObj };
-  };
+      return { ...selectedDodObj };
+    };
   
   //TODO need validation to check dob is null
   const computeInitialValue = (motherName) => {
     const initialValue = motherName;
     return initialValue;
   };
+
+
+const computeCurrentValue = (motherName) => {
+  const currentValue = motherName;
+  return currentValue;
+};
+
   
-  const getFilteredDocuments = (selectedData,correctionData) => {
-    let filteredData  = {};
-    if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
-      filteredData = correctionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
-    } else {
-      filteredData = correctionData?.find((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
-    }
+  const getFilteredDocuments = (correctionData) => {
+    let filteredData  = correctionData[0];
     return filteredData;
   };
   

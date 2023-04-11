@@ -9,7 +9,6 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
   const { t } = useTranslation();
   let formData = {};
   let docIdDetails = [];
-  
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [uploadDoc, setUploadDoc] = useState({});
   const fieldName = DEATH_CORRECTION_FIELD_NAMES[selectedConfig?.CorrectionField];
@@ -39,9 +38,7 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
   }
 
   function selectfile(e) {
-    console.log("select file===", e.target.files);
     let result = selectedConfig?.Documents?.filter((obj) => obj.DocumentId == e?.target?.id);
-    console.log("select file==22", result);
     setDocuploadedName(result[0].DocumentList);
     setDocuploadedType(result[0].DocumentType);
     setDocuploadedId(e?.target?.id);
@@ -82,14 +79,12 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
             //  // setUploadedFiles(!!uploadedFiles.splice(removeindex, 1))
             // }
 
-            console.log("to change stATUS==", docuploadedId);
             // const changeStatusIndex = formDetails?.findIndex((element) => {
             //   return element.DocumentId === docuploadedId;
             // });
 
             // formDetails?.[changeStatusIndex]?.isUploaded = false;
             // formDetails?.[changeStatusIndex]?.uploadedDocId = null;
-            console.log("tempfiles===", temp);
             if (uploadedFiles?.findIndex((item) => item.documentType === temp.documentType) === -1) {
               uploadedFiles.push(temp);
             }

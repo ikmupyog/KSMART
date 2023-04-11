@@ -1,12 +1,10 @@
-export const getFilteredDeceasedAddressEn = (selectedData, correctionData) => {
-  let filteredDocuments = getFilteredDocuments(selectedData,correctionData);
-  const computedValue = computeInitialValue({houseNameEn: selectedData?.AddressBirthDetails?.PermanentAddrHoueNameEn, 
-    localityNameEn: selectedData?.AddressBirthDetails?.PermanentAddrLocalityEn,
-    streetNameEn: selectedData?.AddressBirthDetails?.PermanentAddrStreetNameEn,
-  });
+export const getFilteredDeceasedAddress = (selectedData, correctionData) => {
+  let filteredDocuments = getFilteredDocuments(correctionData);
+  const computedCurrentValue = computeCurrentValue(selectedData);
+  const computedInitialValue = computeInitialValue(selectedData);
   let selectedDodObj = {
-    initialValue: computedValue,
-    curValue: computedValue,
+    initialValue: computedInitialValue,
+    curValue: computedCurrentValue,
     isDisabled: true,
     isEditable: false,
     isFocused: false,
@@ -15,18 +13,38 @@ export const getFilteredDeceasedAddressEn = (selectedData, correctionData) => {
   return { ...selectedDodObj };
 };
 
+
 //TODO need validation to check dob is null
-const computeInitialValue = (addressEn) => {
-  const initialValue = addressEn;
+
+
+const computeInitialValue = (data) => {
+  const initialValue = {
+    houseNameEn: data?.AddressBirthDetails?.PermanentAddrHoueNameEn, 
+    houseNameMl: data?.AddressBirthDetails?.PermanentAddrHoueNameMl, 
+    localityNameEn: data?.AddressBirthDetails?.PermanentAddrLocalityEn,
+    localityNameMl: data?.AddressBirthDetails?.PermanentAddrLocalityMl,
+    streetNameEn: data?.AddressBirthDetails?.PermanentAddrStreetNameEn,
+    streetNameMl: data?.AddressBirthDetails?.PermanentAddrStreetNameMl,
+  };
   return initialValue;
 };
+const computeCurrentValue = (data) => {
+  const currentValue = {
+    houseNameEn: data?.AddressBirthDetails?.PermanentAddrHoueNameEn, 
+    houseNameMl: data?.AddressBirthDetails?.PermanentAddrHoueNameMl, 
+    localityNameEn: data?.AddressBirthDetails?.PermanentAddrLocalityEn,
+    localityNameMl: data?.AddressBirthDetails?.PermanentAddrLocalityMl,
+    streetNameEn: data?.AddressBirthDetails?.PermanentAddrStreetNameEn,
+    streetNameMl: data?.AddressBirthDetails?.PermanentAddrStreetNameMl,
+  };
+  return currentValue;
+};
 
-const getFilteredDocuments = (selectedData,correctionData) => {
-  let filteredData  = {};
-  if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
-    filteredData = correctionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
-  } else {
-    filteredData = correctionData?.find((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
-  }
+
+const getFilteredDocuments = (correctionData) => {
+  let filteredData = correctionData[0];
   return filteredData;
 };
+
+
+

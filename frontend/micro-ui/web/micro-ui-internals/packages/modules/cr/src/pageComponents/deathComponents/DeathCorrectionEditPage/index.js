@@ -14,13 +14,11 @@ function DeathCorrectionPage() {
     "DeathCorrectionDocuments"
   );
 
-  const { data: place = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PlaceMasterDeath");
-  const { data: Menu, isGenderLoad } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
-  const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
+  const { data: place = {}, isLoading: isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PlaceMasterDeath");
+  const { data: Sex, isLoading: isGenderLoad } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
 
   let cmbPlace = [];
-  let menu = [];
-  let cmbNation = [];
+  let sex = [];
   let DeathCorrectionDocuments = [];
   
   DeathCorrectionDocuments = correctionsData["birth-death-service"]?.DeathCorrectionDocuments;
@@ -31,35 +29,30 @@ function DeathCorrectionPage() {
     place["common-masters"].PlaceMasterDeath.map((ob) => {
       cmbPlace.push(ob);
     });
-  Menu &&
-    Menu.map((genderDetails) => {
-      menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
-    });
-  Nation &&
-    Nation["common-masters"] &&
-    Nation["common-masters"].Country &&
-    Nation["common-masters"].Country.map((ob) => {
-      cmbNation.push(ob);
+ 
+    Sex &&
+    Sex.map((genderDetails) => {
+      sex.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
     });
 
-  if ((isLoad || isGenderLoad || isNationLoad || isLoading)) {
+  if ((isLoad || isGenderLoad || isLoading)) {
     return <Loader />;
   }
   if (
-    cmbNation?.length > 0 &&
-    menu?.length > 0 &&
+    sex?.length > 0 &&
     cmbPlace?.length > 0 &&
     DeathCorrectionDocuments?.length > 0 
   ) {
     return (
       <DeathCorrectionEditPage
-        cmbNation={cmbNation}
-        menu={menu}
+        sex={sex}
         cmbPlace={cmbPlace}
         DeathCorrectionDocuments={DeathCorrectionDocuments}
         navigationData={navigationData}
-      />
-    );
-  }
-};
+        />
+        );
+      } else {
+        return null;
+      }
+    };
 export default DeathCorrectionPage;

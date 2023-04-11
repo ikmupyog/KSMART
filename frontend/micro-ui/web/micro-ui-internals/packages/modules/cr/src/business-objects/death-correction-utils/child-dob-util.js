@@ -2,9 +2,8 @@ import moment from "moment";
 
 export const getFilteredDodData = (selectedData, correctionData) => {
   let filteredDocuments = getFilteredDocuments(selectedData,correctionData);
-  const computedCurrentValue = computeCurrentValue(selectedData?.InformationDeath?.DateofDeath);
-  const computedInitialValue = computeInitialValue(selectedData?.InformationDeath?.DateofDeath);
-  console.log("c==omputedInitialValue",computedInitialValue);
+  const computedCurrentValue = computeCurrentValue(selectedData?.InformationDeath?.DateOfDeath);
+  const computedInitialValue = computeInitialValue(selectedData?.InformationDeath?.DateOfDeath);
   let selectedDodObj = {
     initialValue: computedInitialValue,
     curValue: computedCurrentValue,
@@ -18,7 +17,6 @@ export const getFilteredDodData = (selectedData, correctionData) => {
 
 //TODO need validation to check dob is null
 const computeInitialValue = (dod) => {
-  console.log("initial value---",dod);
   const initialValue = dod;
 
   return initialValue;
@@ -32,10 +30,11 @@ const computeCurrentValue = (dod) => {
 
 const getFilteredDocuments = (selectedData,correctionData) => {
   let filteredData  = {};
-  if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
+  if (selectedData?.InformationDeath?.DeathPlace === "HOSPITAL") {
     filteredData = correctionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
   } else {
     filteredData = correctionData?.find((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
   }
   return filteredData;
+  
 };

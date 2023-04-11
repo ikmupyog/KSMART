@@ -1,13 +1,15 @@
 export const getFilteredDeceasedAadharData = (selectedData, correctionData) => {
-  let filteredDocuments = getFilteredDocuments(selectedData,correctionData);
-  const computedValue = computeInitialValue(selectedData?.InformationDeath?.DeceasedAadharNumber);
+  let filteredDocuments = getFilteredDocuments(correctionData);
+  const computedCurrentValue = computeCurrentValue(selectedData?.InformationDeath?.DeceasedAadharNumber);
+  const computedInitialValue = computeInitialValue(selectedData?.InformationDeath?.DeceasedAadharNumber);
   let selectedDodObj = {
-    initialValue: computedValue,
-    curValue: computedValue,
-    isDisabled: true,
-    isFocused: false,
-    ...filteredDocuments,
-  };
+  initialValue: computedInitialValue,
+  curValue: computedCurrentValue,
+  isDisabled: true,
+  isEditable: false,
+  isFocused: false,
+  ...filteredDocuments,
+};
   return { ...selectedDodObj };
 };
 
@@ -17,12 +19,13 @@ const computeInitialValue = (aadhar) => {
   return initialValue;
 };
 
-const getFilteredDocuments = (selectedData,correctionData) => {
-  let filteredData  = {};
-  if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
-    filteredData = correctionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
-  } else {
-    filteredData = correctionData?.find((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
-  }
+
+const computeCurrentValue = (aadhar) => {
+  const currentValue = aadhar;
+  return currentValue;
+};
+
+const getFilteredDocuments = (correctionData) => {
+  let filteredData  = correctionData[0];
   return filteredData;
 };
