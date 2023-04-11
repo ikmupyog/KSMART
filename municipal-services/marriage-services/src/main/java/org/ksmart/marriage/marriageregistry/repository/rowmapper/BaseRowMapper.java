@@ -13,9 +13,11 @@ interface BaseRowMapper {
         
         return AuditDetails.builder()
                 .createdBy(rs.getString("MD_createdby"))
-                .createdTime(Long.valueOf(rs.getLong("MD_createdtime")))
+                .createdTime(rs.getLong("MD_createdtime"))
                 .lastModifiedBy(rs.getString("MD_lastmodifiedby"))
-                .lastModifiedTime(Long.valueOf(rs.getLong("MD_lastmodifiedtime")))
+                .lastModifiedTime(rs.getLong("MD_lastmodifiedtime"))
+              //  .lastModifiedTime(Long.valueOf(rs.getLong("MD_lastmodifiedtime")))
+              // .createdTime(Long.valueOf(rs.getLong("MD_createdtime")))
                 .build();
     }
 
