@@ -119,7 +119,8 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
   } else
     return (
       <React.Fragment>
-        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!publicPlaceType}>
+        {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!publicPlaceType}> */}
+        <div className="col-md-12" >
           <div className="row">
             <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PUBLIC_PLACE")}`}</span> </h1>
             </div>
@@ -250,8 +251,8 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
               />
             </div>
           </div>
-
-        </FormStep>
+          </div>
+        {/* </FormStep> */}
       </React.Fragment>
     );
 };
