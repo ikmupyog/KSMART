@@ -606,6 +606,7 @@ const onPresentAddressChange = (e,fieldType) =>{
                 <TextInput
                   t={t}
                   isMandatory={false}
+                  max="12"
                   optionKey="i18nKey"
                   name="DeceasedAadharNumber"
                   value={deathCorrectionFormData?.DECEASED_AADHAR?.curValue}
@@ -633,10 +634,8 @@ const onPresentAddressChange = (e,fieldType) =>{
                 <CardLabel>{`${t("CR_FIRST_NAME_EN")}`}</CardLabel>
                 <TextInput
                   t={t}
-                  inputRef={register({})}
-                  isMandatory={false}
+                  key={"password"}
                   type={"text"}
-                  optionKey="i18nKey"
                   name="DeceasedFirstNameEn"
                   value={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.firstNameEn} 
                   autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
@@ -649,10 +648,7 @@ const onPresentAddressChange = (e,fieldType) =>{
                 <CardLabel>{`${t("CR_MIDDLE_NAME_EN")}`}</CardLabel>
                 <TextInput
                   t={t}
-                  inputRef={register({})}
-                  isMandatory={false}
                   type={"text"}
-                  optionKey="i18nKey"
                   name="DeceasedMiddleNameEn"
                   value={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.middleNameEn} 
                   autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
@@ -665,10 +661,7 @@ const onPresentAddressChange = (e,fieldType) =>{
                 <CardLabel>{`${t("CR_LAST_NAME_EN")}`}</CardLabel>
                 <TextInput
                   t={t}
-                  inputRef={register({})}
-                  isMandatory={false}
                   type={"text"}
-                  optionKey="i18nKey"
                   name="DeceasedLastNameEn"
                   value={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.lastNameEn} 
                   autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
@@ -698,10 +691,7 @@ const onPresentAddressChange = (e,fieldType) =>{
                 <CardLabel>{`${t("CR_FIRST_NAME_ML")}`}</CardLabel>
                 <TextInput
                   t={t}
-                  inputRef={register({})}
-                  isMandatory={false}
                   type={"text"}
-                  optionKey="i18nKey"
                   name="DeceasedFirstNameMl"
                   value={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.firstNameMl} 
                   autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
@@ -714,10 +704,7 @@ const onPresentAddressChange = (e,fieldType) =>{
                 <CardLabel>{`${t("CR_MIDDLE_NAME_ML")}`}</CardLabel>
                 <TextInput
                   t={t}
-                  inputRef={register({})}
-                  isMandatory={false}
                   type={"text"}
-                  optionKey="i18nKey"
                   name="DeceasedMiddleNameMl"
                   value={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.middleNameMl} 
                   autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
@@ -731,10 +718,7 @@ const onPresentAddressChange = (e,fieldType) =>{
                 <CardLabel>{`${t("CR_LAST_NAME_ML")}`}</CardLabel>
                 <TextInput
                   t={t}
-                  inputRef={register({})}
-                  isMandatory={false}
                   type={"text"}
-                  optionKey="i18nKey"
                   name="DeceasedLastNameMl"
                   value={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.lastNameMl} 
                   autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
@@ -820,7 +804,7 @@ const onPresentAddressChange = (e,fieldType) =>{
                   selected={deathCorrectionFormsObj?.DECEASED_SEX?.curValue}
                   placeholder={`${t("CR_GENDER")}`}
                   select={onGenderChange}
-                  // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                  {...(validation = { isRequired: false, title: t("DC_INVALID_GENDER") })}
                 />
               </div>
             </FieldComponentContainer>
@@ -980,10 +964,7 @@ const onPresentAddressChange = (e,fieldType) =>{
                 <CardLabel>{`${t("CR_MOTHER_NAME_EN")}`}</CardLabel>
                 <TextInput
                   t={t}
-                  inputRef={register({})}
-                  isMandatory={false}
                   type={"text"}
-                  optionKey="i18nKey"
                   name="DeceasedMotherNameEn"
                   value={deathCorrectionFormsObj?.DECEASED_MOTHER?.curValue?.mothersNameEn}
                   onBlur={(e) => onChangeMotherName(e,"mothersNameEn")}
@@ -995,10 +976,7 @@ const onPresentAddressChange = (e,fieldType) =>{
                 <CardLabel>{`${t("CR_MOTHER_NAME_ML")}`}</CardLabel>
                 <TextInput
                   t={t}
-                  inputRef={register({})}
-                  isMandatory={false}
                   type={"text"}
-                  optionKey="i18nKey"
                   name="DeceasedMotherNameMl"
                   value={deathCorrectionFormsObj?.DECEASED_MOTHER?.curValue?.mothersNameMl}
                   onBlur={(e) => onChangeMotherName(e,"mothersNameMl")}
@@ -1025,10 +1003,7 @@ const onPresentAddressChange = (e,fieldType) =>{
                 <CardLabel>{`${t("CR_FATHER_NAME_EN")}`}</CardLabel>
                 <TextInput
                   t={t}
-                  inputRef={register({})}
-                  isMandatory={false}
                   type={"text"}
-                  optionKey="i18nKey"
                   name="DeceasedFatherNameEn"
                   value={deathCorrectionFormsObj?.DECEASED_FATHER?.curValue.fathersNameEn} 
                   onBlur={(e) => onChangeFatherName(e,"fathersNameEn")}
@@ -1040,10 +1015,7 @@ const onPresentAddressChange = (e,fieldType) =>{
                 <CardLabel>{`${t("CR_FATHER_NAME_ML")}`}</CardLabel>
                 <TextInput
                   t={t}
-                  inputRef={register({})}
-                  isMandatory={false}
                   type={"text"}
-                  optionKey="i18nKey"
                   name="DeceasedFatherNameMl"
                   value={deathCorrectionFormsObj?.DECEASED_FATHER?.curValue.fathersNameMl} 
                   onBlur={(e) => onChangeFatherName(e,"fathersNameMl")}
@@ -1072,10 +1044,7 @@ const onPresentAddressChange = (e,fieldType) =>{
                 <CardLabel>{`${t("CR_SPOUSE_TYPE_EN")}`}</CardLabel>
                 <TextInput
                   t={t}
-                  inputRef={register({})}
-                  isMandatory={false}
                   type={"text"}
-                  optionKey="i18nKey"
                   name="DeceasedSpouseEn"
                   value={deathCorrectionFormsObj?.DECEASED_SPOUSE?.curValue.spouseNameEn} 
                   onBlur={(e) => onChangeSpouseName(e,"spouseNameEn")}
@@ -1087,10 +1056,7 @@ const onPresentAddressChange = (e,fieldType) =>{
                 <CardLabel>{`${t("CR_SPOUSE_TYPE_MAL")}`}</CardLabel>
                 <TextInput
                   t={t}
-                  inputRef={register({})}
-                  isMandatory={false}
                   type={"text"}
-                  optionKey="i18nKey"
                   name="DeceasedSpouseMl"
                   value={deathCorrectionFormsObj?.DECEASED_SPOUSE?.curValue.spouseNameMl} 
                   onBlur={(e) => onChangeSpouseName(e,"spouseNameMl")}
@@ -1117,10 +1083,7 @@ const onPresentAddressChange = (e,fieldType) =>{
                 <CardLabel>{`${t("CR_HOUSE_NO_AND_NAME_EN")}`}</CardLabel>
                 <TextInput
                   t={t}
-                  inputRef={register({})}
-                  isMandatory={false}
                   type={"text"}
-                  optionKey="i18nKey"
                   name="DeceasedHouseNameEn"
                   disabled={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isDisabled}
                   autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
@@ -1134,10 +1097,7 @@ const onPresentAddressChange = (e,fieldType) =>{
                 <CardLabel>{`${t("CR_LOCALITY_EN")}`}</CardLabel>
                 <TextInput
                   t={t}
-                  inputRef={register({})}
-                  isMandatory={false}
                   type={"text"}
-                  optionKey="i18nKey"
                   name="DeceasedLocalityEn"
                   disabled={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isDisabled}
                   autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
@@ -1151,10 +1111,7 @@ const onPresentAddressChange = (e,fieldType) =>{
                 <CardLabel>{`${t("CR_STREET_EN")}`}</CardLabel>
                 <TextInput
                   t={t}
-                  inputRef={register({})}
-                  isMandatory={false}
                   type={"text"}
-                  optionKey="i18nKey"
                   name="DeceasedStreetEn"
                   disabled={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isDisabled}
                   autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
@@ -1184,10 +1141,7 @@ const onPresentAddressChange = (e,fieldType) =>{
                 <CardLabel>{`${t("CR_HOUSE_NO_AND_NAME_MAL")}`}</CardLabel>
                 <TextInput
                   t={t}
-                  inputRef={register({})}
-                  isMandatory={false}
                   type={"text"}
-                  optionKey="i18nKey"
                   name="DeceasedHouseNameMl"
                   value={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.houseNameMl} 
                   onChange={(e)=>onPresentAddressChange(e,"houseNameMl")}
@@ -1199,10 +1153,7 @@ const onPresentAddressChange = (e,fieldType) =>{
                 <CardLabel>{`${t("CR_LOCALITY_MAL")}`}</CardLabel>
                 <TextInput
                   t={t}
-                  inputRef={register({})}
-                  isMandatory={false}
                   type={"text"}
-                  optionKey="i18nKey"
                   name="DeceasedLocalityMl"
                   value={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.localityNameMl}
                   onChange={(e)=>onPresentAddressChange(e,"localityNameMl")}
@@ -1214,10 +1165,7 @@ const onPresentAddressChange = (e,fieldType) =>{
                 <CardLabel>{`${t("CR_STREET_MAL")}`}</CardLabel>
                 <TextInput
                   t={t}
-                  inputRef={register({})}
-                  isMandatory={false}
                   type={"text"}
-                  optionKey="i18nKey"
                   name="DeceasedStreetMl"
                   value={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.streetNameMl} 
                   onChange={(e)=>onPresentAddressChange(e,"streetNameMl")}
