@@ -179,7 +179,7 @@ function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, sex, cmbPla
   };
 
   const ButtonContainer = ({children}) => {
-    return <div className="col-md-3" style={{ background: "rgba(244, 119, 56, 0.12)", borderRadius: "9999px", height: "3rem", width: "3rem" }}>{children}</div>;
+    return <div className="col-md-3" style={{ background: "rgba(244, 119, 56, 0.12)", borderRadius: "9999px", height: "2.5rem", width: "2.5rem" }}>{children}</div>;
   };
   const SubmitContainer = ({children}) => {
     return <div className="col-md-3">{children}</div>;
@@ -580,7 +580,7 @@ const onPresentAddressChange = (e,fieldType) =>{
   };
 
   const onSubmit = (data) => console.log(data);
-  
+
   if(Object.keys(deathCorrectionFormsObj)?.length > 0){
 
   return (
@@ -615,11 +615,11 @@ const onPresentAddressChange = (e,fieldType) =>{
                 />
               </div>
             </FieldComponentContainer>
-            <div style={{ marginTop: "2.8rem" }}>
+            <div style={{ marginTop: "2.5rem" }}>
           <ButtonContainer>
             <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_AADHAR"])}>
             <EditIcon
-              style={{ marginTop: "0.8rem" }}
+              style={{ marginTop: "0.6rem", marginLeft: "-0.2em" }}
               selected={true}
               label={"Edit"}
             />
@@ -678,16 +678,19 @@ const onPresentAddressChange = (e,fieldType) =>{
                 />
               </div>
             </FieldComponentContainer>
-              <div style={{ marginTop: "2.8rem" }}>
-          {/* <ButtonContainer>
+             
+              <div style={{ marginTop: "2.5rem" }}>
+          <ButtonContainer>
           <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_NAME"])}>
             <EditIcon
+              style={{ marginTop: "0.6rem", marginLeft: "-0.2em" }}
               selected={true}
               label={"Edit"}
             />
-          </span>
-          </ButtonContainer> */}
+            </span>
+          </ButtonContainer>
         </div>
+      
           </FormFieldContainer>
           <FormFieldContainer>
             <FieldComponentContainer>
@@ -742,17 +745,7 @@ const onPresentAddressChange = (e,fieldType) =>{
                 />
               </div>
             </FieldComponentContainer>           
-        <div style={{ marginBottom: "2.9rem" }}>
-          <ButtonContainer>
-          <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_NAME"])}>
-            <EditIcon
-              style={{ marginTop: "0.8rem" }}
-              selected={true}
-              label={"Edit"}
-            />
-            </span>
-          </ButtonContainer>
-        </div>
+       
           </FormFieldContainer>
           <FormFieldContainer>
             <FieldComponentContainer>
@@ -772,11 +765,11 @@ const onPresentAddressChange = (e,fieldType) =>{
                 />
               </div>
               </FieldComponentContainer>
-              <div style={{ marginTop: "2.8rem" }}>
+              <div style={{ marginTop: "2.5rem" }}>
           <ButtonContainer>
           <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_DOB"])}>
             <EditIcon
-              style={{ marginTop: "0.8rem" }}
+              style={{ marginTop: "0.6rem", marginLeft: "-0.2em" }}
               selected={true}
               label={"Edit"}
             />
@@ -802,11 +795,11 @@ const onPresentAddressChange = (e,fieldType) =>{
                 />
               </div>
               </FieldComponentContainer>
-              <div style={{ marginTop: "2.8rem" }}>
+              <div style={{ marginTop: "2.5rem" }}>
           <ButtonContainer>
           <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_PLACE_OF_DEATH"])}>
             <EditIcon
-              style={{ marginTop: "0.8rem" }}
+              style={{ marginTop: "0.6rem", marginLeft: "-0.2em" }}
               selected={true}
               label={"Edit"}
             />
@@ -831,11 +824,11 @@ const onPresentAddressChange = (e,fieldType) =>{
                 />
               </div>
             </FieldComponentContainer>
-              <div style={{ marginTop: "2.8rem" }}>
+              <div style={{ marginTop: "2.5rem" }}>
           <ButtonContainer>
           <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_SEX"])}>
             <EditIcon
-              style={{ marginTop: "0.8rem" }}
+              style={{ marginTop: "0.6rem", marginLeft: "-0.2em" }}
               selected={true}
               label={"Edit"}
             />
@@ -1014,11 +1007,11 @@ const onPresentAddressChange = (e,fieldType) =>{
                 />
               </div>
             </FieldComponentContainer>
-        <div style={{ marginTop: "2.8rem" }}>
+        <div style={{ marginTop: "2.5rem" }}>
         <ButtonContainer>
         <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_MOTHER"])}>
           <EditIcon
-            style={{ marginTop: "0.8rem" }}
+            style={{ marginTop: "0.6rem", marginLeft: "-0.2em" }}
             selected={true}
             label={"Edit"}
           />
@@ -1061,11 +1054,11 @@ const onPresentAddressChange = (e,fieldType) =>{
               </div>
             </FieldComponentContainer>
 
-            <div style={{ marginTop: "2.8rem" }}>
+            <div style={{ marginTop: "2.5rem" }}>
         <ButtonContainer>
         <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_FATHER"])}>
           <EditIcon
-            style={{ marginTop: "0.8rem" }}
+            style={{ marginTop: "0.6rem", marginLeft: "-0.2em" }}
             selected={true}
             label={"Edit"}
           />
@@ -1106,11 +1099,11 @@ const onPresentAddressChange = (e,fieldType) =>{
                 />
               </div>
             </FieldComponentContainer>
-            <div style={{ marginTop: "2.8rem" }}>
+            <div style={{ marginTop: "2.5rem" }}>
         <ButtonContainer>
         <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_SPOUSE"])}>
           <EditIcon
-            style={{ marginTop: "0.8rem" }}
+            style={{ marginTop: "0.6rem", marginLeft: "-0.2em" }}
             selected={true}
             label={"Edit"}
           />
@@ -1172,17 +1165,16 @@ const onPresentAddressChange = (e,fieldType) =>{
                 />
               </div>
               </FieldComponentContainer>
-              <div style={{ marginTop: "2.8rem" }}>
-             
-        {/* <ButtonContainer>
+              <div style={{ marginTop: "2.5rem" }}>
+        <ButtonContainer>
         <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["PERMANENT_ADDRESS"])}>
           <EditIcon
-            style={{ marginTop: "0.8rem" }}
-            selected={true}
+            style={{ marginTop: "0.6rem", marginLeft: "-0.2em" }}
+             selected={true}
             label={"Edit"}
           />
           </span>
-        </ButtonContainer> */}
+        </ButtonContainer>
       </div>
            
           </FormFieldContainer>
@@ -1234,23 +1226,13 @@ const onPresentAddressChange = (e,fieldType) =>{
                 />
               </div>
             </FieldComponentContainer>
-            <div style={{ marginBottom: "3.3rem" }}>
-        <ButtonContainer>
-        <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["PERMANENT_ADDRESS"])}>
-          <EditIcon
-            style={{ marginTop: "0.8rem" }}
-             selected={true}
-            label={"Edit"}
-          />
-          </span>
-        </ButtonContainer>
-      </div>
+           
           </FormFieldContainer>
           <div style={{ display: "flex", flexDirection: "column-reverse" }}></div>
             <FormFieldContainer>
               <FieldComponentContainer></FieldComponentContainer>
               <SubmitContainer>
-                <div style={{ marginTop: "2.8rem" }}>
+                <div style={{ marginTop: "2.5rem" }}>
                   <span onClick={onSubmitDeathCorrection}>
                     <EditButton selected={true} label={"Submit"} />
                   </span>
