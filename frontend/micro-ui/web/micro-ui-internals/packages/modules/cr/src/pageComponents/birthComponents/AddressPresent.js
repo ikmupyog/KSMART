@@ -176,7 +176,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
     } else
         return (
             <React.Fragment>
-                <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!presentaddressCountry}>
+                {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!presentaddressCountry}> */}
                     <div className="row">
                         <div className="col-md-12">
                             <h1 className="headingh1">
@@ -218,7 +218,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
                             </div>
                         )}
                     </div>
-                </FormStep>
+                {/* </FormStep> */}
             </React.Fragment>
         );
 };
