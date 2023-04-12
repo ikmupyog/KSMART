@@ -39,18 +39,18 @@ export const CRBornOutsideIndiasearch = {
   },
   application: async (tenantId, filters = {}) => {
     const response = await CRBornOutSideIndiaBirthService.CRBornOutsideIndiasearch({ tenantId, filters });
-    return response.ChildDetails[0];
+    return response.BornOutsideChildDetails[0];
   },
 
   numberOfApplications: async (tenantId, filters = {}) => {
-    const response = await CRBornOutSideIndiaBirthService.CRStillBirthsearch({ tenantId, filters });
-    return response.ChildDetails;
+    const response = await CRBornOutSideIndiaBirthService.CRBornOutsideIndiasearch({ tenantId, filters });
+    return response.BornOutsideChildDetails;
   },
 
   applicationDetails: async (t, tenantId, applicationNumber, userType) => {
     // console.log("applicationNumber" + applicationNumber);
     const filter = { applicationNumber };
-    const response = await CRStillBirthsearch.application(tenantId, filter);
+    const response = await CRBornOutsideIndiasearch.application(tenantId, filter);
     // console.log(response);
     // const propertyDetails =
     //   response?.tradeLicenseDetail?.additionalDetail?.propertyId &&
@@ -74,14 +74,14 @@ export const CRBornOutsideIndiasearch = {
         { title: "PDF_BIRTH_CHILD_NAME", value: response?.childFirstNameEn + response?.childMiddleNameEn + response?.childLastNameEn },
         { title: "PDF_BIRTH_CHILD_SEX", value: response?.gender },
         { title: "PDF_BIRTH_DATE_OF_BIRTH", value: response?.childDOB ? convertEpochToDate(response?.childDOB) : "NA" },
-        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.hospitalName + "/" + response?.hospitalNameMl || "NA"},       
+        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.outsideBirthPlaceEn + "/" + response?.outsideBirthPlaceMl || "NA"},       
        ],
     };
     const parentInfo = {
       title: "CR_BIRTH_PARENT_INFORMATION_HEADER",
       values: [
-        { title: "PDF_BIRTH_NAME_OF_MOTHER", value: response?.ParentsDetails?.motherFirstNameEn + " / " + response?.ParentsDetails?.motherFirstNameMl || "NA"},
-        { title: "PDF_BIRTH_NAME_OF_FATHER", value: response?.ParentsDetails?.fatherFirstNameEn + " / " + response?.ParentsDetails?.fatherFirstNameMl || "NA"},       
+        { title: "PDF_BIRTH_NAME_OF_MOTHER", value: response?.BornOutsideParentsDetails?.motherFirstNameEn + " / " + response?.BornOutsideParentsDetails?.motherFirstNameMl || "NA"},
+        { title: "PDF_BIRTH_NAME_OF_FATHER", value: response?.BornOutsideParentsDetails?.fatherFirstNameEn + " / " + response?.BornOutsideParentsDetails?.fatherFirstNameMl || "NA"},       
       ],
     };
     const AddressBirthDetailsInfo = {
