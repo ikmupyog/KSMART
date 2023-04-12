@@ -668,7 +668,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
                       onKeyPress={setCheckSpecialChar}
                       disable={isDisableEdit}
                       placeholder={`${t("CS_COMMON_AADHAAR")}`}
-                      {...(validation = { pattern: "^[0-9]{12}$", type: "test", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                      {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                     />
                   </div>
 

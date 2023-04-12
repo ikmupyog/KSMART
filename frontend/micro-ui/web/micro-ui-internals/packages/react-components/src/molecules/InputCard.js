@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-
+import FormBackButton from "../atoms/FormBackButton";
 import Card from "../atoms/Card";
 import CardHeader from "../atoms/CardHeader";
 import CardText from "../atoms/CardText";
@@ -27,23 +27,29 @@ const InputCard = ({
   // TODO: inputs handle
   return (
     <Card style={cardStyle}>
-        {texts?.header&&
-        <div className="row" style={{display:"grid"}}>
-        <div className="col-md-12">
+      {texts?.header && (
+        <div className="row" style={{ display: "grid" }}>
           <div className="col-md-12">
-            <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t(texts?.header)}`}</span>{" "}
-            </h1>
+            <div className="col-md-12">
+              <h1 className="headingh1">
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t(texts?.header)}`}</span>{" "}
+              </h1>
+            </div>
           </div>
         </div>
-      </div>
-        }          
-          {/* : texts.headerCaption && <CardCaption>{t(texts.headerCaption)}</CardCaption>}  */}
+      )}
 
-       {/* {texts?.header && <CardHeader>{t(texts.header)}</CardHeader>}
+      {/* : texts.headerCaption && <CardCaption>{t(texts.headerCaption)}</CardCaption>}  */}
+
+      {/* {texts?.header && <CardHeader>{t(texts.header)}</CardHeader>}
       {texts?.cardText && <CardText>{t(texts.cardText)}</CardText>}  */}
       {children}
-      {texts.submitBarLabel ? <SubmitBar disabled={isDisable} submit={submit} label={t(texts.submitBarLabel)} onSubmit={onNext} /> : null}
+      <div className="buttonContainerN">
+      <FormBackButton disabled={isDisable}>{t("CS_COMMON_BACK")}</FormBackButton>
+
+{texts.submitBarLabel ? <SubmitBar disabled={isDisable} submit={submit} label={t(texts.submitBarLabel)} onSubmit={onNext} /> : null}
+      </div>
+      
       {texts.skipLabel ? <CardText style={{ marginTop: "10px", textAlign: isMobile ? "center" : "left" }}> {t(texts.skipLabel)} </CardText> : null}
       {texts.skipText ? <LinkButton label={t(texts.skipText)} onClick={onSkip} /> : null}
       {isMultipleAllow && texts.addMultipleText ? <LinkButton label={t(texts.addMultipleText)} onClick={onAdd} /> : null}

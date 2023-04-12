@@ -532,7 +532,7 @@ const AbandonedChildDetails = ({ config, onSelect, userType, formData,isEditAban
     // }
 
     if (e.target.value != null || e.target.value != "") {
-      if (e.target.value <= 10) {
+      if (e.target.value <= 6) {
         setBirthWeight(e.target.value);
       }
     }

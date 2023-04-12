@@ -70,6 +70,7 @@ import CommonRadioButtons from "./atoms/Common_Radio_buttons";
 import CommonDashboard from "./atoms/Common_Dashboard";
 import CommonSecondaryBackButton from "./atoms/Common_SecondaryBackButton";
 import FormInputGroup from "./atoms/FormInputGroup";
+import FormBackButton from "./atoms/FormBackButton";
 import {
   AnnouncementIcon,
   ArrowDown,
@@ -219,6 +220,7 @@ export {
   Menu,
   LinkLabel,
   BackButton,
+  FormBackButton,
   BreakLine,
   BreakLineFile,
   Card,

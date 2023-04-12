@@ -15,7 +15,7 @@ const CreateBornOutsideRegistration =({ parentUrl }) => {
   const history = useHistory();
   const queryClient = useQueryClient();
   const [isEditBornOutsideIndia, setIsEditBornOutsideIndia] = useState(sessionStorage.getItem("CR_BORNOUTSIDEBIRTH_EDIT_FLAG")? true : false);
-  const [params, setParams, clearParams] = isEditBirthNAC ? Digit.Hooks.useSessionStorage("CR_EDIT_BORN_OUTSIDE_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_BORN_OUTSIDE_REG", {});
+  const [params, setParams, clearParams] = isEditBornOutsideIndia ? Digit.Hooks.useSessionStorage("CR_EDIT_BORN_OUTSIDE_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_BORN_OUTSIDE_REG", {});
 
   // console.log("params"+JSON.stringify(params));
   const stateId = Digit.ULBService.getStateId();

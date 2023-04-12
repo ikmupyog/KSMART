@@ -145,6 +145,7 @@ import useApplicationMarriageDetail from "./cr/useApplicationMarriageDetail";
 import useApplicationStillBirthDetail from "./cr/useApplicationStillBirthDetail";
 import useApplicationAbandondBirthDetail from "./cr/useApplicationAbandondBirthDetail";
 import useApplicationDeathDetail from "./cr/useApplicationDeathDetail";
+import useAbandonedDeathDetail from "./cr/useAbandonedDeathDetail";
 import useCRApplicationActions from "./cr/useApplicationActions";
 import useCRAdoptionApplicationActions from "./cr/useAdoptionApplActions";
 import useApplicationBirthNACActions from "./cr/useApplicationBirthNACActions";
@@ -152,6 +153,7 @@ import useApplicationAbandonedBirthActions from "./cr/useApplicationAbandonedBir
 import useCRStillBirthApplicationActions from "./cr/useApplicationStillBirthActions";
 import useApplicationBornOutsideIndiaBirthActions from "./cr/useApplicationBornOutsideIndiaBirthActions";
 import useCRDeathApplicationActions from "./cr/useApplicationDeathActions";
+import useAbandonedDeathActions from "./cr/useAbandonedDeathActions";
 import useCRGenderMDMS from "./cr/useCRGenderMDMS";
 import useCRInbox from "./cr/useInbox";
 import useCRMDMS from "./cr/useMDMS";
@@ -174,6 +176,8 @@ import useApplicationDEATHNACDetail from "./cr/useApplicationDEATHNACDetail";
 
 
 import useSearchDeath from "./cr/useSearchDeath";
+// useSearchAbandonedDeath
+import useSearchAbandonedDeath from "./cr/useSearchAbandonedDeath";
 import useSearchStillBirth from "./cr/useSearchStillBirth";
 import useTenantsDFM from "./dfm/useTenants";
 import useFileManagmentMDMS from "./dfm/useFileManagmentMDMS";
@@ -397,12 +401,14 @@ const cr = {
   useRegistrySearchBirth,
   useRegistrySearchMarriage,
   useSearchDeath,
+  useSearchAbandonedDeath,
   useSearchStillBirth,
   useApplicationDetail: useCRApplicationDetail,
   useApplicationAdoptionDetail: useCRApplicationAdoptionDetail,
   useApplicationMarriageDetail,
   useApplicationStillBirthDetail: useApplicationStillBirthDetail,
   useApplicationAbandondBirthDetail,
+  useAbandonedDeathDetail,
   useApplicationBIRTHNACDetail,
   useCivilRegistrationNACDEATHAPI,
   useDeathNACSearch,
@@ -417,6 +423,7 @@ const cr = {
   useApplicationBirthNACActions,
   useApplicationBornOutsideIndiaBirthActions,
   useCRDeathApplicationActions: useCRDeathApplicationActions,
+  useAbandonedDeathActions,
   useApplicationDeathDetail,
   useFetchBill: useCRFetchBill,
   useDeathFetchBill: useCRDFetchBill,

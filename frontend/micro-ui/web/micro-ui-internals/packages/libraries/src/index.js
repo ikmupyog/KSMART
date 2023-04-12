@@ -29,6 +29,7 @@ import { CRBornOutSideIndiaBirthService } from "./services/elements/CRBORNOUTSID
 import { CRStillBirthService } from "./services/elements/CRSTILLBIRTH";
 import { CRMarriageService } from "./services/elements/CRMARRIAGE";
 import { CRDeathService } from "./services/elements/CRDEATH";
+import { CRAbandonedDeathService } from "./services/elements/CRABANDONEDDEATH";
 import { DFMService } from "./services/elements/DFM";
 import { MCollectService } from "./services/elements/MCollect";
 import HrmsService from "./services/elements/HRMS";
@@ -80,6 +81,7 @@ const initLibraries = () => {
   setupLibraries("CRStillBirthService", CRStillBirthService);
   setupLibraries("CRMarriageService", CRMarriageService);
   setupLibraries("CRDeathService", CRDeathService);
+  setupLibraries("CRAbandonedDeathService",CRAbandonedDeathService);
   setupLibraries("CRNACDeathService", CRNACDeathService);
   setupLibraries("DFMService", DFMService);
   setupLibraries("HRMSService", HrmsService);
