@@ -122,6 +122,7 @@ config = config.concat(abandonedDeathConfig.body.filter((a) => !a. hideInEmploye
 
   function handleSelect(key, data, skipStep, index, isAddMultiple = false) {
     setParams({ ...params, ...{ [key]: { ...params[key], ...data } } });
+    setParams1({ ...params1, ...{ [key]: { ...params1[key], ...data } } });
     // console.log("reachedd");
     if (key === "isSkip" && data === true) {
       goNext(skipStep, index, isAddMultiple, key, true);
@@ -176,7 +177,7 @@ config = config.concat(abandonedDeathConfig.body.filter((a) => !a. hideInEmploye
         })}
 {config.indexRouteA?
   <Route path={`${match.path}/check`}>
-          <AbandonedDeathCheckPage onSubmit={createProperty} value={params} />
+          <AbandonedDeathCheckPage onSubmit={createProperty} value={params1} />
         </Route>
         :
         <Route path={`${match.path}/check`}>
@@ -189,7 +190,7 @@ config = config.concat(abandonedDeathConfig.body.filter((a) => !a. hideInEmploye
         {
           config.indexRouteA?
           <Route path={`${match.path}/acknowledgement`}>
-          <AbandonedDeathAcknowledgement data={params} onSuccess={onSuccessAbandoned} />
+          <AbandonedDeathAcknowledgement data={params1} onSuccess={onSuccessAbandoned} />
         </Route>
           
           :

@@ -109,6 +109,8 @@ import DeathPlaceVehicle from "./pageComponents/deathComponents/DeathPlaceVehicl
 import DeathPublicPlace from "./pageComponents/deathComponents/DeathPublicPlace";
 import DeathOutsideJurisdiction from "./pageComponents/deathComponents/DeathOutsideJurisdiction ";
 import Informer from "./pageComponents/deathComponents/Informer";
+// AbandonedInitiater
+import AbandonedInitiater from "./pageComponents/deathAbandoned/AbandonedInitiater";
 import Initiater from "./pageComponents/deathComponents/Initiater";
 import MyCRApplications from "./pages/citizen/Applications/Application";
 import MyCRDeathApplications from "./pages/citizen/Applications/ApplicationDeath";
@@ -467,6 +469,7 @@ const componentsToRegister = {
   StatisticalInfoAbandoned,
   AbandonedBirthAcknowledgement,
   AbandonedBirthCheckPage,
+  AbandonedInitiater
 };
 
 export const initCRComponents = () => {

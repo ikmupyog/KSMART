@@ -65,68 +65,72 @@ export const CRAbandonedDeathsearch = {
     }
 
     let employeeResponse = [];
-    const InformationDeath = {
+    const InformationDeathAbandoned = {
       title: "CR_DEATH_INFORMATION",
       asSectionHeader: true,
       values: [
         {
           title: "PDF_DECEASED_NAME",
           value:
-            response?.InformationDeath?.DeceasedFirstNameEn +
+            response?.InformationDeathAbandoned?.DeceasedFirstNameEn +
               " " +
-              response?.InformationDeath?.DeceasedMiddleNameEn +
+              response?.InformationDeathAbandoned?.DeceasedMiddleNameEn +
               " " +
-              response?.InformationDeath?.DeceasedLastNameEn +
+              response?.InformationDeathAbandoned?.DeceasedLastNameEn +
               " / " +
-              response?.InformationDeath?.DeceasedFirstNameMl +
+              response?.InformationDeathAbandoned?.DeceasedFirstNameMl +
               " " +
-              response?.InformationDeath?.DeceasedMiddleNameMl +
+              response?.InformationDeathAbandoned?.DeceasedMiddleNameMl +
               " " +
-              response?.InformationDeath?.DeceasedLastNameMl || "NA",
+              response?.InformationDeathAbandoned?.DeceasedLastNameMl || "NA",
         },
 
-        { title: "PDF_BIRTH_CHILD_SEX", value: response?.InformationDeath?.DeceasedGender || "NA" },
+        { title: "PDF_BIRTH_CHILD_SEX", value: response?.InformationDeathAbandoned?.DeceasedGender || "NA" },
         {
           title: "PDF_CR_DEATH_OF_DATE",
-          value: response?.InformationDeath?.DateOfDeath ? convertEpochToDate(response?.InformationDeath?.DateOfDeath) : "NA",
+          value: response?.InformationDeathAbandoned?.DateOfDeath ? convertEpochToDate(response?.InformationDeathAbandoned?.DateOfDeath) : "NA",
         },
         {
           title: "CR_ADDRESS",
           value:
-          response?.AddressBirthDetails?.presentInsideKeralaHouseNameEn + "," +
-            response?.AddressBirthDetails?.presentInsideKeralaStreetNameEn + "," +
-              response?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn 
-               || "NA",
+            response?.AddressBirthDetails?.presentInsideKeralaHouseNameEn +
+              "," +
+              response?.AddressBirthDetails?.presentInsideKeralaStreetNameEn +
+              "," +
+              response?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn || "NA",
         },
         {
           title: "PDF_CR_NAME_WIFE_HUSBAND",
-          value: response?.FamilyInformationDeath?.SpouseNameEn + " / " + response?.FamilyInformationDeath?.SpouseNameML || "NA ",
+          value: response?.FamilyInformationDeathAbandoned?.SpouseNameEn + " / " + response?.FamilyInformationDeathAbandoned?.SpouseNameML || "NA ",
         },
         {
           title: "PDF_BIRTH_NAME_OF_FATHER",
-          value: response?.FamilyInformationDeath?.FatherNameEn + " / " + response?.FamilyInformationDeath?.FatherNameMl || "NA",
+          value: response?.FamilyInformationDeathAbandoned?.FatherNameEn + " / " + response?.FamilyInformationDeathAbandoned?.FatherNameMl || "NA",
         },
         {
           title: "PDF_BIRTH_NAME_OF_MOTHER",
-          value: response?.FamilyInformationDeath?.MotherNameEn + " / " + response?.FamilyInformationDeath?.MotherNameMl || "NA",
+          value: response?.FamilyInformationDeathAbandoned?.MotherNameEn + " / " + response?.FamilyInformationDeathAbandoned?.MotherNameMl || "NA",
         },
-        { title: "PDF_PLACE_OF_DEATH", value: response?.InformationDeath?.DeathPlaceHospitalNameEn + "/" + response?.InformationDeath?.DeathPlaceHospitalNameMl || "NA" },
+        {
+          title: "PDF_PLACE_OF_DEATH",
+          value: response?.InformationDeathAbandoned?.DeathPlaceHospitalNameEn + "/" + response?.InformationDeathAbandoned?.DeathPlaceHospitalNameMl || "NA",
+        },
 
-        // ...(InformationDeath.DeathPlace.code === "HOSPITAL" && {
+        // ...(InformationDeathAbandoned.DeathPlace.code === "HOSPITAL" && {
 
         // }),
       ],
     };
 
     // const DeathPlaceHome = "";
-    // console.log(response?.InformationDeath?.DeathPlace);
-    // if (response?.InformationDeath?.DeathPlace === "HOSPITAL") {
+    // console.log(response?.InformationDeathAbandoned?.DeathPlace);
+    // if (response?.InformationDeathAbandoned?.DeathPlace === "HOSPITAL") {
     //   DeathPlaceHome = {
     //     title: "PDF_PLACE_OF_DEATH",
     //     values: [
     //       {
     //         title: "PDF_BIRTH_NAME_OF_MOTHER",
-    //         value: response?.FamilyInformationDeath?.DeathPlaceType  || "NA",
+    //         value: response?.FamilyInformationDeathAbandoned?.DeathPlaceType  || "NA",
     //       },
     //     ],
     //   };
@@ -145,7 +149,7 @@ export const CRAbandonedDeathsearch = {
     //     { title: "CR_BIRTH_FATHER_NAME_LABEL", value: response?.ParentsDetails?.fatherFirstNameEn + " / " + response?.ParentsDetails?.fatherFirstNameMl || "NA"},
     //    ],
     // };
-    // const FamilyInformationDeath = {
+    // const FamilyInformationDeathAbandoned = {
     //   title: "CR_DEATH_INFORMANT_ADDRESS_INFORMATION_HEADER",
     //   values: [
     //     { title: "CR_DEATH_INFORMANT_HOUSE_NO_LABEL", value: response?.addressInfo?.informantAddress.houseNo || "NA"},
@@ -196,9 +200,9 @@ export const CRAbandonedDeathsearch = {
     //   response && employeeResponse.push(details);
     // }
 
-    response && employeeResponse.push(InformationDeath);
+    response && employeeResponse.push(InformationDeathAbandoned);
     // response && employeeResponse.push(DeathPlaceHome);
-    // response && employeeResponse.push(FamilyInformationDeath);
+    // response && employeeResponse.push(FamilyInformationDeathAbandoned);
     // response && employeeResponse.push(statisticalInfo);
 
     return {

@@ -30,6 +30,7 @@ const CRBreadCrumb = ({ location }) => {
   const isRenewalApplication = location?.pathname?.includes("renew-application-details");
   const isApplicationDetails = location?.pathname?.includes("cr/application-details");
   const isApplicationDeathDetails = location?.pathname?.includes("cr/application-deathdetails");
+  const isApplicationAbandeonedDeathDetails = location?.pathname?.includes("cr/application-abandoneddeathdetails");
   const isApplicationBirthDetails = location?.pathname?.includes("cr/application-birthdetails");
   const isApplicationAdoptionDetails = location?.pathname?.includes("cr/application-Adoptiondetails");
   const isApplicationStillBirthDetails = location?.pathname?.includes("cr/application-stillbirth");
@@ -146,6 +147,12 @@ const CRBreadCrumb = ({ location }) => {
       content: t("Death Application Details"),
       show: isApplicationDeathDetails ||
         breadCrumbUrls.includes("home/application-deathdetails")
+    },
+    {
+      path: sessionStorage.getItem("deathApplicationNo") ? `/digit-ui/employee/cr/application-abandoneddeathdetails/${sessionStorage.getItem("deathApplicationNo")}` : "",
+      content: t("Death Application Details"),
+      show: isApplicationAbandeonedDeathDetails ||
+        breadCrumbUrls.includes("home/application-abandoneddeathdetails")
     },
     {
       path: sessionStorage.getItem("deathApplicationNo") ? `/digit-ui/employee/cr/application-birthdetails/${sessionStorage.getItem("birthApplicationNo")}` : "",

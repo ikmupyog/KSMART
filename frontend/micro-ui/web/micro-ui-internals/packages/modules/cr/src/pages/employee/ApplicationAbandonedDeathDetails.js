@@ -13,12 +13,12 @@ const ApplicationAbandonedDeathDetails = () => {
   const { id: DeathACKNo } = useParams();
   const [showToast, setShowToast] = useState(null);
   // const [callUpdateService, setCallUpdateValve] = useState(false);
-  const [businessService, setBusinessService] = useState("DEATHHOSP"); //DIRECTRENEWAL
+  const [businessService, setBusinessService] = useState("CR"); //DIRECTRENEWAL
   const [numberOfApplications, setNumberOfApplications] = useState([]);
   const [allowedToNextYear, setAllowedToNextYear] = useState(false);
   sessionStorage.setItem("DeathACKNo", DeathACKNo)
   // const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
-  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDeathDetail(t, tenantId, DeathACKNo);
+  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useAbandonedDeathActions(t, tenantId, DeathACKNo);
 
   const stateId = Digit.ULBService.getStateId();
 
@@ -28,7 +28,7 @@ const ApplicationAbandonedDeathDetails = () => {
     data: updateResponse,
     error: updateError,
     mutate,
-  } = Digit.Hooks.cr.useCRDeathApplicationActions(tenantId);
+  } = Digit.Hooks.cr.useAbandonedDeathActions(tenantId);
 
   // let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
   console.log(applicationDetails);

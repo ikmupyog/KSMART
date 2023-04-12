@@ -847,7 +847,7 @@ export const newConfig = [
       {
         route: "abandoned-initiator",
         isMandatory: true,
-        component: "Initiater",
+        component: "AbandonedInitiater",
         texts: {
           headerCaption: "",
           // header: "CR_PLACE_OF_DEATH",
