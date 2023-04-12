@@ -109,12 +109,12 @@ public class MarriageRegistryEnrichment implements BaseEnrichment {
                         marriage.setRegistrationDate(currentTime);
                   //  }
                 });
-            }
+    }
 
-//Jasmine 28.03.2023
-private void setGroomPresentAddress(MarriageRegistryRequest request) {
+    //Jasmine 28.03.2023
+    private void setGroomPresentAddress(MarriageRegistryRequest request) {
     
-    request.getMarriageDetails()
+        request.getMarriageDetails()
             .forEach(marriage ->{
                 if (marriage.getGroomAddressDetails()!=null) {
 
@@ -189,7 +189,7 @@ private void setGroomPresentAddress(MarriageRegistryRequest request) {
                         }
 
                         else {
-//                            if (marriage.getGroomAddressDetails().getPresentOutSideCountry() != null) {
+    //                            if (marriage.getGroomAddressDetails().getPresentOutSideCountry() != null) {
                                 marriage.getGroomAddressDetails().setCountryIdPresent(marriage.getGroomAddressDetails().getPresentaddressCountry());
                                 marriage.getGroomAddressDetails().setVillageNamePresent(marriage.getGroomAddressDetails().getPresentOutSideIndiaadrsVillage());
                                 marriage.getGroomAddressDetails().setTownOrVillagePresent(marriage.getGroomAddressDetails().getPresentOutSideIndiaadrsCityTown());
@@ -204,18 +204,15 @@ private void setGroomPresentAddress(MarriageRegistryRequest request) {
                                 marriage.getGroomAddressDetails().setPresentOthrIndiaProvinceEn(marriage.getGroomAddressDetails().getPresentOutSideIndiaProvinceEn());
                                 marriage.getGroomAddressDetails().setPresentOthrIndiaProvinceMl(marriage.getGroomAddressDetails().getPresentOutSideIndiaProvinceMl());
 
-
-
-
 //                            }
                         }
                     }
                 }
             });
-}
+    }
 
-private void setGroomPermanentAddress(MarriageRegistryRequest request) {
-    request.getMarriageDetails()
+    private void setGroomPermanentAddress(MarriageRegistryRequest request) {
+        request.getMarriageDetails()
             .forEach(marriage-> {
 
                 if (marriage.getGroomAddressDetails()!=null){
@@ -302,10 +299,10 @@ private void setGroomPermanentAddress(MarriageRegistryRequest request) {
 
             });
 
-}
+    }
 
-private void setBridePresentAddress(MarriageRegistryRequest request) {
-    request.getMarriageDetails()
+    private void setBridePresentAddress(MarriageRegistryRequest request) {
+        request.getMarriageDetails()
             .forEach(marriage ->{
                 if (marriage.getBrideAddressDetails()!=null) {
 
@@ -407,14 +404,14 @@ private void setBridePresentAddress(MarriageRegistryRequest request) {
                 }
 
 
-    });
+        });
 
 
 
-}
+    }
 
-private void setBridePermanentAddress(MarriageRegistryRequest request) {
-    request.getMarriageDetails()
+    private void setBridePermanentAddress(MarriageRegistryRequest request) {
+        request.getMarriageDetails()
             .forEach(marriage-> {
 
                    if (marriage.getBrideAddressDetails()!=null){
@@ -583,10 +580,7 @@ private void setBridePermanentAddress(MarriageRegistryRequest request) {
                 registryDetails.getGroomAddressDetails().setPermntOthrIndiaprovinceEn(registryDetails.getGroomAddressDetails().getPermntOutSideIndiaProvinceEn());
                 registryDetails.getGroomAddressDetails().setPermntOthrIndiaprovinceMl(registryDetails.getGroomAddressDetails().getPermntOutSideIndiaProvinceMl());
 
-
-//                            }
             }
-
 
         }
         return groomAddressBuilder.toString();
@@ -595,4 +589,4 @@ private void setBridePermanentAddress(MarriageRegistryRequest request) {
 
 
 
-    }
+}

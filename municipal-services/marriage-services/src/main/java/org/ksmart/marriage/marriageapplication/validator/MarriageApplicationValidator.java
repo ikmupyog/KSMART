@@ -126,17 +126,18 @@ public class MarriageApplicationValidator {
         // WorkFlowCheck wfc = new WorkFlowCheck();
                         Calendar calendar = Calendar.getInstance();
                         Long currentDate = calendar.getTimeInMillis();
+  
                         List<LinkedHashMap<String, Object>> wfLists = JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_MARRIAGE_NEW_WF_JSONPATH + "[*]");
                         for (int n = 0; n < wfLists.size(); n++) {
                         String startStr = wfLists.get(n).get("startdateperiod").toString();
                         String endStr = wfLists.get(n).get("enddateperiod").toString();
-                        Long start = Long.parseLong(startStr);
-                        Long end = Long.parseLong(endStr);
-                        Long comp = currentDate - dateOfMarriage;
+                         Long start = Long.parseLong(startStr);
+                         Long end = Long.parseLong(endStr);
+                         Long comp = currentDate - dateOfMarriage;
                         
-                        System.out.println("StartDate " +start );
-                        System.out.println("endDate " +end );
-                        System.out.println("compDate " +comp );
+                        // System.out.println("StartDate " +start );
+                        // System.out.println("endDate " +end );
+                        // System.out.println("compDate " +comp );
                         if (comp > start && comp <= end)
                                 {
                                         wfc.setApplicationType(wfLists.get(n).get("ApplicationType").toString());
@@ -144,9 +145,11 @@ public class MarriageApplicationValidator {
                                         wfc.setPayment(Boolean.getBoolean(wfLists.get(n).get("payment").toString()));
                                         wfc.setAmount(Integer.parseInt(wfLists.get(n).get("amount").toString()));
                                         wfc.setActive(Boolean.getBoolean(wfLists.get(n).get("active").toString()));
+                                        System.out.println("wfCodetesting"+wfLists.get(n).get("WorkflowCode").toString());
                                 }
                         }
-                System.out.println("wfCodetesting"+wfc);
+                        
+              ///  System.out.println("wfCodetesting"+wfLists.get(n).get("WorkflowCode").toString());
                 return wfc;
         }
         public void validateCommonFields(MarriageDetailsRequest request) {

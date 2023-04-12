@@ -512,7 +512,7 @@ public class MarriageMdmsUtil {
     public Map<String,List<String>> getMarriageMDMSData(MarriageCertPDFRequest request, Object mdmsdata) {
         Map<String, String> errorMap = new HashMap<>();
         Map<String, List<String>> masterData = getAttributeValues(mdmsdata);
-        System.out.println(masterData);
+       // System.out.println(masterData);
         return masterData;
     }
 

@@ -138,8 +138,8 @@ public class MarriageApplicationDetails {
     @JsonProperty("WitnessDetails")
     private WitnessDetails witnessDetails;
 
-    @JsonProperty("MarriageDocument")
-    private MarriageDocument marriageDocument;
+    // @JsonProperty("MarriageDocument")
+    // private MarriageDocument marriageDocument;
     //Workflow 29/03.2023 Jasmine
     @Size(max = 64)
     @JsonProperty("action")

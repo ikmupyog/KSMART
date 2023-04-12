@@ -5,10 +5,15 @@ import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageDocume
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public interface DocumentRowMapper {
-    default MarriageDocument getMarriageDocument(ResultSet rs) throws SQLException {
-        return MarriageDocument.builder()
+    default List<MarriageDocument> getMarriageDocument(ResultSet rs) throws SQLException {
+        List<MarriageDocument> result = new ArrayList<>();
+        while (rs.next()) {
+            result.add(MarriageDocument.builder()
+      //  return MarriageDocument.builder()
                 .id(rs.getString("DOC_id"))
                 .marriageTenantid(rs.getString("DOC_tenantid"))
                 .documentName(rs.getString("DOC_document_name"))
@@ -24,6 +29,8 @@ public interface DocumentRowMapper {
                 .correctionFieldName(rs.getString("DOC_correction_field_name"))
                 .applicationType(rs.getString("DOC_applicationtype"))
                 .updatedFlag(rs.getInt("DOC_updated_flag"))
-                .build();
+                .build());
+        }
+        return result;
     }
 }
