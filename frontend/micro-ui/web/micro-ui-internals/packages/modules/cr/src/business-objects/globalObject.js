@@ -15,6 +15,7 @@ import {
   getFilteredBrideMotherNameData,
   getFilteredBrideAgeData,
   getFilteredBrideDOBData,
+  getFilteredMarriagePlaceNameData,
 } from "./marriage-correction-utils";
 import {
   getFilteredChildDobData,
@@ -60,11 +61,11 @@ export const initializedDeathCorrectionObject = (deathCorrectionDocData, selecte
   return formObj;
 };
 
-export const initializeMarriageCorrectionObject = (marriageCorrectionDocData, selectedData, cmbWardNo) => {
+export const initializeMarriageCorrectionObject = (marriageCorrectionDocData, selectedData, cmbWardNo, cmbPlace,cmbPlaceName) => {
   let formObj = {};
   for (let field_key in MARRIAGE_INCLUSION_FIELD_NAMES) {
     const filteredData = marriageCorrectionDocData?.filter((item) => item.CorrectionField === field_key);
-    let inclusionsDocsData = marriageCorrectionFilterFieldsObj[field_key]?.(selectedData, filteredData,cmbWardNo);
+    let inclusionsDocsData = marriageCorrectionFilterFieldsObj[field_key]?.({data:selectedData, inclusionData: filteredData,cmbWardNo,cmbPlace,cmbPlaceName});
     let tempObj = { ...inclusionsDocsData };
     Object.assign(formObj, { [field_key]: tempObj });
   }
@@ -94,20 +95,21 @@ export const deathCorrectionFilterFieldsObj = {
 };
 
 export const marriageCorrectionFilterFieldsObj = {
-  MARRIAGE_DOM: (data, inclusionData) => getFilteredMarriageDOMData(data, inclusionData),
-  GROOM_NAME_EN: (data, inclusionData) => getFilteredGroomNameData(data, inclusionData),
-  MARRIAGE_PLACE_WARD: (data, inclusionData, cmbWardNo) => getFilteredMarriagePlaceWardData(data, inclusionData, cmbWardNo),
-  MARRIAGE_PLACE_TYPE: (data, inclusionData) => getFilteredMarriagePlaceTypeData(data, inclusionData),
-  GROOM_FATHER_NAME_EN: (data, inclusionData) => getFilteredGroomFatherNameData(data, inclusionData),
-  GROOM_MOTHER_NAME_EN: (data, inclusionData) => getFilteredGroomMotherNameData(data, inclusionData),
-  GROOM_GUARDIAN_NAME_EN: (data, inclusionData) => getFilteredGroomGuardianNameData(data, inclusionData),
-  GROOM_DOB: (data, inclusionData) => getFilteredGroomDOBData(data, inclusionData),
-  GROOM_AGE: (data, inclusionData) => getFilteredGroomAgeData(data, inclusionData),
-  BRIDE_NAME: (data, inclusionData) => getFilteredBrideNameData(data, inclusionData),
-  BRIDE_MOTHER_NAME: (data, inclusionData) => getFilteredBrideMotherNameData(data, inclusionData),
-  BRIDE_FATHER_NAME: (data, inclusionData) => getFilteredBrideFatherNameData(data, inclusionData),
-  BRIDE_GUARDIAN_NAME: (data, inclusionData) => getFilteredBrideGuardianNameData(data, inclusionData),
-  BRIDE_AGE: (data, inclusionData) => getFilteredBrideAgeData(data, inclusionData),
-  BRIDE_DOB: (data, inclusionData) => getFilteredBrideDOBData(data, inclusionData),
+  MARRIAGE_DOM: ({data, inclusionData}) => getFilteredMarriageDOMData(data, inclusionData),
+  GROOM_NAME_EN: ({data, inclusionData}) => getFilteredGroomNameData(data, inclusionData),
+  MARRIAGE_PLACE_WARD: ({data, inclusionData, cmbWardNo}) => getFilteredMarriagePlaceWardData(data, inclusionData, cmbWardNo),
+  MARRIAGE_PLACE_TYPE: ({data, inclusionData, cmbPlace}) => getFilteredMarriagePlaceTypeData(data, inclusionData, cmbPlace),
+  MARRIAGE_PLACE_NAME: ({data, inclusionData, cmbPlaceName}) => getFilteredMarriagePlaceNameData(data, inclusionData, cmbPlaceName),
+  GROOM_FATHER_NAME_EN: ({data, inclusionData}) => getFilteredGroomFatherNameData(data, inclusionData),
+  GROOM_MOTHER_NAME_EN: ({data, inclusionData}) => getFilteredGroomMotherNameData(data, inclusionData),
+  GROOM_GUARDIAN_NAME_EN: ({data, inclusionData}) => getFilteredGroomGuardianNameData(data, inclusionData),
+  GROOM_DOB: ({data, inclusionData}) => getFilteredGroomDOBData(data, inclusionData),
+  GROOM_AGE: ({data, inclusionData}) => getFilteredGroomAgeData(data, inclusionData),
+  BRIDE_NAME: ({data, inclusionData}) => getFilteredBrideNameData(data, inclusionData),
+  BRIDE_MOTHER_NAME: ({data, inclusionData}) => getFilteredBrideMotherNameData(data, inclusionData),
+  BRIDE_FATHER_NAME: ({data, inclusionData}) => getFilteredBrideFatherNameData(data, inclusionData),
+  BRIDE_GUARDIAN_NAME: ({data, inclusionData}) => getFilteredBrideGuardianNameData(data, inclusionData),
+  BRIDE_AGE: ({data, inclusionData}) => getFilteredBrideAgeData(data, inclusionData),
+  BRIDE_DOB: ({data, inclusionData}) => getFilteredBrideDOBData(data, inclusionData),
 };
 
