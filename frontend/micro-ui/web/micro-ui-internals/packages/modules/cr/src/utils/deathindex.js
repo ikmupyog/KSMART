@@ -571,7 +571,7 @@ export const convertToDeathRegistration = (data = {}) => {
         taxHeadMasterCode: "CRB_FEES",
         taxAmount: data?.InformationDeath?.workFlowAmount,
         isPayment:data?.InformationDeath?.isPayment,
-        applicationStatus: data?.InformationDeath?.isPayment ? "PENDINGPAYEMNT" : "INITIATED",
+        applicationStatus: data?.InformationDeath?.isPayment ? "PENDINGPAYMENT" : "INITIATED",
       },
     ],
   };
@@ -649,8 +649,7 @@ export const convertToEditDeathRegistration = (data = {}) => {
           Nationality: data?.InformationDeath?.Nationality?.code,
           Religion: data?.InformationDeath?.Religion?.code,
           Occupation: data?.InformationDeath?.Occupation ? data?.InformationDeath?.Occupation?.code : null,
-          funcionUID: "CRDRNR",
-          registrationNo: null,
+          funcionUID: "CRDRAB",
           DeathACKNo: data?.InformationDeath?.DeathACKNo,
         },
         AddressBirthDetails: {

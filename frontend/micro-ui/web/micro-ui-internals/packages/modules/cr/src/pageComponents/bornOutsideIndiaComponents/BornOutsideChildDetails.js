@@ -105,20 +105,28 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
   const [childArrivalDate, setchildArrivalDate] = useState(
     formData?.BornOutsideChildDetails?.childArrivalDate ? formData?.BornOutsideChildDetails?.childArrivalDate : ""
   );
-  const [outsideBirthPlace, setoutsideBirthPlace] = useState(
-    formData?.BornOutsideChildDetails?.outsideBirthPlace ? formData?.BornOutsideChildDetails?.outsideBirthPlace : ""
+  const [outsideBirthPlaceEn, setoutsideBirthPlaceEn] = useState(
+    formData?.BornOutsideChildDetails?.outsideBirthPlaceEn ? formData?.BornOutsideChildDetails?.outsideBirthPlaceEn: ""
+  );
+  const [outsideBirthPlaceMl, setoutsideBirthPlaceMl] = useState(
+    formData?.BornOutsideChildDetails?.outsideBirthPlaceMl ? formData?.BornOutsideChildDetails?.outsideBirthPlaceMl: ""
   );
   const [country, setcountry] = useState(formData?.BornOutsideChildDetails?.country ? formData?.BornOutsideChildDetails?.country : null);
   const [provinceEn, setprovinceEn] = useState(formData?.BornOutsideChildDetails?.provinceEn ? formData?.BornOutsideChildDetails?.provinceEn : "");
-  const [cityTown, setcityTown] = useState(formData?.BornOutsideChildDetails?.cityTown ? formData?.BornOutsideChildDetails?.cityTown : "");
+  const [provinceMl, setprovinceMl] = useState(formData?.BornOutsideChildDetails?.provinceMl ? formData?.BornOutsideChildDetails?.provinceMl : "");
+  const [cityTownEn, setcityTownEn] = useState(formData?.BornOutsideChildDetails?.cityTownEn ? formData?.BornOutsideChildDetails?.cityTownEn : "");
+  const [cityTownMl, setcityTownMl] = useState(formData?.BornOutsideChildDetails?.cityTownMl ? formData?.BornOutsideChildDetails?.cityTownMl : "");
   const [postCode, setpostCode] = useState(formData?.BornOutsideChildDetails?.postCode ? formData?.BornOutsideChildDetails?.postCode : "");
   const [toast, setToast] = useState(false);
   const [AadharError, setAadharError] = useState(formData?.BornOutsideChildDetails?.childAadharNo ? false : false);
   const [ChildPassportError, setChildPassportError] = useState(formData?.BornOutsideChildDetails?.childPassportNo ? false : false);
   const [childArrivalDateError, setchildArrivalDateError] = useState(formData?.BornOutsideChildDetails?.childArrivalDate ? false : false);
   const [ProvinceEnError, setProvinceEnError] = useState(formData?.BornOutsideChildDetails?.ProvinceEnError ? false : false);
-  const [cityTownError, setcityTownError] = useState(formData?.BornOutsideChildDetails?.cityTownError ? false : false);
-  const [outsideBirthPlaceError, setoutsideBirthPlaceError] = useState(formData?.BornOutsideChildDetails?.outsideBirthPlaceError ? false : false);
+  const [ProvinceMlError, setProvinceMlError] = useState(formData?.BornOutsideChildDetails?.ProvinceMlError ? false : false);
+  const [cityTownEnError, setcityTownEnError] = useState(formData?.BornOutsideChildDetails?.cityTownEnError ? false : false);
+  const [cityTownMlError, setcityTownMlError] = useState(formData?.BornOutsideChildDetails?.cityTownMlError ? false : false);
+  const [outsideBirthPlaceEnError, setoutsideBirthPlaceEnError] = useState(formData?.BornOutsideChildDetails?.outsideBirthPlaceEnError ? false : false);
+  const [outsideBirthPlaceMlError, setoutsideBirthPlaceMlError] = useState(formData?.BornOutsideChildDetails?.outsideBirthPlaceMlError ? false : false);
   const [DOBError, setDOBError] = useState(formData?.BornOutsideChildDetails?.childDOB ? false : false);
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
   const [isChildName, setIsChildName] = useState(formData?.ChildDetails?.isChildName ? formData?.ChildDetails?.isChildName : false);
@@ -135,16 +143,26 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
   function setSelectcountry(value) {
     setcountry(value);
   }
-  function setSelectcityTown(e) {
+  function setSelectcityTownEn(e) {
     if (e.target.value.length === 51) {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setcityTown(
+      setcityTownEn(
         e.target.value.replace(
           /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
           ""
         )
+      );
+    }
+  }
+  function setSelectcityTownMl(e) {
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setcityTownMl(
+        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
       );
     }
   }
@@ -292,11 +310,16 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
   function setSelectChildAadharNo(e) {
     if (e.target.value.trim().length >= 0) {
       setChildAadharNo(
-        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
+        e.target.value.length <= 8 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 8)
       );
     }
   }
-
+  function setCheckMalayalamInputField(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
+    if (!(e.key.match(pattern))) {
+      e.preventDefault();
+    }
+  }
 
   // function setSelectChildAadharNo(e) {
   //   // setContactno(e.target.value.length<=10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
@@ -322,14 +345,31 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
   // }
 
   function setSelectPassportNo(e) {
-    setchildPassportNo(e.target.value.length<=8 ? e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '') : (e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '').substring(0, 8)))
+    setchildPassportNo(e.target.value.length<=12 ? e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '') : (e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '').substring(0, 12)))
   }
 
   function setSelectprovinceEn(e) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setprovinceEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    }
+  }
+  function setSelectprovinceMl(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      setprovinceMl('');
+    }
+    else {
+      setprovinceMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    
+    }
+  }
+
+  function setSelectoutsideBirthPlaceEn(e) {
     if (e.target.value.length === 51) {
       return false;
     } else {
-      setprovinceEn(
+      setoutsideBirthPlaceEn(
         e.target.value.replace(
           /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
           ""
@@ -337,17 +377,20 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
       );
     }
   }
-
-  function setSelectoutsideBirthPlace(e) {
+  function setSelectoutsideBirthPlaceMl(e) {
     if (e.target.value.length === 51) {
       return false;
     } else {
-      setoutsideBirthPlace(
-        e.target.value.replace(
-          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
-          ""
-        )
+      setoutsideBirthPlaceMl(
+        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
       );
+    }
+  }
+
+  function setCheckSpecialChar(e) {
+    let pattern = /^[0-9]*$/;
+    if (!(e.key.match(pattern))) {
+      e.preventDefault();
     }
   }
   let validFlag = true;
@@ -409,27 +452,56 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
     } else {
       setProvinceEnError(false);
     }
-    if (cityTown == null || cityTown == undefined || cityTown == "") {
-      setcityTownError(true);
+    if (provinceMl == null || provinceMl == undefined || provinceMl == "") {
+      setProvinceMlError(true);
       validFlag = false;
       setToast(true);
       setTimeout(() => {
         setToast(false);
       }, 2000);
     } else {
-      setcityTownError(false);
+      setProvinceMlError(false);
     }
-    if (outsideBirthPlace == null || outsideBirthPlace == undefined || outsideBirthPlace == "") {
-      setoutsideBirthPlaceError(true);
+    if (cityTownEn == null || cityTownEn == undefined || cityTownEn == "") {
+      setcityTownEnError(true);
       validFlag = false;
       setToast(true);
       setTimeout(() => {
         setToast(false);
       }, 2000);
     } else {
-      setoutsideBirthPlaceError(false);
+      setcityTownEnError(false);
     }
-
+      if (cityTownMl == null || cityTownMl == undefined || cityTownMl == "") {
+        setcityTownMlError(true);
+        validFlag = false;
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setcityTownMlError(false);
+    }
+    if (outsideBirthPlaceEn == null || outsideBirthPlaceEn == undefined || outsideBirthPlaceEn == "") {
+      setoutsideBirthPlaceEnError(true);
+      validFlag = false;
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setoutsideBirthPlaceEnError(false);
+    }
+    if (outsideBirthPlaceMl == null || outsideBirthPlaceMl == undefined || outsideBirthPlaceMl == "") {
+      setoutsideBirthPlaceMlError(true);
+      validFlag = false;
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setoutsideBirthPlaceMlError(false);
+    }
     if (validFlag == true) {
       // sessionStorage.setItem("stateId", stateId ? stateId : null);
       // sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
@@ -470,9 +542,12 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
         childMiddleNameMl,
         childLastNameMl,
         provinceEn,
-        cityTown,
+        provinceMl,
+        cityTownEn,
+        cityTownMl,
         postCode,
-        outsideBirthPlace,
+        outsideBirthPlaceEn,
+        outsideBirthPlaceMl,
         country,
       });
     }
@@ -524,12 +599,12 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
                   value={childAadharNo}
                   disable={isEdit}
                   onChange={setSelectChildAadharNo}
+                  onKeyPress={setCheckSpecialChar}
                   placeholder={`${t("CS_COMMON_CHILD_AADHAAR")}`}
                   inputProps={{
                     maxLength: 12,
                   }}
-                  {...(validation = { pattern: "^[0-9]{12}$",
-                  isRequired:false, type: "test", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                  {...(validation = { isRequired:false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                 />
               </div>
 
@@ -646,7 +721,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
                   name="childFirstNameEn"
                   value={childFirstNameEn}
                   onChange={setSelectChildFirstNameEn}
-                  disable={isEdit}
+                  disable={isDisableEdit}
                   //  onChange={(e,v) => this.updateTextField(e,v)}
                   // disable={isChildName}
                   placeholder={`${t("CR_FIRST_NAME_EN")}`}
@@ -663,7 +738,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
                   name="childMiddleNameEn"
                   value={childMiddleNameEn}
                   onChange={setSelectChildMiddleNameEn}
-                  disable={isEdit}
+                  disable={isDisableEdit}
                   placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
                   {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })}
                 />
@@ -678,7 +753,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
                   name="childLastNameEn"
                   value={childLastNameEn}
                   onChange={setSelectChildLastNameEn}
-                  disable={isEdit}
+                  disable={isDisableEdit}
                   placeholder={`${t("CR_LAST_NAME_EN")}`}
                   {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
                 />
@@ -700,7 +775,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
                   name="childFirstNameMl"
                   value={childFirstNameMl}
                   onChange={setSelectChildFirstNameMl}
-                  disable={isEdit}
+                  disable={isDisableEdit}
                   placeholder={`${t("CR_FIRST_NAME_ML")}`}
                   {...(validation = {
                     pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -720,7 +795,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
                   name="childMiddleNameMl"
                   value={childMiddleNameMl}
                   onChange={setSelectChildMiddleNameMl}
-                  disable={isEdit}
+                  disable={isDisableEdit}
                   placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
                   {...(validation = {
                     pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -766,7 +841,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
        
    <div className="row">
    <div className="col-md-12">
- <div className="col-md-3">
+ <div className="col-md-4">
             <CardLabel>
               {`${t("CS_COMMON_COUNTRY")}`}
               <span className="mandatorycss">*</span>
@@ -780,7 +855,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
               placeholder={`${t("CS_COMMON_COUNTRY")}`}
             />
           </div>
-          <div className="col-md-3">
+          <div className="col-md-4">
             <CardLabel>{t("CR_STATE_REGION_PROVINCE_EN")} <span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
@@ -793,7 +868,25 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
             />
           </div>
-          <div className="col-md-3">
+          <div className="col-md-4">
+            <CardLabel>{t("CR_STATE_REGION_PROVINCE_ML")} <span className="mandatorycss">*</span></CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="provinceMl"
+              value={provinceMl}
+              onKeyPress={setCheckMalayalamInputField}
+              onChange={setSelectprovinceMl}
+              placeholder={`${t("CR_STATE_REGION_PROVINCE_ML")}`}
+              {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_ML") })}
+            />
+          </div>
+          </div>
+          </div> 
+          <div className="row">
+            <div className="col-md-12">
+            <div className="col-md-4">
             <CardLabel>
               {t("CR_CITY_TOWN_EN")} <span className="mandatorycss">*</span>
             </CardLabel>
@@ -801,14 +894,33 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
               t={t}
               type={"text"}
               optionKey="i18nKey"
-              name="cityTown"
-              value={cityTown}
-              onChange={setSelectcityTown}
+              name="cityTownEn"
+              value={cityTownEn}
+              onChange={setSelectcityTownEn}
               placeholder={`${t("CR_CITY_TOWN_EN")}`}
               {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_TOWN_EN") })}
             />
           </div>
-          <div className="col-md-3">
+          <div className="col-md-4">
+            <CardLabel>
+              {t("CR_CITY_TOWN_ML")} <span className="mandatorycss">*</span>
+            </CardLabel>
+            <TextInput
+              t={t}
+              type={"text"}
+              optionKey="i18nKey"
+              name="cityTownMl"
+              value={cityTownMl}
+              onChange={setSelectcityTownMl}
+              placeholder={`${t("CR_CITY_TOWN_ML")}`}
+              {...(validation = { pattern:  "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_TOWN_ML") })}
+            />
+          </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+            <div className="col-md-4">
             <CardLabel>{t("CR_ZIP_CODE")}<span className="mandatorycss">*</span></CardLabel>
             <TextInput
               t={t}
@@ -828,15 +940,9 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
               })}
             />
           </div>
-         
-          </div>
-        
-          </div> 
-          <div className="row">
-            <div className="col-md-12">
               <div className="col-md-4">
                 <CardLabel>
-                  {`${t("CR_OUTSIDE_BIRTH_PLACE")}`}
+                  {`${t("CR_OUTSIDE_BIRTH_PLACE_EN")}`}
                   <span className="mandatorycss">*</span>
                 </CardLabel>
                 <TextInput
@@ -844,26 +950,51 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
                   isMandatory={false}
                   type={"text"}
                   optionKey="i18nKey"
-                  name="outsideBirthPlace"
-                  value={outsideBirthPlace}
-                  onChange={setSelectoutsideBirthPlace}
+                  name="outsideBirthPlaceEn"
+                  value={outsideBirthPlaceEn}
+                  onChange={setSelectoutsideBirthPlaceEn}
                   disable={isEdit}
                   //  onChange={(e,v) => this.updateTextField(e,v)}
                   // disable={isChildName}
-                  placeholder={`${t("CR_OUTSIDE_BIRTH_PLACE")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_OUTSIDE_BIRTH_PLACE") })}
+                  placeholder={`${t("CR_OUTSIDE_BIRTH_PLACE_EN")}`}
+                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_OUTSIDE_BIRTH_PLACE_EN") })}
+                />
+              </div>
+              <div className="col-md-4">
+                <CardLabel>
+                  {`${t("CR_OUTSIDE_BIRTH_PLACE_ML")}`}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="outsideBirthPlaceMl"
+                  value={outsideBirthPlaceMl}
+                  onChange={setSelectoutsideBirthPlaceMl}
+                  disable={isEdit}
+                  //  onChange={(e,v) => this.updateTextField(e,v)}
+                  // disable={isChildName}
+                  placeholder={`${t("CR_OUTSIDE_BIRTH_PLACE_ML")}`}
+                  {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_OUTSIDE_BIRTH_PLACE_ML") })}
                 />
               </div>
             </div>
           </div>
+          {/* <div className="row">
+            <div className="col-md-12">
+             
+            </div>
+          </div> */}
 
           {toast && (
             <Toast
               error={
-                DOBError || ChildPassportError || AadharError || childArrivalDateError || ProvinceEnError || cityTownError || outsideBirthPlaceError
+                DOBError || ChildPassportError || AadharError || childArrivalDateError || ProvinceEnError || ProvinceMlError  || cityTownEnError || cityTownMlError || outsideBirthPlaceEnError || outsideBirthPlaceMlError
               }
               label={
-                DOBError || ChildPassportError || AadharError || childArrivalDateError || ProvinceEnError || cityTownError || outsideBirthPlaceError
+                DOBError || ChildPassportError || AadharError || childArrivalDateError || ProvinceEnError || ProvinceMlError  || cityTownEnError || cityTownMlError || outsideBirthPlaceEnError || outsideBirthPlaceMlError
                   ? DOBError
                     ? t(`BIRTH_ERROR_DOB_CHOOSE`)
                     : AadharError
@@ -874,10 +1005,16 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
                     ? t(`BIRTH_ERROR_ARRIVAL_DATE_CHOOSE`)
                     : ProvinceEnError
                     ? t(`BIRTH_ERROR_OUTSIDE_STATE_PROV_EN_ERROR`)
-                    : cityTownError
+                    : ProvinceMlError
+                    ? t(`BIRTH_ERROR_OUTSIDE_STATE_PROV_ML_ERROR`)
+                    : cityTownEnError
                     ? t(`BIRTH_ERROR_OUTSIDE_STATE_CITY_TOWN_EN_ERROR`)
-                    : outsideBirthPlaceError
+                    :cityTownMlError
+                    ? t(`BIRTH_ERROR_OUTSIDE_STATE_CITY_TOWN_ML_ERROR`)
+                    : outsideBirthPlaceEnError
                     ? t(`BIRTH_ERROR_OUTSIDE_BIRTH_PLACE_EN_ERROR`)
+                    : outsideBirthPlaceMlError
+                    ? t(`BIRTH_ERROR_OUTSIDE_BIRTH_PLACE_ML_ERROR`)
                     : setToast(false)
                   : setToast(false)
               }

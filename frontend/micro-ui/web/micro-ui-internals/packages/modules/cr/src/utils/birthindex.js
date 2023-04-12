@@ -331,7 +331,7 @@ export const convertToBirthRegistration = (data = {}) => {
         workflowcode: data?.ChildDetails?.workFlowCode,        
         isPayment:data?.ChildDetails?.isPayment,
         Amount:data?.ChildDetails?.Amount,
-        applicationStatus: data?.ChildDetails?.isPayment ? "PENDINGPAYEMNT" : "INITIATED",
+        applicationStatus: data?.ChildDetails?.isPayment ? "PENDINGPAYMENT" : "INITIATED",
         ParentsDetails: {
           motherFirstNameEn: data?.ParentsDetails?.motherFirstNameEn,
           motherFirstNameMl: data?.ParentsDetails?.motherFirstNameMl,
