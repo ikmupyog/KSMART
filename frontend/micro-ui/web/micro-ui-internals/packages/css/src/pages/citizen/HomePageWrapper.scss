@@ -104,3 +104,19 @@
         flex-direction: column;
     }
 }
+@media only screen and (max-width: 680px) {
+    .ServicesSection{
+    display: flex;
+    flex-direction: column;
+    }
+    .CardBasedOptions{
+        width: unset;
+    }
+    .CardBasedOptions .mainContent .CardBasedOptionsMainChildOption .ChildOptionName {
+        font-size: 10px !important;
+    }
+    .flex-right, .leftContainerNav, .mainNav {
+        display: flex;
+        justify-content: space-between;
+    }
+}
