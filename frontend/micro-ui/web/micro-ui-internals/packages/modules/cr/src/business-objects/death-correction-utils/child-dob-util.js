@@ -1,56 +1,40 @@
 import moment from "moment";
 
-export const getFilteredChildDobData = (selectedData, inclusionData) => {
-  let filteredDocuments = getFilteredDocuments(selectedData,inclusionData);
-  const computedValue = computeInitialValue(selectedData?.dateofbirth);
-  let selectedDomObj = {
-    initialValue: computedValue,
-    curValue: computedValue,
-    isDisable: true,
+export const getFilteredDodData = (selectedData, correctionData) => {
+  let filteredDocuments = getFilteredDocuments(selectedData,correctionData);
+  const computedCurrentValue = computeCurrentValue(selectedData?.InformationDeath?.DateOfDeath);
+  const computedInitialValue = computeInitialValue(selectedData?.InformationDeath?.DateOfDeath);
+  let selectedDodObj = {
+    initialValue: computedInitialValue,
+    curValue: computedCurrentValue,
+    isDisabled: true,
     isEditable: false,
     isFocused: false,
     ...filteredDocuments,
   };
-  return { ...selectedDomObj };
+  return { ...selectedDodObj };
 };
 
 //TODO need validation to check dob is null
-const computeInitialValue = (dob) => {
-  const initialValue = dob && moment(dob).format("DD/MM/YYYY");
+const computeInitialValue = (dod) => {
+  const initialValue = dod;
+
   return initialValue;
 };
 
-const getFilteredDocuments = (selectedData,inclusionData) => {
-  let filteredData  = {};
-  if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
-    filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
-  } else {
-    filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
-  }
-  return filteredData;
+const computeCurrentValue = (dod) => {
+  const currentValue = dod && moment(dod).format("DD/MM/YYYY");
+
+  return currentValue;
 };
 
-
-
-// import moment from "moment";
-
-// export const getFilteredChildDobData = (selectedData, correctionData) => {
-//   console.log("selectedData==123", selectedData, correctionData);
-//   let filteredData = {};
-//   if (selectedData?.registerDeathPlace?.placeofdeathid === "HOSPITAL") {
-//     filteredData = correctionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
-//   } else {
-//     filteredData = correctionData?.find((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
-//   }
-//   //TODO need validation to check dob is null
-//   let childDobObj = {
-//     curValue: selectedData?.dateofbirth && moment(selectedData?.dateofbirth).format("DD/MM/YYYY"),
-//     // changeCurValue: (value,data)=> _changeCurValue(value,data)
-//   };
-//   let currentValue = { curValue: selectedData?.dateofdeath && moment(selectedData?.dateofdeath).format("DD/MM/YYYY") };
-//   return { ...filteredData, ...currentValue };
-// };
-
-// const _changeCurValue = (value,data) =>{
-//   return()
-// }
+const getFilteredDocuments = (selectedData,correctionData) => {
+  let filteredData  = {};
+  if (selectedData?.InformationDeath?.DeathPlace === "HOSPITAL") {
+    filteredData = correctionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
+  } else {
+    filteredData = correctionData?.find((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
+  }
+  return filteredData;
+  
+};

@@ -27,15 +27,15 @@ const MarriageCorrection = () => {
   let history = useHistory();
 
   const [payload, setPayload] = useState({});
-  const [enableConfig, setEnableConfig] = useState({enabled:false});
-  const [fetchData,setFetchData]  =useState([]);
+  const [enableConfig, setEnableConfig] = useState({ enabled: false });
+  const [fetchData, setFetchData] = useState([]);
 
   const mutation = Digit.Hooks.cr.useRegistrySearchMarriage(tenantId);
 
-  const onSuccess = (data) =>{
- console.log("success data==",data);
- setFetchData(data?.MarriageDetails);
-  }
+  const onSuccess = (data) => {
+    console.log("success data==", data);
+    setFetchData(data?.MarriageDetails);
+  };
 
   function onSubmit(_data) {
     var fromDate = new Date(_data?.fromDate);
@@ -47,19 +47,31 @@ const MarriageCorrection = () => {
       ...(_data.toDate ? { toDate: toDate?.getTime() } : {}),
       ...(_data.fromDate ? { fromDate: fromDate?.getTime() } : {}),
     };
-
+    
     setPayload(
       Object.keys(data)
         .filter((k) => data[k])
         .reduce((acc, key) => ({ ...acc, [key]: typeof data[key] === "object" ? data[key].code : data[key] }), {})
     );
-
-    setEnableConfig({enabled: true})
+    console.log("data api==", data,payload);
+    setEnableConfig({ enabled: true });
     const params = {
-      filters: payload
-    }
-    mutation.mutate(params,{onSuccess})
+      filters: payload,
+    };
+    console.log("marriageSearch ===", params);
+   
   }
+
+  useEffect(()=>{
+   if( Object.keys(payload)?.length > 0) {
+    mutation.mutate(
+      {
+        filters: payload,
+      },
+      { onSuccess }
+    );
+   }
+  },[payload])
 
   const gotoEditCorrection = async (data) => {
     history.push({
@@ -72,7 +84,7 @@ const MarriageCorrection = () => {
   //   enabled: !!(payload && Object.keys(payload).length > 0),
   //   };
 
-console.log("mutation.isLoading", mutation.isFetching,mutation.isLoading);
+  console.log("mutation.isLoading", mutation.isFetching, mutation.isLoading);
 
   return (
     <SearchMarriageInclusion
