@@ -1,10 +1,12 @@
 export const getFilteredMarriagePlaceWardData = (selectedData, inclusionData, wards) => {
 
     let filteredDocuments = getFilteredDocuments(selectedData,inclusionData);
-    const computedValue = computeInitialValue(selectedData?.marriageWardCode, wards);
+    // const computedValue = computeInitialValue(selectedData?.marriageWardCode, wards);
+    const computedInitialValue = computeInitialValue(selectedData?.marriageWardCode, wards);
+  const computedCurrentValue = computeCurrentValue(selectedData?.marriageWardCode, wards);
     let selectedDomObj = {
-      initialValue: computedValue,
-      curValue: computedValue,
+      initialValue: computedInitialValue,
+      curValue: computedCurrentValue,
       isDisable: true,
       isEditable: false,
       isFocused: false,
@@ -14,11 +16,21 @@ export const getFilteredMarriagePlaceWardData = (selectedData, inclusionData, wa
   };
   
   //TODO need validation to check dob is null
+  // const computeInitialValue = (wardCode,wards) => {
+  //   // marriageCorrectionFormsObj?.marriageWardCode ? cmbWardNoFinal.filter(cmbWardNo=> cmbWardNo.code === marriageCorrectionFormsObj?.marriageWardCode[0]):""
+  //   const initialValue = wards && wards.find((item)=> item.code === wardCode);
+  //   console.log("wards==",wards,initialValue,wardCode);
+  //   return wardCode;
+  // };
+
   const computeInitialValue = (wardCode,wards) => {
-    // marriageCorrectionFormsObj?.marriageWardCode ? cmbWardNoFinal.filter(cmbWardNo=> cmbWardNo.code === marriageCorrectionFormsObj?.marriageWardCode[0]):""
-    const initialValue = wards && wards.find((item)=> item.code === wardCode);
-    console.log("wards==",wards,initialValue,wardCode);
-    return wardCode;
+    const initialValue = wards && wards.find((ward)=>(`${ward.label.toLowerCase()}-${ward.boundaryNum}`) == wardCode.trim());
+    return initialValue;
+  };
+  
+  const computeCurrentValue = (wardCode,wards) => {
+    const currentValue = wards && wards.find((ward)=>(`${ward.label.toLowerCase()}-${ward.boundaryNum}`) == wardCode.trim());
+    return currentValue;
   };
   
   const getFilteredDocuments = (selectedData,inclusionData) => {
