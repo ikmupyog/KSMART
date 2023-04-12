@@ -52,9 +52,7 @@ export const CRAbandonedDeathsearch = {
     const filter = { DeathACKNo };
     const response = await CRAbandonedDeathsearch.application(tenantId, filter);
     console.log("response",response);
-    // const propertyDetails =
-    //   response?.tradeLicenseDetail?.additionalDetail?.propertyId &&
-    //   (await Digit.PTService.search({ tenantId, filters: { propertyIds: response?.tradeLicenseDetail?.additionalDetail?.propertyId } }));
+  
     let numOfApplications = [];
     if (response?.DeathACKNo) {
       const deathNumbers = response?.DeathACKNo;
