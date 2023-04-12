@@ -125,54 +125,55 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
   };
 
   const onGenderChange = (genderDetails) => {
-      console.log("genderDetails",genderDetails);
-      let tempObj = { ...birthInclusionFormsObj };
-      let { CHILD_SEX } = tempObj;
-      tempObj = { ...tempObj, CHILD_SEX: { ...CHILD_SEX, curValue: genderDetails}};
-      setbirthInclusionFormsObj(tempObj);
+    console.log("genderDetails", genderDetails);
+    let tempObj = { ...birthInclusionFormsObj };
+    let { CHILD_SEX } = tempObj;
+    tempObj = { ...tempObj, CHILD_SEX: { ...CHILD_SEX, curValue: genderDetails } };
+    setbirthInclusionFormsObj(tempObj);
   };
 
-  const onAdharChange = (e) =>{
-    console.log("adhar change==",e.target.value);
+  const onAdharChange = (e) => {
+    console.log("adhar change==", e.target.value);
     let tempObj = { ...birthInclusionFormsObj };
-    let { CHILD_ADHAR } = tempObj;
-    tempObj = { ...tempObj, CHILD_ADHAR: { ...CHILD_ADHAR, curValue: e.target.value}};
+    let { CHILD_AADHAAR } = tempObj;
+    tempObj = { ...tempObj, CHILD_AADHAAR: { ...CHILD_AADHAAR, curValue: e.target.value } };
     setbirthInclusionFormsObj(tempObj);
-  }
+  };
 
-  const onChangeMotherDetails = () =>{
+  const onChangeMotherDetails = () => {
     let tempObj = { ...birthInclusionFormsObj };
     let { MOTHER_DETAILS } = tempObj;
     let { curValue } = MOTHER_DETAILS;
-    tempObj = { ...tempObj, MOTHER_DETAILS: { ...MOTHER_DETAILS, curValue:{...curValue,[fieldType]: e.target.value}}};
+    tempObj = { ...tempObj, MOTHER_DETAILS: { ...MOTHER_DETAILS, curValue: { ...curValue, [fieldType]: e.target.value } } };
     setbirthInclusionFormsObj(tempObj);
-  }
+  };
 
-  const onChangeFatherDetails = () =>{
+  const onChangeFatherDetails = () => {
     let tempObj = { ...birthInclusionFormsObj };
     let { FATHER_DETAILS } = tempObj;
     let { curValue } = FATHER_DETAILS;
-    tempObj = { ...tempObj, FATHER_DETAILS: { ...FATHER_DETAILS, curValue:{...curValue,[fieldType]: e.target.value}}};
+    tempObj = { ...tempObj, FATHER_DETAILS: { ...FATHER_DETAILS, curValue: { ...curValue, [fieldType]: e.target.value } } };
     setbirthInclusionFormsObj(tempObj);
-  }
+  };
 
-  const onChildNameChange = (e,fieldType) =>{
+  const onChildNameChange = (e,fieldType) => {
+    e.preventDefault();
+    console.log("e.target==", e.target);
     let tempObj = { ...birthInclusionFormsObj };
     let { CHILD_NAME } = tempObj;
     let { curValue } = CHILD_NAME;
-    tempObj = { ...tempObj, CHILD_NAME: { ...CHILD_NAME, curValue:{...curValue,[fieldType]: e.target.value}}};
+    tempObj = { ...tempObj, CHILD_NAME: { ...CHILD_NAME, curValue: { ...curValue, [fieldType]: e.target.value } } };
+    // birthInclusionFormsObj.CHILD_NAME = { ...CHILD_NAME, curValue: { ...curValue, [fieldType]: e.target.value } } ;
     setbirthInclusionFormsObj(tempObj);
-  }
+  };
 
-
-
-  const onPresentAddressChange = (e,fieldType) =>{
+  const onPresentAddressChange = (e, fieldType) => {
     let tempObj = { ...birthInclusionFormsObj };
     let { PRESENT_ADDRESS } = tempObj;
     let { curValue } = PRESENT_ADDRESS;
-    tempObj = { ...tempObj, PRESENT_ADDRESS: { ...PRESENT_ADDRESS, curValue:{...curValue,[fieldType]: e.target.value}}};
+    tempObj = { ...tempObj, PRESENT_ADDRESS: { ...PRESENT_ADDRESS, curValue: { ...curValue, [fieldType]: e.target.value } } };
     setbirthInclusionFormsObj(tempObj);
-  }
+  };
 
   if (Object.keys(birthInclusionFormsObj)?.length > 0) {
     console.log("birthInclusionFormData??.curValue", birthInclusionFormsObj?.CHILD_DOB);
@@ -194,7 +195,6 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
               <div className="col-md-5">
                 <CardLabel>
                   {t("CR_DATE_OF_BIRTH_TIME")}
-                  <span className="mandatorycss">*</span>
                 </CardLabel>
                 <DatePicker
                   // {...register('childDOB')}
@@ -219,9 +219,11 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
             </FieldComponentContainer>
             <div style={{ marginTop: "2.8rem" }}>
               <ButtonContainer>
-                <span onClick={() => setBirthInclusionFilterQuery(BIRTH_INCLUSION_FIELD_NAMES["CHILD_DOB"])}>
-                  <EditIcon selected={true} label={"Edit"} />
-                </span>
+                {birthInclusionFormsObj?.CHILD_DOB?.isDisabled && (
+                  <span onClick={() => setBirthInclusionFilterQuery(BIRTH_INCLUSION_FIELD_NAMES["CHILD_DOB"])}>
+                    <EditIcon />
+                  </span>
+                )}
               </ButtonContainer>
             </div>
           </FormFieldContainer>
@@ -230,7 +232,6 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
               <div className="col-md-5">
                 <CardLabel>
                   {t("DC_GENDER")}
-                  <span className="mandatorycss">*</span>
                 </CardLabel>
                 <Dropdown
                   selected={birthInclusionFormsObj?.CHILD_SEX?.curValue}
@@ -247,9 +248,11 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
             </FieldComponentContainer>
             <div style={{ marginTop: "2.8rem" }}>
               <ButtonContainer>
-                <span onClick={() => setBirthInclusionFilterQuery(BIRTH_INCLUSION_FIELD_NAMES["CHILD_SEX"])}>
-                  <EditIcon selected={true} label={"Edit"} />
-                </span>
+                {birthInclusionFormsObj?.CHILD_SEX?.isDisabled && (
+                  <span onClick={() => setBirthInclusionFilterQuery(BIRTH_INCLUSION_FIELD_NAMES["CHILD_SEX"])}>
+                    <EditIcon selected={true} label={"Edit"} />
+                  </span>
+                )}
               </ButtonContainer>
             </div>
           </FormFieldContainer>
@@ -258,7 +261,6 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
               <div className="col-md-5">
                 <CardLabel>
                   {t("CR_AADHAR")}
-                  <span className="mandatorycss">*</span>
                 </CardLabel>
                 <TextInput
                   t={t}
@@ -268,7 +270,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   max="12"
                   optionKey="i18nKey"
                   name="AadharNumber"
-                  value={birthInclusionFormsObj?.CHILD_ADHAR?.curValue}
+                  defaultValue={birthInclusionFormsObj?.CHILD_AADHAAR?.curValue}
                   onBlur={onAdharChange}
                   placeholder={`${t("CR_AADHAR")}`}
                   {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
@@ -277,9 +279,11 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
             </FieldComponentContainer>
             <div style={{ marginTop: "2.8rem" }}>
               <ButtonContainer>
-              <span onClick={() => setBirthInclusionFilterQuery(BIRTH_INCLUSION_FIELD_NAMES["CHILD_SEX"])}>
-                <EditIcon selected={true} label={"Edit"} />
-              </span>
+                {birthInclusionFormsObj?.CHILD_AADHAAR?.isDisabled && (
+                  <span onClick={() => setBirthInclusionFilterQuery(BIRTH_INCLUSION_FIELD_NAMES["CHILD_AADHAAR"])}>
+                    <EditIcon selected={true} label={"Edit"} />
+                  </span>
+                )}
               </ButtonContainer>
             </div>
           </FormFieldContainer>
@@ -287,19 +291,19 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
             <FieldComponentContainer>
               <div className="col-md-4">
                 <CardLabel>
-                  {`${t("CR_FIRST_NAME_EN")}`} <span className="mandatorycss">*</span>
+                  {`${t("CR_FIRST_NAME_EN")}`}
                 </CardLabel>
                 <TextInput
                   t={t}
-                  key={"password"}
+                  // key={"password"}
                   // isMandatory={false}
                   type={"text"}
                   // optionKey="i18nKey"
                   name="firstNameEn"
-                  value={birthInclusionFormsObj?.CHILD_NAME?.curValue?.firstNameEn}
+                  defaultValue={birthInclusionFormsObj?.CHILD_NAME?.curValue?.firstNameEn}
                   // disabled={birthInclusionFormsObj?.CHILD_NAME?.isDisabled}
                   autoFocus={birthInclusionFormsObj?.CHILD_NAME?.isFocused}
-                  onChange={(e)=>onChildNameChange(e,"firstNameEn")}
+                  oninput={(e) => onChildNameChange(e, "firstNameEn")}
                   placeholder={`${t("CR_FIRST_NAME_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
@@ -312,10 +316,10 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   type={"text"}
                   // optionKey="i18nKey"
                   name="middleNameEn"
-                  value={birthInclusionFormsObj?.CHILD_NAME?.curValue?.middleNameEn}
-                  disabled={birthInclusionFormsObj?.CHILD_NAME?.isDisabled}
+                  defaultValue={birthInclusionFormsObj?.CHILD_NAME?.curValue?.middleNameEn}
+                  // disabled={birthInclusionFormsObj?.CHILD_NAME?.isDisabled}
                   autoFocus={birthInclusionFormsObj?.CHILD_NAME?.isFocused}
-                  onChange={(e)=>onChildNameChange(e,"middleNameEn")}
+                  onChange={(e) => onChildNameChange(e, "middleNameEn")}
                   // value={DeceasedFirstNameEn}
                   // onChange={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
@@ -330,10 +334,10 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   type={"text"}
                   // optionKey="i18nKey"
                   name="lastNameEn"
-                  value={birthInclusionFormsObj?.CHILD_NAME?.curValue?.lastNameEn}
+                  defaultValue={birthInclusionFormsObj?.CHILD_NAME?.curValue?.lastNameEn}
                   disabled={birthInclusionFormsObj?.CHILD_NAME?.isDisabled}
                   autoFocus={birthInclusionFormsObj?.CHILD_NAME?.isFocused}
-                  onChange={(e)=>onChildNameChange(e,"lastNameEn")}
+                  onChange={(e) => onChildNameChange(e, "lastNameEn")}
                   // value={DeceasedFirstNameEn}
                   // onChange={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_LAST_NAME_EN")}`}
@@ -344,9 +348,11 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
 
             <div style={{ marginTop: "2.8rem" }}>
               <ButtonContainer>
-                <span onClick={() => setBirthInclusionFilterQuery(BIRTH_INCLUSION_FIELD_NAMES["CHILD_NAME"])}>
-                  <EditIcon selected={true} label={"Edit"} />
-                </span>
+                {birthInclusionFormsObj?.CHILD_NAME?.isDisabled && (
+                  <span onClick={() => setBirthInclusionFilterQuery(BIRTH_INCLUSION_FIELD_NAMES["CHILD_NAME"])}>
+                    <EditIcon selected={true} label={"Edit"} />
+                  </span>
+                )}
               </ButtonContainer>
             </div>
           </FormFieldContainer>
@@ -362,27 +368,27 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   type={"text"}
                   // optionKey="i18nKey"
                   name="firstNameMl"
-                  value={birthInclusionFormsObj?.CHILD_NAME?.curValue?.firstNameMl}
+                  defaultValue={birthInclusionFormsObj?.CHILD_NAME?.curValue?.firstNameMl}
                   disabled={birthInclusionFormsObj?.CHILD_NAME?.isDisabled}
                   autoFocus={birthInclusionFormsObj?.CHILD_NAME?.isFocused}
-                  onChange={(e)=>onChildNameChange(e,"firstNameMl")}
+                  onChange={(e) => onChildNameChange(e, "firstNameMl")}
                   // onChange={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_FIRST_NAME_ML")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
               </div>
               <div className="col-md-4">
-                <CardLabel>{`${t("CR_MIDDLE_NAME_MAL")}`}</CardLabel>
+                <CardLabel>{`${t("CR_MIDDLE_NAME_ML")}`}</CardLabel>
                 <TextInput
                   t={t}
                   // isMandatory={false}
                   type={"text"}
                   // optionKey="i18nKey"
                   name="middleNameMl"
-                  value={birthInclusionFormsObj?.CHILD_NAME?.curValue?.middleNameMl}
+                  defaultValue={birthInclusionFormsObj?.CHILD_NAME?.curValue?.middleNameMl}
                   disabled={birthInclusionFormsObj?.CHILD_NAME?.isDisabled}
                   autoFocus={birthInclusionFormsObj?.CHILD_NAME?.isFocused}
-                  onChange={(e)=>onChildNameChange(e,"middleNameMl")}
+                  onChange={(e) => onChildNameChange(e, "middleNameMl")}
                   // value={DeceasedFirstNameEn}
                   // onChange={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
@@ -397,21 +403,20 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   type={"text"}
                   // optionKey="i18nKey"
                   name="lastNameMl"
-                  value={birthInclusionFormsObj?.CHILD_NAME?.curValue?.lastNameMl}
+                  defaultValue={birthInclusionFormsObj?.CHILD_NAME?.curValue?.lastNameMl}
                   disabled={birthInclusionFormsObj?.CHILD_NAME?.isDisabled}
                   autoFocus={birthInclusionFormsObj?.CHILD_NAME?.isFocused}
-                  onChange={(e)=>onChildNameChange(e,"lastNameMl")}
+                  onChange={(e) => onChildNameChange(e, "lastNameMl")}
                   // value={DeceasedFirstNameEn}
                   // onChange={setSelectDeceasedFirstNameEn}
-                  placeholder={`${t("CR_LAST_NAME_MAL")}`}
+                  placeholder={`${t("CR_LAST_NAME_ML")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
               </div>
             </FieldComponentContainer>
 
             <div style={{ marginTop: "2.8rem" }}>
-              <ButtonContainer>
-              </ButtonContainer>
+              <ButtonContainer></ButtonContainer>
             </div>
           </FormFieldContainer>
 
@@ -589,8 +594,8 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   type={"text"}
                   // optionKey="i18nKey"
                   name="MotherNameEn"
-                  value={birthInclusionFormsObj?.MOTHER_DETAILS?.curValue?.motherNameEn}
-                  onBlur={(e) => onChangeMotherDetails(e,"motherNameEn")}
+                  defaultValue={birthInclusionFormsObj?.MOTHER_DETAILS?.curValue?.motherNameEn}
+                  onBlur={(e) => onChangeMotherDetails(e, "motherNameEn")}
                   placeholder={`${t("CR_MOTHER_NAME_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
@@ -603,8 +608,8 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   type={"text"}
                   // optionKey="i18nKey"
                   name="MotherNameMl"
-                  value={birthInclusionFormsObj?.MOTHER_DETAILS?.curValue?.motherNameMl}
-                  onBlur={(e) => onChangeMotherDetails(e,"motherNameMl")}
+                  defaultValue={birthInclusionFormsObj?.MOTHER_DETAILS?.curValue?.motherNameMl}
+                  onBlur={(e) => onChangeMotherDetails(e, "motherNameMl")}
                   // value={DeceasedFirstNameEn}
                   // onChange={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_MOTHER_NAME_ML")}`}
@@ -624,8 +629,8 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   max="12"
                   optionKey="i18nKey"
                   name="motherAadharNumber"
-                  value={birthInclusionFormsObj?.MOTHER_DETAILS?.curValue?.motherAdhar}
-                  onBlur={(e) => onChangeMotherDetails(e,"motherAdhar")}
+                  defaultValue={birthInclusionFormsObj?.MOTHER_DETAILS?.curValue?.motherAdhar}
+                  onBlur={(e) => onChangeMotherDetails(e, "motherAdhar")}
                   // onChange={setSelectDeceasedAadharNumber}
                   placeholder={`${t("CR_AADHAR")}`}
                   {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
@@ -635,9 +640,9 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
 
             <div style={{ marginTop: "2.8rem" }}>
               <ButtonContainer>
-                <span onClick={() => setBirthInclusionFilterQuery(BIRTH_INCLUSION_FIELD_NAMES["MOTHER_DETAILS"])}>
+                {birthInclusionFormsObj?.MOTHER_DETAILS?.isDisabled && (<span onClick={() => setBirthInclusionFilterQuery(BIRTH_INCLUSION_FIELD_NAMES["MOTHER_DETAILS"])}>
                   <EditIcon selected={true} label={"Edit"} />
-                </span>
+                </span>)}
               </ButtonContainer>
             </div>
           </FormFieldContainer>
@@ -653,8 +658,8 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   type={"text"}
                   // optionKey="i18nKey"
                   name="FatherNameEn"
-                  value={birthInclusionFormsObj?.FATHER_DETAILS?.curValue?.fatherNameEn}
-                  onBlur={(e) => onChangeFatherDetails(e,"fatherNameEn")}
+                  defaultValue={birthInclusionFormsObj?.FATHER_DETAILS?.curValue?.fatherNameEn}
+                  onBlur={(e) => onChangeFatherDetails(e, "fatherNameEn")}
                   placeholder={`${t("CR_FATHER_NAME_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
@@ -667,8 +672,8 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   type={"text"}
                   // optionKey="i18nKey"
                   name="FatherNameMl"
-                  value={birthInclusionFormsObj?.FATHER_DETAILS?.curValue?.fatherNameMl}
-                  onBlur={(e) => onChangeFatherDetails(e,"fatherNameMl")}
+                  defaultValue={birthInclusionFormsObj?.FATHER_DETAILS?.curValue?.fatherNameMl}
+                  onBlur={(e) => onChangeFatherDetails(e, "fatherNameMl")}
                   // value={DeceasedFirstNameEn}
                   // onChange={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_FATHER_NAME_ML")}`}
@@ -677,7 +682,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
               </div>
               <div className="col-md-4">
                 <CardLabel>
-                  {t("CR_MOTHER_AADHAR")}
+                  {t("CR_FATHER_AADHAR")}
                   <span className="mandatorycss">*</span>
                 </CardLabel>
                 <TextInput
@@ -688,11 +693,11 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   max="12"
                   optionKey="i18nKey"
                   name="AadharNumber"
-                  value={birthInclusionFormsObj?.FATHER_DETAILS?.curValue?.fatherAdhar}
-                  onBlur={(e) => onChangeFatherDetails(e,"fatherAdhar")}
+                  defaultValue={birthInclusionFormsObj?.FATHER_DETAILS?.curValue?.fatherAdhar}
+                  onBlur={(e) => onChangeFatherDetails(e, "fatherAdhar")}
                   // value={DeceasedAadharNumber}
                   // onChange={setSelectDeceasedAadharNumber}
-                  placeholder={`${t("CR_AADHAR")}`}
+                  placeholder={`${t("CR_FATHER_AADHAR")}`}
                   {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                 />
               </div>
@@ -700,66 +705,11 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
 
             <div style={{ marginTop: "2.8rem" }}>
               <ButtonContainer>
-                <span onClick={() => setBirthInclusionFilterQuery(BIRTH_INCLUSION_FIELD_NAMES["FATHER_DETAILS"])}>
-                  <EditIcon selected={true} label={"Edit"} />
-                </span>
-              </ButtonContainer>
-            </div>
-          </FormFieldContainer>
-          <FormFieldContainer>
-            <FieldComponentContainer>
-              <div className="col-md-4">
-                <CardLabel>
-                  {`${t("CR_SPOUSE_TYPE_EN")}`} <span className="mandatorycss">*</span>
-                </CardLabel>
-                <TextInput
-                  t={t}
-                  // isMandatory={false}
-                  type={"text"}
-                  // optionKey="i18nKey"
-                  name="spouseEn"
-                  // value={DeceasedFirstNameEn}
-                  // onChange={setSelectDeceasedFirstNameEn}
-                  placeholder={`${t("CR_SPOUSE_TYPE_EN")}`}
-                  // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
-                />
-              </div>
-              <div className="col-md-4">
-                <CardLabel>{`${t("CR_SPOUSE_TYPE_MAL")}`}</CardLabel>
-                <TextInput
-                  t={t}
-                  // isMandatory={false}
-                  type={"text"}
-                  // optionKey="i18nKey"
-                  name="SpouseMl"
-                  // value={DeceasedFirstNameEn}
-                  // onChange={setSelectDeceasedFirstNameEn}
-                  placeholder={`${t("CR_SPOUSE_TYPE_ML")}`}
-                  // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
-                />
-              </div>
-              <div className="col-md-4">
-                <CardLabel>
-                  {t("CR_MOTHER_AADHAR")}
-                </CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type="number"
-                  max="12"
-                  optionKey="i18nKey"
-                  name="SpouseAadharNumber"
-                  // value={DeceasedAadharNumber}
-                  // onChange={setSelectDeceasedAadharNumber}
-                  placeholder={`${t("CR_AADHAR")}`}
-                  {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
-                />
-              </div>
-            </FieldComponentContainer>
-
-            <div style={{ marginTop: "2.8rem" }}>
-              <ButtonContainer>
-                <EditIcon selected={true} label={"Edit"} />
+                {birthInclusionFormsObj?.FATHER_DETAILS?.isDisabled && (
+                  <span onClick={() => setBirthInclusionFilterQuery(BIRTH_INCLUSION_FIELD_NAMES["FATHER_DETAILS"])}>
+                    <EditIcon />
+                  </span>
+                )}
               </ButtonContainer>
             </div>
           </FormFieldContainer>
@@ -771,8 +721,8 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   t={t}
                   type={"text"}
                   name="HouseNameEn"
-                  value={birthInclusionFormsObj?.PRESENT_ADDRESS?.curValue?.houseNameEn}
-                  onChange={(e)=>onPresentAddressChange(e,"houseNameEn")}
+                  defaultValue={birthInclusionFormsObj?.PRESENT_ADDRESS?.curValue?.houseNameEn}
+                  onChange={(e) => onPresentAddressChange(e, "houseNameEn")}
                   placeholder={`${t("CR_HOUSE_NO_AND_NAME_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
@@ -785,8 +735,8 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   type={"text"}
                   // optionKey="i18nKey"
                   name="LocalityEn"
-                  value={birthInclusionFormsObj?.PRESENT_ADDRESS?.curValue?.localityEn}
-                  onChange={(e)=>onPresentAddressChange(e,"localityEn")}
+                  defaultValue={birthInclusionFormsObj?.PRESENT_ADDRESS?.curValue?.localityEn}
+                  onChange={(e) => onPresentAddressChange(e, "localityEn")}
                   placeholder={`${t("CR_LOCALITY_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
@@ -799,8 +749,8 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   type={"text"}
                   // optionKey="i18nKey"
                   name="Street"
-                  value={birthInclusionFormsObj?.PRESENT_ADDRESS?.curValue?.streetEn}
-                  onChange={(e)=>onPresentAddressChange(e,"streetEn")}
+                  defaultValue={birthInclusionFormsObj?.PRESENT_ADDRESS?.curValue?.streetEn}
+                  onChange={(e) => onPresentAddressChange(e, "streetEn")}
                   placeholder={`${t("CR_STREET_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
@@ -808,47 +758,47 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
             </FieldComponentContainer>
             <div style={{ marginTop: "2.8rem" }}>
               <ButtonContainer>
-                <span onClick={() => setBirthInclusionFilterQuery(BIRTH_INCLUSION_FIELD_NAMES["PRESENT_ADDRESS"])}>
-                    <EditButton selected={true} label={"Edit"} />
-                  </span>
+                {birthInclusionFormsObj?.PRESENT_ADDRESS?.isDisabled && <span onClick={() => setBirthInclusionFilterQuery(BIRTH_INCLUSION_FIELD_NAMES["PRESENT_ADDRESS"])}>
+                  <EditIcon />
+                </span>}
               </ButtonContainer>
             </div>
           </FormFieldContainer>
           <FormFieldContainer>
             <FieldComponentContainer>
               <div className="col-md-6">
-                <CardLabel>{`${t("CR_HOUSE_NO_AND_NAME_MAL")}`}</CardLabel>
+                <CardLabel>{`${t("CR_HOUSE_NO_AND_NAME_ML")}`}</CardLabel>
                 <TextInput
                   t={t}
                   type={"text"}
                   name="HouseNameMl"
-                  value={birthInclusionFormsObj?.PRESENT_ADDRESS?.curValue?.houseNameMl}
-                  onChange={(e)=>onPresentAddressChange(e,"houseNameMl")}
-                  placeholder={`${t("CR_HOUSE_NO_AND_NAME_MAL")}`}
+                  defaultValue={birthInclusionFormsObj?.PRESENT_ADDRESS?.curValue?.houseNameMl}
+                  onChange={(e) => onPresentAddressChange(e, "houseNameMl")}
+                  placeholder={`${t("CR_HOUSE_NO_AND_NAME_ML")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
               </div>
               <div className="col-md-3">
-                <CardLabel>{`${t("CR_LOCALITY_MAL")}`}</CardLabel>
+                <CardLabel>{`${t("CR_LOCALITY_ML")}`}</CardLabel>
                 <TextInput
                   t={t}
                   type={"text"}
                   name="LocalityMl"
-                  value={birthInclusionFormsObj?.PRESENT_ADDRESS?.curValue?.localityMl}
-                  onChange={(e)=>onPresentAddressChange(e,"localityMl")}
-                  placeholder={`${t("CR_LOCALITY_MAL")}`}
+                  defaultValue={birthInclusionFormsObj?.PRESENT_ADDRESS?.curValue?.localityMl}
+                  onChange={(e) => onPresentAddressChange(e, "localityMl")}
+                  placeholder={`${t("CR_LOCALITY_ML")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
               </div>
               <div className="col-md-3">
-                <CardLabel>{`${t("CR_STREET_MAL")}`}</CardLabel>
+                <CardLabel>{`${t("CR_STREET_ML")}`}</CardLabel>
                 <TextInput
                   t={t}
                   type={"text"}
                   name="StreetMl"
-                  value={birthInclusionFormsObj?.PRESENT_ADDRESS?.curValue?.streetMl}
-                  onChange={(e)=>onPresentAddressChange(e,"streetMl")}
-                  placeholder={`${t("CR_STREET_MAL")}`}
+                  defaultValue={birthInclusionFormsObj?.PRESENT_ADDRESS?.curValue?.streetMl}
+                  onChange={(e) => onPresentAddressChange(e, "streetMl")}
+                  placeholder={`${t("CR_STREET_ML")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
               </div>
