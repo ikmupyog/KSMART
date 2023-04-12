@@ -141,10 +141,15 @@ const StillBirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleT
       setvehicleToMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
-  function setSelectVehicleOtherDetailsEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
-      setvehicleDesDetailsEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-    }
+  // function setSelectVehicleOtherDetailsEn(e) {
+  //   if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+  //     setvehicleDesDetailsEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+  //   }
+  // }
+
+  function setSelectVehicleOtherDetailsEn(e) {   
+      setvehicleDesDetailsEn(e.target.value);
+    
   }
   function selectadmittedHospitalEn(value) {
     setSelectedadmittedHospitalEn(value);
