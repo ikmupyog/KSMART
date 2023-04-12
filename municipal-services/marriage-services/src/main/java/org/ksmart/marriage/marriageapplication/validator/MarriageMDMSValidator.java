@@ -53,14 +53,14 @@ public class MarriageMDMSValidator {
         if (request.getMarriageDetails().get(0).getMarriageType() != null) {
             if (!masterData.get(MarriageConstants.MARRIAGE_TYPE)
                     .contains(request.getMarriageDetails().get(0).getMarriageType()))
-                errorMap.put("GROOM:TYPE OF MARRIAGE INVALID", "The marriage type " +
+                errorMap.put("TYPE OF MARRIAGE INVALID", "The marriage type " +
                         request.getMarriageDetails().get(0).getMarriageType() + " is invalid");
         }
 
         if (request.getMarriageDetails().get(0).getPlacetype() != null) {
             if (!masterData.get(MarriageConstants.MARRIAGE_PLACE_TYPE)
                     .contains(request.getMarriageDetails().get(0).getPlacetype()))
-                errorMap.put("GROOM: MARRIAGE PLACE TYPE INVALID ", "The marriage place type " +
+                errorMap.put(" MARRIAGE PLACE TYPE INVALID ", "The marriage place type " +
                         request.getMarriageDetails().get(0).getPlacetype() + " is invalid");
         }
 
@@ -68,16 +68,16 @@ public class MarriageMDMSValidator {
 
         if (request.getMarriageDetails().get(0).getBrideDetails().getGender() != null) {
             if (!masterData.get(MarriageConstants.GENDERTYPE)
-                    .contains(request.getMarriageDetails().get(0).getGroomDetails().getGender()))
+                    .contains(request.getMarriageDetails().get(0).getBrideDetails().getGender()))
                 errorMap.put("BRIDE:INVALID GENDER TYPE", "The gender of the groom " +
-                        request.getMarriageDetails().get(0).getGroomDetails().getGender() + " is invalid");
+                        request.getMarriageDetails().get(0).getBrideDetails().getGender() + " is invalid");
         }
 
         if (request.getMarriageDetails().get(0).getBrideDetails().getMaritalstatusid() != null) {
             if (!masterData.get(MarriageConstants.MARITAL_STATUS)
-                    .contains(request.getMarriageDetails().get(0).getGroomDetails().getMaritalstatusid()))
+                    .contains(request.getMarriageDetails().get(0).getBrideDetails().getMaritalstatusid()))
                 errorMap.put("BRIDE:MARITAL STATUS INVALID", "The marital status of groom  " +
-                        request.getMarriageDetails().get(0).getGroomDetails().getMaritalstatusid() + " is invalid");
+                        request.getMarriageDetails().get(0).getBrideDetails().getMaritalstatusid() + " is invalid");
         }
         // MASTER DETAILS VALIDATION
 
