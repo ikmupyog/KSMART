@@ -19,12 +19,21 @@ public class MarriageDocumentRowMapper implements ResultSetExtractor<List<Marria
         List<MarriageDocument> result = new ArrayList<>();
         while (rs.next()) {
             result.add(MarriageDocument.builder()
-                    .id(rs.getString("id"))
-                    .documentName(rs.getString("document_name"))
-                    .documentOwner(rs.getString("bride_groom"))
-                    .fileStoreId(rs.getString("filestoreid"))
-                    .active(rs.getBoolean("active"))
-                    .applicationNumber(rs.getString("applicationnumber"))
+                    .id(rs.getString("DOC_id"))
+                    .marriageTenantid(rs.getString("DOC_tenantid"))
+                    .documentName(rs.getString("DOC_document_name"))
+                    .documentType(rs.getString("DOC_document_type"))
+                    .fileStoreId(rs.getString("DOC_filestoreid"))
+                    .documentlink(rs.getString("DOC_document_link"))
+                    .marriageId(rs.getString("DOC_marriageid"))
+                    .documentOwner(rs.getString("DOC_bride_groom"))
+                    .active(rs.getBoolean("DOC_active"))
+                    .applicationNumber(rs.getString("DOC_applicationnumber"))
+                    .registrationNumber(rs.getString("DOC_registrationno"))
+                    .correctionId(rs.getString("DOC_correction_id"))
+                    .correctionFieldName(rs.getString("DOC_correction_field_name"))
+                    .applicationType(rs.getString("DOC_applicationtype"))
+                    .updatedFlag(rs.getInt("DOC_updated_flag"))
                     .marriageDocAuditDetails(getDocumentAuditDetails(rs))
                     .build());
         }
@@ -34,3 +43,4 @@ public class MarriageDocumentRowMapper implements ResultSetExtractor<List<Marria
     }
     
 }
+
