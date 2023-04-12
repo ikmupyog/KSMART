@@ -31,12 +31,12 @@ const SelectDetails = ({ t, config, onSelect, value }) => {
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <PGRTimeline currentStep={6} /> : null}
       {window.location.href.includes("/employee") ? <EmpTimeLine currentStep={5} /> : null}
-      <FormStep config={config} onSelect={goNext} disabled={true} t={t} isDisabled={details?.length < 10}>
+      <FormStep config={config} onSelect={goNext} disabled={true} t={t} isDisabled={!details}>
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
               <CardLabel>
-                {`${t("CS_ADDCOMPLAINT_DETAILS")}`}
+                {`${t("CS_ADDCOMPLAINT_DETAILS")}`} <span className="mandatorycss">*</span>
               </CardLabel>
               <TextArea t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="details" value={details}
                 onChange={handleChange} placeholder={`${t("CS_ADDCOMPLAINT_DETAILS")}`} />

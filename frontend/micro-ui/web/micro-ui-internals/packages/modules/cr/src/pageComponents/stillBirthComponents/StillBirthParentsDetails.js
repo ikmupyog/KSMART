@@ -118,6 +118,10 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
   const [AdhaarDuplicationError, setAdhaarDuplicationError] = useState(false);
   const [AgeValidationMsg, setAgeValidationMsg] = useState(false);
   const [OrderofChildrenValidationMsg, setOrderofChildrenValidationMsg] = useState(false);
+  const [MotherFirstNameError, setMotherFirstNameError] = useState(false);
+  const [MotherFirstNameMLError, setMotherFirstNameMLError] = useState(false);
+  const [FatherFirstNameError, setFatherFirstNameError] = useState(false);
+  const [FatherFirstNameMLError, setFatherFirstNameMLError] = useState(false);
 
 
   const onSkip = () => onSelect();
@@ -237,7 +241,9 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
         setOrderofChildren(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
       }
     }
-
+    else {
+      e.preventDefault();
+    }
     if (e.target.value.trim().length === 3) {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
@@ -292,7 +298,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
       setMotherProfession(null);
 
       setOrderofChildren("");
-      // setMotherNationality(null);
+      
     } else {
 
       setIsMotherInfo(e.target.checked);
@@ -304,13 +310,30 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
       setFatherAadhar(null);
       setFatherFirstNameEn("");
       setFatherFirstNameMl("");
-      // setFatherNationality(null);
+     
       setFatherEducation(null);
       setFatherProfession(null);
-      // setFatherMobile("");
-      // setFatherEmail("");
+   
     } else {
       setIsFatherInfo(e.target.checked);
+    }
+  }
+  function setCheckMalayalamInputField(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
+    if (!(e.key.match(pattern))) {
+      e.preventDefault();
+    }
+  }
+  function setCheckSpecialCharSpace(e) {
+    let pattern = /^[a-zA-Z-.`' ]*$/;
+    if (!(e.key.match(pattern)) && e.code === 'Space') {
+      e.preventDefault();
+    }
+  }
+  function setCheckSpecialChar(e) {
+    let pattern = /^[0-9]*$/;
+    if (!(e.key.match(pattern))) {
+      e.preventDefault();
     }
   }
   function setCheckMalayalamInputField(e) {
@@ -358,10 +381,31 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
       }
     }
   }
-
   let validFlag = true;
   const goNext = () => {
     if (isMotherInfo === false) {
+      if (motherFirstNameEn.trim() == null || motherFirstNameEn.trim() == '' || motherFirstNameEn.trim() == undefined) {
+        validFlag = false;
+        setMotherFirstNameEn("");
+        setMotherFirstNameError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setMotherFirstNameError(false);
+      }
+      if (motherFirstNameMl.trim() == null || motherFirstNameMl.trim() == '' || motherFirstNameMl.trim() == undefined) {
+        validFlag = false;
+        setMotherFirstNameMl("");
+        setMotherFirstNameMLError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setMotherFirstNameMLError(false);
+      }
       if (motherEducation == null || motherEducation == '' || motherEducation == undefined) {
         validFlag = false;
         setMotherEducationError(true);
@@ -383,7 +427,9 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
       } else {
         setMotherProfessionError(false);
       }
-      if (motherAadhar != null) {
+      if (motherAadhar.trim() == null || motherAadhar.trim() == '' || motherAadhar.trim() == undefined) {
+        setMotherAadhar("");
+      } else if (motherAadhar != null && motherAadhar != "") {
         let adharLength = motherAadhar;
         if (adharLength.length < 12 || adharLength.length > 12) {
           validFlag = false;
@@ -395,8 +441,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
         } else {
           setMotherAadharError(false);
         }
-      }
-   
+      }   
       if (motherMarriageBirth == null || motherMarriageBirth == '' || motherMarriageBirth == undefined) {
         if (MotherBirthageError) {
           validFlag = false;
@@ -409,9 +454,30 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
           setMotherBirthageError(false);
         }
       }
-
     }
     if (isFatherInfo === false) {
+      if (fatherFirstNameEn.trim() == null || fatherFirstNameEn.trim() == '' || fatherFirstNameEn.trim() == undefined) {
+        validFlag = false;
+        setFatherFirstNameEn("");
+        setFatherFirstNameError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setFatherFirstNameError(false);
+      }
+      if (fatherFirstNameMl.trim() == null || fatherFirstNameMl.trim() == '' || fatherFirstNameMl.trim() == undefined) {
+        validFlag = false;
+        setFatherFirstNameMl("");
+        setFatherFirstNameMLError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setFatherFirstNameMLError(false);
+      }
       if (fatherEducation == null || fatherEducation == '' || fatherEducation == undefined) {
         validFlag = false;
         setFatherEduError(true);
@@ -433,7 +499,9 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
       } else {
         setFatherProfError(false);
       }
-      if (fatherAadhar != null) {
+      if (fatherAadhar.trim() == null || fatherAadhar.trim() == '' || fatherAadhar.trim() == undefined) {
+        setFatherAadhar("");
+      } else if (fatherAadhar != null && fatherAadhar != "") {
         let adharLength = fatherAadhar;
         if (adharLength.length < 12 || adharLength.length > 12) {
           validFlag = false;
@@ -482,16 +550,21 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
       }
     }
     if (isFatherInfo === false && isMotherInfo === false) {
-      if (motherAadhar != null && fatherAadhar != null) {
-        if (motherAadhar === fatherAadhar) {
-          validFlag = false;
-          setAdhaarDuplicationError(true);
-          setToast(true);
-          setTimeout(() => {
-            setToast(false);
-          }, 2000);
-        } else {
-          setAdhaarDuplicationError(false);
+      if ((motherAadhar.trim() == null || motherAadhar.trim() == '') && (fatherAadhar.trim() != null || fatherAadhar.trim() == '')) {
+        setMotherAadhar('');
+        setFatherAadhar('');
+      } else {
+        if (motherAadhar.trim() != null && fatherAadhar.trim() != null) {
+          if (motherAadhar === fatherAadhar) {
+            validFlag = false;
+            setAdhaarDuplicationError(true);
+            setToast(true);
+            setTimeout(() => {
+              setToast(false);
+            }, 2000);
+          } else {
+            setAdhaarDuplicationError(false);
+          }
         }
       }
     }
@@ -592,6 +665,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
                       name="motherAadhar"
                       value={motherAadhar}
                       onChange={setSelectMotherAadhar}
+                      onKeyPress={setCheckSpecialChar}
                       disable={isDisableEdit}
                       placeholder={`${t("CS_COMMON_AADHAAR")}`}
                       {...(validation = { pattern: "^[0-9]{12}$", type: "test", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
@@ -611,6 +685,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
                       name="motherFirstNameEn"
                       value={motherFirstNameEn}
                       onChange={setSelectMotherFirstNameEn}
+                      onKeyPress={setCheckSpecialCharSpace}
                       disable={isDisableEdit}
                       placeholder={`${t("CR_MOTHER_NAME_EN")}`}
                       {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_MOTHER_NAME_EN") })}
@@ -710,6 +785,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
                       optionKey="i18nKey"
                       name="orderofChildren"
                       value={orderofChildren}
+                      onKeyPress={setCheckSpecialChar}
                       onChange={setSelectOrderofChildren}
                       disable={isDisableEdit}
                       placeholder={`${t("CR_ORDER_CURRENT_DELIVERY")}`}
@@ -775,6 +851,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
                       name="fatherAadhar"
                       value={fatherAadhar}
                       onChange={setSelectFatherAadhar}
+                      onKeyPress={setCheckSpecialChar}
                       disable={isDisableEdit}
                       placeholder={`${t("CS_COMMON_AADHAAR")}`}
                       {...(validation = { pattern: "^([0-9]){12}$", isRequired: false, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}

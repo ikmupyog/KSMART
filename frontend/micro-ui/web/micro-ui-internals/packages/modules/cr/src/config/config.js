@@ -164,7 +164,7 @@ export const newConfig = [
           skipText: "",
         },
         withoutLabel: true,
-        key: "BirthNACAddressPage",
+        key: "AddressBirthDetails",
         nextStep: "nac-initiator-details",
         type: "component",
         hideInEmployee: false,
@@ -810,23 +810,23 @@ export const newConfig = [
         hideInEmployee: false,
       },
       {
-        // 
-            route: "abandoned-family-information",
-            component: "FamilyAbandonedDeath",
-            texts: {
-             headerCaption: "",
-             // header: "CR_FAMILY_INFO",
-             header: "",
-             cardText: "",
-             submitBarLabel: "CS_COMMON_NEXT",
-             skipText: "",
-            },
-            withoutLabel: true,
-            key: "FamilyAbandonedDeath",
-            nextStep: "abandoned-statistical-info",
-            type: "component",
-            hideInEmployee: false,
-         },
+        //
+        route: "abandoned-family-information",
+        component: "FamilyAbandonedDeath",
+        texts: {
+          headerCaption: "",
+          // header: "CR_FAMILY_INFO",
+          header: "",
+          cardText: "",
+          submitBarLabel: "CS_COMMON_NEXT",
+          skipText: "",
+        },
+        withoutLabel: true,
+        key: "FamilyAbandonedDeath",
+        nextStep: "abandoned-statistical-info",
+        type: "component",
+        hideInEmployee: false,
+      },
       {
         route: "abandoned-statistical-info",
         component: "StatisticalInfoAbandoned",
@@ -1050,7 +1050,7 @@ export const newConfig = [
       {
         type: "component",
         route: "address-groom",
-        component: "MarriageAddressBasePage",
+        component: "GroomAddressBasePage",
         texts: {
           headerCaption: "",
           header: "",
@@ -1083,7 +1083,7 @@ export const newConfig = [
       {
         type: "component",
         route: "address-bride",
-        component: "MarriageAddressBasePage",
+        component: "BrideAddressBasePage",
         texts: {
           headerCaption: "",
           header: "",

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { convertToBirthRegistration, convertToEditBirthRegistration } from "../../../utils/birthindex";
-import getPDFData from "../../../utils/getTLAcknowledgementData";
+import getPDFData from "../../../utils/getCRBirthAcknowledgementData";
 import { useHistory } from "react-router-dom";
 
 const GetActionMessage = (props) => {
@@ -26,7 +26,7 @@ const BannerPicker = (props) => {
   if (props.isSuccess && sessionStorage.getItem("CR_BIRTH_EDIT_FLAG")) {
     //console.log(JSON.stringify(props));
     sessionStorage.setItem("applicationNumber", props.data?.ChildDetails[0]?.applicationNumber);
-    console.log(sessionStorage.getItem("applicationNumber"));
+    // console.log(sessionStorage.getItem("applicationNumber"));
     // if (sessionStorage.getItem("applicationNumber") != null) {
     //   window.location.assign(`${window.location.origin}/digit-ui/employee/cr/application-details/${sessionStorage.getItem("applicationNumber")}`);
     // }
@@ -137,16 +137,18 @@ const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
   }, [mutation.isSuccess]);
 
   const handleDownloadPdf = async () => {
-    const { Licenses = [] } = mutation.data
-    const License = (Licenses && Licenses[0]) || {};
-    const tenantInfo = tenants.find((tenant) => tenant.code === License.tenantId);
-    let res = License;
+    const { ChildDetails = [] } = mutation.data
+    const ChildDet = (ChildDetails && ChildDetails[0]) || {};
+    const tenantInfo = tenants.find((tenant) => tenant.code === ChildDet.tenantid);
+    console.log(tenantInfo);
+    let res = ChildDet;
+    console.log(res);
     const data = getPDFData({ ...res }, tenantInfo, t);
     data.then((ress) => Digit.Utils.pdf.generate(ress));
   };
 
   let enableLoader = (mutation.isIdle || mutation.isLoading);
-  console.log(JSON.stringify(mutation));
+  // console.log(JSON.stringify(mutation));
   if (enableLoader) {
     if (mutation?.isLoading === false && mutation?.isSuccess === false && mutation?.isError == false && mutation?.isIdle === true && applicationNumber != null) {
       return (
@@ -171,7 +173,7 @@ const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
       </Card>)
   }
   else
-    // console.log(JSON.stringify(mutation));
+    console.log(JSON.stringify(mutation));
     if (mutation.isSuccess && mutation?.isError === false && mutation?.isLoading === false) {
       return (
         <Card>

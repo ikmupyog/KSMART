@@ -126,7 +126,8 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
     setDocuploadedId(e?.target?.id);
     setUploadedFile(null);
     setFile(e.target.files[0]);
-    console.log(uploadedFiles);  
+    console.log(result + "documentdetails");  
+
     // console.log(uploadedFile);  
   
 
@@ -330,7 +331,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                 name="caretakerDesignation"
                 value={caretakerDesignation}
                 onChange={setSelectcaretakerDesignation}
-                disable={isDisableEdit}
+                disable={isEdit}
                 placeholder={`${t("CR_CARE_TAKER_DESIGNATION")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_ERROR_CARE_TAKER_DESIGNATION") })}
               />

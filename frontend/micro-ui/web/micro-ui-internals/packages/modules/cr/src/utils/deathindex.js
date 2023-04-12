@@ -273,6 +273,8 @@ export const convertToDeathRegistration = (data = {}) => {
   const empTenantId = Digit.ULBService.getCurrentUlb();
   // let tenantId = "";
   // tenantId = empTenantId["code"];
+
+  console.log(data);
   const formdata = {
     deathCertificateDtls: [
       {

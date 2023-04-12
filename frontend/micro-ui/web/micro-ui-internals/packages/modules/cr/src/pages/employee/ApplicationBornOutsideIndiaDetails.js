@@ -19,8 +19,8 @@ const ApplicationBornOutsideIndiaDetails = () => {
   sessionStorage.setItem("applicationNumber", applicationNumber);
   // const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
   const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDetail(t, tenantId, applicationNumber);
-  const [params, setParams, clearParams] =  Digit.Hooks.useSessionStorage("CR_EDIT_STILLBIRTH_REG", {}) 
-  const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_EDIT_STILLBIRTH_FLAG", false) 
+  const [params, setParams, clearParams] =  Digit.Hooks.useSessionStorage("CR_EDIT_BORNOUTSIDEBIRTH_REG", {}) 
+  const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_BORNOUTSIDEBIRTH_EDIT_FLAG", false) 
   const stateId = Digit.ULBService.getStateId();
 
   const {

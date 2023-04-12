@@ -121,6 +121,12 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   const [AadharError, setAadharError] = useState(formData?.BrideDetails?.brideAdharNo ? false : false);
   const [witness1Mobile, setwitness1Mobile] = useState(formData?.WitnessDetails?.witness1Mobile ? formData?.WitnessDetails?.witness1Mobile : "");
   const [witness2Mobile, setwitness2Mobile] = useState(formData?.WitnessDetails?.witness2Mobile ? formData?.WitnessDetails?.witness2Mobile : "");
+  const [witness1Esigned, setwitness1Esigned] = useState(
+    formData?.WitnessDetails?.witness1Esigned ? formData?.WitnessDetails?.witness1Esigned : false
+  );
+  const [witness2Esigned, setwitness2Esigned] = useState(
+    formData?.WitnessDetails?.witness2Esigned ? formData?.WitnessDetails?.witness2Esigned : false
+  );
   const [isDisableEdit, setisDisableEdit] = useState(isEditWitness ? isEditWitness : false);
   //   const [file, setFile] = useState();
   //   const [files, setFiles] = useState();
@@ -253,7 +259,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   }
   function setSelectwitness2AdharNo(e) {
     if (e.target.value.trim().length >= 0) {
-      setwitness2AadharNo(
+      setwitness2AdharNo(
         e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
       );
     }
@@ -459,6 +465,14 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     // setAgeMariageStatus(value.code);
   }
 
+  function setSelectwitness1Esigned() {
+    setwitness1Esigned(true);
+  }
+
+  function setSelectwitness2Esigned() {
+    setwitness1Esigned(true);
+  }
+
   function sendWitness1OTP() {}
 
   let validFlag = true;
@@ -513,6 +527,8 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
         witness2AddresSEn,
         witness1Mobile,
         witness2Mobile,
+        witness1Esigned,
+        witness2Esigned,
       });
     }
   };
@@ -686,7 +702,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                         }}
                         name="eSign"
                         value="E-sign"
-                        onChange={setSelectwitness1Mobile}
+                        onChange={setSelectwitness1Esigned}
                         disable={isDisableEdit}
                         // {...(validation = { isRequired: true })}
                       />
@@ -812,7 +828,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                         }}
                         name="eSign"
                         value="E-sign"
-                        onChange={setSelectwitness1Mobile}
+                        onChange={setSelectwitness2Esigned}
                         disable={isDisableEdit}
                         // {...(validation = { isRequired: true })}
                       />

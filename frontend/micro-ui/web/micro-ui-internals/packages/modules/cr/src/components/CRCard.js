@@ -38,61 +38,61 @@ const CRCard = () => {
             label: t("CR_BIRTH_REGISTRATION"),
             link: `/digit-ui/employee/cr/cr-flow`,
             role: "BND_CEMP"
-        
+
         },
         {
             label: t("CR_BIRTH_REGISTRATION"),
             link: `/digit-ui/employee/cr/cr-flow`,
             role: "BND_SUB_REGISTRAR"
-        
+
         },
         {
             label: t("CR_BIRTH_REGISTRATION"),
             link: `/digit-ui/employee/cr/cr-flow`,
             role: "BND_LOCAL_REGISTRAR"
-        
+
         },
         {
             label: t("CR_BIRTH_REGISTRATION"),
             link: `/digit-ui/employee/cr/cr-flow`,
             role: "BND_DISTRICT_REGISTRAR"
-        
+
         },
         {
             label: t("CR_BIRTH_REGISTRATION"),
             link: `/digit-ui/employee/cr/cr-flow`,
             role: "JHI"
-        
+
         },
         {
             label: t("CR_BIRTH_REGISTRATION"),
             link: `/digit-ui/employee/cr/cr-flow`,
             role: "HOSPITAL_OPERATOR"
-        
+
         },
         {
             label: t("CR_BIRTH_REGISTRATION"),
             link: `/digit-ui/employee/cr/cr-flow`,
             role: "HOSPITAL_APPROVER"
-        
+
         },
         {
             label: t("CR_BIRTH_REGISTRATION"),
             link: `/digit-ui/employee/cr/cr-flow`,
             role: "INSTITUTION_OPERATOR"
-        
+
         },
         {
             label: t("CR_BIRTH_REGISTRATION"),
             link: `/digit-ui/employee/cr/cr-flow`,
             role: "INSTITUTION_APPROVER"
-        
+
         },
         {
             label: t("CR_BIRTH_REGISTRATION"),
             link: `/digit-ui/employee/cr/cr-flow`,
             role: "OFFICIAL_NOTIFIER"
-        
+
         },
         {
             label: t("CR_DEATH_REGISTRATION"),
@@ -155,7 +155,8 @@ const CRCard = () => {
 
     const propsForModuleCard = {
         Icon: <DropIcon />,
-        moduleName: t("Civil Registration"),
+        moduleName: 'Civil Registration',
+        moduleHeader: t('CIVIL_REGISTRATION'),
         // TL_COMMON_TL
         kpis: [
             // {

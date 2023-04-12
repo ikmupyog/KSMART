@@ -2,7 +2,7 @@ import { Banner, Card, CardText, LinkButton, ActionBar, Row, StatusTable, Submit
 import React, { useState, useEffect } from "react";
 import { useLocation, Link, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import getPTAcknowledgementData from "../utils/getTLAcknowledgementData";
+import getCRBirthAcknowledgementData from "../utils/getCRBirthAcknowledgementData";
 import * as func from "../utils";
 
 
@@ -21,10 +21,10 @@ const Response = (props) => {
   const { t } = useTranslation();
 
   const printReciept = async () => {
-    const Licenses = state?.data || [];
-    const license = (Licenses && Licenses[0]) || {};
-    const tenantInfo = tenants.find((tenant) => tenant.code === license.tenantId);
-    const data = await getPTAcknowledgementData({ ...license }, tenantInfo, t);
+    const ChildDetails = state?.data || [];
+    const ChildDet = (ChildDetails && ChildDetails[0]) || {};
+    const tenantInfo = tenants.find((tenant) => tenant.code === ChildDet.tenantid);
+    const data = await getCRBirthAcknowledgementData({ ...ChildDet }, tenantInfo, t);
     Digit.Utils.pdf.generate(data);
   };
 

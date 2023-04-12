@@ -64,6 +64,21 @@ const initRequestBody = (tenantId) => ({
     ],
   },
 });
+const getMarriagePlaceIdMasterList = (tenantId, moduleCode) => ({
+  details: {
+    tenantId: tenantId,
+    moduleDetails: [
+      {
+        moduleName: moduleCode,
+        masterDetails: [
+          {
+            name: "MarriagePlace",
+          },
+        ],
+      },
+    ],
+  },
+});
 const getTypeOfMarriageMasterList = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -865,7 +880,7 @@ const getTradeApplicationDocuments = (tenantId, moduleCode, type) => ({
       },
     ],
   },
-})
+});
 
 const getPTFloorList = (tenantId, moduleCode, type) => ({
   type,
@@ -1422,6 +1437,23 @@ const getBirthCorrectionDocumentslist = (tenantId, moduleCode) => {
           masterDetails: [
             {
               name: "BirthCorrectionDocuments",
+            },
+          ],
+        },
+      ],
+    },
+  };
+};
+const getDeathCorrectionDocumentslist = (tenantId, moduleCode) => {
+  return {
+    details: {
+      tenantId: tenantId,
+      moduleDetails: [
+        {
+          moduleName: moduleCode,
+          masterDetails: [
+            {
+              name: "DeathCorrectionDocuments",
             },
           ],
         },
@@ -2405,8 +2437,11 @@ export const MdmsService = {
     return responseValue;
   },
   getCommonDbmsService: (tenantId, moduleCode, type) => {
-    console.log("reached common",tenantId, moduleCode, type);
-    return MdmsService.getDataByCriteria(tenantId, getCommonDbmsServiceCriteria(tenantId, moduleCode,type), moduleCode);
+    console.log("reached common", tenantId, moduleCode, type);
+    return MdmsService.getDataByCriteria(tenantId, getCommonDbmsServiceCriteria(tenantId, moduleCode, type), moduleCode);
+  },
+  getMarriagePlaceId: (tenantId, moduleCode) => {
+    return MdmsService.getDataByCriteria(tenantId, getMarriagePlaceIdMasterList(tenantId, moduleCode), moduleCode);
   },
   getTypeOfMarriageMaster: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getTypeOfMarriageMasterList(tenantId, moduleCode), moduleCode);
@@ -2595,6 +2630,9 @@ export const MdmsService = {
   GetBirthCorrectionDocuments: (tenantId, moduleCode, type) => {
     return MdmsService.getDataByCriteria(tenantId, getBirthCorrectionDocumentslist(tenantId, moduleCode), moduleCode);
   },
+  GetDeathCorrectionDocuments: (tenantId, moduleCode, type) => {
+    return MdmsService.getDataByCriteria(tenantId, getDeathCorrectionDocumentslist(tenantId, moduleCode), moduleCode);
+  },
   /////////crmdms
   getServiceDefs: (tenantId, moduleCode) => {
     return MdmsService.getDataByCriteria(tenantId, getModuleServiceDefsCriteria(tenantId, moduleCode), moduleCode);
@@ -2716,7 +2754,7 @@ export const MdmsService = {
   getTLLocalbody: (tenantId, moduleCode, type) => {
     return MdmsService.getDataByCriteria(tenantId, getTLLocalbody(tenantId, moduleCode), moduleCode);
   },
-  getTradeApplicationDocuments : (tenantId, moduleCode, type) => {
+  getTradeApplicationDocuments: (tenantId, moduleCode, type) => {
     return MdmsService.getDataByCriteria(tenantId, getTradeApplicationDocuments(tenantId, moduleCode, type), moduleCode);
   },
   getFloorList: (tenantId, moduleCode, type) => {

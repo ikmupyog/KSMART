@@ -2,6 +2,9 @@ import { MdmsService } from "../../services/elements/MDMS";
 import { useQuery } from "react-query";
 
 const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {}) => {
+  const useMarriagePlace = () => {
+    return useQuery("CR_MARRIAGE_PLACE_TYPE", () => MdmsService.getMarriagePlaceId(tenantId, moduleCode), config);
+  };
   const useTypeOfMarriage = () => {
     return useQuery("CR_TYPE_OF_MARRIAGE", () => MdmsService.getTypeOfMarriageMaster(tenantId, moduleCode), config);
   };
@@ -194,6 +197,9 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   const useBirthCorrectionDocuments = () => {
     return useQuery(`BIRTH_CORRECTION_DOCUMENTS`, () => MdmsService.GetBirthCorrectionDocuments(tenantId, moduleCode, type), config);
   };
+  const useDeathCorrectionDocuments = () => {
+    return useQuery(`DEATH_CORRECTION_DOCUMENTS`, () => MdmsService.GetDeathCorrectionDocuments(tenantId, moduleCode, type), config);
+  };
   const useTradeOwnershipSubType = () => {
     return useQuery("TL_TRADE_OWNERSHIP_CATEGORY", () => MdmsService.GetTradeOwnerShipCategory(tenantId, moduleCode, type), {
       select: (data) => {
@@ -291,6 +297,8 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   };
 
   switch (type) {
+    case "MarriagePlace":
+      return useMarriagePlace();
     case "TypeOfMarriage":
       return useTypeOfMarriage();
     case "MarriagePlaceType":
@@ -419,6 +427,8 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
       return useTradeOwnerShipCategory();
     case "BirthCorrectionDocuments":
       return useBirthCorrectionDocuments();
+    case "DeathCorrectionDocuments":
+      return useDeathCorrectionDocuments();
     case "TLOwnerTypeWithSubtypes":
       return useOwnerTypeWithSubtypes();
     case "AccessoryCategory":
