@@ -95,7 +95,7 @@ export const deathCorrectionFilterFieldsObj = {
 };
 
 export const marriageCorrectionFilterFieldsObj = {
-  MARRIAGE_DOM: ({data, inclusionData}) => getFilteredMarriageDOMData(data, inclusionData),
+  DOM: ({data, inclusionData}) => getFilteredMarriageDOMData(data, inclusionData),
   GROOM_NAME_EN: ({data, inclusionData}) => getFilteredGroomNameData(data, inclusionData),
   MARRIAGE_PLACE_WARD: ({data, inclusionData, cmbWardNo}) => getFilteredMarriagePlaceWardData(data, inclusionData, cmbWardNo),
   MARRIAGE_PLACE_TYPE: ({data, inclusionData, cmbPlace}) => getFilteredMarriagePlaceTypeData(data, inclusionData, cmbPlace),

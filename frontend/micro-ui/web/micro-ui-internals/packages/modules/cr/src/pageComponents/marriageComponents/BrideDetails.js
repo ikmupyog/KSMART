@@ -313,12 +313,11 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     birthDate.setHours(0, 0, 0, 0);
 
     if (birthDate.getTime() <= today.getTime()) {
-
-    //setDOBError(false);
-    // setbrideDOB(value);
-    // const today = new Date();
-    // const birthDate = new Date(value);
-    // if (birthDate.getTime() <= today.getTime()) {
+      //setDOBError(false);
+      // setbrideDOB(value);
+      // const today = new Date();
+      // const birthDate = new Date(value);
+      // if (birthDate.getTime() <= today.getTime()) {
       // To calculate the time difference of two dates
       const dobFullYear = new Date(value).getFullYear();
       const currentYear = new Date().getFullYear();
@@ -486,13 +485,12 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     setbrideNoOfSpouse("");
   }
   function setSelectbrideNoOfSpouse(e) {
-
     if (e.target.value.length === 2) {
       if (e.target.value > 3) {
         return false;
       }
     } else {
-      setbrideNoOfSpouse(e.target.value.replace(/[^0-3]/ig, ''));
+      setbrideNoOfSpouse(e.target.value.replace(/[^0-3]/gi, ""));
     }
   }
   function setSelectbrideEmailid(e) {
@@ -512,7 +510,11 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     }
   }
   function setSelectbridePassportNo(e) {
-    setbridePassportNo(e.target.value.length<=8 ? e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '') : (e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '').substring(0, 8)))
+    setbridePassportNo(
+      e.target.value.length <= 8
+        ? e.target.value.replace("[A-PR-WY][1-9]ds?d{4}[1-9]$", "")
+        : e.target.value.replace("[A-PR-WY][1-9]ds?d{4}[1-9]$", "").substring(0, 8)
+    );
     // if (e.target.value.length < 8) {
     //   return false;
     //   // window.alert("Username shouldn't exceed 10 characters")
@@ -624,7 +626,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     }
   };
   console.log("Bride", formData);
-  if (isLoading) {
+  if (isLoading || isMaritalStatusLoading) {
     return <Loader></Loader>;
   } else
     return (
@@ -685,7 +687,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
           <div className="row">
             <div className="col-md-12">
               <div className="radios">
-                {brideTypes.map((type, index) => (
+                {brideTypes.map((type) => (
                   <div style={{ display: "flex", alignItems: "center", columnGap: "8px" }}>
                     <input
                       className="form-check-input"
@@ -694,8 +696,8 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                       style={{ height: "20px", width: "20px" }}
                       onChange={selectSetBrideResidentShip}
                       value={type}
-                      defaultChecked={index === 0}
-                      // checked={brideResidentShip}
+                      // defaultChecked={index === 0}
+                      checked={brideResidentShip === type}
                     />
                     <label class="form-check-label" for="flexRadioDefault1">
                       {type}
@@ -1111,7 +1113,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
             <div className="row">
               <div className="col-md-12">
                 <div className="radios" style={{ justifyContent: "center", columnGap: "40px" }}>
-                  {brideParent.map((type, index) => (
+                  {brideParent.map((type) => (
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", columnGap: "8px" }}>
                       <input
                         className="form-check-input"
@@ -1122,7 +1124,6 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                         onChange={selectParentType}
                         value={type}
                         checked={brideParentGuardian === type}
-                        // checked={brideParentGuardian}
                       />
                       <label class="form-check-label" for="flexRadioDefault1">
                         {type}
