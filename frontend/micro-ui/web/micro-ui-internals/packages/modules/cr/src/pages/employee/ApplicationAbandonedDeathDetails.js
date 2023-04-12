@@ -8,6 +8,9 @@ import get from "lodash/get";
 import orderBy from "lodash/orderBy";
 
 const ApplicationAbandonedDeathDetails = () => {
+  useEffect(()=>{
+    console.log(" ApplicationAbandonedDeathDetails")
+  },[])
   const { t } = useTranslation();
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const { id: DeathACKNo } = useParams();
@@ -18,7 +21,7 @@ const ApplicationAbandonedDeathDetails = () => {
   const [allowedToNextYear, setAllowedToNextYear] = useState(false);
   sessionStorage.setItem("DeathACKNo", DeathACKNo)
   // const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
-  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useAbandonedDeathActions(t, tenantId, DeathACKNo);
+  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useAbandonedDeathDetail(t, tenantId, DeathACKNo);
 
   const stateId = Digit.ULBService.getStateId();
 
@@ -31,10 +34,10 @@ const ApplicationAbandonedDeathDetails = () => {
   } = Digit.Hooks.cr.useAbandonedDeathActions(tenantId);
 
   // let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
-  console.log(applicationDetails);
+  console.log("applicationDetails",applicationDetails);
   let workflowDetails = Digit.Hooks.useWorkflowDetails({
     tenantId: applicationDetails?.applicationData.tenantid || tenantId,
-    id: applicationDetails?.applicationData?.InformationDeath.DeathACKNo,
+    id: applicationDetails?.applicationData?.InformationDeathAbandoned.DeathACKNo,
     moduleCode: businessService,
     role: "BND_CEMP" || "HOSPITAL_OPERATOR",
     config:{},
@@ -141,7 +144,7 @@ const ApplicationAbandonedDeathDetails = () => {
                   {
                     action: data.action,
                     redirectionUrll: {
-                      pathname: `TL/${applicationDetails?.applicationData?.DeathACKNo}/${tenantId}`,
+                      pathname: `TL/${applicationDetails?.applicationData?.InformationDeathAbandoned?.DeathACKNo}/${tenantId}`,
                       state: tenantId
                     },
                     tenantId: tenantId,

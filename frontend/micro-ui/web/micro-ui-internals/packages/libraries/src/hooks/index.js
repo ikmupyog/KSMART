@@ -145,6 +145,7 @@ import useApplicationMarriageDetail from "./cr/useApplicationMarriageDetail";
 import useApplicationStillBirthDetail from "./cr/useApplicationStillBirthDetail";
 import useApplicationAbandondBirthDetail from "./cr/useApplicationAbandondBirthDetail";
 import useApplicationDeathDetail from "./cr/useApplicationDeathDetail";
+import useAbandonedDeathDetail from "./cr/useAbandonedDeathDetail";
 import useCRApplicationActions from "./cr/useApplicationActions";
 import useCRAdoptionApplicationActions from "./cr/useAdoptionApplActions";
 import useApplicationBirthNACActions from "./cr/useApplicationBirthNACActions";
@@ -407,6 +408,7 @@ const cr = {
   useApplicationMarriageDetail,
   useApplicationStillBirthDetail: useApplicationStillBirthDetail,
   useApplicationAbandondBirthDetail,
+  useAbandonedDeathDetail,
   useApplicationBIRTHNACDetail,
   useCivilRegistrationNACDEATHAPI,
   useDeathNACSearch,

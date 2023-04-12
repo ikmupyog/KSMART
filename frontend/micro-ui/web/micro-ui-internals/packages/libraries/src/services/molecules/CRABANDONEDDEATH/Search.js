@@ -1,5 +1,5 @@
 import cloneDeep from "lodash/cloneDeep";
-import { CRAbandonedDeathService } from "../../elements/CRDEATH";
+import { CRAbandonedDeathService } from "../../elements/CRABANDONEDDEATH";
 // import { convertEpochToDateDMY } from  "../../utils";
 
 const stringReplaceAll = (str = "", searcher = "", replaceWith = "") => {
@@ -53,7 +53,7 @@ export const CRAbandonedDeathsearch = {
   applicationDetails: async (t, tenantId, DeathACKNo, userType) => {
     const filter = { DeathACKNo };
     const response = await CRAbandonedDeathsearch.application(tenantId, filter);
-    console.log(response);
+    console.log("response",response);
     // const propertyDetails =
     //   response?.tradeLicenseDetail?.additionalDetail?.propertyId &&
     //   (await Digit.PTService.search({ tenantId, filters: { propertyIds: response?.tradeLicenseDetail?.additionalDetail?.propertyId } }));
@@ -66,7 +66,7 @@ export const CRAbandonedDeathsearch = {
 
     let employeeResponse = [];
     const InformationDeathAbandoned = {
-      title: "CR_DEATH_INFORMATION",
+      title: "CR_ABANDONED_DEATH_INFORMATION",
       asSectionHeader: true,
       values: [
         {

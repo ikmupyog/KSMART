@@ -650,7 +650,7 @@ export const convertToEditAbandonedDeathRegistration = (data = {}) => {
           Occupation: data?.InformationDeathAband?.Occupation ? data?.InformationDeathAband?.Occupation.code : null,
           funcionUID: "CRDRAB",
           registrationNo: null,
-          DeathAckNo:dat?.InformationDeathAband?.DeathAckNo,
+          DeathACKNo:data?.InformationDeathAband?.DeathACKNo,
           BurialDistrict: data?.InformationDeathAband?.BurialDistrict ? data?.InformationDeathAband?.BurialDistrict.code : null,
           BurialLBType: data?.InformationDeathAband?.BurialLBType ? data?.InformationDeathAband?.BurialLBType.code : null,
           BurialLBName: data?.InformationDeathAband?.BurialLBName ? data?.InformationDeathAband?.BurialLBName.code : null,
