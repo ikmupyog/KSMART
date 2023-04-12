@@ -182,7 +182,7 @@ const ApplicationBornOutsideIndiaDetails = () => {
         {/* <label style={{ fontSize: "19px", fontWeight: "bold",marginLeft:"15px" }}>{`${t("Birth Application Summary Details")}`}</label> */}
       </div>
       <ApplicationDetailsTemplate
-        header={"CR_STILLBIRTH_SUMMARY_DETAILS"}
+        header={"CR_BORNOUTSIDE_SUMMARY_DETAILS"}
         applicationDetails={applicationDetails}
         isLoading={isLoading}
         isDataLoading={isLoading}

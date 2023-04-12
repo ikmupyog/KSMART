@@ -74,14 +74,22 @@ export const CRBornOutsideIndiasearch = {
         { title: "PDF_BIRTH_CHILD_NAME", value: response?.childFirstNameEn + response?.childMiddleNameEn + response?.childLastNameEn },
         { title: "PDF_BIRTH_CHILD_SEX", value: response?.gender },
         { title: "PDF_BIRTH_DATE_OF_BIRTH", value: response?.childDOB ? convertEpochToDate(response?.childDOB) : "NA" },
-        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.outsideBirthPlaceEn + "/" + response?.outsideBirthPlaceMl || "NA"},       
+        { title: "CR_DATE_OF_ARRIVAL", value: response?.childArrivalDate ? convertEpochToDate(response?.childArrivalDate) : "NA" },
+        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.outsideBirthPlaceEn + "/" + response?.outsideBirthPlaceMl || "NA"},  
+        { title: "CR_CHILD_PASSPORT_NO", value: response?.childPassportNo }, 
+        { title: "CS_COMMON_COUNTRY", value: response?.country},
+        { title: "CR_STATE_REGION_PROVINCE", value: response?.provinceEn + "/" + response?.provinceMl || "NA"}, 
+        { title: "CR_CITY_TOWN", value: response?.cityTownEn + "/" + response?.cityTownMl || "NA"},
+        { title: "CR_ZIP_CODE", value: response?.postCode},
        ],
     };
     const parentInfo = {
       title: "CR_BIRTH_PARENT_INFORMATION_HEADER",
       values: [
         { title: "PDF_BIRTH_NAME_OF_MOTHER", value: response?.BornOutsideParentsDetails?.motherFirstNameEn + " / " + response?.BornOutsideParentsDetails?.motherFirstNameMl || "NA"},
-        { title: "PDF_BIRTH_NAME_OF_FATHER", value: response?.BornOutsideParentsDetails?.fatherFirstNameEn + " / " + response?.BornOutsideParentsDetails?.fatherFirstNameMl || "NA"},       
+        { title: "PDF_BIRTH_NAME_OF_FATHER", value: response?.BornOutsideParentsDetails?.fatherFirstNameEn + " / " + response?.BornOutsideParentsDetails?.fatherFirstNameMl || "NA"},
+        { title: "CR_MOTHER_PASSPORT_NO", value: response?.BornOutsideParentsDetails?.motherPassportNo},
+        { title: "CR_FATHER_PASSPORT_NO", value: response?.BornOutsideParentsDetails?.fatherPassportNo},         
       ],
     };
     const AddressBirthDetailsInfo = {
@@ -165,7 +173,7 @@ export const CRBornOutsideIndiasearch = {
     // response && employeeResponse.push(motherInfo);
     // response && employeeResponse.push(addressInfo);
     // response && employeeResponse.push(statisticalInfo);
-
+console.log(response, "response");
     return {
       tenantId: response.tenantId,
       applicationDetails: employeeResponse,
