@@ -79,7 +79,7 @@ const SelectAddress = ({ t, config, onSelect, value }) => {
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
-              <CardLabel>{t("CS_COMMON_LOCAL_BODY")}</CardLabel>
+              <CardLabel>{t("CS_COMMON_LOCAL_BODY")} <span className="mandatorycss">*</span></CardLabel>
               <Dropdown isMandatory selected={selectedCity} option={cities} select={selectCity} optionKey="i18nKey" t={t} disable={true} />
               {/*
             <RadioButtons selectedOption={selectedCity} options={cities} optionsKey="i18nKey" onSelect={selectCity} disabled={true} />
@@ -87,7 +87,7 @@ const SelectAddress = ({ t, config, onSelect, value }) => {
             </div>
             {selectedCity && localities ? (
               <div className="col-md-6">
-                <CardLabel>{t("CS_COMMON_WARD")}</CardLabel>
+                <CardLabel>{t("CS_COMMON_WARD")} <span className="mandatorycss">*</span></CardLabel>
                 <Dropdown isMandatory selected={selectedLocality} optionKey="i18nkey" option={localities} select={selectLocality} t={t} />
               </div>
             ) : <div className="col-md-6"></div>}
@@ -97,7 +97,7 @@ const SelectAddress = ({ t, config, onSelect, value }) => {
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-12">
-                <CardLabel> {`${t("CS_ADDCOMPLAINT_LANDMARK")}`} </CardLabel>
+                <CardLabel> {`${t("CS_ADDCOMPLAINT_LANDMARK")}`} <span className="mandatorycss">*</span></CardLabel>
                 <TextArea t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="landmark" value={landmark}
                   onChange={handleLandmark} placeholder={`${t("CS_ADDCOMPLAINT_COMPLAINT_LOCATION")}`} />
               </div>

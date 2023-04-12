@@ -148,7 +148,7 @@ const DeathAcknowledgement = ({ data, onSuccess, userType }) => {
   };
 
   let enableLoader = (mutation.isIdle || mutation.isLoading);
-  // console.log(JSON.stringify(mutation));
+  console.log(JSON.stringify(mutation.data));
   if (enableLoader) {
     if (mutation?.isLoading === false && mutation?.isSuccess === false && mutation?.isError == false && mutation?.isIdle === true && applicationNumber != null) {
       return (
@@ -166,7 +166,7 @@ const DeathAcknowledgement = ({ data, onSuccess, userType }) => {
     return (
       <Card>
         <BannerPicker t={t} data={mutation.data} isSuccess={mutation.isSuccess} isLoading={(mutation?.isLoading)} />
-        {<CardText>{t("CR_DEATH_CREATION_FAILED_RESPONSE")}</CardText>}
+        {/* {<CardText>{t("CR_DEATH_CREATION_FAILED_RESPONSE")}</CardText>} */}
         <Link to={`/digit-ui/citizen`}>
           <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
         </Link>
@@ -195,9 +195,9 @@ const DeathAcknowledgement = ({ data, onSuccess, userType }) => {
             onClick={handleDownloadPdf}
           />
          
-          {mutation?.data?.deathCertificateDtls[0]?.InformationDeath?.applicationStatus === "PENDINGPAYMENT" && <Link to={{
-            pathname: `/digit-ui/citizen/payment/collect/${mutation.data.deathCertificateDtls[0]?.InformationDeath?.businessservice}/${mutation.data.deathCertificateDtls[0]?.InformationDeath?.DeathACKNo}`,
-            state: { tenantId: mutation.data.deathCertificateDtls[0].tenantid },
+          {mutation?.data?.deathCertificateDtls[0]?.applicationStatus === "PENDINGPAYMENT" && <Link to={{
+            pathname: `/digit-ui/citizen/payment/collect/${mutation.data.deathCertificateDtls[0]?.businessService}/${mutation.data.deathCertificateDtls[0]?.InformationDeath?.DeathACKNo}`,
+            state: { tenantId: mutation.data.deathCertificateDtls[0]?.InformationDeath?.TenantId },
           }}>
             <SubmitBar label={t("COMMON_MAKE_PAYMENT")} />
           </Link>}
