@@ -150,6 +150,7 @@ const ApplicationDetails = (props) => {
     <React.Fragment>
       {!isLoading ? (
         <React.Fragment>
+        
           <ApplicationDetailsContent
             applicationDetails={applicationDetails}
             workflowDetails={workflowDetails}

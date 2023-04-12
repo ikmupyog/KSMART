@@ -18,9 +18,9 @@ const ApplicationNACBirthDetails = () => {
   const [allowedToNextYear, setAllowedToNextYear] = useState(false);
   sessionStorage.setItem("applicationNumber", applicationNumber);
   // const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
-  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDetail(t, tenantId, applicationNumber);
-  const [params, setParams, clearParams] =  Digit.Hooks.useSessionStorage("CR_EDIT_STILLBIRTH_REG", {}) 
-  const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_EDIT_STILLBIRTH_FLAG", false) 
+  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationBIRTHNACDetail(t, tenantId, applicationNumber);
+  const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_EDIT_STILLBIRTH_REG", {});
+  const [editFlag, setFlag] = Digit.Hooks.useSessionStorage("CR_EDIT_STILLBIRTH_FLAG", false);
   const stateId = Digit.ULBService.getStateId();
 
   const {
@@ -29,7 +29,7 @@ const ApplicationNACBirthDetails = () => {
     data: updateResponse,
     error: updateError,
     mutate,
-  } = Digit.Hooks.cr.useApplicationActions(tenantId);
+  } = Digit.Hooks.cr.useApplicationBirthNACActions(tenantId);
 
   // let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
   // console.log(applicationDetails?.applicationData?.applicationtype);
@@ -72,15 +72,14 @@ const ApplicationNACBirthDetails = () => {
     let actions = orderBy(filteredActions, ["action"], ["desc"]);
     if ((!actions || actions?.length == 0) && workflowDetails?.data?.actionState) workflowDetails.data.actionState.nextActions = [];
 
-    workflowDetails?.data?.actionState?.nextActions?.forEach(data => {
+    workflowDetails?.data?.actionState?.nextActions?.forEach((data) => {
       if (data.action == "EDIT") {
-        // /digit-ui/employee/cr/cr-flow/child-details/${applicationNumber}      
-          data.redirectionUrl = {
-            pathname: `/digit-ui/employee/cr/create-nacbirth/nacbirth-child-details`,
-            state: applicationDetails,
-          },
-            data.tenantId = stateId
-        
+        // /digit-ui/employee/cr/cr-flow/child-details/${applicationNumber}
+        (data.redirectionUrl = {
+          pathname: `/digit-ui/employee/cr/create-nacbirth/nacbirth-child-details`,
+          state: applicationDetails,
+        }),
+          (data.tenantId = stateId);
       }
     });
   }
@@ -117,24 +116,6 @@ const ApplicationNACBirthDetails = () => {
           role: [],
         });
       }
-      // workflowDetails = {
-      //   ...workflowDetails,
-      //   data: {
-      //     ...workflowDetails?.data,
-      //     actionState: {
-      //       nextActions: allowedToNextYear ?[
-      //         {
-      //           action: "RENEWAL_SUBMIT_BUTTON",
-      //           redirectionUrl: {
-      //             pathname: `/digit-ui/employee/tl/renew-application-details/${applicationNumber}`,
-      //             state: applicationDetails
-      //           },
-      //           tenantId: stateId,
-      //         }
-      //       ] : [],
-      //     },
-      //   },
-      // };
     }
   }
 
@@ -199,7 +180,5 @@ const ApplicationNACBirthDetails = () => {
     </div>
   );
 };
-
-
 
 export default ApplicationNACBirthDetails;
