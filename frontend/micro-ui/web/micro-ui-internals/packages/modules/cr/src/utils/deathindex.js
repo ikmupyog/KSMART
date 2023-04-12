@@ -571,7 +571,7 @@ export const convertToDeathRegistration = (data = {}) => {
         taxHeadMasterCode: "CRB_FEES",
         taxAmount: data?.InformationDeath?.workFlowAmount,
         isPayment:data?.InformationDeath?.isPayment,
-        applicationStatus: data?.InformationDeath?.isPayment ? "PENDINGPAYEMNT" : "INITIATED",
+        applicationStatus: data?.InformationDeath?.isPayment ? "PENDINGPAYMENT" : "INITIATED",
       },
     ],
   };
