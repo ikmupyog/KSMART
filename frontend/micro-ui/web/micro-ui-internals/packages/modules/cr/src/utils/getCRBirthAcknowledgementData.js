@@ -1,46 +1,9 @@
-import { pdfDocumentName, pdfDownloadLink, stringReplaceAll,getTransaltedLocality } from "./index";
+import { pdfDocumentName, pdfDownloadLink, stringReplaceAll, getTransaltedLocality } from "./index";
 
 const capitalize = (text) => text.substr(0, 1).toUpperCase() + text.substr(1);
 const ulbCamel = (ulb) => ulb.toLowerCase().split(" ").map(capitalize).join(" ");
 
-const getOwnerDetails = (application, t) => {
-  application.owners = application?.ChildDetails?.filter((applicationNumber) => applicationNumber.active == true) || [];
-  //if (application?.ChildDetails?.applicationNumber == "TL_COMMON_TABLE_COL_APP_NO") {
-    return {
-      title: t("TL_OWNERSHIP_DETAILS_HEADER"),
-      values: [
-        { title: t("TL_OWNER_S_NAME_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.name || t("CS_NA") },
-        { title: t("TL_OWNER_S_MOBILE_NUM_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.mobileNumber || t("CS_NA") },
-        // { title: t("TL_GUARDIAN_S_NAME_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.fatherOrHusbandName || t("CS_NA") },
-        // { title: t("TL_RELATIONSHIP_WITH_GUARDIAN_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.relationship || t("CS_NA") },
-        { title: t("TL_NEW_OWNER_DETAILS_GENDER_LABEL"), value: t(application?.tradeLicenseDetail?.owners[0]?.gender) || t("CS_NA") },
-        { title: t("TL_NEW_OWNER_DETAILS_EMAIL_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.emailId || t("CS_NA") },
-        { title: t("TL_OWNER_SPECIAL_CATEGORY"), value: application?.tradeLicenseDetail?.owners[0]?.ownerType ? t(`COMMON_MASTERS_OWNERTYPE_${application?.tradeLicenseDetail?.owners[0]?.ownerType}`) : t("CS_NA") },
-        { title: t("TL_NEW_OWNER_DETAILS_ADDR_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.permanentAddress || t("CS_NA") },
-      ],
-    };
-    
-  // } else { //if (application?.subOwnerShipCategory?.includes("INDIVIDUAL"))
-  //   let values = [];
-  //   application?.tradeLicenseDetail.owners.map((owner) => {
-  //     let indOwner = [
-  //       { title: t("TL_OWNER_S_NAME_LABEL"), value: owner?.name || t("CS_NA") },
-  //       { title: t("TL_OWNER_S_MOBILE_NUM_LABEL"), value: owner?.mobileNumber || t("CS_NA") },
-  //       // { title: t("TL_GUARDIAN_S_NAME_LABEL"), value: owner?.fatherOrHusbandName || t("CS_NA") },
-  //       // { title: t("TL_RELATIONSHIP_WITH_GUARDIAN_LABEL"), value: owner?.relationship || t("CS_NA") },
-  //       { title: t("TL_NEW_OWNER_DETAILS_GENDER_LABEL"), value: t(owner?.gender) || t("CS_NA") },
-  //       { title: t("TL_NEW_OWNER_DETAILS_EMAIL_LABEL"), value: owner?.emailId || t("CS_NA") },
-  //       { title: t("TL_OWNER_SPECIAL_CATEGORY"), value: owner?.ownerType ? t(`COMMON_MASTERS_OWNERTYPE_${owner?.ownerType}`) : t("CS_NA") },
-  //       { title: t("TL_NEW_OWNER_DETAILS_ADDR_LABEL"), value: owner?.permanentAddress || t("CS_NA") },
-  //     ];
-  //     values.push(...indOwner);
-  //   });
-  //   return {
-  //     title: t("TL_OWNERSHIP_DETAILS_HEADER"),
-  //     values: values,
-  //   };
-  // }
-};
+
 //  const getTradeDetails = (application, t) => {
 //   return {
 //     title: t("TL_COMMON_TR_DETAILS"),
@@ -105,65 +68,110 @@ const getOwnerDetails = (application, t) => {
 //     values: values,
 //   };
 // };
+const getChildDetails = (application, t) => {
+  console.log(application);
+  application.owners = application?.ChildDetails?.filter((applicationNumber) => applicationNumber.active == true) || [];
+  //if (application?.ChildDetails?.applicationNumber == "TL_COMMON_TABLE_COL_APP_NO") {
+ 
+  return {
+    title: "",
+    values: [
+      { title: t("Date of Birth"), value: application?.childDOB ? Digit.DateUtils.ConvertTimestampToDate(application?.childDOB, "dd/MM/yyyy") : t("CS_NA") },
+      { title: t("Gender"), value: application?.gender ? application?.gender : t("CS_NA") },
+      { title: t("Birth Place"), value: application?.birthPlace ? application?.birthPlace : t("CS_NA") },
+      { title: t("Birth Place Name"), value: application?.hospitalName ? application?.hospitalName : t("CS_NA") },
 
-// const getAddressDetails = (application, t) => {
-//   return {
-//     title: "",
-//     values: [
-//       { title: t("CORE_COMMON_PINCODE"), value: application?.tradeLicenseDetail?.address?.pincode || t("CS_NA") },
-//       { title: t("MYCITY_CODE_LABEL"), value: t(application?.tradeLicenseDetail?.address?.city) || t("CS_NA") },
-//       { title: t("TL_LOCALIZATION_LOCALITY"), value: t(getTransaltedLocality(application?.tradeLicenseDetail?.address)) || t("CS_NA") },
-//       { title: t("TL_LOCALIZATION_BUILDING_NO"), value: application?.tradeLicenseDetail?.address?.doorNo || t("CS_NA") },
-//       { title: t("TL_LOCALIZATION_STREET_NAME"), value: application?.tradeLicenseDetail?.address?.street || t("CS_NA") }
-//     ],
-//   };
-// };
+      // { title: t("TL_OWNER_S_NAME_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.name || t("CS_NA") },
+      // { title: t("TL_OWNER_S_MOBILE_NUM_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.mobileNumber || t("CS_NA") },
+      // // { title: t("TL_GUARDIAN_S_NAME_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.fatherOrHusbandName || t("CS_NA") },
+      // // { title: t("TL_RELATIONSHIP_WITH_GUARDIAN_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.relationship || t("CS_NA") },
+      // { title: t("TL_NEW_OWNER_DETAILS_GENDER_LABEL"), value: t(application?.tradeLicenseDetail?.owners[0]?.gender) || t("CS_NA") },
+      // { title: t("TL_NEW_OWNER_DETAILS_EMAIL_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.emailId || t("CS_NA") },
+      // { title: t("TL_OWNER_SPECIAL_CATEGORY"), value: application?.tradeLicenseDetail?.owners[0]?.ownerType ? t(`COMMON_MASTERS_OWNERTYPE_${application?.tradeLicenseDetail?.owners[0]?.ownerType}`) : t("CS_NA") },
+      // { title: t("TL_NEW_OWNER_DETAILS_ADDR_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.permanentAddress || t("CS_NA") },
+    ],
+  };
 
-// const getCRBirthAcknowledgementData = async (application, tenantInfo, t) => {
-//   const filesArray = application?.tradeLicenseDetail?.applicationDocuments?.map((value) => value?.fileStoreId);
-//   let res;
-//   if (filesArray) {
-//     res = await Digit.UploadServices.Filefetch(filesArray, Digit.ULBService.getStateId());
-//   }
-//   return {
-//     t: t,
-//     tenantId: tenantInfo?.code,
-//     title: `${t(tenantInfo?.i18nKey)} ${ulbCamel(t(`ULBGRADE_${tenantInfo?.city?.ulbGrade.toUpperCase().replace(" ", "_").replace(".", "_")}`))}`,
-//     name: `${t(tenantInfo?.i18nKey)} ${ulbCamel(t(`ULBGRADE_${tenantInfo?.city?.ulbGrade.toUpperCase().replace(" ", "_").replace(".", "_")}`))}`,
-//     email: "",
-//     phoneNumber: "",
-//     details: [
-      // {
-      //   title: t("NOC_TASK_DETAILS_HEADER"),
-      //   values: [
-      //     { title: t("TL_COMMON_TABLE_COL_LIC_NO"), value: application?.licenseNumber || t("CS_NA") },
-      //     { title: t("TL_COMMON_TABLE_COL_APP_NO"), value: application?.applicationNumber },
-      //     {
-      //       title: t("TL_COMMON_TABLE_COL_APP_DATE"),
-      //       value: Digit.DateUtils.ConvertTimestampToDate(application?.applicationDate, "dd/MM/yyyy"),
-      //     },
-      //   ],
-      // },
-//       getTradeDetails(application, t),
-//       getTradeUnitsDetails(application, t),
-//       getAccessoriesDetails(application, t),
-//       getAddressDetails(application, t),
-//       getOwnerDetails(application, t),
-//       {
-//         title: t("TL_COMMON_DOCS"),
-//         values:
-//           application?.tradeLicenseDetail?.applicationDocuments?.length > 0
-//             ? application?.tradeLicenseDetail?.applicationDocuments.map((document, index) => {
-//               let documentLink = pdfDownloadLink(res?.data, document?.fileStoreId);
-//               return {
-//                 title: t(`TL_NEW_${document?.documentType}` || t("CS_NA")),
-//                 value: pdfDocumentName(documentLink, index) || t("CS_NA"),
-//               };
-//             })
-//             : [],
-//       },
-//     ],
-//   };
-// };
+  // } else { //if (application?.subOwnerShipCategory?.includes("INDIVIDUAL"))
+  //   let values = [];
+  //   application?.tradeLicenseDetail.owners.map((owner) => {
+  //     let indOwner = [
+  //       { title: t("TL_OWNER_S_NAME_LABEL"), value: owner?.name || t("CS_NA") },
+  //       { title: t("TL_OWNER_S_MOBILE_NUM_LABEL"), value: owner?.mobileNumber || t("CS_NA") },
+  //       // { title: t("TL_GUARDIAN_S_NAME_LABEL"), value: owner?.fatherOrHusbandName || t("CS_NA") },
+  //       // { title: t("TL_RELATIONSHIP_WITH_GUARDIAN_LABEL"), value: owner?.relationship || t("CS_NA") },
+  //       { title: t("TL_NEW_OWNER_DETAILS_GENDER_LABEL"), value: t(owner?.gender) || t("CS_NA") },
+  //       { title: t("TL_NEW_OWNER_DETAILS_EMAIL_LABEL"), value: owner?.emailId || t("CS_NA") },
+  //       { title: t("TL_OWNER_SPECIAL_CATEGORY"), value: owner?.ownerType ? t(`COMMON_MASTERS_OWNERTYPE_${owner?.ownerType}`) : t("CS_NA") },
+  //       { title: t("TL_NEW_OWNER_DETAILS_ADDR_LABEL"), value: owner?.permanentAddress || t("CS_NA") },
+  //     ];
+  //     values.push(...indOwner);
+  //   });
+  //   return {
+  //     title: t("TL_OWNERSHIP_DETAILS_HEADER"),
+  //     values: values,
+  //   };
+  // }
+};
+const getAddressDetails = (application, t) => {
+  return {
+    title: "",
+    values: [
+      // { title: t("CORE_COMMON_PINCODE"), value: application?.tradeLicenseDetail?.address?.pincode || t("CS_NA") },
+      // { title: t("MYCITY_CODE_LABEL"), value: t(application?.tradeLicenseDetail?.address?.city) || t("CS_NA") },
+      // { title: t("TL_LOCALIZATION_LOCALITY"), value: t(getTransaltedLocality(application?.tradeLicenseDetail?.address)) || t("CS_NA") },
+      { title: t("Locality"), value: application?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn || t("CS_NA") },
+      { title: t("House Name"), value: application?.AddressBirthDetails?.presentInsideKeralaHouseNameEn || t("CS_NA") }
+    ],
+  };
+};
+
+const getCRBirthAcknowledgementData = async (application, tenantInfo, t) => {
+  //   const filesArray = application?.tradeLicenseDetail?.applicationDocuments?.map((value) => value?.fileStoreId);
+  //   let res;
+  //   if (filesArray) {
+  //     res = await Digit.UploadServices.Filefetch(filesArray, Digit.ULBService.getStateId());
+  //   }
+  return {
+    t: t,
+    tenantId: tenantInfo?.code,
+    title: `${t(tenantInfo?.i18nKey)} ${ulbCamel(t(`ULBGRADE_${tenantInfo?.city?.ulbGrade.toUpperCase().replace(" ", "_").replace(".", "_")}`))}`,
+    name: `${t(tenantInfo?.i18nKey)} ${ulbCamel(t(`ULBGRADE_${tenantInfo?.city?.ulbGrade.toUpperCase().replace(" ", "_").replace(".", "_")}`))}`,
+    email: "",
+    phoneNumber: "",
+    details: [
+      {
+        title:t("Acknowledgment Details"),
+        values: [
+          { title: t("Application No"), value: application?.applicationNumber },
+          {
+            title: t("Application Date"),
+            value: Digit.DateUtils.ConvertTimestampToDate(application?.dateofreport, "dd/MM/yyyy"),
+          },
+        ],
+      },
+      getChildDetails(application, t),
+      getAddressDetails(application, t),
+      //       getTradeDetails(application, t),
+      //       getTradeUnitsDetails(application, t),
+      //       getAccessoriesDetails(application, t),
+      //       getAddressDetails(application, t),
+      //       getOwnerDetails(application, t),
+      //       {
+      //         title: t("TL_COMMON_DOCS"),
+      //         values:
+      //           application?.tradeLicenseDetail?.applicationDocuments?.length > 0
+      //             ? application?.tradeLicenseDetail?.applicationDocuments.map((document, index) => {
+      //               let documentLink = pdfDownloadLink(res?.data, document?.fileStoreId);
+      //               return {
+      //                 title: t(`TL_NEW_${document?.documentType}` || t("CS_NA")),
+      //                 value: pdfDocumentName(documentLink, index) || t("CS_NA"),
+      //               };
+      //             })
+      //             : [],
+      //       },
+    ],
+  };
+};
 
 export default getCRBirthAcknowledgementData;

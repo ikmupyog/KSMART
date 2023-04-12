@@ -125,15 +125,7 @@ const DeathPlaceHome = ({
       setDeathPlaceHomehoueNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
-  function setSelectDeathPlaceHomehoueNameMl(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$/;
-    if (!e.target.value.match(pattern)) {
-      e.preventDefault();
-      setDeathPlaceHomehoueNameMl("");
-    } else {
-      setDeathPlaceHomehoueNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
-    }
-  }
+ 
 
   // function setSelectDeathPlaceHomehoueNameMl(e) {
   //   if (e.target.value.length === 51) {
@@ -158,6 +150,15 @@ const DeathPlaceHome = ({
       setDeathPlaceHomelocalityMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
+  function setSelectDeathPlaceHomehoueNameMl(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$/;
+    if (!e.target.value.match(pattern)) {
+      e.preventDefault();
+      setDeathPlaceHomehoueNameMl("");
+    } else {
+      setDeathPlaceHomehoueNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    }
+  }
 
   function setSelectDeathPlaceHomestreetNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
@@ -179,6 +180,19 @@ const DeathPlaceHome = ({
       e.preventDefault();
     }
   }
+  function setCheckSpecialCharSpace(e) {
+    let pattern = /^[a-zA-Z-.`' ]*$/;
+    if (!(e.key.match(pattern)) && e.code === 'Space') {
+      e.preventDefault();
+    }
+  }
+  function setCheckSpecialChar(e) {
+    let pattern = /^[0-9]*$/;
+    if (!(e.key.match(pattern))) {
+      e.preventDefault();
+    }
+  }
+
   function setSelectDeathPlaceWardId(value) {
     setDeathPlaceWardId(value);
   }
@@ -274,6 +288,7 @@ const DeathPlaceHome = ({
                 optionKey="i18nKey"
                 name="DeathPlaceHomeLocalityEn"
                 value={DeathPlaceHomeLocalityEn}
+                onKeyPress={setCheckSpecialCharSpace}
                 onChange={setSelectDeathPlaceHomelocalityEn}
                 placeholder={`${t("CR_LOCALITY_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
@@ -289,7 +304,7 @@ const DeathPlaceHome = ({
                 optionKey="i18nKey"
                 name="DeathPlaceHomeStreetNameEn"
                 value={DeathPlaceHomeStreetNameEn}
-                onChange={setSelectDeathPlaceHomestreetNameEn}
+                onChange={setSelectDeathPlaceHomestreetNameEn}                
                 placeholder={`${t("CR_STREET_NAME_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
               />
@@ -308,6 +323,7 @@ const DeathPlaceHome = ({
                 name="DeathPlaceHomeHoueNameEn"
                 value={DeathPlaceHomeHoueNameEn}
                 onChange={setSelectDeathPlaceHomehoueNameEn}
+                onKeyPress={setCheckSpecialCharSpace}
                 placeholder={`${t("CR_HOUSE_NAME_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z- 0-9]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
               />
@@ -329,6 +345,7 @@ const DeathPlaceHome = ({
                 name="DeathPlaceHomeLocalityMl"
                 value={DeathPlaceHomeLocalityMl}
                 onChange={setSelectDeathPlaceHomelocalityMl}
+                onKeyPress={setCheckMalayalamInputField}
                 placeholder={`${t("CR_LOCALITY_ML")}`}
                 {...(validation = {
                   pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]*$",
@@ -347,7 +364,7 @@ const DeathPlaceHome = ({
                 optionKey="i18nKey"
                 name="DeathPlaceHomeStreetNameMl"
                 value={DeathPlaceHomeStreetNameMl}
-                onChange={setSelectDeathPlaceHomestreetNameMl}
+                onChange={setSelectDeathPlaceHomestreetNameMl}              
                 placeholder={`${t("CR_STREET_NAME_ML")}`}
                 {...(validation = {
                   pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -357,6 +374,7 @@ const DeathPlaceHome = ({
                 })}
               />
             </div>
+            
             <div className="col-md-4">
               <CardLabel>
                 {t("CR_HOUSE_NAME_ML")}
@@ -369,11 +387,11 @@ const DeathPlaceHome = ({
                 optionKey="i18nKey"
                 name="DeathPlaceHomehoueNameMl"
                 value={DeathPlaceHomehoueNameMl}
-                onKeyPress={setCheckMalayalamInputField}
                 onChange={setSelectDeathPlaceHomehoueNameMl}
+                onKeyPress={setCheckMalayalamInputField}
                 placeholder={`${t("CR_HOUSE_NAME_ML")}`}
                 {...(validation = {
-                  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9`' ]*$",
+                  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]*$",
                   isRequired: true,
                   type: "text",
                   title: t("CR_INVALID_LOCALITY_ML"),

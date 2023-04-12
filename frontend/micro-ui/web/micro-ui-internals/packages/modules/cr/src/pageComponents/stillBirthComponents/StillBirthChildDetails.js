@@ -364,6 +364,8 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
     formData?.StillBirthChildDetails?.pregnancyDuration ? false : false
   );
   const [causeFoetalDeathError, setcauseFoetalDeathError] = useState(formData?.StillBirthChildDetails?.causeFoetalDeath ? false : false);
+  const [AdsHomeStreetNameEnError, setAdsHomeStreetNameEnError] = useState(false);
+  const [AdsHomeStreetNameMlError, setAdsHomeStreetNameMlError] = useState(false);
 
   const [access, setAccess] = React.useState(true);
 
@@ -492,6 +494,128 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
   function setSelectcauseFoetalDeath(value) {
     setcauseFoetalDeath(value);
   }
+  function clearBirthPalce(value) {
+    if (value.code === "HOSPITAL") {
+      setInstitution("");
+      setInstitutionId("");
+      setInstitutionIdMl("");
+      setAdrsPostOffice("");
+      setAdrsPincode(null);
+      setAdrsHouseNameEn("");
+      setAdrsHouseNameMl("");
+      setAdrsLocalityNameEn("");
+      setAdrsLocalityNameMl("");
+      setAdrsStreetNameEn("");
+      setAdrsStreetNameMl("");
+      setWardNo("");
+      setvehicleType("");
+      setvehicleRegistrationNo("");
+      setvehicleFromEn("");
+      setvehicleToEn("");
+      setvehicleFromMl("");
+      setvehicleHaltPlace("");
+      setvehicleToMl("");
+      setvehicleDesDetailsEn("");
+      setSelectedadmittedHospitalEn("");
+      setpublicPlaceType("");
+      setlocalityNameEn("");
+      setlocalityNameMl("");
+      setstreetNameEn("");
+      setstreetNameMl("");
+      setpublicPlaceDecpEn("");
+    } else if (value.code === "INSTITUTION") {
+      selectHospitalName("");
+      selectHospitalNameMl("");
+      setAdrsPostOffice("");
+      setAdrsPincode(null);
+      setAdrsHouseNameEn("");
+      setAdrsHouseNameMl("");
+      setAdrsLocalityNameEn("");
+      setAdrsLocalityNameMl("");
+      setAdrsStreetNameEn("");
+      setAdrsStreetNameMl("");
+      setWardNo("");
+      setvehicleType("");
+      setvehicleRegistrationNo("");
+      setvehicleFromEn("");
+      setvehicleToEn("");
+      setvehicleFromMl("");
+      setvehicleHaltPlace("");
+      setvehicleToMl("");
+      setvehicleDesDetailsEn("");
+      setSelectedadmittedHospitalEn("");
+      setpublicPlaceType("");
+      setlocalityNameEn("");
+      setlocalityNameMl("");
+      setstreetNameEn("");
+      setstreetNameMl("");
+      setpublicPlaceDecpEn("");
+    } else if (value.code === "HOME") {
+      selectHospitalName("");
+      selectHospitalNameMl("");
+      setInstitution("");
+      setInstitutionId("");
+      setInstitutionIdMl("");
+      setvehicleType("");
+      setvehicleRegistrationNo("");
+      setvehicleFromEn("");
+      setvehicleToEn("");
+      setvehicleFromMl("");
+      setvehicleHaltPlace("");
+      setvehicleToMl("");
+      setvehicleDesDetailsEn("");
+      setSelectedadmittedHospitalEn("");
+      setpublicPlaceType("");
+      setlocalityNameEn("");
+      setlocalityNameMl("");
+      setstreetNameEn("");
+      setstreetNameMl("");
+      setpublicPlaceDecpEn("");
+    } else if (value.code === "VEHICLE") {
+      selectHospitalName("");
+      selectHospitalNameMl("");
+      setInstitution("");
+      setInstitutionId("");
+      setInstitutionIdMl("");
+      setAdrsPostOffice("");
+      setAdrsPincode(null);
+      setAdrsHouseNameEn("");
+      setAdrsHouseNameMl("");
+      setAdrsLocalityNameEn("");
+      setAdrsLocalityNameMl("");
+      setAdrsStreetNameEn("");
+      setAdrsStreetNameMl("");
+      setpublicPlaceType("");
+      setlocalityNameEn("");
+      setlocalityNameMl("");
+      setstreetNameEn("");
+      setstreetNameMl("");
+      setpublicPlaceDecpEn("");
+    } else if (value.code === "PUBLIC_PLACES") {
+      selectHospitalName("");
+      selectHospitalNameMl("");
+      setInstitution("");
+      setInstitutionId("");
+      setInstitutionIdMl("");
+      setAdrsPostOffice("");
+      setAdrsPincode(null);
+      setAdrsHouseNameEn("");
+      setAdrsHouseNameMl("");
+      setAdrsLocalityNameEn("");
+      setAdrsLocalityNameMl("");
+      setAdrsStreetNameEn("");
+      setAdrsStreetNameMl("");
+      setvehicleType("");
+      setvehicleRegistrationNo("");
+      setvehicleFromEn("");
+      setvehicleToEn("");
+      setvehicleFromMl("");
+      setvehicleHaltPlace("");
+      setvehicleToMl("");
+      setvehicleDesDetailsEn("");
+      setSelectedadmittedHospitalEn("");
+    }
+  }
   function setselectBirthPlace(value) {
     selectBirthPlace(value);
     setValue(value.code);
@@ -501,7 +625,22 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
     } else {
       setWorkFlowCode("STILLBIRTHHOME");
     }
+    clearBirthPalce(value);
   }
+  function setCheckMalayalamInputField(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
+    if (!(e.key.match(pattern)) && e.code === 'Space') {
+      e.preventDefault();
+    }
+  }
+  function setCheckSpecialChar(e) {
+    let pattern = /^[0-9]*$/;
+    if (!(e.key.match(pattern))) {
+      e.preventDefault();
+    }
+  }
+
+
 
   let validFlag = true;
   const goNext = () => {
@@ -596,8 +735,10 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
           }
         }
       }
-      if (adrsLocalityNameEn === null || adrsLocalityNameEn === "" || adrsLocalityNameEn === undefined) {
+ 
+      if (adrsLocalityNameEn === null || adrsLocalityNameEn.trim() == '' || adrsLocalityNameEn.trim() == undefined) {
         validFlag = false;
+        setAdrsLocalityNameEn("");
         setAdsHomeLocalityNameEnError(true);
         setToast(true);
         setTimeout(() => {
@@ -606,8 +747,9 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
       } else {
         setAdsHomeLocalityNameEnError(false);
       }
-      if (adrsLocalityNameMl == null || adrsLocalityNameMl == "" || adrsLocalityNameMl == undefined) {
+      if (adrsLocalityNameMl === null || adrsLocalityNameMl.trim() == '' || adrsLocalityNameMl.trim() == undefined) {
         validFlag = false;
+        setAdrsLocalityNameMl("");
         setAdsHomeLocalityNameMlError(true);
         setToast(true);
         setTimeout(() => {
@@ -616,8 +758,9 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
       } else {
         setAdsHomeLocalityNameMlError(false);
       }
-      if (adrsHouseNameEn == null || adrsHouseNameEn == "" || adrsHouseNameEn == undefined) {
+      if (adrsHouseNameEn === null || adrsHouseNameEn.trim() == '' || adrsHouseNameEn.trim() == undefined) {
         validFlag = false;
+        setAdrsHouseNameEn("");
         setAdsHomeHouseNameEnError(true);
         setToast(true);
         setTimeout(() => {
@@ -626,8 +769,9 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
       } else {
         setAdsHomeHouseNameEnError(false);
       }
-      if (adrsHouseNameMl == null || adrsHouseNameMl == "" || adrsHouseNameMl == undefined) {
+      if (adrsHouseNameMl === null || adrsHouseNameMl.trim() == '' || adrsHouseNameMl.trim() == undefined) {
         validFlag = false;
+        setAdrsHouseNameMl("");
         setAdsHomeHouseNameMlError(true);
         setToast(true);
         setTimeout(() => {
@@ -635,6 +779,36 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
         }, 2000);
       } else {
         setAdsHomeHouseNameMlError(false);
+      }
+      if (adrsStreetNameEn === null || adrsStreetNameEn.trim() === '' || adrsStreetNameEn.trim() === undefined) {
+        setAdrsStreetNameEn("");
+      } else {
+        if (adrsStreetNameEn != null && (adrsStreetNameMl === null || adrsStreetNameMl.trim() === '' || adrsStreetNameMl.trim() === undefined)) {
+          validFlag = false;
+          setAdrsStreetNameMl("");
+          setAdsHomeStreetNameMlError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } else {
+          setAdsHomeStreetNameMlError(false);
+        }
+      }
+      if (adrsStreetNameMl === null || adrsStreetNameMl.trim() === '' || adrsStreetNameMl.trim() === undefined) {
+        setAdrsStreetNameMl("");
+      } else {
+        if (adrsStreetNameMl != null && (adrsStreetNameEn === null || adrsStreetNameEn.trim() === '' || adrsStreetNameEn.trim() === undefined)) {
+          validFlag = false;
+          setAdrsStreetNameEn("");
+          setAdsHomeStreetNameEnError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } else {
+          setAdsHomeStreetNameEnError(false);
+        }
       }
     } else if (birthPlace.code === "VEHICLE") {
       setWorkFlowCode("STILLBIRTHHOME");
@@ -662,9 +836,10 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
       } else {
         setvehiTypeError(false);
       }
-      if (vehicleRegistrationNo == null || vehicleRegistrationNo == "" || vehicleRegistrationNo == undefined) {
+      if (vehicleRegistrationNo === null || vehicleRegistrationNo.trim() == '' || vehicleRegistrationNo.trim() == undefined) {
         validFlag = false;
         setvehicleRegiNoError(true);
+        setvehicleRegistrationNo("");
         setToast(true);
         setTimeout(() => {
           setToast(false);
@@ -672,9 +847,10 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
       } else {
         setvehicleRegiNoError(false);
       }
-      if (vehicleHaltPlace == null || vehicleHaltPlace == "" || vehicleHaltPlace == undefined) {
+      if (vehicleHaltPlace === null || vehicleHaltPlace.trim() == '' || vehicleHaltPlace.trim() == undefined) {
         validFlag = false;
         setvehicleHaltPlaceError(true);
+        setvehicleHaltPlace("");
         setToast(true);
         setTimeout(() => {
           setToast(false);
@@ -682,10 +858,10 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
       } else {
         setvehicleHaltPlaceError(false);
       }
-
-      if (vehicleDesDetailsEn == null || vehicleDesDetailsEn == "" || vehicleDesDetailsEn == undefined) {
+      if (vehicleDesDetailsEn === null || vehicleDesDetailsEn.trim() == '' || vehicleDesDetailsEn.trim() == undefined) {
         validFlag = false;
         setvehiDesDetailsEnError(true);
+        setvehicleDesDetailsEn("");
         setToast(true);
         setTimeout(() => {
           setToast(false);
@@ -717,9 +893,11 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
         wardNameMl = wardNo.localname;
         wardNumber = wardNo.wardno;
         setAdsWardError(false);
-      }
-      if (localityNameEn == null || localityNameEn == "" || localityNameEn == undefined) {
+      } 
+
+      if (localityNameEn === null || localityNameEn.trim() == '' || localityNameEn.trim() == undefined) {
         validFlag = false;
+        setAdrsLocalityNameMl("");
         setlocalNameEnError(true);
         setToast(true);
         setTimeout(() => {
@@ -728,8 +906,10 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
       } else {
         setlocalNameEnError(false);
       }
-      if (localityNameMl == null || localityNameMl == "" || localityNameMl == undefined) {
+
+      if (localityNameMl === null || localityNameMl.trim() == '' || localityNameMl.trim() == undefined) {
         validFlag = false;
+        setAdrsLocalityNameMl("");
         setlocalNameMlError(true);
         setToast(true);
         setTimeout(() => {
@@ -738,6 +918,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
       } else {
         setlocalNameMlError(false);
       }
+
       if (publicPlaceType == null || publicPlaceType == "" || publicPlaceType == undefined) {
         validFlag = false;
         setplaceTypepEnError(true);
@@ -801,63 +982,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
       setcauseFoetalDeathError(false);
     }
 
-    if (validFlag == true) {
-      // sessionStorage.setItem("stateId", stateId ? stateId : null);
-      // sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
-      // sessionStorage.setItem("workFlowCode", workFlowCode);
-      // sessionStorage.setItem("childDOB", childDOB ? childDOB : null);
-      // sessionStorage.setItem("birthDateTime", birthDateTime ? birthDateTime : null);
-      // sessionStorage.setItem("gender", gender ? gender.code : null);
-      // sessionStorage.setItem("childAadharNo", childAadharNo ? childAadharNo : null);
-      // sessionStorage.setItem("childFirstNameEn", childFirstNameEn ? childFirstNameEn : null);
-      // sessionStorage.setItem("childMiddleNameEn", childMiddleNameEn ? childMiddleNameEn : null);
-      // sessionStorage.setItem("childLastNameEn", childLastNameEn ? childLastNameEn : null);
-      // sessionStorage.setItem("childFirstNameMl", childFirstNameMl ? childFirstNameMl : null);
-      // sessionStorage.setItem("childMiddleNameMl", childMiddleNameMl ? childMiddleNameMl : null);
-      // sessionStorage.setItem("childLastNameMl", childLastNameMl ? childLastNameMl : null);
-      // sessionStorage.setItem("isChildName", isChildName);
-      // sessionStorage.setItem("birthPlace", birthPlace.code);
-      // sessionStorage.setItem("hospitalCode", hospitalName ? hospitalName.code : null);
-      // sessionStorage.setItem("hospitalName", hospitalName ? hospitalName.hospitalName : null);
-      // sessionStorage.setItem("hospitalNameMl", hospitalName ? hospitalNameMl.hospitalNamelocal : null);
-      // sessionStorage.setItem("institutionTypeCode", institution ? institution.code : null);
-      // sessionStorage.setItem("institution", institution ? institution.name : null);
-      // sessionStorage.setItem("institutionNameCode", institutionId ? institutionId.code : null);
-      // sessionStorage.setItem("institutionId", institutionId ? institutionId.institutionName : null);
-      // sessionStorage.setItem("institutionIdMl", institutionIdMl ? institutionIdMl.institutionNamelocal : null);
-      // sessionStorage.setItem("adrsHouseNameEn", adrsHouseNameEn ? adrsHouseNameEn : null);
-      // sessionStorage.setItem("adrsHouseNameMl", adrsHouseNameMl ? adrsHouseNameMl : null);
-      // sessionStorage.setItem("adrsLocalityNameEn", adrsLocalityNameEn ? adrsLocalityNameEn : null);
-      // sessionStorage.setItem("adrsLocalityNameMl", adrsLocalityNameMl ? adrsLocalityNameMl : null);
-      // sessionStorage.setItem("adrsStreetNameEn", adrsStreetNameEn ? adrsStreetNameEn : null);
-      // sessionStorage.setItem("adrsStreetNameMl", adrsStreetNameMl ? adrsStreetNameMl : null);
-      // sessionStorage.setItem("adrsPostOffice", adrsPostOffice ? adrsPostOffice.code : null);
-      // sessionStorage.setItem("adrsPincode", adrsPincode ? adrsPincode.code : null);
-      // sessionStorage.setItem("wardNo", wardNo ? wardNo.code : null);
-      // sessionStorage.setItem("wardNameEn", wardNo ? wardNo.name : null);
-      // sessionStorage.setItem("wardNameMl", wardNo ? wardNo.localname : null);
-      // sessionStorage.setItem("wardNumber", wardNo ? wardNo.wardno : null);
-      // sessionStorage.setItem("vehicleType", vehicleType ? vehicleType : null);
-      // sessionStorage.setItem("vehicleRegistrationNo", vehicleRegistrationNo ? vehicleRegistrationNo : null);
-      // sessionStorage.setItem("vehicleFromEn", vehicleFromEn ? vehicleFromEn : null);
-      // sessionStorage.setItem("vehicleToEn", vehicleToEn ? vehicleToEn : null);
-      // sessionStorage.setItem("vehicleFromMl", vehicleFromMl ? vehicleFromMl : null);
-      // sessionStorage.setItem("vehicleToMl", vehicleToMl ? vehicleToMl : null);
-      // sessionStorage.setItem("vehicleHaltPlace", vehicleHaltPlace ? vehicleHaltPlace : null);
-      // // sessionStorage.setItem("vehicleHaltPlaceMl", vehicleHaltPlaceMl ? vehicleHaltPlaceMl : null);
-      // sessionStorage.setItem("setadmittedHospitalEn", setadmittedHospitalEn ? setadmittedHospitalEn.code : null);
-      // sessionStorage.setItem("vehicleDesDetailsEn", vehicleDesDetailsEn ? vehicleDesDetailsEn : null);
-      // sessionStorage.setItem("publicPlaceType", publicPlaceType ? publicPlaceType.code : null);
-      // sessionStorage.setItem("localityNameEn", localityNameEn ? localityNameEn : null);
-      // sessionStorage.setItem("localityNameMl", localityNameMl ? localityNameMl : null);
-      // sessionStorage.setItem("streetNameEn", streetNameEn ? streetNameEn : null);
-      // sessionStorage.setItem("streetNameMl", streetNameMl ? streetNameMl : null);
-      // sessionStorage.setItem("publicPlaceDecpEn", publicPlaceDecpEn ? publicPlaceDecpEn : null);
-      // sessionStorage.setItem("birthWeight", birthWeight ? birthWeight : null);
-      // sessionStorage.setItem("pregnancyDuration", pregnancyDuration ? pregnancyDuration.code : null);
-      // sessionStorage.setItem("medicalAttensionSub", medicalAttensionSub ? medicalAttensionSub.code : null);
-      // sessionStorage.setItem("deliveryMethods", deliveryMethods ? deliveryMethods.code : null);
-      //   sessionStorage.setItem("causeFoetalDeath", causeFoetalDeath ? causeFoetalDeath.code : null);
+    if (validFlag == true) {     
       let IsEditChangeScreen = isEditStillBirth ? isEditStillBirth : false;
       let isWorkflow = isEditStillBirth ? false : true;
       onSelect(config.key, {
@@ -1054,7 +1179,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
                   option={menu}
                   selected={gender}
                   select={setselectGender}
-                  //  disable={isDisableEdit}
+                   disable={isDisableEdit}
                   placeholder={`${t("CR_GENDER")}`}
                   {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })}
                 />

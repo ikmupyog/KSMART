@@ -4,6 +4,7 @@ import { FormStep, CardLabel, TextInput, Dropdown, LinkButton, UploadFile,   Dat
   BackButton,MultiLink, CheckBox, TextArea, Toast, Table, RadioButtons } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 
+
 const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBirth=false }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
@@ -25,7 +26,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
   const [childNameEn, setchildNameEn] = useState(formData?.BirthNACInitiator?.childNameEn ? formData?.BirthNACInitiator?.childNameEn : "");
   const [childNameMl, setchildNameMl] = useState(formData?.BirthNACInitiator?.childNameMl ? formData?.BirthNACInitiator?.childNameMl : "");
   const [orderOfBirth, setorderOfBirth] =useState(
-    formData?.BirthNACInitiator?.orderOfBirth ? formData?.BirthNACInitiator?.orderOfBirth : ""
+    formData?.BirthNACInitiator?.nacorderofChildren ? formData?.BirthNACInitiator?.nacorderofChildren : ""
   );
   const [isAlive, setisAlive] = useState(formData?.BirthNACInitiator?.isAlive ? formData?.BirthNACInitiator?.isAlive : "");
   const [slNo, setslNo] = useState();
@@ -61,10 +62,11 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
   let ownerappmap ={
     slNo: "slNo",
     sex: "sex",
+    dob: "dob",
     childNameEn: "childNameEn",
     childNameMl: "childNameMl",
     orderOfBirth: "orderOfBirth",
-    alive: "alive"
+    isAlive: "isAlive"
   };
 
   const reducer = (state, action) => {
@@ -75,10 +77,11 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
           {
             slNo: "",
             sex: "",
+            dob: "dob",
             childNameEn: "",
             childNameMl: "",
             orderOfBirth: "",
-            alive: "",
+            isAlive: false,
           },
         ];
       case "REMOVE_APPLICANT":
@@ -109,10 +112,11 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
       {
         slNo: "",
         sex: "",
+        dob: null,
         childNameEn: "",
         childNameMl:"",
         orderOfBirth: "",
-        alive: "",
+        isAlive: false,
       },
     ]
   }
@@ -125,10 +129,11 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
           {
             slNo: "",
             sex: "",
+            dob: null,
             childNameEn: "",
             childNameMl:"",
             orderOfBirth: "",
-            alive: "",
+            isAlive: false,
           },
         ];
       case "REMOVE_OWNER":
@@ -149,17 +154,29 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData ,isEditStillBi
       {
         slNo: "",
         sex: "",
+        dob: "dob",
         childNameEn: "",
         childNameMl:"",
         orderOfBirth: "",
-        alive: "",
+        isAlive: false,
       }
     ]
   }
 
   const [appState, dispatchapplicant] = formDatalocal?.tradeLicenseDetail?.owners?.length > 0 ? useReducer(reducer, storedAppData, initapplicantedit) : useReducer(reducer, storedAppData, initapplicant);
-  const [ownerState, disptachowner] =  useReducer(reducerowner, storedOwnerData,initowner)
+  const [ownerState, disptachowner] = useReducer(reducerowner, storedOwnerData, initowner)
 
+  
+  const handleOwnerInputField = useCallback((index, e, key, length = 100) => {
+    if(e.length===0){
+      disptachowner({ type: "EDIT_CURRENT_OWNER", payload: { index, key, value: "" } });
+      return;
+    }
+    if (e.length <= length || typeof e === "object" || typeof e === "boolean")
+      disptachowner({ type: "EDIT_CURRENT_OWNER", payload: { index, key, value: e } });
+    else
+      return
+  }, [disptachowner]);
 
   const handleAppInputField = useCallback((index, e, key, length = 100) => {
     if(e.length===0){
@@ -518,6 +535,17 @@ function selectfile5(e) {
       });
     }
   };
+
+  const handleTextInputField1  = useCallback((index, e, key, length = 100) => {
+    if (e.length <= length) {
+      disptachowner({ type: "EDIT_CURRENT_DOORNO", payload: { index, key, value: e } });
+        setFlgCheck(false);
+        setFlgCheckDoor(false);
+    }
+    else
+      return;
+  }, [disptachowner]); 
+
   const convertEpochToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
@@ -535,50 +563,19 @@ function selectfile5(e) {
     return (
     <React.Fragment>
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-      {window.location.href.includes("/citizen") ? <Timeline currentStep={5} /> : null}
-      {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
+      {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
+      {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
       <FormStep
         t={t}
         config={config}
         onSelect={goNext}
         onSkip={onSkip}
-        isDisabled={!isInitiatorDeclaration || !initiatorNameEn || !initiatorAadhar || !initiatorMobile || !initiatorAddress}
+          isDisabled={!isInitiatorDeclaration || !initiatorNameEn || !initiatorAadhar || !initiatorMobile || !initiatorAddress
+            || !isDeclaration || (ownerState[0].slNo === "" || ownerState[0].dob === null || ownerState[0].childNameEn === "" || ownerState[0].childNameMl === ""
+          || ownerState[0].sex === "" || ownerState[0].orderOfBirth === "" || ownerState[0].isAlive === false )}
       >
         <div>
-                  
-        <div className="row">
-          <div className="col-md-12">
-            <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
-            </h1>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-12">
-              <CheckBox
-                label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
-                onChange={setDeclarationInfo}
-                value={isInitiatorDeclaration}
-                checked={isInitiatorDeclaration}
-                disable={isDisableEdit}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-12">
-              <CheckBox
-                label="I do understand that NAC/NIA issue will be subject to the genuiness of documents produced and enquiry done by the registrar"
-                onChange={setDeclarationStatement}
-                value={isDeclaration}
-                checked={isDeclaration}
-                disable={isDisableEdit}
-              />
-            </div>
-          </div>
-        </div>
+
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -626,7 +623,7 @@ function selectfile5(e) {
             </div>
             <div className="col-md-3">
               <CardLabel>
-                {`${t("CR_IS_CAREOF")}`}
+                S/o or D/o({`${t("CR_IS_CAREOF")}`})
                 <span className="mandatorycss">*</span>
               </CardLabel>
               <TextInput
@@ -686,7 +683,7 @@ function selectfile5(e) {
             </h1>
           </div>
         </div>
-        {ownerState?.length > 0 && ownerState.map((field, index) => {
+            {ownerState.map((field, index) => {
           return (
             <div key={`${field}-${index}`}>
               <div style={{
@@ -698,64 +695,68 @@ function selectfile5(e) {
                   }} className="col-md-12">
                 <div className="row">
                     <div className="col-md-3">
-                      <CardLabel>SL NO</CardLabel>
+                      <CardLabel>SL NO<span className="mandatorycss">*</span></CardLabel>
                       <TextInput
                        t={t}
-                      //isMandatory={config.isMandatory}
+                       //isMandatory={true}
                       type={"number"}
                       optionKey="i18nKey"
                       name="slNo"
-                      value={slNo}
-                      onChange={(e)=>setslNo(e.target.value)}/>
+                      value={field?.slNo}
+                      onChange={(e)=>handleOwnerInputField(index, e.target.value, "slNo")}/>
                     </div>
                     <div className="col-md-3">
                     <CardLabel>
-                  {t("CR_DATE_OF_BIRTH_TIME")}
+                      {t("CR_DATE_OF_BIRTH_TIME")}
+                      <span className="mandatorycss">*</span>
                 </CardLabel>
-                <DatePicker
-                  date={dob}
+                    <DatePicker
+                  //isMandatory={true}
+                  date={field?.dob}
                   name="dob"
                   max={convertEpochToDate(new Date())}
-                  onChange={setselectChildDOB}
+                  onChange={(e)=>handleOwnerInputField(index, e, "dob")}
                   inputFormat="DD-MM-YYYY"
                   placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
-                  {...(validation = { isRequired: false, title: t("CR_DATE_OF_BIRTH_TIME") })}
+                  {...(validation = { isRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
                 />
                     </div>
                     <div className="col-md-3">
                     <CardLabel>
-                      {`${t("CR_NAME_EN")}`}
+                    {`${t("TL_LICENSEE_NAME")}`}
+                      <span className="mandatorycss">*</span>
                     </CardLabel>
                     <TextInput
                       t={t}
-                      //isMandatory={false}
+                      //isMandatory={true}
                       type={"text"}
                       optionKey="i18nKey"
                       name="childNameEn"
-                      value={childNameEn}
-                      onChange={setSelectChildNameEn}
+                      value={field?.childNameEn}
+                      onChange={(e)=>handleOwnerInputField(index, e.target.value, "childNameEn")}
                       disable={isEdit}
-                      placeholder={`${t("CR_NAME_EN")}`}
-                      {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_NAME_EN") })}
+                      placeholder={`${t("TL_LICENSEE_NAME")}`}
+                      {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("TL_LICENSEE_NAME") })}
                     />
                   </div>
                   <div className="col-md-3">
                     <CardLabel>
                       {`${t("CR_NAME_ML")}`}
+                      <span className="mandatorycss">*</span>
                     </CardLabel>
                     <TextInput
                       t={t}
-                      //isMandatory={false}
+                      //isMandatory={true}
                       type={"text"}
                       optionKey="i18nKey"
                       name="childNameMl"
-                      value={childNameMl}
-                      onChange={setSelectChildNameMl}
+                      value={field?.childNameMl}
+                      onChange={(e)=>handleOwnerInputField(index, e.target.value, "childNameMl")}
                       disable={isEdit}
                       placeholder={`${t("CR_FIRST_NAME_ML")}`}
                       {...(validation = {
                         pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                        isRequired: false,
+                        isRequired: true,
                         type: "text",
                         title: t("CR_INVALID_NAME_ML"),
                       })}
@@ -764,44 +765,42 @@ function selectfile5(e) {
                     {/* </div>
                     <div className="row"> */}
                     <div className="col-md-3">
-                      <CardLabel>{`${t("CR_GENDER")}`}</CardLabel>
+                      <CardLabel>{`${t("CR_GENDER")}`}<span className="mandatorycss">*</span></CardLabel>
                       <Dropdown
-                        t={t}
+                      t={t}
                         optionKey="code"
-                        isMandatory={true}
+                        //isMandatory={true}
                         option={menu}
-                        selected={sex}
-                        select={setselectGender}
+                        selected={field?.sex}
+                        // select={setselectGender}
                         placeholder={`${t("CR_GENDER")}`}
-                        onChange={e => handleAppInputField(index, e.target.value, '')}/>
+                        select={(e) => handleOwnerInputField(index, e, 'sex')}/>
                     </div>
                 </div>
                                 
-                
-                    <div className="col-md-3">
-                      <CardLabel>Order of Birth</CardLabel>
+                <div className="col-md-3">
+                      <CardLabel>Order of Birth<span className="mandatorycss">*</span></CardLabel>
                       <TextInput 
                       t={t} 
-                      //isMandatory={config.isMandatory} 
+                      //isMandatory={true}
                       type={"number"}
                       optionKey="i18nKey" 
                       name="orderOfBirth"
-                      value={orderOfBirth} 
-                      onChange={setSelectOrderOfBirth}/>
+                      value={field?.orderOfBirth} 
+                      onChange={(e)=>handleOwnerInputField(index, e.target.value, "orderOfBirth")}
+                      />
                     </div>
                     <div className="col-md-3">
-                      <CardLabel>Alive? Yes/No</CardLabel>
-                      <RadioButtons
-                      style={{display: 'flex'}}
-                        t={t}
-                      options={orderMenu}
-                      optionsKey="code"
-                      name="isAlive"
-                      selectedOption={isAlive} 
-                      onSelect={setAliveExpired}
-                      isDependent={true}
-                      labelKey=""
-                    />
+                  <CardLabel>Alive? Yes/No<span className="mandatorycss">*</span></CardLabel>
+                  <CheckBox
+                    t={t}
+                    label={field?.isAlive? "Yes" : "No"}
+                    name="isAlive"
+                    onChange={(e) => handleOwnerInputField(index, e.target.checked, "isAlive")}
+                    value={field?.isAlive}
+                    checked={field?.isAlive}
+
+                  />
                     </div>
                     {ownerState.length === (index + 1) && (
                       <div className="col-md-1">
@@ -812,7 +811,15 @@ function selectfile5(e) {
                               <path d="M61.44,0A61.46,61.46,0,1,1,18,18,61.25,61.25,0,0,1,61.44,0ZM88.6,56.82v9.24a4,4,0,0,1-4,4H70V84.62a4,4,0,0,1-4,4H56.82a4,4,0,0,1-4-4V70H38.26a4,4,0,0,1-4-4V56.82a4,4,0,0,1,4-4H52.84V38.26a4,4,0,0,1,4-4h9.24a4,4,0,0,1,4,4V52.84H84.62a4,4,0,0,1,4,4Zm8.83-31.37a50.92,50.92,0,1,0,14.9,36,50.78,50.78,0,0,0-14.9-36Z" />
                             </svg>
                           }
-                           onClick={(e) => disptachowner({ type: "ADD_OWNER" })}
+                           onClick={(e) => disptachowner({ type: "ADD_OWNER",payload:{
+                            slNo: slNo,
+                            sex: sex,
+                            dob: dob,
+                            childNameEn: childNameEn,
+                            childNameMl: childNameMl,
+                            orderOfBirth: orderOfBirth,
+                            isAlive: isAlive
+                          } })}
                         />
                       </div>
                     )}
@@ -942,7 +949,40 @@ function selectfile5(e) {
               </div> 
               </div>
               </div>
-    
+                      
+              <div className="row">
+          <div className="col-md-12">
+            <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
+            </h1>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-12">
+              <CheckBox
+                label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
+                onChange={setDeclarationInfo}
+                value={isInitiatorDeclaration}
+                checked={isInitiatorDeclaration}
+                disable={isDisableEdit}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-12">
+              <CheckBox
+                label="I do understand that NAC/NIA issue will be subject to the genuiness of documents produced and enquiry done by the registrar"
+                onChange={setDeclarationStatement}
+                value={isDeclaration}
+                checked={isDeclaration}
+                disable={isDisableEdit}
+              />
+            </div>
+          </div>
+        </div>
          
         {toast && (
           <Toast

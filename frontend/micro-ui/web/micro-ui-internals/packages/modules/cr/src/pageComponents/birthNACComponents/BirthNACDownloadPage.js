@@ -24,8 +24,8 @@ const BirthNACDownloadPage = ({config, onSelect}) => {
     return (
         <React.Fragment>
           <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-          {window.location.href.includes("/citizen") ? <Timeline/> : null}
-          {window.location.href.includes("/employee") ? <Timeline/> : null}
+          {window.location.href.includes("/citizen") }
+          {window.location.href.includes("/employee") }
           <FormStep t={t} config={config} isDisabled={false} onSelect={goNext}>
             <div className="row">
               <div className="col-md-12">

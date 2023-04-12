@@ -1,16 +1,8 @@
 import {
-  Card,
-  CardLabel,
-  CardSubHeader,
-  CardText,
-  CitizenInfoLabel,
-  LinkButton,
-  Row,
-  StatusTable,
-  SubmitBar,
-  BackButton,
+  Card, CardLabel, CardSubHeader, CardText, CitizenInfoLabel,
+  LinkButton, Row, StatusTable, SubmitBar, BackButton, CheckBox,Toast
 } from "@egovernments/digit-ui-react-components";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useRouteMatch } from "react-router-dom";
 //import TLDocument from "../../../pageComponents/TLDocumets";
@@ -94,17 +86,18 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
             </h1>
           </div>
         </div>
-        <div
+        <div className="col-md-12"
           style={{
-            maxWidth: "80%",
+            maxWidth: "auto",
             margin: "25px auto",
             padding: "3rem 2rem",
             border: "none",
             borderRadius: "8px",
-            height: "820px",
+            height: "auto",
             backgroundColor: "#f3f0ef",
           }}
         >
+            <div className="col-md-12">
           <div className="row">
             <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}> {`${t("PDF_BIRTH_CHILD_NAME")}`} </CardLabel>
@@ -531,6 +524,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
               </div>
             </div>
           )}
+        </div>
         </div>
         <div className="row">
           <div className="col-md-12">

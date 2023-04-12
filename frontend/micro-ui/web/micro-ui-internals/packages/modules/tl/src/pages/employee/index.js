@@ -8,6 +8,7 @@ import Inbox from "./Inbox";
 // import Response from "../Response";
 import ApplicationDetails from "./ApplicationDetails";
 //import ReNewApplication from "./ReNewApplication";
+import  ApplicationDetailsCorrection from "./ApplicationDetailsCorrection"
 
 const TLBreadCrumb = ({ location }) => {
   const { t } = useTranslation();
@@ -201,6 +202,7 @@ const EmployeeApp = ({ path, url, userType }) => {
           <PrivateRoute path={`${path}/pde-application`} component={() => <PdeApplication parentUrl={url} isEdit={false} />} />
           <PrivateRoute path={`${path}/pde-search`} component={() => <SearchPde parentUrl={url} />} />
           <PrivateRoute path={`${path}/pde-editapplication`} component={() => <PdeApplication parentUrl={url} isEdit={true}/>} />	
+          <PrivateRoute path={`${path}/applicationcorrection-details/:id`} component={() => <ApplicationDetailsCorrection parentRoute={path} />} />
         </div>
       </React.Fragment>
     </Switch>

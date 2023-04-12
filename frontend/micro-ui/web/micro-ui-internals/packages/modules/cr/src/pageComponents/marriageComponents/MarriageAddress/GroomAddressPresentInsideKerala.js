@@ -3,7 +3,7 @@ import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, Loader,
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
 
-const MarriageAddressPresentInsideKerala = ({
+const GroomAddressPresentInsideKerala = ({
   config,
   onSelect,
   userType,
@@ -78,10 +78,12 @@ const MarriageAddressPresentInsideKerala = ({
   isEditDeath = false,
   isEditStillBirth = false,
   isEditAdoption,
+  isEditBirthNAC = false,
   value,
   setValue,
   // isInitialRender, setIsInitialRender
 }) => {
+  console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const [pofilter, setPofilter] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : isEditStillBirth ? isEditStillBirth : false);
@@ -126,31 +128,37 @@ const MarriageAddressPresentInsideKerala = ({
 
   localbodies &&
     localbodies["tenant"] &&
+    localbodies["tenant"].tenants &&
     localbodies["tenant"].tenants.map((ob) => {
       cmbLB.push(ob);
     });
   Taluk &&
     Taluk["common-masters"] &&
+    Taluk["common-masters"].Taluk &&
     Taluk["common-masters"].Taluk.map((ob) => {
       cmbTaluk.push(ob);
     });
   Village &&
     Village["common-masters"] &&
+    Village["common-masters"].Village &&
     Village["common-masters"].Village.map((ob) => {
       cmbVillage.push(ob);
     });
   District &&
     District["common-masters"] &&
+    District["common-masters"].District &&
     District["common-masters"].District.map((ob) => {
       cmbDistrict.push(ob);
     });
   PostOffice &&
     PostOffice["common-masters"] &&
+    PostOffice["common-masters"].PostOffice &&
     PostOffice["common-masters"].PostOffice.map((ob) => {
       cmbPostOffice.push(ob);
     });
   LBType &&
     LBType["common-masters"] &&
+    LBType["common-masters"].LBType &&
     LBType["common-masters"].LBType.map((ob) => {
       cmbLBType.push(ob);
     });
@@ -160,6 +168,7 @@ const MarriageAddressPresentInsideKerala = ({
   let currentLB = [];
   boundaryList &&
     boundaryList["egov-location"] &&
+    boundaryList["egov-location"].TenantBoundary &&
     boundaryList["egov-location"].TenantBoundary.map((ob) => {
       // console.log(ob);
       // if(ob?.boundary){
@@ -279,6 +288,13 @@ const MarriageAddressPresentInsideKerala = ({
         setPresentWardNo(cmbWardNo.filter((cmbWardNo) => cmbWardNo.code === formData?.AddressBirthDetails?.presentWardNo)[0]);
       }
     }
+    // if (formData?.AddressBirthDetails?.presentInsideKeralaPostOffice != null) {
+    //     if (cmbFilterPostOffice.length > 0 && (presentInsideKeralaPostOffice === undefined || presentInsideKeralaPostOffice === "")) {
+    //         setinsideKeralaPostOffice(cmbFilterPostOffice.filter(cmbFilterPostOffice => cmbFilterPostOffice.code === formData?.AddressBirthDetails?.presentInsideKeralaPostOffice)[0]);
+    //         let pin = cmbFilterPostOffice.filter(cmbFilterPostOffice => cmbFilterPostOffice.code === formData?.AddressBirthDetails?.presentInsideKeralaPostOffice)[0];
+    //         setinsideKeralaPincode(pin.pincode);
+    //     }
+    // }
     if (formData?.AddressBirthDetails?.presentInsideKeralaPostOffice != null) {
       if (cmbFilterPostOffice.length > 0 && (presentInsideKeralaPostOffice === undefined || presentInsideKeralaPostOffice === "")) {
         setinsideKeralaPostOffice(
@@ -860,4 +876,4 @@ const MarriageAddressPresentInsideKerala = ({
       </React.Fragment>
     );
 };
-export default MarriageAddressPresentInsideKerala;
+export default GroomAddressPresentInsideKerala;
