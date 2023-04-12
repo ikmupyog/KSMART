@@ -10,7 +10,7 @@ import { DigitUI } from "@egovernments/digit-ui-module-core";
 import { initLibraries } from "@egovernments/digit-ui-libraries";
 import { HRMSModule ,initHRMSComponents  } from "@egovernments/digit-ui-module-hrms";
 import { TLModule, TLLinks,initTLComponents } from "@egovernments/digit-ui-module-tl";
-import { CRModule, CRLinks,initCRComponents } from "@egovernments/digit-ui-module-cr";
+import { CRModule, CRLinks,initCRComponents, CRReducers } from "@egovernments/digit-ui-module-cr";
 import { DFMModule, DFMLinks,initDFMComponents } from "@egovernments/digit-ui-module-dfm";
 import { initReceiptsComponents, ReceiptsModule } from "@egovernments/digit-ui-module-receipts";
 import { initOBPSComponents } from "@egovernments/digit-ui-module-obps";
@@ -60,6 +60,7 @@ initCustomisationComponents();
 initDFMComponents();
 const moduleReducers = (initData) => ({
   pgr: PGRReducers(initData),
+  cr: CRReducers(initData)
 });
 
 function App() {

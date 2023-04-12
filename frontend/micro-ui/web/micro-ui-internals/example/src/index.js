@@ -22,7 +22,7 @@ import { initNOCComponents } from "@egovernments/digit-ui-module-noc";
 import { initWSComponents } from "@egovernments/digit-ui-module-ws"; 
 import { DigitUI } from "@egovernments/digit-ui-module-core";
 import { initCommonPTComponents } from "@egovernments/digit-ui-module-commonpt";
-import { initCRComponents } from "@egovernments/digit-ui-module-cr";
+import { initCRComponents , CRReducers} from "@egovernments/digit-ui-module-cr";
 
 // import {initCustomisationComponents} from "./customisations";
 
@@ -103,6 +103,7 @@ const initDigitUI = () => {
 
 const moduleReducers = (initData) => ({
     pgr: PGRReducers(initData),
+    cr:CRReducers(initData)
   });
 
   window.Digit.Customizations = { PGR: pgrCustomizations ,TL:{customiseCreateFormData:(formData,licenceObject)=>licenceObject,

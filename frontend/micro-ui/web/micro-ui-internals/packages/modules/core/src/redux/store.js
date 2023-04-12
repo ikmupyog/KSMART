@@ -1,6 +1,7 @@
 import { createStore, combineReducers, compose, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { commonReducer } from "./reducers";
+import { logger } from 'redux-logger';
 
 const getRootReducer = (defaultStore, moduleReducers) =>
   combineReducers({
@@ -8,7 +9,7 @@ const getRootReducer = (defaultStore, moduleReducers) =>
     ...moduleReducers,
   });
 
-const middleware = [thunk];
+const middleware = [thunk, logger];
 
 const composeEnhancers =
   typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose;
