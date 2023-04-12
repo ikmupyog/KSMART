@@ -521,6 +521,7 @@ public class GroomAddressDetails {
     @Size(max = 64)
     @JsonProperty("brideGroomPermanent")
     private String brideGroomPermanent;
+
     @Size(max = 10)
     @JsonProperty("outSideIndiaPostCodePermanent")
     private String outSideIndiaPostCodepermanent;

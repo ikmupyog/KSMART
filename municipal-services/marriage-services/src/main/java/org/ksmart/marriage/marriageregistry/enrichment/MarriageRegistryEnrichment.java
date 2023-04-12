@@ -287,6 +287,7 @@ public class MarriageRegistryEnrichment implements BaseEnrichment {
                                 marriage.getGroomAddressDetails().setPermntOthrIndiaprovinceEn(marriage.getGroomAddressDetails().getPermntOutSideIndiaProvinceEn());
                                 marriage.getGroomAddressDetails().setPermntOthrIndiaprovinceMl(marriage.getGroomAddressDetails().getPermntOutSideIndiaProvinceMl());
 
+                             marriage.getGroomAddressDetails().setOutSideIndiaPostCodepermanent(marriage.getGroomAddressDetails().getPermanentOutsideIndiaPostCode());
 
 
 
@@ -484,6 +485,9 @@ public class MarriageRegistryEnrichment implements BaseEnrichment {
 
                                    marriage.getBrideAddressDetails().setPermntOthrIndiaprovinceEn(marriage.getBrideAddressDetails().getPermntOutSideIndiaProvinceEn());
                                    marriage.getBrideAddressDetails().setPermntOthrIndiaprovinceMl(marriage.getBrideAddressDetails().getPermntOutSideIndiaProvinceMl());
+
+                                marriage.getBrideAddressDetails().setOutSideIndiaPostCodepermanent(marriage.getGroomAddressDetails().getPermanentOutsideIndiaPostCode());
+
 //                               }
                            }
 
@@ -522,68 +526,131 @@ public class MarriageRegistryEnrichment implements BaseEnrichment {
                 if (registryDetails.getGroomAddressDetails().getPermtaddressCountry().equals(MarriageConstants.COUNTRY_CODE)) {
                     if (registryDetails.getGroomAddressDetails().getPermtaddressStateName().equals(MarriageConstants.STATE_CODE_SMALL)) {
 
+
+                        groomAddressBuilder.append(registryDetails.getGroomAddressDetails().getPermntInKeralaAdrHouseNameEn()).append(",");
+
+                        groomAddressBuilder.append(registryDetails.getGroomAddressDetails().getPermntInKeralaAdrStreetNameEn()).append(",");
+
+                        groomAddressBuilder.append(registryDetails.getGroomAddressDetails().getPermntInKeralaAdrLocalityNameEn()).append(",");
+
+                        groomAddressBuilder.append(registryDetails.getGroomAddressDetails().getPermntInKeralaAdrPostOffice()).append(",");
+
+                        groomAddressBuilder.append(registryDetails.getGroomAddressDetails().getPermntInKeralaAdrDistrict()).append(",");
+
+                        groomAddressBuilder.append(registryDetails.getGroomAddressDetails().getPermtaddressStateName()).append(",");
+
                         groomAddressBuilder.append(registryDetails.getGroomAddressDetails().getPermtaddressCountry()).append(",");
 
-                        registryDetails.getGroomAddressDetails().setStateIdPermanent(registryDetails.getGroomAddressDetails().getPermtaddressStateName());
+                        groomAddressBuilder.append(registryDetails.getGroomAddressDetails().getPermntInKeralaAdrPincode());
 
-                        registryDetails.getGroomAddressDetails().setDistrictIdPermanent(registryDetails.getGroomAddressDetails().getPermntInKeralaAdrDistrict());
 
-                        registryDetails.getGroomAddressDetails().setLocalityEnPermanent(registryDetails.getGroomAddressDetails().getPermntInKeralaAdrLocalityNameEn());
-                        registryDetails.getGroomAddressDetails().setLocalityMlPermanent(registryDetails.getGroomAddressDetails().getPermntInKeralaAdrLocalityNameMl());
 
-                        registryDetails.getGroomAddressDetails().setStreetNameEnPermanent(registryDetails.getGroomAddressDetails().getPermntInKeralaAdrStreetNameEn());
-                        registryDetails.getGroomAddressDetails().setStreetNameMlPermanent(registryDetails.getGroomAddressDetails().getPermntInKeralaAdrStreetNameMl());
-
-                        registryDetails.getGroomAddressDetails().setHouseNameNoEnPermanent(registryDetails.getGroomAddressDetails().getPermntInKeralaAdrHouseNameEn());
-                        registryDetails.getGroomAddressDetails().setHouseNameNoMlPermanent(registryDetails.getGroomAddressDetails().getPermntInKeralaAdrHouseNameMl());
-                        registryDetails.getGroomAddressDetails().setPinNoPermanent(registryDetails.getGroomAddressDetails().getPermntInKeralaAdrPincode());
-                        registryDetails.getGroomAddressDetails().setVillageNamePermanent(registryDetails.getGroomAddressDetails().getPermntInKeralaAdrPostOffice());
                     } else {
-                        registryDetails.getGroomAddressDetails().setCountryIdPermanent(registryDetails.getGroomAddressDetails().getPermtaddressCountry());
 
-                        registryDetails.getGroomAddressDetails().setStateIdPermanent(registryDetails.getGroomAddressDetails().getPermtaddressStateName());
+                        groomAddressBuilder.append(registryDetails.getGroomAddressDetails().getPermntOutsideKeralaHouseNameEn()).append(",");
 
-                        registryDetails.getGroomAddressDetails().setDistrictIdPermanent(registryDetails.getGroomAddressDetails().getPermntOutsideKeralaDistrict());
+                        groomAddressBuilder.append(registryDetails.getGroomAddressDetails().getPermntOutsideKeralaStreetNameEn()).append(",");
 
-                        registryDetails.getGroomAddressDetails().setLocalityEnPermanent(registryDetails.getGroomAddressDetails().getPermntOutsideKeralaLocalityNameEn());
-                        registryDetails.getGroomAddressDetails().setLocalityMlPermanent(registryDetails.getGroomAddressDetails().getPermntOutsideKeralaLocalityNameMl());
+                        groomAddressBuilder.append(registryDetails.getGroomAddressDetails().getPermntOutsideKeralaLocalityNameEn()).append(",");
 
-                        registryDetails.getGroomAddressDetails().setStreetNameEnPermanent(registryDetails.getGroomAddressDetails().getPermntOutsideKeralaStreetNameEn());
-                        registryDetails.getGroomAddressDetails().setStreetNameMlPermanent(registryDetails.getGroomAddressDetails().getPermntOutsideKeralaStreetNameMl());
+                        groomAddressBuilder.append(registryDetails.getGroomAddressDetails().getPermntOutsideKeralaPostOfficeEn()).append(",");
 
-                        registryDetails.getGroomAddressDetails().setHouseNameNoEnPermanent(registryDetails.getGroomAddressDetails().getPermntOutsideKeralaHouseNameEn());
-                        registryDetails.getGroomAddressDetails().setHouseNameNoMlPermanent(registryDetails.getGroomAddressDetails().getPermntOutsideKeralaHouseNameMl());
+                        groomAddressBuilder.append(registryDetails.getGroomAddressDetails().getPermntOutsideKeralaDistrict()).append(",");
 
-                        registryDetails.getGroomAddressDetails().setVillageNamePermanent(registryDetails.getGroomAddressDetails().getPermntOutsideKeralaVillage());
+                        groomAddressBuilder.append(registryDetails.getGroomAddressDetails().getPermtaddressStateName()).append(",");
 
-                        registryDetails.getGroomAddressDetails().setPermntOthrTalukName(registryDetails.getGroomAddressDetails().getPermntOutsideKeralaTaluk());
-                        registryDetails.getGroomAddressDetails().setPermntOthPostOfficeEn(registryDetails.getGroomAddressDetails().getPermntOutsideKeralaPostOfficeEn());
+                        groomAddressBuilder.append(registryDetails.getGroomAddressDetails().getPermtaddressCountry()).append(",");
 
+                        groomAddressBuilder.append(registryDetails.getGroomAddressDetails().getPermntOutsideKeralaPincode());
 
-                        registryDetails.getGroomAddressDetails().setPinNoPermanent(registryDetails.getGroomAddressDetails().getPermntOutsideKeralaPincode());
 
                     }
                 }
 
             } else {
-//                            if (registryDetails.getGroomAddressDetails().getPermtaddressCountry() != COUNTRY_CODE) {
-                registryDetails.getGroomAddressDetails().setCountryIdPermanent(registryDetails.getGroomAddressDetails().getPermtaddressCountry());
-                registryDetails.getGroomAddressDetails().setVillageNamePermanent(registryDetails.getGroomAddressDetails().getPermntOutsideIndiaVillage());
-                registryDetails.getGroomAddressDetails().setTownOrVillagePermanent(registryDetails.getGroomAddressDetails().getPermntOutsideIndiaCityTown());
+                groomAddressBuilder.append(registryDetails.getGroomAddressDetails().getPermntOutsideIndiaLineoneEn()).append(",");
 
-                registryDetails.getGroomAddressDetails().setPermntOthrIndiaLineoneEn(registryDetails.getGroomAddressDetails().getPermntOutsideIndiaLineoneEn());
-                registryDetails.getGroomAddressDetails().setPermntOthrIndiaLineoneMl(registryDetails.getGroomAddressDetails().getPermntOutsideIndiaLineoneMl());
+                groomAddressBuilder.append(registryDetails.getGroomAddressDetails().getPermanentOutsideIndiaPostCode()).append(",");
 
-                registryDetails.getGroomAddressDetails().setPermntOthrIndiaLinetwoEn(registryDetails.getGroomAddressDetails().getPermntOutsideIndiaLinetwoEn());
-                registryDetails.getGroomAddressDetails().setPermntOthrIndiaLinetwoMl(registryDetails.getGroomAddressDetails().getPermntOutsideIndiaLinetwoMl());
+                groomAddressBuilder.append(registryDetails.getGroomAddressDetails().getPermntOutSideIndiaProvinceEn()).append(",");
 
-                registryDetails.getGroomAddressDetails().setPermntOthrIndiaprovinceEn(registryDetails.getGroomAddressDetails().getPermntOutSideIndiaProvinceEn());
-                registryDetails.getGroomAddressDetails().setPermntOthrIndiaprovinceMl(registryDetails.getGroomAddressDetails().getPermntOutSideIndiaProvinceMl());
+                groomAddressBuilder.append(registryDetails.getGroomAddressDetails().getPermtaddressCountry());
+
+
+
 
             }
 
         }
         return groomAddressBuilder.toString();
+
+    }
+    private String setBridePermanentAddressForCertificate(MarriageRegistryDetails registryDetails) {
+
+        StringBuilder brideAddressBuilder = new StringBuilder();
+        if (registryDetails.getBrideAddressDetails() != null) {
+
+
+            if (registryDetails.getBrideAddressDetails().getPermtaddressCountry() != null && registryDetails.getBrideAddressDetails().getPermtaddressStateName() != null) {
+                if (registryDetails.getBrideAddressDetails().getPermtaddressCountry().equals(MarriageConstants.COUNTRY_CODE)) {
+                    if (registryDetails.getBrideAddressDetails().getPermtaddressStateName().equals(MarriageConstants.STATE_CODE_SMALL)) {
+
+
+                        brideAddressBuilder.append(registryDetails.getBrideAddressDetails().getPermntInKeralaAdrHouseNameEn()).append(",");
+
+                        brideAddressBuilder.append(registryDetails.getBrideAddressDetails().getPermntInKeralaAdrStreetNameEn()).append(",");
+
+                        brideAddressBuilder.append(registryDetails.getBrideAddressDetails().getPermntInKeralaAdrLocalityNameEn()).append(",");
+
+                        brideAddressBuilder.append(registryDetails.getBrideAddressDetails().getPermntInKeralaAdrPostOffice()).append(",");
+
+                        brideAddressBuilder.append(registryDetails.getBrideAddressDetails().getPermntInKeralaAdrDistrict()).append(",");
+
+                        brideAddressBuilder.append(registryDetails.getBrideAddressDetails().getPermtaddressStateName()).append(",");
+
+                        brideAddressBuilder.append(registryDetails.getBrideAddressDetails().getPermtaddressCountry()).append(",");
+
+                        brideAddressBuilder.append(registryDetails.getBrideAddressDetails().getPermntInKeralaAdrPincode());
+
+
+
+                    } else {
+
+                        brideAddressBuilder.append(registryDetails.getBrideAddressDetails().getPermntOutsideKeralaHouseNameEn()).append(",");
+
+                        brideAddressBuilder.append(registryDetails.getBrideAddressDetails().getPermntOutsideKeralaStreetNameEn()).append(",");
+
+                        brideAddressBuilder.append(registryDetails.getBrideAddressDetails().getPermntOutsideKeralaLocalityNameEn()).append(",");
+
+                        brideAddressBuilder.append(registryDetails.getBrideAddressDetails().getPermntOutsideKeralaPostOfficeEn()).append(",");
+
+                        brideAddressBuilder.append(registryDetails.getBrideAddressDetails().getPermntOutsideKeralaDistrict()).append(",");
+
+                        brideAddressBuilder.append(registryDetails.getBrideAddressDetails().getPermtaddressStateName()).append(",");
+
+                        brideAddressBuilder.append(registryDetails.getBrideAddressDetails().getPermtaddressCountry()).append(",");
+
+                        brideAddressBuilder.append(registryDetails.getBrideAddressDetails().getPermntOutsideKeralaPincode());
+
+
+                    }
+                }
+
+            } else {
+                brideAddressBuilder.append(registryDetails.getBrideAddressDetails().getPermntOutsideIndiaLineoneEn()).append(",");
+
+                brideAddressBuilder.append(registryDetails.getBrideAddressDetails().getPermanentOutsideIndiaPostCode()).append(",");
+
+                brideAddressBuilder.append(registryDetails.getBrideAddressDetails().getPermntOutSideIndiaProvinceEn()).append(",");
+
+                brideAddressBuilder.append(registryDetails.getBrideAddressDetails().getPermtaddressCountry());
+
+
+            }
+
+
+        }
+        return brideAddressBuilder.toString();
 
     }
 
