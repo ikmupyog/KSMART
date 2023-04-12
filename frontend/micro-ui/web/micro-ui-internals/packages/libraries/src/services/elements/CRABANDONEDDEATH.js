@@ -23,7 +23,18 @@ export const CRAbandonedDeathService = {
       params: details,
       auth: true,
     }),
-  CRDeathsearch: ({ tenantId, filters }) =>
+    update: (details, tenantId) =>
+    Request({
+      url: Urls.crabandoneddeath.update,
+      data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: {},
+      auth: true,
+    }),
+  CRAbandonedDeathsearch: ({ tenantId, filters }) =>
     Request({
       url: Urls.crabandoneddeath.search,
       useCache: false,

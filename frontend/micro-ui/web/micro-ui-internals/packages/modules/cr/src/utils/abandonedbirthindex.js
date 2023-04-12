@@ -270,6 +270,35 @@ export const gettradeupdateaccessories = (data) => {
 };
 
 
+
+export const getchilddocuments = (data) => {
+  let childdoc = [];
+  let doc = data.AbandonedBirthInformarDetails.documents.document ? data.AbandonedBirthInformarDetails.documents.document : [];  
+  // doc["ReportingForm"] &&
+  // childdoc.push({
+  //    documentName: doc["ReportingForm"].name,
+  //     fileStoreId: doc["ReportingForm"].fileStoreId,
+  //     documentType: "REPORTINGFORM",
+  //     fileType : doc["ReportingForm"].type,
+  //     fileSize : doc["ReportingForm"].size,
+  //     // documentLink :
+  //     // description :     
+  //     // tenantId: data?.tenantId,
+  //   });
+  // doc["ProofOfIdentity"] &&
+  // childdoc.push({
+  //   documentName: doc["ProofOfIdentity"].name,
+  //   fileStoreId: doc["ProofOfIdentity"].fileStoreId,
+  //   documentType: "CHILDBIRTHPROOF",
+  //   fileType : doc["ProofOfIdentity"].type,
+  //   fileSize : doc["ProofOfIdentity"].size,
+      
+  //   });
+  
+  return doc;
+  
+};
+
 // let document =[];
 //       let doc= {"documentType": "" ,
 //           "fileStoreId":"",
@@ -286,10 +315,11 @@ export const gettradeupdateaccessories = (data) => {
 // document.push(doc);
 // document.push(doc1);
 // console.log(document);
-// // }
+
 
 
 export const convertToAbandonedBirthRegistration = (data = {}) => {
+  // let document =[];
   const formdata = {
     AbandonedDetails: [
       {
@@ -367,9 +397,9 @@ export const convertToAbandonedBirthRegistration = (data = {}) => {
         },
         documentDetails: {
 
-          tenantId: data?.AbandonedBirthInformarDetails?.tenantId,         
-          document : data?.AbandonedBirthInformarDetails?.document,
-
+          tenantId: data?.AbandonedBirthInformarDetails?.tenantId,              
+          document : data?.AbandonedBirthInformarDetails?.documents?.document,
+          
 
         // appplicantDocument : document
       
@@ -461,9 +491,7 @@ export const convertToEditAbandonedBirthRegistration = (data = {}) => {
         documentDetails: {
 
           tenantId: data?.AbandonedBirthInformarDetails?.tenantId,         
-          document : data?.AbandonedBirthInformarDetails?.document,
-
-
+          document : data?.childdoc,
         // appplicantDocument : document
       
 
