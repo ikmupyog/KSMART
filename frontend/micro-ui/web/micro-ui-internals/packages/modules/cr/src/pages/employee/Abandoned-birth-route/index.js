@@ -16,7 +16,7 @@ const CreateAbandonedBirth = ({ parentUrl }) => {
   // const [params, setParams, clearParams] = isEditAbandonedBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_ABANDONEDBIRTH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_ABANDONEDBIRTH_REG", {});
   const [isEditAbandonedBirth, setIsEditAbandonedBirth] = useState(sessionStorage.getItem("CR_ABANDONEDBIRTH_EDIT_FLAG")? true : false);
   // const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_CREATE_ABANDONEDDEATH_REG", {});
-  const [params, setParams, clearParams] = isEditAbandonedBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_ABANDONEDDEATH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_ABANDONEDDEATH_REG", {});
+  const [params, setParams, clearParams] = isEditAbandonedBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_ABANDONEDBIRTH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_ABANDONEBIRTH_REG", {});
 
   // console.log("params"+JSON.stringify(params));
   const stateId = Digit.ULBService.getStateId();
@@ -63,7 +63,11 @@ const CreateAbandonedBirth = ({ parentUrl }) => {
   };
 
   const onSuccess = () => {
-    sessionStorage.removeItem("CurrentFinancialYear");
+   
+    // if(isEditAbandonedBirth === false){
+    //   clearParams();
+    // }  
+    // sessionStorage.removeItem("CurrentFinancialYear");
     queryClient.invalidateQueries("CR_CREATE_ABANDONEDBIRTH_REG");
   };
   const handleSkip = () => { };

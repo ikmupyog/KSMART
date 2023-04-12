@@ -56,7 +56,7 @@ const SearchFields = ({ register, control, reset, tenantId, t, previousPage, onR
                 {t("Aknowledgement Number")}</label>
             <TextInput name="DeathACKNo" inputRef={register({})}
                 placeholder={`${t("DC_DEATH_AKNOWLEDGEMENT_NUMBER")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_REGISTRATION_NUMBER") })} />
+                {...(validation = { pattern: "^[a-zA-Z-.0-9`'/ ]*$", isRequired: false, type: "text", title: t("DC_INVALID_REGISTRATION_NUMBER") })} />
         </SearchField>
         <SearchField>
             <label>

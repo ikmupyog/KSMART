@@ -8,12 +8,12 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   permntInKeralaAdrLBName, setpermntInKeralaAdrLBName,
   permntInKeralaAdrTaluk, setpermntInKeralaAdrTaluk, permntInKeralaAdrVillage, setpermntInKeralaAdrVillage,
   permntInKeralaAdrPostOffice, setpermntInKeralaAdrPostOffice, permntInKeralaAdrPincode, setpermntInKeralaAdrPincode,
-  permntInKeralaAdrHouseNameEn, setpermntInKeralaAdrHouseNameEn,Districtvalues, setDistrictvalue,
+  permntInKeralaAdrHouseNameEn, setpermntInKeralaAdrHouseNameEn, Districtvalues, setDistrictvalue,
   permntInKeralaAdrHouseNameMl, setpermntInKeralaAdrHouseNameMl, permntInKeralaAdrLocalityNameEn, setpermntInKeralaAdrLocalityNameEn,
   permntInKeralaAdrLocalityNameMl, setpermntInKeralaAdrLocalityNameMl, permntInKeralaAdrStreetNameEn, setpermntInKeralaAdrStreetNameEn,
   permntInKeralaAdrStreetNameMl, setpermntInKeralaAdrStreetNameMl, lbs, setLbs, Talukvalues, setLbsTalukvalue, Villagevalues, setLbsVillagevalue, permntInKeralaWardNo,
-  setpermntInKeralaWardNo, PostOfficevalues, setPostOfficevalues, isEditBirth = false, isEditDeath = false,isEditAdoption,
-  isEditStillBirth = false,
+  setpermntInKeralaWardNo, PostOfficevalues, setPostOfficevalues, isEditBirth = false, isEditDeath = false, isEditAdoption,
+  isEditStillBirth = false,countryValuePermanent, setCountryValuePermanent,  valuePermanent,setValuePermanent
   // isInitialRender, setIsInitialRender
   // isInitialRender, setIsInitialRender isEditBirth ? isEditBirth : isEditDeath ? false :
 
@@ -116,7 +116,8 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
       if (cmbLB.length > 0) {
         currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
         setpermntInKeralaAdrLBName(currentLB[0]);
-        cmbFilterDistrict = cmbDistrict.filter((cmbDistrict) => cmbDistrict.code === currentLB[0].city.distCodeStr);
+        cmbFilterDistrict = cmbDistrict.filter((cmbDistrict) => cmbDistrict.statecode === currentLB[0].city.statecode);
+        // cmbFilterDistrict = cmbDistrict.filter((cmbDistrict) => cmbDistrict.code === currentLB[0].city.distCodeStr);
         setpermntInKeralaAdrDistrict(cmbFilterDistrict[0]);
         cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === currentLB[0].city.districtid);
         setLbsTalukvalue(cmbFilterTaluk);
@@ -228,7 +229,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
         setpermntInKeralaAdrPincode(pin.pincode);
       }
     }
-  } else if (isEditAdoption !==false) {
+  } else if (isEditAdoption !== false) {
     if (formData?.AdoptionAddressBasePage?.permntInKeralaAdrDistrict != null) {
       if (cmbDistrict.length > 0 && (permntInKeralaAdrDistrict === undefined || permntInKeralaAdrDistrict === "")) {
         setpermntInKeralaAdrDistrict(cmbDistrict.filter(cmbDistrict => cmbDistrict.code === formData?.AddressBirthDetails?.permntInKeralaAdrDistrict)[0]);
@@ -265,8 +266,10 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   const onSkip = () => onSelect();
 
   function setSelectpermntInKeralaAdrDistrict(value) {
-    // setIsInitialRender(true);
+
     setpermntInKeralaAdrDistrict(value);
+    setpermntInKeralaAdrTaluk(null);
+    setpermntInKeralaAdrVillage(null);
     setpermntInKeralaAdrLBName(null);
     setLbs(null);
     districtid = value.districtid;
@@ -395,7 +398,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   }
   return (
     <React.Fragment>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
+      {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} > */}
 
         <div className="row">
           <div className="col-md-3">
@@ -651,7 +654,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
         <div className="row">
 
         </div>
-      </FormStep>
+      {/* </FormStep> */}
     </React.Fragment>
   );
 };
