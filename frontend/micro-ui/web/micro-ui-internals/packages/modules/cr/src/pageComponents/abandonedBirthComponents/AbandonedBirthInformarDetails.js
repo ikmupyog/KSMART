@@ -1,26 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, TextArea, Toast ,UploadFile} from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-// import Timeline from "../../components/CRTimeline";
 import Timeline from "../../components/CRABTimeline";
 
 const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,isEditAbandonedBirth=false }) => {
-  const stateId = Digit.ULBService.getStateId();
+  const stateId = Digit.ULBService.getStateId();documentList
   const { t } = useTranslation();
   let validation = {};
-  // console.log(Digit.UserService.getUser().info);
   const [isDisableEdit, setisDisableEdit] = useState(isEditAbandonedBirth ? isEditAbandonedBirth : true);
-  const {name:name,} =Digit.UserService.getUser().info ; // window.localStorage.getItem("user-info");
+  const {name:name,} =Digit.UserService.getUser().info ; 
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
 
-  // let extraStyles = {};
-  // extraStyles = getStyle();
-
   let documentList = [
-    { "code": "REPORTINGFORM", "description": "ReportingForm" , "label" : "Reporting Form " },
-    { "code": "CHILDBIRTHPROOF", "description": "ProofOfIdentity","label" : "Medical Certificate in Proof of Date of Birth of the Child " },
-    // { "code": "OWNERPHOTO", "description": "OwnerPhotoProof","label" : "Photo" }
+    { "code": "REPORTINGFORM", "description": "ReportingForm" , "label" : "CR_REPORTING_FORM" },
+    { "code": "CHILDBIRTHPROOF", "description": "ProofOfIdentity","label" : "CR_CHILDBIRTH_PROOF" },    
   ] 
+  
   const [institutionName, setinstitutionName] = useState(formData?.AbandonedBirthInformarDetails?.institutionName ? formData?.AbandonedBirthInformarDetails?.institutionName : formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.institutionName ? formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.institutionName : "");
   const [caretakerName, setcaretakerName] = useState(formData?.AbandonedBirthInformarDetails?.caretakerName ? formData?.AbandonedBirthInformarDetails?.caretakerName : formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.caretakerName ? formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.caretakerName : "");
   const [caretakerDesignation, setcaretakerDesignation] = useState(formData?.AbandonedBirthInformarDetails?.caretakerDesignation ? formData?.AbandonedBirthInformarDetails?.caretakerDesignation : formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.caretakerDesignation ? formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.caretakerDesignation : "");
@@ -48,10 +43,8 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
   const [file, setFile] = useState(formData?.AbandonedBirthInformarDetails?.documents?.ProofOfIdentity);
   const [error, setError] = useState(null);
   const cityDetails = Digit.ULBService.getCurrentUlb();
-  let acceptFormat = ".jpg,.png,.pdf,.jpeg"
-  
-
-
+  let acceptFormat = ".pdf"
+  // let acceptFormat = ".jpg,.png,.pdf,.jpeg"
 
   // const [dropdownValue, setDropdownValue] = useState(formData?.AbandonedBirthInformarDetails?.documents?.ProofOfIdentity?.documentType || null);
   // const tenantId = Digit.ULBService.getCurrentTenantId();
@@ -65,17 +58,17 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
   const onSkip = () => onSelect(); 
 
   function setSelectinstitutionName(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setinstitutionName(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectcaretakerName(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setcaretakerName(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectcaretakerDesignation(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setcaretakerDesignation(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }    
@@ -90,12 +83,12 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
     }
   }   
   function setSelectinfomantinstitution(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setinfomantinstitution(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectinformerDesi(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setinformerDesi(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }  
@@ -105,7 +98,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
     }   
   }
   function setSelectinfomantFirstNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setinfomantFirstNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   } 
@@ -216,10 +209,10 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
       setError(null);
       if (file && file?.type) {
         if (!(acceptFormat?.split(",")?.includes(`.${file?.type?.split("/")?.pop()}`))) {
-          setError(t("PT_UPLOAD_FORMAT_NOT_SUPPORTED"));
+          setError(t("CR_UPLOAD_FORMAT_NOT_SUPPORTED"));
         }
         else if (file.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+          setError(t("CR_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
         } else {
           try {
             const response = await Digit.UploadServices.Filestorage("property-upload", file, Digit.ULBService.getStateId());
@@ -301,7 +294,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                 onChange={setSelectinstitutionName}
                 disable={isEdit}
                 placeholder={`${t("CR_INSTITUTION_NAME_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_ERROR_INSTITUTION_NAME_CHOOSE") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`'  ]*$", isRequired: false, type: "text", title: t("CR_ERROR_INSTITUTION_NAME_CHOOSE") })}
               />
             </div>           
             <div className="col-md-4">
