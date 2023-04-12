@@ -20,10 +20,8 @@ public class MarriageDocumentRowMapper implements ResultSetExtractor<List<Marria
         while (rs.next()) {
             result.add(MarriageDocument.builder()
                     .id(rs.getString("id"))
-                    .documentName(rs.getString("document_name"))
+                    .documentType(rs.getString("document_type"))
                     .documentOwner(rs.getString("bride_groom"))
-                    .fileStoreId(rs.getString("filestoreid"))
-                    .active(rs.getBoolean("active"))
                     .applicationNumber(rs.getString("applicationnumber"))
                     .marriageDocAuditDetails(getDocumentAuditDetails(rs))
                     .build());
@@ -34,3 +32,4 @@ public class MarriageDocumentRowMapper implements ResultSetExtractor<List<Marria
     }
     
 }
+

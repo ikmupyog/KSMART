@@ -5,12 +5,13 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Component;
 
+import javax.swing.text.Document;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 @Component
-public class MarriageApplicationRowMapper implements ResultSetExtractor<List<MarriageApplicationDetails>>, BaseRowMapper,BrideDetailsRowMapper,GroomDetailsRowMapper, BrideAddressDetailsRowMapper, GroomAddressDetailsRowMapper,WitnessDetailsRowMapper{
+public class MarriageApplicationRowMapper implements ResultSetExtractor<List<MarriageApplicationDetails>>, BaseRowMapper,BrideDetailsRowMapper,GroomDetailsRowMapper, BrideAddressDetailsRowMapper, GroomAddressDetailsRowMapper,WitnessDetailsRowMapper,DocumentRowMapper{
 
     @Override
     public List<MarriageApplicationDetails> extractData(ResultSet rs) throws SQLException, DataAccessException { //how to handle null
@@ -47,6 +48,7 @@ public class MarriageApplicationRowMapper implements ResultSetExtractor<List<Mar
                     .witnessDetails(getWitnessDetails(rs))
                     .brideAddressDetails(getBrideAddressDetails(rs))
                     .groomAddressDetails(getGroomAddressDetailsRowMapper(rs))
+                    .marriageDocument(getMarriageDocument(rs))
                     .auditDetails(getAuditDetails(rs))
                     .build());
         }
