@@ -40,9 +40,6 @@ function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, sex, cmbPla
   let deathCorrectionFormData = {};
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
   const [value, setValue1] = useState(0);
-  const [isInitialRender, setIsInitialRender] = useState(true);
-  const [isInitialRenderDeathPlace, setIsInitialRenderDeathPlace] = useState(true);
-  const [isInitialMdmsServiceCompleted, setIsInitialMdmsServiceCompleted] = useState(false);
   const [deathCorrectionFormsObj, setDeathCorrectionFormsObj] = useState(false);
   const [selectedDocs, setSelectedDocs] = useState([]);
   // const [isDisabled,setDisabled] = useState(false);
@@ -79,9 +76,6 @@ function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, sex, cmbPla
     ? cmbPlace.filter((cmbPlace) => cmbPlace.code === formData?.ChildDetails?.DeathPlace)[0]
     : "");
 
-  const [DeceasedAadharNumber, setDeceasedAadharNumber] = useState(
-    formData?.InformationDeath?.DeceasedAadharNumber ? formData?.InformationDeath?.DeceasedAadharNumber : ""
-  );
   const [DeathPlaceInstId, setSelectedDeathPlaceInstId] = useState(
     formData?.InformationDeath?.DeathPlaceInstId ? formData?.InformationDeath?.DeathPlaceInstId : null
   );
@@ -199,318 +193,19 @@ function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, sex, cmbPla
       setDeathCorrectionFormsObj(tempObj);
       setShowModal(false);
     };
+
+  // useEffect(() => {
+  //   if(deathCorrectionFormsObj?.DECEASED_PLACE_OF_DEATH?.curValue){
+  //     console.log("curvalue===", deathCorrectionFormsObj?.DECEASED_PLACE_OF_DEATH?.curValue);
+  //     setselectDeathPlace(deathCorrectionFormsObj?.DECEASED_PLACE_OF_DEATH?.curValue)
+  //   }
+  //    }, [deathCorrectionFormsObj]);
+ 
   
-
-  function setSelectDeceasedAadharNumber(e) {
-    if (e.target.value.trim().length >= 0) {
-      setDeceasedAadharNumber(
-        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
-      );
-    }
-  }
-  function selectNationality(value) {
-    setSelectedNationality(value);
-  }
-  function selectDeceasedGender(value) {
-    setselectedDeceasedGender(value);
-  }
-  function selectDeathPlace(value) {
-    setselectDeathPlace(value);
-    setValue(value.code);
-
-    let currentWorkFlow = workFlowData.filter(
-      (workFlowData) =>
-        workFlowData.DeathPlace === value.code &&
-        workFlowData.startdateperiod <= Difference_In_DaysRounded &&
-        workFlowData.enddateperiod >= Difference_In_DaysRounded
-    );
-    workFlowCode = currentWorkFlow[0].WorkflowCode;
-    if (value.code === "HOSPITAL") {
-      //Institution
-      setSelectedDeathPlaceInstId(null);
-      setInstitutionIdMl(null);
-      setInstitutionFilterList(null);
-      // setIsInitialRenderInstitutionList
-      //Home
-      setDeathPlaceHomepostofficeId(null);
-      setDeathPlaceHomepincode(null);
-      setDeathPlaceHomehoueNameEn(null);
-      setDeathPlaceHomehoueNameMl(null);
-      setDeathPlaceHomelocalityEn(null);
-      setDeathPlaceHomelocalityMl(null);
-      setDeathPlaceHomestreetNameEn(null);
-      setDeathPlaceHomestreetNameMl(null);
-      setDeathPlaceWardId(null);
-      setPostOfficevalues(null);
-      //Vehicle
-      setVehicleNumber(null);
-      setVehicleFromplaceEn(null);
-      setVehicleToPlaceEn(null);
-      setGeneralRemarks(null);
-      setVehicleFirstHaltEn(null);
-      setVehicleFirstHaltMl(null);
-      setSelectedVehicleHospitalEn(null);
-      setVehicleFromplaceMl(null);
-      setVehicleToPlaceMl(null);
-      //PublicPlace
-      setDeathPlaceLocalityEn(null);
-      setDeathPlaceLocalityMl(null);
-      setDeathPlaceStreetEn(null);
-      setDeathPlaceStreetMl(null);
-      //DeathOutsideJurisdiction
-      setSelectDeathPlaceCountry(null);
-      SelectDeathPlaceState(null);
-      SelectDeathPlaceDistrict(null);
-      SelectDeathPlaceCity(null);
-      SelectDeathPlaceRemarksEn(null);
-      SelectDeathPlaceRemarksMl(null);
-      SelectPlaceOfBurialEn(null);
-      SelectPlaceOfBurialMl(null);
-    } else if (value.code === "INSTITUTION") {
-      //Hospital
-      selectHospitalNameMl(null);
-      //Home
-      setDeathPlaceHomepostofficeId(null);
-      setDeathPlaceHomepincode(null);
-      setDeathPlaceHomehoueNameEn(null);
-      setDeathPlaceHomehoueNameMl(null);
-      setDeathPlaceHomelocalityEn(null);
-      setDeathPlaceHomelocalityMl(null);
-      setDeathPlaceHomestreetNameEn(null);
-      setDeathPlaceHomestreetNameMl(null);
-      setDeathPlaceWardId(null);
-      setPostOfficevalues(null);
-      //Vehicle
-      selectDeathPlaceType(null);
-      setVehicleNumber(null);
-      setVehicleFromplaceEn(null);
-      setVehicleToPlaceEn(null);
-      setGeneralRemarks(null);
-      setVehicleFirstHaltEn(null);
-      setVehicleFirstHaltMl(null);
-      setSelectedVehicleHospitalEn(null);
-      setVehicleFromplaceMl(null);
-      setVehicleToPlaceMl(null);
-      //PublicPlace
-      setDeathPlaceLocalityEn(null);
-      setDeathPlaceLocalityMl(null);
-      setDeathPlaceStreetEn(null);
-      setDeathPlaceStreetMl(null);
-      //DeathOutsideJurisdiction
-      setSelectDeathPlaceCountry(null);
-      SelectDeathPlaceState(null);
-      SelectDeathPlaceDistrict(null);
-      SelectDeathPlaceCity(null);
-      SelectDeathPlaceRemarksEn(null);
-      SelectDeathPlaceRemarksMl(null);
-      SelectPlaceOfBurialEn(null);
-      SelectPlaceOfBurialMl(null);
-    } else if (value.code === "VEHICLE") {
-      //Hospital
-      // selectDeathPlaceType(null);
-      selectHospitalNameMl(null);
-      //Institution
-      selectDeathPlaceType(null);
-      setSelectedDeathPlaceInstId(null);
-      setInstitutionIdMl(null);
-      setInstitutionFilterList(null);
-      //Home
-      setDeathPlaceHomepostofficeId(null);
-      setDeathPlaceHomepincode(null);
-      setDeathPlaceHomehoueNameEn(null);
-      setDeathPlaceHomehoueNameMl(null);
-      setDeathPlaceHomelocalityEn(null);
-      setDeathPlaceHomelocalityMl(null);
-      setDeathPlaceHomestreetNameEn(null);
-      setDeathPlaceHomestreetNameMl(null);
-      setDeathPlaceWardId(null);
-      setPostOfficevalues(null);
-      //PublicPlace
-      setDeathPlaceLocalityEn(null);
-      setDeathPlaceLocalityMl(null);
-      setDeathPlaceStreetEn(null);
-      setDeathPlaceStreetMl(null);
-      setGeneralRemarks(null);
-      //DeathOutsideJurisdiction
-      setSelectDeathPlaceCountry(null);
-      SelectDeathPlaceState(null);
-      SelectDeathPlaceDistrict(null);
-      SelectDeathPlaceCity(null);
-      SelectDeathPlaceRemarksEn(null);
-      SelectDeathPlaceRemarksMl(null);
-      SelectPlaceOfBurialEn(null);
-      SelectPlaceOfBurialMl(null);
-    }
-    if (value.code === "PUBLIC_PLACES") {
-      //Hospital
-      selectDeathPlaceType(null);
-      selectHospitalNameMl(null);
-      //Institution
-      setSelectedDeathPlaceInstId(null);
-      setInstitutionIdMl(null);
-      setInstitutionFilterList(null);
-      // setIsInitialRenderInstitutionList
-      //Home
-      setDeathPlaceHomepostofficeId(null);
-      setDeathPlaceHomepincode(null);
-      setDeathPlaceHomehoueNameEn(null);
-      setDeathPlaceHomehoueNameMl(null);
-      setDeathPlaceHomelocalityEn(null);
-      setDeathPlaceHomelocalityMl(null);
-      setDeathPlaceHomestreetNameEn(null);
-      setDeathPlaceHomestreetNameMl(null);
-      setPostOfficevalues(null);
-      //Vehicle
-      setVehicleNumber(null);
-      setVehicleFromplaceEn(null);
-      setVehicleToPlaceEn(null);
-      setVehicleFirstHaltEn(null);
-      setVehicleFirstHaltMl(null);
-      setSelectedVehicleHospitalEn(null);
-      setVehicleFromplaceMl(null);
-      setVehicleToPlaceMl(null);
-      setDeathPlaceWardId(null);
-      //DeathOutsideJurisdiction
-      setSelectDeathPlaceCountry(null);
-      SelectDeathPlaceState(null);
-      SelectDeathPlaceDistrict(null);
-      SelectDeathPlaceCity(null);
-      SelectDeathPlaceRemarksEn(null);
-      SelectDeathPlaceRemarksMl(null);
-      SelectPlaceOfBurialEn(null);
-      SelectPlaceOfBurialMl(null);
-      setGeneralRemarks(null);
-    }
-    if (value.code === "OUTSIDE_JURISDICTION") {
-      //Hospital
-      // selectDeathPlaceType(null);
-      selectHospitalNameMl(null);
-      //Institution
-      setSelectedDeathPlaceInstId(null);
-      setInstitutionIdMl(null);
-      setInstitutionFilterList(null);
-      // setIsInitialRenderInstitutionList
-      //Home
-      setDeathPlaceHomepostofficeId(null);
-      setDeathPlaceHomepincode(null);
-      setDeathPlaceHomehoueNameEn(null);
-      setDeathPlaceHomehoueNameMl(null);
-      setDeathPlaceHomelocalityEn(null);
-      setDeathPlaceHomelocalityMl(null);
-      setDeathPlaceHomestreetNameEn(null);
-      setDeathPlaceHomestreetNameMl(null);
-      setPostOfficevalues(null);
-      //Vehicle
-      setVehicleNumber(null);
-      setVehicleFromplaceEn(null);
-      setVehicleToPlaceEn(null);
-      setVehicleFirstHaltEn(null);
-      setVehicleFirstHaltMl(null);
-      setSelectedVehicleHospitalEn(null);
-      setVehicleFromplaceMl(null);
-      setVehicleToPlaceMl(null);
-      //PublicPlace
-      setDeathPlaceLocalityEn(null);
-      setDeathPlaceLocalityMl(null);
-      setDeathPlaceStreetEn(null);
-      setDeathPlaceStreetMl(null);
-      setGeneralRemarks(null);
-      setDeathPlaceWardId(null);
-    }
-  }
-  React.useEffect(() => {
-    if (isInitialRenderDeathPlace) {
-      if (DeathPlace) {
-        setIsInitialRender(false);
-        naturetype = DeathPlace.code;
-        setValue(naturetype);
-        if (naturetype === "HOSPITAL") {
-          <Hospital DeathPlaceType={DeathPlaceType} HospitalNameMl={HospitalNameMl} />;
-        }
-        if (naturetype === "INSTITUTION") {
-          <Institution
-            DeathPlaceType={DeathPlaceType}
-            DeathPlaceInstId={DeathPlaceInstId}
-            InstitutionIdMl={InstitutionIdMl}
-            InstitutionFilterList={InstitutionFilterList}
-            isInitialRenderInstitutionList={isInitialRenderInstitutionList}
-          />;
-        }
-        if (naturetype === "HOME") {
-          <DeathPlaceHome
-            DeathPlaceWardId={DeathPlaceWardId}
-            DeathPlaceType={DeathPlaceType}
-            DeathPlaceHomePostofficeId={DeathPlaceHomePostofficeId}
-            DeathPlaceHomepincode={DeathPlaceHomepincode}
-            DeathPlaceHomeHoueNameEn={DeathPlaceHomeHoueNameEn}
-            DeathPlaceHomeHoueNameMl={DeathPlaceHomeHoueNameMl}
-            DeathPlaceHomeLocalityEn={DeathPlaceHomeLocalityEn}
-            DeathPlaceHomeLocalityMl={DeathPlaceHomeLocalityMl}
-            DeathPlaceHomeStreetNameEn={DeathPlaceHomeStreetNameEn}
-            DeathPlaceHomeStreetNameMl={DeathPlaceHomeStreetNameMl}
-            PostOfficevalues={PostOfficevalues}
-          />;
-        }
-        if (naturetype === "VEHICLE") {
-          <DeathPlaceVehicle
-            DeathPlaceType={DeathPlaceType}
-            VehicleNumber={VehicleNumber}
-            VehicleFromplaceEn={VehicleFromplaceEn}
-            VehicleToPlaceEn={VehicleToPlaceEn}
-            GeneralRemarks={GeneralRemarks}
-            VehicleFirstHaltEn={VehicleFirstHaltEn}
-            VehicleFirstHaltMl={VehicleFirstHaltMl}
-            VehicleHospitalEn={VehicleHospitalEn}
-            DeathPlaceWardId={DeathPlaceWardId}
-            VehicleFromplaceMl={VehicleFromplaceMl}
-            VehicleToPlaceMl={VehicleToPlaceMl}
-          />;
-        }
-        if (naturetype === "PUBLIC_PLACES") {
-          <DeathPublicPlace
-            DeathPlaceType={DeathPlaceType}
-            DeathPlaceLocalityEn={DeathPlaceLocalityEn}
-            DeathPlaceLocalityMl={DeathPlaceLocalityMl}
-            DeathPlaceStreetEn={DeathPlaceStreetEn}
-            DeathPlaceStreetMl={DeathPlaceStreetMl}
-            DeathPlaceWardId={DeathPlaceWardId}
-            GeneralRemarks={GeneralRemarks}
-          />;
-        }
-        if (naturetype === "OUTSIDE_JURISDICTION") {
-          <DeathOutsideJurisdiction
-            DeathPlaceCountry={DeathPlaceCountry}
-            DeathPlaceState={DeathPlaceState}
-            DeathPlaceDistrict={DeathPlaceDistrict}
-            DeathPlaceCity={DeathPlaceCity}
-            DeathPlaceRemarksEn={DeathPlaceRemarksEn}
-            DeathPlaceRemarksMl={DeathPlaceRemarksMl}
-            PlaceOfBurialMl={PlaceOfBurialMl}
-            PlaceOfBurialEn={PlaceOfBurialEn}
-            GeneralRemarks={GeneralRemarks}
-            DeathPlaceWardId={DeathPlaceWardId}
-          />;
-        }
-      }
-    }
-  }, [isInitialRenderDeathPlace]);
-
-
-  const { register, handleSubmit, control, reset, setValue, getValues, watch, errors } = useForm({
+  const {  handleSubmit,  setValue } = useForm({
     reValidateMode: "onSubmit",
     mode: "all",
   });
-
-  useEffect(()=>{
-    if(cmbPlace?.length > 0){
-      setIsInitialMdmsServiceCompleted(true);
-    }
-  },[cmbPlace])
-
-  const getDeathPlace = () => {
-    const selectedDeathPlace = cmbPlace.find((item) => item.code === navigationData?.InformationDeath?.DeathPlace);
-    return selectedDeathPlace;
-  };
 
   const onDodChange = (value) => {
     let tempObj = {...deathCorrectionFormsObj };
@@ -520,6 +215,7 @@ function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, sex, cmbPla
   };
   const onAdharChange = (e) =>{
     let tempObj = { ...deathCorrectionFormsObj };
+    console.log("DECEASED_AADHAR==",e.target.value);
     let { DECEASED_AADHAR } = tempObj;
     tempObj = { ...tempObj, DECEASED_AADHAR: { ...DECEASED_AADHAR, curValue: e.target.value}};
     setDeathCorrectionFormsObj(tempObj);
@@ -532,21 +228,21 @@ function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, sex, cmbPla
     setDeathCorrectionFormsObj(tempObj);
   }
 
-  const onChangeMotherName = () =>{
+  const onBlurMotherName = (e, fieldType) =>{
     let tempObj = { ...deathCorrectionFormsObj };
     let { DECEASED_MOTHER } = tempObj;
     let { curValue } = DECEASED_MOTHER;
     tempObj = { ...tempObj, DECEASED_MOTHER: { ...DECEASED_MOTHER, curValue:{...curValue,[fieldType]: e.target.value}}};
     setDeathCorrectionFormsObj(tempObj);
   }
-  const onChangeFatherName = () =>{
+  const onBlurFatherName = (e, fieldType) =>{
     let tempObj = { ...deathCorrectionFormsObj };
     let { DECEASED_FATHER } = tempObj;
     let { curValue } = DECEASED_FATHER;
     tempObj = { ...tempObj, DECEASED_FATHER: { ...DECEASED_FATHER, curValue:{...curValue,[fieldType]: e.target.value}}};
     setDeathCorrectionFormsObj(tempObj);
   }
-  const onChangeSpouseName = () =>{
+  const onBlurSpouseName = (e, fieldType) =>{
     let tempObj = { ...deathCorrectionFormsObj };
     let { DECEASED_SPOUSE } = tempObj;
     let { curValue } = DECEASED_SPOUSE;
@@ -561,6 +257,7 @@ function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, sex, cmbPla
     setDeathCorrectionFormsObj(tempObj);
 };
   const onPlaceChange = (placeDetails) => {
+    setselectDeathPlace(placeDetails)
     let tempObj = { ...deathCorrectionFormsObj };
     let { DECEASED_PLACE_OF_DEATH } = tempObj;
     tempObj = { ...tempObj, DECEASED_PLACE_OF_DEATH: { ...DECEASED_PLACE_OF_DEATH, curValue: placeDetails}};
@@ -605,41 +302,41 @@ const onPresentAddressChange = (e,fieldType) =>{
                 <CardLabel>{t("CR_AADHAR")}</CardLabel>
                 <TextInput
                   t={t}
-                  isMandatory={false}
+                  type={"text"}
                   max="12"
-                  optionKey="i18nKey"
                   name="DeceasedAadharNumber"
-                  value={deathCorrectionFormData?.DECEASED_AADHAR?.curValue}
-                  onBlur={onAdharChange} 
+                  defaultValue={deathCorrectionFormsObj?.DECEASED_AADHAR?.curValue}
+                  onBlur={(e)=>onAdharChange(e)}
                   placeholder={`${t("CR_AADHAR")}`}
-                  {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                  // {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                 />
               </div>
             </FieldComponentContainer>
             <div style={{ marginTop: "2.5rem" }}>
           <ButtonContainer>
-            <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_AADHAR"])}>
-            <EditIcon
-              style={{ marginTop: "0.6rem", marginLeft: "-0.2em" }}
-              selected={true}
-              label={"Edit"}
-            />
-            </span>
+            {deathCorrectionFormsObj?.DECEASED_AADHAR?.isDisabled && (
+                   <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_AADHAR"])}>
+                   <EditIcon
+                    style={{ position: "absolute", top: "0.8rem"}} 
+                     selected={true}
+                     label={"Edit"}
+                   />
+                     </span>
+                )}
           </ButtonContainer>
         </div>
-          </FormFieldContainer>
+        </FormFieldContainer>
           <FormFieldContainer>
             <FieldComponentContainer>
               <div className="col-md-4">
                 <CardLabel>{`${t("CR_FIRST_NAME_EN")}`}</CardLabel>
                 <TextInput
                   t={t}
-                  key={"password"}
                   type={"text"}
                   name="DeceasedFirstNameEn"
-                  value={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.firstNameEn} 
-                  autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
-                  onChange={(e)=>onNameChange(e,"DeceasedFirstNameEn")}
+                  defaultValue={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.firstNameEn} 
+                  // autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
+                  onBlur={(e)=>onNameChange(e,"firstNameEn")}
                   placeholder={`${t("CR_FIRST_NAME_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
@@ -650,9 +347,9 @@ const onPresentAddressChange = (e,fieldType) =>{
                   t={t}
                   type={"text"}
                   name="DeceasedMiddleNameEn"
-                  value={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.middleNameEn} 
-                  autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
-                  onChange={(e)=>onNameChange(e,"DeceasedMiddleNameEn")}
+                  defaultValue={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.middleNameEn} 
+                  // autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
+                  onBlur={(e)=>onNameChange(e,"middleNameEn")}
                   placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
@@ -663,28 +360,29 @@ const onPresentAddressChange = (e,fieldType) =>{
                   t={t}
                   type={"text"}
                   name="DeceasedLastNameEn"
-                  value={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.lastNameEn} 
-                  autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
-                  onChange={(e)=>onNameChange(e,"DeceasedLastNameEn")}
+                  defaultValue={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.lastNameEn} 
+                  // autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
+                  onBlur={(e)=>onNameChange(e,"lastNameEn")}
                   placeholder={`${t("CR_LAST_NAME_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
               </div>
             </FieldComponentContainer>
              
-              <div style={{ marginTop: "2.5rem" }}>
+              <div style={{ marginTop: "2.8rem" }}>
           <ButtonContainer>
-          <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_NAME"])}>
-            <EditIcon
-              style={{ marginTop: "0.6rem", marginLeft: "-0.2em" }}
-              selected={true}
-              label={"Edit"}
-            />
-            </span>
-          </ButtonContainer>
+                {deathCorrectionFormsObj?.DECEASED_NAME?.isDisabled && (
+                <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_NAME"])}>
+                <EditIcon
+                  style={{ position: "absolute", top: "0.8rem"}} 
+                  selected={true}
+                  label={"Edit"}
+                />
+                </span>
+                )}
+              </ButtonContainer>
         </div>
-      
-          </FormFieldContainer>
+        </FormFieldContainer>
           <FormFieldContainer>
             <FieldComponentContainer>
               <div className="col-md-4">
@@ -693,9 +391,10 @@ const onPresentAddressChange = (e,fieldType) =>{
                   t={t}
                   type={"text"}
                   name="DeceasedFirstNameMl"
-                  value={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.firstNameMl} 
-                  autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
-                  onChange={(e)=>onNameChange(e,"DeceasedFirstNameMl")}
+                  defaultValue={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.firstNameMl} 
+                  // disabled={deathCorrectionFormsObj?.DECEASED_NAME?.isDisabled} 
+                  // autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
+                  onBlur={(e)=>onNameChange(e,"firstNameMl")}
                   placeholder={`${t("CR_FIRST_NAME_ML")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
@@ -706,10 +405,11 @@ const onPresentAddressChange = (e,fieldType) =>{
                   t={t}
                   type={"text"}
                   name="DeceasedMiddleNameMl"
-                  value={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.middleNameMl} 
-                  autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
-                  onChange={(e)=>onNameChange(e,"DeceasedMiddleNameMl")}
-                  // onChange={setSelectDeceasedFirstNameEn}
+                  defaultValue={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.middleNameMl} 
+                  // autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
+                  // disabled={deathCorrectionFormsObj?.DECEASED_NAME?.isDisabled} 
+                  onBlur={(e)=>onNameChange(e,"middleNameMl")}
+                  // onBlur={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
@@ -720,10 +420,11 @@ const onPresentAddressChange = (e,fieldType) =>{
                   t={t}
                   type={"text"}
                   name="DeceasedLastNameMl"
-                  value={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.lastNameMl} 
-                  autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
-                  onChange={(e)=>onNameChange(e,"DeceasedLastNameMl")}
-                  // onChange={setSelectDeceasedFirstNameEn}
+                  defaultValue={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.lastNameMl} 
+                  // disabled={deathCorrectionFormsObj?.DECEASED_NAME?.isDisabled} 
+                  // autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
+                  onBlur={(e)=>onNameChange(e,"lastNameMl")}
+                  // onBlur={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_LAST_NAME_ML")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
@@ -743,24 +444,26 @@ const onPresentAddressChange = (e,fieldType) =>{
                   date={deathCorrectionFormsObj?.DECEASED_DOB?.curValue}
                   max={convertEpochToDate(new Date())}
                   min={convertEpochToDate("1900-01-01")} 
-                  onChange={onDodChange}
+                  onBlur={onDodChange}
                   formattingFn={formatDod}
                   {...(validation = { isRequired: true, title: t("CR_DATE_OF_DEATH") })}
                 />
               </div>
               </FieldComponentContainer>
-              <div style={{ marginTop: "2.5rem" }}>
+              <div style={{ marginTop: "2.8rem" }}>
           <ButtonContainer>
-          <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_DOB"])}>
-            <EditIcon
-              style={{ marginTop: "0.6rem", marginLeft: "-0.2em" }}
-              selected={true}
-              label={"Edit"}
-            />
-            </span>
-          </ButtonContainer>
+                {deathCorrectionFormsObj?.DECEASED_DOB?.isDisabled && (
+                   <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_DOB"])}>
+                   <EditIcon
+                     style={{ position: "absolute", top: "0.8rem"}}
+                     selected={true}
+                     label={"Edit"}
+                   />
+                   </span>
+                )}
+              </ButtonContainer>
         </div>
-          </FormFieldContainer>
+        </FormFieldContainer>
           <FormFieldContainer>
             <FieldComponentContainer>
               <div className="col-md-4">
@@ -779,48 +482,21 @@ const onPresentAddressChange = (e,fieldType) =>{
                 />
               </div>
               </FieldComponentContainer>
-              <div style={{ marginTop: "2.5rem" }}>
+              <div style={{ marginTop: "2.8rem" }}>
           <ButtonContainer>
-          <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_PLACE_OF_DEATH"])}>
-            <EditIcon
-              style={{ marginTop: "0.6rem", marginLeft: "-0.2em" }}
-              selected={true}
-              label={"Edit"}
-            />
-            </span>
-          </ButtonContainer>
+                {deathCorrectionFormsObj?.DECEASED_PLACE_OF_DEATH?.isDisabled && (
+                 <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_PLACE_OF_DEATH"])}>
+                 <EditIcon
+                  style={{ position: "absolute", top: "0.8rem"}}
+                   selected={true}
+                   label={"Edit"}
+                 />
+                 </span>
+                )}
+              </ButtonContainer>
         </div>
-          </FormFieldContainer>
-          <FormFieldContainer>
-            <FieldComponentContainer>
-              <div className="col-md-4">
-                <CardLabel>{t("CR_GENDER")}</CardLabel>
-                <Dropdown
-                  t={t}
-                  optionKey="code"
-                  option={sex}
-                  disabled={deathCorrectionFormsObj.DECEASED_SEX?.isDisabled}
-                  autofocus={deathCorrectionFormsObj.DECEASED_SEX?.isFocused}
-                  selected={deathCorrectionFormsObj?.DECEASED_SEX?.curValue}
-                  placeholder={`${t("CR_GENDER")}`}
-                  select={onGenderChange}
-                  {...(validation = { isRequired: false, title: t("DC_INVALID_GENDER") })}
-                />
-              </div>
-            </FieldComponentContainer>
-              <div style={{ marginTop: "2.5rem" }}>
-          <ButtonContainer>
-          <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_SEX"])}>
-            <EditIcon
-              style={{ marginTop: "0.6rem", marginLeft: "-0.2em" }}
-              selected={true}
-              label={"Edit"}
-            />
-            </span> 
-          </ButtonContainer>
-        </div>
-          </FormFieldContainer>
-          {value === "HOSPITAL" && (
+       </FormFieldContainer>
+          {/* {DeathPlace.code === "HOSPITAL" && (
             <div>
               <Hospital
                 formData={formData}
@@ -832,7 +508,7 @@ const onPresentAddressChange = (e,fieldType) =>{
               />
             </div>
           )}
-          {value === "INSTITUTION" && (
+          {DeathPlace.code === "INSTITUTION" && (
             <div>
               <Institution
                 formData={formData}
@@ -850,7 +526,7 @@ const onPresentAddressChange = (e,fieldType) =>{
               />
             </div>
           )}
-          {value === "HOME" && (
+          {DeathPlace.code === "HOME" && (
             <div>
               <DeathPlaceHome
                 formData={formData}
@@ -878,7 +554,7 @@ const onPresentAddressChange = (e,fieldType) =>{
               />
             </div>
           )}
-          {value === "VEHICLE" && (
+          {DeathPlace.code === "VEHICLE" && (
             <div>
               <DeathPlaceVehicle
                 formData={formData}
@@ -908,7 +584,7 @@ const onPresentAddressChange = (e,fieldType) =>{
               />
             </div>
           )}
-          {value === "PUBLIC_PLACES" && (
+          {DeathPlace.code === "PUBLIC_PLACES" && (
             <div>
               <DeathPublicPlace
                 formData={formData}
@@ -930,7 +606,7 @@ const onPresentAddressChange = (e,fieldType) =>{
               />
             </div>
           )}
-          {value === "OUTSIDE_JURISDICTION" && (
+          {DeathPlace.code === "OUTSIDE_JURISDICTION" && (
             <div>
               <DeathOutsideJurisdiction
                 formData={formData}
@@ -957,8 +633,39 @@ const onPresentAddressChange = (e,fieldType) =>{
                 setDeathPlaceWardId={setDeathPlaceWardId}
               />
             </div>
-          )}
+          )} */}
           <FormFieldContainer>
+            <FieldComponentContainer>
+              <div className="col-md-4">
+                <CardLabel>{t("CR_GENDER")}</CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="code"
+                  option={sex}
+                  disabled={deathCorrectionFormsObj.DECEASED_SEX?.isDisabled}
+                  autofocus={deathCorrectionFormsObj.DECEASED_SEX?.isFocused}
+                  selected={deathCorrectionFormsObj?.DECEASED_SEX?.curValue}
+                  placeholder={`${t("CR_GENDER")}`}
+                  select={onGenderChange}
+                  {...(validation = { isRequired: false, title: t("DC_INVALID_GENDER") })}
+                />
+              </div>
+            </FieldComponentContainer>
+              <div style={{ marginTop: "2.8rem" }}>
+          <ButtonContainer>
+                {deathCorrectionFormsObj?.DECEASED_SEX?.isDisabled && (
+                <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_SEX"])}>
+                <EditIcon
+                  style={{ position: "absolute", top: "0.8rem"}}
+                  selected={true}
+                  label={"Edit"}
+                />
+                </span> 
+                )}
+              </ButtonContainer>
+        </div>
+        </FormFieldContainer>
+         <FormFieldContainer>
             <FieldComponentContainer>
               <div className="col-md-4">
                 <CardLabel>{`${t("CR_MOTHER_NAME_EN")}`}</CardLabel>
@@ -966,8 +673,8 @@ const onPresentAddressChange = (e,fieldType) =>{
                   t={t}
                   type={"text"}
                   name="DeceasedMotherNameEn"
-                  value={deathCorrectionFormsObj?.DECEASED_MOTHER?.curValue?.mothersNameEn}
-                  onBlur={(e) => onChangeMotherName(e,"mothersNameEn")}
+                  defaultValue={deathCorrectionFormsObj?.DECEASED_MOTHER?.curValue?.mothersNameEn}
+                  onBlur={(e) => onBlurMotherName(e,"mothersNameEn")}
                   placeholder={`${t("CR_MOTHER_NAME_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
@@ -978,25 +685,27 @@ const onPresentAddressChange = (e,fieldType) =>{
                   t={t}
                   type={"text"}
                   name="DeceasedMotherNameMl"
-                  value={deathCorrectionFormsObj?.DECEASED_MOTHER?.curValue?.mothersNameMl}
-                  onBlur={(e) => onChangeMotherName(e,"mothersNameMl")}
+                  defaultValue={deathCorrectionFormsObj?.DECEASED_MOTHER?.curValue?.mothersNameMl}
+                  onBlur={(e) => onBlurMotherName(e,"mothersNameMl")}
                   placeholder={`${t("CR_MOTHER_NAME_ML")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
               </div>
             </FieldComponentContainer>
-        <div style={{ marginTop: "2.5rem" }}>
+        <div style={{ marginTop: "2.8rem" }}>
         <ButtonContainer>
-        <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_MOTHER"])}>
-          <EditIcon
-            style={{ marginTop: "0.6rem", marginLeft: "-0.2em" }}
-            selected={true}
-            label={"Edit"}
-          />
-          </span>
-        </ButtonContainer>
+                {deathCorrectionFormsObj?.DECEASED_MOTHER?.isDisabled && (
+               <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_MOTHER"])}>
+               <EditIcon
+                style={{ position: "absolute", top: "0.8rem"}}
+                 selected={true}
+                 label={"Edit"}
+               />
+               </span>
+                )}
+              </ButtonContainer>
       </div>
-          </FormFieldContainer>
+        </FormFieldContainer>
           <FormFieldContainer>
             <FieldComponentContainer>
               <div className="col-md-4">
@@ -1005,8 +714,8 @@ const onPresentAddressChange = (e,fieldType) =>{
                   t={t}
                   type={"text"}
                   name="DeceasedFatherNameEn"
-                  value={deathCorrectionFormsObj?.DECEASED_FATHER?.curValue.fathersNameEn} 
-                  onBlur={(e) => onChangeFatherName(e,"fathersNameEn")}
+                  defaultValue={deathCorrectionFormsObj?.DECEASED_FATHER?.curValue.fathersNameEn} 
+                  onBlur={(e) => onBlurFatherName(e,"fathersNameEn")}
                   placeholder={`${t("CR_FATHER_NAME_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
@@ -1017,9 +726,9 @@ const onPresentAddressChange = (e,fieldType) =>{
                   t={t}
                   type={"text"}
                   name="DeceasedFatherNameMl"
-                  value={deathCorrectionFormsObj?.DECEASED_FATHER?.curValue.fathersNameMl} 
-                  onBlur={(e) => onChangeFatherName(e,"fathersNameMl")}
-                  // onChange={setSelectDeceasedFirstNameEn}
+                  defaultValue={deathCorrectionFormsObj?.DECEASED_FATHER?.curValue.fathersNameMl} 
+                  onBlur={(e) => onBlurFatherName(e,"fathersNameMl")}
+                  // onBlur={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_FATHER_NAME_ML")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
@@ -1028,16 +737,18 @@ const onPresentAddressChange = (e,fieldType) =>{
 
             <div style={{ marginTop: "2.5rem" }}>
         <ButtonContainer>
-        <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_FATHER"])}>
-          <EditIcon
-            style={{ marginTop: "0.6rem", marginLeft: "-0.2em" }}
-            selected={true}
-            label={"Edit"}
-          />
-          </span>
-        </ButtonContainer>
+                {deathCorrectionFormsObj?.DECEASED_FATHER?.isDisabled && (
+                   <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_FATHER"])}>
+                   <EditIcon
+                     style={{ position: "absolute", top: "0.8rem"}}
+                     selected={true}
+                     label={"Edit"}
+                   />
+                   </span>
+                )}
+              </ButtonContainer>
       </div>
-          </FormFieldContainer>
+       </FormFieldContainer>
           <FormFieldContainer>
             <FieldComponentContainer>
               <div className="col-md-4">
@@ -1046,8 +757,8 @@ const onPresentAddressChange = (e,fieldType) =>{
                   t={t}
                   type={"text"}
                   name="DeceasedSpouseEn"
-                  value={deathCorrectionFormsObj?.DECEASED_SPOUSE?.curValue.spouseNameEn} 
-                  onBlur={(e) => onChangeSpouseName(e,"spouseNameEn")}
+                  defaultValue={deathCorrectionFormsObj?.DECEASED_SPOUSE?.curValue.spouseNameEn} 
+                  onBlur={(e) => onBlurSpouseName(e,"spouseNameEn")}
                   placeholder={`${t("CR_SPOUSE_TYPE_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
@@ -1058,8 +769,8 @@ const onPresentAddressChange = (e,fieldType) =>{
                   t={t}
                   type={"text"}
                   name="DeceasedSpouseMl"
-                  value={deathCorrectionFormsObj?.DECEASED_SPOUSE?.curValue.spouseNameMl} 
-                  onBlur={(e) => onChangeSpouseName(e,"spouseNameMl")}
+                  defaultValue={deathCorrectionFormsObj?.DECEASED_SPOUSE?.curValue.spouseNameMl} 
+                  onBlur={(e) => onBlurSpouseName(e,"spouseNameMl")}
                   placeholder={`${t("CR_SPOUSE_TYPE_ML")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
@@ -1067,16 +778,18 @@ const onPresentAddressChange = (e,fieldType) =>{
             </FieldComponentContainer>
             <div style={{ marginTop: "2.5rem" }}>
         <ButtonContainer>
-        <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_SPOUSE"])}>
-          <EditIcon
-            style={{ marginTop: "0.6rem", marginLeft: "-0.2em" }}
-            selected={true}
-            label={"Edit"}
-          />
-          </span>
-        </ButtonContainer>
+                {deathCorrectionFormsObj?.DECEASED_SPOUSE?.isDisabled && (
+                  <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_SPOUSE"])}>
+                  <EditIcon
+                    style={{ position: "absolute", top: "0.8rem"}}
+                    selected={true}
+                    label={"Edit"}
+                  />
+                  </span>
+                )}
+              </ButtonContainer>
       </div>
-          </FormFieldContainer>
+       </FormFieldContainer>
           <FormFieldContainer>
             <FieldComponentContainer>
               <div className="col-md-6">
@@ -1085,10 +798,10 @@ const onPresentAddressChange = (e,fieldType) =>{
                   t={t}
                   type={"text"}
                   name="DeceasedHouseNameEn"
-                  disabled={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isDisabled}
-                  autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
-                  value={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.houseNameEn} 
-                  onChange={(e)=>onPresentAddressChange(e,"houseNameEn")}
+                  // disabled={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isDisabled}
+                  // autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
+                  defaultValue={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.houseNameEn} 
+                  onBlur={(e)=>onPresentAddressChange(e,"houseNameEn")}
                   placeholder={`${t("CR_HOUSE_NO_AND_NAME_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
@@ -1099,10 +812,10 @@ const onPresentAddressChange = (e,fieldType) =>{
                   t={t}
                   type={"text"}
                   name="DeceasedLocalityEn"
-                  disabled={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isDisabled}
-                  autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
+                  // disabled={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isDisabled}
+                  // autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
                   value={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.localityNameEn} 
-                  onChange={(e)=>onPresentAddressChange(e,"localityNameEn")}
+                  onBlur={(e)=>onPresentAddressChange(e,"localityNameEn")}
                   placeholder={`${t("CR_LOCALITY_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
@@ -1113,10 +826,10 @@ const onPresentAddressChange = (e,fieldType) =>{
                   t={t}
                   type={"text"}
                   name="DeceasedStreetEn"
-                  disabled={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isDisabled}
-                  autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
-                  value={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.streetNameEn} 
-                  onChange={(e)=>onPresentAddressChange(e,"streetNameEn")}
+                  // disabled={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isDisabled}
+                  // autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
+                  defaultValue={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.streetNameEn} 
+                  onBlur={(e)=>onPresentAddressChange(e,"streetNameEn")}
                   placeholder={`${t("CR_STREET_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
@@ -1124,17 +837,18 @@ const onPresentAddressChange = (e,fieldType) =>{
               </FieldComponentContainer>
               <div style={{ marginTop: "2.5rem" }}>
         <ButtonContainer>
-        <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["PERMANENT_ADDRESS"])}>
-          <EditIcon
-            style={{ marginTop: "0.6rem", marginLeft: "-0.2em" }}
-             selected={true}
-            label={"Edit"}
-          />
-          </span>
-        </ButtonContainer>
+                {deathCorrectionFormsObj?.PERMANENT_ADDRESS?.isDisabled && 
+               <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["PERMANENT_ADDRESS"])}>
+               <EditIcon
+                 style={{ position: "absolute", top: "0.8rem"}}
+                 selected={true}
+                 label={"Edit"}
+               />
+               </span>
+                }
+              </ButtonContainer>
       </div>
-           
-          </FormFieldContainer>
+        </FormFieldContainer>
           <FormFieldContainer>
             <FieldComponentContainer>
               <div className="col-md-6">
@@ -1143,8 +857,8 @@ const onPresentAddressChange = (e,fieldType) =>{
                   t={t}
                   type={"text"}
                   name="DeceasedHouseNameMl"
-                  value={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.houseNameMl} 
-                  onChange={(e)=>onPresentAddressChange(e,"houseNameMl")}
+                  defaultValue={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.houseNameMl} 
+                  onBlur={(e)=>onPresentAddressChange(e,"houseNameMl")}
                   placeholder={`${t("CR_HOUSE_NO_AND_NAME_MAL")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
@@ -1155,8 +869,8 @@ const onPresentAddressChange = (e,fieldType) =>{
                   t={t}
                   type={"text"}
                   name="DeceasedLocalityMl"
-                  value={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.localityNameMl}
-                  onChange={(e)=>onPresentAddressChange(e,"localityNameMl")}
+                  defaultValue={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.localityNameMl}
+                  onBlur={(e)=>onPresentAddressChange(e,"localityNameMl")}
                   placeholder={`${t("CR_LOCALITY_MAL")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
@@ -1167,8 +881,8 @@ const onPresentAddressChange = (e,fieldType) =>{
                   t={t}
                   type={"text"}
                   name="DeceasedStreetMl"
-                  value={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.streetNameMl} 
-                  onChange={(e)=>onPresentAddressChange(e,"streetNameMl")}
+                  defaultValue={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.streetNameMl} 
+                  onBlur={(e)=>onPresentAddressChange(e,"streetNameMl")}
                   placeholder={`${t("CR_STREET_MAL")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
