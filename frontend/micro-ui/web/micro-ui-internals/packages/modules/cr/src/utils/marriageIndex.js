@@ -451,7 +451,7 @@ export const convertToMarriageRegistration = (data = {}) => {
           witness1AddresSEn: data?.WitnessDetails?.witness1AddresSEn ? data?.WitnessDetails?.witness1AddresSEn : null,
           // witness1AddressMl: data?.WitnessDetails?.witness1AddressMl ? data?.WitnessDetails?.witness1AddressMl : null,
           witness1Mobile: data?.WitnessDetails?.witness1Mobile ? data?.WitnessDetails?.witness1Mobile : null,
-          witness1Esigned: data?.WitnessDetails?.witness1Esigned ? data?.WitnessDetails?.witness1Esigned : null,
+          witness1Esigned: data?.WitnessDetails?.witness1Esigned ? data?.WitnessDetails?.witness1Esigned : false,
           witness2AadharNo: data?.WitnessDetails?.witness2AadharNo ? data?.WitnessDetails?.witness2AadharNo : null,
           witness2NameEn: data?.WitnessDetails?.witness2NameEn ? data?.WitnessDetails?.witness2NameEn : null,
           // witness2NameMl: data?.WitnessDetails?.witness2NameMl ? data?.WitnessDetails?.witness2NameMl : null,
@@ -459,7 +459,7 @@ export const convertToMarriageRegistration = (data = {}) => {
           witness2AddressEn: data?.WitnessDetails?.witness2AddressEn ? data?.WitnessDetails?.witness2AddressEn : null,
           // witness2AddressMl: data?.WitnessDetails?.witness2AddressMl ? data?.WitnessDetails?.witness2AddressMl : null,
           witness2Mobile: data?.WitnessDetails?.witness2Mobile ? data?.WitnessDetails?.witness2Mobile : null,
-          witness2Esigned: data?.WitnessDetails?.witness2Esigned ? data?.WitnessDetails?.witness2Esigned : null,
+          witness2Esigned: data?.WitnessDetails?.witness2Esigned ? data?.WitnessDetails?.witness2Esigned : false,
         },
         BrideAddressDetails: {
           presentaddressCountry: data?.BrideAddressDetails?.presentaddressCountry ? data?.BrideAddressDetails?.presentaddressCountry?.code : null,

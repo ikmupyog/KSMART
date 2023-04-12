@@ -41,11 +41,6 @@ const computeCurrentValue = (aadharNo) => {
 };
 
 const getFilteredDocuments = (selectedData, inclusionData) => {
-  let filteredData = [];
-  if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
-    filteredData = inclusionData?.filter((item) => item.conditionCode === "DOB_INSTITUTIONAL");
-  } else {
-    filteredData = inclusionData?.filter((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
-  }
+  let filteredData = inclusionData;
   return { documentData: filteredData };
 };

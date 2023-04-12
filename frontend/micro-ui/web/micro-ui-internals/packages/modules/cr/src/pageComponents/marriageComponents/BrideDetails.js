@@ -176,6 +176,21 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
   ];
 
   const brideParent = parentDetails.map((parent) => parent.code);
+  const convertEpochToDate = (dateEpoch) => {
+    // Returning null in else case because new Date(null) returns initial date from calender
+    if (dateEpoch) {
+      const dateFromApi = new Date(dateEpoch);
+      let month = dateFromApi.getMonth() + 1;
+      let day = dateFromApi.getDate();
+      let year = dateFromApi.getFullYear();
+      month = (month > 9 ? "" : "0") + month;
+      day = (day > 9 ? "" : "0") + day;
+      return `${year}-${month}-${day}`;
+      //  return `${day}-${month}-${year}`;
+    } else {
+      return null;
+    }
+  };
 
   function setSelectbrideFirstnameMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
@@ -293,8 +308,17 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
   function setSelectbrideDOB(value) {
     setbrideDOB(value);
     const today = new Date();
+    today.setHours(0, 0, 0, 0);
     const birthDate = new Date(value);
+    birthDate.setHours(0, 0, 0, 0);
+
     if (birthDate.getTime() <= today.getTime()) {
+
+    //setDOBError(false);
+    // setbrideDOB(value);
+    // const today = new Date();
+    // const birthDate = new Date(value);
+    // if (birthDate.getTime() <= today.getTime()) {
       // To calculate the time difference of two dates
       const dobFullYear = new Date(value).getFullYear();
       const currentYear = new Date().getFullYear();
@@ -321,7 +345,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setbrideAge(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' a-zA-Z]/gi, ""));
+      setbrideAge(e.target.value);
     }
   }
   function setSelectbrideParentGuardian(e) {
@@ -462,14 +486,13 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     setbrideNoOfSpouse("");
   }
   function setSelectbrideNoOfSpouse(e) {
+
     if (e.target.value.length === 2) {
       if (e.target.value > 3) {
         return false;
       }
-      // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setbrideNoOfSpouse(e.target.value);
-      // .replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' a-zA-Z]/gi, ""));
+      setbrideNoOfSpouse(e.target.value.replace(/[^0-3]/ig, ''));
     }
   }
   function setSelectbrideEmailid(e) {
@@ -485,15 +508,11 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setbrideSocialSecurityNo(e.target.value.replace(/[^0-9]/gi, ""));
+      setbrideSocialSecurityNo(e.target.value.replace(/[^0-9]/gi, "").substring(0, 9));
     }
   }
   function setSelectbridePassportNo(e) {
-    setbridePassportNo(
-      e.target.value.length <= 12
-        ? e.target.value.replace("[A-PR-WY][1-9]ds?d{4}[1-9]$", "")
-        : e.target.value.replace("[A-PR-WY][1-9]ds?d{4}[1-9]$", "").substring(0, 12)
-    );
+    setbridePassportNo(e.target.value.length<=8 ? e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '') : (e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '').substring(0, 8)))
     // if (e.target.value.length < 8) {
     //   return false;
     //   // window.alert("Username shouldn't exceed 10 characters")
@@ -710,7 +729,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                 <TextInput
                   t={t}
                   isMandatory={false}
-                  type={"number"}
+                  type={"text"}
                   optionKey="i18nKey"
                   name="brideAadharNo"
                   value={brideAadharNo}
@@ -723,7 +742,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                   {...(brideResidentShip === "INDIAN" && {
                     ...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") }),
                   })}
-                  // {...(validation = { pattern: "^[0-9]{12}$", type: "number", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                  // {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                 />
               </div>
               <div className="col-md-4">
@@ -745,7 +764,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                     maxLength: 12,
                   }}
                   {...((brideResidentShip === "NRI" || brideResidentShip === "FOREIGN") && {
-                    ...(validation = { pattern: "^[0-9]{12}$", type: "number", isRequired: true, title: t("CS_COMMON_INVALID_PASSPORT_NO") }),
+                    ...(validation = { pattern: "^[0-9]{8}$", type: "text", isRequired: true, title: t("CS_COMMON_INVALID_PASSPORT_NO") }),
                   })}
                 />
               </div>
@@ -768,7 +787,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                     maxLength: 12,
                   }}
                   {...(brideResidentShip === "FOREIGN" && {
-                    ...(validation = { pattern: "^[0-9]{12}$", type: "number", isRequired: true, title: t("CR_INVALID_SOCIAL_SECURITY_NUMBER") }),
+                    ...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: true, title: t("CR_INVALID_SOCIAL_SECURITY_NUMBER") }),
                   })}
                 />
               </div>
@@ -856,7 +875,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                   onChange={setSelectbrideMobile}
                   disable={isDisableEdit}
                   placeholder={`${t("CR_BRIDE_MOBILE_NO")}`}
-                  {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })}
+                  {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })}
                 />
               </div>
             </div>
@@ -982,6 +1001,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                   <DatePicker
                     date={brideDOB}
                     name="brideDOB"
+                    max={convertEpochToDate(new Date())}
                     onChange={setSelectbrideDOB}
                     inputFormat="DD-MM-YYYY"
                     placeholder={`${t("CR_BRIDE_DATE_OF_BIRTH_TIME")}`}
@@ -1124,7 +1144,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                       <TextInput
                         t={t}
                         isMandatory={false}
-                        type={"number"}
+                        type={"text"}
                         optionKey="i18nKey"
                         name="brideFatherAadharNo"
                         value={brideFatherAadharNo}
@@ -1135,7 +1155,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                           maxLength: 12,
                         }}
                         {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
-                        // {...(validation = { isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                        // {...(validation = { isRequired: false, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                       />
                     </div>
                     <div className="col-md-4">
@@ -1194,7 +1214,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                       <TextInput
                         t={t}
                         isMandatory={false}
-                        type={"number"}
+                        type={"text"}
                         optionKey="i18nKey"
                         name="brideMotherAadharNo"
                         value={brideMotherAadharNo}
@@ -1205,7 +1225,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                           maxLength: 12,
                         }}
                         {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
-                        // {...(validation = { isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                        // {...(validation = { isRequired: false, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                       />
                     </div>
                     <div className="col-md-4">
@@ -1269,7 +1289,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                       <TextInput
                         t={t}
                         isMandatory={false}
-                        type={"number"}
+                        type={"text"}
                         optionKey="i18nKey"
                         name="brideGuardianAadharNo"
                         value={brideGuardianAadharNo}

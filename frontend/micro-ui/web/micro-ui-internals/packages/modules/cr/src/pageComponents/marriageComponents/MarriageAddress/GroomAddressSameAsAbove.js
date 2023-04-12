@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox } from "@egovernments/digit-ui-react-components";
-import Timeline from "../../components/CRTimeline";
+import Timeline from "../../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
-const MarriageAddressSameAsAbove = ({
+const GroomAddressSameAsAbove = ({
   config,
   onSelect,
   userType,
@@ -13,6 +13,7 @@ const MarriageAddressSameAsAbove = ({
   isEditBirth = false,
   isEditDeath = false,
   isEditStillBirth = false,
+  isEditBirthNAC = false,
   // isInitialRender, setIsInitialRender
 }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -21,7 +22,7 @@ const MarriageAddressSameAsAbove = ({
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : isEditStillBirth ? isEditStillBirth : false);
 
-  // const [isPrsentAddress, setIsPrsentAddress] = useState(formData?.MarriageAddressSameAsAboveDetails?.isPrsentAddress);
+  // const [isPrsentAddress, setIsPrsentAddress] = useState(formData?.AddressSameAsAboveDetails?.isPrsentAddress);
 
   const onSkip = () => onSelect();
 
@@ -98,4 +99,4 @@ const MarriageAddressSameAsAbove = ({
     </React.Fragment>
   );
 };
-export default MarriageAddressSameAsAbove;
+export default GroomAddressSameAsAbove;

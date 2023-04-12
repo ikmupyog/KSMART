@@ -125,6 +125,25 @@ const DeathPlaceVehicle = ({
       setVehicleToPlaceEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
+  function setCheckMalayalamInputField(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
+    if (!e.key.match(pattern)) {
+      e.preventDefault();
+    }
+  }
+  function setCheckSpecialCharSpace(e) {
+    let pattern = /^[a-zA-Z-.`' ]*$/;
+    if (!(e.key.match(pattern)) && e.code === 'Space') {
+      e.preventDefault();
+    }
+  }
+  function setCheckSpecialChar(e) {
+    let pattern = /^[0-9]*$/;
+    if (!(e.key.match(pattern))) {
+      e.preventDefault();
+    }
+  }
+
 
   function setSelectVehicleFirstHaltEn(e) {
     if (e.target.value.length === 51) {
@@ -175,12 +194,7 @@ const DeathPlaceVehicle = ({
   function selectVehicleHospitalEn(value) {
     setSelectedVehicleHospitalEn(value);
   }
-  function setCheckMalayalamInputField(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
-    if (!(e.key.match(pattern))) {
-      e.preventDefault();
-    }
-  }
+
   const goNext = () => {
     onSelect(config.key, {});
   };

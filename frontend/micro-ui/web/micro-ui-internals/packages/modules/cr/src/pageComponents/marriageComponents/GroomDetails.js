@@ -162,6 +162,21 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     { i18nKey: "CR_NRI", code: "NRI" },
     { i18nKey: "CR_FOREIGN_NATIONAL", code: "FOREIGN" },
   ];
+  const convertEpochToDate = (dateEpoch) => {
+    // Returning null in else case because new Date(null) returns initial date from calender
+    if (dateEpoch) {
+      const dateFromApi = new Date(dateEpoch);
+      let month = dateFromApi.getMonth() + 1;
+      let day = dateFromApi.getDate();
+      let year = dateFromApi.getFullYear();
+      month = (month > 9 ? "" : "0") + month;
+      day = (day > 9 ? "" : "0") + day;
+      return `${year}-${month}-${day}`;
+      //  return `${day}-${month}-${year}`;
+    } else {
+      return null;
+    }
+  };
 
   const groomTypes = groomTypeRadio.map((type) => type.code);
   const [AadharError, setAadharError] = useState(formData?.GroomDetails?.groomAadharNo ? false : false);
@@ -197,14 +212,10 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     selectGroomGender(value);
   }
   function setSelectGroomPassportNo(e) {
-    setGroomPassportNo(
-      e.target.value.length <= 12
-        ? e.target.value.replace("[A-PR-WY][1-9]ds?d{4}[1-9]$", "")
-        : e.target.value.replace("[A-PR-WY][1-9]ds?d{4}[1-9]$", "").substring(0, 12)
-    );
+    setGroomPassportNo(e.target.value.length<=8 ? e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '') : (e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '').substring(0, 8)))
   }
   function setSelectGroomSocialSecurityNo(e) {
-    //setGroomSocialSecurityNo(e.target.value.length<=9 ? e.target.value.replace('(?!666|000|9\\d{2})\\d{3}-(?!00)\\d{2}-(?!0{4})\\d{4}$', '') : (e.target.value.replace('(?!666|000|9\\d{2})\\d{3}-(?!00)\\d{2}-(?!0{4})\\d{4}$', '').substring(0, 9)))
+    //setGroomSocialSecurityNo(e.target.value.length<=9 ? e.target.value.replace('[0-9()-]', '') : (e.target.value.replace('[0-9()-]', '').substring(0, 9)))
     if (e.target.value.length > 9) {
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
@@ -230,11 +241,17 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       if (e.target.value > 3) {
         return false;
       }
-      // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setGroomNoOfSpouse(e.target.value);
-      // .replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' a-zA-Z]/gi, ""));
+      setGroomNoOfSpouse(e.target.value.replace(/[^0-3]/ig, ''));
     }
+  //   if (e.target.value.length === 2 && e.target.value > 3) {
+  //     return false;
+  // } else {
+  //   setGroomNoOfSpouse(e.target.value.replace(/[^0-3]/ig, ''));  
+  // }
+    // if (e.target.value.trim().length >= 0) {
+    //   setGroomNoOfSpouse(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
+    // }
   }
   function setSelectGroomAge(e) {
     if (e.target.value.trim().length === 3) {
@@ -243,13 +260,31 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     } else {
       setGroomAge(e.target.value);
     }
+    // if (e.target.value.trim().length >= 0) {
+    //   setGroomAge(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
+    // }
   }
 
   function setselectGroomDOB(value) {
     setGroomDOB(value);
     const today = new Date();
+    today.setHours(0, 0, 0, 0);
     const birthDate = new Date(value);
+    birthDate.setHours(0, 0, 0, 0);
+
     if (birthDate.getTime() <= today.getTime()) {
+
+      setDOBError(false);
+      // let Difference_In_Time = today.getTime() - birthDate.getTime();
+      // // console.log("Difference_In_Time" + Difference_In_Time);
+      // setDifferenceInTime(today.getTime() - birthDate.getTime());
+      // let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+      // // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
+      // setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
+    // setGroomDOB(value);
+    // const today = new Date();
+    // const birthDate = new Date(value);
+    // if (birthDate.getTime() <= today.getTime()) {
       // To calculate the time difference of two dates
       const dobFullYear = new Date(value).getFullYear();
       const currentYear = new Date().getFullYear();
@@ -611,7 +646,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 <TextInput
                   t={t}
                   isMandatory={false}
-                  type={"number"}
+                  type={"text"}
                   optionKey="i18nKey"
                   name="groomAadharNo"
                   value={groomAadharNo}
@@ -641,7 +676,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   onChange={setSelectGroomPassportNo}
                   placeholder={`${t("CR_GROOM_PASSPORT_NO")}`}
                   {...((groomResidentShip === "NRI" || groomResidentShip === "FOREIGN") && {
-                    ...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: true, title: t("CS_COMMON_INVALID_PASSPORT_NO") }),
+                    ...(validation = { pattern: "^[0-9]{8}$", type: "text", isRequired: true, title: t("CS_COMMON_INVALID_PASSPORT_NO") }),
                   })}
                 />
               </div>
@@ -730,7 +765,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 <TextInput
                   t={t}
                   isMandatory={false}
-                  type={"number"}
+                  type={"text"}
                   optionKey="i18nKey"
                   name="groomMobile"
                   value={groomMobile}
@@ -847,7 +882,8 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 </CardLabel>
                 <DatePicker
                   date={groomDOB}
-                  name="DateOfDeath"
+                  name="groomDOB"
+                  max={convertEpochToDate(new Date())}
                   onChange={setselectGroomDOB}
                   placeholder={`${t("CR_GROOM_DATE_OF_BIRTH")}`}
                   {...(validation = {
@@ -866,7 +902,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 <TextInput
                   t={t}
                   isMandatory={false}
-                  type={"number"}
+                  type={"text"}
                   optionKey="i18nKey"
                   name="groomAge"
                   value={groomAge}
@@ -933,7 +969,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                       value={groomNoOfSpouse}
                       onChange={setSelectGroomNoOfSpouse}
                       placeholder={`${t("CR_NUMBER_OF_SPOUSE_LIVING")}`}
-                      {...(validation = { pattern: "^[0-9]{2}$", type: "text", isRequired: true, title: t("CR_INVALID_NO_OF_SPOUSE_LIVING") })}
+                      {...(validation = { pattern: "^([0-3]){1}$", type: "text", isRequired: true, title: t("CR_INVALID_NO_OF_SPOUSE_LIVING") })}
                     />
                   </div>
                 )}
@@ -983,7 +1019,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                     <TextInput
                       t={t}
                       isMandatory={false}
-                      type={"number"}
+                      type={"text"}
                       optionKey="i18nKey"
                       name="groomFatherAadharNo"
                       value={groomFatherAadharNo}
@@ -1046,7 +1082,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                     <TextInput
                       t={t}
                       isMandatory={false}
-                      type={"number"}
+                      type={"text"}
                       optionKey="i18nKey"
                       name="groomMotherAadharNo"
                       value={groomMotherAadharNo}
@@ -1113,7 +1149,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                     <TextInput
                       t={t}
                       isMandatory={false}
-                      type={"number"}
+                      type={"text"}
                       optionKey="i18nKey"
                       name="groomGuardianAadharNo"
                       value={groomGuardianAadharNo}

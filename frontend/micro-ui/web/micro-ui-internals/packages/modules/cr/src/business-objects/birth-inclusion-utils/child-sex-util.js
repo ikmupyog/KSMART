@@ -1,7 +1,7 @@
 import moment from "moment";
 
 export const getFilteredChildSexData = (selectedData, inclusionData, sex) => {
-  console.log("selected name==", selectedData, sex);
+  console.log("selected name==in sex--", selectedData, sex);
   let filteredDocuments = getFilteredDocuments(selectedData, inclusionData);
   console.log("filtererd docs==", filteredDocuments);
   const computedInitialValue = computeInitialValue(selectedData?.gender, sex);
@@ -19,12 +19,12 @@ export const getFilteredChildSexData = (selectedData, inclusionData, sex) => {
 
 //TODO need validation to check dob is null
 const computeInitialValue = (gender, sexArray) => {
-  const initialValue = sexArray.find((item) => item.code === gender);
+  const initialValue = sexArray?.find((item) => item.code === gender);
   return initialValue;
 };
 
 const computeCurrentValue = (gender, sexArray) => {
-  const currentValue = sexArray.find((item) => item.code === gender);
+  const currentValue = sexArray?.find((item) => item.code === gender);
   return currentValue;
 };
 
@@ -32,26 +32,36 @@ const getFilteredDocuments = (selectedData, inclusionData) => {
   let filteredData = [];
   let docFlag = "";
   const childAge = selectedData?.dateofbirth && moment().diff(moment(selectedData?.dateofbirth), "years");
-  console.log("childAge==", childAge);
-  if (childAge >= 0 && childAge <= 17) {
+  const birthPlace = selectedData?.registerBirthPlace?.placeofbirthid ; 
+  console.log("childAge==", childAge,selectedData?.registerBirthPlace?.placeofbirthid,birthPlace);
+  if (childAge >= 0 && childAge <= 17 && birthPlace === "HOSPITAL") {
     filteredData = inclusionData?.filter((item) => {
       if (
         item.conditionCode === "INSTITUTIONAL_SEX_CORRECTION_MINOR" ||
-        item.conditionCode === "INSTITUTIONAL_SEX_CHAGE_MINOR" ||
-        item.conditionCode === "NON_INSTITUTIONAL_SEX_CORRECTION_MINOR" ||
-        item.conditionCode === "NON_INSTITUTIONAL_SEX_CHAGE_MAJOR"
+        item.conditionCode === "INSTITUTIONAL_SEX_CHAGE_MINOR" 
       ) {
         return item;
       }
     });
-    docFlag = "SEX_CHANGE";
-  } else if (childAge >= 18) {
+    docFlag = "INSTITUTIONAL_SEX_CHANGE";
+  } else if (childAge >= 0 && childAge <= 17 && birthPlace !== "HOSPITAL") {
     filteredData = inclusionData?.filter((item) => {
-      if (item.conditionCode === "NON_INSTITUTIONAL_SEX_CORRECTION_MAJOR" || item.conditionCode === "NON_INSTITUTIONAL_SEX_CORRECTION_MAJOR") {
+      if (
+        item.conditionCode === "NON_INSTITUTIONAL_SEX_CORRECTION_MINOR" ||
+        item.conditionCode === "NON_INSTITUTIONAL_SEX_CHAGE_MINOR"
+      ) {
         return item;
       }
     });
-    docFlag = "NON_INSTITUTIONAL_SEX_CHANGE";
+    docFlag = "NON_INSTITUTIONAL_SEX_CHANGE_MINOR";
+  }
+   else if (childAge >= 18 && birthPlace !== "HOSPITAL") {
+    filteredData = inclusionData?.filter((item) => {
+      if (item.conditionCode === "NON_INSTITUTIONAL_SEX_CORRECTION_MAJOR" || item.conditionCode === "NON_INSTITUTIONAL_SEX_CHANGE_MAJOR") {
+        return item;
+      }
+    });
+    docFlag = "NON_INSTITUTIONAL_SEX_CHANGE_MAJOR";
   }
 
   return { documentData: filteredData, docFlag };

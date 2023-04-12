@@ -41,7 +41,7 @@ const SelectPincode = ({ t, config, onSelect, value }) => {
     }
   }
 
-  const onSkip = () => onSelect({ pincode: pincode });
+  const onSkip = () => onSelect({ pincode: "" });
   return (
     <React.Fragment>
       {window.location.href.includes("/citizen") ? <PGRTimeline currentStep={2} /> : null}

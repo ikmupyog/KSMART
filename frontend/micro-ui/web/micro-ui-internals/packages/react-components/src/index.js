@@ -201,6 +201,7 @@ import OpenLinkContainer from "./atoms/OpenLinkContainer";
 import UploadPitPhoto from "./molecules/UploadPitPhoto";
 import ULBHomeCard from "./atoms/ULBHomeCard";
 import NewRadioButton from "./atoms/NewRadioButton";
+import Accordion from "./atoms/Accordion";
 
 export {
   EditButton,
@@ -415,4 +416,5 @@ export {
   InboxIcon,
   ViewReportIcon,
   SecondaryBackButton,
+  Accordion
 };
