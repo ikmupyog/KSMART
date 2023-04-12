@@ -116,8 +116,8 @@ const Urls = {
     download_pdf: "/egov-pdf/download/CR/",
     registry_download: "/birth-services/cr/registry/_download",
     registry_search_birth: "/birth-services/cr/registry/_search",
-    create_adoption:'/birth-services/cr/createadoption',
-    correct_update: '/birth-services/cr/createbirthcorrection'    
+    create_adoption: "/birth-services/cr/createadoption",
+    correct_update: "/birth-services/cr/createbirthcorrection",
   },
   crstillbirth: {
     create: "/birth-services/cr/createstillbirth",
@@ -126,7 +126,8 @@ const Urls = {
   },
   crnacbirth: {
     create: "/birth-services/cr/createnac",
-    search:"/birth-services/cr/searchnac",
+    search: "/birth-services/cr/searchnac",
+    update: "/birth-services/cr/updatenac",
   },
   crbornoutsideindiabirth: {
     create: "/birth-services/cr/createbornoutside",
