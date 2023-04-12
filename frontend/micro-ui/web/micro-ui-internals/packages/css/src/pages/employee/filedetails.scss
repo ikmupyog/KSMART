@@ -207,6 +207,10 @@
 
 .geo-tag {
     margin-top: 20px;
+
+    @media (max-width: 1020px) {
+        margin-bottom: 20px;
+    }
 }
 
 .legacy-section {
@@ -344,4 +348,44 @@
     text-align: center;
     margin: auto;
     margin-top: 10px;
+}
+
+.arising-buttons {
+    margin-top: 50px;
+}
+
+.arising-card-file {
+    height: 400px;
+    margin-top: 425px;
+
+    @media (max-width: 1020px) {
+        margin-top: 114px;
+        height: 468px;
+    }
+
+    @media (max-width:600px) {
+        margin-top: 0px;
+        height: 620px;
+    }
+}
+
+.arising-searchbox {
+    margin-top: 185px;
+
+    @media (max-width: 1020px) {
+        margin-top: 0px;
+    }
+
+}
+
+.arising-filewrapper {
+    height: 1115px;
+
+    @media (max-width: 1020px) {
+        height: 1375px;
+    }
+
+    @media (max-width: 600px) {
+        height: 1530px;
+    }
 }

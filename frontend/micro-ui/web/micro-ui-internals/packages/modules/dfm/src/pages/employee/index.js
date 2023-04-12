@@ -242,6 +242,7 @@ const EmployeeApp = ({ path, url, userType }) => {
   const DraftTemplate = Digit?.ComponentRegistryService?.getComponent('DraftTemplate')
   const Templates = Digit?.ComponentRegistryService?.getComponent('Templates')
   const TemplateSec = Digit?.ComponentRegistryService?.getComponent('TemplateSec')
+  const ArisingFile = Digit?.ComponentRegistryService?.getComponent('ArisingFile')
 
   return (
     <Switch>
@@ -259,6 +260,7 @@ const EmployeeApp = ({ path, url, userType }) => {
           <PrivateRoute path={`${path}/draft-template`} component={() => <DraftTemplate parentRoute={path} />} />
           <PrivateRoute path={`${path}/templates`} component={() => <Templates parentRoute={path} />} />
           <PrivateRoute path={`${path}/templateSec`} component={() => <TemplateSec parentRoute={path} />} />
+          <PrivateRoute path={`${path}/arising-file`} component={() => <ArisingFile parentRoute={path} />} />
         </div>
       </React.Fragment>
     </Switch>

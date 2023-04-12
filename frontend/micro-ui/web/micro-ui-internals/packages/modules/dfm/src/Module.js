@@ -30,6 +30,7 @@ import LegacyFile from "./components/LegacyFile";
 import DraftTemplate from "./components/DraftTemplate";
 import Templates from "./components/Templates";
 import TemplateSec from "./components/TemplateSec";
+import ArisingFile from "./components/ArisingFile";
 
 export const DFMModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
@@ -98,7 +99,8 @@ const componentsToRegister = {
   LegacyFile,
   DraftTemplate,
   Templates,
-  TemplateSec
+  TemplateSec,
+  ArisingFile
 };
 
 export const initDFMComponents = () => {

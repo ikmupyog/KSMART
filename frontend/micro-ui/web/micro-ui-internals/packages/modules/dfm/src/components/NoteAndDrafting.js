@@ -701,7 +701,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
                         <div className="col-md-12  col-sm-12 geo-column">
 
-                            <div className="col-md-2">
+                            <div className="col-md-2 col-sm-12">
 
                                 <h3 class="geo-tag">{t("GEO_TAG_LOCATION")}</h3>
                             </div>
@@ -710,7 +710,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
                                     width="80" height="80" allowfullscreen="" loading="lazy"></iframe>
 
                             </div>
-                            <div className="col-md-4" >
+                            <div className="col-md-4 col-sm-4" >
 
                                 <CardLabel className="card-label-file">{`${t("LONGITUDE")}`}</CardLabel>
                                 <TextInput
@@ -722,7 +722,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
                                     placeholder={t("longitude")}
                                 />
                             </div>
-                            <div className="col-md-4" >
+                            <div className="col-md-4 col-sm-4" >
 
                                 <CardLabel className="card-label-file">{`${t("LATITUDE")}`}</CardLabel>
                                 <TextInput
