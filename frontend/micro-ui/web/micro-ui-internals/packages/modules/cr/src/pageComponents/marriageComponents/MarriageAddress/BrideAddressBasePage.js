@@ -147,6 +147,7 @@ const BrideAddressBasePage = ({
   const [presentInsideKeralaStreetNameMl, setinsideKeralaStreetNameMl] = useState(
     formData?.BrideAddressDetails?.presentInsideKeralaStreetNameMl ? formData?.BrideAddressDetails?.presentInsideKeralaStreetNameMl : ""
   );
+  const [Districtvalues, setDistrictvalue] = useState(null);
   const [Talukvalues, setLbsTalukvalue] = useState(null);
   const [Villagevalues, setLbsVillagevalue] = useState(null);
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
@@ -1086,6 +1087,9 @@ const BrideAddressBasePage = ({
       });
     }
   };
+
+  console.log("Adress Groom", formData);
+
   if (
     isCountryLoading ||
     isStateLoading ||
