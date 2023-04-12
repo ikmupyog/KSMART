@@ -4,7 +4,7 @@ import Toast from "./Toast";
 import UploadImages from "./UploadImages";
 import _ from "lodash";
 
-export const ImageUploadHandler = ({ uploadedImages, onPhotoChange, tenantId, moduleType = "property-upload", isMulti = true }) => {
+export const ImageUploadHandler = ({ uploadedImages, onPhotoChange, tenantId, moduleType = "property-upload", isMulti = true, extraParams = {} }) => {
   // const __initImageIds = Digit.SessionStorage.get("PGR_CREATE_IMAGES");
   // const __initThumbnails = Digit.SessionStorage.get("PGR_CREATE_THUMBNAILS");
   const [image, setImage] = useState(null);
@@ -85,7 +85,7 @@ export const ImageUploadHandler = ({ uploadedImages, onPhotoChange, tenantId, mo
   }
 
   const uploadImage = useCallback(async () => {
-    const response = await Digit.UploadServices.Filestorage(moduleType, image, tenantId);
+    const response = await Digit.UploadServices.Filestorage(moduleType, image, tenantId, extraParams);
     setUploadedImagesIds(addUploadedImageIds(response));
   }, [addUploadedImageIds, image]);
 

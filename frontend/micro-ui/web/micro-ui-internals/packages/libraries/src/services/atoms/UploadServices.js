@@ -4,11 +4,13 @@ export const UploadServices = {
   Filestorage: async (module, filedata, tenantId, extraParams = {}) => {
     const formData = new FormData();
 
-    formData.append("file", filedata, filedata.name);
+    formData.append("file", filedata, extraParams?.fileName || filedata.name);
     formData.append("tenantId", tenantId);
     formData.append("module", module);
 
-    console.log({ formData });
+    for (const key in extraParams) {
+      formData.append(key, extraParams[key]);
+    }
 
     let tenantInfo = window?.globalConfigs?.getConfig("ENABLE_SINGLEINSTANCE") ? `?tenantId=${tenantId}` : "";
     var config = {

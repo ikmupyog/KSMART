@@ -18,6 +18,7 @@ import {
 import Timeline from "../../components/MARRIAGETimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
+import { v4 as uuidv4 } from "uuid";
 // import { TimePicker } from '@material-ui/pickers';
 
 const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness }) => {
@@ -131,19 +132,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     formData?.WitnessDetails?.witness2Esigned ? formData?.WitnessDetails?.witness2Esigned : false
   );
   const [isDisableEdit, setisDisableEdit] = useState(isEditWitness ? isEditWitness : false);
-  //   const [file, setFile] = useState();
-  //   const [files, setFiles] = useState();
-  //   function handleChange(e) {
-  //     console.log(e.target.files);
-  //     setFile(URL.createObjectURL(e.target.files[0]));
-  //   }
-  //   function handleFile2Change(e) {
-  //     console.log(e.target.files);
-  //     setFiles(URL.createObjectURL(e.target.files[1]));
-  //   }
-  //   const handleOptionChange = (event) => {
-  //     setSelectedOption(event.target.value);
-  //   };
   const [toast, setToast] = useState(false);
   const [groomImage, setGroomImage] = useState(null);
   const [brideImage, setBrideImage] = useState(null);
@@ -154,6 +142,9 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   const [isExpiredHusband, setIsExpiredHusband] = useState(false);
   const [expirationTypeWife, setExpirationTypeWife] = useState(null);
   const [isExpiredWife, setIsExpiredWife] = useState(false);
+  const [uniqueId, setUniqueId] = useState(null);
+
+  const currentYear = new Date().getFullYear();
 
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -544,6 +535,10 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   };
 
   useEffect(() => {
+    setUniqueId(uuidv4());
+  }, []);
+
+  useEffect(() => {
     if (!brideImage) {
       setPreviewBrideImage(undefined);
       return;
@@ -568,6 +563,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   // console.log({ previewBrideImage })
 
   console.log("Witness", formData);
+  console.log({ currentYear });
 
   if (isLoading || isTalukLoading || isVillageLoading || isLBTypeLoading) {
     return <Loader></Loader>;
@@ -950,27 +946,29 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
           </div> */}
                   <div>
                     <div className="col-md-12">
-                      <div className="col-md-4" style={{ margin: "10px 10px 30px 10px" }}>
-                        <div>
-                          <h2 style={{ marginBottom: "10px" }}>CR_GROOM_IMAGE</h2>
+                      <div className="col-md-6" style={{ margin: "10px 0 30px 0" }}>
+                        <div style={{ display: "flex", flexDirection: "column", justifyItems: "center", alignItems: "center" }}>
+                          <h2 style={{ marginBottom: "10px", textAlign: "center" }}>CR_GROOM_IMAGE</h2>
                           <ImageUploadHandler
                             tenantId={tenantId}
                             uploadedImages={uploadedImages}
                             onPhotoChange={handleUpload}
                             isMulti={false}
-                            moduleType="cr-marriage"
+                            moduleType={`crmarriage/${uniqueId}/groom/${currentYear}`}
+                            extraParams={{ fileName: "groom.jpg", UUID: uniqueId }}
                           />
                         </div>
                       </div>
-                      <div className="col-md-4" style={{ margin: "10px 10px 30px 10px" }}>
-                        <div>
-                          <h2 style={{ marginBottom: "10px" }}>CR_BRIDE_IMAGE</h2>
+                      <div className="col-md-6" style={{ margin: "10px 0 30px 0" }}>
+                        <div style={{ display: "flex", flexDirection: "column", justifyItems: "center", alignItems: "center" }}>
+                          <h2 style={{ marginBottom: "10px", textAlign: "center" }}>CR_BRIDE_IMAGE</h2>
                           <ImageUploadHandler
                             tenantId={tenantId}
                             uploadedImages={uploadedImages}
                             onPhotoChange={handleUpload}
                             isMulti={false}
-                            moduleType="cr-marriage"
+                            moduleType={`crmarriage/${uniqueId}/bride/${currentYear}`}
+                            extraParams={{ fileName: "bride.jpg", UUID: uniqueId }}
                           />
                         </div>
                       </div>

@@ -1088,8 +1088,6 @@ const GroomAddressBasePage = ({
     }
   };
 
-  console.log("Adress Groom", formData);
-
   if (
     isCountryLoading ||
     isStateLoading ||

@@ -25,7 +25,7 @@ const UploadImages = ({ thumbnails = [], isMulti = true, onDelete, onUpload }) =
     //   );
     // } else {
     return (
-      <div className="multi-upload-wrap">
+      <div className={!isMulti ? "single-upload-wrap" : "multi-upload-wrap"}>
         {thumbnails.map((thumbnail, index) => {
           return (
             <div key={index}>
@@ -40,7 +40,7 @@ const UploadImages = ({ thumbnails = [], isMulti = true, onDelete, onUpload }) =
     // }
   } else {
     return (
-      <div className="upload-wrap" onClick={(e) => onUpload(e)}>
+      <div className={!isMulti ? "upload-single-wrap" : "upload-wrap"} onClick={(e) => onUpload(e)}>
         <CameraSvg />
         <input type="file" id="upload" accept="image/*" onChange={(e) => onUpload(e)} />
       </div>
