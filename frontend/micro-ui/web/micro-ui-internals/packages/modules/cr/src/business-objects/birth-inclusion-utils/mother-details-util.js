@@ -2,7 +2,7 @@ import moment from "moment";
 
 export const getFilteredMotherData = (selectedData, inclusionData) => {
   console.log("selectedData==dob", selectedData);
-  let filteredDocuments = getFilteredDocuments(selectedData, inclusionData);
+  let filteredDocuments = getFilteredDocuments(inclusionData);
   const computedCurrentValue = computeCurrentValue(selectedData);
   const computedInitialValue = computeInitialValue(selectedData);
   console.log("c==omputedInitialValue",computedInitialValue);
@@ -40,13 +40,7 @@ const computeCurrentValue = (data) => {
   return currentValue;
 };
 
-const getFilteredDocuments = (selectedData, inclusionData) => {
-  let filteredData = [];
-  if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
-    filteredData = inclusionData?.filter((item) => item.conditionCode === "DOB_INSTITUTIONAL");
-  } else {
-    filteredData = inclusionData?.filter((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
-  }
-  console.log("dob filter==",filteredData);
-  return {documentData:filteredData};
+const getFilteredDocuments = (inclusionData) => {
+  let filteredData = inclusionData;
+  return {documentData:filteredData,docFlag: "MOTHER_DETAILS"};
 };

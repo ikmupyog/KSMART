@@ -5,7 +5,7 @@ import {
   getFilteredChildNameData,
   getFilteredChildSexData,
   getFilteredChildAdharData,
-  getFilteredParentAddressData,
+  getFilteredPresentAddressData,
   getFilteredMotherData,
   getFilteredFatherData,
 } from "./birth-inclusion-utils";
@@ -29,12 +29,13 @@ export const initializeBirthInclusionObject = (birthInclusionDocData, selectedDa
   console.log("sex data==",sex);
   for (let field_key in BIRTH_INCLUSION_FIELD_NAMES) {
     const filteredData = birthInclusionDocData?.filter((item) => item.CorrectionField === field_key);
-    let inclusionsDocsData = birthInclusionFilterFieldsObj[field_key]?.({data:selectedData, inclusionData:filteredData,sex,places});
+    let inclusionsDocsData = birthInclusionFilterFieldsObj[field_key]?.({data:selectedData, inclusionData:filteredData});
     let tempObj = { ...inclusionsDocsData};
     Object.assign(formObj, { [field_key]: tempObj });
   }
   return formObj;
 };
+
 export const initializedDeathCorrectionObject = (deathCorrectionDocData, selectedData) => {
   let formObj = {};
   for (let field_key in DEATH_CORRECTION_FIELD_NAMES) {
@@ -57,18 +58,14 @@ export const initializeMarriageCorrectionObject = (marriageCorrectionDocData, se
   return formObj;
 };
 
-
-
-
-
 export const birthInclusionFilterFieldsObj = {
   CHILD_DOB: ({data, inclusionData}) => getFilteredChildDobData(data, inclusionData),
   CHILD_NAME: ({data, inclusionData}) => getFilteredChildNameData(data, inclusionData),
   CHILD_SEX: ({data, inclusionData, sex}) => getFilteredChildSexData(data, inclusionData, sex),
-  CHILD_ADHAR: ({data, inclusionData}) => getFilteredChildAdharData(data, inclusionData),
+  CHILD_AADHAAR: ({data, inclusionData}) => getFilteredChildAdharData(data, inclusionData),
   FATHER_DETAILS: ({data, inclusionData}) => getFilteredFatherData(data, inclusionData),
   MOTHER_DETAILS: ({data, inclusionData}) => getFilteredMotherData(data, inclusionData),
-  PRESENT_ADDRESS: ({data, inclusionData}) => getFilteredParentAddressData(data, inclusionData),
+  PRESENT_ADDRESS: ({data, inclusionData}) => getFilteredPresentAddressData (data, inclusionData),
 };
 
 export const deathCorrectionFilterFieldsObj = {
