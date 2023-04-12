@@ -109,6 +109,8 @@ import DeathPlaceVehicle from "./pageComponents/deathComponents/DeathPlaceVehicl
 import DeathPublicPlace from "./pageComponents/deathComponents/DeathPublicPlace";
 import DeathOutsideJurisdiction from "./pageComponents/deathComponents/DeathOutsideJurisdiction ";
 import Informer from "./pageComponents/deathComponents/Informer";
+// AbandonedInitiater
+import AbandonedInitiater from "./pageComponents/deathAbandoned/AbandonedInformer";
 import Initiater from "./pageComponents/deathComponents/Initiater";
 import MyCRApplications from "./pages/citizen/Applications/Application";
 import MyCRDeathApplications from "./pages/citizen/Applications/ApplicationDeath";
@@ -122,7 +124,8 @@ import CRCitizenApplicationDetails from "./pages/citizen/Applications/Applicatio
 import CRDeathApplicationDetails from "./pages/citizen/Applications/ApplicationDeathDetails";
 import CRApplicationDetails from "./pages/employee/ApplicationDetails";
 import CRApplicationDeathDetails from "./pages/employee/ApplicationDeathDetails";
-// import ApplicantDetails from "./pageComponents/deathComponents/ApplicantDetails";
+
+import AbandonedInformer from "./pageComponents/deathAbandoned/AbandonedInformer";
 import SearchDeathApplication from "./components/SearchApplicationDeath";
 import CRSearchdeathcorrection from "./pages/employee/SearchCorrection";
 import CRSearchDeathCorrectionRoute from "./pages/employee/DeathCorrection/DeathCorrectionroute";
@@ -190,6 +193,7 @@ import GroomAddressPresentOutsideIndia from "./pageComponents/marriageComponents
 import GroomAddressPresentOutsideKerala from "./pageComponents/marriageComponents/MarriageAddress/GroomAddressPresentOutsideKerala";
 import GroomAddressSameAsAbove from "./pageComponents/marriageComponents/MarriageAddress/GroomAddressSameAsAbove";
 import WitnessDetails from "./pageComponents/marriageComponents/Witnessdetails";
+import MarriageDocuments from "./pageComponents/marriageComponents/MarriageDocuments";
 
 import AbandonedChildDetails from "./pageComponents/abandonedBirthComponents/AbandonedChildDetails";
 import AbandonedBirthInformarDetails from "./pageComponents/abandonedBirthComponents/AbandonedBirthInformarDetails";
@@ -458,6 +462,7 @@ const componentsToRegister = {
   MarriageAddressPage,
   HouseMarriageRegistration,
   WitnessDetails,
+  MarriageDocuments,
   BrideAddressBasePage,
   BrideAddressPermanent,
   BrideAddressPermanentInsideKerala,
@@ -487,6 +492,7 @@ const componentsToRegister = {
   StatisticalInfoAbandoned,
   AbandonedBirthAcknowledgement,
   AbandonedBirthCheckPage,
+  AbandonedInformer
 };
 
 export const initCRComponents = () => {

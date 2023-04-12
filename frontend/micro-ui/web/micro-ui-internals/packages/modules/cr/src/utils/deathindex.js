@@ -649,8 +649,7 @@ export const convertToEditDeathRegistration = (data = {}) => {
           Nationality: data?.InformationDeath?.Nationality?.code,
           Religion: data?.InformationDeath?.Religion?.code,
           Occupation: data?.InformationDeath?.Occupation ? data?.InformationDeath?.Occupation?.code : null,
-          funcionUID: "CRDRNR",
-          registrationNo: null,
+          funcionUID: "CRDRAB",
           DeathACKNo: data?.InformationDeath?.DeathACKNo,
         },
         AddressBirthDetails: {

@@ -195,6 +195,8 @@ const GroomAddressPresent = ({
     }
   }
 
+  console.log("Adress Groom", formData);
+
   const goNext = () => {};
   if (isCountryLoading || isStateLoading || islocalbodiesLoading) {
     return <Loader></Loader>;
