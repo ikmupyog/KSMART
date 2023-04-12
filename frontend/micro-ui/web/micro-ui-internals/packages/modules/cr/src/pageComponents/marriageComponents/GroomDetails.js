@@ -197,7 +197,11 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     selectGroomGender(value);
   }
   function setSelectGroomPassportNo(e) {
-    setGroomPassportNo(e.target.value.length<=8 ? e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '') : (e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '').substring(0, 8)))
+    setGroomPassportNo(
+      e.target.value.length <= 8
+        ? e.target.value.replace("[A-PR-WY][1-9]ds?d{4}[1-9]$", "")
+        : e.target.value.replace("[A-PR-WY][1-9]ds?d{4}[1-9]$", "").substring(0, 8)
+    );
   }
   function setSelectGroomSocialSecurityNo(e) {
     //setGroomSocialSecurityNo(e.target.value.length<=9 ? e.target.value.replace('[0-9()-]', '') : (e.target.value.replace('[0-9()-]', '').substring(0, 9)))
@@ -223,7 +227,9 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
   }
   function setSelectGroomNoOfSpouse(e) {
     if (e.target.value.trim().length >= 0) {
-      setGroomNoOfSpouse(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
+      setGroomNoOfSpouse(
+        e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 2)
+      );
     }
   }
   function setSelectGroomAge(e) {
@@ -576,7 +582,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                       style={{ height: "20px", width: "20px" }}
                       onChange={selectgroomResidenship}
                       value={type}
-                      defaultChecked={index === 0}
+                      checked={groomResidentShip === type}
                     />
                     <label class="form-check-label" for="flexRadioDefault1">
                       {type}
@@ -943,7 +949,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
             <div className="col-md-12">
               {/* <div className="col-md-6"> */}
               <div className="radios" style={{ justifyContent: "center", columnGap: "40px" }}>
-                {groomParent.map((type, index) => (
+                {groomParent.map((type) => (
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", columnGap: "8px" }}>
                     <input
                       className="form-check-input"
@@ -953,8 +959,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                       style={{ height: "20px", width: "20px" }}
                       onChange={selectParentType}
                       value={type}
-                      defaultChecked={index === 0}
-                      // checked={groomParentGuardian}
+                      checked={groomParentGuardian === type}
                     />
                     <label class="form-check-label" for="flexRadioDefault1">
                       {type}

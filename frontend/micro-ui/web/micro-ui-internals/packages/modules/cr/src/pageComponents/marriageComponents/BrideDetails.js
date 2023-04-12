@@ -463,7 +463,9 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
   }
   function setSelectbrideNoOfSpouse(e) {
     if (e.target.value.trim().length >= 0) {
-      setbrideNoOfSpouse(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
+      setbrideNoOfSpouse(
+        e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 2)
+      );
     }
     // if (e.target.value.length === 2) {
     //   if (e.target.value > 3) {
@@ -491,7 +493,11 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     }
   }
   function setSelectbridePassportNo(e) {
-    setbridePassportNo(e.target.value.length<=8 ? e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '') : (e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '').substring(0, 8)))
+    setbridePassportNo(
+      e.target.value.length <= 8
+        ? e.target.value.replace("[A-PR-WY][1-9]ds?d{4}[1-9]$", "")
+        : e.target.value.replace("[A-PR-WY][1-9]ds?d{4}[1-9]$", "").substring(0, 8)
+    );
     // if (e.target.value.length < 8) {
     //   return false;
     //   // window.alert("Username shouldn't exceed 10 characters")
@@ -603,7 +609,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     }
   };
   console.log("Bride", formData);
-  if (isLoading) {
+  if (isLoading || isMaritalStatusLoading) {
     return <Loader></Loader>;
   } else
     return (
@@ -664,7 +670,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
           <div className="row">
             <div className="col-md-12">
               <div className="radios">
-                {brideTypes.map((type, index) => (
+                {brideTypes.map((type) => (
                   <div style={{ display: "flex", alignItems: "center", columnGap: "8px" }}>
                     <input
                       className="form-check-input"
@@ -673,8 +679,8 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                       style={{ height: "20px", width: "20px" }}
                       onChange={selectSetBrideResidentShip}
                       value={type}
-                      defaultChecked={index === 0}
-                      // checked={brideResidentShip}
+                      // defaultChecked={index === 0}
+                      checked={brideResidentShip === type}
                     />
                     <label class="form-check-label" for="flexRadioDefault1">
                       {type}
@@ -1089,7 +1095,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
             <div className="row">
               <div className="col-md-12">
                 <div className="radios" style={{ justifyContent: "center", columnGap: "40px" }}>
-                  {brideParent.map((type, index) => (
+                  {brideParent.map((type) => (
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", columnGap: "8px" }}>
                       <input
                         className="form-check-input"
@@ -1100,7 +1106,6 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                         onChange={selectParentType}
                         value={type}
                         checked={brideParentGuardian === type}
-                        // checked={brideParentGuardian}
                       />
                       <label class="form-check-label" for="flexRadioDefault1">
                         {type}

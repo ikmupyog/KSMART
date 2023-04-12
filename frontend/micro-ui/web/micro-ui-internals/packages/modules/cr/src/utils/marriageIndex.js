@@ -456,7 +456,7 @@ export const convertToMarriageRegistration = (data = {}) => {
           witness2NameEn: data?.WitnessDetails?.witness2NameEn ? data?.WitnessDetails?.witness2NameEn : null,
           // witness2NameMl: data?.WitnessDetails?.witness2NameMl ? data?.WitnessDetails?.witness2NameMl : null,
           witness2Age: data?.WitnessDetails?.witness2Age ? data?.WitnessDetails?.witness2Age : null,
-          witness2AddressEn: data?.WitnessDetails?.witness2AddressEn ? data?.WitnessDetails?.witness2AddressEn : null,
+          witness2AddresSEn: data?.WitnessDetails?.witness2AddresSEn ? data?.WitnessDetails?.witness2AddresSEn : null,
           // witness2AddressMl: data?.WitnessDetails?.witness2AddressMl ? data?.WitnessDetails?.witness2AddressMl : null,
           witness2Mobile: data?.WitnessDetails?.witness2Mobile ? data?.WitnessDetails?.witness2Mobile : null,
           witness2Esigned: data?.WitnessDetails?.witness2Esigned ? data?.WitnessDetails?.witness2Esigned : false,
@@ -469,7 +469,7 @@ export const convertToMarriageRegistration = (data = {}) => {
           presentInsideKeralaLBName: data?.BrideAddressDetails?.presentInsideKeralaLBName
             ? data?.BrideAddressDetails?.presentInsideKeralaLBName?.code
             : null,
-          presentInsideKeralaDistrict: data?.BrideAddressDetails?.presentInsideKeralaDistrictr
+          presentInsideKeralaDistrict: data?.BrideAddressDetails?.presentInsideKeralaDistrict
             ? data?.BrideAddressDetails?.presentInsideKeralaDistrict?.code
             : null,
           presentInsideKeralaTaluk: data?.BrideAddressDetails?.presentInsideKeralaTaluk
@@ -498,6 +498,9 @@ export const convertToMarriageRegistration = (data = {}) => {
             : null,
           presentInsideKeralaPostOffice: data?.BrideAddressDetails?.presentInsideKeralaPostOffice
             ? data?.BrideAddressDetails?.presentInsideKeralaPostOffice?.code
+            : null,
+          presentInsideKeralaPincode: data?.BrideAddressDetails?.presentInsideKeralaPincode
+            ? data?.BrideAddressDetails?.presentInsideKeralaPincode
             : null,
           presentWardNo: data?.BrideAddressDetails?.presentWardNo ? data?.BrideAddressDetails?.presentWardNo?.code : null,
           presentOutsideKeralaDistrict: data?.BrideAddressDetails?.presentOutsideKeralaDistrict
@@ -583,9 +586,7 @@ export const convertToMarriageRegistration = (data = {}) => {
           permntInKeralaAdrHouseNameMl: data?.BrideAddressDetails?.permntInKeralaAdrHouseNameMl
             ? data?.BrideAddressDetails?.permntInKeralaAdrHouseNameMl
             : null,
-          permntInKeralaAdrPincode: data?.BrideAddressDetails?.permntInKeralaAdrPincode
-            ? data?.BrideAddressDetails?.permntInKeralaAdrPincode?.code
-            : null,
+          permntInKeralaAdrPincode: data?.BrideAddressDetails?.permntInKeralaAdrPincode ? data?.BrideAddressDetails?.permntInKeralaAdrPincode : null,
           permntInKeralaAdrPostOffice: data?.BrideAddressDetails?.permntInKeralaAdrPostOffice?.code,
           permntInKeralaWardNo: data?.BrideAddressDetails?.permntInKeralaWardNo ? data?.BrideAddressDetails?.permntInKeralaWardNo?.code : null,
           permntOutsideKeralaDistrict: data?.BrideAddressDetails?.permntOutsideKeralaDistrict
@@ -688,6 +689,9 @@ export const convertToMarriageRegistration = (data = {}) => {
           presentInsideKeralaPostOffice: data?.GroomAddressDetails?.presentInsideKeralaPostOffice
             ? data?.GroomAddressDetails?.presentInsideKeralaPostOffice?.code
             : null,
+          presentInsideKeralaPincode: data?.GroomAddressDetails?.presentInsideKeralaPincode
+            ? data?.GroomAddressDetails?.presentInsideKeralaPincode
+            : null,
           presentWardNo: data?.GroomAddressDetails?.presentWardNo ? data?.GroomAddressDetails?.presentWardNo?.code : null,
           presentOutsideKeralaDistrict: data?.GroomAddressDetails?.presentOutsideKeralaDistrict
             ? data?.GroomAddressDetails?.presentOutsideKeralaDistrict?.code
@@ -772,9 +776,7 @@ export const convertToMarriageRegistration = (data = {}) => {
           permntInKeralaAdrHouseNameMl: data?.GroomAddressDetails?.permntInKeralaAdrHouseNameMl
             ? data?.GroomAddressDetails?.permntInKeralaAdrHouseNameMl
             : null,
-          permntInKeralaAdrPincode: data?.GroomAddressDetails?.permntInKeralaAdrPincode
-            ? data?.GroomAddressDetails?.permntInKeralaAdrPincode?.code
-            : null,
+          permntInKeralaAdrPincode: data?.GroomAddressDetails?.permntInKeralaAdrPincode ? data?.GroomAddressDetails?.permntInKeralaAdrPincode : null,
           permntInKeralaAdrPostOffice: data?.GroomAddressDetails?.permntInKeralaAdrPostOffice
             ? data?.GroomAddressDetails?.permntInKeralaAdrPostOffice?.code
             : null,
