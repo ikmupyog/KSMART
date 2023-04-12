@@ -42,7 +42,6 @@ public class ArisingFileService {
         this.repository = repository;
     }
 
-    //public List<ArisingFile> createArisingFile(ArisingFileRequest request) {
     public ArisingFile createArisingFile(ArisingFileRequest request) {
 
         final ArisingFile arisingFile=request.getArisingFileDetail();

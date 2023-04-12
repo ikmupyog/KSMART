@@ -11,6 +11,7 @@ import org.egov.common.contract.request.User;
 import org.egov.filemgmnt.config.FMConfiguration;
 import org.egov.filemgmnt.web.models.AuditDetails;
 import org.egov.filemgmnt.web.models.arisingfile.ArisingFile;
+import org.egov.filemgmnt.web.models.arisingfile.ArisingFileApplicant;
 import org.egov.filemgmnt.web.models.arisingfile.ArisingFileRequest;
 import org.egov.tracer.model.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,14 +30,20 @@ public class ArisingFileEnrichment extends BaseEnrichment {
         final ArisingFile arisingFile = request.getArisingFileDetail();
         final AuditDetails arisingAuditDetails = arisingFile.getAuditDetails();
         arisingFile.setId(UUID.randomUUID()
-                              .toString());
+                .toString());
         arisingFile.setAuditDetails(arisingAuditDetails);
         arisingFile.getAuditDetails()
-                   .setLastModifiedBy(auditDetails.getLastModifiedBy());
+                .setLastModifiedBy(auditDetails.getLastModifiedBy());
         arisingAuditDetails.setLastModifiedTime(auditDetails.getLastModifiedTime());
         setFileCodes(request);
+        //enrich applicant address
+        final ArisingFileApplicant applicantDetails = arisingFile.getArisingFileApplicant();
+        final AuditDetails applicantAuditDetails = arisingFile.getArisingFileApplicant().getAuditDetails();
+        applicantDetails.setArisingFileId(arisingFile.getId());
+        applicantDetails.setAuditDetails(applicantAuditDetails);
+        applicantAuditDetails.setLastModifiedBy(auditDetails.getLastModifiedBy());
+        applicantAuditDetails.setLastModifiedTime(auditDetails.getLastModifiedTime());
     }
-
 //public void enrichArisingFileUpdate(ArisingFileRequest request) {
 //    RequestInfo requestInfo = request.getRequestInfo();
 //    User userInfo = requestInfo.getUserInfo();
@@ -49,7 +56,7 @@ public class ArisingFileEnrichment extends BaseEnrichment {
 //
 //    }
 
-    private void setFileCodes(final ArisingFileRequest request) {
+      private void setFileCodes(final ArisingFileRequest request) {
         final RequestInfo requestInfo = request.getRequestInfo();
         final ArisingFile files = request.getArisingFileDetail();
         final String tenantId = files.getTenantId();

@@ -653,7 +653,7 @@ serviceMaps:
         - jsonPath: $.ArisingFile.*.auditDetails.applicationDetails
 
 
-        - query: INSERT INTO public.eg_fm_arisingfileapplicantdetails (id, tenantid, arisingfileid, filecode, wardno, applicantnameeng, applicantnamemal, housenameeng, housenamemal, localplaceeng, localplacemal, mainplaceeng, mainplacemal, pincode, postofficeeng, postofficemal, districteng, districtmal, stateeng, statemal, documentfilestoreid, createdby, createdtime, lastmodifiedby, lastmodifiedtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        - query: INSERT INTO public.eg_fm_arisingfileapplicantdetails(id, tenantid, arisingfileid, filecode, applicanttype, firstname, middlename, lastname, mobileno, whatsappno, emailid, wardno, doorno, doorsubno, streetname, localplace, mainplace, city, pincode, documenttypeid, documentno, documentfilestoreid, institutionname, officername, designation, createdby, createdtime, lastmodifiedby, lastmodifiedtime, housename) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
           basePath: ArisingFile.*ArisingFileApplicant.*
           jsonMaps:
 
@@ -665,39 +665,45 @@ serviceMaps:
 
             - jsonPath: $.ArisingFile.ArisingFileApplicant.*.fileCode
 
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.firstName
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.middleName
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.lastName
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.mobileNo
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.whatsappNo
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.emailId
+
             - jsonPath: $.ArisingFile.ArisingFileApplicant.*.wardNo
 
-            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.applicantNameEng
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.doorNo
 
-            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.applicantNameMal
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.doorSubNo
 
-            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.houseNameEng
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.streetName
 
-            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.houseNameMal
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.localPlace
 
-            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.localPlaceEng
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.mainPlace
 
-            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.localPlaceMal
-
-            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.mainPlaceEng
-
-            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.mainPlaceMal
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.cityName
 
             - jsonPath: $.ArisingFile.ArisingFileApplicant.*.pinCode
 
-            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.postOfficeEng
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.documentTypeId
 
-            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.postOfficeMal
-
-            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.districtEng
-
-            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.districtMal
-
-            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.stateEng
-
-            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.stateMal
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.documentNumber
 
             - jsonPath: $.ArisingFile.ArisingFileApplicant.*.documentFileStoreId
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.institutionName
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.officerName
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.designation
 
             - jsonPath: $.ArisingFile.ArisingFileApplicant.*.auditDetails.createdBy
 
@@ -707,6 +713,11 @@ serviceMaps:
 
             - jsonPath: $.ArisingFile.ArisingFileApplicant.*.auditDetails.lastModifiedTime
 
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.applicantMidName
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.applicantLastName
+
+            - jsonPath: $.ArisingFile.ArisingFileApplicant.*.houseName
 
 
 
