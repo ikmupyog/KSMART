@@ -840,14 +840,14 @@ export const newConfig = [
         },
         withoutLabel: true,
         key: "StatisticalInfoAbandoned",
-        nextStep: "abandoned-initiator",
+        nextStep: "abandoned-informer",
         type: "component",
         hideInEmployee: false,
       },
       {
-        route: "abandoned-initiator",
+        route: "abandoned-informer",
         isMandatory: true,
-        component: "Initiater",
+        component: "AbandonedInformer",
         texts: {
           headerCaption: "",
           // header: "CR_PLACE_OF_DEATH",

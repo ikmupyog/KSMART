@@ -67,6 +67,23 @@ body {
     color: #0b0c0c;
   }
 }
+.back-btn-form{
+  height: 2.5rem;
+  --bg-opacity: 1;
+  background-color: #f47738;
+  background-color: rgba(244, 119, 56, var(--bg-opacity));
+  text-align: center;
+  width: 15%;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  display: flex;
+  align-items: center;
+  color: white;
+  justify-content: center;
+  cursor: pointer;
+}
 
 .back-btn2 {
   cursor: pointer;
@@ -842,4 +859,10 @@ h2.span {
 
 .accordion-content {
   background-color: #39b9d2;
+}
+.buttonContainerN{
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
 }

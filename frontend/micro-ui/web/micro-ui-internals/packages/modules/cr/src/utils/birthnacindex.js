@@ -491,14 +491,7 @@ export const convertToNACRegistration = (data = {}) => {
           declarationId: data?.BirthNACInitiator?.declarationId,
           isEsigned: data?.BirthNACInitiator?.declarationId
         },
-        OtherChildren: [{
-          childNameEn: data?.BirthNACInitiator?.childNameEn,
-          childNameMl: data?.BirthNACInitiator?.childNameMl,
-          sex: data?.BirthNACInitiator?.sex?.value,
-          nacorderofChildren: data?.BirthNACInitiator?.nacorderofChildren,
-          dob:  Date.parse(data?.BirthNACInitiator?.dob),
-          isAlive: data?.BirthNACInitiator?.isAlive?.value,
-        }]
+        OtherChildren: data.BirthNACInitiator.ownerState
       },
     ],
   };

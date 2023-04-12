@@ -116,8 +116,8 @@ const Urls = {
     download_pdf: "/egov-pdf/download/CR/",
     registry_download: "/birth-services/cr/registry/_download",
     registry_search_birth: "/birth-services/cr/registry/_search",
-    create_adoption:'/birth-services/cr/createadoption',
-    correct_update: '/birth-services/cr/createbirthcorrection'    
+    create_adoption: "/birth-services/cr/createadoption",
+    correct_update: "/birth-services/cr/createbirthcorrection",
   },
   crstillbirth: {
     create: "/birth-services/cr/createstillbirth",
@@ -126,7 +126,8 @@ const Urls = {
   },
   crnacbirth: {
     create: "/birth-services/cr/createnac",
-    search:"/birth-services/cr/searchnac",
+    search: "/birth-services/cr/searchnac",
+    update: "/birth-services/cr/updatenac",
   },
   crbornoutsideindiabirth: {
     create: "/birth-services/cr/createbornoutside",
@@ -153,10 +154,10 @@ const Urls = {
   },
   crabandoneddeath: {
     create: "/death-services/v1/deathdetails/_createdeathabandoned",
-    search: "/death-services/v1/deathdetails/_searchdeath",
+    search: "/death-services/v1/deathdetails/_searchdeathabandoned",
     download_pdf: "/egov-pdf/download/CR/",
-    update: "/death-services/v1/deathdetails/_updatedeath",
-    registry_search: "/death-services/v1/deathregistry/_searchdeath",
+    update: "/death-services/v1/deathdetails/_updatedeathabandoned",
+    registry_search: "/death-services/v1/deathregistry/_searchdeathabandoned",
     registry_download: "/death-services/v1/deathregistry/_downloaddeath",
   },
   crmarriage: {
