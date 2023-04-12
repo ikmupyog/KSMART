@@ -13,6 +13,7 @@ import { getFilteredBrideMotherNameData } from './bride-mother-name-util';
 import { getFilteredBrideGuardianNameData } from './bride-guardian-name-util';
 import { getFilteredBrideAgeData } from './bride-age-util';
 import { getFilteredBrideDOBData } from './bride-dob-util';
+import { getFilteredMarriagePlaceNameData } from './marriage-place-name-util';
 
 
 export const getFilteredChildNameData = (selectedData, inclusionData) =>{
@@ -54,4 +55,5 @@ export const getFilteredChildNameData = (selectedData, inclusionData) =>{
     getFilteredBrideGuardianNameData,
     getFilteredBrideAgeData,
     getFilteredBrideDOBData,
+    getFilteredMarriagePlaceNameData,
   };

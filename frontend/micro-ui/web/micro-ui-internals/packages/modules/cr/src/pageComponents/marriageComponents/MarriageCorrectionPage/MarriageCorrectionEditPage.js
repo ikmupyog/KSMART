@@ -122,9 +122,16 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
   };
 
     useEffect(async()=>{
-      marriageCorrectionFormData = await initializeMarriageCorrectionObject(BirthCorrectionDocuments,navigationData,cmbWardNo);
+      marriageCorrectionFormData = await initializeMarriageCorrectionObject(BirthCorrectionDocuments,navigationData,cmbWardNo,cmbPlace,cmbPlaceName);
       await setMarriageCorrectionFormsObj(marriageCorrectionFormData);
    },[navigationData,BirthCorrectionDocuments])
+
+   useEffect(() => {
+  if(marriageCorrectionFormsObj?.MARRIAGE_PLACE_TYPE?.curValue){
+    console.log("curvalue===", marriageCorrectionFormsObj?.MARRIAGE_PLACE_TYPE?.curValue);
+    setMarriagePlace(marriageCorrectionFormsObj?.MARRIAGE_PLACE_TYPE?.curValue)
+  }
+   }, [marriageCorrectionFormsObj]);
 
   const setMarriageCorrecvtionFilterQuery = (fieldId) => {
     let selectedMarriageCorrectionData = birthInclusionFormsObj[fieldId];
@@ -262,7 +269,7 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
                   optionKey="name"
                   isMandatory={false}
                   option={cmbPlace}
-                  selected={marriagePlace}
+                  selected={marriageCorrectionFormsObj?.MARRIAGE_PLACE_TYPE?.curValue}
                   select={setMarriagePlace}
                   placeholder={`${t("CR_MARRIAGE_PLACE_TYPE")}`}
                 />
