@@ -32,11 +32,11 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import '@ckeditor/ckeditor5-build-classic/build/translations/de';
 
 
-const Templates = ({ path, handleNext, formData, config, onSelect, memo }) => {
+const Templates = ({ path, handleNext, formData, config, onSelect, title = 'memo' }) => {
     const stateId = Digit.ULBService.getStateId();
     const tenantId = Digit.ULBService.getCurrentTenantId();
     const [draftText, setDraftText] = useState("");
-    const [draftTitle, setDraftTitle] = useState('memo');
+    const [draftTitle, setDraftTitle] = useState(title);
     const { t } = useTranslation();
     const history = useHistory();
     const state = useSelector((state) => state);
