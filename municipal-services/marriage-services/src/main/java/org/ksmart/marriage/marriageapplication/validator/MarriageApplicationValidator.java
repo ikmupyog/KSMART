@@ -1124,14 +1124,14 @@ public class MarriageApplicationValidator {
                                                                                                                 groomaddressInfo.getPresentOutsideKeralaPincode()
                                                                                                                 + " is invalid");
                                                                         }
-                                                                        // if (StringUtils.isEmpty(groomaddressInfo
-                                                                        //                 .getPresentOutsideKeralaLocalityNameEn())) {
-                                                                        //         throw new CustomException(
-                                                                        //                         "GROOM PRESENT ADDRESS OUTSIDE KERALA: POSTOFFICE INVALID ",
-                                                                        //                         "The Postofficef " +
-                                                                        //                                         groomaddressInfo.getPresentOutsideKeralaLocalityNameEn()
-                                                                        //                                         + " is invalid");
-                                                                        // }
+                                                                        if (StringUtils.isEmpty(groomaddressInfo
+                                                                                        .getPresentOutsideKeralaPostOfficeEn())) {
+                                                                                throw new CustomException(
+                                                                                                "GROOM PRESENT ADDRESS OUTSIDE KERALA: POSTOFFICE INVALID ",
+                                                                                                "The Postofficef " +
+                                                                                                                groomaddressInfo.getPresentOutsideKeralaPostOfficeEn()
+                                                                                                                + " is invalid");
+                                                                        }
                                                                         // if (StringUtils.isEmpty(groomaddressInfo
                                                                         //                 .getPresentOutsideKeralaLocalityNameMl())) {
                                                                         //         throw new CustomException(
@@ -1150,15 +1150,15 @@ public class MarriageApplicationValidator {
                                                                         //                                         groomaddressInfo.getPresentOutsideKeralaLocalityNameEn()
                                                                         //                                         + " is invalid");
                                                                         // }
-                                                                        // if (StringUtils.isEmpty(groomaddressInfo
-                                                                        //                 .getPresentOutsideKeralaHouseNameEn())) {
-                                                                        //         throw new CustomException(
-                                                                        //                         "GROOM PRESENT ADDRESS OUTSIDE KERALA: HOUSE NAME ENGLISH INVALID ",
-                                                                        //                         "The House Name English "
-                                                                        //                                         +
-                                                                        //                                         groomaddressInfo.getPresentOutsideKeralaHouseNameEn()
-                                                                        //                                         + " is invalid");
-                                                                        // }
+                                                                        if (StringUtils.isEmpty(groomaddressInfo
+                                                                                        .getPresentOutsideKeralaHouseNameEn())) {
+                                                                                throw new CustomException(
+                                                                                                "GROOM PRESENT ADDRESS OUTSIDE KERALA: HOUSE NAME ENGLISH INVALID ",
+                                                                                                "The House Name English "
+                                                                                                                +
+                                                                                                                groomaddressInfo.getPresentOutsideKeralaHouseNameEn()
+                                                                                                                + " is invalid");
+                                                                        }
                                                                         if (StringUtils.isEmpty(groomaddressInfo
                                                                                         .getPresentOutsideKeralaHouseNameMl())) {
                                                                                 throw new CustomException(
