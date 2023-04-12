@@ -284,6 +284,21 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
+  const convertEpochToDate = (dateEpoch) => {
+    // Returning null in else case because new Date(null) returns initial date from calender
+    if (dateEpoch) {
+      const dateFromApi = new Date(dateEpoch);
+      let month = dateFromApi.getMonth() + 1;
+      let day = dateFromApi.getDate();
+      let year = dateFromApi.getFullYear();
+      month = (month > 9 ? "" : "0") + month;
+      day = (day > 9 ? "" : "0") + day;
+      return `${year}-${month}-${day}`;
+      //  return `${day}-${month}-${year}`;
+    } else {
+      return null;
+    }
+  };
 
   const onSkip = () => onSelect();
   // React.useEffect(() => {
@@ -327,10 +342,10 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
       let Difference_In_DaysRounded = Math.floor(Difference_In_Days);
     } else {
       setmarriageDOM(null);
-      // setDOBError(true);
-      // setToast(true);
+      setDOBError(true);
+      setToast(true);
       setTimeout(() => {
-        // setToast(false);
+         setToast(false);
       }, 3000);
     }
   }
@@ -600,6 +615,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                       date={marriageDOM}
                       isMandatory={false}
                       name="marriageDOM"
+                      max={convertEpochToDate(new Date())}
                       onChange={setSelectmarriageDOM}
                       inputFormat="DD-MM-YYYY"
                       placeholder={`${t("CR_DATE_OF_MARRIAGE")}`}
