@@ -1444,6 +1444,23 @@ const getBirthCorrectionDocumentslist = (tenantId, moduleCode) => {
     },
   };
 };
+const getDeathCorrectionDocumentslist = (tenantId, moduleCode) => {
+  return {
+    details: {
+      tenantId: tenantId,
+      moduleDetails: [
+        {
+          moduleName: moduleCode,
+          masterDetails: [
+            {
+              name: "DeathCorrectionDocuments",
+            },
+          ],
+        },
+      ],
+    },
+  };
+};
 const getCRTitleList = (tenantId, moduleCode) => ({
   details: {
     tenantId: tenantId,
@@ -2612,6 +2629,9 @@ export const MdmsService = {
   },
   GetBirthCorrectionDocuments: (tenantId, moduleCode, type) => {
     return MdmsService.getDataByCriteria(tenantId, getBirthCorrectionDocumentslist(tenantId, moduleCode), moduleCode);
+  },
+  GetDeathCorrectionDocuments: (tenantId, moduleCode, type) => {
+    return MdmsService.getDataByCriteria(tenantId, getDeathCorrectionDocumentslist(tenantId, moduleCode), moduleCode);
   },
   /////////crmdms
   getServiceDefs: (tenantId, moduleCode) => {

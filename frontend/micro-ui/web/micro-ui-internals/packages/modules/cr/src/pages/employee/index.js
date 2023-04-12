@@ -182,7 +182,7 @@ const CRBreadCrumb = ({ location }) => {
       {
       path: sessionStorage.getItem("applicationno") ? `/digit-ui/employee/cr/application-abandonedbirth/${sessionStorage.getItem("birthApplicationNo")}` : "",
       content: t("ABANDONED_BIRTH_APPLICATION_DETAILS"),
-      show: isApplicationStillBirthDetails ||
+      show: isApplicationAbandonedBirthDetails ||
         breadCrumbUrls.includes("home/application-abandonedbirth")
     },
     {

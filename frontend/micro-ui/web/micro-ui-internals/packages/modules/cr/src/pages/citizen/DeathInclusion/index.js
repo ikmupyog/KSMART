@@ -77,7 +77,7 @@ const DeathInclusion = () => {
         <SearchDeathInclusion
         t={t}
         onSubmit={onSubmit}
-        data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : { display: "ES_COMMON_NO_DATA" }) : ""}
+        data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : []) : ""}
         // filestoreId={storeId}
         // isSuccess={isSuccess}
         // isLoading={isLoading}

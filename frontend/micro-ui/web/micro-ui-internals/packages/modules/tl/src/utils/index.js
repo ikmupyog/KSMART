@@ -752,15 +752,14 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
   })
   let Subtype = dataCorr?.tradeLicenseDetail?.tradeUnits.length > 0 ? 
   Array.from(new Set(dataCorr?.tradeLicenseDetail?.tradeUnits.map(type => type.businessSubtype))) : [];
-
-  for(let i=0; i>dataCorr?.tradeLicenseDetail?.tradeUnits.length; i++)
-    data?.tradeLicenseDetail?.tradeUnits.map((unitOld) => {
-      if(!Subtype.includes(unitOld) ){
-        tradeUnitCorr.push({id : unitOld.id, active : false});
-        isEdit = true;
-        unitFlag = true;
-      }
-    });
+  
+  data?.tradeLicenseDetail?.tradeUnits.map((unitOld) => {
+    if(Subtype.filter(subUnit => subUnit.includes(unitOld)).length === 0 ){
+      tradeUnitCorr.push({id : unitOld.id, active : false});
+      isEdit = true;
+      unitFlag = true;
+    }
+  });
    
   if(unitFlag === true){
     tradeUnitHistory = data?.tradeLicenseDetail?.tradeUnits;
@@ -821,7 +820,7 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
     })
   });
   
-  for(let i=0; i>dataCorr?.tradeLicenseDetail?.owners.length; i++)
+  for(let i=0; i>dataCorr?.tradeLicenseDetail?.owners.length; i++){
     data?.tradeLicenseDetail?.owners.map((ownerOld) => {
       if(!dataCorr?.tradeLicenseDetail?.owners[i].uuid.includes(ownerOld.uuid) ){
         ownersCorr.push({uuid : ownerOld.uuid, active : false});
@@ -829,7 +828,9 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
         ownerFlag = true;
       } 
     })
-
+  }
+    
+ 
   if(ownerFlag === true){
     ownersHistory = data?.tradeLicenseDetail?.owners;
   }
@@ -886,7 +887,7 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
       }
     })
   })
-  for(let i=0; i>dataCorr?.tradeLicenseDetail?.structurePlace.length; i++)
+  for(let i=0; i>dataCorr?.tradeLicenseDetail?.structurePlace.length; i++){
     data?.tradeLicenseDetail?.structurePlace.map((placeOld) => {
       if(!dataCorr?.tradeLicenseDetail?.structurePlace[i].id.includes(placeOld.id) ){
         structurePlaceCorr.push({id : placeOld.id, active : false});
@@ -894,6 +895,8 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
         structureplaceFlag = true;
       } 
     });
+  }
+    
 
   if(structureplaceFlag === true){
     structurePlaceHistory = data?.tradeLicenseDetail?.structurePlace;

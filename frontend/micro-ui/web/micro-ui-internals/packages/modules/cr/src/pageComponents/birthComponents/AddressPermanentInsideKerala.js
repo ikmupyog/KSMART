@@ -289,6 +289,8 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   }
   function setSelectpermntInKeralaAdrLBName(value) {
     setTenantWard(value.code);
+    setpermntInKeralaWardNo(null);
+    setTenantboundary(true);
     setpermntInKeralaAdrLBName(value);
   }
   function setSelectpermntInKeralaAdrVillage(value) {
@@ -316,12 +318,12 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
     }
   }
   function setSelectpermntInKeralaAdrHouseNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9 ]*$") != null)) {
       setpermntInKeralaAdrHouseNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectpermntInKeralaAdrHouseNameMl(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$/;
     if (!(e.target.value.match(pattern))) {
       e.preventDefault();
       setpermntInKeralaAdrHouseNameMl('');
