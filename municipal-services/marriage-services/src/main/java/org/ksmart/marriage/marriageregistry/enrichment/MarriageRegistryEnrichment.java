@@ -525,7 +525,7 @@ private void setBridePermanentAddress(MarriageRegistryRequest request) {
                 if (registryDetails.getGroomAddressDetails().getPermtaddressCountry().equals(MarriageConstants.COUNTRY_CODE)) {
                     if (registryDetails.getGroomAddressDetails().getPermtaddressStateName().equals(MarriageConstants.STATE_CODE_SMALL)) {
 
-                        registryDetails.getGroomAddressDetails().setCountryIdPermanent(registryDetails.getGroomAddressDetails().getPermtaddressCountry());
+                        groomAddressBuilder.append(registryDetails.getGroomAddressDetails().getPermtaddressCountry()).append(",");
 
                         registryDetails.getGroomAddressDetails().setStateIdPermanent(registryDetails.getGroomAddressDetails().getPermtaddressStateName());
 

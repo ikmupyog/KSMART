@@ -224,7 +224,8 @@ public class MarriageRegistryRepository {
             req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().setVillageNamePermanent(getValueFromMap(MarriageConstants.VILLAGE,mdmsBrideAddressMap));
             req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().setPermntInKeralaAdrTaluk(getValueFromMap(MarriageConstants.TALUK,mdmsBrideAddressMap));
 
-
+            req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().setGroomUrl("https://ulb-logos.s3.ap-south-1.amazonaws.com/cochin/cochin.jpg");
+            req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().setBrideUrl("https://ulb-logos.s3.ap-south-1.amazonaws.com/cochin/cochin.jpg");
             marriageCertPDFRequest.getMarriageCertificate().forEach(cert-> {
                 String uiHost = marriageApplicationConfiguration.getEgovPdfHost();
                 String tenantId = cert.getMarriageRegistryDetails().getTenantid().split("\\.")[0];
