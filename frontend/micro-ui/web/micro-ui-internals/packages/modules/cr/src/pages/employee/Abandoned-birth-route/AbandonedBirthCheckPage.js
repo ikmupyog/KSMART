@@ -125,18 +125,18 @@ const AbandonedBirthCheckPage = ({ onSubmit, value, userType }) => {
             </h1>
           </div>
         </div>
-        <div
+        <div className="col-md-12"
           style={{
-            maxWidth: "80%",
+            maxWidth: "auto",
             margin: "25px auto",
             padding: "3rem 2rem",
             border: "none",
             borderRadius: "8px",
-            height: "800PX",
+            height: "auto",
             backgroundColor: "#f3f0ef",
           }}
-        >
-
+        >        
+    <div className="col-md-12">
           <div className="row">
             <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_CHILD_SEX")}`}</CardLabel>
@@ -332,6 +332,7 @@ const AbandonedBirthCheckPage = ({ onSubmit, value, userType }) => {
             </div>          
           </div>          
         </div>
+  </div>    
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -351,7 +352,7 @@ const AbandonedBirthCheckPage = ({ onSubmit, value, userType }) => {
               />
             </div>
           </div>
-        </div>
+    </div>
 
         <div className="row">
           <div className="col-md-12">

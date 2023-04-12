@@ -92,6 +92,7 @@ const TopBar = ({
         onNotificationIconClick={onNotificationIconClick}
         hideNotificationIconOnSomeUrlsWhenNotLoggedIn={urlsToDisableNotificationIcon(pathname)}
         cityDetails={cityDetails}
+        showLanguageChange={showLanguageChange}
         t={t}
       />
     );
@@ -132,6 +133,7 @@ const TopBar = ({
             {userDetails?.access_token && (
               <div className="">
                 <Dropdown
+                
                   option={userOptions}
                   optionKey={"name"}
                   select={handleUserDropdownSelection}
