@@ -8,9 +8,7 @@ import get from "lodash/get";
 import orderBy from "lodash/orderBy";
 
 const ApplicationAbandonedDeathDetails = () => {
-  useEffect(()=>{
-    console.log(" ApplicationAbandonedDeathDetails")
-  },[])
+
   const { t } = useTranslation();
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const { id: DeathACKNo } = useParams();
@@ -34,7 +32,7 @@ const ApplicationAbandonedDeathDetails = () => {
   } = Digit.Hooks.cr.useAbandonedDeathActions(tenantId);
 
   // let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
-  console.log("applicationDetails",applicationDetails);
+
   let workflowDetails = Digit.Hooks.useWorkflowDetails({
     tenantId: applicationDetails?.applicationData.tenantid || tenantId,
     id: applicationDetails?.applicationData?.InformationDeathAbandoned.DeathACKNo,
@@ -64,7 +62,7 @@ const ApplicationAbandonedDeathDetails = () => {
       setBusinessService(workflowDetails?.data?.applicationBusinessService);
     }
   }, [workflowDetails.data]);
-  console.log(workflowDetails);
+
   if (workflowDetails?.data?.processInstances?.length > 0) {
     let filteredActions = [];
     filteredActions = get(workflowDetails?.data?.processInstances[0], "nextActions", [])?.filter(
@@ -177,6 +175,7 @@ const ApplicationAbandonedDeathDetails = () => {
         {/* <Header style={{fontSize: "22px !important"}}>{(applicationDetails?.applicationData?.workflowCode == "NewTL" && applicationDetails?.applicationData?.status !== "APPROVED") ? t("TL_TRADE_APPLICATION_DETAILS_LABEL") : t("Birth Application Details")}</Header> */}
         {/* <label style={{ fontSize: "19px", fontWeight: "bold",marginLeft:"15px" }}>{`${t("Birth Application Summary Details")}`}</label> */}
       </div>
+  
       <ApplicationDetailsTemplate
         header={"Abandoned Death Application Summary Details"}
         applicationDetails={applicationDetails}
