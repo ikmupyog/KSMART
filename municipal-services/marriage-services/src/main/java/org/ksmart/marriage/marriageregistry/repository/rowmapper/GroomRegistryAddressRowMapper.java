@@ -58,6 +58,7 @@ public interface GroomRegistryAddressRowMapper {
                 .permntInKeralaAdrTaluk(rs.getString("GPMA_talukid"))
                 .permntInKeralaAdrVillage(rs.getString("GPMA_villageid"))
                 .permntInKeralaWardNo(rs.getString("GPMA_ward_code"))
+                
                 .permntOutsideKeralaTaluk(rs.getString("GPMA_taluk_name"))
 //                .permntOutsideKeralaCityVilgeEn(rs.getString("stat_mother_resdnce_placetype"))
                 .permntOutsideKeralaPostOfficeEn(rs.getString("GPMA_poname_en"))

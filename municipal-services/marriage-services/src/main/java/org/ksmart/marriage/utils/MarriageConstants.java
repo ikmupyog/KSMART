@@ -150,5 +150,8 @@ public class MarriageConstants {
        
        public static final String APPLICATION_NEW = "new";
 
+       public static final String CR_MDMS_MARRIAGE_NEW_WF_JSONPATH = "$.MdmsRes.birth-death-service.WorkFlowMarriage";
+
+       public static final String CR_MDMS_WORKFLOW_NEW = "WorkFlowMarriage";
 
 }

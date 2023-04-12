@@ -10,6 +10,7 @@ import org.ksmart.marriage.marriageapplication.web.model.MarriageApplicationDeta
 import org.ksmart.marriage.marriageapplication.web.model.Demand.Demand;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageApplicationSearchCriteria;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageDetailsRequest;
+import org.ksmart.marriage.marriageapplication.web.model.marriage.WorkFlowCheck;
 import org.ksmart.marriage.marriageapplication.repository.MarriageApplicationRepository;
 import org.ksmart.marriage.marriageapplication.validator.MarriageApplicationValidator;
 import org.ksmart.marriage.marriageapplication.validator.MarriageMDMSValidator;
@@ -51,8 +52,11 @@ public class MarriageApplicationService {
     }
 
     public List<MarriageApplicationDetails> saveMarriageDetails(MarriageDetailsRequest request) {
-        validatorService.validateCommonFields( request);
+
+        WorkFlowCheck wfc = new WorkFlowCheck();
         Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getMarriageDetails().get(0).getTenantid());
+        validatorService.ruleEngineMarriage(request, wfc, mdmsData);
+        validatorService.validateCommonFields( request);
         mdmsValidator.validateMarriageMDMSData(request,mdmsData);
         marriageDetailsEnrichment.enrichCreate(request);
         producer.push(marriageApplicationConfiguration.getSaveMarriageApplicationTopic(), request);
@@ -60,16 +64,16 @@ public class MarriageApplicationService {
         if (request.getMarriageDetails().get(0).isWorkflow()){
             workflowIntegrator.callWorkFlow(request);
         }
-    //    request.getMarriageDetails().forEach(marriage->{
-    //         if(marriage.getStatus() == MarriageConstants.STATUS_FOR_PAYMENT){
-    //             List<Demand> demands = new ArrayList<>();
-    //             Demand demand = new Demand();
-    //             demand.setTenantId(marriage.getTenantid());
-    //             demand.setConsumerCode(marriage.getApplicationNumber());
-    //             demands.add(demand);
-    //             marriageDetailsEnrichment.saveDemand(request.getRequestInfo(),demands);
-    //         }
-    //     }); 
+       request.getMarriageDetails().forEach(marriage->{
+            if(marriage.getStatus() == MarriageConstants.STATUS_FOR_PAYMENT){
+                List<Demand> demands = new ArrayList<>();
+                Demand demand = new Demand();
+                demand.setTenantId(marriage.getTenantid());
+                demand.setConsumerCode(marriage.getApplicationNumber());
+                demands.add(demand);
+                marriageDetailsEnrichment.saveDemand(request.getRequestInfo(),demands);
+            }
+        }); 
         return request.getMarriageDetails();
 
     }
@@ -90,16 +94,16 @@ public class MarriageApplicationService {
             workflowIntegrator.callWorkFlow(request);
         }
         producer.push(marriageApplicationConfiguration.getUpdateMarriageApplicationTopic(), request);
-        // request.getMarriageDetails().forEach(marriage->{
-        //     if(marriage.getStatus() == MarriageConstants.STATUS_FOR_PAYMENT){
-        //         List<Demand> demands = new ArrayList<>();
-        //         Demand demand = new Demand();
-        //         demand.setTenantId(marriage.getTenantid());
-        //         demand.setConsumerCode(marriage.getApplicationNumber());
-        //         demands.add(demand);
-        //         marriageDetailsEnrichment.saveDemand(request.getRequestInfo(),demands);
-        //     }
-        // }); 
+        request.getMarriageDetails().forEach(marriage->{
+            if(marriage.getStatus() == MarriageConstants.STATUS_FOR_PAYMENT){
+                List<Demand> demands = new ArrayList<>();
+                Demand demand = new Demand();
+                demand.setTenantId(marriage.getTenantid());
+                demand.setConsumerCode(marriage.getApplicationNumber());
+                demands.add(demand);
+                marriageDetailsEnrichment.saveDemand(request.getRequestInfo(),demands);
+            }
+        }); 
         return request.getMarriageDetails();
 
     }

@@ -140,7 +140,8 @@ public class MarriageMdmsUtil {
         //Religion
         final String filterCodePostOffice = "$.[?(@.active==true)].code";
         marriageMasterDetails
-                 .add(MasterDetail.builder().name(MarriageConstants.POSTOFFICE).filter(filterCodePostOffice).build());         
+                 .add(MasterDetail.builder().name(MarriageConstants.POSTOFFICE).filter(filterCodePostOffice).build());  
+                 
 
         ModuleDetail marriageModuleDtls = ModuleDetail.builder().masterDetails(marriageMasterDetails)
                 .moduleName(MarriageConstants.COMMON_MASTER_MODULE_NAME).build();
@@ -161,6 +162,10 @@ public class MarriageMdmsUtil {
         final String filterCodeMarriageType = "$.[?(@.active==true)].code";
         marriageMasterDetails
                     .add(MasterDetail.builder().name(MarriageConstants.MARRIAGE_TYPE).filter(filterCodeMarriageType).build());
+
+        // Add Module workflow
+        marriageMasterDetails
+                    .add(MasterDetail.builder().name(MarriageConstants.CR_MDMS_WORKFLOW_NEW).build());
 
         ModuleDetail marriageModuleDtls = ModuleDetail.builder().masterDetails(marriageMasterDetails)
                 .moduleName(MarriageConstants.BND_MODULE_NAME).build();

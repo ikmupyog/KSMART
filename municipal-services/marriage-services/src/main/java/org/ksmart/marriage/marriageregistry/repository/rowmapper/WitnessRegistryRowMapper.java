@@ -33,6 +33,11 @@ public interface WitnessRegistryRowMapper {
                 .witness2Mobile(rs.getLong("WD2_mobile"))
                 .serial_no2(rs.getInt("WD1_serial_no"))
                 .witness2Esigned(rs.getBoolean("WD2_is_esigned"))
+                .brideUrl(rs.getString("MD_brideurl"))
+                .groomUrl(rs.getString("MD_groomurl"))
+                .imageUuid(rs.getString("MD_imageuuid"))
+                .brideFilestoreId(rs.getString("MD_bride_filestoreid"))
+                .groomFilestoreId(rs.getString("MD_groom_filestoreid"))
                // .witness2Esigned(Boolean.valueOf(rs.getString("WD2_is_esigned")))
                 .build();
     }

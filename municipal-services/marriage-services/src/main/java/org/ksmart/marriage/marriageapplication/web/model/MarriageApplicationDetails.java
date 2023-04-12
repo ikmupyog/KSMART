@@ -195,6 +195,11 @@ public class MarriageApplicationDetails {
     @Valid
     private List<MarriageDocument> MarriageDocuments = null;
 
+    private boolean wfnormalRegn ;
+    private boolean wfdelayedWithinFiveYear ;
+    private boolean wfdelayedAfterFiveYear ;
+
+
     // public void setStatus(String s) {
     // }
 
