@@ -125,6 +125,7 @@ export const CRAbandonedDeathsearch = {
               "," +
               response?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn || "NA",
         },
+        // 
         {
           title: "PDF_CR_NAME_WIFE_HUSBAND",
           value: response?.FamilyInfoDeathAbandoned?.SpouseNameEn||"NA" + 
