@@ -1,5 +1,3 @@
-
-
 .loginFormStyleEmployee {
   margin-left: 20%;
   .employeeCard {
@@ -172,7 +170,12 @@
 
 .employee-select-wrap.login-city-dd {
   .options-card {
-    max-height: 200px;
+    width: 26% !important;
+    max-height: 185px;
+    overflow-y: auto;
+    position: absolute;
+    z-index: 1;
+    border: 1px solid #ddd;
   }
 }
 @media screen and (max-width: 768px) {
@@ -198,7 +201,12 @@
   }
   .employee-select-wrap.login-city-dd {
     .options-card {
-      max-height: 160px;
+      width: 26% !important;
+      max-height: 185px;
+      overflow-y: auto;
+      position: absolute;
+      z-index: 1;
+      border: 1px solid #ddd;
     }
   }
 }

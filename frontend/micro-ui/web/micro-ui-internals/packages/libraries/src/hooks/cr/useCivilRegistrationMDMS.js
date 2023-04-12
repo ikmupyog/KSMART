@@ -197,6 +197,9 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   const useBirthCorrectionDocuments = () => {
     return useQuery(`BIRTH_CORRECTION_DOCUMENTS`, () => MdmsService.GetBirthCorrectionDocuments(tenantId, moduleCode, type), config);
   };
+  const useDeathCorrectionDocuments = () => {
+    return useQuery(`DEATH_CORRECTION_DOCUMENTS`, () => MdmsService.GetDeathCorrectionDocuments(tenantId, moduleCode, type), config);
+  };
   const useTradeOwnershipSubType = () => {
     return useQuery("TL_TRADE_OWNERSHIP_CATEGORY", () => MdmsService.GetTradeOwnerShipCategory(tenantId, moduleCode, type), {
       select: (data) => {
@@ -424,6 +427,8 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
       return useTradeOwnerShipCategory();
     case "BirthCorrectionDocuments":
       return useBirthCorrectionDocuments();
+    case "DeathCorrectionDocuments":
+      return useDeathCorrectionDocuments();
     case "TLOwnerTypeWithSubtypes":
       return useOwnerTypeWithSubtypes();
     case "AccessoryCategory":

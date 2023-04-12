@@ -43,11 +43,23 @@ const computeCurrentValue = (data) => {
 };
 
 const getFilteredDocuments = (selectedData, inclusionData) => {
+  console.log("SELECTED DATA OBJ===",selectedData);
   let filteredData = [];
   let docFlag = "";
   const childAge = selectedData?.dateofbirth && moment().diff(moment(selectedData?.dateofbirth), "years");
   if (childAge > 0 && childAge <= 6) {
     filteredData =  inclusionData?.filter((item) => item.conditionCode === "NAME_INCLUSION_LESS_THAN_SIX");
+  } else if (childAge < 15) {
+    filteredData = inclusionData?.filter((item) => item.conditionCode === "NAME_INCLUSION_GREATER_THAN_SIX_STUDENT");
+  } else if (childAge > 15) {
+    filteredData = inclusionData?.filter((item) => item.conditionCode === "NAME_INCLUSION_AGE_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE");
+  } else if (childAge >= 6 && childAge <= 18) {
+    filteredData = inclusionData?.filter((item) => {
+      if (item.conditionCode === "NAME_INCLUSION_GREATER_THAN_SIX_NON_STUDENT" || item.conditionCode === "NAME_INCLUSION_GREATER_THAN_SIX_STUDENT") {
+        return item;
+      }
+    });
+    docFlag = "STUDENT_CHANGE";
   } else if (childAge >= 6 && childAge <= 18) {
     filteredData = inclusionData?.filter((item) => {
       if (item.conditionCode === "NAME_INCLUSION_GREATER_THAN_SIX_NON_STUDENT" || item.conditionCode === "NAME_INCLUSION_GREATER_THAN_SIX_STUDENT") {

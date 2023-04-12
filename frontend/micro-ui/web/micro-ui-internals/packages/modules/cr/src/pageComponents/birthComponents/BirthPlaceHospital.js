@@ -44,7 +44,7 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
 
   useEffect(() => {
 
-    if (isInitialRender) {
+    // if (isInitialRender) {
       if (formData?.ChildDetails?.hospitalName) {
         selectHospitalNameMl(hospitalNameMl);
         setIsInitialRender(false);
@@ -55,8 +55,8 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
           setIsInitialRender(false);
         }
       }
-    }
-  }, [cmbhospitalMl, isInitialRender])
+    // }
+  }, [cmbhospitalMl])
   const onSkip = () => onSelect();
 
   function setselectHospitalName(value) {

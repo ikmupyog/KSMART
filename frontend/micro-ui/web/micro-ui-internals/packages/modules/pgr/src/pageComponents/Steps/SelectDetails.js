@@ -36,7 +36,7 @@ const SelectDetails = ({ t, config, onSelect, value }) => {
           <div className="col-md-12">
             <div className="col-md-6">
               <CardLabel>
-                {`${t("CS_ADDCOMPLAINT_DETAILS")}`}
+                {`${t("CS_ADDCOMPLAINT_DETAILS")}`} <span className="mandatorycss">*</span>
               </CardLabel>
               <TextArea t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="details" value={details}
                 onChange={handleChange} placeholder={`${t("CS_ADDCOMPLAINT_DETAILS")}`} />

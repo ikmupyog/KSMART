@@ -22,6 +22,8 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [conditionalProperty, setConditionalProperty] = useState("");
+  const [checkStudentCondition, setCheckStudentCondition] = useState("");
+  const [checkCorrectionCondition, setCheckCorrectionCondition] = useState("");
   let acceptFormat = ".jpg,.png,.pdf,.jpeg";
   let conditionalComponent = "";
 
@@ -119,7 +121,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
 
   const getDocumentName = (doc) => {
     console.log("doc item==", doc);
-    const documentNameArray = doc.DocumentList && doc.DocumentList?.[0]?.split(",");
+    const documentNameArray = doc.DocumentList && doc.DocumentList?.split(",");
     const documents = documentNameArray.map((name) => {
       return t(name);
     });
@@ -131,7 +133,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
 
   const getFilteredInclusionDocs = (selectedObj) => {
     let filteredDocs = [];
-
+     
     filteredDocs = selectedConfig.documentData?.filter((item) => item.conditionCode == selectedObj.condition);
     console.log("selectedObj==", selectedConfig.documentData, selectedObj, filteredDocs);
     return filteredDocs;
@@ -143,9 +145,77 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     setSelectedDocuments(filterInclusionDocs);
   }
 
+  function selectStudentCheckBox(value) {
+    setConditionalProperty(value);
+    const filterInclusionDocs = getFilteredInclusionDocs(value);
+    setSelectedDocuments(filterInclusionDocs);
+  }
+
+  useEffect(()=>{
+     console.log("checked conditions==",checkStudentCondition,checkCorrectionCondition);
+     let filteredDocs = [];
+     let docCondition = selectedConfig.docFlag === BIRTH_INCLUSION_DOC_FLAGS.MOTHER_DETAILS ? `MOTER_DETAILS` : BIRTH_INCLUSION_DOC_FLAGS.FATHER_DETAILS ? `FATER_DETAILS` : "";
+     if(Object.keys(checkCorrectionCondition)?.length > 0){
+      docCondition = `${docCondition}_${checkCorrectionCondition.code}`
+     }
+     if(Object.keys(checkStudentCondition)?.length > 0){
+      docCondition = `${docCondition}_${checkStudentCondition.code}`
+     }
+     if(Object.keys(checkCorrectionCondition)?.length > 0 && Object.keys(checkStudentCondition)?.length > 0){
+  console.log("docCondition",selectedConfig.documentData,docCondition);
+      filteredDocs = selectedConfig.documentData?.filter((item) => item.conditionCode == docCondition);
+      console.log("filteredDocs==",filteredDocs);
+      setSelectedDocuments(filteredDocs);
+     } 
+     
+  },[checkStudentCondition,checkCorrectionCondition]);
+
   if (!showModal) {
     return null;
   }
+
+  const renderConditionalPopupComponent = () => {
+    let selectedStudentMenu = [];
+    let selectedChangeMenu = [];
+    console.log("reached modal==11", selectedConfig,selectedConfig.docFlag);
+      if([BIRTH_INCLUSION_DOC_FLAGS.FATHER_DETAILS , BIRTH_INCLUSION_DOC_FLAGS.MOTHER_DETAILS].includes(selectedConfig.docFlag)){
+        selectedStudentMenu = [
+          { i18nKey: "CR_COMMON_STUDENT", code: "WITH_OUT_CERTIFICATE"},
+          { i18nKey: "CR_COMMON_NONSTUDENT", code: "WITH_CERTIFICATE"},
+        ];
+        selectedChangeMenu = [
+          { i18nKey: "CR_COMMON_CORRECTION", code: "CORRECTION" },
+          {  i18nKey: "CR_COMMON_CHANGE", code: "CHANGE" },
+        ]
+      }
+      
+    console.log("popup data==",selectedStudentMenu,selectedChangeMenu);
+    if(selectedStudentMenu?.length > 0 && selectedChangeMenu?.length > 0){
+    return (
+      <div>
+        <h2>Select one of the field</h2>
+        <RadioButtons
+          t={t}
+          optionsKey="i18nKey"
+          // isMandatory={config.isMandatory}
+          options={selectedStudentMenu}
+          selectedOption={checkStudentCondition}
+          onSelect={setCheckStudentCondition}
+        />
+        <RadioButtons
+          t={t}
+          optionsKey="i18nKey"
+          // isMandatory={config.isMandatory}
+          options={selectedChangeMenu}
+          selectedOption={checkCorrectionCondition}
+          onSelect={setCheckCorrectionCondition}
+        />
+      </div>
+    );
+    } else{
+      return null;
+    }
+  };
 
   const renderConditionalComponent = () => {
     let selectedMenu = [];
@@ -164,19 +234,32 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
           { i18nKey: "CR_COMMON_CHANGE", code: "CHANGE", condition: "NAME_CHANGE_AGE_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE" },
         ];
         break;
-        case BIRTH_INCLUSION_DOC_FLAGS.SEX_CHANGE:
+      case BIRTH_INCLUSION_DOC_FLAGS.INSTITUTIONAL_SEX_CHANGE:
         selectedMenu = [
-          { i18nKey: "CR_COMMON_CORRECTION", code: "CORRECTION", condition: "NAME_CORRECTION_AGE_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE" },
-          { i18nKey: "CR_COMMON_CHANGE", code: "CHANGE", condition: "NAME_CHANGE_AGE_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE" },
+          { i18nKey: "CR_COMMON_CORRECTION", code: "CORRECTION", condition: "INSTITUTIONAL_SEX_CORRECTION_MINOR" },
+          { i18nKey: "CR_COMMON_CHANGE", code: "CHANGE", condition: "INSTITUTIONAL_SEX_CHAGE_MINOR" },
         ];
         break;
-        case BIRTH_INCLUSION_DOC_FLAGS.NON_INSTITUTIONAL_SEX_CHANGE:
+      case BIRTH_INCLUSION_DOC_FLAGS.NON_INSTITUTIONAL_SEX_CHANGE_MINOR :
         selectedMenu = [
-          { i18nKey: "CR_COMMON_CORRECTION", code: "CORRECTION", condition: "NAME_CORRECTION_AGE_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE" },
-          { i18nKey: "CR_COMMON_CHANGE", code: "CHANGE", condition: "NAME_CHANGE_AGE_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE" },
+          { i18nKey: "CR_COMMON_CORRECTION", code: "CORRECTION", condition: "NON_INSTITUTIONAL_SEX_CORRECTION_MINOR" },
+          { i18nKey: "CR_COMMON_CHANGE", code: "CHANGE", condition: "NON_INSTITUTIONAL_SEX_CHAGE_MINOR" },
         ];
+        break;
+        case BIRTH_INCLUSION_DOC_FLAGS.NON_INSTITUTIONAL_SEX_CHANGE_MAJOR :
+        selectedMenu = [
+          { i18nKey: "CR_COMMON_CORRECTION", code: "CORRECTION", condition: "NON_INSTITUTIONAL_SEX_CORRECTION_MAJOR" },
+          { i18nKey: "CR_COMMON_CHANGE", code: "CHANGE", condition: "NON_INSTITUTIONAL_SEX_CHANGE_MAJOR" },
+        ];
+        break;
+        case BIRTH_INCLUSION_DOC_FLAGS.PRESENT_ADDRESS:
+          selectedMenu = [
+            { i18nKey: "CR_COMMON_CORRECTION", code: "CORRECTION", condition: "PRESENT_ADDRESS_CORRECTION" },
+            { i18nKey: "CR_COMMON_CHANGE", code: "CHANGE", condition: "PRESENT_ADDRESS_CHANGE" },
+          ];
         break;
     }
+    if(selectedMenu?.length > 0){
     return (
       <div>
         <h2>Select one of the field</h2>
@@ -190,6 +273,9 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
         />
       </div>
     );
+    } else{
+      return null;
+    }
   };
 
   return (
@@ -199,6 +285,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
           <span style={{ background: "#fff", padding: "0 10px" }}>{`${fieldName} CHANGE`}</span>{" "}
         </h1>
         {selectedConfig?.documentData?.length > 1 && renderConditionalComponent()}
+        {selectedConfig?.documentData?.length > 1 && renderConditionalPopupComponent()}
         {selectedDocuments?.length == 1 && (
           <div>
             <h2 style={{ marginBottom: "1rem" }}>{`You have to upload the following documents to edit ${fieldName?.toLowerCase()}.`}</h2>

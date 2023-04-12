@@ -125,7 +125,7 @@ const SearchDeathApplication = ({  t, onSubmit, data, count, isSuccess, isLoadin
                 </SearchForm>
             </div>
             {
-                fileData !== "" && (
+                fileData !== [] && (
                     <React.Fragment>
                         <Table 
                             t={t}
@@ -133,9 +133,13 @@ const SearchDeathApplication = ({  t, onSubmit, data, count, isSuccess, isLoadin
                             totalRecords={count}
                             columns={columns}
                             onPageSizeChange={onPageSizeChange}
+                            currentPage={getValues("offset") / getValues("limit")}
                             onNextPage={nextPage}
                             onPrevPage={previousPage}
+                            pageSizeLimit={getValues("limit")}
                             onSort={onSort}
+                            disableSort={false}
+                            sortParams={[{ id: getValues("sortBy"), desc: getValues("sortOrder") === "DESC" ? true : false }]}
                             getCellProps={() => {
                             return {
                               style: {

@@ -237,6 +237,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const [ChildFirstNameMlError, setChildFirstNameMlError] = useState(false);
   const [ChildMiddleNameMlError, setChildMiddleNameMlError] = useState(false);
   const [ChildLastNameMlError, setChildLastNameMlError] = useState(false);
+  const [AdsHomeStreetNameEnError, setAdsHomeStreetNameEnError] = useState(false);
+  const [AdsHomeStreetNameMlError, setAdsHomeStreetNameMlError] = useState(false);
 
   const [access, setAccess] = React.useState(true);
 
@@ -779,8 +781,9 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
           }
         }
       }
-      if (adrsLocalityNameEn === null || adrsLocalityNameEn === "" || adrsLocalityNameEn === undefined) {
+      if (adrsLocalityNameEn === null || adrsLocalityNameEn.trim() == '' || adrsLocalityNameEn.trim() == undefined) {
         validFlag = false;
+        setAdrsLocalityNameEn("");
         setAdsHomeLocalityNameEnError(true);
         setToast(true);
         setTimeout(() => {
@@ -789,8 +792,9 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       } else {
         setAdsHomeLocalityNameEnError(false);
       }
-      if (adrsLocalityNameMl == null || adrsLocalityNameMl == "" || adrsLocalityNameMl == undefined) {
+      if (adrsLocalityNameMl === null || adrsLocalityNameMl.trim() == '' || adrsLocalityNameMl.trim() == undefined) {
         validFlag = false;
+        setAdrsLocalityNameMl("");
         setAdsHomeLocalityNameMlError(true);
         setToast(true);
         setTimeout(() => {
@@ -799,8 +803,9 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       } else {
         setAdsHomeLocalityNameMlError(false);
       }
-      if (adrsHouseNameEn == null || adrsHouseNameEn == "" || adrsHouseNameEn == undefined) {
+      if (adrsHouseNameEn === null || adrsHouseNameEn.trim() == '' || adrsHouseNameEn.trim() == undefined) {
         validFlag = false;
+        setAdrsHouseNameEn("");
         setAdsHomeHouseNameEnError(true);
         setToast(true);
         setTimeout(() => {
@@ -809,8 +814,9 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       } else {
         setAdsHomeHouseNameEnError(false);
       }
-      if (adrsHouseNameMl == null || adrsHouseNameMl == "" || adrsHouseNameMl == undefined) {
+      if (adrsHouseNameMl === null || adrsHouseNameMl.trim() == '' || adrsHouseNameMl.trim() == undefined) {
         validFlag = false;
+        setAdrsHouseNameMl("");
         setAdsHomeHouseNameMlError(true);
         setToast(true);
         setTimeout(() => {
@@ -818,6 +824,36 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
         }, 2000);
       } else {
         setAdsHomeHouseNameMlError(false);
+      }
+      if (adrsStreetNameEn === null || adrsStreetNameEn.trim() === '' || adrsStreetNameEn.trim() === undefined) {
+        setAdrsStreetNameEn("");
+      } else {
+        if (adrsStreetNameEn != null && (adrsStreetNameMl === null || adrsStreetNameMl.trim() === '' || adrsStreetNameMl.trim() === undefined)) {
+          validFlag = false;
+          setAdrsStreetNameMl("");
+          setAdsHomeStreetNameMlError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } else {
+          setAdsHomeStreetNameMlError(false);
+        }
+      }
+      if (adrsStreetNameMl === null || adrsStreetNameMl.trim() === '' || adrsStreetNameMl.trim() === undefined) {
+        setAdrsStreetNameMl("");
+      } else {
+        if (adrsStreetNameMl != null && (adrsStreetNameEn === null || adrsStreetNameEn.trim() === '' || adrsStreetNameEn.trim() === undefined)) {
+          validFlag = false;
+          setAdrsStreetNameEn("");
+          setAdsHomeStreetNameEnError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } else {
+          setAdsHomeStreetNameEnError(false);
+        }
       }
     } else if (birthPlace.code === "VEHICLE") {
 
@@ -845,9 +881,10 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       } else {
         setvehiTypeError(false);
       }
-      if (vehicleRegistrationNo == null || vehicleRegistrationNo == "" || vehicleRegistrationNo == undefined) {
+      if (vehicleRegistrationNo === null || vehicleRegistrationNo.trim() == '' || vehicleRegistrationNo.trim() == undefined) {
         validFlag = false;
         setvehicleRegiNoError(true);
+        setvehicleRegistrationNo("");
         setToast(true);
         setTimeout(() => {
           setToast(false);
@@ -855,9 +892,10 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       } else {
         setvehicleRegiNoError(false);
       }
-      if (vehicleHaltPlace == null || vehicleHaltPlace == "" || vehicleHaltPlace == undefined) {
+      if (vehicleHaltPlace === null || vehicleHaltPlace.trim() == '' || vehicleHaltPlace.trim() == undefined) {
         validFlag = false;
         setvehicleHaltPlaceError(true);
+        setvehicleHaltPlace("");
         setToast(true);
         setTimeout(() => {
           setToast(false);
@@ -875,9 +913,10 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       // } else {
       //   setvehiHaltPlaceMlError(false);
       // }
-      if (vehicleDesDetailsEn == null || vehicleDesDetailsEn == "" || vehicleDesDetailsEn == undefined) {
+      if (vehicleDesDetailsEn === null || vehicleDesDetailsEn.trim() == '' || vehicleDesDetailsEn.trim() == undefined) {
         validFlag = false;
         setvehiDesDetailsEnError(true);
+        setvehicleDesDetailsEn("");
         setToast(true);
         setTimeout(() => {
           setToast(false);
@@ -910,9 +949,10 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
         wardNumber = wardNo.wardno;
         setAdsWardError(false);
       }
-      if (localityNameEn == null || localityNameEn == "" || localityNameEn == undefined) {
+      if (localityNameEn === null || localityNameEn.trim() == '' || localityNameEn.trim() == undefined) {
         validFlag = false;
         setlocalNameEnError(true);
+        setlocalityNameEn("");
         setToast(true);
         setTimeout(() => {
           setToast(false);
@@ -920,9 +960,10 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       } else {
         setlocalNameEnError(false);
       }
-      if (localityNameMl == null || localityNameMl == "" || localityNameMl == undefined) {
+      if (localityNameMl === null || localityNameMl.trim() == '' || localityNameMl.trim() == undefined) {
         validFlag = false;
         setlocalNameMlError(true);
+        setlocalityNameMl("");
         setToast(true);
         setTimeout(() => {
           setToast(false);
@@ -1012,7 +1053,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     } else {
       setDeliveryMethodStError(false);
     }
-    if (isChildName) {
+    if (!isChildName) {
       if (childFirstNameEn.trim() == null || childFirstNameEn.trim() == '' || childFirstNameEn.trim() == undefined) {
         validFlag = false;
         setChildFirstNameEn("");
@@ -1383,15 +1424,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
               </div>
             </div>
           </div>
-          <div className="row">
-            <div className="col-md-12">
-              <div className="col-md-6">
-                <CheckBox label={t("CR_WANT_TO_ENTER_CHILD_NAME")} onChange={setChildName}
-                  value={isChildName} checked={isChildName} />
-              </div>
-            </div>
-          </div>
-          {isChildName === true && (
+
+          {isChildName === false && (
             <div>
               {/* <div className="row">
               <div className="col-md-12">
@@ -1525,6 +1559,14 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                 </div>
               </div>
             </div>)}
+          <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-6">
+                <CheckBox label={t("CR_WANT_TO_ENTER_CHILD_NAME")} onChange={setChildName}
+                  value={isChildName} checked={isChildName} />
+              </div>
+            </div>
+          </div>
           {/* <div className="row">
           <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("OTHER_DETAILS")}`}</span> </h1>
           </div>
@@ -1643,7 +1685,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                 MedicalAttensionSubStError || DeliveryMethodStError || BirthWeightError
                 || PregnancyDurationStError || PregnancyDurationInvalidError || ChildFirstNameEnError || ChildMiddleNameEnError
                 || ChildLastNameEnError || ChildFirstNameMlError || ChildMiddleNameMlError || ChildLastNameMlError
-
+                || AdsHomeStreetNameEnError || AdsHomeStreetNameMlError
               }
               label={
                 AadharError || DOBError || HospitalError || InstitutionError || InstitutionNameError ||
@@ -1662,6 +1704,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                   MedicalAttensionSubStError || DeliveryMethodStError || BirthWeightError
                   || PregnancyDurationStError || PregnancyDurationInvalidError || ChildFirstNameEnError || ChildMiddleNameEnError
                   || ChildLastNameEnError || ChildFirstNameMlError || ChildMiddleNameMlError || ChildLastNameMlError
+                  || AdsHomeStreetNameEnError || AdsHomeStreetNameMlError
                   ?
                   AadharError
                     ? t(`CS_COMMON_INVALID_AADHAR_NO`) : DOBError ? t(`BIRTH_DOB_VALIDATION_MSG`)
@@ -1695,7 +1738,9 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                                                                           : ChildFirstNameMlError ? t(`BIRTH_ERROR_CHILD_FIRST_NAME_ML`)
                                                                             : ChildMiddleNameMlError ? t(`BIRTH_ERROR_CHILD_MIDDLE_NAME_ML`)
                                                                               : ChildLastNameMlError ? t(`BIRTH_ERROR_CHILD_LAST_NAME_ML`)
-                                                                                : setToast(false)
+                                                                                : AdsHomeStreetNameEnError ? t(`BIRTH_ERROR_HOME_STREET_NAME_EN`)
+                                                                                  : AdsHomeStreetNameMlError ? t(`BIRTH_ERROR_HOME_STREET_NAME_ML`)
+                                                                                    : setToast(false)
                   : setToast(false)
               }
               onClose={() => setToast(false)}
