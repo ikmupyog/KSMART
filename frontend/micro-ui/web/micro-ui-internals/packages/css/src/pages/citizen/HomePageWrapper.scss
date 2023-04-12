@@ -104,10 +104,10 @@
         flex-direction: column;
     }
 }
-@media only screen and (max-width: 680px) {
+@media only screen and (max-width: 768px) {
     .ServicesSection{
-    display: flex;
-    flex-direction: column;
+        display: flex;
+        flex-direction: column;
     }
     .CardBasedOptions{
         width: unset;
