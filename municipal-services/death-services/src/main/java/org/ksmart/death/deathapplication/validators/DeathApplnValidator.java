@@ -102,6 +102,7 @@ public void validateCommonFields(DeathDtlRequest request) {
         DeathFamilyInfo  familyInfo = deathdtls.getDeathFamilyInfo();
         DeathInformantDtls  informantDtls = deathdtls.getDeathInformantDtls();
         DeathInitiatorDtls  initiatorDtls = deathdtls.getDeathInitiatorDtls();
+        DeathAddressInfo deathAddressInfo = deathdtls.getDeathAddressInfo();
 //Common validation for all cases
             // if((basicInfo.getDateOfDeath()<=0) || (basicInfo.getTimeOfDeath()<=0)) { 
             //         throw new CustomException("DEATH DATE INVALID", "The date and time can't be null");
@@ -340,9 +341,540 @@ public void validateCommonFields(DeathDtlRequest request) {
                 // } 
                
             } 
+//Address Validation
+
+if (deathAddressInfo.getPermtaddressCountry()
+.equals(DeathConstants.COUNTRY_CODE)) {
+if (StringUtils.isEmpty(
+        deathAddressInfo.getPermtaddressStateName())) {
+throw new CustomException(
+                " PERMANENT ADDRESS: STATE INVALID ",
+                "The State " +
+                                deathAddressInfo.getPermtaddressStateName()
+                                + " is invalid");
+} else {
+if (deathAddressInfo.getPermtaddressStateName()
+                .equals(DeathConstants.STATE_CODE_SMALL)) {
+        if (StringUtils.isEmpty(deathAddressInfo
+                        .getPermntInKeralaAdrDistrict())) {
+                throw new CustomException(
+                                " PERMANENT ADDRESS INSIDE KERALA: DISTRICT INVALID ",
+                                "The   District " +
+                                                deathAddressInfo.getPermntInKeralaAdrDistrict()
+                                                + " is invalid");
+        }
+        if (StringUtils.isEmpty(deathAddressInfo
+                        .getPermntInKeralaAdrTaluk())) {
+                throw new CustomException(
+                                " PERMANENT ADDRESS INSIDE KERALA: TALUK INVALID ",
+                                "The   Taluk " +
+                                                deathAddressInfo.getPermntInKeralaAdrTaluk()
+                                                + " is invalid");
+        }
+
+        if (StringUtils.isEmpty(deathAddressInfo
+                        .getPermntInKeralaAdrVillage())) {
+                throw new CustomException(
+                                " PERMANENT ADDRESS INSIDE KERALA: VILLAGE INVALID ",
+                                "The   Village " +
+                                                deathAddressInfo.getPermntInKeralaAdrVillage()
+                                                + " is invalid");
+        }
+        if (StringUtils.isEmpty(deathAddressInfo
+                        .getPermntInKeralaAdrLBName())) {
+                throw new CustomException(
+                                " PERMANENT ADDRESS INSIDE KERALA: LOCALBODY NAME INVALID ",
+                                "The   Localbody Name "
+                                                +
+                                                deathAddressInfo.getPermntInKeralaAdrLBName()
+                                                + " is invalid");
+        }
+        if (StringUtils.isEmpty(deathAddressInfo
+                        .getPermntInKeralaWardNo())) {
+                throw new CustomException(
+                                " PERMANENT ADDRESS INSIDE KERALA: WARD INVALID ",
+                                "The   Ward " +
+                                                deathAddressInfo.getPermntInKeralaWardNo()
+                                                + " is invalid");
+        }
+        if (StringUtils.isEmpty(deathAddressInfo
+                        .getPermntInKeralaAdrPostOffice())) {
+                throw new CustomException(
+                                " PERMANENT ADDRESS INSIDE KERALA: POSTOFFICE INVALID ",
+                                "The Postofficef " +
+                                                deathAddressInfo.getPermntInKeralaAdrPostOffice()
+                                                + " is invalid");
+        }
+        if (StringUtils.isEmpty(deathAddressInfo
+                        .getPermntInKeralaAdrPincode())) {
+
+                throw new CustomException(
+                                " PERMANENT ADDRESS INSIDE KERALA: PINCODE INVALID ",
+                                "The Pincode " +
+                                                deathAddressInfo.getPermntInKeralaAdrPincode()
+                                                + " is invalid");
+        }
+        // if (StringUtils.isEmpty(deathAddressInfo
+        //                 .getPermntInKeralaAdrLocalityNameEn())) {
+        //         throw new CustomException(
+        //                         " PERMANENT ADDRESS INSIDE KERALA: LOCALITY NAME ENGLISH IS  INVALID ",
+        //                         "The Locality English "
+        //                                         +
+        //                                         deathAddressInfo.getPermntInKeralaAdrLocalityNameEn()
+        //                                         + " is invalid");
+        // }
+        // if (StringUtils.isEmpty(deathAddressInfo
+        //                 .getPermntInKeralaAdrLocalityNameMl())) {
+        //         throw new CustomException(
+        //                         " PERMANENT ADDRESS INSIDE KERALA: LOCALITY NAME MALAYALAM IS INVALID ",
+        //                         "The Locality Malayalam "
+        //                                         +
+        //                                         deathAddressInfo.getPermntInKeralaAdrLocalityNameMl()
+        //                                         + " is invalid");
+        // }
+        if (StringUtils.isEmpty(deathAddressInfo
+                        .getPermntInKeralaAdrHouseNameEn())) {
+                throw new CustomException(
+                                " PERMANENT ADDRESS INSIDE KERALA: HOUSE NAME ENGLISH INVALID ",
+                                "The House Name English "
+                                                +
+                                                deathAddressInfo.getPermntInKeralaAdrHouseNameEn()
+                                                + " is invalid");
+        }
+        if (StringUtils.isEmpty(deathAddressInfo
+                        .getPermntInKeralaAdrHouseNameMl())) {
+                throw new CustomException(
+                                " PERMANENT ADDRESS INSIDE KERALA: HOUSE NAME MALAYALAM INVALID ",
+                                "The House Name Malayalam "
+                                                +
+                                                deathAddressInfo.getPermntInKeralaAdrHouseNameMl()
+                                                + " is invalid");
+        }
+
+}
+/// *****************permanent outside kerala address *****************************************//
+else {
+        if (StringUtils.isEmpty(deathAddressInfo
+                        .getPermntOutsideKeralaDistrict())) {
+                throw new CustomException(
+                                " PERMANENT ADDRESS OUTSIDE KERALA: DISTRICT INVALID ",
+                                "The   District " +
+                                                deathAddressInfo.getPermntOutsideKeralaDistrict()
+                                                + " is invalid");
+        }
+        if (StringUtils.isEmpty(deathAddressInfo
+                        .getPermntOutsideKeralaTaluk())) {
+                throw new CustomException(
+                                " PERMANENT ADDRESS OUTSIDE KERALA: TALUK INVALID ",
+                                "The   Taluk " +
+                                                deathAddressInfo.getPermntOutsideKeralaTaluk()
+                                                + " is invalid");
+        }
+        if (StringUtils.isEmpty(deathAddressInfo
+                        .getPermntOutsideKeralaVillage())) {
+                throw new CustomException(
+                                " PERMANENT ADDRESS OUTSIDE KERALA: VILLAGE INVALID ",
+                                "The   Village " +
+                                                deathAddressInfo.getPermntOutsideKeralaVillage()
+                                                + " is invalid");
+        }
+        
+        if (StringUtils.isEmpty(deathAddressInfo
+                        .getPermntOutsideKeralaCityVilgeEn())) {
+                throw new CustomException(
+                                "  PERMANENT ADDRESS OUTSIDE KERALA: CITY INVALID ",
+                                "The City/Town " +
+                                                deathAddressInfo.getPermntOutsideKeralaCityVilgeEn()
+                                                + " is invalid");
+        }
+
+        if (StringUtils.isEmpty(deathAddressInfo
+                        .getPermntOutsideKeralaVillage())) {
+                throw new CustomException(
+                                "  PERMANENT ADDRESS OUTSIDE KERALA: VILLAGE INVALID ",
+                                "The Village " +
+                                                deathAddressInfo.getPermntOutsideKeralaVillage()
+                                                + " is invalid");
+        }
+        if (StringUtils.isEmpty(deathAddressInfo
+                        .getPermntOutsideKeralaPincode())) {
+                throw new CustomException(
+                                " PERMANENT ADDRESS OUTSIDE KERALA: PINCODE INVALID ",
+                                "The Pincode " +
+                                                deathAddressInfo.getPermntOutsideKeralaPincode()
+                                                + " is invalid");
+        }
+        if (StringUtils.isEmpty(deathAddressInfo
+                        .getPermntOutsideKeralaPostOfficeEn())) {
+                throw new CustomException(
+                                " PERMANENT ADDRESS OUTSIDE KERALA: POSTOFFICE INVALID ",
+                                "The Postofficef " +
+                                                deathAddressInfo.getPermntOutsideKeralaPostOfficeEn()
+                                                + " is invalid");
+        }
+        // if (StringUtils.isEmpty(deathAddressInfo
+        //                 .getPermntOutsideKeralaLocalityNameMl())) {
+        //         throw new CustomException(
+        //                         " PERMANENT ADDRESS OUTSIDE KERALA: LOCALITY NAME MALAYALAM IS INVALID ",
+        //                         "The Locality Malayalam "
+        //                                         +
+        //                                         deathAddressInfo.getPermntOutsideKeralaLocalityNameMl()
+        //                                         + " is invalid");
+        // }
+        // if (StringUtils.isEmpty(deathAddressInfo
+        //                 .getPermntOutsideKeralaLocalityNameEn())) {
+        //         throw new CustomException(
+        //                         " PERMANENT ADDRESS OUTSIDE KERALA: LOCALITY NAME ENGLISH IS  INVALID ",
+        //                         "The Locality English "
+        //                                         +
+        //                                         deathAddressInfo.getPermntOutsideKeralaLocalityNameEn()
+        //                                         + " is invalid");
+        // }
+        if (StringUtils.isEmpty(deathAddressInfo
+                        .getPermntOutsideKeralaHouseNameEn())) {
+                throw new CustomException(
+                                " PERMANENT ADDRESS OUTSIDE KERALA: HOUSE NAME ENGLISH INVALID ",
+                                "The House Name English "
+                                                +
+                                                deathAddressInfo.getPermntOutsideKeralaHouseNameEn()
+                                                + " is invalid");
+        }
+        if (StringUtils.isEmpty(deathAddressInfo
+                        .getPermntOutsideKeralaHouseNameMl())) {
+                throw new CustomException(
+                                " PERMANENT ADDRESS OUTSIDE KERALA: HOUSE NAME MALAYALAM INVALID ",
+                                "The House Name Malayalam "
+                                                +
+                                                deathAddressInfo.getPermntOutsideKeralaHouseNameMl()
+                                                + " is invalid");
+        }
+}
+}
+} else {
+if (StringUtils.isEmpty(deathAddressInfo.getPermntOutsideIndiaprovinceEn())) {
+throw new CustomException(
+                "  PERMANENT ADDRESS OUSIDE INDIA: PROVINCE ENGLISH INVALID ",
+                "The   Province English " +
+                                deathAddressInfo.getPermntOutsideIndiaprovinceEn()
+                                + " is invalid");
+}
+if (StringUtils.isEmpty(deathAddressInfo
+        .getPermntOutsideIndiaprovinceMl())) {
+throw new CustomException(
+                " PERMANENT ADDRESS OUSIDE INDIA: PROVINCE MALAYALAM INVALID ",
+                "The   Province Malayalam " +
+                                deathAddressInfo.getPermntOutsideIndiaprovinceMl()
+                                + " is invalid");
+}
+if (StringUtils.isEmpty(deathAddressInfo
+        .getPermntOutsideIndiaVillage())) {
+throw new CustomException(
+                " PERMANENT ADDRESS OUSIDE INDIA: VILLAGE INVALID ",
+                "The   Village " +
+                                deathAddressInfo.getPermntOutsideIndiaVillage()
+                                + " is invalid");
+}
+if (StringUtils.isEmpty(deathAddressInfo
+        .getPermntOutsideIndiaCityTown())) {
+throw new CustomException(
+                " PERMANENT ADDRESS OUSIDE INDIA: CITY INVALID ",
+                "The   City " +
+                                deathAddressInfo.getPermntOutsideIndiaCityTown()
+                                + " is invalid");
+}
+if (StringUtils.isEmpty(deathAddressInfo
+        .getPermanentOutsideIndiaPostCode())) {
+throw new CustomException(
+                " PERMANENT ADDRESS OUSIDE INDIA: POST CODE INVALID ",
+                "The   Post Code " +
+                                deathAddressInfo.getPermanentOutsideIndiaPostCode()
+                                + " is invalid");
+}
+if (StringUtils.isEmpty(deathAddressInfo
+        .getPermntOutsideIndiaLineoneEn())) {
+throw new CustomException(
+                " PERMANENT ADDRESS OUSIDE INDIA: ADDRESS LINE ONE ENGLISH INVALID ",
+                "The   Adress Line One English " +
+                                deathAddressInfo.getPermntOutsideIndiaLineoneEn()
+                                + " is invalid");
+}
+
+if (StringUtils.isEmpty(deathAddressInfo
+        .getPermntOutsideIndiaLineoneMl())) {
+throw new CustomException(
+                " PERMANENT ADDRESS OUSIDE INDIA: ADDRESS LINE ONE MALAYALAM INVALID ",
+                "The   Adress Line One Malayalam " +
+                                deathAddressInfo.getPermntOutsideIndiaLineoneMl()
+                                + " is invalid");
+}
+
+
+}
+//  permanent address end
+//  present address start
+if (deathAddressInfo.getPresentaddressCountry()
+.equals(DeathConstants.COUNTRY_CODE)) {
+if (StringUtils.isEmpty(deathAddressInfo
+        .getPresentaddressStateName())) {
+throw new CustomException(" PRESENT ADDRESS INSIDE INDIA: STATE INVALID ",
+                "The   State " +
+                                deathAddressInfo.getPresentaddressStateName()
+                                + " is invalid");
+} else {
+if (deathAddressInfo.getPresentaddressStateName()
+                .equals(DeathConstants.STATE_CODE_SMALL)) {
+        if (StringUtils.isEmpty(deathAddressInfo
+                        .getPresentInsideKeralaDistrict())) {
+                throw new CustomException(
+                                " PRESENT ADDRESS INSIDE KERALA: DISTRICT INVALID ",
+                                "The   district " +
+                                                deathAddressInfo.getPresentInsideKeralaDistrict()
+                                                + " is invalid");
+        }
+        if (StringUtils.isEmpty(deathAddressInfo
+                        .getPresentInsideKeralaTaluk())) {
+                throw new CustomException(
+                                " PRESENT ADDRESS INSIDE KERALA: TALUK INVALID ",
+                                "The   Taluk " +
+                                                deathAddressInfo.getPresentInsideKeralaTaluk()
+                                                + " is invalid");
+        }
+
+        if (StringUtils.isEmpty(deathAddressInfo
+                        .getPresentInsideKeralaVillage())) {
+                throw new CustomException(
+                                " PRESENT ADDRESS INSIDE KERALA: VILLAGE INVALID ",
+                                "The   Village " +
+                                                deathAddressInfo.getPresentInsideKeralaVillage()
+                                                + " is invalid");
+        }
+        if (StringUtils.isEmpty(deathAddressInfo
+                        .getPresentInsideKeralaLBName())) {
+                throw new CustomException(
+                                " PRESENT ADDRESS INSIDE KERALA: LOCALBODY NAME INVALID ",
+                                "The   Localbody Name "
+                                                +
+                                                deathAddressInfo.getPresentInsideKeralaLBName()
+                                                + " is invalid");
+        }
+        if (StringUtils.isEmpty(deathAddressInfo
+                        .getPresentWardNo())) {
+                throw new CustomException(
+                                " PRESENT ADDRESS INSIDE KERALA: WARD INVALID ",
+                                "The   Ward " +
+                                                deathAddressInfo.getPresentWardNo()
+                                                + " is invalid");
+        }
+        if (StringUtils.isEmpty(deathAddressInfo
+                        .getPresentInsideKeralaPostOffice())) {
+                throw new CustomException(
+                                " PRESENT ADDRESS INSIDE KERALA: POSTOFFICE INVALID ",
+                                "The   Postofficef " +
+                                                deathAddressInfo.getPresentInsideKeralaPostOffice()
+                                                + " is invalid");
+        }
+        if (StringUtils.isEmpty(deathAddressInfo
+        .getPresentInsideKeralaPincode())) {
+       
+        
+       
+        throw new CustomException(
+        " PRESENT ADDRESS INSIDE KERALA: PINCODE INVALID ",
+        
+        "The Pincode " +
+        deathAddressInfo.getPresentInsideKeralaPincode()
+        + " is invalid");
+        }
+
+        // if (StringUtils.isEmpty(deathAddressInfo
+        //                 .getPresentInsideKeralaLocalityNameEn())) {
+        //         throw new CustomException(
+        //                         " PRESENT ADDRESS INSIDE KERALA: LOCALITY NAME ENGLISH IS  INVALID ",
+        //                         "The   Locality English "
+        //                                         +
+        //                                         deathAddressInfo.getPresentInsideKeralaLocalityNameEn()
+        //                                         + " is invalid");
+        // }
+        // if (StringUtils.isEmpty(deathAddressInfo
+        //                 .getPresentInsideKeralaLocalityNameMl())) {
+        //         throw new CustomException(
+        //                         " PRESENT ADDRESS INSIDE KERALA: LOCALITY NAME MALAYALAM IS INVALID ",
+        //                         "The   Locality Malayalam "
+        //                                         +
+        //                                         deathAddressInfo.getPresentInsideKeralaLocalityNameMl()
+        //                                         + " is invalid");
+        // }
+        if (StringUtils.isEmpty(deathAddressInfo
+                        .getPresentInsideKeralaHouseNameEn())) {
+                throw new CustomException(
+                                " PRESENT ADDRESS INSIDE KERALA: HOUSE NAME ENGLISH INVALID ",
+                                "The   House Name English "
+                                                +
+                                                deathAddressInfo.getPresentInsideKeralaHouseNameEn()
+                                                + " is invalid");
+        }
+        if (StringUtils.isEmpty(deathAddressInfo
+                        .getPresentInsideKeralaHouseNameMl())) {
+                throw new CustomException(
+                                " PRESENT ADDRESS INSIDE KERALA: HOUSE NAME MALAYALAM INVALID ",
+                                "The   House Name Malayalam "
+                                                +
+                                                deathAddressInfo.getPresentInsideKeralaHouseNameMl()
+                                                + " is invalid");
+        }
+} else {
+        if (StringUtils.isEmpty(deathAddressInfo
+                        .getPresentOutsideKeralaDistrict())) {
+                throw new CustomException(
+                                " PRESENT ADDRESS OUTSIDE KERALA: DISTRICT INVALID ",
+                                "The   District " +
+                                                deathAddressInfo.getPresentOutsideKeralaDistrict()
+                                                + " is invalid");
+        }
+        if (StringUtils.isEmpty(deathAddressInfo
+                        .getPresentOutsideKeralaTalukName())) {
+                throw new CustomException(
+                                " PRESENT ADDRESS OUTSIDE KERALA: TALUK INVALID ",
+                                "The   Taluk " +
+                                                deathAddressInfo.getPresentOutsideKeralaTalukName()
+                                                + " is invalid");
+        }
+        if (StringUtils.isEmpty(deathAddressInfo
+                        .getPresentOutsideKeralaVillageName())) {
+                throw new CustomException(
+                                " PRESENT ADDRESS OUTSIDE KERALA: VILLAGE INVALID ",
+                                "The   Village " +
+                                                deathAddressInfo.getPresentOutsideKeralaVillageName()
+                                                + " is invalid");
+        }
+
+        if (StringUtils.isEmpty(deathAddressInfo
+                        .getPresentOutsideKeralaCityVilgeEn())) {
+                throw new CustomException(
+                                "  PRESENT ADDRESS OUTSIDE KERALA: CITY INVALID ",
+                                "The City/Town " +
+                                                deathAddressInfo.getPresentOutsideKeralaCityVilgeEn()
+                                                + " is invalid");
+        }
+
+        if (StringUtils.isEmpty(deathAddressInfo
+                        .getPresentOutsideKeralaPincode())) {
+                throw new CustomException(
+                                " PRESENT ADDRESS OUTSIDE KERALA: PINCODE INVALID ",
+                                "The Pincode " +
+                                                deathAddressInfo.getPresentOutsideKeralaPincode()
+                                                + " is invalid");
+        }
+        if (StringUtils.isEmpty(deathAddressInfo
+                        .getPresentOutsideKeralaPostOfficeEn())) {
+                throw new CustomException(
+                                " PRESENT ADDRESS OUTSIDE KERALA: POSTOFFICE INVALID ",
+                                "The Postofficef " +
+                                                deathAddressInfo.getPresentOutsideKeralaPostOfficeEn()
+                                                + " is invalid");
+        }
+        // if (StringUtils.isEmpty(deathAddressInfo
+        //                 .getPresentOutsideKeralaLocalityNameMl())) {
+        //         throw new CustomException(
+        //                         " PRESENT ADDRESS OUTSIDE KERALA: LOCALITY NAME MALAYALAM IS INVALID ",
+        //                         "The Locality Malayalam "
+        //                                         +
+        //                                         deathAddressInfo.getPresentOutsideKeralaLocalityNameMl()
+        //                                         + " is invalid");
+        // }
+        // if (StringUtils.isEmpty(deathAddressInfo
+        //                 .getPresentOutsideKeralaLocalityNameEn())) {
+        //         throw new CustomException(
+        //                         " PRESENT ADDRESS OUTSIDE KERALA: LOCALITY NAME ENGLISH IS  INVALID ",
+        //                         "The Locality English "
+        //                                         +
+        //                                         deathAddressInfo.getPresentOutsideKeralaLocalityNameEn()
+        //                                         + " is invalid");
+        // }
+        if (StringUtils.isEmpty(deathAddressInfo
+                        .getPresentOutsideKeralaHouseNameEn())) {
+                throw new CustomException(
+                                " PRESENT ADDRESS OUTSIDE KERALA: HOUSE NAME ENGLISH INVALID ",
+                                "The House Name English "
+                                                +
+                                                deathAddressInfo.getPresentOutsideKeralaHouseNameEn()
+                                                + " is invalid");
+        }
+        if (StringUtils.isEmpty(deathAddressInfo
+                        .getPresentOutsideKeralaHouseNameMl())) {
+                throw new CustomException(
+                                " PRESENT ADDRESS OUTSIDE KERALA: HOUSE NAME MALAYALAM INVALID ",
+                                "The House Name Malayalam "
+                                                +
+                                                deathAddressInfo.getPresentOutsideKeralaHouseNameMl()
+                                                + " is invalid");
+        }
+}
+}
+} else {
+if (StringUtils.isEmpty(deathAddressInfo
+        .getPresentOutSideIndiaProvinceEn())) {
+throw new CustomException(
+                "  PRESENT ADDRESS OUTSIDE INDIA: PROVINCE ENGLISH INVALID ",
+                "The   Province English " +
+                                deathAddressInfo.getPresentOutSideIndiaProvinceEn()
+                                + " is invalid");
+}
+if (StringUtils.isEmpty(deathAddressInfo
+        .getPresentOutSideIndiaProvinceMl())) {
+throw new CustomException(
+                "  PRESENT ADDRESS OUTSIDE INDIA: PROVINCE MALAYALAM INVALID ",
+                "The   Province Malayalam " +
+                                deathAddressInfo.getPresentOutSideIndiaProvinceMl()
+                                + " is invalid");
+}
+if (StringUtils.isEmpty(deathAddressInfo
+        .getPresentOutSideIndiaadrsVillage())) {
+throw new CustomException(
+                "  PRESENT ADDRESS OUTSIDE INDIA: VILLAGE INVALID ",
+                "The   Village " +
+                                deathAddressInfo.getPresentOutSideIndiaadrsVillage()
+                                + " is invalid");
+}
+if (StringUtils.isEmpty(deathAddressInfo
+        .getPresentOutSideIndiaadrsCityTown())) {
+throw new CustomException(
+                "  PRESENT ADDRESS OUTSIDE INDIA: CITY INVALID ",
+                "The City/Town " +
+                                deathAddressInfo.getPresentOutSideIndiaadrsCityTown()
+                                + " is invalid");
+}
+// if(StringUtils.isEmpty(deathAddressInfo.getPresentOutSideIndiaPostCode()))
+// {
+// throw new CustomException("  PRESENT ADDRESS OUTSIDE
+// INDIA: POST CODE INVALID",
+// "The Post Code" +
+// deathAddressInfo.getPresentOutSideIndiaPostCode() + " is
+// invalid");
+// }
+if (StringUtils.isEmpty(deathAddressInfo
+        .getPresentOutSideIndiaAdressEn())) {
+throw new CustomException(
+                "  PRESENT ADDRESS OUTSIDE INDIA: ADDRESS LINE ONE ENGLISH INVALID ",
+                "The   Adress Line One English " +
+                                deathAddressInfo.getPresentOutSideIndiaAdressEn()
+                                + " is invalid");
+}
+if (StringUtils.isEmpty(deathAddressInfo
+        .getPresentOutSideIndiaAdressMl())) {
+throw new CustomException(
+                "  PRESENT ADDRESS OUTSIDE INDIA: ADDRESS LINE ONE MALAYALAM INVALID ",
+                "The   Adress Line One Malayalam " +
+                                deathAddressInfo.getPresentOutSideIndiaAdressMl()
+                                + " is invalid");
+}
+
+}
+//  present address end
         });
     }
 }
+
 //Validation for Correction 22.03.2023
 public void validateCorrectionCommonFields(DeathCorrectionRequest request) {
       
