@@ -179,10 +179,9 @@ const BornOutsideCheckPage = ({ onSubmit, value, userType }) => {
               <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PLACE_OF_BIRTH")}`}</CardLabel>
             </div>
             <div className="col-md-6">
-              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>: {t(BornOutsideChildDetails?.outsideBirthPlace)}</CardText>
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>: {t(BornOutsideChildDetails?.outsideBirthPlaceEn?BornOutsideChildDetails.outsideBirthPlaceEn: "CR_NOT_RECORDED" ) +  "/" + t(BornOutsideChildDetails.outsideBirthPlaceMl) }</CardText>
             </div>
           </div>
-
           {BornOutsideParentsDetails && (
             <div>
               <div className="row">

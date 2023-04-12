@@ -4,7 +4,8 @@ import set from "lodash/set";
 
 export const DeathNACRegistrationData = (data = {}) => {
     console.log(data, "data  in json field");
-    const {DeathNACDetails = {}, DeceasedMiddleNameMl="", Id=null, DeathNACAddressPage={}, DeathNACInitiator={}} = data;
+    const {DeathNACDetails = {}, DeceasedMiddleNameMl="", Id=null, DeathNACAddressPage={}, DeathNACInitiator={}, DeathNACParentsDetails
+={}} = data;
 
     let InformationDeath={
         Id,
@@ -47,21 +48,22 @@ export const DeathNACRegistrationData = (data = {}) => {
         DeathPlaceHomeStreetNameMl:_.get(DeathNACDetails, "DeathPlaceHomeStreetNameMl",null),
         DeathPlaceHomeHoueNameEn:_.get(DeathNACDetails, "DeathPlaceHomeHoueNameEn",null),
         DeathPlaceHomeHoueNameMl:_.get(DeathNACDetails, "DeathPlaceHomeHoueNameMl",null),
-        PlaceOfBurialEn:_.get(DeathNACDetails, "PlaceOfBurialEn",null),
+        PlaceOfBurialEn:_.get(DeathNACDetails, "placeofBurial",null),
+
 
         SpouseUnavailable:null,
-        SpouseType:null,
-        SpouseNameEn:null,
-        SpouseNameML:null,
-        SpouseAadhaar:null,
+        SpouseType:_.get(DeathNACParentsDetails, "SpouseType",null),
+        SpouseNameEn:_.get(DeathNACParentsDetails, "SpouseNameEN",null),
+        SpouseNameML:_.get(DeathNACParentsDetails, "SpouseNameMl",null),
+        SpouseAadhaar:_.get(DeathNACParentsDetails, "SpouseAadhaar",null),
         FatherUnavailable:false,
-        FatherNameEn:null,
-        FatherNameMl:null,
-        FatherAadharNo:null,
+        FatherNameEn:_.get(DeathNACParentsDetails, "fatherFirstNameEn",null),
+        FatherNameMl:_.get(DeathNACParentsDetails, "fatherFirstNameMl",null),
+        FatherAadharNo:_.get(DeathNACParentsDetails, "fatherAadhar",null),
         MotherUnavailable:false,
-        MotherNameEn:null,
-        MotherNameMl:null,
-        MotherAadharNo:null,
+        MotherNameEn:_.get(DeathNACParentsDetails, "motherFirstNameEn",null),
+        MotherNameMl:_.get(DeathNACParentsDetails, "motherFirstNameMl",null),
+        MotherAadharNo:_.get(DeathNACParentsDetails, "motherAadhar",null),
         DeathACKNo:false,
         funcionUID:"CRDRNA",
 
@@ -153,10 +155,10 @@ export const DeathNACRegistrationData = (data = {}) => {
         ApplicantName : _.get(DeathNACInitiator, "initiatorNameEn", ""),
         ApplicantAadhaarSubmitted : true,
         ApplicantAadhaarNo : _.get(DeathNACInitiator, "initiatorAadhar", ""),
-        ApplicantRelation : null,
+        ApplicantRelation : _.get(DeathNACInitiator, "RelationwithDeceased", ""),
         ApplicantAddress : _.get(DeathNACInitiator, "initiatorAddress", ""),
         ApplicantMobileNo : _.get(DeathNACInitiator, "initiatorMobile", ""),
-        ApplicantEmail : null,
+        ApplicantEmail : _.get(DeathNACInitiator, "initiatorEmail", ""),
     };
     let AuditDetails = {
         createdBy : null,

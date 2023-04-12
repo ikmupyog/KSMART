@@ -1053,7 +1053,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     } else {
       setDeliveryMethodStError(false);
     }
-    if (isChildName) {
+    if (!isChildName) {
       if (childFirstNameEn.trim() == null || childFirstNameEn.trim() == '' || childFirstNameEn.trim() == undefined) {
         validFlag = false;
         setChildFirstNameEn("");
@@ -1194,7 +1194,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   } else {
     return (
       <React.Fragment>
-        <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+        {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
         {window.location.href.includes("/citizen") ? <Timeline /> : null}
         {window.location.href.includes("/employee") ? <Timeline /> : null}
         <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!childDOB || !gender || !birthPlace
@@ -1424,15 +1424,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
               </div>
             </div>
           </div>
-          <div className="row">
-            <div className="col-md-12">
-              <div className="col-md-6">
-                <CheckBox label={t("CR_WANT_TO_ENTER_CHILD_NAME")} onChange={setChildName}
-                  value={isChildName} checked={isChildName} />
-              </div>
-            </div>
-          </div>
-          {isChildName === true && (
+
+          {isChildName === false && (
             <div>
               {/* <div className="row">
               <div className="col-md-12">
@@ -1566,6 +1559,14 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                 </div>
               </div>
             </div>)}
+          <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-6">
+                <CheckBox label={t("CR_WANT_TO_ENTER_CHILD_NAME")} onChange={setChildName}
+                  value={isChildName} checked={isChildName} />
+              </div>
+            </div>
+          </div>
           {/* <div className="row">
           <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("OTHER_DETAILS")}`}</span> </h1>
           </div>

@@ -111,50 +111,6 @@ const  SearchMarriageInclusion = ({ tenantId, t, onSubmit, data, count, onCorrec
           disableSortBy: true,
           accessor: (row) => GetCell(`${row.BrideDetails.brideFirstnameEn} ${row.BrideDetails.brideMiddlenameEn} ${row.BrideDetails.brideLastnameEn}` || "-"),
       },
-      // {
-      //   Header: t("CR_COMMON_DECEASED_NAME"),
-      //   disableSortBy: true,
-      //   accessor: (row) => GetCell(row.InformationDeath.DeceasedFirstNameEn + row.InformationDeath.DeceasedMiddleNameEn + row.InformationDeath.DeceasedLastNameEn || "-"),
-      // },
-      // {
-      //   Header: t("CR_COMMON_DEATH_PLACE"),
-      //   disableSortBy: true,
-      //   accessor: (row) => GetCell(row.InformationDeath.DeathPlace || "-"),
-      // },
-      // {
-      //   Header: t("Download Certificate"),
-      //   disableSortBy: true,
-      //   Cell: ({ row }) => {
-      //     // console.log('row',row?.original);
-      //     return (
-      //       <div>
-      //         {row.original?.filestoreId && row.original?.isSuccess === true ? (
-      //           <span className="link" onClick={() => downloadDocument(row?.original?.filestoreId)}>
-      //             Download
-      //           </span>
-      //         ) : (
-      //           <Loader />
-      //         )}
-      //       </div>
-      //     );
-      //   },
-      // },
-
-      // {
-      //   Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),
-      //   disableSortBy: true,
-      //   accessor: (row) => GetCell(row.tradeName || ""),
-      // },
-      // {
-      //   Header: t("TL_LOCALIZATION_TRADE_OWNER_NAME"),
-      //   accessor: (row) => GetCell(row.tradeLicenseDetail.owners.map( o => o.name ). join(",") || ""),
-      //   disableSortBy: true,
-      // },
-      // {
-      //   Header: t("TL_COMMON_TABLE_COL_STATUS"),
-      //   accessor: (row) =>GetCell(t( row?.workflowCode&&row?.status&&`WF_${row?.workflowCode?.toUpperCase()}_${row.status}`|| "NA") ),
-      //   disableSortBy: true,
-      // }
     ],
     []
   );

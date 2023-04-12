@@ -13,12 +13,12 @@ const ApplicationStillBirthDetails = () => {
   const { id: applicationNumber } = useParams();
   const [showToast, setShowToast] = useState(null);
   // const [callUpdateService, setCallUpdateValve] = useState(false);
-  const [businessService, setBusinessService] = useState("BIRTHHOSP21"); //DIRECTRENEWAL BIRTHHOSP21
+  const [businessService, setBusinessService] = useState("STILLBIRTHHOSP"); //DIRECTRENEWAL BIRTHHOSP21
   const [numberOfApplications, setNumberOfApplications] = useState([]);
   const [allowedToNextYear, setAllowedToNextYear] = useState(false);
   sessionStorage.setItem("applicationNumber", applicationNumber);
   // const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
-  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDetail(t, tenantId, applicationNumber);
+  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationStillBirthDetail(t, tenantId, applicationNumber);
   const [params, setParams, clearParams] =  Digit.Hooks.useSessionStorage("CR_EDIT_STILLBIRTH_REG", {}) 
   const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_EDIT_STILLBIRTH_FLAG", false) 
   const stateId = Digit.ULBService.getStateId();
@@ -29,7 +29,7 @@ const ApplicationStillBirthDetails = () => {
     data: updateResponse,
     error: updateError,
     mutate,
-  } = Digit.Hooks.cr.useApplicationActions(tenantId);
+  } = Digit.Hooks.cr.useCRStillBirthApplicationActions(tenantId);
 
   // let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
   // console.log(applicationDetails?.applicationData?.applicationtype);
