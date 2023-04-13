@@ -117,6 +117,13 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
         currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
         setpermntInKeralaAdrLBName(currentLB[0]);
         cmbFilterDistrict = cmbDistrict.filter((cmbDistrict) => cmbDistrict.statecode === currentLB[0].city.statecode);
+        console.log(cmbFilterDistrict);
+
+        setDistrictvalue(cmbFilterDistrict);
+                //console.log(cmbFilterDistrict.filter((cmbFilterDistrict) => cmbFilterDistrict.code === currentLB[0].city.distCodeStr)[0]);
+                // setinsideKeralaDistrict(null);
+      setpermntInKeralaAdrDistrict(cmbFilterDistrict.filter((cmbFilterDistrict) => cmbFilterDistrict.code === currentLB[0].city.distCodeStr)[0]);
+
         // cmbFilterDistrict = cmbDistrict.filter((cmbDistrict) => cmbDistrict.code === currentLB[0].city.distCodeStr);
         setpermntInKeralaAdrDistrict(cmbFilterDistrict[0]);
         cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === currentLB[0].city.districtid);
@@ -128,7 +135,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
         setIsInitialRender(false);
       }
     }
-  }, [District, LBType, localbodies, Talukvalues, Villagevalues, PostOfficevalues, lbs, isInitialRender]);
+  }, [District, LBType, localbodies,Districtvalues, Talukvalues, Villagevalues, PostOfficevalues, lbs, isInitialRender]);
 
   if (isEditBirth) {
     if (formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrDistrict != null) {
@@ -409,7 +416,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
             <Dropdown
               t={t}
               optionKey="name"
-              option={cmbDistrict}
+              option={Districtvalues}
               selected={permntInKeralaAdrDistrict}
               select={setSelectpermntInKeralaAdrDistrict}
               placeholder={`${t("CS_COMMON_DISTRICT")}`}
