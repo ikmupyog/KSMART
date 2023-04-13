@@ -576,24 +576,28 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
           config={config}
           onSelect={goNext}
           onSkip={onSkip}
-          // isDisabled={
-          //   !marriageDOM ||
-          //   !marriageDistrictid ||
-          //   !marriageTalukID ||
-          //   !marriageVillageName ||
-          //   !marriageLBtype ||
-          //   !marriageTenantid ||
-          //   !marriagePlacetype ||
-          //   (marriagePlacetype.name === "Religious Institution" ? !placeidEn : false) ||
-          //   (marriagePlacetype.name === "Mandapam/Hall/Auditorium/Convention Centre" ? !placeidEn : false) ||
-          //   (marriagePlacetype.name === "Sub Registrar’s Office" ? !placeidEn : false) ||
-          //   (marriagePlacetype.name === "House"
-          //     ? !marriageLocalityEn || !marriageLocalityMl || !marriagePlacenameEn || !marriagePlacenameMl
-          //     : false) ||
-          //   (marriagePlacetype.name === "Public Place" || "Private Place"
-          //     ? !marriageLocalityEn || !marriageLocalityMl || !marriagePlacenameEn || !marriagePlacenameMl
-          //     : false)
-          // }
+          isDisabled={
+            !marriageDOM ||
+            !marriageDistrictid ||
+            !marriageTalukID ||
+            !marriageVillageName ||
+            !marriageLBtype ||
+            !marriageTenantid ||
+            !marriagePlacetype ||
+            (marriagePlacetype.code === "RELIGIOUS_INSTITUTION" ? !placeidEn : false) ||
+            (marriagePlacetype.code === "MANDAPAM_HALL_AND_OTHER" ? !placeidEn : false) ||
+            (marriagePlacetype.code === "SUB_REGISTRAR_OFFICE" ? !placeidEn : false) ||
+            (marriagePlacetype.code === "HOUSE"
+              ? !marriageLocalityEn || !marriageLocalityMl || !marriageHouseNoAndNameEn || !marriageHouseNoAndNameMl
+              : false) ||
+            (marriagePlacetype.code === "PUBLIC_PLACE" || marriagePlacetype.code === "PRIVATE_PLACE"
+              ? !marriageLocalityEn || !marriageLocalityMl || !marriagePublicOrPrivateNamePlaceEn || !marriagePublicOrPrivateNamePlaceMl
+              : false) ||
+            (marriagePlacetype.code === "OTHER"
+              ? !marriageLocalityEn || !marriageLocalityMl || !marriagePlacenameEn || !marriagePlacenameMl
+              : false) || 
+            !marriageType
+           }
         >
           <div className="row">
             <div className="col-md-12">
