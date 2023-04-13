@@ -49,7 +49,7 @@ public class MarriageCorrectionController {
 
 
 
-    @PostMapping(value = { "/updatemarriageregistry"})
+    @PostMapping(value = { "/_updatemarriagecorrection"})
     public ResponseEntity<MarriageCorrectionResponse> registryUpdate(@RequestBody MarriageCorrectionRequest request) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
 
 
