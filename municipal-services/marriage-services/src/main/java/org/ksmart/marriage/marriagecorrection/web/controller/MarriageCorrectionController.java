@@ -6,7 +6,10 @@ import org.ksmart.marriage.marriagecorrection.web.model.MarriageCorrectionDetail
 import org.ksmart.marriage.marriagecorrection.web.model.MarriageCorrectionRequest;
 import org.ksmart.marriage.marriagecorrection.web.model.MarriageCorrectionResponse;
 import org.ksmart.marriage.marriagecorrection.service.MarriageCorrectionService;
+import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryRequest;
+import org.ksmart.marriage.utils.MarriageConstants;
 import org.ksmart.marriage.utils.ResponseInfoFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,13 +36,34 @@ public class MarriageCorrectionController {
     }
 
     @PostMapping("/_createmarriagecorrection")
-    public ResponseEntity<MarriageCorrectionResponse> create(@Valid @RequestBody MarriageCorrectionRequest request) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    public ResponseEntity<MarriageCorrectionResponse> create(@RequestBody MarriageCorrectionRequest request) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
 
         List<MarriageCorrectionDetails> marriageCorrectionDetailsList = marriageCorrectionService.createCorrection(request);
         MarriageCorrectionResponse response = MarriageCorrectionResponse
                 .builder()
                 .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))
                 .marriageCorrectionDetails(marriageCorrectionDetailsList)
+                .build();
+        return ResponseEntity.ok(response);
+    }
+
+
+
+    @PostMapping(value = { "/_updatemarriagecorrection"})
+    public ResponseEntity<MarriageCorrectionResponse> registryUpdate(@RequestBody MarriageCorrectionRequest request) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+
+
+        //Updating Marriage registry if Registrar Approved
+        //if(request.getMarriageCorrectionDetails().get(0).getStatus().equals(MarriageConstants.WORKFLOW_STATUS_APPROVED)) {
+
+
+            List<MarriageCorrectionDetails> marriageCorrectionDetailsList = marriageCorrectionService.updateMarriageRegistry(request);
+
+        //}
+        MarriageCorrectionResponse response = MarriageCorrectionResponse
+                .builder()
+                .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))
+                .marriageCorrectionDetails(request.getMarriageCorrectionDetails())
                 .build();
         return ResponseEntity.ok(response);
     }

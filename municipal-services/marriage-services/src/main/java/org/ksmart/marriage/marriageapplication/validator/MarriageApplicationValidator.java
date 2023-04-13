@@ -845,7 +845,7 @@ public class MarriageApplicationValidator {
                                                                                         .getPermntInKeralaAdrPostOffice())) {
                                                                                 throw new CustomException(
                                                                                                 "GROOM PERMANENT ADDRESS INSIDE KERALA: POSTOFFICE INVALID ",
-                                                                                                "The Postofficef " +
+                                                                                                "The Postoffice " +
                                                                                                                 groomaddressInfo.getPermntInKeralaAdrPostOffice()
                                                                                                                 + " is invalid");
                                                                         }
@@ -1411,14 +1411,14 @@ public class MarriageApplicationValidator {
                                                                                                                 brideaddressInfo.getPermntInKeralaWardNo()
                                                                                                                 + " is invalid");
                                                                         }
-                                                                        if (StringUtils.isEmpty(brideaddressInfo
-                                                                                        .getPresentOutsideKeralaPostOfficeEn())) {
-                                                                                throw new CustomException(
-                                                                                                " BRIDE PERMANENT ADDRESS INSIDE KERALA: POSTOFFICE INVALID ",
-                                                                                                "The   Postofficef " +
-                                                                                                                brideaddressInfo.getPresentOutsideKeralaPostOfficeEn()
-                                                                                                                + " is invalid");
-                                                                        }
+//                                                                        if (StringUtils.isEmpty(brideaddressInfo
+//                                                                                        .getPresentOutsideKeralaPostOfficeEn())) {
+//                                                                                throw new CustomException(
+//                                                                                                " BRIDE PERMANENT ADDRESS INSIDE KERALA: POSTOFFICE INVALID ",
+//                                                                                                "The   Postofficef " +
+//                                                                                                                brideaddressInfo.getPresentOutsideKeralaPostOfficeEn()
+//                                                                                                                + " is invalid");
+//                                                                        }
                                                                         if (StringUtils.isEmpty(brideaddressInfo
                                                                                         .getPermntInKeralaAdrPincode())) {
                                                                                 throw new CustomException(
