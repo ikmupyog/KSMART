@@ -329,18 +329,15 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
     const [PermanentOutSideIndiaLineOneMlError, setPermanentOutSideIndiaLineOneMlError] = useState(false);
     const [PermanentOutSideIndiaLineTwoEnError, setPermanentOutSideIndiaLineTwoEnError] = useState(false);
     const [PermanentOutSideIndiaLineTwoMlError, setPermanentOutSideIndiaLineTwoMlError] = useState(false);
-    console.log("countryValuePermanent",countryValuePermanent);
-    console.log("valuePermanent",valuePermanent);
-    console.log("isPrsentAddress",isPrsentAddress);
-    
+       
     const onSkip = () => onSelect();
     function setSameAsPresent(e) {
         setIsPrsentAddress(e.target.checked);
         if (e.target.checked == true) {
             setpermtaddressCountry(presentaddressCountry);
             setpermtaddressStateName(presentaddressStateName);
-            setCountryValuePermanent(countryvalue);
-            setValuePermanent(value);
+            setCountryValuePermanent(countryValuePermanent);
+            setValuePermanent(valuePermanent);
             setpermntInKeralaAdrDistrict(presentInsideKeralaDistrict);
             setpermntInKeralaAdrLBName(presentInsideKeralaLBName);
             setpermntInKeralaAdrTaluk(presentInsideKeralaTaluk);
@@ -1766,7 +1763,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                             />
                         </div>
                     )}
-                    {countryValuePermanent === "IND" && valuePermanent === "KL" && isPrsentAddress === false && (
+                    {countryValuePermanent === "IND" && valuePermanent === "kl" && isPrsentAddress === false && (
                         <div>
                             <AddressPermanentInsideKerala
                                 permntInKeralaAdrDistrict={permntInKeralaAdrDistrict}

@@ -50,7 +50,6 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
   let districtid = null;
   let cmbFilterDistrict = [];
   let cmbLB = [];
-  console.log(value);
   Taluk &&
     Taluk["common-masters"] && Taluk["common-masters"].Taluk &&
     Taluk["common-masters"].Taluk.map((ob) => {
@@ -71,7 +70,8 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
   //   PostOffice["common-masters"].PostOffice.map((ob) => {
   //     cmbPostOffice.push(ob);
   //   });
-  console.log("valuePermanent",valuePermanent);
+  
+
   useEffect(() => {
     setcmbFilterPerDistrict(cmbDistrict.filter((cmbDistrict) => cmbDistrict.statecode === valuePermanent));
   // }
@@ -80,7 +80,6 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
 
     if (isInitialRender) {
       if (cmbDistrict.length > 0) {
-        console.log(cmbDistrict);
         // currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
         // setinsideKeralaLBName(currentLB[0]);
         //cmbFilterDistrict = cmbDistrict.filter((cmbDistrict) => cmbDistrict.statecode === "pb");
