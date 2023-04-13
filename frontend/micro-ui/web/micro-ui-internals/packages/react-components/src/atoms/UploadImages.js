@@ -3,35 +3,46 @@ import PropTypes from "prop-types";
 import { CameraSvg } from "./svgindex";
 import { DeleteBtn } from "./svgindex";
 
-const MiniUpload = (props) => {
+const MiniUpload = ({ onUpload }) => {
   return (
     <div className="upload-img-container">
       <CameraSvg className="upload-camera-img" />
-      <input type="file" id="miniupload" accept="image/*" onChange={(e) => props.onUpload(e)} />
+      <input type="file" id="miniupload" accept="image/*" onChange={(e) => onUpload(e)} />
     </div>
   );
 };
 
-const UploadImages = (props) => {
-  if (props.thumbnails && props.thumbnails.length > 0) {
+const UploadImages = ({ thumbnails = [], isMulti = true, onDelete, onUpload }) => {
+  if (thumbnails && thumbnails.length > 0) {
+    // if (!isMulti) {
+    //   return (
+    //     <div className="multi-upload-wrap">
+    //       <div>
+    //         <DeleteBtn onClick={() => onDelete(thumbnails[0])} className="delete" fill="#d4351c" />
+    //         <img src={thumbnails[0]} alt="uploaded thumbnail" />
+    //       </div>
+    //     </div>
+    //   );
+    // } else {
     return (
-      <div className="multi-upload-wrap">
-        {props.thumbnails.map((thumbnail, index) => {
+      <div className={!isMulti ? "single-upload-wrap" : "multi-upload-wrap"}>
+        {thumbnails.map((thumbnail, index) => {
           return (
             <div key={index}>
-              <DeleteBtn onClick={() => props.onDelete(thumbnail)} className="delete" fill="#d4351c" />
+              <DeleteBtn onClick={() => onDelete(thumbnail)} className="delete" fill="#d4351c" />
               <img src={thumbnail} alt="uploaded thumbnail" />
             </div>
           );
         })}
-        {props.thumbnails.length < 3 ? <MiniUpload onUpload={props.onUpload} /> : null}
+        {thumbnails.length < 3 && isMulti ? <MiniUpload onUpload={onUpload} /> : null}
       </div>
     );
+    // }
   } else {
     return (
-      <div className="upload-wrap" onClick={(e) => props.onUpload(e)}>
+      <div className={!isMulti ? "upload-single-wrap" : "upload-wrap"} onClick={(e) => onUpload(e)}>
         <CameraSvg />
-        <input type="file" id="upload" accept="image/*" onChange={(e) => props.onUpload(e)} />
+        <input type="file" id="upload" accept="image/*" onChange={(e) => onUpload(e)} />
       </div>
     );
   }

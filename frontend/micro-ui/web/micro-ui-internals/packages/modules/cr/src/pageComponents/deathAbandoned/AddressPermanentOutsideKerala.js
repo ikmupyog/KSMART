@@ -223,7 +223,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
 
   return (
     <React.Fragment>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!permntOutsideKeralaDistrict}>
+      {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!permntOutsideKeralaDistrict}> */}
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -478,7 +478,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
             />
           </div>
         </div>
-      </FormStep>
+      {/* </FormStep> */}
     </React.Fragment>
   );
 };

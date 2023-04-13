@@ -67,7 +67,7 @@ const AddressSameAsAbove = ({ config, onSelect, userType, formData, isPrsentAddr
   }
   return (
     <React.Fragment>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!isPrsentAddress}>
+      {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!isPrsentAddress}> */}
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -88,7 +88,7 @@ const AddressSameAsAbove = ({ config, onSelect, userType, formData, isPrsentAddr
           </div>
         </div>
 
-      </FormStep>
+      {/* </FormStep> */}
     </React.Fragment>
   );
 };
