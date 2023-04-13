@@ -13,7 +13,8 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   permntInKeralaAdrLocalityNameMl, setpermntInKeralaAdrLocalityNameMl, permntInKeralaAdrStreetNameEn, setpermntInKeralaAdrStreetNameEn,
   permntInKeralaAdrStreetNameMl, setpermntInKeralaAdrStreetNameMl, lbs, setLbs, Talukvalues, setLbsTalukvalue, Villagevalues, setLbsVillagevalue, permntInKeralaWardNo,
   setpermntInKeralaWardNo, PostOfficevalues, setPostOfficevalues, isEditBirth = false, isEditDeath = false, isEditAdoption,
-  isEditStillBirth = false, countryValuePermanent, setCountryValuePermanent, valuePermanent, setValuePermanent
+  isEditStillBirth = false, countryValuePermanent, setCountryValuePermanent, valuePermanent, setValuePermanent,
+  permlbs,setPermLbs,PostOfficePermvalues, setPostOfficePermvalues
   // isInitialRender, setIsInitialRender
   // isInitialRender, setIsInitialRender isEditBirth ? isEditBirth : isEditDeath ? false :
 
@@ -30,19 +31,19 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   const [tenantboundary, setTenantboundary] = useState(false);
   const queryClient = useQueryClient();
   if (tenantboundary) {
-    queryClient.removeQueries("TL_ZONAL_OFFICE");
-    queryClient.removeQueries("CR_VILLAGE");
-    queryClient.removeQueries("CR_TALUK");
-    queryClient.removeQueries("CR_TALUK");
+    queryClient.removeQueries("CR_PERMANANT_ADDR_WARD");
+    queryClient.removeQueries("CR_PERMANANT_ADDR_VILLAGE");
+    queryClient.removeQueries("CR_PERMANANT_ADDR_TALUK");
     setTenantboundary(false);
   }
+  
   const { data: PostOffice = {}, isPostOfficeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
-  const { data: Taluk = {}, isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
-  const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
+  const { data: Taluk = {}, isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PermanantTaluk");
+  const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PermanantVillage");
   const { data: District = {}, isDistrictLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
   const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
   const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
-  const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantWard, "egov-location", "boundary-data");
+  const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantWard, "egov-location", "PermanantWard");
   const [toast, setToast] = useState(false);
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : isEditStillBirth ? isEditStillBirth : false);
@@ -131,11 +132,11 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
         cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
         setLbsVillagevalue(cmbFilterVillage);
         cmbFilterPostOffice = cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === currentLB[0].city.districtid);
-        setPostOfficevalues(cmbFilterPostOffice);
+        setPostOfficePermvalues(cmbFilterPostOffice);
         setIsInitialRender(false);
       }
     }
-  }, [District, LBType, localbodies, Districtvalues, Talukvalues, Villagevalues, PostOfficevalues, lbs, isInitialRender]);
+  }, [District, LBType, localbodies, Districtvalues, Talukvalues, Villagevalues, PostOfficePermvalues, permlbs, isInitialRender]);
 
   if (isEditBirth) {
     if (formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrDistrict != null) {
@@ -278,19 +279,19 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
     setpermntInKeralaAdrTaluk(null);
     setpermntInKeralaAdrVillage(null);
     setpermntInKeralaAdrLBName(null);
-    setLbs(null);
+    setPermLbs(null);
     districtid = value.districtid;
     setTenantboundary(true);
     if (cmbLB.length > 0) {
       currentLB = cmbLB.filter((cmbLB) => cmbLB.city.distCodeStr === value.code);
-      setLbs(currentLB);
+      setPermLbs(currentLB);
       setpermntInKeralaAdrLBName(currentLB);
       cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === districtid);
       setLbsTalukvalue(cmbFilterTaluk);
       cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === districtid);
       setLbsVillagevalue(cmbFilterVillage);
       cmbFilterPostOffice = cmbPostOffice.filter((cmbPostOffice) => cmbPostOffice.distid === districtid);
-      setPostOfficevalues(cmbFilterPostOffice);
+      setPostOfficePermvalues(cmbFilterPostOffice);
       setIsInitialRender(false);
     }
   }
@@ -473,7 +474,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
           <Dropdown
             t={t}
             optionKey="name"
-            option={lbs}
+            option={permlbs}
             selected={permntInKeralaAdrLBName}
             select={setSelectpermntInKeralaAdrLBName}
             placeholder={`${t("CS_COMMON_LB_NAME")}`}
@@ -506,7 +507,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
           <Dropdown
             t={t}
             optionKey="name"
-            option={PostOfficevalues}
+            option={PostOfficePermvalues}
             selected={permntInKeralaAdrPostOffice}
             select={setSelectpermntInKeralaAdrPostOffice}
             placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
@@ -585,7 +586,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
             onChange={setSelectpermntInKeralaAdrHouseNameEn}
             placeholder={`${t("CR_HOUSE_NAME_EN")}`}
             disable={isDisableEdit}
-            {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
+            {...(validation = { pattern: "^[a-zA-Z-0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
           />
         </div>
       </div>
@@ -649,7 +650,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
             placeholder={`${t("CR_HOUSE_NAME_ML")}`}
             disable={isDisableEdit}
             {...(validation = {
-              pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
+              pattern: "^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$",
               isRequired: true,
               type: "text",
               title: t("CR_INVALID_HOUSE_NAME_ML"),

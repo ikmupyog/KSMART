@@ -2,6 +2,24 @@ import { MdmsService } from "../../services/elements/MDMS";
 import { useQuery } from "react-query";
 
 const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {}) => {
+  const useCRPresentAddressWard = () => {
+    return useQuery("CR_PRESENT_ADDR_WARD", () => MdmsService.getTLZonalOffice(tenantId, moduleCode, type), config);
+  };
+  const useCRPresentAddressVillage = () => {
+    return useQuery("CR_PRESENT_ADDR_VILLAGE", () => MdmsService.getCRVillage(tenantId, moduleCode, type), config);
+  };
+  const useCRPresentAddressTaluk = () => {
+    return useQuery("CR_PRESENT_ADDR_TALUK", () => MdmsService.getCRTaluk(tenantId, moduleCode, type), config);
+  };
+  const useCRPermanentAddressWard = () => {
+    return useQuery("CR_PERMANANT_ADDR_WARD", () => MdmsService.getTLZonalOffice(tenantId, moduleCode, type), config);
+  };
+  const useCRPermanentAddressVillage = () => {
+    return useQuery("CR_PERMANANT_ADDR_VILLAGE", () => MdmsService.getCRVillage(tenantId, moduleCode, type), config);
+  };
+  const useCRPermanentAddressTaluk = () => {
+    return useQuery("CR_PERMANANT_ADDR_TALUK", () => MdmsService.getCRTaluk(tenantId, moduleCode, type), config);
+  };
   const useMarriagePlace = () => {
     return useQuery("CR_MARRIAGE_PLACE_TYPE", () => MdmsService.getMarriagePlaceId(tenantId, moduleCode), config);
   };
@@ -226,9 +244,8 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
               ?.filter((e) => e.code.split(".").length <= 2)
               ?.map((ownerShipDetails) => ({
                 ...ownerShipDetails,
-                i18nKey: `COMMON_MASTERS_OWNERSHIPCATEGORY_INDIVIDUAL_${
-                  ownerShipDetails.value.split(".")[1] ? ownerShipDetails.value.split(".")[1] : ownerShipDetails.value.split(".")[0]
-                }`,
+                i18nKey: `COMMON_MASTERS_OWNERSHIPCATEGORY_INDIVIDUAL_${ownerShipDetails.value.split(".")[1] ? ownerShipDetails.value.split(".")[1] : ownerShipDetails.value.split(".")[0]
+                  }`,
               }));
             const finalArr = arr.filter((data) => data.code.includes("INDIVIDUAL") || data.code.includes("OTHER"));
 
@@ -237,23 +254,22 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
 
           const res = ownerShipdropDown?.length
             ? ownerShipdropDown
-                ?.map((ownerShipDetails) => ({
-                  ...ownerShipDetails,
-                  i18nKey: `PT_OWNERSHIP_${
-                    ownerShipDetails.value.split(".")[1] ? ownerShipDetails.value.split(".")[1] : ownerShipDetails.value.split(".")[0]
+              ?.map((ownerShipDetails) => ({
+                ...ownerShipDetails,
+                i18nKey: `PT_OWNERSHIP_${ownerShipDetails.value.split(".")[1] ? ownerShipDetails.value.split(".")[1] : ownerShipDetails.value.split(".")[0]
                   }`,
-                }))
-                .reduce((acc, ownerShipDetails) => {
-                  if (ownerShipDetails.code.includes("INDIVIDUAL")) {
-                    return [...acc, ownerShipDetails];
-                  } else if (ownerShipDetails.code.includes("OTHER")) {
-                    const { code, value, ...everythingElse } = ownerShipDetails;
-                    const mutatedOwnershipDetails = { code: code.split(".")[0], value: value.split(".")[0], ...everythingElse };
-                    return [...acc, mutatedOwnershipDetails];
-                  } else {
-                    return acc;
-                  }
-                }, [])
+              }))
+              .reduce((acc, ownerShipDetails) => {
+                if (ownerShipDetails.code.includes("INDIVIDUAL")) {
+                  return [...acc, ownerShipDetails];
+                } else if (ownerShipDetails.code.includes("OTHER")) {
+                  const { code, value, ...everythingElse } = ownerShipDetails;
+                  const mutatedOwnershipDetails = { code: code.split(".")[0], value: value.split(".")[0], ...everythingElse };
+                  return [...acc, mutatedOwnershipDetails];
+                } else {
+                  return acc;
+                }
+              }, [])
             : null;
 
           return res;
@@ -270,8 +286,8 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
 
         categoryData.length > 0
           ? categoryData?.map((category) => {
-              OwnerShipCategory[category.code] = category;
-            })
+            OwnerShipCategory[category.code] = category;
+          })
           : null;
 
         if (OwnerShipCategory) {
@@ -297,6 +313,18 @@ const useCivilRegistrationMDMS = (tenantId, moduleCode, type, filter, config = {
   };
 
   switch (type) {
+    case "PresentWard":
+      return useCRPresentAddressWard();
+    case "PresentVillage":
+      return useCRPresentAddressVillage();
+    case "PresentTaluk":
+      return useCRPresentAddressTaluk();
+    case "PermanantWard":
+      return useCRPermanentAddressWard();
+    case "PermanantVillage":
+      return useCRPermanentAddressVillage();
+    case "PermanantTaluk":
+      return useCRPermanentAddressTaluk();
     case "MarriagePlace":
       return useMarriagePlace();
     case "TypeOfMarriage":
