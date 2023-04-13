@@ -24,12 +24,12 @@ const hstyle = {
 const selectedDeathSearch=[
   {label:"Death", value:"death"},
   {label:"Death NAC", value:"deathnac"},
-  
+  {label:"Abandoned Death", value:"abandoneddeathsearch"},
 ]
 let  validation =''
 
 const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count, applicationDeathType, setApplicationDeathType }) => {
-  console.log(data);
+  console.log("SearchApplicationDeath",applicationDeathType);
 
   const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
     defaultValues: {
@@ -94,6 +94,11 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count, applicatio
     Digit.SessionStorage.set("CR_DEATH_EDIT", finaldata);
     sessionStorage.setItem("CR_DEATH_EDIT_FLAG", true);
   };
+  const handleAbandonedLinkClick = (finaldata) => {
+    console.log( "CR_CREATE_ABANDONEDDEATH_REG",finaldata );
+    Digit.SessionStorage.set("CR_CREATE_ABANDONEDDEATH_REG", finaldata);
+    sessionStorage.setItem("CR_DEATH_AbandonedEDIT_FLAG", true);
+  };
   //need to get from workflow
   const GetCell = (value) => <span className="cell-text">{value}</span>;
   const columns = useMemo(
@@ -113,9 +118,9 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count, applicatio
                     :
                     row.original.InformationDeath["DeathACKNo"].includes("CRDRNA") ?
                       `/digit-ui/employee/cr/application-deathnacdetails/${row.original.InformationDeath["DeathACKNo"]}` 
-                    :
-                      row.original.InformationDeath["DeathACKNo"].includes("CRDRAB") ?
-                      `/digit-ui/employee/cr/application-abandoneddeathdetails/${row.original.InformationDeath["DeathACKNo"]}`
+                    // :
+                    //   row.original.InformationDeathAbandoned["DeathACKNo"].includes("CRDRAB") ?
+                    //   `/digit-ui/employee/cr/application-abandoneddeathdetails/${row.original.InformationDeathAbandoned["DeathACKNo"]}`
 
                     : "/digit-ui/employee/cr/search-flow/deathsearch/application"
                   }
@@ -166,6 +171,69 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count, applicatio
     []
   );
 
+  const Abandonedcolumns = useMemo(
+    () => [
+      {
+        Header: t("CR_SEARCH_ACK_NO"),
+        accessor: "DeathACKNo",
+        disableSortBy: true,
+        Cell: ({ row }) => {
+          {console.log("row",row)}
+          return (
+          
+            <div>
+              <span className="link">
+                <Link
+                  onClick={handleAbandonedLinkClick(row.original)}
+                  to={
+                     `/digit-ui/employee/cr/application-abandoneddeathdetails/${row.original.InformationDeathAbandoned["DeathACKNo"]}`
+                  }
+                >
+                  {row.original.InformationDeathAbandoned["DeathACKNo"]}
+                </Link>
+              </span>
+            </div>
+          );
+        },
+      },
+      {
+        Header: t("CR_SEARCH_ACK_NO"),
+        disableSortBy: true,
+        accessor: (row) => GetCell(row.InformationDeathAbandoned?.DateOfDeath ? convertEpochToDateDMY(row.InformationDeathAbandoned?.DateOfDeath) : ""),
+      },
+
+      {
+        Header: t("CR_COMMON_DECEASED_NAME"),
+        disableSortBy: true,
+        accessor: (row) =>
+          GetCell(
+            row.InformationDeathAbandoned?.DeceasedFirstNameEn + row.InformationDeathAbandoned?.DeceasedMiddleNameEn + row.InformationDeathAbandoned?.DeceasedLastNameEn ||
+            t("CR_NOT_RECORDED")
+          ),
+      },
+      {
+        Header: t("CR_COMMON_DEATH_PLACE"),
+        disableSortBy: true,
+        accessor: (row) => GetCell(row.deathPlace || "-"),
+      },
+      // {
+      //   Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),
+      //   disableSortBy: true,
+      //   accessor: (row) => GetCell(row.tradeName || ""),
+      // },
+      // {
+      //   Header: t("TL_LOCALIZATION_TRADE_OWNER_NAME"),
+      //   accessor: (row) => GetCell(row.tradeLicenseDetail.owners.map( o => o.name ). join(",") || ""),
+      //   disableSortBy: true,
+      // },
+      // {
+      //   Header: t("TL_COMMON_TABLE_COL_STATUS"),
+      //   accessor: (row) =>GetCell(t( row?.workflowCode&&row?.status&&`WF_${row?.workflowCode?.toUpperCase()}_${row.status}`|| "NA") ),
+      //   disableSortBy: true,
+      // }
+    ],
+    []
+  );
   return (
     <React.Fragment>
       <div style={mystyle}>
@@ -208,7 +276,8 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count, applicatio
             t={t}
             data={data}
             totalRecords={count}
-            columns={applicationDeathType?.value ? columns : null}
+            columns={applicationDeathType?.value ==="abandoneddeathsearch"? Abandonedcolumns
+            :applicationDeathType?.value ==="death"? columns:[] }
             getCellProps={(cellInfo) => {
               return {
                 style: {

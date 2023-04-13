@@ -108,12 +108,10 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
                 <div className="col-md-6">
                   <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("CR_MARRIAGE_REG_SUMMARY_PLACE_OF_MARRIAGE")}`}</CardLabel>
                 </div>
-                {(MarriageDetails?.marriagePlacetype?.name === "Religious Institution" && MarriageDetails?.placeidEn?.i18nKey === "Others") ||
-                (MarriageDetails?.marriagePlacetype?.name === "Mandapam/Hall/Auditorium/Convention Centre" &&
-                  MarriageDetails?.placeidEn?.i18nKey === "Others") ||
-                MarriageDetails?.marriagePlacetype?.name === "House" ||
-                MarriageDetails?.marriagePlacetype?.name === "Private Place" ||
-                MarriageDetails?.marriagePlacetype?.name === "Public Place" ? (
+                {MarriageDetails?.marriagePlacetype?.code === "HOUSE" ||
+                MarriageDetails?.marriagePlacetype?.code === "PRIVATE_PLACE" ||
+                MarriageDetails?.marriagePlacetype?.code === "PUBLIC_PLACE" ||
+                MarriageDetails?.marriagePlacetype?.code === "OTHER" ? (
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                       {t(
@@ -125,7 +123,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                       {t(
-                        `${MarriageDetails?.placeidEn?.i18nKey}, ${MarriageDetails?.marriageTalukID?.name},${MarriageDetails?.marriageDistrictid?.name} `
+                        `${MarriageDetails?.placeidEn?.name}, ${MarriageDetails?.marriageTalukID?.name},${MarriageDetails?.marriageDistrictid?.name} `
                       )}
                     </CardText>
                   </div>
@@ -133,12 +131,10 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
                 <div className="col-md-6">
                   <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}></CardLabel>
                 </div>
-                {(MarriageDetails?.marriagePlacetype?.name === "Religious Institution" && MarriageDetails?.placeidEn?.i18nKey === "Others") ||
-                (MarriageDetails?.marriagePlacetype?.name === "Mandapam/Hall/Auditorium/Convention Centre" &&
-                  MarriageDetails?.placeidEn?.i18nKey === "Others") ||
-                MarriageDetails?.marriagePlacetype?.name === "House" ||
-                MarriageDetails?.marriagePlacetype?.name === "Private Place" ||
-                MarriageDetails?.marriagePlacetype?.name === "Public Place" ? (
+                {MarriageDetails?.marriagePlacetype?.code === "HOUSE" ||
+                MarriageDetails?.marriagePlacetype?.code === "PRIVATE_PLACE" ||
+                MarriageDetails?.marriagePlacetype?.code === "PUBLIC_PLACE" ||
+                MarriageDetails?.marriagePlacetype?.code === "OTHER" ? (
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                       {t(
@@ -150,7 +146,7 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                       {t(
-                        `${MarriageDetails?.placeidEn?.namelocal}, ${MarriageDetails?.marriageTalukID?.name},${MarriageDetails?.marriageDistrictid?.name} `
+                        `${MarriageDetails?.placeidEn?.nameLocal}, ${MarriageDetails?.marriageTalukID?.namelocal},${MarriageDetails?.marriageDistrictid?.namelocal} `
                       )}
                     </CardText>
                   </div>

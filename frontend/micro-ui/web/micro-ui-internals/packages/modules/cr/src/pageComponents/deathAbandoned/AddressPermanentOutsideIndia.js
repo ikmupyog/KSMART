@@ -193,7 +193,7 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
   }
   return (
     <React.Fragment>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
+      {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} > */}
         {/* <header className="card-header" style={{ fontSize: "35px" }}>
           {t("CR_ADDRESS_TYPE_OUTSIDE_INDIA")}
         </header> */}
@@ -373,7 +373,7 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
             />
           </div>
         </div>
-      </FormStep>
+      {/* </FormStep> */}
     </React.Fragment>
   );
 };

@@ -2,13 +2,15 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Toast from "./Toast";
 import UploadImages from "./UploadImages";
+import _ from "lodash";
 
-export const ImageUploadHandler = (props) => {
+export const ImageUploadHandler = ({ uploadedImages, onPhotoChange, tenantId, moduleType = "property-upload", isMulti = true, extraParams = {} }) => {
   // const __initImageIds = Digit.SessionStorage.get("PGR_CREATE_IMAGES");
   // const __initThumbnails = Digit.SessionStorage.get("PGR_CREATE_THUMBNAILS");
   const [image, setImage] = useState(null);
+  // const [singleImage, setSingleImage] = useState(null);
   const [uploadedImagesThumbs, setUploadedImagesThumbs] = useState(null);
-  const [uploadedImagesIds, setUploadedImagesIds] = useState(props.uploadedImages);
+  const [uploadedImagesIds, setUploadedImagesIds] = useState(uploadedImages);
 
   const [rerender, setRerender] = useState(1);
   const [imageFile, setImageFile] = useState(null);
@@ -21,13 +23,19 @@ export const ImageUploadHandler = (props) => {
     }
   }, [image]);
 
+  // useEffect(() => {
+  //   if (singleImage) {
+  //     uploadSingleImage();
+  //   }
+  // }, [singleImage]);
+
   useEffect(() => {
     if (!isDeleting) {
       (async () => {
         if (uploadedImagesIds !== null) {
           await submit();
           setRerender(rerender + 1);
-          props.onPhotoChange(uploadedImagesIds);
+          onPhotoChange && onPhotoChange(uploadedImagesIds);
         }
       })();
     } else {
@@ -36,12 +44,20 @@ export const ImageUploadHandler = (props) => {
   }, [uploadedImagesIds]);
 
   useEffect(() => {
-    console.log("uplodede files==",imageFile);
     if (imageFile && imageFile.size > 2097152) {
       setError("File is too large");
+    } else if (!isMulti && !_.isEmpty(uploadedImagesIds)) {
+      setError("Can't upload multiple images");
     } else {
       setImage(imageFile);
     }
+    // if (module === "marriage") {
+    //   console.log("Hi module");
+    //   setSingleImage(imageFile);
+    // } else {
+    //   console.log("Hi module else");
+    // setImage(imageFile);
+    // }
   }, [imageFile]);
 
   const addUploadedImageIds = useCallback(
@@ -56,16 +72,29 @@ export const ImageUploadHandler = (props) => {
     [uploadedImagesIds]
   );
 
+  // const addUploadedSingleImageIds = useCallback(
+  //   (imageIdData) => {
+  //     return imageIdData.data.files[0].fileStoreId;
+  //   },
+  //   [uploadedImagesIds]
+  // );
+
   function getImage(e) {
     setError(null);
     setImageFile(e.target.files[0]);
   }
 
   const uploadImage = useCallback(async () => {
-    console.log("uploaded images==",image);
-    const response = await Digit.UploadServices.Filestorage("property-upload", image, props.tenantId);
+    const response = await Digit.UploadServices.Filestorage(moduleType, image, tenantId, extraParams);
     setUploadedImagesIds(addUploadedImageIds(response));
   }, [addUploadedImageIds, image]);
+
+  // const uploadSingleImage = useCallback(async () => {
+  //   console.log("Hi from UseEffect");
+  //   const response = await Digit.UploadServices.Filestorage("cr-marriage", image, tenantId);
+  //   console.log({ response });
+  //   setUploadedImagesIds(addUploadedImageIds(response));
+  // }, [addUploadedSingleImageIds, singleImage]);
 
   function addImageThumbnails(thumbnailsData) {
     var keys = Object.keys(thumbnailsData.data);
@@ -87,7 +116,7 @@ export const ImageUploadHandler = (props) => {
 
   const submit = useCallback(async () => {
     if (uploadedImagesIds !== null && uploadedImagesIds.length > 0) {
-      const res = await Digit.UploadServices.Filefetch(uploadedImagesIds, props.tenantId);
+      const res = await Digit.UploadServices.Filefetch(uploadedImagesIds, tenantId);
       addImageThumbnails(res);
     }
   }, [uploadedImagesIds]);
@@ -108,7 +137,12 @@ export const ImageUploadHandler = (props) => {
   return (
     <React.Fragment>
       {error && <Toast error={true} label={error} onClose={() => setError(null)} />}
-      <UploadImages onUpload={getImage} onDelete={deleteImage} thumbnails={uploadedImagesThumbs ? uploadedImagesThumbs.map((o) => o.image) : []} />
+      <UploadImages
+        isMulti={isMulti}
+        onUpload={getImage}
+        onDelete={deleteImage}
+        thumbnails={uploadedImagesThumbs ? uploadedImagesThumbs.map((o) => o.image) : []}
+      />
     </React.Fragment>
   );
 };

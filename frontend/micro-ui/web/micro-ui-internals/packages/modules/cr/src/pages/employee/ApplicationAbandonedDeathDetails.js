@@ -8,17 +8,18 @@ import get from "lodash/get";
 import orderBy from "lodash/orderBy";
 
 const ApplicationAbandonedDeathDetails = () => {
+
   const { t } = useTranslation();
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const { id: DeathACKNo } = useParams();
   const [showToast, setShowToast] = useState(null);
   // const [callUpdateService, setCallUpdateValve] = useState(false);
-  const [businessService, setBusinessService] = useState("DEATHHOSP"); //DIRECTRENEWAL
+  const [businessService, setBusinessService] = useState("CR"); //DIRECTRENEWAL
   const [numberOfApplications, setNumberOfApplications] = useState([]);
   const [allowedToNextYear, setAllowedToNextYear] = useState(false);
   sessionStorage.setItem("DeathACKNo", DeathACKNo)
   // const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
-  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDeathDetail(t, tenantId, DeathACKNo);
+  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useAbandonedDeathDetail(t, tenantId, DeathACKNo);
 
   const stateId = Digit.ULBService.getStateId();
 
@@ -28,13 +29,13 @@ const ApplicationAbandonedDeathDetails = () => {
     data: updateResponse,
     error: updateError,
     mutate,
-  } = Digit.Hooks.cr.useCRDeathApplicationActions(tenantId);
+  } = Digit.Hooks.cr.useAbandonedDeathActions(tenantId);
 
   // let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
-  console.log(applicationDetails);
+
   let workflowDetails = Digit.Hooks.useWorkflowDetails({
     tenantId: applicationDetails?.applicationData.tenantid || tenantId,
-    id: applicationDetails?.applicationData?.InformationDeath.DeathACKNo,
+    id: applicationDetails?.applicationData?.InformationDeathAbandoned.DeathACKNo,
     moduleCode: businessService,
     role: "BND_CEMP" || "HOSPITAL_OPERATOR",
     config:{},
@@ -61,7 +62,7 @@ const ApplicationAbandonedDeathDetails = () => {
       setBusinessService(workflowDetails?.data?.applicationBusinessService);
     }
   }, [workflowDetails.data]);
-  console.log(workflowDetails);
+
   if (workflowDetails?.data?.processInstances?.length > 0) {
     let filteredActions = [];
     filteredActions = get(workflowDetails?.data?.processInstances[0], "nextActions", [])?.filter(
@@ -71,7 +72,7 @@ const ApplicationAbandonedDeathDetails = () => {
     if ((!actions || actions?.length == 0) && workflowDetails?.data?.actionState) workflowDetails.data.actionState.nextActions = [];
 
     workflowDetails?.data?.actionState?.nextActions?.forEach(data => {
-      // console.log(data.action);
+      
       if(data.action == "EDIT") {
         data.redirectionUrl = {
           pathname: `/digit-ui/employee/cr/death-flow/abandoned-information-death`,
@@ -141,7 +142,7 @@ const ApplicationAbandonedDeathDetails = () => {
                   {
                     action: data.action,
                     redirectionUrll: {
-                      pathname: `TL/${applicationDetails?.applicationData?.DeathACKNo}/${tenantId}`,
+                      pathname: `TL/${applicationDetails?.applicationData?.InformationDeathAbandoned?.DeathACKNo}/${tenantId}`,
                       state: tenantId
                     },
                     tenantId: tenantId,
@@ -174,6 +175,7 @@ const ApplicationAbandonedDeathDetails = () => {
         {/* <Header style={{fontSize: "22px !important"}}>{(applicationDetails?.applicationData?.workflowCode == "NewTL" && applicationDetails?.applicationData?.status !== "APPROVED") ? t("TL_TRADE_APPLICATION_DETAILS_LABEL") : t("Birth Application Details")}</Header> */}
         {/* <label style={{ fontSize: "19px", fontWeight: "bold",marginLeft:"15px" }}>{`${t("Birth Application Summary Details")}`}</label> */}
       </div>
+  
       <ApplicationDetailsTemplate
         header={"Abandoned Death Application Summary Details"}
         applicationDetails={applicationDetails}

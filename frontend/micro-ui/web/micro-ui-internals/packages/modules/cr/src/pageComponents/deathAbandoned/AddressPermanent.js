@@ -121,7 +121,7 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
     } else
         return (
             <React.Fragment>
-                <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
+                {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} > */}
 
                     <div className="row">
                         <div className="col-md-6">
@@ -155,7 +155,7 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
                             </div>
                         )}
                     </div>
-                </FormStep>
+                {/* </FormStep> */}
             </React.Fragment>
         );
 };
