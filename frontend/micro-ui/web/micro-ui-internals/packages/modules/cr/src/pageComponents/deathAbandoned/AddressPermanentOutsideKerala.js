@@ -11,7 +11,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
   permntOutsideKeralaLocalityNameEn, setpermntOutsideKeralaLocalityNameEn, permntOutsideKeralaLocalityNameMl, setpermntOutsideKeralaLocalityNameMl,
   permntOutsideKeralaStreetNameEn, setpermntOutsideKeralaStreetNameEn, permntOutsideKeralaStreetNameMl, setpermntOutsideKeralaStreetNameMl,
   permntOutsideKeralaPostOfficeEn, setpermntoutsideKeralaPostOfficeEn, permntOutsideKeralaPostOfficeMl, setpermntoutsideKeralaPostOfficeMl,
-  value, setValue,isEditBirth = false, isEditDeath = false,
+  value, setValue,isEditBirth = false, isEditAbandonedDeath = false,
   // isInitialRender, setIsInitialRender
 
 }) => {
@@ -35,7 +35,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
 
   const [toast, setToast] = useState(false);
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditAbandonedDeath ? false : false);
 
   const cmbUrbanRural = [
     { i18nKey: "Town", code: "TOWN" },
@@ -105,7 +105,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
         setpermntOutsideKeralaVillage(cmbVillage.filter(cmbVillage => cmbVillage.code === formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaVillage)[0]);
       }
     }
-  } else if (isEditDeath) {
+  } else if (isEditAbandonedDeath) {
     if (formData?.AddressBirthDetails?.permntOutsideKeralaDistrict != null) {
       if (cmbDistrict.length > 0 && (permntOutsideKeralaDistrict === undefined || permntOutsideKeralaDistrict === "")) {
         setpermntOutsideKeralaDistrict(cmbDistrict.filter(cmbDistrict => cmbDistrict.code === formData?.AddressBirthDetails?.permntOutsideKeralaDistrict)[0]);
