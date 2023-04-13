@@ -244,7 +244,7 @@ public class FileManagementEnrichment extends BaseEnrichment {
         final List<String> filecodes = generateIds(requestInfo,
                                                    tenantId,
                                                    fmConfig.getFilemgmntFileCodeName(),
-                                                   " FMARISING",
+                                                   fmConfig.getFilemgmntFileCodeName(),
                                                    "AR",
                                                    1);
         validateFileCodes(filecodes, 1);

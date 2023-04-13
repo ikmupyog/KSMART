@@ -40,11 +40,12 @@ public class IdgenUtil {
         final List<IdRequest> reqList = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             reqList.add(IdRequest.builder()
+                                 .tenantId(tenantId)
                                  .idName(idName)
 //                                 .format(idformat)
                                  .moduleCode(moduleCode)
-                                 .tenantId(tenantId)
                                  .fnType(fnType)
+                                 .count(count)
                                  .build());
         }
 
@@ -55,6 +56,7 @@ public class IdgenUtil {
 
         final StringBuilder uri = new StringBuilder(idGenHost).append(idGenPath);
 
+        System.out.println("id gen service" + uri);
         final IdGenerationResponse response = objectMapper.convertValue(restRepo.fetchResult(uri, request),
                                                                         IdGenerationResponse.class);
 

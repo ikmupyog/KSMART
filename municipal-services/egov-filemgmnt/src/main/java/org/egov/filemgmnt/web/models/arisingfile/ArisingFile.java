@@ -1,11 +1,13 @@
 package org.egov.filemgmnt.web.models.arisingfile;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
+import org.egov.filemgmnt.web.models.ApplicantAddress;
 import org.egov.filemgmnt.web.models.AuditDetails;
 import org.springframework.validation.annotation.Validated;
 
@@ -17,6 +19,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Schema(description = "A Object holds the file data of arising file submitted by the user")
 @Validated
@@ -99,7 +103,23 @@ public class ArisingFile {
     @JsonProperty("fileStatus")
     private String fileStatus;
 
+    @JsonProperty("serviceId")
+    private String serviceId;
+
+    @Schema(type = "string", description = "File Subject")
+    @JsonProperty("subject")
+    private String subject;
+
+    @Schema(type = "string", description = "Detailed description of Application")
+    @JsonProperty("applicationDetails")
+    private String applicationDetails;
+
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
+
+    @Valid
+    @NotNull(message = "Arising file Applicant detail is required")
+    @JsonProperty("arisingFileApplicant")
+    private ArisingFileApplicant arisingFileApplicant;
 
 }

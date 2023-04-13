@@ -11,6 +11,7 @@ import org.egov.common.contract.request.User;
 import org.egov.filemgmnt.config.FMConfiguration;
 import org.egov.filemgmnt.web.models.AuditDetails;
 import org.egov.filemgmnt.web.models.arisingfile.ArisingFile;
+import org.egov.filemgmnt.web.models.arisingfile.ArisingFileApplicant;
 import org.egov.filemgmnt.web.models.arisingfile.ArisingFileRequest;
 import org.egov.tracer.model.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,53 +25,59 @@ public class ArisingFileEnrichment extends BaseEnrichment {
     public void enrichAriseFileCreate(ArisingFileRequest request) {
         RequestInfo requestInfo = request.getRequestInfo();
         User userInfo = requestInfo.getUserInfo();
-
         AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
 
-        request.getArisingFileDetail()
-               .forEach(arisingfile -> {
-                   arisingfile.setId(UUID.randomUUID()
-                                         .toString());
-                   arisingfile.setAuditDetails(auditDetails);
-                   // arisingfile.setFileCode(null);
-
-               });
+        final ArisingFile arisingFile = request.getArisingFileDetail();
+        final AuditDetails arisingAuditDetails = arisingFile.getAuditDetails();
+        arisingFile.setId(UUID.randomUUID()
+                .toString());
+        arisingFile.setAuditDetails(arisingAuditDetails);
+        arisingFile.getAuditDetails()
+                .setLastModifiedBy(auditDetails.getLastModifiedBy());
+        arisingAuditDetails.setLastModifiedTime(auditDetails.getLastModifiedTime());
         setFileCodes(request);
-
+        //enrich applicant address
+        final ArisingFileApplicant applicantDetails = arisingFile.getArisingFileApplicant();
+        final AuditDetails applicantAuditDetails = arisingFile.getArisingFileApplicant().getAuditDetails();
+        applicantDetails.setArisingFileId(arisingFile.getId());
+        applicantDetails.setAuditDetails(applicantAuditDetails);
+        applicantAuditDetails.setLastModifiedBy(auditDetails.getLastModifiedBy());
+        applicantAuditDetails.setLastModifiedTime(auditDetails.getLastModifiedTime());
     }
+//public void enrichArisingFileUpdate(ArisingFileRequest request) {
+//    RequestInfo requestInfo = request.getRequestInfo();
+//    User userInfo = requestInfo.getUserInfo();
+//
+//    AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
+//    final List<ArisingFile> arisingFiles= Collections.singletonList(request.getArisingFileDetail());
+//    for (ArisingFile currentArisingFile : arisingFiles ) {
+//        currentArisingFile.setAuditDetails(auditDetails);
+//    }
+//
+//    }
 
-    public void enrichArisingFileUpdate(ArisingFileRequest request) {
-
-        RequestInfo requestInfo = request.getRequestInfo();
-        User userInfo = requestInfo.getUserInfo();
-
-        AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
-
-        request.getArisingFileDetail()
-               .forEach(arisingfile -> arisingfile.setAuditDetails(auditDetails));
-    }
-
-    private void setFileCodes(final ArisingFileRequest request) {
+      private void setFileCodes(final ArisingFileRequest request) {
         final RequestInfo requestInfo = request.getRequestInfo();
-        final List<ArisingFile> files = request.getArisingFileDetail();
-        String tenantId = null;
-        for (ArisingFile arising : files) {
-            tenantId = arising.getTenantId();
-        }
+        final ArisingFile files = request.getArisingFileDetail();
+        final String tenantId = files.getTenantId();
+//        for (ArisingFile arising : files) {
+//            tenantId = arising.getTenantId();
+//        }
 
-        final List<String> filescodes = generateIds(requestInfo,
-                                                    tenantId,
-                                                    fmConfig.getFilemgmntFileCodeName(),
-                                                    " FMARISING",
-                                                    "AR",
+        final List<String> filescodes = generateIds(requestInfo, tenantId, "fm.filecode",
+//                                                    request.getArisingFileDetail()
+//                                                           .getFileCode(),
+                                                    "FM",
+                                                    "APP",
+                                                    // FMConstants.FMMODULENAMEVALUE,
                                                     1);
         validateFileCodes(filescodes, 1);
 
-        String fileCode = null;
-        for (ArisingFile arisefilecode : files) {
-            arisefilecode.setFileCode(filescodes.get(0));
-        }
-
+//        String fileCode = null;
+//        for (ArisingFile arisefilecode : files) {
+//            arisefilecode.setFileCode(filescodes.get(0));
+//        }
+        final ArisingFile fileDetail = request.getArisingFileDetail();
         System.out.println("Filecode=: " + filescodes.get(0));
 
     }

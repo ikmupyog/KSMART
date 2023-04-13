@@ -31,15 +31,8 @@ public class ArisingFileRequest {
     private RequestInfo requestInfo;
 
     @JsonProperty("ArisingFile")
-    private List<ArisingFile> arisingFileDetail;
+    private ArisingFile arisingFileDetail;
 
-    public ArisingFileRequest addArisingFile(ArisingFile arisingFile) {
 
-        if (arisingFileDetail == null) {
-            arisingFileDetail = new ArrayList<>();
-        }
-        arisingFileDetail.add(arisingFile);
-        return this;
-    }
 
 }

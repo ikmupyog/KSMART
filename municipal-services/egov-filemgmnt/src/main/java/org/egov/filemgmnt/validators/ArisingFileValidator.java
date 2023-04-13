@@ -31,21 +31,21 @@ public class ArisingFileValidator {
         this.mdmsValidator = mdmsValidator;
     }
 
-    public void validateArisingFileUpdate(ArisingFileRequest request, List<ArisingFile> searchResult) {
-        List<ArisingFile> files = request.getArisingFileDetail();
-
-        if (CollectionUtils.isEmpty(files)) {
-            throw new CustomException(REQUIRED.getCode(), "Communication file is required.");
-        }
-        if (files.size() > 1) { // NOPMD
-            throw new CustomException(INVALID_UPDATE.getCode(),
-                    "Supports only single communication file update requset.");
-
-        }
-        if (files.size() != searchResult.size()) {
-            throw new CustomException(INVALID_UPDATE.getCode(), "Arising file(s) not found in database.");
-
-        }
-    }
-
+//    public void validateArisingFileUpdate(ArisingFileRequest request, List<ArisingFile> searchResult) {
+//        List<ArisingFile> files = request.getArisingFileDetail();
+//
+//        if (CollectionUtils.isEmpty(files)) {
+//            throw new CustomException(REQUIRED.getCode(), "Communication file is required.");
+//        }
+//        if (files.size() > 1) { // NOPMD
+//            throw new CustomException(INVALID_UPDATE.getCode(),
+//                    "Supports only single communication file update requset.");
+//
+//        }
+//        if (files.size() != searchResult.size()) {
+//            throw new CustomException(INVALID_UPDATE.getCode(), "Arising file(s) not found in database.");
+//
+//        }
+//    }
+//
 }

@@ -1,0 +1,30 @@
+CREATE TABLE IF NOT EXISTS public.eg_fm_arisingfileapplicantdetails
+(
+    id character varying(64) ,
+    tenantid character varying(64),
+    arisingfileid character varying(64),
+    filecode character varying(45),
+    wardno character varying(45),
+    applicantnameeng character varying(64),
+    applicantnamemal character varying(64),
+    housenameeng character varying(64),
+    housenamemal character varying(64),
+    localplaceeng character varying(64),
+    localplacemal character varying(64),
+    mainplaceeng character varying(64),
+    mainplacemal character varying(64),
+    pincode character varying(64),
+    postofficeeng character varying(64),
+    postofficemal character varying(64),
+    districteng character varying(64),
+    districtmal character varying(64),
+    stateeng character varying(64),
+    statemal character varying(64),
+    documentfilestoreid character varying(64),
+    createdby character varying(45),
+    createdtime bigint,
+    lastmodifiedby character varying(45),
+    lastmodifiedtime bigint,
+    CONSTRAINT eg_fm_arisingfileapplicantdetails_pkey PRIMARY KEY (id)
+    )
+

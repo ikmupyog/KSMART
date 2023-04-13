@@ -44,20 +44,24 @@ public class DraftFiles {
     @JsonProperty("moduleName")
     private String moduleName;
 
+    @NotNull
     @Size(max = 64)
     @JsonProperty("fileCode")
     private String fileCode;
 
+    @NotNull
     @Schema(type = "string", description = "Draft Type")
     @Size(max = 64, message = "Draft Type length cannot exceed 64 characters")
     @JsonProperty("draftType")
     private String draftType;
 
+    @NotNull
     @Schema(type = "string", description = "Storing the Draft Content")
     @Size(max = 1024)
     @JsonProperty("draftText")
     private String draftText;
 
+    @NotNull
     @Schema(type = "string", description = " draft created user")
     @Size(max = 64)
     @JsonProperty("assigner")
@@ -67,6 +71,7 @@ public class DraftFiles {
     @JsonProperty("fileStoreId")
     private String fileStoreId;
 
+    @NotNull
     @Schema(type = "string", description = "status")
     @Size(max = 64, message = "status length cannot exceed 64 characters")
     @JsonProperty("status")
