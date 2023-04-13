@@ -226,6 +226,8 @@ public class MarriageRegistryRepository {
 //            groomAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getPermntInKeralaAdrLBName()).append(", ");
 //            groomAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getPermntInKerala).append(", ");
 //            groomAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getPermntInKeralaWardNo()).append(", ");
+              req.getMarriageCertificate().get(0).setGroomPermntFullAddr(marriageRegistryEnrichment.setGroomPermanentAddressForCertificate(req.getMarriageCertificate().get(0).getMarriageRegistryDetails()));
+            req.getMarriageCertificate().get(0).setBridePermntFullAddr(marriageRegistryEnrichment.setBridePermanentAddressForCertificate(req.getMarriageCertificate().get(0).getMarriageRegistryDetails()));
                      //Setting groom NRI address
 
                      //Setting bride address data from MDMS

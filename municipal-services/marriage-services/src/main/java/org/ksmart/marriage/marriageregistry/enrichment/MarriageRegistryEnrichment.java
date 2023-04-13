@@ -516,7 +516,7 @@ public class MarriageRegistryEnrichment implements BaseEnrichment {
     }
 
 
-    private String setGroomPermanentAddressForCertificate(MarriageRegistryDetails registryDetails) {
+    public String setGroomPermanentAddressForCertificate(MarriageRegistryDetails registryDetails) {
 
         StringBuilder groomAddressBuilder = new StringBuilder();
         if (registryDetails.getGroomAddressDetails() != null) {
@@ -585,7 +585,7 @@ public class MarriageRegistryEnrichment implements BaseEnrichment {
         return groomAddressBuilder.toString();
 
     }
-    private String setBridePermanentAddressForCertificate(MarriageRegistryDetails registryDetails) {
+    public String setBridePermanentAddressForCertificate(MarriageRegistryDetails registryDetails) {
 
         StringBuilder brideAddressBuilder = new StringBuilder();
         if (registryDetails.getBrideAddressDetails() != null) {
