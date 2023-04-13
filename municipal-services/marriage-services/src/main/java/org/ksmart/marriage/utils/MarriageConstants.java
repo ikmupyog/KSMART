@@ -154,4 +154,15 @@ public class MarriageConstants {
 
        public static final String CR_MDMS_WORKFLOW_NEW = "WorkFlowMarriage";
 
+    public static final String TENANT_EGOV_LOCATION= "egov-location";
+    public static final String EGOV_LOCATION_JSONPATH = "$.MdmsRes.egov-location";
+    public static final String MARRIAGE_PLACE_JSONPATH = "$.MdmsRes.egov-location.MarriagePlace[0]";
+
+    public static final String MARRIAGE_PLACE_NAME = "name";
+    public static final String MARRIAGE_PLACE_ADDRESS = "address";
+    public static final String MARRIAGE_PLACE_MAIN_PLACE = "mainPlace";
+
+    public static final String MARRIAGE_PLACE_DIST_ID = "distId";
+    public static final String MARRIAGE_PLACE_STATE_ID = "stateid";
+    public static final String MARRIAGE_PLACE_TENENT_CODE = "tenentCode";
 }
