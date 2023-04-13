@@ -1,5 +1,6 @@
 import cloneDeep from "lodash/cloneDeep";
 import { CRStillBirthService } from "../../elements/CRSTILLBIRTH";
+import { NA, getFormattedValue } from "../../../utils/dataFormatter";
 // import { convertEpochToDateDMY } from  "../../utils";
 
 const stringReplaceAll = (str = "", searcher = "", replaceWith = "") => {
@@ -74,8 +75,10 @@ export const CRStillBirthsearch = {
         // { title: "PDF_BIRTH_CHILD_NAME", value: response?.stillbirthchilddetails?.childFirstNameEn + response?.childMiddleNameEn + response?.childLastNameEn },
         { title: "PDF_BIRTH_CHILD_SEX", value: response?.gender },
         { title: "PDF_BIRTH_DATE_OF_BIRTH", value: response?.childDOB ? convertEpochToDate(response?.childDOB) : "NA" },
-        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.hospitalName + "/" + response?.hospitalNameMl || "NA"},       
-         { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.adrsHouseNameEn   || "NA"},    
+        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value:getFormattedValue(response, "birthPlace",false) },  
+        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.hospitalName + "/" + response?.hospitalNameMl || "NA"},   
+            
+        
        ],
        
     };
@@ -103,7 +106,7 @@ export const CRStillBirthsearch = {
        { title: "CS_COMMON_RELIGION", value: response?.StillBirthParentsDetails?.Religion || "NA" },  
        { title: "PDF_BIRTH_FATHER_MOBILE_NO", value: response?.StillBirthParentsDetails?.fatherMobile || "NA" },
        { title: "PDF_BIRTH_FATHER_EMAIL", value: response?.StillBirthParentsDetails?.fatherEmail || "NA" },       
-       
+      
       ],
     };
     const AddressBirthDetails = {
