@@ -39,7 +39,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
         queryClient.removeQueries("TL_ZONAL_OFFICE");
         queryClient.removeQueries("CR_VILLAGE");
         queryClient.removeQueries("CR_TALUK");
-        queryClient.removeQueries("CR_TALUK");
+        // queryClient.removeQueries("CR_TALUK");
         setTenantboundary(false);
     }
     const { data: PostOffice = {}, isPostOfficeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
@@ -693,7 +693,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                                 onChange={setSelectinsideKeralaHouseNameEn}
                                 disable={isDisableEdit}
                                 placeholder={`${t("CR_HOUSE_NAME_EN")}`}
-                                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
+                                {...(validation = { pattern: "^[a-zA-Z-0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
                             />
                         </div>
 
@@ -759,7 +759,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                                 disable={isDisableEdit}
                                 placeholder={`${t("CR_HOUSE_NAME_ML")}`}
                                 {...(validation = {
-                                    pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .`' ]*$",
+                                    pattern: "^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$",
                                     isRequired: true,
                                     type: "text",
                                     title: t("CR_INVALID_HOUSE_NAME_ML"),

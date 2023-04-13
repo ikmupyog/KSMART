@@ -585,7 +585,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
             onChange={setSelectpermntInKeralaAdrHouseNameEn}
             placeholder={`${t("CR_HOUSE_NAME_EN")}`}
             disable={isDisableEdit}
-            {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
+            {...(validation = { pattern: "^[a-zA-Z-0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
           />
         </div>
       </div>
@@ -649,7 +649,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
             placeholder={`${t("CR_HOUSE_NAME_ML")}`}
             disable={isDisableEdit}
             {...(validation = {
-              pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
+              pattern: "^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$",
               isRequired: true,
               type: "text",
               title: t("CR_INVALID_HOUSE_NAME_ML"),
