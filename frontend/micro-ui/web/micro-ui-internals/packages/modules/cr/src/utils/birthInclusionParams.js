@@ -125,7 +125,7 @@ const getCorrectionFieldValues = (item) => {
     case "CHILD_DOB":
   fieldValues =  [
     {
-      column: formFielColumns[item?.CorrectionField],
+      column: "dob",
       oldValue: item.initialValue,
       newValue: item.curValue && Date.parse(item.curValue),
     },

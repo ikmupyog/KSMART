@@ -59,7 +59,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
     console.log("birthInclusionFormData--------", birthInclusionFormsObj, fieldId);
     let selectedBirthInclusionData = birthInclusionFormsObj[fieldId];
     console.log("birthInclusionData", selectedBirthInclusionData);
-    setSelectedFieldType(fieldId)
+    setSelectedFieldType(fieldId);
     setSelectedInclusionItem(selectedBirthInclusionData);
     setShowModal(true);
   };
@@ -73,15 +73,16 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
   };
 
   const onUploadDocSubmit = async (fileData, error) => {
-    console.log("upload response==", fileData,selectedInclusionItem);
+    console.log("upload response==",selectedFieldType, fileData,selectedInclusionItem);
     if (fileData && fileData?.length > 0) {
       const selectedDocIds = fileData.map((item) => item.documentId);
       setSelectedDocs(selectedDocIds);
     }
 
     let tempObj = { ...birthInclusionFormsObj };
+    console.log("temp--obj==",tempObj,tempObj[selectedFieldType]);
     let tempFieldType = tempObj[selectedFieldType];
-    tempObj = { ...tempObj, tempFieldType: { ...tempFieldType, Documents: fileData,selectedDocType: selectedFieldType, isEditable: true, isFocused: true, isDisabled: false } };
+    tempObj = { ...tempObj, [selectedFieldType]: { ...tempFieldType, Documents: fileData,selectedDocType: selectedFieldType, isEditable: true, isFocused: true, isDisabled: false } };
 
     setbirthInclusionFormsObj(tempObj);
     setShowModal(false);
@@ -139,7 +140,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
     console.log("adhar change==", e.target.value);
     let tempObj = { ...birthInclusionFormsObj };
     let { CHILD_AADHAAR } = tempObj;
-    tempObj = { ...tempObj, CHILD_AADHAAR: { ...CHILD_AADHAAR, curValue: e.target.value } };
+    tempObj = { ...tempObj, CHILD_AADHAAR: { ...CHILD_AADHAAR, curValue: e.target.value ,isFocused:false} };
     setbirthInclusionFormsObj(tempObj);
   };
 
@@ -270,13 +271,15 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   isMandatory={false}
                   // type="number"
                   // inputRef={register}
+                  disabled={birthInclusionFormsObj?.CHILD_AADHAAR?.isDisabled}
+                  autoFocus={birthInclusionFormsObj?.CHILD_AADHAAR?.isFocused}
                   max="12"
                   optionKey="i18nKey"
                   name="AadharNumber"
                   defaultValue={birthInclusionFormsObj?.CHILD_AADHAAR?.curValue}
                   onBlur={onAdharChange}
                   placeholder={`${t("CR_AADHAR")}`}
-                  ValidationRequired = {true}
+                  // ValidationRequired = {true}
                   {...(validation = { pattern: "^[0-9]{12}$", type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                 />
               </div>
@@ -285,7 +288,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
               <ButtonContainer>
                 {birthInclusionFormsObj?.CHILD_AADHAAR?.isDisabled && (
                   <span onClick={() => setBirthInclusionFilterQuery(BIRTH_INCLUSION_FIELD_NAMES["CHILD_AADHAAR"])}>
-                    <EditIcon selected={true} label={"Edit"} />
+                    <EditIcon/>
                   </span>
                 )}
               </ButtonContainer>
@@ -685,7 +688,6 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
               <div className="col-md-4">
                 <CardLabel>
                   {t("CR_FATHER_AADHAR")}
-                  <span className="mandatorycss">*</span>
                 </CardLabel>
                 <TextInput
                   t={t}
