@@ -30,19 +30,19 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   const [tenantboundary, setTenantboundary] = useState(false);
   const queryClient = useQueryClient();
   if (tenantboundary) {
-    queryClient.removeQueries("TL_ZONAL_OFFICE");
-    queryClient.removeQueries("CR_VILLAGE");
-    queryClient.removeQueries("CR_TALUK");
-    queryClient.removeQueries("CR_TALUK");
+    queryClient.removeQueries("CR_PERMANANT_ADDR_WARD");
+    queryClient.removeQueries("CR_PERMANANT_ADDR_VILLAGE");
+    queryClient.removeQueries("CR_PERMANANT_ADDR_TALUK");
     setTenantboundary(false);
   }
+  
   const { data: PostOffice = {}, isPostOfficeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
-  const { data: Taluk = {}, isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
-  const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
+  const { data: Taluk = {}, isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PermanantTaluk");
+  const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PermanantVillage");
   const { data: District = {}, isDistrictLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
   const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
   const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
-  const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantWard, "egov-location", "boundary-data");
+  const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantWard, "egov-location", "PermanantWard");
   const [toast, setToast] = useState(false);
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : isEditStillBirth ? isEditStillBirth : false);
