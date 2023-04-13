@@ -207,7 +207,7 @@ public class MarriageRegistryRepository {
             //Setting Groom Address data from MDMS
             Object mdmsGroomAddressData = util.mDMSCallGetAddress(req.getRequestInfo()
                     , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getPermntInKeralaAdrLBName()
-                    , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getDistrictIdPresent()
+                    , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getDistrictIdPermanent()
                     , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getStateIdPermanent()
                     , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getCountryIdPermanent()
                     , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getPoNoPermanent()
@@ -226,8 +226,8 @@ public class MarriageRegistryRepository {
 //            groomAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getPermntInKeralaAdrLBName()).append(", ");
 //            groomAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getPermntInKerala).append(", ");
 //            groomAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getPermntInKeralaWardNo()).append(", ");
-              req.getMarriageCertificate().get(0).setGroomPermntFullAddr(marriageRegistryEnrichment.setGroomPermanentAddressForCertificate(req.getMarriageCertificate().get(0).getMarriageRegistryDetails()));
-            req.getMarriageCertificate().get(0).setBridePermntFullAddr(marriageRegistryEnrichment.setBridePermanentAddressForCertificate(req.getMarriageCertificate().get(0).getMarriageRegistryDetails()));
+              req.getMarriageCertificate().get(0).setGroomPermntFullAddr(marriageRegistryEnrichment.setGroomPermanentAddressForCertificate(req.getRequestInfo(),req.getMarriageCertificate().get(0).getMarriageRegistryDetails()));
+            req.getMarriageCertificate().get(0).setBridePermntFullAddr(marriageRegistryEnrichment.setBridePermanentAddressForCertificate(req.getRequestInfo(),req.getMarriageCertificate().get(0).getMarriageRegistryDetails()));
                      //Setting groom NRI address
 
                      //Setting bride address data from MDMS

@@ -516,6 +516,13 @@ public class MarriageMdmsUtil {
         return masterData;
     }
 
+    public Map<String,List<String>> getMarriageMDMSData(Object mdmsdata) {
+        Map<String, String> errorMap = new HashMap<>();
+        Map<String, List<String>> masterData = getAttributeValues(mdmsdata);
+        // System.out.println(masterData);
+        return masterData;
+    }
+
     private Map<String, List<String>> getAttributeValues(Object mdmsdata) {
         List<String> modulepaths = Arrays.asList(
                 //MarriageConstants.CR_MDMS_TENANTS_CODE_JSONPATH,

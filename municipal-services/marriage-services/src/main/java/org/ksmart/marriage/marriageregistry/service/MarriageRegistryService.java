@@ -49,8 +49,8 @@ public class MarriageRegistryService {
         marriageRegistryEnrichment.enrichCreate(request);
 
         producer.push(marriageApplicationConfiguration.getSaveMarriageRegistryTopic(), request);
-        MarriageRegistrySearchCriteria criteria = MarriageRegistrySearchCriteria.builder().id(request.getMarriageDetails().get(0).getId()).tenantId(request.getMarriageDetails().get(0).getTenantid()).build();
-        download(criteria,request.getRequestInfo());
+        //MarriageRegistrySearchCriteria criteria = MarriageRegistrySearchCriteria.builder().id(request.getMarriageDetails().get(0).getId()).tenantId(request.getMarriageDetails().get(0).getTenantid()).build();
+        //download(criteria,request.getRequestInfo());
         MarriageRegistryRequest result = MarriageRegistryRequest
                                 .builder()
                                 .requestInfo(request.getRequestInfo())
