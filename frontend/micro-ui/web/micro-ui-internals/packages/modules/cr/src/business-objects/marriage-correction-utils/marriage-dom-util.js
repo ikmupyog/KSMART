@@ -2,10 +2,11 @@ import moment from "moment";
 
 export const getFilteredMarriageDOMData = (selectedData, inclusionData) => {
   let filteredDocuments = getFilteredDocuments(selectedData,inclusionData);
-  const computedValue = computeInitialValue(selectedData?.marriageDOM);
+  const computedInitialValue = computeInitialValue(selectedData?.marriageDOM);
+  const computedCurrentValue = computeCurrentValue(selectedData?.marriageDOM);
   let selectedDomObj = {
-    initialValue: computedValue,
-    curValue: computedValue,
+    initialValue: computedInitialValue,
+    curValue: computedCurrentValue,
     isDisable: true,
     isEditable: false,
     isFocused: false,
@@ -16,16 +17,23 @@ export const getFilteredMarriageDOMData = (selectedData, inclusionData) => {
 
 //TODO need validation to check dob is null
 const computeInitialValue = (dom) => {
+  const initialValue = dom;
+  return initialValue;
+};
+
+const computeCurrentValue = (dom) => {
   const initialValue = dom && moment(dom).format("DD/MM/YYYY");
   return initialValue;
 };
 
 const getFilteredDocuments = (selectedData,inclusionData) => {
+  console.log("DOM ===",selectedData,inclusionData  );
   let filteredData  = {};
-  if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
-    filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
+  if (selectedData?.marriagePlacetype === "MANDAPAM_HALL_AND_OTHER") {
+    filteredData = inclusionData?.find((item) => item.conditionCode === "MANDAPAM_HALL_AND_OTHER");
   } else {
-    filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
+    filteredData = inclusionData?.find((item) => item.conditionCode === "RELIGIOUS_INSTITUTION");
   }
+  console.log("filtered data", filteredData);
   return filteredData;
 };

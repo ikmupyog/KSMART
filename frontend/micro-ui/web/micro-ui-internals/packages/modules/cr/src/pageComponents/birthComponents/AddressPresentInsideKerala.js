@@ -509,7 +509,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     } else
         return (
             <React.Fragment>
-                <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!presentInsideKeralaDistrict}>
+                {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!presentInsideKeralaDistrict}> */}
                     <div className="row">
                         <div className="col-md-12">
                             <h1 className="headingh1">
@@ -769,7 +769,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                         </div>
                     </div>
 
-                </FormStep>
+                {/* </FormStep> */}
             </React.Fragment>
         );
 };
