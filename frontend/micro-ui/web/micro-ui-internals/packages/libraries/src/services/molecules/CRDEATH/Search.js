@@ -65,6 +65,10 @@ export const CRDeathsearch = {
     }
 
     let employeeResponse = [];
+    const Deathdetails = {
+      title: "CR_DEATH_SUMMARY_DETAILS",
+      asSectionHeader: true,      
+    }
     const InformationDeath = {
       title: "CR_DEATH_INFORMATION",
       asSectionHeader: true,
