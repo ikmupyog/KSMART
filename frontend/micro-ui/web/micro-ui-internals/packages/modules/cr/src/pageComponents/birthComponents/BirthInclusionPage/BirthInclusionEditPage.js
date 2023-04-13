@@ -15,7 +15,6 @@ import {
 } from "@egovernments/digit-ui-react-components";
 // import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
-import CustomTimePicker from "../../../components/CustomTimePicker";
 import FormFieldContainer from "../../../components/FormFieldContainer";
 import BirthInclusionModal from "../../../components/BirthInclusionModal";
 import { BIRTH_INCLUSION_FIELD_NAMES } from "../../../config/constants";
@@ -25,7 +24,7 @@ import { Controller, useForm } from "react-hook-form";
 import { convertEpochToDate } from "../../../utils";
 import moment from "moment";
 import { formatApiParams } from "../../../utils/birthInclusionParams";
-let birthInclusionFormData = {};
+
 const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocuments, navigationData }) => {
   let formData = {};
   let validation = {};
@@ -37,28 +36,22 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
   const [birthInclusionFormsObj, setbirthInclusionFormsObj] = useState(false);
   const [selectedDocs, setSelectedDocs] = useState([]);
 
-  // const [isDisabled,setDisabled] = useState(false);
-  // const [uploadStatus, setUploadStatus] = useState({
-  //   hospitalCorrectionLetter: false,
-  // });
+
   const [value, setValue] = useState(0);
   const [selectedInclusionItem, setSelectedInclusionItem] = useState([]);
   const [selectedFieldType, setSelectedFieldType] = useState("");
-  // let location = useLocation();
-  // let navigationData = location?.state?.inclusionData;
+
 
   useEffect(async () => {
     birthInclusionFormData = await initializeBirthInclusionObject(BirthCorrectionDocuments, navigationData, sex, cmbPlace);
     await setbirthInclusionFormsObj(birthInclusionFormData);
-    console.log("birthInclusionFormData==", birthInclusionFormData, sex);
   }, [navigationData, BirthCorrectionDocuments]);
 
   console.log("navigationData", navigationData);
 
   const setBirthInclusionFilterQuery = (fieldId) => {
-    console.log("birthInclusionFormData--------", birthInclusionFormsObj, fieldId);
     let selectedBirthInclusionData = birthInclusionFormsObj[fieldId];
-    console.log("birthInclusionData", selectedBirthInclusionData);
+    console.log("birthInclusionData",birthInclusionFormsObj, fieldId, selectedBirthInclusionData);
     setSelectedFieldType(fieldId);
     setSelectedInclusionItem(selectedBirthInclusionData);
     setShowModal(true);
@@ -114,7 +107,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
     console.log("value==", value);
     let tempObj = { ...birthInclusionFormsObj };
     let { CHILD_DOB } = tempObj;
-    tempObj = { ...tempObj, CHILD_DOB: { ...CHILD_DOB, curValue: value && moment(value, "YYYY-MM-DD").format("DD/MM/YYYY") } };
+    tempObj = { ...tempObj, CHILD_DOB: { ...CHILD_DOB, curValue: value && moment(value, "YYYY-MM-DD").format("DD/MM/YYYY"),isFocused:false } };
     setbirthInclusionFormsObj(tempObj);
   };
 
@@ -137,7 +130,6 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
   };
 
   const onAdharChange = (e) => {
-    console.log("adhar change==", e.target.value);
     let tempObj = { ...birthInclusionFormsObj };
     let { CHILD_AADHAAR } = tempObj;
     tempObj = { ...tempObj, CHILD_AADHAAR: { ...CHILD_AADHAAR, curValue: e.target.value ,isFocused:false} };
@@ -162,7 +154,6 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
 
   const onChildNameChange = (e,fieldType) => {
     e.preventDefault();
-    console.log("e.target==", e.target);
     let tempObj = { ...birthInclusionFormsObj };
     let { CHILD_NAME } = tempObj;
     let { curValue } = CHILD_NAME;
@@ -201,9 +192,6 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   {t("CR_DATE_OF_BIRTH_TIME")}
                 </CardLabel>
                 <DatePicker
-                  // {...register('childDOB')}
-                  // datePickerRef ={register}
-                  // name="dateofbirth"
                   disabled={birthInclusionFormsObj?.CHILD_DOB?.isDisabled}
                   autofocus={birthInclusionFormsObj?.CHILD_DOB?.isFocused}
                   date={birthInclusionFormsObj?.CHILD_DOB?.curValue}
@@ -211,11 +199,6 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   min={convertEpochToDate("1900-01-01")}
                   onChange={onDobChange}
                   formattingFn={formatDob}
-                  // disable={true}
-                  // inputFormat="DD/MM/YYYY"
-                  // inputRef={register}
-                  // date={birthInclusionFormsObj.CHILD_DOB?.curValue && moment(birthInclusionFormsObj.CHILD_DOB?.curValue).format("DD-MM-YYYY")}
-                  // onChange={props.onChange}
                   placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
                   {...(validation = { ValidationRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
                 />
@@ -241,7 +224,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   selected={birthInclusionFormsObj?.CHILD_SEX?.curValue}
                   select={onGenderChange}
                   // onBlur={props.onBlur}
-                  // disable={birthInclusionFormsObj?.CHILD_SEX?.isDisabled}
+                  disable={birthInclusionFormsObj?.CHILD_SEX?.isDisabled}
                   option={sex}
                   optionKey="code"
                   t={t}
