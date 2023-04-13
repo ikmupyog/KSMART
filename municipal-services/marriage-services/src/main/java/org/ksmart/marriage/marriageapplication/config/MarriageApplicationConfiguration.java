@@ -117,4 +117,7 @@ public class MarriageApplicationConfiguration {
 
         @Value("${persister.update.marriage.correction.topic}")
         private String UpdateMarriageCorrectionTopic;
+
+        @Value("${persister.update.marriage.registry.correction.topic}")
+        private String UpdateMarriageRegistryCorrectionTopic;
 }

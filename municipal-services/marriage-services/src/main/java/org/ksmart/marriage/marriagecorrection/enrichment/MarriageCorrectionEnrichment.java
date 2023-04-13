@@ -16,6 +16,7 @@ import org.ksmart.marriage.marriagecorrection.web.model.CorrectionField;
 import org.ksmart.marriage.marriagecorrection.web.model.CorrectionFieldValue;
 import org.ksmart.marriage.marriagecorrection.web.model.MarriageCorrectionDetails;
 import org.ksmart.marriage.marriagecorrection.web.model.MarriageCorrectionRequest;
+import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryRequest;
 import org.ksmart.marriage.utils.MarriageConstants;
 import org.springframework.beans.PropertyAccessor;
 import org.springframework.beans.PropertyAccessorFactory;
@@ -508,11 +509,20 @@ public class MarriageCorrectionEnrichment implements BaseEnrichment {
         }
 
 
-
-
     public static <V> void setIfNotNull( Consumer<V> setter,V value) {
         if (Objects.nonNull(value)) {
             setter.accept(value);
         }
+    }
+
+
+    public void enrichRegistryUpdate(MarriageRegistryRequest request) {
+
+        RequestInfo requestInfo = request.getRequestInfo();
+        User userInfo = requestInfo.getUserInfo();
+
+        AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
+        request.getMarriageDetails()
+                .forEach(personal -> personal.setAuditDetails(auditDetails));
     }
 }

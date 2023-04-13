@@ -1,15 +1,20 @@
 package org.ksmart.marriage.marriagecorrection.repository;
 
-import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
+import org.egov.common.contract.request.RequestInfo;
 import org.ksmart.marriage.common.producer.MarriageProducer;
 import org.ksmart.marriage.marriageapplication.config.MarriageApplicationConfiguration;
+import org.ksmart.marriage.marriageapplication.repository.querybuilder.MarriageApplicationQueryBuilder;
+import org.ksmart.marriage.marriageapplication.repository.rowmapper.MarriageApplicationRowMapper;
 import org.ksmart.marriage.marriageapplication.validator.MarriageMDMSValidator;
 import org.ksmart.marriage.marriageapplication.web.model.MarriageApplicationDetails;
+import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageApplicationSearchCriteria;
 import org.ksmart.marriage.marriagecorrection.web.model.MarriageCorrectionRequest;
 import org.ksmart.marriage.utils.MarriageMdmsUtil;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -20,12 +25,18 @@ public class MarriageCorrectionRepository {
     private final MarriageApplicationConfiguration marriageApplicationConfiguration;
     private final MarriageMdmsUtil util;
     private final MarriageMDMSValidator mdmsValidator;
+    private final MarriageApplicationQueryBuilder marriageQueryBuilder;
+    private final JdbcTemplate jdbcTemplate;
+    private final MarriageApplicationRowMapper marriageApplicationRowMapper;
 
-    public MarriageCorrectionRepository(MarriageProducer producer, MarriageApplicationConfiguration marriageApplicationConfiguration, MarriageMdmsUtil util, MarriageMDMSValidator mdmsValidator) {
+    public MarriageCorrectionRepository(MarriageProducer producer, MarriageApplicationConfiguration marriageApplicationConfiguration, MarriageMdmsUtil util, MarriageMDMSValidator mdmsValidator, MarriageApplicationQueryBuilder marriageQueryBuilder, JdbcTemplate jdbcTemplate, MarriageApplicationRowMapper marriageApplicationRowMapper) {
         this.producer = producer;
         this.marriageApplicationConfiguration = marriageApplicationConfiguration;
         this.util = util;
         this.mdmsValidator = mdmsValidator;
+        this.marriageQueryBuilder = marriageQueryBuilder;
+        this.jdbcTemplate = jdbcTemplate;
+        this.marriageApplicationRowMapper = marriageApplicationRowMapper;
     }
 
 
@@ -37,6 +48,16 @@ public class MarriageCorrectionRepository {
 //        producer.push(marriageApplicationConfiguration.getSaveMarriageCorrectionTopic(), request);
 
         return request.getMarriageDetails();
+    }
+
+
+
+    public List<MarriageApplicationDetails> searchMarriageDetails(MarriageApplicationSearchCriteria criteria, RequestInfo requestInfo) {
+        List<Object> preparedStmtValues = new ArrayList<>();
+        String query = marriageQueryBuilder.getMarriageApplicationSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
+        List<MarriageApplicationDetails> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriageApplicationRowMapper);
+
+        return result;
     }
 
 }
