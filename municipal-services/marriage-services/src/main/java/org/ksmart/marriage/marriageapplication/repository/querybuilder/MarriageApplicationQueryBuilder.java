@@ -94,7 +94,7 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
             // .append("DOC.registrationno as DOC_registrationno , DOC.correction_id as DOC_correction_id , DOC.correction_field_name as DOC_correction_field_name , DOC.applicationtype as DOC_applicationtype ")
 
 
-            .append("FROM public.eg_marriage_details as MD  ")
+            .append("FROM eg_marriage_details as MD ")
             .append("INNER JOIN eg_marriage_bride_groom_details as BD ON BD.marriageid = MD.id AND ")
             .append("BD.bride_groom ='B' ")
             .append("INNER JOIN eg_marriage_bride_groom_details as GD ON GD.marriageid = MD.id AND ")
@@ -103,17 +103,16 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
             .append("BPMA.bride_groom ='B' ")
             .append("INNER JOIN  eg_marriage_permanent_address_details as GPMA ON GPMA.marriageid = MD.id AND ")
             .append("GPMA.bride_groom ='G' ")
-            .append("INNER JOIN  eg_marriage_present_address_details as BPSA ON BPSA.marriageid = MD.id AND ")
+            .append("LEFT JOIN  eg_marriage_present_address_details as BPSA ON BPSA.marriageid = MD.id AND ")
             .append("BPSA.bride_groom ='B' ")
-            .append("INNER JOIN  eg_marriage_present_address_details as GPSA ON GPSA.marriageid = MD.id AND ")
+            .append("LEFT JOIN  eg_marriage_present_address_details as GPSA ON GPSA.marriageid = MD.id AND ")
             .append("GPSA.bride_groom ='G' ")
-            .append("INNER JOIN  eg_marriage_witness_details as WD1 ON WD1.marriageid = MD.id  AND ")
+            .append("LEFT JOIN  eg_marriage_witness_details as WD1 ON WD1.marriageid = MD.id  AND ")
             .append("WD1.serial_no = 1 ")
-            .append("INNER JOIN  eg_marriage_witness_details as WD2 ON WD2.marriageid = MD.id  AND ")
+            .append("LEFT JOIN  eg_marriage_witness_details as WD2 ON WD2.marriageid = MD.id  AND ")
             .append("WD2.serial_no = 2 ")
-            // .append("LEFT JOIN  eg_marriage_document as DOC ON DOC.marriageid = MD.id AND DOC.applicationnumber = MD.applicationnumber ")
+            //.append("LEFT JOIN  eg_marriage_document as DOC ON DOC.marriageid = MD.id AND DOC.applicationnumber = MD.applicationnumber ")
             .toString();
-
 
     public String getMarriageApplicationSearchQuery(MarriageApplicationSearchCriteria criteria,
                                                     @NotNull List<Object> preparedStmtValues, Boolean isCount) {
@@ -123,7 +122,7 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
         addFilter("MD.id", criteria.getId(), query, preparedStmtValues);
         addFilter("MD.tenantid", criteria.getTenantId(), query, preparedStmtValues);
         addFilter("MD.applicationNumber", criteria.getApplicationNo(), query, preparedStmtValues);
-        addFilter("MD_registrationno", criteria.getRegistrationNo(), query, preparedStmtValues);
+        addFilter("MD.registrationno", criteria.getRegistrationNo(), query, preparedStmtValues);
         addFilter("BD.aadharno", criteria.getBrideAdharNo(), query, preparedStmtValues);
         if (criteria.getBrideFirstnameEn() != null){
           addFilterString("BD.firstname_en", criteria.getBrideFirstnameEn(), query, preparedStmtValues);
@@ -164,20 +163,33 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
 
     }
     private static final String QUERYDOCUMENT = new StringBuilder()
-                                              .append("Select id ,tenantid ,document_name ,document_type ,filestoreid ,marriageid,bride_groom  ,")
-                                              .append("active,applicationnumber , createdby,createdtime,lastmodifiedby, lastmodifiedtime  from eg_marriage_document")
+                                              .append("Select id ,tenantid ,document_name ,document_type ,filestoreid ,marriageid,bride_groom  ,applicationtype , ")
+                                              .append("active , applicationnumber , createdby,createdtime,lastmodifiedby, lastmodifiedtime  from eg_marriage_document")
                                               .toString();
    
-     public String getMarriageDocumentSearchQuery(String documentType,String documentOwner,String applicationNumber,@NotNull List<Object> preparedStmtValues, Boolean isCount) {
+     public String getMarriageDocumentQuery(MarriageApplicationSearchCriteria criteria ,@NotNull List<Object> preparedStmtValues, Boolean isCount) {
 
         StringBuilder query = new StringBuilder(QUERYDOCUMENT);
         StringBuilder orderBy = new StringBuilder();
-                              addFilter("document_type", documentType, query, preparedStmtValues);
-                              addFilter("bride_groom", documentOwner, query, preparedStmtValues);
-                              addFilter("applicationnumber", applicationNumber, query, preparedStmtValues);
-
+                              addFilter("document_type", criteria.getDocumentType(), query, preparedStmtValues);
+                              addFilter("bride_groom", criteria.getDocumentOwner(), query, preparedStmtValues);
+                              addFilter("applicationnumber", criteria.getApplicationNo(), query, preparedStmtValues);
+                              addFilter("applicationtype", criteria.getApplicationType(), query, preparedStmtValues);
+                              addFilter("tenantid", criteria.getTenantId(), query, preparedStmtValues);
       return query.toString();
     }
+
+    public String getMarriageDocumentSearchQuery(MarriageApplicationSearchCriteria criteria ,@NotNull List<Object> preparedStmtValues, Boolean isCount) {
+
+      StringBuilder query = new StringBuilder(QUERYDOCUMENT);
+      StringBuilder orderBy = new StringBuilder();
+                          //  addFilter("document_type", criteria.getDocumentType(), query, preparedStmtValues);
+                          //  addFilter("bride_groom", criteria.getDocumentOwner(), query, preparedStmtValues);
+                            addFilter("applicationnumber", criteria.getApplicationNo(), query, preparedStmtValues);
+                            addFilter("applicationtype", criteria.getApplicationType(), query, preparedStmtValues);
+                            addFilter("tenantid", criteria.getTenantId(), query, preparedStmtValues);
+    return query.toString();
+  }
 
 
     public String getNextIDQuery() {

@@ -77,6 +77,24 @@ public class MarriageApplicationSearchCriteria {
     @JsonProperty("brideLastnameMl")
     private String brideLastnameMl;
 
+    //for document
+
+    @JsonProperty("documentOwner") 
+    private String documentOwner ;
+
+     @JsonProperty("documentlink")
+     private String documentlink;
+
+    @JsonProperty("applicationType")
+    private String applicationType;
+
+    @JsonProperty("documentType")
+    private String documentType ;
+
+    @JsonProperty("documentName")
+    private String documentName ;
+ 
+
 
     @JsonProperty("sortBy")
     private SortBy sortBy;

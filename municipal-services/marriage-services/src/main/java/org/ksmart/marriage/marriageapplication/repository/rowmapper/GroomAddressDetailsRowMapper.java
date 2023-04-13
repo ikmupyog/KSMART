@@ -32,7 +32,7 @@ public interface GroomAddressDetailsRowMapper {
                 .presentOutsideKeralaPostOfficeEn(rs.getString("GPSA_poname_en"))
                 .presentOutsideKeralaPostOfficeMl(rs.getString("GPSA_poname_ml"))
                 .presentOutsideKeralaTalukName(rs.getString("GPSA_taluk_name"))
-//                .townOrVillagePresent(rs.getString("stat_mother_resdnce_placetype"))
+//              .townOrVillagePresent(rs.getString("stat_mother_resdnce_placetype"))
 
 
                 .presentOutSideIndiaAdressEn(rs.getString("GPSA_ot_address1_en"))

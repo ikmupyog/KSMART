@@ -19,6 +19,7 @@ import org.ksmart.marriage.marriageapplication.web.model.marriage.BrideDetails;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.GroomDetails;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageDetailsRequest;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageDocument;
+import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageApplicationSearchCriteria;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.WitnessDetails;
 import org.ksmart.marriage.utils.IDGenerator;
 import org.ksmart.marriage.utils.MarriageConstants;
@@ -154,6 +155,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
     public void enrichUpdate(MarriageDetailsRequest request) {
 
         RequestInfo requestInfo = request.getRequestInfo();
+        MarriageApplicationSearchCriteria criteria = new MarriageApplicationSearchCriteria();
         User userInfo = requestInfo.getUserInfo();
         AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
         request.getMarriageDetails().
@@ -161,15 +163,21 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                 marriage.setAuditDetails(auditDetails);
                 String applicationNumber =  marriage.getApplicationNumber();
                 String applicationType =  marriage.getApplicationtype();
+                criteria.setApplicationNo(applicationNumber);
+                criteria.setApplicationType(applicationType);
                // String registrationNumber = marriage.getRegistrationNo();
                 //Jasmine 07.04.2023
                 List <MarriageDocument> marriagedocument = marriage.getMarriageDocuments();
                 if (marriagedocument!=null){
                         marriagedocument.forEach(document -> {
                          String documentType =  document.getDocumentType();
-                         String documentOwner =  document.getDocumentOwner();  
-                        document.setActiveFalse(true);
-                         List<MarriageDocument> searchResult = repository.getDocumentDetails(documentType,documentOwner,applicationNumber);
+                         String documentOwner =  document.getDocumentOwner();
+                         criteria.setDocumentType(documentType);
+                         criteria.setDocumentOwner(documentOwner);
+                         criteria.setTenantId(marriage.getTenantid());
+                         document.setActiveFalse(true);
+                         
+                         List<MarriageDocument> searchResult = repository.getDocumentDetails(criteria,requestInfo);
                         // document.setUpdatedFlag( MarriageConstants.VALUE_FALSE);
                          if(searchResult!=null){
                              searchResult.forEach(existingDocument -> {
