@@ -34,6 +34,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
     const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "boundary-data");
 
     const [lbs, setLbs] = useState(0);
+    const [permlbs, setPermLbs] = useState(0);
     const [toast, setToast] = useState(false);
 
     let cmbLB = [];
@@ -119,6 +120,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
     const [Talukvalues, setLbsTalukvalue] = useState(null);
     const [Villagevalues, setLbsVillagevalue] = useState(null);
     const [PostOfficevalues, setPostOfficevalues] = useState(null);
+    const [PostOfficePermvalues, setPostOfficePermvalues] = useState(null);
+
     //################################# Present Outside Kerala ##########################################################################################################
     const [presentOutsideKeralaDistrict, setoutsideKeralaDistrict] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaDistrict?.code ? formData?.AddressBirthDetails?.presentOutsideKeralaDistrict : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaDistrict ? "" :
         formData?.StillBirthChildDetails?.AddressBirthDetails?.presentOutsideKeralaDistrict ? "" : "");
@@ -1760,6 +1763,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 isEditAdoption={isEditAdoption}
                                 isEditBirthNAC={isEditBirthNAC}
                                 formData={formData}
+
                             />
                         </div>
                     )}
@@ -1796,12 +1800,16 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 setDistrictvalue={setDistrictvalue}
                                 lbs={lbs}
                                 setLbs={setLbs}
+                                permlbs={permlbs}
+                                setPermLbs={setPermLbs}
                                 Talukvalues={Talukvalues}
                                 setLbsTalukvalue={setLbsTalukvalue}
                                 Villagevalues={Villagevalues}
                                 setLbsVillagevalue={setLbsVillagevalue}
                                 PostOfficevalues={PostOfficevalues}
                                 setPostOfficevalues={setPostOfficevalues}
+                                PostOfficePermvalues={PostOfficePermvalues}
+                                setPostOfficePermvalues={setPostOfficePermvalues}
                                 isEditBirth={isEditBirth}
                                 isEditDeath={isEditDeath}
                                 isEditStillBirth={isEditStillBirth}

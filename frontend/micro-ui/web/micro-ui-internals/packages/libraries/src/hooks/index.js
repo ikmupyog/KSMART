@@ -132,6 +132,7 @@ import useCivilRegistrationBornOutsideIndiaBirthAPI from "./cr/useCivilRegistrat
 import useCivilRegistrationAbandonedBirthAPI from "./cr/useCivilRegistrationAbandonedBirthAPI";
 import useApplicationBornOutsideIndiaBirthDetail from "./cr/useApplicationBornOutsideIndiaBirthDetail";
 import useBirthCorrectionAction from "./cr/useBirthCorrectionAction";
+import useMarriageCorrectionAction from "./cr/useMarriageCorrectionAction";
 
 import useCivilRegistrationDeathAPI from "./cr/useCivilRegistrationDeathAPI";
 // import useTradeLicenseSearch from "./tl/useTradeLicenseSearch";
@@ -372,6 +373,7 @@ const tl = {
 const cr = {
   getBirthFileSourceDetails,
   useBirthCorrectionAction,
+  useMarriageCorrectionAction,
   useRegSearchDeath,
   getDeathFileSourceDetails,
   useCivilRegMDMS,
