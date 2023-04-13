@@ -3,7 +3,7 @@ import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, TextAre
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
-const AbandonedInformer = ({ config, onSelect, userType, formData, isEditDeath }) => {
+const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandonedDeath }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};

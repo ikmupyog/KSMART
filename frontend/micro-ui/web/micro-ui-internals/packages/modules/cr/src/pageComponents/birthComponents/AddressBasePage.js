@@ -34,6 +34,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
     const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "boundary-data");
 
     const [lbs, setLbs] = useState(0);
+    const [permlbs, setPermLbs] = useState(0);
     const [toast, setToast] = useState(false);
 
     let cmbLB = [];
@@ -119,6 +120,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
     const [Talukvalues, setLbsTalukvalue] = useState(null);
     const [Villagevalues, setLbsVillagevalue] = useState(null);
     const [PostOfficevalues, setPostOfficevalues] = useState(null);
+    const [PostOfficePermvalues, setPostOfficePermvalues] = useState(null);
+
     //################################# Present Outside Kerala ##########################################################################################################
     const [presentOutsideKeralaDistrict, setoutsideKeralaDistrict] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaDistrict?.code ? formData?.AddressBirthDetails?.presentOutsideKeralaDistrict : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaDistrict ? "" :
         formData?.StillBirthChildDetails?.AddressBirthDetails?.presentOutsideKeralaDistrict ? "" : "");
@@ -329,18 +332,15 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
     const [PermanentOutSideIndiaLineOneMlError, setPermanentOutSideIndiaLineOneMlError] = useState(false);
     const [PermanentOutSideIndiaLineTwoEnError, setPermanentOutSideIndiaLineTwoEnError] = useState(false);
     const [PermanentOutSideIndiaLineTwoMlError, setPermanentOutSideIndiaLineTwoMlError] = useState(false);
-    console.log("countryValuePermanent",countryValuePermanent);
-    console.log("valuePermanent",valuePermanent);
-    console.log("isPrsentAddress",isPrsentAddress);
-    
+       
     const onSkip = () => onSelect();
     function setSameAsPresent(e) {
         setIsPrsentAddress(e.target.checked);
         if (e.target.checked == true) {
             setpermtaddressCountry(presentaddressCountry);
             setpermtaddressStateName(presentaddressStateName);
-            setCountryValuePermanent(countryvalue);
-            setValuePermanent(value);
+            setCountryValuePermanent(countryValuePermanent);
+            setValuePermanent(valuePermanent);
             setpermntInKeralaAdrDistrict(presentInsideKeralaDistrict);
             setpermntInKeralaAdrLBName(presentInsideKeralaLBName);
             setpermntInKeralaAdrTaluk(presentInsideKeralaTaluk);
@@ -1763,10 +1763,11 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 isEditAdoption={isEditAdoption}
                                 isEditBirthNAC={isEditBirthNAC}
                                 formData={formData}
+
                             />
                         </div>
                     )}
-                    {countryValuePermanent === "IND" && valuePermanent === "KL" && isPrsentAddress === false && (
+                    {countryValuePermanent === "IND" && valuePermanent === "kl" && isPrsentAddress === false && (
                         <div>
                             <AddressPermanentInsideKerala
                                 permntInKeralaAdrDistrict={permntInKeralaAdrDistrict}
@@ -1799,12 +1800,16 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 setDistrictvalue={setDistrictvalue}
                                 lbs={lbs}
                                 setLbs={setLbs}
+                                permlbs={permlbs}
+                                setPermLbs={setPermLbs}
                                 Talukvalues={Talukvalues}
                                 setLbsTalukvalue={setLbsTalukvalue}
                                 Villagevalues={Villagevalues}
                                 setLbsVillagevalue={setLbsVillagevalue}
                                 PostOfficevalues={PostOfficevalues}
                                 setPostOfficevalues={setPostOfficevalues}
+                                PostOfficePermvalues={PostOfficePermvalues}
+                                setPostOfficePermvalues={setPostOfficePermvalues}
                                 isEditBirth={isEditBirth}
                                 isEditDeath={isEditDeath}
                                 isEditStillBirth={isEditStillBirth}
