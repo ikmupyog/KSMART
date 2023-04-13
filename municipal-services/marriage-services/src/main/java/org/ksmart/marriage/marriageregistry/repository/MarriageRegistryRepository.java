@@ -86,7 +86,8 @@ public class MarriageRegistryRepository {
         String query = queryBuilder.getMarriageRegistrySearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
         
         List<MarriageRegistryDetails> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriageRegistryRowMapper);
- 
+        System.out.println("Groom address -------");
+        System.out.println(marriageRegistryEnrichment.setGroomPermanentAddressForCertificate(result.get(0)));
         return result; 
     }
 
