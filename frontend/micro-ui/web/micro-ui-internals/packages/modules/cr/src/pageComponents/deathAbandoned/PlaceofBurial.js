@@ -12,7 +12,7 @@ const PlaceofBurial = ({ config, onSelect, userType, formData,
   permntInKeralaAdrHouseNameMl, setpermntInKeralaAdrHouseNameMl, permntInKeralaAdrLocalityNameEn, setpermntInKeralaAdrLocalityNameEn,
   permntInKeralaAdrLocalityNameMl, setpermntInKeralaAdrLocalityNameMl, permntInKeralaAdrStreetNameEn, setpermntInKeralaAdrStreetNameEn,
   permntInKeralaAdrStreetNameMl, setpermntInKeralaAdrStreetNameMl, lbs, setLbs, Talukvalues, setLbsTalukvalue, Villagevalues, setLbsVillagevalue, permntInKeralaWardNo,
-  setpermntInKeralaWardNo, PostOfficevalues, setPostOfficevalues, isEditDeath = false
+  setpermntInKeralaWardNo, PostOfficevalues, setPostOfficevalues, isEditAbandonedDeath = false
   // isInitialRender, setIsInitialRender
 
 }) => {
@@ -43,7 +43,7 @@ const PlaceofBurial = ({ config, onSelect, userType, formData,
   const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantWard, "egov-location", "boundary-data");
   const [toast, setToast] = useState(false);
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : isEditDeath ? false : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditAbandonedDeath ? isEditAbandonedDeath : isEditAbandonedDeath ? false : false);
 
   let cmbLB = [];
   let cmbTaluk = [];
@@ -127,7 +127,7 @@ const PlaceofBurial = ({ config, onSelect, userType, formData,
     }
   }, [District, LBType, localbodies, Talukvalues, Villagevalues, PostOfficevalues, lbs, isInitialRender]);
 
-  if (isEditDeath) {
+  if (isEditAbandonedDeath) {
     if (formData?.InformationDeathAbandoned?.BurialDistrict != null) {
       if (cmbDistrict.length > 0 && (permntInKeralaAdrDistrict === undefined || permntInKeralaAdrDistrict === "")) {
         setpermntInKeralaAdrDistrict(cmbDistrict.filter(cmbDistrict => cmbDistrict.code === formData?.InformationDeathAbandoned?.BurialDistrict)[0]);
@@ -161,7 +161,7 @@ const PlaceofBurial = ({ config, onSelect, userType, formData,
       }
     }
   }
-  //  else if (isEditDeath) {
+  //  else if (isEditAbandonedDeath) {
   //   if (formData?.permntInKeralaAdrDistrict != null) {
   //     if (cmbDistrict.length > 0 && (permntInKeralaAdrDistrict === undefined || permntInKeralaAdrDistrict === "")) {
   //       setpermntInKeralaAdrDistrict(cmbDistrict.filter(cmbDistrict => cmbDistrict.code === formData?.permntInKeralaAdrDistrict)[0]);
@@ -326,7 +326,7 @@ const PlaceofBurial = ({ config, onSelect, userType, formData,
   }
   return (
     <React.Fragment>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
+      {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} > */}
 
         <div className="row">
           <div className="col-md-3">
@@ -458,7 +458,7 @@ const PlaceofBurial = ({ config, onSelect, userType, formData,
         <div className="row">
 
         </div>
-      </FormStep>
+      {/* </FormStep> */}
     </React.Fragment>
   );
 };

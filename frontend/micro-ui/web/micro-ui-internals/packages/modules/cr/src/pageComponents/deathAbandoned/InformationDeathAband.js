@@ -21,9 +21,9 @@ import DeathPublicPlace from "../deathComponents/DeathPublicPlace";
 import { useParams } from "react-router-dom";
 import PlaceofBurial from "./PlaceofBurial";
 
-const InformationDeathAbandonedAband = ({ config, onSelect, userType, formData, isEditDeath ,}) => {
+const InformationDeathAbandonedAband = ({ config, onSelect, userType, formData, isEditAbandonedDeath ,}) => {
   const [isEditDeathPageComponents, setIsEditDeathPageComponents] = useState(false);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditAbandonedDeath ? isEditAbandonedDeath : false);
   const stateId = Digit.ULBService.getStateId();
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
   let tenantId = "";
@@ -137,14 +137,14 @@ const InformationDeathAbandonedAband = ({ config, onSelect, userType, formData, 
       cmbState.push(ob);
     });
   const [DateOfDeath, setDateOfDeath] = useState(
-    isEditDeath &&
+    isEditAbandonedDeath &&
       isEditDeathPageComponents === false &&
       (formData?.InformationDeathAbandoned?.IsEditChangeScreen === false || formData?.InformationDeathAbandoned?.IsEditChangeScreen === undefined)
       ? convertEpochToDate(formData?.InformationDeathAbandoned?.DateOfDeath)
       : formData?.InformationDeathAbandoned?.DateOfDeath
   );
   const [FromDate, setFromDate] = useState(
-    isEditDeath &&
+    isEditAbandonedDeath &&
       isEditDeathPageComponents === false &&
       (formData?.InformationDeathAbandoned?.IsEditChangeScreen === false || formData?.InformationDeathAbandoned?.IsEditChangeScreen === undefined)
       ? convertEpochToDate(formData?.InformationDeathAbandoned?.FromDate)
@@ -1046,7 +1046,7 @@ const InformationDeathAbandonedAband = ({ config, onSelect, userType, formData, 
         sessionStorage.setItem("PlaceOfBurialMl", PlaceOfBurialMl ? PlaceOfBurialMl : null);
         sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
       }
-      let IsEditChangeScreen = isEditDeath ? isEditDeath : false;
+      let IsEditChangeScreen = isEditAbandonedDeath ? isEditAbandonedDeath : false;
 
       onSelect(config.key, {
         IsEditChangeScreen,
@@ -1120,7 +1120,7 @@ const InformationDeathAbandonedAband = ({ config, onSelect, userType, formData, 
     }
   };
   if (
-    isEditDeath &&
+    isEditAbandonedDeath &&
     isEditDeathPageComponents === false &&
     (formData?.InformationDeathAbandoned?.IsEditChangeScreen === false || formData?.InformationDeathAbandoned?.IsEditChangeScreen === undefined)
   ) {
@@ -1325,7 +1325,7 @@ const InformationDeathAbandonedAband = ({ config, onSelect, userType, formData, 
             <div>
               <Hospital
                 formData={formData}
-                isEditDeath={isEditDeath}
+                isEditAbandonedDeath={isEditAbandonedDeath}
                 selectDeathPlaceType={selectDeathPlaceType}
                 DeathPlaceType={DeathPlaceType}
                 HospitalNameMl={HospitalNameMl}
@@ -1337,7 +1337,7 @@ const InformationDeathAbandonedAband = ({ config, onSelect, userType, formData, 
             <div>
               <Institution
                 formData={formData}
-                isEditDeath={isEditDeath}
+                isEditAbandonedDeath={isEditAbandonedDeath}
                 selectDeathPlaceType={selectDeathPlaceType}
                 DeathPlaceType={DeathPlaceType}
                 DeathPlaceInstId={DeathPlaceInstId}
@@ -1355,7 +1355,7 @@ const InformationDeathAbandonedAband = ({ config, onSelect, userType, formData, 
             <div>
               <DeathPlaceHome
                 formData={formData}
-                isEditDeath={isEditDeath}
+                isEditAbandonedDeath={isEditAbandonedDeath}
                 DeathPlaceWardId={DeathPlaceWardId}
                 setDeathPlaceWardId={setDeathPlaceWardId}
                 DeathPlaceHomePostofficeId={DeathPlaceHomePostofficeId}
@@ -1383,7 +1383,7 @@ const InformationDeathAbandonedAband = ({ config, onSelect, userType, formData, 
             <div>
               <DeathPlaceVehicle
                 formData={formData}
-                isEditDeath={isEditDeath}
+                isEditAbandonedDeath={isEditAbandonedDeath}
                 DeathPlaceType={DeathPlaceType}
                 selectDeathPlaceType={selectDeathPlaceType}
                 VehicleNumber={VehicleNumber}
@@ -1413,7 +1413,7 @@ const InformationDeathAbandonedAband = ({ config, onSelect, userType, formData, 
             <div>
               <DeathPublicPlace
                 formData={formData}
-                isEditDeath={isEditDeath}
+                isEditAbandonedDeath={isEditAbandonedDeath}
                 DeathPlaceType={DeathPlaceType}
                 selectDeathPlaceType={selectDeathPlaceType}
                 DeathPlaceLocalityEn={DeathPlaceLocalityEn}
@@ -1435,7 +1435,7 @@ const InformationDeathAbandonedAband = ({ config, onSelect, userType, formData, 
             <div>
               <DeathOutsideJurisdiction
                 formData={formData}
-                isEditDeath={isEditDeath}
+                isEditAbandonedDeath={isEditAbandonedDeath}
                 DeathPlaceCountry={DeathPlaceCountry}
                 setSelectDeathPlaceCountry={setSelectDeathPlaceCountry}
                 DeathPlaceState={DeathPlaceState}
@@ -1467,6 +1467,9 @@ const InformationDeathAbandonedAband = ({ config, onSelect, userType, formData, 
               </h1>
             </div>
           </div>
+           {/* END OF PLACE OF BURIAL */}
+           <div className="row">
+            <div className="col-md-12">
           <PlaceofBurial
            presentWardNo={presentWardNo}
            setPresentWardNo={setPresentWardNo}
@@ -1532,8 +1535,10 @@ const InformationDeathAbandonedAband = ({ config, onSelect, userType, formData, 
            setpermntInKeralaAdrStreetNameMl={setpermntInKeralaAdrStreetNameMl}
            permntInKeralaWardNo={permntInKeralaWardNo}
            setpermntInKeralaWardNo={setpermntInKeralaWardNo}
-           isEditDeath={isEditDeath}
+           isEditAbandonedDeath={isEditAbandonedDeath}
            formData={formData}/>
+           </div>
+           </div>
 
           {/* END OF PLACE OF BURIAL */}
           <div className="row">

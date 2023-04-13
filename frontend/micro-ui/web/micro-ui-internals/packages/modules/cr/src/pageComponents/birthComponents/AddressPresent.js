@@ -55,7 +55,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
 
     useEffect(() => {
 
-        // if (isInitialRender) {
+        if (isInitialRender) {
         if (cmbLB.length > 0) {
             currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
             //console.log(currentLB);
@@ -80,9 +80,9 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
             //     cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
             //     setLbsVillagevalue(cmbFilterVillage);
             // }
-            // setIsInitialRender(false);
+            setIsInitialRender(false);
         }
-        // }
+        }
     }, [cmbLB]);
 
     if (isEditBirth) {
@@ -150,7 +150,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
         }
     }
     function setSelectaddressStateName(value) {
-        //console.log(value);
+        console.log(value);
         setaddressStateName(value);
         setValue(value.code);
         // if (value.code != "kl") {

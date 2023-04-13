@@ -1,9 +1,41 @@
+const formFielColumns = {
+  CHILD_DOB: "CR_DATE_OF_BIRTH_TIME",
+  CHILD_SEX:"CR_GENDER",
+  CHILD_AADHAAR: "CR_AADHAR",
+  FATHER_DETAILS: {
+    fatherNameEn: "CR_FATHER_NAME_EN",
+    fatherNameMl: "CR_FATHER_NAME_ML",
+    fatherAdhar: "CR_FATHER_AADHAR"
+  },
+  MOTHER_DETAILS:{
+    motherNameEn: "CR_MOTHER_NAME_EN",
+    motherNameMl: "CR_MOTHER_NAME_ML",
+    motherAdhar: "CR_MOTHER_AADHAR"
+  },
+  CHILD_NAME:{
+    firstNameEn: "CR_FIRST_NAME_EN",
+    middleNameEn: "CR_MIDDLE_NAME_EN",
+    lastNameEn: "CR_LAST_NAME_EN",
+    firstNameMl: "CR_FIRST_NAME_ML",
+    middleNameMl: "CR_MIDDLE_NAME_ML",
+    lastNameMl: "CR_LAST_NAME_ML",
+  },
+  PRESENT_ADDRESS: {
+    houseNameEn: "CR_HOUSE_NO_AND_NAME_EN",
+    houseNameMl: "CR_HOUSE_NO_AND_NAME_ML",
+    localityEn: "CR_LOCALITY_EN",
+    localityMl: "CR_LOCALITY_ML",
+    streetEn: "CR_STREET_EN",
+    streetMl: "CR_STREET_ML",
+  }
+}
+
 const data = [
   {
     correctionFieldName: "CHILD_DOB",
     conditionCode: "DOB_INSTITUTIONAL",
     specificCondition: null,
-    correctionFieldValue: getCorrectionFieldValues(),
+    // correctionFieldValue: getCorrectionFieldValues(),
     CorrectionDocument: [
       {
         DocumentId: 3,
@@ -67,14 +99,61 @@ const getCorrectionDocuments = (docData) => {
   return selectedDocs;
 };
 
+const getNestedFieldNames = (fieldData) =>{
+  let fieldNameData = [];
+  console.log("reached--nested==",fieldData,Object.keys(fieldData.curValue));
+  if(Object.keys(fieldData.curValue)?.length > 0){
+    fieldNameData = Object.keys(fieldData.curValue).map((item)=>{
+      console.log("looped==",formFielColumns[fieldData?.selectedDocType]?.[item],formFielColumns[fieldData?.selectedDocType]);
+      const columnName = formFielColumns[fieldData?.selectedDocType]?.[item];
+       const tempObj = {
+          column: columnName,
+          oldValue: fieldData.initialValue?.[item],
+          newValue: fieldData.curValue?.[item],
+        };
+        console.log("tempObj==",tempObj);
+        return tempObj;
+    }) 
+  }
+  return fieldNameData;
+}
+
 const getCorrectionFieldValues = (item) => {
-  return [
+  console.log("correction item==",item);
+  let fieldValues = [];
+  switch(item?.selectedDocType){
+    case "CHILD_DOB":
+  fieldValues =  [
     {
       column: "dob",
       oldValue: item.initialValue,
       newValue: item.curValue && Date.parse(item.curValue),
     },
   ];
+  break;
+  case "CHILD_SEX" || "CHILD_AADHAAR":
+  fieldValues =  [
+    {
+      column: formFielColumns[item?.CorrectionField],
+      oldValue: item.initialValue,
+      newValue: item.curValue,
+    },
+  ];
+  break;
+  case "CHILD_SEX" || "CHILD_AADHAAR":
+  fieldValues =  [
+    {
+      column: formFielColumns[item?.CorrectionField],
+      oldValue: item.initialValue,
+      newValue: item.curValue,
+    },
+  ];
+  break;
+  case "FATHER_DETAILS" :
+  fieldValues =  getNestedFieldNames(item);
+  break;
+ }
+ return fieldValues;
 };
 
 const getCorrectionFields = (correctionData) => {
@@ -84,11 +163,11 @@ const getCorrectionFields = (correctionData) => {
     Object.values(correctionData)
       .map((item) => {
         console.log("items==", item, item?.CorrectionField === "CHILD_DOB");
-        if (item?.CorrectionField === "CHILD_DOB") {
+        if (item?.isEditable) {
           const correctionFieldValues = getCorrectionFieldValues(item);
           const correctionDocs = getCorrectionDocuments(item.Documents);
           const tempObj = {
-            correctionFieldName: "CHILD_DOB",
+            correctionFieldName: item?.CorrectionField,
             conditionCode: item.conditionCode,
             specificCondition: null,
             correctionFieldValue: correctionFieldValues,

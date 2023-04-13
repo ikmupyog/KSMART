@@ -47,43 +47,57 @@ const getFilteredDocuments = (selectedData, inclusionData) => {
   let filteredData = [];
   let docFlag = "";
   const childAge = selectedData?.dateofbirth && moment().diff(moment(selectedData?.dateofbirth), "years");
-  if (childAge > 0 && childAge <= 6) {
+  if (childAge >= 0 && childAge <= 6) {
     filteredData =  inclusionData?.filter((item) => item.conditionCode === "NAME_INCLUSION_LESS_THAN_SIX");
-  } else if (childAge < 15) {
-    filteredData = inclusionData?.filter((item) => item.conditionCode === "NAME_INCLUSION_GREATER_THAN_SIX_STUDENT");
-  } else if (childAge > 15) {
-    filteredData = inclusionData?.filter((item) => item.conditionCode === "NAME_INCLUSION_AGE_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE");
-  } else if (childAge >= 6 && childAge <= 18) {
+  } else if (childAge > 6 )  {
     filteredData = inclusionData?.filter((item) => {
-      if (item.conditionCode === "NAME_INCLUSION_GREATER_THAN_SIX_NON_STUDENT" || item.conditionCode === "NAME_INCLUSION_GREATER_THAN_SIX_STUDENT") {
+      if(item.conditionCode === "NAME_INCLUSION_GREATER_THAN_SIX_STUDENT" 
+      || item.conditionCode === "NAME_INCLUSION_GREATER_THAN_SIX_NON_STUDENT"
+      || item.conditionCode === "NAME_CORRECTION_AGE_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE"
+      || item.conditionCode === "NAME_CHANGE_AGE_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE"
+      || item.conditionCode === "NAME_INCLUSION_AGE_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE"
+      || item.conditionCode === "AGE_MAJOR_CORRECTION"
+      || item.conditionCode === "AGE_MAJOR_INTIALS_EXPANTION"){
         return item;
       }
     });
-    docFlag = "STUDENT_CHANGE";
-  } else if (childAge >= 6 && childAge <= 18) {
-    filteredData = inclusionData?.filter((item) => {
-      if (item.conditionCode === "NAME_INCLUSION_GREATER_THAN_SIX_NON_STUDENT" || item.conditionCode === "NAME_INCLUSION_GREATER_THAN_SIX_STUDENT") {
-        return item;
-      }
-    });
-    docFlag = "STUDENT_CHANGE";
-  } else if (childAge == 0) {
-    filteredData = inclusionData?.filter((item) => {
-      if (
-        item.conditionCode === "NAME_CORRECTION_AGE_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE" ||
-        item.conditionCode === "NAME_CHANGE_AGE_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE"
-      ) {
-        return item;
-      }
-    });
-    docFlag = "NAME_CORRECTION_CHANGE";
-  } else if (childAge >= 18) {
-    filteredData = inclusionData?.filter((item) => {
-      if (item.conditionCode === "AGE_MAJOR_CORRECTION" || item.conditionCode === "AGE_MAJOR_INTIALS_EXPANTION") {
-        return item;
-      }
-    });
-    docFlag = "AGE_CORRECTION_CHANGE";
+    docFlag = "CHILD_NAME_CHANGE";
   }
+  //  else if (childAge < 15) {
+  //   filteredData = inclusionData?.filter((item) => item.conditionCode === "NAME_INCLUSION_GREATER_THAN_SIX_STUDENT");
+  // } else if (childAge > 15) {
+  //   filteredData = inclusionData?.filter((item) => item.conditionCode === "NAME_INCLUSION_AGE_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE");
+  // } else if (childAge >= 6 && childAge <= 18) {
+  //   filteredData = inclusionData?.filter((item) => {
+  //     if (item.conditionCode === "NAME_INCLUSION_GREATER_THAN_SIX_NON_STUDENT" || item.conditionCode === "NAME_INCLUSION_GREATER_THAN_SIX_STUDENT") {
+  //       return item;
+  //     }
+  //   });
+  //   docFlag = "STUDENT_CHANGE";
+  // } else if (childAge >= 6 && childAge <= 18) {
+  //   filteredData = inclusionData?.filter((item) => {
+  //     if (item.conditionCode === "NAME_INCLUSION_GREATER_THAN_SIX_NON_STUDENT" || item.conditionCode === "NAME_INCLUSION_GREATER_THAN_SIX_STUDENT") {
+  //       return item;
+  //     }
+  //   });
+  //   docFlag = "STUDENT_CHANGE";
+  // } else if (childAge == 0) {
+  //   filteredData = inclusionData?.filter((item) => {
+  //     if (
+  //       item.conditionCode === "NAME_CORRECTION_AGE_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE" ||
+  //       item.conditionCode === "NAME_CHANGE_AGE_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE"
+  //     ) {
+  //       return item;
+  //     }
+  //   });
+  //   docFlag = "NAME_CORRECTION_CHANGE";
+  // } else if (childAge >= 18) {
+  //   filteredData = inclusionData?.filter((item) => {
+  //     if (item.conditionCode === "AGE_MAJOR_CORRECTION" || item.conditionCode === "AGE_MAJOR_INTIALS_EXPANTION") {
+  //       return item;
+  //     }
+  //   });
+  //   docFlag = "AGE_CORRECTION_CHANGE";
+  // }
   return { documentData:filteredData, docFlag };
 };

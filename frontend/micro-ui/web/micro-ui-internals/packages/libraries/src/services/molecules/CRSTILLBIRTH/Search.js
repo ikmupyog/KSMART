@@ -71,10 +71,11 @@ export const CRStillBirthsearch = {
       asSectionHeader: true,
       values: [
         { title: "CR_SEARCH_APP_NO_LABEL", value: response?.applicationNumber || "NA" },
-        { title: "PDF_BIRTH_CHILD_NAME", value: response?.childFirstNameEn + response?.childMiddleNameEn + response?.childLastNameEn },
+        // { title: "PDF_BIRTH_CHILD_NAME", value: response?.stillbirthchilddetails?.childFirstNameEn + response?.childMiddleNameEn + response?.childLastNameEn },
         { title: "PDF_BIRTH_CHILD_SEX", value: response?.gender },
         { title: "PDF_BIRTH_DATE_OF_BIRTH", value: response?.childDOB ? convertEpochToDate(response?.childDOB) : "NA" },
         { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.hospitalName + "/" + response?.hospitalNameMl || "NA"},       
+         { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.adrsHouseNameEn   || "NA"},    
        ],
        
     };
@@ -82,56 +83,72 @@ export const CRStillBirthsearch = {
     const StillBirthParentsDetails = {
       title: "CR_BIRTH_PARENT_INFORMATION_HEADER",
       values: [
-        { title: "CS_COMMON_AADHAAR", value: response?.motherAadhar || "NA"},   
-        { title: "PDF_BIRTH_NAME_OF_MOTHER", value: response?.ParentsDetails?.motherFirstNameEn + " / " + response?.ParentsDetails?.motherFirstNameMl || "NA"},
+        
+        { title: "PDF_BIRTH_MOTHER_AADHAR", value: response?.StillBirthParentsDetails?.motherAadhar || "NA"},   
+        { title: "PDF_BIRTH_NAME_OF_MOTHER", value: response?.StillBirthParentsDetails?.motherFirstNameEn + " / " + response?.StillBirthParentsDetails?.motherFirstNameMl || "NA"},
      
-        { title: "CR_NATIONALITY", value: response?.motherNationality || "NA"},   
-        { title: "CR_MOTHER_AGE_BIRTH", value: response?.motherMarriageBirth || "NA"},   
-        { title: "CR_ORDER_CURRENT_DELIVERY", value: response?.orderofChildren || "NA"},   
-        { title: "CR_EDUCATION", value: response?.motherEducation || "NA"},   
-        { title: "CR_PROFESSIONAL", value: response?.motherProfession || "NA"},     
-        { title: "CR_NATIONALITY", value: response?.motherNationality || "NA"},   
-        { title: "CR_MOTHER_AGE_BIRTH", value: response?.motherMarriageBirth || "NA"},   
-        { title: "CR_ORDER_CURRENT_DELIVERY", value: response?.orderofChildren || "NA"},   
-        { title: "CR_EDUCATION", value: response?.motherEducation || "NA"},   
-        { title: "CS_COMMON_AADHAAR", value: response?.fatherAadhar || "NA"},  
-        { title: "PDF_BIRTH_NAME_OF_FATHER", value: response?.ParentsDetails?.fatherFirstNameEn + " / " + response?.ParentsDetails?.fatherFirstNameMl || "NA"},       
-        { title: "CR_NATIONALITY", value: response?.fatherNationality || "NA" },
+        { title: "CR_NATIONALITY", value: response?.StillBirthParentsDetails?.motherNationality || "NA"},   
+        { title: "CR_MOTHER_AGE_BIRTH", value: response?.StillBirthParentsDetails?.motherMarriageBirth || "NA"},   
+        { title: "CR_ORDER_CURRENT_DELIVERY", value: response?.StillBirthParentsDetails?.orderofChildren || "NA"},   
+        { title: "CR_EDUCATION", value: response?.StillBirthParentsDetails?.motherEducation || "NA"},   
+        { title: "CR_PROFESSIONAL", value: response?.StillBirthParentsDetails?.motherProfession || "NA"},     
+        { title: "CR_NATIONALITY", value: response?.StillBirthParentsDetails?.motherNationality || "NA"},   
        
-       { title: "CR_EDUCATION", value: response?.fatherEducation || "NA" },
+        { title: "PDF_BIRTH_FATHER_AADHAR", value: response?.StillBirthParentsDetails?.fatherAadhar || "NA"},  
+        { title: "PDF_BIRTH_NAME_OF_FATHER", value: response?.StillBirthParentsDetails?.fatherFirstNameEn + " / " + response?.ParentsDetails?.fatherFirstNameMl || "NA"},       
+        { title: "CR_NATIONALITY", value: response?.StillBirthParentsDetails?.fatherNationality || "NA" },       
+       { title: "CR_EDUCATION", value: response?.StillBirthParentsDetails?.fatherEducation || "NA" },
        { title: "CR_PROFESSIONAL", value: response?.fatherProfession   || "NA" },
-       { title: "CS_COMMON_RELIGION", value: response?.Religion || "NA" },
-                
      
+       { title: "CS_COMMON_RELIGION", value: response?.StillBirthParentsDetails?.Religion || "NA" },  
+       { title: "PDF_BIRTH_FATHER_MOBILE_NO", value: response?.StillBirthParentsDetails?.fatherMobile || "NA" },
+       { title: "PDF_BIRTH_FATHER_EMAIL", value: response?.StillBirthParentsDetails?.fatherEmail || "NA" },       
+       
       ],
     };
     const AddressBirthDetails = {
-      title: "CR_PRESENT_ADDRESS_INFORMATION_HEADER",
+      title: "CR_ADDRESS_INFORMATION_HEADER",
       values: [
-        { title: "CR_BIRTH_PERS_HO_NAME_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaHouseNameEn || "CR_NOT_RECORDED"},
-        { title: "CR_BIRTH_PERS_STREET_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaStreetNameEn || "CR_NOT_RECORDED"},
-         { title: "CR_BIRTH_PERS_LOCALITY_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaLocalityNameEn || "CR_NOT_RECORDED"},
-         { title: "CR_BIRTH_PERS_POSTOFFICE_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaPostOffice.name || "CR_NOT_RECORDED"},
-          { title: "CR_BIRTH_PERS_PINCODE_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaPincode || "CR_NOT_RECORDED"},
-         { title: "CR_BIRTH_PERS_DISTRICT_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaDistrict.name|| "CR_NOT_RECORDED"},
-         { title: "CR_BIRTH_PERS_DISTRICT_LABEL", value: response?.AddressBirthDetails.presentaddressStateName.name|| "CR_NOT_RECORDED"},
+   
+        { title: "PDF_BIRTH_PRESENT_ADDRESS",  value: response?.AddressBirthDetails.presentInsideKeralaHouseNameEn + " , " + response?.AddressBirthDetails.presentInsideKeralaStreetNameEn  + " , " + response?.AddressBirthDetails.presentInsideKeralaLocalityNameEn + " , " + response?.AddressBirthDetails.presentInsideKeralaPostOffice.name + " , " + response?.AddressBirthDetails.presentInsideKeralaPincode
+        + " , " +  response?.AddressBirthDetails.presentInsideKeralaDistrict    + " , " +  response?.AddressBirthDetails.presentaddressStateName + " , " +    response?.AddressBirthDetails.presentaddressCountry },
+          {  value:response?.AddressBirthDetails.presentInsideKeralaHouseNameMl + " , " + response?.AddressBirthDetails.presentInsideKeralaStreetNameMl  + " , " + response?.AddressBirthDetails.presentInsideKeralaLocalityNameMl + " , " + response?.AddressBirthDetails.presentInsideKeralaPostOffice + " , " + response?.AddressBirthDetails.presentInsideKeralaPincode   + " , " +  response?.AddressBirthDetails.presentInsideKeralaDistrict     + " , " +  response?.AddressBirthDetails.presentaddressStateName  + " , " +    response?.AddressBirthDetails.presentaddressCountry  || "CR_NOT_RECORDED"},
+          { title: "PDF_BIRTH_PERMANENT_ADDRESS",  value: response?.AddressBirthDetails.permntInKeralaAdrHouseNameEn + " , " + response?.AddressBirthDetails.permntInKeralaAdrStreetNameEn  + " , " + response?.AddressBirthDetails.permntInKeralaAdrLocalityNameEn + " , " + response?.AddressBirthDetails.permntInKeralaAdrPostOffice.name + " , " + response?.AddressBirthDetails.permntInKeralaAdrPincode
+          + " , " +  response?.AddressBirthDetails.permntInKeralaAdrDistrict.name     + " , " +  response?.AddressBirthDetails.permtaddressStateName.name + " , " +    response?.AddressBirthDetails.permtaddressCountry.name },
+      {value: response?.AddressBirthDetails.permntInKeralaAdrHouseNameMl + " , " + response?.AddressBirthDetails.permntInKeralaAdrStreetNameMl  + " , " + response?.AddressBirthDetails.permntInKeralaAdrLocalityNameMl + " , " + response?.AddressBirthDetails.permntInKeralaAdrLocalityNameMl.name + " , " + response?.AddressBirthDetails.permntInKeralaAdrPincode
+      + " , " +  response?.AddressBirthDetails.permntInKeralaAdrDistrict.namelocal     + " , " +  response?.AddressBirthDetails.permtaddressStateName.namelocal + " , " +    response?.AddressBirthDetails.permtaddressCountry.namelocal },
+      
+      
+          // { title: "PDF_BIRTH_NAME_OF_FATHER", value: response?.ParentsDetails?.fatherFirstNameEn + " / " + response?.ParentsDetails?.fatherFirstNameMl || "NA"},
+        // { title: "CR_BIRTH_PERS_HO_NAME_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaHouseNameEn || "CR_NOT_RECORDED"},
+        // { title: "CR_BIRTH_PERS_STREET_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaStreetNameEn || "CR_NOT_RECORDED"},
+        //  { title: "CR_BIRTH_PERS_LOCALITY_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaLocalityNameEn || "CR_NOT_RECORDED"},
+        //  { title: "CR_BIRTH_PERS_POSTOFFICE_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaPostOffice.name || "CR_NOT_RECORDED"},
+        //   { title: "CR_BIRTH_PERS_PINCODE_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaPincode || "CR_NOT_RECORDED"},
+        //  { title: "CR_BIRTH_PERS_DISTRICT_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaDistrict.name|| "CR_NOT_RECORDED"},
+        //  { title: "CR_BIRTH_PERS_DISTRICT_LABEL", value: response?.AddressBirthDetails.presentaddressStateName.name|| "CR_NOT_RECORDED"},
        
-        { title: "CR_BIRTH_PERS_COUNTRY_LABEL", value: response?.AddressBirthDetails.presentaddressCountry.name || "CR_NOT_RECORDED"},
+        // { title: "CR_BIRTH_PERS_COUNTRY_LABEL", value: response?.AddressBirthDetails.presentaddressCountry.name || "CR_NOT_RECORDED"},
 
-        { title: "CR_BIRTH_PERM_HO_NAME_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrHouseNameEn || "CR_NOT_RECORDED"},
-        { title: "CR_BIRTH_PERM_STREET_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrStreetNameEn || "CR_NOT_RECORDED"},
-        { title: "CR_BIRTH_PERM_LOCALITY_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrLocalityNameEn || "CR_NOT_RECORDED"},
-        { title: "CR_BIRTH_PERM_POSTOFFICE_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrPostOffice.name || "CR_NOT_RECORDED"},
-        { title: "CR_BIRTH_PERM_PINCODE_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrPincode || "CR_NOT_RECORDED"},
-        { title: "CR_BIRTH_PERM_DISTRICT_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrDistrict.name|| "CR_NOT_RECORDED"},
-        { title: "CR_BIRTH_PERM_STATE_LABEL", value: response?.AddressBirthDetails.permtaddressStateName.name || "CR_NOT_RECORDED"},
-        { title: "CR_BIRTH_PERM_COUNTRY_LABEL", value: response?.AddressBirthDetails.permtaddressCountry.name || "CR_NOT_RECORDED"},
+        // { title: "CR_BIRTH_PERM_HO_NAME_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrHouseNameEn || "CR_NOT_RECORDED"},
+        // { title: "CR_BIRTH_PERM_STREET_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrStreetNameEn || "CR_NOT_RECORDED"},
+        // { title: "CR_BIRTH_PERM_LOCALITY_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrLocalityNameEn || "CR_NOT_RECORDED"},
+        // { title: "CR_BIRTH_PERM_POSTOFFICE_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrPostOffice.name || "CR_NOT_RECORDED"},
+        // { title: "CR_BIRTH_PERM_PINCODE_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrPincode || "CR_NOT_RECORDED"},
+        // { title: "CR_BIRTH_PERM_DISTRICT_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrDistrict.name|| "CR_NOT_RECORDED"},
+        // { title: "CR_BIRTH_PERM_STATE_LABEL", value: response?.AddressBirthDetails.permtaddressStateName.name || "CR_NOT_RECORDED"},
+        // { title: "CR_BIRTH_PERM_COUNTRY_LABEL", value: response?.AddressBirthDetails.permtaddressCountry.name || "CR_NOT_RECORDED"},
         
       
       ],
       
 
     };
+    
+
+
+
+
     
     // const fatherInfo = {
     //   title: "CR_BIRTH_FATHER_INFORMATION_HEADER",
@@ -174,10 +191,10 @@ export const CRStillBirthsearch = {
       title: "CR_STATISTICAL_DETAILS",
      // asSectionHeader: true,
       values: [
-        { title: "CR_NATURE_OF_MEDICAL_ATTENTION", value: response?.medicalAttensionSub || "NA" },
-        { title: "CR_PREGNANCY_DURATION", value: response?.pregnancyDuration   || "NA" },
-        { title: "CR_DELIVERY_METHOD", value: response?.deliveryMethods },
-        { title: "CR_CAUSE_FOETAL_DEATH", value: response?.causeFoetalDeath || "NA" },
+        { title: "PDF_BIRTH_NATURE_MEDICAL_ATTENTION", value: response?.medicalAttensionSub || "NA" },
+        { title: "PDF_BIRTH_DURATION_PREGNANCY", value: response?.pregnancyDuration   || "NA" },
+        { title: "PDF_BIRTH_DELIVERYMETHOD", value: response?.deliveryMethods },
+        { title: "PDF_CAUSE_FOETAL_DEATH", value: response?.causeFoetalDeath || "NA" },
           
        ],
     };
@@ -185,11 +202,11 @@ export const CRStillBirthsearch = {
       title: "CR_INITIATOR_DETAILS",
      // asSectionHeader: true,
       values: [
-        { title: "CR_INITIATOR_NAME", value: response?.initiatorNameEn || "NA" },
-        { title: "CS_COMMON_AADHAAR", value: response?.initiatorAadhar   || "NA" },
-        { title: "CR_MOBILE_NO", value: response?.initiatorMobile  || "NA"},
-        { title: "CR_INFORMER_DESIGNATION", value: response?.initiatorDesi || "NA" },
-        { title: "CR_INFORMER_ADDRESS", value: response?.initiatorAddress || "NA" },
+        { title: "PDF_INITIATOR_NAME", value: response?.StillBirthInitiatorDetails?.initiatorNameEn || "NA" },
+        { title: "PDF_INITIATOR_AADHAR", value: response?.StillBirthInitiatorDetails?.initiatorAadhar   || "NA" },
+        { title: "PDF_INITIATOR_MOBILE_NO", value: response?.StillBirthInitiatorDetails?.initiatorMobile  || "NA"},
+        { title: "PDF_INITIATOR_DESIGNATION", value: response?.StillBirthInitiatorDetails?.initiatorDesi || "NA" },
+        { title: "PDF_INITIATOR_ADDRESS", value: response?.StillBirthInitiatorDetails?.initiatorAddress || "NA" },
         
        ],
     };
@@ -197,11 +214,11 @@ export const CRStillBirthsearch = {
       title: "CR_INFORMANT_DETAILS",
      // asSectionHeader: true,
       values: [
-        { title: "CR_INFORMANT_NAME", value: response?.infomantFirstNameEn || "NA" },
-        { title: "CS_COMMON_AADHAAR", value: response?.infomantAadhar   || "NA" },
-        { title: "CR_MOBILE_NO", value: response?.infomantMobile  || "NA"},
-        { title: "CR_INFORMER_DESIGNATION", value: response?.informerDesi || "NA" },
-        { title: "CR_INFORMER_ADDRESS", value: response?.informerAddress || "NA" },
+        { title: "PDF_BIRTH_INFORMANT_NAME", value: response?.StillBirthInformarDetails?.infomantFirstNameEn || "NA" },
+        { title: "PDF_INFORMER_AADHAR", value: response?.StillBirthInformarDetails?.infomantAadhar   || "NA" },
+        { title: "PDF_BIRTH_INFORMANT_MOBILE", value: response?.StillBirthInformarDetails?.infomantMobile  || "NA"},
+        { title: "PDF_BIRTH_INFORMANT_DESI", value: response?.StillBirthInformarDetails?.informerDesi || "NA" },
+        { title: "PDF_BIRTH_INFORMANT_ADDRESS", value: response?.StillBirthInformarDetails?.informerAddress || "NA" },
         
        ],
     };
