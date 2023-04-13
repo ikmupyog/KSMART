@@ -192,7 +192,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
   } else
     return (
       <React.Fragment>
-        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!presentOutSideIndiaAdressEn}>
+        {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!presentOutSideIndiaAdressEn}> */}
           {/* <header className="card-header" style={{ fontSize: "35px" }}>
           {t("CR_ADDRESS_TYPE_OUTSIDE_INDIA")}
         </header> */}
@@ -367,7 +367,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
               />
             </div>
           </div>
-        </FormStep>
+        {/* </FormStep> */}
       </React.Fragment>
     );
 };

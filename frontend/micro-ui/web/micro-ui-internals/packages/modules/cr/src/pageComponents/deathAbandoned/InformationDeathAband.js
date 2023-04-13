@@ -1467,6 +1467,9 @@ const InformationDeathAbandonedAband = ({ config, onSelect, userType, formData, 
               </h1>
             </div>
           </div>
+           {/* END OF PLACE OF BURIAL */}
+           <div className="row">
+            <div className="col-md-12">
           <PlaceofBurial
            presentWardNo={presentWardNo}
            setPresentWardNo={setPresentWardNo}
@@ -1534,6 +1537,8 @@ const InformationDeathAbandonedAband = ({ config, onSelect, userType, formData, 
            setpermntInKeralaWardNo={setpermntInKeralaWardNo}
            isEditDeath={isEditDeath}
            formData={formData}/>
+           </div>
+           </div>
 
           {/* END OF PLACE OF BURIAL */}
           <div className="row">

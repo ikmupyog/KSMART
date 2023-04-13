@@ -325,7 +325,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   }
   return (
     <React.Fragment>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
+      {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} > */}
 
         <div className="row">
           <div className="col-md-3">
@@ -571,7 +571,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
         <div className="row">
 
         </div>
-      </FormStep>
+      {/* </FormStep> */}
     </React.Fragment>
   );
 };
