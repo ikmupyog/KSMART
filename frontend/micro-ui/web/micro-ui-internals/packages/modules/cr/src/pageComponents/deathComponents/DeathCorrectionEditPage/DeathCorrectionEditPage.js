@@ -35,6 +35,7 @@ function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, sex, cmbPla
   const [uploadStatus, setUploadStatus] = useState({
     approvedPhotoId: false,
   });
+  const [selectedFieldType, setSelectedFieldType] = useState("");
   const [selectedCorrectionItem, setSelectedCorrectionItem] = useState([]);
   
   let deathCorrectionFormData = {};
@@ -168,6 +169,7 @@ function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, sex, cmbPla
 
   const setDeathCorrectionFilterQuery = (fieldId) => {
     let selectedDeathCorrectionData = deathCorrectionFormsObj[fieldId];
+    setSelectedFieldType(fieldId);
     setSelectedCorrectionItem(selectedDeathCorrectionData);
     setShowModal(true);
   };
@@ -185,10 +187,13 @@ function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, sex, cmbPla
         const selectedDocIds = fileData.map((item) => item.documentId);
         setSelectedDocs(selectedDocIds);
       }
-      selectedDocs;
+   
       let tempObj = { ...deathCorrectionFormsObj };
-      let { DECEASED_DOB } = tempObj;
-      tempObj = { ...tempObj, DECEASED_DOB: { ...DECEASED_DOB, Documents: fileData, isFocused: true, isDisabled: false } };
+      console.log("tempObj==",selectedFieldType,tempObj);
+      // let { DECEASED_DOB } = tempObj;
+      // tempObj = { ...tempObj, DECEASED_DOB: { ...DECEASED_DOB, Documents: fileData, isFocused: true, isDisabled: false } };
+      let tempFieldType = tempObj[selectedFieldType];
+      tempObj = { ...tempObj, [selectedFieldType]: { ...tempFieldType, Documents: fileData, selectedDocType: selectedFieldType, isEditable: true, isFocused: true, isDisabled: false } };
   
       setDeathCorrectionFormsObj(tempObj);
       setShowModal(false);
@@ -210,21 +215,21 @@ function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, sex, cmbPla
   const onDodChange = (value) => {
     let tempObj = {...deathCorrectionFormsObj };
     let { DECEASED_DOB } = tempObj;
-    tempObj = { ...tempObj, DECEASED_DOB: { ...DECEASED_DOB,curValue: value && moment(value,"YYYY-MM-DD").format("DD/MM/YYYY")} };
+    tempObj = { ...tempObj, DECEASED_DOB: { ...DECEASED_DOB,curValue: value && moment(value,"YYYY-MM-DD").format("DD/MM/YYYY"), isFocused:false} };
     setDeathCorrectionFormsObj(tempObj);
   };
   const onAdharChange = (e) =>{
     let tempObj = { ...deathCorrectionFormsObj };
     console.log("DECEASED_AADHAR==",e.target.value);
     let { DECEASED_AADHAR } = tempObj;
-    tempObj = { ...tempObj, DECEASED_AADHAR: { ...DECEASED_AADHAR, curValue: e.target.value}};
+    tempObj = { ...tempObj, DECEASED_AADHAR: { ...DECEASED_AADHAR, curValue: e.target.value, isFocused:false}};
     setDeathCorrectionFormsObj(tempObj);
   }
   const onNameChange = (e,fieldType) =>{
     let tempObj = { ...deathCorrectionFormsObj };
     let { DECEASED_NAME } = tempObj;
     let { curValue } = DECEASED_NAME;
-    tempObj = { ...tempObj, DECEASED_NAME: { ...DECEASED_NAME, curValue:{...curValue,[fieldType]: e.target.value}}};
+    tempObj = { ...tempObj, DECEASED_NAME: { ...DECEASED_NAME, curValue:{...curValue,[fieldType]: e.target.value},isFocused:false}};
     setDeathCorrectionFormsObj(tempObj);
   }
 
@@ -232,35 +237,35 @@ function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, sex, cmbPla
     let tempObj = { ...deathCorrectionFormsObj };
     let { DECEASED_MOTHER } = tempObj;
     let { curValue } = DECEASED_MOTHER;
-    tempObj = { ...tempObj, DECEASED_MOTHER: { ...DECEASED_MOTHER, curValue:{...curValue,[fieldType]: e.target.value}}};
+    tempObj = { ...tempObj, DECEASED_MOTHER: { ...DECEASED_MOTHER, curValue:{...curValue,[fieldType]: e.target.value},isFocused:false}};
     setDeathCorrectionFormsObj(tempObj);
   }
   const onBlurFatherName = (e, fieldType) =>{
     let tempObj = { ...deathCorrectionFormsObj };
     let { DECEASED_FATHER } = tempObj;
     let { curValue } = DECEASED_FATHER;
-    tempObj = { ...tempObj, DECEASED_FATHER: { ...DECEASED_FATHER, curValue:{...curValue,[fieldType]: e.target.value}}};
+    tempObj = { ...tempObj, DECEASED_FATHER: { ...DECEASED_FATHER, curValue:{...curValue,[fieldType]: e.target.value}, isFocused:false}};
     setDeathCorrectionFormsObj(tempObj);
   }
   const onBlurSpouseName = (e, fieldType) =>{
     let tempObj = { ...deathCorrectionFormsObj };
     let { DECEASED_SPOUSE } = tempObj;
     let { curValue } = DECEASED_SPOUSE;
-    tempObj = { ...tempObj, DECEASED_SPOUSE: { ...DECEASED_SPOUSE, curValue:{...curValue,[fieldType]: e.target.value}}};
+    tempObj = { ...tempObj, DECEASED_SPOUSE: { ...DECEASED_SPOUSE, curValue:{...curValue,[fieldType]: e.target.value}, isFocused:false}};
     setDeathCorrectionFormsObj(tempObj);
   }
   
   const onGenderChange = (genderDetails) => {
     let tempObj = { ...deathCorrectionFormsObj };
     let { DECEASED_SEX } = tempObj;
-    tempObj = { ...tempObj, DECEASED_SEX: { ...DECEASED_SEX, curValue: genderDetails}};
+    tempObj = { ...tempObj, DECEASED_SEX: { ...DECEASED_SEX, curValue: genderDetails, isFocused:false}};
     setDeathCorrectionFormsObj(tempObj);
 };
   const onPlaceChange = (placeDetails) => {
     setselectDeathPlace(placeDetails)
     let tempObj = { ...deathCorrectionFormsObj };
     let { DECEASED_PLACE_OF_DEATH } = tempObj;
-    tempObj = { ...tempObj, DECEASED_PLACE_OF_DEATH: { ...DECEASED_PLACE_OF_DEATH, curValue: placeDetails}};
+    tempObj = { ...tempObj, DECEASED_PLACE_OF_DEATH: { ...DECEASED_PLACE_OF_DEATH, curValue: placeDetails, isFocused:false}};
     setDeathCorrectionFormsObj(tempObj);
 };
 
@@ -268,7 +273,7 @@ const onPresentAddressChange = (e,fieldType) =>{
   let tempObj = { ...deathCorrectionFormsObj };
   let { PERMANENT_ADDRESS } = tempObj;
   let { curValue } = PERMANENT_ADDRESS;
-  tempObj = { ...tempObj, PERMANENT_ADDRESS: { ...PERMANENT_ADDRESS, curValue:{...curValue,[fieldType]: e.target.value}}};
+  tempObj = { ...tempObj, PERMANENT_ADDRESS: { ...PERMANENT_ADDRESS, curValue:{...curValue,[fieldType]: e.target.value}, isFocused:false}};
   setDeathCorrectionFormsObj(tempObj);
 }
 
@@ -279,7 +284,7 @@ const onPresentAddressChange = (e,fieldType) =>{
   const onSubmit = (data) => console.log(data);
 
   if(Object.keys(deathCorrectionFormsObj)?.length > 0){
-
+console.log("deathCorrectionFormsObj==",deathCorrectionFormsObj);
   return (
     <React.Fragment>
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
@@ -304,17 +309,20 @@ const onPresentAddressChange = (e,fieldType) =>{
                   t={t}
                   type={"text"}
                   max="12"
-                  name="DeceasedAadharNumber"
+                  isMandatory={false}
+                  disabled={deathCorrectionFormsObj?.DECEASED_AADHAR?.isDisabled}
+                  autoFocus={deathCorrectionFormsObj?.DECEASED_AADHAR?.isFocused}
                   defaultValue={deathCorrectionFormsObj?.DECEASED_AADHAR?.curValue}
                   onBlur={(e)=>onAdharChange(e)}
                   placeholder={`${t("CR_AADHAR")}`}
-                  // {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                  {...(validation = { pattern: "^[0-9]{12}$", type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                 />
               </div>
             </FieldComponentContainer>
             <div style={{ marginTop: "2.5rem" }}>
-          <ButtonContainer>
             {deathCorrectionFormsObj?.DECEASED_AADHAR?.isDisabled && (
+          <ButtonContainer>
+            
                    <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_AADHAR"])}>
                    <EditIcon
                     style={{ position: "absolute", top: "0.8rem"}} 
@@ -322,8 +330,9 @@ const onPresentAddressChange = (e,fieldType) =>{
                      label={"Edit"}
                    />
                      </span>
-                )}
+              
           </ButtonContainer>
+            )}
         </div>
         </FormFieldContainer>
           <FormFieldContainer>
@@ -335,7 +344,8 @@ const onPresentAddressChange = (e,fieldType) =>{
                   type={"text"}
                   name="DeceasedFirstNameEn"
                   defaultValue={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.firstNameEn} 
-                  // autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
+                  disabled={deathCorrectionFormsObj?.DECEASED_NAME?.isDisabled}
+                  autoFocus={true}
                   onBlur={(e)=>onNameChange(e,"firstNameEn")}
                   placeholder={`${t("CR_FIRST_NAME_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -348,7 +358,8 @@ const onPresentAddressChange = (e,fieldType) =>{
                   type={"text"}
                   name="DeceasedMiddleNameEn"
                   defaultValue={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.middleNameEn} 
-                  // autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
+                  disabled={deathCorrectionFormsObj?.DECEASED_NAME?.isDisabled}
+                  autoFocus={true}
                   onBlur={(e)=>onNameChange(e,"middleNameEn")}
                   placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -361,7 +372,8 @@ const onPresentAddressChange = (e,fieldType) =>{
                   type={"text"}
                   name="DeceasedLastNameEn"
                   defaultValue={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.lastNameEn} 
-                  // autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
+                  disabled={deathCorrectionFormsObj?.DECEASED_NAME?.isDisabled}
+                  autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
                   onBlur={(e)=>onNameChange(e,"lastNameEn")}
                   placeholder={`${t("CR_LAST_NAME_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -370,8 +382,8 @@ const onPresentAddressChange = (e,fieldType) =>{
             </FieldComponentContainer>
              
               <div style={{ marginTop: "2.8rem" }}>
+              {deathCorrectionFormsObj?.DECEASED_NAME?.isDisabled && (
           <ButtonContainer>
-                {deathCorrectionFormsObj?.DECEASED_NAME?.isDisabled && (
                 <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_NAME"])}>
                 <EditIcon
                   style={{ position: "absolute", top: "0.8rem"}} 
@@ -379,8 +391,9 @@ const onPresentAddressChange = (e,fieldType) =>{
                   label={"Edit"}
                 />
                 </span>
-                )}
+             
               </ButtonContainer>
+                 )}
         </div>
         </FormFieldContainer>
           <FormFieldContainer>
@@ -392,8 +405,8 @@ const onPresentAddressChange = (e,fieldType) =>{
                   type={"text"}
                   name="DeceasedFirstNameMl"
                   defaultValue={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.firstNameMl} 
-                  // disabled={deathCorrectionFormsObj?.DECEASED_NAME?.isDisabled} 
-                  // autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
+                  disabled={deathCorrectionFormsObj?.DECEASED_NAME?.isDisabled}
+                  autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
                   onBlur={(e)=>onNameChange(e,"firstNameMl")}
                   placeholder={`${t("CR_FIRST_NAME_ML")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -406,8 +419,8 @@ const onPresentAddressChange = (e,fieldType) =>{
                   type={"text"}
                   name="DeceasedMiddleNameMl"
                   defaultValue={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.middleNameMl} 
-                  // autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
-                  // disabled={deathCorrectionFormsObj?.DECEASED_NAME?.isDisabled} 
+                  disabled={deathCorrectionFormsObj?.DECEASED_NAME?.isDisabled}
+                  autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
                   onBlur={(e)=>onNameChange(e,"middleNameMl")}
                   // onBlur={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_MIDDLE_NAME_ML")}`}
@@ -421,8 +434,8 @@ const onPresentAddressChange = (e,fieldType) =>{
                   type={"text"}
                   name="DeceasedLastNameMl"
                   defaultValue={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.lastNameMl} 
-                  // disabled={deathCorrectionFormsObj?.DECEASED_NAME?.isDisabled} 
-                  // autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
+                  disabled={deathCorrectionFormsObj?.DECEASED_NAME?.isDisabled}
+                  autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
                   onBlur={(e)=>onNameChange(e,"lastNameMl")}
                   // onBlur={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_LAST_NAME_ML")}`}
@@ -451,8 +464,8 @@ const onPresentAddressChange = (e,fieldType) =>{
               </div>
               </FieldComponentContainer>
               <div style={{ marginTop: "2.8rem" }}>
+              {deathCorrectionFormsObj?.DECEASED_DOB?.isDisabled && (
           <ButtonContainer>
-                {deathCorrectionFormsObj?.DECEASED_DOB?.isDisabled && (
                    <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_DOB"])}>
                    <EditIcon
                      style={{ position: "absolute", top: "0.8rem"}}
@@ -460,8 +473,9 @@ const onPresentAddressChange = (e,fieldType) =>{
                      label={"Edit"}
                    />
                    </span>
-                )}
+               
               </ButtonContainer>
+               )}
         </div>
         </FormFieldContainer>
           <FormFieldContainer>
@@ -483,8 +497,8 @@ const onPresentAddressChange = (e,fieldType) =>{
               </div>
               </FieldComponentContainer>
               <div style={{ marginTop: "2.8rem" }}>
+              {deathCorrectionFormsObj?.DECEASED_PLACE_OF_DEATH?.isDisabled && (
           <ButtonContainer>
-                {deathCorrectionFormsObj?.DECEASED_PLACE_OF_DEATH?.isDisabled && (
                  <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_PLACE_OF_DEATH"])}>
                  <EditIcon
                   style={{ position: "absolute", top: "0.8rem"}}
@@ -492,8 +506,8 @@ const onPresentAddressChange = (e,fieldType) =>{
                    label={"Edit"}
                  />
                  </span>
-                )}
               </ButtonContainer>
+                )}
         </div>
        </FormFieldContainer>
           {/* {DeathPlace.code === "HOSPITAL" && (
@@ -652,8 +666,8 @@ const onPresentAddressChange = (e,fieldType) =>{
               </div>
             </FieldComponentContainer>
               <div style={{ marginTop: "2.8rem" }}>
+              {deathCorrectionFormsObj?.DECEASED_SEX?.isDisabled && (
           <ButtonContainer>
-                {deathCorrectionFormsObj?.DECEASED_SEX?.isDisabled && (
                 <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_SEX"])}>
                 <EditIcon
                   style={{ position: "absolute", top: "0.8rem"}}
@@ -661,8 +675,8 @@ const onPresentAddressChange = (e,fieldType) =>{
                   label={"Edit"}
                 />
                 </span> 
-                )}
               </ButtonContainer>
+              )}
         </div>
         </FormFieldContainer>
          <FormFieldContainer>
@@ -674,6 +688,8 @@ const onPresentAddressChange = (e,fieldType) =>{
                   type={"text"}
                   name="DeceasedMotherNameEn"
                   defaultValue={deathCorrectionFormsObj?.DECEASED_MOTHER?.curValue?.mothersNameEn}
+                  disabled={deathCorrectionFormsObj.DECEASED_MOTHER?.isDisabled}
+                  autofocus={deathCorrectionFormsObj.DECEASED_MOTHER?.isFocused}
                   onBlur={(e) => onBlurMotherName(e,"mothersNameEn")}
                   placeholder={`${t("CR_MOTHER_NAME_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -686,6 +702,8 @@ const onPresentAddressChange = (e,fieldType) =>{
                   type={"text"}
                   name="DeceasedMotherNameMl"
                   defaultValue={deathCorrectionFormsObj?.DECEASED_MOTHER?.curValue?.mothersNameMl}
+                  disabled={deathCorrectionFormsObj.DECEASED_MOTHER?.isDisabled}
+                  autofocus={deathCorrectionFormsObj.DECEASED_MOTHER?.isFocused}
                   onBlur={(e) => onBlurMotherName(e,"mothersNameMl")}
                   placeholder={`${t("CR_MOTHER_NAME_ML")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -693,8 +711,8 @@ const onPresentAddressChange = (e,fieldType) =>{
               </div>
             </FieldComponentContainer>
         <div style={{ marginTop: "2.8rem" }}>
+        {deathCorrectionFormsObj?.DECEASED_MOTHER?.isDisabled && (
         <ButtonContainer>
-                {deathCorrectionFormsObj?.DECEASED_MOTHER?.isDisabled && (
                <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_MOTHER"])}>
                <EditIcon
                 style={{ position: "absolute", top: "0.8rem"}}
@@ -702,8 +720,8 @@ const onPresentAddressChange = (e,fieldType) =>{
                  label={"Edit"}
                />
                </span>
-                )}
               </ButtonContainer>
+               )}
       </div>
         </FormFieldContainer>
           <FormFieldContainer>
@@ -715,6 +733,8 @@ const onPresentAddressChange = (e,fieldType) =>{
                   type={"text"}
                   name="DeceasedFatherNameEn"
                   defaultValue={deathCorrectionFormsObj?.DECEASED_FATHER?.curValue.fathersNameEn} 
+                  disabled={deathCorrectionFormsObj.DECEASED_FATHER?.isDisabled}
+                  autofocus={deathCorrectionFormsObj.DECEASED_FATHER?.isFocused}
                   onBlur={(e) => onBlurFatherName(e,"fathersNameEn")}
                   placeholder={`${t("CR_FATHER_NAME_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -727,6 +747,8 @@ const onPresentAddressChange = (e,fieldType) =>{
                   type={"text"}
                   name="DeceasedFatherNameMl"
                   defaultValue={deathCorrectionFormsObj?.DECEASED_FATHER?.curValue.fathersNameMl} 
+                  disabled={deathCorrectionFormsObj.DECEASED_FATHER?.isDisabled}
+                  autofocus={deathCorrectionFormsObj.DECEASED_FATHER?.isFocused}
                   onBlur={(e) => onBlurFatherName(e,"fathersNameMl")}
                   // onBlur={setSelectDeceasedFirstNameEn}
                   placeholder={`${t("CR_FATHER_NAME_ML")}`}
@@ -736,8 +758,8 @@ const onPresentAddressChange = (e,fieldType) =>{
             </FieldComponentContainer>
 
             <div style={{ marginTop: "2.5rem" }}>
+            {deathCorrectionFormsObj?.DECEASED_FATHER?.isDisabled && (
         <ButtonContainer>
-                {deathCorrectionFormsObj?.DECEASED_FATHER?.isDisabled && (
                    <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_FATHER"])}>
                    <EditIcon
                      style={{ position: "absolute", top: "0.8rem"}}
@@ -745,8 +767,8 @@ const onPresentAddressChange = (e,fieldType) =>{
                      label={"Edit"}
                    />
                    </span>
-                )}
               </ButtonContainer>
+               )}
       </div>
        </FormFieldContainer>
           <FormFieldContainer>
@@ -758,6 +780,8 @@ const onPresentAddressChange = (e,fieldType) =>{
                   type={"text"}
                   name="DeceasedSpouseEn"
                   defaultValue={deathCorrectionFormsObj?.DECEASED_SPOUSE?.curValue.spouseNameEn} 
+                  disabled={deathCorrectionFormsObj.DECEASED_SPOUSE?.isDisabled}
+                  autofocus={deathCorrectionFormsObj.DECEASED_SPOUSE?.isFocused}
                   onBlur={(e) => onBlurSpouseName(e,"spouseNameEn")}
                   placeholder={`${t("CR_SPOUSE_TYPE_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -770,6 +794,8 @@ const onPresentAddressChange = (e,fieldType) =>{
                   type={"text"}
                   name="DeceasedSpouseMl"
                   defaultValue={deathCorrectionFormsObj?.DECEASED_SPOUSE?.curValue.spouseNameMl} 
+                  disabled={deathCorrectionFormsObj.DECEASED_SPOUSE?.isDisabled}
+                  autofocus={deathCorrectionFormsObj.DECEASED_SPOUSE?.isFocused}
                   onBlur={(e) => onBlurSpouseName(e,"spouseNameMl")}
                   placeholder={`${t("CR_SPOUSE_TYPE_ML")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -777,8 +803,8 @@ const onPresentAddressChange = (e,fieldType) =>{
               </div>
             </FieldComponentContainer>
             <div style={{ marginTop: "2.5rem" }}>
+            {deathCorrectionFormsObj?.DECEASED_SPOUSE?.isDisabled && (
         <ButtonContainer>
-                {deathCorrectionFormsObj?.DECEASED_SPOUSE?.isDisabled && (
                   <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_SPOUSE"])}>
                   <EditIcon
                     style={{ position: "absolute", top: "0.8rem"}}
@@ -786,8 +812,8 @@ const onPresentAddressChange = (e,fieldType) =>{
                     label={"Edit"}
                   />
                   </span>
-                )}
               </ButtonContainer>
+                  )}
       </div>
        </FormFieldContainer>
           <FormFieldContainer>
@@ -798,8 +824,8 @@ const onPresentAddressChange = (e,fieldType) =>{
                   t={t}
                   type={"text"}
                   name="DeceasedHouseNameEn"
-                  // disabled={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isDisabled}
-                  // autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
+                  disabled={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isDisabled}
+                  autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
                   defaultValue={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.houseNameEn} 
                   onBlur={(e)=>onPresentAddressChange(e,"houseNameEn")}
                   placeholder={`${t("CR_HOUSE_NO_AND_NAME_EN")}`}
@@ -812,8 +838,8 @@ const onPresentAddressChange = (e,fieldType) =>{
                   t={t}
                   type={"text"}
                   name="DeceasedLocalityEn"
-                  // disabled={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isDisabled}
-                  // autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
+                  disabled={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isDisabled}
+                  autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
                   value={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.localityNameEn} 
                   onBlur={(e)=>onPresentAddressChange(e,"localityNameEn")}
                   placeholder={`${t("CR_LOCALITY_EN")}`}
@@ -826,8 +852,8 @@ const onPresentAddressChange = (e,fieldType) =>{
                   t={t}
                   type={"text"}
                   name="DeceasedStreetEn"
-                  // disabled={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isDisabled}
-                  // autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
+                  disabled={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isDisabled}
+                  autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
                   defaultValue={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.streetNameEn} 
                   onBlur={(e)=>onPresentAddressChange(e,"streetNameEn")}
                   placeholder={`${t("CR_STREET_EN")}`}
@@ -836,8 +862,8 @@ const onPresentAddressChange = (e,fieldType) =>{
               </div>
               </FieldComponentContainer>
               <div style={{ marginTop: "2.5rem" }}>
+              {deathCorrectionFormsObj?.PERMANENT_ADDRESS?.isDisabled && 
         <ButtonContainer>
-                {deathCorrectionFormsObj?.PERMANENT_ADDRESS?.isDisabled && 
                <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["PERMANENT_ADDRESS"])}>
                <EditIcon
                  style={{ position: "absolute", top: "0.8rem"}}
@@ -845,8 +871,8 @@ const onPresentAddressChange = (e,fieldType) =>{
                  label={"Edit"}
                />
                </span>
-                }
               </ButtonContainer>
+               }
       </div>
         </FormFieldContainer>
           <FormFieldContainer>
@@ -858,6 +884,8 @@ const onPresentAddressChange = (e,fieldType) =>{
                   type={"text"}
                   name="DeceasedHouseNameMl"
                   defaultValue={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.houseNameMl} 
+                  disabled={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isDisabled}
+                  autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
                   onBlur={(e)=>onPresentAddressChange(e,"houseNameMl")}
                   placeholder={`${t("CR_HOUSE_NO_AND_NAME_MAL")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -870,6 +898,8 @@ const onPresentAddressChange = (e,fieldType) =>{
                   type={"text"}
                   name="DeceasedLocalityMl"
                   defaultValue={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.localityNameMl}
+                  disabled={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isDisabled}
+                  autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
                   onBlur={(e)=>onPresentAddressChange(e,"localityNameMl")}
                   placeholder={`${t("CR_LOCALITY_MAL")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -882,6 +912,8 @@ const onPresentAddressChange = (e,fieldType) =>{
                   type={"text"}
                   name="DeceasedStreetMl"
                   defaultValue={deathCorrectionFormsObj?.PERMANENT_ADDRESS?.curValue.streetNameMl} 
+                  disabled={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isDisabled}
+                  autofocus={deathCorrectionFormsObj.PERMANENT_ADDRESS?.isFocused}
                   onBlur={(e)=>onPresentAddressChange(e,"streetNameMl")}
                   placeholder={`${t("CR_STREET_MAL")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
