@@ -88,7 +88,6 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
   );
   const setBirthInclusionFilterQuery = (fieldId) => {
     const birthInclusionData = marriageCorrectionFormsObj[fieldId];
-    console.log("birthInclusionData", BirthCorrectionDocuments,fieldId);
     setSelectedCorrectionItem(birthInclusionData);
     setShowModal(true);
   };
@@ -110,6 +109,8 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
   };
 
   const onSubmit = (data) => console.log(data);
+
+  const mutation = Digit.Hooks.cr.useMarriageCorrectionAction(tenantId);
 
   const { register, handleSubmit, reset, setValue, getValues, watch, errors } = useForm({
     reValidateMode: "onSubmit",
@@ -258,10 +259,10 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
     setShowModal(false);
   };
 
-  const onSubmitBirthInclusion = () => {
-    const formattedResp = formatApiParams(marriageCorrectionFormsObj, navigationData);
+  const onSubmitBirthInclusion = async () => {
+    const formattedResp = await formatApiParams(marriageCorrectionFormsObj, navigationData);
     console.log("formattedResp", formattedResp);
-    // mutation.mutate(formattedResp);
+   await mutation.mutate(formattedResp);
   };
 
   const setMarriageCorrecvtionFilterQuery = (fieldId) => {
@@ -313,7 +314,7 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
             </div>
           </div>
         </div>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        {/* <form onSubmit={handleSubmit(onSubmit)}> */}
           <FormFieldContainer>
             <FieldComponentContainer>
               <div className="col-md-5">
@@ -1156,7 +1157,7 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
               </div>
             </ButtonContainer>
           </FormFieldContainer>
-        </form>
+        {/* </form> */}
         <MarriageCorrectionModal 
         showModal={showModal} 
         selectedConfig={selectedCorrectionItem} 
