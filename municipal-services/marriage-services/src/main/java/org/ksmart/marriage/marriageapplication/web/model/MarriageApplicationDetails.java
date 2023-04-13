@@ -138,6 +138,8 @@ public class MarriageApplicationDetails {
     @JsonProperty("WitnessDetails")
     private WitnessDetails witnessDetails;
 
+    // @JsonProperty("MarriageDocument")
+    // private MarriageDocument marriageDocument;
     //Workflow 29/03.2023 Jasmine
     @Size(max = 64)
     @JsonProperty("action")
@@ -194,6 +196,11 @@ public class MarriageApplicationDetails {
     @JsonProperty("MarriageDocuments")
     @Valid
     private List<MarriageDocument> MarriageDocuments = null;
+
+    private boolean wfnormalRegn ;
+    private boolean wfdelayedWithinFiveYear ;
+    private boolean wfdelayedAfterFiveYear ;
+
 
     // public void setStatus(String s) {
     // }

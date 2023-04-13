@@ -25,7 +25,7 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
 
             .append("GD.id  as  GD_id  , GD.residentship   as GD_residentship , GD.aadharno   as GD_aadharno ,  GD.passportno   as GD_passportno ,")
             .append("GD.socialsecurityno   as GD_socialsecurityno ,  GD.firstname_en   as GD_firstname_en , GD.middlename_en   as GD_middlename_en , GD.lastname_en   as GD_lastname_en ,")
-            .append("GD.firstname_ml   as GD_firstname_ml  ,  GD.middlename_ml   as GD_middlename_ml , GD.lastname_ml   as GD_lastname_ml ,  GD.mobile   as GD_mobile,")
+            .append("GD.firstname_ml   as GD_firstname_ml  ,  GD.middlename_ml  as GD_middlename_ml , GD.lastname_ml as GD_lastname_ml ,  GD.mobile   as GD_mobile,")
             .append("GD.emailid   as GD_emailid , GD.gender   as GD_gender, GD.dateofbirth as GD_dateofbirth, GD.age as GD_age , GD.parent_guardian   as GD_parent_guardian ,")
             .append("GD.fathername_en   as GD_fathername_en, GD.mothername_en   as GD_mothername_en,GD.fathername_ml   as GD_fathername_ml, GD.mothername_ml   as GD_mothername_ml,")
             .append("GD.father_aadharno as GD_father_aadharno, GD.mother_aadharno as GD_mother_aadharno, GD.guardianname_en as GD_guardianname_en, GD.guardianname_ml as GD_guardianname_ml,")
@@ -86,12 +86,12 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
             .append("WD1.id AS WD1_id , WD1.aadharno  as WD1_aadharno , WD1.name_en  as WD1_name_en ,  WD1.name_ml  as WD1_name_ml , WD1.age  as WD1_age , WD1.address_en  as WD1_address_en ,")
             .append("WD1.address_ml  as WD1_address_ml ,  WD1.mobile  as WD1_mobile , WD1.is_esigned  as WD1_is_esigned ,  WD1.marriageid  as WD1_marriageid , WD1.serial_no  as WD1_serial_no, ")
             .append("WD2.id as 	WD2_id ,WD2.aadharno  as WD2_aadharno , WD2.name_en  as WD2_name_en , WD2.name_ml  as WD2_name_ml , WD2.age  as WD2_age ,WD2.address_en  as WD2_address_en ,")
-            .append("WD2.address_ml  as WD2_address_ml , WD2.mobile  as WD2_mobile , WD2.is_esigned  as WD2_is_esigned , WD2.marriageid  as WD2_marriageid , WD2.serial_no  as WD2_serial_no ")
+            .append("WD2.address_ml  as WD2_address_ml , WD2.mobile  as WD2_mobile , WD2.is_esigned  as WD2_is_esigned , WD2.marriageid  as WD2_marriageid , WD2.serial_no  as WD2_serial_no  ")
 
-//            .append("DOC.id as DOC_id , DOC.tenantid as DOC_tenantid , DOC.document_name as DOC_document_name , DOC.document_type as DOC_document_type , DOC.document_description as DOC_document_description ,")
-//            .append("DOC.filestoreid as DOC_filestoreid , DOC.document_link as DOC_document_link , DOC.file_type as DOC_file_type , DOC.file_size as DOC_file_size , DOC.marriageid as DOC_marriageid,")
-//            .append("DOC.bride_groom as DOC_bride_groom , DOC.active as DOC_active , DOC.applicationnumber as DOC_applicationnumber , DOC.updated_flag as DOC_updated_flag,")
-//            .append("DOC.registrationno as DOC_registrationno , DOC.correction_id as DOC_correction_id , DOC.correction_field_name as DOC_correction_field_name , DOC.applicationtype as DOC_applicationtype")
+            // .append("DOC.id as DOC_id , DOC.tenantid as DOC_tenantid , DOC.document_name as DOC_document_name , DOC.document_type as DOC_document_type , DOC.document_description as DOC_document_description ,")
+            // .append("DOC.filestoreid as DOC_filestoreid , DOC.document_link as DOC_document_link , DOC.file_type as DOC_file_type , DOC.file_size as DOC_file_size , DOC.marriageid as DOC_marriageid ,")
+            // .append("DOC.bride_groom as DOC_bride_groom , DOC.active as DOC_active , DOC.applicationnumber as DOC_applicationnumber , DOC.updated_flag as DOC_updated_flag ,")
+            // .append("DOC.registrationno as DOC_registrationno , DOC.correction_id as DOC_correction_id , DOC.correction_field_name as DOC_correction_field_name , DOC.applicationtype as DOC_applicationtype ")
 
 
             .append("FROM public.eg_marriage_details as MD  ")
@@ -111,7 +111,7 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
             .append("WD1.serial_no = 1 ")
             .append("INNER JOIN  eg_marriage_witness_details as WD2 ON WD2.marriageid = MD.id  AND ")
             .append("WD2.serial_no = 2 ")
-//            .append("LEFT JOIN eg_marriage_document as DOC ON DOC.marriageid = MD.id AND DOC.applicationnumber = MD.applicationnumber ")
+            // .append("LEFT JOIN  eg_marriage_document as DOC ON DOC.marriageid = MD.id AND DOC.applicationnumber = MD.applicationnumber ")
             .toString();
 
 
