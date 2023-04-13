@@ -24,7 +24,7 @@ public class MarriageDocumentRowMapper implements ResultSetExtractor<List<Marria
             .documentName(rs.getString("document_name"))
             .documentType(rs.getString("document_type"))
             .fileStoreId(rs.getString("filestoreid"))
-            .documentlink(rs.getString("document_link"))
+          //  .documentlink(rs.getString("document_link"))
             .marriageId(rs.getString("marriageid"))
             .documentOwner(rs.getString("bride_groom"))
             .active(rs.getBoolean("active"))
@@ -33,7 +33,7 @@ public class MarriageDocumentRowMapper implements ResultSetExtractor<List<Marria
             .correctionId(rs.getString("correction_id"))
             .correctionFieldName(rs.getString("correction_field_name"))
             .applicationType(rs.getString("applicationtype"))
-            .updatedFlag(rs.getInt("updated_flag"))
+          //  .updatedFlag(rs.getInt("updated_flag"))
             .build());
         }
 

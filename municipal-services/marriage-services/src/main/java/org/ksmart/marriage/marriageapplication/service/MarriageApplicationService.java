@@ -55,7 +55,7 @@ public class MarriageApplicationService {
 
         WorkFlowCheck wfc = new WorkFlowCheck();
         Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getMarriageDetails().get(0).getTenantid());
-        validatorService.ruleEngineMarriage(request, wfc, mdmsData);
+      //  validatorService.ruleEngineMarriage(request, wfc, mdmsData);
         validatorService.validateCommonFields( request);
         mdmsValidator.validateMarriageMDMSData(request,mdmsData);
         marriageDetailsEnrichment.enrichCreate(request);

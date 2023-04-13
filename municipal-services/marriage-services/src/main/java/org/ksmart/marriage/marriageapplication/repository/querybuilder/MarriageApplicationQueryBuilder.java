@@ -163,8 +163,8 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
 
     }
     private static final String QUERYDOCUMENT = new StringBuilder()
-                                              .append("Select id ,tenantid ,document_name ,document_type ,filestoreid ,marriageid,bride_groom  ,applicationtype , ")
-                                              .append("active , applicationnumber , createdby,createdtime,lastmodifiedby, lastmodifiedtime  from eg_marriage_document")
+                                              .append("Select id ,tenantid ,document_link,document_name ,document_type ,filestoreid ,marriageid,bride_groom  ,applicationtype , ")
+                                              .append("active , applicationnumber ,registrationno,correction_id,correction_field_name, createdby,createdtime,lastmodifiedby, lastmodifiedtime  from eg_marriage_document")
                                               .toString();
    
      public String getMarriageDocumentQuery(MarriageApplicationSearchCriteria criteria ,@NotNull List<Object> preparedStmtValues, Boolean isCount) {
