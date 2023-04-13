@@ -7,11 +7,11 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
   permntOutsideIndiaLineoneMl, setadrsPermntOutsideIndiaLineoneMl, permntOutsideIndiaLinetwoEn, setadrsPermntOutsideIndiaLinetwoEn, permntOutsideIndiaLinetwoMl, setadrsPermntOutsideIndiaLinetwoMl,
   permntOutsideIndiaprovinceEn, setPermntOutsideIndiaprovinceEn, permntOutsideIndiaprovinceMl, setPermntOutsideIndiaprovinceMl, permntOutsideIndiaVillage, setadrsPermntOutsideIndiaVillage,
   permntOutsideIndiaCityTown, setadrsPermntOutsideIndiaCityTown, permanentOutsideIndiaPostCode, setPermantpostCode,
-  isEditBirth = false, isEditDeath = false,
+  isEditBirth = false, isEditAbandonedDeath = false,
   // isInitialRender, setIsInitialRender
   //  permntOutsideIndiaCountry,  setPermntOutsideIndiaCountry, countryvalue, setCountryValue,
 }) => {
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditAbandonedDeath ? false : false);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let tenantId = "";
@@ -40,7 +40,7 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
         setadrsVillage(cmbVillage.filter(cmbVillage => cmbVillage.code === formData?.ChildDetails?.AddressBirthDetails?.permntOutsideIndiaVillage)[0]);
       }
     }
-  } else if (isEditDeath) {
+  } else if (isEditAbandonedDeath) {
     if (formData?.AddressBirthDetails?.permntOutsideIndiaVillage != null) {
       if (cmbVillage.length > 0 && (permntOutsideIndiaVillage === undefined || permntOutsideIndiaVillage === "")) {
         setadrsVillage(cmbVillage.filter(cmbVillage => cmbVillage.code === formData?.AddressBirthDetails?.permntOutsideIndiaVillage)[0]);

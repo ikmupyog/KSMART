@@ -3,7 +3,7 @@ import { FormStep, CardLabel, TextInput, Dropdown, CheckBox, BackButton, } from 
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
-const FamilyAbandonedDeath = ({ config, onSelect,  formData, isEditDeath }) => {
+const FamilyAbandonedDeath = ({ config, onSelect,  formData, isEditAbandonedDeath }) => {
   
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
@@ -44,7 +44,8 @@ const FamilyAbandonedDeath = ({ config, onSelect,  formData, isEditDeath }) => {
   //     : null
   // );
   const [SpouseNameEN, setSpouseNameEN] = useState(
-    isEditDeath ? formData?.FamilyInfoDeathAbandoned?.SpouseNameEN?.formData?.FamilyInfoDeathAbandoned?.SpouseNameEN : ""
+    formData?.FamilyInfoDeathAbandoned?.SpouseNameEN?
+    formData?.FamilyInfoDeathAbandoned?.SpouseNameEN : ""
   );
 
   // const [SpouseNameEN, setSpouseNameEN] = useState(
@@ -302,7 +303,7 @@ const FamilyAbandonedDeath = ({ config, onSelect,  formData, isEditDeath }) => {
     });
   };
 
-  if (isEditDeath) {
+  if (isEditAbandonedDeath) {
     if (formData?.FamilyInfoDeathAbandoned?.SpouseType != null) {
       if (cmbspouse.length > 0 && (SpouseType === undefined || SpouseType === "")) {
         setSpouseType(cmbspouse.filter((cmbspouse) => cmbspouse.code === formData?.FamilyInfoDeathAbandoned?.SpouseType)[0]);
@@ -358,9 +359,9 @@ const FamilyAbandonedDeath = ({ config, onSelect,  formData, isEditDeath }) => {
             <div className="row">
               <div className="col-md-12">
                 <div className="col-md-3">
-                  {/* <CardLabel>
-                    {`${t("CR_SPOUSE_TYPE_EN")}`} <span className="mandatorycss">*</span>
-                  </CardLabel> */}
+                   <CardLabel>
+                    {`${t("CR_SPOUSE_TYPE_EN")}`}
+                  </CardLabel> 
                   <Dropdown
                     t={t}
                     optionKey="name"
@@ -372,9 +373,9 @@ const FamilyAbandonedDeath = ({ config, onSelect,  formData, isEditDeath }) => {
                   />
                 </div>
                 <div className="col-md-3">
-                  {/* <CardLabel>
-                    {`${t("CR_NAME")}`} <span className="mandatorycss">*</span>
-                  </CardLabel> */}
+                  <CardLabel>
+                    {`${t("CR_NAME")}`}
+                  </CardLabel> 
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -388,9 +389,9 @@ const FamilyAbandonedDeath = ({ config, onSelect,  formData, isEditDeath }) => {
                   />
                 </div>
                 <div className="col-md-3">
-                  {/* <CardLabel>
-                    {`${t("CR_NAME_ML")}`} <span className="mandatorycss">*</span>
-                  </CardLabel> */}
+                  <CardLabel>
+                    {`${t("CR_NAME_ML")}`}
+                  </CardLabel> 
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -451,9 +452,9 @@ const FamilyAbandonedDeath = ({ config, onSelect,  formData, isEditDeath }) => {
             <div className="row">
               <div className="col-md-12">
                 <div className="col-md-4">
-                  {/* <CardLabel>
-                    {`${t("CR_NAME")}`} <span className="mandatorycss">*</span>
-                  </CardLabel> */}
+                 <CardLabel>
+                    {`${t("CR_NAME")}`}
+                  </CardLabel> 
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -467,9 +468,9 @@ const FamilyAbandonedDeath = ({ config, onSelect,  formData, isEditDeath }) => {
                   />
                 </div>
                 <div className="col-md-4">
-                  {/* <CardLabel>
-                    {`${t("CR_NAME_ML")}`} <span className="mandatorycss">*</span>
-                  </CardLabel> */}
+                  <CardLabel>
+                    {`${t("CR_NAME_ML")}`} 
+                  </CardLabel> 
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -531,10 +532,9 @@ const FamilyAbandonedDeath = ({ config, onSelect,  formData, isEditDeath }) => {
             <div className="row">
               <div className="col-md-12">
                 <div className="col-md-4">
-                  {/* <CardLabel>
+                   <CardLabel>
                     {`${t("CR_NAME")}`}
-                    <span className="mandatorycss">*</span>
-                  </CardLabel> */}
+                  </CardLabel> 
                   <TextInput
                     t={t}
                     isMandatory={false}
@@ -548,10 +548,10 @@ const FamilyAbandonedDeath = ({ config, onSelect,  formData, isEditDeath }) => {
                   />
                 </div>
                 <div className="col-md-4">
-                  {/* <CardLabel>
+                   <CardLabel>
                     {`${t("CR_NAME_ML")}`}
-                    <span className="mandatorycss">*</span>
-                  </CardLabel> */}
+                
+                  </CardLabel> 
                   <TextInput
                     t={t}
                     isMandatory={false}

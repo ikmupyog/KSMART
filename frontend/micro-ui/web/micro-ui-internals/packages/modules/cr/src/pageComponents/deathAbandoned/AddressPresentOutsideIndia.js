@@ -13,7 +13,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
   permntOutsideIndiaLinetwoMl, setadrsPermntOutsideIndiaLinetwoMl, permntOutsideIndiaprovinceEn, setPermntOutsideIndiaprovinceEn,
   permntOutsideIndiaprovinceMl, setPermntOutsideIndiaprovinceMl,
   permntOutsideIndiaVillage, setadrsPermntOutsideIndiaVillage, permntOutsideIndiaCityTown, setadrsPermntOutsideIndiaCityTown,
-  permanentOutsideIndiaPostCode, setPermantpostCode, permntOutsideIndiaCountry, setPermntOutsideIndiaCountry, isEditBirth = false, isEditDeath = false,
+  permanentOutsideIndiaPostCode, setPermantpostCode, permntOutsideIndiaCountry, setPermntOutsideIndiaCountry, isEditBirth = false, isEditAbandonedDeath = false,
   // isInitialRender, setIsInitialRender
 }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -43,7 +43,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
         setadrsVillage(cmbUrbanRural.filter(cmbUrbanRural => cmbUrbanRural.code === formData?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaadrsVillage)[0]);
       }
     }
-  } else if (isEditDeath) {
+  } else if (isEditAbandonedDeath) {
     if (formData?.AddressBirthDetails?.presentOutSideIndiaadrsVillage != null) {
       if (cmbUrbanRural.length > 0 && (presentOutSideIndiaadrsVillage === undefined || presentOutSideIndiaadrsVillage === "")) {
         setadrsVillage(cmbUrbanRural.filter(cmbUrbanRural => cmbUrbanRural.code === formData?.AddressBirthDetails?.presentOutSideIndiaadrsVillage)[0]);

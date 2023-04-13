@@ -20,7 +20,7 @@ import SelectOtp from "./SelectOtp";
 
 
 
-const StatisticalInfoAbandoned = ({ config, onSelect, userType, formData, isEditDeath,isUserRegistered = true }) => {
+const StatisticalInfoAbandoned = ({ config, onSelect, userType, formData, isEditAbandonedDeath,isUserRegistered = true }) => {
    
     const { t } = useTranslation();
     const stepItems = useMemo(() =>
@@ -490,7 +490,7 @@ const StatisticalInfoAbandoned = ({ config, onSelect, userType, formData, isEdit
 
   //////////////////////
   const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
-  if (isEditDeath) {
+  if (isEditAbandonedDeath) {
     if (formData?.StatisticalInfo?.MedicalAttentionType != null) {
       if (cmbAttention.length > 0 && (MedicalAttentionType === undefined || MedicalAttentionType === "")) {
         setMedicalAttentionType(cmbAttention.filter((cmbAttention) => cmbAttention.code === formData?.StatisticalInfo?.MedicalAttentionType)[0]);

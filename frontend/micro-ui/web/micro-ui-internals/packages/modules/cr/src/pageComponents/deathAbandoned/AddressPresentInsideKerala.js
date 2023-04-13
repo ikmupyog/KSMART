@@ -18,12 +18,12 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     permntInKeralaAdrHouseNameEn, setpermntInKeralaAdrHouseNameEn, permntInKeralaAdrHouseNameMl, setpermntInKeralaAdrHouseNameMl,
     permntInKeralaAdrLocalityNameEn, setpermntInKeralaAdrLocalityNameEn, permntInKeralaAdrLocalityNameMl,
     setpermntInKeralaAdrLocalityNameMl, permntInKeralaAdrStreetNameEn, setpermntInKeralaAdrStreetNameEn, permntInKeralaAdrStreetNameMl,
-    setpermntInKeralaAdrStreetNameMl, permntInKeralaWardNo, setpermntInKeralaWardNo, isEditBirth = false, isEditDeath = false,
+    setpermntInKeralaAdrStreetNameMl, permntInKeralaWardNo, setpermntInKeralaWardNo, isEditBirth = false, isEditAbandonedDeath = false,
     // isInitialRender, setIsInitialRender
 }) => {
     const stateId = Digit.ULBService.getStateId();
     const [pofilter, setPofilter] = useState(false);
-    const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : false);
+    const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditAbandonedDeath ? false : false);
     const { t } = useTranslation();
     let validation = {};
     let tenantId = "";
@@ -169,7 +169,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                 setinsideKeralaPincode(pin.pincode);
             }
         }
-    } else if (isEditDeath) {
+    } else if (isEditAbandonedDeath) {
             if (formData?.AddressBirthDetails?.presentInsideKeralaDistrict != null) {
                 if (cmbDistrict.length > 0 && (presentInsideKeralaDistrict === undefined || presentInsideKeralaDistrict === "")) {
                     setinsideKeralaDistrict(cmbDistrict.filter(cmbDistrict => cmbDistrict.code === formData?.AddressBirthDetails?.presentInsideKeralaDistrict)[0]);
@@ -587,7 +587,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                             <CardLabel>
                                 {t("CR_HOUSE_NAME_EN")}
                             </CardLabel>
-                            {/* <TextInput
+                            <TextInput
                                 t={t}
                                 isMandatory={false}
                                 type={"text"}
@@ -598,7 +598,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                                 disable={isDisableEdit}
                                 placeholder={`${t("CR_HOUSE_NAME_EN")}`}
                                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
-                            /> */}
+                            />
                         </div>
 
                     </div>

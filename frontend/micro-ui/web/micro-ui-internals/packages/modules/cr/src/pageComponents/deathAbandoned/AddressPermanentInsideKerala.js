@@ -12,7 +12,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   permntInKeralaAdrHouseNameMl, setpermntInKeralaAdrHouseNameMl, permntInKeralaAdrLocalityNameEn, setpermntInKeralaAdrLocalityNameEn,
   permntInKeralaAdrLocalityNameMl, setpermntInKeralaAdrLocalityNameMl, permntInKeralaAdrStreetNameEn, setpermntInKeralaAdrStreetNameEn,
   permntInKeralaAdrStreetNameMl, setpermntInKeralaAdrStreetNameMl, lbs, setLbs, Talukvalues, setLbsTalukvalue, Villagevalues, setLbsVillagevalue, permntInKeralaWardNo,
-  setpermntInKeralaWardNo, PostOfficevalues, setPostOfficevalues, isEditBirth = false, isEditDeath = false,
+  setpermntInKeralaWardNo, PostOfficevalues, setPostOfficevalues, isEditBirth = false, isEditAbandonedDeath = false,
   // isInitialRender, setIsInitialRender
 
 }) => {
@@ -43,7 +43,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantWard, "egov-location", "boundary-data");
   const [toast, setToast] = useState(false);
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditAbandonedDeath ? false : false);
 
   let cmbLB = [];
   let cmbTaluk = [];
@@ -160,7 +160,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
         setpermntInKeralaAdrPincode(pin.pincode);
       }
     }
-  } else if (isEditDeath) {
+  } else if (isEditAbandonedDeath) {
     if (formData?.AddressBirthDetails?.permntInKeralaAdrDistrict != null) {
       if (cmbDistrict.length > 0 && (permntInKeralaAdrDistrict === undefined || permntInKeralaAdrDistrict === "")) {
         setpermntInKeralaAdrDistrict(cmbDistrict.filter(cmbDistrict => cmbDistrict.code === formData?.AddressBirthDetails?.permntInKeralaAdrDistrict)[0]);
