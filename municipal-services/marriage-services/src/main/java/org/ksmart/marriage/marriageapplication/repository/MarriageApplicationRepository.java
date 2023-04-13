@@ -71,6 +71,7 @@ public class MarriageApplicationRepository {
         List<Object> preparedStmtValues = new ArrayList<>();
         String query = marriageQueryBuilder.getMarriageApplicationSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
         List<MarriageApplicationDetails> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriageApplicationRowMapper);
+       
         if(result != null) {
 			result.forEach(marriage -> {
                               
@@ -99,17 +100,32 @@ public class MarriageApplicationRepository {
                 WitnessDetails witnessDetailsDec =  encryptionDecryptionUtil.decryptObject(witnessDetails, "BndDetail", WitnessDetails.class, requestInfo);
                 witnessDetails.setWitness1AadharNo(witnessDetailsDec.getWitness1AadharNo());
                 witnessDetails.setWitness2AadharNo(witnessDetailsDec.getWitness2AadharNo());
-			});
+                criteria.setApplicationType(marriage.getApplicationtype());
+                criteria.setApplicationType(marriage.getApplicationNumber());
+                criteria.setTenantId(marriage.getTenantid());
+                System.out.println("criteria"+criteria);
+              //  getDocumentSearchDetails( criteria, requestInfo);
+            });
+
+
         }
         return result;
     }
 
-    public List<MarriageDocument> getDocumentDetails(String documentType, String documentOwner ,String applicationNumber) {
+    public List<MarriageDocument> getDocumentDetails(MarriageApplicationSearchCriteria criteria,RequestInfo requestInfo) {
         List<Object> preparedStmtValues = new ArrayList<>();
-        String query = marriageQueryBuilder.getMarriageDocumentSearchQuery(documentType,documentOwner,applicationNumber, preparedStmtValues, Boolean.FALSE);
+        String query = marriageQueryBuilder.getMarriageDocumentQuery( criteria, preparedStmtValues, Boolean.FALSE);
         List<MarriageDocument> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), documentRowMapper);
+        
         return result;
     }   
+
+    public List<MarriageDocument> getDocumentSearchDetails(MarriageApplicationSearchCriteria criteria,RequestInfo requestInfo) {
+        List<Object> preparedStmtValues = new ArrayList<>();
+        String query = marriageQueryBuilder.getMarriageDocumentSearchQuery( criteria, preparedStmtValues, Boolean.FALSE);
+        List<MarriageDocument> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), documentRowMapper); 
+        return result;
+    }  
 
     public List<MarriageApplicationDetails> getMarriageApplication(MarriageApplicationSearchCriteria criteria, RequestInfo requestInfo) {
         List<Object> preparedStmtValues = new ArrayList<>();

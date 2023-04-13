@@ -84,7 +84,7 @@ public class MarriageRegistryService {
             marriageCertificate.setMarriageRegistryDetails(marriageRegistryDetailsList.get(0));
             marriageCertificate.setRegistrationno(marriageRegistryDetailsList.get(0).getRegistrationno());
             List<MarriageCertificate> marriageDtls = searchCertificate(criteria);
-            if (null!=marriageDtls&&marriageDtls.size() > 1) {
+            if (null!=marriageDtls && marriageDtls.size() > 1) {
                 throw new CustomException("Invalid_Input", "Error in processing data");
             }
 
