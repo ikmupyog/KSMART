@@ -345,7 +345,7 @@ console.log("deathCorrectionFormsObj==",deathCorrectionFormsObj);
                   name="DeceasedFirstNameEn"
                   defaultValue={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.firstNameEn} 
                   disabled={deathCorrectionFormsObj?.DECEASED_NAME?.isDisabled}
-                  autoFocus={true}
+                  autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
                   onBlur={(e)=>onNameChange(e,"firstNameEn")}
                   placeholder={`${t("CR_FIRST_NAME_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
@@ -359,7 +359,7 @@ console.log("deathCorrectionFormsObj==",deathCorrectionFormsObj);
                   name="DeceasedMiddleNameEn"
                   defaultValue={deathCorrectionFormsObj?.DECEASED_NAME?.curValue.middleNameEn} 
                   disabled={deathCorrectionFormsObj?.DECEASED_NAME?.isDisabled}
-                  autoFocus={true}
+                  autoFocus={deathCorrectionFormsObj?.DECEASED_NAME?.isFocused}
                   onBlur={(e)=>onNameChange(e,"middleNameEn")}
                   placeholder={`${t("CR_MIDDLE_NAME_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
