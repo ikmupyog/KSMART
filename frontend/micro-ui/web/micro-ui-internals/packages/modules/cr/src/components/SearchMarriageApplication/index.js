@@ -23,12 +23,12 @@ const hstyle = {
 
 };
 
-const SearchApplication = ({ tenantId, t, onSubmit, data, count }) => {
+const SearchMarriageApplication = ({ tenantId, t, onSubmit, data, count }) => {
   const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
     defaultValues: {
       offset: 0,
       limit: 10,
-      sortBy: "commencementDate",
+      sortBy: "applicationNumber",
       sortOrder: "DESC"
     }
   })
@@ -36,7 +36,7 @@ const SearchApplication = ({ tenantId, t, onSubmit, data, count }) => {
   useEffect(() => {
     register("offset", 0)
     register("limit", 10)
-    register("sortBy", "commencementDate")
+    register("sortBy", "applicationNumber")
     register("sortOrder", "DESC")
   }, [register])
 
@@ -65,79 +65,69 @@ const SearchApplication = ({ tenantId, t, onSubmit, data, count }) => {
   if (isMobile) {
     return <MobileSearchApplication {...{ Controller, register, control, t, reset, previousPage, handleSubmit, tenantId, data, onSubmit }} />
   }
+  console.log("inbox data" + JSON.stringify(data));
   //need to get from workflow
   const GetCell = (value) => <span className="cell-text">{value}</span>;
   const columns = useMemo(() => ([
     {
-      Header: t("TL_COMMON_TABLE_COL_APP_NO"),
-      accessor: "applicationNo",
+      Header: t("CR_COMMON_COL_APP_NO"),
+      accessor: "applicationNumber",
       disableSortBy: true,
       Cell: ({ row }) => {
         return (
-          (row.original["correctionId"] !== null && row.original["correctionAppNumber"] !== null) ?
-            <div>
-              <span className="link">
-                <Link to={`/digit-ui/employee/tl/applicationcorrection-details/${row.original["applicationNumber"]}`}>
-                  {row.original["applicationNumber"]}
-                </Link>
-              </span>
-            </div>
-            :
-            <div>
-              <span className="link">
-                <Link to={`/digit-ui/employee/tl/application-details/${row.original["applicationNumber"]}`}>
-                  {row.original["applicationNumber"]}
-                </Link>
-              </span>
-            </div>
+          <div>
+            <span className="link">
+              <Link onClick={event => handleLinkClick(row.original)} to={`/digit-ui/employee/cr/application-marriagedetails/${row.original.applicationNumber}`}>
+                {/* {row.original.applicationNumber} */}
+                {row.original.applicationNumber}
+              </Link>
+            </span>
+          </div>
         );
-
-        // return (
-        //   <div>
-        //     <span className="link">
-        //       <Link to={`/digit-ui/employee/tl/application-details/${row.original["applicationNumber"]}`}>
-        //         {row.original["applicationNumber"]}
-        //       </Link>
-        //     </span>
-        //   </div>
-        // );
       },
     },
     {
-      Header: t("TL_COMMON_TABLE_COL_APP_DATE"),
+      Header: t("CR_COMMON_COL_APP_DATE"),
       disableSortBy: true,
       accessor: (row) => GetCell(row.auditDetails.createdTime ? convertEpochToDateDMY(row.auditDetails.createdTime) : ""),
     },
     {
-      Header: t("TL_APPLICATION_TYPE_LABEL"),
+      Header: t("CR_COMMON_COL_DOB"),
       disableSortBy: true,
-      accessor: (row) => GetCell(t(`TL_LOCALIZATION_APPLICATIONTYPE_${row.applicationType}`)),
+      accessor: (row) => GetCell(row.childDOB ? convertEpochToDateDMY(row.childDOB) : ""),
+    },
+    // {
+    //     Header: t("TL_APPLICATION_TYPE_LABEL"),
+    //     disableSortBy: true,
+    //     accessor: (row) => GetCell(t(`TL_LOCALIZATION_APPLICATIONTYPE_${row.applicationType}`)),
+    // },
+    {
+      Header: t("CR_COMMON_COL_MOTHER_NAME"),
+      disableSortBy: true,
+      accessor: (row) => GetCell(row.ParentsDetails["motherFirstNameEn"] || "-"),
+
     },
     {
-      Header: t("TL_LICENSE_NUMBERL_LABEL"),
+      Header: t("CR_COMMON_COL_FATHER_NAME"),
       disableSortBy: true,
-      accessor: (row) => GetCell(row.licenseNumber || "-"),
+      accessor: (row) => GetCell(row.ParentsDetails["fatherFirstNameEn"] || "-"),
     },
-    {
-      Header: t("TL_LICENSE_YEAR_LABEL"),
-      disableSortBy: true,
-      accessor: (row) => GetCell(row.financialYear),
-    },
-    {
-      Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),
-      disableSortBy: true,
-      accessor: (row) => GetCell(row.tradeName || ""),
-    },
-    {
-      Header: t("TL_LOCALIZATION_TRADE_OWNER_NAME"),
-      accessor: (row) => GetCell(row.tradeLicenseDetail.owners.map(o => o.name).join(",") || ""),
-      disableSortBy: true,
-    },
-    {
-      Header: t("TL_COMMON_TABLE_COL_STATUS"),
-      accessor: (row) => GetCell(t(row?.workflowCode && row?.status && `WF_${row?.workflowCode?.toUpperCase()}_${row.status}` || "NA")),
-      disableSortBy: true,
-    }
+
+    // {
+    //   Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),
+    //   disableSortBy: true,
+    //   accessor: (row) => GetCell(row.tradeName || ""),
+    // },
+    // {
+    //   Header: t("TL_LOCALIZATION_TRADE_OWNER_NAME"),
+    //   accessor: (row) => GetCell(row.tradeLicenseDetail.owners.map( o => o.name ). join(",") || ""),
+    //   disableSortBy: true,
+    // },
+    // {
+    //   Header: t("TL_COMMON_TABLE_COL_STATUS"),
+    //   accessor: (row) =>GetCell(t( row?.workflowCode&&row?.status&&`WF_${row?.workflowCode?.toUpperCase()}_${row.status}`|| "NA") ),
+    //   disableSortBy: true,
+    // }
   ]), [])
 
   return <React.Fragment>
@@ -190,4 +180,4 @@ const SearchApplication = ({ tenantId, t, onSubmit, data, count }) => {
   </React.Fragment>
 }
 
-export default SearchApplication
+export default SearchMarriageApplication

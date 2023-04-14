@@ -53,4 +53,13 @@ export const CRMarriageService = {
       params: {},
       auth: true,
     }),
+    CRMarriagesearch: ({ tenantId, filters }) =>
+    Request({
+      url: Urls.crmarriage.search,
+      useCache: false,
+      method: "POST",
+      auth: true,
+      userService: false,
+      params: { tenantId, ...filters },
+    }),
 };

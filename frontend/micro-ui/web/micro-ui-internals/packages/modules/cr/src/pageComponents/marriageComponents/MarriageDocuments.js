@@ -1,22 +1,84 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, BackButton, CardLabel, UploadFile } from "@egovernments/digit-ui-react-components";
+import { FormStep, BackButton, CardLabel, UploadFile, Dropdown, ImageUploadHandler } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/MARRIAGETimeline";
 import { useTranslation } from "react-i18next";
 import { v4 as uuidv4 } from "uuid";
 
-const MarriageDocuments = ({ formData, config }) => {
+const MarriageDocuments = ({ formData, config, onSelect }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
 
-  const [uniqueId, setUniqueId] = useState(null);
+  const currentYear = new Date().getFullYear();
 
-  const goNext = () => {};
+  let tenantId = "";
+  tenantId = Digit.ULBService.getCurrentTenantId();
+  if (tenantId === "kl") {
+    tenantId = Digit.ULBService.getCitizenCurrentTenant();
+  }
+
+  const [ageDocument, setAgeDocument] = useState(
+    formData?.MarriageDocuments?.ageDocument?.code ? formData?.MarriageDocuments?.ageDocument?.code : null
+  );
+
+  const [uniqueId, setUniqueId] = useState(null);
+  const [uploadedImages, setUploadedImagesIds] = useState(null);
+
+  let validation = {};
+
+  const groomResidentship = "FOREIGN";
+  const brideResidentship = "NRI";
+  const marriagePlacetype = "RELIGIOUS_INSTITUTION";
+  const groomMaritalstatusID = "UNMARRIED";
+  const brideMaritalstatusID = "ANNULLED";
+  const expirationTypeHusband = false;
+  const expirationTypeWife = true;
+
+  const residentshipDocuments = {
+    INDIAN: ["AADHAR"],
+    NRI: ["PASSPORT"],
+    FOREIGN: ["PASSPORT", "SOCIAL_SECURITY_DOCUMENT"],
+  };
+
+  const proofOfMarriageDocuments = {
+    RELIGIOUS_INSTITUTION: "RELIGIOUS_INSTITUTION",
+    MANDAPAM_HALL_AND_OTHER: "MANDAPAM_HALL_AND_OTHER",
+    SUB_REGISTRAR_OFFICE: "SUB_REGISTRAR_OFFICE",
+  };
+
+  const crAgeDocuments = [
+    {
+      name: "Driving License",
+      code: "DRIVING_LICENSE",
+    },
+    {
+      name: "School Certificate",
+      code: "SCHOOL_CERTIFICATE",
+    },
+    {
+      name: "Birth Certificate",
+      code: "BIRTH_CERTIFICATE",
+    },
+  ];
+
+  function handleUpload(ids) {
+    setUploadedImagesIds(ids);
+  }
+
+  function setSelectAgeDocument(value) {
+    setAgeDocument(value);
+  }
+
+  const goNext = () => {
+    onSelect(config.key, {
+      ageDocument,
+    });
+  };
   const onSkip = () => onSelect();
 
   useEffect(() => {
     setUniqueId(uuidv4());
   }, []);
-
+  console.log({ ageDocument });
   return (
     <React.Fragment>
       <div className="row">
@@ -26,7 +88,7 @@ const MarriageDocuments = ({ formData, config }) => {
           {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
           <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
             <div className="row">
-              <div className="col-md-12">
+              <div className="col-md-12" style={{ marginBottom: "20px" }}>
                 <div className="row">
                   <div className="col-md-12">
                     <h1 className="headingh1">
@@ -43,7 +105,7 @@ const MarriageDocuments = ({ formData, config }) => {
                     </div>
                     <div className="col-md-4">
                       <h1 className="headingh1">
-                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_    _DOCUMENTS")}`}</span>{" "}
+                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_GROOM_DOCUMENTS")}`}</span>{" "}
                       </h1>
                     </div>
                     <div className="col-md-4">
@@ -52,16 +114,46 @@ const MarriageDocuments = ({ formData, config }) => {
                       </h1>
                     </div>
                   </div>
-
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-4"></div>
-                      <div className="col-md-4">
-                        <h1 className="headingh1">
-                          <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PROOF_FOR_RESIDENTSHIP")}`}</span>{" "}
-                        </h1>
+                </div>
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="col-md-4"></div>
+                    <div className="col-md-4">
+                      <h1 className="headingh1">
+                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PHOTOS")}`}</span>{" "}
+                      </h1>
+                    </div>
+                    <div className="col-md-4"></div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="col-md-4"></div>
+                    <div className="col-md-4" style={{ margin: "10px 0 30px 0" }}>
+                      <div style={{ display: "flex", flexDirection: "column", justifyItems: "center", alignItems: "center" }}>
+                        <h2 style={{ marginBottom: "10px", textAlign: "center" }}>CR_GROOM_IMAGE</h2>
+                        <ImageUploadHandler
+                          tenantId={tenantId}
+                          uploadedImages={uploadedImages}
+                          onPhotoChange={handleUpload}
+                          isMulti={false}
+                          moduleType={`crmarriage/${uniqueId}/groom/${currentYear}`}
+                          extraParams={{ fileName: "groom.jpg", UUID: uniqueId }}
+                        />
                       </div>
-                      <div className="col-md-4"></div>
+                    </div>
+                    <div className="col-md-4" style={{ margin: "10px 0 30px 0" }}>
+                      <div style={{ display: "flex", flexDirection: "column", justifyItems: "center", alignItems: "center" }}>
+                        <h2 style={{ marginBottom: "10px", textAlign: "center" }}>CR_BRIDE_IMAGE</h2>
+                        <ImageUploadHandler
+                          tenantId={tenantId}
+                          uploadedImages={uploadedImages}
+                          onPhotoChange={handleUpload}
+                          isMulti={false}
+                          moduleType={`crmarriage/${uniqueId}/bride/${currentYear}`}
+                          extraParams={{ fileName: "bride.jpg", UUID: uniqueId }}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -69,8 +161,108 @@ const MarriageDocuments = ({ formData, config }) => {
                   <div className="col-md-12">
                     <div className="col-md-4"></div>
                     <div className="col-md-4">
+                      <h1 className="headingh1">
+                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PROOF_OF_RESIDENTSHIP")}`}</span>{" "}
+                      </h1>
+                    </div>
+                    <div className="col-md-4"></div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="col-md-4"></div>
+                    <div className="col-md-4">
+                      {groomResidentship &&
+                        residentshipDocuments[groomResidentship].map((document) => {
+                          return (
+                            <div className="row">
+                              <div className="col-md-12">
+                                <CardLabel>
+                                  {`${t(`CR_UPLOAD_YOUR_${document}`)}`}
+                                  <span className="mandatorycss">*</span>
+                                </CardLabel>
+                                <UploadFile
+                                //   key={item.DocumentId}
+                                //   id={item.DocumentId}
+                                //   name={item.DocumentType}
+                                //   extraStyleName={"propertyCreate"}
+                                //   accept=".jpg,.png,.pdf"
+                                //   onUpload={selectfile}
+                                //   onDelete={() => {
+                                //     onDeleteown(item.DocumentId);
+                                //     setUploadedFile(null);
+                                //   }}
+                                //   message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                                //   error={error}
+                                />
+                              </div>
+                            </div>
+                          );
+                        })}
+                    </div>
+                    <div className="col-md-4">
+                      {brideResidentship &&
+                        residentshipDocuments[brideResidentship].map((document) => {
+                          return (
+                            <div className="row">
+                              <div className="col-md-12">
+                                <CardLabel>
+                                  {`${t(`CR_UPLOAD_YOUR_${document}`)}`}
+                                  <span className="mandatorycss">*</span>
+                                </CardLabel>
+                                <UploadFile
+                                //   key={item.DocumentId}
+                                //   id={item.DocumentId}
+                                //   name={item.DocumentType}
+                                //   extraStyleName={"propertyCreate"}
+                                //   accept=".jpg,.png,.pdf"
+                                //   onUpload={selectfile}
+                                //   onDelete={() => {
+                                //     onDeleteown(item.DocumentId);
+                                //     setUploadedFile(null);
+                                //   }}
+                                //   message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                                //   error={error}
+                                />
+                              </div>
+                            </div>
+                          );
+                        })}
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="col-md-4"></div>
+                    <div className="col-md-4">
+                      <h1 className="headingh1">
+                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PROOF_OF_AGE")}`}</span>{" "}
+                      </h1>
+                    </div>
+                    <div className="col-md-4"></div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="col-md-4">
                       <CardLabel>
-                        {`${t("CR_UPLOAD_YOUR_AADHAR")}`}
+                        {`${t("CR_SELECT_DOCUMENT")}`}
+                        <span className="mandatorycss">*</span>
+                      </CardLabel>
+                      <Dropdown
+                        t={t}
+                        optionKey="name"
+                        isMandatory={true}
+                        placeholder={t("CR_SELECT_DOCUMENT")}
+                        option={crAgeDocuments}
+                        selected={ageDocument}
+                        select={setSelectAgeDocument}
+                        {...(validation = { isRequired: true, title: t("CR_INVALID_SELECT_DOCUMENT") })}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <CardLabel>
+                        {`${t(`CR_UPLOAD_YOUR_${ageDocument?.code || "AGE_PROVING_DOCUMENT"}`)}`}
                         <span className="mandatorycss">*</span>
                       </CardLabel>
                       <UploadFile
@@ -90,7 +282,7 @@ const MarriageDocuments = ({ formData, config }) => {
                     </div>
                     <div className="col-md-4">
                       <CardLabel>
-                        {`${t("CR_UPLOAD_YOUR_AADHAR")}`}
+                        {`${t(`CR_UPLOAD_YOUR_${ageDocument?.code}`)}`}
                         <span className="mandatorycss">*</span>
                       </CardLabel>
                       <UploadFile
@@ -110,6 +302,196 @@ const MarriageDocuments = ({ formData, config }) => {
                     </div>
                   </div>
                 </div>
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="col-md-4"></div>
+                    <div className="col-md-4">
+                      <h1 className="headingh1">
+                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PROOF_OF_MARRIAGE")}`}</span>{" "}
+                      </h1>
+                    </div>
+                    <div className="col-md-4"></div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="col-md-4"></div>
+                    <div className="col-md-8">
+                      <div className="row">
+                        <div className="col-md-4"></div>
+                        <div className="col-md-4">
+                          <CardLabel>
+                            {`${t(
+                              `CR_UPLOAD_MARRIAGE_CERTIFICATE_FROM_${proofOfMarriageDocuments[marriagePlacetype] || "AN INSTITUTION/SUB_REGISTRAR"}`
+                            )}`}
+                            <span className="mandatorycss">*</span>
+                          </CardLabel>
+                          <UploadFile
+                          //   key={item.DocumentId}
+                          //   id={item.DocumentId}
+                          //   name={item.DocumentType}
+                          //   extraStyleName={"propertyCreate"}
+                          //   accept=".jpg,.png,.pdf"
+                          //   onUpload={selectfile}
+                          //   onDelete={() => {
+                          //     onDeleteown(item.DocumentId);
+                          //     setUploadedFile(null);
+                          //   }}
+                          //   message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                          //   error={error}
+                          />
+                        </div>
+                        <div className="col-md-4"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="col-md-4"></div>
+                    <div className="col-md-4">
+                      <h1 className="headingh1">
+                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PROOF_OF_ALREADY_MARRIED")}`}</span>{" "}
+                      </h1>
+                    </div>
+                    <div className="col-md-4"></div>
+                  </div>
+                </div>
+                {(groomMaritalstatusID === "MARRIED" ||
+                  groomMaritalstatusID === "ANNULLED" ||
+                  brideMaritalstatusID === "MARRIED" ||
+                  brideMaritalstatusID === "ANNULLED") && (
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-4"></div>
+
+                      <div className="col-md-4">
+                        {(groomMaritalstatusID === "MARRIED" || groomMaritalstatusID === "ANNULLED") && (
+                          <div className="row">
+                            <div className="col-md-12">
+                              <CardLabel>
+                                {`${t("CR_UPLOAD_DIVORCE/ANNULLED_DECREE")}`}
+                                <span className="mandatorycss">*</span>
+                              </CardLabel>
+                              <UploadFile
+                              //   key={item.DocumentId}
+                              //   id={item.DocumentId}
+                              //   name={item.DocumentType}
+                              //   extraStyleName={"propertyCreate"}
+                              //   accept=".jpg,.png,.pdf"
+                              //   onUpload={selectfile}
+                              //   onDelete={() => {
+                              //     onDeleteown(item.DocumentId);
+                              //     setUploadedFile(null);
+                              //   }}
+                              //   message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                              //   error={error}
+                              />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="col-md-4">
+                        {(brideMaritalstatusID === "MARRIED" || brideMaritalstatusID === "ANNULLED") && (
+                          <div className="row">
+                            <div className="col-md-12">
+                              <CardLabel>
+                                {`${t("CR_UPLOAD_DIVORCE/ANNULLED_DECREE")}`}
+                                <span className="mandatorycss">*</span>
+                              </CardLabel>
+                              <UploadFile
+                              //   key={item.DocumentId}
+                              //   id={item.DocumentId}
+                              //   name={item.DocumentType}
+                              //   extraStyleName={"propertyCreate"}
+                              //   accept=".jpg,.png,.pdf"
+                              //   onUpload={selectfile}
+                              //   onDelete={() => {
+                              //     onDeleteown(item.DocumentId);
+                              //     setUploadedFile(null);
+                              //   }}
+                              //   message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                              //   error={error}
+                              />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                )}
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="col-md-4"></div>
+                    <div className="col-md-4">
+                      <h1 className="headingh1">
+                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PROOF_OF_SPOUSE_DIED")}`}</span>{" "}
+                      </h1>
+                    </div>
+                    <div className="col-md-4"></div>
+                  </div>
+                </div>
+                {(expirationTypeHusband || expirationTypeWife) && (
+                  <div className="row">
+                    <div className="col-md-12">
+                      <div className="col-md-4"></div>
+
+                      <div className="col-md-4">
+                        {expirationTypeHusband && (
+                          <div className="row">
+                            <div className="col-md-12"></div>
+                            <CardLabel>
+                              {`${t("CR_UPLOAD_DEATH_CERTIFICATE_OF_GROOM")}`}
+                              <span className="mandatorycss">*</span>
+                            </CardLabel>
+                            <UploadFile
+                            //   key={item.DocumentId}
+                            //   id={item.DocumentId}
+                            //   name={item.DocumentType}
+                            //   extraStyleName={"propertyCreate"}
+                            //   accept=".jpg,.png,.pdf"
+                            //   onUpload={selectfile}
+                            //   onDelete={() => {
+                            //     onDeleteown(item.DocumentId);
+                            //     setUploadedFile(null);
+                            //   }}
+                            //   message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                            //   error={error}
+                            />
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="col-md-4">
+                        {expirationTypeWife && (
+                          <div className="row">
+                            <div className="col-md-12">
+                              <CardLabel>
+                                {`${t("CR_UPLOAD_DEATH_CERTIFICATE_OF_BRIDE")}`}
+                                <span className="mandatorycss">*</span>
+                              </CardLabel>
+                              <UploadFile
+                              //   key={item.DocumentId}
+                              //   id={item.DocumentId}
+                              //   name={item.DocumentType}
+                              //   extraStyleName={"propertyCreate"}
+                              //   accept=".jpg,.png,.pdf"
+                              //   onUpload={selectfile}
+                              //   onDelete={() => {
+                              //     onDeleteown(item.DocumentId);
+                              //     setUploadedFile(null);
+                              //   }}
+                              //   message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                              //   error={error}
+                              />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </FormStep>
@@ -119,34 +501,3 @@ const MarriageDocuments = ({ formData, config }) => {
   );
 };
 export default MarriageDocuments;
-
-{
-  /* 
-
-                
-                  
-                    
-                    <div className="col-md-4">
-                      <CardLabel>
-                        {`${t("CR_UPLOAD_YOUR_AADHAR")}`}
-                        <span className="mandatorycss">*</span>
-                      </CardLabel>
-                      <UploadFile
-                      //   key={item.DocumentId}
-                      //   id={item.DocumentId}
-                      //   name={item.DocumentType}
-                      //   extraStyleName={"propertyCreate"}
-                      //   accept=".jpg,.png,.pdf"
-                      //   onUpload={selectfile}
-                      //   onDelete={() => {
-                      //     onDeleteown(item.DocumentId);
-                      //     setUploadedFile(null);
-                      //   }}
-                      //   message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-                      //   error={error}
-                      />
-                    </div>
-                    <div className="col-md-4"></div>
-                  </div>
-</div> */
-}

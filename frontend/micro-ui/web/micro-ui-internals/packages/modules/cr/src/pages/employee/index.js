@@ -15,6 +15,8 @@ import ApplicationStillBirthDetails from "./ApplicationStillBirthDetails";
 import ApplicationNACBirthDetails from "./ApplicationNACBirthDetails"
 import ApplicationBornOutsideIndiaDetails from "./ApplicationBornOutsideIndiaDetails";
 import ApplicationAbandonedBirthDetails from "./ApplicationAbandonedBirthDetails";
+import ApplicationMarriageDetails from "./ApplicationMarriageDetails";
+
 import DeathCrFlow from "./Death-route";
 import SearchFlow from "./Search-route";
 import SearchInbox from './Inbox-route';
@@ -23,6 +25,7 @@ const CRBreadCrumb = ({ location }) => {
   const isSearch = location?.pathname?.includes("search");
   const isInbox = location?.pathname?.includes("inbox");
   const isApplicationSearch = location?.pathname?.includes("birthsearch/application");
+  const isApplicationMarriageSearch = location?.pathname?.includes("marriagesearch/application");
   const isApplicationDeathSearch = location?.pathname?.includes("deathsearch/application");
   const isDeathCorrectSearch = location?.pathname?.includes("search-correction/application");
   const isSpecifyCorrectSearch = location?.pathname?.includes("death-flow/specify-correction");
@@ -131,6 +134,12 @@ const CRBreadCrumb = ({ location }) => {
       content: t("Birth Applications"),
       show: isApplicationSearch ||
         breadCrumbUrls.includes("home/search-flow/birthsearch")
+    },
+    {
+      path: "/digit-ui/employee/cr/search-flow/marriagesearch/application",
+      content: t("Marriage Applications"),
+      show: isApplicationMarriageSearch ||
+        breadCrumbUrls.includes("home/search-flow/marriagesearch")
     },
     {
       path: "/digit-ui/employee/cr/deathsearch/application",
@@ -271,6 +280,8 @@ const EmployeeApp = ({ path, url, userType }) => {
           <PrivateRoute path={`${path}/application-nacbirth/:id`} component={() => <ApplicationNACBirthDetails parentRoute={path} />} />
           <PrivateRoute path={`${path}/application-deathnacdetails/:id`} component={() => <ApplicationDeathNACDetails parentRoute={path} />} />
           <PrivateRoute path={`${path}/application-abandoneddeathdetails/:id`} component={() => <ApplicationAbandonedDeathDetails parentRoute={path} />} />
+          <PrivateRoute path={`${path}/application-marriagedetails/:id`} component={() => <ApplicationMarriageDetails parentRoute={path} />} />
+
         </div>
       </React.Fragment>
     </Switch>
