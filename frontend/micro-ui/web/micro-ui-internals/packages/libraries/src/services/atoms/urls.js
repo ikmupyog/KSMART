@@ -154,10 +154,10 @@ const Urls = {
   },
   crabandoneddeath: {
     create: "/death-services/v1/deathdetails/_createdeathabandoned",
-    search: "/death-services/v1/deathdetails/_searchdeath",
+    search: "/death-services/v1/deathdetails/_searchdeathabandoned",
     download_pdf: "/egov-pdf/download/CR/",
-    update: "/death-services/v1/deathdetails/_updatedeath",
-    registry_search: "/death-services/v1/deathregistry/_searchdeath",
+    update: "/death-services/v1/deathdetails/_updatedeathabandoned",
+    registry_search: "/death-services/v1/deathregistry/_searchdeathabandoned",
     registry_download: "/death-services/v1/deathregistry/_downloaddeath",
   },
   crmarriage: {
@@ -165,6 +165,7 @@ const Urls = {
     search: "/marriage-services/v1/marriagedetails/_searchmarriage",
     update: "/marriage-services/v1/marriagedetails/_updatemarriage",
     registry_search_marriage: "/marriage-services/v1/marriagedetails/_searchregistry",
+    correct_update: "/marriage-services/v1/marriagedetails/_createmarriagecorrection",
   },
   dfm: {
     create: "/filemgmnt/v1/applicantservices/_create",

@@ -22,7 +22,6 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     isEditBirthNAC=false,value, setValue
     // isInitialRender, setIsInitialRender
 }) => {
-    console.log(formData);
     const stateId = Digit.ULBService.getStateId();
     const [pofilter, setPofilter] = useState(false);
     const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : isEditStillBirth ? isEditStillBirth : false);
@@ -37,19 +36,20 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     const [tenantboundary, setTenantboundary] = useState(false);
     const queryClient = useQueryClient();
     if (tenantboundary) {
-        queryClient.removeQueries("TL_ZONAL_OFFICE");
-        queryClient.removeQueries("CR_VILLAGE");
-        queryClient.removeQueries("CR_TALUK");
-        queryClient.removeQueries("CR_TALUK");
+        queryClient.removeQueries("CR_PRESENT_ADDR_WARD");
+        queryClient.removeQueries("CR_PRESENT_ADDR_VILLAGE");
+        queryClient.removeQueries("CR_PRESENT_ADDR_TALUK");
+        // queryClient.removeQueries("CR_TALUK");
         setTenantboundary(false);
     }
+
     const { data: PostOffice = {}, isPostOfficeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
-    const { data: Taluk = {}, isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Taluk");
-    const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
+    const { data: Taluk = {}, isTalukLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PresentTaluk");
+    const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PresentVillage");
     const { data: District = {}, isDistrictLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
     const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
     const { data: LBType = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "LBType");
-    const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantWard, "egov-location", "boundary-data");
+    const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantWard, "egov-location", "PresentWard");
     const [toast, setToast] = useState(false);
     const [isInitialRender, setIsInitialRender] = useState(true);
     const [cmbFilterPostOffice, setCmbFilterPostOffice] = useState([]);
@@ -509,7 +509,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     } else
         return (
             <React.Fragment>
-                <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!presentInsideKeralaDistrict}>
+                {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!presentInsideKeralaDistrict}> */}
                     <div className="row">
                         <div className="col-md-12">
                             <h1 className="headingh1">
@@ -694,7 +694,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                                 onChange={setSelectinsideKeralaHouseNameEn}
                                 disable={isDisableEdit}
                                 placeholder={`${t("CR_HOUSE_NAME_EN")}`}
-                                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
+                                {...(validation = { pattern: "^[a-zA-Z-0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
                             />
                         </div>
 
@@ -760,7 +760,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                                 disable={isDisableEdit}
                                 placeholder={`${t("CR_HOUSE_NAME_ML")}`}
                                 {...(validation = {
-                                    pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .`' ]*$",
+                                    pattern: "^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$",
                                     isRequired: true,
                                     type: "text",
                                     title: t("CR_INVALID_HOUSE_NAME_ML"),
@@ -769,7 +769,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                         </div>
                     </div>
 
-                </FormStep>
+                {/* </FormStep> */}
             </React.Fragment>
         );
 };

@@ -212,16 +212,24 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     selectGroomGender(value);
   }
   function setSelectGroomPassportNo(e) {
-    setGroomPassportNo(e.target.value.length<=8 ? e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '') : (e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '').substring(0, 8)))
+
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[A-Z0-9 ]*$") != null)) {
+      setGroomPassportNo(e.target.value.length <= 8 ? e.target.value : (e.target.value).substring(0, 8));
+    } 
+    //setGroomPassportNo(e.target.value.length<=8 ? e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '') : (e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '').substring(0, 8)))
   }
   function setSelectGroomSocialSecurityNo(e) {
-    //setGroomSocialSecurityNo(e.target.value.length<=9 ? e.target.value.replace('[0-9()-]', '') : (e.target.value.replace('[0-9()-]', '').substring(0, 9)))
-    if (e.target.value.length > 9) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setGroomSocialSecurityNo(e.target.value.replace(/[^0-9]/gi, "").substring(0, 9));
+
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[A-Z-0-9 ]*$") != null)) {
+      setGroomSocialSecurityNo(e.target.value.length <= 12 ? e.target.value : (e.target.value).substring(0, 12));
     }
+    
+    // if (e.target.value.length >= 12) {
+    //   return false;
+    //   // window.alert("Username shouldn't exceed 10 characters")
+    // } else {
+    //   setGroomSocialSecurityNo(e.target.value.replace(/[^A-Z0-9-]/gi, "").substring(0, 9));
+    // }
   }
   function setSelectGroomMobile(e) {
     if (e.target.value.trim().length >= 0) {
@@ -242,13 +250,13 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
         return false;
       }
     } else {
-      setGroomNoOfSpouse(e.target.value.replace(/[^0-3]/ig, ''));
+      setGroomNoOfSpouse(e.target.value.replace(/[^0-3]/gi, ""));
     }
-  //   if (e.target.value.length === 2 && e.target.value > 3) {
-  //     return false;
-  // } else {
-  //   setGroomNoOfSpouse(e.target.value.replace(/[^0-3]/ig, ''));  
-  // }
+    //   if (e.target.value.length === 2 && e.target.value > 3) {
+    //     return false;
+    // } else {
+    //   setGroomNoOfSpouse(e.target.value.replace(/[^0-3]/ig, ''));
+    // }
     // if (e.target.value.trim().length >= 0) {
     //   setGroomNoOfSpouse(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
     // }
@@ -273,7 +281,6 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     birthDate.setHours(0, 0, 0, 0);
 
     if (birthDate.getTime() <= today.getTime()) {
-
       setDOBError(false);
       // let Difference_In_Time = today.getTime() - birthDate.getTime();
       // // console.log("Difference_In_Time" + Difference_In_Time);
@@ -281,10 +288,10 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       // let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       // // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
       // setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
-    // setGroomDOB(value);
-    // const today = new Date();
-    // const birthDate = new Date(value);
-    // if (birthDate.getTime() <= today.getTime()) {
+      // setGroomDOB(value);
+      // const today = new Date();
+      // const birthDate = new Date(value);
+      // if (birthDate.getTime() <= today.getTime()) {
       // To calculate the time difference of two dates
       const dobFullYear = new Date(value).getFullYear();
       const currentYear = new Date().getFullYear();
@@ -618,7 +625,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                       style={{ height: "20px", width: "20px" }}
                       onChange={selectgroomResidenship}
                       value={type}
-                      defaultChecked={index === 0}
+                      checked={groomResidentShip === type}
                     />
                     <label class="form-check-label" for="flexRadioDefault1">
                       {type}
@@ -676,7 +683,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   onChange={setSelectGroomPassportNo}
                   placeholder={`${t("CR_GROOM_PASSPORT_NO")}`}
                   {...((groomResidentShip === "NRI" || groomResidentShip === "FOREIGN") && {
-                    ...(validation = { pattern: "^[0-9]{8}$", type: "text", isRequired: true, title: t("CS_COMMON_INVALID_PASSPORT_NO") }),
+                    ...(validation = { pattern: "^[A-Z0-9]{8}$", type: "text", isRequired: true, title: t("CS_COMMON_INVALID_PASSPORT_NO") }),
                   })}
                 />
               </div>
@@ -696,7 +703,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   onChange={setSelectGroomSocialSecurityNo}
                   placeholder={`${t("CR_GROOM_SOCIAL_SECURITY_NO")}`}
                   {...(groomResidentShip === "FOREIGN" && {
-                    ...(validation = { pattern: "^[0-9]{9}$", type: "text", isRequired: true, title: t("CR_INVALID_SOCIAL_SECURITY_NUMBER") }),
+                    ...(validation = { pattern: "^[A-Z0-9-]{12}$", type: "text", isRequired: true, title: t("CR_INVALID_SOCIAL_SECURITY_NUMBER") }),
                   })}
                 />
               </div>
@@ -986,7 +993,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
             <div className="col-md-12">
               {/* <div className="col-md-6"> */}
               <div className="radios" style={{ justifyContent: "center", columnGap: "40px" }}>
-                {groomParent.map((type, index) => (
+                {groomParent.map((type) => (
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", columnGap: "8px" }}>
                     <input
                       className="form-check-input"
@@ -996,8 +1003,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                       style={{ height: "20px", width: "20px" }}
                       onChange={selectParentType}
                       value={type}
-                      defaultChecked={index === 0}
-                      // checked={groomParentGuardian}
+                      checked={groomParentGuardian === type}
                     />
                     <label class="form-check-label" for="flexRadioDefault1">
                       {type}

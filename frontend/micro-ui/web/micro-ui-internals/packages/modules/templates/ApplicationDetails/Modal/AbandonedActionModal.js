@@ -111,7 +111,7 @@ const AbandonedActionModal = ({ t, action, tenantId, state, id, closeModal, subm
         : null,
     };
     submitAction({
-      deathCertificateDtls: [applicationData],
+      deathAbandonedDtls: [applicationData],
     });
   }
 

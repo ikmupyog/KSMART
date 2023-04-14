@@ -313,12 +313,11 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     birthDate.setHours(0, 0, 0, 0);
 
     if (birthDate.getTime() <= today.getTime()) {
-
-    //setDOBError(false);
-    // setbrideDOB(value);
-    // const today = new Date();
-    // const birthDate = new Date(value);
-    // if (birthDate.getTime() <= today.getTime()) {
+      //setDOBError(false);
+      // setbrideDOB(value);
+      // const today = new Date();
+      // const birthDate = new Date(value);
+      // if (birthDate.getTime() <= today.getTime()) {
       // To calculate the time difference of two dates
       const dobFullYear = new Date(value).getFullYear();
       const currentYear = new Date().getFullYear();
@@ -486,13 +485,12 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     setbrideNoOfSpouse("");
   }
   function setSelectbrideNoOfSpouse(e) {
-
     if (e.target.value.length === 2) {
       if (e.target.value > 3) {
         return false;
       }
     } else {
-      setbrideNoOfSpouse(e.target.value.replace(/[^0-3]/ig, ''));
+      setbrideNoOfSpouse(e.target.value.replace(/[^0-3]/gi, ""));
     }
   }
   function setSelectbrideEmailid(e) {
@@ -504,21 +502,31 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     }
   }
   function setSelectbrideSocialSecurityNo(e) {
-    if (e.target.value.length > 9) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setbrideSocialSecurityNo(e.target.value.replace(/[^0-9]/gi, "").substring(0, 9));
+
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[A-Z-0-9 ]*$") != null)) {
+      setbrideSocialSecurityNo(e.target.value.length <= 12 ? e.target.value : (e.target.value).substring(0, 12));
     }
+    // let value = e.target.value;
+    // console.log({ value });
+    // // setbrideSocialSecurityNo(value);
+    // let pattern = /[A-Z1-9-]$/g;
+    //   if (value.length <= 12) {
+    //     if (pattern.test(value)) {
+    //       setbrideSocialSecurityNo(value);
+    //     }
+    //   }
+    
   }
   function setSelectbridePassportNo(e) {
-    setbridePassportNo(e.target.value.length<=8 ? e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '') : (e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '').substring(0, 8)))
-    // if (e.target.value.length < 8) {
-    //   return false;
-    //   // window.alert("Username shouldn't exceed 10 characters")
-    // } else {
-    //   setbridePassportNo(e.target.value);
-    // }
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[A-Z0-9 ]*$") != null)) {
+      setbridePassportNo(e.target.value.length <= 8 ? e.target.value : (e.target.value).substring(0, 8));
+    } 
+    // setbridePassportNo(
+    //   e.target.value.length <= 8
+    //     ? e.target.value.replace("[A-PR-WY][1-9]ds?d{4}[1-9]$", "")
+    //     : e.target.value.replace("[A-PR-WY][1-9]ds?d{4}[1-9]$", "").substring(0, 8)
+    // );
+   
   }
   function selectParentType(e) {
     setBrideParentGuardian(e.target.value);
@@ -624,7 +632,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     }
   };
   console.log("Bride", formData);
-  if (isLoading) {
+  if (isLoading || isMaritalStatusLoading) {
     return <Loader></Loader>;
   } else
     return (
@@ -651,9 +659,9 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
               ? !bridePassportNo
               : false || brideResidentShip === "FOREIGN"
               ? !brideSocialSecurityNo || !bridePassportNo
+              : false || brideParentGuardian === "PARENT"
+              ? !brideFathernameEn || !brideFathernameMl || !brideMothernameEn || !brideMothernameMl || !brideFatherAadharNo || !brideMotherAadharNo
               : false
-            // || selectedParent === "PARENT" ? (!brideFathernameEn || !brideFathernameMl || !brideMothernameEn
-            // || !brideMothernameMl || !brideFatherAadharNo || !brideMotherAadharNo) : false
             // || selectedParent === "GUARDIAN" ? (!brideGuardiannameEn || !brideGuardiannameMl || !brideGuardianAadharNo) : false
           }
         >
@@ -685,7 +693,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
           <div className="row">
             <div className="col-md-12">
               <div className="radios">
-                {brideTypes.map((type, index) => (
+                {brideTypes.map((type) => (
                   <div style={{ display: "flex", alignItems: "center", columnGap: "8px" }}>
                     <input
                       className="form-check-input"
@@ -694,8 +702,8 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                       style={{ height: "20px", width: "20px" }}
                       onChange={selectSetBrideResidentShip}
                       value={type}
-                      defaultChecked={index === 0}
-                      // checked={brideResidentShip}
+                      // defaultChecked={index === 0}
+                      checked={brideResidentShip === type}
                     />
                     <label class="form-check-label" for="flexRadioDefault1">
                       {type}
@@ -764,7 +772,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                     maxLength: 12,
                   }}
                   {...((brideResidentShip === "NRI" || brideResidentShip === "FOREIGN") && {
-                    ...(validation = { pattern: "^[0-9]{8}$", type: "text", isRequired: true, title: t("CS_COMMON_INVALID_PASSPORT_NO") }),
+                    ...(validation = { pattern: "^[A-Z0-9]{8}$", type: "text", isRequired: true, title: t("CS_COMMON_INVALID_PASSPORT_NO") }),
                   })}
                 />
               </div>
@@ -780,6 +788,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                   type={"text"}
                   optionKey="i18nKey"
                   name="brideSocialSecurityNo"
+                  value={brideSocialSecurityNo}
                   disable={isDisableEdit}
                   onChange={setSelectbrideSocialSecurityNo}
                   placeholder={`${t("CR_BRIDE_SOCIAL_SECURITY_NO")}`}
@@ -787,7 +796,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                     maxLength: 12,
                   }}
                   {...(brideResidentShip === "FOREIGN" && {
-                    ...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: true, title: t("CR_INVALID_SOCIAL_SECURITY_NUMBER") }),
+                    ...(validation = { pattern: "^[A-Z0-9-]{12}$", type: "text", isRequired: true, title: t("CR_INVALID_SOCIAL_SECURITY_NUMBER") }),
                   })}
                 />
               </div>
@@ -1111,7 +1120,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
             <div className="row">
               <div className="col-md-12">
                 <div className="radios" style={{ justifyContent: "center", columnGap: "40px" }}>
-                  {brideParent.map((type, index) => (
+                  {brideParent.map((type) => (
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", columnGap: "8px" }}>
                       <input
                         className="form-check-input"
@@ -1122,7 +1131,6 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                         onChange={selectParentType}
                         value={type}
                         checked={brideParentGuardian === type}
-                        // checked={brideParentGuardian}
                       />
                       <label class="form-check-label" for="flexRadioDefault1">
                         {type}

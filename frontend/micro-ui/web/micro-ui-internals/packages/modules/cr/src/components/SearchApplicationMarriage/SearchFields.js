@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Controller } from "react-hook-form";
 import {DatePicker, Dropdown, SearchField, SubmitBar, TextInput} from "@egovernments/digit-ui-react-components";
 
@@ -7,11 +7,12 @@ const SearchFields = ({
                           register,
                           control,
                           reset,
-                          previousPage,
-                          searchType
+                          searchType,
+                          emptyRecords
                       }) => {
 
     let validation = {};
+    const [isIdPresent, setIsIdPresent] = useState(false);
     const cmbPlace = [
         { i18nKey: "Religious Institution", name: "RELIGIOUSINSTITUTION", namelocal: "മത സ്ഥാപനം" },
         {
@@ -25,6 +26,14 @@ const SearchFields = ({
         { i18nKey: "Public Place", name: "PUBLICPLACE", namelocal: "പൊതു സ്ഥലം" },
     ];
 
+    const idOnChange = (e) => {
+        if (e.target.value) {
+            setIsIdPresent(true);
+        } else {
+            setIsIdPresent(false);
+        }
+    }
+
 
     return (
         <>
@@ -32,6 +41,7 @@ const SearchFields = ({
                 <label> {searchType == 'application' ? t("APPLICATION NO") : t("REGISTRATION NO")}</label>
                 <TextInput name={searchType == 'application' ? "applicationNo" : "registrationNo"}
                            inputRef={register({})}
+                           onChange={idOnChange}
                            control={control}
                            {...(validation = { isRequired: false, type: "text" })}
                            placeholder={`${searchType == 'application' ? t("Application No") : t("Registration No")}`} />
@@ -39,22 +49,23 @@ const SearchFields = ({
             <SearchField>
                 <label><span className="mandatorycss">*</span> {t("DATE OF MARRIAGE")}</label>
                 <Controller
-                    render={(props) => <DatePicker date={props.value} onChange={props.onChange} />}
+                    render={(props) => <DatePicker
+                        date={props.value}
+                        {...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: !isIdPresent, title: t("CR_INVALID_DATE") })}
+                        onChange={props.onChange} />}
                     name="marriageDOM"
-                    defaultValue={""}
-                    rules={{ required: true }}
                     control={control}
                 />
             </SearchField>
             <SearchField>
                 <label><span className="mandatorycss">*</span> {t("FIRST NAME OF HUSBAND")}</label>
                 <TextInput name="groomFirstnameEn" inputRef={register({})}
-                           {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: true, title: t("Invalid name of husband") })} placeholder={`${t("Invalid name of husband")}`}/>
+                           {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: !isIdPresent, title: t("Invalid name of husband") })} placeholder={`${t("Invalid name of husband")}`}/>
             </SearchField>
             <SearchField>
                 <label><span className="mandatorycss">*</span> {t("FIRST NAME OF WIFE")}</label>
                 <TextInput name="brideFirstnameEn" inputRef={register({})}
-                           {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: true, title: t("Invalid name of wife") })} placeholder={`${t("Name of Wife")}`} />
+                           {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: !isIdPresent, title: t("Invalid name of wife") })} placeholder={`${t("Name of Wife")}`} />
             </SearchField>
             <SearchField>
                 <label> {t("PLACE OF MARRIAGE")}</label>
@@ -80,7 +91,7 @@ const SearchFields = ({
                 <SubmitBar label={t("ES_COMMON_SEARCH")} submit />
                 <p onClick={() => {
                     reset();
-                    previousPage();
+                    emptyRecords();
                 }}>{t(`ES_COMMON_CLEAR_ALL`)}</p>
             </SearchField>
         </>

@@ -147,6 +147,7 @@ const GroomAddressBasePage = ({
   const [presentInsideKeralaStreetNameMl, setinsideKeralaStreetNameMl] = useState(
     formData?.GroomAddressDetails?.presentInsideKeralaStreetNameMl ? formData?.GroomAddressDetails?.presentInsideKeralaStreetNameMl : ""
   );
+  const [Districtvalues, setDistrictvalue] = useState(null);
   const [Talukvalues, setLbsTalukvalue] = useState(null);
   const [Villagevalues, setLbsVillagevalue] = useState(null);
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
@@ -1086,6 +1087,7 @@ const GroomAddressBasePage = ({
       });
     }
   };
+
   if (
     isCountryLoading ||
     isStateLoading ||

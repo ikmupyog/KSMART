@@ -34,12 +34,12 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
             cmbCountry.push(ob);
         });
     State &&
-        State["common-masters"] && State["common-masters"].State && 
+        State["common-masters"] && State["common-masters"].State &&
         State["common-masters"].State.map((ob) => {
             cmbState.push(ob);
         });
     localbodies &&
-        localbodies["tenant"] && localbodies["tenant"].tenants && 
+        localbodies["tenant"] && localbodies["tenant"].tenants &&
         localbodies["tenant"].tenants.map((ob) => {
             cmbLB.push(ob);
         });
@@ -55,30 +55,34 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
 
     useEffect(() => {
 
-        // if (isInitialRender) {
-            if (cmbLB.length > 0) {
-                currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
-                //console.log(currentLB);
-                // setAdrsLBName(currentLB[0]);
-                if (cmbCountry.length > 0 && currentLB.length > 0) {
-                    cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
-                    setaddressCountry(cmbFilterCountry[0]);
+        if (isInitialRender) {
+        if (cmbLB.length > 0) {
+            currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
+            //console.log(currentLB);
+            // setAdrsLBName(currentLB[0]);
+            if (cmbCountry.length > 0 && currentLB.length > 0) {
+                cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
+                setaddressCountry(cmbFilterCountry[0]);
+                if (isPrsentAddress) {
                     setpermtaddressCountry(cmbFilterCountry[0]);
-                    setCountryValue(cmbFilterCountry[0].countrycode);
                 }
-                if (cmbState.length > 0 && currentLB.length > 0) {
-                    cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
-                    setaddressStateName(cmbFilterState[0]);
-                    setpermtaddressStateName(cmbFilterState[0]);
-                    setValue(cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode)[0].statecode);
-                }
-                // if (cmbVillage.length > 0 && currentLB.length > 0) {
-                //     cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
-                //     setLbsVillagevalue(cmbFilterVillage);
-                // }
-                // setIsInitialRender(false);
+                setCountryValue(cmbFilterCountry[0].countrycode);
             }
-        // }
+            if (cmbState.length > 0 && currentLB.length > 0) {
+                cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
+                setaddressStateName(cmbFilterState[0]);
+                if (isPrsentAddress) {
+                    setpermtaddressStateName(cmbFilterState[0]);
+                }
+                setValue(cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode)[0].statecode);
+            }
+            // if (cmbVillage.length > 0 && currentLB.length > 0) {
+            //     cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
+            //     setLbsVillagevalue(cmbFilterVillage);
+            // }
+            setIsInitialRender(false);
+        }
+        }
     }, [cmbLB]);
 
     if (isEditBirth) {
@@ -146,7 +150,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
         }
     }
     function setSelectaddressStateName(value) {
-        //console.log(value);
+        console.log(value);
         setaddressStateName(value);
         setValue(value.code);
         // if (value.code != "kl") {
@@ -172,7 +176,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
     } else
         return (
             <React.Fragment>
-                <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!presentaddressCountry}>
+                {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!presentaddressCountry}> */}
                     <div className="row">
                         <div className="col-md-12">
                             <h1 className="headingh1">
@@ -214,7 +218,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
                             </div>
                         )}
                     </div>
-                </FormStep>
+                {/* </FormStep> */}
             </React.Fragment>
         );
 };
