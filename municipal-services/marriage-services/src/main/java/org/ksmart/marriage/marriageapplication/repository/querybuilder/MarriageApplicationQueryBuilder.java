@@ -132,14 +132,6 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
         if (criteria.getGroomFirstnameEn() != null){
           addFilterString("GD.firstname_en", criteria.getGroomFirstnameEn(), query, preparedStmtValues);
         }
-      //addFilter("GD.firstname_en", criteria.getGroomFirstnameEn(), query, preparedStmtValues);
-      // addFilter("GD.middlename_en", criteria.getGroomMiddlenameEn(), query, preparedStmtValues);
-      //  addFilter("GD.lastname_en", criteria.getGroomLastnameEn(), query, preparedStmtValues);
-      //  addFilter("MD_dateofmarriage", criteria.getMarriageDOM(), query, preparedStmtValues);
-      // addFilter("MD_certificateno", criteria.getCertificateNo(), query, preparedStmtValues);
-      // addFilter("BD.firstname_en", criteria.getBrideFirstnameEn(), query, preparedStmtValues);
-       // addFilter("BD.middlename_en", criteria.getBrideMiddlenameEn(), query, preparedStmtValues);
-       //addFilter("BD.lastname_en", criteria.getBrideLastnameEn(), query, preparedStmtValues);
         addDateRangeFilter("MD.dateofmarriage",
                 criteria.getFromDate(),
                 criteria.getToDate(),
@@ -193,6 +185,50 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
     return query.toString();
   }
 
+  private static final String COUNTQUERY= new StringBuilder()
+    .append("SELECT COUNT(*) ")
+    .append("FROM eg_marriage_details as MD ")
+    .append("INNER JOIN eg_marriage_bride_groom_details as BD ON BD.marriageid = MD.id AND ")
+    .append("BD.bride_groom ='B' ")
+    .append("INNER JOIN eg_marriage_bride_groom_details as GD ON GD.marriageid = MD.id AND ")
+    .append("GD.bride_groom ='G' ")
+    .append("INNER JOIN  eg_marriage_permanent_address_details as BPMA ON BPMA.marriageid = MD.id AND ")
+    .append("BPMA.bride_groom ='B' ")
+    .append("INNER JOIN  eg_marriage_permanent_address_details as GPMA ON GPMA.marriageid = MD.id AND ")
+    .append("GPMA.bride_groom ='G' ")
+    .append("LEFT JOIN  eg_marriage_present_address_details as BPSA ON BPSA.marriageid = MD.id AND ")
+    .append("BPSA.bride_groom ='B' ")
+    .append("LEFT JOIN  eg_marriage_present_address_details as GPSA ON GPSA.marriageid = MD.id AND ")
+    .append("GPSA.bride_groom ='G' ")
+    .append("LEFT JOIN  eg_marriage_witness_details as WD1 ON WD1.marriageid = MD.id  AND ")
+    .append("WD1.serial_no = 1 ")
+    .append("LEFT JOIN  eg_marriage_witness_details as WD2 ON WD2.marriageid = MD.id  AND ")
+    .append("WD2.serial_no = 2 ")
+    .toString();
+
+  public String getMarriageCountQuery(MarriageApplicationSearchCriteria criteria ,@NotNull List<Object> preparedStmtValues, Boolean isCount) {
+
+      StringBuilder query = new StringBuilder(COUNTQUERY);
+      addFilter("MD.id", criteria.getId(), query, preparedStmtValues);
+      addFilter("MD.tenantid", criteria.getTenantId(), query, preparedStmtValues);
+      addFilter("MD.applicationNumber", criteria.getApplicationNo(), query, preparedStmtValues);
+      addFilter("MD.registrationno", criteria.getRegistrationNo(), query, preparedStmtValues);
+      addFilter("BD.aadharno", criteria.getBrideAdharNo(), query, preparedStmtValues);
+      addFilterDate("MD.dateofmarriage", criteria.getMarriageDOM(), query, preparedStmtValues);
+      if (criteria.getBrideFirstnameEn() != null){
+        addFilterString("BD.firstname_en", criteria.getBrideFirstnameEn(), query, preparedStmtValues);
+      }
+      addFilter("GD.aadharno", criteria.getGroomAdharNo(), query, preparedStmtValues);
+      if (criteria.getGroomFirstnameEn() != null){
+        addFilterString("GD.firstname_en", criteria.getGroomFirstnameEn(), query, preparedStmtValues);
+      }
+      addDateRangeFilter("MD.dateofmarriage",
+              criteria.getFromDate(),
+              criteria.getToDate(),
+              query,
+              preparedStmtValues);
+      return query.toString();
+  }
 
     public String getNextIDQuery() {
         StringBuilder query = new StringBuilder("select fn_next_id(?,?,?)");

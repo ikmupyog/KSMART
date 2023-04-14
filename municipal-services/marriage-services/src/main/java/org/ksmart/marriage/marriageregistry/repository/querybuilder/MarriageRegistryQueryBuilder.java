@@ -201,9 +201,9 @@ public class MarriageRegistryQueryBuilder extends BaseMarriageQuery {
             .append("BPSA.bride_groom ='B' ")
             .append("LEFT JOIN eg_register_marriage_present_address_details as GPSA ON GPSA.marriageid = MD.id AND ")
             .append("GPSA.bride_groom ='G' ")
-            .append("INNER JOIN eg_register_marriage_witness_details as WD1 ON WD1.marriageid = MD.id  AND ")
+            .append("LEFT JOIN eg_register_marriage_witness_details as WD1 ON WD1.marriageid = MD.id  AND ")
             .append("WD1.serial_no = 1 ")
-            .append("INNER JOIN eg_register_marriage_witness_details as WD2 ON WD2.marriageid = MD.id  AND ")
+            .append("LEFT JOIN eg_register_marriage_witness_details as WD2 ON WD2.marriageid = MD.id  AND ")
             .append("WD2.serial_no = 2 ")
             .toString();
 
@@ -267,4 +267,53 @@ public class MarriageRegistryQueryBuilder extends BaseMarriageQuery {
         addFilter("MC.registrydetailsid", id, query, preparedStmtVals);
         return query.toString();
     }
+
+    private static final String  REGISTRYCOUNTQUERY= new StringBuilder()
+    .append(" SELECT count(*) ")
+    .append("FROM public.eg_register_marriage_details as MD  ")
+    .append("INNER JOIN eg_register_marriage_bride_groom_details as BD ON BD.marriageid = MD.id AND ")
+    .append("BD.bride_groom ='B' ")
+    .append("INNER JOIN eg_register_marriage_bride_groom_details as GD ON GD.marriageid = MD.id AND ")
+    .append("GD.bride_groom ='G' ")
+    .append("LEFT JOIN eg_register_marriage_permanent_address_details as BPMA ON BPMA.marriageid = MD.id AND ")
+    .append("BPMA.bride_groom ='B' ")
+    .append("LEFT JOIN eg_register_marriage_permanent_address_details as GPMA ON GPMA.marriageid = MD.id AND ")
+    .append("GPMA.bride_groom ='G' ")
+    .append("LEFT JOIN eg_register_marriage_present_address_details as BPSA ON BPSA.marriageid = MD.id AND ")
+    .append("BPSA.bride_groom ='B' ")
+    .append("LEFT JOIN eg_register_marriage_present_address_details as GPSA ON GPSA.marriageid = MD.id AND ")
+    .append("GPSA.bride_groom ='G' ")
+    .append("LEFT JOIN eg_register_marriage_witness_details as WD1 ON WD1.marriageid = MD.id  AND ")
+    .append("WD1.serial_no = 1 ")
+    .append("LEFT JOIN eg_register_marriage_witness_details as WD2 ON WD2.marriageid = MD.id  AND ")
+    .append("WD2.serial_no = 2 ")
+    .toString();
+
+
+    public String getMarriageRegistryCountQuery(@NotNull MarriageRegistrySearchCriteria criteria,
+    @NotNull List<Object> preparedStmtValues, Boolean isCount) {
+
+    StringBuilder query = new StringBuilder(REGISTRYCOUNTQUERY);
+
+          addFilter("MD.id", criteria.getId(), query, preparedStmtValues);
+          addFilter("MD.tenantid", criteria.getTenantId(), query, preparedStmtValues);
+          addFilter("MD.applicationnumber", criteria.getApplicationNumber(), query, preparedStmtValues);  
+          addFilter("MD.registrationno", criteria.getRegistrationNo(), query, preparedStmtValues);  
+          addFilterDate("MD.dateofmarriage", criteria.getMarriageDOM(), query, preparedStmtValues);
+          addFilter("BD.aadharno", criteria.getBrideAdharNo(), query, preparedStmtValues); 
+          if (criteria.getBrideFirstnameEn() != null){
+            addFilterString("BD.firstname_en", criteria.getBrideFirstnameEn(), query, preparedStmtValues);
+          }
+          addFilter("GD.aadharno", criteria.getGroomAdharNo(), query, preparedStmtValues); 
+          if (criteria.getGroomFirstnameEn() != null){
+            addFilterString("GD.firstname_en", criteria.getGroomFirstnameEn(), query, preparedStmtValues);
+          }
+          addDateRangeFilter("MD.dateofmarriage",
+          criteria.getFromDate(),
+          criteria.getToDate(),
+          query,
+          preparedStmtValues);
+          return query.toString();
+
+} 
 }

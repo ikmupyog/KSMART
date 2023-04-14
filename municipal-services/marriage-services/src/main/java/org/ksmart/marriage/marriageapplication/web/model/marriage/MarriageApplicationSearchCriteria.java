@@ -29,7 +29,6 @@ public class MarriageApplicationSearchCriteria {
     @JsonProperty("certificateNo")
     private String certificateNo;
 
-
     @JsonProperty("marriageDOM")
     private Long marriageDOM;
 

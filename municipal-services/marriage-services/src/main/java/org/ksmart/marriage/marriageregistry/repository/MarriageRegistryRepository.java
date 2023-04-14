@@ -89,14 +89,21 @@ public class MarriageRegistryRepository {
 
         return result; 
     }
-
+    public int getMarriageRegistryCount(MarriageRegistrySearchCriteria criteria) {
+        List<Object> preparedStmtList = new ArrayList<>();
+        String query = queryBuilder.getMarriageRegistryCountQuery(criteria, preparedStmtList, Boolean.FALSE);
+        int MarriageCount = jdbcTemplate.queryForObject(query,preparedStmtList.toArray(),Integer.class);
+        System.out.println("Marriagecountquery"+query);
+        return MarriageCount;
+    }
     public List<MarriageCertificate> searchCertificateByMarriageId(String id) {
         List<Object> preparedStmtVals = new ArrayList<>();
         String qry = queryBuilder.getMarriageCertificateSearchQuery(id,preparedStmtVals,Boolean.FALSE);
         List<MarriageCertificate> results = jdbcTemplate.query(qry, preparedStmtVals.toArray(), marriageCertificateRowMapper);
         return results;
-
     }
+
+
 
     public MarriageCertPdfResponse saveMarriageCertPdf(MarriageCertPDFRequest marriageCertPDFRequest) {
         MarriageCertPdfResponse pdfResponse = new MarriageCertPdfResponse();
@@ -341,26 +348,5 @@ public class MarriageRegistryRepository {
         return  null;
     }
 
-
-
-    // public List<MarriageRegistryDetails> updateMarriageRegistry(MarriageRegistryRequest request) {
-    //     marriageRegistryEnrichment.enrichUpdate(request);
-    //     producer.push(marriageApplicationConfiguration.getUpdateMarriageRegistryTopic(), request);
-    //     MarriageRegistryRequest result = MarriageRegistryRequest
-    //                                     .builder()
-    //                                     .requestInfo(request.getRequestInfo())
-    //                                     .marriageDetails(request.getMarriageDetails())
-    //                                     .build();
-    //     return result.getMarriageDetails();
-    // }
-
-    // public List<MarriageRegistryDetails> searchMarriageRegistry(MarriageRegistrySearchCriteria criteria) {
-    //     List<Object> preparedStmtValues = new ArrayList<>();
-    //     String query = marriageRegistryQueryBuilder.getMarriageApplicationSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
-    //     List<MarriageRegistryDetails> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriageRegistryRowMapper);
-    //     return result;
-    // }
-
-    //private final org.ksmart.birth.common.producer.MarriageProducer producer;
 
 }

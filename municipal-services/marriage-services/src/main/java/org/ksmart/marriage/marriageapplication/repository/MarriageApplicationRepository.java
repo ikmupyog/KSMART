@@ -11,7 +11,6 @@ import org.ksmart.marriage.marriageapplication.config.MarriageApplicationConfigu
 import org.ksmart.marriage.marriageapplication.web.model.MarriageApplicationDetails;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.BrideDetails;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.GroomDetails;
-//import org.ksmart.marriage.common.producer.MarriageProducer;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageApplicationSearchCriteria;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageDetailsRequest;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageDocument;
@@ -19,15 +18,10 @@ import org.ksmart.marriage.marriageapplication.web.model.marriage.WitnessDetails
 import org.ksmart.marriage.utils.MarriageConstants;
 import org.ksmart.marriage.marriageapplication.repository.querybuilder.MarriageApplicationQueryBuilder;
 import org.ksmart.marriage.marriageapplication.repository.rowmapper.MarriageApplicationRowMapper;
-//import org.ksmart.marriage.marriageapplication.validator.MarriageMDMSValidator;
-//import org.ksmart.marriage.marriageregistry.repository.rowmapper.MarriageRegistryRowMapper;
 import org.ksmart.marriage.marriageapplication.repository.rowmapper.MarriageDocumentRowMapper;
-//import org.ksmart.marriage.utils.MarriageMdmsUtil;
-// import org.ksmart.marriage.workflow.WorkflowIntegrator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -41,15 +35,6 @@ public class MarriageApplicationRepository {
     private final MarriageApplicationRowMapper marriageApplicationRowMapper;
     private final JdbcTemplate jdbcTemplate;
     private final MarriageDocumentRowMapper marriagedocumentRowMapper;
-   // private final DocumentRowMapper marriagedocumentRowMapper;
-    
-   // private final MarriageRegistryRowMapper marriageRegistryRowMapper;
-    // private final MarriageApplicationConfiguration marriageApplicationConfiguration;
-    // private final MarriageDetailsEnrichment marriageDetailsEnrichment;
-   // private final WorkflowIntegrator workflowIntegrator;
-   // private final MarriageMdmsUtil util;
-   // private final MarriageMDMSValidator mdmsValidator;
-
 
     @Autowired
     EncryptionDecryptionUtil encryptionDecryptionUtil;
@@ -74,8 +59,7 @@ public class MarriageApplicationRepository {
         List<MarriageApplicationDetails> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriageApplicationRowMapper);
        
         if(result != null) {
-			result.forEach(marriage -> {
-                              
+			result.forEach(marriage -> {                  
                 GroomDetails groomDetails =marriage.getGroomDetails();
                 GroomDetails groomDetailsDec =  encryptionDecryptionUtil.decryptObject(groomDetails, "BndDetail", GroomDetails.class, requestInfo);
                 groomDetails.setAadharno(groomDetailsDec.getAadharno());
@@ -96,51 +80,48 @@ public class MarriageApplicationRepository {
                 else  if(brideDetails.getParentGuardian().equals(MarriageConstants.GUARDIAN)){
                     brideDetails.setGuardianAadharno(brideDetailsDec.getGuardianAadharno());
                 }
-    
                 WitnessDetails witnessDetails =marriage.getWitnessDetails();
                 WitnessDetails witnessDetailsDec =  encryptionDecryptionUtil.decryptObject(witnessDetails, "BndDetail", WitnessDetails.class, requestInfo);
                 witnessDetails.setWitness1AadharNo(witnessDetailsDec.getWitness1AadharNo());
                 witnessDetails.setWitness2AadharNo(witnessDetailsDec.getWitness2AadharNo());
+
                 criteria.setApplicationType(marriage.getApplicationtype());
                 criteria.setApplicationNo(marriage.getApplicationNumber());
                 criteria.setTenantId(marriage.getTenantid());
-               // System.out.println("criteriafordocument"+criteria);
-                  List<MarriageDocument> completeDocumentDetails = getDocumentSearchDetails( criteria, requestInfo);
-                // System.out.println("completeDocumentDetails"+completeDocumentDetails);
-                //   List<MarriageDocument> documentDetails1 = new ArrayList<>();
-                //   MarriageDocument document = new MarriageDocument();
-                //   document.setTenantId(marriage.getTenantid());
-                //   document.setConsumerCode(marriage.getApplicationNumber());
-                //   document.add(demand);
+                List<MarriageDocument> completeDocumentDetails = getDocumentSearchDetails( criteria, requestInfo);
                 marriage.setMarriageDocuments(completeDocumentDetails);
-            
                 });
         }
-       // result.get(0).setMarriageDocuments(completeDocumentDetails);
-
         return result;
     }
 
-    public List<MarriageDocument> getDocumentDetails(MarriageApplicationSearchCriteria criteria,RequestInfo requestInfo) {
-        List<Object> preparedStmtValues = new ArrayList<>();
-        String query = marriageQueryBuilder.getMarriageDocumentQuery( criteria, preparedStmtValues, Boolean.FALSE);
-        List<MarriageDocument> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriagedocumentRowMapper);
-        
-        return result;
-    }   
+        public List<MarriageDocument> getDocumentDetails(MarriageApplicationSearchCriteria criteria,RequestInfo requestInfo) {
+            List<Object> preparedStmtValues = new ArrayList<>();
+            String query = marriageQueryBuilder.getMarriageDocumentQuery( criteria, preparedStmtValues, Boolean.FALSE);
+            List<MarriageDocument> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriagedocumentRowMapper);
+            return result;
+        }   
 
-    public List<MarriageDocument> getDocumentSearchDetails(MarriageApplicationSearchCriteria criteria,RequestInfo requestInfo) {
-        List<Object> preparedStmtValues = new ArrayList<>();
-        String query = marriageQueryBuilder.getMarriageDocumentSearchQuery( criteria, preparedStmtValues, Boolean.FALSE);
-        List<MarriageDocument> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriagedocumentRowMapper); 
-        return result;
-    }  
+        public List<MarriageDocument> getDocumentSearchDetails(MarriageApplicationSearchCriteria criteria,RequestInfo requestInfo) {
+            List<Object> preparedStmtValues = new ArrayList<>();
+            String query = marriageQueryBuilder.getMarriageDocumentSearchQuery( criteria, preparedStmtValues, Boolean.FALSE);
+            List<MarriageDocument> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriagedocumentRowMapper); 
+            return result;
+        }  
 
-    public List<MarriageApplicationDetails> getMarriageApplication(MarriageApplicationSearchCriteria criteria, RequestInfo requestInfo) {
-        List<Object> preparedStmtValues = new ArrayList<>();
-        String query = marriageQueryBuilder.getMarriageApplicationSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
-        List<MarriageApplicationDetails> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriageApplicationRowMapper);
-        return result;
-    }
+        public List<MarriageApplicationDetails> getMarriageApplication(MarriageApplicationSearchCriteria criteria, RequestInfo requestInfo) {
+            List<Object> preparedStmtValues = new ArrayList<>();
+            String query = marriageQueryBuilder.getMarriageApplicationSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
+            List<MarriageApplicationDetails> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriageApplicationRowMapper);
+            return result;
+        }
+
+        public int getMarriageCount(MarriageApplicationSearchCriteria criteria) {
+            List<Object> preparedStmtList = new ArrayList<>();
+            String query = marriageQueryBuilder.getMarriageCountQuery(criteria, preparedStmtList, Boolean.FALSE);
+            int MarriageCount = jdbcTemplate.queryForObject(query,preparedStmtList.toArray(),Integer.class);
+           // System.out.println("Marriagecountquery"+query);
+            return MarriageCount;
+        }
 
     }

@@ -32,7 +32,6 @@ public class MarriageApplicationDetails {
     private Long dateofreporting;
 
 
-
     @Size(max = 64)
     @JsonProperty("marriageDistrictid")
     private String districtid;

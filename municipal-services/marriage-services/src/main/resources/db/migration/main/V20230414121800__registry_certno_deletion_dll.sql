@@ -1,0 +1,1 @@
+ALTER TABLE IF EXISTS public.eg_register_marriage_details DROP COLUMN IF EXISTS certificatenumber;

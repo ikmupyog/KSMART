@@ -56,15 +56,8 @@ public class MarriageApplicationService {
 
     public List<MarriageApplicationDetails> saveMarriageDetails(MarriageDetailsRequest request) {
 
-    // try {
-    //         ObjectMapper mapper = new ObjectMapper();
-    //         Object obj = request;
-    //         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-    //        System.out.println("MarriageRequest "+ mapper.writeValueAsString(obj));
-    //     }catch(Exception e) {
-    //     log.error("Exception while fetching from searcher: ",e);
-    // }
-    System.out.println("Workflowtesting"+request.getMarriageDetails().get(0).getIsWorkflow());
+
+    //System.out.println("Workflowtesting"+request.getMarriageDetails().get(0).getIsWorkflow());
         WorkFlowCheck wfc = new WorkFlowCheck();
         Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getMarriageDetails().get(0).getTenantid());
         validatorService.ruleEngineMarriage(request, wfc, mdmsData);

@@ -11,6 +11,7 @@ import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistrySearchCrit
 import org.ksmart.marriage.marriageregistry.service.MarriageRegistryService;
 import org.ksmart.marriage.marriageregistry.web.model.certmodel.MarriageCertResponse;
 import org.ksmart.marriage.marriageregistry.web.model.certmodel.MarriageCertificate;
+import org.ksmart.marriage.marriageregistry.repository.MarriageRegistryRepository;
 import org.ksmart.marriage.utils.ResponseInfoFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,11 +29,14 @@ import java.util.List;
 public class MarriageRegistryController {
     private final MarriageRegistryService marriageService;
     private final ResponseInfoFactory responseInfoFactory;
+    private final MarriageRegistryRepository registryRepository;
 
-
-    public MarriageRegistryController( MarriageRegistryService marriageService, ResponseInfoFactory responseInfoFactory) {
+    public MarriageRegistryController( MarriageRegistryService marriageService, 
+                                        ResponseInfoFactory responseInfoFactory,
+                                        MarriageRegistryRepository registryRepository) {
         this.marriageService = marriageService;
         this.responseInfoFactory = responseInfoFactory;
+        this.registryRepository = registryRepository;
     }
 
     @PostMapping(value = {"/_createregistry"})
@@ -50,13 +54,14 @@ public class MarriageRegistryController {
         
     public ResponseEntity<MarriageRegistryResponse> search(@RequestBody  MarriageRegistryRequest request,
                                                         @ModelAttribute MarriageRegistrySearchCriteria criteria) {
-
+        int registryCount=registryRepository.getMarriageRegistryCount(criteria);
         List<MarriageRegistryDetails> marriageDetails = marriageService.searchRegistry(criteria);
 
         MarriageRegistryResponse response = MarriageRegistryResponse
                                             .builder()
                                             .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
                                             .marriageApplicationDetails(marriageDetails)
+                                            .count(registryCount)
                                             .build();
         return ResponseEntity.ok(response);
     }
