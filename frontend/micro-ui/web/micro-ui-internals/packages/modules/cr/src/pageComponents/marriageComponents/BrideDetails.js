@@ -653,16 +653,19 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
             !brideGender ||
             !brideDOB ||
             !brideMaritalstatusID ||
-            brideResidentShip === "INDIAN"
+            (brideResidentShip === "INDIAN"
               ? !brideAadharNo
-              : false || brideResidentShip === "NRI"
-              ? !bridePassportNo
-              : false || brideResidentShip === "FOREIGN"
-              ? !brideSocialSecurityNo || !bridePassportNo
-              : false || brideParentGuardian === "PARENT"
-              ? !brideFathernameEn || !brideFathernameMl || !brideMothernameEn || !brideMothernameMl || !brideFatherAadharNo || !brideMotherAadharNo
-              : false
-            // || selectedParent === "GUARDIAN" ? (!brideGuardiannameEn || !brideGuardiannameMl || !brideGuardianAadharNo) : false
+              : false) || 
+              (brideResidentShip === "NRI"
+              ? (!bridePassportNo || !brideSocialSecurityNo)
+              : false) || 
+              (brideResidentShip === "FOREIGN"
+              ? (!brideSocialSecurityNo || !bridePassportNo)
+              : false) || 
+              (brideParentGuardian === "PARENT"
+              ? (!brideFathernameEn || !brideFathernameMl || !brideMothernameEn || !brideMothernameMl 
+                || !brideFatherAadharNo || !brideMotherAadharNo) : false) ||
+              (brideParentGuardian === "GUARDIAN" ? (!brideGuardiannameEn || !brideGuardiannameMl || !brideGuardianAadharNo) : false)
           }
         >
           {/* <div className="row">
