@@ -57,12 +57,12 @@ public class MarriageCorrectionService {
         this.mdmsValidator = mdmsValidator;
         this.correctionApplicationToRegistryMapper = correctionApplicationToRegistryMapper;
     }
-
+//req for testing
     public List<MarriageCorrectionDetails> createCorrection(MarriageCorrectionRequest request) {
 
         MarriageRegistrySearchCriteria criteria = new MarriageRegistrySearchCriteria();
         criteria.setRegistrationNo(request.getMarriageCorrectionDetails().get(0).getRegistrationno());
-        List<MarriageRegistryDetails> marriageRegistryDetails = searchRegistry(criteria);
+        List<MarriageRegistryDetails> marriageRegistryDetails = searchRegistry(criteria,request.getRequestInfo());
         if (!marriageRegistryDetails.isEmpty()) {
             MarriageApplicationDetails marriageApplicationDetail = RegistryToApplicationMapper.convert(marriageRegistryDetails);
             marriageCorrectionEnrichment.enrichCreate(request, marriageApplicationDetail);
@@ -82,17 +82,17 @@ public class MarriageCorrectionService {
         return request.getMarriageCorrectionDetails();
     }
 
-
-    private List<MarriageRegistryDetails> searchRegistry(MarriageRegistrySearchCriteria criteria) {
-        return registryRepository.searchMarriageRegistry(criteria);
+//req For Testing
+    private List<MarriageRegistryDetails> searchRegistry(MarriageRegistrySearchCriteria criteria, RequestInfo req) {
+        return registryRepository.searchMarriageRegistry(criteria,req);
     }
 
-
+//req for testing
     public List<MarriageCorrectionDetails> updateMarriageRegistry(MarriageCorrectionRequest request) {
         MarriageRegistrySearchCriteria criteria = new MarriageRegistrySearchCriteria();
         criteria.setRegistrationNo(request.getMarriageCorrectionDetails().get(0).getRegistrationno());
         criteria.setTenantId(request.getMarriageCorrectionDetails().get(0).getTenantid());
-        List<MarriageRegistryDetails> marriageRegistryDetails = searchRegistry(criteria);
+        List<MarriageRegistryDetails> marriageRegistryDetails = searchRegistry(criteria,request.getRequestInfo());
 
         if (!marriageRegistryDetails.isEmpty()) {
             MarriageApplicationSearchCriteria aplnCriteria=new MarriageApplicationSearchCriteria();

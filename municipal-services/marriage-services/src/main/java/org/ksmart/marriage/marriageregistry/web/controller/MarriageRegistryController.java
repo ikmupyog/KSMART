@@ -4,6 +4,7 @@ package org.ksmart.marriage.marriageregistry.web.controller;
 // import lombok.extern.slf4j.Slf4j;
 
 
+import org.egov.common.contract.request.RequestInfo;
 import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryDetails;
 import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryRequest;
 import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryResponse;
@@ -49,13 +50,15 @@ public class MarriageRegistryController {
                                                                   .build();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
+//for testing req
     @PostMapping("_searchregistry")
         
     public ResponseEntity<MarriageRegistryResponse> search(@RequestBody  MarriageRegistryRequest request,
-                                                        @ModelAttribute MarriageRegistrySearchCriteria criteria) {
-        int registryCount=registryRepository.getMarriageRegistryCount(criteria);
-        List<MarriageRegistryDetails> marriageDetails = marriageService.searchRegistry(criteria);
+
+                                                           @ModelAttribute MarriageRegistrySearchCriteria criteria, RequestInfo req) {
+            int registryCount=registryRepository.getMarriageRegistryCount(criteria);
+
+        List<MarriageRegistryDetails> marriageDetails = marriageService.searchRegistry(criteria,req);
 
         MarriageRegistryResponse response = MarriageRegistryResponse
                                             .builder()
@@ -65,11 +68,11 @@ public class MarriageRegistryController {
                                             .build();
         return ResponseEntity.ok(response);
     }
-
+    //for testing req
     @PostMapping("_certificate")
     public  ResponseEntity<MarriageCertResponse> certificateDownload(@RequestBody MarriageRegistryRequest request,
-                                                                     @Valid @ModelAttribute MarriageRegistrySearchCriteria criteria) {
-        List<MarriageCertificate> marriageCertResponseList = marriageService.searchCertificate(criteria);
+                                                                     @Valid @ModelAttribute MarriageRegistrySearchCriteria criteria,RequestInfo req) {
+        List<MarriageCertificate> marriageCertResponseList = marriageService.searchCertificate(criteria,req);
         MarriageCertResponse response;
 //        if(null!=marriageCertResponseList&&!marriageCertResponseList.isEmpty()){
 //            response = MarriageCertResponse

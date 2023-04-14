@@ -330,7 +330,7 @@ public class MarriageCorrectionEnrichment implements BaseEnrichment {
                             marriage.getGroomAddressDetails().setPermntOthrIndiaLinetwoMl(marriage.getGroomAddressDetails().getPermntOutsideIndiaLinetwoMl());
                             marriage.getGroomAddressDetails().setPermntOthrIndiaprovinceEn(marriage.getGroomAddressDetails().getPermntOutSideIndiaProvinceEn());
                             marriage.getGroomAddressDetails().setPermntOthrIndiaprovinceMl(marriage.getGroomAddressDetails().getPermntOutSideIndiaProvinceMl());
-                            marriage.getGroomAddressDetails().setOutSideIndiaPostCodepermanent(marriage.getGroomAddressDetails().getPermanentOutsideIndiaPostCode());
+                            marriage.getGroomAddressDetails().setOutSideIndiaPostCodePermanent(marriage.getGroomAddressDetails().getPermanentOutsideIndiaPostCode());
                         }
                     }
                 }else if (marriage.getGroomAddressDetails().getCountryIdPermanent() != null && marriage.getGroomAddressDetails().getStateIdPermanent() != null) {
@@ -378,7 +378,7 @@ public class MarriageCorrectionEnrichment implements BaseEnrichment {
                             setIfNotNull(marriage.getGroomAddressDetails()::setPermntOthrIndiaLinetwoMl , marriage.getGroomAddressDetails().getPermntOutsideIndiaLinetwoMl());
                             setIfNotNull(marriage.getGroomAddressDetails()::setPermntOthrIndiaprovinceEn , marriage.getGroomAddressDetails().getPermntOutSideIndiaProvinceEn());
                             setIfNotNull(marriage.getGroomAddressDetails()::setPermntOthrIndiaprovinceMl , marriage.getGroomAddressDetails().getPermntOutSideIndiaProvinceMl());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setOutSideIndiaPostCodepermanent , marriage.getGroomAddressDetails().getPermanentOutsideIndiaPostCode());
+                            setIfNotNull(marriage.getGroomAddressDetails()::setOutSideIndiaPostCodePermanent , marriage.getGroomAddressDetails().getPermanentOutsideIndiaPostCode());
 
                         }
                     }
@@ -446,7 +446,7 @@ public class MarriageCorrectionEnrichment implements BaseEnrichment {
                                 marriage.getBrideAddressDetails().setPermntOthrIndiaLinetwoMl(marriage.getBrideAddressDetails().getPermntOutsideIndiaLinetwoMl());
                                 marriage.getBrideAddressDetails().setPermntOthrIndiaprovinceEn(marriage.getBrideAddressDetails().getPermntOutSideIndiaProvinceEn());
                                 marriage.getBrideAddressDetails().setPermntOthrIndiaprovinceMl(marriage.getBrideAddressDetails().getPermntOutSideIndiaProvinceMl());
-                                marriage.getBrideAddressDetails().setOutSideIndiaPostCodepermanent(marriage.getBrideAddressDetails().getPermanentOutsideIndiaPostCode());
+                                marriage.getBrideAddressDetails().setOutSideIndiaPostCodePermanent(marriage.getBrideAddressDetails().getPermanentOutsideIndiaPostCode());
 
 
                             }
@@ -495,7 +495,7 @@ public class MarriageCorrectionEnrichment implements BaseEnrichment {
                                 setIfNotNull(marriage.getBrideAddressDetails()::setPermntOthrIndiaLinetwoMl, marriage.getBrideAddressDetails().getPermntOutsideIndiaLinetwoMl());
                                 setIfNotNull(marriage.getBrideAddressDetails()::setPermntOthrIndiaprovinceEn, marriage.getBrideAddressDetails().getPermntOutSideIndiaProvinceEn());
                                 setIfNotNull(marriage.getBrideAddressDetails()::setPermntOthrIndiaprovinceMl, marriage.getBrideAddressDetails().getPermntOutSideIndiaProvinceMl());
-                                setIfNotNull(marriage.getBrideAddressDetails()::setOutSideIndiaPostCodepermanent, marriage.getBrideAddressDetails().getPermanentOutsideIndiaPostCode());
+                                setIfNotNull(marriage.getBrideAddressDetails()::setOutSideIndiaPostCodePermanent, marriage.getBrideAddressDetails().getPermanentOutsideIndiaPostCode());
 
                             }
                         }

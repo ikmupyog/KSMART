@@ -80,7 +80,7 @@ public class MarriageApplicationService {
                 demands.add(demand);
                 marriageDetailsEnrichment.saveDemand(request.getRequestInfo(),demands);
             }
-        }); 
+        });
         return request.getMarriageDetails();
     }
 

@@ -2,6 +2,7 @@ package org.ksmart.marriage.marriageregistry.repository;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.egov.common.contract.request.RequestInfo;
 import org.egov.tracer.model.CustomException;
 import org.ksmart.marriage.common.producer.MarriageProducer;
 
@@ -30,6 +31,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
+import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Repository
 public class MarriageRegistryRepository {
@@ -79,7 +85,7 @@ public class MarriageRegistryRepository {
         // return result.getMarriageDetails();
 
     // }
-    public List<MarriageRegistryDetails> searchMarriageRegistry(MarriageRegistrySearchCriteria criteria) {
+    public List<MarriageRegistryDetails> searchMarriageRegistry(MarriageRegistrySearchCriteria criteria ,RequestInfo req) {
 
         List<Object> preparedStmtValues = new ArrayList<>();
 
@@ -87,7 +93,15 @@ public class MarriageRegistryRepository {
         
         List<MarriageRegistryDetails> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriageRegistryRowMapper);
 
-        return result; 
+        System.out.println("Groom address -------");
+                String address=marriageRegistryEnrichment.setGroomPermanentAddressForCertificate(req, result.get(0));
+        String address2=marriageRegistryEnrichment.setBridePermanentAddressForCertificate(req, result.get(0));
+
+        System.out.println(address);
+        System.out.println(address2);
+
+        return result;
+
     }
     public int getMarriageRegistryCount(MarriageRegistrySearchCriteria criteria) {
         List<Object> preparedStmtList = new ArrayList<>();
