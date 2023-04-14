@@ -33,6 +33,7 @@ public class MarriageCertificateEnrichment implements BaseEnrichment {
         AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
         request.getMarriageCertificate().setId(UUID.randomUUID().toString());
         request.getMarriageCertificate().setAuditDetails(auditDetails);
+        createCertificateNo(request);
 
     }
 
@@ -41,6 +42,7 @@ public class MarriageCertificateEnrichment implements BaseEnrichment {
         User userInfo = requestInfo.getUserInfo();
         AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
         request.getMarriageCertificate().setAuditDetails(auditDetails);
+        createCertificateNo(request);
 
     }
 
@@ -51,17 +53,32 @@ public class MarriageCertificateEnrichment implements BaseEnrichment {
 
         List<String> ackNoDetails = idGenRepository.getIdList(requestInfo,
                 tenantId,
-                config.getMarriageCertNumberIdName(),
+                config.getGetMarriageCertificateName(),
                 marriageCertRequest.getMarriageCertificate().getModulecode(),
                 "CERT",1);
         ListIterator<String> itr = ackNoDetails.listIterator();
         marriageCertRequest.getMarriageCertificate().setMarriagecertificateno(itr.next());
         marriageCertRequest.getMarriageCertificate().setDateofissue(currentTime);
-
     }
 
+    // private void setCertificateNumber(MarriageCertRequest marriageCertRequest) {
 
+    //     RequestInfo requestInfo = marriageCertRequest.getRequestInfo();
+    //     MarriageCertificate marriageDetails = marriageCertRequest.getMarriageCertificate();
+    //     String tenantId = marriageDetails.getTenantid();
 
-
+    //     List<String> filecodes = getIdList(requestInfo,
+    //                             tenantId,
+    //                             config.getGetMarriageRegNumberName(),
+    //                             marriageCertRequest.getMarriageCertificate().getModulecode(),
+    //                             "CERT",
+    //                             1);
+    //    // validateFileCodes(filecodes, marriageDetails.size());
+    //     Long currentTime = Long.valueOf(System.currentTimeMillis());
+    //     ListIterator<String> itr = filecodes.listIterator();
+    //     marriageDetails.setMarriagecertificateno(itr.next());
+    //     marriageDetails.setDateofissue(currentTime);
+                
+    // }
 
 }

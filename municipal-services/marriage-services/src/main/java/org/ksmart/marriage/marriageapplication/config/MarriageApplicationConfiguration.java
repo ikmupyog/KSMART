@@ -31,7 +31,10 @@ public class MarriageApplicationConfiguration {
     private String marriageFileNumberName;
 
     @Value("${egov.idgen.marriagereg.name}")
-    private String getMarriageRegisNumberName;
+    private String getMarriageRegNumberName;
+
+    @Value("${egov.idgen.marriagecert.name}")
+    private String getMarriageCertificateName;
 
     //Jasmine 24.03.2023
 
@@ -107,8 +110,8 @@ public class MarriageApplicationConfiguration {
     @Value("${persister.update.marriagecertificate.topic}")
     private String updateMarriageCertificateTopic;
 
-    @Value("${egov.idgen.marriageapplncertno.name}")
-    private String marriageCertNumberIdName;
+    // @Value("${egov.idgen.marriageapplncertno.name}")
+    // private String marriageCertNumberIdName;
 
 
         //Marriage Correction

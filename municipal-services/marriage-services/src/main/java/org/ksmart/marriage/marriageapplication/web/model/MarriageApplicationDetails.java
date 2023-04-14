@@ -180,7 +180,7 @@ public class MarriageApplicationDetails {
     private String workflowcode;
 
     @JsonProperty("isWorkflow")
-    private boolean isWorkflow;
+    private Boolean isWorkflow;
 
     private String assignuser;
 
@@ -195,7 +195,7 @@ public class MarriageApplicationDetails {
 
     @JsonProperty("MarriageDocuments")
     @Valid
-    private List<MarriageDocument> MarriageDocuments = null;
+    private List<MarriageDocument> MarriageDocuments ;
 
     private boolean wfnormalRegn ;
     private boolean wfdelayedWithinFiveYear ;

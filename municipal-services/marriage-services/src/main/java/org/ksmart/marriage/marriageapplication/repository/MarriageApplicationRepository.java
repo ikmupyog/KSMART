@@ -40,7 +40,8 @@ public class MarriageApplicationRepository {
     private final MarriageApplicationQueryBuilder marriageQueryBuilder;
     private final MarriageApplicationRowMapper marriageApplicationRowMapper;
     private final JdbcTemplate jdbcTemplate;
-    private final MarriageDocumentRowMapper documentRowMapper;
+    private final MarriageDocumentRowMapper marriagedocumentRowMapper;
+   // private final DocumentRowMapper marriagedocumentRowMapper;
     
    // private final MarriageRegistryRowMapper marriageRegistryRowMapper;
     // private final MarriageApplicationConfiguration marriageApplicationConfiguration;
@@ -58,12 +59,12 @@ public class MarriageApplicationRepository {
                                          JdbcTemplate jdbcTemplate, 
                                          MarriageApplicationQueryBuilder marriageQueryBuilder,
                                          MarriageApplicationRowMapper marriageApplicationRowMapper,
-                                         MarriageDocumentRowMapper documentRowMapper) {
+                                         MarriageDocumentRowMapper marriagedocumentRowMapper) {
         this.producer = producer;
         this.jdbcTemplate = jdbcTemplate;
         this.marriageQueryBuilder = marriageQueryBuilder;
         this.marriageApplicationRowMapper = marriageApplicationRowMapper;
-        this.documentRowMapper = documentRowMapper;
+        this.marriagedocumentRowMapper = marriagedocumentRowMapper;
     }
     //Jasmine 31.03.2023
 
@@ -101,21 +102,29 @@ public class MarriageApplicationRepository {
                 witnessDetails.setWitness1AadharNo(witnessDetailsDec.getWitness1AadharNo());
                 witnessDetails.setWitness2AadharNo(witnessDetailsDec.getWitness2AadharNo());
                 criteria.setApplicationType(marriage.getApplicationtype());
-                criteria.setApplicationType(marriage.getApplicationNumber());
+                criteria.setApplicationNo(marriage.getApplicationNumber());
                 criteria.setTenantId(marriage.getTenantid());
-                System.out.println("criteria"+criteria);
-              //  getDocumentSearchDetails( criteria, requestInfo);
-            });
-
-
+               // System.out.println("criteriafordocument"+criteria);
+                  List<MarriageDocument> completeDocumentDetails = getDocumentSearchDetails( criteria, requestInfo);
+                // System.out.println("completeDocumentDetails"+completeDocumentDetails);
+                //   List<MarriageDocument> documentDetails1 = new ArrayList<>();
+                //   MarriageDocument document = new MarriageDocument();
+                //   document.setTenantId(marriage.getTenantid());
+                //   document.setConsumerCode(marriage.getApplicationNumber());
+                //   document.add(demand);
+                marriage.setMarriageDocuments(completeDocumentDetails);
+            
+                });
         }
+       // result.get(0).setMarriageDocuments(completeDocumentDetails);
+
         return result;
     }
 
     public List<MarriageDocument> getDocumentDetails(MarriageApplicationSearchCriteria criteria,RequestInfo requestInfo) {
         List<Object> preparedStmtValues = new ArrayList<>();
         String query = marriageQueryBuilder.getMarriageDocumentQuery( criteria, preparedStmtValues, Boolean.FALSE);
-        List<MarriageDocument> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), documentRowMapper);
+        List<MarriageDocument> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriagedocumentRowMapper);
         
         return result;
     }   
@@ -123,7 +132,7 @@ public class MarriageApplicationRepository {
     public List<MarriageDocument> getDocumentSearchDetails(MarriageApplicationSearchCriteria criteria,RequestInfo requestInfo) {
         List<Object> preparedStmtValues = new ArrayList<>();
         String query = marriageQueryBuilder.getMarriageDocumentSearchQuery( criteria, preparedStmtValues, Boolean.FALSE);
-        List<MarriageDocument> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), documentRowMapper); 
+        List<MarriageDocument> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriagedocumentRowMapper); 
         return result;
     }  
 

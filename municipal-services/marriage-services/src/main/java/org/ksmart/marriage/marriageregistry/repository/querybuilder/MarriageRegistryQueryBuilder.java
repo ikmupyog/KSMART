@@ -216,6 +216,7 @@ public class MarriageRegistryQueryBuilder extends BaseMarriageQuery {
           addFilter("MD.tenantid", criteria.getTenantId(), query, preparedStmtValues);
           addFilter("MD.applicationnumber", criteria.getApplicationNumber(), query, preparedStmtValues);  
           addFilter("MD.registrationno", criteria.getRegistrationNo(), query, preparedStmtValues);  
+          addFilterDate("MD.dateofmarriage", criteria.getMarriageDOM(), query, preparedStmtValues);
          // addFilter("MD_certificateno", criteria.getCertificateNo(), query, preparedStmtValue
           addFilter("BD.aadharno", criteria.getBrideAdharNo(), query, preparedStmtValues); 
           if (criteria.getBrideFirstnameEn() != null){

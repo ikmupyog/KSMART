@@ -133,23 +133,18 @@ public class MarriageApplicationValidator {
                         String endStr = wfLists.get(n).get("enddateperiod").toString();
                          Long start = Long.parseLong(startStr);
                          Long end = Long.parseLong(endStr);
-                         Long comp = currentDate - dateOfMarriage;
-                        
-                        // System.out.println("StartDate " +start );
-                        // System.out.println("endDate " +end );
-                        // System.out.println("compDate " +comp );
-                        if (comp > start && comp <= end)
-                                {
+                         if (end > 0L) {
+                                Long comp = currentDate - dateOfMarriage;
+                                if (comp > start && comp <= end){
                                         wfc.setApplicationType(wfLists.get(n).get("ApplicationType").toString());
                                         wfc.setWorkflowCode(wfLists.get(n).get("WorkflowCode").toString());
                                         wfc.setPayment(Boolean.getBoolean(wfLists.get(n).get("payment").toString()));
                                         wfc.setAmount(Integer.parseInt(wfLists.get(n).get("amount").toString()));
                                         wfc.setActive(Boolean.getBoolean(wfLists.get(n).get("active").toString()));
-                                        System.out.println("wfCodetesting"+wfLists.get(n).get("WorkflowCode").toString());
+                                        //  System.out.println("wfCodetesting"+wfLists.get(n).get("WorkflowCode").toString());
                                 }
                         }
-                        
-              ///  System.out.println("wfCodetesting"+wfLists.get(n).get("WorkflowCode").toString());
+                        }
                 return wfc;
         }
         public void validateCommonFields(MarriageDetailsRequest request) {

@@ -604,13 +604,8 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 
 
                                        marriage.getBrideAddressDetails().setOutSideIndiaPostCodepermanent(marriage.getBrideAddressDetails().getPermanentOutsideIndiaPostCode());
-
-
 //                                   }
                                }
-
-
-
                        }
 
                 });
@@ -696,8 +691,6 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                     
                 });
     }
-
-
 //Jasmine 30.03.2023
     public List<Demand> saveDemand(RequestInfo requestInfo, List<Demand> demands){
         StringBuilder url = new StringBuilder(config.getBillingHost());
@@ -713,7 +706,6 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
         }
         return response.getDemands();
     }
-
 //        private void setApplicationNumbers(MarriageDetailsRequest request) {
 //            Long currentTime = Long.valueOf(System.currentTimeMillis());
 //            String id = idGenerator.setIDGeneratorStill(request, MarriageConstants.FUN_MODULE_NEW,MarriageConstants.APP_NUMBER_CAPTION);
@@ -724,11 +716,6 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
 //                    setDateofreporting(currentTime);
 //                    });
 //        }
-
-
-
-
-
     private List<String> getIds(RequestInfo requestInfo, String tenantId, String idName, String moduleCode, String fnType, int count) {
         return idGenRepository.getIdList(requestInfo, tenantId, idName, moduleCode, fnType, count);
     }

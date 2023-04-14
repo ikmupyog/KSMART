@@ -37,7 +37,6 @@ public class MarriageApplicationController {
     private final MarriageApplicationService MarriageService;
     private final ResponseInfoFactory responseInfoFactory;
     private final MarriageRegistryRequestService marriageRegistryRequestService;
-
     private final MarriageRegistryService marriageRegistryService;
 
 
@@ -47,8 +46,6 @@ public class MarriageApplicationController {
         this.marriageRegistryRequestService = marriageRegistryRequestService;
         this.marriageRegistryService = marriageRegistryService;
     }
-
-
     @PostMapping(value = {"/_createmarriage"})
     
     public ResponseEntity<MarriageApplicationResponse> saveMarriageDetails(@RequestBody MarriageDetailsRequest request) {
@@ -62,7 +59,6 @@ public class MarriageApplicationController {
                                                 .build();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
     @PostMapping(value = {"/_updatemarriage"})
 
     public ResponseEntity<?> updateMarriageDetails(@RequestBody MarriageDetailsRequest request) {
@@ -90,7 +86,6 @@ public class MarriageApplicationController {
     }
 
     @PostMapping(value = { "/_searchmarriage"})
-
     public ResponseEntity<MarriageApplicationResponse> searchMarriageDetails(@RequestBody MarriageDetailsRequest request,
                                                                      @Valid @ModelAttribute MarriageApplicationSearchCriteria criteria) {
         
@@ -103,7 +98,4 @@ public class MarriageApplicationController {
                                                 .build();
         return ResponseEntity.ok(response);
     }
-
-
-
 }

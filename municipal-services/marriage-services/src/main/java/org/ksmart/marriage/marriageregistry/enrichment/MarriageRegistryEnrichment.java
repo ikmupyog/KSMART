@@ -95,7 +95,7 @@ public class MarriageRegistryEnrichment implements BaseEnrichment {
 
         List<String> filecodes = getIds(requestInfo,
                                 tenantId,
-                                config.getGetMarriageRegisNumberName(),
+                                config.getGetMarriageRegNumberName(),
                                 request.getMarriageDetails().get(0).getModulecode(),
                          "REG",
                 marriageDetails.size());
@@ -111,6 +111,30 @@ public class MarriageRegistryEnrichment implements BaseEnrichment {
                 });
     }
 
+    //Jasmine 14.04.2023
+    private void setCertificateNumber(MarriageRegistryRequest request) {
+
+        RequestInfo requestInfo = request.getRequestInfo();
+        List<MarriageRegistryDetails> marriageDetails = request.getMarriageDetails();
+        String tenantId = marriageDetails.get(0).getTenantid();
+
+        List<String> filecodes = getIds(requestInfo,
+                                tenantId,
+                                config.getGetMarriageCertificateName(),
+                                request.getMarriageDetails().get(0).getModulecode(),
+                         "CERT",
+                marriageDetails.size());
+        validateFileCodes(filecodes, marriageDetails.size());
+        Long currentTime = Long.valueOf(System.currentTimeMillis());
+        ListIterator<String> itr = filecodes.listIterator();
+        request.getMarriageDetails()
+                .forEach(marriage -> {
+                    //if((marriage.getStatus().equals("APPROVED"))&&(marriage.getAction().equals("APPROVE"))) {
+                        marriage.setRegistrationno(itr.next());
+                        marriage.setRegistrationDate(currentTime);
+                  //  }
+                });
+    }
     //Jasmine 28.03.2023
     private void setGroomPresentAddress(MarriageRegistryRequest request) {
     
