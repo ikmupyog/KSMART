@@ -63,7 +63,7 @@ export const TLSearch = {
     // }
     // console.log("response"+response);
 
-   
+
     let employeeResponse = [];
 
     const tradedetails = {
@@ -72,7 +72,7 @@ export const TLSearch = {
       values: [
         { title: "TL_FINANCIAL_YEAR_LABEL", value: response?.financialYear ? `FY${response?.financialYear}` : "NA" },
         { title: "TL_APPLICANT_ID_LABEL", value: response?.applicationNumber ? `${response?.applicationNumber}` : "NA" },
-        { title: "TL_NEW_TRADE_DETAILS_LIC_TYPE_LABEL", value: response?.licenseType ? `TRADELICENSE_LICENSETYPE_${response?.licenseType}` : "NA" },
+        // { title: "TL_NEW_TRADE_DETAILS_LIC_TYPE_LABEL", value: response?.licenseType ? `TRADELICENSE_LICENSETYPE_${response?.licenseType}` : "NA" },
         { title: "TL_COMMON_TABLE_COL_TRD_NAME", value: response?.licenseUnitName },
         {
           title: "TL_NEW_TRADE_DETAILS_TRADE_COMM_DATE_LABEL",
@@ -98,33 +98,24 @@ export const TLSearch = {
     };
     const tradeUnits = {
       title: "TL_TRADE_UNITS_HEADER",
-      asSectionHeader: true,
-      additionalDetails: {
-
-        units: response?.tradeLicenseDetail?.tradeUnits?.map((unit, index) => {
-
-          let tradeSubType = stringReplaceAll(unit?.tradeType, ".", "_");
-          tradeSubType = stringReplaceAll(tradeSubType, "-", "_");
-          return {
-            title: "TL_UNIT_HEADER",
-            values: [
-              {
-                title: "TRADELICENSE_TRADECATEGORY_LABEL",
-                value: unit?.businessCategory ? `${unit?.businessCategory}` : "NA"
-              },
-              {
-                title: "TRADELICENSE_TRADETYPE_LABEL",
-                value: unit?.businessType ? `${unit?.businessType}` : "NA"
-              },
-              {
-                title: "TL_NEW_TRADE_SUB_TYPE_LABEL",
-                value: unit?.businessSubtype ? `${unit?.businessSubtype}` : "NA"
-              },
-            ],
-          };
-        }),
-      },
+      values: []
     };
+    response?.tradeLicenseDetail?.tradeUnits?.map((unit, index) => {
+      if (index === 0) {
+        tradeUnits.values.push({
+          title: "TRADELICENSE_TRADECATEGORY_LABEL",
+          value: unit?.businessCategory ? `${unit?.businessCategory}` : "NA"
+        });
+      }
+      tradeUnits.values.push({
+        title: "TRADELICENSE_TRADETYPE_LABEL",
+        value: unit?.businessType ? `${unit?.businessType}` : "NA"
+      });
+      tradeUnits.values.push({
+        title: "TL_NEW_TRADE_SUB_TYPE_LABEL",
+        value: unit?.businessSubtype ? `${unit?.businessSubtype}` : "NA"
+      })
+    });
 
     let strucutreplacedet = [];
     if (response?.tradeLicenseDetail?.structureType?.includes("LAND")) {
@@ -171,35 +162,12 @@ export const TLSearch = {
 
     }
 
-
     strucutreplacedet.map((ob) => {
       structurePlace1.values.push(ob)
-      // return (ob)
     })
-    // const PropertyDetail = {
-    //   title: "PT_DETAILS",
-    //   values: [
-    //     { title: "TL_PROPERTY_ID", value: propertyDetails?.Properties?.[0]?.propertyId || "NA" },
-    //     { title: "PT_OWNER_NAME", value: propertyDetails?.Properties?.[0]?.owners[0]?.name || "NA" },
-    //     { title: "PROPERTY_ADDRESS", value: propertyAddress || "NA" },
-    //     {
-    //       title: "TL_VIEW_PROPERTY_DETAIL",
-    //       to: `/digit-ui/employee/commonpt/view-property?propertyId=${propertyDetails?.Properties?.[0]?.propertyId}&tenantId=${propertyDetails?.Properties?.[0]?.tenantId}&from=TL_APPLICATION_DETAILS_LABEL`,
-    //       value: "",
-    //       isLink: true,
-    //     },
-    //   ],
-    // };
-
-    // const cityOfApp = cloneDeep(response?.tradeLicenseDetail?.address?.city);
-    // const localityCode = cloneDeep(response?.tradeLicenseDetail?.address?.wardno?.code);
     const tradeAddress = {
       title: "TL_CHECK_ADDRESS",
       values: [
-
-        // { title: "MYCITY_CODE_LABEL", value: response?.tradeLicenseDetail?.address?.city || "NA" },
-        // { title: "TL_LOCALIZATION_LOCALITY", value: `${stringReplaceAll(cityOfApp?.toUpperCase(), ".", "_")}_REVENUE_${localityCode}` },
-
         { title: "TL_LOCALIZATION_WARD_NO", value: response?.tradeLicenseDetail?.address?.wardNo || "NA" },
         { title: "TL_LOCALIZATION_BUILDING_NO", value: response?.tradeLicenseDetail?.address?.doorNo || "NA" },
         { title: "TL_LOCALIZATION_STREET_NAME", value: response?.tradeLicenseDetail?.address?.street || "NA" },
@@ -211,90 +179,64 @@ export const TLSearch = {
       ],
     };
 
-    const checkOwnerLength = response?.tradeLicenseDetail?.owners?.length || 1;
+    const owners = {
+      title: "ES_NEW_APPLICATION_OWNERSHIP_DETAILS",
+      values: []
+    };
+    response?.tradeLicenseDetail?.licenseeType?.includes("INSTITUTION") ?
+      response?.tradeLicenseDetail?.owners?.map((owner, index) => {
+        let licenseeType = response?.tradeLicenseDetail?.licenseeType
+          ? `COMMON_MASTERS_OWNERSHIPCATEGORY_${stringReplaceAll(response?.tradeLicenseDetail?.licenseeType, ".", "_")}`
+          : "NA";
 
-    const owners = response?.tradeLicenseDetail?.licenseeType?.includes("INSTITUTION")
-      ? {
-        title: "ES_NEW_APPLICATION_OWNERSHIP_DETAILS",
-        additionalDetails: {
-          owners: response?.tradeLicenseDetail?.owners?.map((owner, index) => {
-            let licenseeType = response?.tradeLicenseDetail?.licenseeType
-              ? `COMMON_MASTERS_OWNERSHIPCATEGORY_${stringReplaceAll(response?.tradeLicenseDetail?.licenseeType, ".", "_")}`
-              : "NA";
-            return {
-              title: Number(checkOwnerLength) > 1 ? "TL_PAYMENT_PAID_BY_PLACEHOLDER" : "",
-              values: [
-                { title: "TL_NEW_OWNER_DETAILS_OWNERSHIP_TYPE_LABEL", value: licenseeType },
-                { title: "TL_INSTITUTION_NAME_LABEL", value: response?.tradeLicenseDetail?.institution?.instituionName || "NA" },
-                { title: "TL_NEW_OWNER_DESIG_LABEL", value: response?.tradeLicenseDetail?.institution?.designation || "NA" },
-                {
-                  title: "TL_TELEPHONE_NUMBER_LABEL",
-                  value:
-                    response?.tradeLicenseDetail?.institution?.contactNo || response?.tradeLicenseDetail?.institution?.contactNo !== ""
-                      ? response?.tradeLicenseDetail?.institution?.contactNo
-                      : "NA",
-                },
-                { title: "TL_OWNER_S_MOBILE_NUM_LABEL", value: owner?.mobileNumber || "NA" },
-                { title: "TL_NEW_OWNER_DETAILS_NAME_LABEL", value: response?.tradeLicenseDetail?.institution?.name || "NA" },
-                { title: "TL_NEW_OWNER_DETAILS_EMAIL_LABEL", value: owner?.emailId || owner?.emailId !== "" ? owner?.emailId : "NA" },
-              ],
-            };
-          }),
-          documents: [
-            {
-              title: "PT_COMMON_DOCS",
-              values: response?.tradeLicenseDetail?.applicationDocuments?.map((document) => {
-                return {
-                  title: `TL_NEW_${document?.documentType.replace(".", "_")}`,
-                  documentType: document?.documentType,
-                  documentUid: document?.documentUid,
-                  fileStoreId: document?.fileStoreId,
-                };
-              }),
-            },
-          ],
-        },
+        owners.values.push({ title: "TL_NEW_OWNER_DETAILS_OWNERSHIP_TYPE_LABEL", value: licenseeType });
+        owners.values.push({ title: "TL_INSTITUTION_NAME_LABEL", value: response?.tradeLicenseDetail?.institution?.instituionName || "NA" });
+        owners.values.push({ title: "TL_NEW_OWNER_DESIG_LABEL", value: response?.tradeLicenseDetail?.institution?.designation || "NA" });
+        owners.values.push({
+          title: "TL_TELEPHONE_NUMBER_LABEL",
+          value:
+            response?.tradeLicenseDetail?.institution?.contactNo || response?.tradeLicenseDetail?.institution?.contactNo !== ""
+              ? response?.tradeLicenseDetail?.institution?.contactNo
+              : "NA",
+        });
+        owners.values.push({ title: "TL_OWNER_S_MOBILE_NUM_LABEL", value: owner?.mobileNumber || "NA" });
+        owners.values.push({ title: "TL_NEW_OWNER_DETAILS_NAME_LABEL", value: response?.tradeLicenseDetail?.institution?.name || "NA" });
+        owners.values.push({ title: "TL_NEW_OWNER_DETAILS_EMAIL_LABEL", value: owner?.emailId || owner?.emailId !== "" ? owner?.emailId : "NA" });
+      }) :
+      response?.tradeLicenseDetail?.owners?.map((owner, index) => {
+        let licenseeType = response?.tradeLicenseDetail?.licenseeType
+          ? `COMMON_MASTERS_OWNERSHIPCATEGORY_${stringReplaceAll(response?.tradeLicenseDetail?.licenseeType, ".", "_")}`
+          : "NA";
+        owners.values.push({ title: "TL_NEW_OWNER_DETAILS_OWNERSHIP_TYPE_LABEL", value: licenseeType });
+        owners.values.push({ title: "TL_OWNER_S_NAME_LABEL", value: owner?.name || "NA" });
+        owners.values.push({ title: "TL_OWNER_S_MOBILE_NUM_LABEL", value: owner?.mobileNumber || "NA" });
+        owners.values.push({ title: "TL_GUARDIAN_S_NAME_LABEL", value: owner?.careOf + " " + owner?.careOfName || "NA" });
+        owners.values.push({ title: "TL_NEW_OWNER_DETAILS_EMAIL_LABEL", value: owner?.emailId || "NA" });
+      });
+
+    const ownersdocument = {
+      title: "PT_COMMON_DOCS",
+      additionalDetails:{
+        documents:[
+          {
+          //  title: "PT_COMMON_DOCS",
+            values: []
+          }
+        ]
       }
-      : {
-        title: "ES_NEW_APPLICATION_OWNERSHIP_DETAILS",
-        additionalDetails: {
-          owners: response?.tradeLicenseDetail?.owners?.map((owner, index) => {
-            let licenseeType = response?.tradeLicenseDetail?.licenseeType
-              ? `COMMON_MASTERS_OWNERSHIPCATEGORY_${stringReplaceAll(response?.tradeLicenseDetail?.licenseeType, ".", "_")}`
-              : "NA";
-            return {
-              title: Number(checkOwnerLength) > 1 ? "TL_PAYMENT_PAID_BY_PLACEHOLDER" : "",
-              values: [
-                { title: "TL_NEW_OWNER_DETAILS_OWNERSHIP_TYPE_LABEL", value: licenseeType },
-                { title: "TL_OWNER_S_NAME_LABEL", value: owner?.name || "NA" },
-                { title: "TL_OWNER_S_MOBILE_NUM_LABEL", value: owner?.mobileNumber || "NA" },
-                { title: "TL_GUARDIAN_S_NAME_LABEL", value: owner?.fatherOrHusbandName || "NA" },
-                { title: "TL_RELATIONSHIP_WITH_GUARDIAN_LABEL", value: owner?.relationship || "NA" },
-                { title: "TL_NEW_OWNER_DETAILS_GENDER_LABEL", value: owner?.gender || "NA" },
-                { title: "TL_NEW_OWNER_DETAILS_EMAIL_LABEL", value: owner?.emailId || "NA" },
-                { title: "TL_OWNER_SPECIAL_CATEGORY", value: owner?.ownerType ? `COMMON_MASTERS_OWNERTYPE_${owner?.ownerType}` : "NA" },
-                { title: "TL_NEW_OWNER_DETAILS_ADDR_LABEL", value: owner?.permanentAddress || "NA" },
-              ],
-            };
-          }),
-          documents: [
-            {
-              title: "PT_COMMON_DOCS",
-              values: response?.tradeLicenseDetail?.applicationDocuments?.map((document) => {
-                return {
-                  title: `TL_NEW_${document?.documentType.replace(".", "_")}`,
-                  documentType: document?.documentType,
-                  documentUid: document?.documentUid,
-                  fileStoreId: document?.fileStoreId,
-                };
-              }),
-            },
-          ],
-        },
-      };
+   };
 
-      let correctiontag =JSON.parse(response?.correction);
-      const correctionbasedet = correctiontag?.tradeName != "" ? {
+    response?.tradeLicenseDetail?.applicationDocuments?.map((document) => {
+      ownersdocument.additionalDetails.documents[0].values.push({
+        title: `TL_NEW_${document?.documentType.replace(".", "_")}`,
+        documentType: document?.documentType,
+        documentUid: document?.documentUid,
+        fileStoreId: document?.fileStoreId,
+      })
+    });
+
+    let correctiontag = JSON.parse(response?.correction);
+    const correctionbasedet = correctiontag?.tradeName != "" ? {
       title: "TL_CORRECTION_DET",
       values:
         [
@@ -304,13 +246,10 @@ export const TLSearch = {
         ]
     } : "";
 
-
     const correctiontradeUnits = {
       title: "TL_TRADE_UNITS_HEADER",
       additionalDetails: {
-        units:correctiontag?.tradeUnits?.map((unit, index) => {
-          let tradeSubType = stringReplaceAll(unit?.tradeType, ".", "_");
-          tradeSubType = stringReplaceAll(tradeSubType, "-", "_");
+        units: correctiontag?.tradeUnits?.map((unit, index) => {
           return {
             title: "TL_UNIT_HEADER",
             values: [
@@ -355,12 +294,16 @@ export const TLSearch = {
     // response && !(propertyDetails?.Properties?.length > 0) && employeeResponse.push(tradeAddress);
     response?.tradeLicenseDetail?.address && employeeResponse.push(tradeAddress);
     response?.tradeLicenseDetail?.owners && employeeResponse.push(owners);
+    response?.tradeLicenseDetail?.applicationDocuments && employeeResponse.push(ownersdocument);
+
+    console.log("appdata"+JSON.stringify(employeeResponse));
+    
     if ((response?.correctionId !== null && response?.correctionId !== "" &&
       response?.correctionAppNumber !== null && response?.correctionAppNumber !== "")) {
-      if(correctionbasedet!==""){
+      if (correctionbasedet !== "") {
         response && employeeResponse.push(correctionbasedet);
       }
-      if(correctiontag?.tradeUnits.length>0){
+      if (correctiontag?.tradeUnits.length > 0) {
         response && employeeResponse.push(correctiontradeUnits);
       }
     }
