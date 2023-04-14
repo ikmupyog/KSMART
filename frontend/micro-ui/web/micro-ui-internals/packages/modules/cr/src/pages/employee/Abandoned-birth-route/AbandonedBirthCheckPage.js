@@ -10,8 +10,9 @@ import {
   SubmitBar,
   BackButton,
   CheckBox,
+  Toast
 } from "@egovernments/digit-ui-react-components";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useRouteMatch } from "react-router-dom";
 //import TLDocument from "../../../pageComponents/TLDocumets";
@@ -46,10 +47,13 @@ const getPath = (path, params) => {
 const AbandonedBirthCheckPage = ({ onSubmit, value, userType }) => {
   let isEdit = window.location.href.includes("renew-trade");
   // console.log("checkpage");
+  const [InitiatorDeclareError, setInitiatorDeclareError] = useState(false);
+
   const [isInitiatorDeclaration, setisInitiatorDeclaration] = React.useState( false);
   const { t } = useTranslation();
   const history = useHistory();
   const match = useRouteMatch();
+  const [toast, setToast] = useState(false);
   const {
     AbandonedBirthInformarDetails,
     AbandonedChildDetails,
@@ -73,6 +77,19 @@ const AbandonedBirthCheckPage = ({ onSubmit, value, userType }) => {
       new Date(newdate).getDate().toString() + "/" + (new Date(newdate).getMonth() + 1).toString() + "/" + new Date(newdate).getFullYear().toString()
     }`;
   }
+  function onABSubmit() {
+    if (!isInitiatorDeclaration) {
+      setInitiatorDeclareError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setInitiatorDeclareError(false);
+      onSubmit();
+    }
+  }
+  
   function setDeclarationInfo(e) {
     if (e.target.checked == false) {
       setisInitiatorDeclaration(e.target.checked);
@@ -360,7 +377,20 @@ const AbandonedBirthCheckPage = ({ onSubmit, value, userType }) => {
                 </span> */}</h1>
           </div>
         </div>
-        <SubmitBar  disabled={!isInitiatorDeclaration} label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} />
+        {toast && (
+          <Toast
+            error={InitiatorDeclareError}
+            label={
+              InitiatorDeclareError
+                ? InitiatorDeclareError
+                  ? t(`BIRTH_DECLARATION_CHOOSE`) : setToast(false)
+                : setToast(false)
+            }
+            onClose={() => setToast(false)}
+          />
+        )}
+        {""}
+        <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onABSubmit} />
       </Card>
     </React.Fragment>
   );

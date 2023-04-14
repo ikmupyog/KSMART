@@ -23,7 +23,7 @@ const hstyle = {
 
 };
 
-const SearchApplication = ({ tenantId, t, onSubmit, data, count }) => {
+const SearchCitizenApplication = ({ tenantId, t, onSubmit, data, count }) => {
   const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
     defaultValues: {
       offset: 0,
@@ -66,6 +66,7 @@ const SearchApplication = ({ tenantId, t, onSubmit, data, count }) => {
     return <MobileSearchApplication {...{ Controller, register, control, t, reset, previousPage, handleSubmit, tenantId, data, onSubmit }} />
   }
   //need to get from workflow
+
   const GetCell = (value) => <span className="cell-text">{value}</span>;
   const columns = useMemo(() => ([
     {
@@ -74,33 +75,15 @@ const SearchApplication = ({ tenantId, t, onSubmit, data, count }) => {
       disableSortBy: true,
       Cell: ({ row }) => {
         return (
-          (row.original["correctionId"] !== null && row.original["correctionAppNumber"] !== null) ?
-            <div>
-              <span className="link">
-                <Link to={`/digit-ui/employee/tl/applicationcorrection-details/${row.original["applicationNumber"]}`}>
-                  {row.original["applicationNumber"]}
-                </Link>
-              </span>
-            </div>
-            :
-            <div>
-              <span className="link">
-                <Link to={`/digit-ui/employee/tl/application-details/${row.original["applicationNumber"]}`}>
-                  {row.original["applicationNumber"]}
-                </Link>
-              </span>
-            </div>
+          <div>
+            <span >
+              {/* <Link to={`/digit-ui/employee/tl/applicationcorrection-details/${row.original["applicationNumber"]}`}> */}
+              {row.original["applicationNumber"]}
+              {/* </Link> */}
+            </span>
+          </div>
         );
 
-        // return (
-        //   <div>
-        //     <span className="link">
-        //       <Link to={`/digit-ui/employee/tl/application-details/${row.original["applicationNumber"]}`}>
-        //         {row.original["applicationNumber"]}
-        //       </Link>
-        //     </span>
-        //   </div>
-        // );
       },
     },
     {
@@ -126,7 +109,7 @@ const SearchApplication = ({ tenantId, t, onSubmit, data, count }) => {
     {
       Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),
       disableSortBy: true,
-      accessor: (row) => GetCell(row.tradeName || ""),
+      accessor: (row) => GetCell(row.licenseUnitName || ""),
     },
     {
       Header: t("TL_LOCALIZATION_TRADE_OWNER_NAME"),
@@ -137,13 +120,30 @@ const SearchApplication = ({ tenantId, t, onSubmit, data, count }) => {
       Header: t("TL_COMMON_TABLE_COL_STATUS"),
       accessor: (row) => GetCell(t(row?.workflowCode && row?.status && `WF_${row?.workflowCode?.toUpperCase()}_${row.status}` || "NA")),
       disableSortBy: true,
+    },
+
+    {
+      Header: "",  //t("TL_COMMON_TABLE_COL_ACTION"),
+      accessor: "Action",
+      disableSortBy: true,
+      Cell: ({ row }) => {
+        return (
+          <div>
+            <span className="link">
+              <Link to={`/digit-ui/citizen/tl/tradelicence/application/${row.original["applicationNumber"]}/${row.original["tenantId"]}`}>
+              {t(row.original["status"]!= "PENDINGPAYMENT" ? "TL_VIEW_DETAILS" : "TL_VIEW_DETAILS_PAY") }
+              </Link>
+            </span>
+          </div>
+        );
+      },
     }
   ]), [])
 
   return <React.Fragment>
 
     <div style={mystyle}>
-      <h1 style={hstyle}>{t("TL_SEARCH_APPLICATIONS")}</h1>
+      <h1 style={hstyle}>{t("TL_MY_APPLICATIONS_HEADER")}</h1>
       <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
         <SearchFields {...{ register, control, reset, tenantId, t }} />
 
@@ -190,4 +190,4 @@ const SearchApplication = ({ tenantId, t, onSubmit, data, count }) => {
   </React.Fragment>
 }
 
-export default SearchApplication
+export default SearchCitizenApplication

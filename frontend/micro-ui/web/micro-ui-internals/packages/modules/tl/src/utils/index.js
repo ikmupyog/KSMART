@@ -848,33 +848,31 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
   if(ownerFlag === true){
     ownersHistory = data?.tradeLicenseDetail?.owners;
   }
-
-  let structurePlaceID = dataCorr?.tradeLicenseDetail?.structurePlace.length > 0 ? 
-  Array.from(new Set(dataCorr?.tradeLicenseDetail?.structurePlace.map(sPlace => sPlace?.id))) : [];
-
-  console.log("structurePlaceID"+JSON.stringify(structurePlaceID));
+  let structurePlaceID = [];
+  dataCorr?.tradeLicenseDetail?.structurePlace.length > 0 ? 
+  structurePlaceID.push(Array.from(new Set(dataCorr?.tradeLicenseDetail?.structurePlace.map(sPlace => sPlace?.id)))) : [];
   
   dataCorr?.tradeLicenseDetail?.structurePlace.map((placeNew) => {
     data?.tradeLicenseDetail?.structurePlace.map((placeOld) => {
-      if(structurePlaceID.filter(placeID => placeID.includes(placeNew.id)).length > 0){
+      if(structurePlaceID.filter(placeID => placeID.includes(placeOld.id)).length > 0){
         if ((placeOld.doorNo !== placeNew.doorNo)||(placeOld.doorNoSub !== placeNew.doorNoSub)||(placeOld.blockNo !== placeNew.blockNo)
         ||(placeOld.surveyNo !== placeNew.surveyNo)||(placeOld.subDivisionNo !== placeNew.subDivisionNo)||(placeOld.partitionNo !== placeNew.partitionNo)
         ||(placeOld.vehicleNo !== placeNew.vehicleNo)||(placeOld.vesselNo !== placeNew.vesselNo)||(placeOld.isResurveyed !== placeNew.isResurveyed)||(placeOld.stallNo !== placeNew.stallNo)){
           structurePlaceCorr.push({
             id : placeOld?.id ? placeOld?.id : null,
             tenantId : dataCorr.tenantId,
-            blockNo : placeNew?.blockNo ? placeNew?.blockNo : "",
-            surveyNo : placeNew?.surveyNo ? placeNew?.surveyNo : "",
-            subDivisionNo : placeNew?.subDivisionNo ? placeNew?.subDivisionNo : "",
-            partitionNo : placeNew?.partitionNo ? placeNew?.partitionNo : "",
+            blockNo : placeNew?.blockNo ? placeNew?.blockNo : null,
+            surveyNo : placeNew?.surveyNo ? placeNew?.surveyNo : null,
+            subDivisionNo : placeNew?.subDivisionNo ? placeNew?.subDivisionNo : null,
+            partitionNo : placeNew?.partitionNo ? placeNew?.partitionNo : null,
             doorNo : placeNew?.doorNo ? placeNew?.doorNo : null,
-            doorNoSub : placeNew?.doorNoSub ? placeNew?.doorNoSub : "",
+            doorNoSub : placeNew?.doorNoSub ? placeNew?.doorNoSub : null,
             buildingId : null,
-            vehicleNo : placeNew?.vehicleNo ? placeNew?.vehicleNo : "",
-            vesselNo : placeNew?.vesselNo ? placeNew?.vesselNo : "",
+            vehicleNo : placeNew?.vehicleNo ? placeNew?.vehicleNo : null,
+            vesselNo : placeNew?.vesselNo ? placeNew?.vesselNo : null,
             active : true,
             isResurveyed : placeNew?.isResurveyed ? placeNew?.isResurveyed : false,
-            stallNo : placeNew?.stallNo ? placeNew?.stallNo : "",
+            stallNo : placeNew?.stallNo ? placeNew?.stallNo : null,
           });
 
           isEdit = true;
@@ -886,33 +884,33 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
       structurePlaceCorr.push({
         id : null,
         tenantId : dataCorr.tenantId,
-        blockNo : placeNew?.blockNo ? placeNew?.blockNo : "",
-        surveyNo : placeNew?.surveyNo ? placeNew?.surveyNo : "",
-        subDivisionNo : placeNew?.subDivisionNo ? placeNew?.subDivisionNo : "",
-        partitionNo : placeNew?.partitionNo ? placeNew?.partitionNo : "",
+        blockNo : placeNew?.blockNo ? placeNew?.blockNo : null,
+        surveyNo : placeNew?.surveyNo ? placeNew?.surveyNo : null,
+        subDivisionNo : placeNew?.subDivisionNo ? placeNew?.subDivisionNo : null,
+        partitionNo : placeNew?.partitionNo ? placeNew?.partitionNo : null,
         doorNo : placeNew?.doorNo ? placeNew?.doorNo : null,
-        doorNoSub : placeNew?.doorNoSub ? placeNew?.doorNoSub : "",
+        doorNoSub : placeNew?.doorNoSub ? placeNew?.doorNoSub : null,
         buildingId : null,
-        vehicleNo : placeNew?.vehicleNo ? placeNew?.vehicleNo : "",
-        vesselNo : placeNew?.vesselNo ? placeNew?.vesselNo : "",
+        vehicleNo : placeNew?.vehicleNo ? placeNew?.vehicleNo : null,
+        vesselNo : placeNew?.vesselNo ? placeNew?.vesselNo : null,
         active : true,
         isResurveyed : placeNew?.isResurveyed ? placeNew?.isResurveyed : false,
-        stallNo : placeNew?.stallNo ? placeNew?.stallNo : ""
+        stallNo : placeNew?.stallNo ? placeNew?.stallNo : null
       });
       isEdit = true;
       structureplaceFlag = true;
     }
   });
 
-  // if(structurePlaceID.length > 0) {
-  //   data?.tradeLicenseDetail?.structurePlace.map((place) => {
-  //     if(structurePlaceID.filter(id => id.includes(place.id)).length === 0 ){
-  //       structurePlaceCorr.push({id : place.id, active : false});
-  //       isEdit = true;
-  //       structureplaceFlag = true;
-  //     }
-  //   });
-  // }
+  if(structurePlaceID.length > 0) {
+    data?.tradeLicenseDetail?.structurePlace.map((place) => {
+      if(structurePlaceID.filter(id => id.includes(place.id)).length === 0 ){
+        structurePlaceCorr.push({id : place.id, active : false});
+        isEdit = true;
+        structureplaceFlag = true;
+      }
+    });
+  }
 
   // for(let i=0; i>dataCorr?.tradeLicenseDetail?.structurePlace.length; i++){
   //   data?.tradeLicenseDetail?.structurePlace.map((placeOld) => {
