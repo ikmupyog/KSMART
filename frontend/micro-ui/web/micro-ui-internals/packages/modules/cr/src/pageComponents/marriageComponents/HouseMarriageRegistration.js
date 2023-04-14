@@ -260,7 +260,7 @@ const HouseMarriageRegistration = ({
     // setAgeMariageStatus(value.code);
   }
   function setSelectOtherMarriagePlacenameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9, ]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9 ]*$") != null)) {
       setmarriagePlacenameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
     // if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
@@ -574,7 +574,7 @@ const HouseMarriageRegistration = ({
             onChange={setSelectOtherMarriagePlacenameEn}
             disable={isDisableEdit}
             placeholder={`${t("CR_HOUSE_NO_AND_NAME_EN")}`}
-            {...(validation = { pattern: "^[a-zA-Z-.`'0-9, ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSENO_NAME_EN") })}
+            {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSENO_NAME_EN") })}
           />
         </div>
         <div className="col-md-3">
@@ -661,7 +661,7 @@ const HouseMarriageRegistration = ({
             isMandatory={false}
             placeholder={`${t("CR_HOUSE_NO_AND_NAME_MAL")}`}
             {...(validation = {
-              pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`', ]*$",
+              pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
               isRequired: true,
               type: "text",
               title: t("CR_INVALID_HOUSENO_NAME_ML"),
