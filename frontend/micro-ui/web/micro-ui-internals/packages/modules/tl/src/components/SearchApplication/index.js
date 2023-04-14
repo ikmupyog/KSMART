@@ -65,7 +65,6 @@ const SearchApplication = ({ tenantId, t, onSubmit, data, count }) => {
   if (isMobile) {
     return <MobileSearchApplication {...{ Controller, register, control, t, reset, previousPage, handleSubmit, tenantId, data, onSubmit }} />
   }
-  console.log("inbox data" + JSON.stringify(data));
   //need to get from workflow
   const GetCell = (value) => <span className="cell-text">{value}</span>;
   const columns = useMemo(() => ([

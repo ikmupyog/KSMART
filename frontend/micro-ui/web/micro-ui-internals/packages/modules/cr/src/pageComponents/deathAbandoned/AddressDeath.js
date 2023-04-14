@@ -13,7 +13,7 @@ import AddressPermanentInsideKerala from "./AddressPermanentInsideKerala";
 import AddressPermanentOutsideKerala from "./AddressPermanentOutsideKerala";
 import AddressPermanentOutsideIndia from "./AddressPermanentOutsideIndia";
 
-const AddressDeath = ({ config, onSelect, userType, formData, isEditBirth = false, isEditDeath = false }) => {
+const AddressDeath = ({ config, onSelect, userType, formData, isEditBirth = false, isEditAbandonedDeath = false }) => {
     console.log(formData);
     const stateId = Digit.ULBService.getStateId();
     let tenantId = "";
@@ -835,7 +835,7 @@ const AddressDeath = ({ config, onSelect, userType, formData, isEditBirth = fals
                             isPrsentAddress={isPrsentAddress}
                             setIsPrsentAddress={setIsPrsentAddress}
                             isEditBirth={isEditBirth}
-                            isEditDeath={isEditDeath}
+                            isEditAbandonedDeath={isEditAbandonedDeath}
                             formData={formData}
                         />
                     </div>
@@ -907,7 +907,7 @@ const AddressDeath = ({ config, onSelect, userType, formData, isEditBirth = fals
                                 permntInKeralaWardNo={permntInKeralaWardNo}
                                 setpermntInKeralaWardNo={setpermntInKeralaWardNo}
                                 isEditBirth={isEditBirth}
-                                isEditDeath={isEditDeath}
+                                isEditAbandonedDeath={isEditAbandonedDeath}
                                 formData={formData}
                             />
                         </div>
@@ -972,7 +972,7 @@ const AddressDeath = ({ config, onSelect, userType, formData, isEditBirth = fals
                                 permntOutsideKeralaPostOfficeMl={permntOutsideKeralaPostOfficeMl}
                                 setpermntoutsideKeralaPostOfficeMl={setpermntoutsideKeralaPostOfficeMl}
                                 isEditBirth={isEditBirth}
-                                isEditDeath={isEditDeath}
+                                isEditAbandonedDeath={isEditAbandonedDeath}
                                 formData={formData}
                             />
                         </div>
@@ -1025,7 +1025,7 @@ const AddressDeath = ({ config, onSelect, userType, formData, isEditBirth = fals
                                 // permntOutsideIndiaCountry={permntOutsideIndiaCountry}
                                 // setPermntOutsideIndiaCountry={setPermntOutsideIndiaCountry}
                                 isEditBirth={isEditBirth}
-                                isEditDeath={isEditDeath}
+                                isEditAbandonedDeath={isEditAbandonedDeath}
                                 formData={formData}
                             />
                         </div>
@@ -1035,7 +1035,7 @@ const AddressDeath = ({ config, onSelect, userType, formData, isEditBirth = fals
                             isPrsentAddress={isPrsentAddress}
                             setIsPrsentAddress={setIsPrsentAddress}
                             isEditBirth={isEditBirth}
-                            isEditDeath={isEditDeath}
+                            isEditAbandonedDeath={isEditAbandonedDeath}
                             formData={formData}
                         />
                     </div>
@@ -1057,7 +1057,7 @@ const AddressDeath = ({ config, onSelect, userType, formData, isEditBirth = fals
                                 valuePermanent={valuePermanent}
                                 setValuePermanent={setValuePermanent}
                                 isEditBirth={isEditBirth}
-                                isEditDeath={isEditDeath}
+                                isEditAbandonedDeath={isEditAbandonedDeath}
                                 formData={formData}
                             />
                         </div>
@@ -1100,7 +1100,7 @@ const AddressDeath = ({ config, onSelect, userType, formData, isEditBirth = fals
                                 PostOfficevalues={PostOfficevalues}
                                 setPostOfficevalues={setPostOfficevalues}
                                 isEditBirth={isEditBirth}
-                                isEditDeath={isEditDeath}
+                                isEditAbandonedDeath={isEditAbandonedDeath}
                                 formData={formData}
                             />
                         </div>
@@ -1137,7 +1137,7 @@ const AddressDeath = ({ config, onSelect, userType, formData, isEditBirth = fals
                                 value={value}
                                 setValue={setValue}
                                 isEditBirth={isEditBirth}
-                                isEditDeath={isEditDeath}
+                                isEditAbandonedDeath={isEditAbandonedDeath}
                                 formData={formData}
                             />
                         </div>
@@ -1168,7 +1168,7 @@ const AddressDeath = ({ config, onSelect, userType, formData, isEditBirth = fals
                                 countryvalue={countryvalue}
                                 setCountryValue={setCountryValue}
                                 isEditBirth={isEditBirth}
-                                isEditDeath={isEditDeath}
+                                isEditAbandonedDeath={isEditAbandonedDeath}
                                 formData={formData}
                             />
                         </div>

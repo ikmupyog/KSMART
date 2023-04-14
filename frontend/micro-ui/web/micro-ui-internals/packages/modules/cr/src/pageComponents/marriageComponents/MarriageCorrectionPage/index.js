@@ -71,16 +71,17 @@ const MarriageCorrectionPage = () => {
   const onBirthCorrectionSuccess = (data) => {
     data &&
       data["birth-death-service"] &&
-      data["birth-death-service"].BirthCorrectionDocuments &&
-      data["birth-death-service"].BirthCorrectionDocuments?.map((ob) => {
+      data["birth-death-service"].CorrectionMarriageDocuments &&
+      data["birth-death-service"].CorrectionMarriageDocuments?.map((ob) => {
         correctionDocs.push(ob);
       });
+      console.log("marriage docss==",data,correctionDocs);
     setBirthCorrectionDocs(correctionDocs);
   };
 
   useEffect(() => {
     mutation.mutate({ moduleCode: "birth-death-service", type: "MarriagePlaceType" }, { onSuccess: onMarriagePlacesSuccess });
-    correctionDocsMutation.mutate({ moduleCode: "birth-death-service", type: "BirthCorrectionDocuments" }, { onSuccess: onBirthCorrectionSuccess });
+    correctionDocsMutation.mutate({ moduleCode: "birth-death-service", type: "CorrectionMarriageDocuments" }, { onSuccess: onBirthCorrectionSuccess });
     wardMutation.mutate({ moduleCode: "egov-location", type: "TenantBoundary" }, { onSuccess: onMarriageWardSuccess });
     placeNameMutation.mutate({ moduleCode: "egov-location", type: "MarriagePlace" }, { onSuccess: onMarriagePlaceNameSuccess });
   }, []);

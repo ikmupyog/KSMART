@@ -119,7 +119,7 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData, isEd
     }
   }
   function setSelectinitiatorAddress(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z-0-9 ]*$") != null) {
       setinitiatorAddress(e.target.value.length <= 250 ? e.target.value : e.target.value.substring(0, 250));
     }
   }
@@ -490,7 +490,7 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData, isEd
                 onChange={setSelectinitiatorAddress}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_INFORMER_ADDRESS")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
+                {...(validation = { pattern: "^[a-zA-Z-0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
               />
             </div>
           </div>

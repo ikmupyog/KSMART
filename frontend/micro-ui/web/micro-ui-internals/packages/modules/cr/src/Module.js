@@ -118,6 +118,7 @@ import MyCRDeathApplications from "./pages/citizen/Applications/ApplicationDeath
 // import GeneralRemarks from "./pageComponents/deathComponents/GeneralRemarks";
 import CRSearch from "./pages/employee/Search";
 // import CRDeathsearch from "./pages/employee/Search";
+import SearchMarriageApplication from "./components/SearchMarriageApplication";
 import SearchCrApplication from "./components/SearchApplication";
 import SearchRegistryDeath from "./components/SearchRegistryDeath";
 import CRCitizenApplicationDetails from "./pages/citizen/Applications/ApplicationDetails";
@@ -193,6 +194,7 @@ import GroomAddressPresentOutsideIndia from "./pageComponents/marriageComponents
 import GroomAddressPresentOutsideKerala from "./pageComponents/marriageComponents/MarriageAddress/GroomAddressPresentOutsideKerala";
 import GroomAddressSameAsAbove from "./pageComponents/marriageComponents/MarriageAddress/GroomAddressSameAsAbove";
 import WitnessDetails from "./pageComponents/marriageComponents/Witnessdetails";
+import MarriageDocuments from "./pageComponents/marriageComponents/MarriageDocuments";
 
 import AbandonedChildDetails from "./pageComponents/abandonedBirthComponents/AbandonedChildDetails";
 import AbandonedBirthInformarDetails from "./pageComponents/abandonedBirthComponents/AbandonedBirthInformarDetails";
@@ -314,6 +316,7 @@ const componentsToRegister = {
   SearchDeathInclusion,
   // CRDeathsearch,
   SearchCrApplication,
+  SearchMarriageApplication,
   SearchRegistryDeath,
   SearchDeathApplication,
   AddressOne,
@@ -461,6 +464,7 @@ const componentsToRegister = {
   MarriageAddressPage,
   HouseMarriageRegistration,
   WitnessDetails,
+  MarriageDocuments,
   BrideAddressBasePage,
   BrideAddressPermanent,
   BrideAddressPermanentInsideKerala,

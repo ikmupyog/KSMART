@@ -13,10 +13,12 @@ import {
   SubmitBar,
   TextArea,
   PopUp,
+  UploadFile,
 } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/MARRIAGETimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
+import { v4 as uuidv4 } from "uuid";
 // import { TimePicker } from '@material-ui/pickers';
 
 const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness }) => {
@@ -107,7 +109,9 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   const [witness1AadharNo, setwitness1AadharNo] = useState(
     formData?.WitnessDetails?.witness1AadharNo ? formData?.WitnessDetails?.witness1AadharNo : ""
   );
-  const [witness2AdharNo, setwitness2AdharNo] = useState(formData?.WitnessDetails?.witness2AdharNo ? formData?.WitnessDetails?.witness2AdharNo : "");
+  const [witness2AadharNo, setwitness2AadharNo] = useState(
+    formData?.WitnessDetails?.witness2AadharNo ? formData?.WitnessDetails?.witness2AadharNo : ""
+  );
   const [witness2NameEn, setwitness2NameEn] = useState(formData?.WitnessDetails?.witness2NameEn ? formData?.WitnessDetails?.witness2NameEn : "");
   const [witness1NameEn, setwitness1NameEn] = useState(formData?.WitnessDetails?.witness1NameEn ? formData?.WitnessDetails?.witness1NameEn : "");
   const [witness1Age, setwitness1Age] = useState(formData?.WitnessDetails?.witness1Age ? formData?.WitnessDetails?.witness1Age : "");
@@ -128,34 +132,31 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     formData?.WitnessDetails?.witness2Esigned ? formData?.WitnessDetails?.witness2Esigned : false
   );
   const [isDisableEdit, setisDisableEdit] = useState(isEditWitness ? isEditWitness : false);
-  //   const [file, setFile] = useState();
-  //   const [files, setFiles] = useState();
-  //   function handleChange(e) {
-  //     console.log(e.target.files);
-  //     setFile(URL.createObjectURL(e.target.files[0]));
-  //   }
-  //   function handleFile2Change(e) {
-  //     console.log(e.target.files);
-  //     setFiles(URL.createObjectURL(e.target.files[1]));
-  //   }
-  //   const handleOptionChange = (event) => {
-  //     setSelectedOption(event.target.value);
-  //   };
   const [toast, setToast] = useState(false);
   const [groomImage, setGroomImage] = useState(null);
   const [brideImage, setBrideImage] = useState(null);
   const [previewGroomImage, setPreviewGroomImage] = useState(null);
   const [previewBrideImage, setPreviewBrideImage] = useState(null);
   const [expirationType, setExpirationType] = useState(null);
-  const [expirationTypeHusband, setExpirationTypeHusband] = useState(null);
+  const [expirationTypeHusband, setExpirationTypeHusband] = useState(
+    formData?.WitnessDetails?.expirationTypeHusband ? formData?.WitnessDetails?.expirationTypeHusband : null
+  );
   const [isExpiredHusband, setIsExpiredHusband] = useState(false);
-  const [expirationTypeWife, setExpirationTypeWife] = useState(null);
+  const [expirationTypeWife, setExpirationTypeWife] = useState(
+    formData?.WitnessDetails?.expirationTypeWife ? formData?.WitnessDetails?.expirationTypeWife : null
+  );
   const [isExpiredWife, setIsExpiredWife] = useState(false);
+  const [uniqueId, setUniqueId] = useState(null);
 
-  console.log({ expirationTypeHusband });
-  console.log({ isExpiredHusband });
-  console.log({ expirationTypeWife });
-  console.log({ isExpiredWife });
+  const currentYear = new Date().getFullYear();
+
+  let tenantId = "";
+  tenantId = Digit.ULBService.getCurrentTenantId();
+  if (tenantId === "kl") {
+    tenantId = Digit.ULBService.getCitizenCurrentTenant();
+  }
+
+  const [uploadedImages, setUploadedImagesIds] = useState(null);
 
   const getUserType = () => Digit.UserService.getType();
 
@@ -246,7 +247,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     }
     // const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12)
 
-    // if (newValue === witness2AdharNo) {
+    // if (newValue === witness2AadharNo) {
     //   setwitness1AadharNo("");
     //   setAadharError(true);
     //     setToast(true);
@@ -257,32 +258,32 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     //   setwitness1AadharNo(newValue);
     // }
   }
-  function setSelectwitness2AdharNo(e) {
+  function setSelectwitness2AadharNo(e) {
     if (e.target.value.trim().length >= 0) {
-      setwitness2AdharNo(
+      setwitness2AadharNo(
         e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
       );
     }
     // const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12)
 
     // if (newValue === witness1AadharNo) {
-    //   setwitness2AdharNo("");
+    //   setwitness2AadharNo("");
     //   setAadharError(true);
     //     setToast(true);
     //     setTimeout(() => {
     //       setToast(false);
     //     }, 3000);
     // } else {
-    //   setwitness2AdharNo(newValue);
+    //   setwitness2AadharNo(newValue);
     // }
     // if (e.target.value.trim().length >= 0) {
-    //   setwitness2AdharNo(
+    //   setwitness2AadharNo(
     //     e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
     //   );
     // }
     // i
     // if (e.target.value.trim().length >= 0) {
-    //   setwitness2AdharNo(
+    //   setwitness2AadharNo(
     //     e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
     //   );
     // }
@@ -296,16 +297,16 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     //     // window.alert("Username shouldn't exceed 10 characters")
     //   } else if (e.target.value.length < 12) {
     //     setAadharError(true);
-    //     setwitness2AdharNo(e.target.value);
+    //     setwitness2AadharNo(e.target.value);
     //     return false;
     //   } else {
     //     setAadharError(false);
-    //     setwitness2AdharNo(e.target.value);
+    //     setwitness2AadharNo(e.target.value);
     //     return true;
     //   }
     // } else {
     //   setAadharError(false);
-    //   setwitness2AdharNo(e.target.value);
+    //   setwitness2AadharNo(e.target.value);
     //   return true;
     // }
   }
@@ -515,10 +516,10 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
       // sessionStorage.setItem("marraigeOthersSpecify", marraigeOthersSpecify ? marraigeOthersSpecify : null);
       // sessionStorage.setItem("tripStartTime", tripStartTime ? tripStartTime : null);
       // sessionStorage.setItem("witness1AadharNo", witness1AadharNo ? witness1AadharNo : null);
-      // sessionStorage.setItem("witness2AdharNo", witness2AdharNo ? witness2AdharNo : null);
+      // sessionStorage.setItem("witness2AadharNo", witness2AadharNo ? witness2AadharNo : null);
       onSelect(config.key, {
         witness1AadharNo,
-        witness2AdharNo,
+        witness2AadharNo,
         witness1NameEn,
         witness2NameEn,
         witness1Age,
@@ -529,9 +530,15 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
         witness2Mobile,
         witness1Esigned,
         witness2Esigned,
+        expirationTypeHusband,
+        expirationTypeWife,
       });
     }
   };
+
+  useEffect(() => {
+    setUniqueId(uuidv4());
+  }, []);
 
   useEffect(() => {
     if (!brideImage) {
@@ -558,6 +565,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   // console.log({ previewBrideImage })
 
   console.log("Witness", formData);
+  console.log({ currentYear });
 
   if (isLoading || isTalukLoading || isVillageLoading || isLBTypeLoading) {
     return <Loader></Loader>;
@@ -571,7 +579,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
             {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
             <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
               <div className="row">
-                <div className="col-md-12">
+                <div className="col-md-12" style={{ marginBottom: "20px" }}>
                   <div className="row">
                     <div className="col-md-12">
                       <h1 className="headingh1">
@@ -725,9 +733,9 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                         type={"number"}
                         optionKey="i18nKey"
                         isMandatory={false}
-                        name="witness2AdharNo"
-                        value={witness2AdharNo}
-                        onChange={setSelectwitness2AdharNo}
+                        name="witness2AadharNo"
+                        value={witness2AadharNo}
+                        onChange={setSelectwitness2AadharNo}
                         disable={isDisableEdit}
                         placeholder={`${t("CR_WITNESS2_ADHAR_NO")}`}
                         inputProps={{
@@ -913,65 +921,49 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                       </h1>
                     </div>
                   </div>
-                  <div className="col-md-12"></div>
-                  {/* <div className="col-md-12">
-            <div className="col-md-4">
-              <h2>Add Groom Image :</h2>
-              <input type="file" onChange={handleChange} />
-              <img src={file} />
-            </div>
-            <div className="col-md-4">
-              <h2>Add Bride Image :</h2>
-              <input type="file" onChange={handleChange} />
-              <img src={file} />
-            </div>
-          </div> */}
-                  {/* <div className="col-md-12">
-            <div className="col-md-4">
-              <h2>Add Groom Image :</h2>
-              <input type="file" onChange={handleChange} />
-              <img src={file} />
-            </div>
-            <div className="col-md-4">
-              <h2>Add Bride Image :</h2>
-              <input type="file" onChange={handleChanges} />
-              <img src={files} />
-            </div>
-          </div> */}
-                  <div>
+                  <div className="row">
                     <div className="col-md-12">
-                      <div className="col-md-4" style={{ margin: "10px 10px 30px 10px" }}>
-                        <div>
-                          <h2 style={{ marginBottom: "10px" }}>CR_GROOM_IMAGE</h2>
-                          <input type="file" accept="image/*" onChange={handleGroomImage} />
-                        </div>
-                        {groomImage && <img src={previewGroomImage} style={{ width: "120px", height: "150px", margin: "10px 0" }} />}
+                      <div className="col-md-6">
+                        <CardLabel>
+                          {`${t("CR_WITNESS1_AADHAR")}`}
+                          <span className="mandatorycss">*</span>
+                        </CardLabel>
+                        <UploadFile
+                        //   key={item.DocumentId}
+                        //   id={item.DocumentId}
+                        //   name={item.DocumentType}
+                        //   extraStyleName={"propertyCreate"}
+                        //   accept=".jpg,.png,.pdf"
+                        //   onUpload={selectfile}
+                        //   onDelete={() => {
+                        //     onDeleteown(item.DocumentId);
+                        //     setUploadedFile(null);
+                        //   }}
+                        //   message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                        //   error={error}
+                        />
                       </div>
-                      <div className="col-md-4" style={{ margin: "10px 10px 30px 10px" }}>
-                        <div>
-                          <h2 style={{ marginBottom: "10px" }}>CR_BRIDE_IMAGE</h2>
-                          <input type="file" accept="image/*" onChange={handleBrideImage} />
-                        </div>
-                        {brideImage && <img src={previewBrideImage} style={{ width: "120px", height: "150px", margin: "10px 0" }} />}
+                      <div className="col-md-6">
+                        <CardLabel>
+                          {`${t("CR_WITNESS1_AADHAR")}`}
+                          <span className="mandatorycss">*</span>
+                        </CardLabel>
+                        <UploadFile
+                        //   key={item.DocumentId}
+                        //   id={item.DocumentId}
+                        //   name={item.DocumentType}
+                        //   extraStyleName={"propertyCreate"}
+                        //   accept=".jpg,.png,.pdf"
+                        //   onUpload={selectfile}
+                        //   onDelete={() => {
+                        //     onDeleteown(item.DocumentId);
+                        //     setUploadedFile(null);
+                        //   }}
+                        //   message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                        //   error={error}
+                        />
                       </div>
                     </div>
-                    {/* <div className="col-md-12">
-            <div className="col-md-4">
-              <h2>Add Groom Image :</h2>
-              <input type="file" onChange={handleChange} />
-              <img src={file} />
-            </div>
-            <div className="col-md-4">
-              <h2>Add Bride Image :</h2>
-              <input type="file" onChange={handleChange} />
-              <img src={file} />
-            </div>
-          </div> */}
-                    {/* <div style={{ display: "flex" }}>
-              <div style={{ width: "10%" }}>{file1 && <img src={URL.createObjectURL(file1)} alt="file 1" />}</div>
-
-              <div style={{ width: "10%" }}>{file2 && <img src={URL.createObjectURL(file2)} alt="file 2" />}</div>
-            </div> */}
                   </div>
                 </div>
               </div>
