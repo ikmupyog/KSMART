@@ -674,16 +674,14 @@ if (deathAddressInfo.getPresentaddressStateName()
                                                 + " is invalid");
         }
         if (StringUtils.isEmpty(deathAddressInfo
-        .getPresentInsideKeralaPincode())) {
-       
+                    .getPresentInsideKeralaPincode())) {     
+               
+                    throw new CustomException(
+                         " PRESENT ADDRESS INSIDE KERALA: PINCODE INVALID ",
         
-       
-        throw new CustomException(
-        " PRESENT ADDRESS INSIDE KERALA: PINCODE INVALID ",
-        
-        "The Pincode " +
-        deathAddressInfo.getPresentInsideKeralaPincode()
-        + " is invalid");
+                            "The Pincode " +
+                                deathAddressInfo.getPresentInsideKeralaPincode()
+                                + " is invalid");
         }
 
         // if (StringUtils.isEmpty(deathAddressInfo
