@@ -2,6 +2,7 @@ package org.ksmart.marriage.utils;
 
 import com.jayway.jsonpath.JsonPath;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.mdms.model.MasterDetail;
 import org.egov.mdms.model.MdmsCriteria;
@@ -10,6 +11,7 @@ import org.egov.mdms.model.ModuleDetail;
 import org.egov.tracer.model.CustomException;
 import org.ksmart.marriage.common.repository.ServiceRequestRepository;
 import org.ksmart.marriage.marriageapplication.config.MarriageApplicationConfiguration;
+import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryDetails;
 import org.ksmart.marriage.marriageregistry.web.model.certmodel.MarriageCertPDFRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -229,6 +231,53 @@ public class MarriageMdmsUtil {
 
         return Arrays.asList(marriageModuleDtls);
     }
+
+    private List<ModuleDetail> getAddressRequestFromIds(String district
+            , String state
+            , String country
+            , String postOfficeId
+            , String village
+            , String taluk) {
+        // master details for marriage certificate
+        List<MasterDetail> marriageMasterDetails = new ArrayList<>();
+        if(null!=district) {
+            final String filterCode = "$.[?(@.id=='" + district + "')].name";
+            marriageMasterDetails
+                    .add(MasterDetail.builder().name(MarriageConstants.DISTRICT).filter(filterCode).build());
+        }
+        if(null!=state) {
+            final String filterCodeState = "$.[?(@.id=='" + state + "')].name";
+            marriageMasterDetails
+                    .add(MasterDetail.builder().name(MarriageConstants.STATE).filter(filterCodeState).build());
+        }
+        if(null!=country) {
+            final String filterCodeCountry = "$.[?(@.id=='" + country + "')].name";
+            marriageMasterDetails
+                    .add(MasterDetail.builder().name(MarriageConstants.COUNTRY).filter(filterCodeCountry).build());
+        }
+        if(null!=postOfficeId) {
+            final String filterCodePostOffice = "$.[?(@.id=='" + postOfficeId + "')].name";
+            marriageMasterDetails
+                    .add(MasterDetail.builder().name(MarriageConstants.POSTOFFICE).filter(filterCodePostOffice).build());
+        }
+        if(null!=village) {
+            final String filterCodeVillage = "$.[?(@.id=='" + village + "')].name";
+            marriageMasterDetails
+                    .add(MasterDetail.builder().name(MarriageConstants.VILLAGE).filter(filterCodeVillage).build());
+        }
+        if(null!=taluk) {
+            //taluk
+            final String filterCodeTaluk = "$.[?(@.id=='" + taluk + "')].name";
+            marriageMasterDetails
+                    .add(MasterDetail.builder().name(MarriageConstants.TALUK).filter(filterCodeTaluk).build());
+        }
+        ModuleDetail marriageModuleDtls = ModuleDetail.builder().masterDetails(marriageMasterDetails)
+                .moduleName(MarriageConstants.COMMON_MASTER_MODULE_NAME).build();
+
+        return Arrays.asList(marriageModuleDtls);
+    }
+
+
     private MdmsCriteriaReq getMDMSRequestForAddress(RequestInfo requestInfo
             , String tenantId
             , String presentAddressDistrict
@@ -273,6 +322,23 @@ public class MarriageMdmsUtil {
 
         return marriageModuleDtls;
     }
+    private ModuleDetail getMarriagePalceCertificate(String placeId,String placeType) {
+
+        List<MasterDetail> masterDetails = new ArrayList<>();
+        if(StringUtils.isNotBlank(placeId)) {
+            // filter to only get code field from master data
+            final String filterCode = "$.[?(@.code=='" + placeId + "')]";
+            masterDetails
+                    .add(MasterDetail.builder().name(MarriageConstants.MARRIAGE_PLACE).filter(filterCode).build());
+        }
+
+
+        ModuleDetail marriageModuleDtls = ModuleDetail.builder().masterDetails(masterDetails)
+                .moduleName(MarriageConstants.TENANT_EGOV_LOCATION).build();
+
+
+        return marriageModuleDtls;
+    }
     public Object mDMSCallGetAddress(RequestInfo requestInfo
             , String tenantId
             , String presentAddressDistrict
@@ -289,6 +355,19 @@ public class MarriageMdmsUtil {
                 , presentPostOfficeId
                 , presentAddressVillage
                 , presentAddrTaluk);
+        Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);
+        return result;
+    }
+
+    public Object mDMSCallGetMandapamAddress(RequestInfo requestInfo, MarriageRegistryDetails marriageRegistryDetails){
+        ModuleDetail moduleDetail = getMarriagePalceCertificate(marriageRegistryDetails.getPlaceid(),marriageRegistryDetails.getPlacetype());
+        List<ModuleDetail> moduleDetails = new LinkedList<>();
+        moduleDetails.add(moduleDetail);
+        MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(marriageRegistryDetails.getTenantid())
+                .build();
+
+        MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
+                .requestInfo(requestInfo).build();
         Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);
         return result;
     }
@@ -516,24 +595,141 @@ public class MarriageMdmsUtil {
         return masterData;
     }
 
+    public Map<String,List<String>> getMarriageMDMSData(Object mdmsdata) {
+//        Map<String, String> errorMap = new HashMap<>();
+        Map<String, List<String>> masterData = getAttributeValues(mdmsdata);
+        // System.out.println(masterData);
+        return masterData;
+    }
+
     private Map<String, List<String>> getAttributeValues(Object mdmsdata) {
         List<String> modulepaths = Arrays.asList(
                 //MarriageConstants.CR_MDMS_TENANTS_CODE_JSONPATH,
                 MarriageConstants.TENANT_JSONPATH,
                 MarriageConstants.COMMON_MASTER_JSONPATH);
-        final Map<String, List<String>> mdmsResMap = new HashMap<>();
-        // System.out.println("Jasminemodulepaths"+modulepaths);
-        modulepaths.forEach(modulepath -> {
-            try {
-                mdmsResMap.putAll(JsonPath.read(mdmsdata, modulepath));
-                // log.error("jsonpath1" + JsonPath.read(mdmsdata, modulepath));
-            } catch (Exception e) {
-                log.error("Error while fetching MDMS data", e);
-                throw new CustomException(MarriageConstants.INVALID_TENANT_ID_MDMS_KEY,
-                        MarriageConstants.INVALID_TENANT_ID_MDMS_MSG);
-            }
+//        final Map<String, List<String>> mdmsResMap = new HashMap<>();
+//        // System.out.println("Jasminemodulepaths"+modulepaths);
+//        modulepaths.forEach(modulepath -> {
+//            try {
+//                mdmsResMap.putAll(JsonPath.read(mdmsdata, modulepath));
+//                // log.error("jsonpath1" + JsonPath.read(mdmsdata, modulepath));
+//            } catch (Exception e) {
+//                log.error("Error while fetching MDMS data", e);
+//                throw new CustomException(MarriageConstants.INVALID_TENANT_ID_MDMS_KEY,
+//                        MarriageConstants.INVALID_TENANT_ID_MDMS_MSG);
+//            }
+//
+//        });
+//        return mdmsResMap;
+        return  getAttributeValuesForJsonPaths(mdmsdata,modulepaths);
+    }
+    private Map<String, List<String>> getAttributeValuesForJsonPaths(Object mdmsdata,List<String> modulepaths) {
+        if(modulepaths!=null&&!modulepaths.isEmpty()) {
+            final Map<String, List<String>> mdmsResMap = new HashMap<>();
+            modulepaths.forEach(modulepath -> {
+                try {
+                    mdmsResMap.putAll(JsonPath.read(mdmsdata, modulepath));
+                } catch (Exception e) {
+                    log.error("Error while fetching MDMS data", e);
+                    throw new CustomException(MarriageConstants.INVALID_TENANT_ID_MDMS_KEY,
+                            MarriageConstants.INVALID_TENANT_ID_MDMS_MSG);
+                }
 
-        });
-        return mdmsResMap;
+            });
+            return mdmsResMap;
+        }else{
+            log.error("Error while fetching MDMS data,modulepaths is invalid");
+            throw new CustomException(MarriageConstants.INVALID_TENANT_ID_MDMS_KEY,
+                    MarriageConstants.INVALID_TENANT_ID_MDMS_MSG);
+        }
+    }
+    private Map<String, Object> getAttributeStrValuesForJsonPaths(Object mdmsdata,List<String> modulepaths) {
+        if(modulepaths!=null&&!modulepaths.isEmpty()) {
+            final Map<String, Object> mdmsResMap = new HashMap<>();
+            modulepaths.forEach(modulepath -> {
+                try {
+                    mdmsResMap.putAll(JsonPath.read(mdmsdata, modulepath));
+                } catch (Exception e) {
+                    log.error("Error while fetching MDMS data", e);
+                    throw new CustomException(MarriageConstants.INVALID_TENANT_ID_MDMS_KEY,
+                            MarriageConstants.INVALID_TENANT_ID_MDMS_MSG);
+                }
+
+            });
+            return mdmsResMap;
+        }else{
+            log.error("Error while fetching MDMS data,modulepaths is invalid");
+            throw new CustomException(MarriageConstants.INVALID_TENANT_ID_MDMS_KEY,
+                    MarriageConstants.INVALID_TENANT_ID_MDMS_MSG);
+        }
+    }
+    public Map<String, Object> getMandapamAttributeValues(Object mdmsdata) {
+        List<String> modulepaths = Arrays.asList(
+                //MarriageConstants.CR_MDMS_TENANTS_CODE_JSONPATH,
+//                MarriageConstants.TENANT_JSONPATH,
+//                MarriageConstants.COMMON_MASTER_JSONPATH,
+//                MarriageConstants.EGOV_LOCATION_JSONPATH,
+                MarriageConstants.MARRIAGE_PLACE_JSONPATH);
+
+        return getAttributeStrValuesForJsonPaths(mdmsdata,modulepaths);
+    }
+
+    public StringBuilder appendIfNotBlank(String v,StringBuilder s,boolean addSemicolon){
+        if(StringUtils.isNotBlank(v)){
+            s.append(v);
+            if(addSemicolon){
+                s.append(",");
+            }
+        }
+        return  s;
+    }
+
+    private MdmsCriteriaReq getMDMSRequestForAddressFromIds(RequestInfo requestInfo
+            , String tenantId
+            , String presentAddressDistrict
+            , String presentAddressState
+            , String presentAddressCountry
+            , String presentPostOfficeId
+            , String presentAddressVillage
+            , String presentAddrTaluk) {
+        ModuleDetail tenantIdRequest = getTenantIdCertificate(tenantId);
+        List<ModuleDetail> commonMasterRequest = getAddressRequestFromIds(presentAddressDistrict
+                ,presentAddressState
+                ,presentAddressCountry
+                ,presentPostOfficeId
+                ,presentAddressVillage
+                ,presentAddrTaluk);
+
+        List<ModuleDetail> moduleDetails = new LinkedList<>();
+        moduleDetails.add(tenantIdRequest);
+        moduleDetails.addAll(commonMasterRequest);
+
+        MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(config.getEgovStateLevelTenant())
+                .build();
+
+        MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
+                .requestInfo(requestInfo).build();
+
+        // System.out.println("mdmsreq2"+mdmsCriteriaReq);
+        return mdmsCriteriaReq;
+    }
+    public Object mDMSCallGetAddressFromIds(RequestInfo requestInfo
+            , String tenantId
+            , String presentAddressDistrict
+            , String presentAddressState
+            , String presentAddressCountry
+            , String presentPostOfficeId
+            , String presentAddressVillage
+            , String presentAddrTaluk) {
+        MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestForAddressFromIds(requestInfo
+                , tenantId
+                , presentAddressDistrict
+                , presentAddressState
+                , presentAddressCountry
+                , presentPostOfficeId
+                , presentAddressVillage
+                , presentAddrTaluk);
+        Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);
+        return result;
     }
 }
