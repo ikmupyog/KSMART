@@ -1,4 +1,5 @@
 import { format, toDate } from "date-fns";
+import fetch from 'isomorphic-unfetch';
 
 export const ConvertTimestampToDate = (timestamp, dateFormat = "d-MMM-yyyy") => {
   return timestamp ? format(toDate(timestamp), dateFormat) : null;
@@ -30,3 +31,31 @@ export const ConvertEpochToTimeInHours = (dateEpoch) => {
   min = (min > 9 ? "" : "0") + min;
   return `${hour}:${min} ${period}`;
 };
+
+export const getWorldTime = async () => {
+  const timestamp = await worldTime();
+  return timestamp;
+};
+
+
+const worldTime = async (timezone = "Asia/Kolkata") => {
+  const res = await fetch(`https://worldtimeapi.org/api/timezone/${timezone}`);
+  const json = await res.json();
+  const status = res.status;
+
+  if (status >= 400)
+    throw Error(res.statusText);
+
+  const utcDatetime = json.utc_datetime;
+  const datetimeMicrosecond = +utcDatetime.match(/\.\d{3}(\d*?)[+Z]/)[1];
+  const utcMicroseconds = new Date(utcDatetime).getTime() * 1000 + datetimeMicrosecond;
+  const microseconds = utcMicroseconds + json.raw_offset * 1000000;
+
+  return {
+    response: json,
+    milliseconds: microseconds / 1000,
+    utcMilliseconds: utcMicroseconds / 1000,
+    microseconds: microseconds,
+    utcMicroseconds: utcMicroseconds,
+  };
+}
