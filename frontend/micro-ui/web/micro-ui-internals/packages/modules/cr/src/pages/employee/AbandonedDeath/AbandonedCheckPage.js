@@ -42,10 +42,10 @@ import {
   };
   
   const AbandonedDeathCheckPage = ({ onSubmit, value, userType }) => {
-    React.useEffect(()=>{
-        console.log("AbandonedDeathCheckPage",value);
-    },
-    [])
+    // React.useEffect(()=>{
+    //     console.log("AbandonedDeathCheckPage",value);
+    // },
+    // [])
  
     let isEdit = window.location.href.includes("renew-trade");
     const { t } = useTranslation();
@@ -53,7 +53,7 @@ import {
     const match = useRouteMatch();
     const {
       InformationDeathAband,
-      FamilyInformationDeath,
+      FamilyAbandonedDeath,
       AddressBirthDetails,
       // ChildDetails,
       // ParentsDetails,
@@ -322,8 +322,8 @@ import {
               <div className="col-md-6">
                 <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}> {`${t("PDF_CR_NAME_WIFE_HUSBAND")}`} </CardLabel>
               </div>
-              {/* {FamilyInformationDeath.SpouseUnavailable === false && ( */}
-              {FamilyInformationDeath.SpouseUnavailable ? (
+              {/* {FamilyAbandonedDeath.SpouseUnavailable === false && ( */}
+              {FamilyAbandonedDeath.SpouseUnavailable ? (
                <div className="col-md-6">
                <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                  :{" "}  {t("CR_NOT_RECORDED")}{" "}
@@ -333,19 +333,19 @@ import {
                 <div className="col-md-6">
                   <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                     :{" "}
-                    {t(FamilyInformationDeath.SpouseNameMl ? FamilyInformationDeath?.SpouseNameMl : "CR_NOT_RECORDED") +
+                    {t(FamilyAbandonedDeath.SpouseNameMl ? FamilyAbandonedDeath?.SpouseNameMl : "CR_NOT_RECORDED") +
                       " " +
                       "(" +
                       " " +
-                      (FamilyInformationDeath.SpouseType.namelocal ? FamilyInformationDeath?.SpouseType.namelocal : "CR_NOT_RECORDED") +
+                      (FamilyAbandonedDeath.SpouseType.namelocal ? FamilyAbandonedDeath?.SpouseType.namelocal : "CR_NOT_RECORDED") +
                       " " +
                       ")" +
                       "/" +
                       " " +
-                      (FamilyInformationDeath.SpouseNameEN ? FamilyInformationDeath?.SpouseNameEN : "CR_NOT_RECORDED") +
+                      (FamilyAbandonedDeath.SpouseNameEN ? FamilyAbandonedDeath?.SpouseNameEN : "CR_NOT_RECORDED") +
                       " " +
                       "(" +
-                      (FamilyInformationDeath?.SpouseType.name ? FamilyInformationDeath?.SpouseType.name : "CR_NOT_RECORDED") +
+                      (FamilyAbandonedDeath?.SpouseType.name ? FamilyAbandonedDeath?.SpouseType.name : "CR_NOT_RECORDED") +
                       ")"}
                   </CardText>
                 </div>
@@ -356,7 +356,7 @@ import {
                 <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}> {`${t("PDF_BIRTH_NAME_OF_MOTHER")}`} </CardLabel>
               </div>
   
-              {FamilyInformationDeath.MotherUnavailable ? (
+              {FamilyAbandonedDeath.MotherUnavailable ? (
                 <div className="col-md-6">
                 <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                   :{" "}  {t("CR_NOT_RECORDED")}{" "}
@@ -366,11 +366,11 @@ import {
               <div className="col-md-6">
                 <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                   :{" "}
-                  {t(FamilyInformationDeath.MotherNameMl ? FamilyInformationDeath?.MotherNameMl : "CR_NOT_RECORDED") +
+                  {t(FamilyAbandonedDeath.MotherNameMl ? FamilyAbandonedDeath?.MotherNameMl : "CR_NOT_RECORDED") +
                     "/" +
                     " " +
-                    (FamilyInformationDeath.MotherNameEn ? FamilyInformationDeath?.MotherNameEn : "CR_NOT_RECORDED")
-                    // (FamilyInformationDeath.MotherNameEn ? FamilyInformationDeath?.MotherNameEn : "CR_NOT_RECORDED")
+                    (FamilyAbandonedDeath.MotherNameEn ? FamilyAbandonedDeath?.MotherNameEn : "CR_NOT_RECORDED")
+                    // (FamilyAbandonedDeath.MotherNameEn ? FamilyAbandonedDeath?.MotherNameEn : "CR_NOT_RECORDED")
                     }
                 </CardText>
               </div>
@@ -380,7 +380,7 @@ import {
               <div className="col-md-6">
                 <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}> {`${t("PDF_BIRTH_NAME_OF_FATHER")}`} </CardLabel>
               </div>
-              {FamilyInformationDeath.FatherUnavailable ? (
+              {FamilyAbandonedDeath.FatherUnavailable ? (
                 <div className="col-md-6">
                 <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                   :{" "}  {t("CR_NOT_RECORDED")}{" "}
@@ -390,10 +390,10 @@ import {
               <div className="col-md-6">
                 <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                   :{" "}
-                  {t(FamilyInformationDeath.FatherNameMl ? FamilyInformationDeath?.FatherNameMl : "CR_NOT_RECORDED") +
+                  {t(FamilyAbandonedDeath.FatherNameMl ? FamilyAbandonedDeath?.FatherNameMl : "CR_NOT_RECORDED") +
                     "/" +
                     " " +
-                    (FamilyInformationDeath.FatherNameEn ? FamilyInformationDeath?.FatherNameEn : "CR_NOT_RECORDED")}
+                    (FamilyAbandonedDeath.FatherNameEn ? FamilyAbandonedDeath?.FatherNameEn : "CR_NOT_RECORDED")}
                 </CardText>
               </div>
                )}

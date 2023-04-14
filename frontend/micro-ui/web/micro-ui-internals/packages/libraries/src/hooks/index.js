@@ -132,6 +132,8 @@ import useCivilRegistrationBornOutsideIndiaBirthAPI from "./cr/useCivilRegistrat
 import useCivilRegistrationAbandonedBirthAPI from "./cr/useCivilRegistrationAbandonedBirthAPI";
 import useApplicationBornOutsideIndiaBirthDetail from "./cr/useApplicationBornOutsideIndiaBirthDetail";
 import useBirthCorrectionAction from "./cr/useBirthCorrectionAction";
+import useMarriageCorrectionAction from "./cr/useMarriageCorrectionAction";
+import useApplicationMarriageActions from "./cr/useApplicationMarriageActions";
 
 import useCivilRegistrationDeathAPI from "./cr/useCivilRegistrationDeathAPI";
 // import useTradeLicenseSearch from "./tl/useTradeLicenseSearch";
@@ -145,6 +147,7 @@ import useApplicationMarriageDetail from "./cr/useApplicationMarriageDetail";
 import useApplicationStillBirthDetail from "./cr/useApplicationStillBirthDetail";
 import useApplicationAbandondBirthDetail from "./cr/useApplicationAbandondBirthDetail";
 import useApplicationDeathDetail from "./cr/useApplicationDeathDetail";
+import useAbandonedDeathDetail from "./cr/useAbandonedDeathDetail";
 import useCRApplicationActions from "./cr/useApplicationActions";
 import useCRAdoptionApplicationActions from "./cr/useAdoptionApplActions";
 import useApplicationBirthNACActions from "./cr/useApplicationBirthNACActions";
@@ -152,6 +155,7 @@ import useApplicationAbandonedBirthActions from "./cr/useApplicationAbandonedBir
 import useCRStillBirthApplicationActions from "./cr/useApplicationStillBirthActions";
 import useApplicationBornOutsideIndiaBirthActions from "./cr/useApplicationBornOutsideIndiaBirthActions";
 import useCRDeathApplicationActions from "./cr/useApplicationDeathActions";
+import useAbandonedDeathActions from "./cr/useAbandonedDeathActions";
 import useCRGenderMDMS from "./cr/useCRGenderMDMS";
 import useCRInbox from "./cr/useInbox";
 import useCRMDMS from "./cr/useMDMS";
@@ -171,9 +175,12 @@ import useCivilRegistrationNACDEATHAPI from "./cr/useCivilRegistrationNACDEATHAP
 import useDeathNACSearch from "./cr/useDeathNACSearch";
 import useApplicationDEATHNACActions from "./cr/useApplicationDEATHNACActions";
 import useApplicationDEATHNACDetail from "./cr/useApplicationDEATHNACDetail";
+import useMarriageSearch from "./cr/useMarriageSearch";
 
 
 import useSearchDeath from "./cr/useSearchDeath";
+// useSearchAbandonedDeath
+import useSearchAbandonedDeath from "./cr/useSearchAbandonedDeath";
 import useSearchStillBirth from "./cr/useSearchStillBirth";
 import useTenantsDFM from "./dfm/useTenants";
 import useFileManagmentMDMS from "./dfm/useFileManagmentMDMS";
@@ -368,6 +375,8 @@ const tl = {
 const cr = {
   getBirthFileSourceDetails,
   useBirthCorrectionAction,
+  useMarriageCorrectionAction,
+  useApplicationMarriageActions,
   useRegSearchDeath,
   getDeathFileSourceDetails,
   useCivilRegMDMS,
@@ -389,6 +398,7 @@ const cr = {
   useAbandonedBirthSearch,
   useBirthNACSearch,
   useBornOutSideBirthSearch,
+  useMarriageSearch,
   useSearchMarriage,
   useAdoptionSearch,
   useRegistrySearchDeath,
@@ -397,12 +407,14 @@ const cr = {
   useRegistrySearchBirth,
   useRegistrySearchMarriage,
   useSearchDeath,
+  useSearchAbandonedDeath,
   useSearchStillBirth,
   useApplicationDetail: useCRApplicationDetail,
   useApplicationAdoptionDetail: useCRApplicationAdoptionDetail,
   useApplicationMarriageDetail,
   useApplicationStillBirthDetail: useApplicationStillBirthDetail,
   useApplicationAbandondBirthDetail,
+  useAbandonedDeathDetail,
   useApplicationBIRTHNACDetail,
   useCivilRegistrationNACDEATHAPI,
   useDeathNACSearch,
@@ -417,6 +429,7 @@ const cr = {
   useApplicationBirthNACActions,
   useApplicationBornOutsideIndiaBirthActions,
   useCRDeathApplicationActions: useCRDeathApplicationActions,
+  useAbandonedDeathActions,
   useApplicationDeathDetail,
   useFetchBill: useCRFetchBill,
   useDeathFetchBill: useCRDFetchBill,

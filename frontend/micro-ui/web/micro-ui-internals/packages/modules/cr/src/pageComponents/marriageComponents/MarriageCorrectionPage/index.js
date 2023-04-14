@@ -6,7 +6,7 @@ import MarriageCorrectionEditPage from "./MarriageCorrectionEditPage";
 
 const MarriageCorrectionPage = () => {
   const { t } = useTranslation();
-  let birthInclusionFormData = {};
+  // let birthInclusionFormData = {};
   const stateId = Digit.ULBService.getStateId();
 
   let tenantId = "";
@@ -16,9 +16,11 @@ const MarriageCorrectionPage = () => {
   }
   const [cmbPlace, setCmbPlace] = useState([]);
   const [cmbWardNoFinal, setCmbWardNoFinal] = useState([]);
+  const [cmbPlaceName, setCmbPlaceName] = useState([]);
   const [birthCorrectionDocs, setBirthCorrectionDocs] = useState([]);
   let location = useLocation();
   let place = [];
+  let marriagePlace = [];
   let cmbWardNo = [];
   let correctionDocs = [];
   let navigationData = location?.state?.marriageCorrectionData;
@@ -26,6 +28,7 @@ const MarriageCorrectionPage = () => {
   const mutation = Digit.Hooks.cr.useCivilRegMDMS(stateId);
   const correctionDocsMutation = Digit.Hooks.cr.useCivilRegMDMS(stateId);
   const wardMutation = Digit.Hooks.cr.useCivilRegMDMS(tenantId);
+  const placeNameMutation = Digit.Hooks.cr.useCivilRegMDMS(tenantId);
 
   const onMarriageWardSuccess = (data) => {
     data &&
@@ -40,7 +43,7 @@ const MarriageCorrectionPage = () => {
       wardmst.namecmb = wardmst.wardno + " ( " + wardmst.name + " )";
       cmbWardNoFinal.push(wardmst);
     });
-    setCmbWardNoFinal(cmbWardNo);
+    setCmbWardNoFinal(cmbWardNoFinal);
   };
 
   const onMarriagePlacesSuccess = (data) => {
@@ -53,27 +56,43 @@ const MarriageCorrectionPage = () => {
     setCmbPlace(place);
   };
 
+  const onMarriagePlaceNameSuccess = (data) => {
+    data &&
+    data["egov-location"] &&
+    data["egov-location"].MarriagePlace &&
+    data["egov-location"].MarriagePlace?.map((ob) => {
+      marriagePlace.push(ob);
+    });
+    setCmbPlaceName(marriagePlace);
+  }
+
+  console.log("placename ===",cmbPlaceName);
+
   const onBirthCorrectionSuccess = (data) => {
     data &&
       data["birth-death-service"] &&
-      data["birth-death-service"].BirthCorrectionDocuments &&
-      data["birth-death-service"].BirthCorrectionDocuments?.map((ob) => {
+      data["birth-death-service"].CorrectionMarriageDocuments &&
+      data["birth-death-service"].CorrectionMarriageDocuments?.map((ob) => {
         correctionDocs.push(ob);
       });
+      console.log("marriage docss==",data,correctionDocs);
     setBirthCorrectionDocs(correctionDocs);
   };
 
   useEffect(() => {
     mutation.mutate({ moduleCode: "birth-death-service", type: "MarriagePlaceType" }, { onSuccess: onMarriagePlacesSuccess });
-    correctionDocsMutation.mutate({ moduleCode: "birth-death-service", type: "BirthCorrectionDocuments" }, { onSuccess: onBirthCorrectionSuccess });
+    correctionDocsMutation.mutate({ moduleCode: "birth-death-service", type: "CorrectionMarriageDocuments" }, { onSuccess: onBirthCorrectionSuccess });
     wardMutation.mutate({ moduleCode: "egov-location", type: "TenantBoundary" }, { onSuccess: onMarriageWardSuccess });
+    placeNameMutation.mutate({ moduleCode: "egov-location", type: "MarriagePlace" }, { onSuccess: onMarriagePlaceNameSuccess });
   }, []);
 
-  if (cmbWardNoFinal?.length > 0 && cmbPlace?.length > 0 && birthCorrectionDocs?.length > 0) {
+  if (cmbWardNoFinal?.length > 0 && cmbPlace?.length > 0 && cmbPlaceName?.length && birthCorrectionDocs?.length > 0) {
     return (
       <MarriageCorrectionEditPage
         cmbPlace={cmbPlace}
         cmbWardNoFinal={cmbWardNoFinal}
+        cmbWardNo={cmbWardNo}
+        cmbPlaceName={cmbPlaceName}
         BirthCorrectionDocuments={birthCorrectionDocs}
         navigationData={navigationData}
         // birthInclusionFormData={birthInclusionFormData}

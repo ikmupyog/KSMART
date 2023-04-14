@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCountry, setpermtaddressCountry,
     permtaddressStateName, setpermtaddressStateName, value, setValue, countryvalue, setCountryValue,
     isPrsentAddress, setIsPrsentAddress, countryValuePermanent, setCountryValuePermanent,
-    valuePermanent, setValuePermanent, isEditBirth = false, isEditDeath = false,
+    valuePermanent, setValuePermanent, isEditBirth = false, isEditAbandonedDeath = false,
     // isInitialRender, setIsInitialRender
 }) => {
     const stateId = Digit.ULBService.getStateId();
@@ -20,7 +20,7 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
     const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
     const { data: State = {}, isStateLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
     const [isInitialRender, setIsInitialRender] = useState(true);
-    const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : false);
+    const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditAbandonedDeath ? false : false);
 
     let cmbLB = [];
     let cmbCountry = [];
@@ -87,7 +87,7 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
                 setValuePermanent(value.formData?.ChildDetails?.AddressBirthDetails?.permtaddressStateName);
             }
         }
-    } else if (isEditDeath) {
+    } else if (isEditAbandonedDeath) {
         if (formData?.AddressBirthDetails?.permtaddressCountry != null) {
             if (cmbCountry.length > 0 && (permtaddressCountry === undefined || permtaddressCountry === "")) {
                 setpermtaddressCountry(cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.AddressBirthDetails?.permtaddressCountry)[0]);
@@ -121,7 +121,7 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
     } else
         return (
             <React.Fragment>
-                <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
+                {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} > */}
 
                     <div className="row">
                         <div className="col-md-6">
@@ -155,7 +155,7 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
                             </div>
                         )}
                     </div>
-                </FormStep>
+                {/* </FormStep> */}
             </React.Fragment>
         );
 };

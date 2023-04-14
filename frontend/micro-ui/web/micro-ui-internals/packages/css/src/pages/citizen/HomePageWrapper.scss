@@ -16,8 +16,9 @@
 
     .ServicesSection{
         @apply flex flex-wrap ;
+       
     }
-
+  
     .WhatsNewSection{
         @apply m-sm;
         .headSection{
@@ -96,5 +97,26 @@
             top: calc( 10vw + 16px );
             @apply ml-md;
         }
+    }
+}
+@media (max-width: 768px){
+    .flexService{
+        flex-direction: column;
+    }
+}
+@media only screen and (max-width: 768px) {
+    .ServicesSection{
+        display: flex;
+        flex-direction: column;
+    }
+    .CardBasedOptions{
+        width: unset;
+    }
+    .CardBasedOptions .mainContent .CardBasedOptionsMainChildOption .ChildOptionName {
+        font-size: 10px !important;
+    }
+    .flex-right, .leftContainerNav, .mainNav {
+        display: flex;
+        justify-content: space-between;
     }
 }

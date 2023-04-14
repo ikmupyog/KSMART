@@ -8,7 +8,7 @@ import AddressPresent from "./AddressPresent";
 import AddressPresentInsideKerala from "./AddressPresentInsideKerala";
 import AddressPresentOutsideKerala from "./AddressPresentOutsideKerala";
 import AddressPresentOutsideIndia from "./AddressPresentOutsideIndia";
-import AddressSameAsAbove from "./AddressSameAsAbove";
+// import AddressSameAsAbove from "./AddressSameAsAbove";
 import AddressPermanent from "./AddressPermanent";
 import AddressPermanentInsideKerala from "./AddressPermanentInsideKerala";
 import AddressPermanentOutsideKerala from "./AddressPermanentOutsideKerala";
@@ -34,6 +34,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
     const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "boundary-data");
 
     const [lbs, setLbs] = useState(0);
+    const [permlbs, setPermLbs] = useState(0);
     const [toast, setToast] = useState(false);
 
     let cmbLB = [];
@@ -119,6 +120,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
     const [Talukvalues, setLbsTalukvalue] = useState(null);
     const [Villagevalues, setLbsVillagevalue] = useState(null);
     const [PostOfficevalues, setPostOfficevalues] = useState(null);
+    const [PostOfficePermvalues, setPostOfficePermvalues] = useState(null);
+
     //################################# Present Outside Kerala ##########################################################################################################
     const [presentOutsideKeralaDistrict, setoutsideKeralaDistrict] = useState(formData?.AddressBirthDetails?.presentOutsideKeralaDistrict?.code ? formData?.AddressBirthDetails?.presentOutsideKeralaDistrict : formData?.ChildDetails?.AddressBirthDetails?.presentOutsideKeralaDistrict ? "" :
         formData?.StillBirthChildDetails?.AddressBirthDetails?.presentOutsideKeralaDistrict ? "" : "");
@@ -179,16 +182,16 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
         formData?.StillBirthChildDetails?.AddressBirthDetails?.isPrsentAddress ? formData?.StillBirthChildDetails?.AddressBirthDetails?.isPrsentAddress : true);
 
     //################################################### Country State Permanent ###########################################################################
-
+       
     const [permtaddressCountry, setpermtaddressCountry] = useState(formData?.AddressBirthDetails?.permtaddressCountry?.code ? formData?.AddressBirthDetails?.permtaddressCountry : formData?.ChildDetails?.AddressBirthDetails?.permtaddressCountry ? "" :
         formData?.StillBirthChildDetails?.AddressBirthDetails?.permtaddressCountry ? "" : "");
     const [permtaddressStateName, setpermtaddressStateName] = useState(formData?.AddressBirthDetails?.permtaddressStateName?.code ? formData?.AddressBirthDetails?.permtaddressStateName : formData?.ChildDetails?.AddressBirthDetails?.permtaddressStateName ? "" :
         formData?.StillBirthChildDetails?.AddressBirthDetails?.permtaddressStateName ? "" : "");
     const [countryValuePermanent, setCountryValuePermanent] = useState(formData?.AddressBirthDetails?.permtaddressCountry?.code ? formData?.AddressBirthDetails?.permtaddressCountry.countrycode : formData?.ChildDetails?.AddressBirthDetails?.permtaddressCountry ? "" :
         formData?.StillBirthChildDetails?.AddressBirthDetails?.permtaddressCountry ? "" : "");
-    const [valuePermanent, setValuePermanent] = useState(formData?.AddressBirthDetails?.presentaddressStateName?.code ? formData?.AddressBirthDetails?.permtaddressStateName.code : formData?.ChildDetails?.AddressBirthDetails?.permtaddressStateName ? "" :
-        formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressStateName ? "" : "");
-
+    const [valuePermanent, setValuePermanent] = useState(formData?.AddressBirthDetails?.permtaddressStateName?.code ? formData?.AddressBirthDetails?.permtaddressStateName.code : formData?.ChildDetails?.AddressBirthDetails?.permtaddressStateName ? "" :
+        formData?.StillBirthChildDetails?.AddressBirthDetails?.permtaddressStateName ? "" : "");
+      
     //################################################# Permanent Inside Kerala ##########################################################################################
 
     const [permntInKeralaAdrDistrict, setpermntInKeralaAdrDistrict] = useState(formData?.AddressBirthDetails?.permntInKeralaAdrDistrict?.code ? formData?.AddressBirthDetails?.permntInKeralaAdrDistrict : formData?.ChildDetails?.AddressBirthDetails?.permtaddressCountry ? "" :
@@ -329,15 +332,15 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
     const [PermanentOutSideIndiaLineOneMlError, setPermanentOutSideIndiaLineOneMlError] = useState(false);
     const [PermanentOutSideIndiaLineTwoEnError, setPermanentOutSideIndiaLineTwoEnError] = useState(false);
     const [PermanentOutSideIndiaLineTwoMlError, setPermanentOutSideIndiaLineTwoMlError] = useState(false);
-
+       
     const onSkip = () => onSelect();
     function setSameAsPresent(e) {
         setIsPrsentAddress(e.target.checked);
         if (e.target.checked == true) {
             setpermtaddressCountry(presentaddressCountry);
             setpermtaddressStateName(presentaddressStateName);
-            setCountryValuePermanent(countryvalue);
-            setValuePermanent(value);
+            setCountryValuePermanent(countryValuePermanent);
+            setValuePermanent(valuePermanent);
             setpermntInKeralaAdrDistrict(presentInsideKeralaDistrict);
             setpermntInKeralaAdrLBName(presentInsideKeralaLBName);
             setpermntInKeralaAdrTaluk(presentInsideKeralaTaluk);
@@ -1464,7 +1467,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
     } else
         return (
             <React.Fragment>
-                <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+                {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
                 {window.location.href.includes("/citizen/cr/cr-birth-creation/address-birth") ? <Timeline currentStep={3} /> : null || window.location.href.includes("employee/cr/cr-flow") ? <Timeline currentStep={3} /> : null}
                 {window.location.href.includes("/citizen/cr-adoptionflow/adoption-address-birth") ? <AdoptionTimeline currentStep={3} /> : null || window.location.href.includes("employee/cr/cr-adoptionflow") ? <AdoptionTimeline currentStep={3} /> : null}
                 {window.location.href.includes("/citizen/cr/cr-death-creation/address-death") ? <DRTimeline currentStep={2} /> : null || window.location.href.includes("employee/cr/death-flow") ? <DRTimeline currentStep={2} /> : null}
@@ -1760,10 +1763,11 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 isEditAdoption={isEditAdoption}
                                 isEditBirthNAC={isEditBirthNAC}
                                 formData={formData}
+
                             />
                         </div>
                     )}
-                    {countryValuePermanent === "IND" && valuePermanent === "KL" && isPrsentAddress === false && (
+                    {countryValuePermanent === "IND" && valuePermanent === "kl" && isPrsentAddress === false && (
                         <div>
                             <AddressPermanentInsideKerala
                                 permntInKeralaAdrDistrict={permntInKeralaAdrDistrict}
@@ -1796,18 +1800,26 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 setDistrictvalue={setDistrictvalue}
                                 lbs={lbs}
                                 setLbs={setLbs}
+                                permlbs={permlbs}
+                                setPermLbs={setPermLbs}
                                 Talukvalues={Talukvalues}
                                 setLbsTalukvalue={setLbsTalukvalue}
                                 Villagevalues={Villagevalues}
                                 setLbsVillagevalue={setLbsVillagevalue}
                                 PostOfficevalues={PostOfficevalues}
                                 setPostOfficevalues={setPostOfficevalues}
+                                PostOfficePermvalues={PostOfficePermvalues}
+                                setPostOfficePermvalues={setPostOfficePermvalues}
                                 isEditBirth={isEditBirth}
                                 isEditDeath={isEditDeath}
                                 isEditStillBirth={isEditStillBirth}
                                 isEditAdoption={isEditAdoption}
                                 isEditBirthNAC={isEditBirthNAC}
                                 formData={formData}
+                                countryValuePermanent={countryValuePermanent}
+                                setCountryValuePermanent={setCountryValuePermanent}
+                                valuePermanent={valuePermanent}
+                                setValuePermanent={setValuePermanent}
                             />
                         </div>
                     )}
@@ -1848,6 +1860,10 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 isEditAdoption={isEditAdoption}
                                 isEditBirthNAC={isEditBirthNAC}
                                 formData={formData}
+                                countryValuePermanent={countryValuePermanent}
+                                setCountryValuePermanent={setCountryValuePermanent}
+                                valuePermanent={valuePermanent}
+                                setValuePermanent={setValuePermanent}
                             />
                         </div>
                     )}
@@ -1882,6 +1898,10 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                                 isEditAdoption={isEditAdoption}
                                 isEditBirthNAC={isEditBirthNAC}
                                 formData={formData}
+                                countryValuePermanent={countryValuePermanent}
+                                setCountryValuePermanent={setCountryValuePermanent}
+                                valuePermanent={valuePermanent}
+                                setValuePermanent={setValuePermanent}
                             />
                         </div>
                     )}

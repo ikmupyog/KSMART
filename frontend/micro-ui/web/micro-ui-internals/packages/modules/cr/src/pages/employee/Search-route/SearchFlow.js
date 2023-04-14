@@ -18,6 +18,12 @@ const SearchFlow = ({ path }) => {
       img: <SearchIconSvg />,
       link: `${path}/deathsearch/application`,
     },
+    {
+      title: "Marriage Search",
+      subTitle: "Marriage Applications Search",
+      img: <SearchIconSvg />,
+      link: `${path}/marriagesearch/application`,
+    },
    
     
   ];
@@ -25,6 +31,7 @@ const SearchFlow = ({ path }) => {
     {
      'Birth Search':  'crfile',
      'Death Search':  'crfileadoption',
+     'Marriage Search':  'crfilecorrection',
     };
   return (
     <div>

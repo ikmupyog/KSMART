@@ -5,6 +5,7 @@ import SearchFields from "./SearchFields";
 import { useForm } from "react-hook-form";
 import ResultTable from "../SearchMarriageInclusion/ResultTable";
 import { useHistory } from "react-router-dom";
+import { convertDateToEpoch } from "../../utils";
 
 const SearchParent = ({
                           searchType = 'application'
@@ -44,9 +45,7 @@ const SearchParent = ({
     }
 
     const setValue = (type, value) => {
-        const obj = {...defaultValue };
-        obj[type] = value;
-        setDefaultValue(obj);
+        defaultValue[type] = value;
     }
     const onSuccess = (data) => {
         if (data && data["MarriageDetails"]) {
@@ -55,28 +54,32 @@ const SearchParent = ({
     };
 
     const onSubmit = (_data) => {
-        let marriageDOM = new Date(_data?.marriageDOM);
-        marriageDOM?.setSeconds(marriageDOM?.getSeconds() - 19800);
-
-        let data = {
-            ..._data,
-            ...(_data.marriageDOM ? { marriageDOM: marriageDOM?.getTime() } : {}),
-        };
+        let data = _data;
+        if (_data.marriageDOM) {
+            data.marriageDOM = convertDateToEpoch(_data.marriageDOM);
+        }
 
         data = Object.keys(data)
             .filter((k) => data[k])
             .reduce((acc, key) => ({ ...acc, [key]: typeof data[key] === "object" ? data[key].name : data[key] }), {})
+
+        data = {
+            ...data,
+            ...defaultValue
+        }
 
         const params = {
             filters: data
         }
         mutate(params, { onSuccess })
     };
-    function previousPage() {
-        setValue("offset", getValue("offset") - getValue("limit"));
-        handleSubmit(onSubmit)();
+    function emptyRecords() {
+        setResults([]);
     }
 
+    const downloadLink = (data) => {
+        console.log("download certificate");
+    }
     const goToLink = (data) => {
         history.push({
             pathname: `/digit-ui/citizen/cr/marriage-correction-edit`,
@@ -92,7 +95,7 @@ const SearchParent = ({
                 <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
                     <SearchFields
                         searchType={searchType}
-                        {...{ t, register, control, reset, previousPage }} />
+                        {...{ t, register, control, reset, emptyRecords }} />
                 </SearchForm>
             </div>
             {isLoading && <Loader/>}
@@ -106,6 +109,7 @@ const SearchParent = ({
                         t={t}
                         onSubmit={onSubmit}
                         goToLink={goToLink}
+                        downloadLink={downloadLink}
                         searchType={searchType}
                     />
                 </React.Fragment>
