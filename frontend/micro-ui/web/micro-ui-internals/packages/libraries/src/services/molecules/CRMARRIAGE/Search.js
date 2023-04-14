@@ -39,12 +39,12 @@ export const CRSearchMarriage = {
   },
   application: async (tenantId, filters = {}) => {
     const response = await CRService.CRMarriageService({ tenantId, filters });
-    return response.ChildDetails[0];
+    return response.MarriageDetails[0];
   },
 
   numberOfApplications: async (tenantId, filters = {}) => {
     const response = await CRService.CRMarriageService({ tenantId, filters });
-    return response.ChildDetails;
+    return response.MarriageDetails;
   },
 
   applicationDetails: async (t, tenantId, applicationNumber, userType) => {

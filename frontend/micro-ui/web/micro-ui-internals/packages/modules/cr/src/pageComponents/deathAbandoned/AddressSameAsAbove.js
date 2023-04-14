@@ -4,14 +4,14 @@ import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 
 const AddressSameAsAbove = ({ config, onSelect, userType, formData, isPrsentAddress, setIsPrsentAddress,
-  isEditBirth = false, isEditDeath = false,
+  isEditBirth = false, isEditAbandonedDeath = false,
   // isInitialRender, setIsInitialRender
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditAbandonedDeath ? false : false);
 
   // const [isPrsentAddress, setIsPrsentAddress] = useState(formData?.AddressSameAsAboveDetails?.isPrsentAddress);
 
@@ -67,7 +67,7 @@ const AddressSameAsAbove = ({ config, onSelect, userType, formData, isPrsentAddr
   }
   return (
     <React.Fragment>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!isPrsentAddress}>
+      {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!isPrsentAddress}> */}
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -88,7 +88,7 @@ const AddressSameAsAbove = ({ config, onSelect, userType, formData, isPrsentAddr
           </div>
         </div>
 
-      </FormStep>
+      {/* </FormStep> */}
     </React.Fragment>
   );
 };

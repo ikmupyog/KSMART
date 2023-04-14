@@ -9,8 +9,6 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
     isEditBirthNAC = false
     // isInitialRender, setIsInitialRender
 }) => {
-    console.log("value", value);
-    console.log("valuePermanent", valuePermanent);
     const stateId = Digit.ULBService.getStateId();
     let tenantId = "";
     tenantId = Digit.ULBService.getCurrentTenantId();
@@ -48,27 +46,28 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
     let cmbFilterCountry = [];
     let cmbFilterState = [];
     useEffect(() => {
-        console.log(cmbLB.filter((cmbLB) => cmbLB.code === tenantId));
         if (isPrsentAddress && isInitialRender) {
             if (cmbLB.length > 0) {
                 currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
                 // setAdrsLBName(currentLB[0]);
-                cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
-                setpermtaddressCountry(cmbFilterCountry[0]);
-                setCountryValue(cmbFilterCountry[0].countrycode);
-                setCountryValuePermanent(cmbFilterCountry[0].countrycode);
-                cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
-                setpermtaddressStateName(cmbFilterState[0]);
-                setValue(cmbFilterState[0].statecode);
-                setValuePermanent(cmbFilterState[0].statecode);
+                if (cmbCountry.length > 0 && currentLB.length > 0) {
+                    cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
+                    setpermtaddressCountry(cmbFilterCountry[0]);
+                    //setCountryValue(cmbFilterCountry[0].countrycode);
+                    setCountryValuePermanent(cmbFilterCountry[0].countrycode);
+                }
+                if (cmbState.length > 0 && currentLB.length > 0) {
+                    cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
+                    setpermtaddressStateName(cmbFilterState[0]);
+                    //setValue(cmbFilterState[0].statecode);
+                    setValuePermanent(cmbFilterState[0].statecode);
+                }
                 setIsInitialRender(false);
             }
         } else if (!isPrsentAddress) {
-            console.log("Jetheesh");
             if (cmbLB.length > 0) {
                 currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
                 // setAdrsLBName(currentLB[0]);
-                console.log(currentLB);
                 if (cmbCountry.length > 0 && currentLB.length > 0) {
                     cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
                     setpermtaddressCountry(cmbFilterCountry[0]);
@@ -76,15 +75,16 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
                 }
                 if (cmbState.length > 0 && currentLB.length > 0) {
                     cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
-                    setpermtaddressStateName(cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode));
-                    console.log(cmbFilterState[0]);
-                    setValuePermanent(cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode)[0].code);
+                    // console.log("test",cmbFilterState);
+                    setpermtaddressStateName(cmbFilterState[0]);
+                    // console.log(cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode)[0].code);
+                    setValuePermanent(cmbFilterState[0].code);
                 }
                 setIsInitialRender(false);
             }
         }
-    }, [localbodies, isInitialRender]);
-   
+    }, [isPrsentAddress,localbodies, isInitialRender]);
+
     if (isEditBirth) {
         if (formData?.ChildDetails?.AddressBirthDetails?.permtaddressCountry != null) {
             if (cmbCountry.length > 0 && (permtaddressCountry === undefined || permtaddressCountry === "")) {
@@ -147,7 +147,6 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
     }
     function setSelectaddressStateName(value) {
         setpermtaddressStateName(value);
-        console.log("value", value);
         setValuePermanent(value.code);
     }
 

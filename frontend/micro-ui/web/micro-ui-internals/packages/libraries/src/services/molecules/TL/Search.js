@@ -98,6 +98,7 @@ export const TLSearch = {
     };
     const tradeUnits = {
       title: "TL_TRADE_UNITS_HEADER",
+      asSectionHeader: true,
       additionalDetails: {
 
         units: response?.tradeLicenseDetail?.tradeUnits?.map((unit, index) => {

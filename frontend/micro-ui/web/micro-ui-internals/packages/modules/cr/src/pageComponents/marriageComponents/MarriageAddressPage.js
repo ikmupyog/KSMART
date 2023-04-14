@@ -1388,7 +1388,7 @@ const MarriageAddressPage = ({ config, onSelect, userType, formData, isEditBirth
   } else
     return (
       <React.Fragment>
-        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
+        {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}> */}
           {/* {isPrsentAddress === false && ( */}
           <div>
             <AddressPermanent
@@ -1631,7 +1631,7 @@ const MarriageAddressPage = ({ config, onSelect, userType, formData, isEditBirth
             />
           )}
           {""}
-        </FormStep>
+        {/* </FormStep> */}
       </React.Fragment>
     );
 };
