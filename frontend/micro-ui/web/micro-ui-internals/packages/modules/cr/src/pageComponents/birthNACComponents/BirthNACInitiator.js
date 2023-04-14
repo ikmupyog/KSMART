@@ -30,7 +30,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
   );
   const [isDeclaration, setDeclaration] = useState(formData?.BirthNACInitiator?.isunderstood ? formData?.BirthNACInitiator?.isunderstood : false);
   const [initiatorNameEn, setinitiatorNameEn] = useState(
-    formData?.BirthNACInitiator?.initiatorNameEn ? formData?.BirthNACInitiator?.initiatorNameEn : name
+    formData?.BirthNACInitiator?.initiatorNameEn ? formData?.BirthNACInitiator?.initiatorNameEn : ""
   );
   const [initiatorAadhar, setinitiatorAadhar] = useState(
     formData?.BirthNACInitiator?.initiatorAadhar ? formData?.BirthNACInitiator?.initiatorAadhar : ""
@@ -62,14 +62,15 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
   const [uploadedFile3, setUploadedFile3] = useState(null);
   const [uploadedFile4, setUploadedFile4] = useState(null);
   const [uploadedFile5, setUploadedFile5] = useState(null);
-  const [file, setFile] = useState(formData?.owners?.documents?.ProofOfIdentity);
-  const [file1, setFile1] = useState(formData?.owners?.documents?.ProofOfIdentity);
-  const [file2, setFile2] = useState(formData?.owners?.documents?.ProofOfIdentity);
-  const [file3, setFile3] = useState(formData?.owners?.documents?.ProofOfIdentity);
-  const [file4, setFile4] = useState(formData?.owners?.documents?.ProofOfIdentity);
-  const [file5, setFile5] = useState(formData?.owners?.documents?.ProofOfIdentity);
+  const [aadressFile, setAadressFile] = useState(formData?.owners?.documents?.ProofOfIdentity);
+  const [proofFile, setProofFile] = useState(formData?.owners?.documents?.ProofOfIdentity);
+  const [certificateFile, setCertificateFile] = useState(formData?.owners?.documents?.ProofOfIdentity);
+  const [motherIdFile, setMotherIdFile] = useState(formData?.owners?.documents?.ProofOfIdentity);
+  const [fatherIdFile, setFatherIdFile] = useState(formData?.owners?.documents?.ProofOfIdentity);
+  const [medicalFile, setMedicalFile] = useState(formData?.owners?.documents?.ProofOfIdentity);
 
   const [toast, setToast] = useState(false);
+  const [DobMissmatchError, setDOBMissmatchError] = useState(false);
   const [infomantFirstNmeEnError, setinfomantFirstNmeEnError] = useState(formData?.BirthNACInitiator?.initiatorNameEn ? false : false);
   const [initiatorAadharError, setinitiatorAadharError] = useState(formData?.BirthNACInitiator?.initiatorAadhar ? false : false);
   const [initiatorMobileError, setinitiatorMobileError] = useState(formData?.BirthNACInitiator?.initiatorMobile ? false : false);
@@ -163,7 +164,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
       let ownerStates = formData?.BirthNACInitiator?.ownerState.map((item) => {
         let newValue = item;
         newValue.dob = new Date(item.dob);
-        newValue.sex = item.sex.value;
+        newValue.sex = item.sex;
         return newValue;
       });
       return ownerStates;
@@ -333,33 +334,33 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
     }
   }
   function selectfile(e) {
-    setFile(e.target.files[0]);
+    setAadressFile(e.target.files[0]);
   }
   function selectfile1(e) {
-    setFile1(e.target.files[0]);
+    setProofFile(e.target.files[0]);
   }
   function selectfile2(e) {
-    setFile2(e.target.files[0]);
+    setCertificateFile(e.target.files[0]);
   }
   function selectfile3(e) {
-    setFile3(e.target.files[0]);
+    setMotherIdFile(e.target.files[0]);
   }
   function selectfile4(e) {
-    setFile4(e.target.files[0]);
+    setFatherIdFile(e.target.files[0]);
   }
   function selectfile5(e) {
-    setFile5(e.target.files[0]);
+    setMedicalFile(e.target.files[0]);
   }
 
   useEffect(() => {
     (async () => {
       setError(null);
-      if (file) {
-        if (file.size >= 2000000) {
+      if (aadressFile) {
+        if (aadressFile.size >= 2000000) {
           setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
         } else {
           try {
-            const response = await Digit.UploadServices.Filestorage("citizen-profile", file, Digit.ULBService.getStateId());
+            const response = await Digit.UploadServices.Filestorage("citizen-profile", aadressFile, Digit.ULBService.getStateId());
             if (response?.data?.files?.length > 0) {
               setUploadedFile(response?.data?.files[0]?.fileStoreId);
             } else {
@@ -369,16 +370,16 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
         }
       }
     })();
-  }, [file]);
+  }, [aadressFile]);
   useEffect(() => {
     (async () => {
       setError(null);
-      if (file1) {
-        if (file1.size >= 2000000) {
+      if (proofFile) {
+        if (proofFile.size >= 2000000) {
           setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
         } else {
           try {
-            const response = await Digit.UploadServices.Filestorage("citizen-profile", file1, Digit.ULBService.getStateId());
+            const response = await Digit.UploadServices.Filestorage("citizen-profile", proofFile, Digit.ULBService.getStateId());
             if (response?.data?.files?.length > 0) {
               setUploadedFile1(response?.data?.files[0]?.fileStoreId);
             } else {
@@ -388,16 +389,16 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
         }
       }
     })();
-  }, [file1]);
+  }, [proofFile]);
   useEffect(() => {
     (async () => {
       setError(null);
-      if (file2) {
-        if (file2.size >= 2000000) {
+      if (certificateFile) {
+        if (certificateFile.size >= 2000000) {
           setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
         } else {
           try {
-            const response = await Digit.UploadServices.Filestorage("citizen-profile", file2, Digit.ULBService.getStateId());
+            const response = await Digit.UploadServices.Filestorage("citizen-profile", certificateFile, Digit.ULBService.getStateId());
             if (response?.data?.files?.length > 0) {
               setUploadedFile2(response?.data?.files[0]?.fileStoreId);
             } else {
@@ -407,16 +408,16 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
         }
       }
     })();
-  }, [file2]);
+  }, [certificateFile]);
   useEffect(() => {
     (async () => {
       setError(null);
-      if (file3) {
-        if (file3.size >= 2000000) {
+      if (motherIdFile) {
+        if (motherIdFile.size >= 2000000) {
           setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
         } else {
           try {
-            const response = await Digit.UploadServices.Filestorage("citizen-profile", file3, Digit.ULBService.getStateId());
+            const response = await Digit.UploadServices.Filestorage("citizen-profile", motherIdFile, Digit.ULBService.getStateId());
             if (response?.data?.files?.length > 0) {
               setUploadedFile3(response?.data?.files[0]?.fileStoreId);
             } else {
@@ -426,16 +427,16 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
         }
       }
     })();
-  }, [file3]);
+  }, [motherIdFile]);
   useEffect(() => {
     (async () => {
       setError(null);
-      if (file4) {
-        if (file4.size >= 2000000) {
+      if (fatherIdFile) {
+        if (fatherIdFile.size >= 2000000) {
           setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
         } else {
           try {
-            const response = await Digit.UploadServices.Filestorage("citizen-profile", file4, Digit.ULBService.getStateId());
+            const response = await Digit.UploadServices.Filestorage("citizen-profile", fatherIdFile, Digit.ULBService.getStateId());
             if (response?.data?.files?.length > 0) {
               setUploadedFile4(response?.data?.files[0]?.fileStoreId);
             } else {
@@ -445,16 +446,16 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
         }
       }
     })();
-  }, [file4]);
+  }, [fatherIdFile]);
   useEffect(() => {
     (async () => {
       setError(null);
-      if (file5) {
-        if (file5.size >= 2000000) {
+      if (medicalFile) {
+        if (medicalFile.size >= 2000000) {
           setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
         } else {
           try {
-            const response = await Digit.UploadServices.Filestorage("citizen-profile", file5, Digit.ULBService.getStateId());
+            const response = await Digit.UploadServices.Filestorage("citizen-profile", medicalFile, Digit.ULBService.getStateId());
             if (response?.data?.files?.length > 0) {
               setUploadedFile5(response?.data?.files[0]?.fileStoreId);
             } else {
@@ -464,7 +465,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
         }
       }
     })();
-  }, [file5]);
+  }, [medicalFile]);
   let validFlag = true;
   const goNext = () => {
     if (initiatorNameEn == null || initiatorNameEn == "" || initiatorNameEn == undefined) {
@@ -528,12 +529,19 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
     } else {
       setinitiatorAddressError(false);
     }
-
+    if (formData?.BirthNACDetails?.childDOB !== ownerState[0].dob) {
+      // alert("mismatch");
+      setDOBMissmatchError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    }
     const newOwnerState = ownerState.map((item) => {
       let newVal = item;
       newVal.dob = Date.parse(item.dob);
       newVal.nacorderofChildren = parseInt(item.nacorderofChildren);
-      newVal.sex = item.sex.i18nKey;
+      newVal.sex = item.sex?.code;
       return newVal;
     });
 
@@ -600,6 +608,13 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
           ownerState[0].childNameMl === "" ||
           ownerState[0].sex === "" ||
           ownerState[0].nacorderofChildren === ""
+          //||
+          // !aadressFile ||
+          // !proofFile ||
+          // !certificateFile ||
+          // !motherIdFile ||
+          // !fatherIdFile ||
+          // !medicalFile
         }
       >
         <div>
@@ -650,7 +665,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
               </div>
               <div className="col-md-3">
                 <CardLabel>
-                  S/o or D/o
+                  {`${t("CR_IS_CAREOF")}`}(S/O or D/O)
                   <span className="mandatorycss">*</span>
                 </CardLabel>
                 <TextInput
@@ -838,14 +853,16 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     <CardLabel>
                       Alive? Yes/No<span className="mandatorycss">*</span>
                     </CardLabel>
-                    <CheckBox
-                      t={t}
-                      label={field?.isAlive ? "Yes" : "No"}
-                      name="isAlive"
-                      onChange={(e) => handleOwnerInputField(index, e.target.checked, "isAlive")}
-                      value={field?.isAlive}
-                      checked={field?.isAlive}
-                    />
+                    <div className="col-md-3">
+                      <CheckBox
+                        t={t}
+                        label={field.isAlive ? "Yes" : "NO"}
+                        name="isAlive"
+                        onChange={(e) => handleOwnerInputField(index, e.target.checked, "isAlive")}
+                        value={field?.isAlive}
+                        checked={field?.isAlive}
+                      />
+                    </div>
                   </div>
                   {ownerState.length === index + 1 && (
                     <div className="col-md-1">
@@ -909,12 +926,12 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
           <div className="row">
             <div className="col-md-12">
               <div className="row">
-                <div className="col-md-5">
+                <div className="col-md-6">
                   <CardLabel>
                     Address proof of parents at the time of birth<span className="mandatorycss">*</span>
                   </CardLabel>
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-6">
                   <UploadFile
                     extraStyleName={"propertyCreate"}
                     accept=".jpg,.png,.pdf"
@@ -927,12 +944,12 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-5">
+                <div className="col-md-6">
                   <CardLabel>
                     Proof of birth showing the date/place details of parents at the time of birth<span className="mandatorycss">*</span>
                   </CardLabel>
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-6">
                   <UploadFile
                     extraStyleName={"propertyCreate"}
                     accept=".jpg,.png,.pdf"
@@ -945,12 +962,12 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-5">
+                <div className="col-md-6">
                   <CardLabel>
                     School Certificate of Child(above 6 years)<span className="mandatorycss">*</span>
                   </CardLabel>
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-6">
                   <UploadFile
                     extraStyleName={"propertyCreate"}
                     accept=".jpg,.png,.pdf"
@@ -963,12 +980,12 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-5">
+                <div className="col-md-6">
                   <CardLabel>
                     ID Proof of Mother at the time of birth <span className="mandatorycss">*</span>
                   </CardLabel>
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-6">
                   <UploadFile
                     extraStyleName={"propertyCreate"}
                     accept=".jpg,.png,.pdf"
@@ -981,12 +998,12 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-5">
+                <div className="col-md-6">
                   <CardLabel>
                     ID Proof of Father at the time of birth <span className="mandatorycss">*</span>
                   </CardLabel>
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-6">
                   <UploadFile
                     extraStyleName={"propertyCreate"}
                     accept=".jpg,.png,.pdf"
@@ -999,12 +1016,12 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                 </div>
               </div>
               <div className="row">
-                <div className="col-md-5">
+                <div className="col-md-6">
                   <CardLabel>
                     Medical Certificate(if child is differently abled for not attending school after 6 years) <span className="mandatorycss">*</span>
                   </CardLabel>
                 </div>
-                <div className="col-md-3">
+                <div className="col-md-6">
                   <UploadFile
                     extraStyleName={"propertyCreate"}
                     accept=".jpg,.png,.pdf"
@@ -1055,7 +1072,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
 
           {toast && (
             <Toast
-              error={infomantFirstNmeEnError || initiatorAadharError || initiatorMobileError || initiatorAddressError}
+              error={infomantFirstNmeEnError || initiatorAadharError || initiatorMobileError || initiatorAddressError || DobMissmatchError}
               label={
                 infomantFirstNmeEnError || initiatorAadharError || initiatorMobileError || initiatorAddressError
                   ? infomantFirstNmeEnError
@@ -1066,6 +1083,8 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     ? t(`BIRTH_ERROR_INFORMANT_MOBILE_CHOOSE`)
                     : initiatorAddressError
                     ? t(`BIRTH_ERROR_INFORMANT_ADDRESS_CHOOSE`)
+                    : DobMissmatchError
+                    ? "DOSB MISSMATCH"
                     : setToast(false)
                   : setToast(false)
               }
