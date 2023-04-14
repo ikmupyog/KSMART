@@ -68,7 +68,7 @@ export const TLSearch = {
 
     const tradedetails = {
       title: "TL_COMMON_TR_DETAILS",
-      asSectionHeader: true,
+      //asSectionHeader: true,
       values: [
         { title: "TL_FINANCIAL_YEAR_LABEL", value: response?.financialYear ? `FY${response?.financialYear}` : "NA" },
         { title: "TL_APPLICANT_ID_LABEL", value: response?.applicationNumber ? `${response?.applicationNumber}` : "NA" },
@@ -117,34 +117,72 @@ export const TLSearch = {
       })
     });
 
+
     let strucutreplacedet = [];
     if (response?.tradeLicenseDetail?.structureType?.includes("LAND")) {
-      strucutreplacedet.push({
-        title: "TL_LOCALIZATION_BLOCK_NO",
-        value: response?.tradeLicenseDetail?.structurePlace?.blockNo
-          ? response?.tradeLicenseDetail?.structurePlace?.blockNo
-          : "NA"
-      });
-      strucutreplacedet.push({
-        title: "TL_LOCALIZATION_SURVEY_NO",
-        value: response?.tradeLicenseDetail?.structurePlace?.surveyNo
-          ? response?.tradeLicenseDetail?.structurePlace?.surveyNo
-          : "NA"
-      });
-      strucutreplacedet.push({
-        title: "TL_LOCALIZATION_SUBDIVISION_NO",
-        value: response?.tradeLicenseDetail?.structurePlace?.subDivisionNo
-          ? response?.tradeLicenseDetail?.structurePlace?.subDivisionNo
-          : "NA"
-      });
-      strucutreplacedet.push({
-        title: "TL_LOCALIZATION_PARTITION_NO",
-        value: response?.tradeLicenseDetail?.structurePlace?.partitionNo
-          ? response?.tradeLicenseDetail?.structurePlace?.partitionNo
-          : "NA"
-      });
+      response?.tradeLicenseDetail?.structurePlace.map((structreplace) => {
+        strucutreplacedet.push({
+          title: "TL_LOCALIZATION_BLOCK_NO",
+          value: structreplace?.blockNo
+            ? structreplace?.blockNo
+            : "NA"
+        });
+        strucutreplacedet.push({
+          title: "TL_LOCALIZATION_SURVEY_NO",
+          value: structreplace?.surveyNo
+            ? structreplace?.surveyNo
+            : "NA"
+        });
+        strucutreplacedet.push({
+          title: "TL_LOCALIZATION_SUBDIVISION_NO",
+          value: structreplace?.subDivisionNo
+            ? structreplace?.subDivisionNo
+            : "NA"
+        });
+        strucutreplacedet.push({
+          title: "TL_LOCALIZATION_PARTITION_NO",
+          value: structreplace?.partitionNo
+            ? structreplace?.partitionNo
+            : "NA"
+        });
+      })
     }
-
+    if (response?.tradeLicenseDetail?.structureType?.includes("BUILDING")) {
+      response?.tradeLicenseDetail?.structurePlace.map((structreplace) => {
+        strucutreplacedet.push({
+          title: "TL_LOCALIZATION_DOOR_NO",
+          value: structreplace?.doorNo
+            ? structreplace?.doorNo
+            : "NA"
+        });
+        strucutreplacedet.push({
+          title: "TL_LOCALIZATION_DOOR_NO_SUB",
+          value: structreplace?.doorNoSub
+            ? structreplace?.doorNoSub
+            : "NA"
+        })
+      })
+    }
+    if (response?.tradeLicenseDetail?.structureType?.includes("VEHICLE")) {
+      response?.tradeLicenseDetail?.structurePlace.map((structreplace) => {
+        strucutreplacedet.push({
+          title: "TL_VECHICLE_NO",
+          value: structreplace?.vehicleNo
+            ? structreplace?.vehicleNo
+            : "NA"
+        })
+      })
+    }
+    if (response?.tradeLicenseDetail?.structureType?.includes("WATER")) {
+      response?.tradeLicenseDetail?.structurePlace.map((structreplace) => {
+        strucutreplacedet.push({
+          title: "TL_VESSEL_NO",
+          value: structreplace?.vesselNo
+            ? structreplace?.vesselNo
+            : "NA"
+        })
+      })
+    }
     const structurePlace1 = {
       title: "TL_PLACE_ACTIVITY",
       values: [
@@ -216,15 +254,15 @@ export const TLSearch = {
 
     const ownersdocument = {
       title: "PT_COMMON_DOCS",
-      additionalDetails:{
-        documents:[
+      additionalDetails: {
+        documents: [
           {
-          //  title: "PT_COMMON_DOCS",
+            //  title: "PT_COMMON_DOCS",
             values: []
           }
         ]
       }
-   };
+    };
 
     response?.tradeLicenseDetail?.applicationDocuments?.map((document) => {
       ownersdocument.additionalDetails.documents[0].values.push({
@@ -236,40 +274,130 @@ export const TLSearch = {
     });
 
     let correctiontag = JSON.parse(response?.correction);
-    const correctionbasedet = correctiontag?.tradeName != "" ? {
+    const correctionbasedet = {
       title: "TL_CORRECTION_DET",
-      values:
-        [
-          { title: "TL_COMMON_TABLE_COL_TRD_NAME", value: correctiontag?.tradeName || "NA" },
-          { title: "TL_COMMON_TABLE_COL_TRD_NAME", value: correctiontag?.licenseUnitNameLocal || "NA" },
-          { title: "TL_LOCALIZATION_WARD_NO", value: correctiontag?.wardNo || "NA" },
-        ]
-    } : "";
+      values: []
+    }
+    if (correctiontag?.tradeName != "") {
+      correctionbasedet.values.push({ title: "TL_COMMON_TABLE_COL_TRD_NAME", value: correctiontag?.licenseUnitName || "NA" });
+      correctionbasedet.values.push({ title: "TL_COMMON_TABLE_COL_TRD_NAME", value: correctiontag?.licenseUnitNameLocal || "NA" });
+      // correctionbasedet.values.push({ title: "TL_LOCALIZATION_WARD_NO", value: correctiontag?.wardNo || "NA" });
+    }
 
-    const correctiontradeUnits = {
-      title: "TL_TRADE_UNITS_HEADER",
-      additionalDetails: {
-        units: correctiontag?.tradeUnits?.map((unit, index) => {
-          return {
-            title: "TL_UNIT_HEADER",
-            values: [
-              {
-                title: "TRADELICENSE_TRADECATEGORY_LABEL",
-                value: unit?.businessCategory ? `${unit?.businessCategory}` : "NA"
-              },
-              {
-                title: "TRADELICENSE_TRADETYPE_LABEL",
-                value: unit?.businessType ? `${unit?.businessType}` : "NA"
-              },
-              {
-                title: "TL_NEW_TRADE_SUB_TYPE_LABEL",
-                value: unit?.businessSubtype ? `${unit?.businessSubtype}` : "NA"
-              },
-            ],
-          };
-        }),
-      },
-    };
+
+    correctiontag?.tradeUnits?.map((unit) => {
+      correctionbasedet.values.push({ title: "TRADELICENSE_TRADECATEGORY_LABEL", value: unit?.businessCategory ? `${unit?.businessCategory}` : "NA" });
+      correctionbasedet.values.push({ title: "TRADELICENSE_TRADETYPE_LABEL", value: unit?.businessType ? `${unit?.businessType}` : "NA" });
+      correctionbasedet.values.push({ title: "TL_NEW_TRADE_SUB_TYPE_LABEL", value: unit?.businessSubtype ? `${unit?.businessSubtype}` : "NA" });
+    });
+    if (correctiontag?.structurePlace.length > 0) {
+      correctionbasedet.values.push({
+        title: "TL_NEW_TRADE_DETAILS_STRUCT_TYPE_LABEL",
+        value: response?.tradeLicenseDetail?.structureType
+      });
+      correctionbasedet.values.push({
+        title: "TL_NEW_TRADE_DETAILS_STRUCT_SUB_TYPE_LABEL",
+        value: response?.tradeLicenseDetail?.structurePlaceSubtype
+          ? response?.tradeLicenseDetail?.structurePlaceSubtype
+          : "NA",
+      });
+      if (response?.tradeLicenseDetail?.structureType?.includes("LAND")) {
+        correctiontag?.structurePlace?.map((structreplace) => {
+          correctionbasedet.values.push({
+            title: "TL_LOCALIZATION_BLOCK_NO",
+            value: structreplace?.blockNo
+              ? structreplace?.blockNo
+              : "NA"
+          });
+          correctionbasedet.values.push({
+            title: "TL_LOCALIZATION_SURVEY_NO",
+            value: structreplace?.surveyNo
+              ? structreplace?.surveyNo
+              : "NA"
+          });
+          correctionbasedet.values.push({
+            title: "TL_LOCALIZATION_SUBDIVISION_NO",
+            value: structreplace?.subDivisionNo
+              ? structreplace?.subDivisionNo
+              : "NA"
+          });
+          correctionbasedet.values.push({
+            title: "TL_LOCALIZATION_PARTITION_NO",
+            value: structreplace?.partitionNo
+              ? structreplace?.partitionNo
+              : "NA"
+          });
+        });
+      }
+      if (response?.tradeLicenseDetail?.structureType?.includes("BUILDING")) {
+        correctiontag?.structurePlace?.map((structreplace) => {
+          correctionbasedet.values.push({
+            title: "TL_LOCALIZATION_DOOR_NO",
+            value: structreplace?.doorNo
+              ? structreplace?.doorNo
+              : "NA"
+          });
+          correctionbasedet.values.push({
+            title: "TL_LOCALIZATION_DOOR_NO_SUB",
+            value: structreplace?.doorNoSub
+              ? structreplace?.doorNoSub
+              : "NA"
+          })
+        })
+      }
+      if (response?.tradeLicenseDetail?.structureType?.includes("VEHICLE")) {
+        correctiontag?.structurePlace?.map((structreplace) => {
+          correctionbasedet.values.push({
+            title: "TL_VECHICLE_NO",
+            value: structreplace?.vehicleNo
+              ? structreplace?.vehicleNo
+              : "NA"
+          })
+        })
+      }
+      if (response?.tradeLicenseDetail?.structureType?.includes("WATER")) {
+        correctiontag?.structurePlace?.map((structreplace) => {
+          correctionbasedet.values.push({
+            title: "TL_VESSEL_NO",
+            value: structreplace?.vesselNo
+              ? structreplace?.vesselNo
+              : "NA"
+          })
+        })
+      }
+    }
+    if (correctiontag?.owners.length > 0) {
+      response?.tradeLicenseDetail?.licenseeType?.includes("INSTITUTION") ?
+        correctiontag?.owners?.map((owner) => {
+          let licenseeType = response?.tradeLicenseDetail?.licenseeType
+            ? `COMMON_MASTERS_OWNERSHIPCATEGORY_${stringReplaceAll(response?.tradeLicenseDetail?.licenseeType, ".", "_")}`
+            : "NA";
+
+          correctionbasedet.values.push({ title: "TL_NEW_OWNER_DETAILS_OWNERSHIP_TYPE_LABEL", value: licenseeType });
+          correctionbasedet.values.push({ title: "TL_INSTITUTION_NAME_LABEL", value: response?.tradeLicenseDetail?.institution?.instituionName || "NA" });
+          correctionbasedet.values.push({ title: "TL_NEW_OWNER_DESIG_LABEL", value: response?.tradeLicenseDetail?.institution?.designation || "NA" });
+          correctionbasedet.values.push({
+            title: "TL_TELEPHONE_NUMBER_LABEL",
+            value:
+              response?.tradeLicenseDetail?.institution?.contactNo || response?.tradeLicenseDetail?.institution?.contactNo !== ""
+                ? response?.tradeLicenseDetail?.institution?.contactNo
+                : "NA",
+          });
+          correctionbasedet.values.push({ title: "TL_OWNER_S_MOBILE_NUM_LABEL", value: owner?.mobileNumber || "NA" });
+          correctionbasedet.values.push({ title: "TL_NEW_OWNER_DETAILS_NAME_LABEL", value: response?.tradeLicenseDetail?.institution?.name || "NA" });
+          correctionbasedet.values.push({ title: "TL_NEW_OWNER_DETAILS_EMAIL_LABEL", value: owner?.emailId || owner?.emailId !== "" ? owner?.emailId : "NA" });
+        }) :
+        correctiontag?.owners?.map((owner) => {
+          let licenseeType = response?.tradeLicenseDetail?.licenseeType
+            ? `COMMON_MASTERS_OWNERSHIPCATEGORY_${stringReplaceAll(response?.tradeLicenseDetail?.licenseeType, ".", "_")}`
+            : "NA";
+          correctionbasedet.values.push({ title: "TL_NEW_OWNER_DETAILS_OWNERSHIP_TYPE_LABEL", value: licenseeType });
+          correctionbasedet.values.push({ title: "TL_OWNER_S_NAME_LABEL", value: owner?.name + "  " + owner?.applicantNameLocal || "NA" });
+          correctionbasedet.values.push({ title: "TL_OWNER_S_MOBILE_NUM_LABEL", value: owner?.mobileNumber || "NA" });
+          correctionbasedet.values.push({ title: "TL_GUARDIAN_S_NAME_LABEL", value: owner?.careOf + " " + owner?.careOfName || "NA" });
+          correctionbasedet.values.push({ title: "TL_NEW_OWNER_DETAILS_EMAIL_LABEL", value: owner?.emailId || "NA" });
+        });
+    }
 
 
     if (response?.workflowCode == "NewTL" && response?.status !== "APPROVED") {
@@ -285,6 +413,12 @@ export const TLSearch = {
       };
       response && employeeResponse.push(details);
     }
+    if ((response?.correctionId !== null && response?.correctionId !== "" &&
+      response?.correctionAppNumber !== null && response?.correctionAppNumber !== "")) {
+      if (correctionbasedet.values.length !== 0) {
+        response && employeeResponse.push(correctionbasedet);
+      }
+    }
     response && employeeResponse.push(tradedetails);
     response?.tradeLicenseDetail?.tradeUnits && employeeResponse.push(tradeUnits);
     response?.tradeLicenseDetail?.structureType && employeeResponse.push(structurePlace1);
@@ -294,20 +428,9 @@ export const TLSearch = {
     // response && !(propertyDetails?.Properties?.length > 0) && employeeResponse.push(tradeAddress);
     response?.tradeLicenseDetail?.address && employeeResponse.push(tradeAddress);
     response?.tradeLicenseDetail?.owners && employeeResponse.push(owners);
+
+
     response?.tradeLicenseDetail?.applicationDocuments && employeeResponse.push(ownersdocument);
-
-    console.log("appdata"+JSON.stringify(employeeResponse));
-    
-    if ((response?.correctionId !== null && response?.correctionId !== "" &&
-      response?.correctionAppNumber !== null && response?.correctionAppNumber !== "")) {
-      if (correctionbasedet !== "") {
-        response && employeeResponse.push(correctionbasedet);
-      }
-      if (correctiontag?.tradeUnits.length > 0) {
-        response && employeeResponse.push(correctiontradeUnits);
-      }
-    }
-
     return {
       tenantId: response.tenantId,
       applicationDetails: employeeResponse,
