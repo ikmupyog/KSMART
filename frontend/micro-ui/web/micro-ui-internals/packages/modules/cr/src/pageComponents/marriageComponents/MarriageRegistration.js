@@ -284,6 +284,21 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
+  const convertEpochToDate = (dateEpoch) => {
+    // Returning null in else case because new Date(null) returns initial date from calender
+    if (dateEpoch) {
+      const dateFromApi = new Date(dateEpoch);
+      let month = dateFromApi.getMonth() + 1;
+      let day = dateFromApi.getDate();
+      let year = dateFromApi.getFullYear();
+      month = (month > 9 ? "" : "0") + month;
+      day = (day > 9 ? "" : "0") + day;
+      return `${year}-${month}-${day}`;
+      //  return `${day}-${month}-${year}`;
+    } else {
+      return null;
+    }
+  };
 
   const onSkip = () => onSelect();
   // React.useEffect(() => {
@@ -327,10 +342,10 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
       let Difference_In_DaysRounded = Math.floor(Difference_In_Days);
     } else {
       setmarriageDOM(null);
-      // setDOBError(true);
-      // setToast(true);
+      setDOBError(true);
+      setToast(true);
       setTimeout(() => {
-        // setToast(false);
+         setToast(false);
       }, 3000);
     }
   }
@@ -561,24 +576,28 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
           config={config}
           onSelect={goNext}
           onSkip={onSkip}
-          // isDisabled={
-          //   !marriageDOM ||
-          //   !marriageDistrictid ||
-          //   !marriageTalukID ||
-          //   !marriageVillageName ||
-          //   !marriageLBtype ||
-          //   !marriageTenantid ||
-          //   !marriagePlacetype ||
-          //   (marriagePlacetype.name === "Religious Institution" ? !placeidEn : false) ||
-          //   (marriagePlacetype.name === "Mandapam/Hall/Auditorium/Convention Centre" ? !placeidEn : false) ||
-          //   (marriagePlacetype.name === "Sub Registrar’s Office" ? !placeidEn : false) ||
-          //   (marriagePlacetype.name === "House"
-          //     ? !marriageLocalityEn || !marriageLocalityMl || !marriagePlacenameEn || !marriagePlacenameMl
-          //     : false) ||
-          //   (marriagePlacetype.name === "Public Place" || "Private Place"
-          //     ? !marriageLocalityEn || !marriageLocalityMl || !marriagePlacenameEn || !marriagePlacenameMl
-          //     : false)
-          // }
+          isDisabled={
+            !marriageDOM ||
+            !marriageDistrictid ||
+            !marriageTalukID ||
+            !marriageVillageName ||
+            !marriageLBtype ||
+            !marriageTenantid ||
+            !marriagePlacetype ||
+            (marriagePlacetype.code === "RELIGIOUS_INSTITUTION" ? !placeidEn : false) ||
+            (marriagePlacetype.code === "MANDAPAM_HALL_AND_OTHER" ? !placeidEn : false) ||
+            (marriagePlacetype.code === "SUB_REGISTRAR_OFFICE" ? !placeidEn : false) ||
+            (marriagePlacetype.code === "HOUSE"
+              ? !marriageLocalityEn || !marriageLocalityMl || !marriageHouseNoAndNameEn || !marriageHouseNoAndNameMl
+              : false) ||
+            (marriagePlacetype.code === "PUBLIC_PLACE" || marriagePlacetype.code === "PRIVATE_PLACE"
+              ? !marriageLocalityEn || !marriageLocalityMl || !marriagePublicOrPrivateNamePlaceEn || !marriagePublicOrPrivateNamePlaceMl
+              : false) ||
+            (marriagePlacetype.code === "OTHER"
+              ? !marriageLocalityEn || !marriageLocalityMl || !marriagePlacenameEn || !marriagePlacenameMl
+              : false) || 
+            !marriageType
+           }
         >
           <div className="row">
             <div className="col-md-12">
@@ -600,6 +619,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                       date={marriageDOM}
                       isMandatory={false}
                       name="marriageDOM"
+                      max={convertEpochToDate(new Date())}
                       onChange={setSelectmarriageDOM}
                       inputFormat="DD-MM-YYYY"
                       placeholder={`${t("CR_DATE_OF_MARRIAGE")}`}

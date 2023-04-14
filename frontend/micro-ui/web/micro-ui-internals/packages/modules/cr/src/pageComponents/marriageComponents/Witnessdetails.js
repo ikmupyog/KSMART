@@ -13,7 +13,7 @@ import {
   SubmitBar,
   TextArea,
   PopUp,
-  ImageUploadHandler,
+  UploadFile,
 } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/MARRIAGETimeline";
 import { useTranslation } from "react-i18next";
@@ -138,9 +138,13 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   const [previewGroomImage, setPreviewGroomImage] = useState(null);
   const [previewBrideImage, setPreviewBrideImage] = useState(null);
   const [expirationType, setExpirationType] = useState(null);
-  const [expirationTypeHusband, setExpirationTypeHusband] = useState(null);
+  const [expirationTypeHusband, setExpirationTypeHusband] = useState(
+    formData?.WitnessDetails?.expirationTypeHusband ? formData?.WitnessDetails?.expirationTypeHusband : null
+  );
   const [isExpiredHusband, setIsExpiredHusband] = useState(false);
-  const [expirationTypeWife, setExpirationTypeWife] = useState(null);
+  const [expirationTypeWife, setExpirationTypeWife] = useState(
+    formData?.WitnessDetails?.expirationTypeWife ? formData?.WitnessDetails?.expirationTypeWife : null
+  );
   const [isExpiredWife, setIsExpiredWife] = useState(false);
   const [uniqueId, setUniqueId] = useState(null);
 
@@ -153,10 +157,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   }
 
   const [uploadedImages, setUploadedImagesIds] = useState(null);
-
-  const handleUpload = (ids) => {
-    setUploadedImagesIds(ids);
-  };
 
   const getUserType = () => Digit.UserService.getType();
 
@@ -530,6 +530,8 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
         witness2Mobile,
         witness1Esigned,
         witness2Esigned,
+        expirationTypeHusband,
+        expirationTypeWife,
       });
     }
   };
@@ -577,7 +579,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
             {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
             <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
               <div className="row">
-                <div className="col-md-12">
+                <div className="col-md-12" style={{ marginBottom: "20px" }}>
                   <div className="row">
                     <div className="col-md-12">
                       <h1 className="headingh1">
@@ -919,77 +921,49 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                       </h1>
                     </div>
                   </div>
-                  <div className="col-md-12"></div>
-                  {/* <div className="col-md-12">
-            <div className="col-md-4">
-              <h2>Add Groom Image :</h2>
-              <input type="file" onChange={handleChange} />
-              <img src={file} />
-            </div>
-            <div className="col-md-4">
-              <h2>Add Bride Image :</h2>
-              <input type="file" onChange={handleChange} />
-              <img src={file} />
-            </div>
-          </div> */}
-                  {/* <div className="col-md-12">
-            <div className="col-md-4">
-              <h2>Add Groom Image :</h2>
-              <input type="file" onChange={handleChange} />
-              <img src={file} />
-            </div>
-            <div className="col-md-4">
-              <h2>Add Bride Image :</h2>
-              <input type="file" onChange={handleChanges} />
-              <img src={files} />
-            </div>
-          </div> */}
-                  <div>
+                  <div className="row">
                     <div className="col-md-12">
-                      <div className="col-md-6" style={{ margin: "10px 0 30px 0" }}>
-                        <div style={{ display: "flex", flexDirection: "column", justifyItems: "center", alignItems: "center" }}>
-                          <h2 style={{ marginBottom: "10px", textAlign: "center" }}>CR_GROOM_IMAGE</h2>
-                          <ImageUploadHandler
-                            tenantId={tenantId}
-                            uploadedImages={uploadedImages}
-                            onPhotoChange={handleUpload}
-                            isMulti={false}
-                            moduleType={`crmarriage/${uniqueId}/groom/${currentYear}`}
-                            extraParams={{ fileName: "groom.jpg", UUID: uniqueId }}
-                          />
-                        </div>
+                      <div className="col-md-6">
+                        <CardLabel>
+                          {`${t("CR_WITNESS1_AADHAR")}`}
+                          <span className="mandatorycss">*</span>
+                        </CardLabel>
+                        <UploadFile
+                        //   key={item.DocumentId}
+                        //   id={item.DocumentId}
+                        //   name={item.DocumentType}
+                        //   extraStyleName={"propertyCreate"}
+                        //   accept=".jpg,.png,.pdf"
+                        //   onUpload={selectfile}
+                        //   onDelete={() => {
+                        //     onDeleteown(item.DocumentId);
+                        //     setUploadedFile(null);
+                        //   }}
+                        //   message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                        //   error={error}
+                        />
                       </div>
-                      <div className="col-md-6" style={{ margin: "10px 0 30px 0" }}>
-                        <div style={{ display: "flex", flexDirection: "column", justifyItems: "center", alignItems: "center" }}>
-                          <h2 style={{ marginBottom: "10px", textAlign: "center" }}>CR_BRIDE_IMAGE</h2>
-                          <ImageUploadHandler
-                            tenantId={tenantId}
-                            uploadedImages={uploadedImages}
-                            onPhotoChange={handleUpload}
-                            isMulti={false}
-                            moduleType={`crmarriage/${uniqueId}/bride/${currentYear}`}
-                            extraParams={{ fileName: "bride.jpg", UUID: uniqueId }}
-                          />
-                        </div>
+                      <div className="col-md-6">
+                        <CardLabel>
+                          {`${t("CR_WITNESS1_AADHAR")}`}
+                          <span className="mandatorycss">*</span>
+                        </CardLabel>
+                        <UploadFile
+                        //   key={item.DocumentId}
+                        //   id={item.DocumentId}
+                        //   name={item.DocumentType}
+                        //   extraStyleName={"propertyCreate"}
+                        //   accept=".jpg,.png,.pdf"
+                        //   onUpload={selectfile}
+                        //   onDelete={() => {
+                        //     onDeleteown(item.DocumentId);
+                        //     setUploadedFile(null);
+                        //   }}
+                        //   message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                        //   error={error}
+                        />
                       </div>
                     </div>
-                    {/* <div className="col-md-12">
-            <div className="col-md-4">
-              <h2>Add Groom Image :</h2>
-              <input type="file" onChange={handleChange} />
-              <img src={file} />
-            </div>
-            <div className="col-md-4">
-              <h2>Add Bride Image :</h2>
-              <input type="file" onChange={handleChange} />
-              <img src={file} />
-            </div>
-          </div> */}
-                    {/* <div style={{ display: "flex" }}>
-              <div style={{ width: "10%" }}>{file1 && <img src={URL.createObjectURL(file1)} alt="file 1" />}</div>
-
-              <div style={{ width: "10%" }}>{file2 && <img src={URL.createObjectURL(file2)} alt="file 2" />}</div>
-            </div> */}
                   </div>
                 </div>
               </div>

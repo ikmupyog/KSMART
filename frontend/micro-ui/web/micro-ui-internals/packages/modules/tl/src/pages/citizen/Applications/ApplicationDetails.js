@@ -18,7 +18,7 @@ import { Link, useHistory, useParams } from "react-router-dom";
 import getPDFData from "../../../utils/getTLAcknowledgementData";
 import TLWFApplicationTimeline from "../../../pageComponents/TLWFApplicationTimeline";
 import TLDocument from "../../../pageComponents/TLDocumets";
-import { isUndefined } from "lodash";
+import { concat, isUndefined } from "lodash";
 
 const getAddress = (address, t) => {
   return `${address?.doorNo ? `${address?.doorNo}, ` : ""} ${address?.street ? `${address?.street}, ` : ""}${
@@ -77,7 +77,6 @@ const TLApplicationDetails = () => {
 
 
   function rearrangeApplication(application){
-    console.log("application"+JSON.stringify(application));
     if(application[0].applicationNumber){
       let tenantIdV = application[0].tenantId;
       let businessServiceV = application[0].businessService;
@@ -85,7 +84,7 @@ const TLApplicationDetails = () => {
       let applicationTypeV = application[0].applicationType;
       let licenseNumberV = application[0].licenseNumber;
       let applicationNumberV = application[0].applicationNumber;
-      let licenseUnitNameV = application[0].licenseUnitName;
+      // let licenseUnitNameV = application[0].licenseUnitName;
       let applicationDateV = application[0].applicationDate;
       let issuedDateV = application[0].issuedDate;
       let financialYearV = application[0].financialYear;
@@ -95,11 +94,14 @@ const TLApplicationDetails = () => {
       let structureTypeV = application[0].tradeLicenseDetail.structureType;
       let owners = [];
       application[0].tradeLicenseDetail.owners.map((owner,index)=>{
-        let address = owner.houseName ? owner.houseName  + "," : '' + 
+        let address = owner?.designation ?  owner?.designation + ", " : "" + 
+        owner.houseName ? owner.houseName  + "," : '' + 
         owner.street ? owner.street  + ",": '' + 
         owner.locality ? owner.locality  + ",": '' +
         owner.postOffice ? owner.postOffice  + ",": '' + "-" +
         owner.pincode ? owner.pincode : '' ;
+
+        
 
         let singleOwner = {name : owner.name, mobileNumber : owner.mobileNumber, emailId : owner.emailId,
           applicantNameLocal : owner.applicantNameLocal, careOf : owner.careOf, careOfName : owner.careOfName, 
@@ -113,10 +115,10 @@ const TLApplicationDetails = () => {
         application[0].tradeLicenseDetail.structurePlace.map((strutPlace,index) => {
           let tempStructurePlace = {doorNo : strutPlace.doorNo , doorNoSub : strutPlace.doorNoSub, stallNo : strutPlace.stallNo,
             blockNo : null, surveyNo : null, subDivisionNo : null, partitionNo : null, vehicleNo : null, vesselNo : null};
-            tempString += index === 0 ?
-            strutPlace?.doorNo ? strutPlace?.doorNo : "" + strutPlace?.doorNoSub ? "/"+ strutPlace?.doorNoSub : ""
-            : ", " + strutPlace?.doorNo +"/"+ strutPlace?.doorNoSub;
-            tempString += index === 0 ? ", " + "Stall Nos : "+strutPlace?.stallNo ? strutPlace?.stallNo :"" :  ", " + strutPlace?.stallNo;
+            index === 0 ? tempString += strutPlace?.doorNo ? strutPlace?.doorNo : "" +
+             strutPlace?.doorNoSub ? tempString += "/"+ strutPlace?.doorNoSub : ""
+            : tempString += ", " + strutPlace?.doorNo ? strutPlace?.doorNo : "" +strutPlace?.doorNoSub ? tempString += "/"+ strutPlace?.doorNoSub : "";
+            index === 0 ? tempString += ", " + "Stall Nos : "+strutPlace?.stallNo ? strutPlace?.stallNo :"" :  tempString += ", " + strutPlace?.stallNo;
 
           structurePlaceV.push(tempStructurePlace);
         });
@@ -128,10 +130,11 @@ const TLApplicationDetails = () => {
           subDivisionNo : application[0]?.tradeLicenseDetail?.structurePlace[0]?.subDivisionNo, 
           partitionNo : application[0]?.tradeLicenseDetail?.structurePlace[0]?.partitionNo, 
           vehicleNo : null, vesselNo : null}
-          tempString += "Survey No : "+application[0]?.tradeLicenseDetail?.structurePlace[0]?.blockNo ? application[0]?.tradeLicenseDetail?.structurePlace[0]?.blockNo : "" + "/"+
-          application[0]?.tradeLicenseDetail?.structurePlace[0]?.surveyNo ? application[0]?.tradeLicenseDetail?.structurePlace[0]?.surveyNo : "" + "/"+
-          application[0]?.tradeLicenseDetail?.structurePlace[0]?.subDivisionNo ? application[0]?.tradeLicenseDetail?.structurePlace[0]?.subDivisionNo : "" + "/"+
-          application[0]?.tradeLicenseDetail?.structurePlace[0]?.partitionNo ? application[0]?.tradeLicenseDetail?.structurePlace[0]?.partitionNo : "" ;
+          tempString += "Survey No : ";
+          tempString += application[0]?.tradeLicenseDetail?.structurePlace[0]?.blockNo ? application[0]?.tradeLicenseDetail?.structurePlace[0]?.blockNo : "" ;
+          tempString += application[0]?.tradeLicenseDetail?.structurePlace[0]?.surveyNo ? " / " + application[0]?.tradeLicenseDetail?.structurePlace[0]?.surveyNo : "" ;
+          tempString += application[0]?.tradeLicenseDetail?.structurePlace[0]?.subDivisionNo ? " / " + application[0]?.tradeLicenseDetail?.structurePlace[0]?.subDivisionNo : "" ;
+          tempString += application[0]?.tradeLicenseDetail?.structurePlace[0]?.partitionNo ? " / " + application[0]?.tradeLicenseDetail?.structurePlace[0]?.partitionNo : "" ;
         structurePlaceV.push(tempStructurePlace);
       }
       else if (structureTypeV === "VEHICLE"){
@@ -141,7 +144,8 @@ const TLApplicationDetails = () => {
           subDivisionNo : '', 
           partitionNo : '', 
           vehicleNo : application[0]?.tradeLicenseDetail?.structurePlace[0]?.vehicleNo , vesselNo : null};
-        tempString += "Vehicle No : "+ application[0]?.tradeLicenseDetail?.structurePlace[0]?.vehicleNo ? application[0]?.tradeLicenseDetail?.structurePlace[0]?.vehicleNo : "";
+        tempString += "Vehicle No : ";
+        tempString += application[0]?.tradeLicenseDetail?.structurePlace[0]?.vehicleNo ? application[0]?.tradeLicenseDetail?.structurePlace[0]?.vehicleNo : "";
         structurePlaceV.push(tempStructurePlace);
       }
       else if (structureTypeV === "WATER"){
@@ -160,15 +164,17 @@ const TLApplicationDetails = () => {
         structureTypeDetails += "/" + application[0].tradeLicenseDetail.address.doorNo;
       }
 
-      let addressV = "Ward No : " + application[0].tradeLicenseDetail.address.wardNo +", "+tempString + application[0].tradeLicenseDetail.address.buildingName + 
-      application[0].tradeLicenseDetail.address.street ? ", " + application[0].tradeLicenseDetail.address.street : '' +
-      application[0].tradeLicenseDetail.address.locality ? ", " + application[0].tradeLicenseDetail.address.locality : '' +
-      application[0].tradeLicenseDetail.address.landmark ? ", " + application[0].tradeLicenseDetail.address.landmark : '' +
-      application[0].tradeLicenseDetail.address.waterbody ? ", " + application[0].tradeLicenseDetail.address.waterbody : '' +
-      application[0].tradeLicenseDetail.address.serviceArea ? ", " + application[0].tradeLicenseDetail.address.serviceArea : '' +
-      application[0].tradeLicenseDetail.address.localityName ? ", " + application[0].tradeLicenseDetail.address.localityName : '' +
-      application[0].tradeLicenseDetail.address.postOffice ? ", " + application[0].tradeLicenseDetail.address.postOffice  + "-" + application[0].tradeLicenseDetail.address.pincode : '';
-    
+      let addressV = "Ward No : " + application[0].tradeLicenseDetail.address.wardNo +", "+tempString ; 
+      addressV += application[0].tradeLicenseDetail.address.buildingName  ? application[0].tradeLicenseDetail.address.buildingName : ""; 
+      addressV += application[0].tradeLicenseDetail.address.street ? ", " + application[0].tradeLicenseDetail.address.street : "" ;
+      addressV += application[0].tradeLicenseDetail.address.locality ? ", " + application[0].tradeLicenseDetail.address.locality : "" ;
+      addressV += application[0].tradeLicenseDetail.address.landmark ? ", " + application[0].tradeLicenseDetail.address.landmark : "" ;
+      addressV += application[0].tradeLicenseDetail.address.waterbody ? ", " + application[0].tradeLicenseDetail.address.waterbody : "" ;
+      addressV += application[0].tradeLicenseDetail.address.serviceArea ? ", " + application[0].tradeLicenseDetail.address.serviceArea : "" ;
+      addressV += application[0].tradeLicenseDetail.address.localityName ? ", " + application[0].tradeLicenseDetail.address.localityName : "" ;
+      addressV += application[0].tradeLicenseDetail.address.postOffice ? ", " + application[0].tradeLicenseDetail.address.postOffice : "" ;
+      addressV += application[0].tradeLicenseDetail.address.pincode ? "-" + application[0].tradeLicenseDetail.address.pincode : "";
+
       let tradeUnitsV = application[0].tradeLicenseDetail.tradeUnits;
       let ownerPhotoV =  application[0].tradeLicenseDetail.applicationDocuments.filter((doc)=>{
         doc.documentType === "OWNERPHOTO"
@@ -184,7 +190,9 @@ const TLApplicationDetails = () => {
         };
         institution.push(tempInst);
       }
-      let licenseUnitNameLocalV = application[0]?.licenseUnitNameLocal;
+      let licenseUnitName =   application[0]?.tradeLicenseDetail?.institution?.licenseUnitId ? application[0]?.tradeLicenseDetail?.institution?.licenseUnitId + " - " : "" +
+      application[0]?.licenseUnitName ? application[0]?.licenseUnitName : "" 
+          + application[0]?.licenseUnitNameLocal ?  " ( " +application[0]?.licenseUnitNameLocal + " ) " : "" ;
       let desiredLicensePeriodV = application[0]?.desiredLicensePeriod;
       let businessSector = application[0]?.businessSector;
       let capitalInvestment = application[0]?.capitalInvestment;
@@ -201,7 +209,7 @@ const TLApplicationDetails = () => {
       applicationType : applicationTypeV,
       licenseNumber : licenseNumberV,
       applicationNumber : applicationNumberV,
-      licenseUnitName : licenseUnitNameV,
+      licenseUnitName : licenseUnitName,
       applicationDate : applicationDateV,
       issuedDate : issuedDateV,
       financialYear : financialYearV,
@@ -225,11 +233,9 @@ const TLApplicationDetails = () => {
         institution : institution,
         applicationDocuments : applicationDocuments
       },
-      licenseUnitNameLocal : licenseUnitNameLocalV,
       desiredLicensePeriod : desiredLicensePeriodV,
       signedCertificate : "111111111111"        
     }];
-  
       return finalJson ;
     }
     else{

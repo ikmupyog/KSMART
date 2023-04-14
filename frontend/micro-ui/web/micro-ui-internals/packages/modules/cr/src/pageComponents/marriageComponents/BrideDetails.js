@@ -502,25 +502,31 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     }
   }
   function setSelectbrideSocialSecurityNo(e) {
-    if (e.target.value.length > 9) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setbrideSocialSecurityNo(e.target.value.replace(/[^0-9]/gi, "").substring(0, 9));
+
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[A-Z-0-9 ]*$") != null)) {
+      setbrideSocialSecurityNo(e.target.value.length <= 12 ? e.target.value : (e.target.value).substring(0, 12));
     }
+    // let value = e.target.value;
+    // console.log({ value });
+    // // setbrideSocialSecurityNo(value);
+    // let pattern = /[A-Z1-9-]$/g;
+    //   if (value.length <= 12) {
+    //     if (pattern.test(value)) {
+    //       setbrideSocialSecurityNo(value);
+    //     }
+    //   }
+    
   }
   function setSelectbridePassportNo(e) {
-    setbridePassportNo(
-      e.target.value.length <= 8
-        ? e.target.value.replace("[A-PR-WY][1-9]ds?d{4}[1-9]$", "")
-        : e.target.value.replace("[A-PR-WY][1-9]ds?d{4}[1-9]$", "").substring(0, 8)
-    );
-    // if (e.target.value.length < 8) {
-    //   return false;
-    //   // window.alert("Username shouldn't exceed 10 characters")
-    // } else {
-    //   setbridePassportNo(e.target.value);
-    // }
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[A-Z0-9 ]*$") != null)) {
+      setbridePassportNo(e.target.value.length <= 8 ? e.target.value : (e.target.value).substring(0, 8));
+    } 
+    // setbridePassportNo(
+    //   e.target.value.length <= 8
+    //     ? e.target.value.replace("[A-PR-WY][1-9]ds?d{4}[1-9]$", "")
+    //     : e.target.value.replace("[A-PR-WY][1-9]ds?d{4}[1-9]$", "").substring(0, 8)
+    // );
+   
   }
   function selectParentType(e) {
     setBrideParentGuardian(e.target.value);
@@ -653,9 +659,9 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
               ? !bridePassportNo
               : false || brideResidentShip === "FOREIGN"
               ? !brideSocialSecurityNo || !bridePassportNo
+              : false || brideParentGuardian === "PARENT"
+              ? !brideFathernameEn || !brideFathernameMl || !brideMothernameEn || !brideMothernameMl || !brideFatherAadharNo || !brideMotherAadharNo
               : false
-            // || selectedParent === "PARENT" ? (!brideFathernameEn || !brideFathernameMl || !brideMothernameEn
-            // || !brideMothernameMl || !brideFatherAadharNo || !brideMotherAadharNo) : false
             // || selectedParent === "GUARDIAN" ? (!brideGuardiannameEn || !brideGuardiannameMl || !brideGuardianAadharNo) : false
           }
         >
@@ -766,7 +772,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                     maxLength: 12,
                   }}
                   {...((brideResidentShip === "NRI" || brideResidentShip === "FOREIGN") && {
-                    ...(validation = { pattern: "^[0-9]{8}$", type: "text", isRequired: true, title: t("CS_COMMON_INVALID_PASSPORT_NO") }),
+                    ...(validation = { pattern: "^[A-Z0-9]{8}$", type: "text", isRequired: true, title: t("CS_COMMON_INVALID_PASSPORT_NO") }),
                   })}
                 />
               </div>
@@ -782,6 +788,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                   type={"text"}
                   optionKey="i18nKey"
                   name="brideSocialSecurityNo"
+                  value={brideSocialSecurityNo}
                   disable={isDisableEdit}
                   onChange={setSelectbrideSocialSecurityNo}
                   placeholder={`${t("CR_BRIDE_SOCIAL_SECURITY_NO")}`}
@@ -789,7 +796,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                     maxLength: 12,
                   }}
                   {...(brideResidentShip === "FOREIGN" && {
-                    ...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: true, title: t("CR_INVALID_SOCIAL_SECURITY_NUMBER") }),
+                    ...(validation = { pattern: "^[A-Z0-9-]{12}$", type: "text", isRequired: true, title: t("CR_INVALID_SOCIAL_SECURITY_NUMBER") }),
                   })}
                 />
               </div>
