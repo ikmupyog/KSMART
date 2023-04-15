@@ -967,5 +967,13 @@ serviceMaps:
 
         - jsonPath: $.ModuleDetails.*.status
 
-        - jsonPath: $.ModuleDetails.*.auditDetails
+        - jsonPath: $.ModuleDetails.*.auditDetails.createdBy
+
+        - jsonPath: $.ModuleDetails.*.auditDetails.createdTime
+
+        - jsonPath: $.ModuleDetails.*.auditDetails.lastModifiedBy
+
+        - jsonPath: $.ModuleDetails.*.auditDetails.  lastModifiedTime
+
+
 
