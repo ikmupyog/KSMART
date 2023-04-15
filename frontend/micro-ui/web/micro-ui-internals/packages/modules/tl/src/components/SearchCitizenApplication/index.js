@@ -96,16 +96,16 @@ const SearchCitizenApplication = ({ tenantId, t, onSubmit, data, count }) => {
       disableSortBy: true,
       accessor: (row) => GetCell(t(`TL_LOCALIZATION_APPLICATIONTYPE_${row.applicationType}`)),
     },
-    {
-      Header: t("TL_LICENSE_NUMBERL_LABEL"),
-      disableSortBy: true,
-      accessor: (row) => GetCell(row.licenseNumber || "-"),
-    },
-    {
-      Header: t("TL_LICENSE_YEAR_LABEL"),
-      disableSortBy: true,
-      accessor: (row) => GetCell(row.financialYear),
-    },
+    // {
+    //   Header: t("TL_LICENSE_NUMBERL_LABEL"),
+    //   disableSortBy: true,
+    //   accessor: (row) => GetCell(row.licenseNumber || "-"),
+    // },
+    // {
+    //   Header: t("TL_LICENSE_YEAR_LABEL"),
+    //   disableSortBy: true,
+    //   accessor: (row) => GetCell(row.financialYear),
+    // },
     {
       Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),
       disableSortBy: true,
