@@ -100,8 +100,6 @@ public class MarriageApplicationController {
     //     }catch(Exception e) {
     //     log.error("Exception while fetching from searcher: ",e);
     // }
-       
-        
         MarriageApplicationResponse response = MarriageApplicationResponse
                                                 .builder()
                                                 .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),Boolean.TRUE))
