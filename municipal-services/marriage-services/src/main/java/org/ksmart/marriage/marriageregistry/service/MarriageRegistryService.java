@@ -66,14 +66,14 @@ public class MarriageRegistryService {
     //     return repository.updateMarriageRegistry(request);
     // }
 
-    public List<MarriageRegistryDetails> searchRegistry(MarriageRegistrySearchCriteria criteria, RequestInfo req) {
+    public List<MarriageRegistryDetails> searchRegistry(MarriageRegistrySearchCriteria criteria) {
         
-        return repository.searchMarriageRegistry(criteria,req);
+        return repository.searchMarriageRegistry(criteria);
     }
 
 
     public MarriageCertificate download(MarriageRegistrySearchCriteria criteria, RequestInfo requestInfo) {
-        List<MarriageRegistryDetails> marriageRegistryDetailsList = repository.searchMarriageRegistry(criteria,requestInfo);
+        List<MarriageRegistryDetails> marriageRegistryDetailsList = repository.searchMarriageRegistry(criteria);
         if (marriageRegistryDetailsList != null && !marriageRegistryDetailsList.isEmpty()) {
 //            List<MarriageCertificate> marriageCertificateList = repository.searchCertificateByMarriageId(marriageRegistryDetailsList.get(0).getId());
         try {
@@ -83,7 +83,7 @@ public class MarriageRegistryService {
             MarriageCertRequest marriageCertRequest = MarriageCertRequest.builder().marriageCertificate(marriageCertificate).requestInfo(requestInfo).build();
             marriageCertificate.setMarriageRegistryDetails(marriageRegistryDetailsList.get(0));
             marriageCertificate.setRegistrationno(marriageRegistryDetailsList.get(0).getRegistrationno());
-            List<MarriageCertificate> marriageDtls = searchCertificate(criteria,requestInfo);
+            List<MarriageCertificate> marriageDtls = searchCertificate(criteria);
             if (null!=marriageDtls && marriageDtls.size() > 1) {
                 throw new CustomException("Invalid_Input", "Error in processing data");
             }
@@ -145,8 +145,8 @@ public class MarriageRegistryService {
 
     }
 
-    public List<MarriageCertificate> searchCertificate(MarriageRegistrySearchCriteria criteria , RequestInfo req) {
-        List<MarriageRegistryDetails> obj = repository.searchMarriageRegistry(criteria,req);
+    public List<MarriageCertificate> searchCertificate(MarriageRegistrySearchCriteria criteria) {
+        List<MarriageRegistryDetails> obj = repository.searchMarriageRegistry(criteria);
         return repository.searchCertificateByMarriageId(obj.get(0).getId());
     }
 }

@@ -55,10 +55,10 @@ public class MarriageRegistryController {
         
     public ResponseEntity<MarriageRegistryResponse> search(@RequestBody  MarriageRegistryRequest request,
 
-                                                           @ModelAttribute MarriageRegistrySearchCriteria criteria, RequestInfo req) {
+                                                           @ModelAttribute MarriageRegistrySearchCriteria criteria) {
             int registryCount=registryRepository.getMarriageRegistryCount(criteria);
 
-        List<MarriageRegistryDetails> marriageDetails = marriageService.searchRegistry(criteria,req);
+        List<MarriageRegistryDetails> marriageDetails = marriageService.searchRegistry(criteria);
 
         MarriageRegistryResponse response = MarriageRegistryResponse
                                             .builder()
@@ -71,8 +71,8 @@ public class MarriageRegistryController {
     //for testing req
     @PostMapping("_certificate")
     public  ResponseEntity<MarriageCertResponse> certificateDownload(@RequestBody MarriageRegistryRequest request,
-                                                                     @Valid @ModelAttribute MarriageRegistrySearchCriteria criteria,RequestInfo req) {
-        List<MarriageCertificate> marriageCertResponseList = marriageService.searchCertificate(criteria,req);
+                                                                     @Valid @ModelAttribute MarriageRegistrySearchCriteria criteria) {
+        List<MarriageCertificate> marriageCertResponseList = marriageService.searchCertificate(criteria);
         MarriageCertResponse response;
 //        if(null!=marriageCertResponseList&&!marriageCertResponseList.isEmpty()){
 //            response = MarriageCertResponse

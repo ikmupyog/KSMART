@@ -85,20 +85,20 @@ public class MarriageRegistryRepository {
         // return result.getMarriageDetails();
 
     // }
-    public List<MarriageRegistryDetails> searchMarriageRegistry(MarriageRegistrySearchCriteria criteria ,RequestInfo req) {
+    public List<MarriageRegistryDetails> searchMarriageRegistry(MarriageRegistrySearchCriteria criteria) {
 
         List<Object> preparedStmtValues = new ArrayList<>();
 
         String query = queryBuilder.getMarriageRegistrySearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
         
         List<MarriageRegistryDetails> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriageRegistryRowMapper);
-
-        System.out.println("Groom address -------");
-                String address=marriageRegistryEnrichment.setGroomPermanentAddressForCertificate(req, result.get(0));
-        String address2=marriageRegistryEnrichment.setBridePermanentAddressForCertificate(req, result.get(0));
-
-        System.out.println(address);
-        System.out.println(address2);
+//
+//        System.out.println("Groom address -------");
+//                String address=marriageRegistryEnrichment.setGroomPermanentAddressForCertificate(req, result.get(0));
+//        String address2=marriageRegistryEnrichment.setBridePermanentAddressForCertificate(req, result.get(0));
+//
+//        System.out.println(address);
+//        System.out.println(address2);
 
         return result;
 
