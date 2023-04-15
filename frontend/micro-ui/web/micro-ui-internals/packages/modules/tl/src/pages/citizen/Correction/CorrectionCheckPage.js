@@ -13,7 +13,7 @@ import {
 } from "@egovernments/digit-ui-react-components";
 
 
-
+import { stringReplaceAll } from "../../../utils/index";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useRouteMatch } from "react-router-dom";
@@ -199,10 +199,10 @@ const CorrectionCheckPage = ({ onSubmit, value, valuenew }) => {
                               {`${t(unit.businessCategory)}`}
                             </td>
                             <td style={{border:"solid 1px"}}>
-                              {`${t(unit.businessType)}`}
+                              {`${t(stringReplaceAll(unit.businessType, ".", "_"))}`}
                             </td>
                             <td style={{border:"solid 1px"}}>
-                              {`${t(unit.businessSubtype)}`}
+                              {`${t(stringReplaceAll(unit.businessSubtype, ".", "_"))}`}
                             </td>
                           </tr>
                         )
@@ -278,10 +278,10 @@ const CorrectionCheckPage = ({ onSubmit, value, valuenew }) => {
                                 {`${t(unit.businessCategory)}`}
                               </td>
                               <td style={{border:"solid 1px"}}>
-                                {`${t(unit.businessType)}`}
+                                {`${t(stringReplaceAll(unit.businessType, ".", "_"))}`}
                               </td>
                               <td style={{border:"solid 1px"}}>
-                                {`${t(unit.businessSubtype)}`}
+                                {`${t(stringReplaceAll(unit.businessSubtype, ".", "_"))}`}
                               </td>
                             </tr>
                           )

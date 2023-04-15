@@ -1,6 +1,7 @@
 import cloneDeep from "lodash/cloneDeep";
 import { CRService } from "../../elements/CR";
 // import { convertEpochToDateDMY } from  "../../utils";
+import { NA, getFormattedValue } from "../../../utils/dataFormatter";
 
 const stringReplaceAll = (str = "", searcher = "", replaceWith = "") => {
   if (searcher == "") return str;
@@ -62,8 +63,8 @@ export const CRsearch = {
       numOfApplications = await CRsearch.numberOfApplications(tenantId, filters);
     }
     let employeeResponse = [];
-    const Birthdetails = {
-      title: "CR_BIRTH_SUMMARY_DETAILS",
+    const AdoptionDetails = {
+      title: "CR_ADOPTION_SUMMARY_DETAILS",
       asSectionHeader: true,      
     }
     const childdetails = {
@@ -74,18 +75,44 @@ export const CRsearch = {
         { title: "PDF_BIRTH_CHILD_NAME", value: response?.childFirstNameEn + response?.childMiddleNameEn + response?.childLastNameEn },
         { title: "PDF_BIRTH_CHILD_SEX", value: response?.gender },
         { title: "PDF_BIRTH_DATE_OF_BIRTH", value: response?.childDOB ? convertEpochToDate(response?.childDOB) : "NA" },
-        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.hospitalName + "/" + response?.hospitalNameMl || "NA"},       
+        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value:getFormattedValue(response, "birthPlace",false) },
        ],
     };
     const parentInfo = {
       title: "CR_BIRTH_PARENT_INFORMATION_HEADER",
       values: [
-        { title: "PDF_BIRTH_NAME_OF_MOTHER", value: response?.ParentsDetails?.motherFirstNameEn + " / " + response?.ParentsDetails?.motherFirstNameMl || "NA"},
-        { title: "PDF_BIRTH_NAME_OF_FATHER", value: response?.ParentsDetails?.fatherFirstNameEn + " / " + response?.ParentsDetails?.fatherFirstNameMl || "NA"},       
+        { title: "PDF_BIRTH_NAME_OF_MOTHER", value: getFormattedValue(response, "ParentsDetails.motherFirstName") },
+        { title: "CR_BIRTH_MOTHER_AADHAR_LABEL", value: response?.ParentsDetails?.motherAadhar || NA },
+        // { title: "CR_BIRTH_MOTHER_EMAIL_LABEL", value: response?.ParentsDetails.emailid || "NA" },
+        // { title: "CR_BIRTH_MOTHER_MOBILE_LABEL", value: response?.ParentsDetails.mobileno || "NA" },
+
+        { title: "PDF_BIRTH_NAME_OF_FATHER", value: getFormattedValue(response, "ParentsDetails.fatherFirstName") },
+        { title: "CR_BIRTH_FATHER_AADHAR_LABEL", value: response?.ParentsDetails?.fatherAadhar || NA },
+        { title: "CR_BIRTH_FATHER_EMAIL_LABEL", value: response?.ParentsDetails?.fatherEmail || NA },
+        { title: "CR_BIRTH_FATHER_MOBILE_LABEL", value: response?.ParentsDetails?.fatherMobile || NA },
       ],
     };
     const AddressBirthDetailsInfo = {
       title: "CR_ADDRESS_INFORMATION_HEADER",
+      values: [
+        { title: "CR_BIRTH_PERS_HO_NAME_LABEL", value: getFormattedValue(response, "AddressBirthDetails.presentInsideKeralaHouseName") },
+        { title: "CR_BIRTH_PERS_STREET_LABEL", value: getFormattedValue(response, "AddressBirthDetails.presentInsideKeralaStreetName") },
+        { title: "CR_BIRTH_PERS_LOCALITY_LABEL", value: getFormattedValue(response, "AddressBirthDetails.presentInsideKeralaLocalityName") },
+        { title: "CR_BIRTH_PERS_POSTOFFICE_LABEL", value: getFormattedValue(response, "AddressBirthDetails.presentInsideKeralaPostOffice", false) },
+        { title: "CR_BIRTH_PERS_PINCODE_LABEL", value: response?.AddressBirthDetails?.presentInsideKeralaPincode || NA },
+        { title: "CR_BIRTH_PERS_DISTRICT_LABEL", value: response?.AddressBirthDetails?.presentInsideKeralaDistrict || NA },
+        { title: "CR_BIRTH_PERS_STATE_LABEL", value: response?.AddressBirthDetails?.presentaddressStateName || NA },
+        { title: "CR_BIRTH_PERS_COUNTRY_LABEL", value: response?.AddressBirthDetails?.presentaddressCountry || NA },
+
+        { title: "CR_BIRTH_PERM_HO_NAME_LABEL", value: getFormattedValue(response, "AddressBirthDetails.permntInKeralaAdrHouseName") },
+        { title: "CR_BIRTH_PERM_STREET_LABEL", value: getFormattedValue(response, "AddressBirthDetails.permntInKeralaAdrStreetName") },
+        { title: "CR_BIRTH_PERM_LOCALITY_LABEL", value: getFormattedValue(response, "AddressBirthDetails.permntInKeralaAdrLocalityName") },
+        { title: "CR_BIRTH_PERM_POSTOFFICE_LABEL", value: getFormattedValue(response, "AddressBirthDetails.permntInKeralaAdrPostOffice", false) },
+        { title: "CR_BIRTH_PERM_PINCODE_LABEL", value: getFormattedValue(response, "AddressBirthDetails.permntInKeralaAdrPincode", false) },
+        { title: "CR_BIRTH_PERM_DISTRICT_LABEL", value: getFormattedValue(response, "AddressBirthDetails.permntInKeralaAdrDistrict", false) },
+        { title: "CR_BIRTH_PERM_STATE_LABEL", value: getFormattedValue(response, "AddressBirthDetails.permtaddressStateName", false) },
+        { title: "CR_BIRTH_PERM_COUNTRY_LABEL", value: getFormattedValue(response, "AddressBirthDetails.permtaddressCountry", false) },
+      ],
       // values: [
       //   { title: "CR_BIRTH_PERS_HO_NAME_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaHouseNameEn || "CR_NOT_RECORDED"},
       //   { title: "CR_BIRTH_PERS_STREET_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaStreetNameEn || "CR_NOT_RECORDED"},
@@ -157,9 +184,10 @@ export const CRsearch = {
     //   };
     //   response && employeeResponse.push(details);
     // }
-    response && employeeResponse.push(Birthdetails);
+    response && employeeResponse.push(AdoptionDetails);
     response && employeeResponse.push(childdetails);
     response && employeeResponse.push(parentInfo);
+    response && employeeResponse.push(AddressBirthDetailsInfo);
     // response && employeeResponse.push(motherInfo);
     // response && employeeResponse.push(addressInfo);
     // response && employeeResponse.push(statisticalInfo);

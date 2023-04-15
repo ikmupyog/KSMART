@@ -50,7 +50,7 @@ export const CRsearch = {
     // console.log("applicationNumber" + applicationNumber);
     const filter = { applicationNumber };
     const response = await CRsearch.application(tenantId, filter);
-    console.log(response);
+    // console.log(response);
     
     // const propertyDetails =
     //   response?.tradeLicenseDetail?.additionalDetail?.propertyId &&
