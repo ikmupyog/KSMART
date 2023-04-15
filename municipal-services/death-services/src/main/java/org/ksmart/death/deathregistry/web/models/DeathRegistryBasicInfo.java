@@ -502,6 +502,6 @@ public class DeathRegistryBasicInfo {
 
    @JsonProperty("DeathPlaceHospitalNameMl")
    private String  deathPlaceHospitalNameMl ;
-
-
+   
+   private String  dateOfDeathInWords ;
 }

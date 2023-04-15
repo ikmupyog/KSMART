@@ -217,10 +217,13 @@ public class DeathRegistryService {
         nacCertificate.setDeathDtlId(criteria.getId());
         nacCertificate.setTenantId(criteria.getTenantId());
         NACCertRequest nacCertRequest = NACCertRequest.builder().deathNACCertificate(nacCertificate).requestInfo(requestInfo).build();
-               
+        Long currentTime = Long.valueOf(System.currentTimeMillis());
+        nacCertRequest.getDeathNACCertificate().setDateofissue(currentTime); 
+
         List<DeathRegistryNACDtls> deathDtls = repository.getDeathNACApplication(criteria,requestInfo);     
         NACPdfApplicationRequest applicationRequest = NACPdfApplicationRequest.builder().requestInfo(requestInfo).deathNACCertificate(deathDtls).build();
         NACPdfResp pdfResp = repository.saveDeathNACPdf(applicationRequest);
+        nacCertificate.setFilestoreid(pdfResp.getFilestoreIds().get(0));
         return nacCertificate;
       }
       catch(Exception e) {

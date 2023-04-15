@@ -21,6 +21,7 @@ import org.ksmart.death.deathregistry.repository.rowmapper.DeathRegistryNACRowMa
 import org.ksmart.death.deathregistry.repository.rowmapper.DeathRegistryRowMapper;
 import org.ksmart.death.deathregistry.util.DeathRegistryConstants;
 import org.ksmart.death.deathregistry.util.DeathRegistryMdmsUtil;
+import org.ksmart.death.deathregistry.util.NumToWordConverter;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryCriteria;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryDtl;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryNACDtls;
@@ -155,6 +156,24 @@ public class DeathRegistryRepository {
                 // String formatted = formatDate.format(date);
                 // System.out.println("formatted"+formatted);
 
+                Long currentTime = Long.valueOf(System.currentTimeMillis());
+                cert.getDeathBasicInfo().setDateofissue(currentTime);
+
+                String strDate=null;
+                String dodInWords = null;
+
+                if(cert.getDeathBasicInfo().getDateOfDeath() != null){
+                    Date res = new Date(cert.getDeathBasicInfo().getDateOfDeath()) ;
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                    strDate= formatter.format(res);
+                    String[] dobAry = strDate.split("/");
+                    try {
+                         dodInWords = NumToWordConverter.convertNumber(Long.parseLong(dobAry[0])) + "/" + new SimpleDateFormat("MMMM").format(res) + "/" + NumToWordConverter.convertNumber(Long.parseLong(dobAry[2]));
+                         
+                         cert.getDeathBasicInfo().setDateOfDeathInWords(dodInWords.toUpperCase());
+                    } catch(Exception e) {
+                    }
+                }
 				String finalPath = uiHost + deathCertPath;
                 //RAkhi S on 10.02.2023 MDMS Call
                 Object mdmsData = util.mDMSCallCertificate(pdfApplicationRequest.getRequestInfo()
@@ -1439,13 +1458,14 @@ public class DeathRegistryRepository {
             });
             // log.info(new Gson().toJson(pdfApplicationRequest));
             NACPdfApplicationRequest req = NACPdfApplicationRequest.builder().deathNACCertificate(pdfApplicationRequest.getDeathNACCertificate()).requestInfo(pdfApplicationRequest.getRequestInfo()).build();
-
+         
             pdfApplicationRequest.getDeathNACCertificate().forEach(cert-> {
                 String uiHost = config.getEgovPdfHost();
                 String deathCertPath = config.getEgovPdfDeathNACEndPoint();
                 String tenantId = cert.getDeathBasicInfo().getTenantId().split("\\.")[0];
                 deathCertPath = deathCertPath.replace("$tenantId",tenantId);
                 String pdfFinalPath = uiHost + deathCertPath;
+                // log.info(new Gson().toJson(req));
                 DeathPdfResp response = restTemplate.postForObject(pdfFinalPath, req, DeathPdfResp.class);
     
                 if (response != null && CollectionUtils.isEmpty(response.getFilestoreIds())) {
