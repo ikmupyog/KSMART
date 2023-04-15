@@ -202,8 +202,11 @@ public class MarriageRegistryRepository {
 
 //            Object mdmsData = util.mDMSCall(req.getRequestInfo(), req.getMarriageCertificate().get(0).getTenantid());
                         Map<String,List<String>>  mdmsMap = util.getMarriageMDMSData(req,mdmsMarriagePlaceData);
+                        System.out.println(getValueFromMap(MarriageConstants.DISTRICT,mdmsMap));
                         util.appendIfNotBlank(getValueFromMap(MarriageConstants.DISTRICT,mdmsMap),marriageAddr,true);
                         util.appendIfNotBlank(getValueFromMap(MarriageConstants.STATE,mdmsMap),marriageAddr,true);
+                        Map<String, List<String>> mdmsCountryMap = util.mDMSCallGetCountry(req.getRequestInfo(),MarriageConstants.COUNTRY_CODE);
+                        util.appendIfNotBlank(getValueFromMap(MarriageConstants.COUNTRY,mdmsCountryMap),marriageAddr,false);
 //                        req.getMarriageCertificate().get(0).setTenantNameEn(getValueFromMap(MarriageConstants.TENANTS,mdmsMap));
 //                        req.getMarriageCertificate().get(0).setTalukNameEn(getValueFromMap(MarriageConstants.TALUK,mdmsMap));
 //                        req.getMarriageCertificate().get(0).setDistrictNameEn(getValueFromMap(MarriageConstants.DISTRICT,mdmsMap));

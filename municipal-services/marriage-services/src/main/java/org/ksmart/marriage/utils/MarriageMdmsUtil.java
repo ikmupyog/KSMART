@@ -241,7 +241,7 @@ public class MarriageMdmsUtil {
         // master details for marriage certificate
         List<MasterDetail> marriageMasterDetails = new ArrayList<>();
         if(null!=district) {
-            final String filterCode = "$.[?(@.id=='" + district + "')].name";
+            final String filterCode = "$.[?(@.districtid=='" + district + "')].name";
             marriageMasterDetails
                     .add(MasterDetail.builder().name(MarriageConstants.DISTRICT).filter(filterCode).build());
         }
@@ -318,6 +318,21 @@ public class MarriageMdmsUtil {
 
         ModuleDetail marriageModuleDtls = ModuleDetail.builder().masterDetails(masterDetails)
                 .moduleName(MarriageConstants.TENANT_MODULE_NAME).build();
+
+
+        return marriageModuleDtls;
+    }
+
+    private ModuleDetail getCountry(String counrtyCode){
+        List<MasterDetail> masterDetails = new ArrayList<>();
+
+        // filter to only get code field from master data
+        final String filterCode = "$.[?(@.code=='"+counrtyCode+"')].name";
+        masterDetails
+                .add(MasterDetail.builder().name(MarriageConstants.COUNTRY).filter(filterCode).build());
+
+        ModuleDetail marriageModuleDtls = ModuleDetail.builder().masterDetails(masterDetails)
+                .moduleName(MarriageConstants.COMMON_MASTER_MODULE_NAME).build();
 
 
         return marriageModuleDtls;
@@ -589,7 +604,7 @@ public class MarriageMdmsUtil {
 //    }
 
     public Map<String,List<String>> getMarriageMDMSData(MarriageCertPDFRequest request, Object mdmsdata) {
-        Map<String, String> errorMap = new HashMap<>();
+//        Map<String, String> errorMap = new HashMap<>();
         Map<String, List<String>> masterData = getAttributeValues(mdmsdata);
        // System.out.println(masterData);
         return masterData;
@@ -623,6 +638,8 @@ public class MarriageMdmsUtil {
 //        return mdmsResMap;
         return  getAttributeValuesForJsonPaths(mdmsdata,modulepaths);
     }
+
+
     private Map<String, List<String>> getAttributeValuesForJsonPaths(Object mdmsdata,List<String> modulepaths) {
         if(modulepaths!=null&&!modulepaths.isEmpty()) {
             final Map<String, List<String>> mdmsResMap = new HashMap<>();
@@ -682,6 +699,32 @@ public class MarriageMdmsUtil {
             }
         }
         return  s;
+    }
+
+    private MdmsCriteriaReq MdmsRequestForCountry(RequestInfo requestInfo,String countryCode){
+        List<ModuleDetail> moduleDetails = new LinkedList<>();
+        ModuleDetail countryRequest = getCountry(countryCode);
+        moduleDetails.add(countryRequest);
+        MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(config.getEgovStateLevelTenant())
+                .build();
+
+        MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
+                .requestInfo(requestInfo).build();
+
+        // System.out.println("mdmsreq2"+mdmsCriteriaReq);
+        return mdmsCriteriaReq;
+    }
+
+    public Map<String, List<String>> mDMSCallGetCountry(RequestInfo requestInfo
+            , String countryCode) {
+        MdmsCriteriaReq mdmsCriteriaReq = MdmsRequestForCountry(requestInfo, countryCode);
+        Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);
+        if(null!=result){
+            List<String> modulepaths = Arrays.asList(
+                    MarriageConstants.COMMON_MASTER_JSONPATH);
+           return  getAttributeValuesForJsonPaths(result,modulepaths);
+        }
+        return null;
     }
 
     private MdmsCriteriaReq getMDMSRequestForAddressFromIds(RequestInfo requestInfo
