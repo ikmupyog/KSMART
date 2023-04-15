@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.tracer.model.CustomException;
+import org.ksmart.marriage.marriageregistry.enrichment.MarriageCertificateEnrichment;
 import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryDetails;
 import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryRequest;
 import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistrySearchCriteria;
@@ -33,15 +34,17 @@ public class MarriageRegistryService {
     private final MarriageApplicationConfiguration marriageApplicationConfiguration;
     private final MarriageRegistryEnrichment marriageRegistryEnrichment;
     private final MarriageRegistryRepository repository;
+    private final MarriageCertificateEnrichment marriageCertificateEnrichment;
 
-    public MarriageRegistryService(MarriageRegistryRepository repository,MarriageRegistryEnrichment marriageRegistryEnrichment,
-                                    MarriageProducer producer, 
-                                    MarriageApplicationConfiguration marriageApplicationConfiguration ) {
+    public MarriageRegistryService(MarriageRegistryRepository repository, MarriageRegistryEnrichment marriageRegistryEnrichment,
+                                   MarriageProducer producer,
+                                   MarriageApplicationConfiguration marriageApplicationConfiguration, MarriageCertificateEnrichment marriageCertificateEnrichment) {
 
             this.producer = producer;
             this.marriageApplicationConfiguration = marriageApplicationConfiguration;
             this.marriageRegistryEnrichment = marriageRegistryEnrichment;
             this.repository = repository;
+        this.marriageCertificateEnrichment = marriageCertificateEnrichment;
     }
 //    private final MarriageApplicationConfiguration marriageApplicationConfiguration;
     public List<MarriageRegistryDetails> createRegistry(MarriageRegistryRequest request) {
@@ -115,6 +118,7 @@ public class MarriageRegistryService {
             Calendar cal = Calendar.getInstance();
             marriageCertificate.setDateofissue(cal.getTimeInMillis());
             marriageCertificate.setEmbeddedUrl(marriageCertPDFRequest.getMarriageCertificate().get(0).getEmbeddedUrl());
+            //marriageCertificateEnrichment.createCertificateNo(marriageCertRequest); //TODO check IdGenError
             MarriageCertPdfResponse pdfResp = repository.saveMarriageCertPdf(marriageCertPDFRequest);
 //            marriageCertificate.setDateofissue(marriageCertPDFRequest.getMarriageCertificate().get(0).getMarriageRegistryDetails().getRegistrationDate());
             marriageCertificate.setFilestoreid(pdfResp.getFilestoreIds().get(0));

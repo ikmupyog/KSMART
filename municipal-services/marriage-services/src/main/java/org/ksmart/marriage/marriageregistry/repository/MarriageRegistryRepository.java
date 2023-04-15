@@ -178,14 +178,14 @@ public class MarriageRegistryRepository {
 
                 if (req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlacetype()
                         .equals(MarriageConstants.PLACE_TYPE_HOUSE)) {
+                    if (!StringUtils.isEmpty(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getMarriageHouseNoAndNameEn())) {
+                        marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getMarriageHouseNoAndNameEn()+",");
+                    }
                     if (!StringUtils.isEmpty(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLocality_en())) {
-                       marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLocality_en()+",");
+                        marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLocality_en()+",");
                     }
                     if (!StringUtils.isEmpty(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getStreet_name_en())) {
                         marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getStreet_name_en()+",");
-                    }
-                    if (!StringUtils.isEmpty(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getMarriageHouseNoAndNameEn())) {
-                       marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getMarriageHouseNoAndNameEn()+",");
                     }
                     if (!StringUtils.isEmpty(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLandmark())) {
                         marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLandmark()+",");

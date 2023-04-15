@@ -84,6 +84,9 @@ public class MarriageCertificate {
 
     @JsonProperty("marriagePlaceFullAddr")
     private String marriagePlaceFullAddr;
+    @JsonProperty("groomNRIAddress")
+    private String groomNRIAddress;
+
 //
 //    @Size(max = 64)
 //    @JsonProperty("marriagePlacetype")
