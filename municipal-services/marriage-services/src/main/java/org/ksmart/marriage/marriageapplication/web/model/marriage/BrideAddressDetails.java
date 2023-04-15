@@ -411,7 +411,7 @@ public class BrideAddressDetails {
     @JsonProperty("permntOutsideIndiaCityTown")
     private String permntOutsideIndiaCityTown;
 
-    @Size(max = 10)
+
     @JsonProperty("permanentOutsideIndiaPostCode")
     private String permanentOutsideIndiaPostCode;
 
@@ -522,9 +522,10 @@ public class BrideAddressDetails {
     @JsonProperty("brideGroomPermanent")
     private String brideGroomPermanent;
 
-    @Size(max = 10)
+
     @JsonProperty("outSideIndiaPostCodePermanent")
-    private String outSideIndiaPostCodepermanent;
+    private String outSideIndiaPostCodePermanent;
+
     @JsonProperty("PermanentAddrCityOrVillageEn")
     private String permanentAddrCityOrVillageEn ;
 

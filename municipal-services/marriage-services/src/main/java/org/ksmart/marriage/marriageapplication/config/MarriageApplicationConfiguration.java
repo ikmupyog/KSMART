@@ -33,7 +33,7 @@ public class MarriageApplicationConfiguration {
     @Value("${egov.idgen.marriagereg.name}")
     private String getMarriageRegNumberName;
 
-    @Value("${egov.idgen.marriagecert.name}")
+//    @Value("${egov.idgen.marriagecert.name}")
     private String getMarriageCertificateName;
 
     //Jasmine 24.03.2023

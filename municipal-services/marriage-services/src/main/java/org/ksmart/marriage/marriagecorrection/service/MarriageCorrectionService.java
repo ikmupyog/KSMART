@@ -57,7 +57,7 @@ public class MarriageCorrectionService {
         this.mdmsValidator = mdmsValidator;
         this.correctionApplicationToRegistryMapper = correctionApplicationToRegistryMapper;
     }
-
+//req for testing
     public List<MarriageCorrectionDetails> createCorrection(MarriageCorrectionRequest request) {
 
         MarriageRegistrySearchCriteria criteria = new MarriageRegistrySearchCriteria();
@@ -82,12 +82,12 @@ public class MarriageCorrectionService {
         return request.getMarriageCorrectionDetails();
     }
 
-
+//req For Testing
     private List<MarriageRegistryDetails> searchRegistry(MarriageRegistrySearchCriteria criteria) {
         return registryRepository.searchMarriageRegistry(criteria);
     }
 
-
+//req for testing
     public List<MarriageCorrectionDetails> updateMarriageRegistry(MarriageCorrectionRequest request) {
         MarriageRegistrySearchCriteria criteria = new MarriageRegistrySearchCriteria();
         criteria.setRegistrationNo(request.getMarriageCorrectionDetails().get(0).getRegistrationno());
