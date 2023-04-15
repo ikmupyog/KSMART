@@ -417,7 +417,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     // }
     function setSelectinsideKeralaHouseNameEn(e) {
         if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9 ]*$") != null)) {
-            setinsideKeralaHouseNameEn(e.target.value.trim().length <= 50 ? e.target.value.trim() : (e.target.value.trim()).substring(0, 50));
+            setinsideKeralaHouseNameEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
             if (isPrsentAddress) {
                 setpermntInKeralaAdrHouseNameEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
             }
@@ -445,7 +445,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
 
     function setSelectinsideKeralaLocalityNameEn(e) {
         if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-            setinsideKeralaLocalityNameEn(e.target.value.trim().length <= 50 ? e.target.value.trim() : (e.target.value.trim()).substring(0, 50));
+            setinsideKeralaLocalityNameEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
             if (isPrsentAddress) {
                 setpermntInKeralaAdrLocalityNameEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
             }
@@ -462,7 +462,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
             setinsideKeralaLocalityNameMl('');
         }
         else {
-            setinsideKeralaLocalityNameMl(e.target.value.trim().length <= 50 ? e.target.value.trim() : (e.target.value.trim()).substring(0, 50));
+            setinsideKeralaLocalityNameMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
             if (isPrsentAddress) {
                 setpermntInKeralaAdrLocalityNameMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
             }
@@ -474,7 +474,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
 
     function setSelectinsideKeralaStreetNameEn(e) {
         if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-            setinsideKeralaStreetNameEn(e.target.value.trim().length <= 50 ? e.target.value.trim() : (e.target.value.trim()).substring(0, 50));
+            setinsideKeralaStreetNameEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
             if (isPrsentAddress) {
                 setpermntInKeralaAdrStreetNameEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
             }
@@ -491,7 +491,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
             setinsideKeralaStreetNameMl('');
         }
         else {
-            setinsideKeralaStreetNameMl(e.target.value.trim().length <= 50 ? e.target.value.trim() : (e.target.value.trim()).substring(0, 50));
+            setinsideKeralaStreetNameMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
             if (isPrsentAddress) {
                 setpermntInKeralaAdrStreetNameMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
             }
