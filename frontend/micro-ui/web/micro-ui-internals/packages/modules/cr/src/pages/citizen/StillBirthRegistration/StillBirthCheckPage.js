@@ -107,6 +107,7 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
       {window.location.href.includes("/citizen") ? <Timeline currentStep={5} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
       <Card>
+        
         {/* <label style={{ fontSize: "17px", fontWeight: "bold" }}>{t("CR_REG_SUMMARY_HEADING")}</label> */}
         <div className="row">
           <div className="col-md-12">
@@ -126,10 +127,19 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
             backgroundColor: "#f3f0ef",
           }}
         >
+           
+           
+              <div className="col-md-12">
+                <h1 className="headingh1">
+                  <span style={{ background: "#f3f0ef", padding: "0 10px" }}>{`${t("CR_BIRTH_CHILD_DETAILS")}`}</span>{" "}
+                </h1>
+              </div>
+         
+          
             <div className="col-md-12">
           <div className="row">
             <div className="col-md-6">
-              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_CHILD_SEX")}`}</CardLabel>
+              <CardLabel style={{  fontWeight: "bold" }}>{`${t("PDF_BIRTH_CHILD_SEX")}`}</CardLabel>
             </div>
             <div className="col-md-6">
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
@@ -292,6 +302,12 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
             </div>
           </div>
 
+
+          <div className="col-md-12">
+                <h1 className="headingh1">
+                  <span style={{ background: "#f3f0ef", padding: "0 10px" }}>{`${t("CR_BIRTH_PARENT_INFORMATION_HEADER")}`}</span>{" "}
+                </h1>
+              </div>
           <div className="row">
             <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_NAME_OF_MOTHER")}`}</CardLabel>
@@ -306,7 +322,97 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                   t(StillBirthParentsDetails.motherFirstNameMl)}
               </CardText>
             </div>
+            
           </div>
+
+          <div className="row">
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("CR_BIRTH_MOTHER_AADHAR")}`}</CardLabel>
+            </div>
+
+            <div className="col-md-6">
+              {/* <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_HOSPITAL")}`}</CardLabel> */}
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                :
+                {t(StillBirthParentsDetails?.motherAadhar ?  StillBirthParentsDetails?.motherAadhar : "CR_NOT_RECORDED")}
+             
+           
+              </CardText>
+            </div>               
+          </div>
+          <div className="row">
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("CR_NATIONALITY")}`}</CardLabel>
+            </div>
+
+            <div className="col-md-6">
+              {/* <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_HOSPITAL")}`}</CardLabel> */}
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                :
+                {t(StillBirthParentsDetails?.motherNationality ?  StillBirthParentsDetails?.motherNationality.code : "CR_NOT_RECORDED")}
+             
+              </CardText>
+            </div>               
+          </div>
+
+          <div className="row">
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("CR_MOTHER_AGE_BIRTH")}`}</CardLabel>
+            </div>
+
+            <div className="col-md-6">
+              {/* <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_HOSPITAL")}`}</CardLabel> */}
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                :
+                {t(StillBirthParentsDetails?.motherMarriageBirth ?  StillBirthParentsDetails?.motherMarriageBirth : "CR_NOT_RECORDED")}
+             
+              </CardText>
+            </div>               
+          </div>
+          <div className="row">
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("CR_ORDER_CURRENT_DELIVERY")}`}</CardLabel>
+            </div>
+
+            <div className="col-md-6">
+              {/* <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_HOSPITAL")}`}</CardLabel> */}
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                :
+                {t(StillBirthParentsDetails?.orderofChildren ?  StillBirthParentsDetails?.orderofChildren : "CR_NOT_RECORDED")}
+             
+              </CardText>
+            </div>               
+          </div>
+          <div className="row">
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("CR_EDUCATION")}`}</CardLabel>
+            </div>
+
+            <div className="col-md-6">
+              {/* <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_HOSPITAL")}`}</CardLabel> */}
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                :
+                {t(StillBirthParentsDetails?.motherEducation ?  StillBirthParentsDetails?.motherEducation.code : "CR_NOT_RECORDED")}
+             
+              </CardText>
+            </div>               
+          </div>
+
+          <div className="row">
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("CR_PROFESSIONAL")}`}</CardLabel>
+            </div>
+
+            <div className="col-md-6">
+              {/* <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_HOSPITAL")}`}</CardLabel> */}
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                :
+                {t(StillBirthParentsDetails?.motherProfession ?  StillBirthParentsDetails?.motherProfession.code : "CR_NOT_RECORDED")}
+             
+              </CardText>
+            </div>               
+          </div>
+
           <div className="row">
             <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_NAME_OF_FATHER")}`}</CardLabel>
@@ -320,6 +426,79 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
               </CardText>
             </div>
           </div>
+          <div className="row">
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("CR_BIRTH_FATHER_AADHAR")}`}</CardLabel>
+            </div>
+
+            <div className="col-md-6">
+              {/* <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_HOSPITAL")}`}</CardLabel> */}
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                :
+                {t(StillBirthParentsDetails?.fatherAadhar ?  StillBirthParentsDetails?.fatherAadhar : "CR_NOT_RECORDED")}
+             
+              </CardText>
+            </div>               
+          </div>
+          <div className="row">
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("CR_NATIONALITY")}`}</CardLabel>
+            </div>
+
+            <div className="col-md-6">
+              {/* <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_HOSPITAL")}`}</CardLabel> */}
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                :
+                {t(StillBirthParentsDetails?.fatherNationality ?  StillBirthParentsDetails?.fatherNationality.code : "CR_NOT_RECORDED")}
+             
+              </CardText>
+            </div>               
+          </div>
+
+          <div className="row">
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("CR_EDUCATION")}`}</CardLabel>
+            </div>
+
+            <div className="col-md-6">
+              {/* <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_HOSPITAL")}`}</CardLabel> */}
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                :
+                {t(StillBirthParentsDetails?.fatherEducation ?  StillBirthParentsDetails?.fatherEducation.code : "CR_NOT_RECORDED")}
+             
+              </CardText>
+            </div>               
+          </div>
+          <div className="row">
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("CR_PROFESSIONAL")}`}</CardLabel>
+            </div>
+
+            <div className="col-md-6">
+              {/* <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_HOSPITAL")}`}</CardLabel> */}
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                :
+                {t(StillBirthParentsDetails?.fatherProfession ?  StillBirthParentsDetails?.fatherProfession.code : "CR_NOT_RECORDED")}
+             
+              </CardText>
+            </div>               
+          </div>
+          <div className="row">
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_FATHER_MOBILE_NO")}`}</CardLabel>
+            </div>
+
+            <div className="col-md-6">
+              {/* <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_HOSPITAL")}`}</CardLabel> */}
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                :
+                {t(StillBirthParentsDetails?.fatherMobile ?  StillBirthParentsDetails?.fatherMobile : "CR_NOT_RECORDED")}
+             
+              </CardText>
+            </div>               
+          </div>
+
+        
 
           {/* <div className="row">
             <div className="col-md-6">
@@ -335,7 +514,11 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
               
             </div>
           </div>  */}
-
+ <div className="col-md-12">
+                <h1 className="headingh1">
+                  <span style={{ background: "#f3f0ef", padding: "0 10px" }}>{`${t("CR_ADDRESS_INFORMATION_HEADER")}`}</span>{" "}
+                </h1>
+              </div>
           <div className="row">
             <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_PRESENT_ADDRESS")}`}</CardLabel>
@@ -515,7 +698,75 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
             </div>
           )}
         </div>
+
+
+        <div className="col-md-12">
+                <h1 className="headingh1">
+                  <span style={{ background: "#f3f0ef", padding: "0 10px" }}>{`${t("CR_STATISTICAL_DETAILS")}`}</span>{" "}
+                </h1>
+              </div>
+
+              <div className="row">
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_NATURE_MEDICAL_ATTENTION")}`}</CardLabel>
+            </div>
+
+            <div className="col-md-6">
+              {/* <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_HOSPITAL")}`}</CardLabel> */}
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                :
+                {t(StillBirthChildDetails?.medicalAttensionSub ?  StillBirthChildDetails?.medicalAttensionSub.code : "CR_NOT_RECORDED")}
+             
+              </CardText>
+            </div>               
+          </div>
+
+
+          <div className="row">
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_DURATION_PREGNANCY")}`}</CardLabel>
+            </div>
+
+            <div className="col-md-6">
+              {/* <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_HOSPITAL")}`}</CardLabel> */}
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                :
+                {t(StillBirthChildDetails?.pregnancyDuration ?  StillBirthChildDetails?.pregnancyDuration.code : "CR_NOT_RECORDED")}
+             
+              </CardText>
+            </div>               
+          </div>
+          <div className="row">
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_BIRTH_DELIVERYMETHOD")}`}</CardLabel>
+            </div>
+
+            <div className="col-md-6">
+              {/* <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_HOSPITAL")}`}</CardLabel> */}
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                :
+                {t(StillBirthChildDetails?.deliveryMethods ?  StillBirthChildDetails?.deliveryMethods.code : "CR_NOT_RECORDED")}
+             
+              </CardText>
+            </div>               
+          </div>
+          <div className="row">
+            <div className="col-md-6">
+              <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>{`${t("PDF_CAUSE_FOETAL_DEATH")}`}</CardLabel>
+            </div>
+
+            <div className="col-md-6">
+              {/* <CardLabel style={{ lineHeight: "auto" }}>{`${t("CR_HOSPITAL")}`}</CardLabel> */}
+              <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
+                :
+                {t(StillBirthChildDetails?.causeFoetalDeath ?  StillBirthChildDetails?.causeFoetalDeath.code : "CR_NOT_RECORDED")}
+             
+              </CardText>
+            </div>               
+          </div>
+
         </div>
+
 
         <div className="row">
         <div className="row">
