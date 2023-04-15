@@ -18,7 +18,7 @@ const ApplicationAbandonedBirthDetails = () => {
   const [allowedToNextYear, setAllowedToNextYear] = useState(false);
   sessionStorage.setItem("applicationNumber", applicationNumber);
   // const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
-  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationDetail(t, tenantId, applicationNumber);
+  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.cr.useApplicationAbandondBirthDetail(t, tenantId, applicationNumber);
   const [params, setParams, clearParams] =  Digit.Hooks.useSessionStorage("CR_EDIT_ABANDONEDBIRTH_REG", {}) 
   const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_EDIT_ABANDONEDBIRTH_FLAG", false) 
   const stateId = Digit.ULBService.getStateId();
@@ -29,7 +29,7 @@ const ApplicationAbandonedBirthDetails = () => {
     data: updateResponse,
     error: updateError,
     mutate,
-  } = Digit.Hooks.cr.useApplicationActions(tenantId);
+  } = Digit.Hooks.cr.useApplicationAbandondBirthDetail(tenantId);
 
   // let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
   // console.log(applicationDetails?.applicationData?.applicationtype);

@@ -39,7 +39,6 @@ export const CRNACsearch = {
   },
   application: async (tenantId, filters = {}) => {
     const response = await CRNACBirthService.CRNACsearch({ tenantId, filters });
-    console.log(response, "response");
     return response.nacDetails[0];
   },
 
@@ -49,11 +48,8 @@ export const CRNACsearch = {
   },
 
   applicationDetails: async (t, tenantId, applicationNumber, userType) => {
-    // console.log("applicationNumber" + applicationNumber);
     const filter = { applicationNumber };
-    const response = await CRNACsearch.application(tenantId, filter);
-    // console.log(response);
-    // const propertyDetails =
+    const response = await CRNACsearch.application(tenantId, filter); // const propertyDetails =
     //   response?.tradeLicenseDetail?.additionalDetail?.propertyId &&
     //   (await Digit.PTService.search({ tenantId, filters: { propertyIds: response?.tradeLicenseDetail?.additionalDetail?.propertyId } }));
     let numOfApplications = [];
@@ -80,7 +76,7 @@ export const CRNACsearch = {
         { title: "PDF_BIRTH_DATE_OF_BIRTH", value: response?.childDOB ? convertEpochToDate(response?.childDOB) : "NA" },
         { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.birthPlace || "NA" },
         { title: "PDF_BIRTH_AADHAR_NO", value: response?.childAadharNo || "NA" },
-        { title: "PDF_BIRTH_ORDER_OF_BIRTH", value: response?.orderofBirth || "NA" },
+        { title: "PDF_BIRTH_ORDER", value: response?.orderofBirth || "NA" },
       ],
     };
     const parentInfo = {
@@ -98,12 +94,14 @@ export const CRNACsearch = {
         { title: "PDF_BIRTH_FATHER_AADHAR", value: response?.ParentsDetails?.fatherAadhar || "NA" },
       ],
     };
-    const AddressBirthDetailsInfo = {
-      title: "CR_ADDRESS_INFORMATION_HEADER",
+    const PresentAddressBirthDetailsInfo = {
+      title: "CR_PRESENT_ADDRESS_INFORMATION_HEADER",
       values: [
         { title: "CR_BIRTH_PERS_HO_NAME_LABEL", value: response?.AddressBirthDetails.presentInKeralaAdrHouseNameEn || "CR_NOT_RECORDED" },
         { title: "CR_BIRTH_PERS_STREET_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaStreetNameEn || "CR_NOT_RECORDED" },
         { title: "CR_BIRTH_PERS_LOCALITY_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaLocalityNameEn || "CR_NOT_RECORDED" },
+        { title: "CR_BIRTH_PERS_VILLAGE_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaVillage || "CR_NOT_RECORDED" },
+        { title: "CR_BIRTH_PERS_TALUK_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaTaluk || "CR_NOT_RECORDED" },
         { title: "CR_BIRTH_PERS_POSTOFFICE_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaPostOffice || "CR_NOT_RECORDED" },
         { title: "CR_BIRTH_PERS_PINCODE_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaPincode || "CR_NOT_RECORDED" },
         { title: "CR_BIRTH_PERS_DISTRICT_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaDistrict || "CR_NOT_RECORDED" },
@@ -112,10 +110,17 @@ export const CRNACsearch = {
           value: response?.AddressBirthDetails.presentaddressStateName || "CR_NOT_RECORDED",
         },
         { title: "CR_BIRTH_PERS_COUNTRY_LABEL", value: response?.AddressBirthDetails.presentaddressCountry || "CR_NOT_RECORDED" },
-
+      ],
+    };
+    const PermanentAddressBirthDetailsInfo = {
+      title: "CR_PERMANENT_ADDRESS_INFORMATION_HEADER",
+      values: [
         { title: "CR_BIRTH_PERM_HO_NAME_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrHouseNameEn || "CR_NOT_RECORDED" },
         { title: "CR_BIRTH_PERM_STREET_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrStreetNameEn || "CR_NOT_RECORDED" },
         { title: "CR_BIRTH_PERM_LOCALITY_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrLocalityNameEn || "CR_NOT_RECORDED" },
+        { title: "CR_BIRTH_PERM_WARD_LABEL", value: response?.AddressBirthDetails.permntInKeralaWardNo || "CR_NOT_RECORDED" },
+        { title: "CR_BIRTH_PERM_VILLAGE_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrVillage || "CR_NOT_RECORDED" },
+        { title: "CR_BIRTH_PERM_TALUK_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrTaluk || "CR_NOT_RECORDED" },
         { title: "CR_BIRTH_PERM_POSTOFFICE_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrPostOffice || "CR_NOT_RECORDED" },
         { title: "CR_BIRTH_PERM_PINCODE_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrPincode || "CR_NOT_RECORDED" },
         { title: "CR_BIRTH_PERM_DISTRICT_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrDistrict || "CR_NOT_RECORDED" },
@@ -133,6 +138,7 @@ export const CRNACsearch = {
         { title: "CR_APPLICANT_AADHAR", value: response?.ApplicantDetails.aadharNo || "NA" },
         { title: "CR_APPLICANT_MOBILE", value: response?.ApplicantDetails.mobileNo || "NA" },
         { title: "CR_APPLICANT_ADDRESS", value: response?.ApplicantDetails.applicantAddressEn || "NA" },
+        { title: "CR_CARE_OF_APPLICATION", value: response?.ApplicantDetails.careofapplication || "NA" },
       ],
     };
 
@@ -152,7 +158,8 @@ export const CRNACsearch = {
     response && employeeResponse.push(Birthdetails);
     response && employeeResponse.push(childdetails);
     response && employeeResponse.push(parentInfo);
-    response && employeeResponse.push(AddressBirthDetailsInfo);
+    response && employeeResponse.push(PresentAddressBirthDetailsInfo);
+    response && employeeResponse.push(PermanentAddressBirthDetailsInfo);
     response && employeeResponse.push(initiatorInfo);
 
     // response && employeeResponse.push(statisticalInfo);

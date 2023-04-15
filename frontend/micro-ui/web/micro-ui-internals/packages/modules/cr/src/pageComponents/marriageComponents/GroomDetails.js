@@ -305,6 +305,8 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
         setTimeout(() => {
           setToast(false);
         }, 2000);
+        setGroomAge('');
+        setGroomDOB('');
       }
     } else {
       setGroomDOB(null);
@@ -494,6 +496,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
         e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
       );
     }
+  }
     // const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
     // if (newValue === groomAadharNo || newValue === groomGuardianAadharNo || newValue === groomFatherAadharNo) {
@@ -506,10 +509,32 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     // } else {
     // setGroomMotherAadharNo(newValue);
     //  }
-  }
+    function setCheckSpecialChar(e) {
+      let pattern = /^[0-9]*$/;
+      if (!(e.key.match(pattern))) {
+        e.preventDefault();
+      }
+    }
 
   let validFlag = true;
   const goNext = () => {
+    if (groomAadharNo.trim() == null || groomAadharNo.trim() == '' || groomAadharNo.trim() == undefined) {
+      setGroomAadharNo("");
+    } else if (groomAadharNo != null && groomAadharNo != "") {
+      let adharLength = groomAadharNo;
+      if (adharLength.length < 12 || adharLength.length > 12) {
+        validFlag = false;
+        setAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setAadharError(false);
+      }
+    } else {
+      setAadharError(false);
+    }
     if (validFlag == true) {
       // sessionStorage.setItem("groomDOB", groomDOB ? groomDOB : null);
       // sessionStorage.setItem("groomGender", groomGender ? groomGender.code : null);
@@ -595,16 +620,18 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
             !groomGender ||
             !groomDOB ||
             !groomMaritalstatusID ||
-            groomResidentShip === "INDIAN"
+            (groomResidentShip === "INDIAN"
               ? !groomAadharNo
-              : false || groomResidentShip === "NRI"
-              ? !groomPassportNo
-              : false || groomResidentShip === "FOREIGN"
-              ? !groomSocialSecurityNo || !groomPassportNo
-              : false
-            // || groomParentGuardian === "PARENT" ? (!groomFathernameEn || !groomFathernameMl || !groomMothernameEn
-            // || !groomMothernameMl || !groomFatherAadharNo || !groomMotherAadharNo) : false
-            // || groomParentGuardian === "GUARDIAN" ? (!groomGuardiannameEn || !groomGuardiannameMl || !groomGuardianAadharNo) : false
+              : false) || 
+            (groomResidentShip === "NRI"
+              ? (!groomPassportNo || !groomSocialSecurityNo)
+              : false) || 
+            (groomResidentShip === "FOREIGN"
+              ? (!groomSocialSecurityNo || !groomPassportNo)
+              : false)
+            || (groomParentGuardian === "PARENT" ? (!groomFathernameEn || !groomFathernameMl || !groomMothernameEn
+            || !groomMothernameMl || !groomFatherAadharNo || !groomMotherAadharNo) : false)
+            || (groomParentGuardian === "GUARDIAN" ? (!groomGuardiannameEn || !groomGuardiannameMl || !groomGuardianAadharNo) : false)
           }
         >
           <div className="row">
@@ -660,6 +687,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   name="groomAadharNo"
                   value={groomAadharNo}
                   onChange={setSelectGroomAadharNo}
+                  onKeyPress={setCheckSpecialChar}
                   placeholder={`${t("CR_GROOM_AADHAR_NO")}`}
                   inputProps={{
                     maxLength: 12,
