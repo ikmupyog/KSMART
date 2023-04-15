@@ -28,7 +28,7 @@ public class GlobalMasterServices {
     public ModuleDetails createModule( final ModuleDetailsRequest request){
         final ModuleDetails moduleDetails=request.getModuleDetails();
         enrichment.enrichCreateModule(request);
-        producer.push(fmConfiguration.getSaveModulemasterTopic(),request);
+        producer.push(fmConfiguration.getSavemodulemasterTopic(),request);
         return request.getModuleDetails();
     }
 //    //create MajorFunction
