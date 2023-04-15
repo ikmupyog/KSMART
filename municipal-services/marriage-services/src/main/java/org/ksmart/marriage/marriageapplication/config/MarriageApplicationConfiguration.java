@@ -64,24 +64,24 @@ public class MarriageApplicationConfiguration {
 
     //Demand
   
-        @Value("${egov.billingservice.host}")
-        private String billingHost;
+    @Value("${egov.billingservice.host}")
+    private String billingHost;
     
-        @Value("${egov.bill.gen.endpoint}")
-        private String fetchBillEndpoint;
+    @Value("${egov.bill.gen.endpoint}")
+    private String fetchBillEndpoint;
     
-        @Value("${egov.demand.create.endpoint}")
-        private String demandCreateEndpoint;
+    @Value("${egov.demand.create.endpoint}")
+    private String demandCreateEndpoint;
 
-         //MDMS
-         @Value("${egov.mdms.host}")
-         private String mdmsHost;
+    //MDMS
+    @Value("${egov.mdms.host}")
+    private String mdmsHost;
      
-         @Value("${egov.mdms.search.endpoint}")
-         private String mdmsEndPoint;
+    @Value("${egov.mdms.search.endpoint}")
+    private String mdmsEndPoint;
 
-         @Value("${egov.state.level.tenant.id}")
-         private String egovStateLevelTenant;
+    @Value("${egov.state.level.tenant.id}")
+    private String egovStateLevelTenant;
 
     @Value("${egov.ui.app.host}")
     private String uiAppHost;
@@ -110,17 +110,16 @@ public class MarriageApplicationConfiguration {
     @Value("${persister.update.marriagecertificate.topic}")
     private String updateMarriageCertificateTopic;
 
-    // @Value("${egov.idgen.marriageapplncertno.name}")
-    // private String marriageCertNumberIdName;
+    @Value("${egov.idgen.marriageapplncertno.name}")
+    private String marriageCertNumberIdName;
 
+    //Marriage Correction
+    @Value("${persister.save.marriage.correction.topic}")
+    private String SaveMarriageCorrectionTopic;
 
-        //Marriage Correction
-        @Value("${persister.save.marriage.correction.topic}")
-        private String SaveMarriageCorrectionTopic;
+    @Value("${persister.update.marriage.correction.topic}")
+    private String UpdateMarriageCorrectionTopic;
 
-        @Value("${persister.update.marriage.correction.topic}")
-        private String UpdateMarriageCorrectionTopic;
-
-        @Value("${persister.update.marriage.registry.correction.topic}")
-        private String UpdateMarriageRegistryCorrectionTopic;
+    @Value("${persister.update.marriage.registry.correction.topic}")
+    private String UpdateMarriageRegistryCorrectionTopic;
 }
