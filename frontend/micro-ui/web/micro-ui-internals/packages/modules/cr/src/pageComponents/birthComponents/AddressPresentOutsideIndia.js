@@ -267,8 +267,8 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
                 onChange={setSelectProvinceMl}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_STATE_REGION_PROVINCE_ML")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
-              />
+                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
+              /> 
             </div>
           </div>
 
@@ -316,11 +316,11 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
                 disable={isDisableEdit}
                 placeholder={`${t("CR_ZIP_CODE")}`}
                 {...(validation = {
-                  pattern: "^[a-zA-Z-.0-9`' ]*$",
+                  pattern: "^[a-zA-Z-.`' ]*$",
                   isRequired: true,
                   type: "number",
-                  max: 6,
-                  min: 6,
+                  maxLength: 6,
+                  minLength: 6,
                   title: t("CR_INVALID_ZIP_CODE"),
                 })}
               />

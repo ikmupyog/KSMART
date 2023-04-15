@@ -209,8 +209,10 @@ const Initiater = ({ config, onSelect, userType, formData, isEditDeath }) => {
   return (
     <React.Fragment>
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
-      {window.location.href.includes("/citizen/cr-death-creation/initiator") || window.location.href.includes("/employee/cr-death-creation/initiator") ? <Timeline currentStep={5} /> : null}
+      {/* {window.location.href.includes("/citizen/cr-death-creation/initiator") || window.location.href.includes("/employee/cr-death-creation/initiator") ? <Timeline currentStep={5} /> : null} */}
       
+      {window.location.href.includes("/citizen") ? <Timeline currentStep={5} /> : null}
+      {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
         <div className="row">
           <div className="col-md-12">
