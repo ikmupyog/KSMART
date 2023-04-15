@@ -1,5 +1,5 @@
 import { format, toDate } from "date-fns";
-import fetch from 'isomorphic-unfetch';
+// import fetch from 'isomorphic-unfetch';
 
 export const ConvertTimestampToDate = (timestamp, dateFormat = "d-MMM-yyyy") => {
   return timestamp ? format(toDate(timestamp), dateFormat) : null;
