@@ -617,44 +617,43 @@ serviceMaps:
         serviceid, subject, applicationdetails)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ;
         
-        basePath: arisingFile
-        jsonMaps:
-        - jsonPath: $.arisingFile.id
+      basePath: ArisingFile
+      jsonMaps:
+      - jsonPath: $.ArisingFile.id
 
-        - jsonPath: $.arisingFile.tenantId   
-              
-        - jsonPath: $.arisingFile.fileCode 
+      - jsonPath: $.ArisingFile.tenantId   
+            
+      - jsonPath: $.ArisingFile.fileCode 
+    
+      - jsonPath: $.ArisingFile.fileArisingMode 
+    
+      - jsonPath: $.ArisingFile.fileArisingDate 
+     
+      - jsonPath: $.ArisingFile.year
       
-        - jsonPath: $.arisingFile.fileArisingMode 
+      - jsonPath: $.ArisingFile.workflowCode
       
-        - jsonPath: $.arisingFile.fileArisingDate 
-       
-        - jsonPath: $.arisingFile.year
-        
-        - jsonPath: $.arisingFile.workflowCode
-        
-        - jsonPath: $.arisingFile.businessService
-        
-        - jsonPath: $.arisingFile.assignee
-        
-        - jsonPath: $.arisingFile.action
-        
-        - jsonPath: $.arisingFile.fileStatus      
-               
-        - jsonPath: $.arisingFile.auditDetails.createdBy
+      - jsonPath: $.ArisingFile.businessService
+      
+      - jsonPath: $.ArisingFile.assignee
+      
+      - jsonPath: $.ArisingFile.action
+      
+      - jsonPath: $.ArisingFile.fileStatus      
+             
+      - jsonPath: $.ArisingFile.auditDetails.createdBy
 
-        - jsonPath: $.arisingFile.auditDetails.createdTime
-        
-        - jsonPath: $.arisingFile.auditDetails.lastModifiedBy
+      - jsonPath: $.ArisingFile.auditDetails.createdTime
+      
+      - jsonPath: $.ArisingFile.auditDetails.lastModifiedBy
 
-        - jsonPath: $.arisingFile.auditDetails.lastModifiedTime       
-        
-         - jsonPath: $.arisingFile.serviceId
+      - jsonPath: $.ArisingFile.auditDetails.lastModifiedTime       
+      
+      - jsonPath: $.ArisingFile.serviceId
 
-        - jsonPath: $.arisingFile.subject
+      - jsonPath: $.ArisingFile.subject
 
-        - jsonPath: $.arisingFile.applicationDetails
-
+      - jsonPath: $.ArisingFile.applicationDetails
 
     - query: >
         INSERT INTO public.eg_fm_arisingfileapplicantdetails(id, tenantid, arisingfileid, filecode, applicanttype, firstname, 
@@ -663,95 +662,93 @@ serviceMaps:
         createdby, createdtime, lastmodifiedby, lastmodifiedtime, housename)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ;
          
-        basePath: arisingFile.arisingFileApplicant
-        jsonMaps:
-            - jsonPath: $.arisingFile.arisingFileApplicant.id
+      basePath: ArisingFile.arisingFileApplicant
+      jsonMaps:
+      - jsonPath: $.ArisingFile.arisingFileApplicant.id
 
-            - jsonPath: $.arisingFile.arisingFileApplicant.tenantId
+      - jsonPath: $.ArisingFile.arisingFileApplicant.tenantId
 
-            - jsonPath: $.arisingFile.arisingFileApplicant.arisingFileId
+      - jsonPath: $.ArisingFile.arisingFileApplicant.arisingFileId
 
-            - jsonPath: $.arisingFile.arisingFileApplicant.fileCode
-            
-            - jsonPath: $.arisingFile.arisingFileApplicant.applicantType
+      - jsonPath: $.ArisingFile.arisingFileApplicant.fileCode
+      
+      - jsonPath: $.ArisingFile.arisingFileApplicant.applicantType
 
-            - jsonPath: $.arisingFile.arisingFileApplicant.firstName
+      - jsonPath: $.ArisingFile.arisingFileApplicant.firstName
 
-            - jsonPath: $.arisingFile.arisingFileApplicant.middleName
+      - jsonPath: $.ArisingFile.arisingFileApplicant.middleName
 
-            - jsonPath: $.arisingFile.arisingFileApplicant.lastName
+      - jsonPath: $.ArisingFile.arisingFileApplicant.lastName
 
-            - jsonPath: $.arisingFile.arisingFileApplicant.mobileNo
+      - jsonPath: $.ArisingFile.arisingFileApplicant.mobileNo
 
-            - jsonPath: $.arisingFile.arisingFileApplicant.whatsappNo
+      - jsonPath: $.ArisingFile.arisingFileApplicant.whatsappNo
 
-            - jsonPath: $.arisingFile.arisingFileApplicant.emailId
+      - jsonPath: $.ArisingFile.arisingFileApplicant.emailId
 
-            - jsonPath: $.arisingFile.arisingFileApplicant.wardNo
+      - jsonPath: $.ArisingFile.arisingFileApplicant.wardNo
 
-            - jsonPath: $.arisingFile.arisingFileApplicant.doorNo
+      - jsonPath: $.ArisingFile.arisingFileApplicant.doorNo
 
-            - jsonPath: $.arisingFile.arisingFileApplicant.doorSubNo           
+      - jsonPath: $.ArisingFile.arisingFileApplicant.doorSubNo           
 
-            - jsonPath: $.arisingFile.arisingFileApplicant.streetName
+      - jsonPath: $.ArisingFile.arisingFileApplicant.streetName
 
-            - jsonPath: $.arisingFile.arisingFileApplicant.localPlace
+      - jsonPath: $.ArisingFile.arisingFileApplicant.localPlace
 
-            - jsonPath: $.arisingFile.arisingFileApplicant.mainPlace
+      - jsonPath: $.ArisingFile.arisingFileApplicant.mainPlace
 
-            - jsonPath: $.arisingFile.arisingFileApplicant.cityName
+      - jsonPath: $.ArisingFile.arisingFileApplicant.cityName
 
-            - jsonPath: $.arisingFile.arisingFileApplicant.pinCode
+      - jsonPath: $.ArisingFile.arisingFileApplicant.pinCode
 
-            - jsonPath: $.arisingFile.arisingFileApplicant.documentTypeId
+      - jsonPath: $.ArisingFile.arisingFileApplicant.documentTypeId
 
-            - jsonPath: $.arisingFile.arisingFileApplicant.documentNumber
+      - jsonPath: $.ArisingFile.arisingFileApplicant.documentNumber
 
-            - jsonPath: $.arisingFile.arisingFileApplicant.documentFileStoreId
+      - jsonPath: $.ArisingFile.arisingFileApplicant.documentFileStoreId
 
-            - jsonPath: $.arisingFile.arisingFileApplicant.institutionName
+      - jsonPath: $.ArisingFile.arisingFileApplicant.institutionName
 
-            - jsonPath: $.arisingFile.arisingFileApplicant.officerName
+      - jsonPath: $.ArisingFile.arisingFileApplicant.officerName
 
-            - jsonPath: $.arisingFile.arisingFileApplicant.designation
+      - jsonPath: $.ArisingFile.arisingFileApplicant.designation
 
-            - jsonPath: $.arisingFile.arisingFileApplicant.auditDetails.createdBy
+      - jsonPath: $.ArisingFile.arisingFileApplicant.auditDetails.createdBy
 
-            - jsonPath: $.arisingFile.arisingFileApplicant.auditDetails.createdTime
+      - jsonPath: $.ArisingFile.arisingFileApplicant.auditDetails.createdTime
 
-            - jsonPath: $.arisingFile.arisingFileApplicant.auditDetails.lastModifiedBy
+      - jsonPath: $.ArisingFile.arisingFileApplicant.auditDetails.lastModifiedBy
 
-            - jsonPath: $.arisingFile.arisingFileApplicant.auditDetails.lastModifiedTime 
-            
-            - jsonPath: $.arisingFile.arisingFileApplicant.houseName          
+      - jsonPath: $.ArisingFile.arisingFileApplicant.auditDetails.lastModifiedTime 
+      
+      - jsonPath: $.ArisingFile.arisingFileApplicant.houseName          
 
   - version: 1.0
     description: Update arising file  details in egov_filemgmnt database, eg_fm_arisingfile table
     fromTopic: update-fm-arisingfiledetails
     isTransaction: true
     queryMaps:
-        - query: UPDATE public.eg_fm_arisingfile  SET  filearisingmode=?, filearisingdate=?, financialyear=?, workflowcode=?, businessservice=?, assignee=?, action=?, filestatus=? WHERE filecode = ?;
-          basePath: arisingFile
-          jsonMaps:
+    - query: UPDATE public.eg_fm_arisingfile  SET  filearisingmode=?, filearisingdate=?, financialyear=?, workflowcode=?, businessservice=?, assignee=?, action=?, filestatus=? WHERE filecode = ?;
+      basePath: arisingFile
+      jsonMaps:
+      - jsonPath: $.arisingFile.fileArisingMode
 
-            - jsonPath: $.arisingFile.fileArisingMode
+      - jsonPath: $.arisingFile.fileArisingDate
 
-            - jsonPath: $.arisingFile.fileArisingDate
+      - jsonPath: $.arisingFile.year
 
-            - jsonPath: $.arisingFile.year
+      - jsonPath: $.arisingFile.workflowCode
 
-            - jsonPath: $.arisingFile.workflowCode
+      - jsonPath: $.arisingFile.businessService
 
-            - jsonPath: $.arisingFile.businessService
+      - jsonPath: $.arisingFile.assignee
 
-            - jsonPath: $.arisingFile.assignee
+      - jsonPath: $.arisingFile.action
 
-            - jsonPath: $.arisingFile.action
+      - jsonPath: $.arisingFile.fileStatus
 
-            - jsonPath: $.arisingFile.fileStatus
-
-            - jsonPath: $.arisingFile.fileCode
-
+      - jsonPath: $.arisingFile.fileCode
 
   - version: 1.0
     description: Save drafting details in egov_filemgmnt database, eg_fm_drafting table

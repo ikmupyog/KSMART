@@ -27,7 +27,7 @@ public class ArisingFileRequest {
     @JsonProperty("RequestInfo")
     private RequestInfo requestInfo;
 
-    @JsonProperty("arisingFile")
+    @JsonProperty("ArisingFile")
     private ArisingFile arisingFile;
 
 }
