@@ -345,7 +345,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
       setDOBError(true);
       setToast(true);
       setTimeout(() => {
-         setToast(false);
+        setToast(false);
       }, 3000);
     }
   }
@@ -595,9 +595,9 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
               : false) ||
             (marriagePlacetype.code === "OTHER"
               ? !marriageLocalityEn || !marriageLocalityMl || !marriagePlacenameEn || !marriagePlacenameMl
-              : false) || 
+              : false) ||
             !marriageType
-           }
+          }
         >
           <div className="row">
             <div className="col-md-12">

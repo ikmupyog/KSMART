@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 
 const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isEditBirthPageComponents }) => {
   // console.log(JSON.stringify(formData));
-  console.log(formData);
+  // console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -162,7 +162,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
 
   function setSelectMotherFirstNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setMotherFirstNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setMotherFirstNameEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
@@ -173,24 +173,24 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
       setMotherFirstNameMl('');
     }
     else {
-      setMotherFirstNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setMotherFirstNameMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectMotherAadhar(e) {
     if (e.target.value.trim().length >= 0) {
-      setMotherAadhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
+      setMotherAadhar(e.target.value.trim().length <= 12 ? e.target.value.trim().replace(/[^0-9]/ig, '') : (e.target.value.trim().replace(/[^0-9]/ig, '')).substring(0, 12));
     }
   }
 
   function setSelectFatherAadhar(e) {
     if (e.target.value.trim().length >= 0) {
-      setFatherAadhar(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
+      setFatherAadhar(e.target.value.trim().length <= 12 ? e.target.value.trim().replace(/[^0-9]/ig, '') : (e.target.value.trim().replace(/[^0-9]/ig, '')).substring(0, 12));
     }
   }
 
   function setSelectFatherMobile(e) {
     if (e.target.value.trim().length >= 0) {
-      setFatherMobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
+      setFatherMobile(e.target.value.trim().length <= 10 ? e.target.value.trim().replace(/[^0-9]/ig, '') : (e.target.value.trim().replace(/[^0-9]/ig, '')).substring(0, 10));
     }
   }
   function setSelectFatherEmail(e) {
@@ -198,7 +198,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setFatherEmail(e.target.value);
+      setFatherEmail(e.target.value.trim());
     }
   }
 
@@ -209,7 +209,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
   // }
 
   function setSelectMotherMarriageAge(e) {
-    setMotherMarriageAge(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
+    setMotherMarriageAge(e.target.value.trim().length <= 2 ? e.target.value.trim().replace(/[^0-9]/ig, '') : (e.target.value.trim().replace(/[^0-9]/ig, '')).substring(0, 2));
     if (e.target.value < 18) {
       setAgeValidationMsg(true);
       setToast(true);
@@ -224,7 +224,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
 
   function setSelectMotherMarriageBirth(e) {
     if (e.target.value.trim().length >= 0) {
-      setMotherMarriageBirth(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
+      setMotherMarriageBirth(e.target.value.trim().length <= 2 ? e.target.value.trim().replace(/[^0-9]/ig, '') : (e.target.value.trim().replace(/[^0-9]/ig, '')).substring(0, 2));
     }
   }
   function setSelectMotherEducation(value) {
@@ -249,7 +249,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
 
     if (e.target.value < 10) {
       if (e.target.value > 4) {
-        setOrderofChildren(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
+        setOrderofChildren(e.target.value.trim().length <= 2 ? e.target.value.trim().replace(/[^0-9]/ig, '') : (e.target.value.trim().replace(/[^0-9]/ig, '')).substring(0, 2));
         setOrderofChildrenValidationMsg(true);
         setToast(true);
         setTimeout(() => {
@@ -257,7 +257,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
         }, 2000);
       } else {
         setOrderofChildrenValidationMsg(false);
-        setOrderofChildren(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
+        setOrderofChildren(e.target.value.trim().length <= 2 ? e.target.value.trim().replace(/[^0-9]/ig, '') : (e.target.value.trim().replace(/[^0-9]/ig, '')).substring(0, 2));
       }
     }
     else {
@@ -291,7 +291,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
   }
 
   function setSelectFatherFirstNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.trim().match("^[a-zA-Z ]*$") != null)) {
       setFatherFirstNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
@@ -302,7 +302,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
       setFatherFirstNameMl('');
     }
     else {
-      setFatherFirstNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setFatherFirstNameMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
@@ -607,30 +607,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
       }
     }
     if (validFlag == true) {
-      // sessionStorage.setItem("motherFirstNameEn", motherFirstNameEn ? motherFirstNameEn : null);
-      // sessionStorage.setItem("motherFirstNameMl", motherFirstNameMl ? motherFirstNameMl : null);
-      // sessionStorage.setItem("motherAadhar", motherAadhar ? motherAadhar : null);
-      // sessionStorage.setItem("motherMarriageAge", motherMarriageAge ? motherMarriageAge : null);
-      // sessionStorage.setItem("motherMarriageBirth", motherMarriageBirth ? motherMarriageBirth : null);
-      // sessionStorage.setItem("motherEducation", motherEducation ? motherEducation.code : null);
-      // sessionStorage.setItem("motherProfession", motherProfession ? motherProfession.code : null);
-      // sessionStorage.setItem("motherNationality", motherNationality ? motherNationality.code : null);
-      // sessionStorage.setItem("motherMaritalStatus", motherMaritalStatus ? motherMaritalStatus : null);
-      // // sessionStorage.setItem("MotherAgeMarriage", MotherAgeMarriage ? MotherAgeMarriage : null);
-
-      // sessionStorage.setItem("orderofChildren", orderofChildren ? orderofChildren : null);
-      // sessionStorage.setItem("isMotherInfo", isMotherInfo ? isMotherInfo : null);
-      // sessionStorage.setItem("isFatherInfo", isFatherInfo ? isFatherInfo : null);
-      // sessionStorage.setItem("fatherAadhar", fatherAadhar ? fatherAadhar : null);
-      // sessionStorage.setItem("fatherFirstNameEn", fatherFirstNameEn ? fatherFirstNameEn : null);
-      // sessionStorage.setItem("fatherFirstNameMl", fatherFirstNameMl ? fatherFirstNameMl : null);
-      // sessionStorage.setItem("fatherNationality", fatherNationality ? fatherNationality.code : null);
-      // sessionStorage.setItem("fatherEducation", fatherEducation ? fatherEducation.code : null);
-      // sessionStorage.setItem("fatherProfession", fatherProfession ? fatherProfession.code : null);
-      // sessionStorage.setItem("Religion", Religion ? Religion.code : null);
-      // sessionStorage.setItem("fatherEmail", fatherEmail ? fatherEmail : null);
-      // sessionStorage.setItem("fatherMobile", fatherMobile ? fatherMobile : null);
-
+     
       onSelect(config.key, {
         motherFirstNameEn,
         motherFirstNameMl,
