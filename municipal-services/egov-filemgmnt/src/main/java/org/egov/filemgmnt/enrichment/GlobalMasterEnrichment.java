@@ -13,13 +13,13 @@ import java.util.UUID;
 
 @Component
 public class GlobalMasterEnrichment extends BaseEnrichment{
-
+    @Autowired
     private FMConfiguration fmConfiguration;
-    public static void enrichCreateModule(ModuleDetailsRequest request){
+    public  void enrichCreateModule(ModuleDetailsRequest request){
         RequestInfo requestInfo = request.getRequestInfo();
         User userInfo = requestInfo.getUserInfo();
 
-        AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
+       final AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
        final ModuleDetails moduleDetails = request.getModuleDetails();
        final AuditDetails moduleAuditDetails = moduleDetails.getAuditDetails();
         moduleDetails.setId(UUID.randomUUID()

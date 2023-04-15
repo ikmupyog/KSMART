@@ -122,4 +122,8 @@ public class FMConfiguration {
 
     @Value("${egov.url.shortner.endpoint}")
     private String urlShortnerEndpoint;
+    // Global Mastersettings
+    @Value("${persister.save.savemodulemaster.topic:}")
+    private String saveModulemasterTopic;
+
 }
