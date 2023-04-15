@@ -409,9 +409,9 @@ serviceMaps:
 
                 - jsonPath: $.MarriageDetails.*.BrideAddressDetails.presentOutSideIndiaAdressMlB
 
-                - jsonPath: $.MarriageDetails.*.BrideAddressDetails.PresentOutSideIndiaProvinceEn
+                - jsonPath: $.MarriageDetails.*.BrideAddressDetails.PresentOthrIndiaProvinceEn
 
-                - jsonPath: $.MarriageDetails.*.BrideAddressDetails.presentOutSideIndiaProvinceMl
+                - jsonPath: $.MarriageDetails.*.BrideAddressDetails.presentOthrIndiaProvinceMl
 
                 - jsonPath: $.MarriageDetails.*.BrideAddressDetails.outSideIndiaPostCodePresent
 
@@ -485,13 +485,13 @@ serviceMaps:
 
                 - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutsideIndiaLinetwoEn
 
-                - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutsideIndiaLinetwoMl
+                - jsonPath: $.MarriageDetails.*.BrideAddressDetails.PermntOthrIndiaprovinceEn
 
-                - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutSideIndiaProvinceMl
+                - jsonPath: $.MarriageDetails.*.BrideAddressDetails.PermntOthrIndiaprovinceMl
 
                 - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permanentAddrVillageId
 
-                - jsonPath: $.MarriageDetails.*.BrideAddressDetails.outSideIndiaPostCodepermanent
+                - jsonPath: $.MarriageDetails.*.BrideAddressDetails.outSideIndiaPostCodePermanent
 
                 - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutsideKeralaPostOfficeMl
 
@@ -566,9 +566,9 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentOutSideIndiaAdressMlB
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.PresentOutSideIndiaProvinceEn
+            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.PresentOthrIndiaProvinceEn
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentOutSideIndiaProvinceMl
+            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentOthrIndiaProvinceMl
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.outSideIndiaPostCodePresent
 
@@ -644,16 +644,16 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOutsideIndiaLinetwoMl
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOutSideIndiaProvinceMl
+            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.PermntOthrIndiaprovinceEn
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permanentAddrVillageId
+            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.PermntOthrIndiaprovinceMl
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.outSideIndiaPostCodepermanent
+            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.outSideIndiaPostCodePermanent
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOutsideKeralaPostOfficeMl
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.townOrVillagePermanent
- 
+
 
         - query: INSERT INTO public.eg_marriage_document( id ,tenantid ,document_name ,document_type ,filestoreid ,
             document_link ,marriageid ,bride_groom ,active ,applicationnumber  , createdby ,createdtime,lastmodifiedby , lastmodifiedtime ,applicationtype)
@@ -689,7 +689,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails[*][?({id} in @.MarriageDocuments[*].id)].auditDetails.lastModifiedBy
 
-            - jsonPath: $.MarriageDetails[*][?({id} in @.MarriageDocuments[*].id)].auditDetails.lastModifiedTime 
+            - jsonPath: $.MarriageDetails[*][?({id} in @.MarriageDocuments[*].id)].auditDetails.lastModifiedTime
 
             - jsonPath: $.MarriageDetails.*.MarriageDocuments.*.applicationType
 
@@ -1117,9 +1117,9 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.presentOutSideIndiaAdressMlB
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.PresentOutSideIndiaProvinceEn
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.PresentOthrIndiaProvinceEn
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.presentOutSideIndiaProvinceMl
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.presentOthrIndiaProvinceMl
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.outSideIndiaPostCodePresent
 
@@ -1200,9 +1200,9 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentOutSideIndiaAdressMlB
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.PresentOutSideIndiaProvinceEn
+            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.PresentOthrIndiaProvinceEn
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentOutSideIndiaProvinceMl
+            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.presentOthrIndiaProvinceMl
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.outSideIndiaPostCodePresent
 
@@ -1279,11 +1279,11 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutsideIndiaLinetwoMl
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutSideIndiaProvinceMl
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.PermntOthrIndiaprovinceMl
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntInKeralaAdrVillage
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.PermntOthrIndiaprovinceEn
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.outSideIndiaPostCodepermanent
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.outSideIndiaPostCodePermanent
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutsideKeralaPostOfficeMl
 
@@ -1361,11 +1361,11 @@ serviceMaps:
 
              - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOutsideIndiaLinetwoMl
 
-             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOutSideIndiaProvinceMl
+             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.PermntOthrIndiaprovinceEn
 
-             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntInKeralaAdrVillage
+             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.PermntOthrIndiaprovinceMl
 
-             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.outSideIndiaPostCodepermanent
+             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.outSideIndiaPostCodePermanent
 
              - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOutsideKeralaPostOfficeMl
 

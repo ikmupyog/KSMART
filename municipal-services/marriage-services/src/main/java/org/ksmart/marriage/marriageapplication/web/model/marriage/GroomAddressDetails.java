@@ -524,6 +524,6 @@ public class GroomAddressDetails {
 
     @Size(max = 10)
     @JsonProperty("outSideIndiaPostCodePermanent")
-    private String outSideIndiaPostCodepermanent;
+    private String outSideIndiaPostCodePermanent;
 
 }

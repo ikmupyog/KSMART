@@ -262,6 +262,9 @@ public class BrideRegistryAddressDetails {
     private String presentOthrIndiaProvinceMl;
 
 
+    @Size(max = 10)
+    @JsonProperty("outSideIndiaPostCodePresent")
+    private String outSideIndiaPostCodePresent;
     ////Permanant
 
     @JsonProperty("isPermanentAddress")
@@ -419,7 +422,9 @@ public class BrideRegistryAddressDetails {
     @JsonProperty("permntOutsideIndiaCountry")
     private String permntOutsideIndiaCountry;
 
-
+    @Size(max = 10)
+    @JsonProperty("presentOutSideIndiaPostCode")
+    private String presentOutSideIndiaPostCode;
     ////Db Fields//////
 
     @Size(max = 64)
@@ -519,7 +524,7 @@ public class BrideRegistryAddressDetails {
 
     @Size(max = 10)
     @JsonProperty("outSideIndiaPostCodePermanent")
-    private String outSideIndiaPostCodepermanent;
+    private String outSideIndiaPostCodePermanent;
     // @Size(max = 64)
     // @JsonProperty("presentaddressCountry")
     // private String presentaddressCountry;

@@ -55,7 +55,7 @@ public class MarriageRegistryQueryBuilder extends BaseMarriageQuery {
     .append("GPMA.id as GPMA_id ,GPMA.housename_en as GPMA_housename_en,GPMA.housename_ml as GPMA_housename_ml,GPMA.villageid as GPMA_villageid,GPMA.village_name as GPMA_village_name,")  
     .append("GPMA.talukid as GPMA_talukid  , GPMA.taluk_name as GPMA_taluk_name  ,  GPMA.tenantid as GPMA_tenantid  , GPMA.ward_code as GPMA_ward_code,")  
     .append("GPMA.locality_en as GPMA_locality_en,GPMA.locality_ml as GPMA_locality_ml,GPMA.street_name_en as  GPMA_street_name_en,GPMA.street_name_ml as GPMA_street_name_ml  ,") 	
-    .append("GPMA.districtid as  GPMA_districtid,GPMA.stateid as GPMA_stateid  ,  GPMA.poid as GPMA_poid  , GPMA.poname_en as GPMA_poname_en  ,  GPMA.poname_ml as GPMA_poname_ml  ,")  
+    .append("GPMA.districtid as  GPMA_districtid, GPMA.stateid as GPMA_stateid  ,  GPMA.poid as GPMA_poid  , GPMA.poname_en as GPMA_poname_en  ,  GPMA.poname_ml as GPMA_poname_ml  ,")
     .append("GPMA.pinno as  GPMA_pinno  , GPMA.countryid as GPMA_countryid ,GPMA.marriageid as GPMA_marriageid , GPMA.bride_groom as GPMA_bride_groom , ")
     .append("GPMA.ot_address1_en as GPMA_ot_address1_en  ,  GPMA.ot_address1_ml as GPMA_ot_address1_ml  , GPMA.ot_address2_en as GPMA_ot_address2_en  , ") 
     .append("GPMA.ot_address2_ml as GPMA_ot_address2_ml ,GPMA.ot_state_region_province_en as GPMA_ot_state_region_province_en  ,")
