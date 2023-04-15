@@ -1,8 +1,5 @@
 package org.egov.filemgmnt.web.models.arisingfile;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.egov.common.contract.request.RequestInfo;
 import org.springframework.validation.annotation.Validated;
 
@@ -30,9 +27,7 @@ public class ArisingFileRequest {
     @JsonProperty("RequestInfo")
     private RequestInfo requestInfo;
 
-    @JsonProperty("ArisingFile")
-    private ArisingFile arisingFileDetail;
-
-
+    @JsonProperty("arisingFile")
+    private ArisingFile arisingFile;
 
 }

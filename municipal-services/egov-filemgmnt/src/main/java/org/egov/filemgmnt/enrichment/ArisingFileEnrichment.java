@@ -25,24 +25,29 @@ public class ArisingFileEnrichment extends BaseEnrichment {
     public void enrichAriseFileCreate(ArisingFileRequest request) {
         RequestInfo requestInfo = request.getRequestInfo();
         User userInfo = requestInfo.getUserInfo();
-        AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
+        final AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
 
-        final ArisingFile arisingFile = request.getArisingFileDetail();
+        final ArisingFile arisingFile = request.getArisingFile();
         final AuditDetails arisingAuditDetails = arisingFile.getAuditDetails();
         arisingFile.setId(UUID.randomUUID()
-                .toString());
-        arisingFile.setAuditDetails(arisingAuditDetails);
-        arisingFile.getAuditDetails()
-                .setLastModifiedBy(auditDetails.getLastModifiedBy());
-        arisingAuditDetails.setLastModifiedTime(auditDetails.getLastModifiedTime());
+                              .toString());
+        arisingFile.setAuditDetails(auditDetails);
+
+//        arisingFile.getAuditDetails()
+//                   .setLastModifiedBy(auditDetails.getLastModifiedBy());
+//        arisingFile.getAuditDetails()
+//                   .setLastModifiedTime(auditDetails.getLastModifiedTime());
         setFileCodes(request);
-        //enrich applicant address
+        // enrich applicant address
         final ArisingFileApplicant applicantDetails = arisingFile.getArisingFileApplicant();
-        final AuditDetails applicantAuditDetails = arisingFile.getArisingFileApplicant().getAuditDetails();
+        final AuditDetails applicantAuditDetails = arisingFile.getArisingFileApplicant()
+                                                              .getAuditDetails();
+        applicantDetails.setId(UUID.randomUUID()
+                                   .toString());
         applicantDetails.setArisingFileId(arisingFile.getId());
-        applicantDetails.setAuditDetails(applicantAuditDetails);
-        applicantAuditDetails.setLastModifiedBy(auditDetails.getLastModifiedBy());
-        applicantAuditDetails.setLastModifiedTime(auditDetails.getLastModifiedTime());
+        applicantDetails.setAuditDetails(auditDetails);
+//        applicantAuditDetails.setLastModifiedBy(auditDetails.getLastModifiedBy());
+//        applicantAuditDetails.setLastModifiedTime(auditDetails.getLastModifiedTime());
     }
 //public void enrichArisingFileUpdate(ArisingFileRequest request) {
 //    RequestInfo requestInfo = request.getRequestInfo();
@@ -56,29 +61,17 @@ public class ArisingFileEnrichment extends BaseEnrichment {
 //
 //    }
 
-      private void setFileCodes(final ArisingFileRequest request) {
+    private void setFileCodes(final ArisingFileRequest request) {
         final RequestInfo requestInfo = request.getRequestInfo();
-        final ArisingFile files = request.getArisingFileDetail();
+        final ArisingFile files = request.getArisingFile();
         final String tenantId = files.getTenantId();
-//        for (ArisingFile arising : files) {
-//            tenantId = arising.getTenantId();
-//        }
 
-        final List<String> filescodes = generateIds(requestInfo, tenantId, "fm.filecode",
-//                                                    request.getArisingFileDetail()
-//                                                           .getFileCode(),
-                                                    "FM",
-                                                    "APP",
-                                                    // FMConstants.FMMODULENAMEVALUE,
-                                                    1);
-        validateFileCodes(filescodes, 1);
+        final List<String> filecodes = generateIds(requestInfo, tenantId, "fm.filecode", "FM", "APP", 1);
+        validateFileCodes(filecodes, 1);
+        final ArisingFile fileDetail = request.getArisingFile();
+        fileDetail.setFileCode(filecodes.get(0));
 
-//        String fileCode = null;
-//        for (ArisingFile arisefilecode : files) {
-//            arisefilecode.setFileCode(filescodes.get(0));
-//        }
-        final ArisingFile fileDetail = request.getArisingFileDetail();
-        System.out.println("Filecode=: " + filescodes.get(0));
+        System.out.println("Filecode=: " + filecodes.get(0));
 
     }
 

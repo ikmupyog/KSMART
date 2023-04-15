@@ -7,7 +7,6 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
-import org.egov.filemgmnt.web.models.ApplicantAddress;
 import org.egov.filemgmnt.web.models.AuditDetails;
 import org.springframework.validation.annotation.Validated;
 
@@ -19,8 +18,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Schema(description = "A Object holds the file data of arising file submitted by the user")
 @Validated
@@ -44,10 +41,10 @@ public class ArisingFile {
     @JsonProperty("tenantId")
     private String tenantId;
 
-    @Schema(type = "string", description = "File number")
-    @Size(max = 64, message = "File number length cannot exceed 64 characters")
-    @JsonProperty("fileNumber")
-    private String fileNumber;
+//    @Schema(type = "string", description = "File number")
+//    @Size(max = 64, message = "File number length cannot exceed 64 characters")
+//    @JsonProperty("fileNumber")
+//    private String fileNumber;
 
     @Schema(type = "string", description = "File code")
     @Size(max = 64, message = "File code length cannot exceed 64 characters")
@@ -71,7 +68,7 @@ public class ArisingFile {
 //    @Size(min = 4, max = 4, message = "Invalid calendar year")
     @Size(max = 10)
 //    @Pattern(regexp = "^[1-9][0-9]{3}$", message = "Invalid Calendar year")
-    @JsonProperty("Year")
+    @JsonProperty("year")
     private String year;
 
     @Schema(type = "string", description = "Workflow code")

@@ -5,7 +5,6 @@ import java.util.List;
 import org.egov.filemgmnt.service.ArisingFileService;
 import org.egov.filemgmnt.util.FMUtils;
 import org.egov.filemgmnt.util.ResponseInfoFactory;
-import org.egov.filemgmnt.web.models.ApplicantServiceResponse;
 import org.egov.filemgmnt.web.models.RequestInfoWrapper;
 import org.egov.filemgmnt.web.models.arisingfile.ArisingFile;
 import org.egov.filemgmnt.web.models.arisingfile.ArisingFileRequest;
@@ -39,15 +38,14 @@ public class ArisingFileController {
         if (log.isDebugEnabled()) {
             log.debug("ArisingFileRequest-create:  \n{}", FMUtils.toJson(request));
         }
-     //   List<ArisingFile> arisingFileDetails = arisingFileService.createArisingFile(request);
 
-       final ArisingFile arisingFileDetails = arisingFileService.createArisingFile(request);
+        final ArisingFile arisingFileDetails = arisingFileService.createArisingFile(request);
 
         return ResponseEntity.ok(ArisingFileResponse.builder()
-                        .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
-                                Boolean.TRUE))
-                        .arisingFileDetail(arisingFileDetails)
-                                                          .build());
+                                                    .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+                                                                                                                        Boolean.TRUE))
+                                                    .arisingFileDetail(arisingFileDetails)
+                                                    .build());
     }
 
 //    @PostMapping("/applicantservices/_updateArisingFile")

@@ -1,9 +1,7 @@
 package org.egov.filemgmnt.service;
 
-import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
+
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.filemgmnt.config.FMConfiguration;
 import org.egov.filemgmnt.enrichment.ArisingFileEnrichment;
@@ -44,12 +42,12 @@ public class ArisingFileService {
 
     public ArisingFile createArisingFile(ArisingFileRequest request) {
 
-        final ArisingFile arisingFile=request.getArisingFileDetail();
+        final ArisingFile arisingFile = request.getArisingFile();
         // enrich request
         fileEnrichment.enrichAriseFileCreate(request);
 
         producer.push(fmConfig.getSaveArisingFileTopic(), request);
-        return request.getArisingFileDetail();
+        return request.getArisingFile();
     }
 
 //        public ArisingFile updateArisingFile(ArisingFileRequest request) {

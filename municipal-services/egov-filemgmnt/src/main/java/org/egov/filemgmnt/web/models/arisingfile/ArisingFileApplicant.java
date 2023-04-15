@@ -1,15 +1,20 @@
 package org.egov.filemgmnt.web.models.arisingfile;
 
-
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.v3.oas.annotations.media.Schema;
-import lombok.*;
-import org.egov.filemgmnt.web.models.AuditDetails;
-import org.springframework.validation.annotation.Validated;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import org.egov.filemgmnt.web.models.AuditDetails;
+import org.springframework.validation.annotation.Validated;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Schema(description = "A Object holds the applicant details of the file arised by the operator")
 @Validated
@@ -43,6 +48,10 @@ public class ArisingFileApplicant {
     @JsonProperty("fileCode")
     private String fileCode;
 
+    @Schema(type = "string", description = "Applicant Type")
+    @Size(max = 64)
+    @JsonProperty("applicantType")
+    private String applicantType;
 
     @Schema(type = "string", description = "First Name of applicant")
     @Size(max = 64)
@@ -74,7 +83,6 @@ public class ArisingFileApplicant {
     @JsonProperty("emailId")
     private String emailId;
 
-
     @Schema(type = "string", description = "Ward Number")
     @Size(max = 64, message = "Ward number length cannot exceed 64 characters")
     @JsonProperty("wardNo")
@@ -90,16 +98,10 @@ public class ArisingFileApplicant {
     @JsonProperty("doorSubNo")
     private String doorSubNo;
 
-    @Schema(type = "string", description = "Applicant house name")
-    @Size(max = 64)
-    @JsonProperty("houseName")
-    private String houseName;
-
     @Schema(type = "string", description = "Applicant Street Name")
     @Size(max = 64)
     @JsonProperty("streetName")
     private String streetName;
-
 
     @Schema(type = "string", description = "Applicant localplace ")
     @Size(max = 64)
@@ -117,7 +119,7 @@ public class ArisingFileApplicant {
     private String cityName;
 
     @Schema(type = "string", description = "Applicant Pincode")
-    @Size(max = 64, message = "Pincode length cannot exceed 64 characters" )
+    @Size(max = 64, message = "Pincode length cannot exceed 64 characters")
     @JsonProperty("pinCode")
     private String pinCode;
 
@@ -153,5 +155,10 @@ public class ArisingFileApplicant {
 
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
+
+    @Schema(type = "string", description = "Applicant house name")
+    @Size(max = 64)
+    @JsonProperty("houseName")
+    private String houseName;
 
 }
