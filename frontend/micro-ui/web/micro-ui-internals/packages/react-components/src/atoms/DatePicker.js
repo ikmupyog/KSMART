@@ -49,7 +49,7 @@ const DatePicker = (props) => {
         <CalendarIcon isdisabled={props.disabled ? true : false} style={{ right: "13px", zIndex: "10", top: "10px",  position: "absolute" }} />
         <input
           className={`${props.disabled ? "disabled" : ""}`}
-          style={{  right: "13px", zIndex: "10", top: "-10px", height:"58px", position: "absolute" }}
+          style={{  right: "13px", zIndex: "100",opacity:"0", top: "-10px", height:"58px", position: "absolute",width:"100%" }}
           value={props.date ? props.date : ""}
           type="date"
           ref={dateInp}
