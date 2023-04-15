@@ -116,30 +116,6 @@ public class MarriageRegistryEnrichment implements BaseEnrichment {
                 });
     }
 
-    //Jasmine 14.04.2023
-    private void setCertificateNumber(MarriageRegistryRequest request) {
-
-        RequestInfo requestInfo = request.getRequestInfo();
-        List<MarriageRegistryDetails> marriageDetails = request.getMarriageDetails();
-        String tenantId = marriageDetails.get(0).getTenantid();
-
-        List<String> filecodes = getIds(requestInfo,
-                                tenantId,
-                                config.getGetMarriageCertificateName(),
-                                request.getMarriageDetails().get(0).getModulecode(),
-                         "CERT",
-                marriageDetails.size());
-        validateFileCodes(filecodes, marriageDetails.size());
-        Long currentTime = Long.valueOf(System.currentTimeMillis());
-        ListIterator<String> itr = filecodes.listIterator();
-        request.getMarriageDetails()
-                .forEach(marriage -> {
-                    //if((marriage.getStatus().equals("APPROVED"))&&(marriage.getAction().equals("APPROVE"))) {
-                        marriage.setRegistrationno(itr.next());
-                        marriage.setRegistrationDate(currentTime);
-                  //  }
-                });
-    }
     //Jasmine 28.03.2023
     private void setGroomPresentAddress(MarriageRegistryRequest request) {
     
@@ -555,7 +531,7 @@ public class MarriageRegistryEnrichment implements BaseEnrichment {
         if (registryDetails.getGroomAddressDetails() != null) {
 
 
-            if (registryDetails.getGroomAddressDetails().getDistrictIdPermanent() != null && registryDetails.getGroomAddressDetails().getStateIdPermanent() != null) {
+            if (registryDetails.getGroomAddressDetails().getPermtaddressCountry() != null && registryDetails.getGroomAddressDetails().getPermtaddressStateName() != null) {
                 if (registryDetails.getGroomAddressDetails().getPermtaddressCountry().equals(MarriageConstants.COUNTRY_CODE)) {
                     if (registryDetails.getGroomAddressDetails().getPermtaddressStateName().equals(MarriageConstants.STATE_CODE_SMALL)) {
 
