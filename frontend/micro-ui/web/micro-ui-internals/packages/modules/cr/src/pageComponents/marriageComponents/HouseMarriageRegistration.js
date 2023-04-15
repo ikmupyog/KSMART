@@ -260,7 +260,7 @@ const HouseMarriageRegistration = ({
     // setAgeMariageStatus(value.code);
   }
   function setSelectOtherMarriagePlacenameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9 ]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "-" && (e.target.value.match("^[a-zA-Z-0-9 ]*$") != null)) {
       setmarriagePlacenameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
     // if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
@@ -308,6 +308,18 @@ const HouseMarriageRegistration = ({
   //   setmarriageType(value);
   //   // setAgeMariageStatus(value.code);
   // }
+  function setCheckMalayalamInputField(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
+    if (!(e.key.match(pattern))) {
+        e.preventDefault();
+    }
+}
+function setCheckMalayalamInputFieldWithSplChar(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]/;
+    if (!(e.key.match(pattern))) {
+        e.preventDefault();
+    }
+}
 
   let validFlag = true;
   const goNext = () => {
@@ -610,6 +622,7 @@ const HouseMarriageRegistration = ({
             optionKey="i18nKey"
             name="marriageLocalityMl"
             value={marriageLocalityMl}
+            onKeyPress={setCheckMalayalamInputField}
             onChange={setSelectmarriageLocalityMl}
             isMandatory={false}
             disable={isDisableEdit}
@@ -633,6 +646,7 @@ const HouseMarriageRegistration = ({
             optionKey="i18nKey"
             name="marriageStreetMl"
             value={marriageStreetMl}
+            onKeyPress={setCheckMalayalamInputField}
             onChange={setSelectmarriageStreetMl}
             disable={isDisableEdit}
             isMandatory={false}
@@ -656,6 +670,7 @@ const HouseMarriageRegistration = ({
             optionKey="i18nKey"
             name="marriageHouseNoAndNameMal"
             value={marriagePlacenameMl}
+            onKeyPress={setCheckMalayalamInputFieldWithSplChar}
             onChange={selectSetmarriagePlacenameMl}
             disable={isDisableEdit}
             isMandatory={false}

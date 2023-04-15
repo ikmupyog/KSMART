@@ -323,12 +323,14 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
       const currentYear = new Date().getFullYear();
       const age = currentYear - dobFullYear;
       setbrideAge(age);
-      if (age < 21) {
+      if (age < 18) {
         setAgeValidationMsg(true);
         setToast(true);
         setTimeout(() => {
           setToast(false);
         }, 2000);
+        setbrideAge('');
+        setbrideDOB('');
       }
     } else {
       setbrideDOB(null);
@@ -538,21 +540,44 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
       setTripStartTime(value);
     }
   };
+  function setCheckSpecialChar(e) {
+    let pattern = /^[0-9]*$/;
+    if (!(e.key.match(pattern))) {
+      e.preventDefault();
+    }
+  }
 
   let validFlag = true;
   const goNext = () => {
-    if (AadharError) {
-      validFlag = false;
-      // setAadharErroChildAadharNor(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-      // return false;
-      // window.alert("Username shouldn't exceed 10 characters")
+    if (brideAadharNo.trim() == null || brideAadharNo.trim() == '' || brideAadharNo.trim() == undefined) {
+      setBrideAadharNo("");
+    } else if (brideAadharNo != null && brideAadharNo != "") {
+      let adharLength = brideAadharNo;
+      if (adharLength.length < 12 || adharLength.length > 12) {
+        validFlag = false;
+        setAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setAadharError(false);
+      }
     } else {
       setAadharError(false);
     }
+    // if (AadharError) {
+    //   validFlag = false;
+    //   // setAadharErroChildAadharNor(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 2000);
+    //   // return false;
+    //   // window.alert("Username shouldn't exceed 10 characters")
+    // } else {
+    //   setAadharError(false);
+    // }
     if (validFlag == true) {
       // sessionStorage.setItem("tripStartTime", tripStartTime ? tripStartTime : null);
 
@@ -653,16 +678,19 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
             !brideGender ||
             !brideDOB ||
             !brideMaritalstatusID ||
-            brideResidentShip === "INDIAN"
+            (brideResidentShip === "INDIAN"
               ? !brideAadharNo
-              : false || brideResidentShip === "NRI"
-              ? !bridePassportNo
-              : false || brideResidentShip === "FOREIGN"
-              ? !brideSocialSecurityNo || !bridePassportNo
-              : false || brideParentGuardian === "PARENT"
-              ? !brideFathernameEn || !brideFathernameMl || !brideMothernameEn || !brideMothernameMl || !brideFatherAadharNo || !brideMotherAadharNo
-              : false
-            // || selectedParent === "GUARDIAN" ? (!brideGuardiannameEn || !brideGuardiannameMl || !brideGuardianAadharNo) : false
+              : false) || 
+              (brideResidentShip === "NRI"
+              ? (!bridePassportNo || !brideSocialSecurityNo)
+              : false) || 
+              (brideResidentShip === "FOREIGN"
+              ? (!brideSocialSecurityNo || !bridePassportNo)
+              : false) || 
+              (brideParentGuardian === "PARENT"
+              ? (!brideFathernameEn || !brideFathernameMl || !brideMothernameEn || !brideMothernameMl 
+                || !brideFatherAadharNo || !brideMotherAadharNo) : false) ||
+              (brideParentGuardian === "GUARDIAN" ? (!brideGuardiannameEn || !brideGuardiannameMl || !brideGuardianAadharNo) : false)
           }
         >
           {/* <div className="row">
@@ -742,6 +770,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                   name="brideAadharNo"
                   value={brideAadharNo}
                   onChange={setSelectbrideAadharNo}
+                  onKeyPress={setCheckSpecialChar}
                   disable={isDisableEdit}
                   placeholder={`${t("CR_BRIDE_AADHAR_NO")}`}
                   inputProps={{

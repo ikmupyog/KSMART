@@ -362,7 +362,7 @@ const componentsToRegister = {
   AddressPresentOutsideKerala,
   AddressPresentOutsideIndia,
   AddressPermanentOutsideKerala,
-  // AddressPermanentOutsideIndia,
+  AddressPermanentOutsideIndia,
   AddressPermanentInsideKerala,
   InformarHospitalInstitution,
   InitiatorDetails,
