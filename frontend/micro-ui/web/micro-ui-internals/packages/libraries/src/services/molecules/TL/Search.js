@@ -65,7 +65,10 @@ export const TLSearch = {
 
 
     let employeeResponse = [];
-
+    const tradesummary = {
+      title: "TL_TRADE_APPLICATION_DETAILS_LABEL",
+      asSectionHeader: true,
+    }
     const tradedetails = {
       title: "TL_COMMON_TR_DETAILS",
       //asSectionHeader: true,
@@ -400,19 +403,21 @@ export const TLSearch = {
     }
 
 
-    if (response?.workflowCode == "NewTL" && response?.status !== "APPROVED") {
-      const details = {
-        title: "",
-        values: [
-          { title: "TL_COMMON_TABLE_COL_APP_NO", value: response?.applicationNumber || "NA" },
-          {
-            title: "TL_APPLICATION_CHALLAN_LABEL",
-            value: (response?.tradeLicenseDetail?.channel && `TL_CHANNEL_${response?.tradeLicenseDetail?.channel}`) || "NA",
-          },
-        ],
-      };
-      response && employeeResponse.push(details);
-    }
+    // if (response?.workflowCode == "NewTL" && response?.status !== "APPROVED") {
+    //   const details = {
+    //     title: "",
+    //     values: [
+    //       { title: "TL_COMMON_TABLE_COL_APP_NO", value: response?.applicationNumber || "NA" },
+    //       {
+    //         title: "TL_APPLICATION_CHALLAN_LABEL",
+    //         value: (response?.tradeLicenseDetail?.channel && `TL_CHANNEL_${response?.tradeLicenseDetail?.channel}`) || "NA",
+    //       },
+    //     ],
+    //   };
+    //   response && employeeResponse.push(details);
+    // }
+    
+    response && employeeResponse.push(tradesummary);
     if ((response?.correctionId !== null && response?.correctionId !== "" &&
       response?.correctionAppNumber !== null && response?.correctionAppNumber !== "")) {
       if (correctionbasedet.values.length !== 0) {
@@ -434,7 +439,7 @@ export const TLSearch = {
     return {
       tenantId: response.tenantId,
       applicationDetails: employeeResponse,
-      additionalDetails: response?.additionalDetails,
+   //   additionalDetails: response?.additionalDetails,
       applicationData: response,
       numOfApplications: numOfApplications,
     };
