@@ -169,8 +169,11 @@ console.log("valuePermanent",valuePermanent);
   function setSelectpermntOutsideKeralaVillage(value) {
     setpermntOutsideKeralaVillage(value);
   }
-  function setSelectpermntOutsideKeralaTaluk(value) {
-    setpermntOutsideKeralaTaluk(value);
+  function setSelectpermntOutsideKeralaTaluk(e) {
+    // setpermntOutsideKeralaTaluk(value);
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setpermntOutsideKeralaTaluk(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));      
+    }
   }
   // function setSelectoutsideKeralaPostOffice(value) {
   //   setoutsideKeralaPostOffice(value);
@@ -290,7 +293,18 @@ console.log("valuePermanent",valuePermanent);
               {t("CR_TALUK_TEHSIL")}
               <span className="mandatorycss">*</span>
             </CardLabel>
-            <Dropdown
+            <TextInput
+                t={t}
+                type={"text"}
+                optionKey="i18nKey"
+                name="permntOutsideKeralaTaluk"
+                value={permntOutsideKeralaTaluk}
+                onChange={setSelectpermntOutsideKeralaTaluk}
+                placeholder={`${t("CR_TALUK_TEHSIL")}`}
+                disable={isDisableEdit}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_VILLAGE_NAME_EN") })}
+              />
+            {/* <Dropdown
               t={t}
               optionKey="name"
               option={cmbTaluk}
@@ -298,7 +312,7 @@ console.log("valuePermanent",valuePermanent);
               select={setSelectpermntOutsideKeralaTaluk}
               disable={isDisableEdit} 
               placeholder={`${t("CR_TALUK_TEHSIL")}`}
-            />
+            /> */}
           </div>
           <div className="col-md-3">
             <CardLabel>

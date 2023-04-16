@@ -190,7 +190,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
     //   setpermntOutsideKeralaTaluk('');
     // }
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setoutsideKeralaHouseNameEn(e.target.value.trim().length <= 50 ? e.target.value.trim() : (e.target.value.trim()).substring(0, 50));
+      setoutsideKeralaTaluk(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       if (isPrsentAddress) {
         setpermntOutsideKeralaTaluk(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       } 
@@ -444,7 +444,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
                 {...(validation = {
                   pattern: "^[a-zA-Z-.`' ]*$",
                   isRequired: true,
-                  type: "number",
+                  type: "text",
                   maxLength: 6,
                   minLength: 6,
                   title: t("CS_COMMON_INVALID_PIN_CODE"),
