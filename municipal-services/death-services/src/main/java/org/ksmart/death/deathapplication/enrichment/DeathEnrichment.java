@@ -591,7 +591,20 @@ public class DeathEnrichment implements BaseEnrichment{
                 DeathStatisticalInfo  statisticalInfo = deathdtls.getDeathStatisticalInfo();
                 if (statisticalInfo!=null){
                     statisticalInfo.setStatisticalId(UUID.randomUUID().toString()); 
-                }               
+                }     
+                List<DeathDocument> documentInfo = deathdtls.getDeathAbandonedDocuments();
+                if (documentInfo!=null){
+                    documentInfo
+                        .forEach(document -> {
+                    document.setId(UUID.randomUUID().toString());
+                    document.setActive(true);
+                    document.setTenantId(deathdtls.getDeathBasicInfo().getTenantId());
+                    document.setDeathDtlId(deathdtls.getDeathBasicInfo().getId());
+                    // document.setDeathACKNo(deathdtls.getDeathBasicInfo().getDeathACKNo());
+                    document.setDeathDocAuditDetails(auditDetails);
+                });
+            }
+
                 DeathBasicInfo deathBasicDtls =deathdtls.getDeathBasicInfo();
                 if(deathBasicDtls.getDeceasedAadharNumber()!=null){
                     DeathBasicInfo deathBasicEnc =  encryptionDecryptionUtil.encryptObject(deathBasicDtls, "BndDetail", DeathBasicInfo.class);
@@ -753,6 +766,14 @@ public class DeathEnrichment implements BaseEnrichment{
                     deathdtls.getDeathBasicInfo().setDeathACKNo(itr.next());
                     deathdtls.getDeathBasicInfo().setAckNoID(deathApplnUtil.setSeqId(ackNoDetails));
                     deathdtls.getDeathBasicInfo().setApplicationDate(currentTime);
+
+                    List<DeathDocument> documentInfo = deathdtls.getDeathAbandonedDocuments();
+                    if (documentInfo!=null){
+                        documentInfo
+                            .forEach(document -> {                        
+                        document.setDeathACKNo(deathdtls.getDeathBasicInfo().getDeathACKNo());
+                    });
+                }
 
                 });
     }
@@ -996,4 +1017,26 @@ public class DeathEnrichment implements BaseEnrichment{
                 }
             });
     }
+
+    //RAkhi S ikm on 16.04.2023 Set Deathplace types
+    public void setDeathPlaceTypes(DeathDtlRequest request) {
+        request.getDeathCertificateDtls()
+            .forEach(death -> {
+                if (death.getDeathBasicInfo().getDeathPlace() != null) {
+                    if(death.getDeathBasicInfo().getDeathPlace().equals(DeathConstants.DEATH_PLACE_HOSPITAL)){
+                        death.getDeathBasicInfo().setDeathPlaceType(death.getDeathBasicInfo().getHospitalNameEn());
+                    }
+                    else if(death.getDeathBasicInfo().getDeathPlace().equals(DeathConstants.DEATH_PLACE_INSTITUTION)){
+                        death.getDeathBasicInfo().setDeathPlaceType(death.getDeathBasicInfo().getInstitution());
+                    }
+                    else if(death.getDeathBasicInfo().getDeathPlace().equals(DeathConstants.DEATH_PLACE_VEHICLE)){
+                        death.getDeathBasicInfo().setDeathPlaceType(death.getDeathBasicInfo().getVehicleType());
+                    }
+                    else if(death.getDeathBasicInfo().getDeathPlace().equals(DeathConstants.DEATH_PLACE_PUBLICPLACES)){
+                        death.getDeathBasicInfo().setDeathPlaceType(death.getDeathBasicInfo().getPublicPlaceType());
+                    }
+                }
+            }
+          );          
+        }
 }

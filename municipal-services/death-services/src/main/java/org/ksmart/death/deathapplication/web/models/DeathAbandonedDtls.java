@@ -44,6 +44,9 @@ public class DeathAbandonedDtls {
 
    @JsonProperty("InformantDetailsDeathAbandoned")
    private DeathAbandonedInformantDtls deathInformantDtls;
+
+   @JsonProperty("DeathAbandonedDocuments")
+   private List<DeathDocument> deathAbandonedDocuments;
   
    @JsonProperty("AuditDetails")
    private AuditDetails  deathAuditDetails;

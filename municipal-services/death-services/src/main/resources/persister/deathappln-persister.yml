@@ -1629,6 +1629,34 @@ serviceMaps:
 
       - jsonPath: $.deathAbandonedDtls.*.StatisticalInfoDeathAbandoned.MPAddress
 
+    - query: INSERT INTO public.eg_death_document_dtls(id, tenantid, death_dtls_id, document_type, filestore_id, death_ackno, active, created_by, createdtime, lastmodifiedby, lastmodifiedtime)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+     
+
+      basePath: deathAbandonedDtls.*.DeathAbandonedDocuments.*
+      jsonMaps:
+      - jsonPath: $.deathAbandonedDtls.*.DeathAbandonedDocuments.*.Id
+      
+      - jsonPath: $.deathAbandonedDtls.*.DeathAbandonedDocuments.*.TenantId
+
+      - jsonPath: $.deathAbandonedDtls.*.DeathAbandonedDocuments.*.DeathDtlId
+
+      - jsonPath: $.deathAbandonedDtls.*.DeathAbandonedDocuments.*.DocumentType
+
+      - jsonPath: $.deathAbandonedDtls.*.DeathAbandonedDocuments.*.FileStoreId
+
+      - jsonPath: $.deathAbandonedDtls.*.DeathAbandonedDocuments.*.DeathACKNo
+
+      - jsonPath: $.deathAbandonedDtls.*.DeathAbandonedDocuments.*.Active
+
+      - jsonPath: $.deathAbandonedDtls.*.DeathAbandonedDocuments.*.AuditDetails.createdBy      
+
+      - jsonPath: $.deathAbandonedDtls.*.DeathAbandonedDocuments.*.AuditDetails.createdTime
+
+      - jsonPath: $.deathAbandonedDtls.*.DeathAbandonedDocuments.*.AuditDetails.lastModifiedBy
+      
+      - jsonPath: $.deathAbandonedDtls.*.DeathAbandonedDocuments.*.AuditDetails.lastModifiedTime
+
       # UPDATE DEATH ABANDONED  Rakhi S on 13.03.2023 
   - version: 1.0
     description: Persists death reporting form details in eg_death_dtls,eg_death_statistical_dtls,eg_death_address_dtls  table

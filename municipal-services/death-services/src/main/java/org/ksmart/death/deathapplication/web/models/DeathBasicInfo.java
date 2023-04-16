@@ -432,4 +432,18 @@ public class DeathBasicInfo {
    private boolean delayedWithinThirty ;
    private boolean delayedWithinOneyear ;
    private boolean delayedAfterOneyear ;
+   
+   //new fields from Sruthi 16.04.2023
+   
+   @JsonProperty("hospitalNameEn")
+   private String  hospitalNameEn ;
+
+   @JsonProperty("institution")
+   private String  institution ;
+
+   @JsonProperty("vehicleType")
+   private String  vehicleType ;
+
+   @JsonProperty("publicPlaceType")
+   private String  publicPlaceType ;
 }

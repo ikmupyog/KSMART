@@ -3,13 +3,10 @@ package org.ksmart.death.deathapplication.service;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-
 import org.ksmart.death.deathapplication.config.DeathConfiguration;
 import org.ksmart.death.deathapplication.enrichment.DeathEnrichment;
 import org.ksmart.death.deathapplication.kafka.producer.DeathProducer;
@@ -32,44 +29,23 @@ import org.ksmart.death.deathapplication.web.models.Demand.Demand;
 import org.ksmart.death.deathapplication.web.models.Demand.DemandDetail;
 import org.ksmart.death.workflow.WorkflowIntegrator;
 import org.egov.common.contract.request.RequestInfo;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;    
+import lombok.extern.slf4j.Slf4j;  
 
-/**
-     * Creates DeathService
-     * Jasmine on 06.02.2023
-     * 
-     */
-   import com.fasterxml.jackson.databind.ObjectMapper;
-    import com.fasterxml.jackson.databind.SerializationFeature;
-    
-    import lombok.extern.slf4j.Slf4j;
-    
-    /**
-         * Creates CrDeathService
-         * Jasmine IKM
-         * on 07.02.2023
-         * DeathRegistryService create Rakhi S on 09.02.2023
-         */
-    
-
-    
-       @Slf4j
+@Slf4j
 @Service
 public class DeathApplnService {
 
      private final DeathProducer producer;
-     //Rakhi S ikm on 08.02.2023
      private final DeathEnrichment enrichmentService;
      private final DeathConfiguration deathConfig;
      private final DeathMdmsUtil util;
      private final WorkflowIntegrator workflowIntegrator;
      private final DeathApplnValidator validatorService;
      private final DeathApplnRepository repository;
-     //RAkhi S on 14.02.2023
-      private final DeathMDMSValidator mdmsValidator;
-
-      private final DemandService demandService;
-
-     //Rakhi S ikm on 08.02.2023
+     private final DeathMDMSValidator mdmsValidator;
+     private final DemandService demandService;
 
      DeathApplnService(DeathApplnRepository repository ,DeathProducer producer
                          ,DeathEnrichment enrichmentService,DeathApplnValidator validatorService,DeathConfiguration deathConfig
@@ -89,21 +65,18 @@ public class DeathApplnService {
 
      //RAkhi S ikm  on 06.02.2023
      public List<DeathDtl> create(DeathDtlRequest request) {
-          // Rakhi S IKM validate mdms data on 14.02.2023
           WorkFlowCheck wfc = new WorkFlowCheck();
           Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getTenantId());
           validatorService.ruleEngineDeath(request, wfc, mdmsData);
-          validatorService.validateCommonFields( request);
+          validatorService.validateCommonFields(request);
           mdmsValidator.validateDeathMDMSData(request,mdmsData);
-          //Rakhi S ikm on 08.02.2023
+          enrichmentService.setDeathPlaceTypes(request);
           enrichmentService.setPresentAddress(request);
           enrichmentService.setPermanentAddress(request);
           enrichmentService.enrichCreate(request);
-          enrichmentService.setACKNumber(request);           
-         //RAkhi S ikm  on 06.02.2023         
+          enrichmentService.setACKNumber(request);         
           producer.push(deathConfig.getSaveDeathDetailsTopic(), request);
           workflowIntegrator.callWorkFlow(request);
-          //Rakhi S on 10.04.2023
           request.getDeathCertificateDtls().forEach(death->{
                if(wfc.getPayment()!= null){
                    if(death.getApplicationStatus().equals(DeathConstants.STATUS_FOR_PAYMENT)){
@@ -129,6 +102,7 @@ public class DeathApplnService {
      //Jasmine  Update 07.02.2023
      public List<DeathDtl> update(DeathDtlRequest request) {
           Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getTenantId());
+          enrichmentService.setDeathPlaceTypes(request);
           enrichmentService.setPresentAddress(request);
           enrichmentService.setPermanentAddress(request);
           String ackNumber = request.getDeathCertificateDtls().get(0).getDeathBasicInfo().getDeathACKNo();
@@ -138,10 +112,8 @@ public class DeathApplnService {
 
           List<DeathDtl> searchResult = repository.getDeathApplication(criteria,request.getRequestInfo());
           validatorService.validateUpdate(request, searchResult);
-          mdmsValidator.validateDeathMDMSData(request,mdmsData);
-          //Jasmine 09.02.2023                        
+          mdmsValidator.validateDeathMDMSData(request,mdmsData);                      
           enrichmentService.enrichUpdate(request);
-          //Jasmine 13.02.2023
           workflowIntegrator.callWorkFlow(request);
           producer.push(deathConfig.getUpdateDeathDetailsTopic(), request);          
           DeathDtlRequest result = DeathDtlRequest
@@ -156,9 +128,7 @@ public class DeathApplnService {
             Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCorrection().get(0).getDeathCorrectionBasicInfo().getTenantId());
             enrichmentService.setCorrectionPresentAddress(request);
             enrichmentService.setCorrectionPermanentAddress(request);
-            //Jasmine 22.03.2023
             validatorService.validateCorrectionCommonFields( request);
-           // mdmsValidator.validateDeathMDMSData(request,mdmsData);
             enrichmentService.enrichCreateCorrection(request);
             enrichmentService.setCorrectionACKNumber(request);                  
             producer.push(deathConfig.getSaveDeathCorrectionTopic(), request);
@@ -195,7 +165,20 @@ public class DeathApplnService {
           enrichmentService.setAbandonedPresentAddress(request);
           enrichmentService.setAbandonedPermanentAddress(request);
           enrichmentService.enrichCreateAbandoned(request);
-          enrichmentService.setAbandonedACKNumber(request);            
+          enrichmentService.setAbandonedACKNumber(request);    
+            /********************************************* */
+
+  try {
+     ObjectMapper mapper = new ObjectMapper();
+     Object obj = request;
+     mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+    System.out.println("rakhi3 "+ mapper.writeValueAsString(obj));
+        }catch(Exception e) {
+        log.error("Exception while fetching from searcher: ",e);
+    }
+
+
+/********************************************** */    
           producer.push(deathConfig.getSaveDeathAbandonedTopic(), request);
           workflowIntegrator.callWorkFlowAbandoned(request);
           return request.getDeathAbandonedDtls();

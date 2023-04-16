@@ -25,6 +25,9 @@ public class DeathDocument {
     @JsonProperty("Id")
     private String id;
 
+    @JsonProperty("DeathDtlId")
+    private String deathDtlId;
+
     @JsonProperty("Active")
     private Boolean active;
 
@@ -42,12 +45,6 @@ public class DeathDocument {
 
     @JsonProperty("DeathCorrectionId")
     private String deathCorrectionId = null;
-
-    // @JsonProperty("documentOwner")
-    // private String documentOwner = null;
-
-    // @JsonProperty("documentUid")
-    // private String documentUid;
 
     @JsonProperty("DeathACKNo")
     private String deathACKNo = null;
