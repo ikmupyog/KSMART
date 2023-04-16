@@ -299,6 +299,8 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
       return null;
     }
   };
+  const [toast, setToast] = useState(false);
+  const [DOBError, setDOBError] = useState(formData?.MarriageDetails?.marriageDOM ? false : false);
 
   const onSkip = () => onSelect();
   // React.useEffect(() => {
@@ -477,18 +479,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
 
   let validFlag = true;
   const goNext = () => {
-    // if (AadharError) {
-    //   validFlag = false;
-    //   setAadharErroChildAadharNor(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 2000);
-    //   // return false;
-    //   // window.alert("Username shouldn't exceed 10 characters")
-    // } else {
-    //   setAadharError(false);
-    // }
+    
     if (validFlag == true) {
       // sessionStorage.setItem("marriageDOM", marriageDOM ? marriageDOM : null);
       // sessionStorage.setItem("marriageDistrictid", marriageDistrictid ? marriageDistrictid : null);
@@ -623,7 +614,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                       onChange={setSelectmarriageDOM}
                       inputFormat="DD-MM-YYYY"
                       placeholder={`${t("CR_DATE_OF_MARRIAGE")}`}
-                      {...(validation = { isRequired: true, title: t("CR_INVALID_DATE_OF_MARRIAGE") })}
+                      //{...(validation = { isRequired: true, title: t("CR_INVALID_DATE_OF_MARRIAGE") })}
                     />
                   </div>
                 </div>
@@ -927,6 +918,21 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
               </div>
             </div>
           </div>
+          {toast && (
+              <Toast
+                error={DOBError || AgeValidationMsg}
+                label={
+                  DOBError || AgeValidationMsg
+                    ? DOBError
+                      ? t(`MARRIAGE_DOB_VALIDATION_MSG`)
+                      : AgeValidationMsg
+                      ? t(`CR_INVALID_AGE`)
+                      : setToast(false)
+                    : setToast(false)
+                }
+                onClose={() => setToast(false)}
+              />
+            )}
         </FormStep>
       </React.Fragment>
     );
