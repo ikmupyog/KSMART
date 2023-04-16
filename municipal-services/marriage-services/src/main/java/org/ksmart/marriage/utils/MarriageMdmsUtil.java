@@ -375,16 +375,20 @@ public class MarriageMdmsUtil {
     }
 
     public Object mDMSCallGetMandapamAddress(RequestInfo requestInfo, MarriageRegistryDetails marriageRegistryDetails){
-        ModuleDetail moduleDetail = getMarriagePalceCertificate(marriageRegistryDetails.getPlaceid(),marriageRegistryDetails.getPlacetype());
-        List<ModuleDetail> moduleDetails = new LinkedList<>();
-        moduleDetails.add(moduleDetail);
-        MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(marriageRegistryDetails.getTenantid())
-                .build();
+        if(StringUtils.isNotBlank(marriageRegistryDetails.getPlaceid())) {
+            ModuleDetail moduleDetail = getMarriagePalceCertificate(marriageRegistryDetails.getPlaceid(), marriageRegistryDetails.getPlacetype());
+            List<ModuleDetail> moduleDetails = new LinkedList<>();
+            moduleDetails.add(moduleDetail);
+            MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(marriageRegistryDetails.getTenantid())
+                    .build();
 
-        MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
-                .requestInfo(requestInfo).build();
-        Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);
-        return result;
+            MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
+                    .requestInfo(requestInfo).build();
+            Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);
+            return result;
+        }else{
+            return null;
+        }
     }
 
 //    public Object mdmsCallForLocation (RequestInfo requestInfo, String tenantId) {
@@ -681,14 +685,18 @@ public class MarriageMdmsUtil {
         }
     }
     public Map<String, Object> getMandapamAttributeValues(Object mdmsdata) {
-        List<String> modulepaths = Arrays.asList(
-                //MarriageConstants.CR_MDMS_TENANTS_CODE_JSONPATH,
+        if(null!=mdmsdata) {
+            List<String> modulepaths = Arrays.asList(
+                    //MarriageConstants.CR_MDMS_TENANTS_CODE_JSONPATH,
 //                MarriageConstants.TENANT_JSONPATH,
 //                MarriageConstants.COMMON_MASTER_JSONPATH,
 //                MarriageConstants.EGOV_LOCATION_JSONPATH,
-                MarriageConstants.MARRIAGE_PLACE_JSONPATH);
+                    MarriageConstants.MARRIAGE_PLACE_JSONPATH);
 
-        return getAttributeStrValuesForJsonPaths(mdmsdata,modulepaths);
+            return getAttributeStrValuesForJsonPaths(mdmsdata, modulepaths);
+        }else{
+            return null;
+        }
     }
 
     public StringBuilder appendIfNotBlank(String v,StringBuilder s,boolean addSemicolon){
