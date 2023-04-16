@@ -211,7 +211,8 @@ public class MarriageRegistryRepository {
                else if (req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlacetype().equals(
                         MarriageConstants.PLACE_TYPE_PRIVATE_PLACE) ||
                         (req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlacetype().equals(
-                                MarriageConstants.PLACE_TYPE_PUBLIC_PLACE))) {
+                                MarriageConstants.PLACE_TYPE_PUBLIC_PLACE))||(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlacetype().equals(
+                        MarriageConstants.PLACE_OTHER))) {
                     if (!StringUtils.isEmpty(
                             req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlacenameEn())) {
                        marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlacenameEn()+",");
@@ -291,9 +292,13 @@ public class MarriageRegistryRepository {
 
 
 
+            if(StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getGroomUrl())) {
+                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().setGroomUrl(marriageApplicationConfiguration.getImageURLStartPath()+req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getGroomUrl());
 
-           // req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().setGroomUrl("https://ulb-logos.s3.ap-south-1.amazonaws.com/cochin/cochin.jpg");
-           // req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().setBrideUrl("https://ulb-logos.s3.ap-south-1.amazonaws.com/cochin/cochin.jpg");
+            }
+            if(StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getBrideUrl())) {
+                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().setBrideUrl(marriageApplicationConfiguration.getImageURLStartPath()+req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getBrideUrl());
+            }
             marriageCertPDFRequest.getMarriageCertificate().forEach(cert-> {
                 String uiHost = marriageApplicationConfiguration.getEgovPdfHost();
                 String tenantId = cert.getMarriageRegistryDetails().getTenantid().split("\\.")[0];
@@ -310,7 +315,8 @@ public class MarriageRegistryRepository {
 
         }catch (Exception e){
             e.printStackTrace();
-            throw new CustomException("PDF_ERROR","Error in generating PDF");
+            System.out.println(e.getMessage());
+            throw new CustomException("PDF_ERROR","Error in generating PDF"+e.getMessage());
         }
         return  pdfResponse;
     }

@@ -725,8 +725,10 @@ public class MarriageMdmsUtil {
 
     public Map<String, List<String>> mDMSCallGetCountry(RequestInfo requestInfo
             , String countryCode) {
+        log.info("Inside mDMSCallGetCountry "+countryCode);
         MdmsCriteriaReq mdmsCriteriaReq = MdmsRequestForCountry(requestInfo, countryCode);
         Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);
+        log.info("result mDMSCallGetCountry "+result.toString());
         if(null!=result){
             List<String> modulepaths = Arrays.asList(
                     MarriageConstants.COMMON_MASTER_JSONPATH);
