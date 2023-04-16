@@ -54,7 +54,7 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
             .append("GPMA.pinno as  GPMA_pinno  , GPMA.countryid as GPMA_countryid ,GPMA.marriageid as GPMA_marriageid , GPMA.bride_groom as GPMA_bride_groom , ")
             .append("GPMA.ot_address1_en as GPMA_ot_address1_en  ,  GPMA.ot_address1_ml as GPMA_ot_address1_ml  , GPMA.ot_address2_en as GPMA_ot_address2_en  , ")
             .append("GPMA.ot_address2_ml as GPMA_ot_address2_ml ,GPMA.ot_state_region_province_en as GPMA_ot_state_region_province_en  ,")
-            .append("GPMA.ot_state_region_province_ml as GPMA_ot_state_region_province_ml , GPMA.ot_zipcode as GPMA_ot_zipcode ,")
+            .append("GPMA.ot_state_region_province_ml as GPMA_ot_state_region_province_ml , GPMA.ot_zipcode as GPMA_ot_zipcode , GPMA.city_town_village as GPMA_city_town_village  ,")
 
             .append("BPMA.id as BPMA_id ,BPMA.housename_no_en as BPMA_housename_en ,BPMA.housename_no_ml as BPMA_housename_ml,BPMA.villageid as BPMA_villageid ,BPMA.village_name as BPMA_village_name,")
             .append("BPMA.talukid as BPMA_talukid  , BPMA.taluk_name as BPMA_taluk_name  ,  BPMA.tenantid as BPMA_tenantid  , BPMA.ward_code as BPMA_ward_code  , ")
@@ -63,7 +63,7 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
             .append("BPMA.pinno   BPMA_pinno  , BPMA.countryid  BPMA_countryid , BPMA.marriageid as BPMA_marriageid  ,  BPMA.bride_groom as BPMA_bride_groom  , ")
             .append("BPMA.ot_address1_en as BPMA_ot_address1_en  ,  BPMA.ot_address1_ml as BPMA_ot_address1_ml  , BPMA.ot_address2_en as BPMA_ot_address2_en  ,  ")
             .append("BPMA.ot_address2_ml as BPMA_ot_address2_ml  , BPMA.ot_state_region_province_en as BPMA_ot_state_region_province_en  ,  ")
-            .append("BPMA.ot_state_region_province_ml as BPMA_ot_state_region_province_ml , BPMA.ot_zipcode as BPMA_ot_zipcode ,")
+            .append("BPMA.ot_state_region_province_ml as BPMA_ot_state_region_province_ml , BPMA.ot_zipcode as BPMA_ot_zipcode ,BPMA.city_town_village as BPMA_city_town_village ,")
 
             .append("GPSA.id as GPSA_id ,GPSA.housename_no_en as GPSA_housename_en,GPSA.housename_no_ml as GPSA_housename_ml,GPSA.villageid as GPSA_villageid,GPSA.village_name as GPSA_village_name,")
             .append("GPSA.talukid as GPSA_talukid  , GPSA.taluk_name as GPSA_taluk_name  ,  GPSA.tenantid as GPSA_tenantid  , GPSA.ward_code as GPSA_ward_code,")
@@ -72,7 +72,7 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
             .append("GPSA.pinno   GPSA_pinno  , GPSA.countryid  GPSA_countryid , GPSA.marriageid as GPSA_marriageid  ,  GPSA.bride_groom as GPSA_bride_groom  ,  ")
             .append("GPSA.ot_address1_en as GPSA_ot_address1_en,GPSA.ot_address1_ml as GPSA_ot_address1_ml  , GPSA.ot_address2_en as GPSA_ot_address2_en  , ")
             .append("GPSA.ot_address2_ml as GPSA_ot_address2_ml,GPSA.ot_state_region_province_en as GPSA_ot_state_region_province_en,")
-            .append("GPSA.ot_state_region_province_ml as GPSA_ot_state_region_province_ml,")
+            .append("GPSA.ot_state_region_province_ml as GPSA_ot_state_region_province_ml, GPSA.ot_zipcode as GPSA_ot_zipcode, GPSA.city_town_village as GPSA_city_town_village , ")
 
             .append("BPSA.id as BPSA_id ,BPSA.housename_no_en as BPSA_housename_en,BPSA.housename_no_ml as BPSA_housename_ml,BPSA.villageid as BPSA_villageid,BPSA.village_name as BPSA_village_name,")
             .append("BPSA.talukid as BPSA_talukid  , BPSA.taluk_name as BPSA_taluk_name  ,  BPSA.tenantid as BPSA_tenantid  , BPSA.ward_code as BPSA_ward_code  ,")
@@ -81,7 +81,9 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
             .append("BPSA.poid as BPSA_poid,BPSA.poname_en as BPSA_poname_en,BPSA.poname_ml as BPSA_poname_ml,BPSA.pinno   BPSA_pinno  , BPSA.countryid  BPSA_countryid ,")
             .append("BPSA.marriageid as BPSA_marriageid  ,  BPSA.bride_groom as BPSA_bride_groom  ,  BPSA.ot_address1_en as BPSA_ot_address1_en  ,")
             .append("BPSA.ot_address1_ml as BPSA_ot_address1_ml,BPSA.ot_address2_en as BPSA_ot_address2_en,BPSA.ot_address2_ml as BPSA_ot_address2_ml,")
-            .append("BPSA.ot_state_region_province_en BPSA_ot_state_region_province_en  ,  BPSA.ot_state_region_province_ml as BPSA_ot_state_region_province_ml,")
+            .append("BPSA.ot_state_region_province_en BPSA_ot_state_region_province_en  ,  BPSA.ot_state_region_province_ml as BPSA_ot_state_region_province_ml, ")
+            .append("BPSA.ot_zipcode as BPSA_ot_zipcode,BPSA.city_town_village as BPSA_city_town_village , ")
+            
 
             .append("WD1.id AS WD1_id , WD1.aadharno  as WD1_aadharno , WD1.name_en  as WD1_name_en ,  WD1.name_ml  as WD1_name_ml , WD1.age  as WD1_age , WD1.address_en  as WD1_address_en ,")
             .append("WD1.address_ml  as WD1_address_ml ,  WD1.mobile  as WD1_mobile , WD1.is_esigned  as WD1_is_esigned ,  WD1.marriageid  as WD1_marriageid , WD1.serial_no  as WD1_serial_no, ")
