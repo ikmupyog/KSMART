@@ -305,15 +305,9 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
             <div className="col-md-4">
               <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                 :
-                {t(
-                  GroomAddressDetails?.permntInKeralaAdrHouseNameEn
-                    ? GroomAddressDetailsGroomAddressDetails?.permntInKeralaAdrHouseNameEn
-                    : "CR_NOT_RECORDED"
-                ) +
+                {t(GroomAddressDetails?.permntInKeralaAdrHouseNameEn ? GroomAddressDetails?.permntInKeralaAdrHouseNameEn : "CR_NOT_RECORDED") +
                   " , " +
-                  (GroomAddressDetails?.permntInKeralaAdrStreetNameEn
-                    ? GroomAddressDetailsGroomAddressDetails?.permntInKeralaAdrStreetNameEn
-                    : "CR_NOT_RECORDED") +
+                  (GroomAddressDetails?.permntInKeralaAdrStreetNameEn ? GroomAddressDetails?.permntInKeralaAdrStreetNameEn : "CR_NOT_RECORDED") +
                   " , " +
                   GroomAddressDetails?.permntInKeralaAdrLocalityNameEn +
                   " , " +
