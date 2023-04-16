@@ -33,7 +33,7 @@ public class MarriageCertificateEnrichment implements BaseEnrichment {
         AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
         request.getMarriageCertificate().setId(UUID.randomUUID().toString());
         request.getMarriageCertificate().setAuditDetails(auditDetails);
-        createCertificateNo(request);
+        //createCertificateNo(request);
 
     }
 
@@ -42,7 +42,7 @@ public class MarriageCertificateEnrichment implements BaseEnrichment {
         User userInfo = requestInfo.getUserInfo();
         AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
         request.getMarriageCertificate().setAuditDetails(auditDetails);
-        createCertificateNo(request);
+        //createCertificateNo(request);
 
     }
 
