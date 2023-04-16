@@ -68,9 +68,9 @@ const ulbCamel = (ulb) => ulb.toLowerCase().split(" ").map(capitalize).join(" ")
 //     values: values,
 //   };
 // };
-const getChildDetails = (application, t) => {
+const getStillBirthChildDetails = (application, t) => {
   console.log(application);
-  application.owners = application?.ChildDetails?.filter((applicationNumber) => applicationNumber.active == true) || [];
+  application.owners = application?.StillBirthChildDetails?.filter((applicationNumber) => applicationNumber.active == true) || [];
   //if (application?.ChildDetails?.applicationNumber == "TL_COMMON_TABLE_COL_APP_NO") {
  
   return {
@@ -80,7 +80,7 @@ const getChildDetails = (application, t) => {
       { title: t("Gender"), value: application?.gender ? application?.gender : t("CS_NA") },
       { title: t("Birth Place"), value: application?.birthPlace ? application?.birthPlace : t("CS_NA") },
       { title: t("Birth Place Name"), value: application?.hospitalName ? application?.hospitalName : t("CS_NA") },
-
+   //   { title: "Birth Place Name", value: response?.hospitalName + "/" + response?.hospitalNameMl || "NA"},   
       // { title: t("TL_OWNER_S_NAME_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.name || t("CS_NA") },
       // { title: t("TL_OWNER_S_MOBILE_NUM_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.mobileNumber || t("CS_NA") },
       // // { title: t("TL_GUARDIAN_S_NAME_LABEL"), value: application?.tradeLicenseDetail?.owners[0]?.fatherOrHusbandName || t("CS_NA") },
@@ -150,7 +150,7 @@ const getCRStillBirthAcknowledgementData = async (application, tenantInfo, t) =>
           },
         ],
       },
-      getChildDetails(application, t),
+      getStillBirthChildDetails(application, t),
       getAddressDetails(application, t),
       //       getTradeDetails(application, t),
       //       getTradeUnitsDetails(application, t),
