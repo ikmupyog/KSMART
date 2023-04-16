@@ -52,6 +52,7 @@ public class MarriageApplicationValidator {
                 // IMP:Have to enable after URI submission
                 validateCommonFields(request);
         }
+
         public void ruleEngineMarriage(MarriageDetailsRequest request, WorkFlowCheck wfc,Object mdmsdata){
                 Long dateOfMarriage = 0L;
                 String marriagePlace = null;

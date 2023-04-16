@@ -43,7 +43,8 @@ public class MarriageApplicationService {
                                       MarriageDetailsEnrichment marriageDetailsEnrichment,
                                       MarriageMdmsUtil util,
                                       MarriageMDMSValidator mdmsValidator,
-                                      MarriageApplicationConfiguration marriageApplicationConfiguration, MarriageApplicationValidator validatorService) {
+                                      MarriageApplicationConfiguration marriageApplicationConfiguration, 
+                                      MarriageApplicationValidator validatorService) {
         this.repository = repository;
         this.workflowIntegrator = workflowIntegrator;
         this. marriageDetailsEnrichment= marriageDetailsEnrichment;

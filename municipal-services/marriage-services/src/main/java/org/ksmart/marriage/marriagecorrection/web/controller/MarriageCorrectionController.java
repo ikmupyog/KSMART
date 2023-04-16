@@ -51,15 +51,15 @@ public class MarriageCorrectionController {
 
     @PostMapping(value = { "/_updatemarriagecorrection"})
     public ResponseEntity<MarriageCorrectionResponse> registryUpdate(@RequestBody MarriageCorrectionRequest request) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
-
+        
+        List<MarriageCorrectionDetails> marriageapplnDetails = marriageCorrectionService.updateMarriageCorrectionDetails(request);
 
         //Updating Marriage registry if Registrar Approved
-        //if(request.getMarriageCorrectionDetails().get(0).getStatus().equals(MarriageConstants.WORKFLOW_STATUS_APPROVED)) {
-
+        if(request.getMarriageCorrectionDetails().get(0).getStatus().equals(MarriageConstants.WORKFLOW_STATUS_APPROVED) && (request.getMarriageCorrectionDetails().get(0).getApplicationtype().equals(MarriageConstants.APPLICATION_CORRECTION))) {
 
             List<MarriageCorrectionDetails> marriageCorrectionDetailsList = marriageCorrectionService.updateMarriageRegistry(request);
 
-        //}
+        }
         MarriageCorrectionResponse response = MarriageCorrectionResponse
                 .builder()
                 .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))
@@ -67,4 +67,5 @@ public class MarriageCorrectionController {
                 .build();
         return ResponseEntity.ok(response);
     }
+    
 }

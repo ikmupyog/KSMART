@@ -5,6 +5,7 @@ import lombok.*;
 import org.ksmart.marriage.common.model.AuditDetails;
 import org.springframework.validation.annotation.Validated;
 
+import javax.swing.text.Document;
 import javax.validation.constraints.Size;
 import java.util.List;
 
@@ -54,6 +55,18 @@ public class MarriageCorrectionDetails {
     private List<CorrectionField> correctionField;
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
+
+    @JsonProperty("assignee")
+    private List<String> assignees;
+
+   @Size(max = 128)
+   private String comment;
+
+    @JsonProperty("wfDocuments")
+    private List<Document> wfDocuments;
+
+    @JsonProperty("isWorkflow")
+    private Boolean isWorkflow;
 
 
 }
