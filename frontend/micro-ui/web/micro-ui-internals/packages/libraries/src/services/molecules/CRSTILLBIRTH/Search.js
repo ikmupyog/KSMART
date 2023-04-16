@@ -75,7 +75,7 @@ export const CRStillBirthsearch = {
         // { title: "PDF_BIRTH_CHILD_NAME", value: response?.stillbirthchilddetails?.childFirstNameEn + response?.childMiddleNameEn + response?.childLastNameEn },
         { title: "PDF_BIRTH_CHILD_SEX", value: response?.gender },
         { title: "PDF_BIRTH_DATE_OF_BIRTH", value: response?.childDOB ? convertEpochToDate(response?.childDOB) : "NA" },
-        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value:getFormattedValue(response, "birthPlace",false) },  
+        // { title: "PDF_BIRTH_PLACE_OF_BIRTH", value:getFormattedValue(response, "birthPlace",false) },  
         { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.hospitalName + "/" + response?.hospitalNameMl || "NA"},   
             
         
@@ -87,17 +87,17 @@ export const CRStillBirthsearch = {
       title: "CR_BIRTH_PARENT_INFORMATION_HEADER",
       values: [
         
-        { title: "PDF_BIRTH_MOTHER_AADHAR", value: response?.StillBirthParentsDetails?.motherAadhar || "NA"},   
+        { title: "CR_BIRTH_MOTHER_AADHAR", value: response?.StillBirthParentsDetails?.motherAadhar || "NA"},   
         { title: "PDF_BIRTH_NAME_OF_MOTHER", value: response?.StillBirthParentsDetails?.motherFirstNameEn + " / " + response?.StillBirthParentsDetails?.motherFirstNameMl || "NA"},
      
         { title: "CR_NATIONALITY", value: response?.StillBirthParentsDetails?.motherNationality || "NA"},   
         { title: "CR_MOTHER_AGE_BIRTH", value: response?.StillBirthParentsDetails?.motherMarriageBirth || "NA"},   
         { title: "CR_ORDER_CURRENT_DELIVERY", value: response?.StillBirthParentsDetails?.orderofChildren || "NA"},   
         { title: "CR_EDUCATION", value: response?.StillBirthParentsDetails?.motherEducation || "NA"},   
-        { title: "CR_PROFESSIONAL", value: response?.StillBirthParentsDetails?.motherProfession || "NA"},     
-        { title: "CR_NATIONALITY", value: response?.StillBirthParentsDetails?.motherNationality || "NA"},   
+        { title: "CR_PROFESSIONAL", value: response?.StillBirthParentsDetails?.motherProfession || "NA"}, 
+      
        
-        { title: "PDF_BIRTH_FATHER_AADHAR", value: response?.StillBirthParentsDetails?.fatherAadhar || "NA"},  
+        { title: "CR_BIRTH_FATHER_AADHAR", value: response?.StillBirthParentsDetails?.fatherAadhar || "NA"},  
         { title: "PDF_BIRTH_NAME_OF_FATHER", value: response?.StillBirthParentsDetails?.fatherFirstNameEn + " / " + response?.ParentsDetails?.fatherFirstNameMl || "NA"},       
         { title: "CR_NATIONALITY", value: response?.StillBirthParentsDetails?.fatherNationality || "NA" },       
        { title: "CR_EDUCATION", value: response?.StillBirthParentsDetails?.fatherEducation || "NA" },

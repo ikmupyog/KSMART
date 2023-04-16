@@ -19,8 +19,8 @@ const ActionModal = (props) => {
   if (props?.businessService.includes("PT")) {
     return <PTActionModal {...props} />;
   }
-  if (props?.businessService.includes("BIRTHHOSP21") || props?.businessService.includes("WFBIRTH30DAYS") || props?.businessService.includes("1YRBIRTHHOSP") || props?.businessService.includes("ABOVE1YRBIRTHHOSP")
-  || props?.businessService.includes("21BIRTHHOME") || props?.businessService.includes("30BIRTHHOME") || props?.businessService.includes("1YRBIRTHHOME") || props?.businessService.includes("ABOVE1YRBIRTHHOME")) {
+  if (props?.businessService.includes("WFBIRTH21DAYS") || props?.businessService.includes("WFBIRTH30DAYS") || props?.businessService.includes("WFBIRTH1YR") || props?.businessService.includes("WFBIRTHABOVE1YR")
+  || props?.businessService.includes("WFBIRTH21DAYSHOME") || props?.businessService.includes("WFBIRTH30DAYSHOME") || props?.businessService.includes("WFBIRTH1YRHOME") || props?.businessService.includes("ABOVE1YRBIRTHHOME")) {
     return <BirthActionModal {...props} />;
   }
   if (props?.businessService.includes("STILLBIRTHHOSP")

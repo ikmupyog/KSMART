@@ -292,7 +292,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
   }
   function setSelectoutsideKeralaStreetNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setoutsideKeralaStreetNameEn(e.target.value.trim().length <= 50 ? e.target.value.trim() : (e.target.value.trim()).substring(0, 50));
+      setoutsideKeralaStreetNameEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       if (isPrsentAddress) {
         setpermntOutsideKeralaStreetNameEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       } 

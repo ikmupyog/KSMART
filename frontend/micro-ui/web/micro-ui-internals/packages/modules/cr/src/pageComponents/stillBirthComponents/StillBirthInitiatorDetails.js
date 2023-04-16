@@ -124,47 +124,12 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData, isEd
     }
   }
 
+ 
   function setSelectinitiatorAadhar(e) {
     if (e.target.value.trim().length >= 0) {
-      setinitiatorAadhar(
-        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
-      );
+      setinitiatorAadhar(e.target.value.trim().length <= 12 ? e.target.value.trim().replace(/[^0-9]/ig, '') : (e.target.value.trim().replace(/[^0-9]/ig, '')).substring(0, 12));
     }
-    // if (e.target.value.length != 0) {
-    //   if (e.target.value.length > 12) {
-    //     // setChildAadharNo(e.target.value);
-    //     setinitiatorAadharError(true);
-    //     return false;
-    //   } else if (e.target.value.length < 12) {
-    //     setinitiatorAadharError(true);
-    //     setinitiatorAadhar(e.target.value);
-    //     return false;
-    //   } else {
-    //     setinitiatorAadharError(false);
-    //     setinitiatorAadhar(e.target.value);
-    //     return true;
-    //   }
-    // } else {
-    //   setinitiatorAadharError(false);
-    //   setinitiatorAadhar(e.target.value);
-    //   return true;
-    // }
   }
-  // function setSelectinitiatorAadhar(e) {
-
-  //   if (e.target.value.length != 0) {
-  //     if (e.target.value.length > 12) {
-  //       return false;
-  //     } else if (e.target.value.length < 12) {
-  //       setinitiatorAadhar(e.target.value);
-  //       return false;
-  //     } else {
-  //       setinitiatorAadhar(e.target.value);
-  //     }
-  //   } else {
-  //     setinitiatorAadhar(e.target.value);
-  //   }
-  // }
   function setSelectinitiatorMobile(e) {
     if (e.target.value.trim().length >= 0) {
       setinitiatorMobile(
@@ -204,7 +169,12 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData, isEd
       setIsCaretaker(e.target.checked);
     }
   }
-
+  function setCheckSpecialChar(e) {
+    let pattern = /^[0-9]*$/;
+    if (!(e.key.match(pattern))) {
+      e.preventDefault();
+    }
+  }
   let validFlag = true;
   const goNext = () => {
     // if (relation == null || relation == "" || relation == undefined) {
@@ -239,7 +209,31 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData, isEd
         setinitiatorDesiError(false);
       }
     }
-    if (initiatorAadhar != null || initiatorAadhar != "" || initiatorAadhar != undefined) {
+    // if (initiatorAadhar != null || initiatorAadhar != "" || initiatorAadhar != undefined) {
+    //   let adharLength = initiatorAadhar;
+    //   if (adharLength.length < 12 || adharLength.length > 12) {
+    //     validFlag = false;
+    //     setinitiatorAadharError(true);
+    //     setToast(true);
+    //     setTimeout(() => {
+    //       setToast(false);
+    //     }, 2000);
+    //   } else {
+    //     setinitiatorAadharError(false);
+    //   }
+    // } else {
+    //   validFlag = false;
+    //   setinitiatorAadharError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 2000);
+    // }
+
+
+    if (initiatorAadhar.trim() == null || initiatorAadhar.trim() == '' || initiatorAadhar.trim() == undefined) {
+      setinitiatorAadhar("");
+    } else if (initiatorAadhar != null && initiatorAadhar != "") {
       let adharLength = initiatorAadhar;
       if (adharLength.length < 12 || adharLength.length > 12) {
         validFlag = false;
@@ -251,14 +245,10 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData, isEd
       } else {
         setinitiatorAadharError(false);
       }
-    } else {
-      validFlag = false;
-      setinitiatorAadharError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
     }
+
+
+
     if (initiatorMobile != null || initiatorMobile != "" || initiatorMobile != undefined) {
       let mobileLength = initiatorMobile;
       if (mobileLength.length < 10 || mobileLength.length > 10) {
@@ -433,6 +423,7 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData, isEd
                 value={initiatorAadhar}
                 onChange={setSelectinitiatorAadhar}
                 disable={isDisableEdit}
+                onKeyPress={setCheckSpecialChar}
                 placeholder={`${t("CS_COMMON_AADHAAR")}`}
                 {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
               />
@@ -490,7 +481,7 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData, isEd
                 onChange={setSelectinitiatorAddress}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_INFORMER_ADDRESS")}`}
-                {...(validation = { pattern: "^[a-zA-Z-0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
+                {...(validation = { pattern: "^[a-zA-Z-.,`'0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
               />
             </div>
           </div>
