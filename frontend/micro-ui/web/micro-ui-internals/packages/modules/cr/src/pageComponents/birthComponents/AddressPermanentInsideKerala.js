@@ -28,6 +28,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   if (tenantId === "kl") {
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
+  const [popermfilter, setPoPermfilter] = useState(false);
   const [tenantWard, setTenantWard] = useState(tenantId);
   const [tenantboundary, setTenantboundary] = useState(false);
   const queryClient = useQueryClient();
@@ -348,17 +349,17 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
     setpermntInKeralaAdrPincode(value.pincode);
   }
   function setSelectpermntInKeralaAdrPincode(e) {
-    if (e.target.value.length != 0) {
-      if (e.target.value.length > 6) {
-        return false;
-      } else if (e.target.value.length < 6) {
-        setpermntInKeralaAdrPincode(e.target.value);
-        return false;
-      } else {
-        setpermntInKeralaAdrPincode(e.target.value);
-        return true;
-      }
+   
+    if (e.target.value.length === 6) {
+      setPostOfficePermvalues(PostOfficePermvalues.filter((postoffice) =>
+        parseInt(postoffice.pincode) === parseInt(e.target.value)));
+        setPoPermfilter(true);
+    } else {
+      setPostOfficePermvalues(cmbFilterPostOffice);
+      setPoPermfilter(false);
     }
+    setpermntInKeralaAdrPincode(e.target.value.length <= 6 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 6));
+    setpermntInKeralaAdrPostOffice(PostOfficePermvalues.filter((postoffice) => parseInt(postoffice.pincode) === parseInt(e.target.value))[0]);
   }
   function setSelectpermntInKeralaAdrHouseNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9 ]*$") != null)) {
@@ -419,6 +420,12 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
       e.preventDefault();
     }
   }
+  function setCheckMalayalamInputFieldWithSplChar(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]/;
+    if (!(e.key.match(pattern))) {
+        e.preventDefault();
+    }
+}
   // useEffect(() => {
   //     if (isInitialRender) {
   //         console.log("presentInsideKeralaDistrict" + districtid);
@@ -561,9 +568,9 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
             disable={isDisableEdit}
             placeholder={`${t("CS_COMMON_PIN_CODE")}`}
             {...(validation = {
-              pattern: "^[a-zA-Z-.`' ]*$",
+              pattern: "^[0-9]*$",
               isRequired: true,
-              type: "number",
+              type: "text",
               maxLength: 6,
               minLength: 6,
               title: t("CS_COMMON_INVALID_PIN_CODE"),
@@ -677,7 +684,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
             optionKey="i18nKey"
             name="permntInKeralaAdrHouseNameMl"
             value={permntInKeralaAdrHouseNameMl}
-            onKeyPress={setCheckMalayalamInputField}
+            onKeyPress={setCheckMalayalamInputFieldWithSplChar}
             onChange={setSelectpermntInKeralaAdrHouseNameMl}
             placeholder={`${t("CR_HOUSE_NAME_ML")}`}
             disable={isDisableEdit}

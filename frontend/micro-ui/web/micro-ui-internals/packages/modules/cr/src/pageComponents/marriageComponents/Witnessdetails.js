@@ -117,13 +117,14 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   const [witness1NameEn, setwitness1NameEn] = useState(formData?.WitnessDetails?.witness1NameEn ? formData?.WitnessDetails?.witness1NameEn : "");
   const [witness1Age, setwitness1Age] = useState(formData?.WitnessDetails?.witness1Age ? formData?.WitnessDetails?.witness1Age : "");
   const [witness2Age, setwitness2Age] = useState(formData?.WitnessDetails?.witness2Age ? formData?.WitnessDetails?.witness2Age : "");
-  const [witness1AddresSEn, setwitness1AddresSEn] = useState(
-    formData?.WitnessDetails?.witness1AddresSEn ? formData?.WitnessDetails?.witness1AddresSEn : ""
+  const [witness1AddressEn, setwitness1AddressEn] = useState(
+    formData?.WitnessDetails?.witness1AddressEn ? formData?.WitnessDetails?.witness1AddressEn : ""
   );
-  const [witness2AddresSEn, setwitness2AddresSEn] = useState(
-    formData?.WitnessDetails?.witness2AddresSEn ? formData?.WitnessDetails?.witness2AddresSEn : ""
+  const [witness2AddressEn, setwitness2AddressEn] = useState(
+    formData?.WitnessDetails?.witness2AddressEn ? formData?.WitnessDetails?.witness2AddressEn : ""
   );
-  const [AadharError, setAadharError] = useState(formData?.BrideDetails?.brideAdharNo ? false : false);
+  const [witness1AadharError, setwitness1AadharError] = useState(formData?.BrideDetails?.brideAdharNo ? false : false);
+  const [witness2AadharError, setwitness2AadharError] = useState(formData?.BrideDetails?.brideAdharNo ? false : false);
   const [witness1Mobile, setwitness1Mobile] = useState(formData?.WitnessDetails?.witness1Mobile ? formData?.WitnessDetails?.witness1Mobile : "");
   const [witness2Mobile, setwitness2Mobile] = useState(formData?.WitnessDetails?.witness2Mobile ? formData?.WitnessDetails?.witness2Mobile : "");
   const [witness1Esigned, setwitness1Esigned] = useState(
@@ -203,6 +204,15 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     setBrideImage(event.target.files[0]);
   };
   const [AgeValidationMsg, setAgeValidationMsg] = useState(false);
+  const [AdhaarDuplicationError, setAdhaarDuplicationError] = useState(false);
+  const [witness1NameEnError, setwitness1NameEnError] = useState(false);
+  const [witness2NameEnError, setwitness2NameEnError] = useState(false);
+  const [witness1AgeError, setwitness1AgeError] = useState(false);
+  const [witness2AgeError, setwitness2AgeError] = useState(false);
+  const [witness1AddressEnError, setwitness1AddressEnError] = useState(false);
+  const [witness2AddressEnError, setwitness2AddressEnError] = useState(false);
+  const [witness1MobileError, setwitness1MobileError] = useState(false);
+  const [witness2MobileError, setwitness2MobileError] = useState(false);
   const onSkip = () => onSelect();
 
   function setSelectExpirationTypeHusband(value) {
@@ -402,15 +412,15 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     //   setwitness2Age(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' a-zA-Z]/gi, ""));
     // }
   }
-  function setSelectwitness1AddresSEn(e) {
+  function setSelectwitness1AddressEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setwitness1AddresSEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setwitness1AddressEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
     // if (e.target.value.length === 51) {
     //   return false;
     //   // window.alert("Username shouldn't exceed 10 characters")
     // } else {
-    //   setwitness1AddresSEn(
+    //   setwitness1AddressEn(
     //     e.target.value.replace(
     //       /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
     //       ""
@@ -418,15 +428,15 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     //   );
     // }
   }
-  function setSelectwitness2AddresSEn(e) {
+  function setSelectwitness2AddressEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setwitness2AddresSEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setwitness2AddressEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
     // if (e.target.value.length === 51) {
     //   return false;
     //   // window.alert("Username shouldn't exceed 10 characters")
     // } else {
-    //   setwitness2AddresSEn(
+    //   setwitness2AddressEn(
     //     e.target.value.replace(
     //       /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
     //       ""
@@ -474,6 +484,13 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   function setSelectwitness2Esigned() {
     setwitness1Esigned(true);
   }
+ 
+  function setCheckSpecialChar(e) {
+    let pattern = /^[0-9]*$/;
+    if (!(e.key.match(pattern))) {
+      e.preventDefault();
+    }
+  }
 
   function sendWitness1OTP() {}
 
@@ -483,17 +500,160 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
 
   let validFlag = true;
   const goNext = () => {
-    if (AadharError) {
+    if (witness1AadharNo.trim() == null || witness1AadharNo.trim() == '' || witness1AadharNo.trim() == undefined) {
+      setwitness1AadharNo("");
+    } else if (witness1AadharNo != null && witness1AadharNo != "") {
+      let adharLength = witness1AadharNo;
+      if (adharLength.length < 12 || adharLength.length > 12) {
+        validFlag = false;
+        setwitness1AadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setwitness1AadharError(false);
+      }
+    }
+    if (witness2AadharNo.trim() == null || witness2AadharNo.trim() == '' || witness2AadharNo.trim() == undefined) {
+      setwitness2AadharNo("");
+    } else if (witness2AadharNo != null && witness2AadharNo != "") {
+      let adharLength = witness2AadharNo;
+      if (adharLength.length < 12 || adharLength.length > 12) {
+        validFlag = false;
+        setwitness2AadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setwitness2AadharError(false);
+      }
+    }
+    if ((witness1AadharNo.trim() == null || witness1AadharNo.trim() == '') && (witness2AadharNo.trim() != null || witness2AadharNo.trim() == '')) {
+      setwitness1AadharNo('');
+      setwitness2AadharNo('');
+    } else {
+      if (witness1AadharNo.trim() != null && witness2AadharNo.trim() != null) {
+        if (witness1AadharNo === witness2AadharNo) {
+          validFlag = false;
+          setAdhaarDuplicationError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } else {
+          setAdhaarDuplicationError(false);
+        }
+      }
+    }
+    if (witness1NameEn.trim() == null || witness1NameEn.trim() == '' || witness1NameEn.trim() == undefined) {
       validFlag = false;
-      setAadharErroChildAadharNor(true);
+      setwitness1NameEn("");
+      setwitness1NameEnError(true);
       setToast(true);
       setTimeout(() => {
         setToast(false);
       }, 2000);
-      // return false;
-      // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setAadharError(false);
+      setwitness1NameEnError(false);
+    }
+    if (witness1Age == null || witness1Age == '' || witness1Age == undefined) {
+      if (witness1AgeError) {
+        validFlag = false;
+        setwitness1AgeError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setwitness1AgeError(false);
+      }
+    }
+    if (witness2Age == null || witness2AddressEn == '' || witness2Age == undefined) {
+      if (witness2AgeError) {
+        validFlag = false;
+        setwitness2AgeError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setwitness2AgeError(false);
+      }
+    }
+    if (witness2NameEn.trim() == null || witness2NameEn.trim() == '' || witness2NameEn.trim() == undefined) {
+      validFlag = false;
+      setwitness2NameEn("");
+      setwitness2NameEnError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setwitness2NameEnError(false);
+    }
+    if (witness1AddressEn.trim() == null || witness1AddressEn.trim() == '' || witness1AddressEn.trim() == undefined) {
+      validFlag = false;
+      setwitness1AddressEn("");
+      setwitness1AddressEnError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setwitness1AddressEnError(false);
+    }
+    if (witness2AddressEn.trim() == null || witness2AddressEn.trim() == '' || witness2AddressEn.trim() == undefined) {
+      validFlag = false;
+      setwitness2AddressEn("");
+      setwitness2AddressEnError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setwitness2AddressEnError(false);
+    }
+    if (witness1Mobile != null || witness1Mobile != "" || witness1Mobile != undefined) {
+      let mobileLength = witness1Mobile;
+      if (mobileLength.length < 10 || mobileLength.length > 10) {
+        validFlag = false;
+        setwitness1MobileError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setwitness1MobileError(false);
+      }
+    } else {
+      validFlag = false;
+      setwitness1MobileError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    }
+    if (witness2Mobile != null || witness2Mobile != "" || witness2Mobile != undefined) {
+      let mobileLength = witness2Mobile;
+      if (mobileLength.length < 10 || mobileLength.length > 10) {
+        validFlag = false;
+        setwitness2MobileError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setwitness2MobileError(false);
+      }
+    } else {
+      validFlag = false;
+      setwitness2MobileError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
     }
     if (validFlag == true) {
       // sessionStorage.setItem("marraigeDOM", marraigeDOM ? marraigeDOM : null);
@@ -507,8 +667,8 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
       // sessionStorage.setItem("witness2NameEn", witness2NameEn ? witness2NameEn : null);
       // sessionStorage.setItem("witness1Age", witness1Age ? witness1Age : null);
       // sessionStorage.setItem("witness2Age", witness2Age ? witness2Age : null);
-      // sessionStorage.setItem("witness1AddresSEn", witness1AddresSEn ? witness1AddresSEn : null);
-      // sessionStorage.setItem("witness2AddresSEn", witness2AddresSEn ? witness2AddresSEn : null);
+      // sessionStorage.setItem("witness1AddressEn", witness1AddressEn ? witness1AddressEn : null);
+      // sessionStorage.setItem("witness2AddressEn", witness2AddressEn ? witness2AddressEn : null);
       // sessionStorage.setItem("witness1Mobile", witness1Mobile ? witness1Mobile : null);
       // sessionStorage.setItem("witness2Mobile", witness2Mobile ? witness2Mobile : null);
       // sessionStorage.setItem("marriageStreetMal", marriageStreetMal ? marriageStreetMal : null);
@@ -529,8 +689,8 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
         witness2NameEn,
         witness1Age,
         witness2Age,
-        witness1AddresSEn,
-        witness2AddresSEn,
+        witness1AddressEn,
+        witness2AddressEn,
         witness1Mobile,
         witness2Mobile,
         witness1Esigned,
@@ -582,7 +742,13 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
             <BackButton>{t("CS_COMMON_BACK")}</BackButton>
             {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
             {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
-            <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
+            <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}
+            isDisabled={!witness1AadharNo || !witness1NameEn 
+               || !witness1Age || !witness1AddressEn
+               || !witness1Mobile || !witness2AadharNo || !witness2NameEn || !witness2Age
+               || !witness2AddressEn 
+               || !witness2Mobile 
+            }>
               <div className="row">
                 <div className="col-md-12" style={{ marginBottom: "20px" }}>
                   <div className="row">
@@ -611,6 +777,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                         name="witness1AadharNo"
                         value={witness1AadharNo}
                         onChange={setSelectwitness1AadharNo}
+                        onKeyPress={setCheckSpecialChar}
                         disable={isDisableEdit}
                         placeholder={`${t("CR_WITNESS1_ADHAR_NO")}`}
                         inputProps={{
@@ -671,9 +838,9 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                         type={"text"}
                         optionKey="i18nKey"
                         isMandatory={false}
-                        name="witness1AddresSEn"
-                        value={witness1AddresSEn}
-                        onChange={setSelectwitness1AddresSEn}
+                        name="witness1AddressEn"
+                        value={witness1AddressEn}
+                        onChange={setSelectwitness1AddressEn}
                         disable={isDisableEdit}
                         placeholder={`${t("CR_WITNESS1_ADDRESS")}`}
                         {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CS_INVALID_ADDRESS") })}
@@ -797,9 +964,9 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                         type={"text"}
                         optionKey="i18nKey"
                         isMandatory={false}
-                        name="witness2AddresSEn"
-                        value={witness2AddresSEn}
-                        onChange={setSelectwitness2AddresSEn}
+                        name="witness2AddressEn"
+                        value={witness2AddressEn}
+                        onChange={setSelectwitness2AddressEn}
                         disable={isDisableEdit}
                         placeholder={`${t("CR_WITNESS2_ADDRESS")}`}
                         {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CS_INVALID_ADDRESS") })}
@@ -958,14 +1125,58 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
               </div>
               {toast && (
                 <Toast
-                  error={AadharError || AgeValidationMsg}
+                  error={
+                    witness1AadharError || 
+                    AgeValidationMsg || 
+                    AdhaarDuplicationError || 
+                    witness1NameEnError || 
+                    witness2AadharError ||
+                    witness2NameEnError || 
+                    witness1AgeError ||
+                    witness2AgeError || 
+                    witness1AddressEnError || 
+                    witness2AddressEnError || 
+                    witness1MobileError || 
+                    witness2MobileError
+                  }
                   label={
-                    AadharError || AgeValidationMsg
-                      ? AadharError
+                    witness1AadharError || 
+                    AgeValidationMsg || 
+                    AdhaarDuplicationError || 
+                    witness1NameEnError ||
+                    witness2AadharError || 
+                    witness2NameEnError || 
+                    witness1AgeError || 
+                    witness2AgeError ||
+                    witness1AddressEnError ||
+                    witness2AddressEnError ||
+                    witness1MobileError ||
+                    witness2MobileError
+                      ? witness1AadharError
                         ? t(`CS_COMMON_INVALID_AADHAR_NO`)
                         : AgeValidationMsg
-                        ? t(`CR_INVALID_AGE`)
-                        : setToast(false)
+                          ? t(`CR_INVALID_AGE`)
+                          : AdhaarDuplicationError
+                            ? t(`DUPLICATE_AADHAR_NO`)
+                            : witness1NameEnError
+                              ? t(`CR_INVALID_WITNESS1_NAME`)
+                              : witness2AadharError
+                                ? t(`CS_COMMON_INVALID_AADHAR_NO`)
+                                : witness2NameEnError
+                                  ? t(`CR_INVALID_WITNESS2_NAME`)
+                                  : witness1AgeError
+                                    ? t(`CR_INVALID_WITNESS1_AGE`)
+                                    : witness2AgeError
+                                      ? t(`CR_INVALID_WITNESS2_AGE`)
+                                      : witness1AddressEnError
+                                        ? t(`CR_INVALID_WITNESS1_ADDRESS`)
+                                        : witness2AddressEnError
+                                          ? t(`CR_INVALID_WITNESS2_ADDRESS`)
+                                          : witness1MobileError
+                                            ? t(`CR_INVALID_WITNESS1_MOBILENO`)
+                                            : witness2MobileError
+                                              ? t(`CR_INVALID_WITNESS2_MOBILENO`)
+                                              : setToast(false)
                       : setToast(false)
                   }
                   onClose={() => setToast(false)}

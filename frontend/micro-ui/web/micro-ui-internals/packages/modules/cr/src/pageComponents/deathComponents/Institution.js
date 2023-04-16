@@ -9,8 +9,8 @@ const Institution = ({
   onSelect,
   userType,
   formData,
-  DeathPlaceType,
-  selectDeathPlaceType,
+  institution,
+  selectinstitution,
   DeathPlaceInstId,
   setSelectedDeathPlaceInstId,
   InstitutionIdMl,
@@ -19,8 +19,9 @@ const Institution = ({
   setInstitutionFilterList,
   isInitialRenderInstitutionList,
   setIsInitialRenderInstitutionList,
-  isEditDeath,
-}) => {
+  isEditDeath  = false
+}) => { 
+  const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -30,7 +31,7 @@ const Institution = ({
 
   const { t } = useTranslation();
   let validation = {};
-  const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
+
   const { data: institutionType = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(
     stateId,
     "birth-death-service",
@@ -44,7 +45,7 @@ const Institution = ({
     setTenantboundary(false);
   }
   const [isInitialRender, setIsInitialRender] = useState(true);
-  // const [DeathPlaceType, selectDeathPlaceType] = useState(formData?.Institution?.DeathPlaceType);
+  // const [institution, selectinstitution] = useState(formData?.Institution?.institution);
   // const [DeathPlaceInstId, setSelectedDeathPlaceInstId] = useState(formData?.Institution?.DeathPlaceInstId);
   // const [InstitutionIdMl, setInstitutionIdMl] = useState(formData?.Institution?.DeathPlaceInstId);
 
@@ -64,8 +65,8 @@ const Institution = ({
     });
   if (isEditDeath) {
     if (formData?.InformationDeath?.institutionTypeCode != null) {
-      if (cmbinstitutionType.length > 0 && (DeathPlaceType === undefined || DeathPlaceType === "")) {
-        selectDeathPlaceType(
+      if (cmbinstitutionType.length > 0 && (institution === undefined || institution === "")) {
+        selectinstitution(
           cmbinstitutionType.filter((cmbinstitutionType) => cmbinstitutionType.code === formData?.InformationDeath?.institutionTypeCode)[0]
         );
       }
@@ -83,8 +84,8 @@ const Institution = ({
   }
   useEffect(() => {
     if (isInitialRenderInstitutionList) {
-      if (DeathPlaceType) {
-        setInstitutionFilterList(cmbInstitutionList.filter((cmbInstitutionList) => cmbInstitutionList.placeofEventCodeNew === DeathPlaceType.code));
+      if (institution) {
+        setInstitutionFilterList(cmbInstitutionList.filter((cmbInstitutionList) => cmbInstitutionList.placeofEventCodeNew === institution.code));
         setIsInitialRenderInstitutionList(false);
       }
     }
@@ -92,8 +93,8 @@ const Institution = ({
 
   const onSkip = () => onSelect();
 
-  function setselectDeathPlaceType(value) {
-    selectDeathPlaceType(value);
+  function setselectinstitution(value) {
+    selectinstitution(value);
     setSelectedDeathPlaceInstId(null);
     setInstitutionIdMl(null);
     setIsInitialRenderInstitutionList(true);
@@ -124,7 +125,7 @@ const Institution = ({
 
   const goNext = () => {
     onSelect(config.key, {
-      // DeathPlaceType,
+      // institution,
       // DeathPlaceInstId,
     });
   };
@@ -133,7 +134,7 @@ const Institution = ({
   }
   return (
     <React.Fragment>
-      {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled = {!DeathPlaceType}>   */}
+      {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled = {!institution}>   */}
       <div className="col-md-12">
         <div className="row">
           <div className="col-md-12">
@@ -154,8 +155,9 @@ const Institution = ({
                 optionKey="name"
                 isMandatory={true}
                 option={cmbinstitutionType}
-                selected={DeathPlaceType}
-                select={setselectDeathPlaceType}
+                selected={institution}
+                select={setselectinstitution}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_INSTITUTION_TYPE")}`}
               />
             </div>
@@ -171,6 +173,7 @@ const Institution = ({
                 option={InstitutionFilterList}
                 selected={DeathPlaceInstId}
                 select={selectDeathPlaceInstId}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_INSTITUTION_NAME_EN")}`}
               />
             </div>

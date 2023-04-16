@@ -660,9 +660,9 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                             disable={isDisableEdit}
                             placeholder={`${t("CS_COMMON_PIN_CODE")}`}
                             {...(validation = {
-                                pattern: "^[a-zA-Z-.`' ]*$",
+                                pattern: "^[0-9]*$",
                                 isRequired: true,
-                                type: "number",
+                                type: "text",
                                 maxLength: 6,
                                 minLength: 6,
                                 title: t("CS_COMMON_INVALID_PIN_CODE"),
