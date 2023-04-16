@@ -473,7 +473,15 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     }
   }
 
-  console.log({ placeidEn, placeidMl });
+  // useEffect(() => {
+  //   console.log({ cmbLB });
+  //   if (cmbLB?.length > 0) {
+  //     console.log("Hi");
+  //     currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
+  //     console.log({ currentLB });
+  //     setMarriageTenantid(currentLB);
+  //   }
+  // }, []);
 
   let validFlag = true;
   const goNext = () => {
@@ -568,7 +576,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   } else
     return (
       <React.Fragment>
-        <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+        {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
         {window.location.href.includes("/citizen") ? <Timeline currentStep={1} /> : null}
         {window.location.href.includes("/employee") ? <Timeline currentStep={1} /> : null}
         <FormStep
