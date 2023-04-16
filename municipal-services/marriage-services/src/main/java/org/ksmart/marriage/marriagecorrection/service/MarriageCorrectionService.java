@@ -140,7 +140,7 @@ public List<MarriageCorrectionDetails> updateMarriageCorrectionDetails(MarriageC
                                                 .applicationNo(applicationNumber)
                                                 .build());
     List<MarriageApplicationDetails> searchResult = applnRepository.getMarriageApplication(criteria,request.getRequestInfo());
-    correctionValidatorService.validateCorrectionUpdate(request, searchResult);
+    correctionValidatorService.validateCorrectionUpdate(request, searchResult); 
     if (request.getMarriageCorrectionDetails().get(0).getIsWorkflow()){
         workflowIntegrator.callCorrectionWorkFlow(request);
     }
