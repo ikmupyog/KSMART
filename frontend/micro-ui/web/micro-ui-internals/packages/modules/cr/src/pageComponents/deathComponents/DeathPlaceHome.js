@@ -29,6 +29,7 @@ const DeathPlaceHome = ({
   setDeathPlaceWardId,
   PostOfficevalues,
   setPostOfficevalues,
+  isEditDeath,
 }) => {
   const [pofilter, setPofilter] = useState(false);
   const stateId = Digit.ULBService.getStateId();
@@ -46,6 +47,7 @@ const DeathPlaceHome = ({
   const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [cmbFilterPostOffice, setCmbFilterPostOffice] = useState([]);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
   let cmbPostOffice = [];
   let cmbLB = [];
   let currentLB = [];
@@ -150,16 +152,17 @@ const DeathPlaceHome = ({
       setDeathPlaceHomelocalityMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
+
   function setSelectDeathPlaceHomehoueNameMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$/;
-    if (!e.target.value.match(pattern)) {
+    if (!(e.target.value.match(pattern))) {
       e.preventDefault();
-      setDeathPlaceHomehoueNameMl("");
-    } else {
-      setDeathPlaceHomehoueNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+      setDeathPlaceHomehoueNameMl('');
+    }
+    else {
+      setDeathPlaceHomehoueNameMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
-
   function setSelectDeathPlaceHomestreetNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
       setDeathPlaceHomestreetNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
@@ -192,7 +195,13 @@ const DeathPlaceHome = ({
       e.preventDefault();
     }
   }
-
+  
+function setCheckMalayalamInputFieldWithSplChar(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]/;
+    if (!(e.key.match(pattern))) {
+        e.preventDefault();
+    }
+}
   function setSelectDeathPlaceWardId(value) {
     setDeathPlaceWardId(value);
   }
@@ -387,15 +396,18 @@ const DeathPlaceHome = ({
                 optionKey="i18nKey"
                 name="DeathPlaceHomehoueNameMl"
                 value={DeathPlaceHomehoueNameMl}
-                onChange={setSelectDeathPlaceHomehoueNameMl}
-                onKeyPress={setCheckMalayalamInputField}
+                onKeyPress={setCheckMalayalamInputFieldWithSplChar}
+                onChange={setSelectDeathPlaceHomehoueNameMl}     
+               
+              //  disable={isDisableEdit}
                 placeholder={`${t("CR_HOUSE_NAME_ML")}`}
                 {...(validation = {
-                  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]*$",
+                  pattern: "^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$",
                   isRequired: true,
                   type: "text",
-                  title: t("CR_INVALID_LOCALITY_ML"),
-                })}
+                  title: t("CR_INVALID_HOUSE_NAME_ML"),
+              })} 
+            
               />
             </div>
           </div>

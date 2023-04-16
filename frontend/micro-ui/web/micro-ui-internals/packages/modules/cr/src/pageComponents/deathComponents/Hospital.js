@@ -6,8 +6,8 @@ const Hospital = ({
   onSelect,
   userType,
   formData,
-  DeathPlaceType,
-  selectDeathPlaceType,
+  hospitalNameEn,
+  selecthospitalNameEn,
   HospitalNameMl,
   selectHospitalNameMl,
   isEditDeath,
@@ -35,10 +35,10 @@ const Hospital = ({
       cmbhospital.push(ob);
     });
   if (isEditDeath) {
-    if (formData?.InformationDeath?.DeathPlaceType != null) {
-      if (cmbhospital.length > 0 && (DeathPlaceType === undefined || DeathPlaceType === "")) {
-        selectDeathPlaceType(cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.InformationDeath?.DeathPlaceType)[0]);
-        cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.InformationDeath?.DeathPlaceType)[0];
+    if (formData?.InformationDeath?.hospitalNameEn != null) {
+      if (cmbhospital.length > 0 && (hospitalNameEn === undefined || hospitalNameEn === "")) {
+        selecthospitalNameEn(cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.InformationDeath?.hospitalNameEn)[0]);
+        cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.InformationDeath?.hospitalNameEn)[0];
         selectHospitalNameMl(cmbhospitalMl);
       }
     }
@@ -47,15 +47,15 @@ const Hospital = ({
   useEffect(() => {
    
     // if (isInitialRender) {
-      if (formData?.InformationDeath?.DeathPlaceType) {
+      if (formData?.InformationDeath?.hospitalNameEn) {
         // selectHospitalNameMl(HospitalNameMl);
-        cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.InformationDeath?.DeathPlaceType.code);
+        cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.InformationDeath?.hospitalNameEn.code);
         selectHospitalNameMl(cmbhospitalMl[0]);
         setIsInitialRender(false);
       } else {
-        if (DeathPlaceType != null) {
-          console.log(DeathPlaceType);
-        cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === DeathPlaceType.code);
+        if (hospitalNameEn != null) {
+          console.log(hospitalNameEn);
+        cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === hospitalNameEn.code);
         selectHospitalNameMl(cmbhospitalMl[0]);
         setIsInitialRender(false);
       }
@@ -64,8 +64,8 @@ const Hospital = ({
   }, [cmbhospitalMl]);
 
   const onSkip = () => onSelect();
-  function setselectDeathPlaceType(value) {
-    selectDeathPlaceType(value);
+  function setselecthospitalNameEn(value) {
+    selecthospitalNameEn(value);
     setIsInitialRender(true);
   }
   function setselectHospitalNameMl(value) {
@@ -79,7 +79,7 @@ const Hospital = ({
     return (
       <React.Fragment>
       
-        {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!DeathPlaceType}> */}
+        {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!hospitalNameEn}> */}
         <div className="col-md-12">
           <div className="row">
             <div className="col-md-12">
@@ -100,8 +100,8 @@ const Hospital = ({
                   optionKey="hospitalName"
                   isMandatory={true}
                   option={cmbhospital}
-                  selected={DeathPlaceType}
-                  select={setselectDeathPlaceType}
+                  selected={hospitalNameEn}
+                  select={setselecthospitalNameEn}
                   disable={isDisableEdit}
                   placeholder={`${t("CR_HOSPITAL_EN")}`}
                 />

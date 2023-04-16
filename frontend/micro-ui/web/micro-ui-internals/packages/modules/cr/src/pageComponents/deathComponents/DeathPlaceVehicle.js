@@ -7,8 +7,8 @@ const DeathPlaceVehicle = ({
   onSelect,
   userType,
   formData,
-  DeathPlaceType,
-  selectDeathPlaceType,
+  vehicleType,
+  selectvehicleType,
   VehicleNumber,
   setVehicleNumber,
   VehicleFromplaceEn,
@@ -104,8 +104,8 @@ const DeathPlaceVehicle = ({
 
   const onSkip = () => onSelect();
 
-  function setselectDeathPlaceType(value) {
-    selectDeathPlaceType(value);
+  function setselectvehicleType(value) {
+    selectvehicleType(value);
   }
   // function setSelectVehicleNumber(e) {
   //   setVehicleNumber(e.target.value);
@@ -224,8 +224,8 @@ const DeathPlaceVehicle = ({
                 optionKey="name"
                 isMandatory={false}
                 option={cmbVehicle}
-                selected={DeathPlaceType}
-                select={setselectDeathPlaceType}
+                selected={vehicleType}
+                select={setselectvehicleType}
                 placeholder={`${t("CR_VEHICLE_TYPE")}`}
               />
             </div>

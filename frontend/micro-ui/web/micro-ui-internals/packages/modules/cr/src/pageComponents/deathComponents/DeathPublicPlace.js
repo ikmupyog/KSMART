@@ -7,8 +7,8 @@ const DeathPublicPlace = ({
   onSelect,
   userType,
   formData,
-  DeathPlaceType,
-  selectDeathPlaceType,
+  publicPlaceType,
+  selectpublicPlaceType,
   DeathPlaceLocalityEn,
   setDeathPlaceLocalityEn,
   DeathPlaceLocalityMl,
@@ -27,7 +27,7 @@ const DeathPublicPlace = ({
   let validation = {};
   const { data: otherplace = {}, isotherLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "OtherBithPlace");
   const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS("kl.cochin", "cochin/egov-location", "boundary-data");
-  // const [DeathPlaceType, selectDeathPlaceType] = useState(formData?.DeathPublicPlace?.DeathPlaceType? formData?.DeathPublicPlace?.DeathPlaceType : "");
+  // const [publicPlaceType, selectpublicPlaceType] = useState(formData?.DeathPublicPlace?.publicPlaceType? formData?.DeathPublicPlace?.publicPlaceType : "");
   // const [DeathPlaceLocalityEn, setDeathPlaceLocalityEn] = useState(formData?.DeathPublicPlace?.DeathPlaceLocalityEn? formData?.DeathPublicPlace?.DeathPlaceLocalityEn : "");
   // const [DeathPlaceLocalityMl, setDeathPlaceLocalityMl] = useState(formData?.DeathPublicPlace?.DeathPlaceLocalityMl? formData?.DeathPublicPlace?.DeathPlaceLocalityMl : "");
   // const [DeathPlaceStreetEn, setDeathPlaceStreetEn] = useState(formData?.DeathPublicPlace?.DeathPlaceStreetEn? formData?.DeathPublicPlace?.DeathPlaceStreetEn : "");
@@ -61,8 +61,8 @@ const DeathPublicPlace = ({
     cmbWardNoFinal.push(wardmst);
   });
   const onSkip = () => onSelect();
-  function setSelectDeathPlaceType(value) {
-    selectDeathPlaceType(value);
+  function setSelectpublicPlaceType(value) {
+    selectpublicPlaceType(value);
   }
   function setSelectDeathPlaceWardId(value) {
     setDeathPlaceWardId(value);
@@ -113,7 +113,7 @@ const DeathPublicPlace = ({
     return <Loader></Loader>;
   }
   const goNext = () => {
-    // sessionStorage.setItem("DeathPlaceType", DeathPlaceType ? DeathPlaceType.code : null);
+    // sessionStorage.setItem("publicPlaceType", publicPlaceType ? publicPlaceType.code : null);
     //   sessionStorage.setItem("DeathPlaceLocalityEn", DeathPlaceLocalityEn ? DeathPlaceLocalityEn : null);
     //   sessionStorage.setItem("DeathPlaceLocalityMl", DeathPlaceLocalityMl ? DeathPlaceLocalityMl : null);
     //   sessionStorage.setItem("DeathPlaceStreetEn", DeathPlaceStreetEn ? DeathPlaceStreetEn : null);
@@ -122,12 +122,12 @@ const DeathPublicPlace = ({
     //   sessionStorage.setItem("DeathPlaceWardId", DeathPlaceWardId ? DeathPlaceWardId : null);
 
     onSelect(config.key, {
-      // DeathPlaceType, DeathPlaceLocalityEn, DeathPlaceLocalityMl, DeathPlaceStreetEn, DeathPlaceStreetMl, GeneralRemarks,DeathPlaceWardId
+      // publicPlaceType, DeathPlaceLocalityEn, DeathPlaceLocalityMl, DeathPlaceStreetEn, DeathPlaceStreetMl, GeneralRemarks,DeathPlaceWardId
     });
   };
   return (
     <React.Fragment>
-      {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!DeathPlaceType}> */}
+      {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!publicPlaceType}> */}
       <div className="col-md-12">
         <div className="row">
           <div className="col-md-12">
@@ -148,8 +148,8 @@ const DeathPublicPlace = ({
                 t={t}
                 optionKey="name"
                 option={cmbOtherplace}
-                selected={DeathPlaceType}
-                select={setSelectDeathPlaceType}
+                selected={publicPlaceType}
+                select={setSelectpublicPlaceType}
                 placeholder={`${t("CR_PUBLIC_PLACE_TYPE")}`}
               />
             </div>

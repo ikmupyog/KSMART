@@ -14,6 +14,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
   // console.log(JSON.stringify(formData));
   // console.log(formData);
   // console.log(isEditStillBirth);
+  sessionStorage.removeItem("applicationNumber");
   const [isEditStillBirthPageComponents, setisEditStillBirthPageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditStillBirth ? isEditStillBirth : false);
   const [workFlowCode, setWorkFlowCode] = useState(formData?.StillBirthChildDetails?.workFlowCode);
@@ -158,7 +159,10 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
       (formData?.StillBirthChildDetails?.IsEditChangeScreen === false || formData?.StillBirthChildDetails?.IsEditChangeScreen === undefined)
       ? convertEpochToDate(formData?.StillBirthChildDetails?.childDOB)
       : formData?.StillBirthChildDetails?.childDOB
-  ); //formData?.StillBirthChildDetails?.childDOB
+  ); 
+  
+  
+  //formData?.StillBirthChildDetails?.childDOB
   // const [gender, selectGender] = useState(isEditStillBirth && isEditStillBirthPageComponents === false && (formData?.StillBirthChildDetails?.IsEditChangeScreen === false || formData?.StillBirthChildDetails?.IsEditChangeScreen === undefined) ? (menu.filter(menu => menu.code === formData?.StillBirthChildDetails?.gender)[0]) : formData?.StillBirthChildDetails?.gender);
   const [gender, selectGender] = useState(
     formData?.StillBirthChildDetails?.gender?.code
@@ -171,8 +175,8 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isInitialRenderPlace, setIsInitialRenderPlace] = useState(true);
   const [isInitialRenderFormData, setisInitialRenderFormData] = useState(false);
-  const [birthDateTime, setbirthDateTime] = useState(""); //formData?.StillBirthChildDetails?.birthDateTime ? formData?.StillBirthChildDetails?.birthDateTime :
-
+  //const [birthDateTime, setbirthDateTime] = useState(""); //formData?.StillBirthChildDetails?.birthDateTime ? formData?.StillBirthChildDetails?.birthDateTime :
+  onst [birthDateTime, setbirthDateTime] = useState(formData?.StillBirthChildDetails?.birthDateTime ? formData?.StillBirthChildDetails?.birthDateTime : "");
   const [birthPlace, selectBirthPlace] = useState(
     formData?.StillBirthChildDetails?.birthPlace?.code
       ? formData?.StillBirthChildDetails?.birthPlace
@@ -456,17 +460,23 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
       setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
-      // if (birthPlace) {
-      //   let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
-      //   console.log("currentWorgFlowDOB" + currentWorgFlow);
-      //   if (currentWorgFlow.length > 0) {
-      //     // console.log(currentWorgFlow[0].WorkflowCode);
-      //     setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
-      //   }
-      // }
+      if (birthPlace) {
+        let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
+        if (currentWorgFlow.length > 0) {
+          console.log(currentWorgFlow);
+          setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+          setIsPayment(currentWorgFlow[0].payment);
+          setAmount(currentWorgFlow[0].amount);
+        }
+      }
+      if (Difference_In_Days >= 365) {
+        setChildAadharHIde(true);
+      } else {
+        setChildAadharHIde(false);
+        setChildAadharNo("");
+      }
     }
   }
-
   function setSelectPregnancyDuration(e) {
     setPregnancyDuration(
       e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 2)
@@ -477,17 +487,26 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
     setMedicalAttensionSub(value);
   }
 
+  // const handleTimeChange = (value, cb) => {
+  //   if (typeof value === "string") {
+  //     cb(value);
+  //     console.log(value);
+  //     let hour = value;
+  //     let period = hour > 12 ? "PM" : "AM";
+  //     console.log(period);
+  //     setbirthDateTime(value);
+  //   }
+  // };
   const handleTimeChange = (value, cb) => {
     if (typeof value === "string") {
       cb(value);
       console.log(value);
-      let hour = value;
-      let period = hour > 12 ? "PM" : "AM";
-      console.log(period);
+      // let hour = value;
+      // let period = hour > 12 ? "PM" : "AM";
+      // console.log(period);
       setbirthDateTime(value);
     }
   };
-
   function setSelectDeliveryMethod(value) {
     setDeliveryMethod(value);
   }
