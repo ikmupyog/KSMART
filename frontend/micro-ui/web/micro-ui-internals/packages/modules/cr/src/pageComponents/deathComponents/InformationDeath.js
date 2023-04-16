@@ -313,10 +313,10 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
 
   // const [DeathPlace, setselectDeathPlace] = useState(cmbPlace?(cmbPlace.filter(cmbPlace=>cmbPlace.code === formData?.InformationDeath?.DeathPlace)[0]) :formData?.InformationDeath?.DeathPlace) ;
   //Hospital, Intitution, vehicle, Public Place {DeathPlaceType}
-  const [DeathPlaceType, selectDeathPlaceType] = useState(
-    formData?.InformationDeath?.DeathPlaceType?.code
-      ? formData?.InformationDeath?.DeathPlaceType
-      : formData?.InformationDeath?.DeathPlaceType
+  const [hospitalNameEn, selecthospitalNameEn] = useState(
+    formData?.InformationDeath?.hospitalNameEn?.code
+      ? formData?.InformationDeath?.hospitalNameEn
+      : formData?.InformationDeath?.hospitalNameEn
       ? ""
       : ""
   );
@@ -326,6 +326,9 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
       : formData?.InformationDeath?.HospitalNameMl
       ? ""
       : ""
+  );
+  const [institution, selectinstitution] = useState(
+    formData?.InformationDeath?.institution ? formData?.InformationDeath?.institution : null
   );
    const [DeathPlaceInstId, setSelectedDeathPlaceInstId] = useState(
     formData?.InformationDeath?.DeathPlaceInstId ? formData?.InformationDeath?.DeathPlaceInstId : null
@@ -361,6 +364,9 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
   );
   //Vehicle home OutsideJurisdiction{DeathPlaceWardId} Publicplace OutsideJurisdiction {GeneralRemarks} Publicplace {DeathPlaceWardId}
   //
+  const [vehicleType, selectvehicleType] = useState(
+    formData?.InformationDeath?.vehicleType ? formData?.InformationDeath?.vehicleType : null
+  );
   const [VehicleNumber, setVehicleNumber] = useState(formData?.InformationDeath?.VehicleNumber);
   const [VehicleFromplaceEn, setVehicleFromplaceEn] = useState(formData?.InformationDeath?.VehicleFromplaceEn);
   const [VehicleToPlaceEn, setVehicleToPlaceEn] = useState(formData?.InformationDeath?.VehicleToPlaceEn);
@@ -372,7 +378,9 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
   const [VehicleHospitalEn, setSelectedVehicleHospitalEn] = useState(formData?.InformationDeath?.VehicleHospitalEn);
   const [DeathPlaceWardId, setDeathPlaceWardId] = useState(formData?.InformationDeath?.DeathPlaceWardId);
   //Public Place
-
+  const [publicPlaceType, selectpublicPlaceType] = useState(
+    formData?.InformationDeath?.publicPlaceType ? formData?.InformationDeath?.publicPlaceType : null
+  );
   const [DeathPlaceLocalityEn, setDeathPlaceLocalityEn] = useState(
     formData?.InformationDeath?.DeathPlaceLocalityEn ? formData?.InformationDeath?.DeathPlaceLocalityEn : ""
   );
@@ -402,12 +410,12 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
   const [isInitialRenderDeathPlace, setIsInitialRenderDeathPlace] = useState(true);
 
   const [sexError, setsexError] = useState(formData?.InformationDeath?.sexError ? false : false);
-  const [DOBError, setDOBError] = useState(formData?.InformationDeath?.ChildDOB ? false : false);
+  const [DOBError, setDOBError] = useState(formData?.InformationDeath?.DateOfDeath ? false : false);
   const [AadharError, setAadharError] = useState(formData?.InformationDeath?.DeceasedAadharNumber ? false : false);
   const [DeceasedFirstNameEnError, setDeceasedFirstNameEnError] = useState(formData?.InformationDeath?.DeceasedFirstNameEn ? false : false);
   const [DeceasedFirstNameMlError, setDeceasedFirstNameMlError] = useState(formData?.InformationDeath?.DeceasedFirstNameMl ? false : false);
-  const [HospitalError, setHospitalError] = useState(formData?.InformationDeath?.DeathPlaceType ? false : false);
-  const [InstitutionError, setInstitutionError] = useState(formData?.InformationDeath?.DeathPlaceType ? false : false);
+  const [HospitalError, setHospitalError] = useState(formData?.InformationDeath?.hospitalNameEn ? false : false);
+  const [InstitutionError, setInstitutionError] = useState(formData?.InformationDeath?.institution ? false : false);
   const [InstitutionNameError, setInstitutionNameError] = useState(formData?.InformationDeath?.DeathPlaceInstId ? false : false);
   const [AgeError, setAgeError] = useState(formData?.InformationDeath?.Age ? false : false);
   const [AgeUnitError, setAgeUnitError] = useState(formData?.InformationDeath?.AgeUnit ? false : false);
@@ -422,7 +430,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
   const [VehicleFromplaceEnError, setVehicleFromplaceEnError] = useState(formData?.InformationDeath?.VehicleFromplaceEn ? false : false);
   const [VehicleToPlaceEnError, setVehicleToPlaceEnError] = useState(formData?.InformationDeath?.setVehicleToPlaceEn ? false : false);
   const [VehicleNumberError, setvVehicleNumberError] = useState(formData?.InformationDeath?.VehicleNumber ? false : false);
-  const [DeathPlaceTypeError, setDeathPlaceTypeError] = useState(formData?.InformationDeath?.DeathPlaceType ? false : false);
+  const [vehicleTypeError, setvehicleTypeError] = useState(formData?.InformationDeath?.vehicleType ? false : false);
   const [VehicleFirstHaltEnError, setvehicleHaltPlaceError] = useState(formData?.InformationDeath?.VehicleFirstHaltEn ? false : false);
   const [GeneralRemarksError, setGeneralRemarksError] = useState(formData?.InformationDeath?.GeneralRemarks ? false : false);
   const [VehicleHospitalEnError, setVehicleHospitalEnError] = useState(formData?.InformationDeath?.VehicleHospitalEn ? false : false);
@@ -479,12 +487,13 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         naturetype = DeathPlace.code;
         setValue(naturetype);
         if (naturetype === "HOSPITAL") {
-          <Hospital DeathPlaceType={DeathPlaceType} 
+          <Hospital 
+          hospitalNameEn={hospitalNameEn} 
           HospitalNameMl={HospitalNameMl} />;
         }
         if (naturetype === "INSTITUTION") {
           <Institution
-            DeathPlaceType={DeathPlaceType}
+          institution={institution}
             DeathPlaceInstId={DeathPlaceInstId}
             InstitutionIdMl={InstitutionIdMl}
             InstitutionFilterList={InstitutionFilterList}
@@ -494,7 +503,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         if (naturetype === "HOME") {
           <DeathPlaceHome
             DeathPlaceWardId={DeathPlaceWardId}
-            DeathPlaceType={DeathPlaceType}
+            // DeathPlaceType={DeathPlaceType}
             DeathPlaceHomePostofficeId={DeathPlaceHomePostofficeId}
             DeathPlaceHomepincode={DeathPlaceHomepincode}
             DeathPlaceHomeHoueNameEn={DeathPlaceHomeHoueNameEn}
@@ -505,10 +514,12 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
             DeathPlaceHomeStreetNameMl={DeathPlaceHomeStreetNameMl}
             PostOfficevalues={PostOfficevalues}
           />;
+
+       
         }
         if (naturetype === "VEHICLE") {
           <DeathPlaceVehicle
-            DeathPlaceType={DeathPlaceType}
+          vehicleType={vehicleType}
             VehicleNumber={VehicleNumber}
             VehicleFromplaceEn={VehicleFromplaceEn}
             VehicleToPlaceEn={VehicleToPlaceEn}
@@ -523,7 +534,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         }
         if (naturetype === "PUBLIC_PLACES") {
           <DeathPublicPlace
-            DeathPlaceType={DeathPlaceType}
+          publicPlaceType={publicPlaceType}
             DeathPlaceLocalityEn={DeathPlaceLocalityEn}
             DeathPlaceLocalityMl={DeathPlaceLocalityMl}
             DeathPlaceStreetEn={DeathPlaceStreetEn}
@@ -661,6 +672,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
           setWorkFlowAmount(currentWorgFlow[0].amount);
 
         }
+       
       }
     }
   }
@@ -795,6 +807,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
   //     }, 3000);
   //   }
   // }
+ 
   function selectDeathPlace(value) {
     setselectDeathPlace(value);
     setValue(value.code);
@@ -809,9 +822,11 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
       setIsPayment(currentWorgFlow[0].payment);
       setWorkFlowAmount(currentWorgFlow[0].amount);
     }
+    clearDeathPlace
+  }
     function clearDeathPlace(value) {
       if (value.code === "HOSPITAL") {
-        selectDeathPlaceType("");
+        selectinstitution("");
         setSelectedDeathPlaceInstId("");
         setInstitutionIdMl("");
         setDeathPlaceHomepostofficeId("");
@@ -823,7 +838,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         setDeathPlaceHomestreetNameEn("");
         setDeathPlaceHomestreetNameMl("");
         setDeathPlaceWardId("");
-        selectDeathPlaceType("");
+        selectvehicleType("");
         setVehicleNumber("");
         setVehicleFromplaceEn("");
         setVehicleToPlaceEn("");
@@ -832,14 +847,14 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         setVehicleToPlaceMl("");
         setGeneralRemarks("");
         setSelectedVehicleHospitalEn("");
-        selectDeathPlaceType("");
+        selectpublicPlaceType("");
         setDeathPlaceLocalityEn("");
         setDeathPlaceLocalityMl("");
         setDeathPlaceStreetEn("");
         setDeathPlaceStreetMl("");
         setGeneralRemarks("");
       }else if (value.code === "INSTITUTION") {
-        selectDeathPlaceType("");
+        selecthospitalNameEn("");
         selectHospitalNameMl("");
         setDeathPlaceHomepostofficeId("");
         setDeathPlaceHomepincode(null);
@@ -850,7 +865,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         setDeathPlaceHomestreetNameEn("");
         setDeathPlaceHomestreetNameMl("");
         setDeathPlaceWardId("");
-        selectDeathPlaceType("");
+        selectvehicleType("");
         setVehicleNumber("");
         setVehicleFromplaceEn("");
         setVehicleToPlaceEn("");
@@ -859,19 +874,19 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         setVehicleToPlaceMl("");
         setGeneralRemarks("");
         setSelectedVehicleHospitalEn("");
-        selectDeathPlaceType("");
+        selectpublicPlaceType("");
         setDeathPlaceLocalityEn("");
         setDeathPlaceLocalityMl("");
         setDeathPlaceStreetEn("");
         setDeathPlaceStreetMl("");
         setGeneralRemarks("");
       } else if (value.code === "HOME") {
-        selectDeathPlaceType("");
+        selecthospitalNameEn("");
         selectHospitalNameMl("");
-        selectDeathPlaceType("");
+        selectinstitution("");
         setSelectedDeathPlaceInstId("");
         setInstitutionIdMl("");
-        selectDeathPlaceType("");
+        selectvehicleType("");
         setVehicleNumber("");
         setVehicleFromplaceEn("");
         setVehicleToPlaceEn("");
@@ -880,16 +895,16 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         setVehicleToPlaceMl("");
         setGeneralRemarks("");
         setSelectedVehicleHospitalEn("");
-        selectDeathPlaceType("");
+        selectpublicPlaceType("");
         setDeathPlaceLocalityEn("");
         setDeathPlaceLocalityMl("");
         setDeathPlaceStreetEn("");
         setDeathPlaceStreetMl("");
         setGeneralRemarks("");
       }else if (value.code === "VEHICLE") {
-        selectDeathPlaceType("");
+        selecthospitalNameEn("");
         selectHospitalNameMl("");
-        selectDeathPlaceType("");
+        selectinstitution("");
         setSelectedDeathPlaceInstId("");
         setInstitutionIdMl("");
         setDeathPlaceHomepostofficeId("");
@@ -901,16 +916,16 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         setDeathPlaceHomestreetNameEn("");
         setDeathPlaceHomestreetNameMl("");
         setDeathPlaceWardId("");
-        selectDeathPlaceType("");
+        selectpublicPlaceType("");
         setDeathPlaceLocalityEn("");
         setDeathPlaceLocalityMl("");
         setDeathPlaceStreetEn("");
         setDeathPlaceStreetMl("");
         setGeneralRemarks("");
       } else if (value.code === "PUBLIC_PLACES") {
-        selectDeathPlaceType("");
+        selecthospitalNameEn("");
         selectHospitalNameMl("");
-        selectDeathPlaceType("");
+        selectinstitution("");
         setSelectedDeathPlaceInstId("");
         setInstitutionIdMl("");
         setDeathPlaceHomepostofficeId("");
@@ -922,7 +937,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         setDeathPlaceHomestreetNameEn("");
         setDeathPlaceHomestreetNameMl("");
         setDeathPlaceWardId("");
-        selectDeathPlaceType("");
+        selectvehicleType("");
         setVehicleNumber("");
         setVehicleFromplaceEn("");
         setVehicleToPlaceEn("");
@@ -932,7 +947,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         setGeneralRemarks("");
         setSelectedVehicleHospitalEn("");
       }
-    }
+    
     
   }
  
@@ -1080,7 +1095,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
     // }
 
     if (DeathPlace.code == "HOSPITAL") {
-      if (DeathPlaceType == null || HospitalNameMl === null) {
+      if (hospitalNameEn == null || HospitalNameMl === null) {
         setHospitalError(true);
         validFlag = false;
         setToast(true);
@@ -1088,14 +1103,14 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
           setToast(false);
         }, 2000);
       } else {
-        DeathPlaceTypecode = DeathPlaceType.code;
+        DeathPlaceTypecode = hospitalNameEn.code;
         setHospitalError(false);
       }   
 
     
       
     } else if (DeathPlace.code === "INSTITUTION") {
-      if (DeathPlaceType == null) {
+      if (institution == null) {
         setInstitutionError(true);
         validFlag = false;
         setToast(true);
@@ -1103,7 +1118,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
           setToast(false);
         }, 2000);
       } else {
-        DeathPlaceTypecode = DeathPlaceType.code;
+        DeathPlaceTypecode = institution.code;
         setInstitutionError(false);
         if (DeathPlaceInstId === null) {
           setInstitutionNameError(true);
@@ -1179,15 +1194,15 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
   }
   else if (DeathPlace.code === "VEHICLE") {   
 
-    if (DeathPlaceType == null || DeathPlaceType == "" || DeathPlaceType == undefined) {
+    if (vehicleType == null || vehicleType == "" || vehicleType == undefined) {
       validFlag = false;
-      setDeathPlaceTypeError(true);
+      setvehicleTypeError(true);
       setToast(true);
       setTimeout(() => {
         setToast(false);
       }, 2000);
     } else {
-      setDeathPlaceTypeError(false);
+      setvehicleTypeError(false);
     }
     if (VehicleNumber == null || VehicleNumber == "" || VehicleNumber == undefined) {
       validFlag = false;
@@ -1407,9 +1422,10 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         workFlowCode,
         workFlowAmount,
         isPayment,
-        DeathPlaceType,
+        hospitalNameEn,
         HospitalNameMl,
         DeathPlaceTypecode,
+        institution,
         DeathPlaceInstId,
         InstitutionIdMl,
         institutionNameCode,
@@ -1421,7 +1437,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         DeathPlaceHomeStreetNameMl,
         DeathPlaceHomePostofficeId,
         DeathPlaceHomepincode,
-        DeathPlaceType,
+        vehicleType,
         VehicleNumber,
         VehicleFromplaceEn,
         VehicleToPlaceEn,
@@ -1432,7 +1448,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
         VehicleHospitalEn,
         GeneralRemarks,
         DeathPlaceWardId,
-        DeathPlaceType,
+        publicPlaceType,
         DeathPlaceLocalityEn,
         DeathPlaceLocalityMl,
         DeathPlaceStreetEn,
@@ -1490,23 +1506,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
       }
     }
 
-    // if (formData?.ChildDetails?.medicalAttensionSub != null) {
-    //   if (cmbAttDeliverySub.length > 0 && (medicalAttensionSub === undefined || medicalAttensionSub === "")) {
-    //     setMedicalAttensionSub(cmbAttDeliverySub.filter(cmbAttDeliverySub => cmbAttDeliverySub.code === formData?.ChildDetails?.medicalAttensionSub)[0]);
-    //   }
-    // }
-    // if (formData?.ChildDetails?.pregnancyDuration != null) {
-    //   console.log("pregnancyDuration" + pregnancyDuration);
-    //   if (cmbPregWeek.length > 0 && (pregnancyDuration === undefined || pregnancyDuration === "")) {
-    //     setPregnancyDuration(cmbPregWeek.filter(cmbPregWeek => parseInt(cmbPregWeek.code) === formData?.ChildDetails?.pregnancyDuration)[0]);
-    //   }
-    // }
-    // if (formData?.ChildDetails?.deliveryMethods != null) {
-    //   if (cmbDeliveryMethod.length > 0 && (deliveryMethods === undefined || deliveryMethods === "")) {
-    //     // console.log(cmbDeliveryMethod.filter(cmbDeliveryMethod => parseInt(cmbDeliveryMethod.code) === formData?.ChildDetails?.deliveryMethods)[0]);
-    //     setDeliveryMethod(cmbDeliveryMethod.filter(cmbDeliveryMethod => cmbDeliveryMethod.code === formData?.ChildDetails?.deliveryMethods)[0]);
-    //   }
-    // }
+  
   }
   if (
     isWorkFlowDetailsLoading ||
@@ -1531,12 +1531,12 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
           onSelect={goNext}
           onSkip={onSkip}
          isDisabled={!DeathPlace
-          || (value === "HOSPITAL" ? (!DeathPlaceType || !HospitalNameMl) : false)
-          || (value === "INSTITUTION" ? (!DeathPlaceType || !DeathPlaceInstId || !InstitutionIdMl) : false)
+          || (value === "HOSPITAL" ? (!hospitalNameEn || !HospitalNameMl) : false)
+          || (value === "INSTITUTION" ? (!institution || !DeathPlaceInstId || !InstitutionIdMl) : false)
           || (value === "HOME" ? (!DeathPlaceWardId || !DeathPlaceHomePostofficeId || DeathPlaceHomepincode === "" || DeathPlaceHomeLocalityEn == ""
           || DeathPlaceHomeHoueNameEn == "" || DeathPlaceHomeLocalityMl == "" || DeathPlaceHomehoueNameMl == "") : false)
-          || (value === "PUBLIC_PLACES" ? (!DeathPlaceType || !DeathPlaceWardId || DeathPlaceLocalityEn === "" ) : false)
-          || (value === "VEHICLE" ? (!DeathPlaceType || VehicleNumber === "" || VehicleFirstHaltEn === ""
+          || (value === "PUBLIC_PLACES" ? (!publicPlaceType || !DeathPlaceWardId || DeathPlaceLocalityEn === "" ) : false)
+          || (value === "VEHICLE" ? (!vehicleType || VehicleNumber === "" || VehicleFirstHaltEn === ""
              || !DeathPlaceWardId || GeneralRemarks === "") : false) || 
             (value === "OUTSIDE_JURISDICTION" ? (!DeathPlaceDistrict || DeathPlaceCity == ""|| PlaceOfBurialEn == "" || PlaceOfBurialMl == "" || !DeathPlaceWardId ) : false)
           || DeceasedFirstNameEn == "" || DeceasedFirstNameMl == "" || !AgeUnit || !Age || !DeceasedGender || !Nationality || !Religion
@@ -1708,8 +1708,8 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
               <Hospital
                 formData={formData}
                 isEditDeath={isEditDeath}
-                selectDeathPlaceType={selectDeathPlaceType}
-                DeathPlaceType={DeathPlaceType}
+                selecthospitalNameEn={selecthospitalNameEn}
+                hospitalNameEn={hospitalNameEn}
                 HospitalNameMl={HospitalNameMl}
                 selectHospitalNameMl={selectHospitalNameMl}
               />
@@ -1719,8 +1719,8 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
                 <Institution
                   formData={formData}
                   isEditDeath={isEditDeath}
-                  selectDeathPlaceType={selectDeathPlaceType}
-                  DeathPlaceType={DeathPlaceType}
+                  selectinstitution={selectinstitution}
+                  institution={institution}
                   DeathPlaceInstId={DeathPlaceInstId}
                   setSelectedDeathPlaceInstId={setSelectedDeathPlaceInstId}
                   InstitutionIdMl={InstitutionIdMl}
@@ -1765,8 +1765,8 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
                 <DeathPlaceVehicle
                   formData={formData}
                   isEditDeath={isEditDeath}
-                  DeathPlaceType={DeathPlaceType}
-                  selectDeathPlaceType={selectDeathPlaceType}
+                  vehicleType={vehicleType}
+                  selectvehicleType={selectvehicleType}
                   VehicleNumber={VehicleNumber}
                   setVehicleNumber={setVehicleNumber}
                   VehicleFromplaceEn={VehicleFromplaceEn}
@@ -1795,8 +1795,8 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
                 <DeathPublicPlace
                   formData={formData}
                   isEditDeath={isEditDeath}
-                  DeathPlaceType={DeathPlaceType}
-                  selectDeathPlaceType={selectDeathPlaceType}
+                  publicPlaceType={publicPlaceType}
+                  selectpublicPlaceType={selectpublicPlaceType}
                   DeathPlaceLocalityEn={DeathPlaceLocalityEn}
                   setDeathPlaceLocalityEn={setDeathPlaceLocalityEn}
                   DeathPlaceLocalityMl={DeathPlaceLocalityMl}

@@ -29,6 +29,7 @@ const DeathPlaceVehicle = ({
   setVehicleFromplaceMl,
   VehicleToPlaceMl,
   setVehicleToPlaceMl,
+  isEditDeath = false
 }) => {
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
@@ -44,6 +45,7 @@ const DeathPlaceVehicle = ({
   const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "boundary-data");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [tenantboundary, setTenantboundary] = useState(false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
   if (tenantboundary) {
     queryClient.removeQueries("CR_HOSPITALMASTER");
     queryClient.removeQueries("TL_ZONAL_OFFICE");
@@ -101,6 +103,26 @@ const DeathPlaceVehicle = ({
       }
     }
   }, [localbodies, isInitialRender]);
+
+  if (isEditDeath) {
+    if (formData?.InformationDeath?.vehicleType != null) {
+      if (cmbVehicle.length > 0 && (vehicleType === undefined || vehicleType === "")) {
+        selectvehicleType(cmbVehicle.filter(cmbVehicle => cmbVehicle.code === formData?.InformationDeath?.vehicleType)[0]);
+      }
+    }
+    if (formData?.InformationDeath?.VehicleHospitalEn != null) {
+      if (cmbhospital.length > 0 && (VehicleHospitalEn === undefined || VehicleHospitalEn === "")) {
+        setSelectedVehicleHospitalEn(cmbhospital.filter(cmbhospital => cmbhospital.code === formData?.InformationDeath?.VehicleHospitalEn)[0]);
+      }
+    }
+    if (formData?.InformationDeath?.DeathPlaceWardId != null) {
+      if (cmbWardNo.length > 0 && (DeathPlaceWardId === undefined || DeathPlaceWardId === "")) {
+        setDeathPlaceWardId(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.InformationDeath?.DeathPlaceWardId)[0]);
+      }
+    }
+  }
+
+
 
   const onSkip = () => onSelect();
 
@@ -196,7 +218,7 @@ const DeathPlaceVehicle = ({
   }
 
   const goNext = () => {
-    onSelect(config.key, {});
+   
   };
   if (isLoad || isLoading || islocalbodiesLoading || isWardLoaded) {
     return <Loader></Loader>;
@@ -226,6 +248,7 @@ const DeathPlaceVehicle = ({
                 option={cmbVehicle}
                 selected={vehicleType}
                 select={setselectvehicleType}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_VEHICLE_TYPE")}`}
               />
             </div>
@@ -242,6 +265,7 @@ const DeathPlaceVehicle = ({
                 name="VehicleNumber"
                 value={VehicleNumber}
                 onChange={setSelectVehicleNumber}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_VEHICLE_REGISTRATION_NO")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_REGISTRATION_NO") })}
               />
@@ -282,6 +306,7 @@ const DeathPlaceVehicle = ({
                 name="VehicleFromplaceEn"
                 value={VehicleFromplaceEn}
                 onChange={setSelectVehicleFromplaceEn}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_VEHICLE_FROM_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_VEHICLE_FROM") })}
               />
@@ -296,6 +321,7 @@ const DeathPlaceVehicle = ({
                 name="VehicleToPlaceEn"
                 value={VehicleToPlaceEn}
                 onChange={setSelectVehicleToPlaceEn}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_VEHICLE_TO_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_VEHICLE_TO") })}
               />
@@ -310,6 +336,7 @@ const DeathPlaceVehicle = ({
                 name="VehicleFromplaceMl"
                 value={VehicleFromplaceMl}
                 onChange={setSelectVehicleFromplaceMl}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_VEHICLE_FROM_ML")}`}
                 {...(validation = {
                   pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -329,6 +356,7 @@ const DeathPlaceVehicle = ({
                 name="VehicleToPlaceMl"
                 value={VehicleToPlaceMl}
                 onChange={setSelectVehicleToPlaceMl}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_VEHICLE_TO_ML")}`}
                 {...(validation = {
                   pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -352,6 +380,7 @@ const DeathPlaceVehicle = ({
                 option={cmbhospital}
                 selected={VehicleHospitalEn}
                 select={selectVehicleHospitalEn}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_ADMITTED_HOSPITAL_EN")}`}
               />
             </div>
@@ -366,6 +395,7 @@ const DeathPlaceVehicle = ({
                 option={cmbWardNoFinal}
                 selected={DeathPlaceWardId}
                 select={setSelectDeathPlaceWardId}
+                disable={isDisableEdit}
                 {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
               />
             </div>
@@ -384,6 +414,7 @@ const DeathPlaceVehicle = ({
                 value={GeneralRemarks}
                 onChange={setSelectGeneralRemarks}
                 placeholder={`${t("CR_OTHER_DETAILS_EN")}`}
+                disable={isDisableEdit}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_OTHER_DETAILS_EN") })}
               />
             </div>

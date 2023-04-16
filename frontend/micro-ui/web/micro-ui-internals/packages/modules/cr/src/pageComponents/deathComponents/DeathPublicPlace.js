@@ -21,7 +21,9 @@ const DeathPublicPlace = ({
   setGeneralRemarks,
   DeathPlaceWardId,
   setDeathPlaceWardId,
+  isEditDeath = false
 }) => {
+  const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -60,6 +62,21 @@ const DeathPublicPlace = ({
     wardmst.namecmb = wardmst.wardno + " ( " + wardmst.name + " )";
     cmbWardNoFinal.push(wardmst);
   });
+
+  if (isEditDeath) {
+    if (formData?.InformationDeath?.publicPlaceType != null) {
+      if (cmbOtherplace.length > 0 && (publicPlaceType === undefined || publicPlaceType === "")) {
+        selectpublicPlaceType(cmbOtherplace.filter(cmbOtherplace => cmbOtherplace.code === formData?.InformationDeath?.publicPlaceType)[0]);
+      }
+    }
+    if (formData?.InformationDeath?.DeathPlaceWardId != null) {
+      if (cmbWardNo.length > 0 && (DeathPlaceWardId === undefined || DeathPlaceWardId === "")) {
+        setDeathPlaceWardId(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.InformationDeath?.DeathPlaceWardId)[0]);
+      }
+    }
+  }
+
+
   const onSkip = () => onSelect();
   function setSelectpublicPlaceType(value) {
     selectpublicPlaceType(value);
@@ -150,6 +167,7 @@ const DeathPublicPlace = ({
                 option={cmbOtherplace}
                 selected={publicPlaceType}
                 select={setSelectpublicPlaceType}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_PUBLIC_PLACE_TYPE")}`}
               />
             </div>
@@ -164,6 +182,7 @@ const DeathPublicPlace = ({
                 option={cmbWardNoFinal}
                 selected={DeathPlaceWardId}
                 select={setSelectDeathPlaceWardId}
+                disable={isDisableEdit}
                 placeholder={`${t("CS_COMMON_WARD")}`}
                 {...(validation = { isRequired: true, title: t("CS_COMMON_INVALID_WARD") })}
               />
@@ -185,6 +204,7 @@ const DeathPublicPlace = ({
                 name="DeathPlaceLocalityEn"
                 value={DeathPlaceLocalityEn}
                 onChange={setSelectDeathPlaceLocalityEn}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_LOCALITY_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
               />
@@ -199,6 +219,7 @@ const DeathPublicPlace = ({
                 name="DeathPlaceStreetEn"
                 value={DeathPlaceStreetEn}
                 onChange={setSelectDeathPlaceStreetEn}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_STREET_NAME_EN")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
               />
@@ -215,6 +236,7 @@ const DeathPublicPlace = ({
                 name="DeathPlaceLocalityMl"
                 value={DeathPlaceLocalityMl}
                 onChange={setSelectDeathPlaceLocalityMl}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_LOCALITY_ML")}`}
                 {...(validation = {
                   pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -233,6 +255,7 @@ const DeathPublicPlace = ({
                 name="DeathPlaceStreetMl"
                 value={DeathPlaceStreetMl}
                 onChange={setSelectDeathPlaceStreetMl}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_STREET_NAME_ML")}`}
                 {...(validation = {
                   pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -255,6 +278,7 @@ const DeathPublicPlace = ({
                 name="GeneralRemarks"
                 value={GeneralRemarks}
                 onChange={setSelectGeneralRemarks}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_DESCRIPTION")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_DESCRIPTION") })}
               />

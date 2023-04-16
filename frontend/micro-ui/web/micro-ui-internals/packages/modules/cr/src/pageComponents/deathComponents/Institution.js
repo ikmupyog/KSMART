@@ -19,8 +19,9 @@ const Institution = ({
   setInstitutionFilterList,
   isInitialRenderInstitutionList,
   setIsInitialRenderInstitutionList,
-  isEditDeath,
-}) => {
+  isEditDeath  = false
+}) => { 
+  const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -30,7 +31,7 @@ const Institution = ({
 
   const { t } = useTranslation();
   let validation = {};
-  const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
+
   const { data: institutionType = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(
     stateId,
     "birth-death-service",
@@ -156,6 +157,7 @@ const Institution = ({
                 option={cmbinstitutionType}
                 selected={institution}
                 select={setselectinstitution}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_INSTITUTION_TYPE")}`}
               />
             </div>
@@ -171,6 +173,7 @@ const Institution = ({
                 option={InstitutionFilterList}
                 selected={DeathPlaceInstId}
                 select={selectDeathPlaceInstId}
+                disable={isDisableEdit}
                 placeholder={`${t("CR_INSTITUTION_NAME_EN")}`}
               />
             </div>

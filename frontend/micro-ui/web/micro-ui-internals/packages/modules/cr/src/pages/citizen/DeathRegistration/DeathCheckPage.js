@@ -142,7 +142,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                      : {t(InformationDeath.DeathPlaceType.hospitalNamelocal) + "/" + InformationDeath.DeathPlaceType.hospitalName}
+                      : {t(InformationDeath.hospitalNameEn.hospitalNamelocal) + "/" + InformationDeath.hospitalNameEn.hospitalName}
                     </CardText>
                   </div>
                 </div>
@@ -155,11 +155,11 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                       :{" "}
-                      {t(InformationDeath.DeathPlaceType.namelocal) +
+                      {t(InformationDeath.institution.namelocal) +
                         "," +
                         InformationDeath.DeathPlaceInstId.institutionNamelocal +
                         "/" +
-                        InformationDeath.DeathPlaceType.code +
+                        InformationDeath.institution.code +
                         "," +
                         InformationDeath.DeathPlaceInstId.institutionName}
                     </CardText>
