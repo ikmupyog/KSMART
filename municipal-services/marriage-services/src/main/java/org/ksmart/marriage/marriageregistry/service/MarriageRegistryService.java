@@ -138,8 +138,9 @@ public class MarriageRegistryService {
 
             return marriageCertificate;
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             e.printStackTrace();
-            throw new CustomException("DOWNLOAD_ERROR", "Error in Downloading Certificate");
+            throw new CustomException("DOWNLOAD_ERROR", "Error in Downloading Certificate"+e.getMessage());
         }
         }else if (marriageRegistryDetailsList == null && marriageRegistryDetailsList.isEmpty()){
             throw new CustomException("DOWNLOAD_ERROR", "Marriage registry not found");
