@@ -405,15 +405,15 @@ if (deathAddressInfo.getPermtaddressStateName()
                                                 deathAddressInfo.getPermntInKeralaAdrPostOffice()
                                                 + " is invalid");
         }
-        if (StringUtils.isEmpty(deathAddressInfo
-                        .getPermntInKeralaAdrPincode())) {
+        // if (StringUtils.isEmpty(deathAddressInfo
+        //                 .getPermntInKeralaAdrPincode())) {
 
-                throw new CustomException(
-                                " PERMANENT ADDRESS INSIDE KERALA: PINCODE INVALID ",
-                                "The Pincode " +
-                                                deathAddressInfo.getPermntInKeralaAdrPincode()
-                                                + " is invalid");
-        }
+        //         throw new CustomException(
+        //                         " PERMANENT ADDRESS INSIDE KERALA: PINCODE INVALID ",
+        //                         "The Pincode " +
+        //                                         deathAddressInfo.getPermntInKeralaAdrPincode()
+        //                                         + " is invalid");
+        // }
         // if (StringUtils.isEmpty(deathAddressInfo
         //                 .getPermntInKeralaAdrLocalityNameEn())) {
         //         throw new CustomException(
@@ -673,16 +673,16 @@ if (deathAddressInfo.getPresentaddressStateName()
                                                 deathAddressInfo.getPresentInsideKeralaPostOffice()
                                                 + " is invalid");
         }
-        if (StringUtils.isEmpty(deathAddressInfo
-                    .getPresentInsideKeralaPincode())) {     
+        // if (StringUtils.isEmpty(deathAddressInfo
+        //             .getPresentInsideKeralaPincode())) {     
                
-                    throw new CustomException(
-                         " PRESENT ADDRESS INSIDE KERALA: PINCODE INVALID ",
+        //             throw new CustomException(
+        //                  " PRESENT ADDRESS INSIDE KERALA: PINCODE INVALID ",
         
-                            "The Pincode " +
-                                deathAddressInfo.getPresentInsideKeralaPincode()
-                                + " is invalid");
-        }
+        //                     "The Pincode " +
+        //                         deathAddressInfo.getPresentInsideKeralaPincode()
+        //                         + " is invalid");
+        // }
 
         // if (StringUtils.isEmpty(deathAddressInfo
         //                 .getPresentInsideKeralaLocalityNameEn())) {
