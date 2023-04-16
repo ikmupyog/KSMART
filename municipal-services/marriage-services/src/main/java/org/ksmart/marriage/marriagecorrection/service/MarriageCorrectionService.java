@@ -17,6 +17,7 @@ import org.ksmart.marriage.marriagecorrection.mapper.RegistryToApplicationMapper
 import org.ksmart.marriage.marriagecorrection.web.model.MarriageCorrectionDetails;
 import org.ksmart.marriage.marriagecorrection.web.model.MarriageCorrectionRequest;
 import org.ksmart.marriage.marriagecorrection.repository.MarriageCorrectionRepository;
+import org.ksmart.marriage.marriagecorrection.validator.MarriageCorrectionValidator;
 import org.ksmart.marriage.marriageregistry.repository.MarriageRegistryRepository;
 import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryDetails;
 import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryRequest;
@@ -50,6 +51,7 @@ public class MarriageCorrectionService {
     private final MarriageApplicationRepository applnRepository;
     private final MarriageApplicationValidator applnvalidatorService;
     private final WorkflowIntegrator workflowIntegrator;
+    private final MarriageCorrectionValidator correctionValidatorService ;
 
     public MarriageCorrectionService(MarriageCorrectionRepository correctionRepository, MarriageRegistryRepository registryRepository, 
                                                 MarriageCorrectionEnrichment marriageCorrectionEnrichment, org.ksmart.marriage.marriagecorrection.mapper.RegistryToApplicationMapper registryToApplicationMapper, 
@@ -59,7 +61,8 @@ public class MarriageCorrectionService {
                                                 CorrectionApplicationToRegistryMapper correctionApplicationToRegistryMapper,
                                                  MarriageApplicationRepository applnRepository,
                                                  MarriageApplicationValidator applnvalidatorService,
-                                                 WorkflowIntegrator workflowIntegrator) {
+                                                 WorkflowIntegrator workflowIntegrator,
+                                                 MarriageCorrectionValidator correctionValidatorService) {
         this.correctionRepository = correctionRepository;
         this.registryRepository = registryRepository;
         this.marriageCorrectionEnrichment = marriageCorrectionEnrichment;
@@ -73,6 +76,7 @@ public class MarriageCorrectionService {
         this.applnRepository = applnRepository;
         this.applnvalidatorService = applnvalidatorService;
         this.workflowIntegrator = workflowIntegrator;
+        this.correctionValidatorService = correctionValidatorService;
     }
 //req for testing
     public List<MarriageCorrectionDetails> createCorrection(MarriageCorrectionRequest request) {
@@ -131,13 +135,12 @@ public class MarriageCorrectionService {
 //Jasmine 15.04.2023
 public List<MarriageCorrectionDetails> updateMarriageCorrectionDetails(MarriageCorrectionRequest request) {
 
-   
     String applicationNumber = request.getMarriageCorrectionDetails().get(0).getApplicationNo();
     MarriageApplicationSearchCriteria criteria =(MarriageApplicationSearchCriteria.builder()
                                                 .applicationNo(applicationNumber)
                                                 .build());
     List<MarriageApplicationDetails> searchResult = applnRepository.getMarriageApplication(criteria,request.getRequestInfo());
-
+    correctionValidatorService.validateCorrectionUpdate(request, searchResult);
     if (request.getMarriageCorrectionDetails().get(0).getIsWorkflow()){
         workflowIntegrator.callCorrectionWorkFlow(request);
     }

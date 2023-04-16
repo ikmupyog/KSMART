@@ -10,12 +10,8 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
-import org.ksmart.marriage.marriageapplication.web.model.marriage.BrideAddressDetails;
-import org.ksmart.marriage.marriageapplication.web.model.marriage.BrideDetails;
-import org.ksmart.marriage.marriageapplication.web.model.marriage.GroomAddressDetails;
-import org.ksmart.marriage.marriageapplication.web.model.marriage.GroomDetails;
-import org.ksmart.marriage.marriageapplication.web.model.marriage.WitnessDetails;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.WorkFlowCheck;
+import org.ksmart.marriage.marriagecorrection.web.model.MarriageCorrectionRequest;
 import org.ksmart.marriage.utils.MarriageConstants;
 import org.springframework.stereotype.Component;
 
@@ -31,9 +27,9 @@ import static org.ksmart.marriage.marriageapplication.web.enums.ErrorCodes.MARRI
 
 @Component
 public class MarriageCorrectionValidator {
-
-        public void validateUpdate(MarriageDetailsRequest request, List<MarriageApplicationDetails> searchResult) {
-                List<MarriageApplicationDetails> marriageDetails = request.getMarriageDetails();
+//
+        public void validateCorrectionUpdate(MarriageCorrectionRequest request, List<MarriageApplicationDetails> searchResult) {
+                List<MarriageApplicationDetails> marriageDetails = searchResult;
 
                 if (CollectionUtils.isEmpty(marriageDetails)) {
                         throw new CustomException(MARRIAGE_DETAILS_REQUIRED.getCode(),

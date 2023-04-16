@@ -505,6 +505,44 @@ serviceMaps:
             - jsonPath: $.CorrectionFieldValue.*.auditDetails.lastModifiedBy
 
 
+    - version: 1.0
+      description: Persists update marriage correction details in marriage tables
+      fromTopic: correction-update-marriage-application-topic
+      isTransaction: true
+      queryMaps:
+
+        - query: INSERT INTO public.eg_marriage_details_audit SELECT * FROM  public.eg_marriage_details WHERE id =? and  tenantid=? AND applicationnumber = ? ;
+
+          basePath: MarriageDetails.*
+          jsonMaps:
+            - jsonPath: $.MarriageDetails.*.id
+
+            - jsonPath: $.MarriageDetails.*.marriageTenantid
+            
+            - jsonPath: $.MarriageDetails.*.applicationNumber
+
+        - query:  UPDATE public.eg_marriage_details SET businessservice = ? ,action = ? , status = ? ,lastmodifiedtime = ? ,lastmodifiedby= ?
+            WHERE id = ? AND tenantid = ? AND  applicationnumber = ? 
+
+          basePath: MarriageDetails.*
+          jsonMaps:
+
+            - jsonPath: $.MarriageDetails.*.businessService
+
+            - jsonPath: $.MarriageDetails.*.action
+
+            - jsonPath: $.MarriageDetails.*.status
+
+            - jsonPath: $.MarriageDetails.*.auditDetails.lastModifiedTime
+
+            - jsonPath: $.MarriageDetails.*.auditDetails.lastModifiedBy
+
+            - jsonPath: $.MarriageDetails.*.id
+
+            - jsonPath: $.MarriageDetails.*.marriageTenantid
+
+            - jsonPath: $.MarriageDetails.*.applicationNumber
+
 #    - version: 1.0
 #      description: Persists save marriage details in marriage  table
 #      fromTopic: update-marriage-application-topic
