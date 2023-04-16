@@ -62,15 +62,11 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
     },
   ];
 
-  function handleUpload(ids) {
-    setUploadedImagesIds(ids);
-  }
-
   function setSelectAgeDocument(value) {
     setAgeDocument(value);
   }
 
-  function selectfile(e) {
+  function select(e) {
     setFile(e.target.files[0]);
   }
 
@@ -152,54 +148,198 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
               </div>
               <div className="row">
                 <div className="col-md-6">
-                  {groomResidentship &&
-                    residentshipDocuments[groomResidentship].map((document) => {
-                      return (
-                        <div className="col-md-12">
-                          <CardLabel>
-                            {`${t(`CR_UPLOAD_YOUR_${document}`)}`}
-                            <span className="mandatorycss">*</span>
-                          </CardLabel>
-                          {/* {!selectedDocs.includes(item.DocumentId) && ( */}
-                          <UploadFile
-                            id={"marriage-docs"}
-                            extraStyleName={"propertyCreate"}
-                            accept=".jpg,.png,.pdf"
-                            onUpload={selectfile}
-                            onDelete={() => {
-                              setUploadedFile(null);
-                            }}
-                          />
-                        </div>
-                      );
-                    })}
+                  {groomResidentship === "INDIAN" && (
+                    <div className="col-md-12">
+                      <CardLabel>
+                        {`${t(`CR_UPLOAD_YOUR_AADHAR`)}`}
+                        <span className="mandatorycss">*</span>
+                      </CardLabel>
+                      {/* {!selectedDocs.includes(item.DocumentId) && ( */}
+                      <UploadFile
+                        id={"marriage-docs"}
+                        extraStyleName={"propertyCreate"}
+                        accept=".jpg,.png,.pdf"
+                        onUpload={selectAadhar}
+                        onDelete={() => {
+                          setUploadedFile(null);
+                        }}
+                        message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                      />
+                    </div>
+                  )}
+                  {groomResidentship === "NRI" && (
+                    <React.Fragment>
+                      <div className="col-md-12">
+                        <CardLabel>
+                          {`${t(`CR_UPLOAD_YOUR_PASSPORT`)}`}
+                          <span className="mandatorycss">*</span>
+                        </CardLabel>
+                        {/* {!selectedDocs.includes(item.DocumentId) && ( */}
+                        <UploadFile
+                          id={"marriage-docs"}
+                          extraStyleName={"propertyCreate"}
+                          accept=".jpg,.png,.pdf"
+                          onUpload={selectAadhar}
+                          onDelete={() => {
+                            setUploadedFile(null);
+                          }}
+                          message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                        />
+                      </div>
+                      <div className="col-md-12">
+                        <CardLabel>
+                          {`${t(`CR_UPLOAD_YOUR_SOCIAL_SECURITY_DOCUMENT`)}`}
+                          <span className="mandatorycss">*</span>
+                        </CardLabel>
+                        {/* {!selectedDocs.includes(item.DocumentId) && ( */}
+                        <UploadFile
+                          id={"marriage-docs"}
+                          extraStyleName={"propertyCreate"}
+                          accept=".jpg,.png,.pdf"
+                          onUpload={selectAadhar}
+                          onDelete={() => {
+                            setUploadedFile(null);
+                          }}
+                          message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                        />
+                      </div>
+                    </React.Fragment>
+                  )}
+                  {groomResidentship === "FOREIGN" && (
+                    <React.Fragment>
+                      <div className="col-md-12">
+                        <CardLabel>
+                          {`${t(`CR_UPLOAD_YOUR_PASSPORT`)}`}
+                          <span className="mandatorycss">*</span>
+                        </CardLabel>
+                        {/* {!selectedDocs.includes(item.DocumentId) && ( */}
+                        <UploadFile
+                          id={"marriage-docs"}
+                          extraStyleName={"propertyCreate"}
+                          accept=".jpg,.png,.pdf"
+                          onUpload={selectAadhar}
+                          onDelete={() => {
+                            setUploadedFile(null);
+                          }}
+                          message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                        />
+                      </div>
+                      <div className="col-md-12">
+                        <CardLabel>
+                          {`${t(`CR_UPLOAD_YOUR_SOCIAL_SECURITY_DOCUMENT`)}`}
+                          <span className="mandatorycss">*</span>
+                        </CardLabel>
+                        {/* {!selectedDocs.includes(item.DocumentId) && ( */}
+                        <UploadFile
+                          id={"marriage-docs"}
+                          extraStyleName={"propertyCreate"}
+                          accept=".jpg,.png,.pdf"
+                          onUpload={selectAadhar}
+                          onDelete={() => {
+                            setUploadedFile(null);
+                          }}
+                          message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                        />
+                      </div>
+                    </React.Fragment>
+                  )}
                 </div>
                 <div className="col-md-6">
-                  {brideResidentship &&
-                    residentshipDocuments[brideResidentship].map((document) => {
-                      return (
-                        <div className="col-md-12">
-                          <CardLabel>
-                            {`${t(`CR_UPLOAD_YOUR_${document}`)}`}
-                            <span className="mandatorycss">*</span>
-                          </CardLabel>
-                          <UploadFile
-                          //   key={item.DocumentId}
-                          //   id={item.DocumentId}
-                          //   name={item.DocumentType}
-                          //   extraStyleName={"propertyCreate"}
-                          //   accept=".jpg,.png,.pdf"
-                          //   onUpload={selectfile}
-                          //   onDelete={() => {
-                          //     onDeleteown(item.DocumentId);
-                          //     setUploadedFile(null);
-                          //   }}
-                          //   message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-                          //   error={error}
-                          />
-                        </div>
-                      );
-                    })}
+                  {brideResidentship === "INDIAN" && (
+                    <div className="col-md-12">
+                      <CardLabel>
+                        {`${t(`CR_UPLOAD_YOUR_AADHAR`)}`}
+                        <span className="mandatorycss">*</span>
+                      </CardLabel>
+                      {/* {!selectedDocs.includes(item.DocumentId) && ( */}
+                      <UploadFile
+                        id={"marriage-docs"}
+                        extraStyleName={"propertyCreate"}
+                        accept=".jpg,.png,.pdf"
+                        onUpload={selectAadhar}
+                        onDelete={() => {
+                          setUploadedFile(null);
+                        }}
+                        message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                      />
+                    </div>
+                  )}
+                  {brideResidentship === "NRI" && (
+                    <React.Fragment>
+                      <div className="col-md-12">
+                        <CardLabel>
+                          {`${t(`CR_UPLOAD_YOUR_PASSPORT`)}`}
+                          <span className="mandatorycss">*</span>
+                        </CardLabel>
+                        {/* {!selectedDocs.includes(item.DocumentId) && ( */}
+                        <UploadFile
+                          id={"marriage-docs"}
+                          extraStyleName={"propertyCreate"}
+                          accept=".jpg,.png,.pdf"
+                          onUpload={selectAadhar}
+                          onDelete={() => {
+                            setUploadedFile(null);
+                          }}
+                          message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                        />
+                      </div>
+                      <div className="col-md-12">
+                        <CardLabel>
+                          {`${t(`CR_UPLOAD_YOUR_SOCIAL_SECURITY_DOCUMENT`)}`}
+                          <span className="mandatorycss">*</span>
+                        </CardLabel>
+                        {/* {!selectedDocs.includes(item.DocumentId) && ( */}
+                        <UploadFile
+                          id={"marriage-docs"}
+                          extraStyleName={"propertyCreate"}
+                          accept=".jpg,.png,.pdf"
+                          onUpload={selectAadhar}
+                          onDelete={() => {
+                            setUploadedFile(null);
+                          }}
+                          message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                        />
+                      </div>
+                    </React.Fragment>
+                  )}
+                  {brideResidentship === "FOREIGN" && (
+                    <React.Fragment>
+                      <div className="col-md-12">
+                        <CardLabel>
+                          {`${t(`CR_UPLOAD_YOUR_PASSPORT`)}`}
+                          <span className="mandatorycss">*</span>
+                        </CardLabel>
+                        {/* {!selectedDocs.includes(item.DocumentId) && ( */}
+                        <UploadFile
+                          id={"marriage-docs"}
+                          extraStyleName={"propertyCreate"}
+                          accept=".jpg,.png,.pdf"
+                          onUpload={selectAadhar}
+                          onDelete={() => {
+                            setUploadedFile(null);
+                          }}
+                          message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                        />
+                      </div>
+                      <div className="col-md-12">
+                        <CardLabel>
+                          {`${t(`CR_UPLOAD_YOUR_SOCIAL_SECURITY_DOCUMENT`)}`}
+                          <span className="mandatorycss">*</span>
+                        </CardLabel>
+                        {/* {!selectedDocs.includes(item.DocumentId) && ( */}
+                        <UploadFile
+                          id={"marriage-docs"}
+                          extraStyleName={"propertyCreate"}
+                          accept=".jpg,.png,.pdf"
+                          onUpload={selectAadhar}
+                          onDelete={() => {
+                            setUploadedFile(null);
+                          }}
+                          message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                        />
+                      </div>
+                    </React.Fragment>
+                  )}
                 </div>
               </div>
               <div className="row">
