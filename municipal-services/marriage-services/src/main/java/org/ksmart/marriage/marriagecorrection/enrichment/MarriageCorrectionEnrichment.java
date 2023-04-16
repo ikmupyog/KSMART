@@ -525,4 +525,9 @@ public class MarriageCorrectionEnrichment implements BaseEnrichment {
         request.getMarriageDetails()
                 .forEach(personal -> personal.setAuditDetails(auditDetails));
     }
+
+       public void enrichUpdate(MarriageCorrectionRequest request) {
+
+       
+ }
 }
