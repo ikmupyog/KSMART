@@ -151,6 +151,10 @@ public class MarriageRegistryService {
 
     public List<MarriageCertificate> searchCertificate(MarriageRegistrySearchCriteria criteria) {
         List<MarriageRegistryDetails> obj = repository.searchMarriageRegistry(criteria);
-        return repository.searchCertificateByMarriageId(obj.get(0).getId());
+        if(null!=obj&&obj.size()>0) {
+            return repository.searchCertificateByMarriageId(obj.get(0).getId());
+        }else{
+            throw  new CustomException("MARRIAGE REGISTRY DATA NOT FOUND", " Marriage Registry data not found");
+        }
     }
 }
