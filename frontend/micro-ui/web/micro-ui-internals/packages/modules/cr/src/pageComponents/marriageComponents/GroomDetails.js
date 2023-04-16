@@ -889,7 +889,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   value={groomEmailid}
                   onChange={setSelectGroomEmailid}
                   placeholder={`${t("CR_GROOM_EMAIL")}`}
-                  {...(validation = { isRequired: true, title: t("CR_INVALID_EMAIL") })}
+                  {...(validation = { pattern: "^[^\s@]+@[^\s@]+\.[^\s@]+$" , isRequired: true, title: t("CR_INVALID_EMAIL") })}
                 />
               </div>
             </div>
