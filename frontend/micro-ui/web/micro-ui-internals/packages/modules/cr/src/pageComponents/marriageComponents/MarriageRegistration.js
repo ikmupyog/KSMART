@@ -299,6 +299,8 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
       return null;
     }
   };
+  const [toast, setToast] = useState(false);
+  const [DOBError, setDOBError] = useState(formData?.MarriageDetails?.marriageDOM ? false : false);
 
   const onSkip = () => onSelect();
   // React.useEffect(() => {
@@ -345,7 +347,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
       setDOBError(true);
       setToast(true);
       setTimeout(() => {
-         setToast(false);
+        setToast(false);
       }, 3000);
     }
   }
@@ -473,22 +475,19 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
     }
   }
 
-  console.log({ placeidEn, placeidMl });
+  // useEffect(() => {
+  //   console.log({ cmbLB });
+  //   if (cmbLB?.length > 0) {
+  //     console.log("Hi");
+  //     currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
+  //     console.log({ currentLB });
+  //     setMarriageTenantid(currentLB);
+  //   }
+  // }, []);
 
   let validFlag = true;
   const goNext = () => {
-    // if (AadharError) {
-    //   validFlag = false;
-    //   setAadharErroChildAadharNor(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 2000);
-    //   // return false;
-    //   // window.alert("Username shouldn't exceed 10 characters")
-    // } else {
-    //   setAadharError(false);
-    // }
+    
     if (validFlag == true) {
       // sessionStorage.setItem("marriageDOM", marriageDOM ? marriageDOM : null);
       // sessionStorage.setItem("marriageDistrictid", marriageDistrictid ? marriageDistrictid : null);
@@ -568,7 +567,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   } else
     return (
       <React.Fragment>
-        <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+        {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
         {window.location.href.includes("/citizen") ? <Timeline currentStep={1} /> : null}
         {window.location.href.includes("/employee") ? <Timeline currentStep={1} /> : null}
         <FormStep
@@ -595,9 +594,9 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
               : false) ||
             (marriagePlacetype.code === "OTHER"
               ? !marriageLocalityEn || !marriageLocalityMl || !marriagePlacenameEn || !marriagePlacenameMl
-              : false) || 
+              : false) ||
             !marriageType
-           }
+          }
         >
           <div className="row">
             <div className="col-md-12">
@@ -623,7 +622,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                       onChange={setSelectmarriageDOM}
                       inputFormat="DD-MM-YYYY"
                       placeholder={`${t("CR_DATE_OF_MARRIAGE")}`}
-                      {...(validation = { isRequired: true, title: t("CR_INVALID_DATE_OF_MARRIAGE") })}
+                      //{...(validation = { isRequired: true, title: t("CR_INVALID_DATE_OF_MARRIAGE") })}
                     />
                   </div>
                 </div>
@@ -927,6 +926,21 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
               </div>
             </div>
           </div>
+          {toast && (
+              <Toast
+                error={DOBError || AgeValidationMsg}
+                label={
+                  DOBError || AgeValidationMsg
+                    ? DOBError
+                      ? t(`MARRIAGE_DOB_VALIDATION_MSG`)
+                      : AgeValidationMsg
+                      ? t(`CR_INVALID_AGE`)
+                      : setToast(false)
+                    : setToast(false)
+                }
+                onClose={() => setToast(false)}
+              />
+            )}
         </FormStep>
       </React.Fragment>
     );

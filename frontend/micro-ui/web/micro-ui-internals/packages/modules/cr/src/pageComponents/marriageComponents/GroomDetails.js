@@ -212,18 +212,16 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     selectGroomGender(value);
   }
   function setSelectGroomPassportNo(e) {
-
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[A-Z0-9 ]*$") != null)) {
-      setGroomPassportNo(e.target.value.length <= 8 ? e.target.value : (e.target.value).substring(0, 8));
-    } 
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[A-Z0-9 ]*$") != null) {
+      setGroomPassportNo(e.target.value.length <= 8 ? e.target.value : e.target.value.substring(0, 8));
+    }
     //setGroomPassportNo(e.target.value.length<=8 ? e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '') : (e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '').substring(0, 8)))
   }
   function setSelectGroomSocialSecurityNo(e) {
-
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[A-Z-0-9 ]*$") != null)) {
-      setGroomSocialSecurityNo(e.target.value.length <= 12 ? e.target.value : (e.target.value).substring(0, 12));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[A-Z-0-9 ]*$") != null) {
+      setGroomSocialSecurityNo(e.target.value.length <= 12 ? e.target.value : e.target.value.substring(0, 12));
     }
-    
+
     // if (e.target.value.length >= 12) {
     //   return false;
     //   // window.alert("Username shouldn't exceed 10 characters")
@@ -293,9 +291,13 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       // const birthDate = new Date(value);
       // if (birthDate.getTime() <= today.getTime()) {
       // To calculate the time difference of two dates
-      const dobFullYear = new Date(value).getFullYear();
-      const currentYear = new Date().getFullYear();
-      const age = currentYear - dobFullYear;
+
+      const dob = new Date(value);
+      const month_diff = Date.now() - dob.getTime();
+      const age_dt = new Date(month_diff);
+      const year = age_dt.getUTCFullYear();
+      const age = Math.abs(year - 1970);
+
       setGroomAge(age);
       if (age < 21) {
         setAgeValidationMsg(true);
@@ -595,7 +597,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
   };
 
   console.log("Groom", formData);
-  console.log({ groomResidentShip });
+  console.log({ groomDOB });
 
   if (isLoading || isMaritalStatusLoading) {
     return <Loader></Loader>;
@@ -887,7 +889,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   value={groomEmailid}
                   onChange={setSelectGroomEmailid}
                   placeholder={`${t("CR_GROOM_EMAIL")}`}
-                  {...(validation = { isRequired: true, title: t("CR_INVALID_EMAIL") })}
+                  {...(validation = { pattern: "^[^\s@]+@[^\s@]+\.[^\s@]+$" , isRequired: true, title: t("CR_INVALID_EMAIL") })}
                 />
               </div>
             </div>

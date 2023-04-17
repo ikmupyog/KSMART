@@ -6,6 +6,7 @@ import { useQueryClient } from "react-query";
 const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospitalName, hospitalName, hospitalNameMl,
   selectHospitalNameMl, isEditBirth
 }) => {
+  console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -16,7 +17,7 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
   let validation = {};
   const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "hospital");
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
+  const [isDisableEdit, setisDisableEdit] = useState(false);
 
   const [tenantboundary, setTenantboundary] = useState(false);
   const queryClient = useQueryClient();
@@ -44,9 +45,11 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
 
   useEffect(() => {
 
-    // if (isInitialRender) {
-      if (formData?.ChildDetails?.hospitalName) {
-        selectHospitalNameMl(hospitalNameMl);
+    if (isInitialRender) {
+      if (formData?.ChildDetails?.hospitalCode) {
+        cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.ChildDetails?.hospitalCode);
+        selectHospitalNameMl(cmbhospitalMl[0]);
+        // selectHospitalNameMl(hospitalNameMl);
         setIsInitialRender(false);
       } else {
         if (hospitalName != null) {
@@ -55,8 +58,8 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
           setIsInitialRender(false);
         }
       }
-    // }
-  }, [cmbhospitalMl])
+    }
+  }, [cmbhospitalMl,isInitialRender])
   const onSkip = () => onSelect();
 
   function setselectHospitalName(value) {

@@ -13,7 +13,7 @@ const ApplicationDetails = () => {
   const { id: applicationNumber } = useParams();
   const [showToast, setShowToast] = useState(null);
   // const [callUpdateService, setCallUpdateValve] = useState(false);
-  //   const [businessService, setBusinessService] = useState("BIRTHHOSP21"); //DIRECTRENEWAL BIRTHHOSP21
+  const [businessService, setBusinessService] = useState("45MARRIAGE");
   const [numberOfApplications, setNumberOfApplications] = useState([]);
   const [allowedToNextYear, setAllowedToNextYear] = useState(false);
   sessionStorage.setItem("applicationNumber", applicationNumber);
@@ -38,7 +38,7 @@ const ApplicationDetails = () => {
     tenantId: applicationDetails?.applicationData.tenantid || tenantId,
     id: applicationDetails?.applicationData?.applicationNumber,
     moduleCode: businessService,
-    role: "BND_CEMP" || "HOSPITAL_OPERATOR",
+    role: "BND_CEMP" || "SUB_REGISTRAR || LOCAL_REGISTRAR",
     config: {},
   });
 

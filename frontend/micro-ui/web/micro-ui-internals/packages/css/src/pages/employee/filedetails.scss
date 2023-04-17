@@ -1,37 +1,174 @@
-.flow-wrapper{
+.flow-wrapper {
     background: #fff;
     padding: 20px;
     border-radius: 25px;
 }
-.border-active{
+
+.border-active {
     border-bottom: 1px solid #edf2f9;
 }
-.wrapper-app{
+
+.wrapper-app {
     background: white;
-    padding: 20px 0px 20px 40px;
+    padding: 20px 15px;
     border-radius: 20px;
     width: 65%;
-    @media (max-width: 1050px){
-     margin-bottom: 20px;    
-     width: 90%;   
+
+    @media (max-width: 1050px) {
+        margin-bottom: 20px;
+        width: 90%;
     }
 }
-.timeline-wrapper{
+
+.timeline-wrapper {
     background: white;
-    padding: 20px 0px 20px 40px;
+    padding: 20px 15px;
     border-radius: 20px;
-    height: 100% ;
+    height: 100%;
     width: 50%;
     margin-left: 15px;
-    @media (max-width: 1050px){
+
+    @media (max-width: 1050px) {
         width: 90%;
-       
+
     }
 }
-.file-main{
+
+.file-main {
     display: flex;
-    @media (max-width: 1050px){
+
+    @media (max-width: 1050px) {
         flex-direction: column;
         align-items: center;
+    }
+}
+
+
+.cr-wrapper-app {
+    background: white;
+    padding: 20px 15px;
+    border-radius: 20px;
+    width: 65%;
+
+    @media (max-width: 1050px) {
+        margin-bottom: 20px;
+        width: 90%;
+    }
+}
+
+.cr-timeline-wrapper {
+    background: white;
+    padding: 20px 15px;
+    border-radius: 20px;
+    height: 100%;
+    width: 34%;
+    margin-left: 15px;
+
+    @media (max-width: 1050px) {
+        width: 90%;
+
+    }
+}
+
+
+/* Slideshow container */
+.carousel-container {
+    max-width: 1000px;
+    position: relative;
+    margin: auto;
+}
+
+.carousel-slide {
+    display: none
+}
+
+.carousel-img {
+    max-width: auto !important;
+    vertical-align: middle;
+}
+
+.carousel-prev,
+.carousel-next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    @apply bg-white;
+}
+
+.carousel-next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.carousel-prev:hover,
+.carousel-next:hover {
+    @apply bg-black;
+}
+
+.carousel-text {
+    color: #f2f2f2;
+    font-size: 15px;
+    padding: 8px 12px;
+    position: absolute;
+    bottom: 8px;
+    width: 100%;
+    text-align: center;
+}
+
+.carousel-numbertext {
+    color: #f2f2f2;
+    font-size: 12px;
+    padding: 8px 12px;
+    position: absolute;
+    top: 0;
+}
+
+.carousel-dot {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 0 2px;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+    @apply bg-white;
+
+}
+
+.carousel-active,
+.carousel-dot:hover {
+    color: #fff;
+    @apply bg-primary-main;
+}
+
+.carousel-fade {
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+@keyframes fade {
+    from {
+        opacity: .4
+    }
+
+    to {
+        opacity: 1
+    }
+}
+
+@media only screen and (max-width: 300px) {
+
+    .carousel-prev,
+    .carousel-next,
+    .carousel-text {
+        font-size: 11px
     }
 }

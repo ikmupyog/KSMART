@@ -83,10 +83,10 @@ function ApplicationDetailsContent({
   };
 
   const checkLocation =
-    window.location.href.includes("employee/tl") || window.location.href.includes("employee/obps") || window.location.href.includes("employee/noc");
+    window.location.href.includes("employee/obps") || window.location.href.includes("employee/noc");
   const isNocLocation = window.location.href.includes("employee/noc");
   const isBPALocation = window.location.href.includes("employee/obps");
-  
+
 
   const getRowStyles = () => {
     if (window.location.href.includes("employee/obps") || window.location.href.includes("employee/noc")) {
@@ -259,7 +259,7 @@ function ApplicationDetailsContent({
                     {/* {t("ES_APPLICATION_DETAILS_APPLICATION_TIMELINE")} */}
                     {t("Activities")}
                   </CardSectionHeader>
-                  <BreakLine style={{ marginLeft: "-40px" }} />
+                  <BreakLine />
                   {workflowDetails?.data?.timeline && workflowDetails?.data?.timeline?.length === 1 ? (
                     <CheckPoint
                       isCompleted={true}

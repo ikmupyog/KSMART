@@ -319,9 +319,11 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
       // const birthDate = new Date(value);
       // if (birthDate.getTime() <= today.getTime()) {
       // To calculate the time difference of two dates
-      const dobFullYear = new Date(value).getFullYear();
-      const currentYear = new Date().getFullYear();
-      const age = currentYear - dobFullYear;
+      const dob = new Date(value);
+      const month_diff = Date.now() - dob.getTime();
+      const age_dt = new Date(month_diff);
+      const year = age_dt.getUTCFullYear();
+      const age = Math.abs(year - 1970);
       setbrideAge(age);
       if (age < 18) {
         setAgeValidationMsg(true);
@@ -504,9 +506,8 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     }
   }
   function setSelectbrideSocialSecurityNo(e) {
-
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[A-Z-0-9 ]*$") != null)) {
-      setbrideSocialSecurityNo(e.target.value.length <= 12 ? e.target.value : (e.target.value).substring(0, 12));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[A-Z-0-9 ]*$") != null) {
+      setbrideSocialSecurityNo(e.target.value.length <= 12 ? e.target.value : e.target.value.substring(0, 12));
     }
     // let value = e.target.value;
     // console.log({ value });
@@ -517,18 +518,16 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     //       setbrideSocialSecurityNo(value);
     //     }
     //   }
-    
   }
   function setSelectbridePassportNo(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[A-Z0-9 ]*$") != null)) {
-      setbridePassportNo(e.target.value.length <= 8 ? e.target.value : (e.target.value).substring(0, 8));
-    } 
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[A-Z0-9 ]*$") != null) {
+      setbridePassportNo(e.target.value.length <= 8 ? e.target.value : e.target.value.substring(0, 8));
+    }
     // setbridePassportNo(
     //   e.target.value.length <= 8
     //     ? e.target.value.replace("[A-PR-WY][1-9]ds?d{4}[1-9]$", "")
     //     : e.target.value.replace("[A-PR-WY][1-9]ds?d{4}[1-9]$", "").substring(0, 8)
     // );
-   
   }
   function selectParentType(e) {
     setBrideParentGuardian(e.target.value);
@@ -1001,7 +1000,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                   onChange={setSelectbrideEmailid}
                   disable={isDisableEdit}
                   placeholder={`${t("CR_BRIDE_EMAIL")}`}
-                  {...(validation = { isRequired: true, title: t("CR_INVALID_EMAIL") })}
+                  {...(validation = { pattern: "^[^\s@]+@[^\s@]+\.[^\s@]+$" ,isRequired: true, title: t("CR_INVALID_EMAIL") })}
                 />
               </div>
             </div>

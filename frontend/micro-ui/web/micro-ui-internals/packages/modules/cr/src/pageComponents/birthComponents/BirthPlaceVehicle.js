@@ -21,7 +21,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
   const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "boundary-data");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [tenantboundary, setTenantboundary] = useState(false);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
+  const [isDisableEdit, setisDisableEdit] = useState(false);
 
   if (tenantboundary) {
     queryClient.removeQueries("CR_HOSPITALMASTER");
@@ -102,17 +102,17 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
   }
   function setSelectVehicleRegistrationNo(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z0-9\-]*$") != null)) {
-      setvehicleRegistrationNo(e.target.value.length <= 15 ? e.target.value : (e.target.value).substring(0, 15));
+      setvehicleRegistrationNo(e.target.value.trim().length <= 15 ? e.target.value : (e.target.value).substring(0, 15));
     }
   }
   function setSelectVehicleFromEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
-      setvehicleFromEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setvehicleFromEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectVehicleToEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
-      setvehicleToEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setvehicleToEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectVehicleFromMl(e) {
@@ -122,12 +122,12 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
       setvehicleFromMl('');
     }
     else {
-      setvehicleFromMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setvehicleFromMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectVehicleHaltPlace(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
-      setvehicleHaltPlace(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setvehicleHaltPlace(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   // function setSelectVehicleHaltPlaceMl(e) {
@@ -144,12 +144,12 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
       setvehicleToMl('');
     }
     else {
-      setvehicleToMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setvehicleToMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectVehicleOtherDetailsEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
-      setvehicleDesDetailsEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setvehicleDesDetailsEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function selectadmittedHospitalEn(value) {

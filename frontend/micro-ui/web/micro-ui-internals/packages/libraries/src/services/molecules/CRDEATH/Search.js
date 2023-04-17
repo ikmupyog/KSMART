@@ -145,10 +145,10 @@ export const CRDeathsearch = {
         // + " , " +  response?.AddressBirthDetails.presentInsideKeralaDistrict    + " , " +  response?.AddressBirthDetails.presentaddressStateName + " , " +    response?.AddressBirthDetails.presentaddressCountry },
         //   {  value:response?.AddressBirthDetails.presentInsideKeralaHouseNameMl + " , " + response?.AddressBirthDetails.presentInsideKeralaStreetNameMl  + " , " + response?.AddressBirthDetails.presentInsideKeralaLocalityNameMl + " , " + response?.AddressBirthDetails.presentInsideKeralaPostOffice + " , " + 
         //   response?.AddressBirthDetails.presentInsideKeralaPincode   + " , " +  response?.AddressBirthDetails.presentInsideKeralaDistrict     + " , " +  response?.AddressBirthDetails.presentaddressStateName  + " , " +    response?.AddressBirthDetails.presentaddressCountry  || "CR_NOT_RECORDED"},
-       
+        { title: "CR_PROFESSIONAL", value: response?.AddressBirthDetails?.presentInsideKeralaHouseNameEn || "NA"},
    
-    ]
-      }  
+    ],
+      } ; 
     // const AddressBirthDetails = {
     //   title: "CR_ADDRESS_INFORMATION_HEADER",
     //   values: [
@@ -190,8 +190,8 @@ export const CRDeathsearch = {
           { title: "CR_FAMILY_MOBILE_NO", value: response?.FamilyInformationDeath?.FamilyMobileNo || "NA" },
           { title: "CR_EMAIL_ID", value: response?.FamilyInformationDeath?.FamilyEmailId || "NA" }, 
          { title: "PDF_PLACE_OF_DEATH", value: response?.InformationDeath?.DeathPlaceHospitalNameEn + "/" + response?.InformationDeath?.DeathPlaceHospitalNameMl || "NA" },
-        ]
-      } 
+        ],
+      } ;
     
     
          const statisticalInfo = {
@@ -257,29 +257,16 @@ export const CRDeathsearch = {
     //     { title: "CR_STATSTICAL_DEATH_SMOKING_NUM_YEARS", value: response?.statisticalInfo.smokingNumYears || "NA" },
     //   ],
     // };
-    // const permanentAddress = {
-    //   title: "CR_DEATH_PERMANENT_ADDRESS_INFORMATION_HEADER",
-    //   values: [
-    //     { title: "CR_DEATH_PERM_HOUSE_NO_LABEL", value: response?.addressInfo?.permanentAddress.houseNo || "NA"},
-    //     { title: "CR_DEATH_PERM_HOUSE_NAME_LABEL", value: response?.addressInfo?.permanentAddress.houeNameEn || "NA" },
-    //     { title: "CR_DEATH_PERM_HOUSE_LOCALITY_LABEL", value: response?.addressInfo?.permanentAddress.localityEn || "NA" },
-    //     { title: "CR_DEATH_PERM_HOUSE_CITY_LABEL", value: response?.addressInfo?.permanentAddress.cityEn || "NA" },
-    //   ],
-    // };
+    const permanentAddress = {
+      title: "CR_DEATH_PERMANENT_ADDRESS_INFORMATION_HEADER",
+      values: [
+        { title: "CR_DEATH_PERM_HOUSE_NO_LABEL", value: response?.addressInfo?.permanentAddress.houseNo || "NA"},
+        { title: "CR_DEATH_PERM_HOUSE_NAME_LABEL", value: response?.addressInfo?.permanentAddress.houeNameEn || "NA" },
+        { title: "CR_DEATH_PERM_HOUSE_LOCALITY_LABEL", value: response?.addressInfo?.permanentAddress.localityEn || "NA" },
+        { title: "CR_DEATH_PERM_HOUSE_CITY_LABEL", value: response?.addressInfo?.permanentAddress.cityEn || "NA" },
+      ],
+    };
 
-    // if (response?.workflowCode == "NewTL" && response?.status !== "APPROVED") {
-    //   const details = {
-    //     title: "",
-    //     values: [
-    //       { title: "TL_COMMON_TABLE_COL_APP_NO", value: response?.applicationNumber || "NA" },
-    //       {
-    //         title: "TL_APPLICATION_CHALLAN_LABEL",
-    //         value: (response?.tradeLicenseDetail?.channel && `TL_CHANNEL_${response?.tradeLicenseDetail?.channel}`) || "NA",
-    //       },
-    //     ],
-    //   };
-    //   response && employeeResponse.push(details);
-    // }
     response && employeeResponse.push(Deathdetails);
     response && employeeResponse.push(InformationDeath);
    response && employeeResponse.push(AddressBirthDetails);

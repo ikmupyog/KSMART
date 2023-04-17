@@ -3,6 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import React, {useState, useEffect, useCallback } from "react";
 import SearchDeathFields from "./SearchDeathFields";
 import { Link } from "react-router-dom";
+import MobileSearchApplication from "./MobileSearchApplication";
 
 
 const mystyle = {
@@ -21,7 +22,7 @@ const mystyle = {
     lineHieght: "1.5rem",
   };
 
-const SearchDeathApplication = ({  t, onSubmit, data, count, isSuccess, isLoading, onInclusionClick }) => {
+const SearchDeathApplication = ({  t, onSubmit, data, count, isSuccess, isLoading, tenantId }) => {
 
     // const { t } = useTranslation();
     const [fileData, setFileData] = useState([]);
@@ -41,6 +42,12 @@ const SearchDeathApplication = ({  t, onSubmit, data, count, isSuccess, isLoadin
     //     register("sortBy", "TL_COMMON_TABLE_COL_APP_NO");
     //     register("sortOrder", "DESC");
     //   }, [register]);
+
+    const isMobile = window.Digit.Utils.browser.isMobile();
+
+    if (isMobile) {
+        return <MobileSearchApplication {...{ Controller, register, control, t, reset, previousPage, handleSubmit, tenantId, data, onSubmit }} />;
+    }
 
     const GetCell = (value) => <span className="cell-text">{value}</span>;
 
