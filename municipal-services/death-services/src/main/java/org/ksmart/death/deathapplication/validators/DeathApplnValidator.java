@@ -157,22 +157,22 @@ public void validateCommonFields(DeathDtlRequest request) {
                     basicInfo.getHospitalNameEn()+ " is invalid");  
                 } 
                 //INFORMANT DETAILS
-                if(StringUtils.isEmpty(informantDtls.getInformantAadharNo())){
-                    throw new CustomException("INFORMANT AADHAR IS INVALID", "The Aadhar of informant " +
-                    informantDtls.getInformantAadharNo()+ " is invalid");  
-                } 
-                if(StringUtils.isEmpty(informantDtls.getInformantNameEn())){
-                    throw new CustomException("INFORMANT NAME IS INVALID", "The name of informant " +
-                    informantDtls.getInformantNameEn()+ " is invalid");  
-                } 
-                if(StringUtils.isEmpty(informantDtls.getDeathSignedOfficerDesignation())){
-                    throw new CustomException("INFORMANT DESIGNATION IS INVALID", "The designation of informant " +
-                    informantDtls.getDeathSignedOfficerDesignation()+ " is invalid");  
-                }
-                if(informantDtls.getInformantMobileNo()<=0){
-                    throw new CustomException("MOBILE NUMBER OF INFORMANT IS INVALID", "The mobile number of informant " +
-                    informantDtls.getInformantMobileNo()+ " is invalid");  
-                }
+                // if(StringUtils.isEmpty(informantDtls.getInformantAadharNo())){
+                //     throw new CustomException("INFORMANT AADHAR IS INVALID", "The Aadhar of informant " +
+                //     informantDtls.getInformantAadharNo()+ " is invalid");  
+                // } 
+                // if(StringUtils.isEmpty(informantDtls.getInformantNameEn())){
+                //     throw new CustomException("INFORMANT NAME IS INVALID", "The name of informant " +
+                //     informantDtls.getInformantNameEn()+ " is invalid");  
+                // } 
+                // if(StringUtils.isEmpty(informantDtls.getDeathSignedOfficerDesignation())){
+                //     throw new CustomException("INFORMANT DESIGNATION IS INVALID", "The designation of informant " +
+                //     informantDtls.getDeathSignedOfficerDesignation()+ " is invalid");  
+                // }
+                // if(informantDtls.getInformantMobileNo()<=0){
+                //     throw new CustomException("MOBILE NUMBER OF INFORMANT IS INVALID", "The mobile number of informant " +
+                //     informantDtls.getInformantMobileNo()+ " is invalid");  
+                // }
             }
         //DEATH PLACE INSTITUTION
             if (basicInfo.getDeathPlace().equals(DeathConstants.DEATH_PLACE_INSTITUTION)){
@@ -185,22 +185,22 @@ public void validateCommonFields(DeathDtlRequest request) {
                     basicInfo.getDeathPlaceInstId()+ " is invalid");  
                 } 
                 //INFORMANT DETAILS
-                if(StringUtils.isEmpty(informantDtls.getInformantAadharNo())){
-                    throw new CustomException("INFORMANT AADHAR IS INVALID", "The Aadhar of informant " +
-                    informantDtls.getInformantAadharNo()+ " is invalid");  
-                } 
-                if(StringUtils.isEmpty(informantDtls.getInformantNameEn())){
-                    throw new CustomException("INFORMANT NAME IS INVALID", "The name of informant " +
-                    informantDtls.getInformantNameEn()+ " is invalid");  
-                } 
-                if(StringUtils.isEmpty(informantDtls.getDeathSignedOfficerDesignation())){
-                    throw new CustomException("INFORMANT DESIGNATION IS INVALID", "The designation of informant " +
-                    informantDtls.getDeathSignedOfficerDesignation()+ " is invalid");  
-                }
-                if(informantDtls.getInformantMobileNo()<=0){
-                    throw new CustomException("MOBILE NUMBER OF INFORMANT IS INVALID", "The mobile number of informant " +
-                    informantDtls.getInformantMobileNo()+ " is invalid");  
-                }
+                // if(StringUtils.isEmpty(informantDtls.getInformantAadharNo())){
+                //     throw new CustomException("INFORMANT AADHAR IS INVALID", "The Aadhar of informant " +
+                //     informantDtls.getInformantAadharNo()+ " is invalid");  
+                // } 
+                // if(StringUtils.isEmpty(informantDtls.getInformantNameEn())){
+                //     throw new CustomException("INFORMANT NAME IS INVALID", "The name of informant " +
+                //     informantDtls.getInformantNameEn()+ " is invalid");  
+                // } 
+                // if(StringUtils.isEmpty(informantDtls.getDeathSignedOfficerDesignation())){
+                //     throw new CustomException("INFORMANT DESIGNATION IS INVALID", "The designation of informant " +
+                //     informantDtls.getDeathSignedOfficerDesignation()+ " is invalid");  
+                // }
+                // if(informantDtls.getInformantMobileNo()<=0){
+                //     throw new CustomException("MOBILE NUMBER OF INFORMANT IS INVALID", "The mobile number of informant " +
+                //     informantDtls.getInformantMobileNo()+ " is invalid");  
+                // }
 
             }
 //DEATH PLACE HOME
