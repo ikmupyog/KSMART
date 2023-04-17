@@ -12,19 +12,20 @@ const SearchFields = ({
                       }) => {
 
     let validation = {};
+    const stateId = Digit.ULBService.getStateId();
     const [isIdPresent, setIsIdPresent] = useState(false);
-    const cmbPlace = [
-        { i18nKey: "Religious Institution", name: "RELIGIOUSINSTITUTION", namelocal: "മത സ്ഥാപനം" },
-        {
-            i18nKey: "Mandapam/Hall/Auditorium/Convention Centre",
-            name: "MANDAPAM/HALL/AUDITORIUM/CONVENTIONALCENTRE",
-            namelocal: "മണ്ഡപം/ ഹാൾ / ഓഡിറ്റോറിയം",
-        },
-        { i18nKey: "Sub Registrar's Office", name: "SUBREGISTRARSOFFICE", namelocal: "സബ് രജിസ്ട്രാർ ഓഫീസ്" },
-        { i18nKey: "House", name: "HOUSE", namelocal: "വീട്" },
-        { i18nKey: "Private Place", name: "PRIVATEPLACE", namelocal: "സ്വകാര്യ സ്ഥലം" },
-        { i18nKey: "Public Place", name: "PUBLICPLACE", namelocal: "പൊതു സ്ഥലം" },
-    ];
+    const { data: marriagePlaceType = {}, isMarriagePlaceTypeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
+        stateId,
+        "birth-death-service",
+        "MarriagePlaceType"
+    );
+    const cmbPlace = []
+    marriagePlaceType &&
+    marriagePlaceType["birth-death-service"] &&
+    marriagePlaceType["birth-death-service"].MarriagePlaceType &&
+    marriagePlaceType["birth-death-service"].MarriagePlaceType.map((ob) => {
+        cmbPlace.push(ob);
+    });
 
     const idOnChange = (e) => {
         if (e.target.value) {
@@ -71,7 +72,7 @@ const SearchFields = ({
                 <label> {t("PLACE OF MARRIAGE")}</label>
                 <Controller
                     control={control}
-                    name="placeOfMarriage"
+                    name="marriagePlacetype"
                     rules={{ required: false}}
                     defaultValue={""}
                     render={(props) => (
@@ -80,7 +81,7 @@ const SearchFields = ({
                             select={props.onChange}
                             onBlur={props.onBlur}
                             option={cmbPlace}
-                            optionKey="i18nKey"
+                            optionKey="name"
                             t={t}
                             placeholder={`${t("CR_MARRIAGE_PLACE_TYPE")}`}
                         />
