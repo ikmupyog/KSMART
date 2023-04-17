@@ -65,25 +65,22 @@ const Informer = ({ config, onSelect, userType, formData, isEditDeath }) => {
   //     setIsDeclarationInfotwo(e.target.checked);
   //   }
   // }
-  function setSelectInformantAadharNo(e) {
-    if (e.target.value.trim().length >= 0) {
-      setInformantAadharNo(
-        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
-      );
+ 
+    function setSelectInformantAadharNo(e) {
+      if (e.target.value.trim().length >= 0) {
+        setInformantAadharNo(e.target.value.trim().length <= 12 ? e.target.value.trim().replace(/[^0-9]/ig, '') : (e.target.value.trim().replace(/[^0-9]/ig, '')).substring(0, 12));
+      }
     }
-    // if (e.target.value.length != 0) {
-    //   if (e.target.value.length > 12) {
-    //     return false;
-    //   } else if (e.target.value.length < 12) {
-    //     setInformantAadharNo(e.target.value);
-    //     return false;
-    //   } else {
-    //     setInformantAadharNo(e.target.value);
-    //   }
-    // } else {
-    //   setInformantAadharNo(e.target.value);
-    // }
-  }
+
+
+    function setCheckSpecialChar(e) {
+      let pattern = /^[0-9]*$/;
+      if (!(e.key.match(pattern))) {
+        e.preventDefault();
+      }
+    }
+   
+  
   function setSelectInformantNameEn(e) {
     if (e.target.value.length === 51) {
       return false;
@@ -163,17 +160,31 @@ const Informer = ({ config, onSelect, userType, formData, isEditDeath }) => {
     } else {
       setinformerDesiError(false);
     }
-
-    if (InformantAadharNo == null || InformantAadharNo == "" || InformantAadharNo == undefined) {
-      validFlag = false;
-      setinfomantAadharError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      setinfomantAadharError(false);
+    if (InformantAadharNo.trim() == null || InformantAadharNo.trim() == '' || InformantAadharNo.trim() == undefined) {
+      setInformantAadharNo("");
+    } else if (InformantAadharNo != null && InformantAadharNo != "") {
+      let adharLength = InformantAadharNo;
+      if (adharLength.length < 12 || adharLength.length > 12) {
+        validFlag = false;
+        setinfomantAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setinfomantAadharError(false);
+      }
     }
+    // if (InformantAadharNo == null || InformantAadharNo == "" || InformantAadharNo == undefined) {
+    //   validFlag = false;
+    //   setinfomantAadharError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 2000);
+    // } else {
+    //   setinfomantAadharError(false);
+    // }
     if (InformantMobileNo == null || InformantMobileNo == "" || InformantMobileNo == undefined) {
       validFlag = false;
       setinfomantMobileError(true);
@@ -247,6 +258,7 @@ const Informer = ({ config, onSelect, userType, formData, isEditDeath }) => {
                 name="InformantAadharNo"
                 value={InformantAadharNo}
                 onChange={setSelectInformantAadharNo}
+                onKeyPress={setCheckSpecialChar}
                 placeholder={`${t("CS_COMMON_AADHAAR")}`}
                 {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
               />

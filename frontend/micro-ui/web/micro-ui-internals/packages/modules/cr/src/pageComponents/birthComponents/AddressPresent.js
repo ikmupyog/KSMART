@@ -20,7 +20,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
     const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
     const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
     const { data: State = {}, isStateLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
-    const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
+    // const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
     const [isInitialRender, setIsInitialRender] = useState(true);
     const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : isEditStillBirth ? isEditStillBirth : false);
 
@@ -43,11 +43,11 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
         localbodies["tenant"].tenants.map((ob) => {
             cmbLB.push(ob);
         });
-    Village &&
-        Village["common-masters"] && Village["common-masters"].Village &&
-        Village["common-masters"].Village.map((ob) => {
-            cmbVillage.push(ob);
-        });
+    // Village &&
+    //     Village["common-masters"] && Village["common-masters"].Village &&
+    //     Village["common-masters"].Village.map((ob) => {
+    //         cmbVillage.push(ob);
+    //     });
     let currentLB = [];
     let cmbFilterCountry = [];
     let cmbFilterState = [];

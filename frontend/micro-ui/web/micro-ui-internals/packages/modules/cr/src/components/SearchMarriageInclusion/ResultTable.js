@@ -6,10 +6,12 @@ const ResultTable = ({
                          setValue,
                          getValues,
                          data = [],
+                         count = 0,
                          handleSubmit,
                          t,
                          onSubmit,
                          goToLink,
+                         downloadLink,
                          searchType
                      }) => {
     const GetCell = (value) => <span className="cell-text">{value}</span>;
@@ -18,7 +20,7 @@ const ResultTable = ({
         () => {
             const cols = [
                 {
-                    Header: t("CR_SEARCH_APP_NO_LABEL"),
+                    Header: t(searchType == 'application' ? "CR_SEARCH_APP_NO_LABEL" : "REGISTRATION NO"),
                     accessor: "marriageRecordNo",
                     disableSortBy: true,
                     Cell: ({ row }) => {
@@ -55,7 +57,7 @@ const ResultTable = ({
                     Cell: ({ row }) => {
                         return (
                             <div>
-                            <span className="link" onClick={() => goToLink(row.original)}>
+                            <span className="link" onClick={() => downloadLink(row.original)}>
                                 Download
                             </span>
                             </div>
@@ -93,7 +95,7 @@ const ResultTable = ({
             <Table
                 t={t}
                 data={data}
-                totalRecords={3} // count always 0 in api. need to change once api is fixed
+                totalRecords={count}
                 columns={columns}
                 getCellProps={(cellInfo) => {
                     return {

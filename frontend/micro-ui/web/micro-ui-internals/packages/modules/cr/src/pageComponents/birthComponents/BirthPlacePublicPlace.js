@@ -7,7 +7,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
   streetNameMl, setstreetNameMl, publicPlaceDecpEn, setpublicPlaceDecpEn, setWardNo, wardNo, isEditBirth = false
 }) => {
   const stateId = Digit.ULBService.getStateId();
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
+  const [isDisableEdit, setisDisableEdit] = useState(false);
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
   if (tenantId === "kl") {
@@ -68,7 +68,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
   }
   function setSelectlocalityNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
-      setlocalityNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setlocalityNameEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectlocalityNameMl(e) {
@@ -78,13 +78,13 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
       setlocalityNameMl('');
     }
     else {
-      setlocalityNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setlocalityNameMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
   function setSelectstreetNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
-      setstreetNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setstreetNameEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectstreetNameMl(e) {
@@ -94,12 +94,12 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
       setstreetNameMl('');
     }
     else {
-      setstreetNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setstreetNameMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectVehicleOtherDetailsEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
-      setpublicPlaceDecpEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setpublicPlaceDecpEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
     //setpublicPlaceDecpEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/ig, ''));
   }

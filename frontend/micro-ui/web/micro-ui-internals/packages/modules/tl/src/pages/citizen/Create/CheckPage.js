@@ -10,6 +10,7 @@ import {
   StatusTable,
   SubmitBar,
 } from "@egovernments/digit-ui-react-components";
+import { stringReplaceAll } from "../../../utils/index";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useRouteMatch } from "react-router-dom";
@@ -137,7 +138,7 @@ const CheckPage = ({ onSubmit, value }) => {
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_NEW_TRADE_DETAILS_TRADE_TYPE_LABEL")}`}</CardText>
                 </div>
                 <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{t(TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessType?.i18nKey)}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t(stringReplaceAll(TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessType?.i18nKey, ".", "_"))}`}</CardText>
                 </div>
               </div>
             </div>
@@ -147,7 +148,7 @@ const CheckPage = ({ onSubmit, value }) => {
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("TL_NEW_TRADE_DETAILS_TRADE_SUBTYPE_LABEL")}`}</CardText>
                 </div>
                 <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{t(TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessSubtype?.i18nKey)}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t(stringReplaceAll(TradeDetails?.tradeLicenseDetail?.tradeUnits?.businessSubtype?.i18nKey, ".", "_"))}`}</CardText>
                 </div>
               </div>
             </div>
