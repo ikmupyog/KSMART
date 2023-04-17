@@ -14,6 +14,7 @@ import {
   TextArea,
   PopUp,
   UploadFile,
+  ImageUploadHandler,
 } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/MARRIAGETimeline";
 import { useTranslation } from "react-i18next";
@@ -492,6 +493,10 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   }
 
   function sendWitness1OTP() {}
+
+  function handleUpload(ids) {
+    setUploadedImagesIds(ids);
+  }
 
   let validFlag = true;
   const goNext = () => {
@@ -1084,50 +1089,34 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                   <div className="row">
                     <div className="col-md-12">
                       <h1 className="headingh1">
-                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DOCUMENTS")}`}</span>{" "}
+                        <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PHOTOS")}`}</span>{" "}
                       </h1>
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-md-12">
-                      <div className="col-md-6">
-                        <CardLabel>
-                          {`${t("CR_WITNESS1_AADHAR")}`}
-                          <span className="mandatorycss">*</span>
-                        </CardLabel>
-                        <UploadFile
-                        //   key={item.DocumentId}
-                        //   id={item.DocumentId}
-                        //   name={item.DocumentType}
-                        //   extraStyleName={"propertyCreate"}
-                        //   accept=".jpg,.png,.pdf"
-                        //   onUpload={selectfile}
-                        //   onDelete={() => {
-                        //     onDeleteown(item.DocumentId);
-                        //     setUploadedFile(null);
-                        //   }}
-                        //   message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-                        //   error={error}
+                    <div className="col-md-6" style={{ margin: "10px 0 30px 0" }}>
+                      <div style={{ display: "flex", flexDirection: "column", justifyItems: "center", alignItems: "center" }}>
+                        <h2 style={{ marginBottom: "10px", textAlign: "center" }}>CR_GROOM_IMAGE</h2>
+                        <ImageUploadHandler
+                          tenantId={tenantId}
+                          uploadedImages={uploadedImages}
+                          onPhotoChange={handleUpload}
+                          isMulti={false}
+                          moduleType={`crmarriage/${uniqueId}/groom/${currentYear}`}
+                          extraParams={{ fileName: "groom.jpg", UUID: uniqueId }}
                         />
                       </div>
-                      <div className="col-md-6">
-                        <CardLabel>
-                          {`${t("CR_WITNESS1_AADHAR")}`}
-                          <span className="mandatorycss">*</span>
-                        </CardLabel>
-                        <UploadFile
-                        //   key={item.DocumentId}
-                        //   id={item.DocumentId}
-                        //   name={item.DocumentType}
-                        //   extraStyleName={"propertyCreate"}
-                        //   accept=".jpg,.png,.pdf"
-                        //   onUpload={selectfile}
-                        //   onDelete={() => {
-                        //     onDeleteown(item.DocumentId);
-                        //     setUploadedFile(null);
-                        //   }}
-                        //   message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
-                        //   error={error}
+                    </div>
+                    <div className="col-md-6" style={{ margin: "10px 0 30px 0" }}>
+                      <div style={{ display: "flex", flexDirection: "column", justifyItems: "center", alignItems: "center" }}>
+                        <h2 style={{ marginBottom: "10px", textAlign: "center" }}>CR_BRIDE_IMAGE</h2>
+                        <ImageUploadHandler
+                          tenantId={tenantId}
+                          uploadedImages={uploadedImages}
+                          onPhotoChange={handleUpload}
+                          isMulti={false}
+                          moduleType={`crmarriage/${uniqueId}/bride/${currentYear}`}
+                          extraParams={{ fileName: "bride.jpg", UUID: uniqueId }}
                         />
                       </div>
                     </div>
