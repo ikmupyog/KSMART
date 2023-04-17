@@ -158,7 +158,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
   const [isInitialRenderFormData, setisInitialRenderFormData] = useState(false);
 
   const [birthDateTime, setbirthDateTime] = useState(""); 
-  const [isChildName, setIsChildName] = useState(true);
+  const [isChildName, setIsChildName] = useState(formData?.AdoptionChildDetails?.isChildName?formData?.AdoptionChildDetails?.isChildName:false);
   const [adoptionAgency, setIsAdoptionAgency] = useState(formData?.AdoptionChildDetails?.adopthasagency ? formData?.AdoptionChildDetails?.adopthasagency :formData?.AdoptionChildDetails?.adoptionAgency ? formData?.AdoptionChildDetails?.adoptionAgency : false);
   const [birthRegistered, setbirthRegistered] = useState(formData?.AdoptionChildDetails?.birthRegistered ? formData?.AdoptionChildDetails?.birthRegistered : false);
   // const [birthPlace, selectBirthPlace] = useState(isEditAdoption && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined) ? (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.AdoptionChildDetails?.birthPlace)[0]) : formData?.AdoptionChildDetails?.birthPlace);
@@ -1341,15 +1341,15 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
               </div>
             </div>
           </div>
-          <div className="row">
+          {/* <div className="row">
             <div className="col-md-12">
               <div className="col-md-6">
                    <CheckBox label={t("CR_WANT_TO_ENTER_CHILD_NAME")} onChange={setChildName}
                   value={isChildName} checked={isChildName} />
               </div>
             </div>
-          </div>
-          {isChildName === true && (
+          </div> */}
+          {isChildName === false && (
             <div>
               {/* <div className="row">
               <div className="col-md-12">
@@ -1482,7 +1482,15 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                   </div>
                 </div>
               </div>
-            </div>)}  
+            </div>)}
+            <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-6">
+                <CheckBox label={t("CR_WANT_TO_ENTER_CHILD_NAME")} onChange={setChildName}
+                  value={isChildName} checked={isChildName} />
+              </div>
+            </div>
+          </div> 
               {AdoptionDeedNo ==="" &&(
                      <div className="row">
                      <div className="col-md-12">
