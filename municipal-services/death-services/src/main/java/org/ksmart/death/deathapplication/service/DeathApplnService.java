@@ -166,19 +166,6 @@ public class DeathApplnService {
           enrichmentService.setAbandonedPermanentAddress(request);
           enrichmentService.enrichCreateAbandoned(request);
           enrichmentService.setAbandonedACKNumber(request);    
-            /********************************************* */
-
-  try {
-     ObjectMapper mapper = new ObjectMapper();
-     Object obj = request;
-     mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-    System.out.println("rakhi3 "+ mapper.writeValueAsString(obj));
-        }catch(Exception e) {
-        log.error("Exception while fetching from searcher: ",e);
-    }
-
-
-/********************************************** */    
           producer.push(deathConfig.getSaveDeathAbandonedTopic(), request);
           workflowIntegrator.callWorkFlowAbandoned(request);
           return request.getDeathAbandonedDtls();

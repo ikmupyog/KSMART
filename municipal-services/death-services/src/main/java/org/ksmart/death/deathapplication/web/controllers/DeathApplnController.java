@@ -2,7 +2,6 @@ package org.ksmart.death.deathapplication.web.controllers;
 
 import java.util.List;
 import javax.validation.Valid;
-
 import org.ksmart.death.common.contract.RequestInfoWrapper;
 import org.ksmart.death.deathapplication.service.DeathApplnService;
 import org.ksmart.death.deathapplication.service.DeathRegistryRequestService;
@@ -36,16 +35,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-
 import lombok.extern.slf4j.Slf4j;
-/**
-     * Creates DeathController 
-     * Jasmine 06/02/2023
-     * Death Application Create Api- Rakhi S on 06.02.2023 
-     */
 
     @Slf4j
     @RestController

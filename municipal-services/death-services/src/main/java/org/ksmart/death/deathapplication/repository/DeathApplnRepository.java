@@ -126,7 +126,9 @@ public class DeathApplnRepository {
                    deathPlaceHospitalMl = deathPlaceHospitalMl.replaceAll("[\\[\\]\\(\\)]", "");
                     
                 deathDtl.getDeathBasicInfo().setDeathPlaceHospitalNameEn(deathPlaceHospital);
-                deathDtl.getDeathBasicInfo().setDeathPlaceHospitalNameMl(deathPlaceHospitalMl);               
+                deathDtl.getDeathBasicInfo().setDeathPlaceHospitalNameMl(deathPlaceHospitalMl);     
+                
+                deathDtl.getDeathBasicInfo().setHospitalNameEn(deathDtl.getDeathBasicInfo().getDeathPlaceType());
                }
 
                //Rakhi S on 02.04.2023 Death place Institution
@@ -149,11 +151,15 @@ public class DeathApplnRepository {
                 
                 deathDtl.getDeathBasicInfo().setDeathPlaceInstitutionNameEn(deathPlaceInstitution);
                 deathDtl.getDeathBasicInfo().setDeathPlaceInstitutionNameMl(deathPlaceInstitutionMl);
+
+                deathDtl.getDeathBasicInfo().setInstitution(deathDtl.getDeathBasicInfo().getDeathPlaceType());
+            }
+            else if(deathDtl.getDeathBasicInfo().getDeathPlace().equals(DeathConstants.DEATH_PLACE_VEHICLE)){
+                deathDtl.getDeathBasicInfo().setVehicleType(deathDtl.getDeathBasicInfo().getDeathPlaceType());
+            }
+            else if(deathDtl.getDeathBasicInfo().getDeathPlace().equals(DeathConstants.DEATH_PLACE_PUBLICPLACES)){
+                deathDtl.getDeathBasicInfo().setPublicPlaceType(deathDtl.getDeathBasicInfo().getDeathPlaceType());
             } 
-            // System.out.println("regStatusNormal:"+deathDtl.getDeathBasicInfo().isNormalRegn());
-            // System.out.println("Del30:"+deathDtl.getDeathBasicInfo().isDelayedWithinThirty());
-            // System.out.println("Del1:"+deathDtl.getDeathBasicInfo().isDelayedWithinOneyear());
-            // System.out.println("Delafter1:"+deathDtl.getDeathBasicInfo().isDelayedAfterOneyear());
 			});
         }
         return result; 

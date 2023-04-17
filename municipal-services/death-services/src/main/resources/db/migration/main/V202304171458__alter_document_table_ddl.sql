@@ -1,0 +1,1 @@
+ALTER TABLE public.eg_death_document_dtls ALTER COLUMN document_type TYPE varchar(500);

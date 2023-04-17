@@ -858,7 +858,18 @@ public class DeathEnrichment implements BaseEnrichment{
             if (addressinfo!=null){
                 addressinfo.setPresentAddrId(UUID.randomUUID().toString());
                 addressinfo.setPermanentAddrId(UUID.randomUUID().toString());
-            }                      
+            }  
+            List<DeathDocument> documentInfo = deathdtls.getDeathNACDocuments();
+                if (documentInfo!=null){
+                    documentInfo
+                        .forEach(document -> {
+                    document.setId(UUID.randomUUID().toString());
+                    document.setActive(true);
+                    document.setTenantId(deathdtls.getDeathBasicInfo().getTenantId());
+                    document.setDeathDtlId(deathdtls.getDeathBasicInfo().getId());
+                    document.setDeathDocAuditDetails(auditDetails);
+                });
+            }                    
             DeathBasicInfo deathBasicDtls =deathdtls.getDeathBasicInfo();
             if(deathBasicDtls.getDeceasedAadharNumber()!=null){
                 DeathBasicInfo deathBasicEnc =  encryptionDecryptionUtil.encryptObject(deathBasicDtls, "BndDetail", DeathBasicInfo.class);
@@ -893,6 +904,14 @@ public class DeathEnrichment implements BaseEnrichment{
                     deathdtls.getDeathBasicInfo().setDeathACKNo(itr.next());
                     deathdtls.getDeathBasicInfo().setAckNoID(deathApplnUtil.setSeqId(ackNoDetails));
                     deathdtls.getDeathBasicInfo().setApplicationDate(currentTime);
+
+                    List<DeathDocument> documentInfo = deathdtls.getDeathNACDocuments();
+                    if (documentInfo!=null){
+                        documentInfo
+                            .forEach(document -> {                        
+                        document.setDeathACKNo(deathdtls.getDeathBasicInfo().getDeathACKNo());
+                    });
+                }
 
                 });
     }

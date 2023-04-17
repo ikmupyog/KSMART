@@ -2412,6 +2412,34 @@ serviceMaps:
 
       - jsonPath: $.deathNACDtls.*.AddressBirthDetails.isPrsentAddress
 
+    - query: INSERT INTO public.eg_death_document_dtls(id, tenantid, death_dtls_id, document_type, filestore_id, death_ackno, active, created_by, createdtime, lastmodifiedby, lastmodifiedtime)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+     
+
+      basePath: deathNACDtls.*.DeathNACDocuments.*
+      jsonMaps:
+      - jsonPath: $.deathNACDtls.*.DeathNACDocuments.*.Id
+      
+      - jsonPath: $.deathNACDtls.*.DeathNACDocuments.*.TenantId
+
+      - jsonPath: $.deathNACDtls.*.DeathNACDocuments.*.DeathDtlId
+
+      - jsonPath: $.deathNACDtls.*.DeathNACDocuments.*.DocumentType
+
+      - jsonPath: $.deathNACDtls.*.DeathNACDocuments.*.FileStoreId
+
+      - jsonPath: $.deathNACDtls.*.DeathNACDocuments.*.DeathACKNo
+
+      - jsonPath: $.deathNACDtls.*.DeathNACDocuments.*.Active
+
+      - jsonPath: $.deathNACDtls.*.DeathNACDocuments.*.AuditDetails.createdBy      
+
+      - jsonPath: $.deathNACDtls.*.DeathNACDocuments.*.AuditDetails.createdTime
+
+      - jsonPath: $.deathNACDtls.*.DeathNACDocuments.*.AuditDetails.lastModifiedBy
+      
+      - jsonPath: $.deathNACDtls.*.DeathNACDocuments.*.AuditDetails.lastModifiedTime
+
            # UPDATE DEATH NAC  Rakhi S on 30.03.2023 
   - version: 1.0
     description: Persists death reporting form details in eg_death_dtls,eg_death_address_dtls  table

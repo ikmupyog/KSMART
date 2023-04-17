@@ -35,6 +35,9 @@ public class DeathNACDtls {
     @JsonProperty("DeathApplicantDtls")
     private DeathNACApplicantDtls deathApplicantDtls;  
 
+    @JsonProperty("DeathNACDocuments")
+    private List<DeathDocument> deathNACDocuments;
+
     @JsonProperty("AuditDetails")
     private AuditDetails  deathAuditDetails;
 
