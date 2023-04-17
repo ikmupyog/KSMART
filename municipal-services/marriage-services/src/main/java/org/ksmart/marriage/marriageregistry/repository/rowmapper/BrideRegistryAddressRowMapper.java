@@ -51,7 +51,7 @@ public interface BrideRegistryAddressRowMapper {
                 .presentOutSideIndiaProvinceEn(rs.getString("BPSA_ot_state_region_province_en"))
                 .presentOutSideIndiaProvinceMl(rs.getString("BPSA_ot_state_region_province_ml"))
                 .presentOutSideIndiaPostCode(rs.getString("BPSA_ot_zipcode"))
-
+                .brideGroomPresent(rs.getString("BPSA_bride_groom"))
 //                PERMANENT
 
 
@@ -93,7 +93,7 @@ public interface BrideRegistryAddressRowMapper {
                 .permanentOutsideIndiaPostCode(rs.getString("BPMA_ot_zipcode"))
                 .permntOutSideIndiaProvinceMl(rs.getString("BPMA_ot_state_region_province_ml"))
                 .permntOutSideIndiaProvinceEn(rs.getString("BPMA_ot_state_region_province_en"))
-
+                .brideGroomPermanent(rs.getString("BPMA_bride_groom"))
 //                .isPermanentAddress(rs.getInt("BPMA_same_as_present")==1?true:false)
 //                .isPermanentAddressInt(rs.getInt("BPMA_same_as_present"))
                 .build();

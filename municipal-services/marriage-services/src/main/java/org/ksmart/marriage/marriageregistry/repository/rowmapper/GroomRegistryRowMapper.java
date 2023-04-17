@@ -45,6 +45,7 @@ public interface GroomRegistryRowMapper {
                .groomNoOfSpouse(rs.getInt("GD_livingspouseNo"))
                .marriageid(rs.getString("MD_id"))
               // .photo_url(rs.getString("GD_photo_url"))
+                .brideGroom(rs.getString("GD_bride_groom"))
                 .tenentId(rs.getString("MD_tenantid"))
                .build();
     }
