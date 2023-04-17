@@ -32,12 +32,8 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
   const [toast, setToast] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [tenantId, setTenantId] = useState(formDataPage?.localbody?.code ? formDataPage?.localbody?.code: Digit.ULBService.getCitizenCurrentTenant());
-
- // console.log(Digit.ULBService.get);
- //let userInfos = sessionStorage.getItem("Digit.citizen.userRequestObject");
   let tempdistrictid = Digit.SessionStorage.get("CITIZEN.COMMON.HOME.DISTRICT");
   let temptenant = Digit.SessionStorage.get("CITIZEN.COMMON.HOME.CITY");
-  console.log("formdata"+JSON.stringify(formData));
   const [editview, setEditview] = useState(Object.keys(formData).length === 0 ? false : true);
   if (tenantboundary) {
     queryClient.removeQueries("TL_ZONAL_OFFICE");
@@ -824,8 +820,6 @@ const TLLicenseUnitDet = ({ t, config, onSelect, userType, formData }) => {
   if (formDataPage?.localbody && Localbody === undefined) {
     setLocalbody(formDataPage?.localbody ? formDataPage?.localbody : "");
   }
-console.log(JSON.stringify(Zonal));
-console.log(formDataPage?.tradeLicenseDetail?.address?.zonalId);
   if (formDataPage?.tradeLicenseDetail?.address?.zonalId && (zonalOffice === undefined ||zonalOffice==="") && Zonal.length > 0) {
     setZonalOffice(Zonal.filter(zone => zone?.code === formDataPage?.tradeLicenseDetail?.address?.zonalId)[0]);
   }
