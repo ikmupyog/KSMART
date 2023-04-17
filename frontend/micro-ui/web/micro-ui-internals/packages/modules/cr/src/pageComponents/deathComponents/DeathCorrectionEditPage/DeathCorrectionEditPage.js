@@ -175,8 +175,9 @@ function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, sex, cmbPla
   };
 
   const ButtonContainer = ({children}) => {
-    return <div className="col-md-3" style={{ background: "rgba(244, 119, 56, 0.12)", borderRadius: "9999px", height: "2.5rem", width: "2.5rem" }}>{children}</div>;
+    return <div className="col-md-2" style={{ background: "rgba(244, 119, 56, 0.12)", borderRadius: "9999px", height: "3rem", width: "3rem" }}>{children}</div>;
   };
+
   const SubmitContainer = ({children}) => {
     return <div className="col-md-3">{children}</div>;
   };
@@ -325,7 +326,7 @@ console.log("deathCorrectionFormsObj==",deathCorrectionFormsObj);
             
                    <span  onClick={()=> setDeathCorrectionFilterQuery(DEATH_CORRECTION_FIELD_NAMES["DECEASED_AADHAR"])}>
                    <EditIcon
-                    style={{ position: "absolute", top: "0.8rem"}} 
+                    style={{ position: "absolute", top: "0.95rem"}} 
                      selected={true}
                      label={"Edit"}
                    />
