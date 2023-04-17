@@ -6,6 +6,7 @@ import { useQueryClient } from "react-query";
 const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospitalName, hospitalName, hospitalNameMl,
   selectHospitalNameMl, isEditBirth
 }) => {
+  console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -45,8 +46,10 @@ const BirthPlaceHospital = ({ config, onSelect, userType, formData, selectHospit
   useEffect(() => {
 
     // if (isInitialRender) {
-      if (formData?.ChildDetails?.hospitalName) {
-        selectHospitalNameMl(hospitalNameMl);
+      if (formData?.ChildDetails?.hospitalCode) {
+        cmbhospitalMl = cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.ChildDetails?.hospitalCode);
+        selectHospitalNameMl(cmbhospitalMl[0]);
+        // selectHospitalNameMl(hospitalNameMl);
         setIsInitialRender(false);
       } else {
         if (hospitalName != null) {
