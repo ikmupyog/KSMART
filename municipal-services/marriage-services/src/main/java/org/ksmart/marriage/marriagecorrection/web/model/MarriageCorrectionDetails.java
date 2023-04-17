@@ -40,6 +40,9 @@ public class MarriageCorrectionDetails {
     @JsonProperty("workflowCode")
     private String workflowcode;
     @Size(max = 64)
+    @JsonProperty("registerId")
+    private String registerId;
+    @Size(max = 64)
     @JsonProperty("registrationno")
     private String registrationno;
     @JsonProperty("registration_date")

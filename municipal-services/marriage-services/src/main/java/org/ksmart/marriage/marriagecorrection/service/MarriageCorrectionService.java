@@ -2,7 +2,7 @@ package org.ksmart.marriage.marriagecorrection.service;
 
 import lombok.extern.slf4j.Slf4j;
 
-import org.egov.common.contract.request.RequestInfo;
+import org.egov.tracer.model.CustomException;
 import org.ksmart.marriage.common.producer.MarriageProducer;
 import org.ksmart.marriage.marriageapplication.config.MarriageApplicationConfiguration;
 import org.ksmart.marriage.marriageapplication.repository.MarriageApplicationRepository;
@@ -11,9 +11,12 @@ import org.ksmart.marriage.marriageapplication.validator.MarriageApplicationVali
 import org.ksmart.marriage.marriageapplication.validator.MarriageMDMSValidator;
 import org.ksmart.marriage.marriageapplication.web.model.MarriageApplicationDetails;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageApplicationSearchCriteria;
+import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageDetailsRequest;
 import org.ksmart.marriage.marriagecorrection.enrichment.MarriageCorrectionEnrichment;
 import org.ksmart.marriage.marriagecorrection.mapper.CorrectionApplicationToRegistryMapper;
 import org.ksmart.marriage.marriagecorrection.mapper.RegistryToApplicationMapper;
+import org.ksmart.marriage.marriagecorrection.validator.MarriageCorrectionApplnValidator;
+import org.ksmart.marriage.marriagecorrection.validator.MarriageCorrectionMDMSValidator;
 import org.ksmart.marriage.marriagecorrection.web.model.MarriageCorrectionDetails;
 import org.ksmart.marriage.marriagecorrection.web.model.MarriageCorrectionRequest;
 import org.ksmart.marriage.marriagecorrection.repository.MarriageCorrectionRepository;
@@ -28,6 +31,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.ksmart.marriage.marriageapplication.web.enums.ErrorCodes.MARRIAGE_DETAILS_INVALID_CREATE;
 
 @Slf4j
 @Service
@@ -53,16 +58,20 @@ public class MarriageCorrectionService {
     private final WorkflowIntegrator workflowIntegrator;
     private final MarriageCorrectionValidator correctionValidatorService ;
 
-    public MarriageCorrectionService(MarriageCorrectionRepository correctionRepository, MarriageRegistryRepository registryRepository, 
-                                                MarriageCorrectionEnrichment marriageCorrectionEnrichment, org.ksmart.marriage.marriagecorrection.mapper.RegistryToApplicationMapper registryToApplicationMapper, 
-                                                MarriageApplicationService marriageService, MarriageProducer producer, 
-                                                MarriageApplicationConfiguration marriageApplicationConfiguration, MarriageMdmsUtil util, 
-                                                MarriageMDMSValidator mdmsValidator, 
-                                                CorrectionApplicationToRegistryMapper correctionApplicationToRegistryMapper,
-                                                 MarriageApplicationRepository applnRepository,
-                                                 MarriageApplicationValidator applnvalidatorService,
-                                                 WorkflowIntegrator workflowIntegrator,
-                                                 MarriageCorrectionValidator correctionValidatorService) {
+    private final MarriageCorrectionApplnValidator marriageCorrectionApplnValidator;
+    private final MarriageCorrectionMDMSValidator marriageCorrectionMDMSValidator;
+
+
+    public MarriageCorrectionService(MarriageCorrectionRepository correctionRepository, MarriageRegistryRepository registryRepository,
+                                     MarriageCorrectionEnrichment marriageCorrectionEnrichment, org.ksmart.marriage.marriagecorrection.mapper.RegistryToApplicationMapper registryToApplicationMapper,
+                                     MarriageApplicationService marriageService, MarriageProducer producer,
+                                     MarriageApplicationConfiguration marriageApplicationConfiguration, MarriageMdmsUtil util,
+                                     MarriageMDMSValidator mdmsValidator,
+                                     CorrectionApplicationToRegistryMapper correctionApplicationToRegistryMapper,
+                                     MarriageApplicationRepository applnRepository,
+                                     MarriageApplicationValidator applnvalidatorService,
+                                     WorkflowIntegrator workflowIntegrator,
+                                     MarriageCorrectionValidator correctionValidatorService, MarriageCorrectionApplnValidator marriageCorrectionApplnValidator, MarriageCorrectionMDMSValidator marriageCorrectionMDMSValidator) {
         this.correctionRepository = correctionRepository;
         this.registryRepository = registryRepository;
         this.marriageCorrectionEnrichment = marriageCorrectionEnrichment;
@@ -77,9 +86,15 @@ public class MarriageCorrectionService {
         this.applnvalidatorService = applnvalidatorService;
         this.workflowIntegrator = workflowIntegrator;
         this.correctionValidatorService = correctionValidatorService;
+        this.marriageCorrectionApplnValidator = marriageCorrectionApplnValidator;
+        this.marriageCorrectionMDMSValidator = marriageCorrectionMDMSValidator;
     }
 //req for testing
     public List<MarriageCorrectionDetails> createCorrection(MarriageCorrectionRequest request) {
+
+        marriageCorrectionApplnValidator.validateCorrectionCreate(request);
+        Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getMarriageCorrectionDetails().get(0).getTenantid());
+        marriageCorrectionMDMSValidator.validateMarriageCorrectionMDMSData(request,mdmsData);
 
         MarriageRegistrySearchCriteria criteria = new MarriageRegistrySearchCriteria();
         criteria.setRegistrationNo(request.getMarriageCorrectionDetails().get(0).getRegistrationno());
@@ -90,15 +105,16 @@ public class MarriageCorrectionService {
 
             List<MarriageApplicationDetails> marriageApplicationDetailsList = new ArrayList<>();
             marriageApplicationDetailsList.add(marriageApplicationDetail);
-
             request.setMarriageDetails(marriageApplicationDetailsList);
 
-            //correctionRepository.saveCorrectionDetails(request);
-
-            //Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getMarriageDetails().get(0).getTenantid());
-            //mdmsValidator.validateMarriageMDMSData(request,mdmsData);
+            MarriageDetailsRequest marriageDetailsRequest=new MarriageDetailsRequest();
+            marriageDetailsRequest.setMarriageDetails(marriageApplicationDetailsList);
+            mdmsValidator.validateMarriageMDMSData(marriageDetailsRequest,mdmsData);
 
             producer.push(marriageApplicationConfiguration.getSaveMarriageCorrectionTopic(), request);
+        }else{
+            throw new CustomException(MARRIAGE_DETAILS_INVALID_CREATE.getCode(),
+                    "Marriage registration(s) not found in database.");
         }
         return request.getMarriageCorrectionDetails();
     }
@@ -136,16 +152,16 @@ public class MarriageCorrectionService {
 public List<MarriageCorrectionDetails> updateMarriageCorrectionDetails(MarriageCorrectionRequest request) {
 
     String applicationNumber = request.getMarriageCorrectionDetails().get(0).getApplicationNo();
-    MarriageApplicationSearchCriteria criteria =(MarriageApplicationSearchCriteria.builder()
-                                                .applicationNo(applicationNumber)
-                                                .build());
-    List<MarriageApplicationDetails> searchResult = applnRepository.getMarriageApplication(criteria,request.getRequestInfo());
-    correctionValidatorService.validateCorrectionUpdate(request, searchResult); 
-    if (request.getMarriageCorrectionDetails().get(0).getIsWorkflow()){
+    MarriageApplicationSearchCriteria criteria = (MarriageApplicationSearchCriteria.builder()
+            .applicationNo(applicationNumber)
+            .build());
+    List<MarriageApplicationDetails> searchResult = applnRepository.getMarriageApplication(criteria, request.getRequestInfo());
+    correctionValidatorService.validateCorrectionUpdate(request, searchResult);
+    if (request.getMarriageCorrectionDetails().get(0).getIsWorkflow()) {
         workflowIntegrator.callCorrectionWorkFlow(request);
     }
     producer.push(marriageApplicationConfiguration.getUpdateMarriageApplicationCorrectionTopic(), request);
-    
+
     // request.getMarriageDetails().forEach(marriage->{
     //     if(marriage.getStatus() == MarriageConstants.STATUS_FOR_PAYMENT){
     //         List<Demand> demands = new ArrayList<>();
@@ -156,8 +172,9 @@ public List<MarriageCorrectionDetails> updateMarriageCorrectionDetails(MarriageC
     //         marriageDetailsEnrichment.saveDemand(request.getRequestInfo(),demands);
     //     }
     // }); 
-     return request.getMarriageCorrectionDetails();
-
+    return request.getMarriageCorrectionDetails();
 }
-
+    public List<MarriageApplicationDetails> searchCorrectionDetails(MarriageCorrectionRequest request,MarriageApplicationSearchCriteria criteria) {
+        return correctionRepository.searchMarriageCorrectionApplnDetails(criteria);
+    }
 }

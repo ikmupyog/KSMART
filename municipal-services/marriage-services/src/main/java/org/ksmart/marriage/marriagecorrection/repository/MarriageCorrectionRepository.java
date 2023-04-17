@@ -60,4 +60,12 @@ public class MarriageCorrectionRepository {
         return result;
     }
 
+    public List<MarriageApplicationDetails> searchMarriageCorrectionApplnDetails(MarriageApplicationSearchCriteria criteria) {
+        List<Object> preparedStmtValues = new ArrayList<>();
+        String query = marriageQueryBuilder.getMarriageApplicationSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
+        List<MarriageApplicationDetails> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), marriageApplicationRowMapper);
+
+        return result;
+    }
+
 }
