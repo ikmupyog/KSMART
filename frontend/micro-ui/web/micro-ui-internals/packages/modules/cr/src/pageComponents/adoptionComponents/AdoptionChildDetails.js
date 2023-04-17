@@ -1135,19 +1135,19 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                <div className="col-md-12">
                  <div className="col-md-3">
                    <CardLabel>
-                     {`${t("CR_BIRTH_RED_ID")}`}
+                     {`${t("CR_SEARCH_BIRTH_REG_ID")}`}
                    </CardLabel>
                    <TextInput
                      t={t}
                      isMandatory={false}
                      type={"text"}
                      optionKey="i18nKey"
-                     name="CR_BIRTH_RED_ID"
+                     name="CR_SEARCH_BIRTH_REG_ID"
                      value={SearchRegId?.applicationNumber}
                      // onKeyPress={setCheckMalayalamInputField}
                     //  onChange={setSelectDeeOrderNo}
                      disable={true}
-                     placeholder={`${t("CR_BIRTH_RED_ID")}`}
+                     placeholder={`${t("CR_SEARCH_BIRTH_REG_ID")}`}
                      {...(validation = {
                        // pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
                        isRequired: false,
@@ -1180,7 +1180,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                       
                  </div> */}
                  <div className="col-md-3">
-                   <CardLabel>{`${t("CR_COMMON_COL_DOB")}`}
+                   <CardLabel>{`${t("CR_SEARCH_DOB")}`}
                    {AdoptionDeedNo ==="" &&  <span className="mandatorycss">*</span>}
                    </CardLabel>
                    <TextInput
@@ -1188,12 +1188,12 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                      isMandatory={false}
                      type={"text"}
                      optionKey="i18nKey"
-                     name="adoptissuingauththority"
+                     name="CR_SEARCH_DOB"
                      value={convertEpochToDateDMY(SearchRegId?.childDOB)}
                      // onKeyPress={setCheckMalayalamInputField}
                      onChange={setSelectIssuingAuthority}
                      disable={true}
-                     placeholder={`${t("CR_COMMON_COL_DOB")}`}
+                     placeholder={`${t("CR_SEARCH_DOB")}`}
                      {...(validation = {
                        // pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
                        isRequired:false,
@@ -1203,7 +1203,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                    />
                  </div>
                  <div className="col-md-3">
-                   <CardLabel>{`${t("CR_COMMON_GENDER")}`}
+                   <CardLabel>{`${t("CR_SEARCH_PLACE")}`}
                    {AdoptionDeedNo ==="" &&  <span className="mandatorycss">*</span>}
                    </CardLabel>
                    <TextInput
@@ -1211,12 +1211,35 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                      isMandatory={false}
                      type={"text"}
                      optionKey="i18nKey"
-                     name="adoptissuingauththority"
+                     name="CR_SEARCH_PLACE"
+                     value={SearchRegId?.birthPlace}
+                     // onKeyPress={setCheckMalayalamInputField}
+                    //  onChange={setSelectIssuingAuthority}
+                     disable={true}
+                     placeholder={`${t("CR_SEARCH_PLACE")}`}
+                     {...(validation = {
+                      
+                       isRequired:  false,
+                       type: "text",
+                       title: t(""),
+                     })}
+                   />
+                 </div>
+                 <div className="col-md-3">
+                   <CardLabel>{`${t("CR_SEARCH_GENDER")}`}
+                   {AdoptionDeedNo ==="" &&  <span className="mandatorycss">*</span>}
+                   </CardLabel>
+                   <TextInput
+                     t={t}
+                     isMandatory={false}
+                     type={"text"}
+                     optionKey="i18nKey"
+                     name="CR_SEARCH_GENDER"
                      value={SearchRegId?.gender}
                      // onKeyPress={setCheckMalayalamInputField}
                     //  onChange={setSelectIssuingAuthority}
                      disable={true}
-                     placeholder={`${t("CR_COMMON_GENDER")}`}
+                     placeholder={`${t("CR_SEARCH_GENDER")}`}
                      {...(validation = {
                       
                        isRequired:  false,
