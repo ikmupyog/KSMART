@@ -10,8 +10,8 @@ import {
   Loader,
   Toast,
 } from "@egovernments/digit-ui-react-components";
-import SearchFormFields from "./SearchFields";
-
+import SearchFormFields from "./SearchDeathFields";
+import { convertEpochToDateDMY } from "../../utils";
 
 const MobileSearchApplication = ({ Controller, register, control, t, reset, previousPage, handleSubmit, tenantId, data, onSubmit}) => {
 
@@ -67,7 +67,6 @@ const MobileSearchApplication = ({ Controller, register, control, t, reset, prev
     [currentlyActiveMobileModal]
   );
 
-
   const propsMobileInboxCards = useMemo(
     () => {
       if (data?.display){
@@ -79,9 +78,9 @@ const MobileSearchApplication = ({ Controller, register, control, t, reset, prev
       }
       return data?.map((data) => ({
         [t("TL_COMMON_TABLE_COL_APP_NO")]: data.TL_COMMON_TABLE_COL_APP_NO,
-        // [t("CR_NAME")]: data.CR_NAME,
-        [t("CR_FATHER_NAME")]: data.CR_FATHER_NAME,
-        [t("CR_COMMON_MOTHER_NAME")]: data.CR_MOTHER_NAME,
+        [t("CR_NAME")]: data.CR_DECEASED_NAME,
+        [t("CR_FATHER_NAME")]: data.CR_DECEASED_FATHER_NAME,
+        [t("CR_COMMON_MOTHER_NAME")]: data.CR_DECEASED_MOTHER_NAME,
         [t("CR_ADDRESS")]: data.CR_ADDRESS,
         [t("TL_CITY_NAME")]: data.TL_COMMON_CITY_NAME,
        }))

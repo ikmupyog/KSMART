@@ -7,7 +7,7 @@ const BirthPlacePublicPlace = ({ config, onSelect, userType, formData, publicPla
   streetNameMl, setstreetNameMl, publicPlaceDecpEn, setpublicPlaceDecpEn, setWardNo, wardNo, isEditBirth = false
 }) => {
   const stateId = Digit.ULBService.getStateId();
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
+  const [isDisableEdit, setisDisableEdit] = useState(false);
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
   if (tenantId === "kl") {
