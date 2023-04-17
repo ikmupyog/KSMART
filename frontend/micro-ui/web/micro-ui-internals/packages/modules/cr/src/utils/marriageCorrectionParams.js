@@ -1,55 +1,40 @@
-const data = [
-    {
-      correctionFieldName: "CHILD_DOB",
-      conditionCode: "DOB_INSTITUTIONAL",
-      specificCondition: null,
-      correctionFieldValue: getCorrectionFieldValues(),
-      CorrectionDocument: [
-        {
-          DocumentId: 3,
-          DocumentType: "Applicant ID proof",
-          DocumentName: "ID_PROOF_EPIC",
-          filestoreId: "9a6a52a4-3c03-4ca4-8bb1-54a8a4c48827",
-        },
-      ],
-    },
-    {
-      correctionFieldName: "FATHER_DETAILS",
-      conditionCode: "FATER_DETAILS_CORRECTION_WITH_OUT_CERTIFICATE",
-      specificCondition: "CORRECTION",
-      correctionFieldValue: [
-        {
-          column: "fatherfnen",
-          newValue: "fatherFirstNameEn",
-          oldValue: null,
-        },
-        {
-          column: "fatherfnml",
-          newValue: "fatherFirstNameMl",
-          oldValue: null,
-        },
-        {
-          column: "fatheraadhar",
-          newValue: "123456789012",
-          oldValue: null,
-        },
-      ],
-      CorrectionDocument: [
-        {
-          DocumentId: 3,
-          DocumentType: "Applicant ID proof",
-          DocumentName: "ID_PROOF_EPIC",
-          filestoreId: "9a6a52a4-3c03-4ca4-8bb1-54a8a4c48827",
-        },
-        {
-          DocumentId: 4,
-          DocumentType: "ID proof of father",
-          DocumentName: "ID_PROOF_PPO",
-          filestoreId: "9a6a52a4-3c03-4ca4-8bb1-54a8a4c48827",
-        },
-      ],
-    },
-  ];
+
+const formFielColumns = {
+  DOM: "CR_DATE_OF_MARRIAGE",
+  PLACE_OF_MARRIAGE:"CR_PLACE_OF_MARRIAGE",
+  BRIDE_FATHER: {
+    brideFatherNameEn: "CR_FATHER_NAME_EN",
+    brideFatherNameMl: "CR_FATHER_NAME_ML",
+  },
+  BRIDE_MOTHER:{
+    motherNameEn: "CR_MOTHER_NAME_EN",
+    motherNameMl: "CR_MOTHER_NAME_ML",
+  },
+  GROOM_FATHER: {
+    groomFatherNameEn: "CR_FATHER_NAME_EN",
+    groomFatherNameml: "CR_FATHER_NAME_ML",
+  },
+  GROOM_MOTHER:{
+    groomMotherNameEn: "CR_MOTHER_NAME_EN",
+    groomMotherNameMl: "CR_MOTHER_NAME_ML",
+  },
+  GROOM_NAME:{
+    firstNameEn: "CR_FIRST_NAME_EN",
+    middleNameEn: "CR_MIDDLE_NAME_EN",
+    lastNameEn: "CR_LAST_NAME_EN",
+    firstNameMl: "CR_FIRST_NAME_ML",
+    middleNameMl: "CR_MIDDLE_NAME_ML",
+    lastNameMl: "CR_LAST_NAME_ML",
+  },
+  BRIDE_NAME:{
+    firstNameEn: "CR_FIRST_NAME_EN",
+    middleNameEn: "CR_MIDDLE_NAME_EN",
+    lastNameEn: "CR_LAST_NAME_EN",
+    firstNameMl: "CR_FIRST_NAME_ML",
+    middleNameMl: "CR_MIDDLE_NAME_ML",
+    lastNameMl: "CR_LAST_NAME_ML",
+  },
+}
   
   const getCorrectionDocuments = (docData) => {
     console.log("docData", docData);
@@ -66,15 +51,53 @@ const data = [
     }
     return selectedDocs;
   };
-  
+
+  const getNestedFieldNames = (fieldData) =>{
+    let fieldNameData = [];
+    console.log("reached--nested==",fieldData,Object.keys(fieldData.curValue));
+    if(Object.keys(fieldData.curValue)?.length > 0){
+      fieldNameData = Object.keys(fieldData.curValue).map((item)=>{
+        console.log("looped==",formFielColumns[fieldData?.selectedDocType]?.[item],formFielColumns[fieldData?.selectedDocType]);
+        const columnName = formFielColumns[fieldData?.selectedDocType]?.[item];
+         const tempObj = {
+            column: columnName,
+            oldValue: fieldData.initialValue?.[item],
+            newValue: fieldData.curValue?.[item],
+          };
+          console.log("tempObj==",tempObj);
+          return tempObj;
+      }) 
+    }
+    return fieldNameData;
+  }
+
   const getCorrectionFieldValues = (item) => {
-    return [
+    console.log("correction item==",item);
+    let fieldValues = [];
+    switch(item?.selectedDocType){
+      case "DOM":
+    fieldValues =  [
       {
-        column: "dob",
+        column: "dom",
         oldValue: item.initialValue,
         newValue: item.curValue && Date.parse(item.curValue),
       },
     ];
+    break;
+    case "DOM":
+    fieldValues =  [
+      {
+        column: formFielColumns[item?.CorrectionField],
+        oldValue: item.initialValue,
+        newValue: item.curValue,
+      },
+    ];
+    break;
+    case "GROOM_NAME" : case "FATHER_NAME" : case "MOTHER_NAME" :
+    fieldValues =  getNestedFieldNames(item);
+    break;
+   }
+   return fieldValues;
   };
   
   const getCorrectionFields = (correctionData) => {
@@ -83,13 +106,13 @@ const data = [
       Object.values(correctionData)?.length > 0 &&
       Object.values(correctionData)
         .map((item) => {
-          console.log("items==", item, item?.CorrectionField === "CHILD_DOB");
-          if (item?.CorrectionField === "DOM") {
+          console.log("items==marriage", item);
+          if (item?.isEditable) {
             const correctionFieldValues = getCorrectionFieldValues(item);
             const correctionDocs = getCorrectionDocuments(item.Documents);
             const tempObj = {
-              correctionFieldName: "DOM",
-              conditionCode: item.conditionCode,
+              correctionFieldName: item?.documentData?.[0]?.CorrectionField ,
+              conditionCode: item?.Documents?.[0]?.documentCondition,
               specificCondition: null,
               correctionFieldValue: correctionFieldValues,
               CorrectionDocument: correctionDocs,
@@ -105,7 +128,7 @@ const data = [
   };
   
   export const formatApiParams = (formData,userData) => {
-    console.log("formdata==", formData);
+    console.log("formdata==", formData,userData);
     const correctionFieldData = getCorrectionFields(formData);
     console.log("formData", formData);
     const apiParam = {
@@ -118,7 +141,7 @@ const data = [
           workflowcode: "BIRTHHOSP21",
           action: "",
           registerid: "c0bcc185-b408-4f44-bfc2-6eee61c6663e",
-          registrationNo: userData?.registration_no,
+          registrationNo: userData?.registrationno,
           registrationDate: null,
           applicationStatus: "INITIATED",
           CorrectionField: correctionFieldData,

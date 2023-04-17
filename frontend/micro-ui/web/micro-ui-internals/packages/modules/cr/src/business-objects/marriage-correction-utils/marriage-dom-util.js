@@ -27,13 +27,12 @@ const computeCurrentValue = (dom) => {
 };
 
 const getFilteredDocuments = (selectedData,inclusionData) => {
-  console.log("DOM ===",selectedData,inclusionData  );
   let filteredData  = {};
   if (selectedData?.marriagePlacetype === "MANDAPAM_HALL_AND_OTHER") {
-    filteredData = inclusionData?.find((item) => item.conditionCode === "MANDAPAM_HALL_AND_OTHER");
+    filteredData = inclusionData?.filter((item) => item.conditionCode === "MANDAPAM_HALL_AND_OTHER");
   } else {
-    filteredData = inclusionData?.find((item) => item.conditionCode === "RELIGIOUS_INSTITUTION");
+    filteredData = inclusionData?.filter((item) => item.conditionCode === "RELIGIOUS_INSTITUTION");
   }
   console.log("filtered data", filteredData);
-  return filteredData;
+  return {documentData:filteredData, docFlag: "DOM"};
 };

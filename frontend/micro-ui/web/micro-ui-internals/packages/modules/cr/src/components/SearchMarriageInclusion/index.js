@@ -126,7 +126,7 @@ const  SearchMarriageInclusion = ({ tenantId, t, onSubmit, data, count, onCorrec
   return (
     <React.Fragment>
       <div style={mystyle}>
-        <h1 style={hstyle}>{t("MARRIAGE CERTIFICATE")}</h1>
+        <h1 style={hstyle}>{t("MARRIAGE CORRECTIONS")}</h1>
         <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
           <SearchFields {...{ register, control, reset, tenantId, previousPage, t }} />
         </SearchForm>

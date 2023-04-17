@@ -6,7 +6,6 @@ import MarriageCorrectionEditPage from "./MarriageCorrectionEditPage";
 
 const MarriageCorrectionPage = () => {
   const { t } = useTranslation();
-  // let birthInclusionFormData = {};
   const stateId = Digit.ULBService.getStateId();
 
   let tenantId = "";
@@ -17,7 +16,7 @@ const MarriageCorrectionPage = () => {
   const [cmbPlace, setCmbPlace] = useState([]);
   const [cmbWardNoFinal, setCmbWardNoFinal] = useState([]);
   const [cmbPlaceName, setCmbPlaceName] = useState([]);
-  const [birthCorrectionDocs, setBirthCorrectionDocs] = useState([]);
+  const [marriageCorrectionDocs, setMarriageCorrectionDocs] = useState([]);
   let location = useLocation();
   let place = [];
   let marriagePlace = [];
@@ -68,34 +67,32 @@ const MarriageCorrectionPage = () => {
 
   console.log("placename ===",cmbPlaceName);
 
-  const onBirthCorrectionSuccess = (data) => {
+  const onMarriageCorrectionSuccess = (data) => {
     data &&
       data["birth-death-service"] &&
       data["birth-death-service"].CorrectionMarriageDocuments &&
       data["birth-death-service"].CorrectionMarriageDocuments?.map((ob) => {
         correctionDocs.push(ob);
       });
-      console.log("marriage docss==",data,correctionDocs);
-    setBirthCorrectionDocs(correctionDocs);
+      setMarriageCorrectionDocs(correctionDocs);
   };
 
   useEffect(() => {
     mutation.mutate({ moduleCode: "birth-death-service", type: "MarriagePlaceType" }, { onSuccess: onMarriagePlacesSuccess });
-    correctionDocsMutation.mutate({ moduleCode: "birth-death-service", type: "CorrectionMarriageDocuments" }, { onSuccess: onBirthCorrectionSuccess });
+    correctionDocsMutation.mutate({ moduleCode: "birth-death-service", type: "CorrectionMarriageDocuments" }, { onSuccess: onMarriageCorrectionSuccess });
     wardMutation.mutate({ moduleCode: "egov-location", type: "TenantBoundary" }, { onSuccess: onMarriageWardSuccess });
     placeNameMutation.mutate({ moduleCode: "egov-location", type: "MarriagePlace" }, { onSuccess: onMarriagePlaceNameSuccess });
   }, []);
 
-  if (cmbWardNoFinal?.length > 0 && cmbPlace?.length > 0 && cmbPlaceName?.length && birthCorrectionDocs?.length > 0) {
+  if (cmbWardNoFinal?.length > 0 && cmbPlace?.length > 0 && cmbPlaceName?.length && marriageCorrectionDocs?.length > 0) {
     return (
       <MarriageCorrectionEditPage
         cmbPlace={cmbPlace}
         cmbWardNoFinal={cmbWardNoFinal}
         cmbWardNo={cmbWardNo}
         cmbPlaceName={cmbPlaceName}
-        BirthCorrectionDocuments={birthCorrectionDocs}
+        BirthCorrectionDocuments={marriageCorrectionDocs}
         navigationData={navigationData}
-        // birthInclusionFormData={birthInclusionFormData}
       />
     );
   } else {
