@@ -691,10 +691,10 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
       });
     }
   };
-  if (formData?.ChildDetails?.birthPlace != null) {
+  if (formData?.BirthNACDetails?.birthPlace != null) {
     if (cmbPlaceMaster.length > 0 && (birthPlace === undefined || birthPlace === "")) {
-      selectBirthPlace(cmbPlaceMaster.filter((cmbPlaceMaster) => cmbPlaceMaster.code === formData?.ChildDetails?.birthPlace)[0]);
-      setValue(formData?.ChildDetails?.birthPlace);
+      selectBirthPlace(cmbPlaceMaster.filter((cmbPlaceMaster) => cmbPlaceMaster.code === formData?.BirthNACDetails?.birthPlace)[0]);
+      setValue(formData?.BirthNACDetails?.birthPlace);
     }
   }
   const convertEpochToDate = (dateEpoch) => {
@@ -717,7 +717,7 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
   } else {
     return (
       <React.Fragment>
-        <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+        {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
         {window.location.href.includes("/citizen") ? <Timeline currentStep={1} /> : null}
         {window.location.href.includes("/employee") ? <Timeline currentStep={1} /> : null}
         <FormStep
@@ -925,7 +925,8 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
               </div>
               <div className="col-md-4">
                 <CardLabel>
-                  Order of Birth<span className="mandatorycss">*</span>
+                  {`${t("ORDER_OF_BIRTH")}`}
+                  <span className="mandatorycss">*</span>
                 </CardLabel>
                 <TextInput
                   t={t}

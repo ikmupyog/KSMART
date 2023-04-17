@@ -67,11 +67,14 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
   };
   const convertEpochToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
+
     if (dateEpoch) {
       const dateFromApi = new Date(dateEpoch);
+      console.log("dateFromApi",dateFromApi);
       let month = dateFromApi.getMonth() + 1;
       let day = dateFromApi.getDate();
       let year = dateFromApi.getFullYear();
+      console.log("year" , year);
       month = (month > 9 ? "" : "0") + month;
       day = (day > 9 ? "" : "0") + day;
       return `${year}-${month}-${day}`;
@@ -153,14 +156,8 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
     { i18nKey: "41", code: "41" },
     { i18nKey: "42", code: "42" },
   ];
-  const [childDOB, setChildDOB] = useState(
-    isEditStillBirth &&
-      isEditStillBirthPageComponents === false &&
-      (formData?.StillBirthChildDetails?.IsEditChangeScreen === false || formData?.StillBirthChildDetails?.IsEditChangeScreen === undefined)
-      ? convertEpochToDate(formData?.StillBirthChildDetails?.childDOB)
-      : formData?.StillBirthChildDetails?.childDOB
-  ); 
-  
+ 
+  const [childDOB, setChildDOB] = useState(isEditStillBirth ? convertEpochToDate(formData?.StillBirthChildDetails?.childDOB) : formData?.StillBirthChildDetails?.childDOB);
   
   //formData?.StillBirthChildDetails?.childDOB
   // const [gender, selectGender] = useState(isEditStillBirth && isEditStillBirthPageComponents === false && (formData?.StillBirthChildDetails?.IsEditChangeScreen === false || formData?.StillBirthChildDetails?.IsEditChangeScreen === undefined) ? (menu.filter(menu => menu.code === formData?.StillBirthChildDetails?.gender)[0]) : formData?.StillBirthChildDetails?.gender);
@@ -176,7 +173,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
   const [isInitialRenderPlace, setIsInitialRenderPlace] = useState(true);
   const [isInitialRenderFormData, setisInitialRenderFormData] = useState(false);
   //const [birthDateTime, setbirthDateTime] = useState(""); //formData?.StillBirthChildDetails?.birthDateTime ? formData?.StillBirthChildDetails?.birthDateTime :
-  onst [birthDateTime, setbirthDateTime] = useState(formData?.StillBirthChildDetails?.birthDateTime ? formData?.StillBirthChildDetails?.birthDateTime : "");
+  const [birthDateTime, setbirthDateTime] = useState(formData?.StillBirthChildDetails?.birthDateTime ? formData?.StillBirthChildDetails?.birthDateTime : "");
   const [birthPlace, selectBirthPlace] = useState(
     formData?.StillBirthChildDetails?.birthPlace?.code
       ? formData?.StillBirthChildDetails?.birthPlace
@@ -469,12 +466,12 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
           setAmount(currentWorgFlow[0].amount);
         }
       }
-      if (Difference_In_Days >= 365) {
-        setChildAadharHIde(true);
-      } else {
-        setChildAadharHIde(false);
-        setChildAadharNo("");
-      }
+      // if (Difference_In_Days >= 365) {
+      //   setChildAadharHIde(true);
+      // } else {
+      //   setChildAadharHIde(false);
+      //   setChildAadharNo("");
+      // }
     }
   }
   function setSelectPregnancyDuration(e) {
