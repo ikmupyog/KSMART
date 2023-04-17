@@ -34,8 +34,9 @@ const ActionModal = (props) => {
     return <BornOutsideActionModal {...props} />;
   }
 
-  if (props?.businessService.includes("21DEATHHHOME") || props?.businessService.includes("DEATHHOSP")) {
-    return <DeathActionModal {...props} />;
+  if (props?.businessService.includes("WFDEATH21DAYS") || props?.businessService.includes("WFDEATH30DAYS") || props?.businessService.includes("WFDEATH1YR") || props?.businessService.includes("WFDEATHABOVE1YR")
+  || props?.businessService.includes("WFDEATH21DAYSHOME") || props?.businessService.includes("WFDEATH30DAYSHOME") || props?.businessService.includes("WFDEATH1YEARHOME") || props?.businessService.includes("WFDEATHHOME1YEARABOVE")) {
+    return <BirthActionModal {...props} />;
   }
   if (props?.businessService.includes("DEATHABANDONED") || props?.businessService.includes("DEATHHOSP")) {
     return <AbandonedActionModal {...props} />;

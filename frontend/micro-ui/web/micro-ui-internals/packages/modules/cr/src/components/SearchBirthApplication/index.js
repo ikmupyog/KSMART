@@ -120,7 +120,7 @@ const SearchBirthApplication = ({ onSubmit, data, filestoreId, isSuccess, isLoad
                                 </span>
                             ) : (
                                 <span className="link" onClick={() => downloadDocument(row?.original?.filestoreId)}>
-                                    <Link to={`/digit-ui/citizen/cr/cr/application/${row.original?.TL_COMMON_TABLE_COL_APP_NO}/${row.original?.TL_COMMON_CITY_NAME}`}>
+                                    <Link to={`/digit-ui/citizen/payment/collect/CR/${row.original?.TL_COMMON_TABLE_COL_APP_NO}`}>
 
                                         MAKE PAYMENT
                                     </Link>

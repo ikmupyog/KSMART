@@ -124,7 +124,7 @@ const DesktopInbox = ({
             return (
               <div>
                 <span className="link">
-                  <Link onClick={event => handleLinkClick(row.original)} to={`/digit-ui/employee/cr/application-birthdetails/${row.original.applicationNumber}`}>
+                  <Link onClick={event => handleLinkClick(row.original)} to={`/digit-ui/employee/cr/application-details/${row.original.applicationNumber}`}>
                     {/* {row.original.applicationNumber} */}
                     {row.original.applicationNumber}
                   </Link>
