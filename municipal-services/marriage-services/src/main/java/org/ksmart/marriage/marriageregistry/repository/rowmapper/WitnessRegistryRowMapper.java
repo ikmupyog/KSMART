@@ -11,7 +11,7 @@ public interface WitnessRegistryRowMapper {
     default WitnessRegistryDetails getWitnessDetails(ResultSet rs) throws SQLException {
 
         return WitnessRegistryDetails.builder()
-               // .marriageid(rs.getString("MD_id"))
+                .marriageid(rs.getString("MD_id"))
                 .witnessId1(rs.getString("WD1_id"))
                 .witness1AadharNo(rs.getString("WD1_aadharno"))
                 .witness1NameEn(rs.getString("WD1_name_en"))
@@ -39,6 +39,15 @@ public interface WitnessRegistryRowMapper {
                 .brideFilestoreId(rs.getString("MD_bride_filestoreid"))
                 .groomFilestoreId(rs.getString("MD_groom_filestoreid"))
                // .witness2Esigned(Boolean.valueOf(rs.getString("WD2_is_esigned")))
+                .tenentId(rs.getString("MD_tenantid"))
+                .brideExpired(rs.getBoolean("MD_bride_expired"))
+                .brideUrl(rs.getString("MD_brideurl"))
+                .brideFilestoreId(rs.getString("MD_bride_filestoreid"))
+                .groomExpired(rs.getBoolean("MD_groom_expired"))
+                .groomUrl(rs.getString("MD_groomurl"))
+                .groomFilestoreId(rs.getString("MD_groom_filestoreid"))
+                .imageUuid(rs.getString("MD_imageuuid"))
+                .isBackward(rs.getBoolean("MD_is_backward"))
                 .build();
     }
 

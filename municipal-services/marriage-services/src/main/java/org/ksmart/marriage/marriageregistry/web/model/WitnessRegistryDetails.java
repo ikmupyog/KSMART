@@ -121,13 +121,14 @@ public class WitnessRegistryDetails {
     private String groomFilestoreId;
 
     @JsonProperty("brideExpired")
-    private boolean brideExpired;
+    private Boolean brideExpired;
 
     @JsonProperty("groomExpired")
-    private boolean groomExpired;
+    private Boolean groomExpired;
 
     @JsonProperty("isBackward")
-    private boolean isBackward;
+    private Boolean isBackward;
+
    @JsonProperty("AuditDetails")
    private AuditDetails WitnessAuditDetails;
 

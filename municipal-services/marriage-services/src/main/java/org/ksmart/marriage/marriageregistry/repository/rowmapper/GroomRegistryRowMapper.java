@@ -10,7 +10,7 @@ public interface GroomRegistryRowMapper {
     default GroomRegistryDetails getGroomDetails (ResultSet rs) throws SQLException{
 
         return GroomRegistryDetails.builder()
-             //  .groomId(rs.getString("GD_id"))
+               .groomId(rs.getString("GD_id"))
                .residentship(rs.getString("GD_residentship"))
                .aadharno(rs.getString("GD_aadharno"))
                .passportno(rs.getString("GD_passportno"))
@@ -43,9 +43,9 @@ public interface GroomRegistryRowMapper {
                .groomIsSpouseLiving(rs.getBoolean("GD_is_spouse_living"))
               // .groomNoOfSpouse(Integer.valueOf(rs.getString("GD_livingspouseNo")))
                .groomNoOfSpouse(rs.getInt("GD_livingspouseNo"))
-              // .marriageid(rs.getString("GD_marriageid"))
+               .marriageid(rs.getString("MD_id"))
               // .photo_url(rs.getString("GD_photo_url"))
-
+                .tenentId(rs.getString("MD_tenantid"))
                .build();
     }
 }

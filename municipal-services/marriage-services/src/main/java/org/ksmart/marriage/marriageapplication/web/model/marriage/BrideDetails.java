@@ -132,7 +132,7 @@ public class BrideDetails {
     private String maritalstatusid;
 
     @JsonProperty("brideIsSpouseLiving")
-    private boolean brideIsSpouseLiving;
+    private Boolean brideIsSpouseLiving;
 
     @JsonProperty("brideNoOfSpouse")
     private Integer brideNoOfSpouse;

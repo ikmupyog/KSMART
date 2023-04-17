@@ -27,14 +27,15 @@ public class MarriageRegistryQueryBuilder extends BaseMarriageQuery {
     .append("MD.landmark as MD_landmark ,  MD.registrationno as MD_registrationno ,  MD.registration_date  as MD_registration_date ,  MD.registration_status as MD_registration_status , ")
     .append("MD.createdtime  as MD_createdtime ,   MD.createdby as MD_createdby ,  MD.lastmodifiedtime  as MD_lastmodifiedtime ,   MD.lastmodifiedby as MD_lastmodifiedby ,") 
     .append("MD.applicationnumber as MD_applicationnumber ,MD.brideurl as MD_brideurl,MD.groomurl as MD_groomurl ,MD.imageuuid as MD_imageuuid ,MD.bride_filestoreid as MD_bride_filestoreid ,MD.groom_filestoreid as MD_groom_filestoreid ,")
-   
+     .append("MD.bride_expired as MD_bride_expired , MD.groom_expired as MD_groom_expired ,MD.is_backward as MD_is_backward,")
+
     .append("GD.id  as  GD_id  , GD.residentship   as GD_residentship , GD.aadharno   as GD_aadharno ,  GD.passportno   as GD_passportno ,")
     .append("GD.socialsecurityno   as GD_socialsecurityno ,  GD.firstname_en   as GD_firstname_en , GD.middlename_en   as GD_middlename_en , GD.lastname_en   as GD_lastname_en ,")
     .append("GD.firstname_ml   as GD_firstname_ml  ,  GD.middlename_ml   as GD_middlename_ml , GD.lastname_ml   as GD_lastname_ml ,  GD.mobile   as GD_mobile,")    
     .append("GD.emailid   as GD_emailid , GD.gender   as GD_gender, GD.dateofbirth as GD_dateofbirth, GD.age as GD_age , GD.parent_guardian   as GD_parent_guardian ,")
     .append("GD.fathername_en   as GD_fathername_en, GD.mothername_en   as GD_mothername_en,GD.fathername_ml   as GD_fathername_ml, GD.mothername_ml   as GD_mothername_ml,")    
     .append("GD.father_aadharno as GD_father_aadharno, GD.mother_aadharno as GD_mother_aadharno, GD.guardianname_en as GD_guardianname_en, GD.guardianname_ml as GD_guardianname_ml,")    
-    .append("GD.guardian_aadharno   as GD_guardian_aadhar,  GD.maritalstatusid   as GD_maritalstatus,GD.no_of_spouse_living   as GD_livingspouseNo, GD.is_spouse_living as GD_is_spouse_living ,GD.bride_groom   GD_bride_groom ,") 
+    .append("GD.guardian_aadharno   as GD_guardian_aadhar,  GD.maritalstatusid   as GD_maritalstatus,GD.no_of_spouse_living   as GD_livingspouseNo, GD.is_spouse_living as GD_is_spouse_living ,GD.bride_groom   GD_bride_groom ,")
         
     .append("BD.id as  BD_id  , BD.residentship   as BD_residentship ,  BD.aadharno   as BD_aadharno ,BD.passportno   as BD_passportno ,  BD.socialsecurityno   as BD_socialsecurityno ,")
     .append("BD.firstname_en   as BD_firstname_en , BD.middlename_en   as BD_middlename_en ,BD.lastname_en   as BD_lastname_en ,  BD.firstname_ml   as BD_firstname_ml,")
