@@ -26,12 +26,16 @@ const Initiater = ({ config, onSelect, userType, formData, isEditDeath }) => {
   const { mobileNumber: mobileNumber, } = Digit.UserService.getUser().info; 
  // const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.Initiator?.isInitiatorDeclaration ? formData?.Initiator?.isInitiatorDeclaration :  false);
   const [isCaretaker, setIsCaretaker] = useState(formData?.Initiator?.isCaretaker ? formData?.Initiator?.isCaretaker :  false);
-  const [InitiatorAadhaar, setInitiatorAadhaar] = useState(formData?.Initiator?.InitiatorAadhaar ? formData?.Initiator?.InitiatorAadhaar : "");
-  const [InitiatorName, setInitiatorName] = useState(formData?.Initiator?.InitiatorName ? formData?.Initiator?.InitiatorName : name);
+  const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.Initiator?.isInitiatorDeclaration ? formData?.Initiator?.isInitiatorDeclaration : formData?.InformationDeath?.Initiator?.isInitiatorDeclaration ? formData?.InformationDeath?.Initiator?.isInitiatorDeclaration : false);
+  const [InitiatorAadhaar, setInitiatorAadhaar] = useState(formData?.Initiator?.InitiatorAadhaar ? formData?.Initiator?.InitiatorAadhaar : formData?.InformationDeath?.Initiator?.InitiatorAadhaar ? formData?.InformationDeath?.Initiator?.InitiatorAadhaar :"");
+  const [InitiatorName, setInitiatorName] = useState(formData?.Initiator?.InitiatorName ? formData?.Initiator?.InitiatorName : formData?.InformationDeath?.Initiator?.InitiatorName ? formData?.InformationDeath?.Initiator?.InitiatorName : name);
   const [InitiatorRelation, setInitiatorRelation] = useState(formData?.Initiator?.InitiatorRelation.code ? formData?.Initiator?.InitiatorRelation : formData?.Initiator?.relation ? cmbRelation.filter(cmbRelation => cmbRelation.code === formData?.Initiator?.relation)[0] : "");
-  const [InitiatorMobile, setInitiatorMobile] = useState(formData?.Initiator?.InitiatorMobile ? formData?.Initiator?.InitiatorMobile : mobileNumber);
-  const [InitiatorAddress, setInitiatorAddress] = useState(formData?.Initiator?.InitiatorAddress ? formData?.Initiator?.InitiatorAddress : "");
-  const [initiatorDesi, setinitiatorDesi] = useState(formData?.Initiator?.initiatorDesi ? formData?.Initiator?.initiatorDesi : "");
+  const [InitiatorMobile, setInitiatorMobile] = useState(formData?.Initiator?.InitiatorMobile ? formData?.Initiator?.InitiatorMobile : 
+    formData?.InformationDeath?.Initiator?.InitiatorMobile ? formData?.InformationDeath?.Initiator?.InitiatorMobile :mobileNumber);
+  const [InitiatorAddress, setInitiatorAddress] = useState(formData?.Initiator?.InitiatorAddress ? formData?.Initiator?.InitiatorAddress : 
+    formData?.InformationDeath?.Initiator?.InitiatorAddress ? formData?.InformationDeath?.Initiator?.InitiatorAddress :"");
+  const [initiatorDesi, setinitiatorDesi] = useState(formData?.Initiator?.initiatorDesi ? formData?.Initiator?.initiatorDesi :
+    formData?.InformationDeath?.Initiator?.initiatorDesi ? formData?.InformationDeath?.Initiator?.initiatorDesi :  "");
   const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? false : false);
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [toast, setToast] = useState(false);
