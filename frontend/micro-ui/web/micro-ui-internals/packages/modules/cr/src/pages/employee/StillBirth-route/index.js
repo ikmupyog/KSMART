@@ -10,9 +10,9 @@ const ScrFlowApp = ({ parentUrl }) => {
   const { pathname } = useLocation();
   const history = useHistory();
   const queryClient = useQueryClient();
-  console.log("CR_STILLBIRTH_EDIT_FLAG" ,sessionStorage.getItem("CR_STILLBIRTH_EDIT_FLAG"));
+  // console.log("CR_STILLBIRTH_EDIT_FLAG" ,sessionStorage.getItem("CR_STILLBIRTH_EDIT_FLAG"));
   const [isEditStillBirth, setIsEditStillBirth] = useState(sessionStorage.getItem("CR_STILLBIRTH_EDIT_FLAG") ? true : false);
-  console.log("isEditStillBirthIndex" , isEditStillBirth);  
+  // console.log("isEditStillBirthIndex" , isEditStillBirth);  
   const [params, setParams, clearParams] = isEditStillBirth ? Digit.Hooks.useSessionStorage("CR_EDIT_STILLBIRTH_REG", {}) : Digit.Hooks.useSessionStorage("CR_CREATE_STILLBIRTH_REG", {});
   // console.log("isEditBirth" + isEditBirth);
   // console.log("params"+JSON.stringify(params));
