@@ -24,7 +24,7 @@ public class GlobalMasterEnrichment extends BaseEnrichment{
        final AuditDetails moduleAuditDetails = moduleDetails.getAuditDetails();
         moduleDetails.setId(UUID.randomUUID()
                 .toString());
-        moduleDetails.setAuditDetails(moduleAuditDetails);
+        moduleDetails.setAuditDetails(auditDetails);
         moduleDetails.getAuditDetails().setLastModifiedBy(auditDetails.getLastModifiedBy());
         moduleDetails.getAuditDetails().setLastModifiedTime(auditDetails.getLastModifiedTime());
     }

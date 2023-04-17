@@ -948,32 +948,33 @@ serviceMaps:
 
   - version: 1.0
     description: Insert Modulemaster  details in egov_filemgmnt database, eg_fm_modulemaster table
-    fromTopic: eg_fm_modulemaster
+    fromTopic: save_fm_modulemaster
     isTransaction: true
     queryMaps:
-    - query: INSERT INTO eg_fm_modulemaster (id, tenantid, modulecode, modulenameeng, modulenamemal, status, createdby, createdtime, lastmodifiedby, lastmodifiedtime) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
-      basePath: ModuleDetails.*
+
+    - query: >
+        INSERT INTO public.eg_fm_modulemaster(id, tenantid, modulecode, modulenameeng, modulenamemal, status, 
+        createdby, createdtime, lastmodifiedby, lastmodifiedtime)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+      basePath: ModuleDetails
       jsonMaps:
+        - jsonPath: $.ModuleDetails.id
 
-      - jsonPath: $.ModuleDetails.*.id
+        - jsonPath: $.ModuleDetails.tenantId
 
-      - jsonPath: $.ModuleDetails.*.tenantId
+        - jsonPath: $.ModuleDetails.moduleCode
 
-      - jsonPath: $.ModuleDetails.*.moduleCode
+        - jsonPath: $.ModuleDetails.moduleNameEnglish
 
-      - jsonPath: $.ModuleDetails.*.moduleNameEnglish
+        - jsonPath: $.ModuleDetails.moduleNameMalayalam
 
-      - jsonPath: $.ModuleDetails.*.moduleNameMalayalam
+        - jsonPath: $.ModuleDetails.status
 
-      - jsonPath: $.ModuleDetails.*.status
+        - jsonPath: $.ModuleDetails.auditDetails.createdBy
 
-      - jsonPath: $.ModuleDetails.*.auditDetails.createdBy
+        - jsonPath: $.ModuleDetails.auditDetails.createdTime
 
-      - jsonPath: $.ModuleDetails.*.auditDetails.createdTime
+        - jsonPath: $.ModuleDetails.auditDetails.lastModifiedBy
 
-      - jsonPath: $.ModuleDetails.*.auditDetails.lastModifiedBy
-
-      - jsonPath: $.ModuleDetails.*.auditDetails.  lastModifiedTime
-
-
+        - jsonPath: $.ModuleDetails.auditDetails.lastModifiedTime
 

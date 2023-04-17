@@ -3,7 +3,6 @@ package org.egov.filemgmnt.web.controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.egov.filemgmnt.service.GlobalMasterServices;
-import org.egov.filemgmnt.util.FMUtils;
 import org.egov.filemgmnt.util.ResponseInfoFactory;
 import org.egov.filemgmnt.web.models.GlobalMaster.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
 
 @Slf4j
 @RestController

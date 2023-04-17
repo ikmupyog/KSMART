@@ -125,7 +125,7 @@ public class FMConfiguration {
 
     // Global Mastersettings
 
-    @Value("${persister.save.savemodulemaster.topic:}")
-    private String savemodulemasterTopic;
+    @Value("${persister.save.modulemaster.topic:}")
+    private String saveModuleMasterTopic;
 
 }
