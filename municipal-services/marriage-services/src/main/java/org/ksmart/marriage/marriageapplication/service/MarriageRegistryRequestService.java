@@ -53,7 +53,7 @@ public class MarriageRegistryRequestService {
         registerMarriageDetail.setAction(Marriagerequest.getMarriageDetails().get(0).getAction());
         registerMarriageDetail.setStatus(Marriagerequest.getMarriageDetails().get(0).getStatus());
         registerMarriageDetail.setApplicationtype(Marriagerequest.getMarriageDetails().get(0).getApplicationtype());
-        registerMarriageDetail.setModulecode(Marriagerequest.getMarriageDetails().get(0).getModuleCode());
+        registerMarriageDetail.setModuleCode(Marriagerequest.getMarriageDetails().get(0).getModuleCode());
         registerMarriageDetail.setBrideDetails(brideRegistryDetails(Marriagerequest));
         registerMarriageDetail.setGroomDetails(groomRegistryDetails(Marriagerequest));
         registerMarriageDetail.setWitnessDetails(witnessRegistryDetails(Marriagerequest));

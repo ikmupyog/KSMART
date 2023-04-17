@@ -101,7 +101,7 @@ public class MarriageRegistryEnrichment implements BaseEnrichment {
         List<String> filecodes = getIds(requestInfo,
                                 tenantId,
                                 config.getGetMarriageRegNumberName(),
-                                request.getMarriageDetails().get(0).getModulecode(),
+                                request.getMarriageDetails().get(0).getModuleCode(),
                          "REG",
                 marriageDetails.size());
         validateFileCodes(filecodes, marriageDetails.size());

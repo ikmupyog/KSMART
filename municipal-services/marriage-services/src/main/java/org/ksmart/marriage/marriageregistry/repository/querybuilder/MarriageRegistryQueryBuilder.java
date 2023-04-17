@@ -27,7 +27,7 @@ public class MarriageRegistryQueryBuilder extends BaseMarriageQuery {
     .append("MD.landmark as MD_landmark ,  MD.registrationno as MD_registrationno ,  MD.registration_date  as MD_registration_date ,  MD.registration_status as MD_registration_status , ")
     .append("MD.createdtime  as MD_createdtime ,   MD.createdby as MD_createdby ,  MD.lastmodifiedtime  as MD_lastmodifiedtime ,   MD.lastmodifiedby as MD_lastmodifiedby ,") 
     .append("MD.applicationnumber as MD_applicationnumber ,MD.brideurl as MD_brideurl,MD.groomurl as MD_groomurl ,MD.imageuuid as MD_imageuuid ,MD.bride_filestoreid as MD_bride_filestoreid ,MD.groom_filestoreid as MD_groom_filestoreid ,")
-     .append("MD.bride_expired as MD_bride_expired , MD.groom_expired as MD_groom_expired ,MD.is_backward as MD_is_backward,")
+     .append("MD.bride_expired as MD_bride_expired , MD.groom_expired as MD_groom_expired ,MD.is_backward as MD_is_backward,MD.module_code as MD_module_code,")
 
     .append("GD.id  as  GD_id  , GD.residentship   as GD_residentship , GD.aadharno   as GD_aadharno ,  GD.passportno   as GD_passportno ,")
     .append("GD.socialsecurityno   as GD_socialsecurityno ,  GD.firstname_en   as GD_firstname_en , GD.middlename_en   as GD_middlename_en , GD.lastname_en   as GD_lastname_en ,")

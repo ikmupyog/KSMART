@@ -179,8 +179,8 @@ public class MarriageRegistryDetails {
     @JsonProperty("applicationNumber")
     private String applicationNumber;
 
-    @JsonProperty("modulecode")
-    private String modulecode;
+    @JsonProperty("moduleCode")
+    private String moduleCode;
 
     @JsonProperty("BrideDetails")
     private BrideRegistryDetails brideDetails;

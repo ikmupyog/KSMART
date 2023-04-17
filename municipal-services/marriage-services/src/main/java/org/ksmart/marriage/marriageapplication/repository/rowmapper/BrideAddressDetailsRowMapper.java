@@ -94,6 +94,7 @@ public interface BrideAddressDetailsRowMapper {
                 .permntOutSideIndiaProvinceEn(rs.getString("BPMA_ot_state_region_province_en"))
                 .brideGroomPermanent(rs.getString("BPMA_bride_groom"))
 
+
 //                .isPermanentAddress(rs.getInt("BPMA_same_as_present")==1?true:false)
 //                .isPermanentAddressInt(rs.getInt("BPMA_same_as_present"))
                 .build();
