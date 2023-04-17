@@ -6,6 +6,7 @@ const ResultTable = ({
                          setValue,
                          getValues,
                          data = [],
+                         count = 0,
                          handleSubmit,
                          t,
                          onSubmit,
@@ -94,7 +95,7 @@ const ResultTable = ({
             <Table
                 t={t}
                 data={data}
-                totalRecords={data.length + 1000} // count always 0 in api. need to change once api is fixed
+                totalRecords={count}
                 columns={columns}
                 getCellProps={(cellInfo) => {
                     return {

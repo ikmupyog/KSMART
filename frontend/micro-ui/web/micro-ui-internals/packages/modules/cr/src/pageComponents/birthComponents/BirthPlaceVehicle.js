@@ -21,7 +21,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
   const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "boundary-data");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [tenantboundary, setTenantboundary] = useState(false);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
+  const [isDisableEdit, setisDisableEdit] = useState(false);
 
   if (tenantboundary) {
     queryClient.removeQueries("CR_HOSPITALMASTER");

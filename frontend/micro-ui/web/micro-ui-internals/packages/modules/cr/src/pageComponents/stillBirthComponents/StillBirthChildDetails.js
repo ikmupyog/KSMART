@@ -176,7 +176,7 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
   const [isInitialRenderPlace, setIsInitialRenderPlace] = useState(true);
   const [isInitialRenderFormData, setisInitialRenderFormData] = useState(false);
   //const [birthDateTime, setbirthDateTime] = useState(""); //formData?.StillBirthChildDetails?.birthDateTime ? formData?.StillBirthChildDetails?.birthDateTime :
-  onst [birthDateTime, setbirthDateTime] = useState(formData?.StillBirthChildDetails?.birthDateTime ? formData?.StillBirthChildDetails?.birthDateTime : "");
+  const [birthDateTime, setbirthDateTime] = useState(formData?.StillBirthChildDetails?.birthDateTime ? formData?.StillBirthChildDetails?.birthDateTime : "");
   const [birthPlace, selectBirthPlace] = useState(
     formData?.StillBirthChildDetails?.birthPlace?.code
       ? formData?.StillBirthChildDetails?.birthPlace
@@ -469,12 +469,12 @@ const StillBirthChildDetails = ({ config, onSelect, userType, formData, isEditSt
           setAmount(currentWorgFlow[0].amount);
         }
       }
-      if (Difference_In_Days >= 365) {
-        setChildAadharHIde(true);
-      } else {
-        setChildAadharHIde(false);
-        setChildAadharNo("");
-      }
+      // if (Difference_In_Days >= 365) {
+      //   setChildAadharHIde(true);
+      // } else {
+      //   setChildAadharHIde(false);
+      //   setChildAadharNo("");
+      // }
     }
   }
   function setSelectPregnancyDuration(e) {
