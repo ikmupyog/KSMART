@@ -107,6 +107,9 @@ public class TLConfiguration {
     @Value("${persister.savecorrection.tradelicense.topic}")
     private String saveCorrectionTopic;
 
+    @Value("${persister.updatecorrection.tradelicense.topic}")
+    private String updateCorrectionTopic;
+
     @Value("${persister.update.tradelicense.adhoc.topic}")
     private String updateAdhocTopic;
 

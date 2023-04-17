@@ -255,4 +255,19 @@ public class TradeLicense {
   @JsonProperty("isCurrentRequest")
   private Boolean isCurrentRequest;
 
+  @Size(max = 64)
+  @SafeHtml
+  @JsonProperty("correctionAction")
+  private String correctionAction = null;
+
+  @Size(max = 64)
+  @SafeHtml
+  @JsonProperty("correctionApplicationType")
+  private String correctionApplicationType = null;
+
+  @Size(max = 64)
+  @SafeHtml
+  @JsonProperty("correctionWorkflowCode")
+  private String correctionWorkflowCode = null;
+
 }

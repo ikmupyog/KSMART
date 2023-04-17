@@ -81,6 +81,10 @@ public class TLRowMapper implements ResultSetExtractor<List<TradeLicense>> {
                         .correction(rs.getString("correction"))
                         .correctionStatus(rs.getString("correctionstatus"))
                         .isCurrentRequest(rs.getBoolean("iscurrentrequest"))
+                        .correctionAction(rs.getString("correction_action"))
+                        .correctionApplicationType(rs.getString("correction_applicationType"))
+                        .correctionWorkflowCode(rs.getString("correction_workflowCode"))
+
                         .id(id)
                         .build();
 
@@ -241,7 +245,7 @@ public class TLRowMapper implements ResultSetExtractor<List<TradeLicense>> {
             if (rs.getBoolean("useractive") && rs.getString("tlowner_uuid") != null) {
                 OwnerInfo owner = OwnerInfo.builder()
                         .uuid(rs.getString("tlowner_uuid"))
-                        .userActive(rs.getBoolean("useractive"))
+                        .userActive(rs.getBoolean("userActive"))
                         .name(rs.getString("tlowner_ownername"))
                         .aadhaarNumber(rs.getString("tlowner_aadharno"))
                         // .permanentAddress(rs.getString("address"))

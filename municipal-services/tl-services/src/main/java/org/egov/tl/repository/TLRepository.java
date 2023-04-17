@@ -9,6 +9,7 @@ import org.egov.tl.repository.rowmapper.TLRowMapper;
 import org.egov.tl.repository.rowmapper.TLRowMapperDoor;
 import org.egov.tl.repository.rowmapper.TLRowMapperPde;
 import org.egov.tl.web.models.*;
+import org.egov.tl.web.models.correction.CorrectionRequest;
 import org.egov.tl.workflow.WorkflowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -133,10 +134,19 @@ public class TLRepository {
     /**
      * Pushes the request on save Correction topic
      *
-     * @param tradeLicenseRequest The tradeLciense create request
+     * @param CorrectionRequest The License correction create request
      */
     public void saveCorrection(CorrectionRequest correctionRequest) {
         producer.push(config.getSaveCorrectionTopic(), correctionRequest);
+    }
+
+    /**
+     * Pushes the request on update Correction topic
+     *
+     * @param CorrectionRequest The License correction update request
+     */
+    public void updateCorrection(CorrectionRequest correctionRequest) {
+        producer.push(config.getUpdateCorrectionTopic(), correctionRequest);
     }
 
     /**
@@ -257,6 +267,24 @@ public class TLRepository {
         List<TradeLicense> licenses = jdbcTemplate.query(query, preparedStmtList.toArray(), rowMapperDoor);
         // sortChildObjectsById(licenses);
         return licenses;
+    }
+
+    /**
+     * Searhces correction request in databse
+     *
+     * @param criteria The Corection request Search criteria
+     * @return Correction request details from seach
+     */
+    public Map<String, Object> getCorrectionDetails(String CorrectionId) {
+
+        List<Object> preparedStmtValues = new ArrayList<>();
+        preparedStmtValues.add(CorrectionId);
+        String query = queryBuilder.getCorrectionDetQuery();
+        Map<String, Object> correctionDetails = jdbcTemplate.queryForMap(query, preparedStmtValues.toArray());
+        // finalid=String.format("%05d",Integer.parseInt(String.valueOf(nextID.get(0).get("genid"))));
+        // String finalid = String.valueOf(nextID.get(0).get("fn_next_id"));
+
+        return correctionDetails;
     }
 
 }

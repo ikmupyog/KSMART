@@ -115,7 +115,9 @@ public class TLQueryBuilder {
             +
             " correction.correctionappnumber as correctionappnumber, correction.correction as correction, history as correction_history, "
             +
-            " correction.correctionstatus as correctionstatus, correction.active as correction_active, correction.iscurrentrequest "
+            " correction.correctionstatus as correctionstatus, correction.active as correction_active, correction.iscurrentrequest, "
+            +
+            " correction.action as correction_action, correction.applicationType as correction_applicationType, correction.workflowCode as correction_workflowCode "
             +
             "FROM eg_tl_tradelicense tl"
             + LEFT_OUTER_JOIN_STRING
@@ -702,6 +704,11 @@ public class TLQueryBuilder {
         // else {
         // return addCountWrapper(builder.toString());
         // }
+    }
+
+    public String getCorrectionDetQuery() {
+        StringBuilder query = new StringBuilder("select * from eg_tl_correction where id=?");
+        return query.toString();
     }
 
 }

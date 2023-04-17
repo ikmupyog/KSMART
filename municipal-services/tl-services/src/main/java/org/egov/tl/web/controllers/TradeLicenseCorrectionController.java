@@ -7,6 +7,10 @@ import org.egov.tl.service.notification.PaymentNotificationService;
 import org.egov.tl.service.notification.TLNotificationService;
 import org.egov.tl.util.ResponseInfoFactory;
 import org.egov.tl.web.models.*;
+import org.egov.tl.web.models.correction.Correction;
+import org.egov.tl.web.models.correction.CorrectionRequest;
+import org.egov.tl.web.models.correction.CorrectionResponse;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,83 +69,17 @@ public class TradeLicenseCorrectionController {
                 return new ResponseEntity<>(response, HttpStatus.OK);
         }
 
-        @RequestMapping(value = { "/{servicename}/_search", "/_search" }, method = RequestMethod.POST)
-        public ResponseEntity<TradeLicenseResponse> search(@Valid @RequestBody RequestInfoWrapper requestInfoWrapper,
-                        @Valid @ModelAttribute TradeLicenseSearchCriteria criteria,
-                        @PathVariable(required = false) String servicename, @RequestHeader HttpHeaders headers) {
-                List<TradeLicense> licenses = tradeLicenseCorrectionService.search(criteria,
-                                requestInfoWrapper.getRequestInfo(),
-                                servicename, headers);
-
-                // int count = tradeLicensePdeService.countLicenses(criteria,
-                // requestInfoWrapper.getRequestInfo(), servicename,
-                // headers);
-
-                TradeLicenseResponse response = TradeLicenseResponse.builder().licenses(licenses).responseInfo(
-                                responseInfoFactory.createResponseInfoFromRequestInfo(
-                                                requestInfoWrapper.getRequestInfo(),
-                                                true))
-                                .count(0)
-                                .build();
-                return new ResponseEntity<>(response, HttpStatus.OK);
-        }
-
         @RequestMapping(value = { "/{servicename}/_update", "/_update" }, method = RequestMethod.POST)
-        public ResponseEntity<TradeLicenseResponse> update(@Valid @RequestBody TradeLicenseRequest tradeLicenseRequest,
+        public ResponseEntity<CorrectionResponse> update(@Valid @RequestBody CorrectionRequest correctionRequest,
                         @PathVariable(required = false) String servicename) {
-                List<TradeLicense> licenses = tradeLicenseCorrectionService.update(tradeLicenseRequest, servicename);
+                List<Correction> licenses = tradeLicenseCorrectionService.update(correctionRequest, servicename);
 
-                TradeLicenseResponse response = TradeLicenseResponse.builder().licenses(licenses).responseInfo(
+                CorrectionResponse response = CorrectionResponse.builder().licenseCorrection(licenses).responseInfo(
                                 responseInfoFactory.createResponseInfoFromRequestInfo(
-                                                tradeLicenseRequest.getRequestInfo(),
+                                                correctionRequest.getRequestInfo(),
                                                 true))
                                 .build();
                 return new ResponseEntity<>(response, HttpStatus.OK);
         }
 
-        // @RequestMapping(value = { "/{servicename}/_updatewf", "/_updatewf" }, method
-        // = RequestMethod.POST)
-        // public ResponseEntity<TradeLicenseResponse> updatewf(
-        // @Valid @RequestBody TradeLicenseRequest tradeLicenseRequest,
-        // @PathVariable(required = false) String servicename) {
-        // List<TradeLicense> licenses =
-        // tradeLicenseCorrectionService.updatewf(tradeLicenseRequest, servicename);
-
-        // TradeLicenseResponse response =
-        // TradeLicenseResponse.builder().licenses(licenses).responseInfo(
-        // responseInfoFactory.createResponseInfoFromRequestInfo(
-        // tradeLicenseRequest.getRequestInfo(),
-        // true))
-        // .build();
-        // return new ResponseEntity<>(response, HttpStatus.OK);
-        // }
-
-        // @RequestMapping(value = { "/{servicename}/{jobname}/_batch", "/_batch" },
-        // method = RequestMethod.POST)
-        // public ResponseEntity sendReminderSMS(@Valid @RequestBody RequestInfoWrapper
-        // requestInfoWrapper,
-        // @PathVariable(required = false) String servicename,
-        // @PathVariable(required = true) String jobname) {
-
-        // tradeLicensePdeService.runJob(servicename, jobname,
-        // requestInfoWrapper.getRequestInfo());
-
-        // return new ResponseEntity(HttpStatus.ACCEPTED);
-        // }
-
-        // @RequestMapping(value = "/_plainsearch", method = RequestMethod.POST)
-        // public ResponseEntity<TradeLicenseResponse> plainsearch(@Valid @RequestBody
-        // RequestInfoWrapper requestInfoWrapper,
-        // @Valid @ModelAttribute TradeLicenseSearchCriteria criteria) {
-
-        // List<TradeLicense> licenses = tradeLicensePdeService.plainSearch(criteria,
-        // requestInfoWrapper.getRequestInfo());
-
-        // TradeLicenseResponse response =
-        // TradeLicenseResponse.builder().licenses(licenses).responseInfo(
-        // responseInfoFactory.createResponseInfoFromRequestInfo(requestInfoWrapper.getRequestInfo(),
-        // true))
-        // .build();
-        // return new ResponseEntity<>(response, HttpStatus.OK);
-        // }
 }

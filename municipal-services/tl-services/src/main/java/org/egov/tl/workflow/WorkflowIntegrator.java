@@ -9,6 +9,8 @@ import org.egov.tl.config.TLConfiguration;
 import org.egov.tl.util.TLConstants;
 import org.egov.tl.web.models.TradeLicense;
 import org.egov.tl.web.models.TradeLicenseRequest;
+import org.egov.tl.web.models.correction.Correction;
+import org.egov.tl.web.models.correction.CorrectionRequest;
 import org.egov.tracer.model.CustomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -180,6 +182,103 @@ public class WorkflowIntegrator {
 
 			// setting the status back to TL object from wf response
 			tradeLicenseRequest.getLicenses()
+					.forEach(tlObj -> tlObj.setStatus(idStatusMap.get(tlObj.getApplicationNumber())));
+		}
+	}
+
+	/**
+	 * Method to integrate correction process with workflow
+	 *
+	 * takes the correction request as parameter constructs the work-flow request
+	 *
+	 * and sets the resultant status from wf-response back to correction object
+	 *
+	 * @param correctionRequest
+	 */
+	public void callCorrectionWorkFlow(CorrectionRequest correctionRequest) {
+		Correction currentCorrection = correctionRequest.getLicenseCorrection().get(0);
+		String wfTenantId = currentCorrection.getTenantId();
+		String businessServiceFromMDMS = correctionRequest.getLicenseCorrection().isEmpty() ? null
+				: currentCorrection.getBusinessService();
+		if (businessServiceFromMDMS == null)
+			businessServiceFromMDMS = businessService_TL;
+		JSONArray array = new JSONArray();
+		for (Correction correction : correctionRequest.getLicenseCorrection()) {
+			if ((businessServiceFromMDMS.equals(businessService_TL))
+					|| (!correction.getAction().equalsIgnoreCase(TRIGGER_NOWORKFLOW))) {
+				JSONObject obj = new JSONObject();
+				List<Map<String, String>> uuidmaps = new LinkedList<>();
+				if (!CollectionUtils.isEmpty(correction.getAssignee())) {
+
+					// Adding assignes to processInstance
+					correction.getAssignee().forEach(assignee -> {
+						Map<String, String> uuidMap = new HashMap<>();
+						uuidMap.put(UUIDKEY, assignee);
+						uuidmaps.add(uuidMap);
+					});
+				}
+				obj.put(BUSINESSIDKEY, correction.getApplicationNumber());
+				obj.put(TENANTIDKEY, wfTenantId);
+				switch (businessServiceFromMDMS) {
+					// TLR Changes
+					case businessService_TL:
+						obj.put(BUSINESSSERVICEKEY, currentCorrection.getWorkflowCode());
+						obj.put(MODULENAMEKEY, TLMODULENAMEVALUE);
+						break;
+				}
+				obj.put(ACTIONKEY, correction.getAction());
+				obj.put(COMMENTKEY, correction.getComment());
+				if (!CollectionUtils.isEmpty(correction.getAssignee()))
+					obj.put(ASSIGNEEKEY, uuidmaps);
+				obj.put(DOCUMENTSKEY, correction.getWfDocuments());
+				array.add(obj);
+			}
+		}
+		if (!array.isEmpty()) {
+			JSONObject workFlowRequest = new JSONObject();
+			workFlowRequest.put(REQUESTINFOKEY, correctionRequest.getRequestInfo());
+			workFlowRequest.put(WORKFLOWREQUESTARRAYKEY, array);
+			String response = null;
+			try {
+				response = rest.postForObject(config.getWfHost().concat(config.getWfTransitionPath()), workFlowRequest,
+						String.class);
+			} catch (HttpClientErrorException e) {
+
+				/*
+				 * extracting message from client error exception
+				 */
+				DocumentContext responseContext = JsonPath.parse(e.getResponseBodyAsString());
+				List<Object> errros = null;
+				try {
+					errros = responseContext.read("$.Errors");
+				} catch (PathNotFoundException pnfe) {
+					log.error("EG_TL_WF_ERROR_KEY_NOT_FOUND",
+							" Unable to read the json path in error object : " + pnfe.getMessage());
+					throw new CustomException("EG_TL_WF_ERROR_KEY_NOT_FOUND",
+							" Unable to read the json path in error object : " + pnfe.getMessage());
+				}
+				throw new CustomException("EG_WF_ERROR", errros.toString());
+			} catch (Exception e) {
+				throw new CustomException("EG_WF_ERROR",
+						" Exception occured while integrating with workflow : " + e.getMessage());
+			}
+
+			/*
+			 * on success result from work-flow read the data and set the status back to TL
+			 * object
+			 */
+			DocumentContext responseContext = JsonPath.parse(response);
+			List<Map<String, Object>> responseArray = responseContext.read(PROCESSINSTANCESJOSNKEY);
+			Map<String, String> idStatusMap = new HashMap<>();
+			responseArray.forEach(
+					object -> {
+
+						DocumentContext instanceContext = JsonPath.parse(object);
+						idStatusMap.put(instanceContext.read(BUSINESSIDJOSNKEY), instanceContext.read(STATUSJSONKEY));
+					});
+
+			// setting the status back to TL object from wf response
+			correctionRequest.getLicenseCorrection()
 					.forEach(tlObj -> tlObj.setStatus(idStatusMap.get(tlObj.getApplicationNumber())));
 		}
 	}
