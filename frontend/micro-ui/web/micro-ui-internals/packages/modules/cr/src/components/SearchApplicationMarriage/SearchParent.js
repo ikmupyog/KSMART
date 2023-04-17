@@ -5,7 +5,6 @@ import SearchFields from "./SearchFields";
 import { useForm } from "react-hook-form";
 import ResultTable from "../SearchMarriageInclusion/ResultTable";
 import { useHistory } from "react-router-dom";
-import { convertDateToEpoch } from "../../utils";
 
 const SearchParent = ({
                           searchType = 'application'
@@ -16,7 +15,7 @@ const SearchParent = ({
         marriageDOM: "",
         groomFirstnameEn: "",
         brideFirstnameEn: "",
-        placeOfMarriage: "",
+        marriagePlacetype: "",
     }
 
     if (searchType === 'application') {
@@ -26,6 +25,7 @@ const SearchParent = ({
     }
 
     const [results, setResults] = useState([]);
+    const [count, setCount] = useState(0);
     const [defaultValue, setDefaultValue] = useState({
         offset: 0,
         limit: 10,
@@ -50,18 +50,19 @@ const SearchParent = ({
     const onSuccess = (data) => {
         if (data && data["MarriageDetails"]) {
             setResults(data["MarriageDetails"])
+            setCount(data["Count"])
         }
     };
 
     const onSubmit = (_data) => {
         let data = _data;
         if (_data.marriageDOM) {
-            data.marriageDOM = convertDateToEpoch(_data.marriageDOM);
+            data.marriageDOM = Date.parse(_data.marriageDOM);
         }
 
         data = Object.keys(data)
             .filter((k) => data[k])
-            .reduce((acc, key) => ({ ...acc, [key]: typeof data[key] === "object" ? data[key].name : data[key] }), {})
+            .reduce((acc, key) => ({ ...acc, [key]: typeof data[key] === "object" ? data[key].code : data[key] }), {})
 
         data = {
             ...data,
@@ -75,6 +76,7 @@ const SearchParent = ({
     };
     function emptyRecords() {
         setResults([]);
+        setCount(0);
     }
 
     const downloadLink = (data) => {
@@ -105,6 +107,7 @@ const SearchParent = ({
                         setValue={setValue}
                         getValues={getValue}
                         data={results}
+                        count={count}
                         handleSubmit={handleSubmit}
                         t={t}
                         onSubmit={onSubmit}
