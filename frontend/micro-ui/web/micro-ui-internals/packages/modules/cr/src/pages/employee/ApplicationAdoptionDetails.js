@@ -104,8 +104,8 @@ const ApplicationAdoptionDetails = () => {
       // appData.AdoptionAddressBasePage =tmpData?.AddressBirthDetails,
       // appData.AdoptionInitiatorDetails =tmpData?.InitiatorinfoDetails,
       // setParams(appData)
-      let tmp =applicationDetails
-      tmp?.applicationDetails?.splice(0,1,{title : "CR_ADOPTION_SUMMARY_DETAILS",asSectionHeader:  true })
+      // let tmp =applicationDetails
+      // tmp?.applicationDetails?.splice(0,1,{title : "CR_ADOPTION_SUMMARY_DETAILS",asSectionHeader:  true })
       setFlag(true)
     }
     else{

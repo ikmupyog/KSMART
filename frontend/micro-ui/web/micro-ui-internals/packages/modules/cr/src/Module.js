@@ -118,6 +118,7 @@ import MyCRDeathApplications from "./pages/citizen/Applications/ApplicationDeath
 // import GeneralRemarks from "./pageComponents/deathComponents/GeneralRemarks";
 import CRSearch from "./pages/employee/Search";
 // import CRDeathsearch from "./pages/employee/Search";
+import SearchMarriageApplication from "./components/SearchMarriageApplication";
 import SearchCrApplication from "./components/SearchApplication";
 import SearchRegistryDeath from "./components/SearchRegistryDeath";
 import CRCitizenApplicationDetails from "./pages/citizen/Applications/ApplicationDetails";
@@ -315,6 +316,7 @@ const componentsToRegister = {
   SearchDeathInclusion,
   // CRDeathsearch,
   SearchCrApplication,
+  SearchMarriageApplication,
   SearchRegistryDeath,
   SearchDeathApplication,
   AddressOne,
@@ -360,7 +362,7 @@ const componentsToRegister = {
   AddressPresentOutsideKerala,
   AddressPresentOutsideIndia,
   AddressPermanentOutsideKerala,
-  // AddressPermanentOutsideIndia,
+  AddressPermanentOutsideIndia,
   AddressPermanentInsideKerala,
   InformarHospitalInstitution,
   InitiatorDetails,

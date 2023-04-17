@@ -26,7 +26,6 @@ const ApplicationDetailsCorrection = () => {
   const stateId = Digit.ULBService.getStateId();
   const { data: TradeRenewalDate = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", ["TradeRenewal"]);
 
-  console.log("firing when inbox correction" + JSON.stringify(applicationDetails));
   const {
     isLoading: updatingApplication,
     isError: updateApplicationError,

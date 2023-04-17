@@ -83,6 +83,9 @@ import CorrectionCheckPage from "./pages/citizen/Correction/CorrectionCheckPage"
 import TLCorrectionDetailsView from "./pageComponents/TLCorrectionDetailsView"
 import TLCorrectionDocumentUpload from "./pageComponents/TLCorrectionDocumentUpload"
 import TLCorrectionAcknowledgement from "./pages/citizen/Correction/TLCorrectionAcknowledgement"
+import MyApplicationDetails from "./pages/citizen/Applications/MyApplicationDetails"
+import SearchCitizenApplication from "./components/SearchCitizenApplication"
+
 export const TLModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
 
@@ -210,7 +213,9 @@ const componentsToRegister = {
   CorrectionCheckPage,
   TLCorrectionDetailsView,
   TLCorrectionAcknowledgement,
-  TLCorrectionDocumentUpload
+  TLCorrectionDocumentUpload,
+  MyApplicationDetails,
+  SearchCitizenApplication
 };
 export const initTLComponents = () => {
   Object.entries(componentsToRegister).forEach(([key, value]) => {
