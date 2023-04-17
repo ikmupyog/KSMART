@@ -25,10 +25,6 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
   let validation = {};
   const [isDisableEdit, setisDisableEdit] = useState(isEditStillBirth ? isEditStillBirth : false);
   const { name: name } = Digit.UserService.getUser().info; // window.localStorage.getItem("user-info");
-  const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(
-    formData?.BirthNACInitiator?.isDeclared ? formData?.BirthNACInitiator?.isDeclared : false
-  );
-  const [isDeclaration, setDeclaration] = useState(formData?.BirthNACInitiator?.isunderstood ? formData?.BirthNACInitiator?.isunderstood : false);
   const [initiatorNameEn, setinitiatorNameEn] = useState(
     formData?.BirthNACInitiator?.initiatorNameEn ? formData?.BirthNACInitiator?.initiatorNameEn : ""
   );
@@ -254,22 +250,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
     Menu.map((genderDetails) => {
       menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
     });
-  useEffect(() => {
-    if (isInitialRender) {
-      if (formData?.BirthNACInitiator?.isInitiatorDeclaration != null) {
-        setIsInitialRender(false);
-        setisInitiatorDeclaration(formData?.BirthNACInitiator?.isInitiatorDeclaration);
-      }
-    }
-  }, [isInitialRender]);
-  useEffect(() => {
-    if (isInitialRender) {
-      if (formData?.BirthNACInitiator?.isInitiatorDeclaration != null) {
-        setIsInitialRender(false);
-        setDeclaration(formData?.BirthNACInitiator?.isInitiatorDeclaration);
-      }
-    }
-  }, [isInitialRender]);
+
   function setSelectinitiatorNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
       setinitiatorNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
@@ -319,20 +300,6 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
     }
   }
 
-  function setDeclarationInfo(e) {
-    if (e.target.checked == false) {
-      setisInitiatorDeclaration(e.target.checked);
-    } else {
-      setisInitiatorDeclaration(e.target.checked);
-    }
-  }
-  function setDeclarationStatement(e) {
-    if (e.target.checked == false) {
-      setDeclaration(e.target.checked);
-    } else {
-      setDeclaration(e.target.checked);
-    }
-  }
   function selectfile(e) {
     setAadressFile(e.target.files[0]);
   }
@@ -552,8 +519,6 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
         initiatorMobile,
         initiatorDesi,
         initiatorAddress,
-        isInitiatorDeclaration,
-        isDeclaration,
         ownerState: newOwnerState,
         careofapplicant,
       });
@@ -587,7 +552,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
   };
   return (
     <React.Fragment>
-      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+      {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
       {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
       <FormStep
@@ -596,12 +561,10 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
         onSelect={goNext}
         onSkip={onSkip}
         isDisabled={
-          !isInitiatorDeclaration ||
           !initiatorNameEn ||
           !initiatorAadhar ||
           !initiatorMobile ||
           !initiatorAddress ||
-          !isDeclaration ||
           ownerState[0].slNo === "" ||
           ownerState[0].dob === null ||
           ownerState[0].childNameEn === "" ||
@@ -837,7 +800,8 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
 
                   <div className="col-md-3">
                     <CardLabel>
-                      Order of Birth<span className="mandatorycss">*</span>
+                      {`${t("ORDER_OF_BIRTH")}`}
+                      <span className="mandatorycss">*</span>
                     </CardLabel>
                     <TextInput
                       t={t}
@@ -928,7 +892,8 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
               <div className="row">
                 <div className="col-md-6">
                   <CardLabel>
-                    Address proof of parents at the time of birth<span className="mandatorycss">*</span>
+                    {`${t("CR_NAC_DOWNLOAD_ADDRESS_PROOF_PARENTS")}`}
+                    <span className="mandatorycss">*</span>
                   </CardLabel>
                 </div>
                 <div className="col-md-6">
@@ -946,7 +911,8 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
               <div className="row">
                 <div className="col-md-6">
                   <CardLabel>
-                    Proof of birth showing the date/place details of parents at the time of birth<span className="mandatorycss">*</span>
+                    {`${t("CR_NAC_DOWNLOAD_BIRTH_SHOWING_DATE_PLACE")}`}
+                    <span className="mandatorycss">*</span>
                   </CardLabel>
                 </div>
                 <div className="col-md-6">
@@ -964,7 +930,8 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
               <div className="row">
                 <div className="col-md-6">
                   <CardLabel>
-                    School Certificate of Child(above 6 years)<span className="mandatorycss">*</span>
+                    {`${t("CR_NAC_DOWNLOAD_SCHOOL_CERTIFICATE")}`}
+                    <span className="mandatorycss">*</span>
                   </CardLabel>
                 </div>
                 <div className="col-md-6">
@@ -982,7 +949,8 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
               <div className="row">
                 <div className="col-md-6">
                   <CardLabel>
-                    ID Proof of Mother at the time of birth <span className="mandatorycss">*</span>
+                    {`${t("CR_NAC_DONWLOAD_ID_PROOF_OF_MOTHER")}`}
+                    <span className="mandatorycss">*</span>
                   </CardLabel>
                 </div>
                 <div className="col-md-6">
@@ -1000,7 +968,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
               <div className="row">
                 <div className="col-md-6">
                   <CardLabel>
-                    ID Proof of Father at the time of birth <span className="mandatorycss">*</span>
+                    {`${t("CR_NAC_DONWLOAD_ID_PROOF_OF_FATHER")}`} <span className="mandatorycss">*</span>
                   </CardLabel>
                 </div>
                 <div className="col-md-6">
@@ -1018,7 +986,8 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
               <div className="row">
                 <div className="col-md-6">
                   <CardLabel>
-                    Medical Certificate(if child is differently abled for not attending school after 6 years) <span className="mandatorycss">*</span>
+                    {`${t("CR_NAC_DOWNLOAD_MEDICAL_CERTIFICATE_DIFFERENTLY_ABLED")}`}
+                    <span className="mandatorycss">*</span>
                   </CardLabel>
                 </div>
                 <div className="col-md-6">
@@ -1032,40 +1001,6 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     message={uploadedFile5 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
                   />
                 </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col-md-12">
-              <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
-              </h1>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12">
-              <div className="col-md-12">
-                <CheckBox
-                  label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
-                  onChange={setDeclarationInfo}
-                  value={isInitiatorDeclaration}
-                  checked={isInitiatorDeclaration}
-                  disable={isDisableEdit}
-                />
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12">
-              <div className="col-md-12">
-                <CheckBox
-                  label="I do understand that NAC/NIA issue will be subject to the genuiness of documents produced and enquiry done by the registrar"
-                  onChange={setDeclarationStatement}
-                  value={isDeclaration}
-                  checked={isDeclaration}
-                  disable={isDisableEdit}
-                />
               </div>
             </div>
           </div>

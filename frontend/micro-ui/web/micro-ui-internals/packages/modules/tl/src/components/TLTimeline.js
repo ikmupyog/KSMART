@@ -34,7 +34,6 @@ break;
 
 
 const Timeline = ({ currentStep = 1, flow = "" }) => {
-  console.log("flow"+flow);
   const { t } = useTranslation();
   const isMobile = window.Digit.Utils.browser.isMobile();
   getAction(flow);
