@@ -227,9 +227,9 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
                             <div className="col-md-3 col-sm-4" >
                                 <SubmitBar label={t("SAVE")} style={{ marginBottom: "10px" }} />
                             </div>
-                            <div className="col-md-3 col-sm-4 " >
+                            {/* <div className="col-md-3 col-sm-4 " >
                                 <SubmitBar label={t("FORWARD")} style={{ marginBottom: "10px" }} />
-                            </div>
+                            </div> */}
                             <div className="col-md-3  col-sm-4"  >
                                 <Dropdown
                                     t={t}

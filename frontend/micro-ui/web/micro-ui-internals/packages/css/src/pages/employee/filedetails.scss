@@ -76,7 +76,11 @@
 
     @media (max-width: 1020px) {
         height: 470px;
-        margin-top: 190px
+        margin-top: 140px
+    }
+
+    @media (max-width: 600px) {
+        margin-top: 185px
     }
 }
 
@@ -141,7 +145,7 @@
 }
 
 .card-document {
-    height: 200px;
+    height: 317px;
     margin-top: 30px;
 
     h2 {
@@ -379,13 +383,21 @@
 }
 
 .arising-filewrapper {
-    height: 1115px;
+    height: 1560px;
 
     @media (max-width: 1020px) {
-        height: 1375px;
+        height: 1612px;
     }
 
     @media (max-width: 600px) {
-        height: 1530px;
+        height: 3225px;
+    }
+}
+
+.note-wrapper {
+    height: 2085px;
+
+    @media (max-width: 600px) {
+        height: 3460px;
     }
 }

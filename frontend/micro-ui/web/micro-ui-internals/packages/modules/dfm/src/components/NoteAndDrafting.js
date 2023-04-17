@@ -154,7 +154,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
             <div className="moduleLinkHomePageModuleLinks">
 
-                <div className="FileFlowWrapper">
+                <div className="FileFlowWrapper note-wrapper" >
 
                     <div className="row">
                         <div className="col-md-12 col-sm-12" >
@@ -166,11 +166,26 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
                     <div className="row subject-section"  >
                         <div className="col-md-12 col-sm-12">
-                            <div className="col-md-2" >
-                                <h6 class="mLeft" >{t("APPLICATION_NUMBER")}</h6>
-                            </div>
-                            <div className="col-md-2"  >
 
+                            <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("APPLICATION_NUMBER")}
+                                </CardLabel>
+                                <TextInput
+
+                                    t={t}
+                                    type={"text"}
+                                    optionKey="i18nKey"
+                                    name="RegistrationNo"
+                                    placeholder={t("APPLICATION_NUMBER")}
+                                />
+
+                            </div>
+
+                            <div className="col-md-4 col-sm-4">
+                                <CardLabel>
+                                    {t("NAME_OF_CHILD")}
+                                </CardLabel>
                                 <TextInput
 
                                     t={t}
@@ -182,27 +197,10 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
                             </div>
 
-                            <div className="col-md-2"   >
-
-                                <h3 class="date-picker">{t("NAME_OF_CHILD")}</h3>
-                            </div>
-                            <div className="col-md-2">
-
-                                <TextInput
-
-                                    t={t}
-                                    type={"text"}
-                                    optionKey="i18nKey"
-                                    name="RegistrationNo"
-                                    placeholder={t("shows_subject_from_application_with_edit_bitton")}
-                                />
-
-                            </div>
-                            <div className="col-md-1 thirdColumn"  >
-                                <h6 >{t("SEX")}</h6>
-                            </div>
-                            <div className="col-md-2"  >
-
+                            <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("SEX")}
+                                </CardLabel>
                                 <Dropdown
 
                                     t={t}
@@ -224,35 +222,34 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
                     <div className="row subject-section"  >
                         <div className="col-md-12 col-sm-12">
-                            <div className="col-md-2"  >
-                                <h6 class="mLeft">{t("DATE_OF_BIRTH")}</h6>
-                            </div>
-                            <div className="col-md-2"  >
 
+                            <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("DATE_OF_BIRTH")}
+                                </CardLabel>
                                 <DatePicker
 
                                     t={t}
                                     type={"text"}
                                     optionKey="i18nKey"
                                     name="RegistrationNo"
-                                    placeholder={t("shows_subject_from_application_with_edit_bitton")}
+                                    placeholder={t("DATE_OF_BIRTH")}
                                 />
 
                             </div>
 
-                            <div className="col-md-2"  >
 
-                                <h3 class="date-picker">{t("PLACE_OF_BIRTH")}</h3>
-                            </div>
-                            <div className="col-md-2"  >
-
+                            <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("PLACE_OF_BIRTH")}
+                                </CardLabel>
                                 <TextInput
 
                                     t={t}
                                     type={"text"}
                                     optionKey="i18nKey"
                                     name="RegistrationNo"
-                                    placeholder={t("shows_subject_from_application_with_edit_bitton")}
+                                    placeholder={t("PLACE_OF_BIRT")}
                                 />
 
                             </div>
@@ -273,35 +270,34 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
                     <div className="row subject-section"  >
                         <div className="col-md-12 col-sm-12">
-                            <div className="col-md-2"  >
-                                <h6 class="mLeft">{t("NAME_OF_MOTHER")}</h6>
-                            </div>
-                            <div className="col-md-2"  >
 
+                            <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("NAME_OF_MOTHER")}
+                                </CardLabel>
                                 <TextInput
 
                                     t={t}
                                     type={"text"}
                                     optionKey="i18nKey"
                                     name="RegistrationNo"
-                                    placeholder={t("shows_subject_from_application_with_edit_bitton")}
+                                    placeholder={t("NAME_OF_MOTHER")}
                                 />
 
                             </div>
 
-                            <div className="col-md-2"  >
 
-                                <h3 class="date-picker">{t("NAME_OF_FATHER")}</h3>
-                            </div>
-                            <div className="col-md-2"  >
-
+                            <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("NAME_OF_FATHER")}
+                                </CardLabel>
                                 <TextInput
 
                                     t={t}
                                     type={"text"}
                                     optionKey="i18nKey"
                                     name="RegistrationNo"
-                                    placeholder={t("shows_subject_from_application_with_edit_bitton")}
+                                    placeholder={t("NAME_OF_FATHER")}
                                 />
 
                             </div>
@@ -327,50 +323,49 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
                     <div className="row subject-section"  >
                         <div className="col-md-12 col-sm-12">
-                            <div className="col-md-2" >
-                                <h6 class="mLeft">{t("WARD_NO")}</h6>
-                            </div>
-                            <div className="col-md-2"  >
 
+                            <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("WARD_NO")}
+                                </CardLabel>
                                 <TextInput
 
                                     t={t}
                                     type={"text"}
                                     optionKey="i18nKey"
                                     name="RegistrationNo"
-                                    placeholder={t("shows_subject_from_application_with_edit_bitton")}
+                                    placeholder={t("WARD_NO")}
                                 />
 
                             </div>
 
-                            <div className="col-md-2"   >
 
-                                <h3 class="date-picker">{t("HOUSE_NAME")}</h3>
-                            </div>
-                            <div className="col-md-2"  >
-
+                            <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("HOUSE_NAME")}
+                                </CardLabel>
                                 <TextInput
 
                                     t={t}
                                     type={"text"}
                                     optionKey="i18nKey"
                                     name="RegistrationNo"
-                                    placeholder={t("shows_subject_from_application_with_edit_bitton")}
+                                    placeholder={t("HOUSE_NAME")}
                                 />
 
                             </div>
-                            <div className="col-md-1 thirdColumn"  >
-                                <h6 >{t("LOCAL_PLACE")}</h6>
-                            </div>
-                            <div className="col-md-2"  >
 
+                            <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("LOCAL_PLACE")}
+                                </CardLabel>
                                 <Dropdown
 
                                     t={t}
                                     type={"text"}
                                     optionKey="i18nKey"
                                     name="RegistrationNo"
-                                    placeholder={t("shows_subject_from_application_with_edit_bitton")}
+                                    placeholder={t("LOCAL_PLACE")}
                                 />
 
                             </div>
@@ -383,50 +378,49 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
                     <div className="row subject-section"  >
                         <div className="col-md-12 col-sm-12">
-                            <div className="col-md-2" >
-                                <h6 class="mLeft">{t("POST_OFFICE")}</h6>
-                            </div>
-                            <div className="col-md-2"  >
 
+                            <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("POST_OFFICE")}
+                                </CardLabel>
                                 <TextInput
 
                                     t={t}
                                     type={"text"}
                                     optionKey="i18nKey"
                                     name="RegistrationNo"
-                                    placeholder={t("shows_subject_from_application_with_edit_bitton")}
+                                    placeholder={t("POST_OFFICE")}
                                 />
 
                             </div>
 
-                            <div className="col-md-2"   >
 
-                                <h3 class="date-picker">{t("PINCODE")}</h3>
-                            </div>
-                            <div className="col-md-2"  >
-
+                            <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("PINCODE")}
+                                </CardLabel>
                                 <TextInput
 
                                     t={t}
                                     type={"text"}
                                     optionKey="i18nKey"
                                     name="RegistrationNo"
-                                    placeholder={t("shows_subject_from_application_with_edit_bitton")}
+                                    placeholder={t("PINCODE")}
                                 />
 
                             </div>
-                            <div className="col-md-1 thirdColumn"  >
-                                <h6 >{t("DISTRICT")}</h6>
-                            </div>
-                            <div className="col-md-2"  >
 
+                            <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("DISTRICT")}
+                                </CardLabel>
                                 <Dropdown
 
                                     t={t}
                                     type={"text"}
                                     optionKey="i18nKey"
                                     name="RegistrationNo"
-                                    placeholder={t("shows_subject_from_application_with_edit_bitton")}
+                                    placeholder={t("DISTRICT")}
                                 />
 
                             </div>
@@ -449,50 +443,49 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
                     <div className="row subject-section" >
                         <div className="col-md-12 col-sm-12">
-                            <div className="col-md-2" >
-                                <h6 class="mLeft">{t("WARD_NO")}</h6>
-                            </div>
-                            <div className="col-md-2"  >
 
+                            <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("WARD_NO")}
+                                </CardLabel>
                                 <TextInput
 
                                     t={t}
                                     type={"text"}
                                     optionKey="i18nKey"
                                     name="RegistrationNo"
-                                    placeholder={t("shows_subject_from_application_with_edit_bitton")}
+                                    placeholder={t("WARD_NO")}
                                 />
 
                             </div>
 
-                            <div className="col-md-2"   >
 
-                                <h3 class="date-picker">{t("HOUSE_NAME")}</h3>
-                            </div>
-                            <div className="col-md-2"  >
-
+                            <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("HOUSE_NAME")}
+                                </CardLabel>
                                 <TextInput
 
                                     t={t}
                                     type={"text"}
                                     optionKey="i18nKey"
                                     name="RegistrationNo"
-                                    placeholder={t("shows_subject_from_application_with_edit_bitton")}
+                                    placeholder={t("HOUSE_NAME")}
                                 />
 
                             </div>
-                            <div className="col-md-1 thirdColumn" >
-                                <h6>{t("LOCAL_PLACE")}</h6>
-                            </div>
-                            <div className="col-md-2"  >
 
+                            <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("LOCAL_PLACE")}
+                                </CardLabel>
                                 <Dropdown
 
                                     t={t}
                                     type={"text"}
                                     optionKey="i18nKey"
                                     name="RegistrationNo"
-                                    placeholder={t("shows_subject_from_application_with_edit_bitton")}
+                                    placeholder={t("LOCAL_PLACE")}
                                 />
 
                             </div>
@@ -504,50 +497,49 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
                     </div>
                     <div className="row subject-section"  >
                         <div className="col-md-12 col-sm-12">
-                            <div className="col-md-2" >
-                                <h6 class="mLeft">{t("POST_OFFICE")}</h6>
-                            </div>
-                            <div className="col-md-2"  >
 
+                            <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("POST_OFFICE")}
+                                </CardLabel>
                                 <TextInput
 
                                     t={t}
                                     type={"text"}
                                     optionKey="i18nKey"
                                     name="RegistrationNo"
-                                    placeholder={t("shows_subject_from_application_with_edit_bitton")}
+                                    placeholder={t("POST_OFFICE")}
                                 />
 
                             </div>
 
-                            <div className="col-md-2"   >
 
-                                <h3 class="date-picker">{t("PINCODE")}</h3>
-                            </div>
-                            <div className="col-md-2"  >
-
+                            <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("PINCODE")}
+                                </CardLabel>
                                 <TextInput
 
                                     t={t}
                                     type={"text"}
                                     optionKey="i18nKey"
                                     name="RegistrationNo"
-                                    placeholder={t("shows_subject_from_application_with_edit_bitton")}
+                                    placeholder={t("PINCODE")}
                                 />
 
                             </div>
-                            <div className="col-md-1 thirdColumn"  >
-                                <h6 >{t("DISTRICT")}</h6>
-                            </div>
-                            <div className="col-md-2"  >
 
+                            <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("DISTRICT")}
+                                </CardLabel>
                                 <Dropdown
 
                                     t={t}
                                     type={"text"}
                                     optionKey="i18nKey"
                                     name="RegistrationNo"
-                                    placeholder={t("shows_subject_from_application_with_edit_bitton")}
+                                    placeholder={t("DISTRICT")}
                                 />
 
                             </div>
@@ -845,14 +837,29 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
                             ></CustomButton>
                         </div>
                     </div>
+                    <div className="col-md-12" style={{ marginTop: "30px" }}>
+                        <div className="col-md-2" >
+                            <CardLabel>{`${t("SUPPORTING_DOCUMENTS")}`}</CardLabel>
+                        </div>
+                        <div className="col-md-4">
+                            <UploadFile
+                                id={"tl-doc"}
+                                extraStyleName={"propertyCreate"}
+                                accept=".jpg,.png,.pdf"
 
-                    <CardLabel>{`${t("ATTACH_SUPPORTING_DOCUMENTS")}`}</CardLabel>
+                            />
+                        </div>
+
+
+
+                    </div>
+                    {/* <CardLabel>{`${t("ATTACH_SUPPORTING_DOCUMENTS")}`}</CardLabel>
                     <UploadFile
                         id={"tl-doc"}
                         extraStyleName={"propertyCreate"}
                         accept=".jpg,.png,.pdf"
 
-                    />
+                    /> */}
 
 
                 </div>
