@@ -8,6 +8,7 @@ import {
   LinkButton,
   EditButton,
   BackButton,
+  SubmitBar,
   EditIcon,
   Loader,
 } from "@egovernments/digit-ui-react-components";
@@ -22,14 +23,14 @@ import DeathOutsideJurisdiction from "../DeathOutsideJurisdiction ";
 import DeathCorrectionModal from "../../../components/DeathCorrectionModal";
 import { DEATH_CORRECTION_FIELD_NAMES } from "../../../config/constants";
 import { initializedDeathCorrectionObject } from "../../../business-objects/globalObject";
-import { useLocation } from "react-router-dom";
 import moment from "moment";
 import { convertEpochToDate  } from "../../../utils";
 import { useForm } from "react-hook-form";
-import { formatApiParams } from "../../../utils/birthInclusionParams";
+import { formatApiParams } from "../../../utils/deathCorrectionParams";
 
 function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, sex, cmbPlace , DeathCorrectionDocuments ,navigationData}) {
   const { t } = useTranslation();
+  const tenantId = Digit.ULBService.getCurrentTenantId();
   const [showModal, setShowModal] = useState(false);
   const stateId = Digit.ULBService.getStateId();
   const [uploadStatus, setUploadStatus] = useState({
@@ -155,6 +156,8 @@ function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, sex, cmbPla
 
   const [AadharError, setAadharError] = useState(formData?.InformationDeath?.DeceasedAadharNumber ? false : false);
 
+  const mutation = Digit.Hooks.cr.useDeathCorrectionAction(tenantId);
+
 
   const formatDod = (date) => {
     return date;
@@ -191,8 +194,6 @@ function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, sex, cmbPla
    
       let tempObj = { ...deathCorrectionFormsObj };
       console.log("tempObj==",selectedFieldType,tempObj);
-      // let { DECEASED_DOB } = tempObj;
-      // tempObj = { ...tempObj, DECEASED_DOB: { ...DECEASED_DOB, Documents: fileData, isFocused: true, isDisabled: false } };
       let tempFieldType = tempObj[selectedFieldType];
       tempObj = { ...tempObj, [selectedFieldType]: { ...tempFieldType, Documents: fileData, selectedDocType: selectedFieldType, isEditable: true, isFocused: true, isDisabled: false } };
   
@@ -200,14 +201,6 @@ function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, sex, cmbPla
       setShowModal(false);
     };
 
-  // useEffect(() => {
-  //   if(deathCorrectionFormsObj?.DECEASED_PLACE_OF_DEATH?.curValue){
-  //     console.log("curvalue===", deathCorrectionFormsObj?.DECEASED_PLACE_OF_DEATH?.curValue);
-  //     setselectDeathPlace(deathCorrectionFormsObj?.DECEASED_PLACE_OF_DEATH?.curValue)
-  //   }
-  //    }, [deathCorrectionFormsObj]);
- 
-  
   const {  handleSubmit,  setValue } = useForm({
     reValidateMode: "onSubmit",
     mode: "all",
@@ -279,7 +272,9 @@ const onPresentAddressChange = (e,fieldType) =>{
 }
 
   const onSubmitDeathCorrection = () => {
-    const formattedResp = formatApiParams(deathCorrectionFormsObj);
+    const formattedResp =  formatApiParams(deathCorrectionFormsObj, navigationData);
+    console.log("formattedResp", formattedResp);
+    mutation.mutate(formattedResp);
   };
 
   const onSubmit = (data) => console.log(data);
@@ -458,7 +453,7 @@ console.log("deathCorrectionFormsObj==",deathCorrectionFormsObj);
                   date={deathCorrectionFormsObj?.DECEASED_DOB?.curValue}
                   max={convertEpochToDate(new Date())}
                   min={convertEpochToDate("1900-01-01")} 
-                  onBlur={onDodChange}
+                  onChange={onDodChange}
                   formattingFn={formatDod}
                   {...(validation = { isRequired: true, title: t("CR_DATE_OF_DEATH") })}
                 />
@@ -479,7 +474,7 @@ console.log("deathCorrectionFormsObj==",deathCorrectionFormsObj);
                )}
         </div>
         </FormFieldContainer>
-          <FormFieldContainer>
+          {/* <FormFieldContainer>
             <FieldComponentContainer>
               <div className="col-md-4">
                 <CardLabel>{t("CR_PLACE_OF_DEATH")}</CardLabel>
@@ -489,7 +484,7 @@ console.log("deathCorrectionFormsObj==",deathCorrectionFormsObj);
                   name="DeathPlace"
                   isMandatory={false}
                   option={cmbPlace}
-                  disabled={deathCorrectionFormsObj.DECEASED_PLACE_OF_DEATH?.isDisabled}
+                  disable={deathCorrectionFormsObj.DECEASED_PLACE_OF_DEATH?.isDisabled}
                   autofocus={deathCorrectionFormsObj.DECEASED_PLACE_OF_DEATH?.isFocused}
                   selected={deathCorrectionFormsObj?.DECEASED_PLACE_OF_DEATH?.curValue}
                   placeholder={`${t("CR_PLACE_OF_DEATH")}`}
@@ -511,7 +506,7 @@ console.log("deathCorrectionFormsObj==",deathCorrectionFormsObj);
                 )}
         </div>
        </FormFieldContainer>
-          {/* {DeathPlace.code === "HOSPITAL" && (
+          {DeathPlace.code === "HOSPITAL" && (
             <div>
               <Hospital
                 formData={formData}
@@ -657,7 +652,7 @@ console.log("deathCorrectionFormsObj==",deathCorrectionFormsObj);
                   t={t}
                   optionKey="code"
                   option={sex}
-                  disabled={deathCorrectionFormsObj.DECEASED_SEX?.isDisabled}
+                  disable={deathCorrectionFormsObj.DECEASED_SEX?.isDisabled}
                   autofocus={deathCorrectionFormsObj.DECEASED_SEX?.isFocused}
                   selected={deathCorrectionFormsObj?.DECEASED_SEX?.curValue}
                   placeholder={`${t("CR_GENDER")}`}
@@ -926,13 +921,11 @@ console.log("deathCorrectionFormsObj==",deathCorrectionFormsObj);
           <div style={{ display: "flex", flexDirection: "column-reverse" }}></div>
             <FormFieldContainer>
               <FieldComponentContainer></FieldComponentContainer>
-              <SubmitContainer>
-                <div style={{ marginTop: "2.5rem" }}>
-                  <span onClick={onSubmitDeathCorrection}>
-                    <EditButton selected={true} label={"Submit"} />
-                  </span>
-                </div>
-              </SubmitContainer>
+              <SubmitBar label={t("CS_COMMON_SUBMIT")} onClick={onSubmitDeathCorrection}>
+                {/* <div style={{ marginTop: "2.5rem" }}>
+                 
+                </div> */}
+              </SubmitBar>
             </FormFieldContainer>
         </form>
         <DeathCorrectionModal 
