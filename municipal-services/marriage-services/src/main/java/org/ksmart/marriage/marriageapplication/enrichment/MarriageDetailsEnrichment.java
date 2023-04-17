@@ -168,6 +168,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                 criteria.setApplicationType(applicationType);
                // String registrationNumber = marriage.getRegistrationNo();
                 //Jasmine 07.04.2023
+                //Updated on 17.04.2023
                 List <MarriageDocument> marriagedocument = marriage.getMarriageDocuments();
                 if (marriagedocument!=null){
                         marriagedocument.forEach(document -> {
