@@ -58,7 +58,7 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
                     />
         </SearchField>}
         <SearchField>
-            <label  style={mystyle}>{t("TL_COMMON_TABLE_COL_APP_DATE")}</label>  
+            <label  style={mystyle}>{t("TL_COMMON_TABLE_COL_APP_FROM_DATE")}</label>  
             <Controller
            
                 render={(props) => <DatePicker  date={props.value} onChange={props.onChange} />}
@@ -66,14 +66,14 @@ const SearchFields = ({register, control, reset, tenantId, t }) => {
                 control={control}
                 />
         </SearchField>
-        {/* <SearchField>
-            <label style={mystyle}>{t("TL_TRADE_LICENCE_TO_DATE")}</label>
+        <SearchField>
+            <label style={mystyle}>{t("TL_COMMON_TABLE_COL_APP_TO_DATE")}</label>
             <Controller
                 render={(props) => <DatePicker   date={props.value} onChange={props.onChange} />}
                 name="toDate"
                 control={control}
                 />
-        </SearchField> */}
+        </SearchField>
         <SearchField>
             <label>{t("TL_TRADE_LICENSE_LABEL")}</label>
             <TextInput  name="licenseNumbers" inputRef={register({})}/>
