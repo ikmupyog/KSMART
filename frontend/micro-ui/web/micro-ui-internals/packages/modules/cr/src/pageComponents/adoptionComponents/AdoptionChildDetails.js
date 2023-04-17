@@ -1269,15 +1269,6 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
           </div>
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-12">
-                <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_REGISTRATION_DETAILS")}`}</span>{" "}
-                </h1>
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12">
                <div className="col-md-3">
                 <CardLabel>
                   {t("CR_DATE_OF_BIRTH_TIME")}
