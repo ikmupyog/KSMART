@@ -58,7 +58,7 @@ public class MarriageDocument {
     private Integer updatedFlag ;
 
     @JsonProperty("activeFalse")
-    private boolean activeFalse ;
+    private Boolean activeFalse ;
 
     @JsonProperty("auditDetails")
     private AuditDetails marriageDocAuditDetails ;

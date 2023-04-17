@@ -126,4 +126,7 @@ public class MarriageApplicationConfiguration {
     @Value("${persister.update.marriage.application.correction.topic}")
     private String updateMarriageApplicationCorrectionTopic;
 
+    @Value("${egov.marriage.image.startPoint}")
+    private String imageURLStartPath;
+
 }

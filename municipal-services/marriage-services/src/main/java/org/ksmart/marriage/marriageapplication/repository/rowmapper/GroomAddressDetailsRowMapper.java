@@ -49,6 +49,7 @@ public interface GroomAddressDetailsRowMapper {
                 .presentOutSideIndiaProvinceEn(rs.getString("GPSA_ot_state_region_province_en"))
                 .presentOutSideIndiaProvinceMl(rs.getString("GPSA_ot_state_region_province_ml"))
                 .presentOutSideIndiaPostCode(rs.getString("GPSA_ot_zipcode"))
+                .brideGroomPresent(rs.getString("GPSA_bride_groom"))
 
 
 
@@ -94,6 +95,7 @@ public interface GroomAddressDetailsRowMapper {
                 .permanentOutsideIndiaPostCode(rs.getString("GPMA_ot_zipcode"))
                 .permntOutSideIndiaProvinceMl(rs.getString("GPMA_ot_state_region_province_ml"))
                 .permntOutSideIndiaProvinceEn(rs.getString("GPMA_ot_state_region_province_en"))
+                .brideGroomPermanent(rs.getString("GPMA_bride_groom"))
 
 //                .isPermanentAddress(rs.getInt("GPMA_same_as_present")==1?true:false)
 //                .isPermanentAddressInt(rs.getInt("GPMA_same_as_present"))

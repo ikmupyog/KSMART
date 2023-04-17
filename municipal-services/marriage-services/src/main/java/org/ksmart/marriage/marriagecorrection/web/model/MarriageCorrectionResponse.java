@@ -3,6 +3,8 @@ package org.ksmart.marriage.marriagecorrection.web.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.egov.common.contract.response.ResponseInfo;
+import org.ksmart.marriage.marriageapplication.web.model.MarriageApplicationDetails;
+import org.ksmart.marriage.marriageregistry.web.model.certmodel.MarriageCertificate;
 import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
@@ -24,6 +26,10 @@ public class MarriageCorrectionResponse {
     @Valid
     private List<MarriageCorrectionDetails> marriageCorrectionDetails;
 
+    @JsonProperty("marriageCertificate")
+    @Valid
+    private MarriageCertificate marriageCertificate;
+
     public MarriageCorrectionResponse addCrMarriageDtl(MarriageCorrectionDetails marriageCorrection) {
         if (marriageCorrectionDetails == null) {
             marriageCorrectionDetails = new ArrayList<>();
@@ -31,4 +37,7 @@ public class MarriageCorrectionResponse {
         marriageCorrectionDetails.add(marriageCorrection);
         return this;
     }
+    @JsonProperty("MarriageDetails")
+    private List<MarriageApplicationDetails> marriageDetails;
+
 }

@@ -39,6 +39,8 @@ public interface BrideDetailsRowMapper {
                 .brideIsSpouseLiving(rs.getBoolean("BD_is_spouse_living"))
                 .brideNoOfSpouse(rs.getInt("BD_livingspouseNo"))
                 .brideGroom(rs.getString("BD_bride_groom"))
+                .marriageid(rs.getString("MD_id"))
+                .tenentId(rs.getString("MD_tenantid"))
                 .build();
 
 
