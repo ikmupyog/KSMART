@@ -62,6 +62,16 @@ public class BaseMarriageQueryBuilder {
             paramValues.add(value);
         }
     }
+
+    
+    void checkFilter(String column, Boolean value, StringBuilder query, List<Object> paramValues) {
+       // if (StringUtils.isNotBlank(value)) {
+            addWhereClause(paramValues, query);
+            query.append(column)
+                    .append("=? ");
+            paramValues.add(value);
+       // }
+    }
     void addFilterDate(String column, Long value, StringBuilder query, List<Object> paramValues) {
         if (value != null) {
             addWhereClause(paramValues, query);

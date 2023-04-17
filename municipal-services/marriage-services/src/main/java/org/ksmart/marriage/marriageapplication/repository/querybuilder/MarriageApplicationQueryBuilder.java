@@ -171,7 +171,8 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
                               addFilter("applicationnumber", criteria.getApplicationNo(), query, preparedStmtValues);
                               addFilter("applicationtype", criteria.getApplicationType(), query, preparedStmtValues);
                               addFilter("tenantid", criteria.getTenantId(), query, preparedStmtValues);
-                              addFilter("active", "true", query, preparedStmtValues);
+                              checkFilter("active", criteria.getActive(), query, preparedStmtValues);
+                              //addFilter("active", "true", query, preparedStmtValues);
       return query.toString();
     }
 

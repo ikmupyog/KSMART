@@ -176,10 +176,11 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                          criteria.setDocumentType(documentType);
                          criteria.setDocumentOwner(documentOwner);
                          criteria.setTenantId(marriage.getTenantid());
+                         criteria.setActive(true);
                          document.setActiveFalse(true);
                          
                          List<MarriageDocument> searchResult = repository.getDocumentDetails(criteria,requestInfo);
-                        // document.setUpdatedFlag( MarriageConstants.VALUE_FALSE);
+                         document.setUpdatedFlag( MarriageConstants.VALUE_FALSE);
                          if(searchResult!=null){
                              searchResult.forEach(existingDocument -> {
                                  if(document.getFileStoreId().equals(existingDocument.getFileStoreId())){
@@ -188,6 +189,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                                  else{
                                     document.setUpdatedFlag( MarriageConstants.VALUE_TRUE);
                                     document.setActiveFalse(false);
+                                    criteria.setActive(false);
                                 }
                              });
                       }
