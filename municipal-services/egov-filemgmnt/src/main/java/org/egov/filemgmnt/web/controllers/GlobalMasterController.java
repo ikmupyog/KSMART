@@ -7,12 +7,6 @@ import org.egov.filemgmnt.util.FMUtils;
 import org.egov.filemgmnt.util.ResponseInfoFactory;
 import org.egov.filemgmnt.web.models.GlobalMaster.*;
 import org.egov.filemgmnt.web.models.RequestInfoWrapper;
-import org.egov.filemgmnt.web.models.arisingfile.ArisingFile;
-import org.egov.filemgmnt.web.models.arisingfile.ArisingFileSearchCriteria;
-import org.egov.filemgmnt.web.models.arisingfile.ArisingFileSearchResponse;
-import org.egov.filemgmnt.web.models.drafting.DraftFiles;
-import org.egov.filemgmnt.web.models.drafting.DraftFilesRequest;
-import org.egov.filemgmnt.web.models.drafting.DraftFilesResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,10 +27,10 @@ public class GlobalMasterController {
         this.globalMasterServices = globalMasterServices;
         this.responseInfoFactory = responseInfoFactory;
     }
-    @PostMapping("/moduledetails/_create")
+    @PostMapping("/Globalmaster/_createmodule")
     public ResponseEntity<ModuleDetailsResponse> createModuledetails(@RequestBody final ModuleDetailsRequest request) {
 //        if (log.isDebugEnabled()) {
-//            log.debug("moduledetails-create:  \n{}", FMUtils.toJson(request));
+//            log.debug("Globalmaster/_createmodule:  \n{}", FMUtils.toJson(request));
 //        }
         final ModuleDetails moduleDetails = globalMasterServices.createModule(request);
         return ResponseEntity.ok(ModuleDetailsResponse.builder()
@@ -84,11 +78,11 @@ public class GlobalMasterController {
 //                .build());
 //    }
 //
-@PostMapping("/moduledetails/_search")
+@PostMapping("/Globalmaster/_searchmodule")
 public ResponseEntity<ModuleSearchResponse> searchModule(@RequestBody final RequestInfoWrapper request,
                                                             @ModelAttribute final ModuleSearchCriteria searchCriteria) {
     if (log.isDebugEnabled()) {
-        log.debug("Moduledetails_search:  \n{}", FMUtils.toJson(searchCriteria));
+        log.debug("Globalmaster/_searchmodule:  \n{}", FMUtils.toJson(searchCriteria));
     }
     final List<ModuleDetails> result = globalMasterServices.searchModule(request.getRequestInfo(), searchCriteria);
 
@@ -98,8 +92,11 @@ public ResponseEntity<ModuleSearchResponse> searchModule(@RequestBody final Requ
             .moduleDetails(result)
             .build());
 }
-    @PostMapping("/moduledetails/_update")
+    @PostMapping("/Globalmaster/_updatemodule")
     public ResponseEntity<ModuleDetailsResponse> updateModule(@RequestBody ModuleDetailsRequest request) {
+        if (log.isDebugEnabled()) {
+            log.debug("Globalmaster/_updatemodule:  \n{}", FMUtils.toJson(request));
+        }
 
         final ModuleDetails moduleDetail = globalMasterServices.updateModule(request);
 
