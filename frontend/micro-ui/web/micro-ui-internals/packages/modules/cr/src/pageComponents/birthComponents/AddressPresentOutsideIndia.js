@@ -26,7 +26,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
   }
   let validation = {};
   const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : isEditStillBirth ? isEditStillBirth : false);
+  const [isDisableEdit, setisDisableEdit] = useState(false);
 
   let cmbCountry = [];
   Country &&
