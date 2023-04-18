@@ -49,7 +49,8 @@ export const CRNACsearch = {
 
   applicationDetails: async (t, tenantId, applicationNumber, userType) => {
     const filter = { applicationNumber };
-    const response = await CRNACsearch.application(tenantId, filter); // const propertyDetails =
+    const response = await CRNACsearch.application(tenantId, filter);
+    // const propertyDetails =
     //   response?.tradeLicenseDetail?.additionalDetail?.propertyId &&
     //   (await Digit.PTService.search({ tenantId, filters: { propertyIds: response?.tradeLicenseDetail?.additionalDetail?.propertyId } }));
     let numOfApplications = [];
@@ -141,28 +142,28 @@ export const CRNACsearch = {
         { title: "CR_CARE_OF_APPLICATION", value: response?.ApplicantDetails.careofapplication || "NA" },
       ],
     };
+    // const multipleChildInfo = {
+    //   title: "CR_NAC_MULTIPLE_NUMBER_OF_CHILD",
+    //   values: [
+    //     {
+    //       title: "CR_NAC_SL_NO",
+    //       value: response?.OtherChildren.slNo || "NA",
+    //     },
+    //     { title: "CR_NAC_DOB", value: response?.OtherChildren.dob || "NA" },
+    //     { title: "CR_NAC_CHILD_NAME", value: response?.OtherChildren.childNameEn || "NA" },
+    //     { title: "CR_NAC_CHILD_NAME_ML", value: response?.OtherChildren.childNameMl || "NA" },
+    //     { title: "CR_NAC_SEX", value: response?.OtherChildren.sex || "NA" },
+    //     { title: "CR_NAC_ORDER_OF_CHILDREN", value: response?.OtherChildren.nacorderofChildren || "NA" },
+    //   ],
+    // };
 
-    // if (response?.workflowCode == "NewTL" && response?.status !== "APPROVED") {
-    //   const details = {
-    //     title: "",
-    //     values: [
-    //       { title: "TL_COMMON_TABLE_COL_APP_NO", value: response?.applicationNumber || "NA" },
-    //       {
-    //         title: "TL_APPLICATION_CHALLAN_LABEL",
-    //         value: (response?.tradeLicenseDetail?.channel && `TL_CHANNEL_${response?.tradeLicenseDetail?.channel}`) || "NA",
-    //       },
-    //     ],
-    //   };
-    //   response && employeeResponse.push(details);
-    // }
     response && employeeResponse.push(Birthdetails);
     response && employeeResponse.push(childdetails);
     response && employeeResponse.push(parentInfo);
     response && employeeResponse.push(PresentAddressBirthDetailsInfo);
     response && employeeResponse.push(PermanentAddressBirthDetailsInfo);
     response && employeeResponse.push(initiatorInfo);
-
-    // response && employeeResponse.push(statisticalInfo);
+    //response && employeeResponse.push(multipleChildInfo);
 
     return {
       tenantId: response.tenantId,
