@@ -434,7 +434,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
         {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
         {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
 
-        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!fatherFirstNameEn}>
+        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
           <div>
             <div className="row">
               <div className="col-md-12">
@@ -529,7 +529,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                 <div className="col-md-3">
                   <CardLabel>
                     {`${t("CR_FATHER_NAME_EN")}`}
-                    <span className="mandatorycss">*</span>
+                    {/* <span className="mandatorycss">*</span> */}
                   </CardLabel>
                   <TextInput
                     t={t}
@@ -541,14 +541,14 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                     onChange={setSelectFatherFirstNameEn}
                     // disable={isFatherInfo}
                     placeholder={`${t("CR_FATHER_NAME_EN")}`}
-                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FATHER_NAME_EN") })}
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_FATHER_NAME_EN") })}
                   />
                 </div>
 
                 <div className="col-md-3">
                   <CardLabel>
                     {`${t("CR_FATHER_NAME_ML")}`}
-                    <span className="mandatorycss">*</span>
+                    {/* <span className="mandatorycss">*</span> */}
                   </CardLabel>
                   <TextInput
                     t={t}
@@ -562,7 +562,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                     placeholder={`${t("CR_FATHER_NAME_ML")}`}
                     {...(validation = {
                       pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                      isRequired: true,
+                      isRequired: false,
                       type: "text",
                       title: t("CR_INVALID_FATHER_NAME_ML"),
                     })}
@@ -571,7 +571,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                 <div className="col-md-3">
                   {" "}
                   <CardLabel>{`${t("CR_PASSPORT_NO")}`}
-                  <span className="mandatorycss">*</span>
+                  {/* <span className="mandatorycss">*</span> */}
                   </CardLabel>
                   <TextInput
                     t={t}
@@ -584,13 +584,14 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                     // disable={isFatherInfo}
                     placeholder={`${t("CR_PASSPORT_NO")}`}
                     style={{ textTransform: "uppercase" }}
-                    {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_PASSPORT_NO") })}
+                    {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_PASSPORT_NO") })}
                   />
                 </div>
                 <div className="col-md-3">
                   {/* <span className="mandatorycss">*</span> */}
                   <CardLabel>
-                    {`${t("CR_NATIONALITY")}`} <span className="mandatorycss">*</span>
+                    {`${t("CR_NATIONALITY")}`} 
+                    {/* <span className="mandatorycss">*</span> */}
                   </CardLabel>
                   <Dropdown
                     t={t}
@@ -680,7 +681,8 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                 </div>
                 <div className="col-md-3">
                   <CardLabel>
-                    {`${t("CR_FATHER_EDUCATION")}`} <span className="mandatorycss">*</span>
+                    {`${t("CR_FATHER_EDUCATION")}`} 
+                    {/* <span className="mandatorycss">*</span> */}
                   </CardLabel>
                   <Dropdown
                     t={t}
@@ -694,7 +696,8 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                 </div>
                 <div className="col-md-3">
                   <CardLabel>
-                    {`${t("CR_FATHER_PROFESSIONAL")}`} <span className="mandatorycss">*</span>
+                    {`${t("CR_FATHER_PROFESSIONAL")}`} 
+                    {/* <span className="mandatorycss">*</span> */}
                   </CardLabel>
                   <Dropdown
                     t={t}

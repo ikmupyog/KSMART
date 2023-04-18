@@ -321,49 +321,39 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
     }
   }
 
-  // function setSelectChildAadharNo(e) {
-  //   // setContactno(e.target.value.length<=10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
-  //   if (e.target.value.length != 0) {
-  //     if (e.target.value.length > 12) {
-  //       // setChildAadharNo(e.target.value);
-  //       setAadharError(true);
-  //       return false;
-  //     } else if (e.target.value.length < 12) {
-  //       setAadharError(true);
-  //       setChildAadharNo(e.target.value);
-  //       return false;
-  //     } else {
-  //       setAadharError(false);
-  //       setChildAadharNo(e.target.value);
-  //       return true;
-  //     }
-  //   } else {
-  //     setAadharError(false);
-  //     setChildAadharNo(e.target.value);
-  //     return true;
-  //   }
-  // }
-
   function setSelectPassportNo(e) {
+    if (e.target.value.trim().length >= 0) {
     setchildPassportNo(e.target.value.length<=12 ? e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '') : (e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '').substring(0, 12)))
+    }
   }
 
   function setSelectprovinceEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9, ]*$") != null)) {
       setprovinceEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
-  function setSelectprovinceMl(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
-    if (!(e.target.value.match(pattern))) {
-      e.preventDefault();
-      setprovinceMl('');
-    }
-    else {
-      setprovinceMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+  // function setSelectprovinceMl(e) {
+  //   let pattern = "/^[\u0D00-\u0D7F\u200D\u200C0-9, \-]*$/";
+  //   if (!(e.target.value.match(pattern))) {
+  //     e.preventDefault();
+  //     setprovinceMl('');
+  //   }
+  //   else {
+  //     setprovinceMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     
-    }
-  }
+  //   }
+  // }
+
+  function setSelectprovinceMl(e) {
+    let pattern = "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$";
+        if (!(e.target.value.match(pattern))) {
+            e.preventDefault();
+            setprovinceMl('');
+        }
+        else {
+          setprovinceMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+        }
+      }
 
   function setSelectoutsideBirthPlaceEn(e) {
     if (e.target.value.length === 51) {
@@ -865,7 +855,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
               value={provinceEn}
               onChange={setSelectprovinceEn}
               placeholder={`${t("CR_STATE_REGION_PROVINCE_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
+              {...(validation = { pattern: "^[a-zA-Z-0-9, ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
             />
           </div>
           <div className="col-md-4">
@@ -879,7 +869,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
               onKeyPress={setCheckMalayalamInputField}
               onChange={setSelectprovinceMl}
               placeholder={`${t("CR_STATE_REGION_PROVINCE_ML")}`}
-              {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_ML") })}
+              {...(validation = {  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_ML") })}
             />
           </div>
           </div>
