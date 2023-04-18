@@ -36,7 +36,7 @@ const SearchRegistryBirth = ({ onSubmit, data, isSuccess, isLoading, count }) =>
     defaultValues: {
       offset: 0,
       limit: 10,
-      // sortBy: "dateOfBirth",
+      sortBy: "birthDate",
       sortOrder: "DESC",
     },
   });
@@ -45,7 +45,7 @@ const SearchRegistryBirth = ({ onSubmit, data, isSuccess, isLoading, count }) =>
   useEffect(() => {
     register("offset", 0);
     register("limit", 10);
-    //register("sortBy", "dateOfBirth");
+    register("sortBy", "birthDate");
     register("sortOrder", "DESC");
   }, [register]);
 

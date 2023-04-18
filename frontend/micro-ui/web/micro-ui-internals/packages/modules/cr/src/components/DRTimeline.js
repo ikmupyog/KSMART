@@ -13,8 +13,8 @@ const getAction = (flow) => {
       'CR_ADDRESS_DECESED',
       'CR_FAMILY_DETAILS',  
       'CR_MORE_INFO',
-      'CR_INITIATOR_DETAILS',
-     // 'CR_INFORMENT_DETAILS',
+      // 'CR_INITIATOR_DETAILS',
+     'CR_INFORMENT_DETAILS',
       'CR_SUMMARY',
     ]
   }

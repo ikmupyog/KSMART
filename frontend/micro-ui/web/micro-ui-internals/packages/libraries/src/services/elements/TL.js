@@ -34,7 +34,7 @@ export const TLService = {
       //params: { tenantId, ...filters },
     }),
   TLsearch: ({ tenantId, filters }) =>
-     Request({
+    Request({
       url: Urls.tl.search,
       useCache: false,
       method: "POST",
@@ -64,7 +64,7 @@ export const TLService = {
       auth: true,
     }),
   createpde: (details, tenantId) =>
- 
+
     Request({
       url: Urls.tl.createpde,
       data: details,
@@ -76,7 +76,7 @@ export const TLService = {
       auth: true,
     }),
   searchpde: ({ tenantId, filters }) =>
-     Request({
+    Request({
       url: Urls.tl.searchpde,
       useCache: false,
       method: "POST",
@@ -84,8 +84,8 @@ export const TLService = {
       userService: true,
       params: { tenantId, ...filters },
     }),
-    updatepde: (details, tenantId ) =>
-     Request({
+  updatepde: (details, tenantId) =>
+    Request({
       url: Urls.tl.updatepde,
       data: details,
       useCache: false,
@@ -95,7 +95,7 @@ export const TLService = {
       params: {},
       auth: true,
     }),
-    updatepdewf: (details, tenantId) =>
+  updatepdewf: (details, tenantId) =>
     Request({
       url: Urls.tl.updatepdewf,
       data: details,
@@ -105,9 +105,8 @@ export const TLService = {
       method: "POST",
       params: {},
       auth: true,
-    }), 
-    createcorrection: (details, tenantId) =>
- 
+    }),
+  createcorrection: (details, tenantId) =>
     Request({
       url: Urls.tl.createcorrection,
       data: details,
@@ -117,5 +116,17 @@ export const TLService = {
       method: "POST",
       params: {},
       auth: true,
-    }), 
+    }),
+    updatecorrection: (details, tenantId) =>
+    Request({
+      url: Urls.tl.updatecorrection,
+      data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: {},
+      auth: true,
+    }),
+    
 };

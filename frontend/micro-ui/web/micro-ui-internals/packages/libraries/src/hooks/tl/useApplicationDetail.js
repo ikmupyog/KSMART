@@ -1,11 +1,11 @@
 import { TLSearch } from "../../services/molecules/TL/Search";
 import { useQuery } from "react-query";
 
-const useApplicationDetail = (t, tenantId, applicationNumber, config = {}, userType) => {
+const useApplicationDetail = (t, tenantId, applicationNumber, config = {}, userType,applicationType) => {
   let EditRenewalApplastModifiedTime = Digit.SessionStorage.get("EditRenewalApplastModifiedTime");
   return useQuery(
     ["APPLICATION_SEARCH", "TL_SEARCH", applicationNumber, userType, EditRenewalApplastModifiedTime],
-    () => TLSearch.applicationDetails(t, tenantId, applicationNumber, userType),
+    () => TLSearch.applicationDetails(t, tenantId, applicationNumber, userType,applicationType),
     config
   );
 };
