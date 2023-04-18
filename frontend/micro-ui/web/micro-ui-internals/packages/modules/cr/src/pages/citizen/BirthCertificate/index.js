@@ -1,25 +1,21 @@
 import React, { useState } from "react";
 import { BackButton } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-// import BirthCertificate from "./BirthCertificate";
 import BirthCertificate from "../../../components/SearchRegistryBirth";
+import _ from "lodash";
+import { convertDateToEpoch } from "../../../utils";
 
 const BirthCertificateSearch = ({ path }) => {
   const { t } = useTranslation();
-  // const tenantId = Digit.ULBService.getCurrentTenantId();
   const [payload, setPayload] = useState({});
 
   function onSubmit(_data) {
-    var fromDate = new Date(_data?.fromDate);
-    fromDate?.setSeconds(fromDate?.getSeconds() - 19800);
-    var toDate = new Date(_data?.toDate);
-    toDate?.setSeconds(toDate?.getSeconds() + 86399 - 19800);
     const data = {
-      ..._data,
-      ...(_data.toDate ? { toDate: toDate?.getTime() } : {}),
-      ...(_data.fromDate ? { fromDate: fromDate?.getTime() } : {}),
+      ..._data
     };
-
+    if (!_.isEmpty(_data.birthDate)) {
+      _.set(data, "birthDate", convertDateToEpoch(_data.birthDate, "start"))
+    }
     setPayload(
       Object.keys(data)
         .filter((k) => data[k])
@@ -28,7 +24,7 @@ const BirthCertificateSearch = ({ path }) => {
   }
 
   const config = {
-    enabled: !!(payload && Object.keys(payload).length > 0),
+    enabled: !!(payload && Object.keys(payload).length > 0)
   };
 
   const { data: { RegisterBirthDetails: searchReult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useRegistrySearchBirth({
