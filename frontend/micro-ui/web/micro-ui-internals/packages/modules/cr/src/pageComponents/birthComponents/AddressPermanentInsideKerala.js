@@ -15,7 +15,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
   setpermntInKeralaWardNo, PostOfficevalues, setPostOfficevalues, isEditBirth = false, isEditDeath = false, isEditAdoption,
   isEditStillBirth = false, countryValuePermanent, setCountryValuePermanent, valuePermanent, setValuePermanent,
   permlbs, setPermLbs, DistrictPermvalues, setDistrictPermvalue, TalukPermvalues, setLbsTalukPermvalue, VillagePermvalues, setLbsVillagePermvalue,
-  PostOfficePermvalues, setPostOfficePermvalues, isPrsentAddress, setIsPrsentAddress
+  PostOfficePermvalues, setPostOfficePermvalues, isPrsentAddress, setIsPrsentAddress,isEditBirthNAC
   // isInitialRender, setIsInitialRender
   // isInitialRender, setIsInitialRender isEditBirth ? isEditBirth : isEditDeath ? false :
 

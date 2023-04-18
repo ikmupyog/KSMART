@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { convertToNACRegistration } from "../../../utils/birthnacindex";
-import getPDFData from "../../../utils/getTLAcknowledgementData";
+import getPDFData from "../../../utils/getCRBirthNACAcknowledgmentData";
 
 const GetActionMessage = (props) => {
   const { t } = useTranslation();
@@ -146,7 +146,7 @@ const BirthNACAcknowledgement = ({ data, onSuccess, userType }) => {
           </Link>
         )}
         <Link to={`/digit-ui/citizen`}>
-          <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
+          <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />m
         </Link>
       </Card>
     );
