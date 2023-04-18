@@ -3,14 +3,21 @@ package org.egov.filemgmnt.web.controllers;
 
 import lombok.extern.slf4j.Slf4j;
 import org.egov.filemgmnt.service.GlobalMasterServices;
+import org.egov.filemgmnt.util.FMUtils;
 import org.egov.filemgmnt.util.ResponseInfoFactory;
 import org.egov.filemgmnt.web.models.GlobalMaster.*;
+import org.egov.filemgmnt.web.models.RequestInfoWrapper;
+import org.egov.filemgmnt.web.models.arisingfile.ArisingFile;
+import org.egov.filemgmnt.web.models.arisingfile.ArisingFileSearchCriteria;
+import org.egov.filemgmnt.web.models.arisingfile.ArisingFileSearchResponse;
+import org.egov.filemgmnt.web.models.drafting.DraftFiles;
+import org.egov.filemgmnt.web.models.drafting.DraftFilesRequest;
+import org.egov.filemgmnt.web.models.drafting.DraftFilesResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @Slf4j
@@ -77,5 +84,31 @@ public class GlobalMasterController {
 //                .build());
 //    }
 //
+@PostMapping("/moduledetails/_search")
+public ResponseEntity<ModuleSearchResponse> searchModule(@RequestBody final RequestInfoWrapper request,
+                                                            @ModelAttribute final ModuleSearchCriteria searchCriteria) {
+    if (log.isDebugEnabled()) {
+        log.debug("Moduledetails_search:  \n{}", FMUtils.toJson(searchCriteria));
+    }
+    final List<ModuleDetails> result = globalMasterServices.searchModule(request.getRequestInfo(), searchCriteria);
+
+    return ResponseEntity.ok(ModuleSearchResponse.builder()
+            .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+                    Boolean.TRUE))
+            .moduleDetails(result)
+            .build());
+}
+    @PostMapping("/moduledetails/_update")
+    public ResponseEntity<ModuleDetailsResponse> updateModule(@RequestBody ModuleDetailsRequest request) {
+
+        final ModuleDetails moduleDetail = globalMasterServices.updateModule(request);
+
+        return ResponseEntity.ok(ModuleDetailsResponse.builder()
+                .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+                        Boolean.TRUE))
+                .moduleDetails(moduleDetail)
+                .build());
+          }
+
 
 }

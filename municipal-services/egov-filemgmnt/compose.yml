@@ -168,18 +168,50 @@ services:
       - DB_PORT=5432
       - DB_USER=postgres
       - DB_PASSWORD=123
-      - DATA_CONFIG_URLS=file:///residential-certificate-config.json
-      - FORMAT_CONFIG_URLS=file:///residential-certificate-format.json
+    #  - DATA_CONFIG_URLS=file:///residential-certificate-config.json
+    #  - FORMAT_CONFIG_URLS=file:///residential-certificate-format.json
+
+    #  - DATA_CONFIG_URLS=file:///draft-certificate-config.json
+    #  - FORMAT_CONFIG_URLS=file:///draft-certificate-format.json
+
+    #  - DATA_CONFIG_URLS=file:///circular-certificate-config.json
+    #  - FORMAT_CONFIG_URLS=file:///circular-certificate-format.json
+
+    #  - DATA_CONFIG_URLS=file:///notice-certificate-config.json
+    #  - FORMAT_CONFIG_URLS=file:///notice-certificate-format.json 
+
+    #  - DATA_CONFIG_URLS=file:///affidavit-certificate-config.json
+    #  - FORMAT_CONFIG_URLS=file:///affidavit-certificate-format.json
+
+      - DATA_CONFIG_URLS=file:///memo-certificate-config.json
+      - FORMAT_CONFIG_URLS=file:///memo-certificate-format.json 
+
       - EGOV_FILESTORE_SERVICE_HOST=http://filestore:8083
       - EGOV_EXTERNAL_HOST=https://ksmart-dev.lsgkerala.gov.in
       - EGOV_LOCALISATION_HOST=https://ksmart-dev.lsgkerala.gov.in
-      - DEFAULT_LOCALISATION_LOCALE=en_IN
+      - DEFAULT_LOCALISATION_LOCALE=en_IN-
       - DEFAULT_LOCALISATION_TENANT=kl
 #    extra_hosts:
 #      - 'host.docker.internal:host-gateway'
     volumes:
-      - './src/test/resources/pdfservice/residential-certificate-config.json:/residential-certificate-config.json'
-      - './src/test/resources/pdfservice/residential-certificate-format.json:/residential-certificate-format.json'
+     # - './src/test/resources/pdfservice/residential-certificate-config.json:/residential-certificate-config.json'
+     # - './src/test/resources/pdfservice/residential-certificate-format.json:/residential-certificate-format.json'
+
+     # - './src/test/resources/pdfservice/draft-certificate-config.json:/draft-certificate-config.json'
+     # - './src/test/resources/pdfservice/draft-certificate-format.json:/draft-certificate-format.json'
+
+     # - './src/test/resources/pdfservice/circular-certificate-config.json:/circular-certificate-config.json'
+     # - './src/test/resources/pdfservice/circular-certificate-format.json:/circular-certificate-format.json'
+
+     # - './src/test/resources/pdfservice/notice-certificate-config.json:/notice-certificate-config.json'
+     # - './src/test/resources/pdfservice/notice-certificate-format.json:/notice-certificate-format.json'
+
+     # - './src/test/resources/pdfservice/affidavit-certificate-config.json:/affidavit-certificate-config.json'
+     # - './src/test/resources/pdfservice/affidavit-certificate-format.json:/affidavit-certificate-format.json'
+
+      - './src/test/resources/pdfservice/memo-certificate-config.json:/memo-certificate-config.json'
+      - './src/test/resources/pdfservice/memo-certificate-format.json:/memo-certificate-format.json'
+
     networks:
       - ksmart
     depends_on:

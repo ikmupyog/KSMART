@@ -978,3 +978,17 @@ serviceMaps:
 
         - jsonPath: $.ModuleDetails.auditDetails.lastModifiedTime
 
+  - version: 1.0
+    description: Update module master in egov_filemgmnt database, eg_fm_modulemaster
+    fromTopic: update-fm-modulemaster
+    isTransaction: true
+    queryMaps:
+    - query: UPDATE public.eg_fm_modulemaster SET modulenameeng=?, modulenamemal=?
+               WHERE modulecode= ?;
+      basePath: ModuleDetails
+      jsonMaps:
+        - jsonPath: $.ModuleDetails.moduleNameEnglish
+
+        - jsonPath: $.ModuleDetails.moduleNameMalayalam
+
+        - jsonPath: $.ModuleDetails.moduleCode
