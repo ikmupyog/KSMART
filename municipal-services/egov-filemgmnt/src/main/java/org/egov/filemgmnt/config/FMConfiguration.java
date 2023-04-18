@@ -1,5 +1,6 @@
 package org.egov.filemgmnt.config;
 
+import org.apache.kafka.common.protocol.types.Field.Str;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
@@ -95,6 +96,9 @@ public class FMConfiguration {
     @Value("${persister.update.draftingstatus.topic:}")
     private String updateDraftingStatusTopic;
 
+    @Value("${draftfiles.allowed.search.params}")
+    private String allowedDraftFilesSearchParams;
+
     // enquiry config
 
     @Value("${persister.save.enquiry.topic:}")
@@ -123,6 +127,42 @@ public class FMConfiguration {
     @Value("${egov.url.shortner.endpoint}")
     private String urlShortnerEndpoint;
 
+
+    @Value("${egov.pdf.draftcertificate.createEndPoint}")
+    private String egovPdfDraftEndPoint;
+
+    @Value("${egov.fm.draftcertificate.link}")
+    private String draftCertificateLink;
+
+    @Value("${egov.pdf.circularcertificate.createEndPoint}")
+    private String egovPdfCircularEndPoint;
+
+    @Value("${egov.fm.circularcertificate.link}")
+    private String circularCertificateLink;
+
+    @Value("${egov.pdf.noticecertificate.createEndPoint}")
+    private String egovPdfNoticeEndPoint;
+
+    @Value("${egov.fm.noticecertificate.link}")
+    private String noticeCertificateLink;
+
+    @Value("${egov.pdf.affidavitcertificate.createEndPoint}")
+    private String egovPdfAffidavitEndPoint;
+
+    @Value("${egov.fm.affidavitcertificate.link}")
+    private String affidavitCertificateLink;
+
+    @Value("${egov.pdf.memocertificate.createEndPoint}")
+    private String egovPdfMemoEndPoint;
+
+    @Value("${egov.fm.memocertificate.link}")
+    private String memoCertificateLink;
+
+
+
+
+
+
     // Global Mastersettings
 
     @Value("${persister.save.modulemaster.topic:}")
@@ -130,5 +170,8 @@ public class FMConfiguration {
 
     @Value("${persister.update.modulemaster.topic:}")
     private String updateModuleMasterTopic;
+
+
+
 
 }
