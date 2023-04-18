@@ -2455,7 +2455,7 @@ serviceMaps:
 
     - query: UPDATE  public.eg_death_dtls  SET 
          lastmodifiedby = ? , lastmodifiedtime = ? ,    
-         action = ? , status = ?  
+         action = ? , status = ? 
          WHERE  tenantid = ? AND ack_no = ?
 
       basePath: deathNACDtls.*
@@ -2467,7 +2467,7 @@ serviceMaps:
      
       - jsonPath: $.deathNACDtls.*.action
 
-      - jsonPath: $.deathNACDtls.*.applicationStatus      
+      - jsonPath: $.deathNACDtls.*.applicationStatus     
 
       - jsonPath: $.deathNACDtls.*.InformationDeath.TenantId
 

@@ -1058,4 +1058,48 @@ public class DeathEnrichment implements BaseEnrichment{
             }
           );          
         }
+
+     //RAkhi S ikm on 16.04.2023 Set Deathplace types
+    public void setNACDeathPlaceTypes(DeathNACRequest request) {
+        request.getDeathNACDtls()
+            .forEach(death -> {
+                if (death.getDeathBasicInfo().getDeathPlace() != null) {
+                    if(death.getDeathBasicInfo().getDeathPlace().equals(DeathConstants.DEATH_PLACE_HOSPITAL)){
+                        death.getDeathBasicInfo().setDeathPlaceType(death.getDeathBasicInfo().getHospitalNameEn());
+                    }
+                    else if(death.getDeathBasicInfo().getDeathPlace().equals(DeathConstants.DEATH_PLACE_INSTITUTION)){
+                        death.getDeathBasicInfo().setDeathPlaceType(death.getDeathBasicInfo().getInstitution());
+                    }
+                    else if(death.getDeathBasicInfo().getDeathPlace().equals(DeathConstants.DEATH_PLACE_VEHICLE)){
+                        death.getDeathBasicInfo().setDeathPlaceType(death.getDeathBasicInfo().getVehicleType());
+                    }
+                    else if(death.getDeathBasicInfo().getDeathPlace().equals(DeathConstants.DEATH_PLACE_PUBLICPLACES)){
+                        death.getDeathBasicInfo().setDeathPlaceType(death.getDeathBasicInfo().getPublicPlaceType());
+                    }
+                }
+            }
+          );          
+        }
+        
+         //RAkhi S ikm on 16.04.2023 Set Deathplace types
+    public void setAbandonedDeathPlaceTypes(DeathAbandonedRequest request) {
+        request.getDeathAbandonedDtls()
+            .forEach(death -> {
+                if (death.getDeathBasicInfo().getDeathPlace() != null) {
+                    if(death.getDeathBasicInfo().getDeathPlace().equals(DeathConstants.DEATH_PLACE_HOSPITAL)){
+                        death.getDeathBasicInfo().setDeathPlaceType(death.getDeathBasicInfo().getHospitalNameEn());
+                    }
+                    else if(death.getDeathBasicInfo().getDeathPlace().equals(DeathConstants.DEATH_PLACE_INSTITUTION)){
+                        death.getDeathBasicInfo().setDeathPlaceType(death.getDeathBasicInfo().getInstitution());
+                    }
+                    else if(death.getDeathBasicInfo().getDeathPlace().equals(DeathConstants.DEATH_PLACE_VEHICLE)){
+                        death.getDeathBasicInfo().setDeathPlaceType(death.getDeathBasicInfo().getVehicleType());
+                    }
+                    else if(death.getDeathBasicInfo().getDeathPlace().equals(DeathConstants.DEATH_PLACE_PUBLICPLACES)){
+                        death.getDeathBasicInfo().setDeathPlaceType(death.getDeathBasicInfo().getPublicPlaceType());
+                    }
+                }
+            }
+          );          
+        }
 }

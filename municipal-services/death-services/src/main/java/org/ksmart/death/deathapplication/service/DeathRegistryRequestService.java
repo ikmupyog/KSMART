@@ -808,6 +808,8 @@ public DeathRegistryStatisticalInfo createRegistryStatisticalInfoAbandoned(Death
         deathRegistryBasicInfo.setSpouseNameEn(deathBasicInfo.getSpouseNameEn());
         deathRegistryBasicInfo.setSpouseNameML(deathBasicInfo.getSpouseNameML());
         deathRegistryBasicInfo.setSpouseAadhaar(deathBasicInfo.getSpouseAadhaar());
+        deathRegistryBasicInfo.setDeathNAC(deathBasicInfo.isDeathNAC());
+        deathRegistryBasicInfo.setDeathNIA(deathBasicInfo.isDeathNIA());
         return deathRegistryBasicInfo;
     
     }

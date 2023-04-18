@@ -314,6 +314,64 @@ public String getNextIDQuery() {
   return query.toString();
     
 }
+
+//Rakhi S on 18.04.2023
+private static final String QUERYDOCUMENT = new StringBuilder()
+                                              .append("SELECT id, tenantid, document_type, death_dtls_id, filestore_id, death_ackno,  active, created_by, createdtime, lastmodifiedby, lastmodifiedtime")
+                                              .append("	FROM eg_death_document_dtls")
+                                              .toString();
+
+public String getDeathDocumentSearchQuery(DeathSearchCriteria criteria ,@NotNull List<Object> preparedStmtValues, Boolean isCount) {
+
+  StringBuilder query = new StringBuilder(QUERYDOCUMENT);
+  StringBuilder orderBy = new StringBuilder();
+                        addFilter("death_ackno", criteria.getDeathACKNo(), query, preparedStmtValues);
+                        addFilter("death_dtls_id", criteria.getDeathDtlId(), query, preparedStmtValues);
+                        addFilter("tenantid", criteria.getTenantId(), query, preparedStmtValues);
+return query.toString();
+}
+private static final String COUNTQUERY= new StringBuilder()
+                    .append("SELECT COUNT(*) ")
+                    .append("FROM eg_death_dtls dt")
+                    .toString();   
+                    
+public String getDeathCountQuery(@NotNull DeathSearchCriteria criteria,
+                                    @NotNull List<Object> preparedStmtValues, Boolean isCount){
+         StringBuilder query = new StringBuilder(COUNTQUERY);
+         StringBuilder orderBy = new StringBuilder();
+
+        addFilter("dt.id", criteria.getId(), query, preparedStmtValues);
+        addFilter("dt.tenantid", criteria.getTenantId(), query, preparedStmtValues);
+        addFilter("dt.ack_no", criteria.getDeathACKNo(), query, preparedStmtValues);  
+        addFilter("dt.deceased_firstname_en", criteria.getDeceasedFirstNameEn(), query, preparedStmtValues);  
+        addFilter("dt.death_place_ward_id", criteria.getDeathPlaceWardId(), query, preparedStmtValues);
+        addFilter("dt.death_place_inst_type", criteria.getHospitalName(), query, preparedStmtValues);
+        addFilter("dt.created_by", criteria.getCreatedBy(), query, preparedStmtValues);
+        addFilter("dt.funcion_uid", criteria.getFuncionUID(), query, preparedStmtValues);
+        addDateRangeFilter("dt.application_date",
+        criteria.getFromDate(),
+        criteria.getToDate(),
+        query,
+        preparedStmtValues);
+
+      // if(criteria.getSortOrder() == null){
+      //   criteria.setSortOrder(DeathSearchCriteria.SortOrder.ASC);
+      // }
+        // if (StringUtils.isEmpty(criteria.getSortBy()))
+        // addOrderByColumns("dt.createdtime","ASC", orderBy);
+        // else if (criteria.getSortBy() == DeathSearchCriteria.SortBy.DateOfDeath)
+        // addOrderByColumns("dt.dateofdeath",criteria.getSortOrder().toString(), orderBy);
+        // else if (criteria.getSortBy() == DeathSearchCriteria.SortBy.DeathACKNo)
+        // addOrderByColumns("dt.ack_no",criteria.getSortOrder().toString(),orderBy);
+        // else if (criteria.getSortBy() == DeathSearchCriteria.SortBy.DeceasedGender)
+        // addOrderByColumns("dt.deceased_gender",criteria.getSortOrder().toString(), orderBy);
+        // else if (criteria.getSortBy() == DeathSearchCriteria.SortBy.TenantId)
+        // addOrderByColumns("dt.tenantid",criteria.getSortOrder().toString(), orderBy);
+        // addOrderToQuery(orderBy, query);
+        addLimitAndOffset(criteria.getOffset(),criteria.getLimit(), query, preparedStmtValues);
+
+        return query.toString();                             
+}
     //Rakhi S on 27.02.2023
     // private final String PAGINATIONWRAPPER = "SELECT * FROM " +
     //         "(SELECT *, DENSE_RANK() OVER (ORDER BY application_date DESC , id) offset_ FROM " +

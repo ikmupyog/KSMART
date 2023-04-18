@@ -3,6 +3,7 @@ package org.ksmart.death.deathapplication.web.controllers;
 import java.util.List;
 import javax.validation.Valid;
 import org.ksmart.death.common.contract.RequestInfoWrapper;
+import org.ksmart.death.deathapplication.repository.DeathApplnRepository;
 import org.ksmart.death.deathapplication.service.DeathApplnService;
 import org.ksmart.death.deathapplication.service.DeathRegistryRequestService;
 import org.ksmart.death.deathapplication.util.DeathConstants;
@@ -51,13 +52,16 @@ public class DeathApplnController {
     private final DeathApplnService deathService;
     private final DeathRegistryRequestService deathRegistryRequestService;
     private final DeathRegistryService deathRegistryService;
+    private final DeathApplnRepository repository;
 
     @Autowired
-    public DeathApplnController(DeathApplnService deathService,DeathRegistryRequestService deathRegistryRequestService ,  DeathRegistryService deathRegistryService) {
-      
+    public DeathApplnController(DeathApplnService deathService,DeathRegistryRequestService deathRegistryRequestService ,  
+                                DeathRegistryService deathRegistryService,
+                                DeathApplnRepository repository) {      
         this.deathService = deathService;
         this.deathRegistryRequestService = deathRegistryRequestService;
         this.deathRegistryService = deathRegistryService;
+        this.repository = repository;
     }
 
 
@@ -95,13 +99,15 @@ public class DeathApplnController {
     @PostMapping("/deathdetails/_searchdeath")
     public ResponseEntity<DeathDtlResponse> search(@RequestBody RequestInfoWrapper request,
                                                             @ModelAttribute DeathSearchCriteria criteria) {
-
+        
+        int count=repository.getDeathCount(criteria);
         List<DeathDtl> deathDetails = deathService.search(criteria, request.getRequestInfo());
 
         DeathDtlResponse response = DeathDtlResponse
                                         .builder()
                                         .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
                                         .deathCertificateDtls(deathDetails)
+                                        .count(count)
                                         .build();
         return ResponseEntity.ok(response);
     }

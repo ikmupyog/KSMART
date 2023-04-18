@@ -446,4 +446,10 @@ public class DeathBasicInfo {
 
    @JsonProperty("publicPlaceType")
    private String  publicPlaceType ;
+
+   @JsonProperty("isDeathNAC")
+   private boolean isDeathNAC ;
+
+   @JsonProperty("isDeathNIA")
+   private boolean isDeathNIA ;
 }

@@ -504,4 +504,10 @@ public class DeathRegistryBasicInfo {
    private String  deathPlaceHospitalNameMl ;
    
    private String  dateOfDeathInWords ;
+
+   @JsonProperty("isDeathNAC")
+   private boolean isDeathNAC ;
+
+   @JsonProperty("isDeathNIA")
+   private boolean isDeathNIA ;
 }

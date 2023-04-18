@@ -162,6 +162,7 @@ public class DeathApplnService {
       //RAkhi S ikm  on 06.03.2023 - Service to create Abandoned request
       public List<DeathAbandonedDtls> createAbandoned(DeathAbandonedRequest request) {
 
+          enrichmentService.setAbandonedDeathPlaceTypes(request);
           enrichmentService.setAbandonedPresentAddress(request);
           enrichmentService.setAbandonedPermanentAddress(request);
           enrichmentService.enrichCreateAbandoned(request);
@@ -172,7 +173,7 @@ public class DeathApplnService {
      }
      //RAkhi S ikm  on 08.03.2023 - Service to update Abandoned request
      public List<DeathAbandonedDtls> updateAbandoned(DeathAbandonedRequest request) {
-          
+          enrichmentService.setAbandonedDeathPlaceTypes(request);
           enrichmentService.setAbandonedPresentAddress(request);
           enrichmentService.setAbandonedPermanentAddress(request);
           String ackNumber = request.getDeathAbandonedDtls().get(0).getDeathBasicInfo().getDeathACKNo();
@@ -198,7 +199,8 @@ public class DeathApplnService {
           Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathNACDtls().get(0).getDeathBasicInfo().getTenantId());          
           validatorService.validateNACCommonFieldss(request);
           mdmsValidator.validateNACMDMSData(request,mdmsData);
-
+          
+          enrichmentService.setNACDeathPlaceTypes(request);
           enrichmentService.setNACPresentAddress(request);
           enrichmentService.setNACPermanentAddress(request);
           enrichmentService.enrichCreateNAC(request);
@@ -211,6 +213,7 @@ public class DeathApplnService {
       // //RAkhi S ikm  on 30.03.2023 - Service to update NAC request
       public List<DeathNACDtls> updateNAC(DeathNACRequest request) {
 
+          enrichmentService.setNACDeathPlaceTypes(request);
           enrichmentService.setNACPresentAddress(request);
           enrichmentService.setNACPermanentAddress(request);
           String ackNumber = request.getDeathNACDtls().get(0).getDeathBasicInfo().getDeathACKNo();

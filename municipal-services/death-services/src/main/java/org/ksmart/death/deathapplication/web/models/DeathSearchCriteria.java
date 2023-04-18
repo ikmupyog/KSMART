@@ -156,4 +156,7 @@ public class DeathSearchCriteria {
 
     @JsonProperty("funcionUID")
     private String funcionUID;
+
+    @JsonProperty("DeathDtlId")
+    private String  deathDtlId ;
 }
