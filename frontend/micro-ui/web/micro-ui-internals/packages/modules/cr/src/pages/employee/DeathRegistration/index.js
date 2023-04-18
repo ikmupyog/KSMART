@@ -83,6 +83,7 @@ const CreateDeathEmp = ({ parentUrl }) => {
               formData={params}
               onAdd={handleMultiple}
               userType="employee"
+              isEditDeath={isEditDeath}
             />
            </Route>  
           

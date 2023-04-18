@@ -82,79 +82,81 @@ const SearchBirthApplication = ({ onSubmit, data, tenantId, isSuccess, isLoading
     return <MobileSearchApplication {...{ Controller, register, control, t, reset, previousPage, handleSubmit, tenantId, data, onSubmit }} />;
   }
 
-  const GetCell = (value) => <span className="cell-text">{value}</span>;
-  const columns = useMemo(
-    () => [
-      {
-        Header: t("CR_COMMON_COL_ACKNO"),
-        accessor: (row) => GetCell(row.TL_COMMON_TABLE_COL_APP_NO),
-        // disableSortBy: true,
-        // Cell: ({ row }) => {
-        //     return (
-        //         <div>
-        //             <span className="link">
-        //                 {/* <Link to={`/digit-ui/employee/cr/application-deathdetails/${row.original.deathApplicationNo}`}>
-        //         {row.original.deathApplicationNo}
-        //       </Link> */}
-        //                 {row.original.TL_COMMON_TABLE_COL_APP_NO}
-        //             </span>
-        //         </div>
-        //     );
-        // },
-      },
-      {
-        Header: t("CR_COMMON_MOTHER_NAME"),
-        disableSortBy: true,
-        accessor: (row) => GetCell(row?.CR_MOTHER_NAME || "-"),
-      },
-      {
-        Header: "Father Name",
-        disableSortBy: true,
-        accessor: (row) => GetCell(row?.CR_FATHER_NAME || "-"),
-      },
-      {
-        Header: "Status",
-        disableSortBy: true,
-        Cell: ({ row }) => {
-          return (
-            <div>
-              {row.original?.TL_APPLICATION_STATUS === "INITIATED" ? (
-                <span className="link" onClick={() => downloadDocument(row?.original?.filestoreId)}>
-                  <Link to={`/digit-ui/citizen/cr/cr/application/${row.original?.TL_COMMON_TABLE_COL_APP_NO}/${row.original?.TL_COMMON_CITY_NAME}`}>
-                    VIEW DETAILS
-                  </Link>
-                </span>
-              ) : (
-                <span className="link" onClick={() => downloadDocument(row?.original?.filestoreId)}>
-                  <Link to={`/digit-ui/citizen/cr/cr/application/${row.original?.TL_COMMON_TABLE_COL_APP_NO}/${row.original?.TL_COMMON_CITY_NAME}`}>
-                    MAKE PAYMENT
-                  </Link>
-                </span>
-              )}
-            </div>
-          );
-        },
-      },
-    ],
-    []
-  );
-  let tmpData = data;
+    const GetCell = (value) => <span className="cell-text">{value}</span>;
+    const columns = useMemo(
+        () => [
+            {
+                Header: t("CR_COMMON_COL_ACKNO"),
+                accessor: (row) => GetCell(row.TL_COMMON_TABLE_COL_APP_NO),
+                // disableSortBy: true,
+                // Cell: ({ row }) => {
+                //     return (
+                //         <div>
+                //             <span className="link">
+                //                 {/* <Link to={`/digit-ui/employee/cr/application-deathdetails/${row.original.deathApplicationNo}`}>
+                //         {row.original.deathApplicationNo}
+                //       </Link> */}
+                //                 {row.original.TL_COMMON_TABLE_COL_APP_NO}
+                //             </span>
+                //         </div>
+                //     );
+                // },
+            },
+            {
+                Header: t("CR_COMMON_MOTHER_NAME"),
+                disableSortBy: true,
+                accessor: (row) => GetCell(row?.CR_MOTHER_NAME || "-"),
+            },
+            {
+                Header: "Father Name",
+                disableSortBy: true,
+                accessor: (row) => GetCell(row?.CR_FATHER_NAME || "-"),
+            },
+            {
+                Header: "Status",
+                disableSortBy: true,
+                Cell: ({ row }) => {
+                    return (
+                        <div>
+                            {row.original?.TL_APPLICATION_STATUS === "INITIATED" ? (
+                                <span className="link" onClick={() => downloadDocument(row?.original?.filestoreId)}>
+                                    <Link to={`/digit-ui/citizen/cr/cr/application/${row.original?.TL_COMMON_TABLE_COL_APP_NO}/${row.original?.TL_COMMON_CITY_NAME}`}>
 
-  useEffect(() => {
-    if (isSuccess === true) {
-      tmpData[0] = { ...data[0], isSuccess };
-    }
-    setFileData(tmpData);
-  });
-  return (
-    <React.Fragment>
-      <div style={mystyle}>
-        <h1 style={hstyle}>{t("BIRTH CERTIFICATE")}</h1>
-        <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
-          <SearchFields {...{ register, control, reset, previousPage, t }} />
-        </SearchForm>
-      </div>
-      {/* { FileData?.display ? (
+                                        VIEW DETAILS
+                                    </Link>
+                                </span>
+                            ) : (
+                                <span className="link" onClick={() => downloadDocument(row?.original?.filestoreId)}>
+                                    <Link to={`/digit-ui/citizen/cr/cr/application/${row.original?.TL_COMMON_TABLE_COL_APP_NO}/${row.original?.TL_COMMON_CITY_NAME}`}>
+
+                                        MAKE PAYMENT
+                                    </Link>
+                                </span>
+                            )}
+                        </div>
+                    );
+                },
+            },
+        ],
+        []
+    );
+    let tmpData = data;
+   
+    useEffect(() => {
+        if ( isSuccess === true) {
+            tmpData[0] = { ...data[0], isSuccess };
+        }
+        setFileData(tmpData);
+    });
+    return (
+        <React.Fragment>
+            <div style={mystyle}>
+                <h1 style={hstyle}>{t("BIRTH CERTIFICATE")}</h1>
+                <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
+                    <SearchFields {...{ register, control, reset, previousPage, t }} />
+                </SearchForm>
+            </div>
+            {/* { FileData?.display ? (
                 <Card style={{ marginTop: 20 }}>
                     {t(FileData.display)
                         .split("\\n")
