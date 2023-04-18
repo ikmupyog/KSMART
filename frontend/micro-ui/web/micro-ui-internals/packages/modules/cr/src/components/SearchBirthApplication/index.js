@@ -2,7 +2,7 @@ import React, { useCallback, useMemo, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { SearchForm, Table, Card, Header, SubmitBar, Loader } from "@egovernments/digit-ui-react-components";
 import { convertEpochToDateDMY } from "../../utils";
-
+import MobileSearchApplication from "./MobileBirthSearchApplication";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import SearchFields from "./SearchFields";
@@ -29,7 +29,7 @@ const registyBtnStyle = {
     marginBottom: "15px",
 };
 
-const SearchBirthApplication = ({ onSubmit, data, filestoreId, isSuccess, isLoading, count }) => {
+const SearchBirthApplication = ({ onSubmit, data, tenantId, isSuccess, isLoading, count }) => {
     const [FileData, setFileData] = useState([]);
     const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
         defaultValues: {
@@ -75,6 +75,13 @@ const SearchBirthApplication = ({ onSubmit, data, filestoreId, isSuccess, isLoad
         handleSubmit(onSubmit)();
         console.log('prev');
     }
+
+    const isMobile = window.Digit.Utils.browser.isMobile();
+
+    if (isMobile) {
+        return <MobileSearchApplication {...{ Controller, register, control, t, reset, previousPage, handleSubmit, tenantId, data, onSubmit }} />;
+    }
+
     const GetCell = (value) => <span className="cell-text">{value}</span>;
     const columns = useMemo(
         () => [
@@ -120,7 +127,7 @@ const SearchBirthApplication = ({ onSubmit, data, filestoreId, isSuccess, isLoad
                                 </span>
                             ) : (
                                 <span className="link" onClick={() => downloadDocument(row?.original?.filestoreId)}>
-                                    <Link to={`/digit-ui/citizen/cr/cr/application/${row.original?.TL_COMMON_TABLE_COL_APP_NO}/${row.original?.TL_COMMON_CITY_NAME}`}>
+                                    <Link to={`/digit-ui/citizen/payment/collect/CR/${row.original?.TL_COMMON_TABLE_COL_APP_NO}`}>
 
                                         MAKE PAYMENT
                                     </Link>

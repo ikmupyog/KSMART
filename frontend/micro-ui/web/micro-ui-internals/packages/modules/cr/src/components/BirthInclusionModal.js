@@ -174,6 +174,49 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
     return null;
   }
 
+  const renderChildNamePopupComponent = () =>{
+    let selectedStudentMenu = [];
+    let selectedChangeMenu = [];
+    console.log("reached modal==11", selectedConfig,selectedConfig.docFlag);
+      if(BIRTH_INCLUSION_DOC_FLAGS.CHILD_NAME_CHANGE === selectedConfig.docFlag){
+        selectedStudentMenu = [
+          { i18nKey: "CR_COMMON_STUDENT", code: "WITH_OUT_CERTIFICATE"},
+          +{ i18nKey: "CR_COMMON_NONSTUDENT", code: "WITH_CERTIFICATE"},
+        ];
+        selectedChangeMenu = [
+          { i18nKey: "CR_COMMON_CORRECTION", code: "CORRECTION" },
+          {  i18nKey: "CR_COMMON_CHANGE", code: "CHANGE" },
+        ]
+      }
+      
+    console.log("popup data==",selectedStudentMenu,selectedChangeMenu);
+    if(selectedStudentMenu?.length > 0 && selectedChangeMenu?.length > 0){
+    return (
+      <div>
+        <h2>Select one of the field</h2>
+        <RadioButtons
+          t={t}
+          optionsKey="i18nKey"
+          // isMandatory={config.isMandatory}
+          options={selectedStudentMenu}
+          selectedOption={checkStudentCondition}
+          onSelect={setCheckStudentCondition}
+        />
+        <RadioButtons
+          t={t}
+          optionsKey="i18nKey"
+          // isMandatory={config.isMandatory}
+          options={selectedChangeMenu}
+          selectedOption={checkCorrectionCondition}
+          onSelect={setCheckCorrectionCondition}
+        />
+      </div>
+    );
+    } else{
+      return null;
+    }
+  }
+
   const renderConditionalPopupComponent = () => {
     let selectedStudentMenu = [];
     let selectedChangeMenu = [];
@@ -228,12 +271,12 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
           { i18nKey: "CR_COMMON_NONSTUDENT", code: "NONSTUDENT", condition: "NAME_INCLUSION_GREATER_THAN_SIX_STUDENT" },
         ];
         break;
-      case BIRTH_INCLUSION_DOC_FLAGS.NAME_CORRECTION:
-        selectedMenu = [
-          { i18nKey: "CR_COMMON_CORRECTION", code: "CORRECTION", condition: "NAME_CORRECTION_AGE_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE" },
-          { i18nKey: "CR_COMMON_CHANGE", code: "CHANGE", condition: "NAME_CHANGE_AGE_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE" },
-        ];
-        break;
+      // case BIRTH_INCLUSION_DOC_FLAGS.NAME_CORRECTION:
+      //   selectedMenu = [
+      //     { i18nKey: "CR_COMMON_CORRECTION", code: "CORRECTION", condition: "NAME_CORRECTION_AGE_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE" },
+      //     { i18nKey: "CR_COMMON_CHANGE", code: "CHANGE", condition: "NAME_CHANGE_AGE_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE" },
+      //   ];
+      //   break;
       case BIRTH_INCLUSION_DOC_FLAGS.INSTITUTIONAL_SEX_CHANGE:
         selectedMenu = [
           { i18nKey: "CR_COMMON_CORRECTION", code: "CORRECTION", condition: "INSTITUTIONAL_SEX_CORRECTION_MINOR" },
@@ -286,6 +329,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
         </h1>
         {selectedConfig?.documentData?.length > 1 && renderConditionalComponent()}
         {selectedConfig?.documentData?.length > 1 && renderConditionalPopupComponent()}
+        {selectedConfig?.documentData?.length > 1 && renderChildNamePopupComponent()}
         {selectedDocuments?.length == 1 && (
           <div>
             <h2 style={{ marginBottom: "1rem" }}>{`You have to upload the following documents to edit ${fieldName?.toLowerCase()}.`}</h2>
@@ -306,7 +350,7 @@ const BirthInclusionModal = ({ title, showModal, onSubmit, hideModal, selectedCo
                           onDeleteown(item.DocumentId);
                           setUploadedFile(null);
                         }}
-                        // message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                        message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
                         error={error}
                       />
                     </div>

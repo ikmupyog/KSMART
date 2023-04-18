@@ -7,7 +7,8 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
   permntOutsideIndiaLineoneMl, setadrsPermntOutsideIndiaLineoneMl, permntOutsideIndiaLinetwoEn, setadrsPermntOutsideIndiaLinetwoEn, permntOutsideIndiaLinetwoMl, setadrsPermntOutsideIndiaLinetwoMl,
   permntOutsideIndiaprovinceEn, setPermntOutsideIndiaprovinceEn, permntOutsideIndiaprovinceMl, setPermntOutsideIndiaprovinceMl, permntOutsideIndiaVillage, setadrsPermntOutsideIndiaVillage,
   permntOutsideIndiaCityTown, setadrsPermntOutsideIndiaCityTown, permanentOutsideIndiaPostCode, setPermantpostCode,
-  isEditBirth = false, isEditDeath = false, isEditStillBirth = false,isEditAdoption,isEditBirthNAC=false
+  isEditBirth = false, isEditDeath = false, isEditStillBirth = false,isEditAdoption,isEditBirthNAC=false,
+  isPrsentAddress, setIsPrsentAddress
   // isInitialRender, setIsInitialRender
   //isEditBirth ? isEditBirth : isEditDeath ? false :
   //  permntOutsideIndiaCountry,  setPermntOutsideIndiaCountry, countryvalue, setCountryValue,
@@ -68,18 +69,18 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
 
   function setSelectadrsPermntOutsideIndiaCityTown(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setadrsPermntOutsideIndiaCityTown(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setadrsPermntOutsideIndiaCityTown(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
   function setSelectadrsPermntOutsideIndiaLineoneEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setadrsPermntOutsideIndiaLineoneEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setadrsPermntOutsideIndiaLineoneEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectadrsPermntOutsideIndiaLinetwoEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setadrsPermntOutsideIndiaLinetwoEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setadrsPermntOutsideIndiaLinetwoEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
 
@@ -90,7 +91,7 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
       setadrsPermntOutsideIndiaLinetwoMl('');
     }
     else {
-      setadrsPermntOutsideIndiaLinetwoMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setadrsPermntOutsideIndiaLinetwoMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectadrsPermntOutsideIndiaLineoneMl(e) {
@@ -100,12 +101,12 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
       setadrsPermntOutsideIndiaLineoneMl('');
     }
     else {
-      setadrsPermntOutsideIndiaLineoneMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setadrsPermntOutsideIndiaLineoneMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectLocalityEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setLocalityEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setLocalityEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectLocalityMl(e) {
@@ -115,7 +116,7 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
       setLocalityMl('');
     }
     else {
-      setLocalityMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setLocalityMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   // function setSelectResNoEn(e) {
@@ -134,7 +135,7 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
   // }
   function setSelectHouseNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setHouseNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setHouseNameEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectHouseNameMl(e) {
@@ -144,12 +145,12 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
       setHouseNameMl('');
     }
     else {
-      setHouseNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setHouseNameMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectPermntOutsideIndiaprovinceEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setPermntOutsideIndiaprovinceEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setPermntOutsideIndiaprovinceEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectPermntOutsideIndiaprovinceMl(e) {
@@ -159,7 +160,7 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
       setPermntOutsideIndiaprovinceMl('');
     }
     else {
-      setPermntOutsideIndiaprovinceMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setPermntOutsideIndiaprovinceMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectProvinceMl(e) {
@@ -169,7 +170,7 @@ const AddressPermanentOutsideIndia = ({ config, onSelect, userType, formData, pe
       setProvinceMl('');
     }
     else {
-      setProvinceMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setProvinceMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectPermntOutsideIndiaCountry(value) {

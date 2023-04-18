@@ -39,12 +39,13 @@ export const CRAbandonedsearch = {
   },
   application: async (tenantId, filters = {}) => {
     const response = await CRABNBirthService.CRAbandonedsearch({ tenantId, filters });
-    return response.ChildDetails[0];
+    console.log(response);
+    return response.AbandonedDetails[0];
   },
 
   numberOfApplications: async (tenantId, filters = {}) => {
     const response = await CRABNBirthService.CRAbandonedsearch({ tenantId, filters });
-    return response.ChildDetails;
+    return response.AbandonedChildDetails;
   },
 
   applicationDetails: async (t, tenantId, applicationNumber, userType) => {

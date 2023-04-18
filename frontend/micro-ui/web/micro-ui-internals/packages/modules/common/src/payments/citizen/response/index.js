@@ -125,12 +125,181 @@ export const SuccessfulPayment = (props)=>{
     //const tenantId = Digit.ULBService.getCurrentTenantId();
     const state = tenantId;
     const applicationDetails = await Digit.TLService.search({ applicationNumber: consumerCode, tenantId });
+
     const generatePdfKeyForTL = "tlcertificate"
 
     if (applicationDetails) {
-      let response = await Digit.PaymentService.generatePdf(state, { Licenses: applicationDetails?.Licenses }, generatePdfKeyForTL);
+      const application = rearrangeApplication(applicationDetails);
+      let response = await Digit.PaymentService.generatePdf(state, { Licenses: application?.Licenses }, generatePdfKeyForTL);
       const fileStore = await Digit.PaymentService.printReciept(state, { fileStoreIds: response.filestoreIds[0] });
       window.open(fileStore[response.filestoreIds[0]], "_blank");
+    }
+  }
+
+  function rearrangeApplication(application){
+    if(application[0].applicationNumber){
+      let tenantIdV = application[0].tenantId;
+      let businessServiceV = application[0].businessService;
+      let licenseTypeV = application[0].licenseType;
+      let applicationTypeV = application[0].applicationType;
+      let licenseNumberV = application[0].licenseNumber;
+      let applicationNumberV = application[0].applicationNumber;
+      // let licenseUnitNameV = application[0].licenseUnitName;
+      let applicationDateV = application[0].applicationDate;
+      let issuedDateV = application[0].issuedDate;
+      let financialYearV = application[0].financialYear;
+      let validFromV = application[0].validFrom;
+      let validToV = application[0].validTo;
+      let commencementDateV = application[0].commencementDate;
+      let structureTypeV = application[0].tradeLicenseDetail.structureType;
+      let owners = [];
+      application[0].tradeLicenseDetail.owners.map((owner,index)=>{
+        let address = owner?.designation ?  owner?.designation + ", " : "" + 
+        owner.houseName ? owner.houseName  + "," : '' + 
+        owner.street ? owner.street  + ",": '' + 
+        owner.locality ? owner.locality  + ",": '' +
+        owner.postOffice ? owner.postOffice  + ",": '' + "-" +
+        owner.pincode ? owner.pincode : '' ;
+
+        
+
+        let singleOwner = {name : owner.name, mobileNumber : owner.mobileNumber, emailId : owner.emailId,
+          applicantNameLocal : owner.applicantNameLocal, careOf : owner.careOf, careOfName : owner.careOfName, 
+          designation : owner?.designation ? owner?.designation : '', address : address
+        }
+        owners.push(singleOwner);
+      });
+      let structurePlaceV = [];
+      let tempString = "";
+      if(structureTypeV === "BUILDING" || structureTypeV === "LBBUILDING"){
+        application[0].tradeLicenseDetail.structurePlace.map((strutPlace,index) => {
+          let tempStructurePlace = {doorNo : strutPlace.doorNo , doorNoSub : strutPlace.doorNoSub, stallNo : strutPlace.stallNo,
+            blockNo : null, surveyNo : null, subDivisionNo : null, partitionNo : null, vehicleNo : null, vesselNo : null};
+            index === 0 ? tempString += strutPlace?.doorNo ? strutPlace?.doorNo : "" +
+             strutPlace?.doorNoSub ? tempString += "/"+ strutPlace?.doorNoSub : ""
+            : tempString += ", " + strutPlace?.doorNo ? strutPlace?.doorNo : "" +strutPlace?.doorNoSub ? tempString += "/"+ strutPlace?.doorNoSub : "";
+            index === 0 ? tempString += ", " + "Stall Nos : "+strutPlace?.stallNo ? strutPlace?.stallNo :"" :  tempString += ", " + strutPlace?.stallNo;
+
+          structurePlaceV.push(tempStructurePlace);
+        });
+      } 
+      else if (structureTypeV === "LAND"){
+        let tempStructurePlace = {doorNo : null , doorNoSub : null, stallNo : null,
+          blockNo : application[0]?.tradeLicenseDetail?.structurePlace[0]?.blockNo, 
+          surveyNo : application[0]?.tradeLicenseDetail?.structurePlace[0]?.surveyNo, 
+          subDivisionNo : application[0]?.tradeLicenseDetail?.structurePlace[0]?.subDivisionNo, 
+          partitionNo : application[0]?.tradeLicenseDetail?.structurePlace[0]?.partitionNo, 
+          vehicleNo : null, vesselNo : null}
+          tempString += "Survey No : ";
+          tempString += application[0]?.tradeLicenseDetail?.structurePlace[0]?.blockNo ? application[0]?.tradeLicenseDetail?.structurePlace[0]?.blockNo : "" ;
+          tempString += application[0]?.tradeLicenseDetail?.structurePlace[0]?.surveyNo ? " / " + application[0]?.tradeLicenseDetail?.structurePlace[0]?.surveyNo : "" ;
+          tempString += application[0]?.tradeLicenseDetail?.structurePlace[0]?.subDivisionNo ? " / " + application[0]?.tradeLicenseDetail?.structurePlace[0]?.subDivisionNo : "" ;
+          tempString += application[0]?.tradeLicenseDetail?.structurePlace[0]?.partitionNo ? " / " + application[0]?.tradeLicenseDetail?.structurePlace[0]?.partitionNo : "" ;
+        structurePlaceV.push(tempStructurePlace);
+      }
+      else if (structureTypeV === "VEHICLE"){
+        let tempStructurePlace = {doorNo : '' , doorNoSub : '', stallNo : '',
+          blockNo : '', 
+          surveyNo : '', 
+          subDivisionNo : '', 
+          partitionNo : '', 
+          vehicleNo : application[0]?.tradeLicenseDetail?.structurePlace[0]?.vehicleNo , vesselNo : null};
+        tempString += "Vehicle No : ";
+        tempString += application[0]?.tradeLicenseDetail?.structurePlace[0]?.vehicleNo ? application[0]?.tradeLicenseDetail?.structurePlace[0]?.vehicleNo : "";
+        structurePlaceV.push(tempStructurePlace);
+      }
+      else if (structureTypeV === "WATER"){
+        let tempStructurePlace = {doorNo : '' , doorNoSub : '', stallNo : '',
+          blockNo : '', 
+          surveyNo : '', 
+          subDivisionNo : '', 
+          partitionNo : '', 
+          vehicleNo : '', vesselNo : application[0]?.tradeLicenseDetail?.structurePlace[0]?.vesselNo}
+          tempString += "Vessel No : "+ application[0]?.tradeLicenseDetail?.structurePlace[0]?.vesselNo ? application[0]?.tradeLicenseDetail?.structurePlace[0]?.vesselNo : "";
+        structurePlaceV.push(tempStructurePlace);
+      }
+
+      let structureTypeDetails = application[0].tradeLicenseDetail.address.wardNo;
+      if(structureTypeV === "BUILDING"){
+        structureTypeDetails += "/" + application[0].tradeLicenseDetail.address.doorNo;
+      }
+
+      let addressV = "Ward No : " + application[0].tradeLicenseDetail.address.wardNo +", "+tempString ; 
+      addressV += application[0].tradeLicenseDetail.address.buildingName  ? application[0].tradeLicenseDetail.address.buildingName : ""; 
+      addressV += application[0].tradeLicenseDetail.address.street ? ", " + application[0].tradeLicenseDetail.address.street : "" ;
+      addressV += application[0].tradeLicenseDetail.address.locality ? ", " + application[0].tradeLicenseDetail.address.locality : "" ;
+      addressV += application[0].tradeLicenseDetail.address.landmark ? ", " + application[0].tradeLicenseDetail.address.landmark : "" ;
+      addressV += application[0].tradeLicenseDetail.address.waterbody ? ", " + application[0].tradeLicenseDetail.address.waterbody : "" ;
+      addressV += application[0].tradeLicenseDetail.address.serviceArea ? ", " + application[0].tradeLicenseDetail.address.serviceArea : "" ;
+      addressV += application[0].tradeLicenseDetail.address.localityName ? ", " + application[0].tradeLicenseDetail.address.localityName : "" ;
+      addressV += application[0].tradeLicenseDetail.address.postOffice ? ", " + application[0].tradeLicenseDetail.address.postOffice : "" ;
+      addressV += application[0].tradeLicenseDetail.address.pincode ? "-" + application[0].tradeLicenseDetail.address.pincode : "";
+
+      let tradeUnitsV = application[0].tradeLicenseDetail.tradeUnits;
+      let ownerPhotoV =  application[0].tradeLicenseDetail.applicationDocuments.filter((doc)=>{
+        doc.documentType === "OWNERPHOTO"
+        doc?.documentType.includes("OWNERPHOTO")
+      })[0];
+      
+      let institution = [];
+      if( application[0]?.tradeLicenseDetail?.institution){
+        let tempInst = {institutionName : application[0]?.tradeLicenseDetail?.institution?.institutionName,
+          organisationregistrationno : application[0]?.tradeLicenseDetail?.institution?.organisationregistrationno,
+          address : application[0]?.tradeLicenseDetail?.institution?.address,
+          licenseUnitId : application[0]?.tradeLicenseDetail?.institution?.licenseUnitId
+        };
+        institution.push(tempInst);
+      }
+      let licenseUnitName =   application[0]?.tradeLicenseDetail?.institution?.licenseUnitId ? application[0]?.tradeLicenseDetail?.institution?.licenseUnitId + " - " : "" +
+      application[0]?.licenseUnitName ? application[0]?.licenseUnitName : "" 
+          + application[0]?.licenseUnitNameLocal ?  " ( " +application[0]?.licenseUnitNameLocal + " ) " : "" ;
+      let desiredLicensePeriodV = application[0]?.desiredLicensePeriod;
+      let businessSector = application[0]?.businessSector;
+      let capitalInvestment = application[0]?.capitalInvestment;
+      let enterpriseType = application[0]?.enterpriseType;
+      let structurePlaceSubtype = application[0]?.structurePlaceSubtype;
+      let businessActivityDesc = application[0]?.businessActivityDesc;
+      let licenseeType = application[0]?.licenseeType;
+      let ownershipCategory = application[0]?.tradeLicenseDetail?.ownershipCategory;
+      let applicationDocuments = application[0]?.tradeLicenseDetail?.applicationDocuments;
+      let finalJson = 
+        [{tenantId : tenantIdV,
+      businessService : businessServiceV,
+      licenseType : licenseTypeV,
+      applicationType : applicationTypeV,
+      licenseNumber : licenseNumberV,
+      applicationNumber : applicationNumberV,
+      licenseUnitName : licenseUnitName,
+      applicationDate : applicationDateV,
+      issuedDate : issuedDateV,
+      financialYear : financialYearV,
+      validFrom : validFromV,
+      validTo : validToV,
+      commencementDate : commencementDateV,
+      tradeLicenseDetail : {
+        ownershipCategory : ownershipCategory,
+        structureType : structureTypeV,
+        owners : owners,
+        address : addressV,
+        tradeUnits : tradeUnitsV,
+        ownerPhoto : ownerPhotoV,
+        structurePlace : structurePlaceV,
+        businessSector : businessSector,
+        capitalInvestment : capitalInvestment,
+        enterpriseType : enterpriseType,
+        structurePlaceSubtype : structurePlaceSubtype,
+        businessActivityDesc : businessActivityDesc,
+        licenseeType : licenseeType,
+        institution : institution,
+        applicationDocuments : applicationDocuments
+      },
+      desiredLicensePeriod : desiredLicensePeriodV,
+      signedCertificate : "111111111111"        
+    }];
+      return finalJson ;
+    }
+    else{
+      return [{}];
     }
   }
 

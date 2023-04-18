@@ -165,6 +165,7 @@ const Urls = {
     search: "/marriage-services/v1/marriagedetails/_searchmarriage",
     update: "/marriage-services/v1/marriagedetails/_updatemarriage",
     registry_search_marriage: "/marriage-services/v1/marriagedetails/_searchregistry",
+    correct_update: "/marriage-services/v1/marriagedetails/_createmarriagecorrection",
   },
   dfm: {
     create: "/filemgmnt/v1/applicantservices/_create",

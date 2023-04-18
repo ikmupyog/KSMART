@@ -64,8 +64,8 @@ export const CRBornOutsideIndiasearch = {
     let employeeResponse = [];
     const Birthdetails = {
       title: "CR_BIRTH_SUMMARY_DETAILS",
-      asSectionHeader: true,      
-    }
+      asSectionHeader: true,
+    };
     const childdetails = {
       title: "CR_BIRTH_CHILD_DETAILS",
       asSectionHeader: true,
@@ -75,33 +75,38 @@ export const CRBornOutsideIndiasearch = {
         { title: "PDF_BIRTH_CHILD_SEX", value: response?.gender },
         { title: "PDF_BIRTH_DATE_OF_BIRTH", value: response?.childDOB ? convertEpochToDate(response?.childDOB) : "NA" },
         { title: "CR_DATE_OF_ARRIVAL", value: response?.childArrivalDate ? convertEpochToDate(response?.childArrivalDate) : "NA" },
-        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.outsideBirthPlaceEn + "/" + response?.outsideBirthPlaceMl || "NA"},  
-        { title: "CR_CHILD_PASSPORT_NO", value: response?.childPassportNo }, 
-        { title: "CS_COMMON_COUNTRY", value: response?.country},
-        { title: "CR_STATE_REGION_PROVINCE", value: response?.provinceEn + "/" + response?.provinceMl || "NA"}, 
-        { title: "CR_CITY_TOWN", value: response?.cityTownEn + "/" + response?.cityTownMl || "NA"},
-        { title: "CR_ZIP_CODE", value: response?.postCode},
-       ],
+        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.outsideBirthPlaceEn + "/" + response?.outsideBirthPlaceMl || "NA" },
+        { title: "CR_CHILD_PASSPORT_NO", value: response?.childPassportNo },
+        { title: "CS_COMMON_COUNTRY", value: response?.country },
+        { title: "CR_STATE_REGION_PROVINCE", value: response?.provinceEn + "/" + response?.provinceMl || "NA" },
+        { title: "CR_CITY_TOWN", value: response?.cityTownEn + "/" + response?.cityTownMl || "NA" },
+        { title: "CR_ZIP_CODE", value: response?.postCode },
+      ],
     };
     const parentInfo = {
       title: "CR_BIRTH_PARENT_INFORMATION_HEADER",
       values: [
-        { title: "PDF_BIRTH_NAME_OF_MOTHER", value: response?.BornOutsideParentsDetails?.motherFirstNameEn + " / " + response?.BornOutsideParentsDetails?.motherFirstNameMl || "NA"},
-        { title: "CR_MOTHER_PASSPORT_NO", value: response?.BornOutsideParentsDetails?.motherPassportNo},
-        { title: "CR_MOTHER_NATIONALITY", value: response?.BornOutsideParentsDetails?.motherNationality}, 
-        { title: "PDF_BIRTH_NAME_OF_FATHER", value: response?.BornOutsideParentsDetails?.fatherFirstNameEn + " / " + response?.BornOutsideParentsDetails?.fatherFirstNameMl || "NA"},
-        { title: "CR_FATHER_PASSPORT_NO", value: response?.BornOutsideParentsDetails?.fatherPassportNo},
-        { title: "CR_FATHER_NATIONALITY", value: response?.BornOutsideParentsDetails?.fatherNationality},
-        { title: "CR_MOTHER_AGE_MARRIAGE", value: response?.BornOutsideParentsDetails?.motherMarriageAge},
-        { title: "CR_MOTHER_AGE_BIRTH", value: response?.BornOutsideParentsDetails?.motherMarriageBirth},
-        { title: "CR_MOTHER_EDUCATION", value: response?.BornOutsideParentsDetails?.motherEducation}, 
-        { title: "CR_MOTHER_PROFESSIONAL", value: response?.BornOutsideParentsDetails?.motherProfession},
-        { title: "CR_FATHER_EDUCATION", value: response?.BornOutsideParentsDetails?.fatherEducation}, 
-        { title: "CR_FATHER_PROFESSIONAL", value: response?.BornOutsideParentsDetails?.fatherProfession},
-        { title: "CS_COMMON_RELIGION", value: response?.BornOutsideParentsDetails?.Religion},
-        { title: "CR_PARENTS_CONTACT_NO", value: response?.BornOutsideParentsDetails?.fatherMobile},
-        { title: "CR_PARENTS_EMAIL", value: response?.BornOutsideParentsDetails?.fatherEmail},
-                 
+        {
+          title: "PDF_BIRTH_NAME_OF_MOTHER",
+          value: response?.BornOutsideParentsDetails?.motherFirstNameEn + " / " + response?.BornOutsideParentsDetails?.motherFirstNameMl || "NA",
+        },
+        { title: "CR_MOTHER_PASSPORT_NO", value: response?.BornOutsideParentsDetails?.motherPassportNo },
+        { title: "CR_MOTHER_NATIONALITY", value: response?.BornOutsideParentsDetails?.motherNationality },
+        {
+          title: "PDF_BIRTH_NAME_OF_FATHER",
+          value: response?.BornOutsideParentsDetails?.fatherFirstNameEn + " / " + response?.BornOutsideParentsDetails?.fatherFirstNameMl || "NA",
+        },
+        { title: "CR_FATHER_PASSPORT_NO", value: response?.BornOutsideParentsDetails?.fatherPassportNo },
+        { title: "CR_FATHER_NATIONALITY", value: response?.BornOutsideParentsDetails?.fatherNationality },
+        { title: "CR_MOTHER_AGE_MARRIAGE", value: response?.BornOutsideParentsDetails?.motherMarriageAge },
+        { title: "CR_MOTHER_AGE_BIRTH", value: response?.BornOutsideParentsDetails?.motherMarriageBirth },
+        { title: "CR_MOTHER_EDUCATION", value: response?.BornOutsideParentsDetails?.motherEducation },
+        { title: "CR_MOTHER_PROFESSIONAL", value: response?.BornOutsideParentsDetails?.motherProfession },
+        { title: "CR_FATHER_EDUCATION", value: response?.BornOutsideParentsDetails?.fatherEducation },
+        { title: "CR_FATHER_PROFESSIONAL", value: response?.BornOutsideParentsDetails?.fatherProfession },
+        { title: "CS_COMMON_RELIGION", value: response?.BornOutsideParentsDetails?.Religion },
+        { title: "CR_PARENTS_CONTACT_NO", value: response?.BornOutsideParentsDetails?.fatherMobile },
+        { title: "CR_PARENTS_EMAIL", value: response?.BornOutsideParentsDetails?.fatherEmail },
       ],
     };
     const PermanentrAddressBirthDetailsInfo = {
@@ -116,31 +121,51 @@ export const CRBornOutsideIndiasearch = {
         // { title: "CR_BIRTH_PERS_STATE_LABEL", value: response?.BornOutsideAddressBirthDetails.presentaddressStateName || "CR_NOT_RECORDED"},
         // { title: "CR_BIRTH_PERS_COUNTRY_LABEL", value: response?.BornOutsideAddressBirthDetails.presentaddressCountry || "CR_NOT_RECORDED"},
 
-        { title: "CR_BIRTH_PERM_HO_NAME_LABEL", value: response?.BornOutsideAddressBirthDetails.permntInKeralaAdrHouseNameEn || "CR_NOT_RECORDED"},
-        { title: "CR_BIRTH_PERM_STREET_LABEL", value: response?.BornOutsideAddressBirthDetails.permntInKeralaAdrStreetNameEn || "CR_NOT_RECORDED"},
-        { title: "CR_BIRTH_PERM_LOCALITY_LABEL", value: response?.BornOutsideAddressBirthDetails.permntInKeralaAdrLocalityNameEn || "CR_NOT_RECORDED"},
-        { title: "CR_BIRTH_PERM_POSTOFFICE_LABEL", value: response?.BornOutsideAddressBirthDetails.permntInKeralaAdrPostOffice|| "CR_NOT_RECORDED"},
-        { title: "CR_BIRTH_PERM_PINCODE_LABEL", value: response?.BornOutsideAddressBirthDetails.permntInKeralaAdrPincode || "CR_NOT_RECORDED"},
+        { title: "CR_BIRTH_PERM_HO_NAME_LABEL", value: response?.BornOutsideAddressBirthDetails.permntInKeralaAdrHouseNameEn || "CR_NOT_RECORDED" },
+        { title: "CR_BIRTH_PERM_STREET_LABEL", value: response?.BornOutsideAddressBirthDetails.permntInKeralaAdrStreetNameEn || "CR_NOT_RECORDED" },
+        {
+          title: "CR_BIRTH_PERM_LOCALITY_LABEL",
+          value: response?.BornOutsideAddressBirthDetails.permntInKeralaAdrLocalityNameEn || "CR_NOT_RECORDED",
+        },
+        { title: "CR_BIRTH_PERM_POSTOFFICE_LABEL", value: response?.BornOutsideAddressBirthDetails.permntInKeralaAdrPostOffice || "CR_NOT_RECORDED" },
+        { title: "CR_BIRTH_PERM_PINCODE_LABEL", value: response?.BornOutsideAddressBirthDetails.permntInKeralaAdrPincode || "CR_NOT_RECORDED" },
         { title: "CR_BIRTH_PERM_VILLAGE_LABEL", value: response?.BornOutsideAddressBirthDetails.permntInKeralaAdrVillage || "CR_NOT_RECORDED" },
         { title: "CR_BIRTH_PERM_TALUK_LABEL", value: response?.BornOutsideAddressBirthDetails.permntInKeralaAdrTaluk || "CR_NOT_RECORDED" },
-        { title: "CR_BIRTH_PERM_DISTRICT_LABEL", value: response?.BornOutsideAddressBirthDetails.permntInKeralaAdrDistrict|| "CR_NOT_RECORDED"},
-        { title: "CR_BIRTH_PERM_STATE_LABEL", value: response?.BornOutsideAddressBirthDetails.permtaddressStateName || "CR_NOT_RECORDED"},
-        { title: "CR_BIRTH_PERM_COUNTRY_LABEL", value: response?.BornOutsideAddressBirthDetails.permtaddressCountry || "CR_NOT_RECORDED"},
-        
+        { title: "CR_BIRTH_PERM_DISTRICT_LABEL", value: response?.BornOutsideAddressBirthDetails.permntInKeralaAdrDistrict || "CR_NOT_RECORDED" },
+        { title: "CR_BIRTH_PERM_STATE_LABEL", value: response?.BornOutsideAddressBirthDetails.permtaddressStateName || "CR_NOT_RECORDED" },
+        { title: "CR_BIRTH_PERM_COUNTRY_LABEL", value: response?.BornOutsideAddressBirthDetails.permtaddressCountry || "CR_NOT_RECORDED" },
       ],
     };
     const OutsideAddressBirthDetailsInfo = {
       title: "CR_PARENTS_FOREIGN_ADDRESS",
       values: [
-        { title: "CR_ADDRES_LINE_ONE", value: response?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEn + " / " + response?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressMl || "NA"},
-        { title: "CR_ADDRES_LINE_TWO", value: response?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEnB + " / " + response?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressMlB || "NA"},
-        { title: "CR_ZIP_CODE", value: response?.BornOutsideAddressBirthDetails.presentOutSideIndiaPostCode || "CR_NOT_RECORDED"},
-        { title: "CR_CITY_TOWN_EN", value: response?.BornOutsideAddressBirthDetails.presentOutSideIndiaadrsCityTown || "CR_NOT_RECORDED"},
-        { title: "CR_TOWN_VILLAGE_EN", value: response?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsVillage || "NA"},
-        { title: "CR_STATE_REGION_PROVINCE", value: response?.BornOutsideAddressBirthDetails?.presentOutSideIndiaProvinceEn + " / " + response?.BornOutsideAddressBirthDetails?.presentOutSideIndiaProvinceMl || "NA"},
-        { title: "CS_COMMON_COUNTRY", value: response?.BornOutsideAddressBirthDetails.presentOutSideCountry || "CR_NOT_RECORDED"},
-      ]
-    }
+        {
+          title: "CR_ADDRES_LINE_ONE",
+          value:
+            response?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEn +
+              " / " +
+              response?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressMl || "NA",
+        },
+        {
+          title: "CR_ADDRES_LINE_TWO",
+          value:
+            response?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressEnB +
+              " / " +
+              response?.BornOutsideAddressBirthDetails?.presentOutSideIndiaAdressMlB || "NA",
+        },
+        { title: "CR_ZIP_CODE", value: response?.BornOutsideAddressBirthDetails.presentOutSideIndiaPostCode || "CR_NOT_RECORDED" },
+        { title: "CR_CITY_TOWN_EN", value: response?.BornOutsideAddressBirthDetails.presentOutSideIndiaadrsCityTown || "CR_NOT_RECORDED" },
+        { title: "CR_TOWN_VILLAGE_EN", value: response?.BornOutsideAddressBirthDetails?.presentOutSideIndiaadrsVillage || "NA" },
+        {
+          title: "CR_STATE_REGION_PROVINCE",
+          value:
+            response?.BornOutsideAddressBirthDetails?.presentOutSideIndiaProvinceEn +
+              " / " +
+              response?.BornOutsideAddressBirthDetails?.presentOutSideIndiaProvinceMl || "NA",
+        },
+        { title: "CS_COMMON_COUNTRY", value: response?.BornOutsideAddressBirthDetails.presentOutSideCountry || "CR_NOT_RECORDED" },
+      ],
+    };
     // const fatherInfo = {
     //   title: "CR_BIRTH_FATHER_INFORMATION_HEADER",
     //   values: [
@@ -185,7 +210,6 @@ export const CRBornOutsideIndiasearch = {
 
       ],
     };
-    
 
     // if (response?.workflowCode == "NewTL" && response?.status !== "APPROVED") {
     //   const details = {
@@ -206,7 +230,7 @@ export const CRBornOutsideIndiasearch = {
     response && employeeResponse.push(PermanentrAddressBirthDetailsInfo);
     response && employeeResponse.push(OutsideAddressBirthDetailsInfo);
     response && employeeResponse.push(statisticalInfo);
-console.log(response, "response");
+    console.log(response, "response");
     return {
       tenantId: response.tenantId,
       applicationDetails: employeeResponse,
