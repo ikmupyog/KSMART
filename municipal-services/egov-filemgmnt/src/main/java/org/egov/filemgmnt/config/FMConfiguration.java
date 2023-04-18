@@ -80,7 +80,7 @@ public class FMConfiguration {
     private String updateCommunicationFileTopic;
 
     // arising file config
-    @Value("${persister.save.arisingfiledetails.topic:}")
+    @Value("${persister.save.arisingfiledetails.topic}")
     private String saveArisingFileTopic;
 
     @Value("${persister.update.arisingfiledetails.topic:}")
@@ -126,6 +126,12 @@ public class FMConfiguration {
 
     @Value("${egov.url.shortner.endpoint}")
     private String urlShortnerEndpoint;
+
+    // Global Mastersettings
+
+    @Value("${persister.save.modulemaster.topic:}")
+    private String saveModuleMasterTopic;
+
 
     @Value("${egov.pdf.draftcertificate.createEndPoint}")
     private String egovPdfDraftEndPoint;

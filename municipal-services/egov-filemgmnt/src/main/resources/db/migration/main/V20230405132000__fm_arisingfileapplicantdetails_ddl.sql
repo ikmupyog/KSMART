@@ -26,5 +26,5 @@ CREATE TABLE IF NOT EXISTS public.eg_fm_arisingfileapplicantdetails
     lastmodifiedby character varying(45),
     lastmodifiedtime bigint,
     CONSTRAINT eg_fm_arisingfileapplicantdetails_pkey PRIMARY KEY (id)
-    )
+    );
 

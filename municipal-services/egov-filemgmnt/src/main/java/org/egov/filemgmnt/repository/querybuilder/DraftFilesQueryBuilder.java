@@ -31,7 +31,7 @@ public class DraftFilesQueryBuilder extends BaseQueryBuilder {
         addFilter("dr.drafttype", criteria.getDraftType(), query, preparedStmtValues);
         addFilter("dr.filecode", criteria.getFileCode(), query, preparedStmtValues);
         addFilter("dr.status", criteria.getStatus(), query, preparedStmtValues);
-        addFilter("dr.assigner", criteria.getUuid(), query, preparedStmtValues);
+        addFilter("dr.assigner", criteria.getAssigner(), query, preparedStmtValues);
         addFilter("dr.tenantid", criteria.getTenantId(), query, preparedStmtValues);
 
         return query.toString();

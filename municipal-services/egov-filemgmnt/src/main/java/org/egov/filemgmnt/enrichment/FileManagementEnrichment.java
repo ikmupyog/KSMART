@@ -241,12 +241,7 @@ public class FileManagementEnrichment extends BaseEnrichment {
 
         final String tenantId = applicant.getTenantId();
 
-        final List<String> filecodes = generateIds(requestInfo,
-                                                   tenantId,
-                                                   fmConfig.getFilemgmntFileCodeName(),
-                                                   " FMARISING",
-                                                   "AR",
-                                                   1);
+        final List<String> filecodes = generateIds(requestInfo, tenantId, "fm.filecode", "FM", "APP", 1);
         validateFileCodes(filecodes, 1);
 
         final ApplicantFileDetail fileDetail = request.getApplicantServiceDetail()

@@ -1,5 +1,6 @@
 package org.egov.filemgmnt.web.models.arisingfile;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -17,8 +18,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Schema(description = "A Object holds the file data of arising file submitted by the user")
 @Validated
@@ -42,10 +41,10 @@ public class ArisingFile {
     @JsonProperty("tenantId")
     private String tenantId;
 
-    @Schema(type = "string", description = "File number")
-    @Size(max = 64, message = "File number length cannot exceed 64 characters")
-    @JsonProperty("fileNumber")
-    private String fileNumber;
+//    @Schema(type = "string", description = "File number")
+//    @Size(max = 64, message = "File number length cannot exceed 64 characters")
+//    @JsonProperty("fileNumber")
+//    private String fileNumber;
 
     @Schema(type = "string", description = "File code")
     @Size(max = 64, message = "File code length cannot exceed 64 characters")
@@ -69,7 +68,7 @@ public class ArisingFile {
 //    @Size(min = 4, max = 4, message = "Invalid calendar year")
     @Size(max = 10)
 //    @Pattern(regexp = "^[1-9][0-9]{3}$", message = "Invalid Calendar year")
-    @JsonProperty("Year")
+    @JsonProperty("year")
     private String year;
 
     @Schema(type = "string", description = "Workflow code")
@@ -115,7 +114,9 @@ public class ArisingFile {
     @JsonProperty("auditDetails")
     private AuditDetails auditDetails;
 
-
-
+    @Valid
+    @NotNull(message = "Arising file Applicant detail is required")
+    @JsonProperty("arisingFileApplicant")
+    private ArisingFileApplicant arisingFileApplicant;
 
 }
