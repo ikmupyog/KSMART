@@ -33,7 +33,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
   const { data: District = {}, isDistrictLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
   const [toast, setToast] = useState(false);
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : isEditStillBirth ? isEditStillBirth : false);
+  const [isDisableEdit, setisDisableEdit] = useState(false);
 
   // const [isInitialRenderDistrict, setInitialRenderDistrict] = useState(sessionStorage.getItem("presentOutsideKeralaFlag"));
   const [cmbFilterDistrict, setCmbFilterDistrict] = useState();
