@@ -581,20 +581,6 @@ export const convertToAbandonedDeathRegistration = (data = {}) => {
               filestoreId: data?.InitiatorAbandoned?.uploadedFile5
           }
       ],
-        // Initiator: {
-        //   IsDeclarationInitiator: data?.Initiator?.IsDeclarationInitiator,
-        //   InitiatorRelation: data?.Initiator?.InitiatorRelation,
-        //   InitiatorAadhaar: data?.Initiator?.InitiatorAadhaar,
-        //   InitiatorName: data?.Initiator?.InitiatorName,
-        //   InitiatorMobile: parseInt(data?.Initiator?.InitiatorMobile),
-        //   InitiatorAddress: data?.Initiator?.InitiatorAddress,
-        //   InitiatorDocumentId: null,
-        //   InitiatorDocumentTenantId: data?.InformationDeath?.tenantId,
-        //   InitiatorDocumentAckNo: null,
-        //   InitiatorDocumentType: null,
-        //   InitiatorDocumentUserType: null,
-        //   InitiatorDocumentFileStoreId: null,
-        // },
         AuditDetails: {
           createdBy: null,
           lastModifiedBy: null,
