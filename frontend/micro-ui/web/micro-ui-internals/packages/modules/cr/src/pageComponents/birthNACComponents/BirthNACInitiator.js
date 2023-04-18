@@ -576,13 +576,14 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
           ownerState[0].childNameEn === "" ||
           ownerState[0].childNameMl === "" ||
           ownerState[0].sex === "" ||
-          ownerState[0].nacorderofChildren === "" ||
-          !aadressFile ||
-          !proofFile ||
-          !certificateFile ||
-          !motherIdFile ||
-          !fatherIdFile ||
-          !medicalFile
+          ownerState[0].nacorderofChildren === ""
+          //||
+          // !aadressFile ||
+          // !proofFile ||
+          // !certificateFile ||
+          // !motherIdFile ||
+          // !fatherIdFile ||
+          // !medicalFile
         }
       >
         <div>
