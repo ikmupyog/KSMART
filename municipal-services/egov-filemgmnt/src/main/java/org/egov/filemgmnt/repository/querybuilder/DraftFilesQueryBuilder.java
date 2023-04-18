@@ -25,6 +25,7 @@ public class DraftFilesQueryBuilder extends BaseQueryBuilder {
                                          @NotNull List<Object> preparedStmtValues, Boolean isCount) {
         StringBuilder query = new StringBuilder(QUERY);
 
+        addFilter("drafting_id", criteria.getUuid(), query, preparedStmtValues);
         addFilter("dr.businessservice", criteria.getBusinessService(), query, preparedStmtValues);
         addFilter("dr.modulename", criteria.getModuleName(), query, preparedStmtValues);
         addFilter("dr.drafttype", criteria.getDraftType(), query, preparedStmtValues);

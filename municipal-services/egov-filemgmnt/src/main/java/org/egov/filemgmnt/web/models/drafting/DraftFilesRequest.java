@@ -31,7 +31,7 @@ public class DraftFilesRequest {
     @JsonProperty("RequestInfo")
     private RequestInfo requestInfo;
 
-    @JsonProperty("Drafting")
+    @JsonProperty("DraftFiles")
     private List<DraftFiles> drafting;
 
     public DraftFilesRequest addDrafting(DraftFiles newDrafting) {
