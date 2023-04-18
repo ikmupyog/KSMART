@@ -40,6 +40,10 @@ public class MarriageCorrectionApplnValidator {
             throw new CustomException(MARRIAGE_DETAILS_INVALID_CREATE.getCode(),
                     "Tenant id is required for create correction request.");
         }
+        if (CollectionUtils.isEmpty(correctionApplications.get(0).getCorrectionField())) {
+            throw new CustomException(MARRIAGE_DETAILS_REQUIRED.getCode(),
+                    "Marriage Correction Details is required.");
+        }
     }
 
     public void validateCorrectionUpdate(MarriageCorrectionRequest request) {
