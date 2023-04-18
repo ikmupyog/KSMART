@@ -1,4 +1,5 @@
 import moment from "moment";
+import {BIRTH_INCLUSION_FIELD_NAMES} from "../../config/constants";
 
 export const getFilteredChildSexData = (selectedData, inclusionData, sex) => {
   console.log("selected name==in sex--", selectedData, sex);
@@ -7,6 +8,7 @@ export const getFilteredChildSexData = (selectedData, inclusionData, sex) => {
   const computedInitialValue = computeInitialValue(selectedData?.gender, sex);
   const computedCurrentValue = computeCurrentValue(selectedData?.gender, sex);
   let selectedDobObj = {
+    fieldName: BIRTH_INCLUSION_FIELD_NAMES.CHILD_SEX,
     initialValue: computedInitialValue,
     curValue: computedCurrentValue,
     isDisabled: true,

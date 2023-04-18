@@ -46,6 +46,7 @@ const TLCorrectionPlaceOfActivity = ({ t, config,formData,onEditSelect,formDataE
   const [ownershipCategoryMenu,setOwnershipCategoryMenu] =useState([]);
   const [ownershipCategory, setOwnershipCategory] = useState(formDataEdit?.TradeDetails?.tradeLicenseDetail?.ownershipCategory ? ownershipCategoryMenu.filter((category) => category?.code.includes(formDataEdit?.TradeDetails?.tradeLicenseDetail?.ownershipCategory))[0] : "");
   const [value2, setValue2] = useState();
+  const [isResurveyed, setIsResurveyed] = useState(formDataEdit?.TradeDetails?.tradeLicenseDetail?.structurePlace?.isResurveyed === false ? { i18nKey: "TL_COMMON_NO", code: "NO" } : { i18nKey: "TL_COMMON_YES", code: "YES" });
   const [value3, setValue3] = useState(formDataEdit?.TradeDetails?.tradeLicenseDetail?.structurePlace?.isResurveyed === false ?  "NO" : "YES");
   const [locality, setLocality] = useState(formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.localityName ? formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.localityName : "");
   const [street, setStreet] = useState(formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.street ? formDataEdit?.TradeDetails?.tradeLicenseDetail?.address?.street : "");
@@ -219,6 +220,12 @@ const TLCorrectionPlaceOfActivity = ({ t, config,formData,onEditSelect,formDataE
     }
     Digit.SessionStorage.set("activityedit", true);
   });
+  
+  const selectIsResurveyed = (value => {
+    setIsResurveyed(value);
+    setValue3(value.code);
+    formStateDoor[0].isResurveyed = value;
+  });
 
   let data1 = [];
   let config1 = '';
@@ -292,8 +299,6 @@ const TLCorrectionPlaceOfActivity = ({ t, config,formData,onEditSelect,formDataE
     }
   };
   const [formStateDoor, dispatchDoor] = useReducer(reducerDoor, storedDoorData, initFnEdit); 
-
-  console.log("formStateDoor : " + JSON.stringify(formStateDoor));
 
   const handleTextInputField1 = useCallback((index, e, key, length = 100) => {
     if (e.length <= length) {
@@ -468,7 +473,7 @@ const TLCorrectionPlaceOfActivity = ({ t, config,formData,onEditSelect,formDataE
                     </CardLabel>&nbsp;
                   </div>
                   <div className="col-md-8" >
-                    <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={menu} selectedOption={field?.isResurveyed} onSelect={selectIsResurveyed} disabled={isEdit} style={{ display: "flex", justifyContent: "space-between", width: "48%" }} />
+                    <RadioButtons t={t} optionsKey="i18nKey" isMandatory={config.isMandatory} options={menu} selectedOption={isResurveyed} onSelect={selectIsResurveyed} disabled={isEdit} style={{ display: "flex", justifyContent: "space-between", width: "48%" }} />
                   </div>
                 </div>
                 {value3 === "YES" && (

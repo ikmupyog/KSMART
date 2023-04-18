@@ -114,6 +114,7 @@ const SearchParent = ({
                         goToLink={goToLink}
                         downloadLink={downloadLink}
                         searchType={searchType}
+                        tenantId={tenantId}
                     />
                 </React.Fragment>
             )}

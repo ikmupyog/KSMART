@@ -122,34 +122,34 @@ const getCorrectionFieldValues = (item) => {
   console.log("correction item==",item);
   let fieldValues = [];
   switch(item?.selectedDocType){
-    case "CHILD_DOB":
+  case "CHILD_DOB":
   fieldValues =  [
     {
-      column: "dob",
+      column: formFielColumns[item?.selectedDocType],
       oldValue: item.initialValue,
       newValue: item.curValue && Date.parse(item.curValue),
     },
   ];
   break;
-  case "CHILD_SEX" || "CHILD_AADHAAR":
+  case "CHILD_AADHAAR":
   fieldValues =  [
     {
-      column: formFielColumns[item?.CorrectionField],
+      column: formFielColumns[item?.selectedDocType],
       oldValue: item.initialValue,
       newValue: item.curValue,
     },
   ];
   break;
-  case "CHILD_SEX" || "CHILD_AADHAAR":
+  case "CHILD_SEX" : 
   fieldValues =  [
     {
-      column: formFielColumns[item?.CorrectionField],
-      oldValue: item.initialValue,
-      newValue: item.curValue,
+      column: formFielColumns[item?.selectedDocType],
+      oldValue: item.initialValue?.code,
+      newValue: item.curValue?.code,
     },
   ];
   break;
-  case "FATHER_DETAILS" :
+  case "FATHER_DETAILS" : case "CHILD_NAME" : case "MOTHER_DETAILS":
   fieldValues =  getNestedFieldNames(item);
   break;
  }
@@ -162,13 +162,13 @@ const getCorrectionFields = (correctionData) => {
     Object.values(correctionData)?.length > 0 &&
     Object.values(correctionData)
       .map((item) => {
-        console.log("items==", item, item?.CorrectionField === "CHILD_DOB");
+        console.log("items==loooped", item, item?.documentData?.[0]?.CorrectionField );
         if (item?.isEditable) {
           const correctionFieldValues = getCorrectionFieldValues(item);
           const correctionDocs = getCorrectionDocuments(item.Documents);
           const tempObj = {
-            correctionFieldName: item?.CorrectionField,
-            conditionCode: item.conditionCode,
+            correctionFieldName: item?.documentData?.[0]?.CorrectionField,
+            conditionCode: item?.documentCondition,
             specificCondition: null,
             correctionFieldValue: correctionFieldValues,
             CorrectionDocument: correctionDocs,
@@ -180,13 +180,14 @@ const getCorrectionFields = (correctionData) => {
         }
       })
       .filter((item) => item !== null);
+      console.log("correctionDocs--==",correctionDocs);
   return correctionDocs;
 };
 
 export const formatApiParams = (formData,userData) => {
-  console.log("formdata==", formData);
+  console.log("formdata==", formData,userData);
   const correctionFieldData = getCorrectionFields(formData);
-  console.log("formData", formData);
+  console.log("formData", formData,userData);
   const apiParam = {
     CorrectionDetails: [
       {
