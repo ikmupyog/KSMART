@@ -192,7 +192,7 @@ const TLApplicationDetails = () => {
       addressV += application[0].tradeLicenseDetail.address.pincode ? "-" + application[0].tradeLicenseDetail.address.pincode : "";
 
       let tradeUnitsV = application[0].tradeLicenseDetail.tradeUnits;
-      let ownerPhotoV = application[0].tradeLicenseDetail.applicationDocuments.filter((doc) => {
+      let ownerPhotoV = application[0]?.tradeLicenseDetail?.applicationDocuments.filter((doc) => {
         doc.documentType === "OWNERPHOTO"
         doc?.documentType.includes("OWNERPHOTO")
       })[0];

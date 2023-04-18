@@ -41,7 +41,7 @@ const BirthReqSearch = ({ BirthRegNo, setSelectSetBirthRegNo, setSearchRegId }) 
               // pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
               isRequired: true,
               type: "text",
-              title: t("CR_INVALID_ADOPTION_DECREE"),
+              title: t("CR_INVALID_BIRTH_REG_ID"),
             })}
           />
         </div>
