@@ -153,7 +153,7 @@ public class MarriageApplicationQueryBuilder extends BaseMarriageQueryBuilder {
            else if (criteria.getSortBy() == MarriageApplicationSearchCriteria.SortBy.tenantId)
            addOrderByColumns("MD.tenantid",criteria.getSortOrder().toString(), orderBy);
            addOrderToQuery(orderBy, query);
-           //addLimitAndOffset(criteria.getOffset(),criteria.getLimit(), query, preparedStmtValues);
+           addLimitAndOffset(criteria.getOffset(),criteria.getLimit(), query, preparedStmtValues);
 
         return query.toString();
 
