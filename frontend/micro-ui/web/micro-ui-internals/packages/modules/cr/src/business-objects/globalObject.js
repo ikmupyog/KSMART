@@ -44,7 +44,7 @@ export const initializeBirthInclusionObject = (birthInclusionDocData, selectedDa
   console.log("sex data==",sex);
   for (let field_key in BIRTH_INCLUSION_FIELD_NAMES) {
     const filteredData = birthInclusionDocData?.filter((item) => item.CorrectionField === field_key);
-    let inclusionsDocsData = birthInclusionFilterFieldsObj[field_key]?.({data:selectedData, inclusionData:filteredData});
+    let inclusionsDocsData = birthInclusionFilterFieldsObj[field_key]?.({data:selectedData, inclusionData:filteredData,sex});
     let tempObj = { ...inclusionsDocsData};
     Object.assign(formObj, { [field_key]: tempObj });
   }

@@ -1,5 +1,6 @@
 import cloneDeep from "lodash/cloneDeep";
 import { CRStillBirthService } from "../../elements/CRSTILLBIRTH";
+import { NA, getFormattedValue } from "../../../utils/dataFormatter";
 // import { convertEpochToDateDMY } from  "../../utils";
 
 const stringReplaceAll = (str = "", searcher = "", replaceWith = "") => {
@@ -74,7 +75,10 @@ export const CRStillBirthsearch = {
         // { title: "PDF_BIRTH_CHILD_NAME", value: response?.stillbirthchilddetails?.childFirstNameEn + response?.childMiddleNameEn + response?.childLastNameEn },
         { title: "PDF_BIRTH_CHILD_SEX", value: response?.gender },
         { title: "PDF_BIRTH_DATE_OF_BIRTH", value: response?.childDOB ? convertEpochToDate(response?.childDOB) : "NA" },
-        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.hospitalName + "/" + response?.hospitalNameMl || "NA"},       
+        // { title: "PDF_BIRTH_PLACE_OF_BIRTH", value:getFormattedValue(response, "birthPlace",false) },  
+        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.hospitalName + "/" + response?.hospitalNameMl || "NA"},   
+            
+        
        ],
        
     };
@@ -83,17 +87,17 @@ export const CRStillBirthsearch = {
       title: "CR_BIRTH_PARENT_INFORMATION_HEADER",
       values: [
         
-        { title: "PDF_BIRTH_MOTHER_AADHAR", value: response?.StillBirthParentsDetails?.motherAadhar || "NA"},   
+        { title: "CR_BIRTH_MOTHER_AADHAR", value: response?.StillBirthParentsDetails?.motherAadhar || "NA"},   
         { title: "PDF_BIRTH_NAME_OF_MOTHER", value: response?.StillBirthParentsDetails?.motherFirstNameEn + " / " + response?.StillBirthParentsDetails?.motherFirstNameMl || "NA"},
      
         { title: "CR_NATIONALITY", value: response?.StillBirthParentsDetails?.motherNationality || "NA"},   
         { title: "CR_MOTHER_AGE_BIRTH", value: response?.StillBirthParentsDetails?.motherMarriageBirth || "NA"},   
         { title: "CR_ORDER_CURRENT_DELIVERY", value: response?.StillBirthParentsDetails?.orderofChildren || "NA"},   
         { title: "CR_EDUCATION", value: response?.StillBirthParentsDetails?.motherEducation || "NA"},   
-        { title: "CR_PROFESSIONAL", value: response?.StillBirthParentsDetails?.motherProfession || "NA"},     
-        { title: "CR_NATIONALITY", value: response?.StillBirthParentsDetails?.motherNationality || "NA"},   
+        { title: "CR_PROFESSIONAL", value: response?.StillBirthParentsDetails?.motherProfession || "NA"}, 
+      
        
-        { title: "PDF_BIRTH_FATHER_AADHAR", value: response?.StillBirthParentsDetails?.fatherAadhar || "NA"},  
+        { title: "CR_BIRTH_FATHER_AADHAR", value: response?.StillBirthParentsDetails?.fatherAadhar || "NA"},  
         { title: "PDF_BIRTH_NAME_OF_FATHER", value: response?.StillBirthParentsDetails?.fatherFirstNameEn + " / " + response?.ParentsDetails?.fatherFirstNameMl || "NA"},       
         { title: "CR_NATIONALITY", value: response?.StillBirthParentsDetails?.fatherNationality || "NA" },       
        { title: "CR_EDUCATION", value: response?.StillBirthParentsDetails?.fatherEducation || "NA" },
@@ -102,7 +106,7 @@ export const CRStillBirthsearch = {
        { title: "CS_COMMON_RELIGION", value: response?.StillBirthParentsDetails?.Religion || "NA" },  
        { title: "PDF_BIRTH_FATHER_MOBILE_NO", value: response?.StillBirthParentsDetails?.fatherMobile || "NA" },
        { title: "PDF_BIRTH_FATHER_EMAIL", value: response?.StillBirthParentsDetails?.fatherEmail || "NA" },       
-       
+      
       ],
     };
     const AddressBirthDetails = {
@@ -110,8 +114,8 @@ export const CRStillBirthsearch = {
       values: [
    
         { title: "PDF_BIRTH_PRESENT_ADDRESS",  value: response?.AddressBirthDetails.presentInsideKeralaHouseNameEn + " , " + response?.AddressBirthDetails.presentInsideKeralaStreetNameEn  + " , " + response?.AddressBirthDetails.presentInsideKeralaLocalityNameEn + " , " + response?.AddressBirthDetails.presentInsideKeralaPostOffice.name + " , " + response?.AddressBirthDetails.presentInsideKeralaPincode
-        + " , " +  response?.AddressBirthDetails.presentInsideKeralaDistrict.name     + " , " +  response?.AddressBirthDetails.presentaddressStateName.name + " , " +    response?.AddressBirthDetails.presentaddressCountry.name },
-          {  value:response?.AddressBirthDetails.presentInsideKeralaHouseNameMl + " , " + response?.AddressBirthDetails.presentInsideKeralaStreetNameMl  + " , " + response?.AddressBirthDetails.presentInsideKeralaLocalityNameMl + " , " + response?.AddressBirthDetails.presentInsideKeralaPostOffice.namelocal + " , " + response?.AddressBirthDetails.presentInsideKeralaPincode   + " , " +  response?.AddressBirthDetails.presentInsideKeralaDistrict.namelocal     + " , " +  response?.AddressBirthDetails.presentaddressStateName.namelocal  + " , " +    response?.AddressBirthDetails.presentaddressCountry.namelocal   || "CR_NOT_RECORDED"},
+        + " , " +  response?.AddressBirthDetails.presentInsideKeralaDistrict    + " , " +  response?.AddressBirthDetails.presentaddressStateName + " , " +    response?.AddressBirthDetails.presentaddressCountry },
+          {  value:response?.AddressBirthDetails.presentInsideKeralaHouseNameMl + " , " + response?.AddressBirthDetails.presentInsideKeralaStreetNameMl  + " , " + response?.AddressBirthDetails.presentInsideKeralaLocalityNameMl + " , " + response?.AddressBirthDetails.presentInsideKeralaPostOffice + " , " + response?.AddressBirthDetails.presentInsideKeralaPincode   + " , " +  response?.AddressBirthDetails.presentInsideKeralaDistrict     + " , " +  response?.AddressBirthDetails.presentaddressStateName  + " , " +    response?.AddressBirthDetails.presentaddressCountry  || "CR_NOT_RECORDED"},
           { title: "PDF_BIRTH_PERMANENT_ADDRESS",  value: response?.AddressBirthDetails.permntInKeralaAdrHouseNameEn + " , " + response?.AddressBirthDetails.permntInKeralaAdrStreetNameEn  + " , " + response?.AddressBirthDetails.permntInKeralaAdrLocalityNameEn + " , " + response?.AddressBirthDetails.permntInKeralaAdrPostOffice.name + " , " + response?.AddressBirthDetails.permntInKeralaAdrPincode
           + " , " +  response?.AddressBirthDetails.permntInKeralaAdrDistrict.name     + " , " +  response?.AddressBirthDetails.permtaddressStateName.name + " , " +    response?.AddressBirthDetails.permtaddressCountry.name },
       {value: response?.AddressBirthDetails.permntInKeralaAdrHouseNameMl + " , " + response?.AddressBirthDetails.permntInKeralaAdrStreetNameMl  + " , " + response?.AddressBirthDetails.permntInKeralaAdrLocalityNameMl + " , " + response?.AddressBirthDetails.permntInKeralaAdrLocalityNameMl.name + " , " + response?.AddressBirthDetails.permntInKeralaAdrPincode

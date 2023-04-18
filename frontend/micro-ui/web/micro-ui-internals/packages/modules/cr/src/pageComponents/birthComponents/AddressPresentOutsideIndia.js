@@ -70,19 +70,21 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
     setadrsVillage(value);
     if (isPrsentAddress) {
       setadrsPermntOutsideIndiaVillage(value);
-    } else {
-      setadrsPermntOutsideIndiaVillage('');
-    }
+    } 
+    // else {
+    //   setadrsPermntOutsideIndiaVillage('');
+    // }
   }
 
   function setSelectadrsCityTown(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setadrsCityTown(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       if (isPrsentAddress) {
-        setadrsPermntOutsideIndiaCityTown(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-      } else {
-        setadrsPermntOutsideIndiaCityTown('');
-      }
+        setadrsPermntOutsideIndiaCityTown(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      } 
+      // else {
+      //   setadrsPermntOutsideIndiaCityTown('');
+      // }
     }
   }
 
@@ -90,20 +92,22 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setAdressEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       if (isPrsentAddress) {
-        setadrsPermntOutsideIndiaLineoneEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-      } else {
-        setadrsPermntOutsideIndiaLineoneEn('');
-      }
+        setadrsPermntOutsideIndiaLineoneEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      } 
+      // else {
+      //   setadrsPermntOutsideIndiaLineoneEn('');
+      // }
     }
   }
   function setSelectAdressEnB(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setAdressEnB(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       if (isPrsentAddress) {
-        setadrsPermntOutsideIndiaLinetwoEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-      } else {
-        setadrsPermntOutsideIndiaLinetwoEn('');
-      }
+        setadrsPermntOutsideIndiaLinetwoEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      } 
+      // else {
+      //   setadrsPermntOutsideIndiaLinetwoEn('');
+      // }
     }
   }
 
@@ -116,10 +120,11 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
     else {
       setAdressMlB(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       if (isPrsentAddress) {
-        setadrsPermntOutsideIndiaLinetwoMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-      } else {
-        setadrsPermntOutsideIndiaLinetwoMl('');
-      }
+        setadrsPermntOutsideIndiaLinetwoMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      } 
+      // else {
+      //   setadrsPermntOutsideIndiaLinetwoMl('');
+      // }
     }
   }
   function setSelectAdressMl(e) {
@@ -131,10 +136,11 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
     else {
       setAdressMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       if (isPrsentAddress) {
-        setadrsPermntOutsideIndiaLineoneMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-      } else {
-        setadrsPermntOutsideIndiaLineoneMl('');
-      }
+        setadrsPermntOutsideIndiaLineoneMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      } 
+      // else {
+      //   setadrsPermntOutsideIndiaLineoneMl('');
+      // }
     }
   }
 
@@ -142,10 +148,11 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setProvinceEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       if (isPrsentAddress) {
-        setPermntOutsideIndiaprovinceEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-      } else {
-        setPermntOutsideIndiaprovinceEn('');
-      }
+        setPermntOutsideIndiaprovinceEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      } 
+      // else {
+      //   setPermntOutsideIndiaprovinceEn('');
+      // }
     }
   }
   function setSelectProvinceMl(e) {
@@ -157,10 +164,11 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
     else {
       setProvinceMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
       if (isPrsentAddress) {
-        setPermntOutsideIndiaprovinceMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-      } else {
-        setPermntOutsideIndiaprovinceMl('');
-      }
+        setPermntOutsideIndiaprovinceMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      } 
+      // else {
+      //   setPermntOutsideIndiaprovinceMl('');
+      // }
     }
   }
 
@@ -186,9 +194,10 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
         setPostCode(e.target.value);
         if (isPrsentAddress) {
           setPermantpostCode(e.target.value);
-        } else {
-          setPermantpostCode('');
-        }
+        } 
+        // else {
+        //   setPermantpostCode('');
+        // }
       }
     }
   }
@@ -258,8 +267,8 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
                 onChange={setSelectProvinceMl}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_STATE_REGION_PROVINCE_ML")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
-              />
+                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
+              /> 
             </div>
           </div>
 
@@ -307,11 +316,11 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
                 disable={isDisableEdit}
                 placeholder={`${t("CR_ZIP_CODE")}`}
                 {...(validation = {
-                  pattern: "^[a-zA-Z-.0-9`' ]*$",
+                  pattern: "^[a-zA-Z-.`' ]*$",
                   isRequired: true,
                   type: "number",
-                  max: 6,
-                  min: 6,
+                  maxLength: 6,
+                  minLength: 6,
                   title: t("CR_INVALID_ZIP_CODE"),
                 })}
               />

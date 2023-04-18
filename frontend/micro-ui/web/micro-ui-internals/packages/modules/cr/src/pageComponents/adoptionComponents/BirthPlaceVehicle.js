@@ -173,7 +173,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
   } else
   return (
     <React.Fragment>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
+      {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} > */}
         <div className="row">
           <div className="col-md-12" >
             <h1 className="headingh1" >
@@ -350,7 +350,7 @@ const BirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleType, 
           </div>
         </div>
 
-      </FormStep>
+      {/* </FormStep> */}
     </React.Fragment>
   );
 };

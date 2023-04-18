@@ -142,7 +142,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                      : {t(InformationDeath.DeathPlaceType.hospitalNamelocal) + "/" + InformationDeath.DeathPlaceType.hospitalName}
+                      : {t(InformationDeath.hospitalNameEn.hospitalNamelocal) + "/" + InformationDeath.hospitalNameEn.hospitalName}
                     </CardText>
                   </div>
                 </div>
@@ -155,11 +155,11 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                       :{" "}
-                      {t(InformationDeath.DeathPlaceType.namelocal) +
+                      {t(InformationDeath.institution.namelocal) +
                         "," +
                         InformationDeath.DeathPlaceInstId.institutionNamelocal +
                         "/" +
-                        InformationDeath.DeathPlaceType.code +
+                        InformationDeath.institution.code +
                         "," +
                         InformationDeath.DeathPlaceInstId.institutionName}
                     </CardText>
@@ -280,7 +280,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
               )}
             </div>
           </div>
-
+ 
           <div className="row">
             <div className="col-md-6">
               <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}> {`${t("PDF_CR_NAME_WIFE_HUSBAND")}`} </CardLabel>
@@ -293,7 +293,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
               <div className="col-md-6">
                 <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                   :{" "}
-                  {t(FamilyInformationDeath.SpouseNameMl ? FamilyInformationDeath?.SpouseNameMl : "CR_NOT_RECORDED") +
+                  {t(FamilyInformationDeath.SpouseNameML ? FamilyInformationDeath?.SpouseNameML : "CR_NOT_RECORDED") +
                     " " +
                     "(" +
                     " " +
@@ -302,7 +302,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                     ")" +
                     "/" +
                     " " +
-                    (FamilyInformationDeath.SpouseNameEN ? FamilyInformationDeath?.SpouseNameEN : "CR_NOT_RECORDED") +
+                    (FamilyInformationDeath.SpouseNameEn ? FamilyInformationDeath?.SpouseNameEn : "CR_NOT_RECORDED") +
                     " " +
                     "(" +
                     (FamilyInformationDeath?.SpouseType.name ? FamilyInformationDeath?.SpouseType.name : "CR_NOT_RECORDED") +

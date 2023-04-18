@@ -2,6 +2,17 @@ import Urls from "../atoms/urls";
 import { Request } from "../atoms/Utils/Request";
 
 export const CRMarriageService = {
+  correctMarriage: (details, tenantId) =>
+    Request({
+      url: Urls.crmarriage.correct_update,
+      data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: {},
+      auth: true,
+    }),
   create: (details, tenantId) =>
     Request({
       url: Urls.crmarriage.create,
@@ -41,5 +52,14 @@ export const CRMarriageService = {
       method: "POST",
       params: {},
       auth: true,
+    }),
+    CRMarriagesearch: ({ tenantId, filters }) =>
+    Request({
+      url: Urls.crmarriage.search,
+      useCache: false,
+      method: "POST",
+      auth: true,
+      userService: false,
+      params: { tenantId, ...filters },
     }),
 };

@@ -60,7 +60,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
   const [isMotherInfo, setIsMotherInfo] = useState(formData?.StillBirthParentsDetails?.isMotherInfo ? formData?.StillBirthParentsDetails?.isMotherInfo :
     formData?.StillBirthChildDetails?.StillBirthParentsDetails?.ismotherInfo ? formData?.StillBirthChildDetails?.StillBirthParentsDetails?.ismotherInfo : false);
   const [motherAadhar, setMotherAadhar] = useState(formData?.StillBirthParentsDetails?.motherAadhar ? formData?.StillBirthParentsDetails?.motherAadhar :
-    formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherAadhar ? formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherAadhar : null);
+    formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherAadhar ? formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherAadhar : "");
   const [motherFirstNameEn, setMotherFirstNameEn] = useState(formData?.StillBirthParentsDetails?.motherFirstNameEn ? formData?.StillBirthParentsDetails?.motherFirstNameEn :
     formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherFirstNameEn ? formData?.StillBirthChildDetails?.StillBirthParentsDetails?.motherFirstNameEn : "");
   const [motherFirstNameMl, setMotherFirstNameMl] = useState(formData?.StillBirthParentsDetails?.motherFirstNameMl ? formData?.StillBirthParentsDetails?.motherFirstNameMl :
@@ -82,7 +82,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
   const [isFatherInfo, setIsFatherInfo] = useState(formData?.StillBirthParentsDetails?.isFatherInfo ? formData?.StillBirthParentsDetails?.isFatherInfo :
     formData?.StillBirthChildDetails?.StillBirthParentsDetails?.isfatherInfo ? formData?.StillBirthChildDetails?.StillBirthParentsDetails?.isfatherInfo : false);
   const [fatherAadhar, setFatherAadhar] = useState(formData?.StillBirthParentsDetails?.fatherAadhar ? formData?.StillBirthParentsDetails?.fatherAadhar :
-    formData?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherAadhar ? formData?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherAadhar : null);
+    formData?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherAadhar ? formData?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherAadhar : "");
   const [fatherFirstNameEn, setFatherFirstNameEn] = useState(formData?.StillBirthParentsDetails?.fatherFirstNameEn ? formData?.StillBirthParentsDetails?.fatherFirstNameEn :
     formData?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherFirstNameEn ? formData?.StillBirthChildDetails?.StillBirthParentsDetails?.fatherFirstNameEn : "");
   const [fatherFirstNameMl, setFatherFirstNameMl] = useState(formData?.StillBirthParentsDetails?.fatherFirstNameMl ? formData?.StillBirthParentsDetails?.fatherFirstNameMl :
@@ -110,7 +110,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
   const [OrderofChildrenError, setOrderofChildrenError] = useState(formData?.StillBirthParentsDetails?.orderofChildren ? false : false);
   const [FatherFirstNmeEnError, setFatherFirstNmeEnError] = useState(formData?.StillBirthParentsDetails?.fatherFirstNameEn ? false : false);
   const [FatherFirstNmeMlError, setFatherFirstNmeMlError] = useState(formData?.StillBirthParentsDetails?.fatherFirstNameMl ? false : false);
-  const [FatherMobileError, setFatherMobileError] = useState(formData?.StillBirthParentsDetails?.fatherAadhar ? false : false);
+  const [FatherMobileError, setFatherMobileError] = useState(formData?.StillBirthParentsDetails?.fatherMobile ? false : false);
   const [FatherEduError, setFatherEduError] = useState(formData?.StillBirthParentsDetails?.fatherEducation ? false : false);
   const [FatherProfError, setFatherProfError] = useState(formData?.StillBirthParentsDetails?.fatherProfession ? false : false);
   const [ReligionError, setReligionError] = useState(formData?.StillBirthParentsDetails?.Religion ? false : false);
@@ -441,7 +441,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
         } else {
           setMotherAadharError(false);
         }
-      }   
+      }
       if (motherMarriageBirth == null || motherMarriageBirth == '' || motherMarriageBirth == undefined) {
         if (MotherBirthageError) {
           validFlag = false;
@@ -623,7 +623,7 @@ const StillBirthParentsDetails = ({ config, onSelect, userType, formData, isEdit
   } else
     return (
       <React.Fragment>
-        <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+        {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
         {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
         {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
 

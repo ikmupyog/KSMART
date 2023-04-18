@@ -1,14 +1,17 @@
 @import "./login.scss";
+
 /* TODO: convert using tailwind */
 .employee {
   .breadcrumb {
     @apply ml-sm mb-lg;
   }
+
   .ground-container {
     margin-bottom: 56px;
-    
+
     @apply flex flex-col;
   }
+
   .card-home {
     border: 1px solid #edf2f9;
     padding: 16px;
@@ -18,6 +21,7 @@
     min-width: 300px;
     border-radius: 0.8rem;
   }
+
   .topbar {
     position: fixed;
     top: 0;
@@ -50,7 +54,7 @@
       margin-top: 12px;
 
       .user-img-txt {
-        background: #f47738;
+        @apply bg-primary-main;
         padding: 10px 15px;
         border-radius: 50%;
         color: white;
@@ -108,91 +112,96 @@
 
 .citizen,
 .employee {
-  .sidebar{
-  
+  .sidebar {
+
     transition: all 0.2s ease;
     position: fixed;
     left: 0;
     padding: 85px 0;
     background: #ffff;
-    height:100vh;
+    height: 100vh;
     color: black;
     margin-top: 0px;
     z-index: 10000;
+
     .actions {
       cursor: pointer;
       padding: 0 20px;
       margin-bottom: 32px;
+
       &.active {
         padding-right: 16px;
-        
+
       }
     }
-    .nav_drop{
+
+    .nav_drop {
       width: 300px;
       display: block;
       list-style: none;
       position: relative;
       left: 70px;
     }
-    
+
   }
+
   .display {
     transition: all 3s 3s;
-   width: 300px;
-   position: fixed;
-   left: 0;
-   padding: 85px 0;
-   background: #ffff;
-   height: 100vh;
-   color: balck;
-   margin-top: 0px;
-   z-index: 10000;
-   .actions {
-     cursor: pointer;
-     padding: 0 20px;
-     margin-bottom: 32px;
-   }
+    width: 300px;
+    position: fixed;
+    left: 0;
+    padding: 85px 0;
+    background: #ffff;
+    height: 100vh;
+    color: balck;
+    margin-top: 0px;
+    z-index: 10000;
+
+    .actions {
+      cursor: pointer;
+      padding: 0 20px;
+      margin-bottom: 32px;
+    }
   }
 
   .wrapperStyles {
     margin-top: -5px;
     padding-left: 20px;
     padding-top: 10px;
-  
+
     .containerStyles {
       border: 1px solid #505A5F;
       padding: 16px;
       margin-bottom: 20px;
     }
-  
+
     &.leftBorder {
       border-left: 2px solid rgba(0, 0, 0, 0.12);
     }
   }
-  
+
   .rowContainerStyles {
     @apply flex flex-col;
   }
-  
+
   .tableContainerStyles {
     border: 1px solid #505A5F;
     padding: 16px;
     margin-bottom: 20px;
   }
-  
+
   .historyTables {
     display: grid;
     grid-template-rows: 100px 100px;
-    grid-template-columns: repeat(5, minmax(100px, 1fr)); 
+    grid-template-columns: repeat(5, minmax(100px, 1fr));
   }
-  
+
   .historyContent {
     margin: 0 10px;
     position: relative;
     padding-bottom: 5px;
   }
-  
+
   .historyCheckpoint {
     background-color: #fe7a51;
     border-radius: 100%;
@@ -202,12 +211,12 @@
     position: relative;
     left: -9px;
     top: 4px;
-  
+
     &.zIndex {
       z-index: 10;
     }
   }
-  
+
   .historyTableDateLabel {
     color: rgba(0, 0, 0, 0.87);
     font-size: 16px;
@@ -216,13 +225,13 @@
     text-align: left;
     display: inline-block;
     padding-top: 5px;
-  
+
   }
-  
+
   .bottomMargin {
     margin-bottom: 0px;
   }
-  
+
   .historyTableDate {
     color: rgba(0, 0, 0, 0.87);
     font-size: 19px;
@@ -232,7 +241,7 @@
     display: inline-block;
     padding-top: 10px;
   }
-  
+
   .historyHorizontalBar {
     background-color: rgba(0, 0, 0, 0.12);
     width: auto;
@@ -250,6 +259,7 @@
   .sidebar {
     margin-top: 54px;
     min-width: 200px;
+
     .actions {
       display: flex;
       align-items: center;
@@ -259,22 +269,25 @@
 }
 
 .link {
-  @apply text-primary-main cursor-pointer ;
+  @apply text-primary-main cursor-pointer;
 
   :hover {
     @apply text-primary-dark;
   }
 }
 
-.RightMostTopBarOptions{
+.RightMostTopBarOptions {
   @apply inline-block float-right;
-  .EventNotificationWrapper{
+
+  .EventNotificationWrapper {
     @apply relative cursor-pointer;
-    span{
+
+    span {
       top: -10px;
       right: -10px;
       @apply absolute bg-error h-5 w-5 rounded-full text-center;
-      p{
+
+      p {
         line-height: 20px;
       }
     }
@@ -286,21 +299,25 @@
     .ground-container {
       @apply block ml-md;
     }
+
     .breadcrumb {
       @apply mb-lg;
       margin-left: 0;
     }
+
     .card-home {
       width: 330px;
       margin-right: 16px;
       margin-bottom: 16px;
     }
+
     .card-home-hrms {
       width: 405px;
       padding: 0px;
       margin-right: 16px;
       margin-bottom: 16px;
     }
+
     .main {
       padding-top: 80px;
       margin-left: 72px;
@@ -357,9 +374,10 @@
   margin: auto !important;
 }
 
-.mb-50{
+.mb-50 {
   margin-bottom: 50px;
 }
-.mb-25{
+
+.mb-25 {
   margin-bottom: 25px;
 }

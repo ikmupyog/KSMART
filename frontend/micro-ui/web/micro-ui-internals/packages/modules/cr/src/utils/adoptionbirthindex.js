@@ -396,7 +396,7 @@ export const convertToAdoptionRegistration = (data = {}) => {
           presentInsideKeralaStreetNameMl: data?.AdoptionAddressBasePage?.presentInsideKeralaStreetNameMl,
           presentInsideKeralaHouseNameMl: data?.AdoptionAddressBasePage?.presentInsideKeralaHouseNameMl,
           presentInsideKeralaPincode: data?.AdoptionAddressBasePage?.presentInsideKeralaPincode
-            ? data?.AdoptionAddressBasePage?.presentInsideKeralaPincode.code
+            ? data?.AdoptionAddressBasePage?.presentInsideKeralaPincode
             : null,
           presentInsideKeralaPostOffice: data?.AdoptionAddressBasePage?.presentInsideKeralaPostOffice
             ? data?.AdoptionAddressBasePage?.presentInsideKeralaPostOffice.code
@@ -459,7 +459,7 @@ export const convertToAdoptionRegistration = (data = {}) => {
           permntInKeralaAdrStreetNameMl: data?.AdoptionAddressBasePage?.permntInKeralaAdrStreetNameMl,
           permntInKeralaAdrHouseNameMl: data?.AdoptionAddressBasePage?.permntInKeralaAdrHouseNameMl,
           permntInKeralaAdrPincode: data?.AdoptionAddressBasePage?.permntInKeralaAdrPincode
-            ? data?.AdoptionAddressBasePage?.permntInKeralaAdrPincode.code
+            ? data?.AdoptionAddressBasePage?.permntInKeralaAdrPincode
             : null,
           permntInKeralaAdrPostOffice: data?.AdoptionAddressBasePage?.permntInKeralaAdrPostOffice
             ? data?.AdoptionAddressBasePage?.permntInKeralaAdrPostOffice.code
@@ -642,7 +642,7 @@ export const convertToAdoptionUpdation = (data = {}) => {
           presentInsideKeralaStreetNameMl: data?.AdoptionAddressBasePage?.presentInsideKeralaStreetNameMl,
           presentInsideKeralaHouseNameMl: data?.AdoptionAddressBasePage?.presentInsideKeralaHouseNameMl,
           presentInsideKeralaPincode: data?.AdoptionAddressBasePage?.presentInsideKeralaPincode
-            ? data?.AdoptionAddressBasePage?.presentInsideKeralaPincode.code
+            ? data?.AdoptionAddressBasePage?.presentInsideKeralaPincode
             : null,
           presentInsideKeralaPostOffice: data?.AdoptionAddressBasePage?.presentInsideKeralaPostOffice
             ? data?.AdoptionAddressBasePage?.presentInsideKeralaPostOffice.code
@@ -705,7 +705,7 @@ export const convertToAdoptionUpdation = (data = {}) => {
           permntInKeralaAdrStreetNameMl: data?.AdoptionAddressBasePage?.permntInKeralaAdrStreetNameMl,
           permntInKeralaAdrHouseNameMl: data?.AdoptionAddressBasePage?.permntInKeralaAdrHouseNameMl,
           permntInKeralaAdrPincode: data?.AdoptionAddressBasePage?.permntInKeralaAdrPincode
-            ? data?.AdoptionAddressBasePage?.permntInKeralaAdrPincode.code
+            ? data?.AdoptionAddressBasePage?.permntInKeralaAdrPincode
             : null,
           permntInKeralaAdrPostOffice: data?.AdoptionAddressBasePage?.permntInKeralaAdrPostOffice
             ? data?.AdoptionAddressBasePage?.permntInKeralaAdrPostOffice.code

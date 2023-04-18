@@ -4,6 +4,7 @@ import PTActionModal from "./PTActionModal";
 import TLActionModal from "./TLActionModal";
 import BirthActionModal from "./BirthActionModal";
 import StillBirthActionModal from "./StillBirthActionModal";
+import BirthNACActionModal from "./BirthNACActionModal";
 import BornOutsideActionModal from "./BornOutsideActionModal";
 import AdoptionActionModal from "./AdoptionActionModal";
 import AbandonedActionModal from "./AbandonedActionModal";
@@ -19,26 +20,37 @@ const ActionModal = (props) => {
   if (props?.businessService.includes("PT")) {
     return <PTActionModal {...props} />;
   }
-  if (props?.businessService.includes("BIRTHHOSP21") || props?.businessService.includes("WFBIRTH30DAYS") || props?.businessService.includes("1YRBIRTHHOSP") || props?.businessService.includes("ABOVE1YRBIRTHHOSP")
-  || props?.businessService.includes("21BIRTHHOME") || props?.businessService.includes("30BIRTHHOME") || props?.businessService.includes("1YRBIRTHHOME") || props?.businessService.includes("ABOVE1YRBIRTHHOME")) {
+  if (
+    props?.businessService.includes("WFBIRTH21DAYS") ||
+    props?.businessService.includes("WFBIRTH30DAYS") ||
+    props?.businessService.includes("WFBIRTH1YR") ||
+    props?.businessService.includes("WFBIRTHABOVE1YR") ||
+    props?.businessService.includes("WFBIRTH21DAYSHOME") ||
+    props?.businessService.includes("WFBIRTH30DAYSHOME") ||
+    props?.businessService.includes("WFBIRTH1YRHOME") ||
+    props?.businessService.includes("ABOVE1YRBIRTHHOME")
+  ) {
     return <BirthActionModal {...props} />;
   }
-  if (props?.businessService.includes("STILLBIRTHHOSP")
-  || props?.businessService.includes("STILLBIRTHHOME") ){
+  if (props?.businessService.includes("STILLBIRTHHOSP") || props?.businessService.includes("STILLBIRTHHOME")) {
     return <StillBirthActionModal {...props} />;
   }
-  if(props?.businessService.includes("ADOPTIONHOME")){
+  if (props?.businessService.includes("ADOPTIONHOME")) {
     return <AdoptionActionModal {...props} />;
   }
-  if(props?.businessService.includes("BORNOUTSIDE60")){
+  if (props?.businessService.includes("BORNOUTSIDE60")) {
     return <BornOutsideActionModal {...props} />;
   }
 
-  if (props?.businessService.includes("21DEATHHHOME") || props?.businessService.includes("DEATHHOSP")) {
-    return <DeathActionModal {...props} />;
+  if (props?.businessService.includes("WFDEATH21DAYS") || props?.businessService.includes("WFDEATH30DAYS") || props?.businessService.includes("WFDEATH1YR") || props?.businessService.includes("WFDEATHABOVE1YR")
+  || props?.businessService.includes("WFDEATH21DAYSHOME") || props?.businessService.includes("WFDEATH30DAYSHOME") || props?.businessService.includes("WFDEATH1YEARHOME") || props?.businessService.includes("WFDEATHHOME1YEARABOVE")) {
+    return <BirthActionModal {...props} />;
   }
   if (props?.businessService.includes("DEATHABANDONED") || props?.businessService.includes("DEATHHOSP")) {
     return <AbandonedActionModal {...props} />;
+  }
+  if (props?.businessService.includes("NACAPP")) {
+    return <BirthNACActionModal {...props} />;
   }
   if (props?.businessService.includes("NACAPP")) {
     return <DeathNACActionModal {...props} />;
@@ -46,7 +58,12 @@ const ActionModal = (props) => {
   if (props?.businessService.includes("NewDFM")) {
     return <DFMActionModal {...props} />;
   }
-  if (props?.businessService.includes("NewTL") || props?.businessService.includes("TL") || props?.businessService.includes("EDITRENEWAL") || props?.businessService.includes("DIRECTRENEWAL")) {
+  if (
+    props?.businessService.includes("NewTL") ||
+    props?.businessService.includes("TL") ||
+    props?.businessService.includes("EDITRENEWAL") ||
+    props?.businessService.includes("DIRECTRENEWAL")
+  ) {
     return <TLActionModal {...props} />;
   }
 
