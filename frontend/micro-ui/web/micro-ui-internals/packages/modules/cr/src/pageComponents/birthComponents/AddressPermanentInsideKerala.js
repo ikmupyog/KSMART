@@ -112,9 +112,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
     cmbWardNoFinal.push(wardmst);
   });
   useEffect(() => {
-
-    if (isInitialRender && isPrsentAddress && formData?.AddressBirthDetails?.permntInKeralaAdrLBName === null) {
-      console.log("CheckPerm1");
+    if (isInitialRender && isPrsentAddress && (formData?.AddressBirthDetails?.presentInsideKeralaLBName === null || formData?.AddressBirthDetails?.presentInsideKeralaLBName === "" || formData?.AddressBirthDetails?.presentInsideKeralaLBName === undefined)) {
       if (cmbLB.length > 0) {
         currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
         if (currentLB.length > 0) {
@@ -142,8 +140,7 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
         }
       }
     }
-    else if (isInitialRender && !isPrsentAddress && formData?.AddressBirthDetails?.permntInKeralaAdrLBName === null) {
-      console.log("CheckPerm2");
+    else if (isInitialRender && isPrsentAddress === false && (formData?.AddressBirthDetails?.presentInsideKeralaLBName === null || formData?.AddressBirthDetails?.presentInsideKeralaLBName === "" || formData?.AddressBirthDetails?.presentInsideKeralaLBName === undefined)) {
       if (cmbLB.length > 0) {
         currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
         if (currentLB.length > 0) {
@@ -172,7 +169,6 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
       }
     }
     else if (isInitialRender && !isPrsentAddress && formData?.AddressBirthDetails?.permntInKeralaAdrLBName != null) {
-      console.log("CheckPerm3");
       if (cmbLB.length > 0) {
         currentLB = cmbLB.filter((cmbLB) => cmbLB.code === formData?.AddressBirthDetails?.permntInKeralaAdrLBName.code);
         if (currentLB.length > 0) {

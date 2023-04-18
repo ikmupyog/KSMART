@@ -122,8 +122,8 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
     useEffect(() => {
 
         if (isInitialRender) {
-
-            if (cmbLB.length > 0 && !isEditBirth && !isEditDeath && !isEditAdoption && isEditBirthNAC && !isEditStillBirth && formData?.AddressBirthDetails?.presentInsideKeralaLBName === null) {
+            if (cmbLB.length > 0 && isEditBirth ===false && isEditDeath  ===false && isEditAdoption  ===false && isEditBirthNAC  ===false && isEditStillBirth  ===false && 
+                (formData?.AddressBirthDetails?.presentInsideKeralaLBName === null || formData?.AddressBirthDetails?.presentInsideKeralaLBName === "" || formData?.AddressBirthDetails?.presentInsideKeralaLBName === undefined)) {
                 console.log("Check1");
                 currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
                 if (currentLB.length > 0) {
@@ -157,7 +157,7 @@ const AddressPresentInsideKerala = ({ config, onSelect, userType, formData, pres
                     setIsInitialRender(false);
                 }
             }
-            else if (cmbLB.length > 0 && !isEditBirth && !isEditDeath && !isEditAdoption && isEditBirthNAC && !isEditStillBirth && formData?.AddressBirthDetails?.presentInsideKeralaLBName != null) {
+            else if (cmbLB.length > 0 && isEditBirth ===false && isEditDeath  ===false && isEditAdoption  ===false && isEditBirthNAC  ===false && isEditStillBirth  ===false && formData?.AddressBirthDetails?.presentInsideKeralaLBName != null) {
                 console.log("Check2");
                 currentLB = cmbLB.filter((cmbLB) => cmbLB.code === formData?.AddressBirthDetails?.presentInsideKeralaLBName.code);
                 if (currentLB.length > 0) {
