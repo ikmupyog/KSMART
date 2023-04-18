@@ -63,17 +63,10 @@ public class MarriageRegistryService {
 
     }
 
-
-    // public List<MarriageRegistryDetails> updateRegistry(MarriageRegistryRequest request) {
-
-    //     return repository.updateMarriageRegistry(request);
-    // }
-
     public List<MarriageRegistryDetails> searchRegistry(MarriageRegistrySearchCriteria criteria) {
         
         return repository.searchMarriageRegistry(criteria);
     }
-
 
     public MarriageCertificate download(MarriageRegistrySearchCriteria criteria, RequestInfo requestInfo) {
         List<MarriageRegistryDetails> marriageRegistryDetailsList = repository.searchMarriageRegistry(criteria);

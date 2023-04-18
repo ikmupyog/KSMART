@@ -121,7 +121,7 @@ public class MarriageRegistryRepository {
 
     public MarriageCertPdfResponse saveMarriageCertPdf(MarriageCertPDFRequest marriageCertPDFRequest) {
         MarriageCertPdfResponse pdfResponse = new MarriageCertPdfResponse();
-        try {
+        // try {
 //            marriagecertpdfrequest.getmarriagecertificate().foreach(cert->{
 //                string uihost = marriageapplicationconfiguration.getuiapphost();
 //                string marriagecertpath = stringutils.replaceeach(marriageapplicationconfiguration.getmarriagecertlink(),new string[]{"$id","$tenantid","$regno","$marriagecertificateno"}, new string[]{cert.getid(),cert.gettenantid(),cert.getregistrationno(),cert.getmarriagecertificateno()});
@@ -170,12 +170,13 @@ public class MarriageRegistryRepository {
                     }
                     Map<String, List<String>> mdmsCountryMap = util.mDMSCallGetCountry(req.getRequestInfo(), MarriageConstants.COUNTRY_CODE);
                     util.appendIfNotBlank(getValueFromMap(MarriageConstants.COUNTRY, mdmsCountryMap), marriageAddr, false);
-                    System.out.println(marriageAddr);
+                    System.out.println("PlaceAddress"+marriageAddr);
                 }else if (req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlacetype()
                         .equals(MarriageConstants.PLACE_TYPE_RELIGIOUS_INSTITUTION)
                         || req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlacetype()
                         .equals(MarriageConstants.PLACE_TYPE_MANDAPAM_OTHER))
                 {
+                    System.out.println("Enter Mandapam");
                     if (StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlaceid())) {
                         Object mdmsMarriagePlaceData1 = util.mDMSCallGetMandapamAddress(req.getRequestInfo(), req.getMarriageCertificate().get(0).getMarriageRegistryDetails());
                         System.out.println(mdmsMarriagePlaceData1);
@@ -200,7 +201,7 @@ public class MarriageRegistryRepository {
                                         util.appendIfNotBlank(getValueFromMap(MarriageConstants.STATE, mdmsMap), marriageAddr, true);
                                         Map<String, List<String>> mdmsCountryMap = util.mDMSCallGetCountry(req.getRequestInfo(), MarriageConstants.COUNTRY_CODE);
                                         util.appendIfNotBlank(getValueFromMap(MarriageConstants.COUNTRY, mdmsCountryMap), marriageAddr, false);
-                                        System.out.println(marriageAddr);
+                                        System.out.println("MandapammarriageAddr"+marriageAddr);
                                     }
                                 }
                             }
@@ -268,7 +269,7 @@ public class MarriageRegistryRepository {
 //            groomAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getPermntInKerala).append(", ");
 //            groomAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getPermntInKeralaWardNo()).append(", ");
               req.getMarriageCertificate().get(0).setGroomPermntFullAddr(marriageRegistryEnrichment.setGroomPermanentAddressForCertificate(req.getRequestInfo(),req.getMarriageCertificate().get(0).getMarriageRegistryDetails()));
-            req.getMarriageCertificate().get(0).setBridePermntFullAddr(marriageRegistryEnrichment.setBridePermanentAddressForCertificate(req.getRequestInfo(),req.getMarriageCertificate().get(0).getMarriageRegistryDetails()));
+              req.getMarriageCertificate().get(0).setBridePermntFullAddr(marriageRegistryEnrichment.setBridePermanentAddressForCertificate(req.getRequestInfo(),req.getMarriageCertificate().get(0).getMarriageRegistryDetails()));
                      //Setting groom NRI address
 
                      //Setting bride address data from MDMS
@@ -313,11 +314,11 @@ public class MarriageRegistryRepository {
                 pdfResponse.setFilestoreIds(response.getFilestoreIds());
             });
 
-        }catch (Exception e){
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-            throw new CustomException("PDF_ERROR","Error in generating PDF"+e.getMessage());
-        }
+        // }catch (Exception e){
+        //     e.printStackTrace();
+        //     System.out.println(e.getMessage());
+        //     throw new CustomException("PDF_ERROR","Error in generating PDF"+e.getMessage());
+        // }
         return  pdfResponse;
     }
     public String getShortenedUrl(String url) {

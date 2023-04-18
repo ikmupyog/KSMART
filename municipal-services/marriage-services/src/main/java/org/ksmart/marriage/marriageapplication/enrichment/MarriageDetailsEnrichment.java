@@ -677,7 +677,7 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
                 tenantId,
                 config.getMarriageApplNumberIdName(),
                 request.getMarriageDetails().get(0).getModuleCode(),
-                "APPL",
+                "ACK",
                 marriageDetails.size());
         validateFileCodes(filecodes, marriageDetails.size());
 

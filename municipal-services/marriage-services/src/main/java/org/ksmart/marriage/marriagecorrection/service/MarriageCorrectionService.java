@@ -153,8 +153,8 @@ public List<MarriageCorrectionDetails> updateMarriageCorrectionDetails(MarriageC
 
     String applicationNumber = request.getMarriageCorrectionDetails().get(0).getApplicationNo();
     MarriageApplicationSearchCriteria criteria = (MarriageApplicationSearchCriteria.builder()
-            .applicationNo(applicationNumber)
-            .build());
+                                                .applicationNo(applicationNumber)
+                                                .build());
     List<MarriageApplicationDetails> searchResult = applnRepository.getMarriageApplication(criteria, request.getRequestInfo());
     correctionValidatorService.validateCorrectionUpdate(request, searchResult);
     if (request.getMarriageCorrectionDetails().get(0).getIsWorkflow()) {
