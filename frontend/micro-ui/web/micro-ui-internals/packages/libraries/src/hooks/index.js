@@ -168,7 +168,7 @@ import useRegistryDownloadDeath from "./cr/useRegistryDownloadDeath";
 import useResistryDownloadBirth from "./cr/useResistryDownloadBirth"
 import useRegistrySearchBirth from "./cr/useRegistrySearchBirth";
 import useRegistrySearchDeath from "./cr/useRegistrySearchDeath";
-import useSearchMarriage from "./cr/useSearchMarriage";
+import useSearchMarriage, { getMarriageRegistryFileSourceDetails } from "./cr/useSearchMarriage";
 import useRegistrySearchMarriage from "./cr/useRegistrySearchMarriage";
 import useApplicationBIRTHNACDetail from "./cr/useApplicationBIRTHNACDetail";
 import useCivilRegistrationNACDEATHAPI from "./cr/useCivilRegistrationNACDEATHAPI";
@@ -400,6 +400,7 @@ const cr = {
   useBornOutSideBirthSearch,
   useMarriageSearch,
   useSearchMarriage,
+  getMarriageRegistryFileSourceDetails,
   useAdoptionSearch,
   useRegistrySearchDeath,
   useRegistryDownloadDeath,

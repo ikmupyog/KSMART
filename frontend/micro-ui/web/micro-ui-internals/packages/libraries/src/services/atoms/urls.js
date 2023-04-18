@@ -106,6 +106,7 @@ const Urls = {
     updatepde: "/tl-services/pde/_update",
     updatepdewf: "/tl-services/pde/_updatewf",
     createcorrection: "/tl-services/correction/_create",
+    updatecorrection: "/tl-services/correction/_update",
   },
   cr: {
     create: "/birth-services/cr/createbirth",
@@ -163,9 +164,11 @@ const Urls = {
   crmarriage: {
     create: "/marriage-services/v1/marriagedetails/_createmarriage",
     search: "/marriage-services/v1/marriagedetails/_searchmarriage",
+    download_pdf: "/egov-pdf/download/CR/",
     update: "/marriage-services/v1/marriagedetails/_updatemarriage",
     registry_search_marriage: "/marriage-services/v1/marriagedetails/_searchregistry",
     correct_update: "/marriage-services/v1/marriagedetails/_createmarriagecorrection",
+    registry_download: "/marriage-services/v1/marriagedetails/_certificate",
   },
   dfm: {
     create: "/filemgmnt/v1/applicantservices/_create",

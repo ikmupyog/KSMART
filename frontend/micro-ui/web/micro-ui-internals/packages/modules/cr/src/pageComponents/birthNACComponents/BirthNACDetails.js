@@ -905,7 +905,12 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
               </div>
               <div className="col-md-2">
                 <CardLabel>{t("CR_TIME_OF_BIRTH")}</CardLabel>
-                <CustomTimePicker name="birthDateTime" onChange={(val) => handleTimeChange(val, setbirthDateTime)} value={birthDateTime} />
+                <CustomTimePicker
+                  name="birthDateTime"
+                  onChange={(val) => handleTimeChange(val, setbirthDateTime)}
+                  value={birthDateTime}
+                  disable={isDisableEdit}
+                />
               </div>
               <div className="col-md-3">
                 <CardLabel>
@@ -930,13 +935,18 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
                 </CardLabel>
                 <TextInput
                   t={t}
-                  type={"number"}
+                  type={"text"}
                   optionKey="i18nKey"
                   name="nacorderofChildren"
                   value={nacorderofChildren}
                   disable={isEdit}
                   onChange={setSelectOrderOfBirth}
                   placeholder={`${t("ORDER_OF_BIRTH")}`}
+                  {...(validation = {
+                    pattern: "^[0-9`' ]*$",
+                    isRequired: true,
+                    type: "text",
+                  })}
                 />
               </div>
             </div>

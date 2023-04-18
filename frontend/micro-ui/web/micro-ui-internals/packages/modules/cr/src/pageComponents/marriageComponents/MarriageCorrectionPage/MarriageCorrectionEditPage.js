@@ -1149,13 +1149,11 @@ const cmbPlaceNameMandapam = cmbPlaceName?.filter((placeId) => placeId.placeTpe 
           <div style={{ display: "flex", flexDirection: "column-reverse" }}></div>
           <FormFieldContainer>
             <FieldComponentContainer></FieldComponentContainer>
-            <ButtonContainer>
-              <div style={{ marginTop: "2.8rem" }}>
+            
                 <span onClick={onSubmitBirthInclusion}>
                   <EditButton selected={true} label={"Submit"} />
                 </span>
-              </div>
-            </ButtonContainer>
+              
           </FormFieldContainer>
         {/* </form> */}
         <MarriageCorrectionModal 

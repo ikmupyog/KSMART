@@ -278,7 +278,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
 
   function setSelectinitiatorAddress(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setinitiatorAddress(e.target.value.length <= 250 ? e.target.value : e.target.value.substring(0, 250));
+      setinitiatorAddress(e.target.value.length <= 200 ? e.target.value : e.target.value.substring(0, 200));
     }
   }
 
@@ -521,6 +521,12 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
         initiatorAddress,
         ownerState: newOwnerState,
         careofapplicant,
+        uploadedFile,
+        uploadedFile1,
+        uploadedFile2,
+        uploadedFile3,
+        uploadedFile4,
+        uploadedFile5,
       });
     }
   };
@@ -707,7 +713,8 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                   <div className="row">
                     <div className="col-md-3">
                       <CardLabel>
-                        SL NO<span className="mandatorycss">*</span>
+                        {t("SL NO")}
+                        <span className="mandatorycss">*</span>
                       </CardLabel>
                       <TextInput
                         t={t}
@@ -721,7 +728,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     </div>
                     <div className="col-md-3">
                       <CardLabel>
-                        {t("CR_DATE_OF_BIRTH_TIME")}
+                        {`${t("CR_DATE_OF_BIRTH_TIME")}`}
                         <span className="mandatorycss">*</span>
                       </CardLabel>
                       <DatePicker
@@ -737,7 +744,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     </div>
                     <div className="col-md-3">
                       <CardLabel>
-                        Name(English)
+                        {`${t("CR_NAME")}`}
                         <span className="mandatorycss">*</span>
                       </CardLabel>
                       <TextInput

@@ -98,13 +98,20 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
 
   function submit(data) {
     let workflow = { action: action?.action, comments: data?.comments, businessService, moduleName: moduleCode };
-    applicationData = {
-      ...applicationData,
-      action: action?.action,
-      comment: data?.comments,
-      assignee: !selectedApprover?.uuid ? null : [selectedApprover?.uuid],
-      // assignee: action?.isTerminateState ? [] : [selectedApprover?.uuid],
-      wfDocuments: uploadedFile
+
+    if(applicationData?.correctionId!==null && applicationData?.correctionAppNumber!==null){
+      applicationData = {
+        id:applicationData?.correctionId,
+        tenantId:applicationData?.tenantId,
+        tradeLicenseId:applicationData?.id,
+        status: action?.applicationStatus,
+        assignUser: !selectedApprover?.uuid ? null : selectedApprover?.uuid,
+        applicationNumber : applicationData?.correctionAppNumber,//"KL-KOCHI-C-000039-BFIFLC-2023-APLN",
+        action: action?.action,
+        applicationType: "CORRECTION",
+        workflowCode: "CorrectionTL",
+        assignee: !selectedApprover?.uuid ? null : [selectedApprover?.uuid],
+        wfDocuments: uploadedFile
         ? [
             {
               documentType: action?.action + " DOC",
@@ -113,25 +120,70 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
             },
           ]
         : null,
-    };
-    if((action?.action != "APPROVE")&&(action?.applicationStatus != "APPROVED")){
-      if(selectedApprover?.uuid)
-      submitAction({
-        Licenses: [applicationData],
-      });
+      };
+      if((action?.action != "APPROVE")&&(action?.applicationStatus != "APPROVED")){
+        if(selectedApprover?.uuid)
+        submitAction({
+          LicenseCorrection: [applicationData],
+        });
+        else{
+          setError(t("Please select Assignee"));
+          setToast(true)
+            setTimeout(() => {
+              setToast(false);
+            }, 2000);
+        }
+      }
       else{
-        setError(t("Please select Assignee"));
-        setToast(true)
-          setTimeout(() => {
-            setToast(false);
-          }, 2000);
+        submitAction({
+          LicenseCorrection: [applicationData],
+        });
+      }
+
+
+
+
+
+
+    }else{
+      applicationData = {
+        ...applicationData,
+        action: action?.action,
+        comment: data?.comments,
+        assignee: !selectedApprover?.uuid ? null : [selectedApprover?.uuid],
+        // assignee: action?.isTerminateState ? [] : [selectedApprover?.uuid],
+        wfDocuments: uploadedFile
+          ? [
+              {
+                documentType: action?.action + " DOC",
+                fileName: file?.name,
+                fileStoreId: uploadedFile,
+              },
+            ]
+          : null,
+      };
+      if((action?.action != "APPROVE")&&(action?.applicationStatus != "APPROVED")){
+        if(selectedApprover?.uuid)
+        submitAction({
+          Licenses: [applicationData],
+        });
+        else{
+          setError(t("Please select Assignee"));
+          setToast(true)
+            setTimeout(() => {
+              setToast(false);
+            }, 2000);
+        }
+      }
+      else{
+        submitAction({
+          Licenses: [applicationData],
+        });
       }
     }
-    else{
-      submitAction({
-        Licenses: [applicationData],
-      });
-    }
+
+
+
     
   }
 
