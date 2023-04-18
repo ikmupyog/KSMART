@@ -588,7 +588,6 @@ export const convertToAbandonedDeathRegistration = (data = {}) => {
           lastModifiedTime: null,
         },
         applicationType: "new",
-        // applicationStatus: "Workflow_appl_status",
         businessService: "CR",
         action: "INITIATE",
         assignee: [],
