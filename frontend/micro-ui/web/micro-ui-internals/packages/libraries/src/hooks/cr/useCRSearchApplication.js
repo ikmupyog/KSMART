@@ -43,7 +43,7 @@ export const useCRSearchApplication = (params, config = {}, t) => {
         CR_MOTHER_NAME: i.ParentsDetails?.motherFirstNameEn,
         CR_ADDRESS:i.AddressBirthDetails?.houseNameNoEnPresent,
         TL_COMMON_CITY_NAME: i.tenantid,
-        TL_APPLICATION_STATUS: i.ChildDetails?.applicationStatus,
+        TL_APPLICATION_STATUS: i.applicationStatus,
         
       }));
     },
