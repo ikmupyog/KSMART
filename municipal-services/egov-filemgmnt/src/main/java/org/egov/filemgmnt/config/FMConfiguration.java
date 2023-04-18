@@ -128,4 +128,7 @@ public class FMConfiguration {
     @Value("${persister.save.modulemaster.topic:}")
     private String saveModuleMasterTopic;
 
+    @Value("${persister.update.modulemaster.topic:}")
+    private String updateModuleMasterTopic;
+
 }

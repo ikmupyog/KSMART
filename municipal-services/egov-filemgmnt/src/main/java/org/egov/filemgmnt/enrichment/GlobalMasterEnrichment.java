@@ -73,6 +73,18 @@ public class GlobalMasterEnrichment extends BaseEnrichment{
 //                    .setLastModifiedTime(auditDetails.getLastModifiedTime());
 //
 //    }
+public void enrichUpdateModule(ModuleDetailsRequest request) {
+
+    final RequestInfo requestInfo = request.getRequestInfo();
+    final User userInfo = requestInfo.getUserInfo();
+    final AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
+    final  ModuleDetails moduleDetails= request.getModuleDetails();
+     moduleDetails.setAuditDetails(auditDetails);
+     moduleDetails.getModuleNameEnglish();
+     moduleDetails.getModuleNameMalayalam();
+
+}
+
 
 }
 
