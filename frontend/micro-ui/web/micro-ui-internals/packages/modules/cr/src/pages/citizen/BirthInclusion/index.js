@@ -82,7 +82,7 @@ const BirthInclusion = () => {
             onInclusionClick={gotoEditInclusion}
           />
         {/* </Route> */}
-        {/* <Route path={`${path}/birth-inclusion-edit`}>
+        {/* <Route path={`${path}/acknowledgement`}>
           <BirthInclusionEditPage />
         </Route> */}
         {/* <Route>

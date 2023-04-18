@@ -17,6 +17,7 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import Timeline from "../../../components/NACTimeline";
+import _, { isArray } from "lodash";
 
 const ActionButton = ({ jumpTo }) => {
   const { t } = useTranslation();
@@ -43,7 +44,7 @@ const getPath = (path, params) => {
   return path;
 };
 
-const BirthNACCheckPage = ({ onSubmit, value, userType }) => {
+const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
   let isEdit = window.location.href.includes("renew-trade");
   const { t } = useTranslation();
   const history = useHistory();
@@ -53,6 +54,7 @@ const BirthNACCheckPage = ({ onSubmit, value, userType }) => {
   const [isDeclaration, setDeclaration] = useState(false);
   const [toast, setToast] = useState(false);
   const { ChildDetails, BirthNACInitiator, BirthNACDetails, BirthNACParentsDetails, AddressBirthDetails } = value;
+  const ownerState = useState(BirthNACInitiator?.ownerState);
   function getdate(date) {
     let newdate = Date.parse(date);
     return `${
@@ -1479,6 +1481,78 @@ const BirthNACCheckPage = ({ onSubmit, value, userType }) => {
             </StatusTable>
           }
         />
+        {ownerState.map((item) => {
+          let itemData = _.head(item) || {};
+          if (Array.isArray(item)) {
+            return (
+              <Accordion
+                key={item.slNo}
+                expanded={false}
+                title={`${t("DETAILS OF THE CHILDREN BORN INCLUDING THE APPLICANT CHILD")}`}
+                content={
+                  <StatusTable>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <div className="col-md-12">
+                          <h1 className="summaryheadingh">
+                            <span style={{ background: "#fff", padding: "0 10px" }}>{`${t(
+                              "DETAILS OF THE CHILDREN BORN INCLUDING THE APPLICANT CHILD"
+                            )}`}</span>{" "}
+                          </h1>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <div className="col-md-2">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("SL NO")}`} :</CardText>
+                        </div>
+                        <div className="col-md-2">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{itemData?.slNo}</CardText>
+                        </div>
+                        <div className="col-md-2">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_DATE_OF_BIRTH_TIME")}`} :</CardText>
+                        </div>
+                        <div className="col-md-2">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{itemData?.dob}</CardText>
+                        </div>
+                        <div className="col-md-2">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}> {`${t("ORDER_OF_BIRTH")}`} :</CardText>
+                        </div>
+                        <div className="col-md-2">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{itemData?.nacorderofChildren}</CardText>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <div className="col-md-2">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_NAME")}`} :</CardText>
+                        </div>
+                        <div className="col-md-2">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{itemData?.childNameEn}</CardText>
+                        </div>
+                        <div className="col-md-2">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_NAME_ML")}`} :</CardText>
+                        </div>
+                        <div className="col-md-2">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{itemData?.childNameMl}</CardText>
+                        </div>
+                        <div className="col-md-2">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_GENDER")}`} :</CardText>
+                        </div>
+                        <div className="col-md-2">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{itemData?.sex}</CardText>
+                        </div>
+                      </div>
+                    </div>
+                  </StatusTable>
+                }
+              />
+            );
+          }
+        })}
+        ;
         <div className="row">
           <div className="col-md-12">
             <h1 className="summaryheadingh">
@@ -1486,7 +1560,6 @@ const BirthNACCheckPage = ({ onSubmit, value, userType }) => {
             </h1>
           </div>
         </div>
-
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-12">

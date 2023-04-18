@@ -39,14 +39,18 @@ export const TLSearch = {
     const response = await TLService.TLsearch({ tenantId, filters });
     return response.Licenses[0];
   },
-
+  correctionapplication: async (details) => {
+    const response = await TLService.search(details);
+    return response.Licenses[0];
+  },
   numberOfApplications: async (tenantId, filters = {}) => {
     const response = await TLService.TLsearch({ tenantId, filters });
     return response.Licenses;
   },
 
-  applicationDetails: async (t, tenantId, applicationNumber, userType) => {
-    const filter = { applicationNumber };
+  applicationDetails: async (t, tenantId, applicationNumber, userType, applicationType) => {
+    const filter = applicationType === "CORRECTION" ? { applicationNumber: applicationNumber, applicationType: applicationType} : { applicationNumber };
+ //   const response = applicationType === "CORRECTION" ? await TLSearch.correctionapplication(filter) : await TLSearch.application(tenantId, filter);
     const response = await TLSearch.application(tenantId, filter);
     // const propertyDetails =
     //   response?.tradeLicenseDetail?.additionalDetail?.propertyId &&
@@ -416,7 +420,7 @@ export const TLSearch = {
     //   };
     //   response && employeeResponse.push(details);
     // }
-    
+
     response && employeeResponse.push(tradesummary);
     if ((response?.correctionId !== null && response?.correctionId !== "" &&
       response?.correctionAppNumber !== null && response?.correctionAppNumber !== "")) {
@@ -439,7 +443,7 @@ export const TLSearch = {
     return {
       tenantId: response.tenantId,
       applicationDetails: employeeResponse,
-   //   additionalDetails: response?.additionalDetails,
+      //   additionalDetails: response?.additionalDetails,
       applicationData: response,
       numOfApplications: numOfApplications,
     };
