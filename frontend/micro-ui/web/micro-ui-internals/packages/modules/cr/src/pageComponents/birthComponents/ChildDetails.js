@@ -16,7 +16,6 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   // console.log(isEditBirth);  
   sessionStorage.removeItem("applicationNumber");
   const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(false);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
   const [workFlowCode, setWorkFlowCode] = useState(formData?.ChildDetails?.workFlowCode);
   const [isPayment, setIsPayment] = useState(formData?.ChildDetails?.isPayment);
   const [Amount, setAmount] = useState(formData?.ChildDetails?.Amount);
@@ -34,12 +33,22 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const { data: AttentionOfDelivery = {}, isAttentionOfDeliveryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "AttentionOfDelivery");
   const { data: DeliveryMethodList = {}, isDeliveryMethodListLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeliveryMethod");
   const { data: PlaeceMaster = {}, isPlaceMasterLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "PlaceMaster");
+  // const [userRole, setuserRole] = useState(formData?.ChildDetails?.userRole);
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
   const [InstitutionFilterList, setInstitutionFilterList] = useState(null);
   const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(false);
   const [DifferenceInDaysRounded, setDifferenceInDaysRounded] = useState();
   const { uuid: uuid, } = Digit.UserService.getUser().info;
   // console.log(Digit.UserService.getUser().info);
+  // const { roles: roles, } = Digit.UserService.getUser().info;
+  // console.log(roles);
+  // if (roles.length > 0) {
+  //   console.log(roles[0].code);
+  //   setuserRole(roles[0].code);
+  // }
+  // const [isDisableEdit, setisDisableEdit] = useState((userRole === "HOSPITAL_OPERATOR") && isEditBirth ? false : false);
+  const [isDisableEdit, setisDisableEdit] = useState(false);
+
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
@@ -132,7 +141,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     { i18nKey: "41", code: "41" },
     { i18nKey: "42", code: "42" },
   ];
-  const [childDOB, setChildDOB] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? convertEpochToDate(formData?.ChildDetails?.childDOB) : formData?.ChildDetails?.childDOB); //formData?.ChildDetails?.childDOB
+  const [childDOB, setChildDOB] = useState(isEditBirth ? convertEpochToDate(formData?.ChildDetails?.childDOB) : formData?.ChildDetails?.childDOB); //formData?.ChildDetails?.childDOB
   // const [gender, selectGender] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? (menu.filter(menu => menu.code === formData?.ChildDetails?.gender)[0]) : formData?.ChildDetails?.gender);
   const [gender, selectGender] = useState(formData?.ChildDetails?.gender?.code ? formData?.ChildDetails?.gender : formData?.ChildDetails?.gender ?
     (menu.filter(menu => menu.code === formData?.ChildDetails?.gender)[0]) : "");
@@ -203,34 +212,34 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const [DifferenceInTime, setDifferenceInTime] = useState(formData?.ChildDetails?.DifferenceInTime);
 
   const [toast, setToast] = useState(false);
-  const [AadharError, setAadharError] = useState(formData?.ChildDetails?.childAadharNo ? false : false);
+  const [AadharError, setAadharError] = useState(false);
   const [ChildAadharHIde, setChildAadharHIde] = useState(formData?.ChildDetails?.childAadharNo ? true : false);
-  const [DOBError, setDOBError] = useState(formData?.ChildDetails?.childDOB ? false : false);
-  const [HospitalError, setHospitalError] = useState(formData?.ChildDetails?.hospitalName ? false : false);
-  const [InstitutionError, setInstitutionError] = useState(formData?.ChildDetails?.institution ? false : false);
-  const [InstitutionNameError, setInstitutionNameError] = useState(formData?.ChildDetails?.institutionId ? false : false);
-  const [WardError, setAdsWardError] = useState(formData?.ChildDetails?.wardNo ? false : false);
-  const [AdsHomePostOfficeError, setAdsHomePostOfficeError] = useState(formData?.ChildDetails?.AdrsHomePostOffice ? false : false);
-  const [AdsHomePincodeError, setAdsHomePincodeError] = useState(formData?.ChildDetails?.AdrsHomePincode ? false : false);
-  const [AdsHomeHouseNameEnError, setAdsHomeHouseNameEnError] = useState(formData?.ChildDetails?.AdrsHomeHouseNameEn ? false : false);
-  const [AdsHomeHouseNameMlError, setAdsHomeHouseNameMlError] = useState(formData?.ChildDetails?.AdrsHomeHouseNameMl ? false : false);
-  const [AdsHomeLocalityNameEnError, setAdsHomeLocalityNameEnError] = useState(formData?.ChildDetails?.AdrsHomeLocalityNameEn ? false : false);
-  const [AdsHomeLocalityNameMlError, setAdsHomeLocalityNameMlError] = useState(formData?.ChildDetails?.AdrsHomeLocalityNameMl ? false : false);
-  const [vehicleRegiNoError, setvehicleRegiNoError] = useState(formData?.ChildDetails?.VehicleRegistrationNo ? false : false);
-  const [vehiTypeError, setvehiTypeError] = useState(formData?.ChildDetails?.vehicleType ? false : false);
-  const [vehicleHaltPlaceError, setvehicleHaltPlaceError] = useState(formData?.ChildDetails?.vehicleHaltPlace ? false : false);
+  const [DOBError, setDOBError] = useState(false);
+  const [HospitalError, setHospitalError] = useState(false);
+  const [InstitutionError, setInstitutionError] = useState(false);
+  const [InstitutionNameError, setInstitutionNameError] = useState(false);
+  const [WardError, setAdsWardError] = useState(false);
+  const [AdsHomePostOfficeError, setAdsHomePostOfficeError] = useState(false);
+  const [AdsHomePincodeError, setAdsHomePincodeError] = useState(false);
+  const [AdsHomeHouseNameEnError, setAdsHomeHouseNameEnError] = useState(false);
+  const [AdsHomeHouseNameMlError, setAdsHomeHouseNameMlError] = useState(false);
+  const [AdsHomeLocalityNameEnError, setAdsHomeLocalityNameEnError] = useState(false);
+  const [AdsHomeLocalityNameMlError, setAdsHomeLocalityNameMlError] = useState(false);
+  const [vehicleRegiNoError, setvehicleRegiNoError] = useState(false);
+  const [vehiTypeError, setvehiTypeError] = useState(false);
+  const [vehicleHaltPlaceError, setvehicleHaltPlaceError] = useState(false);
   // const [vehiHaltPlaceMlError, setvehiHaltPlaceMlError] = useState(formData?.ChildDetails?.vehicleHaltPlaceMl ? false : false);
-  const [admittedHospitalEnError, setadmittedHospitalEnError] = useState(formData?.ChildDetails?.setadmittedHospitalEn ? false : false);
-  const [vehiDesDetailsEnError, setvehiDesDetailsEnError] = useState(formData?.ChildDetails?.vehicleDesDetailsEn ? false : false);
-  const [placeTypepEnError, setplaceTypepEnError] = useState(formData?.ChildDetails?.publicPlaceType ? false : false);
-  const [localNameEnError, setlocalNameEnError] = useState(formData?.ChildDetails?.localityNameEn ? false : false);
-  const [localNameMlError, setlocalNameMlError] = useState(formData?.ChildDetails?.localityNameMl ? false : false);
-  const [BirthWeightError, setBirthWeightError] = useState(formData?.ChildDetails?.birthWeight ? false : false);
-  const [MedicalAttensionSubStError, setMedicalAttensionSubStError] = useState(formData?.ChildDetails?.medicalAttensionSub ? false : false);
+  const [admittedHospitalEnError, setadmittedHospitalEnError] = useState(false);
+  const [vehiDesDetailsEnError, setvehiDesDetailsEnError] = useState(false);
+  const [placeTypepEnError, setplaceTypepEnError] = useState(false);
+  const [localNameEnError, setlocalNameEnError] = useState(false);
+  const [localNameMlError, setlocalNameMlError] = useState(false);
+  const [BirthWeightError, setBirthWeightError] = useState(false);
+  const [MedicalAttensionSubStError, setMedicalAttensionSubStError] = useState(false);
 
-  const [DeliveryMethodStError, setDeliveryMethodStError] = useState(formData?.ChildDetails?.deliveryMethods ? false : false);
-  const [PregnancyDurationStError, setPregnancyDurationStError] = useState(formData?.ChildDetails?.pregnancyDuration ? false : false);
-  const [PregnancyDurationInvalidError, setPregnancyDurationInvalidError] = useState(formData?.ChildDetails?.pregnancyDuration ? false : false);
+  const [DeliveryMethodStError, setDeliveryMethodStError] = useState(false);
+  const [PregnancyDurationStError, setPregnancyDurationStError] = useState(false);
+  const [PregnancyDurationInvalidError, setPregnancyDurationInvalidError] = useState(false);
   const [ChildFirstNameEnError, setChildFirstNameEnError] = useState(false);
   const [ChildMiddleNameEnError, setChildMiddleNameEnError] = useState(false);
   const [ChildLastNameEnError, setChildLastNameEnError] = useState(false);

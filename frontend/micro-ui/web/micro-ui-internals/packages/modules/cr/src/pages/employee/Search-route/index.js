@@ -31,6 +31,7 @@ const SearchRoute = ({ parentUrl }) => {
           <SearchFlow path={path} />
         </Route>
         <PrivateRoute path={`${path}/birthsearch/:variant`} component={(props) => <Search {...props} parentRoute={path} />} />
+        <PrivateRoute path={`${path}/marriagesearch/:variant`} component={(props) => <Search {...props} parentRoute={path} />} />
         <PrivateRoute path={`${path}/deathsearch/:variant`} component={(props) => <Search {...props} parentRoute={path} />} />
         <PrivateRoute path={`${path}/application-details/:id`} component={() => <ApplicationDetails parentRoute={path} />} />
         <PrivateRoute path={`${path}/application-deathdetails/:id`} component={() => <ApplicationDeathDetails parentRoute={path} />} /> 

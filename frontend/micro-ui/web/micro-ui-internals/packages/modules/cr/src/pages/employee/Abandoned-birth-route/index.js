@@ -63,6 +63,7 @@ const CreateAbandonedBirth = ({ parentUrl }) => {
   };
 
   const onSuccess = () => {
+    console.log(isEditAbandonedBirth);
    
     // if(isEditAbandonedBirth === false){
     //   clearParams();

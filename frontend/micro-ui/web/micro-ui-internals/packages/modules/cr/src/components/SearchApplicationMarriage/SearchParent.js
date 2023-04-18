@@ -15,7 +15,7 @@ const SearchParent = ({
         marriageDOM: "",
         groomFirstnameEn: "",
         brideFirstnameEn: "",
-        placeOfMarriage: "",
+        marriagePlacetype: "",
     }
 
     if (searchType === 'application') {
@@ -25,6 +25,7 @@ const SearchParent = ({
     }
 
     const [results, setResults] = useState([]);
+    const [count, setCount] = useState(0);
     const [defaultValue, setDefaultValue] = useState({
         offset: 0,
         limit: 10,
@@ -44,39 +45,43 @@ const SearchParent = ({
     }
 
     const setValue = (type, value) => {
-        const obj = {...defaultValue };
-        obj[type] = value;
-        setDefaultValue(obj);
+        defaultValue[type] = value;
     }
     const onSuccess = (data) => {
         if (data && data["MarriageDetails"]) {
             setResults(data["MarriageDetails"])
+            setCount(data["Count"])
         }
     };
 
     const onSubmit = (_data) => {
-        let marriageDOM = new Date(_data?.marriageDOM);
-        marriageDOM?.setSeconds(marriageDOM?.getSeconds() - 19800);
-
-        let data = {
-            ..._data,
-            ...(_data.marriageDOM ? { marriageDOM: marriageDOM?.getTime() } : {}),
-        };
+        let data = _data;
+        if (_data.marriageDOM) {
+            data.marriageDOM = Date.parse(_data.marriageDOM);
+        }
 
         data = Object.keys(data)
             .filter((k) => data[k])
-            .reduce((acc, key) => ({ ...acc, [key]: typeof data[key] === "object" ? data[key].name : data[key] }), {})
+            .reduce((acc, key) => ({ ...acc, [key]: typeof data[key] === "object" ? data[key].code : data[key] }), {})
+
+        data = {
+            ...data,
+            ...defaultValue
+        }
 
         const params = {
             filters: data
         }
         mutate(params, { onSuccess })
     };
-    function previousPage() {
-        setValue("offset", getValue("offset") - getValue("limit"));
-        handleSubmit(onSubmit)();
+    function emptyRecords() {
+        setResults([]);
+        setCount(0);
     }
 
+    const downloadLink = (data) => {
+        console.log("download certificate");
+    }
     const goToLink = (data) => {
         history.push({
             pathname: `/digit-ui/citizen/cr/marriage-correction-edit`,
@@ -92,7 +97,7 @@ const SearchParent = ({
                 <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
                     <SearchFields
                         searchType={searchType}
-                        {...{ t, register, control, reset, previousPage }} />
+                        {...{ t, register, control, reset, emptyRecords }} />
                 </SearchForm>
             </div>
             {isLoading && <Loader/>}
@@ -102,11 +107,14 @@ const SearchParent = ({
                         setValue={setValue}
                         getValues={getValue}
                         data={results}
+                        count={count}
                         handleSubmit={handleSubmit}
                         t={t}
                         onSubmit={onSubmit}
                         goToLink={goToLink}
+                        downloadLink={downloadLink}
                         searchType={searchType}
+                        tenantId={tenantId}
                     />
                 </React.Fragment>
             )}

@@ -9,7 +9,6 @@ const staticStyles = {
     "flex-direction": "row",
     "justify-content": "space-between",
     cursor: "pointer",
-    "background-color": "#f47738",
     color: "white",
     padding: "10px",
     "box-shadow": "0px 0px 10px rgba(0, 0, 0, 0.2)",
@@ -29,7 +28,7 @@ const Accordion = ({ title = "", content = "", expanded = false, styles = {} }) 
 
   return (
     <div style={{ ...staticStyles.container, ...styles.container || {} }}>
-      <div style={{ ...staticStyles.title, ...styles.title, }} onClick={() => setIsActive(!isActive)}>
+      <div style={{ ...staticStyles.title, ...styles.title, }} className="primary-bg" onClick={() => setIsActive(!isActive)}>
         <div>{title}</div>
         <div>{isActive ? '-' : '+'}</div>
       </div>

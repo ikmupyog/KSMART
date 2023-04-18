@@ -140,7 +140,7 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
 
         <EditButton
           selected={true}
-          label={"Submit"}
+          label={"Save"}
           onClick={() => {
             onSubmit(uploadedFiles, error);
           }}

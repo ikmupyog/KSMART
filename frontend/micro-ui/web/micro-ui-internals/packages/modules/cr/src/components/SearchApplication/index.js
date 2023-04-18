@@ -429,7 +429,7 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count,applicationType, 
       const handleAbandonedBirthLinkClick = (finaldata) => {  
         console.log(finaldata);
         let temp={};
-        temp.BornOutsideChildDetails =finaldata;
+        temp.AbandonedChildDetails =finaldata;
          Digit.SessionStorage.set("CR_EDIT_ABANDONEDBIRTH_REG", temp);      
          sessionStorage.setItem("CR_ABANDONEDBIRTH_EDIT_FLAG", true);
       }
@@ -473,13 +473,13 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count,applicationType, 
           {
             Header: t("CR_COMMON_COL_MOTHER_NAME"),
             disableSortBy: true,
-            accessor: (row) => GetCell(row.StillBirthParentsDetails["motherFirstNameEn"] || "-"),
+            accessor: (row) => GetCell(row.ParentsDetails["motherFirstNameEn"] || "-"),
           },
-          {
-            Header: t("CR_COMMON_COL_FATHER_NAME"),
-            disableSortBy: true,
-            accessor: (row) => GetCell(row.StillBirthParentsDetails["fatherFirstNameEn"] || "-"),
-          },
+          // {
+          //   Header: t("CR_COMMON_COL_FATHER_NAME"),
+          //   disableSortBy: true,
+          //   accessor: (row) => GetCell(row.ParentsDetails["fatherFirstNameEn"] || "-"),
+          // },
     
           // {
           //   Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),

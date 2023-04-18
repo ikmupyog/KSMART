@@ -1,24 +1,31 @@
 import React, {Fragment, useCallback, useMemo} from "react";
 import { Table } from "@egovernments/digit-ui-react-components";
 import {convertEpochToDateDMY} from "../../utils";
+import _ from "lodash";
+import { downloadDocument } from "../../utils/uploadedDocuments";
 
 const ResultTable = ({
                          setValue,
                          getValues,
                          data = [],
+                         count = 0,
                          handleSubmit,
                          t,
                          onSubmit,
                          goToLink,
-                         searchType
+                         downloadLink,
+                         searchType,
+                         tenantId
                      }) => {
     const GetCell = (value) => <span className="cell-text">{value}</span>;
+    const fileSource = Digit.Hooks.cr.getMarriageRegistryFileSourceDetails(tenantId);
+
 
     const columns = useMemo(
         () => {
             const cols = [
                 {
-                    Header: t("CR_SEARCH_APP_NO_LABEL"),
+                    Header: t(searchType == 'application' ? "CR_SEARCH_APP_NO_LABEL" : "REGISTRATION NO"),
                     accessor: "marriageRecordNo",
                     disableSortBy: true,
                     Cell: ({ row }) => {
@@ -49,15 +56,26 @@ const ResultTable = ({
             ];
             if (searchType == 'certificate') {
                 cols.push({
-                    Header: t("ACTION"),
-                    accessor: "action",
+                    Header: t("Download Certificate"),
                     disableSortBy: true,
                     Cell: ({ row }) => {
+                        let id = _.get(row, "original.id", null);
                         return (
                             <div>
-                            <span className="link" onClick={() => goToLink(row.original)}>
-                                Download
-                            </span>
+                                {id !== null && <span className="link" onClick={() => {
+                                    fileSource.mutate({ filters: { id, source: "sms" } }, {
+                                        onSuccess: (fileDownloadInfo) => {
+                                            const { filestoreId } = fileDownloadInfo;
+                                            if (filestoreId) {
+                                                downloadDocument(filestoreId);
+                                            } else {
+                                                console.log("filestoreId is null");
+                                            }
+                                        }
+                                    });
+                                }}>
+                Download
+              </span>}
                             </div>
                         );
                     },
@@ -93,7 +111,7 @@ const ResultTable = ({
             <Table
                 t={t}
                 data={data}
-                totalRecords={3} // count always 0 in api. need to change once api is fixed
+                totalRecords={count}
                 columns={columns}
                 getCellProps={(cellInfo) => {
                     return {

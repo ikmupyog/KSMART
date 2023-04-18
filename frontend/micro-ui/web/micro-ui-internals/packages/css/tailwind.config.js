@@ -10,8 +10,9 @@ module.exports = {
     },
     colors: {
       primary: {
-        light: "#F18F5E",
-        main: "#F47738",
+        light: "#838bfa",
+        // main: "#F47738",
+        main: "#626ad3",
         dark: "#C8602B",
       },
       secondary: "#22394D",
@@ -25,7 +26,7 @@ module.exports = {
       },
       border: "#D6D5D4",
       "input-border": "#464646",
-      focus: "#F47738",
+      focus: "#5b64e1",
       error: "#D4351C",
       success: "#00703C",
       black: "#000000",

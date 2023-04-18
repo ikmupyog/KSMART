@@ -58,20 +58,26 @@ const StillBirthInformarDetails =  ({ config, onSelect, userType, formData,isEdi
       setinformerAddress(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
+
   function setSelectinfomantAadhar(e) {
-    if (e.target.value.length != 0) {
-      if (e.target.value.length > 12) {
-        return false;
-      } else if (e.target.value.length < 12) {
-        setinfomantAadhar(e.target.value);
-        return false;
-      } else {
-        setinfomantAadhar(e.target.value);
-      }
-    } else {
-      setinfomantAadhar(e.target.value);
+    if (e.target.value.trim().length >= 0) {
+      setinfomantAadhar(e.target.value.trim().length <= 12 ? e.target.value.trim().replace(/[^0-9]/ig, '') : (e.target.value.trim().replace(/[^0-9]/ig, '')).substring(0, 12));
     }
   }
+  // function setSelectinfomantAadhar(e) {
+  //   if (e.target.value.length != 0) {
+  //     if (e.target.value.length > 12) {
+  //       return false;
+  //     } else if (e.target.value.length < 12) {
+  //       setinfomantAadhar(e.target.value);
+  //       return false;
+  //     } else {
+  //       setinfomantAadhar(e.target.value);
+  //     }
+  //   } else {
+  //     setinfomantAadhar(e.target.value);
+  //   }
+  // }
 
   function setSelectinfomantMobile(e) {
     if (e.target.value.length != 0) {
@@ -103,7 +109,12 @@ const StillBirthInformarDetails =  ({ config, onSelect, userType, formData,isEdi
       setIsDeclarationInfo(e.target.checked);
     }
   }
-
+  function setCheckSpecialChar(e) {
+    let pattern = /^[0-9]*$/;
+    if (!(e.key.match(pattern))) {
+      e.preventDefault();
+    }
+  }
 
   let validFlag = true;
   const goNext = () => {
@@ -127,17 +138,32 @@ const StillBirthInformarDetails =  ({ config, onSelect, userType, formData,isEdi
     } else {
       setinformerDesiError(false);
     }
-
-    if (infomantAadhar == null || infomantAadhar == "" || infomantAadhar == undefined) {
-      validFlag = false;
-      setinfomantAadharError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      setinfomantAadharError(false);
+    if (infomantAadhar.trim() == null || infomantAadhar.trim() == '' || infomantAadhar.trim() == undefined) {
+      setinfomantAadhar("");
+    } else if (infomantAadhar != null && infomantAadhar != "") {
+      let adharLength = infomantAadhar;
+      if (adharLength.length < 12 || adharLength.length > 12) {
+        validFlag = false;
+        setinfomantAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setinfomantAadharError(false);
+      }
     }
+
+    // if (infomantAadhar == null || infomantAadhar == "" || infomantAadhar == undefined) {
+    //   validFlag = false;
+    //   setinfomantAadharError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 2000);
+    // } else {
+    //   setinfomantAadharError(false);
+    // }
     if (infomantMobile == null || infomantMobile == "" || infomantMobile == undefined) {
       validFlag = false;
       setinfomantMobileError(true);
@@ -185,7 +211,7 @@ const StillBirthInformarDetails =  ({ config, onSelect, userType, formData,isEdi
         <div className="row">
           <div className="col-md-12" >
             <div className="col-md-4" ><CardLabel>{`${t("CS_COMMON_AADHAAR")}`}<span className="mandatorycss">*</span></CardLabel>
-              <TextInput t={t} isMandatory={true} type={"number"} optionKey="i18nKey" name="infomantAadhar" value={infomantAadhar} onChange={setSelectinfomantAadhar} disable={isEdit}
+              <TextInput t={t} isMandatory={true} type={"number"} optionKey="i18nKey" name="infomantAadhar" value={infomantAadhar} onChange={setSelectinfomantAadhar} disable={isEdit} onKeyPress={setCheckSpecialChar}
                 placeholder={`${t("CS_COMMON_AADHAAR")}`} {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })} />
             </div>
 
