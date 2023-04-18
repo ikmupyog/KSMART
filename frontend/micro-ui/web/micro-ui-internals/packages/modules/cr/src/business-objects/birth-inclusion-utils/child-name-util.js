@@ -1,5 +1,5 @@
 import moment from "moment";
-
+import {BIRTH_INCLUSION_FIELD_NAMES} from "../../config/constants";
 export const getFilteredChildNameData = (selectedData, inclusionData) => {
   console.log("selected name==", selectedData);
   let filteredDocuments = getFilteredDocuments(selectedData, inclusionData);
@@ -7,6 +7,7 @@ export const getFilteredChildNameData = (selectedData, inclusionData) => {
   const computedInitialValue = computeInitialValue(selectedData);
   const computedCurrentValue = computeCurrentValue(selectedData);
   let selectedDobObj = {
+    fieldName: BIRTH_INCLUSION_FIELD_NAMES.CHILD_NAME,
     initialValue: computedInitialValue,
     curValue: computedCurrentValue,
     isDisabled: true,
@@ -43,21 +44,22 @@ const computeCurrentValue = (data) => {
 };
 
 const getFilteredDocuments = (selectedData, inclusionData) => {
-  console.log("SELECTED DATA OBJ===",selectedData);
   let filteredData = [];
   let docFlag = "";
   const childAge = selectedData?.dateofbirth && moment().diff(moment(selectedData?.dateofbirth), "years");
-  if (childAge >= 0 && childAge <= 6) {
-    filteredData =  inclusionData?.filter((item) => item.conditionCode === "NAME_INCLUSION_LESS_THAN_SIX");
-  } else if (childAge > 6 )  {
+  console.log("childAge--==",childAge);
+  if (childAge > 0 && childAge <= 6) {
+    filteredData =  inclusionData?.filter((item) => item.conditionCode === "NAME_LESS_THAN_SIX");
+  } else if (childAge === 0 )  {
     filteredData = inclusionData?.filter((item) => {
-      if(item.conditionCode === "NAME_INCLUSION_GREATER_THAN_SIX_STUDENT" 
-      || item.conditionCode === "NAME_INCLUSION_GREATER_THAN_SIX_NON_STUDENT"
-      || item.conditionCode === "NAME_CORRECTION_AGE_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE"
-      || item.conditionCode === "NAME_CHANGE_AGE_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE"
-      || item.conditionCode === "NAME_INCLUSION_AGE_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE"
-      || item.conditionCode === "AGE_MAJOR_CORRECTION"
-      || item.conditionCode === "AGE_MAJOR_INTIALS_EXPANTION"){
+      if(item.conditionCode === "NAME_GREATER_THAN_SIX_NON_STUDENT" 
+      || item.conditionCode === "NAME_GREATER_THAN_SIX_STUDENT"
+      || item.conditionCode === "NAME_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE"
+      || item.conditionCode === "NAME_INCLUSION_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE_AGE_10_MON_DIFF"
+      || item.conditionCode === "NAME_CHANGE_AFTER_FIFTEEN_WITH_TENTH_CERTIFICATE_AGE_10_MON_DIFF"
+      || item.conditionCode === "NAME_CORRECTION_AFTER_18_SELF_APPLY_AS_TENTH_CERTIFICATE"
+      || item.conditionCode === "NAME_CORRECTION_AFTER_18_SELF_APPLY_TENTH_CERTIFICATE_AGE_10_MON_DIFF"
+      || item.conditionCode === "ADD_HUSBAND_NAME_FOR_FEMALE"){
         return item;
       }
     });
