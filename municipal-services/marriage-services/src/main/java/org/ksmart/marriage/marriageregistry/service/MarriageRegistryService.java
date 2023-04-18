@@ -5,6 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.tracer.model.CustomException;
+import org.ksmart.marriage.marriageapplication.repository.MarriageApplicationRepository;
+import org.ksmart.marriage.marriageapplication.web.model.MarriageApplicationDetails;
+import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageApplicationSearchCriteria;
+import org.ksmart.marriage.marriagecorrection.enrichment.MarriageCorrectionEnrichment;
+import org.ksmart.marriage.marriagecorrection.mapper.CorrectionApplicationToRegistryMapper;
+import org.ksmart.marriage.marriagecorrection.web.model.MarriageCorrectionDetails;
+import org.ksmart.marriage.marriagecorrection.web.model.MarriageCorrectionRequest;
 import org.ksmart.marriage.marriageregistry.enrichment.MarriageCertificateEnrichment;
 import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryDetails;
 import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryRequest;
@@ -23,6 +30,9 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+
+import static org.ksmart.marriage.marriageapplication.web.enums.ErrorCodes.MARRIAGE_DETAILS_INVALID_CREATE;
+
 /**
      * Created by Jasmine
      * on 24.03.2023
@@ -35,16 +45,22 @@ public class MarriageRegistryService {
     private final MarriageRegistryEnrichment marriageRegistryEnrichment;
     private final MarriageRegistryRepository repository;
     private final MarriageCertificateEnrichment marriageCertificateEnrichment;
+    private final MarriageCorrectionEnrichment marriageCorrectionEnrichment;
+    private final MarriageApplicationRepository marriageApplicationRepository;
+    private final CorrectionApplicationToRegistryMapper correctionApplicationToRegistryMapper;
 
     public MarriageRegistryService(MarriageRegistryRepository repository, MarriageRegistryEnrichment marriageRegistryEnrichment,
                                    MarriageProducer producer,
-                                   MarriageApplicationConfiguration marriageApplicationConfiguration, MarriageCertificateEnrichment marriageCertificateEnrichment) {
+                                   MarriageApplicationConfiguration marriageApplicationConfiguration, MarriageCertificateEnrichment marriageCertificateEnrichment, MarriageCorrectionEnrichment marriageCorrectionEnrichment, MarriageApplicationRepository marriageApplicationRepository, CorrectionApplicationToRegistryMapper correctionApplicationToRegistryMapper) {
 
             this.producer = producer;
             this.marriageApplicationConfiguration = marriageApplicationConfiguration;
             this.marriageRegistryEnrichment = marriageRegistryEnrichment;
             this.repository = repository;
         this.marriageCertificateEnrichment = marriageCertificateEnrichment;
+        this.marriageCorrectionEnrichment = marriageCorrectionEnrichment;
+        this.marriageApplicationRepository = marriageApplicationRepository;
+        this.correctionApplicationToRegistryMapper = correctionApplicationToRegistryMapper;
     }
 //    private final MarriageApplicationConfiguration marriageApplicationConfiguration;
     public List<MarriageRegistryDetails> createRegistry(MarriageRegistryRequest request) {
@@ -150,5 +166,37 @@ public class MarriageRegistryService {
         }else{
             throw  new CustomException("MARRIAGE REGISTRY DATA NOT FOUND", " Marriage Registry data not found");
         }
+    }
+
+
+
+    public List<MarriageCorrectionDetails> updateMarriageRegistry(MarriageCorrectionRequest request) {
+        MarriageRegistrySearchCriteria criteria = new MarriageRegistrySearchCriteria();
+        criteria.setRegistrationNo(request.getMarriageCorrectionDetails().get(0).getRegistrationno());
+        criteria.setTenantId(request.getMarriageCorrectionDetails().get(0).getTenantid());
+        List<MarriageRegistryDetails> marriageRegistryDetails = searchRegistry(criteria);
+
+        if (!marriageRegistryDetails.isEmpty()) {
+            MarriageApplicationSearchCriteria aplnCriteria=new MarriageApplicationSearchCriteria();
+            aplnCriteria.setRegistrationNo(request.getMarriageCorrectionDetails().get(0).getRegistrationno());
+            aplnCriteria.setApplicationNo(request.getMarriageCorrectionDetails().get(0).getApplicationNo());
+            aplnCriteria.setTenantId(request.getMarriageCorrectionDetails().get(0).getTenantid());
+
+            List<MarriageApplicationDetails> marriageAplnDetails = marriageApplicationRepository.getMarriageApplication(aplnCriteria, request.getRequestInfo());
+
+            if(!marriageAplnDetails.isEmpty()) {
+                MarriageRegistryRequest marriageRegistryRequest = correctionApplicationToRegistryMapper.convert(marriageRegistryDetails, marriageAplnDetails);
+                marriageRegistryRequest.setRequestInfo(request.getRequestInfo());
+                marriageCorrectionEnrichment.enrichRegistryUpdate(marriageRegistryRequest);
+                producer.push(marriageApplicationConfiguration.getUpdateMarriageRegistryCorrectionTopic(), marriageRegistryRequest);
+            }else{
+                throw new CustomException(MARRIAGE_DETAILS_INVALID_CREATE.getCode(),
+                        "Marriage Application(s) not found in database.");
+            }
+        }else{
+            throw new CustomException(MARRIAGE_DETAILS_INVALID_CREATE.getCode(),
+                    "Marriage registration(s) not found in database.");
+        }
+        return request.getMarriageCorrectionDetails();
     }
 }
