@@ -1,0 +1,210 @@
+{
+    "key": "draft-certificate",
+    "config": {
+      "pageSize": "A4",
+      "pageOrientation": "portrait",
+      "pageMargins": [70.86, 70.86, 70.86, 70.86],
+      "info": {
+        "title": "Egov File Management",
+        "author": "KSMART",
+        "subject": "Draft Certificate"
+      },
+      "defaultStyle": {
+        "font": "Thumba"
+      },
+      "content": [
+        {
+          "table": {
+            "widths": ["*"],
+            "body": [
+              [
+                {
+                  "stack": [
+                    {
+                      "image": "{{tenantLogo}}",
+                      "style": "tenant-logo",
+                      "fit": [70, 70]
+                    }
+                  ]
+                }
+              ]
+            ]
+          },
+          "layout": "noBorders"
+        },
+        {
+          "table": {
+            "widths": ["*"],
+            "body": [
+              [
+                {
+                  "stack": [
+                    {
+                      "text": "{{tenantId}}",
+                      "style": "tenant-name"
+                    }
+                  ]
+                }
+              ]
+            ]
+          },
+          "layout": "noBorders"
+        },
+        {
+          "table": {
+            "widths": ["*"],
+            "body": [
+              [
+                {
+                  "text": "സർട്ടിഫിക്കറ്റ്",
+                  "style": "certificate-title"
+                }
+              ]
+            ]
+          },
+          "layout": "noBorders"
+        },
+        {
+          "style": "certificate-subtitle-margin",
+          "table": {
+            "widths": ["*", "auto"],
+            "body": [
+              [
+                {
+                  "stack": [
+                    {
+                      "text": "സർട്ടിഫിക്കറ്റ് നമ്പർ: {{fileCode}}",
+                      "style": ["certificate-subtitle", "align-left"]
+                    }
+                  ]
+                },
+                {
+                  "stack": [
+                    {
+                      "text": "തീയതി: {{certificateDate}}",
+                      "style": ["certificate-subtitle", "align-right"]
+                    }
+                  ]
+                }
+              ]
+            ]
+          },
+          "layout": "noBorders"
+        },
+        {
+          "table": {
+            "widths": ["*"],
+            "body": [
+              [
+                {
+                  "columns": [
+                    {
+                      "text": "{{draftText}}",
+                      "style": "certificate-body"
+                    }
+                  ]
+                }
+              ]
+            ]
+          },
+          "layout": "noBorders"
+        },
+        {
+          "style": "certificate-signature-margin",
+          "table": {
+            "widths": ["*"],
+            "body": [
+              [
+                {
+                  "stack": [
+                    {
+                      "text": "ഡിജിറ്റൽ സിഗ്‌നേച്ചർ",
+                      "style": ["certificate-signature", "align-right"]
+                    }
+                  ]
+                }
+              ]
+            ]
+          },
+          "layout": "noBorders"
+        },
+        {
+          "image": "{{qrCodeImage}}",
+          "fit": [70, 70],
+          "alignment": "left",
+          "margin": [0, 50, 0, 0]
+        }
+      ],
+      "footer": "(function(currentPage, pageCount) { return [ {columns: [{text: currentPage.toString() + ' of ' + pageCount, alignment: 'right', margin: [0, 0, 70.86, 0] }]} ]; })",
+      "styles": {
+        "tenant-logo": {
+          "width": 70,
+          "heigth": 70,
+          "alignment": "center",
+          "margin": [0, 0, 0, 0]
+        },
+        "tenant-name": {
+          "color": "#000000",
+          "bold": true,
+          "fontSize": 20,
+          "fontWeight": 400,
+          "alignment": "center",
+          "margin": [0, 20, 0, 0]
+        },
+        "tenant-address": {
+          "color": "#000000",
+          "bold": true,
+          "fontSize": 16,
+          "fontWeight": 400,
+          "alignment": "center",
+          "margin": [0, 8, 0, 0]
+        },
+        "certificate-title": {
+          "color": "#004d00",
+          "bold": true,
+          "decoration": "underline",
+          "fontSize": 18,
+          "alignment": "center",
+          "margin": [0, 25, 0, 0]
+        },
+        "certificate-subtitle": {
+          "color": "#000099",
+          "bold": true,
+          "fontSize": 14,
+          "fontWeight": 400,
+          "margin": [0, 0, 0, 0]
+        },
+        "certificate-signature": {
+          "color": "#000000",
+          "bold": true,
+          "fontSize": 14,
+          "fontWeight": 400,
+          "margin": [0, 0, 0, 0]
+        },
+        "certificate-subtitle-margin": {
+          "margin": [0, 45, 0, 45]
+        },
+        "certificate-signature-margin": {
+          "margin": [0, 45, 0, 0]
+        },
+        "certificate-body": {
+          "color": "#000000",
+          "bold": false,
+          "fontSize": 14,
+          "fontWeight": 400,
+          "alignment": "justify",
+          "letterSpacing": 2.74,
+          "lineHeight": 1.2,
+          "leadingIndent": 34,
+          "preserveLeadingSpaces": false,
+          "margin": [0, 0, 0, 0]
+        },
+        "align-left": {
+           "alignment": "left"
+        },
+        "align-right": {
+           "alignment": "right"
+        }
+      }
+      }
+  }
