@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, TextArea, Toast } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, TextArea, Toast,  UploadFile, } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
@@ -7,7 +7,7 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
-  console.log(formData);
+  console.log("Informer",formData);
 
   const [IsDeclarationInformant, setIsDeclarationInformant] = useState(
     formData?.InformantDetails?.IsDeclarationInformant ? formData?.InformantDetails?.IsDeclarationInformant : false
@@ -30,6 +30,16 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
   const [InformantAddress, setInformantAddress] = useState(
     formData?.InformantDetails?.InformantAddress ? formData?.InformantDetails?.InformantAddress : ""
   );
+  const [InformantOfficeAuthority, setInformantOfficeAuthority] = useState(
+    formData?.InformantDetails?.InformantOfficeAuthority ? formData?.InformantDetails?.InformantOfficeAuthority : ""
+  );
+  const [InformantPENNo, setInformantPENNo] = useState(
+    formData?.InformantDetails?.InformantPENNo ? formData?.InformantDetails?.InformantPENNo : ""
+  );
+  const [InformantOfficeAddress, setInformantOfficeAddress] = useState(
+    formData?.InformantDetails?.InformantOfficeAddress ? formData?.InformantDetails?.InformantOfficeAddress : ""
+  );
+
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [toast, setToast] = useState(false);
   const [infomantNameError, setinfomantNameError] = useState(formData?.InformantDetails?.InformantNameEn ? false : false);
@@ -37,6 +47,154 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
   const [infomantMobileError, setinfomantMobileError] = useState(formData?.InformantDetails?.InformantMobileNo ? false : false);
   const [informerDesiError, setinformerDesiError] = useState(formData?.InformantDetails?.DeathSignedOfficerDesignation ? false : false);
   const onSkip = () => onSelect();
+  const [error, setError] = useState(null);
+  const [uploadedFile, setUploadedFile] = useState(null);
+  const [uploadedFile1, setUploadedFile1] = useState(null);
+  const [uploadedFile2, setUploadedFile2] = useState(null);
+  const [uploadedFile3, setUploadedFile3] = useState(null);
+  const [uploadedFile4, setUploadedFile4] = useState(null);
+  const [uploadedFile5, setUploadedFile5] = useState(null);
+  const [file, setFile] = useState(formData?.InformantDetails?.file);
+  const [file1, setFile1] = useState(formData?.InformantDetails?.file1);
+  const [file2, setFile2] = useState(formData?.InformantDetails?.file2);
+  const [file3, setFile3] = useState(formData?.InformantDetails?.file3);
+  const [file4, setFile4] = useState(formData?.InformantDetails?.file4);
+  const [file5, setFile5] = useState(formData?.InformantDetails?.file5);
+
+  function selectfile(e) {
+    setFile(e.target.files[0]);
+  }
+  function selectfile1(e) {
+    setFile1(e.target.files[0]);
+  }
+  function selectfile2(e) {
+    setFile2(e.target.files[0]);
+  }
+  function selectfile3(e) {
+    setFile3(e.target.files[0]);
+  }
+  function selectfile4(e) {
+    setFile4(e.target.files[0]);
+  }
+  function selectfile5(e) {
+    setFile5(e.target.files[0]);
+  }
+
+  useEffect(() => {
+    (async () => {
+      setError(null);
+      if (file) {
+        if (file.size >= 2000000) {
+          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+        } else {
+          try {
+            const response = await Digit.UploadServices.Filestorage("citizen-profile", file, Digit.ULBService.getStateId());
+            if (response?.data?.files?.length > 0) {
+              setUploadedFile(response?.data?.files[0]?.fileStoreId);
+            } else {
+              setError(t("FILE_UPLOAD_ERROR"));
+            }
+          } catch (err) {}
+        }
+      }
+    })();
+  }, [file]);
+  useEffect(() => {
+    (async () => {
+      setError(null);
+      if (file1) {
+        if (file1.size >= 2000000) {
+          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+        } else {
+          try {
+            const response = await Digit.UploadServices.Filestorage("citizen-profile", file1, Digit.ULBService.getStateId());
+            if (response?.data?.files?.length > 0) {
+
+              setUploadedFile1(response?.data?.files[0]?.fileStoreId);
+            } else {
+              setError(t("FILE_UPLOAD_ERROR"));
+            }
+          } catch (err) {}
+        }
+      }
+    })();
+  }, [file1]);
+  useEffect(() => {
+    (async () => {
+      setError(null);
+      if (file2) {
+        if (file2.size >= 2000000) {
+          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+        } else {
+          try {
+            const response = await Digit.UploadServices.Filestorage("citizen-profile", file2, Digit.ULBService.getStateId());
+            if (response?.data?.files?.length > 0) {
+              setUploadedFile2(response?.data?.files[0]?.fileStoreId);
+            } else {
+              setError(t("FILE_UPLOAD_ERROR"));
+            }
+          } catch (err) {}
+        }
+      }
+    })();
+  }, [file2]);
+  useEffect(() => {
+    (async () => {
+      setError(null);
+      if (file3) {
+        if (file3.size >= 2000000) {
+          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+        } else {
+          try {
+            const response = await Digit.UploadServices.Filestorage("citizen-profile", file3, Digit.ULBService.getStateId());
+            if (response?.data?.files?.length > 0) {
+              setUploadedFile3(response?.data?.files[0]?.fileStoreId);
+            } else {
+              setError(t("FILE_UPLOAD_ERROR"));
+            }
+          } catch (err) {}
+        }
+      }
+    })();
+  }, [file3]);
+  useEffect(() => {
+    (async () => {
+      setError(null);
+      if (file4) {
+        if (file4.size >= 2000000) {
+          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+        } else {
+          try {
+            const response = await Digit.UploadServices.Filestorage("citizen-profile", file4, Digit.ULBService.getStateId());
+            if (response?.data?.files?.length > 0) {
+              setUploadedFile4(response?.data?.files[0]?.fileStoreId);
+            } else {
+              setError(t("FILE_UPLOAD_ERROR"));
+            }
+          } catch (err) {}
+        }
+      }
+    })();
+  }, [file4]);
+  useEffect(() => {
+    (async () => {
+      setError(null);
+      if (file5) {
+        if (file5.size >= 2000000) {
+          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+        } else {
+          try {
+            const response = await Digit.UploadServices.Filestorage("citizen-profile", file5, Digit.ULBService.getStateId());
+            if (response?.data?.files?.length > 0) {
+              setUploadedFile5(response?.data?.files[0]?.fileStoreId);
+            } else {
+              setError(t("FILE_UPLOAD_ERROR"));
+            }
+          } catch (err) {}
+        }
+      }
+    })();
+  }, [file5]);
 
   useEffect(() => {
     if (isInitialRender) {
@@ -71,18 +229,19 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
         e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
       );
     }
-    // if (e.target.value.length != 0) {
-    //   if (e.target.value.length > 12) {
-    //     return false;
-    //   } else if (e.target.value.length < 12) {
-    //     setInformantAadharNo(e.target.value);
-    //     return false;
-    //   } else {
-    //     setInformantAadharNo(e.target.value);
-    //   }
-    // } else {
-    //   setInformantAadharNo(e.target.value);
-    // }
+  }
+    function setSelectInformantOfficeAuthority(e) {
+    
+        setInformantOfficeAuthority(e.target.value);
+      }
+      function setSelectInformantPENNo(e) {
+        
+          setInformantPENNo(e.target.value);
+      }  
+        function setSelectInformantOfficeAddress(e) {
+        
+            setInformantOfficeAddress(e.target.value);
+
   }
   function setSelectInformantNameEn(e) {
     if (e.target.value.length === 51) {
@@ -194,6 +353,16 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
       sessionStorage.setItem("InformantMobileNo", InformantMobileNo ? InformantMobileNo : null);
       sessionStorage.setItem("DeathSignedOfficerDesignation", DeathSignedOfficerDesignation ? DeathSignedOfficerDesignation : null);
       sessionStorage.setItem("InformantAddress", InformantAddress ? InformantAddress : null);
+      // 
+      sessionStorage.setItem("InformantOfficeAuthority",InformantOfficeAuthority ?InformantOfficeAuthority : null);
+      sessionStorage.setItem("InformantPENNo", InformantPENNo ? InformantPENNo : null);
+      sessionStorage.setItem("InformantOfficeAddress", InformantOfficeAddress ? InformantOfficeAddress : null);
+      sessionStorage.setItem("file", file ? file : null);
+      sessionStorage.setItem("file1", file1 ? file1 : null);
+      sessionStorage.setItem("file2", file2 ? file2 : null);
+      sessionStorage.setItem("file3", file3 ? file3 : null);
+      sessionStorage.setItem("file4", file4 ? file4 : null);
+      sessionStorage.setItem("file5", file5 ? file5 : null);
       onSelect(config.key, {
         IsDeclarationInformant,
         // isDeclarationInfotwo,
@@ -232,27 +401,43 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
           </div>
         </div>
 
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-3">
+<div className="row">
+  <div className="col-md-12">
+  <div className="col-md-3">
               <CardLabel>
-                {`${t("CS_COMMON_AADHAAR")}`}
+                {`${t("CR_INFORMER_AUTHORITY")}`}
                 <span className="mandatorycss">*</span>
               </CardLabel>
               <TextInput
                 t={t}
                 isMandatory={false}
-                type={"number"}
+                type={"text"}
                 optionKey="i18nKey"
-                name="InformantAadharNo"
-                value={InformantAadharNo}
-                onChange={setSelectInformantAadharNo}
-                placeholder={`${t("CS_COMMON_AADHAAR")}`}
-                {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                name="InformantOfficeAuthority"
+                value={InformantOfficeAuthority}
+                onChange={setSelectInformantOfficeAuthority}
+                placeholder={`${t("CR_INFORMER_AUTHORITY")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMER_DESIGNATION") })}
               />
             </div>
-
-            <div className="col-md-3">
+  <div className="col-md-3">
+              <CardLabel>
+                {`${t("CR_INFORMER_DESIGNATION")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="DeathSignedOfficerDesignation"
+                value={DeathSignedOfficerDesignation}
+                onChange={setSelectDeathSignedOfficerDesignation}
+                placeholder={`${t("CR_INFORMER_DESIGNATION")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMER_DESIGNATION") })}
+              />
+            </div>
+  <div className="col-md-3">
               <CardLabel>
                 {`${t("CR_INFORMANT_NAME")}`}
                 <span className="mandatorycss">*</span>
@@ -272,7 +457,7 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
 
             <div className="col-md-3">
               <CardLabel>
-                {`${t("CR_INFORMER_DESIGNATION")}`}
+                {`${t("CR_PEN_NO")}`}
                 <span className="mandatorycss">*</span>
               </CardLabel>
               <TextInput
@@ -280,13 +465,38 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
                 isMandatory={false}
                 type={"text"}
                 optionKey="i18nKey"
-                name="DeathSignedOfficerDesignation"
-                value={DeathSignedOfficerDesignation}
-                onChange={setSelectDeathSignedOfficerDesignation}
-                placeholder={`${t("CR_INFORMER_DESIGNATION")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMER_DESIGNATION") })}
+                name="InformantPENNo"
+                value={InformantPENNo}
+                onChange={setSelectInformantPENNo}
+                placeholder={`${t("CR_PEN_NO)")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMANT_NAME") })}
               />
             </div>
+
+           
+  </div>
+</div>
+<div className="row">
+  <div className="col-md-12">
+  <div className="col-md-3">
+              <CardLabel>
+                {`${t("CS_COMMON_AADHAAR")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"number"}
+                optionKey="i18nKey"
+                name="InformantAadharNo"
+                value={InformantAadharNo}
+                onChange={setSelectInformantAadharNo}
+                placeholder={`${t("CS_COMMON_AADHAAR")}`}
+                {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+              />
+            </div>
+
+            
             <div className="col-md-3">
               <CardLabel>
                 {`${t("CR_MOBILE_NO")}`}
@@ -304,12 +514,26 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
                 {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
               />
             </div>
-          </div>
-        </div>
+  </div>
+</div>
         <div className="row">
           <div className="col-md-12">
+          <div className="col-md-6">
+              <CardLabel>{`${t("CR_OFFICE_ADDRESS")}`}</CardLabel>
+              <TextArea
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="InformantOfficeAddress"
+                value={InformantOfficeAddress}
+                onChange={setSelectInformantOfficeAddress}
+                placeholder={`${t("CR_OFFICE_ADDRESS")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRESS") })}
+              />
+            </div>
             <div className="col-md-6">
-              <CardLabel>{`${t("CR_ADDRESS")}`}</CardLabel>
+              <CardLabel>{`${t("CR_PERSONAL_ADDRESS")}`}</CardLabel>
               <TextArea
                 t={t}
                 isMandatory={false}
@@ -318,12 +542,132 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
                 name="InformantAddress"
                 value={InformantAddress}
                 onChange={setSelectInformantAddress}
-                placeholder={`${t("CR_ADDRESS")}`}
+                placeholder={`${t("CR_PERSONAL_ADDRESS")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRESS") })}
               />
             </div>
           </div>
         </div>
+     
+        <div className="row">
+          <div className="col-md-12">
+            <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}>{`DOCUMENTS`}</span>
+            </h1>
+          </div>
+        </div>
+        <div className="row">
+            <div className="col-md-12">
+              <div className="row">
+                <div className="col-md-5">
+                  <CardLabel>
+                    Letter form the Informer /Notifier Official<span className="mandatorycss">*</span>
+                  </CardLabel>
+                </div>
+                <div className="col-md-3">
+                  <UploadFile
+                    extraStyleName={"propertyCreate"}
+                    accept=".jpg,.png,.pdf"
+                    onUpload={selectfile}
+                    onDelete={() => {
+                      setUploadedFile(null);
+                    }}
+                    message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-5">
+                  <CardLabel>
+                    Copy of the FIR<span className="mandatorycss">*</span>
+                  </CardLabel>
+                </div>
+                <div className="col-md-3">
+                  <UploadFile
+                    extraStyleName={"propertyCreate"}
+                    accept=".jpg,.png,.pdf"
+                    onUpload={selectfile1}
+                    onDelete={() => {
+                      setUploadedFile1(null);
+                    }}
+                    message={uploadedFile1 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-5">
+                  <CardLabel>
+                   Inquest Report<span className="mandatorycss">*</span>
+                  </CardLabel>
+                </div>
+                <div className="col-md-3">
+                  <UploadFile
+                    extraStyleName={"propertyCreate"}
+                    accept=".jpg,.png,.pdf"
+                    onUpload={selectfile2}
+                    onDelete={() => {
+                      setUploadedFile2(null);
+                    }}
+                    message={uploadedFile2 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-5">
+                  <CardLabel>
+                    Post-Mortem Report <span className="mandatorycss">*</span>
+                  </CardLabel>
+                </div>
+                <div className="col-md-3">
+                  <UploadFile
+                    extraStyleName={"propertyCreate"}
+                    accept=".jpg,.png,.pdf"
+                    onUpload={selectfile3}
+                    onDelete={() => {
+                      setUploadedFile3(null);
+                    }}
+                    message={uploadedFile3 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-5">
+                  <CardLabel>
+                    Medical Certificate of Cause-of-Death<span className="mandatorycss">*</span>
+                  </CardLabel>
+                </div>
+                <div className="col-md-3">
+                  <UploadFile
+                    extraStyleName={"propertyCreate"}
+                    accept=".jpg,.png,.pdf"
+                    onUpload={selectfile4}
+                    onDelete={() => {
+                      setUploadedFile4(null);
+                    }}
+                    message={uploadedFile4 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-5">
+                  <CardLabel>
+                    Court Order<span className="mandatorycss">*</span>
+                  </CardLabel>
+                </div>
+                <div className="col-md-3">
+                  <UploadFile
+                    extraStyleName={"propertyCreate"}
+                    accept=".jpg,.png,.pdf"
+                    onUpload={selectfile5}
+                    onDelete={() => {
+                      setUploadedFile5(null);
+                    }}
+                    message={uploadedFile5 ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
 
         {toast && (
           <Toast

@@ -357,7 +357,7 @@ export const convertToAbandonedDeathRegistration = (data = {}) => {
           Nationality: data?.InformationDeathAband?.Nationality.code,
           Religion: data?.InformationDeathAband?.Religion.code,
           Occupation: data?.InformationDeathAband?.Occupation ? data?.InformationDeathAband?.Occupation.code : null,
-          funcionUID: "CRDRNR",
+          funcionUID: "CRDRAB",
           registrationNo: null,
           BurialDistrict: data?.InformationDeathAband?.BurialDistrict ? data?.InformationDeathAband?.BurialDistrict.code : null,
           BurialLBType: data?.InformationDeathAband?.BurialLBType ? data?.InformationDeathAband?.BurialLBType.code : null,
@@ -532,21 +532,55 @@ export const convertToAbandonedDeathRegistration = (data = {}) => {
           AlcoholType: data?.StatisticalInfoAbandoned?.AlcoholType,
         },
         InformantDetailsDeathAbandoned: {
-          InformantAadharSubmitted: null,
-          InformantAadharNo: data?.InitiatorAbandoned?.InformantAadharNo,
-          InformantName: data?.InitiatorAbandoned?.InformantNameEn,
-          DeathSignedOfficerDesignation: data?.InitiatorAbandoned?.DeathSignedOfficerDesignation,
-          InformantMobileNo: parseInt(data?.InitiatorAbandoned?.InformantMobileNo),
-          InformantAddress: data?.InitiatorAbandoned?.InformantAddress ? data?.InitiatorAbandoned?.InformantAddress : null,
-          IsDeclarationInformant: data?.InitiatorAbandoned?.IsDeclarationInformant,
-          InformantDocumentId: null,
-          InformantDocumentDeathDtlId: null,
-          InformantDocumentTenantId: data?.InitiatorAbandoned?.tenantId,
-          InformantDocumentAckNo: null,
-          InformantDocumentType: null,
-          InformantDocumentUserType: null,
-          InformantDocumentFileStoreId: null,
+          // InformantAadharSubmitted: null,
+          // InformantAadharNo: data?.InitiatorAbandoned?.InformantAadharNo,
+          // InformantName: data?.InitiatorAbandoned?.InformantNameEn,
+          // DeathSignedOfficerDesignation: data?.InitiatorAbandoned?.DeathSignedOfficerDesignation,
+          // InformantMobileNo: parseInt(data?.InitiatorAbandoned?.InformantMobileNo),
+          // InformantAddress: data?.InitiatorAbandoned?.InformantAddress ? data?.InitiatorAbandoned?.InformantAddress : null,
+          // IsDeclarationInformant: data?.InitiatorAbandoned?.IsDeclarationInformant,
+          // InformantDocumentId: null,
+          // InformantDocumentDeathDtlId: null,
+          // InformantDocumentTenantId: data?.InitiatorAbandoned?.tenantId,
+          // InformantDocumentAckNo: null,
+          // InformantDocumentType: null,
+          // InformantDocumentUserType: null,
+          // InformantDocumentFileStoreId: null,
+          InformantOfficeAuthority: data?.InitiatorAbandoned?.InformantOfficeAuthority,
+          InformantDesignation: data?.InitiatorAbandoned?.DeathSignedOfficerDesignation,                
+          InformantName: data?.InitiatorAbandoned?.InformantName,              
+          InformantPENNo: data?.InitiatorAbandoned?.InformantPENNo,
+          InformantOfficeAddress: data?.InitiatorAbandoned?.InformantOfficeAddress,               
+          InformantAadhaarNo: data?.InitiatorAbandoned?.InformantAadharNo,
+          InformantMobileNo: parseInt(data?.InitiatorAbandoned?.InformantMobileNo),              
+          InformantAddress: data?.InitiatorAbandoned?.InformantAddress
         },
+        DeathAbandonedDocuments: [
+          {
+              DocumentType: "Letter form the Informer/Notifier Official",
+              filestoreId: data?.InitiatorAbandoned?.file
+          },
+          {
+              DocumentType: "Copy of the FIR",
+              filestoreId: data?.InitiatorAbandoned?.file1
+          },
+          {
+              DocumentType: "Inquest Report",
+              filestoreId: data?.InitiatorAbandoned?.file2
+          },
+          {
+              DocumentType: "Post-Mortem Report",
+              filestoreId: data?.InitiatorAbandoned?.file3
+          },
+          {
+              DocumentType: "Medical Certificate of Cause of Death",
+              filestoreId: data?.InitiatorAbandoned?.file4
+          },
+          {
+              DocumentType: "Court Order",
+              filestoreId: data?.InitiatorAbandoned?.file5
+          }
+      ],
         // Initiator: {
         //   IsDeclarationInitiator: data?.Initiator?.IsDeclarationInitiator,
         //   InitiatorRelation: data?.Initiator?.InitiatorRelation,
@@ -824,35 +858,15 @@ export const convertToEditAbandonedDeathRegistration = (data = {}) => {
           AlcoholType: data?.StatisticalInfoDeathAbandoned?.AlcoholType,
         },
         InformantDetailsDeathAbandoned: {
-          InformantAadharSubmitted: null,
-          InformantAadharNo: data?.InformantDetailsDeathAbandoned?.InformantAadharNo,
-          InformantName: data?.InformantDetailsDeathAbandoned?.InformantName,
-          DeathSignedOfficerDesignation: data?.InformantDetailsDeathAbandoned?.DeathSignedOfficerDesignation,
-          InformantMobileNo: parseInt(data?.InformantDetailsDeathAbandoned?.InformantMobileNo),
-          InformantAddress: data?.InformantDetailsDeathAbandoned?.InformantAddress ? data?.InformantDetailsDeathAbandoned?.InformantAddress : null,
-          IsDeclarationInformant: data?.InformantDetailsDeathAbandoned?.IsDeclarationInformant,
-          InformantDocumentId: null,
-          InformantDocumentDeathDtlId: null,
-          InformantDocumentTenantId: data?.InformantDetailsDeathAbandoned?.tenantId,
-          InformantDocumentAckNo: null,
-          InformantDocumentType: null,
-          InformantDocumentUserType: null,
-          InformantDocumentFileStoreId: null,
+          InformantOfficeAuthority: data?.InformantDetailsDeathAbandoned?.InformantOfficeAuthority,
+          InformantDesignation: data?.InformantDetailsDeathAbandoned?.InformantDesignation,                
+          InformantName: data?.InformantDetailsDeathAbandoned?.InformantName,              
+          InformantPENNo: data?.InformantDetailsDeathAbandoned?.InformantPENNo,
+          InformantOfficeAddress: data?.InformantDetailsDeathAbandoned?.InformantOfficeAddress,               
+          InformantAadhaarNo: data?.InformantDetailsDeathAbandoned?.InformantAadharNo,
+          InformantMobileNo: parseInt(data?.InformantDetailsDeathAbandoned?.InformantMobileNo),              
+          InformantAddress: data?.InformantDetailsDeathAbandoned?.InformantAddress
         },
-        // Initiator: {
-        //   IsDeclarationInitiator: data?.Initiator?.IsDeclarationInitiator,
-        //   InitiatorRelation: data?.Initiator?.InitiatorRelation,
-        //   InitiatorAadhaar: data?.Initiator?.InitiatorAadhaar,
-        //   InitiatorName: data?.Initiator?.InitiatorName,
-        //   InitiatorMobile: parseInt(data?.Initiator?.InitiatorMobile),
-        //   InitiatorAddress: data?.Initiator?.InitiatorAddress,
-        //   InitiatorDocumentId: null,
-        //   InitiatorDocumentTenantId: data?.InformationDeath?.tenantId,
-        //   InitiatorDocumentAckNo: null,
-        //   InitiatorDocumentType: null,
-        //   InitiatorDocumentUserType: null,
-        //   InitiatorDocumentFileStoreId: null,
-        // },
         AuditDetails: {
           createdBy: null,
           lastModifiedBy: null,
