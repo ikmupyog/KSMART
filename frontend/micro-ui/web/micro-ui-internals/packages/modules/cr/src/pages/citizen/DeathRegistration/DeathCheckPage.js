@@ -245,7 +245,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ID_DETAILS_OF_DECEASED")}`} :</CardText>
                     </div>
                     <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformationDeath?.DeceasedIdproofType}</CardText>
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformationDeath?.DeceasedIdproofType.name}</CardText>
                     </div>
 
                     <div className="col-md-2">
@@ -1704,28 +1704,28 @@ content={<StatusTable >
 
             <div className="col-md-12">
           <div className="col-md-6">
-            <div className="col-md-3">
+            <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ACTUAL_CAUSE_OF_DEATH_MAIN")}`} :</CardText>
           </div>
-            <div className="col-md-3">
+            <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StatisticalInfo?.DeathCauseMain.name}</CardText>
           </div>
-          <div className="col-md-3">
+          <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_ACTUAL_CAUSE_OF_DEATH_SUB")}`} :</CardText>
           </div>
-            <div className="col-md-3">
+            <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StatisticalInfo?.DeathCauseMainCustom}</CardText>
           </div>
-          <div className="col-md-3">
+          <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_APROXIMATE")}`} :</CardText>
           </div>
-            <div className="col-md-3">
+            <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StatisticalInfo?.DeathCauseMainInterval}</CardText>
           </div>
           <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TIME_UNIT")}`} :</CardText>
           </div>
-            <div className="col-md-3">
+            <div className="col-md-2">
             <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StatisticalInfo?.DeathCauseMainTimeUnit.code}</CardText>
           </div>
           </div>
@@ -1800,20 +1800,11 @@ content={<StatusTable >
               <div className="col-md-12">
                 <div className="col-md-12">
                   <h1 className="summaryheadingh">
-                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_UNDERLYING_CAUSE")}`}</span>{" "}
-                  </h1>
-                </div>
-              </div>
-            </div>
-          <div className="row">
-              <div className="col-md-12">
-                <div className="col-md-12">
-                  <h1 className="summaryheadingh">
                     <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_OTHER_SIGNIFICANT")}`}</span>{" "}
                   </h1>
                 </div>
               </div>
-            </div>
+            </div>          
 
             <div className="col-md-12">
           <div className="col-md-6">
@@ -1825,6 +1816,41 @@ content={<StatusTable >
           </div>
           </div>
             </div>
+            <div className="row">
+              <div className="col-md-12">
+                <div className="col-md-12">
+                  <h1 className="summaryheadingh">
+                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_HABITS")}`}</span>{" "}
+                  </h1>
+                </div>
+              </div>
+            </div> 
+
+            <div className="row">
+        <div className="col-md-12">
+        <div className="col-md-2">
+            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HABITUALLY_SMOKE")}`} :</CardText>
+          </div>
+          <div className="col-md-2">
+            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StatisticalInfo?.SmokingType}</CardText>
+          </div>
+         
+          <div className="col-md-2">
+            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HABITUALLY_CHEW_TOBACCO")}`} :</CardText>
+          </div>
+          <div className="col-md-2">
+            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StatisticalInfo?.TobaccoType}</CardText>
+          </div>
+          <div className="col-md-2">
+            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_HABITUALLY_DRINK_ALCOHOL")}`} :</CardText>
+          </div>
+          <div className="col-md-2">
+            <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StatisticalInfo?.AlcoholType}</CardText>
+          </div>
+        </div>
+      </div>
+     
+
             </div>
       </StatusTable>}
         />
