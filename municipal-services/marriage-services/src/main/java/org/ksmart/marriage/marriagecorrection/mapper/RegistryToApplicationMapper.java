@@ -133,7 +133,7 @@ public class RegistryToApplicationMapper {
         marriageApplicationDetails.getBrideAddressDetails().setPermntInKeralaAdrPincode(marriageRegistryDetails.getBrideAddressDetails().getPermntInKeralaAdrPincode());
         marriageApplicationDetails.getBrideAddressDetails().setPermntInKeralaAdrLBName(marriageRegistryDetails.getBrideAddressDetails().getPermntInKeralaAdrLBName());
         marriageApplicationDetails.getBrideAddressDetails().setPermntInKeralaAdrTaluk(marriageRegistryDetails.getBrideAddressDetails().getPermntInKeralaAdrTaluk());
-        marriageApplicationDetails.getBrideAddressDetails().setPermntInKeralaAdrVillage(marriageRegistryDetails.getBrideAddressDetails().getPermntInKeralaAdrVillage());
+        marriageApplicationDetails.getBrideAddressDetails().setPermanentAddrVillageId(marriageRegistryDetails.getBrideAddressDetails().getPermntInKeralaAdrVillage());
         marriageApplicationDetails.getBrideAddressDetails().setPermntInKeralaWardNo(marriageRegistryDetails.getBrideAddressDetails().getPermntInKeralaWardNo());
         marriageApplicationDetails.getBrideAddressDetails().setPermntOutsideKeralaTaluk(marriageRegistryDetails.getBrideAddressDetails().getPermntOutsideKeralaTaluk());
         marriageApplicationDetails.getBrideAddressDetails().setPermntOutsideKeralaPostOfficeEn(marriageRegistryDetails.getBrideAddressDetails().getPermntOutsideKeralaPostOfficeEn());
@@ -162,7 +162,7 @@ public class RegistryToApplicationMapper {
         marriageApplicationDetails.getGroomAddressDetails().setPermntInKeralaAdrPincode(marriageRegistryDetails.getGroomAddressDetails().getPermntInKeralaAdrPincode());
         marriageApplicationDetails.getGroomAddressDetails().setPermntInKeralaAdrLBName(marriageRegistryDetails.getGroomAddressDetails().getPermntInKeralaAdrLBName());
         marriageApplicationDetails.getGroomAddressDetails().setPermntInKeralaAdrTaluk(marriageRegistryDetails.getGroomAddressDetails().getPermntInKeralaAdrTaluk());
-        marriageApplicationDetails.getGroomAddressDetails().setPermntInKeralaAdrVillage(marriageRegistryDetails.getGroomAddressDetails().getPermntInKeralaAdrVillage());
+        marriageApplicationDetails.getGroomAddressDetails().setPermanentAddrVillageId(marriageRegistryDetails.getGroomAddressDetails().getPermntInKeralaAdrVillage());
         marriageApplicationDetails.getGroomAddressDetails().setPermntInKeralaWardNo(marriageRegistryDetails.getGroomAddressDetails().getPermntInKeralaWardNo());
         marriageApplicationDetails.getGroomAddressDetails().setPermntOutsideKeralaTaluk(marriageRegistryDetails.getGroomAddressDetails().getPermntOutsideKeralaTaluk());
         marriageApplicationDetails.getGroomAddressDetails().setPermntOutsideKeralaPostOfficeEn(marriageRegistryDetails.getGroomAddressDetails().getPermntOutsideKeralaPostOfficeEn());
