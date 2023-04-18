@@ -118,7 +118,7 @@ public class MarriageRegistryService {
             Calendar cal = Calendar.getInstance();
             marriageCertificate.setDateofissue(cal.getTimeInMillis());
             marriageCertificate.setEmbeddedUrl(marriageCertPDFRequest.getMarriageCertificate().get(0).getEmbeddedUrl());
-            //marriageCertificateEnrichment.createCertificateNo(marriageCertRequest); //TODO check IdGenError
+           // marriageCertificateEnrichment.createCertificateNo(marriageCertRequest); //TODO check IdGenError
             MarriageCertPdfResponse pdfResp = repository.saveMarriageCertPdf(marriageCertPDFRequest);
 //            marriageCertificate.setDateofissue(marriageCertPDFRequest.getMarriageCertificate().get(0).getMarriageRegistryDetails().getRegistrationDate());
             marriageCertificate.setFilestoreid(pdfResp.getFilestoreIds().get(0));

@@ -12,6 +12,7 @@ import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryDetails;
 // import org.ksmart.marriage.marriageapplication.web.model.MarriageApplicationDetail;
 import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryRequest;
 import org.ksmart.marriage.marriageregistry.web.model.certmodel.MarriageCertPDFRequest;
+import org.ksmart.marriage.marriageregistry.web.model.certmodel.MarriageCertRequest;
 import org.ksmart.marriage.marriageregistry.web.model.certmodel.MarriageCertificate;
 import org.ksmart.marriage.utils.IDGenerator;
 import org.ksmart.marriage.utils.MarriageConstants;
@@ -90,6 +91,7 @@ public class MarriageRegistryEnrichment implements BaseEnrichment {
         setBridePresentAddress(request);
         setGroomPermanentAddress(request);
         setGroomPresentAddress(request);
+        createCertificateNo(request);
     }
 
     private void setRegistrationNumber(MarriageRegistryRequest request) {
@@ -811,6 +813,28 @@ public class MarriageRegistryEnrichment implements BaseEnrichment {
         return  null;
     }
 
+    public void createCertificateNo(MarriageRegistryRequest marriageRegistryRequest) {
+        if (null != marriageRegistryRequest) {
+            if (null != marriageRegistryRequest.getMarriageDetails() && marriageRegistryRequest.getMarriageDetails().size() > 0) {
+                marriageRegistryRequest.getMarriageDetails().forEach(e-> {
+
+
+                    RequestInfo requestInfo = marriageRegistryRequest.getRequestInfo();
+                    Long currentTime = Long.valueOf(System.currentTimeMillis());
+                    String tenantId = marriageRegistryRequest.getMarriageDetails().get(0).getTenantid();
+
+                    List<String> ackNoDetails = idGenRepository.getIdList(requestInfo,
+                            tenantId,
+                            config.getGetMarriageCertificateName(),
+                            e.getModuleCode(),
+                            "CERT", 1);
+                    ListIterator<String> itr = ackNoDetails.listIterator();
+                    e.setCertificateNo(itr.next());
+//                    e.setDateofIssue(currentTime);
+                });
+            }
+        }
+    }
 
 
 }

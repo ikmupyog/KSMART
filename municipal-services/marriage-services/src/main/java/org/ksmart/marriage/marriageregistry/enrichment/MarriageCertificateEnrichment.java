@@ -46,20 +46,20 @@ public class MarriageCertificateEnrichment implements BaseEnrichment {
 
     }
 
-    public void createCertificateNo(MarriageCertRequest marriageCertRequest){
-        RequestInfo requestInfo = marriageCertRequest.getRequestInfo();
-        Long currentTime = Long.valueOf(System.currentTimeMillis());
-        String tenantId = marriageCertRequest.getMarriageCertificate().getMarriageRegistryDetails().getTenantid();
-
-        List<String> ackNoDetails = idGenRepository.getIdList(requestInfo,
-                tenantId,
-                config.getGetMarriageCertificateName(),
-                marriageCertRequest.getMarriageCertificate().getModulecode(),
-                "CERT",1);
-        ListIterator<String> itr = ackNoDetails.listIterator();
-        marriageCertRequest.getMarriageCertificate().setMarriagecertificateno(itr.next());
-        marriageCertRequest.getMarriageCertificate().setDateofissue(currentTime);
-    }
+//    public void createCertificateNo(MarriageCertRequest marriageCertRequest){
+//        RequestInfo requestInfo = marriageCertRequest.getRequestInfo();
+//        Long currentTime = Long.valueOf(System.currentTimeMillis());
+//        String tenantId = marriageCertRequest.getMarriageCertificate().getMarriageRegistryDetails().getTenantid();
+//
+//        List<String> ackNoDetails = idGenRepository.getIdList(requestInfo,
+//                tenantId,
+//                config.getGetMarriageCertificateName(),
+//                marriageCertRequest.getMarriageCertificate().getModulecode(),
+//                "CERT",1);
+//        ListIterator<String> itr = ackNoDetails.listIterator();
+//        marriageCertRequest.getMarriageCertificate().setMarriagecertificateno(itr.next());
+//        marriageCertRequest.getMarriageCertificate().setDateofissue(currentTime);
+//    }
 
     // private void setCertificateNumber(MarriageCertRequest marriageCertRequest) {
 
