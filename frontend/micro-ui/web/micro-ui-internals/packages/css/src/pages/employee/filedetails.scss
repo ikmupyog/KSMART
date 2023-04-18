@@ -70,12 +70,12 @@
 
 .card-file {
     border: 2px solid black;
-    height: 350px;
+    height: 435px;
     margin-top: 115px;
     margin-bottom: 30px;
 
     @media (max-width: 1020px) {
-        height: 470px;
+        height: 525px;
         margin-top: 140px
     }
 
@@ -174,7 +174,7 @@
 
 .reference-row {
     border: 2px solid black;
-    height: 200px;
+    height: 445px;
     margin-top: 800px;
     margin-bottom: 50px;
 
@@ -395,9 +395,77 @@
 }
 
 .note-wrapper {
-    height: 2085px;
+    height: 2460px;
 
     @media (max-width: 600px) {
-        height: 3460px;
+        height: 3772px;
+    }
+}
+
+.module-adding {
+    margin-top: 40px;
+
+    @media (max-width: 1020px) {
+        margin-top: 10px;
+    }
+}
+
+.module-wrapper {
+    height: 270px;
+
+    @media (max-width: 1020px) {
+        height: 340px;
+    }
+
+    @media (max-width: 600px) {
+        height: 520px;
+    }
+}
+
+.major-wrapper {
+    height: 360px;
+
+    @media (max-width: 1020px) {
+        height: 440px;
+    }
+
+    @media (max-width: 600px) {
+        height: 620px;
+    }
+}
+
+.customSubFunctionTable {
+    @media (max-width: 1020px) {
+        max-width: 645px;
+        overflow-x: scroll;
+    }
+
+    @media (max-width: 600px) {
+        max-width: 340px;
+        overflow-x: scroll;
+    }
+}
+
+.sub-wrapper {
+    height: 340px;
+
+    @media (max-width: 1020px) {
+        height: 290px;
+    }
+
+    @media (max-width: 600px) {
+        height: 695px;
+    }
+}
+
+.service-wrapper {
+    height: 405px;
+
+    @media (max-width: 1020px) {
+        height: 361px;
+    }
+
+    @media (max-width: 600px) {
+        height: 860px;
     }
 }

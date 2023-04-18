@@ -9,6 +9,7 @@ import FileFlow from './FileFlow'
 // import Response from "../Response";
 // import ApplicationDetails from "./ApplicationDetails";
 import { TradeLisense } from "./FileFlow/TradeLisense";
+import ModuleAdding from "../../components/ModuleAdding";
 //import ReNewApplication from "./ReNewApplication";
 
 const DFMBreadCrumb = ({ location }) => {
@@ -243,6 +244,10 @@ const EmployeeApp = ({ path, url, userType }) => {
   const Templates = Digit?.ComponentRegistryService?.getComponent('Templates')
   const TemplateSec = Digit?.ComponentRegistryService?.getComponent('TemplateSec')
   const ArisingFile = Digit?.ComponentRegistryService?.getComponent('ArisingFile')
+  const ModuleAdding = Digit?.ComponentRegistryService?.getComponent('ModuleAdding')
+  const MajorFunctionAdding = Digit?.ComponentRegistryService?.getComponent('MajorFunctionAdding')
+  const SubFunctionAdding = Digit?.ComponentRegistryService?.getComponent('SubFunctionAdding')
+  const ServiceAdding = Digit?.ComponentRegistryService?.getComponent('ServiceAdding')
 
   return (
     <Switch>
@@ -261,6 +266,10 @@ const EmployeeApp = ({ path, url, userType }) => {
           <PrivateRoute path={`${path}/templates`} component={() => <Templates parentRoute={path} />} />
           <PrivateRoute path={`${path}/templateSec`} component={() => <TemplateSec parentRoute={path} />} />
           <PrivateRoute path={`${path}/arising-file`} component={() => <ArisingFile parentRoute={path} />} />
+          <PrivateRoute path={`${path}/module-adding`} component={() => <ModuleAdding parentRoute={path} />} />
+          <PrivateRoute path={`${path}/major-function-adding`} component={() => <MajorFunctionAdding parentRoute={path} />} />
+          <PrivateRoute path={`${path}/sub-function-adding`} component={() => <SubFunctionAdding parentRoute={path} />} />
+          <PrivateRoute path={`${path}/service-adding`} component={() => <ServiceAdding parentRoute={path} />} />
         </div>
       </React.Fragment>
     </Switch>

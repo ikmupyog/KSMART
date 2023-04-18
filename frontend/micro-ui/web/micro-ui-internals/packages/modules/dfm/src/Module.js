@@ -31,6 +31,10 @@ import DraftTemplate from "./components/DraftTemplate";
 import Templates from "./components/Templates";
 import TemplateSec from "./components/TemplateSec";
 import ArisingFile from "./components/ArisingFile";
+import ModuleAdding from "./components/ModuleAdding";
+import MajorFunctionAdding from "./components/MajorFunctionAdding";
+import SubFunctionAdding from "./components/SubFunctionAdding";
+import ServiceAdding from "./components/ServiceAdding";
 
 export const DFMModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
@@ -100,7 +104,11 @@ const componentsToRegister = {
   DraftTemplate,
   Templates,
   TemplateSec,
-  ArisingFile
+  ArisingFile,
+  ModuleAdding,
+  MajorFunctionAdding,
+  SubFunctionAdding,
+  ServiceAdding
 };
 
 export const initDFMComponents = () => {

@@ -674,7 +674,36 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
                             </div>
 
                         </div>
+                        <div className="col-md-12 col-sm-12 col-xs-12 reference-div" >
+                            <div className="col-md-12 col-sm-12  col-xs-12" >
 
+                                <ul style={{
+                                    maxHeight: "250px",
+                                    overflowY: "scroll", border: "1px solid rgb(69 69 69 / 18%)", padding: "10px"
+                                }}>
+                                    <li>For verification</li>
+                                    <li>Submitting the draft notice.</li>
+                                    <li>For verification</li>
+                                    <li>Submitting the draft notice.</li>
+                                    <li>For verification</li>
+                                    <li>Submitting the draft notice.</li>
+                                    <li>For verification</li>
+                                    <li>Submitting the draft notice.</li>
+                                    <li>For verification</li>
+                                    <li>Submitting the draft notice.</li>
+                                    <li>For verification</li>
+                                    <li>Submitting the draft notice.</li>
+                                    <li>For verification</li>
+                                    <li>Submitting the draft notice.</li>
+                                    <li>For verification</li>
+                                    <li>Submitting the draft notice.</li>
+
+
+                                </ul>
+                            </div>
+
+
+                        </div>
 
 
                     </div>
@@ -755,66 +784,69 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
                     </div>
 
 
-                    {/* <div class="card-checkbox" >
-
-                        <CardLabel className="card-label-file">{`${t("NOTE")}`}</CardLabel>
-                        <CheckBox t={t} optionKey="name" checked={checkNote}
-                            value={checkNote} onChange={(e) => handleNoteChange(e)} disable={checkNote} />
-
-                    </div>
-                    <div class="card-checkbox">
-                        <CardLabel className="card-label-file" >{`${t("ENQUIRY")}`}</CardLabel>  <CheckBox t={t} optionKey="name" checked={checkEnquiry}
-                            value={checkEnquiry} onChange={(e) => handleEnquiryChange(e)} />
-                    </div>
-                    <div >
-                        <CardLabel className="card-label-file"  >{`${t("DRAFTING")}`} </CardLabel> <CheckBox t={t} optionKey="name" checked={checkDraft}
-                            value={checkDraft} onChange={(e) => handleDraftChange(e)} />
-
-                    </div> */}
                     <div className="row card-file"  >
                         <div className="col-md-12 col-sm-12">
                             <div className="col-md-6 search-file">
 
+                                <div class="link-file">
+
+                                    <LinkButton
+                                        label={t("+ADD_REFERENCE_HERE")}
+                                        className="file-link-button"
+                                    />
+                                </div>
+                                <div class="link-file">
+                                    <LinkButton
+                                        label={t("ADD")}
+                                        className="file-link-button"
+
+
+                                    />
+                                </div>
+                                <div class="link-file-sec" >
+                                    <LinkButton
+                                        label={t("REMOVE")}
+                                        className="file-link-button"
+
+
+                                    />
+                                </div>
+
+                            </div>
+                            <div className="col-md-6 search-file"  >
                                 <TextInput
                                     t={t}
                                     type={"text"}
                                     optionKey="i18nKey"
                                     name="RegistrationNo"
-                                    placeholder={t("shows_subject_from_application_with_edit_bitton")}
+                                    placeholder={t("SEARCH_SELECT_AUTO_NOTES")}
                                 />
-
-                            </div>
-                            <div className="col-md-6 search-file" >
-
-                                <ul>
+                                <ul style={{
+                                    maxHeight: "120px",
+                                    overflowY: "scroll", border: "1px solid rgb(69 69 69 / 18%)", padding: "10px"
+                                }}>
                                     <li>For verification</li>
                                     <li>Submitting the draft notice.</li>
+                                    <li>For verification</li>
+                                    <li>Submitting the draft notice.</li>
+                                    <li>For verification</li>
+                                    <li>Submitting the draft notice.</li>
+                                    <li>For verification</li>
+                                    <li>Submitting the draft notice.</li>
+                                    <li>For verification</li>
+                                    <li>Submitting the draft notice.</li>
+                                    <li>For verification</li>
+                                    <li>Submitting the draft notice.</li>
+                                    <li>For verification</li>
+                                    <li>Submitting the draft notice.</li>
+                                    <li>For verification</li>
+                                    <li>Submitting the draft notice.</li>
+
+
                                 </ul>
                             </div>
                         </div>
-                        <div class="link-file">
 
-                            <LinkButton
-                                label={t("+ADD_REFERENCE_HERE")}
-                                className="file-link-button"
-                            />
-                        </div>
-                        <div class="link-file">
-                            <LinkButton
-                                label={t("ADD")}
-                                className="file-link-button"
-
-
-                            />
-                        </div>
-                        <div class="link-file-sec" >
-                            <LinkButton
-                                label={t("REMOVE")}
-                                className="file-link-button"
-
-
-                            />
-                        </div>
                         <div class="textarea-draft">
 
                             <TextArea
