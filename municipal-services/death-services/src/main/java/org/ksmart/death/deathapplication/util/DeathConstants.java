@@ -155,4 +155,8 @@ public class DeathConstants {
     public static final String CR_MDMS_DEATH_NEW_WF_JSONPATH = "$.MdmsRes.birth-death-service.WorkFlowDeath";
     public static final String CR_MDMS_WORKFLOW_NEW = "WorkFlowDeath";
 
+
+
+    public static final String NOT_APPLICABLE = "NOT_APPLICABLE";
+
 }
