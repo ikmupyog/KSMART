@@ -371,6 +371,16 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
         InformantMobileNo,
         DeathSignedOfficerDesignation,
         InformantAddress,
+        InformantOfficeAuthority,
+        InformantPENNo,
+        InformantOfficeAddress,
+        uploadedFile,
+        uploadedFile1,
+        uploadedFile2,
+        uploadedFile3,
+        uploadedFile4,
+        uploadedFile5
+
       });
     }
   };

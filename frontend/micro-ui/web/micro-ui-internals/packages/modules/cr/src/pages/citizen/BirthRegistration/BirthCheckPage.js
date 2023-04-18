@@ -93,7 +93,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
       return null;
     }
   };
-
+// 
   // useEffect(() => {
   //   if (isInitialRender) {
   //     if (formData?.InitiatorinfoDetails?.isInitiatorDeclaration != null) {

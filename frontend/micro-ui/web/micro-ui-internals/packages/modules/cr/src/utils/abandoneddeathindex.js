@@ -558,27 +558,27 @@ export const convertToAbandonedDeathRegistration = (data = {}) => {
         DeathAbandonedDocuments: [
           {
               DocumentType: "Letter form the Informer/Notifier Official",
-              filestoreId: data?.InitiatorAbandoned?.file
+              filestoreId: data?.InitiatorAbandoned?.uploadedFile
           },
           {
               DocumentType: "Copy of the FIR",
-              filestoreId: data?.InitiatorAbandoned?.file1
+              filestoreId: data?.InitiatorAbandoned?.uploadedFile1
           },
           {
               DocumentType: "Inquest Report",
-              filestoreId: data?.InitiatorAbandoned?.file2
+              filestoreId: data?.InitiatorAbandoned?.uploadedFile2
           },
           {
               DocumentType: "Post-Mortem Report",
-              filestoreId: data?.InitiatorAbandoned?.file3
+              filestoreId: data?.InitiatorAbandoned?.uploadedFile3
           },
           {
               DocumentType: "Medical Certificate of Cause of Death",
-              filestoreId: data?.InitiatorAbandoned?.file4
+              filestoreId: data?.InitiatorAbandoned?.uploadedFile4
           },
           {
               DocumentType: "Court Order",
-              filestoreId: data?.InitiatorAbandoned?.file5
+              filestoreId: data?.InitiatorAbandoned?.uploadedFile5
           }
       ],
         // Initiator: {
