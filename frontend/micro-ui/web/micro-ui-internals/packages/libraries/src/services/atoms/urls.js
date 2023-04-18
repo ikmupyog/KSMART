@@ -106,6 +106,7 @@ const Urls = {
     updatepde: "/tl-services/pde/_update",
     updatepdewf: "/tl-services/pde/_updatewf",
     createcorrection: "/tl-services/correction/_create",
+    updatecorrection: "/tl-services/correction/_update",
   },
   cr: {
     create: "/birth-services/cr/createbirth",
