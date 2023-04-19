@@ -25,7 +25,7 @@ import { convertEpochToDate } from "../../../utils";
 import moment from "moment";
 import { formatApiParams } from "../../../utils/birthInclusionParams";
 
-const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocuments, navigationData }) => {
+const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocuments, navigationData, navigateAcknowledgement }) => {
   let formData = {};
   let validation = {};
   let birthInclusionFormData = {};
@@ -40,6 +40,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
   const [selectedInclusionItem, setSelectedInclusionItem] = useState([]);
   const [selectedBirthData, setSelectedBirthData] = useState({});
   const [selectedFieldType, setSelectedFieldType] = useState("");
+  const history = useHistory();
 
   useEffect(async () => {
     birthInclusionFormData = await initializeBirthInclusionObject(BirthCorrectionDocuments, navigationData, sex, cmbPlace);
@@ -73,31 +74,37 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
 
   const onUploadDocSubmit = ({ fileData, documentCondition }) => {
     console.log("upload response==", selectedFieldType, documentCondition, fileData, selectedInclusionItem);
-    if (fileData && fileData?.length > 0) {
-      const selectedDocIds = fileData.map((item) => item.documentId);
-      setSelectedDocs(selectedDocIds);
-    }
-
+    
     let tempObj = { ...birthInclusionFormsObj };
-    console.log("temp--obj==",fileData, tempObj, tempObj[selectedFieldType]);
     let tempFieldType = tempObj[selectedFieldType];
-    tempObj = {
-      ...tempObj,
-      [selectedFieldType]: {
-        ...tempFieldType,
-        Documents: fileData,
-        documentCondition,
-        selectedDocType: selectedFieldType,
-        isEditable: true,
-        isFocused: true,
-        isDisabled: false,
-      },
-    };
 
-    console.log("temp--Obj--after==",tempObj);
+    console.log("temp--obj==", fileData, tempObj, tempObj[selectedFieldType]);
+  
+      if (fileData && fileData?.length > 0) {
+        const selectedDocIds = fileData.map((item) => item.documentId);
+        setSelectedDocs(selectedDocIds);
+      }
+  
+      tempObj = {
+        ...tempObj,
+        [selectedFieldType]: {
+          ...tempFieldType,
+          Documents: fileData,
+          documentCondition,
+          selectedDocType: selectedFieldType,
+          isEditable: true,
+          isFocused: true,
+          isDisabled: false,
+        },
+      };
 
-    setbirthInclusionFormsObj(tempObj);
-    setShowModal(false);
+      console.log("temp--Obj--after==", tempObj);
+
+      setbirthInclusionFormsObj(tempObj);
+      setShowModal(false);
+    // } else {
+    //   setFileUploadError("You have to upload following documents to make changes in the field");
+    // }
   };
 
   // const { register, control, handleSubmit, reset, getValues, watch, setFocus, errors } = useForm({
@@ -130,14 +137,15 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
     setbirthInclusionFormsObj(tempObj);
   };
 
+  const onDocUploadSuccess = (data) =>{
+    console.log("success==",data);
+    navigateAcknowledgement(data);
+  }
+
   const onSubmitBirthInclusion = () => {
     const formattedResp = formatApiParams(birthInclusionFormsObj, navigationData);
     console.log("formattedResp", formattedResp);
-    mutation.mutate(formattedResp);
-    history.push({
-      pathname: `/digit-ui/citizen/cr/birth-inclusion-acknowledgement`
-      // state: { inclusionData:data }
-    });
+    mutation.mutate(formattedResp,{ onSuccess: onDocUploadSuccess });
   };
 
   const formatDob = (date) => {
@@ -547,7 +555,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   type={"text"}
                   name="HouseNameEn"
                   defaultValue={birthInclusionFormsObj?.PRESENT_ADDRESS?.curValue?.houseNameEn}
-                  onChange={(e) => onPresentAddressChange(e, "houseNameEn")}
+                  onBlur={(e) => onPresentAddressChange(e, "houseNameEn")}
                   placeholder={`${t("CR_HOUSE_NO_AND_NAME_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
@@ -561,7 +569,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   // optionKey="i18nKey"
                   name="LocalityEn"
                   defaultValue={birthInclusionFormsObj?.PRESENT_ADDRESS?.curValue?.localityEn}
-                  onChange={(e) => onPresentAddressChange(e, "localityEn")}
+                  onBlur={(e) => onPresentAddressChange(e, "localityEn")}
                   placeholder={`${t("CR_LOCALITY_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
@@ -575,7 +583,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   // optionKey="i18nKey"
                   name="Street"
                   defaultValue={birthInclusionFormsObj?.PRESENT_ADDRESS?.curValue?.streetEn}
-                  onChange={(e) => onPresentAddressChange(e, "streetEn")}
+                  onBlur={(e) => onPresentAddressChange(e, "streetEn")}
                   placeholder={`${t("CR_STREET_EN")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
@@ -600,7 +608,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   type={"text"}
                   name="HouseNameMl"
                   defaultValue={birthInclusionFormsObj?.PRESENT_ADDRESS?.curValue?.houseNameMl}
-                  onChange={(e) => onPresentAddressChange(e, "houseNameMl")}
+                  onBlur={(e) => onPresentAddressChange(e, "houseNameMl")}
                   placeholder={`${t("CR_HOUSE_NO_AND_NAME_ML")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
@@ -612,7 +620,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   type={"text"}
                   name="LocalityMl"
                   defaultValue={birthInclusionFormsObj?.PRESENT_ADDRESS?.curValue?.localityMl}
-                  onChange={(e) => onPresentAddressChange(e, "localityMl")}
+                  onBlur={(e) => onPresentAddressChange(e, "localityMl")}
                   placeholder={`${t("CR_LOCALITY_ML")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
@@ -624,7 +632,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
                   type={"text"}
                   name="StreetMl"
                   defaultValue={birthInclusionFormsObj?.PRESENT_ADDRESS?.curValue?.streetMl}
-                  onChange={(e) => onPresentAddressChange(e, "streetMl")}
+                  onBlur={(e) => onPresentAddressChange(e, "streetMl")}
                   placeholder={`${t("CR_STREET_ML")}`}
                   // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
                 />
@@ -637,7 +645,7 @@ const BirthInclusionEditPage = ({ cmbNation, sex, cmbPlace, BirthCorrectionDocum
             <ButtonContainer>
               <div style={{ marginTop: "2.8rem" }}>
                 <span>
-                  <EditButton selected={true} label={"Submit"}  onClick={onSubmitBirthInclusion}/>
+                  <EditButton selected={true} label={"Submit"} onClick={onSubmitBirthInclusion} />
                 </span>
               </div>
             </ButtonContainer>
