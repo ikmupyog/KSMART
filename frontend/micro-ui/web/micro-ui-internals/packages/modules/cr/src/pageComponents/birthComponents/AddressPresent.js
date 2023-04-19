@@ -54,34 +54,63 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
     let cmbFilterVillage = [];
 
     useEffect(() => {
-
-        if (isInitialRender) {
-        if (cmbLB.length > 0) {
-            currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
-            //console.log(currentLB);
-            // setAdrsLBName(currentLB[0]);
-            if (cmbCountry.length > 0 && currentLB.length > 0) {
-                cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
-                setaddressCountry(cmbFilterCountry[0]);
-                if (isPrsentAddress) {
-                    setpermtaddressCountry(cmbFilterCountry[0]);
+        if (isInitialRender && countryvalue === "IND" && value === "kl" &&
+            (formData?.AddressBirthDetails?.presentaddressStateName === null || formData?.AddressBirthDetails?.presentaddressStateName === "" ||
+                formData?.AddressBirthDetails?.presentaddressStateName === undefined)) {
+            if (cmbLB.length > 0) {
+                currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
+                //console.log(currentLB);
+                // setAdrsLBName(currentLB[0]);
+                if (cmbCountry.length > 0 && currentLB.length > 0) {
+                    cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
+                    setaddressCountry(cmbFilterCountry[0]);
+                    if (isPrsentAddress) {
+                        setpermtaddressCountry(cmbFilterCountry[0]);
+                    }
+                    setCountryValue(cmbFilterCountry[0].countrycode);
                 }
-                setCountryValue(cmbFilterCountry[0].countrycode);
-            }
-            if (cmbState.length > 0 && currentLB.length > 0) {
-                cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
-                setaddressStateName(cmbFilterState[0]);
-                if (isPrsentAddress) {
-                    setpermtaddressStateName(cmbFilterState[0]);
+                if (cmbState.length > 0 && currentLB.length > 0) {
+                    cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
+                    setaddressStateName(cmbFilterState[0]);
+                    if (isPrsentAddress) {
+                        setpermtaddressStateName(cmbFilterState[0]);
+                    }
+                    setValue(cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode)[0].code);
                 }
-                setValue(cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode)[0].code);
+                // if (cmbVillage.length > 0 && currentLB.length > 0) {
+                //     cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
+                //     setLbsVillagevalue(cmbFilterVillage);
+                // }
+                setIsInitialRender(false);
             }
-            // if (cmbVillage.length > 0 && currentLB.length > 0) {
-            //     cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
-            //     setLbsVillagevalue(cmbFilterVillage);
-            // }
-            setIsInitialRender(false);
-        }
+        } else if (isInitialRender && countryvalue === "IND" && value === "kl" && formData?.AddressBirthDetails?.presentaddressStateName != null) {
+     
+            if (cmbLB.length > 0) {
+                currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
+                //console.log(currentLB);
+                // setAdrsLBName(currentLB[0]);
+                if (cmbCountry.length > 0) {
+                    cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === formData?.AddressBirthDetails?.presentaddressCountry.code);
+                    setaddressCountry(cmbFilterCountry[0]);
+                    if (isPrsentAddress) {
+                        setpermtaddressCountry(cmbFilterCountry[0]);
+                    }
+                    setCountryValue(cmbFilterCountry[0].countrycode);
+                }
+                if (cmbState.length > 0) {
+                    cmbFilterState = cmbState.filter((cmbState) => cmbState.code === formData?.AddressBirthDetails?.presentaddressStateName.code);
+                    setaddressStateName(cmbFilterState[0]);
+                    if (isPrsentAddress) {
+                        setpermtaddressStateName(cmbFilterState[0]);
+                    }
+                    setValue(cmbState.filter((cmbState) => cmbState.code === formData?.AddressBirthDetails?.presentaddressStateName.code));
+                }
+                // if (cmbVillage.length > 0 && currentLB.length > 0) {
+                //     cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
+                //     setLbsVillagevalue(cmbFilterVillage);
+                // }
+                setIsInitialRender(false);
+            }
         }
     }, [cmbLB]);
 
@@ -145,7 +174,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
         setCountryValue(value.countrycode);
         if (isPrsentAddress) {
             setpermtaddressCountry(value);
-        } 
+        }
     }
     function setSelectaddressStateName(value) {
         setaddressStateName(value);
@@ -160,7 +189,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
         // }
         if (isPrsentAddress) {
             setpermtaddressStateName(value);
-        } 
+        }
     }
 
     const goNext = () => {
@@ -172,47 +201,47 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
         return (
             <React.Fragment>
                 {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!presentaddressCountry}> */}
-                    <div className="row">
-                        <div className="col-md-12">
-                            <h1 className="headingh1">
-                                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ADDRESS")}`}</span>{" "}
-                            </h1>
-                        </div>
+                <div className="row">
+                    <div className="col-md-12">
+                        <h1 className="headingh1">
+                            <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_ADDRESS")}`}</span>{" "}
+                        </h1>
                     </div>
-                    <div className="row">
+                </div>
+                <div className="row">
+                    <div className="col-md-6">
+                        <CardLabel>
+                            {`${t("CS_COMMON_COUNTRY")}`}
+                            <span className="mandatorycss">*</span>
+                        </CardLabel>
+                        <Dropdown
+                            t={t}
+                            optionKey="name"
+                            isMandatory={false}
+                            option={cmbCountry}
+                            selected={presentaddressCountry}
+                            select={setSelectaddressCountry}
+                            disable={isDisableEdit}
+                        />
+                    </div>
+                    {countryvalue === "IND" && (
                         <div className="col-md-6">
                             <CardLabel>
-                                {`${t("CS_COMMON_COUNTRY")}`}
+                                {`${t("CS_COMMON_STATE")}`}
                                 <span className="mandatorycss">*</span>
                             </CardLabel>
                             <Dropdown
                                 t={t}
                                 optionKey="name"
                                 isMandatory={false}
-                                option={cmbCountry}
-                                selected={presentaddressCountry}
-                                select={setSelectaddressCountry}
+                                option={cmbState}
+                                selected={presentaddressStateName}
+                                select={setSelectaddressStateName}
                                 disable={isDisableEdit}
                             />
                         </div>
-                        {countryvalue === "IND" && (
-                            <div className="col-md-6">
-                                <CardLabel>
-                                    {`${t("CS_COMMON_STATE")}`}
-                                    <span className="mandatorycss">*</span>
-                                </CardLabel>
-                                <Dropdown
-                                    t={t}
-                                    optionKey="name"
-                                    isMandatory={false}
-                                    option={cmbState}
-                                    selected={presentaddressStateName}
-                                    select={setSelectaddressStateName}
-                                    disable={isDisableEdit}
-                                />
-                            </div>
-                        )}
-                    </div>
+                    )}
+                </div>
                 {/* </FormStep> */}
             </React.Fragment>
         );

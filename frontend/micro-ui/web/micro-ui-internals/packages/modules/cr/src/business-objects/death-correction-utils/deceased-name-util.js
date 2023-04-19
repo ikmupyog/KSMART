@@ -1,8 +1,12 @@
+ import { DEATH_CORRECTION_FIELD_NAMES } from "../../config/constants";
+ 
+ 
  export const getFilteredDeceasedNameData = (selectedData, correctionData) => {
    let filteredDocuments = getFilteredDocuments(correctionData);
    const computedInitialValue = computeInitialValue(selectedData);
    const computedCurrentValue = computeCurrentValue(selectedData);
    let selectedDodObj = {
+    fieldName: DEATH_CORRECTION_FIELD_NAMES.DECEASED_NAME,
    initialValue: computedInitialValue,
    curValue: computedCurrentValue,
    isDisabled: true,

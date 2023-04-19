@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation,  useHistory, useRouteMatch } from "react-router-dom";
 import { Loader } from "@egovernments/digit-ui-react-components";
 import DeathCorrectionEditPage from "./DeathCorrectionEditPage";
 
 function DeathCorrectionPage() {
   const stateId = Digit.ULBService.getStateId();
+  const match = useRouteMatch();
   let location = useLocation();
+  const history = useHistory();
   let navigationData = location?.state?.correctionData;
 
   const { data: correctionsData = {}, isSuccess, isError, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
@@ -16,6 +18,13 @@ function DeathCorrectionPage() {
 
   const { data: place = {}, isLoading: isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PlaceMasterDeath");
   const { data: Sex, isLoading: isGenderLoad } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
+
+  const createProperty = async () => {
+    history.push({
+      pathname: `/digit-ui/citizen/cr/death-correction-acknowledgement`
+    });
+  };
+
 
   let cmbPlace = [];
   let sex = [];
@@ -49,6 +58,7 @@ function DeathCorrectionPage() {
         cmbPlace={cmbPlace}
         DeathCorrectionDocuments={DeathCorrectionDocuments}
         navigationData={navigationData}
+        onSubmitAcknowledgement={createProperty}
         />
         );
       } else {

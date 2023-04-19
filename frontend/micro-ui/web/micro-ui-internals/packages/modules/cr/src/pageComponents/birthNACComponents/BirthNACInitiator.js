@@ -77,8 +77,8 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
   const storedOwnerData = null;
   let menu = [];
   let orderMenu = [
-    { i18nKey: `Alive`, code: "Yes", value: true },
-    { i18nKey: `Expired`, code: "No", value: false },
+    { i18nKey: `Yes`, code: "Yes", value: true },
+    { i18nKey: `No`, code: "No", value: false },
   ];
 
   let ownerappmap = {
@@ -277,7 +277,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
   }
 
   function setSelectinitiatorAddress(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z-0-9 ]*$") != null) {
       setinitiatorAddress(e.target.value.length <= 200 ? e.target.value : e.target.value.substring(0, 200));
     }
   }
@@ -509,6 +509,7 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
       newVal.dob = Date.parse(item.dob);
       newVal.nacorderofChildren = parseInt(item.nacorderofChildren);
       newVal.sex = item.sex?.code;
+      newVal.isAlive = item.isAlive?.value;
       return newVal;
     });
 
@@ -558,7 +559,6 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
   };
   return (
     <React.Fragment>
-      {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
       {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
       <FormStep
@@ -571,19 +571,18 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
           !initiatorAadhar ||
           !initiatorMobile ||
           !initiatorAddress ||
-          ownerState[0].slNo === "" ||
           ownerState[0].dob === null ||
           ownerState[0].childNameEn === "" ||
           ownerState[0].childNameMl === "" ||
           ownerState[0].sex === "" ||
-          ownerState[0].nacorderofChildren === ""
-          //||
-          // !aadressFile ||
-          // !proofFile ||
-          // !certificateFile ||
-          // !motherIdFile ||
-          // !fatherIdFile ||
-          // !medicalFile
+          ownerState[0].nacorderofChildren === "" ||
+          ownerState[0].isAlive === "" ||
+          !aadressFile ||
+          !proofFile ||
+          !certificateFile ||
+          !motherIdFile ||
+          !fatherIdFile ||
+          !medicalFile
         }
       >
         <div>
@@ -722,8 +721,8 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                         type={"number"}
                         optionKey="i18nKey"
                         name="slNo"
-                        value={field?.slNo}
-                        onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^0-9]/gi, ""), "slNo")}
+                        value={field?.slNo ? field.slNo : index + 1}
+                        //onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^0-9]/gi, ""), "slNo")}
                       />
                     </div>
                     <div className="col-md-3">
@@ -824,16 +823,24 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                     <CardLabel>
                       Alive? Yes/No<span className="mandatorycss">*</span>
                     </CardLabel>
-                    <div className="col-md-3">
-                      <CheckBox
+                    {/* <CheckBox
                         t={t}
                         label={field.isAlive ? "Yes" : "NO"}
                         name="isAlive"
                         onChange={(e) => handleOwnerInputField(index, e.target.checked, "isAlive")}
                         value={field?.isAlive}
                         checked={field?.isAlive}
-                      />
-                    </div>
+                      /> */}
+                    <Dropdown
+                      t={t}
+                      optionKey="code"
+                      //isMandatory={true}
+                      option={orderMenu}
+                      selected={field?.isAlive}
+                      // select={setselectGender}
+                      //placeholder={`${t("CR_GENDER")}`}
+                      select={(e) => handleOwnerInputField(index, e, "isAlive")}
+                    />
                   </div>
                   {ownerState.length === index + 1 && (
                     <div className="col-md-1">
