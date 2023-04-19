@@ -1242,7 +1242,7 @@ serviceMaps:
 
       - jsonPath: $.deathAbandonedDtls.*.InformantDetailsDeathAbandoned.InformantName
 
-      - jsonPath: $.deathAbandonedDtls.*.InformantDetailsDeathAbandoned.InformantAadharNo
+      - jsonPath: $.deathAbandonedDtls.*.InformantDetailsDeathAbandoned.InformantAadhaarNo
 
       - jsonPath: $.deathAbandonedDtls.*.InformantDetailsDeathAbandoned.InformantMobileNo
 

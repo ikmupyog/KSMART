@@ -616,8 +616,13 @@ public class DeathEnrichment implements BaseEnrichment{
                 deathFamilyDtls.setMotherAadharNo(deathFamilyEnc.getMotherAadharNo());
                 deathFamilyDtls.setSpouseAadhaar(deathFamilyEnc.getSpouseAadhaar());
                 DeathAbandonedInformantDtls deathInformant =deathdtls.getDeathInformantDtls() ;
+                System.out.println(deathInformant);
                 if (deathInformant!=null){
+                    System.out.println("In");
+                   System.out.println(deathInformant);
                     if(deathInformant.getInformantAadhaarNo()!=null){
+                        System.out.println("Inv Aadhaar");
+                        System.out.println(deathInformant.getInformantAadhaarNo());
                         DeathAbandonedInformantDtls deathInformantEnc = encryptionDecryptionUtil.encryptObject(deathInformant, "BndDetail", DeathAbandonedInformantDtls.class);
                         deathInformant.setInformantAadhaarNo(deathInformantEnc.getInformantAadhaarNo());
                     }                    
