@@ -81,10 +81,16 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
         formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressCountry ? "" : "");
     const [presentaddressStateName, setaddressStateName] = useState(formData?.AddressBirthDetails?.presentaddressStateName?.code ? formData?.AddressBirthDetails?.presentaddressStateName : formData?.ChildDetails?.AddressBirthDetails?.presentaddressStateName ? "" :
         formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressStateName ? "" : "");
-    const [countryvalue, setCountryValue] = useState(formData?.AddressBirthDetails?.presentaddressCountry?.code ? formData?.AddressBirthDetails?.presentaddressCountry.countrycode : formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry ? formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry :
-        formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressCountry ? formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressCountry : "")
+    let countrycode = "";
+    if (formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry === "COUNTRY_INDIA") {
+        countrycode = "IND"
+    } else {
+        countrycode = formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry
+    }
+    const [countryvalue, setCountryValue] = useState(formData?.AddressBirthDetails?.presentaddressCountry?.code ? formData?.AddressBirthDetails?.presentaddressCountry.countrycode : formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry ? countrycode :
+        formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressCountry ? countrycode : "IND")
     const [value, setValue] = useState(formData?.AddressBirthDetails?.presentaddressStateName?.code ? formData?.AddressBirthDetails?.presentaddressStateName.code : formData?.ChildDetails?.AddressBirthDetails?.presentaddressStateName ? formData?.ChildDetails?.AddressBirthDetails?.presentaddressStateName :
-        formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressStateName ? formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressStateName : "");
+        formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressStateName ? formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressStateName : "kl");
 
     //################################# Present Inside Kerala #########################################################################################################
 
@@ -168,6 +174,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
         formData?.StillBirthChildDetails?.AddressBirthDetails?.presentOutSideIndiaAdressMlB ? formData?.StillBirthChildDetails?.AddressBirthDetails?.presentOutSideIndiaAdressMlB : "");
     const [presentOutSideIndiaProvinceEn, setProvinceEn] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaProvinceEn ? formData?.AddressBirthDetails?.presentOutSideIndiaProvinceEn : formData?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaProvinceEn ? formData?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaProvinceEn :
         formData?.StillBirthChildDetails?.AddressBirthDetails?.presentOutSideIndiaProvinceEn ? formData?.StillBirthChildDetails?.AddressBirthDetails?.presentOutSideIndiaProvinceEn : "");
+
     const [presentOutSideIndiaProvinceMl, setProvinceMl] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaProvinceMl ? formData?.AddressBirthDetails?.presentOutSideIndiaProvinceMl : formData?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaProvinceMl ? formData?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaProvinceMl :
         formData?.StillBirthChildDetails?.AddressBirthDetails?.presentOutSideIndiaProvinceMl ? formData?.StillBirthChildDetails?.AddressBirthDetails?.presentOutSideIndiaProvinceMl : "");
     const [presentOutSideIndiaadrsVillage, setadrsVillage] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaadrsVillage?.code ? formData?.AddressBirthDetails?.presentOutSideIndiaadrsVillage : formData?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaadrsVillage ? "" :
@@ -190,10 +197,16 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
         formData?.StillBirthChildDetails?.AddressBirthDetails?.permtaddressCountry ? "" : "");
     const [permtaddressStateName, setpermtaddressStateName] = useState(formData?.AddressBirthDetails?.permtaddressStateName?.code ? formData?.AddressBirthDetails?.permtaddressStateName : formData?.ChildDetails?.AddressBirthDetails?.permtaddressStateName ? "" :
         formData?.StillBirthChildDetails?.AddressBirthDetails?.permtaddressStateName ? "" : "");
-    const [countryValuePermanent, setCountryValuePermanent] = useState(formData?.AddressBirthDetails?.permtaddressCountry?.code ? formData?.AddressBirthDetails?.permtaddressCountry.countrycode : formData?.ChildDetails?.AddressBirthDetails?.permtaddressCountry ? "" :
-        formData?.StillBirthChildDetails?.AddressBirthDetails?.permtaddressCountry ? "" : "");
+    let countryPermcode = "";
+    if (formData?.ChildDetails?.AddressBirthDetails?.permtaddressCountry === "COUNTRY_INDIA") {
+        countryPermcode = "IND"
+    } else {
+        countryPermcode = formData?.ChildDetails?.AddressBirthDetails?.permtaddressCountry
+    }
+    const [countryValuePermanent, setCountryValuePermanent] = useState(formData?.AddressBirthDetails?.permtaddressCountry?.code ? formData?.AddressBirthDetails?.permtaddressCountry.countrycode : formData?.ChildDetails?.AddressBirthDetails?.permtaddressCountry ? countryPermcode :
+        formData?.StillBirthChildDetails?.AddressBirthDetails?.permtaddressCountry ? countryPermcode : "IND");
     const [valuePermanent, setValuePermanent] = useState(formData?.AddressBirthDetails?.permtaddressStateName?.code ? formData?.AddressBirthDetails?.permtaddressStateName.code : formData?.ChildDetails?.AddressBirthDetails?.permtaddressStateName ? "" :
-        formData?.StillBirthChildDetails?.AddressBirthDetails?.permtaddressStateName ? "" : "");
+        formData?.StillBirthChildDetails?.AddressBirthDetails?.permtaddressStateName ? "" : "kl");
 
     //################################################# Permanent Inside Kerala ##########################################################################################
 
@@ -689,17 +702,17 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                 } else {
                     setPresentInsideKeralaPostOfficeError(false);
                 }
-                if (presentOutsideKeralaPostOfficeMl === null || presentOutsideKeralaPostOfficeMl.trim() == '' || presentOutsideKeralaPostOfficeMl.trim() == undefined) {
-                    setoutsideKeralaPostOfficeMl("");
-                    setPresentInsideKeralaPostOfficeError(true);
-                    validFlag = false;
-                    setToast(true);
-                    setTimeout(() => {
-                        setToast(false);
-                    }, 2000);
-                } else {
-                    setPresentInsideKeralaPostOfficeError(false);
-                }
+                // if (presentOutsideKeralaPostOfficeMl === null || presentOutsideKeralaPostOfficeMl.trim() == '' || presentOutsideKeralaPostOfficeMl.trim() == undefined) {
+                //     setoutsideKeralaPostOfficeMl("");
+                //     setPresentInsideKeralaPostOfficeError(true);
+                //     validFlag = false;
+                //     setToast(true);
+                //     setTimeout(() => {
+                //         setToast(false);
+                //     }, 2000);
+                // } else {
+                //     setPresentInsideKeralaPostOfficeError(false);
+                // }
                 if (presentOutsideKeralaLocalityNameEn === null || presentOutsideKeralaLocalityNameEn.trim() == '' || presentOutsideKeralaLocalityNameEn.trim() == undefined) {
                     setoutsideKeralaLocalityNameEn("");
                     setPresentInsideKeralaLocalityNameEnError(true);
@@ -869,7 +882,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
             //Jetheesh
 
             if (isPrsentAddress === false) {
-                if (countryvalue === "IND" && value === "kl") {
+                if (countryValuePermanent === "IND" && valuePermanent === "kl") {
                     if (permtaddressCountry == null || permtaddressCountry == undefined) {
                         setPermanentAddressCountryError(true);
                         validFlag = false;
@@ -1040,7 +1053,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                         setPresentInsideKeralaStreetNameEnError(false);
                     }
                 }
-                if (countryvalue === "IND" && value != "kl") {
+                if (countryValuePermanent === "IND" && valuePermanent != "kl") {
                     if (permtaddressCountry == null || permtaddressCountry == undefined) {
                         setPermanentAddressCountryError(true);
                         validFlag = false;
@@ -1123,17 +1136,17 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                     } else {
                         setPermanentInsideKeralaPostOfficeError(false);
                     }
-                    if (permntOutsideKeralaPostOfficeMl === null || permntOutsideKeralaPostOfficeMl.trim() == '' || permntOutsideKeralaPostOfficeMl.trim() == undefined) {
-                        setoutsideKeralaPostOfficeMl("");
-                        setPermanentInsideKeralaPostOfficeError(true);
-                        validFlag = false;
-                        setToast(true);
-                        setTimeout(() => {
-                            setToast(false);
-                        }, 2000);
-                    } else {
-                        setPermanentInsideKeralaPostOfficeError(false);
-                    }
+                    // if (permntOutsideKeralaPostOfficeMl === null || permntOutsideKeralaPostOfficeMl.trim() == '' || permntOutsideKeralaPostOfficeMl.trim() == undefined) {
+                    //     setoutsideKeralaPostOfficeMl("");
+                    //     setPermanentInsideKeralaPostOfficeError(true);
+                    //     validFlag = false;
+                    //     setToast(true);
+                    //     setTimeout(() => {
+                    //         setToast(false);
+                    //     }, 2000);
+                    // } else {
+                    //     setPermanentInsideKeralaPostOfficeError(false);
+                    // }
                     if (permntOutsideKeralaLocalityNameEn === null || permntOutsideKeralaLocalityNameEn.trim() == '' || permntOutsideKeralaLocalityNameEn.trim() == undefined) {
                         setoutsideKeralaLocalityNameEn("");
                         setPermanentInsideKeralaLocalityNameEnError(true);
@@ -1179,7 +1192,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                         setPermanentInsideKeralaHouseNameMlError(false);
                     }
                 }
-                if (countryvalue != "IND") {
+                if (countryValuePermanent != "IND") {
 
                     if (permtaddressCountry == null || permtaddressCountry == undefined) {
                         setPermanentAddressCountryError(true);
@@ -1332,13 +1345,15 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                 presentOutsideKeralaLocalityNameMl,
                 presentOutsideKeralaStreetNameMl,
                 presentOutsideKeralaHouseNameMl,
-                presentOutSideIndiaAdressEn,
-                presentOutSideIndiaAdressMl,
-                presentOutSideIndiaAdressEnB,
-                presentOutSideIndiaAdressMlB,
-                presentOutSideIndiaAdressMlB,
                 presentOutSideIndiaProvinceEn,
-                // presentOutSideCountry,
+                presentOutSideIndiaProvinceMl,
+                presentOutSideIndiaadrsVillage,
+                presentOutSideIndiaadrsCityTown,
+                presentOutSideIndiaPostCode,
+                presentOutSideIndiaAdressEn,
+                presentOutSideIndiaAdressEnB,
+                presentOutSideIndiaAdressMl,
+                presentOutSideIndiaAdressMlB,
                 isPrsentAddress,
 
                 permtaddressCountry,
@@ -1374,6 +1389,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                 permntOutsideIndiaLinetwoEn,
                 permntOutsideIndiaLinetwoMl,
                 permntOutsideIndiaprovinceEn,
+                permntOutsideIndiaprovinceMl,
                 permntOutsideIndiaVillage,
                 permntOutsideIndiaCityTown,
                 permanentOutsideIndiaPostCode,
@@ -1455,6 +1471,10 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                             setinsideKeralaStreetNameEn={setinsideKeralaStreetNameEn}
                             presentInsideKeralaStreetNameMl={presentInsideKeralaStreetNameMl}
                             setinsideKeralaStreetNameMl={setinsideKeralaStreetNameMl}
+                            value={value}
+                            setValue={setValue}
+                            countryvalue={countryvalue}
+                            setCountryValue={setCountryValue}
                             Districtvalues={Districtvalues}
                             setDistrictvalue={setDistrictvalue}
                             lbs={lbs}
@@ -1499,8 +1519,6 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                             isEditAdoption={isEditAdoption}
                             isEditBirthNAC={isEditBirthNAC}
                             formData={formData}
-                            value={value}
-                            setValue={setValue}
                         />
                     </div>
                 )}

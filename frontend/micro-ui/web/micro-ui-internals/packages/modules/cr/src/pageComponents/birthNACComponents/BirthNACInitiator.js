@@ -559,7 +559,6 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
   };
   return (
     <React.Fragment>
-      {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
       {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
       <FormStep
@@ -572,12 +571,12 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
           !initiatorAadhar ||
           !initiatorMobile ||
           !initiatorAddress ||
-          ownerState[0].slNo === "" ||
           ownerState[0].dob === null ||
           ownerState[0].childNameEn === "" ||
           ownerState[0].childNameMl === "" ||
           ownerState[0].sex === "" ||
           ownerState[0].nacorderofChildren === "" ||
+          ownerState[0].isAlive === "" ||
           !aadressFile ||
           !proofFile ||
           !certificateFile ||
@@ -722,8 +721,8 @@ const BirthNACInitiator = ({ config, onSelect, userType, formData, isEditStillBi
                         type={"number"}
                         optionKey="i18nKey"
                         name="slNo"
-                        value={field?.slNo}
-                        onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^0-9]/gi, ""), "slNo")}
+                        value={field?.slNo ? field.slNo : index + 1}
+                        //onChange={(e) => handleOwnerInputField(index, e.target.value.replace(/[^0-9]/gi, ""), "slNo")}
                       />
                     </div>
                     <div className="col-md-3">

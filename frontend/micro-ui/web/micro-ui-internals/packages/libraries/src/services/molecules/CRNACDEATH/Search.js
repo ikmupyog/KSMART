@@ -41,19 +41,19 @@ export const CRNACDeathsearch = {
 
   application: async (tenantId, filters = {}) => {
     const response = await CRNACDeathService.CRNACDeathsearch({ tenantId, filters });
-    console.log(response.deathCertificateDtls);
-    return response.deathCertificateDtls[0];
+    console.log(response.deathNACDtls);
+    return response.deathNACDtls[0] || {};
   },
 
   numberOfApplications: async (tenantId, filters = {}) => {
     const response = await CRNACDeathService.CRNACDeathsearch({ tenantId, filters });
-    return response.deathCertificateDtls;
+    return response.deathNACDtls;
   },
 
   applicationDetails: async (t, tenantId, DeathACKNo, userType) => {
     const filter = { DeathACKNo };
     const response = await CRNACDeathsearch.application(tenantId, filter);
-    console.log(response);
+    console.log(response, "response");
     // const propertyDetails =
     //   response?.tradeLicenseDetail?.additionalDetail?.propertyId &&
     //   (await Digit.PTService.search({ tenantId, filters: { propertyIds: response?.tradeLicenseDetail?.additionalDetail?.propertyId } }));
@@ -65,6 +65,10 @@ export const CRNACDeathsearch = {
     }
 
     let employeeResponse = [];
+    const Deathdetails = {
+      title: "Death SUMMARY DETAILS",
+      asSectionHeader: true,
+    }
     const InformationDeath = {
       title: "CR_DEATH_INFORMATION",
       asSectionHeader: true,
@@ -73,16 +77,16 @@ export const CRNACDeathsearch = {
           title: "PDF_DECEASED_NAME",
           value:
             response?.InformationDeath?.DeceasedFirstNameEn +
-              
-              response?.InformationDeath?.DeceasedMiddleNameEn +
-               
-              response?.InformationDeath?.DeceasedLastNameEn +
-              " / " +
-              response?.InformationDeath?.DeceasedFirstNameMl +
-              " " +
-              response?.InformationDeath?.DeceasedMiddleNameMl +
-              " " +
-              response?.InformationDeath?.DeceasedLastNameMl || "NA",
+
+            response?.InformationDeath?.DeceasedMiddleNameEn +
+
+            response?.InformationDeath?.DeceasedLastNameEn +
+            " / " +
+            response?.InformationDeath?.DeceasedFirstNameMl +
+            " " +
+            response?.InformationDeath?.DeceasedMiddleNameMl +
+            " " +
+            response?.InformationDeath?.DeceasedLastNameMl || "NA",
         },
 
         { title: "PDF_BIRTH_CHILD_SEX", value: response?.InformationDeath?.DeceasedGender || "NA" },
@@ -93,22 +97,22 @@ export const CRNACDeathsearch = {
         {
           title: "CR_ADDRESS",
           value:
-          response?.AddressBirthDetails?.presentInsideKeralaHouseNameEn + "," +
+            response?.AddressBirthDetails?.presentInsideKeralaHouseNameEn + "," +
             response?.AddressBirthDetails?.presentInsideKeralaStreetNameEn + "," +
-              response?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn 
-               || "NA",
+            response?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn
+            || "NA",
         },
         {
           title: "PDF_CR_NAME_WIFE_HUSBAND",
-          value: response?.FamilyInformationDeath?.SpouseNameEn + " / " + response?.FamilyInformationDeath?.SpouseNameML || "NA ",
+          value: response?.InformationDeath?.SpouseNameEn + " / " + response?.InformationDeath?.SpouseNameML || "NA ",
         },
         {
           title: "PDF_BIRTH_NAME_OF_FATHER",
-          value: response?.FamilyInformationDeath?.FatherNameEn + " / " + response?.FamilyInformationDeath?.FatherNameMl || "NA",
+          value: response?.InformationDeath?.FatherNameEn + " / " + response?.InformationDeath?.FatherNameMl || "NA",
         },
         {
           title: "PDF_BIRTH_NAME_OF_MOTHER",
-          value: response?.FamilyInformationDeath?.MotherNameEn + " / " + response?.FamilyInformationDeath?.MotherNameMl || "NA",
+          value: response?.InformationDeath?.MotherNameEn + " / " + response?.InformationDeath?.MotherNameMl || "NA",
         },
         { title: "PDF_PLACE_OF_DEATH", value: response?.InformationDeath?.DeathPlaceHospitalNameEn + "/" + response?.InformationDeath?.DeathPlaceHospitalNameMl || "NA" },
 
@@ -196,6 +200,7 @@ export const CRNACDeathsearch = {
     //   response && employeeResponse.push(details);
     // }
 
+    response && employeeResponse.push(Deathdetails);
     response && employeeResponse.push(InformationDeath);
     // response && employeeResponse.push(DeathPlaceHome);
     // response && employeeResponse.push(FamilyInformationDeath);

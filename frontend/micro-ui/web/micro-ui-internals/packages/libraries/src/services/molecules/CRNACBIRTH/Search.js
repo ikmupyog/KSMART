@@ -96,38 +96,131 @@ export const CRNACsearch = {
       ],
     };
     const PresentAddressBirthDetailsInfo = {
-      title: "CR_PRESENT_ADDRESS_INFORMATION_HEADER",
+      title: "CR_ADDRESS_INFORMATION_HEADER",
       values: [
-        { title: "CR_BIRTH_PERS_HO_NAME_LABEL", value: response?.AddressBirthDetails.presentInKeralaAdrHouseNameEn || "CR_NOT_RECORDED" },
-        { title: "CR_BIRTH_PERS_STREET_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaStreetNameEn || "CR_NOT_RECORDED" },
-        { title: "CR_BIRTH_PERS_LOCALITY_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaLocalityNameEn || "CR_NOT_RECORDED" },
-        { title: "CR_BIRTH_PERS_VILLAGE_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaVillage || "CR_NOT_RECORDED" },
-        { title: "CR_BIRTH_PERS_TALUK_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaTaluk || "CR_NOT_RECORDED" },
-        { title: "CR_BIRTH_PERS_POSTOFFICE_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaPostOffice || "CR_NOT_RECORDED" },
-        { title: "CR_BIRTH_PERS_PINCODE_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaPincode || "CR_NOT_RECORDED" },
-        { title: "CR_BIRTH_PERS_DISTRICT_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaDistrict || "CR_NOT_RECORDED" },
         {
-          title: "CR_BIRTH_PERS_STATE_LABEL",
-          value: response?.AddressBirthDetails.presentaddressStateName || "CR_NOT_RECORDED",
+          title: "PDF_BIRTH_PRESENT_ADDRESS",
+          value:
+            response?.AddressBirthDetails.presentInsideKeralaHouseNameEn +
+            " , " +
+            response?.AddressBirthDetails.presentInsideKeralaStreetNameEn +
+            " , " +
+            response?.AddressBirthDetails.presentInsideKeralaLocalityNameEn +
+            " , " +
+            response?.AddressBirthDetails.presentInsideKeralaVillage +
+            " , " +
+            response?.AddressBirthDetails.presentInsideKeralaTaluk +
+            " , " +
+            response?.AddressBirthDetails.presentInsideKeralaDistrict +
+            " , " +
+            response?.AddressBirthDetails.presentaddressStateName +
+            " , " +
+            response?.AddressBirthDetails.presentaddressCountry +
+            " , " +
+            response?.AddressBirthDetails.presentInsideKeralaPostOffice +
+            " , " +
+            response?.AddressBirthDetails.presentInsideKeralaPincode,
         },
-        { title: "CR_BIRTH_PERS_COUNTRY_LABEL", value: response?.AddressBirthDetails.presentaddressCountry || "CR_NOT_RECORDED" },
+
+        {
+          value:
+            response?.AddressBirthDetails.presentInsideKeralaHouseNameMl +
+              " , " +
+              response?.AddressBirthDetails.presentInsideKeralaStreetNameMl +
+              " , " +
+              response?.AddressBirthDetails.presentInsideKeralaLocalityNameMl +
+              " , " +
+              response?.AddressBirthDetails.presentInsideKeralaVillage +
+              " , " +
+              response?.AddressBirthDetails.presentInsideKeralaTaluk +
+              " , " +
+              response?.AddressBirthDetails.presentInsideKeralaDistrict +
+              " , " +
+              response?.AddressBirthDetails.presentaddressStateName +
+              " , " +
+              response?.AddressBirthDetails.presentaddressCountry +
+              " , " +
+              response?.AddressBirthDetails.presentInsideKeralaPostOffice +
+              " , " +
+              response?.AddressBirthDetails.presentInsideKeralaPincode || "CR_NOT_RECORDED",
+        },
+
+        {
+          title: "PDF_BIRTH_PERMANENT_ADDRESS",
+          value:
+            response?.AddressBirthDetails.permntInKeralaAdrHouseNameEn +
+            " , " +
+            response?.AddressBirthDetails.permntInKeralaAdrStreetNameEn +
+            " , " +
+            response?.AddressBirthDetails.permntInKeralaAdrLocalityNameEn +
+            " , " +
+            response?.AddressBirthDetails.permntInKeralaAdrVillage +
+            " , " +
+            response?.AddressBirthDetails.permntInKeralaAdrTaluk +
+            " , " +
+            response?.AddressBirthDetails.permntInKeralaAdrDistrict +
+            " , " +
+            response?.AddressBirthDetails.permtaddressStateName +
+            " , " +
+            response?.AddressBirthDetails.permtaddressCountry +
+            " , " +
+            response?.AddressBirthDetails.permntInKeralaAdrPostOffice +
+            " , " +
+            response?.AddressBirthDetails.permntInKeralaAdrPincode,
+        },
+        {
+          value:
+            response?.AddressBirthDetails.permntInKeralaAdrHouseNameMl +
+            " , " +
+            response?.AddressBirthDetails.permntInKeralaAdrStreetNameMl +
+            " , " +
+            response?.AddressBirthDetails.permntInKeralaAdrLocalityNameMl +
+            " , " +
+            response?.AddressBirthDetails.permntInKeralaAdrVillage +
+            " , " +
+            response?.AddressBirthDetails.permntInKeralaAdrTaluk +
+            " , " +
+            response?.AddressBirthDetails.permntInKeralaAdrDistrict +
+            " , " +
+            response?.AddressBirthDetails.permtaddressStateName +
+            " , " +
+            response?.AddressBirthDetails.permtaddressCountry +
+            " , " +
+            response?.AddressBirthDetails.permntInKeralaAdrPostOffice +
+            " , " +
+            response?.AddressBirthDetails.permntInKeralaAdrPincode,
+        },
       ],
-    };
-    const PermanentAddressBirthDetailsInfo = {
-      title: "CR_PERMANENT_ADDRESS_INFORMATION_HEADER",
-      values: [
-        { title: "CR_BIRTH_PERM_HO_NAME_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrHouseNameEn || "CR_NOT_RECORDED" },
-        { title: "CR_BIRTH_PERM_STREET_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrStreetNameEn || "CR_NOT_RECORDED" },
-        { title: "CR_BIRTH_PERM_LOCALITY_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrLocalityNameEn || "CR_NOT_RECORDED" },
-        { title: "CR_BIRTH_PERM_WARD_LABEL", value: response?.AddressBirthDetails.permntInKeralaWardNo || "CR_NOT_RECORDED" },
-        { title: "CR_BIRTH_PERM_VILLAGE_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrVillage || "CR_NOT_RECORDED" },
-        { title: "CR_BIRTH_PERM_TALUK_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrTaluk || "CR_NOT_RECORDED" },
-        { title: "CR_BIRTH_PERM_POSTOFFICE_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrPostOffice || "CR_NOT_RECORDED" },
-        { title: "CR_BIRTH_PERM_PINCODE_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrPincode || "CR_NOT_RECORDED" },
-        { title: "CR_BIRTH_PERM_DISTRICT_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrDistrict || "CR_NOT_RECORDED" },
-        { title: "CR_BIRTH_PERM_STATE_LABEL", value: response?.AddressBirthDetails.permtaddressStateName || "CR_NOT_RECORDED" },
-        { title: "CR_BIRTH_PERM_COUNTRY_LABEL", value: response?.AddressBirthDetails.permtaddressCountry || "CR_NOT_RECORDED" },
-      ],
+      //     { title: "CR_BIRTH_PERS_HO_NAME_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaHouseNameEn || "CR_NOT_RECORDED" },
+      //     { title: "CR_BIRTH_PERS_STREET_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaStreetNameEn || "CR_NOT_RECORDED" },
+      //     { title: "CR_BIRTH_PERS_LOCALITY_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaLocalityNameEn || "CR_NOT_RECORDED" },
+      //     { title: "CR_BIRTH_PERS_VILLAGE_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaVillage || "CR_NOT_RECORDED" },
+      //     { title: "CR_BIRTH_PERS_TALUK_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaTaluk || "CR_NOT_RECORDED" },
+      //     { title: "CR_BIRTH_PERS_POSTOFFICE_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaPostOffice || "CR_NOT_RECORDED" },
+      //     { title: "CR_BIRTH_PERS_PINCODE_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaPincode || "CR_NOT_RECORDED" },
+      //     { title: "CR_BIRTH_PERS_DISTRICT_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaDistrict || "CR_NOT_RECORDED" },
+      //     {
+      //       title: "CR_BIRTH_PERS_STATE_LABEL",
+      //       value: response?.AddressBirthDetails.presentaddressStateName || "CR_NOT_RECORDED",
+      //     },
+      //     { title: "CR_BIRTH_PERS_COUNTRY_LABEL", value: response?.AddressBirthDetails.presentaddressCountry || "CR_NOT_RECORDED" },
+      //   ],
+      // };
+      // const PermanentAddressBirthDetailsInfo = {
+      //   title: "CR_PERMANENT_ADDRESS_INFORMATION_HEADER",
+      //   values: [
+      //     { title: "CR_BIRTH_PERM_HO_NAME_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrHouseNameEn || "CR_NOT_RECORDED" },
+      //     { title: "CR_BIRTH_PERM_STREET_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrStreetNameEn || "CR_NOT_RECORDED" },
+      //     { title: "CR_BIRTH_PERM_LOCALITY_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrLocalityNameEn || "CR_NOT_RECORDED" },
+      //     { title: "CR_BIRTH_PERM_WARD_LABEL", value: response?.AddressBirthDetails.permntInKeralaWardNo || "CR_NOT_RECORDED" },
+      //     { title: "CR_BIRTH_PERM_VILLAGE_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrVillage || "CR_NOT_RECORDED" },
+      //     { title: "CR_BIRTH_PERM_TALUK_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrTaluk || "CR_NOT_RECORDED" },
+      //     { title: "CR_BIRTH_PERM_POSTOFFICE_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrPostOffice || "CR_NOT_RECORDED" },
+      //     { title: "CR_BIRTH_PERM_PINCODE_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrPincode || "CR_NOT_RECORDED" },
+      //     { title: "CR_BIRTH_PERM_DISTRICT_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrDistrict || "CR_NOT_RECORDED" },
+      //     { title: "CR_BIRTH_PERM_STATE_LABEL", value: response?.AddressBirthDetails.permtaddressStateName || "CR_NOT_RECORDED" },
+      //     { title: "CR_BIRTH_PERM_COUNTRY_LABEL", value: response?.AddressBirthDetails.permtaddressCountry || "CR_NOT_RECORDED" },
+      //   ],
     };
     const initiatorInfo = {
       title: "CR_APPLICANT_INFORMATION_HEADER",
@@ -161,7 +254,7 @@ export const CRNACsearch = {
     response && employeeResponse.push(childdetails);
     response && employeeResponse.push(parentInfo);
     response && employeeResponse.push(PresentAddressBirthDetailsInfo);
-    response && employeeResponse.push(PermanentAddressBirthDetailsInfo);
+    //response && employeeResponse.push(PermanentAddressBirthDetailsInfo);
     response && employeeResponse.push(initiatorInfo);
     //response && employeeResponse.push(multipleChildInfo);
 
