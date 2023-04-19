@@ -2,8 +2,8 @@ import { Banner, Card, CardText, LinkButton, Loader, SubmitBar, toast } from "@e
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { convertToBirthRegistration, convertToEditBirthRegistration } from "../../../utils/birthindex";
-import getPDFData from "../../../utils/getCRBirthAcknowledgementData";
+import { convertToStillBirthRegistration,convertToEditStillBirthRegistration  } from "../../../utils/stillbirthindex";
+import getPDFData from "../../../utils/getCRStillBirthAcknowledgementData";
 import { useHistory } from "react-router-dom";
 
 const GetActionMessage = (props) => {
@@ -23,20 +23,18 @@ const rowContainerStyle = {
 };
 
 const BannerPicker = (props) => {
-  if (props.isSuccess && sessionStorage.getItem("CR_BIRTH_EDIT_FLAG")) {
-    console.log(JSON.stringify(props));
-    sessionStorage.setItem("applicationNumber", props.data?.ChildDetails[0]?.applicationNumber);
+  if (props.isSuccess && sessionStorage.getItem("CR_STILLBIRTH_EDIT_FLAG")) {
+    //console.log(JSON.stringify(props));
+    sessionStorage.setItem("applicationNumber", props.data?.StillBirthChildDetails[0]?.applicationNumber);
     // console.log(sessionStorage.getItem("applicationNumber"));
-    if (sessionStorage.getItem("applicationNumber") != null && props.isSuccess) {
-      window.location.assign(`${window.location.origin}/digit-ui/employee/cr/application-details/${sessionStorage.getItem("applicationNumber")}`);
-    } else {
-      sessionStorage.removeItem("applicationNumber");
-    }
+    // if (sessionStorage.getItem("applicationNumber") != null) {
+    //   window.location.assign(`${window.location.origin}/digit-ui/employee/cr/application-details/${sessionStorage.getItem("applicationNumber")}`);
+    // }
   } else {
     return (
       <Banner
         message={GetActionMessage(props)}
-        applicationNumber={props.data?.ChildDetails[0]?.applicationNumber}
+        applicationNumber={props.data?.StillBirthChildDetails[0]?.applicationNumber}
         info={props.isSuccess ? props.applicationNumber : ""}
         successful={props.isSuccess}
       />
@@ -46,7 +44,7 @@ const BannerPicker = (props) => {
 
 };
 
-const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
+const BirthInclusionAcknowledgement = ({ data, onSuccess, userType }) => {
   const [toast, setToast] = useState(false);
   const { t } = useTranslation();
   const history = useHistory();
@@ -58,13 +56,13 @@ const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
   const resubmit = window.location.href.includes("edit-application");
   const tenantId = Digit.ULBService.getCurrentTenantId();
   //console.log(sessionStorage.getItem("CR_BIRTH_EDIT_FLAG"));
-  const [isEditBirth, setIsEditBirth] = useState(sessionStorage.getItem("CR_BIRTH_EDIT_FLAG") ? true : false);
-
+ 
+  const [isEditStillBirth, setIsEditStilllBirth] = useState(sessionStorage.getItem("CR_STILLBIRTH_EDIT_FLAG") ? true : false);
   let applicationNumber = sessionStorage.getItem("applicationNumber") != null ? sessionStorage.getItem("applicationNumber") : null;
   // console.log(applicationNumber);
   //console.log("isEditBirth" + isEditBirth);
-  const mutation = Digit.Hooks.cr.useCivilRegistrationAPI(
-    tenantId, isEditBirth ? false : true
+  const mutation = Digit.Hooks.cr.useCivilRegistrationStillBirthAPI(
+    tenantId, isEditStillBirth ? false : true
   );
 
   useEffect(() => {
@@ -77,7 +75,7 @@ const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
         let tenantId1 = data?.cpt?.details?.address?.tenantId ? data?.cpt?.details?.address?.tenantId : tenantId;
         data.tenantId = tenantId1;
         if (!resubmit) {
-          let formdata = !isEditBirth ? convertToBirthRegistration(data) : convertToEditBirthRegistration(data);
+          let formdata = !isEditStillBirth ? convertToStillBirthRegistration(data) : convertToEditStillBirthRegistration(data);
           // formdata.BirthDetails[0].tenantId = formdata?.BirthDetails[0]?.tenantId || tenantId1;
           // if (!isEditBirth) {
           //   mutation.mutate(formdata, {
@@ -130,7 +128,7 @@ const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
     //console.log(mutation.data);
     if (mutation.isSuccess) {
       //console.log(mutation.data?.ChildDetails[0].applicationNumber);
-      applicationNumber = mutation.data?.ChildDetails[0].applicationNumber;
+      applicationNumber = mutation.data?.StillBirthChildDetails[0].applicationNumber;
       sessionStorage.setItem("applicationNumber", applicationNumber);
       //console.log(applicationNumber);
     } else {
@@ -139,8 +137,8 @@ const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
   }, [mutation.isSuccess]);
 
   const handleDownloadPdf = async () => {
-    const { ChildDetails = [] } = mutation.data
-    const ChildDet = (ChildDetails && ChildDetails[0]) || {};
+    const { StillBirthChildDetails = [] } = mutation.data
+    const ChildDet = (StillBirthChildDetails && StillBirthChildDetails[0]) || {};
     const tenantInfo = tenants.find((tenant) => tenant.code === ChildDet.tenantid);
     console.log(tenantInfo);
     let res = ChildDet;
@@ -197,12 +195,12 @@ const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
             onClick={handleDownloadPdf}
           />
          
-          {mutation?.data?.ChildDetails[0]?.applicationStatus === "PENDINGPAYMENT" && <Link to={{
-            pathname: `/digit-ui/citizen/payment/collect/${mutation.data.ChildDetails[0].businessservice}/${mutation.data.ChildDetails[0].applicationNumber}`,
+          {/* {mutation?.data?.StillBirthChildDetails[0]?.applicationStatus === "PENDINGPAYMENT" && <Link to={{
+            pathname: `/digit-ui/citizen/payment/collect/${mutation.data.StillBirthChildDetails[0].businessservice}/${mutation.data.StillBirthChildDetails[0].applicationNumber}`,
             state: { tenantId: mutation.data.ChildDetails[0].tenantid },
           }}>
             <SubmitBar label={t("COMMON_MAKE_PAYMENT")} />
-          </Link>}
+          </Link>} */}
           <Link to={`/digit-ui/citizen`}>
             <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
           </Link>
@@ -225,4 +223,4 @@ const BirthAcknowledgement = ({ data, onSuccess, userType }) => {
 
 };
 
-export default BirthAcknowledgement;
+export default BirthInclusionAcknowledgement;

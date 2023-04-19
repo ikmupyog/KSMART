@@ -77,8 +77,8 @@ const SearchApplication = ({ tenantId, t, onSubmit, data, count }) => {
           (row.original["correctionId"] !== null && row.original["correctionAppNumber"] !== null) ?
             <div>
               <span className="link">
-                <Link to={`/digit-ui/employee/tl/applicationcorrection-details/${row.original["applicationNumber"]}`}>
-                  {row.original["applicationNumber"]}
+                <Link to={`/digit-ui/employee/tl/applicationcorrection-details/${row.original["correctionAppNumber"]}`}>
+                  {row.original["correctionAppNumber"]}
                 </Link>
               </span>
             </div>

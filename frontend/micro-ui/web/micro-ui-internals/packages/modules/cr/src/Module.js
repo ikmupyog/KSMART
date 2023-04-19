@@ -38,6 +38,7 @@ import CreateAbandonedBirth from "./pages/employee/Abandoned-birth-route";
 import CrFlowApp from "./pages/employee/Birth-route";
 import ScrFlowApp from "./pages/employee/StillBirth-route";
 import CreateBornOutsideEmp from "./pages/employee/OutsideIndiaBirth-route";
+import CreateNACBirth from "./pages/employee/NacBirth-route";
 
 import ParentsDetails from "../src/pageComponents/birthComponents/ParentsDetails";
 import BirthPlaceHospital from "../src/pageComponents/birthComponents/BirthPlaceHospital";
@@ -299,6 +300,7 @@ const componentsToRegister = {
   CrFlowApp,
   ScrFlowApp,
   CreateBornOutsideEmp,
+  CreateNACBirth,
   MyCRApplications,
   MyCRDeathApplications,
   CustomTimePicker,
@@ -496,7 +498,7 @@ const componentsToRegister = {
   StatisticalInfoAbandoned,
   AbandonedBirthAcknowledgement,
   AbandonedBirthCheckPage,
-  AbandonedInformer
+  AbandonedInformer,
 };
 
 export const initCRComponents = () => {

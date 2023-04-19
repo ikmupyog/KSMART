@@ -1,4 +1,5 @@
 import moment from "moment";
+import {BIRTH_INCLUSION_FIELD_NAMES} from "../../config/constants";
 
 export const getFilteredChildDobData = (selectedData, inclusionData) => {
   console.log("selectedData==dob", selectedData);
@@ -7,6 +8,7 @@ export const getFilteredChildDobData = (selectedData, inclusionData) => {
   const computedInitialValue = computeInitialValue(selectedData?.dateofbirth);
   console.log("c==omputedInitialValue",computedInitialValue);
   let selectedDobObj = {
+    fieldName: BIRTH_INCLUSION_FIELD_NAMES.CHILD_DOB,
     initialValue: computedInitialValue,
     curValue: computedCurrentValue,
     docFlag: null,

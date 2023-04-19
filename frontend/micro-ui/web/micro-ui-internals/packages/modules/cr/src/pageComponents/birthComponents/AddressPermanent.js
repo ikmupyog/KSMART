@@ -21,7 +21,7 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
     const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
     const { data: State = {}, isStateLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
     const [isInitialRender, setIsInitialRender] = useState(true);
-    const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : isEditStillBirth ? isEditStillBirth : false);
+    const [isDisableEdit, setisDisableEdit] = useState(false);
 
     let cmbLB = [];
     let cmbCountry = [];
