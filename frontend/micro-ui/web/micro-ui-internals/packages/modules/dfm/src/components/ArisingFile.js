@@ -28,9 +28,11 @@ import Search from "../pages/employee/Search";
 import BirthSearchInbox from "../../../cr/src/components/inbox/search";
 import { LocationSearchCard } from "@egovernments/digit-ui-react-components";
 import { cardStyle } from "../utils";
+import { useQueryClient } from "react-query";
 
-const ArisingFile = ({ path, handleNext, formData, config, onSelect }) => {
+const ArisingFile = ({ path, handleNext, formData, config, onSelect, value }) => {
     const stateId = Digit.ULBService.getStateId();
+    console.log("stateId", value)
     const { t } = useTranslation();
     const history = useHistory();
     const state = useSelector((state) => state);
@@ -48,98 +50,100 @@ const ArisingFile = ({ path, handleNext, formData, config, onSelect }) => {
     const [isActiveCheck, setIsactiveCheck] = useState(() => {
         return { isActiveCheck: true };
     });
+    const [districtId, setDistrictId] = useState("");
+    // const [villageId, setVillageId] = useState("");
+    const statesId = Digit.SessionStorage.get("Employee.tenantId");
+    const [tenantWard, setTenantWard] = useState();
+    // const { complaint_details } = value;
+    const [tenantboundary, setTenantboundary] = useState(false);
+    console.log("tenantWard", statesId)
+    const queryClient = useQueryClient();
+    if (tenantboundary) {
+        queryClient.removeQueries("TL_ZONAL_OFFICE");
+        queryClient.removeQueries("CR_VILLAGE");
+        queryClient.removeQueries("CR_TALUK");
+        queryClient.removeQueries("CR_TALUK");
+        setTenantboundary(false);
+    }
+    const [selected, setSelected] = useState({
+        state: "",
+        district: "",
+        village: "",
+        ward: ""
+        //village: complaint_details?.village || "",
+        // lbName: complaint_details?.lbName || "",
+        // postOffice: complaint_details?.postOffice || "",
+        // locality: complaint_details?.locality || "",
+        // pincode: complaint_details?.pincode || "",
+        //  street: complaint_details?.street || "",
+        // ward: complaint_details?.ward || ""
+    })
+    //const stateIds = Digit.SessionStorage.get("Employee.tenantId");
+    // console.log("stateIds", stateIds)
+    let cmbState = [];
+    let cmbDistrict = [];
+    let cmbLB = [];
+    let cmbWardNo = [];
+    let cmbWard = [];
+    const { tenants } = Digit.SessionStorage.get("initData");
+    const { data: State = {}, isStateLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
+    // const { data: PostOffice = {}, isPostOfficeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
+    const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
+    const { data: District = {}, isDistrictLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
+    const { data: BoundaryList = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantWard, "egov-location", "boundary-data");
+    console.log("boundartList", BoundaryList)
+    State &&
+        State["common-masters"] &&
+        State["common-masters"].State.map((ob) => {
+            cmbState.push(ob);
+        });
+    District && District["common-masters"] &&
+        District["common-masters"].District.map((ob) => {
+            if (ob.statecode === stateId) { cmbDistrict.push(ob) };
+        });
+    tenants && tenants.map((ob) => {
+        if (ob.city.districtid === districtId) {
+            cmbLB.push(ob);
+        }
+    });
+    BoundaryList && BoundaryList["egov-location"] &&
+        BoundaryList["egov-location"].TenantBoundary?.map((ob) => {
+            if (ob?.hierarchyType.code === "REVENUE") {
+                ob.boundary.children.map((obward) => {
+                    cmbWardNo.push(...obward.children);
+                });
+            }
+        });
+
+    cmbWardNo.map((wardmst) => {
+        wardmst.localnamecmb = wardmst.wardno + " ( " + wardmst.localname + " )";
+        wardmst.namecmb = wardmst.wardno + " ( " + wardmst.name + " )";
+        cmbWard.push(wardmst);
+    });
     const setNoteTextField = (e) => {
         setNoteText(e.target.value);
     }
     const tenantId = Digit.ULBService.getCurrentTenantId();
     const mutation = Digit.Hooks.dfm.useApplicationNoteDrafting(tenantId);
 
-    const saveNote = () => {
-        const formData = {
 
-            RequestInfo: {
-                apiId: "apiId",
-                ver: "1.0",
-                ts: null,
-                action: null,
-                did: null,
-                key: null,
-                msgId: null,
-                authToken: "cb24fc0e-9275-4c9b-a08b-837213e8451a",
-                correlationId: null,
-                userInfo: {
-                    id: null,
-                    tenantId: "kl.cochin",
-                    uuid: "ca06f4a2-25a2-411e-ae8f-28cf2e300678",
-                    roles: [{
-                        id: null,
-                        name: null,
-                        code: "EMPLOYEE",
-                        tenantId: null
-                    }]
-                }
-            },
-            ProcessInstances: {
-                id: null,
-                tenantId: "kl.cochin",
-                businessService: "DFM",
-                businessId: "123",
-                action: "KL-KOCHI-C-000015- FMARISING-2023-AR",
-                moduleName: "Note",
-                comment: noteText,
-                assigner: "ca06f4a2-25a2-411e-ae8f-28cf2e300678",
-                stateSla: "1",
-                businesssServiceSla: "1",
-                previousStatus: "1",
-                rating: "1",
-                auditDetails: {
-                    createdBy: null,
-                    createdTime: null,
-                    lastModifiedBy: null,
-                    lastModifiedTime: null
-                },
+    const stateChange = (val) => {
+        setSelected({ ...selected, state: val })
 
-                documents: [
-                    {
-                        id: null,
-                        tenantId: "kl.cochin",
-                        documentType: "file",
-                        fileStoreId: "1234567",
-                        processInstanceId: "123",
-                        documentUid: "456",
-                        active: "true",
-                        auditDetails: {
-                            createdBy: null,
-                            createdTime: null,
-                            lastModifiedBy: null,
-                            lastModifiedTime: null
-                        }
-                    }
-                ],
-
-                assignes: [
-                    {
-                        id: null,
-                        tenantId: "kl.cochin",
-                        uuid: "123",
-                        auditDetails: {
-                            createdBy: null,
-                            createdTime: null,
-                            lastModifiedBy: null,
-                            lastModifiedTime: null
-                        }
-
-                    }
-                ]
-
-
-
-            }
-
-        }
-        mutation.mutate(formData)
     }
-
+    const districtChange = (val) => {
+        setSelected({ ...selected, district: val })
+        setDistrictId(val.districtid)
+    }
+    const LBChange = (val) => {
+        setSelected({ ...selected, village: val })
+        // setVillageId(val.lgdid)
+        setTenantboundary(true)
+        setTenantWard(val.code)
+    }
+    const wardChange = (val) => {
+        setSelected({ ...selected, ward: val })
+    }
     const individualOptions = useMemo(
         () => [
             { code: "INSIDE_LOCAL_BODY", name: t("INSIDE_LOCAL_BODY") },
@@ -167,6 +171,8 @@ const ArisingFile = ({ path, handleNext, formData, config, onSelect }) => {
         if (e.code == "INSIDE_LOCAL_BODY") {
             setIndividual(true);
             setInstitution(false);
+            setIndividualInside(true);
+            setIndividualOutside(false);
         } else {
             setIndividual(true);
             setInstitution(false);
@@ -276,7 +282,7 @@ const ArisingFile = ({ path, handleNext, formData, config, onSelect }) => {
                             </div>
                             <div className="col-md-10 col-sm-10"  >
 
-                                <Dropdown
+                                <TextInput
 
                                     t={t}
                                     type={"text"}
@@ -331,17 +337,17 @@ const ArisingFile = ({ path, handleNext, formData, config, onSelect }) => {
                     <div className="row">
 
                         <div className="col-md-12 col-sm-12  col-xs-12">
-                            <div className="col-md-3 ">
-
+                            <div className="col-md-4 ">
+                                <CardLabel style={{ float: "right", marginTop: "15px" }}>{`${t("INDIVIDUAL")}`}</CardLabel>
 
                             </div>
                             <div className="col-md-3  col-sm-6  col-xs-12">
-                                <CardLabel>{`${t("INDIVIDUAL")}`}</CardLabel>
+
                                 {/* <RadioButtons optionsKey="name"   onSelect={setIsactive} selectedOption={isActive} selected={isActive} options={individualOptions} onSelect={handleIndividual} /> */}
                                 <RadioButtons optionsKey="name" onSelect={handleIndividual} selectedOption={isActive} selected={isActive} options={individualOptions} />
 
                             </div>
-                            <div className="col-md-3 col-sm-6 col-xs-12" style={{ marginTop: "25px" }}>
+                            <div className="col-md-3 col-sm-6 col-xs-12">
                                 {/* <CardLabel >{`${t("INSTITUTION")}`}</CardLabel> */}
                                 {/* <RadioButtons optionsKey="name" selectedOption={isActive} selected={isActive} options={institutionOptions} onSelect={} /> */}
                                 <RadioButtons optionsKey="name" onChange={handleInstitution} selectedOption={isActiveCheck} selected={isActiveCheck} options={institutionOptions} onSelect={handleInstitution} />
@@ -482,24 +488,113 @@ const ArisingFile = ({ path, handleNext, formData, config, onSelect }) => {
 
 
                         {/* institution end */}
-
-
-
-                        <div className="col-md-12 col-sm-12">
-                            {individualInside && <div className="col-md-2 col-sm-2"  >
+                        {individualInside && <div className="col-md-12 col-sm-12">
+                            <div className="col-md-4 col-sm-4"  >
                                 <CardLabel>
-                                    {t("WARD_NO")}
+                                    {t("STATE_NAME")}
                                     <span className="mandatorycss">*</span>
                                 </CardLabel>
-                                <TextInput
+                                <Dropdown
+                                    t={t}
+                                    optionKey="name"
+                                    name="state"
+                                    isMandatory={false}
+                                    option={cmbState}
+                                    selected={selected.state}
+                                    select={stateChange}
+                                    placeholder={t("STATE_NAME")}
+                                />
+
+                            </div>
+                            <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("DISTRICT")}
+                                    <span className="mandatorycss">*</span>
+                                </CardLabel>
+                                <Dropdown
 
                                     t={t}
                                     type={"text"}
-                                    optionKey="i18nKey"
-                                    name="RegistrationNo"
-                                    placeholder={t("WARD_NO")}
+                                    optionKey="name"
+                                    name="District"
+                                    placeholder={t("DISTRICT")}
+                                    option={cmbDistrict}
+                                    selected={selected.district}
+                                    select={districtChange}
                                 />
-                            </div>}
+                            </div>
+
+                            <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("LB_NAME")}
+                                    <span className="mandatorycss">*</span>
+                                </CardLabel>
+                                <Dropdown
+                                    t={t}
+                                    optionKey="name"
+                                    name="LB"
+                                    isMandatory={false}
+                                    option={cmbLB}
+                                    selected={selected.LB}
+                                    select={LBChange}
+                                    placeholder={t("LB_NAME")}
+                                />
+
+                            </div>
+                        </div>}
+                        {individualOutside && <div className="col-md-12 col-sm-12">
+                            <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("STATE_NAME")}
+                                </CardLabel>
+                                <Dropdown
+                                    t={t}
+                                    optionKey="name"
+                                    name="state"
+                                    isMandatory={false}
+                                    option={cmbState}
+                                    selected={selected.state}
+                                    select={stateChange}
+                                    placeholder={t("STATE_NAME")}
+                                />
+
+                            </div>
+                            <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("DISTRICT")}
+                                </CardLabel>
+                                <Dropdown
+
+                                    t={t}
+                                    type={"text"}
+                                    optionKey="name"
+                                    name="District"
+                                    placeholder={t("DISTRICT")}
+                                    option={cmbDistrict}
+                                    selected={selected.district}
+                                    select={districtChange}
+                                />
+                            </div>
+
+                            <div className="col-md-4 col-sm-4"  >
+                                <CardLabel>
+                                    {t("LB_NAME")}
+                                </CardLabel>
+                                <Dropdown
+                                    t={t}
+                                    optionKey="name"
+                                    name="LB"
+                                    isMandatory={false}
+                                    option={cmbLB}
+                                    selected={selected.LB}
+                                    select={LBChange}
+                                    placeholder={t("LB_NAME")}
+                                />
+
+                            </div>
+                        </div>}
+                        <div className="col-md-12 col-sm-12">
+
                             {individualInside && <div className="col-md-4 col-sm-4"  >
                                 <CardLabel>
                                     {t("WARD_NAME")}
@@ -509,26 +604,16 @@ const ArisingFile = ({ path, handleNext, formData, config, onSelect }) => {
 
                                     t={t}
                                     type={"text"}
-                                    optionKey="i18nKey"
-                                    name="RegistrationNo"
+                                    optionKey="namecmb"
+                                    option={cmbWard}
+                                    name="Ward"
+                                    selected={selected.ward}
+                                    select={wardChange}
                                     placeholder={t("WARD_NAME")}
                                 />
 
                             </div>}
-                            {individualOutside && <div className="col-md-2 col-sm-2"  >
-                                <CardLabel>
-                                    {t("WARD_NO")}
 
-                                </CardLabel>
-                                <TextInput
-
-                                    t={t}
-                                    type={"text"}
-                                    optionKey="i18nKey"
-                                    name="RegistrationNo"
-                                    placeholder={t("WARD_NO")}
-                                />
-                            </div>}
                             {individualOutside && <div className="col-md-4 col-sm-4"  >
                                 <CardLabel>
                                     {t("WARD_NAME")}
@@ -544,34 +629,8 @@ const ArisingFile = ({ path, handleNext, formData, config, onSelect }) => {
                                 />
 
                             </div>}
-                            {/* <div className="col-md-2 col-sm-2"  >
-                                <CardLabel>
-                                    {t("WARD_NO")}
-                                </CardLabel>
-                                <TextInput
 
-                                    t={t}
-                                    type={"text"}
-                                    optionKey="i18nKey"
-                                    name="RegistrationNo"
-                                    placeholder={t("WARD_NO")}
-                                />
-                            </div>
                             <div className="col-md-4 col-sm-4"  >
-                                <CardLabel>
-                                    {t("WARD_NAME")}
-                                </CardLabel>
-                                <Dropdown
-
-                                    t={t}
-                                    type={"text"}
-                                    optionKey="i18nKey"
-                                    name="RegistrationNo"
-                                    placeholder={t("WARD_NAME")}
-                                />
-
-                            </div> */}
-                            <div className="col-md-2 col-sm-2"  >
                                 <CardLabel>
                                     {t("DOOR_NO")}
                                     <span className="mandatorycss">*</span>
@@ -696,33 +755,7 @@ const ArisingFile = ({ path, handleNext, formData, config, onSelect }) => {
 
 
                         <div className="col-md-12 col-sm-12">
-                            <div className="col-md-4 col-sm-4"  >
-                                <CardLabel>
-                                    {t("DISTRICT")}
-                                </CardLabel>
-                                <Dropdown
 
-                                    t={t}
-                                    type={"text"}
-                                    optionKey="i18nKey"
-                                    name="RegistrationNo"
-                                    placeholder={t("DISTRICT")}
-                                />
-                            </div>
-                            <div className="col-md-4 col-sm-4"  >
-                                <CardLabel>
-                                    {t("STATE_NAME")}
-                                </CardLabel>
-                                <Dropdown
-
-                                    t={t}
-                                    type={"text"}
-                                    optionKey="i18nKey"
-                                    name="RegistrationNo"
-                                    placeholder={t("STATE_NAME")}
-                                />
-
-                            </div>
                             <div className="col-md-4 col-sm-4"  >
                                 <CardLabel>
                                     {t("MOBILE_NO")}
@@ -737,11 +770,6 @@ const ArisingFile = ({ path, handleNext, formData, config, onSelect }) => {
                                 />
 
                             </div>
-
-                        </div>
-
-
-                        <div className="col-md-12 col-sm-12">
                             <div className="col-md-4 col-sm-4"  >
                                 <CardLabel>
                                     {t("WHATSAPP_NO")}
@@ -769,7 +797,6 @@ const ArisingFile = ({ path, handleNext, formData, config, onSelect }) => {
                                 />
 
                             </div>
-
 
                         </div>
 

@@ -21,7 +21,10 @@ import {
     TextArea,
     CustomButton,
     CardTextButton,
-    ActionBar
+    ActionBar,
+    PopUp,
+    Modal,
+    Card
 } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import SearchApplication from "./SearchApplication";
@@ -31,6 +34,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import '@ckeditor/ckeditor5-build-classic/build/translations/de';
 import viewToPlainText from '@ckeditor/ckeditor5-clipboard/src/utils/viewtoplaintext';
+
 
 const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
     const stateId = Digit.ULBService.getStateId();
@@ -45,6 +49,7 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
     const mutation = Digit.Hooks.dfm.useApplicationDrafting(tenantId);
     const payload = "KL-KOCHI-C-000017- FMARISING-2023-AR";
     const { data, isLoading } = Digit.Hooks.dfm.useApplicationFetchDraft({ tenantId, id: payload });
+    const [popup, setPopup] = useState(false);
 
     const draftTextValue = data?.Drafting[0]?.draftText;
 
@@ -101,14 +106,70 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
         }
     }, [mutation.isSuccess])
 
+    const sendSMS = () => {
+        setPopup(true);
+    }
+
+    const closeModal = () => {
+        setPopup(false);
+    }
+
+    const Close = () => (
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#FFFFFF">
+            <path d="M0 0h24v24H0V0z" fill="none" />
+            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" />
+        </svg>
+    );
+
+    const CloseBtn = (props) => {
+        return (
+            <div className="icon-bg-secondary" onClick={props.onClick}>
+                <Close />
+            </div>
+        );
+    };
+    // var link = "mailto:target@gmail.com";
+    // In addition to this you can add subject or body as parameter . 
+    // For e.g. 
+    // "mailto:target@example.com?subject=test subject&body=my text"
+    // window.location.href = link;
 
     return (
         <React.Fragment>
+
 
             <div className="moduleLinkHomePageModuleLinks">
 
                 <div className="FileFlowWrapper draft-editor" >
 
+                    {/* <button onClick={() => window.location = 'mailto:preethi.pillai@trois.in'}>test</button>
+                    <a href="sms:+918547847375">
+                        8547847375
+                    </a> */}
+                    {popup &&
+                        <Modal
+                            headerBarEnd={<CloseBtn onClick={closeModal} />}
+                            actionCancelOnSubmit={closeModal}
+                        >
+
+                            <Card>
+
+                                <React.Fragment>
+                                    <CardLabel>{t("CS_REOPEN_COMPLAINT")}</CardLabel>
+                                    <Dropdown />
+                                </React.Fragment>
+                                <CardLabel>{t("CS_COMMON_EMPLOYEE_COMMENTS")}</CardLabel>
+                                <TextArea />
+                                <CardLabel>{t("CS_ACTION_SUPPORTING_DOCUMENTS")}</CardLabel>
+
+                                <UploadFile
+                                    id={"pgr-doc"}
+                                    accept=".jpg"
+
+
+                                />
+                            </Card>
+                        </Modal>}
                     <div className="row wrapper-file" >
                         <div className="col-md-12 col-sm-12 col-xs-12">
                             <div className="col-md-2 col-sm-12 col-xs-12"  >
@@ -140,6 +201,28 @@ const DraftingFile = ({ path, handleNext, formData, config, onSelect }) => {
                                 />
 
                             </div>
+                            <div className="col-md-1 col-sm-12 col-xs-12" style={{ display: "flex" }} >
+
+                                <div style={{ width: "25px", height: "25px", cursor: "pointer" }} onClick={() => window.location = 'mailto:preethi.pillai@trois.in'}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z" /></svg>
+                                </div>
+                                <div style={{ width: "25px", height: "25px", cursor: "pointer", marginLeft: "20px", marginTop: "3px" }} onClick={sendSMS}>
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-chat-right-text" viewBox="0 0 16 16">
+                                        <path d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z" />
+                                        <path d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
+                                    </svg>
+                                </div>
+                            </div>
+                            {/* <div className="col-md-1 col-sm-12 col-xs-12"  >
+                                <div style={{ width: "25px", height: "25px", cursor: "pointer" }} onClick={() => window.location = 'mailto:preethi.pillai@trois.in'}>
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-chat-right-text" viewBox="0 0 16 16">
+                                        <path d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z" />
+                                        <path d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6zm0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
+                                    </svg>
+                                </div>
+                            </div> */}
                         </div>
 
 

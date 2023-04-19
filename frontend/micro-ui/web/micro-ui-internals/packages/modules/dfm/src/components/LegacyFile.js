@@ -226,10 +226,12 @@ const LegacyFile = ({ path, handleNext, formData, config, onSelect }) => {
                     </div>
 
 
-                    <div className="row subject-section"  >
+
+
+                    <div className="row"  >
                         <div className="col-md-12">
-                            <div className="col-md-2"  >
-                                <h6>{t("LAST_CORRESPONDENCE_TYPE")}</h6>
+                            <div className="col-md-2 note-file"  >
+                                <h6>{t("NOTE_FILE_LAST_PAGE_NO.")}</h6>
                             </div>
                             <div className="col-md-3"  >
 
@@ -246,7 +248,7 @@ const LegacyFile = ({ path, handleNext, formData, config, onSelect }) => {
 
                             <div className="col-md-2"  >
 
-                                <h3 class="date-picker">{t("LAST_CORRESPONDENCE_DATE")}</h3>
+                                <h3>{t("FILE_START_DATE")}</h3>
                             </div>
                             <div className="col-md-3"  >
 
@@ -258,11 +260,10 @@ const LegacyFile = ({ path, handleNext, formData, config, onSelect }) => {
 
 
                     </div>
-
-                    <div className="row"  >
+                    <div className="row subject-section"  >
                         <div className="col-md-12">
-                            <div className="col-md-2 note-file"  >
-                                <h6>{t("NOTE_FILE_LAST_PAGE_NO.")}</h6>
+                            <div className="col-md-2"  >
+                                <h6>{t("LAST_CORRESPONDENCE_TYPE")}</h6>
                             </div>
                             <div className="col-md-3"  >
 
@@ -279,7 +280,7 @@ const LegacyFile = ({ path, handleNext, formData, config, onSelect }) => {
 
                             <div className="col-md-2"  >
 
-                                <h3 class="date-picker">{t("FILE_START_DATE")}</h3>
+                                <h3 >{t("LAST_CORRESPONDENCE_DATE")}</h3>
                             </div>
                             <div className="col-md-3"  >
 
@@ -291,7 +292,6 @@ const LegacyFile = ({ path, handleNext, formData, config, onSelect }) => {
 
 
                     </div>
-
                     <div className="row"  >
                         <div className="col-md-12">
                             <div className="col-md-2 file-section"  >

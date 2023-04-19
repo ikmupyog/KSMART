@@ -152,14 +152,15 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
     return (
         <React.Fragment>
 
-            <div className="moduleLinkHomePageModuleLinks">
+            <div className="moduleLinkHomePageModuleLinks" style={{ height: "max-content" }}>
 
-                <div className="FileFlowWrapper note-wrapper" >
+                {/* <div className="FileFlowWrapper note-wrapper"  > */}
+                <div className="FileFlowWrapper"  >
 
                     <div className="row">
                         <div className="col-md-12 col-sm-12" >
-                            <h1 className="headingh1" style={{ marginTop: "40px", marginBottom: "40px" }}>
-                                <span style={{ background: "#fff", padding: "0 10px", color: "black" }}>{`${t("CHILD_INFORMATION")}`}</span>
+                            <h1 className="headingh1">
+                                <span style={{ background: "#fff", padding: "0 0px", color: "black" }}>{`${t("CHILD_INFORMATION")}`}</span>
                             </h1>
                         </div>
                     </div>
@@ -262,8 +263,8 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
                     </div>
                     <div className="row">
                         <div className="col-md-12 col-sm-12">
-                            <h1 className="headingh1" style={{ marginTop: "40px", marginBottom: "40px" }}>
-                                <span style={{ background: "#fff", padding: "0 10px", color: "black" }}>{`${t("PARENT_INFORMATION")}`}</span>
+                            <h1 className="headingh1">
+                                <span style={{ background: "#fff", padding: "0 0px", color: "black" }}>{`${t("PARENT_INFORMATION")}`}</span>
                             </h1>
                         </div>
                     </div>
@@ -315,8 +316,8 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
                     <div className="row">
                         <div className="col-md-12 col-sm-12">
-                            <h1 className="headingh1" style={{ marginTop: "40px", marginBottom: "40px" }}>
-                                <span style={{ background: "#fff", padding: "0 10px", color: "black", fontSize: "12px" }}>{`${t("ADDRESS_OF_THE_PARENT_AT_THE_TIME_OF_BIRTH")}`}</span>
+                            <h1 className="headingh1">
+                                <span style={{ background: "#fff", padding: "0 0px", color: "black", fontSize: "12px" }}>{`${t("ADDRESS_OF_THE_PARENT_AT_THE_TIME_OF_BIRTH")}`}</span>
                             </h1>
                         </div>
                     </div>
@@ -435,8 +436,8 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
                     <div className="row">
                         <div className="col-md-12 col-sm-12">
-                            <h1 className="headingh1" style={{ marginTop: "40px", marginBottom: "40px" }}>
-                                <span style={{ background: "#fff", padding: "0 10px", color: "black", fontSize: "12px" }}>{`${t("PERMANENT_ADDRESS_OF_THE_PARENTS")}`}</span>
+                            <h1 className="headingh1">
+                                <span style={{ background: "#fff", padding: "0 0px", color: "black", fontSize: "12px" }}>{`${t("PERMANENT_ADDRESS_OF_THE_PARENTS")}`}</span>
                             </h1>
                         </div>
                     </div>
@@ -554,7 +555,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
                     <div className="row card-document"   >
 
                         <div className="col-md-12 col-sm-12 col-xs-12 card-document-column">
-                            <h2 style={{ marginTop: "40px" }} >{t("DOCUMENTS_INFORMATION")}</h2>
+                            <h2 >{t("DOCUMENTS_INFORMATION")}</h2>
                             <div className="col-md-4 col-sm-4 col-xs-4">
 
                                 <h3 class="document">{t("DOCUMENT")} 1</h3>
@@ -621,7 +622,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
 
                         <div className="col-md-12 col-sm-12 col-xs-12 reference-div" >
-                            <div className="col-md-2 col-sm-3 col-xs-6" >
+                            {/* <div className="col-md-2 col-sm-3 col-xs-6" >
 
                                 <h3>{t("REFERENCE")} 1</h3>
                             </div>
@@ -632,8 +633,8 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
 
                                 />
-                            </div>
-                            <div className="col-md-2 col-sm-3 col-xs-6" >
+                            </div> */}
+                            <div className="col-md-1 col-sm-3 col-xs-6" >
 
                                 <h3>{t("DRAFTING")} 1</h3>
                             </div>
@@ -648,7 +649,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
                         </div>
                         <div className="col-md-12 col-sm-12 col-xs-12 reference-div" >
-                            <div className="col-md-2  col-sm-3  col-xs-6" >
+                            {/* <div className="col-md-2  col-sm-3  col-xs-6" >
 
                                 <h3>{t("REFERENCE")} 2</h3>
                             </div>
@@ -659,8 +660,8 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
 
                                 />
-                            </div>
-                            <div className="col-md-2  col-sm-3  col-xs-6" >
+                            </div> */}
+                            <div className="col-md-1  col-sm-3  col-xs-6" >
 
                                 <h3>{t("DRAFTING")} 2</h3>
                             </div>
@@ -678,8 +679,8 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
                             <div className="col-md-12 col-sm-12  col-xs-12" >
 
                                 <ul style={{
-                                    maxHeight: "250px",
-                                    overflowY: "scroll", border: "1px solid rgb(69 69 69 / 18%)", padding: "10px"
+                                    maxHeight: "200px",
+                                    overflowY: "scroll", border: "1px solid rgb(69 69 69 / 18%)", padding: "0px"
                                 }}>
                                     <li>For verification</li>
                                     <li>Submitting the draft notice.</li>
@@ -708,14 +709,14 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
                     </div>
 
-                    <div class="custom-draft-button" >
+                    {/* <div class="custom-draft-button" >
 
                         <CustomButton
                             class="customCardButton"
                             text="View all notes"
 
                         ></CustomButton>
-                    </div>
+                    </div> */}
 
 
                     {showGeoLocation && <div className="row geo-location">
@@ -762,7 +763,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
                     <div className="row" >
 
-                        <div className="col-md-12 col-sm-12  col-xs-12" style={{ marginTop: "40px" }} >
+                        <div className="col-md-12 col-sm-12  col-xs-12" >
                             <div className="col-md-3  col-sm-3  col-xs-12" >
 
                                 <CardLabel className="card-label-file">{`${t("NOTE")}`}</CardLabel>
@@ -788,7 +789,17 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
                         <div className="col-md-12 col-sm-12">
                             <div className="col-md-6 search-file">
 
-                                <div class="link-file">
+                                <TextArea
+                                    t={t}
+                                    type={"text"}
+                                    optionKey="i18nKey"
+                                    name="NoteText"
+                                    placeholder={t("shows_subject_from_application_with_edit_bitton")}
+                                    onChange={setNoteTextField}
+                                    value={noteText}
+                                />
+
+                                {/* <div class="link-file">
 
                                     <LinkButton
                                         label={t("+ADD_REFERENCE_HERE")}
@@ -810,7 +821,7 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
 
 
                                     />
-                                </div>
+                                </div> */}
 
                             </div>
                             <div className="col-md-6 search-file"  >
@@ -821,9 +832,10 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
                                     name="RegistrationNo"
                                     placeholder={t("SEARCH_SELECT_AUTO_NOTES")}
                                 />
+
                                 <ul style={{
                                     maxHeight: "120px",
-                                    overflowY: "scroll", border: "1px solid rgb(69 69 69 / 18%)", padding: "10px"
+                                    overflowY: "scroll", border: "1px solid rgb(69 69 69 / 18%)", padding: "0px"
                                 }}>
                                     <li>For verification</li>
                                     <li>Submitting the draft notice.</li>
@@ -846,8 +858,28 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
                                 </ul>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="textarea-draft">
+
+
+                    <div className="row" style={{
+                        height: "70px"
+                    }}>
+                        <div className="col-md-12" >
+                            <div className="col-md-2" >
+                                <CardLabel>{`${t("SUPPORTING_DOCUMENTS")}`}</CardLabel>
+                            </div>
+                            <div className="col-md-4">
+                                <UploadFile
+                                    id={"tl-doc"}
+                                    extraStyleName={"propertyCreate"}
+                                    accept=".jpg,.png,.pdf"
+
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    {/* <div class="textarea-draft">
 
                             <TextArea
                                 t={t}
@@ -859,32 +891,35 @@ const NoteAndDrafting = ({ path, handleNext, formData, config, onSelect }) => {
                                 value={noteText}
                             />
 
-                        </div>
-                        <div class="custom-draft-button">
+                        </div> */}
+                    {/* /////////////////////////save textarea//////////// */}
+                    {/* <div class="custom-draft-button">
 
                             <CustomButton
                                 onClick={saveNote}
                                 text={t("SAVE")}
 
                             ></CustomButton>
+                        </div> */}
+                    {/* /////////////////////////save textarea//////////// */}
+
+                    {/* <div className="row">
+                        <div className="col-md-12" >
+                            <div className="col-md-2" >
+                                <CardLabel>{`${t("SUPPORTING_DOCUMENTS")}`}</CardLabel>
+                            </div>
+                            <div className="col-md-4">
+                                <UploadFile
+                                    id={"tl-doc"}
+                                    extraStyleName={"propertyCreate"}
+                                    accept=".jpg,.png,.pdf"
+
+                                />
+                            </div>
                         </div>
-                    </div>
-                    <div className="col-md-12" style={{ marginTop: "30px" }}>
-                        <div className="col-md-2" >
-                            <CardLabel>{`${t("SUPPORTING_DOCUMENTS")}`}</CardLabel>
-                        </div>
-                        <div className="col-md-4">
-                            <UploadFile
-                                id={"tl-doc"}
-                                extraStyleName={"propertyCreate"}
-                                accept=".jpg,.png,.pdf"
-
-                            />
-                        </div>
 
 
-
-                    </div>
+                    </div> */}
                     {/* <CardLabel>{`${t("ATTACH_SUPPORTING_DOCUMENTS")}`}</CardLabel>
                     <UploadFile
                         id={"tl-doc"}
