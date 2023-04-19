@@ -68,13 +68,19 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
     DeathNACDetails,
     DeathNACParentsDetails,
     DeathNACAddressPage,
+    DeathNACInitiator,
 
   } = value;
+  console.log(value, "value");
   function getdate(date) {
     let newdate = Date.parse(date);
     return `${new Date(newdate).getDate().toString() + "/" + (new Date(newdate).getMonth() + 1).toString() + "/" + new Date(newdate).getFullYear().toString()
       }`;
   }
+  console.log(DeathNACDetails,"DeathNACDetails");
+  console.log(DeathNACParentsDetails,"DeathNACParentsDetails");
+  console.log(DeathNACAddressPage,"DeathNACAddressPage");
+  console.log(DeathNACInitiator,"DeathNACInitiator");
   // const typeOfApplication = !isEditProperty ? `new-application` : `renew-trade`;
   let routeLink = "";
   // `/digit-ui/citizen/tl/tradelicence/${typeOfApplication}`;
@@ -133,9 +139,6 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                     </CardLabel>
                   </div>
                   <div className="col-md-6">
-                    {/* <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                      : Jobin K Thomas / ജോബിൻ കെ തോമസ്
-                    </CardText> */}
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                       : {t(DeathNACDetails.DeceasedFirstNameMl ? DeathNACDetails.DeceasedFirstNameMl : " CR_NOT_RECORDED")}{" "}
                       {t(DeathNACDetails.DeceasedMiddleNameMl)}{" "}
@@ -659,7 +662,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
               </div>
               <div className="row">
                 <div className="col-md-12">
-                  {
+                  {/* {
                     spouse && spousecode === "Wife" && (
                       <div className="col-md-12">
                         <div className="col-md-6">
@@ -705,15 +708,12 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                           </CardText>
                         </div>
                       </div>
-                    )}
+                    )} */}
                   <div className="col-md-6">
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>Father
                     </CardLabel>
                   </div>
                   <div className="col-md-6">
-                    {/* <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                      : Jobin K Thomas / ജോബിൻ കെ തോമസ്
-                    </CardText> */}
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                       :{" "}
                       {t(DeathNACParentsDetails.fatherFirstNameMl ? DeathNACParentsDetails?.fatherFirstNameMl : "CR_NOT_RECORDED") +
@@ -735,9 +735,6 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}>Mother </CardLabel>
                   </div>
                   <div className="col-md-6">
-                    {/* <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                      : Jobin K Thomas / ജോബിൻ കെ തോമസ്
-                    </CardText> */}
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                       :{" "}
                       {t(DeathNACParentsDetails.motherFirstNameMl ? DeathNACParentsDetails?.motherFirstNameMl : "CR_NOT_RECORDED") +
@@ -761,12 +758,12 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
             </StatusTable>
           }
         />
-        {/* <Accordion
+        <Accordion
           expanded={false}
           title={t("BIRTH_TIME_LINE_ADDRESS")}
           content={
             <StatusTable>
-              {AddressBirthDetails?.presentaddressCountry?.code === "COUNTRY_INDIA" && AddressBirthDetails?.presentaddressStateName?.code === "kl" && (
+              {DeathNACAddressPage?.permtaddressCountry?.code === "COUNTRY_INDIA" && DeathNACAddressPage?.permtaddressStateName?.code === "kl" && (
                 <div>
                   <div className="row">
                     <div className="col-md-12">
@@ -782,7 +779,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentInsideKeralaDistrict.name}
+                          {DeathNACAddressPage?.presentInsideKeralaDistrict.name}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -790,7 +787,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentInsideKeralaTaluk.name}
+                          {DeathNACAddressPage?.presentInsideKeralaTaluk.name}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -798,7 +795,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentInsideKeralaVillage.name}
+                          {DeathNACAddressPage?.presentInsideKeralaVillage.name}
                         </CardText>
                       </div>
                     </div>
@@ -810,7 +807,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentInsideKeralaLBName.name}
+                          {DeathNACAddressPage?.presentInsideKeralaLBName.name}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -818,7 +815,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentWardNo.namecmb}
+                          {DeathNACAddressPage?.presentWardNo.namecmb}
                         </CardText>
                       </div>
                     </div>
@@ -830,7 +827,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentInsideKeralaPostOffice.name}
+                          {DeathNACAddressPage?.presentInsideKeralaPostOffice.name}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -838,7 +835,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentInsideKeralaPincode}
+                          {DeathNACAddressPage?.presentInsideKeralaPincode}
                         </CardText>
                       </div>
                     </div>
@@ -850,7 +847,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentInsideKeralaLocalityNameEn}
+                          {DeathNACAddressPage?.presentInsideKeralaLocalityNameEn}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -858,7 +855,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentInsideKeralaLocalityNameMl}
+                          {DeathNACAddressPage?.presentInsideKeralaLocalityNameMl}
                         </CardText>
                       </div>
                     </div>
@@ -870,7 +867,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentInsideKeralaStreetNameEn}
+                          {DeathNACAddressPage?.presentInsideKeralaStreetNameEn}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -878,7 +875,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentInsideKeralaStreetNameMl}
+                          {DeathNACAddressPage?.presentInsideKeralaStreetNameMl}
                         </CardText>
                       </div>
                     </div>
@@ -890,7 +887,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentInsideKeralaHouseNameEn}
+                          {DeathNACAddressPage?.presentInsideKeralaHouseNameEn}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -898,14 +895,14 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentInsideKeralaHouseNameMl}
+                          {DeathNACAddressPage?.presentInsideKeralaHouseNameMl}
                         </CardText>
                       </div>
                     </div>
                   </div>
                 </div>
               )}
-              {AddressBirthDetails?.presentaddressCountry?.code === "COUNTRY_INDIA" && AddressBirthDetails?.presentaddressStateName?.code != "kl" && (
+              {DeathNACAddressPage?.presentaddressCountry?.code === "COUNTRY_INDIA" && DeathNACAddressPage?.presentaddressStateName?.code != "kl" && (
                 <div>
                   <div className="row">
                     <div className="col-md-12">
@@ -921,7 +918,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentOutsideKeralaDistrict.name}
+                          {DeathNACAddressPage?.presentOutsideKeralaDistrict.name}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -929,7 +926,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentOutsideKeralaTaluk}
+                          {DeathNACAddressPage?.presentOutsideKeralaTaluk}
                         </CardText>
                       </div>
                     </div>
@@ -941,7 +938,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentOutsideKeralaVillage.i18nKey}
+                          {DeathNACAddressPage?.presentOutsideKeralaVillage.i18nKey}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -949,7 +946,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentOutsideKeralaCityVilgeEn}
+                          {DeathNACAddressPage?.presentOutsideKeralaCityVilgeEn}
                         </CardText>
                       </div>
                     </div>
@@ -961,7 +958,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentOutsideKeralaPostOfficeEn}
+                          {DeathNACAddressPage?.presentOutsideKeralaPostOfficeEn}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -969,7 +966,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentOutsideKeralaPincode}
+                          {DeathNACAddressPage?.presentOutsideKeralaPincode}
                         </CardText>
                       </div>
                     </div>
@@ -981,7 +978,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentOutsideKeralaLocalityNameEn}
+                          {DeathNACAddressPage?.presentOutsideKeralaLocalityNameEn}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -989,7 +986,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentOutsideKeralaLocalityNameMl}
+                          {DeathNACAddressPage?.presentOutsideKeralaLocalityNameMl}
                         </CardText>
                       </div>
                     </div>
@@ -1001,7 +998,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentOutsideKeralaStreetNameEn}
+                          {DeathNACAddressPage?.presentOutsideKeralaStreetNameEn}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -1009,7 +1006,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentOutsideKeralaStreetNameMl}
+                          {DeathNACAddressPage?.presentOutsideKeralaStreetNameMl}
                         </CardText>
                       </div>
                     </div>
@@ -1021,7 +1018,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentOutsideKeralaHouseNameEn}
+                          {DeathNACAddressPage?.presentOutsideKeralaHouseNameEn}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -1029,14 +1026,14 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentOutsideKeralaHouseNameMl}
+                          {DeathNACAddressPage?.presentOutsideKeralaHouseNameMl}
                         </CardText>
                       </div>
                     </div>
                   </div>
                 </div>
               )}
-              {AddressBirthDetails?.presentaddressCountry?.code != "COUNTRY_INDIA" && (
+              {DeathNACAddressPage?.presentaddressCountry?.code != "COUNTRY_INDIA" && (
                 <div>
                   <div className="row">
                     <div className="col-md-12">
@@ -1054,7 +1051,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentOutSideIndiaProvinceEn}
+                          {DeathNACAddressPage?.presentOutSideIndiaProvinceEn}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -1064,7 +1061,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentOutSideIndiaProvinceMl}
+                          {DeathNACAddressPage?.presentOutSideIndiaProvinceMl}
                         </CardText>
                       </div>
                     </div>
@@ -1076,7 +1073,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentOutSideIndiaadrsVillage.i18nKey}
+                          {DeathNACAddressPage?.presentOutSideIndiaadrsVillage.i18nKey}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1084,7 +1081,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentOutSideIndiaadrsCityTown}
+                          {DeathNACAddressPage?.presentOutSideIndiaadrsCityTown}
                         </CardText>
                       </div>
                     </div>
@@ -1096,7 +1093,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentOutSideIndiaPostCode}
+                          {DeathNACAddressPage?.presentOutSideIndiaPostCode}
                         </CardText>
                       </div>
                     </div>
@@ -1108,7 +1105,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentOutSideIndiaAdressEn}
+                          {DeathNACAddressPage?.presentOutSideIndiaAdressEn}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -1116,7 +1113,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentOutSideIndiaAdressMl}
+                          {DeathNACAddressPage?.presentOutSideIndiaAdressMl}
                         </CardText>
                       </div>
                     </div>
@@ -1128,7 +1125,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentOutSideIndiaAdressEnB}
+                          {DeathNACAddressPage?.presentOutSideIndiaAdressEnB}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -1136,14 +1133,14 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.presentOutSideIndiaAdressMlB}
+                          {DeathNACAddressPage?.presentOutSideIndiaAdressMlB}
                         </CardText>
                       </div>
                     </div>
                   </div>
                 </div>
               )}
-              {AddressBirthDetails?.permtaddressCountry?.code === "COUNTRY_INDIA" && AddressBirthDetails?.permtaddressStateName?.code === "kl" && (
+              {DeathNACAddressPage?.permtaddressCountry?.code === "COUNTRY_INDIA" && DeathNACAddressPage?.permtaddressStateName?.code === "kl" && (
                 <div>
                   <div className="row">
                     <div className="col-md-12">
@@ -1159,7 +1156,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntInKeralaAdrDistrict.name}
+                          {DeathNACAddressPage?.permntInKeralaAdrDistrict.name}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1167,7 +1164,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntInKeralaAdrTaluk.name}
+                          {DeathNACAddressPage?.permntInKeralaAdrTaluk.name}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1175,7 +1172,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntInKeralaAdrVillage.name}
+                          {DeathNACAddressPage?.permntInKeralaAdrVillage.name}
                         </CardText>
                       </div>
                     </div>
@@ -1187,7 +1184,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntInKeralaAdrLBName.name}
+                          {DeathNACAddressPage?.permntInKeralaAdrLBName.name}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1195,7 +1192,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntInKeralaWardNo.namecmb}
+                          {DeathNACAddressPage?.permntInKeralaWardNo.namecmb}
                         </CardText>
                       </div>
                     </div>
@@ -1207,7 +1204,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntInKeralaAdrPostOffice.name}
+                          {DeathNACAddressPage?.permntInKeralaAdrPostOffice.name}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1215,7 +1212,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntInKeralaAdrPincode}
+                          {DeathNACAddressPage?.permntInKeralaAdrPincode}
                         </CardText>
                       </div>
                     </div>
@@ -1227,7 +1224,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntInKeralaAdrLocalityNameEn}
+                          {DeathNACAddressPage?.permntInKeralaAdrLocalityNameEn}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1235,7 +1232,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntInKeralaAdrLocalityNameMl}
+                          {DeathNACAddressPage?.permntInKeralaAdrLocalityNameMl}
                         </CardText>
                       </div>
                     </div>
@@ -1247,7 +1244,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntInKeralaAdrStreetNameEn}
+                          {DeathNACAddressPage?.permntInKeralaAdrStreetNameEn}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -1255,7 +1252,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntInKeralaAdrStreetNameMl}
+                          {DeathNACAddressPage?.permntInKeralaAdrStreetNameMl}
                         </CardText>
                       </div>
                     </div>
@@ -1267,7 +1264,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntInKeralaAdrHouseNameEn}
+                          {DeathNACAddressPage?.permntInKeralaAdrHouseNameEn}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -1275,14 +1272,14 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntInKeralaAdrHouseNameMl}
+                          {DeathNACAddressPage?.permntInKeralaAdrHouseNameMl}
                         </CardText>
                       </div>
                     </div>
                   </div>
                 </div>
               )}
-              {AddressBirthDetails?.permtaddressCountry?.code === "COUNTRY_INDIA" && AddressBirthDetails?.permtaddressStateName?.code != "kl" && (
+              {DeathNACAddressPage?.permtaddressCountry?.code === "COUNTRY_INDIA" && DeathNACAddressPage?.permtaddressStateName?.code != "kl" && (
                 <div>
                   <div className="row">
                     <div className="col-md-12">
@@ -1298,7 +1295,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntOutsideKeralaDistrict.name}
+                          {DeathNACAddressPage?.permntOutsideKeralaDistrict.name}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1306,7 +1303,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntOutsideKeralaTaluk}
+                          {DeathNACAddressPage?.permntOutsideKeralaTaluk}
                         </CardText>
                       </div>
                     </div>
@@ -1318,7 +1315,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntOutsideKeralaVillage.i18nKey}
+                          {DeathNACAddressPage?.permntOutsideKeralaVillage.i18nKey}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1326,7 +1323,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntOutsideKeralaCityVilgeEn}
+                          {DeathNACAddressPage?.permntOutsideKeralaCityVilgeEn}
                         </CardText>
                       </div>
                     </div>
@@ -1338,7 +1335,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntOutsideKeralaPostOfficeEn}
+                          {DeathNACAddressPage?.permntOutsideKeralaPostOfficeEn}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1346,7 +1343,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntOutsideKeralaPincode}
+                          {DeathNACAddressPage?.permntOutsideKeralaPincode}
                         </CardText>
                       </div>
                     </div>
@@ -1358,7 +1355,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntOutsideKeralaLocalityNameEn}
+                          {DeathNACAddressPage?.permntOutsideKeralaLocalityNameEn}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -1366,7 +1363,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntOutsideKeralaLocalityNameMl}
+                          {DeathNACAddressPage?.permntOutsideKeralaLocalityNameMl}
                         </CardText>
                       </div>
                     </div>
@@ -1378,7 +1375,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntOutsideKeralaStreetNameEn}
+                          {DeathNACAddressPage?.permntOutsideKeralaStreetNameEn}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -1386,7 +1383,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntOutsideKeralaStreetNameMl}
+                          {DeathNACAddressPage?.permntOutsideKeralaStreetNameMl}
                         </CardText>
                       </div>
                     </div>
@@ -1398,7 +1395,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntOutsideKeralaHouseNameEn}
+                          {DeathNACAddressPage?.permntOutsideKeralaHouseNameEn}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -1406,14 +1403,14 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntOutsideKeralaHouseNameMl}
+                          {DeathNACAddressPage?.permntOutsideKeralaHouseNameMl}
                         </CardText>
                       </div>
                     </div>
                   </div>
                 </div>
               )}
-              {AddressBirthDetails?.permtaddressCountry?.code != "COUNTRY_INDIA" && (
+              {DeathNACAddressPage?.permtaddressCountry?.code != "COUNTRY_INDIA" && (
                 <div>
                   <div className="row">
                     <div className="col-md-12">
@@ -1431,7 +1428,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntOutsideIndiaprovinceEn}
+                          {DeathNACAddressPage?.permntOutsideIndiaprovinceEn}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -1441,7 +1438,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntOutsideIndiaprovinceMl}
+                          {DeathNACAddressPage?.permntOutsideIndiaprovinceMl}
                         </CardText>
                       </div>
                     </div>
@@ -1453,7 +1450,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-2">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntOutsideIndiaVillage.i18nKey}
+                          {DeathNACAddressPage?.permntOutsideIndiaVillage.i18nKey}
                         </CardText>
                       </div>
                       <div className="col-md-2">
@@ -1461,7 +1458,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntOutsideIndiaCityTown}
+                          {DeathNACAddressPage?.permntOutsideIndiaCityTown}
                         </CardText>
                       </div>
                     </div>
@@ -1473,7 +1470,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-4">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permanentOutsideIndiaPostCode}
+                          {DeathNACAddressPage?.permanentOutsideIndiaPostCode}
                         </CardText>
                       </div>
                     </div>
@@ -1485,7 +1482,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntOutsideIndiaLineoneEn}
+                          {DeathNACAddressPage?.permntOutsideIndiaLineoneEn}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -1493,7 +1490,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntOutsideIndiaLineoneMl}
+                          {DeathNACAddressPage?.permntOutsideIndiaLineoneMl}
                         </CardText>
                       </div>
                     </div>
@@ -1505,7 +1502,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntOutsideIndiaLinetwoEn}
+                          {DeathNACAddressPage?.permntOutsideIndiaLinetwoEn}
                         </CardText>
                       </div>
                       <div className="col-md-3">
@@ -1513,7 +1510,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       </div>
                       <div className="col-md-3">
                         <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                          {AddressBirthDetails?.permntOutsideIndiaLinetwoMl}
+                          {DeathNACAddressPage?.permntOutsideIndiaLinetwoMl}
                         </CardText>
                       </div>
                     </div>
@@ -1522,7 +1519,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
               )}
             </StatusTable>
           }
-        /> */}
+        />
         <Accordion
           expanded={false}
           title="Initiator Details"
@@ -1545,7 +1542,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                      : Jobin K Thomas / ജോബിൻ കെ തോമസ്
+                      {DeathNACInitiator.initiatorNameEn}
                     </CardText>
                   </div>
                   <div className="col-md-6">
@@ -1554,7 +1551,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                      : Jobin K Thomas / ജോബിൻ കെ തോമസ്
+                    {DeathNACInitiator.initiatorAadhar }
                     </CardText>
                   </div>
                   <div className="col-md-6">
@@ -1562,7 +1559,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                      : Jobin K Thomas / ജോബിൻ കെ തോമസ്
+                    {DeathNACInitiator.initiatorMobile}
                     </CardText>
                   </div>
                   <div className="col-md-6">
@@ -1570,7 +1567,7 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                   <div className="col-md-6">
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                      : Jobin K Thomas / ജോബിൻ കെ തോമസ്
+                    {DeathNACInitiator.RelationwithDeceased}
                     </CardText>
                   </div>
                 </div>

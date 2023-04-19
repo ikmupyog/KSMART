@@ -211,7 +211,7 @@ export const DeathNACRegistrationData = (data = {}) => {
             "businessService": "CR",
             "action": "INITIATE",
             "assignee": [],
-            "workflowcode": "WFDEATH21DAYSHOME",
+            "workflowcode": "NACDEATH",
             "wfDocuments": null
         }
         ]

@@ -52,7 +52,7 @@ const ActionModal = (props) => {
   if (props?.businessService.includes("NACAPP")) {
     return <BirthNACActionModal {...props} />;
   }
-  if (props?.businessService.includes("WFDEATH21DAYSHOME")) {
+  if (props?.businessService.includes("NACDEATH")) {
     return <DeathNACActionModal {...props} />;
   }
   if (props?.businessService.includes("NewDFM")) {
