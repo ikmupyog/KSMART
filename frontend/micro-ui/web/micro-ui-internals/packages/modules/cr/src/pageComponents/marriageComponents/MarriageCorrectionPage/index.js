@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Loader } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import MarriageCorrectionEditPage from "./MarriageCorrectionEditPage";
 
 const MarriageCorrectionPage = () => {
   const { t } = useTranslation();
   const stateId = Digit.ULBService.getStateId();
-
+  const history = useHistory();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
   if (tenantId === "kl") {
@@ -65,7 +65,12 @@ const MarriageCorrectionPage = () => {
     setCmbPlaceName(marriagePlace);
   }
 
-  console.log("placename ===",cmbPlaceName);
+  const createProperty = async (navData) => {
+    history.push({
+      pathname: `/digit-ui/citizen/cr/marriage-correction-acknowledgement`,
+      state: { navData }
+    });
+  };
 
   const onMarriageCorrectionSuccess = (data) => {
     data &&
@@ -93,6 +98,7 @@ const MarriageCorrectionPage = () => {
         cmbPlaceName={cmbPlaceName}
         BirthCorrectionDocuments={marriageCorrectionDocs}
         navigationData={navigationData}
+        onSubmitAcknowledgement={createProperty}
       />
     );
   } else {

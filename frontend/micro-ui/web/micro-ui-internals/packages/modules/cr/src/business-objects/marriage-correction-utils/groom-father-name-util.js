@@ -32,6 +32,5 @@ export const getFilteredGroomFatherNameData = (selectedData, inclusionData) => {
   
   const getFilteredDocuments = (inclusionData) => {
     let filteredData  = inclusionData;
-    console.log("filtered data ===", filteredData);
     return {documentData:filteredData, docFlag: "GROOM_FATHER"}; 
   };

@@ -29,6 +29,9 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
 
   useEffect(() => {
     setSelectedDocuments(selectedConfig?.documentData);
+    return ()=>{
+      setUploadedFiles([]);
+    }
   }, [selectedConfig?.documentData]);
 
   function onDeleteown(e) {
@@ -51,7 +54,6 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
     setUploadedFile(null);
     setFile(e.target.files[0]);
   }
-  console.log("selectedConfig ===", selectedConfig);
 
   useEffect(() => {
  
@@ -73,26 +75,10 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
               documentType: docuploadedType,
               fileStoreId: response?.data?.files[0]?.fileStoreId,
               documentName: file.name,
-              documentCondition: selectedDocuments?.[0]?.conditionCode,
+             
               type: file.type,
               size: file.size,
             };
-            // let tempfiles=uploadedFiles;
-            // const removeindex = tempfiles.findIndex(element => {
-            //   return element.documentType ===temp.documentType
-            // });
-            // if(removeindex !== -1){
-            //   tempfiles=tempfiles.splice(removeindex,1);
-            //   setUploadedFiles(tempfiles);
-            //  // setUploadedFiles(!!uploadedFiles.splice(removeindex, 1))
-            // }
-
-            // const changeStatusIndex = formDetails?.findIndex((element) => {
-            //   return element.DocumentId === docuploadedId;
-            // });
-
-            // formDetails?.[changeStatusIndex]?.isUploaded = false;
-            // formDetails?.[changeStatusIndex]?.uploadedDocId = null;
             if (uploadedFiles?.findIndex((item) => item.documentType === temp.documentType) === -1) {
               uploadedFiles.push(temp);
             }
@@ -124,24 +110,13 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
   }
 
   
-//   useEffect(()=>{
-//     console.log("checked conditions==",checkStudentCondition,checkCorrectionCondition);
-//     let filteredDocs = [];
-//     let docCondition = "";
-//     if(Object.keys(checkCorrectionCondition)?.length > 0){
-//      docCondition = `${docCondition}_${checkCorrectionCondition.code}`
-//     }
-//     if(Object.keys(checkStudentCondition)?.length > 0){
-//      docCondition = `${docCondition}_${checkStudentCondition.code}`
-//     }
-//     if(Object.keys(checkCorrectionCondition)?.length > 0 && Object.keys(checkStudentCondition)?.length > 0){
-//  console.log("docCondition",selectedConfig.documentData,docCondition);
-//      filteredDocs = selectedConfig.documentData?.filter((item) => item.conditionCode == docCondition);
-//      console.log("filteredDocs==",filteredDocs);
-//      setSelectedDocuments(filteredDocs);
-//     } 
-    
-//  },[checkStudentCondition,checkCorrectionCondition]);
+  const resetFields = () => {
+    setUploadedFiles([]);
+    setDocuploadedId("");
+    setDocuploadedName("");
+    setDocuploadedType("");
+    setFile({});
+  };
 
   if (!showModal) {
     return null;
@@ -183,7 +158,6 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
       return null;
     }
   };
-console.log("selectedDocuments ===", selectedDocuments);
 
   return (
     <PopUp>
@@ -197,7 +171,7 @@ console.log("selectedDocuments ===", selectedDocuments);
         <h2 style={{ marginBottom: "1rem" }}>{`You have to upload the following documents to edit ${fieldName?.toLowerCase()}.`}</h2>
         {selectedDocuments?.[0]?.Documents?.map((item, index) => (
           <div>
-            {!selectedDocs.includes(item.DocumentId) && (
+            {!selectedDocs.includes(item.DocumentId?.toString()) && (
               <div style={{ padding: ".5rem, 0,.5rem, 0" }}>
                 <h1 style={{ fontWeight: "bold" }}>{item.DocumentType}</h1>
                 <div style={{ padding: "1rem 0 1.5rem 1rem" }}>
@@ -225,9 +199,10 @@ console.log("selectedDocuments ===", selectedDocuments);
 
         <EditButton
           selected={true}
-          label={"Submit"}
+          label={"Save"}
           onClick={() => {
-            onSubmit(uploadedFiles, error);
+            resetFields();
+            onSubmit({fileData:uploadedFiles,documentCondition: selectedDocuments?.[0]?.conditionCode});
           }}
         />
         <EditButton
