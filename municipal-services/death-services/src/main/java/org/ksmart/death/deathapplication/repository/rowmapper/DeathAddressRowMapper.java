@@ -75,6 +75,8 @@ public class DeathAddressRowMapper  implements ResultSetExtractor  , BaseRowMapp
                           .presentInsideKeralaPostOffice(rs.getString("P_postoffice_id"))
                           .presentWardNo(rs.getString("P_ward_id"))
                           .presentInsideKeralaPincode(rs.getString("P_pincode"))
+                          .presentInsideKeralaDistrict(rs.getString("P_district_id"))
+
 
                           .presentOutsideKeralaDistrict(rs.getString("P_district_id"))
                           .presentOutsideKeralaTalukName(rs.getString("P_taluk_id"))
