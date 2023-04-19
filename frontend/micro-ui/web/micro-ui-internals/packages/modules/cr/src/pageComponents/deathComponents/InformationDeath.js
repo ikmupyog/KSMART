@@ -147,23 +147,23 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
     State["common-masters"].State.map((ob) => {
       cmbState.push(ob);
     });
-  // const [DateOfDeath, setDateOfDeath] = useState(
-  //   isEditDeath &&
-  //     isEditDeathPageComponents === false &&
-  //     (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
-  //     ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath)
-  //     : formData?.InformationDeath?.DateOfDeath
-  // );
-  const [DateOfDeath, setDateOfDeath] = useState(isEditDeath ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath) : formData?.InformationDeath?.DateOfDeath); 
-  const [FromDate, setFromDate] = useState(isEditDeath ? convertEpochToDate(formData?.InformationDeath?.FromDate) : formData?.InformationDeath?.FromDate); 
-// console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
-  // const [FromDate, setFromDate] = useState(
-  //   isEditDeath &&
-  //     isEditDeathPageComponents === false &&
-  //     (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
-  //     ? convertEpochToDate(formData?.InformationDeath?.FromDate)
-  //     : formData?.InformationDeath?.FromDate
-  // );
+  const [DateOfDeath, setDateOfDeath] = useState(
+    isEditDeath &&
+      isEditDeathPageComponents === false &&
+      (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
+      ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath)
+      : formData?.InformationDeath?.DateOfDeath
+  );
+ //const [DateOfDeath, setDateOfDeath] = useState(isEditDeath ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath) : formData?.InformationDeath?.DateOfDeath); 
+  //const [FromDate, setFromDate] = useState(isEditDeath ? convertEpochToDate(formData?.InformationDeath?.FromDate) : formData?.InformationDeath?.FromDate); 
+console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
+  const [FromDate, setFromDate] = useState(
+    isEditDeath &&
+      isEditDeathPageComponents === false &&
+      (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
+      ? convertEpochToDate(formData?.InformationDeath?.FromDate)
+      : formData?.InformationDeath?.FromDate
+  );
   const handleFromTimeChange = (value, cb) => {
     if (typeof value === "string") {
       cb(value);
@@ -565,7 +565,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
   function setCheckedDate(e) {
     if (e.target.checked === true) {
       setChecked(e.target.checked);
-      setDateOfDeath("");
+      setFromDate("");
       setToDate("");
     } else {
       setChecked(e.target.checked);
@@ -1571,10 +1571,10 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
                       <span className="mandatorycss">*</span>
                     </CardLabel>
                     <DatePicker
-                      date={DateOfDeath}
+                      date={FromDate}
                       max={convertEpochToDate(new Date())}
                       name="FromDate"
-                      onChange={selectDeathDate}
+                      onChange={selectFromDate}
                       {...(validation = {
                         pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",
                         isRequired: true,
