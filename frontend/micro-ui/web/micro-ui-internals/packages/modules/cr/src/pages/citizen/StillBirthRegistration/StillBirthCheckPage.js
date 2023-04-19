@@ -653,22 +653,22 @@ const StillBirthCheckPage = ({ onSubmit, value, userType }) => {
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StillBirthParentsDetails?.motherNationality.nationalityname}</CardText>
                     </div>
-                    <div className="col-md-2">
+                    {/* <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_MARITAL_STATUS")}`} :</CardText>
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StillBirthParentsDetails?.motherMaritalStatus.code}</CardText>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
                 <div className="row">
                   <div className="col-md-12">
-                    <div className="col-md-8">
+                    {/* <div className="col-md-8">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_MOTHER_AGE_MARRIAGE")}`} :</CardText>
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{StillBirthParentsDetails?.motherMarriageAge}</CardText>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
                 <div className="row">

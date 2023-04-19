@@ -62,4 +62,17 @@ export const CRMarriageService = {
       userService: false,
       params: { tenantId, ...filters },
     }),
+    CRRegDownloadMarriageRegistryDetails: ({params={}, tenantId, additionalProps={}}) =>
+        Request({
+            url: Urls.crmarriage.registry_download,
+            data: {},
+            useCache: false,
+            method: "POST",
+            params,
+            auth: true,
+            locale: true,
+            userInfo: true,
+            userDownloadInfo: true,
+            ...additionalProps
+        })
 };

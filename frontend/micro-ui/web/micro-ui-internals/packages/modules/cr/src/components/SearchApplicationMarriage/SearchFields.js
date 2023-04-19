@@ -12,20 +12,22 @@ const SearchFields = ({
                       }) => {
 
     let validation = {};
-    const stateId = Digit.ULBService.getStateId();
     const [isIdPresent, setIsIdPresent] = useState(false);
-    const { data: marriagePlaceType = {}, isMarriagePlaceTypeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
-        stateId,
-        "birth-death-service",
-        "MarriagePlaceType"
-    );
-    const cmbPlace = []
-    marriagePlaceType &&
-    marriagePlaceType["birth-death-service"] &&
-    marriagePlaceType["birth-death-service"].MarriagePlaceType &&
-    marriagePlaceType["birth-death-service"].MarriagePlaceType.map((ob) => {
-        cmbPlace.push(ob);
-    });
+    /* Commented below code in case it is needed in the future */
+
+    // const stateId = Digit.ULBService.getStateId();
+    // const { data: marriagePlaceType = {}, isMarriagePlaceTypeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
+    //     stateId,
+    //     "birth-death-service",
+    //     "MarriagePlaceType"
+    // );
+    // const cmbPlace = []
+    // marriagePlaceType &&
+    // marriagePlaceType["birth-death-service"] &&
+    // marriagePlaceType["birth-death-service"].MarriagePlaceType &&
+    // marriagePlaceType["birth-death-service"].MarriagePlaceType.map((ob) => {
+    //     cmbPlace.push(ob);
+    // });
 
     const idOnChange = (e) => {
         if (e.target.value) {
@@ -68,26 +70,40 @@ const SearchFields = ({
                 <TextInput name="brideFirstnameEn" inputRef={register({})}
                            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", type: "text", isRequired: !isIdPresent, title: t("Invalid name of wife") })} placeholder={`${t("Name of Wife")}`} />
             </SearchField>
-            <SearchField>
-                <label> {t("PLACE OF MARRIAGE")}</label>
-                <Controller
-                    control={control}
-                    name="marriagePlacetype"
-                    rules={{ required: false}}
-                    defaultValue={""}
-                    render={(props) => (
-                        <Dropdown
-                            selected={props.value}
-                            select={props.onChange}
-                            onBlur={props.onBlur}
-                            option={cmbPlace}
-                            optionKey="name"
-                            t={t}
-                            placeholder={`${t("CR_MARRIAGE_PLACE_TYPE")}`}
-                        />
-                    )}
-                />
-            </SearchField>
+            {
+                searchType === "certificate" && (
+                    <SearchField>
+                        <label> {t("CERTIFICATE NO")}</label>
+                        <TextInput name={"certificateNo"}
+                                   inputRef={register({})}
+                                   onChange={idOnChange}
+                                   control={control}
+                                   {...(validation = { isRequired: false, type: "text" })}
+                                   placeholder={"Certificate No"} />
+                    </SearchField>
+                )
+            }
+            {/* Commented below search field in case it is needed */}
+            {/*<SearchField>*/}
+            {/*    <label> {t("PLACE OF MARRIAGE")}</label>*/}
+            {/*    <Controller*/}
+            {/*        control={control}*/}
+            {/*        name="marriagePlacetype"*/}
+            {/*        rules={{ required: false}}*/}
+            {/*        defaultValue={""}*/}
+            {/*        render={(props) => (*/}
+            {/*            <Dropdown*/}
+            {/*                selected={props.value}*/}
+            {/*                select={props.onChange}*/}
+            {/*                onBlur={props.onBlur}*/}
+            {/*                option={cmbPlace}*/}
+            {/*                optionKey="name"*/}
+            {/*                t={t}*/}
+            {/*                placeholder={`${t("CR_MARRIAGE_PLACE_TYPE")}`}*/}
+            {/*            />*/}
+            {/*        )}*/}
+            {/*    />*/}
+            {/*</SearchField>*/}
             <SearchField className="submit">
                 <SubmitBar label={t("ES_COMMON_SEARCH")} submit />
                 <p onClick={() => {

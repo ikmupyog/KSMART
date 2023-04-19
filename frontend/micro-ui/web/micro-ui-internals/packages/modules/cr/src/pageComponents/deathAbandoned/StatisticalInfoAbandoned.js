@@ -644,6 +644,62 @@ const StatisticalInfoAbandoned = ({ config, onSelect, userType, formData, isEdit
     }
   }, [deathsub, isInitialRender, deathmain]);
 
+
+
+  const [MPDesignation, setMPDesignation] = useState(
+    formData?.StatisticalInfoAbandoned?.MPDesignation ? formData?.StatisticalInfoAbandoned?.MPDesignation : ""
+  );
+  // MPDesignation
+  function setSelectMPDesignation(e) {
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setMPDesignation(
+        e.target.value.replace(
+          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
+          ""
+        )
+      );
+    }
+  }
+
+  const [MPName, setMPName] = useState(
+    formData?.StatisticalInfoAbandoned?.MPName ? formData?.StatisticalInfoAbandoned?.MPName : ""
+  );
+  // MPDesignation
+  function setSelectMPName(e) {
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setMPName(
+        e.target.value.replace(
+          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
+          ""
+        )
+      );
+    }
+  }
+  const [MPAadharNumber, setMPAadharNumber] = useState(
+    formData?.StatisticalInfoAbandoned?.MPAadharNumber ? formData?.StatisticalInfoAbandoned?.MPAadharNumber : ""
+  );
+
+  function setSelectMPAadharNumber(e) {
+    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+    if (newValue === MPAadharNumber) {
+      // If so, clear the Father's Aadhar number field
+      setMPAadharNumber("");
+      setAadharError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else {
+      setMPAadharNumber(newValue);
+    }
+    
+  }
   const onSkip = () => onSelect();
 
   // useEffect(() => {
@@ -727,6 +783,9 @@ const StatisticalInfoAbandoned = ({ config, onSelect, userType, formData, isEdit
       SmokingType,
       TobaccoType,
       AlcoholType,
+      MPDesignation,
+      MPAadharNumber,
+      MPName
     });
   };
 
@@ -1175,6 +1234,64 @@ const StatisticalInfoAbandoned = ({ config, onSelect, userType, formData, isEdit
               />
             </div>
           </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+          <h1 className="headingh1">
+              <span style={{ background: "#fff", padding: "0 10px" }}> {`Details of the Medical practitioner`}</span>{" "}
+            </h1>
+            </div>
+            </div>
+        <div className="row">
+          <div className="col-md-12">
+          <div className="col-md-3">
+                  <CardLabel>
+                    {`${t("CR_NAME")}`}
+                  </CardLabel> 
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="MPName"
+                    value={MPName}
+                    onChange={setSelectMPName}
+                    placeholder={`${t("CR_NAME")}`}
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_NAME_EN") })}
+                  />
+                </div>
+                <div className="col-md-3">
+                  <CardLabel>
+                    {`${t("CR_DESIGNATION")}`}
+                  </CardLabel> 
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="MPDesignation"
+                    value={MPDesignation}
+                    onChange={setSelectMPDesignation}
+                    placeholder={`${t("CR_DESIGNATION")}`}
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_NAME_EN") })}
+                  />
+                </div>
+                <div className="col-md-3">
+                  <CardLabel>{t("CS_COMMON_AADHAAR")}</CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type="number"
+                    max="12"
+                    optionKey="i18nKey"
+                    name="MPAadharNumber"
+                    value={MPAadharNumber}
+                    onChange={setSelectMPAadharNumber}
+                    placeholder={`${t("CS_COMMON_AADHAAR")}`}
+                    {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                  />
+                </div>
+            </div>
         </div>
         {/* <div className="row">
             <div className="col-md-12">

@@ -2,6 +2,17 @@ import Urls from "../atoms/urls";
 import { Request } from "../atoms/Utils/Request";
 
 export const CRDeathService = {
+  correctDeath: (details, tenantId) =>
+  Request({
+    url: Urls.crdeath.correct_update,
+    data: details,
+    useCache: false,
+    setTimeParam: false,
+    userService: true,
+    method: "POST",
+    params: {},
+    auth: true,
+  }),
   create: (details, tenantId) =>
     Request({
       url: Urls.crdeath.create,

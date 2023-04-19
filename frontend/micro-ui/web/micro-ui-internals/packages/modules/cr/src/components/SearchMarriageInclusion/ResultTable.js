@@ -1,6 +1,8 @@
-import React, {Fragment, useCallback, useMemo} from "react";
-import { Table } from "@egovernments/digit-ui-react-components";
+import React, {Fragment, useCallback, useMemo, useState} from "react";
+import {Loader, Table} from "@egovernments/digit-ui-react-components";
 import {convertEpochToDateDMY} from "../../utils";
+import _ from "lodash";
+import { downloadDocument } from "../../utils/uploadedDocuments";
 
 const ResultTable = ({
                          setValue,
@@ -12,9 +14,14 @@ const ResultTable = ({
                          onSubmit,
                          goToLink,
                          downloadLink,
-                         searchType
+                         searchType,
+                         tenantId
                      }) => {
     const GetCell = (value) => <span className="cell-text">{value}</span>;
+    const fileSource = Digit.Hooks.cr.getMarriageRegistryFileSourceDetails(tenantId);
+    const [isLoading, setIsLoading] = useState(false);
+
+
 
     const columns = useMemo(
         () => {
@@ -51,15 +58,32 @@ const ResultTable = ({
             ];
             if (searchType == 'certificate') {
                 cols.push({
-                    Header: t("ACTION"),
-                    accessor: "action",
+                    Header: t("Download Certificate"),
                     disableSortBy: true,
                     Cell: ({ row }) => {
+                        let id = _.get(row, "original.id", null);
                         return (
                             <div>
-                            <span className="link" onClick={() => downloadLink(row.original)}>
-                                Download
-                            </span>
+                                {id !== null && <span className="link" onClick={() => {
+                                    setIsLoading(true);
+                                    fileSource.mutate({ filters: { id, source: "sms" } }, {
+                                        onSuccess: (fileDownloadInfo) => {
+                                            setIsLoading(false);
+                                            const { filestoreId } = fileDownloadInfo;
+                                            if (filestoreId) {
+                                                downloadDocument(filestoreId);
+                                            } else {
+                                                console.log("filestoreId is null");
+                                            }
+                                        },
+                                        onError: (err) => {
+                                            setIsLoading(false);
+                                            alert("Download certificate not available");
+                                        }
+                                    });
+                                }}>
+                Download
+              </span>}
                             </div>
                         );
                     },
@@ -92,6 +116,7 @@ const ResultTable = ({
 
     return (
         <>
+            {isLoading && <Loader/>}
             <Table
                 t={t}
                 data={data}
