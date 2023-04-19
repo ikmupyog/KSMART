@@ -74,8 +74,8 @@ class BaseQueryBuilder {
         if (StringUtils.isNotBlank(value)) {
             addWhereClause(paramValues, query);
             query.append(column)
-                    .append("LIKE ?% ");
-            paramValues.add(value);
+                    .append("LIKE ? ");
+            paramValues.add(value.concat("%"));
         }
     }
     //Rakhi S on 24.02.2023
