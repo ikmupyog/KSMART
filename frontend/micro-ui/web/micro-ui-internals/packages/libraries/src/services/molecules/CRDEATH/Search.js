@@ -76,18 +76,16 @@ export const CRDeathsearch = {
         {
           // title: "PDF_DECEASED_NAME",
           // value:
-          //   response?.InformationDeath?.DeceasedFirstNameEn 
-            // +
-              
-            //   response?.InformationDeath?.DeceasedMiddleNameEn +
-               
-            //   response?.InformationDeath?.DeceasedLastNameEn +
-            //   " / " +
-            //   response?.InformationDeath?.DeceasedFirstNameMl +
-            //   " " +
-            //   response?.InformationDeath?.DeceasedMiddleNameMl +
-            //   " " +
-            //   response?.InformationDeath?.DeceasedLastNameMl || "NA",
+          //   response?.InformationDeath?.DeceasedFirstNameEn
+          // +
+          //   response?.InformationDeath?.DeceasedMiddleNameEn +
+          //   response?.InformationDeath?.DeceasedLastNameEn +
+          //   " / " +
+          //   response?.InformationDeath?.DeceasedFirstNameMl +
+          //   " " +
+          //   response?.InformationDeath?.DeceasedMiddleNameMl +
+          //   " " +
+          //   response?.InformationDeath?.DeceasedLastNameMl || "NA",
         },
 
         // { title: "PDF_BIRTH_CHILD_SEX", value: response?.InformationDeath?.DeceasedGender || "NA" },
@@ -226,7 +224,12 @@ export const CRDeathsearch = {
         { title: "CR_EMAIL_ID", value: response?.FamilyInformationDeath?.FamilyEmailId || "NA" },
         {
           title: "PDF_PLACE_OF_DEATH",
-          value: response?.InformationDeath?.DeathPlaceHospitalNameEn + "/" + response?.InformationDeath?.DeathPlaceHospitalNameMl || "NA",
+          value:
+            response?.InformationDeath?.DeathPlaceHospitalNameEn +
+              "/" +
+              response?.InformationDeath?.DeathPlaceHospitalNameMl?.response?.InformationDeath?.DeathPlaceInstitutionNameEn +
+              "/" +
+              response?.InformationDeath?.DeathPlaceInstitutionNameMl || "NA",
         },
       ],
     };
@@ -234,7 +237,6 @@ export const CRDeathsearch = {
     const statisticalInfo = {
       title: "CR_DEATH_STATSTICAL_INFORMATION_HEADER",
       values: [
-        
         { title: "CR_AUTOPSY_PERFORM", value: response?.StatisticalInfo?.IsAutopsyPerformed || "NA" },
         { title: "CR_MANNER_OF_DEATH", value: response?.StatisticalInfo?.MannerOfDeath || "NA" },
         { title: "CR_CAUSE_OF_DEATH", value: response?.StatisticalInfo?.DeathCauseSub || "NA" },
@@ -256,9 +258,7 @@ export const CRDeathsearch = {
         { title: "CR_HABITUALLY_CHEW_TOBACCO", value: response?.StatisticalInfo?.TobaccoType || "NA" },
         { title: "CR_HABITUALLY_DRINK_ALCOHOL", value: response?.StatisticalInfo?.AlcoholType || "NA" },
 
-
         { title: "CR_STATSTICAL_DEATH_OCCUPATION", value: response?.statisticalInfo?.occupation || "NA" },
-
       ],
     };
     // const DeathPlaceHome = "";
