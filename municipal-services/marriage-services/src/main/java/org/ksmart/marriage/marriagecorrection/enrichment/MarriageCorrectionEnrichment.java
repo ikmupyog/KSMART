@@ -75,6 +75,7 @@ public class MarriageCorrectionEnrichment implements BaseEnrichment {
             correction.setMarriageId(marriageApplicationDetails.getId());
 
             setApplicationNumbers(correctionRequest, marriageApplicationDetails);
+            correction.setApplicationNo(marriageApplicationDetails.getApplicationNumber());
 
             Map<String, String> marriageApplnDetailsFieldMap = getJsonFieldNames(MarriageApplicationDetails.class.getDeclaredFields());
             Map<String, String> brideDetailsFieldMap = getJsonFieldNames(BrideDetails.class.getDeclaredFields());
