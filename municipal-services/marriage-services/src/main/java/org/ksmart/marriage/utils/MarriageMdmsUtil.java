@@ -71,6 +71,17 @@ public class MarriageMdmsUtil {
                 .requestInfo(requestInfo).build();
         return mdmsCriteriaReq;
     }
+
+    private MdmsCriteriaReq getMDMSRequestForTenant(RequestInfo requestInfo, String tenantId) {
+        ModuleDetail tenantIdRequest = getTenantIdRequest(tenantId);
+        List<ModuleDetail> moduleDetails = new LinkedList<>();
+        moduleDetails.add(tenantIdRequest);
+        MdmsCriteria mdmsCriteria = MdmsCriteria.builder().moduleDetails(moduleDetails).tenantId(config.getEgovStateLevelTenant())
+                .build();
+        MdmsCriteriaReq mdmsCriteriaReq = MdmsCriteriaReq.builder().mdmsCriteria(mdmsCriteria)
+                .requestInfo(requestInfo).build();
+        return mdmsCriteriaReq;
+    }
     public StringBuilder getMdmsSearchUrl() {
         return new StringBuilder().append(config.getMdmsHost()).append(config.getMdmsEndPoint());
     }
@@ -79,7 +90,7 @@ public class MarriageMdmsUtil {
         // master details for Marriage module
         List<MasterDetail> marriageMasterDetails = new ArrayList<>();
         // filter to only get code field from master data    
-        final String filterCode = "$.[?(@.code=='"+tenantId+"')].*";
+        final String filterCode = "$.[?(@.code=='"+tenantId+"')]";
     //    final String filterCode = "$.[?(@.active==true)].code";
         marriageMasterDetails
                 .add(MasterDetail.builder().name(MarriageConstants.TENANTS).filter(filterCode).build());
@@ -733,6 +744,22 @@ public class MarriageMdmsUtil {
             List<String> modulepaths = Arrays.asList(
                     MarriageConstants.COMMON_MASTER_JSONPATH);
            return  getAttributeValuesForJsonPaths(result,modulepaths);
+        }
+        return null;
+    }
+
+
+    public Map<String, List<String>> mDMSCallGetTenantData(RequestInfo requestInfo
+            , String tenantId) {
+        log.info("Inside mDMSCallGetTenant "+tenantId);
+        MdmsCriteriaReq mdmsCriteriaReq = getMDMSRequestForTenant(requestInfo, tenantId);
+        Object result = serviceRequestRepository.fetchResult(getMdmsSearchUrl(), mdmsCriteriaReq);
+        log.info("result mDMSCallGetTenant "+result.toString());
+        if(null!=result){
+            List<String> modulepaths = Arrays.asList(
+                    MarriageConstants.COMMON_MASTER_JSONPATH,
+                    MarriageConstants.TENANT_JSONPATH);
+            return  getAttributeValuesForJsonPaths(result,modulepaths);
         }
         return null;
     }

@@ -34,7 +34,7 @@ public class MarriageRegistryDetails {
     private String districtid;
 
     @Size(max = 64)
-    @JsonProperty("marriageLBtype")
+        @JsonProperty("marriageLBtype")
     private String lbtype;
 
     @Size(max = 64)

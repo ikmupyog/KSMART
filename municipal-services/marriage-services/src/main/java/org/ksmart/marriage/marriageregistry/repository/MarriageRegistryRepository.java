@@ -123,110 +123,128 @@ public class MarriageRegistryRepository {
     public MarriageCertPdfResponse saveMarriageCertPdf(MarriageCertPDFRequest marriageCertPDFRequest) {
         MarriageCertPdfResponse pdfResponse = new MarriageCertPdfResponse();
         try {
-//            marriagecertpdfrequest.getmarriagecertificate().foreach(cert->{
-//                string uihost = marriageapplicationconfiguration.getuiapphost();
-//                string marriagecertpath = stringutils.replaceeach(marriageapplicationconfiguration.getmarriagecertlink(),new string[]{"$id","$tenantid","$regno","$marriagecertificateno"}, new string[]{cert.getid(),cert.gettenantid(),cert.getregistrationno(),cert.getmarriagecertificateno()});
-//                cert.setembeddedurl(getshortenedurl(uihost+marriagecertpath));
-//
-//
-//
-//            });
-            MarriageCertPDFRequest req = MarriageCertPDFRequest.builder().marriageCertificate(marriageCertPDFRequest.getMarriageCertificate()).requestInfo(marriageCertPDFRequest.getRequestInfo()).build();
-            //TODO pdf data creation
-            StringBuilder groomFullName = new StringBuilder();
-            groomFullName.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomDetails().getFirstname_en());
-            if(StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomDetails().getMiddlename_en())){
-                groomFullName.append(" "+req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomDetails().getMiddlename_en());
-            }
-            if(StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomDetails().getLastname_en())){
-                groomFullName.append(" "+req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomDetails().getLastname_en());
-            }
-            req.getMarriageCertificate().get(0).setGroomFullName(groomFullName.toString());
+            if (marriageCertPDFRequest != null && marriageCertPDFRequest.getMarriageCertificate() != null && marriageCertPDFRequest.getMarriageCertificate().size() > 0
+            &&null!=marriageCertPDFRequest.getMarriageCertificate().get(0).getMarriageRegistryDetails()) {
+                MarriageCertPDFRequest req = MarriageCertPDFRequest.builder().marriageCertificate(marriageCertPDFRequest.getMarriageCertificate()).requestInfo(marriageCertPDFRequest.getRequestInfo()).build();
+                //TODO pdf data creation
+                if(null!=req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomDetails()&& StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomDetails().getFirstname_en())) {
+                    StringBuilder groomFullName = new StringBuilder();
+                    groomFullName.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomDetails().getFirstname_en());
+                    if (StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomDetails().getMiddlename_en())) {
+                        groomFullName.append(" " + req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomDetails().getMiddlename_en());
+                    }
+                    if (StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomDetails().getLastname_en())) {
+                        groomFullName.append(" " + req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomDetails().getLastname_en());
+                    }
+                    req.getMarriageCertificate().get(0).setGroomFullName(groomFullName.toString());
+                }else{
+                    throw new CustomException("PDF_ERROR", "Groom Details not found!!!" );
+                }
+                if(null!=req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideDetails()&&
+                        StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideDetails().getFirstname_en())) {
+                    StringBuilder brideFullName = new StringBuilder();
+                    brideFullName.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideDetails().getFirstname_en());
+                    if (StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideDetails().getMiddlename_en())) {
+                        brideFullName.append(" " + req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideDetails().getMiddlename_en());
+                    }
+                    if (StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideDetails().getLastname_en())) {
+                        brideFullName.append(" " + req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideDetails().getLastname_en());
+                    }
+                    req.getMarriageCertificate().get(0).setBrideFullName(brideFullName.toString());
+                }else{
+                    throw new CustomException("PDF_ERROR", "Bride Details not found!!!" );
+                }
+                if(null!=req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails()){
+                    if(StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getGroomUrl())) {
 
-            StringBuilder brideFullName = new StringBuilder();
-            brideFullName.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideDetails().getFirstname_en());
-            if(StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideDetails().getMiddlename_en())){
-                brideFullName.append(" "+req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideDetails().getMiddlename_en());
-            }
-            if(StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideDetails().getLastname_en())){
-                brideFullName.append(" "+req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideDetails().getLastname_en());
-            }
-            req.getMarriageCertificate().get(0).setBrideFullName(brideFullName.toString());
-            //Setting Marriage Place Address------------------------------------------------------------------------------------------
-            StringBuilder marriageAddr = new StringBuilder();
-            if (!StringUtils.isEmpty(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlacetype())) {
-                if (req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlacetype()
-                        .equals(MarriageConstants.PLACE_TYPE_HOUSE)) {
-                    if (!StringUtils.isEmpty(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getMarriageHouseNoAndNameEn())) {
-                        marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getMarriageHouseNoAndNameEn()+",");
+                        //req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().setGroomUrl(marriageApplicationConfiguration.getImageURLStartPath() + req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getGroomUrl());
+                    }else{
+                        throw new CustomException("PDF_ERROR", "Groom Photo not found!!!" );
                     }
-                    if (!StringUtils.isEmpty(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLocality_en())) {
-                        marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLocality_en()+",");
+                    if(StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getBrideUrl())) {
+                        //req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().setBrideUrl(marriageApplicationConfiguration.getImageURLStartPath()+req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getBrideUrl());
+                    }else{
+                        throw new CustomException("PDF_ERROR", "Bride Photo not found!!!" );
                     }
-                    if (!StringUtils.isEmpty(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getStreet_name_en())) {
-                        marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getStreet_name_en()+",");
-                    }
-                    if (!StringUtils.isEmpty(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLandmark())) {
-                        marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLandmark()+",");
-                    }
-                    Map<String, List<String>> mdmsCountryMap = util.mDMSCallGetCountry(req.getRequestInfo(), MarriageConstants.COUNTRY_CODE);
-                    util.appendIfNotBlank(getValueFromMap(MarriageConstants.COUNTRY, mdmsCountryMap), marriageAddr, false);
-                    System.out.println(marriageAddr);
-                }else if (req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlacetype()
-                        .equals(MarriageConstants.PLACE_TYPE_RELIGIOUS_INSTITUTION)
-                        || req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlacetype()
-                        .equals(MarriageConstants.PLACE_TYPE_MANDAPAM_OTHER))
-                {
-                    if (StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlaceid())) {
-                        Object mdmsMarriagePlaceData1 = util.mDMSCallGetMandapamAddress(req.getRequestInfo(), req.getMarriageCertificate().get(0).getMarriageRegistryDetails());
-                        System.out.println(mdmsMarriagePlaceData1);
-                        if (null != mdmsMarriagePlaceData1) {
-                            Map<String, Object> mdmsMap1 = util.getMandapamAttributeValues(mdmsMarriagePlaceData1);
-                            if (null != mdmsMap1) {
-                                util.appendIfNotBlank(getValueFromMapOfStr(MarriageConstants.MARRIAGE_PLACE_ADDRESS, mdmsMap1), marriageAddr, true);
-                                util.appendIfNotBlank(getValueFromMapOfStr(MarriageConstants.MARRIAGE_PLACE_MAIN_PLACE, mdmsMap1), marriageAddr, true);
-                                Object mdmsMarriagePlaceData = util.mDMSCallGetAddressFromIds(req.getRequestInfo()
-                                        , getValueFromMapOfStr(MarriageConstants.MARRIAGE_PLACE_TENENT_CODE, mdmsMap1)
-                                        , getValueFromMapOfStr(MarriageConstants.MARRIAGE_PLACE_DIST_ID, mdmsMap1)
-                                        , getValueFromMapOfStr(MarriageConstants.MARRIAGE_PLACE_STATE_ID, mdmsMap1)
-                                        , null
-                                        , null
-                                        , null
-                                        , null);
-                                if(null!=mdmsMarriagePlaceData) {
-                                    Map<String, List<String>> mdmsMap = util.getMarriageMDMSData(req, mdmsMarriagePlaceData);
-                                    if(null!=mdmsMap) {
-                                        System.out.println(getValueFromMap(MarriageConstants.DISTRICT, mdmsMap));
-                                        util.appendIfNotBlank(getValueFromMap(MarriageConstants.DISTRICT, mdmsMap), marriageAddr, true);
-                                        util.appendIfNotBlank(getValueFromMap(MarriageConstants.STATE, mdmsMap), marriageAddr, true);
-                                        Map<String, List<String>> mdmsCountryMap = util.mDMSCallGetCountry(req.getRequestInfo(), MarriageConstants.COUNTRY_CODE);
-                                        util.appendIfNotBlank(getValueFromMap(MarriageConstants.COUNTRY, mdmsCountryMap), marriageAddr, false);
-                                        System.out.println(marriageAddr);
+            }else{
+                    throw new CustomException("PDF_ERROR", "Bride and Groom Photos not found!!!" );
+                }
+
+                if(null!=req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlacetype()) {
+                    // Map<String, List<String>> mdmsTenantMap = util.mDMSCallGetTenantData(req.getRequestInfo(),req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getTenantid());
+                    //req.getMarriageCertificate().get(0).setLbType(getValueFromMap(MarriageConstants.LBTYPE, mdmsTenantMap));
+                    //Setting Marriage Place Address------------------------------------------------------------------------------------------
+                    StringBuilder marriageAddr = new StringBuilder();
+                    if (!StringUtils.isEmpty(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlacetype())) {
+                        if (req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlacetype()
+                                .equals(MarriageConstants.PLACE_TYPE_HOUSE)) {
+                            if (!StringUtils.isEmpty(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getMarriageHouseNoAndNameEn())) {
+                                marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getMarriageHouseNoAndNameEn() + ",");
+                            }
+                            if (!StringUtils.isEmpty(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLocality_en())) {
+                                marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLocality_en() + ",");
+                            }
+                            if (!StringUtils.isEmpty(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getStreet_name_en())) {
+                                marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getStreet_name_en() + ",");
+                            }
+                            if (!StringUtils.isEmpty(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLandmark())) {
+                                marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLandmark() + ",");
+                            }
+                            Map<String, List<String>> mdmsCountryMap = util.mDMSCallGetCountry(req.getRequestInfo(), MarriageConstants.COUNTRY_CODE);
+                            util.appendIfNotBlank(getValueFromMap(MarriageConstants.COUNTRY, mdmsCountryMap), marriageAddr, false);
+                            System.out.println(marriageAddr);
+                        } else if (req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlacetype()
+                                .equals(MarriageConstants.PLACE_TYPE_RELIGIOUS_INSTITUTION)
+                                || req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlacetype()
+                                .equals(MarriageConstants.PLACE_TYPE_MANDAPAM_OTHER)) {
+                            if (StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlaceid())) {
+                                Object mdmsMarriagePlaceData1 = util.mDMSCallGetMandapamAddress(req.getRequestInfo(), req.getMarriageCertificate().get(0).getMarriageRegistryDetails());
+                                System.out.println(mdmsMarriagePlaceData1);
+                                if (null != mdmsMarriagePlaceData1) {
+                                    Map<String, Object> mdmsMap1 = util.getMandapamAttributeValues(mdmsMarriagePlaceData1);
+                                    if (null != mdmsMap1) {
+                                        util.appendIfNotBlank(getValueFromMapOfStr(MarriageConstants.MARRIAGE_PLACE_ADDRESS, mdmsMap1), marriageAddr, true);
+                                        util.appendIfNotBlank(getValueFromMapOfStr(MarriageConstants.MARRIAGE_PLACE_MAIN_PLACE, mdmsMap1), marriageAddr, true);
+                                        Object mdmsMarriagePlaceData = util.mDMSCallGetAddressFromIds(req.getRequestInfo()
+                                                , getValueFromMapOfStr(MarriageConstants.MARRIAGE_PLACE_TENENT_CODE, mdmsMap1)
+                                                , getValueFromMapOfStr(MarriageConstants.MARRIAGE_PLACE_DIST_ID, mdmsMap1)
+                                                , getValueFromMapOfStr(MarriageConstants.MARRIAGE_PLACE_STATE_ID, mdmsMap1)
+                                                , null
+                                                , null
+                                                , null
+                                                , null);
+                                        if (null != mdmsMarriagePlaceData) {
+                                            Map<String, List<String>> mdmsMap = util.getMarriageMDMSData(req, mdmsMarriagePlaceData);
+                                            if (null != mdmsMap) {
+                                                System.out.println(getValueFromMap(MarriageConstants.DISTRICT, mdmsMap));
+                                                util.appendIfNotBlank(getValueFromMap(MarriageConstants.DISTRICT, mdmsMap), marriageAddr, true);
+                                                util.appendIfNotBlank(getValueFromMap(MarriageConstants.STATE, mdmsMap), marriageAddr, true);
+                                                Map<String, List<String>> mdmsCountryMap = util.mDMSCallGetCountry(req.getRequestInfo(), MarriageConstants.COUNTRY_CODE);
+                                                util.appendIfNotBlank(getValueFromMap(MarriageConstants.COUNTRY, mdmsCountryMap), marriageAddr, false);
+                                                System.out.println(marriageAddr);
+                                            }
+                                        }
                                     }
                                 }
                             }
-                        }
-                    }
-                }
-
-               else if (req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlacetype().equals(
-                        MarriageConstants.PLACE_TYPE_PRIVATE_PLACE) ||
-                        (req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlacetype().equals(
-                                MarriageConstants.PLACE_TYPE_PUBLIC_PLACE))||(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlacetype().equals(
-                        MarriageConstants.PLACE_OTHER))) {
-                    if (!StringUtils.isEmpty(
-                            req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlacenameEn())) {
-                       marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlacenameEn()+",");
-                    }
-                    if (!StringUtils.isEmpty(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLocality_en())) {
-                        marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLocality_en()+",");
-                    }
-                    if (!StringUtils.isEmpty(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getStreet_name_en())) {
-                        marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getStreet_name_en()+",");
-                    }
-                    if (!StringUtils.isEmpty(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLandmark())) {
-                        marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLandmark()+",");
-                    }
+                        } else if (req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlacetype().equals(
+                                MarriageConstants.PLACE_TYPE_PRIVATE_PLACE) ||
+                                (req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlacetype().equals(
+                                        MarriageConstants.PLACE_TYPE_PUBLIC_PLACE)) || (req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlacetype().equals(
+                                MarriageConstants.PLACE_OTHER))) {
+                            if (!StringUtils.isEmpty(
+                                    req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlacenameEn())) {
+                                marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getPlacenameEn() + ",");
+                            }
+                            if (!StringUtils.isEmpty(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLocality_en())) {
+                                marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLocality_en() + ",");
+                            }
+                            if (!StringUtils.isEmpty(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getStreet_name_en())) {
+                                marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getStreet_name_en() + ",");
+                            }
+                            if (!StringUtils.isEmpty(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLandmark())) {
+                                marriageAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getLandmark() + ",");
+                            }
 
 //                    Object mdmsMarriagePlaceAddressData = util.mDMSCallGetAddress(req.getRequestInfo()
 //                            , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getTenantid()
@@ -236,61 +254,61 @@ public class MarriageRegistryRepository {
 //                            , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getPoNoPermanent()
 //                            , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getVillageNamePermanent()
 //                            , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getPermntInKeralaAdrTaluk());
-                    Map<String, List<String>> mdmsCountryMap = util.mDMSCallGetCountry(req.getRequestInfo(), MarriageConstants.COUNTRY_CODE);
-                    util.appendIfNotBlank(getValueFromMap(MarriageConstants.COUNTRY, mdmsCountryMap), marriageAddr, false);
-                    System.out.println(marriageAddr);
+                            Map<String, List<String>> mdmsCountryMap = util.mDMSCallGetCountry(req.getRequestInfo(), MarriageConstants.COUNTRY_CODE);
+                            util.appendIfNotBlank(getValueFromMap(MarriageConstants.COUNTRY, mdmsCountryMap), marriageAddr, false);
+                            System.out.println(marriageAddr);
 
+                        }
+                        req.getMarriageCertificate().get(0).setMarriagePlaceFullAddr(marriageAddr.toString());
+                    }
+                }else{
+                    throw new CustomException("PDF_ERROR"," Marriage Place Type is Empty");
                 }
-                req.getMarriageCertificate().get(0).setMarriagePlaceFullAddr(marriageAddr.toString());
-            }
 
-
-            StringBuilder groomAddr = new StringBuilder();
-            //Setting Groom Address data from MDMS
-            Object mdmsGroomAddressData = util.mDMSCallGetAddress(req.getRequestInfo()
-                    , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getPermntInKeralaAdrLBName()
-                    , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getDistrictIdPermanent()
-                    , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getStateIdPermanent()
-                    , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getCountryIdPermanent()
-                    , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getPoNoPermanent()
-                    , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getVillageNamePermanent()
-                    , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getPermntInKeralaAdrTaluk());
-            Map<String,List<String>>  mdmsGroomAddressMap = util.getMarriageMDMSData(req,mdmsGroomAddressData);
-            req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().setPermntInKeralaAdrLBName(getValueFromMap(MarriageConstants.TENANTS,mdmsGroomAddressMap));
-                     req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().setDistrictIdPresent(getValueFromMap(MarriageConstants.DISTRICT,mdmsGroomAddressMap));
-                     req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().setStateIdPermanent(getValueFromMap(MarriageConstants.STATE,mdmsGroomAddressMap));
-                     req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().setCountryIdPermanent(getValueFromMap(MarriageConstants.COUNTRY,mdmsGroomAddressMap));
-                     req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().setPoNoPermanent(getValueFromMap(MarriageConstants.POSTOFFICE,mdmsGroomAddressMap));
-                     req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().setVillageNamePermanent(getValueFromMap(MarriageConstants.VILLAGE,mdmsGroomAddressMap));
-                     req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().setPermntInKeralaAdrTaluk(getValueFromMap(MarriageConstants.TALUK,mdmsGroomAddressMap));
+                StringBuilder groomAddr = new StringBuilder();
+                //Setting Groom Address data from MDMS
+                Object mdmsGroomAddressData = util.mDMSCallGetAddress(req.getRequestInfo()
+                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getPermntInKeralaAdrLBName()
+                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getDistrictIdPermanent()
+                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getStateIdPermanent()
+                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getCountryIdPermanent()
+                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getPoNoPermanent()
+                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getVillageNamePermanent()
+                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getPermntInKeralaAdrTaluk());
+                Map<String, List<String>> mdmsGroomAddressMap = util.getMarriageMDMSData(req, mdmsGroomAddressData);
+                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().setPermntInKeralaAdrLBName(getValueFromMap(MarriageConstants.TENANTS, mdmsGroomAddressMap));
+                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().setDistrictIdPresent(getValueFromMap(MarriageConstants.DISTRICT, mdmsGroomAddressMap));
+                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().setStateIdPermanent(getValueFromMap(MarriageConstants.STATE, mdmsGroomAddressMap));
+                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().setCountryIdPermanent(getValueFromMap(MarriageConstants.COUNTRY, mdmsGroomAddressMap));
+                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().setPoNoPermanent(getValueFromMap(MarriageConstants.POSTOFFICE, mdmsGroomAddressMap));
+                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().setVillageNamePermanent(getValueFromMap(MarriageConstants.VILLAGE, mdmsGroomAddressMap));
+                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().setPermntInKeralaAdrTaluk(getValueFromMap(MarriageConstants.TALUK, mdmsGroomAddressMap));
 //            groomAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().get).append(", ");
 //            groomAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getPermntInKeralaWardNo()).append(", ");
 //            groomAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getPermntInKeralaAdrLBName()).append(", ");
 //            groomAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getPermntInKerala).append(", ");
 //            groomAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getPermntInKeralaWardNo()).append(", ");
-              req.getMarriageCertificate().get(0).setGroomPermntFullAddr(marriageRegistryEnrichment.setGroomPermanentAddressForCertificate(req.getRequestInfo(),req.getMarriageCertificate().get(0).getMarriageRegistryDetails()));
-            req.getMarriageCertificate().get(0).setBridePermntFullAddr(marriageRegistryEnrichment.setBridePermanentAddressForCertificate(req.getRequestInfo(),req.getMarriageCertificate().get(0).getMarriageRegistryDetails()));
-                     //Setting groom NRI address
+                req.getMarriageCertificate().get(0).setGroomPermntFullAddr(marriageRegistryEnrichment.setGroomPermanentAddressForCertificate(req.getRequestInfo(), req.getMarriageCertificate().get(0).getMarriageRegistryDetails()));
+                req.getMarriageCertificate().get(0).setBridePermntFullAddr(marriageRegistryEnrichment.setBridePermanentAddressForCertificate(req.getRequestInfo(), req.getMarriageCertificate().get(0).getMarriageRegistryDetails()));
+                //Setting groom NRI address
 
-                     //Setting bride address data from MDMS
-                     Object mdmsBrideAddressData = util.mDMSCallGetAddress(req.getRequestInfo()
-                    , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().getPermntInKeralaAdrLBName()
-                    , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().getDistrictIdPresent()
-                    , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().getStateIdPermanent()
-                    , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().getCountryIdPermanent()
-                    , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().getPoNoPermanent()
-                    , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().getVillageNamePermanent()
-                    , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().getPermntInKeralaAdrTaluk());
-            Map<String,List<String>>  mdmsBrideAddressMap = util.getMarriageMDMSData(req,mdmsBrideAddressData);
-            req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().setPermntInKeralaAdrLBName(getValueFromMap(MarriageConstants.TENANTS,mdmsBrideAddressMap));
-            req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().setDistrictIdPresent(getValueFromMap(MarriageConstants.DISTRICT,mdmsBrideAddressMap));
-            req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().setStateIdPermanent(getValueFromMap(MarriageConstants.STATE,mdmsBrideAddressMap));
-            req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().setCountryIdPermanent(getValueFromMap(MarriageConstants.COUNTRY,mdmsBrideAddressMap));
-            req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().setPoNoPermanent(getValueFromMap(MarriageConstants.POSTOFFICE,mdmsBrideAddressMap));
-            req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().setVillageNamePermanent(getValueFromMap(MarriageConstants.VILLAGE,mdmsBrideAddressMap));
-            req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().setPermntInKeralaAdrTaluk(getValueFromMap(MarriageConstants.TALUK,mdmsBrideAddressMap));
-
-
+                //Setting bride address data from MDMS
+                Object mdmsBrideAddressData = util.mDMSCallGetAddress(req.getRequestInfo()
+                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().getPermntInKeralaAdrLBName()
+                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().getDistrictIdPresent()
+                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().getStateIdPermanent()
+                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().getCountryIdPermanent()
+                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().getPoNoPermanent()
+                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().getVillageNamePermanent()
+                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().getPermntInKeralaAdrTaluk());
+                Map<String, List<String>> mdmsBrideAddressMap = util.getMarriageMDMSData(req, mdmsBrideAddressData);
+                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().setPermntInKeralaAdrLBName(getValueFromMap(MarriageConstants.TENANTS, mdmsBrideAddressMap));
+                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().setDistrictIdPresent(getValueFromMap(MarriageConstants.DISTRICT, mdmsBrideAddressMap));
+                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().setStateIdPermanent(getValueFromMap(MarriageConstants.STATE, mdmsBrideAddressMap));
+                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().setCountryIdPermanent(getValueFromMap(MarriageConstants.COUNTRY, mdmsBrideAddressMap));
+                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().setPoNoPermanent(getValueFromMap(MarriageConstants.POSTOFFICE, mdmsBrideAddressMap));
+                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().setVillageNamePermanent(getValueFromMap(MarriageConstants.VILLAGE, mdmsBrideAddressMap));
+                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().setPermntInKeralaAdrTaluk(getValueFromMap(MarriageConstants.TALUK, mdmsBrideAddressMap));
 
 
 //            if(StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getGroomUrl())) {
@@ -300,27 +318,31 @@ public class MarriageRegistryRepository {
 //            if(StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getBrideUrl())) {
 //                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().setBrideUrl(marriageApplicationConfiguration.getImageURLStartPath()+req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getBrideUrl());
 //            }
-            marriageCertPDFRequest.getMarriageCertificate().forEach(cert-> {
-                String uiHost = marriageApplicationConfiguration.getEgovPdfHost();
-                String tenantId = cert.getMarriageRegistryDetails().getTenantid().split("\\.")[0];
-                String marriageCertPath = StringUtils.replace(marriageApplicationConfiguration.getEgovPdfMarriageEndPoint(),"$tenantId", tenantId);
-                String pdfFinalPath = uiHost + marriageCertPath;
-                System.out.println(new Gson().toJson(req));
-                MarriageCertPdfResponse response = restTemplate.postForObject(pdfFinalPath, req, MarriageCertPdfResponse.class);//Creating PDF
+                marriageCertPDFRequest.getMarriageCertificate().forEach(cert -> {
+                    String uiHost = marriageApplicationConfiguration.getEgovPdfHost();
+                    String tenantId = cert.getMarriageRegistryDetails().getTenantid().split("\\.")[0];
+                    String marriageCertPath = StringUtils.replace(marriageApplicationConfiguration.getEgovPdfMarriageEndPoint(), "$tenantId", tenantId);
+                    String pdfFinalPath = uiHost + marriageCertPath;
+                    System.out.println(new Gson().toJson(req));
+                    MarriageCertPdfResponse response = restTemplate.postForObject(pdfFinalPath, req, MarriageCertPdfResponse.class);//Creating PDF
 
-                if (response != null && CollectionUtils.isEmpty(response.getFilestoreIds())) {
-                    throw new CustomException("EMPTY_FILESTORE_IDS_FROM_PDF_SERVICE",
-                            "No file store id found from pdf service");
-                }
-                pdfResponse.setFilestoreIds(response.getFilestoreIds());
-            });
+                    if (response != null && CollectionUtils.isEmpty(response.getFilestoreIds())) {
+                        throw new CustomException("EMPTY_FILESTORE_IDS_FROM_PDF_SERVICE",
+                                "No file store id found from pdf service");
+                    }
+                    pdfResponse.setFilestoreIds(response.getFilestoreIds());
+                });
+            }else{
+                throw new CustomException("PDF_ERROR", "Error in generating PDF. Marriage Registry Data is Empty" );
+            }
 
-        }catch (Exception e){
-            e.printStackTrace();
-            System.out.println(e.getMessage());
-            throw new CustomException("PDF_ERROR","Error in generating PDF"+e.getMessage());
-        }
-        return  pdfResponse;
+            }catch(Exception e){
+                e.printStackTrace();
+                System.out.println(e.getMessage());
+                throw new CustomException("PDF_ERROR", "Error in generating PDF" + e.getMessage());
+            }
+            return pdfResponse;
+
     }
     public String getShortenedUrl(String url) {
         HashMap<String, String> body=new HashMap<>();
