@@ -2,24 +2,24 @@ import React, { useState } from 'react'
 
 const staticStyles = {
   container: {
-    "margin-bottom": "10px"
+    marginBottom: "10px"
   },
   title: {
     display: "flex",
-    "flex-direction": "row",
-    "justify-content": "space-between",
+    flexDirection: "row",
+    justifyContent: "space-between",
     cursor: "pointer",
     color: "white",
     padding: "10px",
-    "box-shadow": "0px 0px 10px rgba(0, 0, 0, 0.2)",
-    "border-top-left-radius": "10px",
-    "border-top-right-radius": "10px"
+    boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.2)",
+    borderTopLeftRadius: "10px",
+    borderTopRightRadius: "10px"
   },
   body: {
-    "background-color": "#e9e4e1",
+    backgroundColor: "#e9e4e1",
     padding: "10px",
-    "border-bottom-left-radius": "10px",
-    "border-bottom-right-radius": "10px"
+    borderBottomLeftRadius: "10px",
+    borderBottomRightRadius: "10px"
   }
 }
 

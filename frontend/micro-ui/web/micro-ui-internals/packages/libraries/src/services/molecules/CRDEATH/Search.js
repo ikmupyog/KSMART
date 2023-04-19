@@ -73,22 +73,22 @@ export const CRDeathsearch = {
       title: "CR_DEATH_INFORMATION",
       asSectionHeader: true,
       values: [
-        // {
-        //   title: "PDF_DECEASED_NAME",
-        //   value:
-        //     response?.InformationDeath?.DeceasedFirstNameEn
-        //     // +
-
-        //     //   response?.InformationDeath?.DeceasedMiddleNameEn +
-
-        //     //   response?.InformationDeath?.DeceasedLastNameEn +
-        //     //   " / " +
-        //     //   response?.InformationDeath?.DeceasedFirstNameMl +
-        //     //   " " +
-        //     //   response?.InformationDeath?.DeceasedMiddleNameMl +
-        //     //   " " +
-        //     //   response?.InformationDeath?.DeceasedLastNameMl || "NA",
-        // },
+        {
+          // title: "PDF_DECEASED_NAME",
+          // value:
+          //   response?.InformationDeath?.DeceasedFirstNameEn 
+            // +
+              
+            //   response?.InformationDeath?.DeceasedMiddleNameEn +
+               
+            //   response?.InformationDeath?.DeceasedLastNameEn +
+            //   " / " +
+            //   response?.InformationDeath?.DeceasedFirstNameMl +
+            //   " " +
+            //   response?.InformationDeath?.DeceasedMiddleNameMl +
+            //   " " +
+            //   response?.InformationDeath?.DeceasedLastNameMl || "NA",
+        },
 
         // { title: "PDF_BIRTH_CHILD_SEX", value: response?.InformationDeath?.DeceasedGender || "NA" },
         // {

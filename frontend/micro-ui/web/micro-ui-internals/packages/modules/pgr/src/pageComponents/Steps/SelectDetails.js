@@ -11,20 +11,23 @@ const SelectDetails = ({ t, config, onSelect, value }) => {
 
   const locale = Digit.SessionStorage.get("locale");
 
-  let ml_pattern = /^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$/;
-  let en_pattern = /^[a-zA-Z-.`'0-9 ]*$/;
+  let ml_pattern = /^[\u0D00-\u0D7F\u200D\u200C 0-9!@#$%^&*()_+=-`~\\\]\[{}|';:/.,?><]*$/;
+  let en_pattern = /^[A-Za-z0-9\s!@#$%^&*()_+=-`~\\\]\[{}|';:/.,?><]*$/;
+
   const handleChange = (e) => {
-    if (locale === "ml_IN") {
-      if (e.target.value.match(ml_pattern)) {
-        setDetails(e.target.value);
+    if (e.target.value.trim().length <= 150) {
+      if (locale === "ml_IN") {
+        if (e.target.value.match(ml_pattern)) {
+          setDetails(e.target.value.substring(0, 150));
+        }
+      } else if (e.target.value.match(en_pattern)) {
+        setDetails(e.target.value.substring(0, 150));
       }
-    } else if (e.target.value.match(en_pattern)) {
-      setDetails(e.target.value);
     }
   }
 
   const goNext = () => {
-    onSelect({ details: details });
+    onSelect({ details: details.trim() });
   };
 
   return (
@@ -37,6 +40,7 @@ const SelectDetails = ({ t, config, onSelect, value }) => {
             <div className="col-md-6">
               <CardLabel>
                 {`${t("CS_ADDCOMPLAINT_DETAILS")}`} <span className="mandatorycss">*</span>
+                <span>{t("PGR_COMPLAINT_DETAILS_LIMIT")} </span>
               </CardLabel>
               <TextArea t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="details" value={details}
                 onChange={handleChange} placeholder={`${t("CS_ADDCOMPLAINT_DETAILS")}`} />

@@ -389,7 +389,8 @@ const AbandonedInformer = ({ config, onSelect, userType, formData, isEditAbandon
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       {window.location.href.includes("/citizen/cr-death-creation/informer") || window.location.href.includes("/employee/cr-death-creation/informer") ? <Timeline currentStep={6} /> : null}
       
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!IsDeclarationInformant}>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={
+        !IsDeclarationInformant||!uploadedFile||!uploadedFile1||!uploadedFile2||!uploadedFile3||!uploadedFile4||!uploadedFile5}>
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
