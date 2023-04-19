@@ -105,6 +105,8 @@ public class MarriageCorrectionService {
 
         MarriageRegistrySearchCriteria criteria = new MarriageRegistrySearchCriteria();
         criteria.setRegistrationNo(request.getMarriageCorrectionDetails().get(0).getRegistrationno());
+        criteria.setId(request.getMarriageCorrectionDetails().get(0).getRegisterId());
+        criteria.setTenantId(request.getMarriageCorrectionDetails().get(0).getTenantid());
         List<MarriageRegistryDetails> marriageRegistryDetails = searchRegistry(criteria);
         if (!marriageRegistryDetails.isEmpty()) {
             MarriageApplicationDetails marriageApplicationDetail = RegistryToApplicationMapper.convert(marriageRegistryDetails);
@@ -115,7 +117,9 @@ public class MarriageCorrectionService {
 
             MarriageDetailsRequest marriageDetailsRequest=new MarriageDetailsRequest();
             marriageDetailsRequest.setMarriageDetails(marriageApplicationDetailsList);
-            mdmsValidator.validateMarriageMDMSData(marriageDetailsRequest,mdmsData);
+            marriageCorrectionApplnValidator.validateCommonFields(marriageDetailsRequest);
+            //validatorService.validateCommonFields( marriageDetailsRequest);
+            //mdmsValidator.validateMarriageMDMSData(marriageDetailsRequest,mdmsData);
             //validatorService.ruleEngineMarriage(marriageDetailsRequest, wfc, mdmsData);
 
             producer.push(marriageApplicationConfiguration.getSaveMarriageCorrectionTopic(), request);

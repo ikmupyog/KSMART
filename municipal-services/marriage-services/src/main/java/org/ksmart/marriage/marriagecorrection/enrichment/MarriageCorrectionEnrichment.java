@@ -67,6 +67,7 @@ public class MarriageCorrectionEnrichment implements BaseEnrichment {
             marriageApplicationDetails.setMarriageDocuments(documentList);
             marriageApplicationDetails.setTenantid(correction.getTenantid());
             marriageApplicationDetails.setApplicationtype(correction.getApplicationtype());
+            marriageApplicationDetails.setModuleCode(correction.getModuleCode());
             marriageApplicationDetails.setBusinessservice(correction.getBusinessservice());
             marriageApplicationDetails.setStatus(correction.getStatus());
             marriageApplicationDetails.setAction(correction.getAction());
@@ -229,6 +230,8 @@ public class MarriageCorrectionEnrichment implements BaseEnrichment {
 
         setBridePermanentAddress(marriageApplicationDetails);
         setGroomPermanentAddress(marriageApplicationDetails);
+       
+
     }
 
     private Map<String, String> getJsonFieldNames(Field[] fields) {
@@ -256,8 +259,8 @@ public class MarriageCorrectionEnrichment implements BaseEnrichment {
         List<String> filecodes = getIds(requestInfo,
                 tenantId,
                 config.getMarriageApplNumberIdName(),
-                marriageApplicationDetails.getApplicationtype(),
-                "APPL",
+                marriageApplicationDetails.getModuleCode(),
+                "ACK",
                 marriageCorrection.size());
         validateFileCodes(filecodes, marriageCorrection.size());
 
@@ -287,101 +290,54 @@ public class MarriageCorrectionEnrichment implements BaseEnrichment {
                     marriage.getGroomAddressDetails().setBrideGroomPermanent("G");
                 }
 
-                if (marriage.getGroomAddressDetails().getPermtaddressCountry() != null && marriage.getGroomAddressDetails().getPermtaddressStateName() != null) {
-                    if (marriage.getGroomAddressDetails().getPermtaddressCountry().contains(MarriageConstants.COUNTRY_CODE)) {
-                        if (marriage.getGroomAddressDetails().getPermtaddressStateName().contains(MarriageConstants.STATE_CODE_SMALL)) {
-
-                            marriage.getGroomAddressDetails().setCountryIdPermanent(marriage.getGroomAddressDetails().getPermtaddressCountry());
-                            marriage.getGroomAddressDetails().setPermanentAddrTalukId(marriage.getGroomAddressDetails().getPermntInKeralaAdrTaluk());
-                            marriage.getGroomAddressDetails().setPermanentAddrVillageId(marriage.getGroomAddressDetails().getPermntInKeralaAdrVillage());
-                            marriage.getGroomAddressDetails().setStateIdPermanent(marriage.getGroomAddressDetails().getPermtaddressStateName());
-                            marriage.getGroomAddressDetails().setDistrictIdPermanent(marriage.getGroomAddressDetails().getPermntInKeralaAdrDistrict());
-                            marriage.getGroomAddressDetails().setLocalityEnPermanent(marriage.getGroomAddressDetails().getPermntInKeralaAdrLocalityNameEn());
-                            marriage.getGroomAddressDetails().setLocalityMlPermanent(marriage.getGroomAddressDetails().getPermntInKeralaAdrLocalityNameMl());
-                            marriage.getGroomAddressDetails().setStreetNameEnPermanent(marriage.getGroomAddressDetails().getPermntInKeralaAdrStreetNameEn());
-                            marriage.getGroomAddressDetails().setStreetNameMlPermanent(marriage.getGroomAddressDetails().getPermntInKeralaAdrStreetNameMl());
-                            marriage.getGroomAddressDetails().setHouseNameNoEnPermanent(marriage.getGroomAddressDetails().getPermntInKeralaAdrHouseNameEn());
-                            marriage.getGroomAddressDetails().setHouseNameNoMlPermanent(marriage.getGroomAddressDetails().getPermntInKeralaAdrHouseNameMl());
-                            marriage.getGroomAddressDetails().setPinNoPermanent(marriage.getGroomAddressDetails().getPermntInKeralaAdrPincode());
-                            marriage.getGroomAddressDetails().setPoNoPermanent(marriage.getGroomAddressDetails().getPermntInKeralaAdrPostOffice());
-                        } else {
-                            marriage.getGroomAddressDetails().setCountryIdPermanent(marriage.getGroomAddressDetails().getPermtaddressCountry());
-                            marriage.getGroomAddressDetails().setStateIdPermanent(marriage.getGroomAddressDetails().getPermtaddressStateName());
-                            marriage.getGroomAddressDetails().setDistrictIdPermanent(marriage.getGroomAddressDetails().getPermntOutsideKeralaDistrict());
-                            marriage.getGroomAddressDetails().setTownOrVillagePermanent(marriage.getGroomAddressDetails().getPermntOutsideKeralaCityVilgeEn());
-                            marriage.getGroomAddressDetails().setLocalityEnPermanent(marriage.getGroomAddressDetails().getPermntOutsideKeralaLocalityNameEn());
-                            marriage.getGroomAddressDetails().setLocalityMlPermanent(marriage.getGroomAddressDetails().getPermntOutsideKeralaLocalityNameMl());
-                            marriage.getGroomAddressDetails().setStreetNameEnPermanent(marriage.getGroomAddressDetails().getPermntOutsideKeralaStreetNameEn());
-                            marriage.getGroomAddressDetails().setStreetNameMlPermanent(marriage.getGroomAddressDetails().getPermntOutsideKeralaStreetNameMl());
-                            marriage.getGroomAddressDetails().setHouseNameNoEnPermanent(marriage.getGroomAddressDetails().getPermntOutsideKeralaHouseNameEn());
-                            marriage.getGroomAddressDetails().setHouseNameNoMlPermanent(marriage.getGroomAddressDetails().getPermntOutsideKeralaHouseNameMl());
-                            marriage.getGroomAddressDetails().setVillageNamePermanent(marriage.getGroomAddressDetails().getPermntOutsideKeralaVillage());
-                            marriage.getGroomAddressDetails().setPermntOthrTalukName(marriage.getGroomAddressDetails().getPermntOutsideKeralaTaluk());
-                            marriage.getGroomAddressDetails().setPermntOthPostOfficeEn(marriage.getGroomAddressDetails().getPermntOutsideKeralaPostOfficeEn());
-                            marriage.getGroomAddressDetails().setPinNoPermanent(marriage.getGroomAddressDetails().getPermntOutsideKeralaPincode());
-                        }
-                    } else {
-                        if (marriage.getGroomAddressDetails().getPermntOutsideIndiaCountry() != null) {
-                            marriage.getGroomAddressDetails().setCountryIdPresent(marriage.getGroomAddressDetails().getPermntOutsideIndiaCountry());
-                            marriage.getGroomAddressDetails().setVillageNamePermanent(marriage.getGroomAddressDetails().getPermntOutsideIndiaVillage());
-                            marriage.getGroomAddressDetails().setTownOrVillagePermanent(marriage.getGroomAddressDetails().getPermntOutsideIndiaCityTown());
-                            marriage.getGroomAddressDetails().setPermntOthrIndiaLineoneEn(marriage.getGroomAddressDetails().getPermntOutsideIndiaLineoneEn());
-                            marriage.getGroomAddressDetails().setPermntOthrIndiaLineoneMl(marriage.getGroomAddressDetails().getPermntOutsideIndiaLineoneMl());
-                            marriage.getGroomAddressDetails().setPermntOthrIndiaLinetwoEn(marriage.getGroomAddressDetails().getPermntOutsideIndiaLinetwoEn());
-                            marriage.getGroomAddressDetails().setPermntOthrIndiaLinetwoMl(marriage.getGroomAddressDetails().getPermntOutsideIndiaLinetwoMl());
-                            marriage.getGroomAddressDetails().setPermntOthrIndiaprovinceEn(marriage.getGroomAddressDetails().getPermntOutSideIndiaProvinceEn());
-                            marriage.getGroomAddressDetails().setPermntOthrIndiaprovinceMl(marriage.getGroomAddressDetails().getPermntOutSideIndiaProvinceMl());
-                            marriage.getGroomAddressDetails().setOutSideIndiaPostCodePermanent(marriage.getGroomAddressDetails().getPermanentOutsideIndiaPostCode());
-                        }
-                    }
-                }else if (marriage.getGroomAddressDetails().getCountryIdPermanent() != null && marriage.getGroomAddressDetails().getStateIdPermanent() != null) {
+                if (marriage.getGroomAddressDetails().getCountryIdPermanent() != null && marriage.getGroomAddressDetails().getStateIdPermanent() != null) {
                     if (marriage.getGroomAddressDetails().getCountryIdPermanent().contains(MarriageConstants.COUNTRY_CODE)) {
                         if (marriage.getGroomAddressDetails().getStateIdPermanent().contains(MarriageConstants.STATE_CODE_SMALL)) {
 
-                            setIfNotNull(marriage.getGroomAddressDetails()::setCountryIdPermanent, marriage.getGroomAddressDetails().getPermtaddressCountry());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setPermanentAddrTalukId,marriage.getGroomAddressDetails().getPermntInKeralaAdrTaluk());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setPermanentAddrVillageId,marriage.getGroomAddressDetails().getPermntInKeralaAdrVillage());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setStateIdPermanent,marriage.getGroomAddressDetails().getPermtaddressStateName());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setDistrictIdPermanent,marriage.getGroomAddressDetails().getPermntInKeralaAdrDistrict());
+                            //setIfNotNull(marriage.getGroomAddressDetails()::setCountryIdPermanent, marriage.getGroomAddressDetails().getPermtaddressCountry());
+                            //setIfNotNull(marriage.getGroomAddressDetails()::setPermanentAddrTalukId,marriage.getGroomAddressDetails().getPermntInKeralaAdrTaluk());
+                            //setIfNotNull(marriage.getGroomAddressDetails()::setPermanentAddrVillageId,marriage.getGroomAddressDetails().getPermntInKeralaAdrVillage());
+                            //setIfNotNull(marriage.getGroomAddressDetails()::setStateIdPermanent,marriage.getGroomAddressDetails().getPermtaddressStateName());
+                            //setIfNotNull(marriage.getGroomAddressDetails()::setDistrictIdPermanent,marriage.getGroomAddressDetails().getPermntInKeralaAdrDistrict());
                             setIfNotNull(marriage.getGroomAddressDetails()::setLocalityEnPermanent,marriage.getGroomAddressDetails().getPermntInKeralaAdrLocalityNameEn());
                             setIfNotNull(marriage.getGroomAddressDetails()::setLocalityMlPermanent,marriage.getGroomAddressDetails().getPermntInKeralaAdrLocalityNameMl());
                             setIfNotNull(marriage.getGroomAddressDetails()::setStreetNameEnPermanent,marriage.getGroomAddressDetails().getPermntInKeralaAdrStreetNameEn());
                             setIfNotNull(marriage.getGroomAddressDetails()::setStreetNameMlPermanent,marriage.getGroomAddressDetails().getPermntInKeralaAdrStreetNameMl());
                             setIfNotNull(marriage.getGroomAddressDetails()::setHouseNameNoEnPermanent,marriage.getGroomAddressDetails().getPermntInKeralaAdrHouseNameEn());
                             setIfNotNull(marriage.getGroomAddressDetails()::setHouseNameNoMlPermanent,marriage.getGroomAddressDetails().getPermntInKeralaAdrHouseNameMl());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setPinNoPermanent,marriage.getGroomAddressDetails().getPermntInKeralaAdrPincode());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setPoNoPermanent,marriage.getGroomAddressDetails().getPermntInKeralaAdrPostOffice());
+                            //setIfNotNull(marriage.getGroomAddressDetails()::setPinNoPermanent,marriage.getGroomAddressDetails().getPermntInKeralaAdrPincode());
+                            //setIfNotNull(marriage.getGroomAddressDetails()::setPoNoPermanent,marriage.getGroomAddressDetails().getPermntInKeralaAdrPostOffice());
                         } else {
-                            setIfNotNull(marriage.getGroomAddressDetails()::setCountryIdPermanent , marriage.getGroomAddressDetails().getPermtaddressCountry());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setStateIdPermanent , marriage.getGroomAddressDetails().getPermtaddressStateName());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setDistrictIdPermanent , marriage.getGroomAddressDetails().getPermntOutsideKeralaDistrict());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setTownOrVillagePermanent , marriage.getGroomAddressDetails().getPermntOutsideKeralaCityVilgeEn());
+                            //setIfNotNull(marriage.getGroomAddressDetails()::setCountryIdPermanent , marriage.getGroomAddressDetails().getPermtaddressCountry());
+                            //setIfNotNull(marriage.getGroomAddressDetails()::setStateIdPermanent , marriage.getGroomAddressDetails().getPermtaddressStateName());
+                            //setIfNotNull(marriage.getGroomAddressDetails()::setDistrictIdPermanent , marriage.getGroomAddressDetails().getPermntOutsideKeralaDistrict());
+                            //setIfNotNull(marriage.getGroomAddressDetails()::setTownOrVillagePermanent , marriage.getGroomAddressDetails().getPermntOutsideKeralaCityVilgeEn());
                             setIfNotNull(marriage.getGroomAddressDetails()::setLocalityEnPermanent , marriage.getGroomAddressDetails().getPermntOutsideKeralaLocalityNameEn());
                             setIfNotNull(marriage.getGroomAddressDetails()::setLocalityMlPermanent , marriage.getGroomAddressDetails().getPermntOutsideKeralaLocalityNameMl());
                             setIfNotNull(marriage.getGroomAddressDetails()::setStreetNameEnPermanent , marriage.getGroomAddressDetails().getPermntOutsideKeralaStreetNameEn());
                             setIfNotNull(marriage.getGroomAddressDetails()::setStreetNameMlPermanent , marriage.getGroomAddressDetails().getPermntOutsideKeralaStreetNameMl());
                             setIfNotNull(marriage.getGroomAddressDetails()::setHouseNameNoEnPermanent , marriage.getGroomAddressDetails().getPermntOutsideKeralaHouseNameEn());
                             setIfNotNull(marriage.getGroomAddressDetails()::setHouseNameNoMlPermanent , marriage.getGroomAddressDetails().getPermntOutsideKeralaHouseNameMl());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setVillageNamePermanent , marriage.getGroomAddressDetails().getPermntOutsideKeralaVillage());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setPermntOthrTalukName , marriage.getGroomAddressDetails().getPermntOutsideKeralaTaluk());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setPermntOthPostOfficeEn , marriage.getGroomAddressDetails().getPermntOutsideKeralaPostOfficeEn());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setPinNoPermanent , marriage.getGroomAddressDetails().getPermntOutsideKeralaPincode());
+                            //setIfNotNull(marriage.getGroomAddressDetails()::setVillageNamePermanent , marriage.getGroomAddressDetails().getPermntOutsideKeralaVillage());
+                            //setIfNotNull(marriage.getGroomAddressDetails()::setPermntOthrTalukName , marriage.getGroomAddressDetails().getPermntOutsideKeralaTaluk());
+                            //setIfNotNull(marriage.getGroomAddressDetails()::setPermntOthPostOfficeEn , marriage.getGroomAddressDetails().getPermntOutsideKeralaPostOfficeEn());
+                            //setIfNotNull(marriage.getGroomAddressDetails()::setPinNoPermanent , marriage.getGroomAddressDetails().getPermntOutsideKeralaPincode());
 
                         }
                     } else {
-                        if (marriage.getGroomAddressDetails().getPermntOutsideIndiaCountry() != null) {
-                            setIfNotNull(marriage.getGroomAddressDetails()::setCountryIdPresent , marriage.getGroomAddressDetails().getPermntOutsideIndiaCountry());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setVillageNamePermanent , marriage.getGroomAddressDetails().getPermntOutsideIndiaVillage());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setTownOrVillagePermanent , marriage.getGroomAddressDetails().getPermntOutsideIndiaCityTown());
+                        //if (marriage.getGroomAddressDetails().getPermntOutsideIndiaCountry() != null) {
+                            //setIfNotNull(marriage.getGroomAddressDetails()::setCountryIdPresent , marriage.getGroomAddressDetails().getPermntOutsideIndiaCountry());
+                            //setIfNotNull(marriage.getGroomAddressDetails()::setVillageNamePermanent , marriage.getGroomAddressDetails().getPermntOutsideIndiaVillage());
+                            //setIfNotNull(marriage.getGroomAddressDetails()::setTownOrVillagePermanent , marriage.getGroomAddressDetails().getPermntOutsideIndiaCityTown());
                             setIfNotNull(marriage.getGroomAddressDetails()::setPermntOthrIndiaLineoneEn , marriage.getGroomAddressDetails().getPermntOutsideIndiaLineoneEn());
                             setIfNotNull(marriage.getGroomAddressDetails()::setPermntOthrIndiaLineoneMl , marriage.getGroomAddressDetails().getPermntOutsideIndiaLineoneMl());
                             setIfNotNull(marriage.getGroomAddressDetails()::setPermntOthrIndiaLinetwoEn , marriage.getGroomAddressDetails().getPermntOutsideIndiaLinetwoEn());
                             setIfNotNull(marriage.getGroomAddressDetails()::setPermntOthrIndiaLinetwoMl , marriage.getGroomAddressDetails().getPermntOutsideIndiaLinetwoMl());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setPermntOthrIndiaprovinceEn , marriage.getGroomAddressDetails().getPermntOutSideIndiaProvinceEn());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setPermntOthrIndiaprovinceMl , marriage.getGroomAddressDetails().getPermntOutSideIndiaProvinceMl());
-                            setIfNotNull(marriage.getGroomAddressDetails()::setOutSideIndiaPostCodePermanent , marriage.getGroomAddressDetails().getPermanentOutsideIndiaPostCode());
+                            //setIfNotNull(marriage.getGroomAddressDetails()::setPermntOthrIndiaprovinceEn , marriage.getGroomAddressDetails().getPermntOutSideIndiaProvinceEn());
+                            //setIfNotNull(marriage.getGroomAddressDetails()::setPermntOthrIndiaprovinceMl , marriage.getGroomAddressDetails().getPermntOutSideIndiaProvinceMl());
+                            //setIfNotNull(marriage.getGroomAddressDetails()::setOutSideIndiaPostCodePermanent , marriage.getGroomAddressDetails().getPermanentOutsideIndiaPostCode());
 
-                        }
+                        //}
                     }
 
                 }
@@ -403,102 +359,53 @@ public class MarriageCorrectionEnrichment implements BaseEnrichment {
                         marriage.getBrideAddressDetails().setBrideGroomPermanent("B");
                     }
 
-                    if (marriage.getBrideAddressDetails().getPermtaddressCountry() != null && marriage.getBrideAddressDetails().getPermtaddressStateName() != null) {
-                        if (marriage.getBrideAddressDetails().getPermtaddressCountry().contains(MarriageConstants.COUNTRY_CODE)) {
-                            if (marriage.getBrideAddressDetails().getPermtaddressStateName().contains(MarriageConstants.STATE_CODE_SMALL)) {
-
-                                marriage.getBrideAddressDetails().setCountryIdPermanent(marriage.getBrideAddressDetails().getPermtaddressCountry());
-                                marriage.getBrideAddressDetails().setStateIdPermanent(marriage.getBrideAddressDetails().getPermtaddressStateName());
-                                marriage.getBrideAddressDetails().setPermanentAddrTalukId(marriage.getBrideAddressDetails().getPermntInKeralaAdrTaluk());
-                                marriage.getBrideAddressDetails().setPermanentAddrVillageId(marriage.getBrideAddressDetails().getPermntInKeralaAdrVillage());
-                                marriage.getBrideAddressDetails().setDistrictIdPermanent(marriage.getBrideAddressDetails().getPermntInKeralaAdrDistrict());
-                                marriage.getBrideAddressDetails().setLocalityEnPermanent(marriage.getBrideAddressDetails().getPermntInKeralaAdrLocalityNameEn());
-                                marriage.getBrideAddressDetails().setLocalityMlPermanent(marriage.getBrideAddressDetails().getPermntInKeralaAdrLocalityNameMl());
-                                marriage.getBrideAddressDetails().setStreetNameEnPermanent(marriage.getBrideAddressDetails().getPermntInKeralaAdrStreetNameEn());
-                                marriage.getBrideAddressDetails().setStreetNameMlPermanent(marriage.getBrideAddressDetails().getPermntInKeralaAdrStreetNameMl());
-                                marriage.getBrideAddressDetails().setHouseNameNoEnPermanent(marriage.getBrideAddressDetails().getPermntInKeralaAdrHouseNameEn());
-                                marriage.getBrideAddressDetails().setHouseNameNoMlPermanent(marriage.getBrideAddressDetails().getPermntInKeralaAdrHouseNameMl());
-                                marriage.getBrideAddressDetails().setPinNoPermanent(marriage.getBrideAddressDetails().getPermntInKeralaAdrPincode());
-                                marriage.getBrideAddressDetails().setPoNoPermanent(marriage.getBrideAddressDetails().getPermntInKeralaAdrPostOffice());
-                            } else {
-                                marriage.getBrideAddressDetails().setCountryIdPermanent(marriage.getBrideAddressDetails().getPermtaddressCountry());
-                                marriage.getBrideAddressDetails().setStateIdPermanent(marriage.getBrideAddressDetails().getPermtaddressStateName());
-                                marriage.getBrideAddressDetails().setDistrictIdPermanent(marriage.getBrideAddressDetails().getPermntOutsideKeralaDistrict());
-                                marriage.getBrideAddressDetails().setLocalityEnPermanent(marriage.getBrideAddressDetails().getPermntOutsideKeralaLocalityNameEn());
-                                marriage.getBrideAddressDetails().setLocalityMlPermanent(marriage.getBrideAddressDetails().getPermntOutsideKeralaLocalityNameMl());
-                                marriage.getBrideAddressDetails().setStreetNameEnPermanent(marriage.getBrideAddressDetails().getPermntOutsideKeralaStreetNameEn());
-                                marriage.getBrideAddressDetails().setStreetNameMlPermanent(marriage.getBrideAddressDetails().getPermntOutsideKeralaStreetNameMl());
-                                marriage.getBrideAddressDetails().setHouseNameNoEnPermanent(marriage.getBrideAddressDetails().getPermntOutsideKeralaHouseNameEn());
-                                marriage.getBrideAddressDetails().setHouseNameNoMlPermanent(marriage.getBrideAddressDetails().getPermntOutsideKeralaHouseNameMl());
-                                marriage.getBrideAddressDetails().setVillageNamePermanent(marriage.getBrideAddressDetails().getPermntOutsideKeralaVillage());
-                                marriage.getBrideAddressDetails().setPermntOthrTalukName(marriage.getBrideAddressDetails().getPermntOutsideKeralaTaluk());
-                                marriage.getBrideAddressDetails().setPermntOthPostOfficeEn(marriage.getBrideAddressDetails().getPermntOutsideKeralaPostOfficeEn());
-                                marriage.getBrideAddressDetails().setPinNoPermanent(marriage.getBrideAddressDetails().getPermntOutsideKeralaPincode());
-
-                            }
-                        } else {
-                            if (marriage.getBrideAddressDetails().getPermntOutsideIndiaCountry() != null) {
-                                marriage.getBrideAddressDetails().setCountryIdPresent(marriage.getBrideAddressDetails().getPermntOutsideIndiaCountry());
-                                marriage.getBrideAddressDetails().setVillageNamePermanent(marriage.getBrideAddressDetails().getPermntOutsideIndiaVillage());
-                                marriage.getBrideAddressDetails().setTownOrVillagePermanent(marriage.getBrideAddressDetails().getPermntOutsideIndiaCityTown());
-                                marriage.getBrideAddressDetails().setPermntOthrIndiaLineoneEn(marriage.getBrideAddressDetails().getPermntOutsideIndiaLineoneEn());
-                                marriage.getBrideAddressDetails().setPermntOthrIndiaLineoneMl(marriage.getBrideAddressDetails().getPermntOutsideIndiaLineoneMl());
-                                marriage.getBrideAddressDetails().setPermntOthrIndiaLinetwoEn(marriage.getBrideAddressDetails().getPermntOutsideIndiaLinetwoEn());
-                                marriage.getBrideAddressDetails().setPermntOthrIndiaLinetwoMl(marriage.getBrideAddressDetails().getPermntOutsideIndiaLinetwoMl());
-                                marriage.getBrideAddressDetails().setPermntOthrIndiaprovinceEn(marriage.getBrideAddressDetails().getPermntOutSideIndiaProvinceEn());
-                                marriage.getBrideAddressDetails().setPermntOthrIndiaprovinceMl(marriage.getBrideAddressDetails().getPermntOutSideIndiaProvinceMl());
-                                marriage.getBrideAddressDetails().setOutSideIndiaPostCodePermanent(marriage.getBrideAddressDetails().getPermanentOutsideIndiaPostCode());
-
-
-                            }
-                        }
-                    }else if (marriage.getBrideAddressDetails().getCountryIdPermanent() != null && marriage.getBrideAddressDetails().getStateIdPermanent() != null) {
+                    if (marriage.getBrideAddressDetails().getCountryIdPermanent() != null && marriage.getBrideAddressDetails().getStateIdPermanent() != null) {
                         if (marriage.getBrideAddressDetails().getCountryIdPermanent().contains(MarriageConstants.COUNTRY_CODE)) {
                             if (marriage.getBrideAddressDetails().getStateIdPermanent().contains(MarriageConstants.STATE_CODE_SMALL)) {
 
-                                setIfNotNull(marriage.getBrideAddressDetails()::setCountryIdPermanent, marriage.getBrideAddressDetails().getPermtaddressCountry());
-                                setIfNotNull(marriage.getBrideAddressDetails()::setStateIdPermanent, marriage.getBrideAddressDetails().getPermtaddressStateName());
-                                setIfNotNull(marriage.getBrideAddressDetails()::setPermanentAddrTalukId, marriage.getBrideAddressDetails().getPermntInKeralaAdrTaluk());
-                                setIfNotNull(marriage.getBrideAddressDetails()::setPermanentAddrVillageId, marriage.getBrideAddressDetails().getPermntInKeralaAdrVillage());
-                                setIfNotNull(marriage.getBrideAddressDetails()::setDistrictIdPermanent, marriage.getBrideAddressDetails().getPermntInKeralaAdrDistrict());
+                                //setIfNotNull(marriage.getBrideAddressDetails()::setCountryIdPermanent, marriage.getBrideAddressDetails().getPermtaddressCountry());
+                                //setIfNotNull(marriage.getBrideAddressDetails()::setStateIdPermanent, marriage.getBrideAddressDetails().getPermtaddressStateName());
+                                //setIfNotNull(marriage.getBrideAddressDetails()::setPermanentAddrTalukId, marriage.getBrideAddressDetails().getPermntInKeralaAdrTaluk());
+                                //setIfNotNull(marriage.getBrideAddressDetails()::setPermanentAddrVillageId, marriage.getBrideAddressDetails().getPermntInKeralaAdrVillage());
+                                //setIfNotNull(marriage.getBrideAddressDetails()::setDistrictIdPermanent, marriage.getBrideAddressDetails().getPermntInKeralaAdrDistrict());
                                 setIfNotNull(marriage.getBrideAddressDetails()::setLocalityEnPermanent, marriage.getBrideAddressDetails().getPermntInKeralaAdrLocalityNameEn());
                                 setIfNotNull(marriage.getBrideAddressDetails()::setLocalityMlPermanent, marriage.getBrideAddressDetails().getPermntInKeralaAdrLocalityNameMl());
                                 setIfNotNull(marriage.getBrideAddressDetails()::setStreetNameEnPermanent, marriage.getBrideAddressDetails().getPermntInKeralaAdrStreetNameEn());
                                 setIfNotNull(marriage.getBrideAddressDetails()::setStreetNameMlPermanent, marriage.getBrideAddressDetails().getPermntInKeralaAdrStreetNameMl());
                                 setIfNotNull(marriage.getBrideAddressDetails()::setHouseNameNoEnPermanent, marriage.getBrideAddressDetails().getPermntInKeralaAdrHouseNameEn());
                                 setIfNotNull(marriage.getBrideAddressDetails()::setHouseNameNoMlPermanent, marriage.getBrideAddressDetails().getPermntInKeralaAdrHouseNameMl());
-                                setIfNotNull(marriage.getBrideAddressDetails()::setPinNoPermanent, marriage.getBrideAddressDetails().getPermntInKeralaAdrPincode());
-                                setIfNotNull(marriage.getBrideAddressDetails()::setPoNoPermanent, marriage.getBrideAddressDetails().getPermntInKeralaAdrPostOffice());
+                                //setIfNotNull(marriage.getBrideAddressDetails()::setPinNoPermanent, marriage.getBrideAddressDetails().getPermntInKeralaAdrPincode());
+                                //setIfNotNull(marriage.getBrideAddressDetails()::setPoNoPermanent, marriage.getBrideAddressDetails().getPermntInKeralaAdrPostOffice());
                             } else {
-                                setIfNotNull(marriage.getBrideAddressDetails()::setCountryIdPermanent, marriage.getBrideAddressDetails().getPermtaddressCountry());
-                                setIfNotNull(marriage.getBrideAddressDetails()::setStateIdPermanent, marriage.getBrideAddressDetails().getPermtaddressStateName());
-                                setIfNotNull(marriage.getBrideAddressDetails()::setDistrictIdPermanent, marriage.getBrideAddressDetails().getPermntOutsideKeralaDistrict());
+                                //setIfNotNull(marriage.getBrideAddressDetails()::setCountryIdPermanent, marriage.getBrideAddressDetails().getPermtaddressCountry());
+                                //setIfNotNull(marriage.getBrideAddressDetails()::setStateIdPermanent, marriage.getBrideAddressDetails().getPermtaddressStateName());
+                                //setIfNotNull(marriage.getBrideAddressDetails()::setDistrictIdPermanent, marriage.getBrideAddressDetails().getPermntOutsideKeralaDistrict());
                                 setIfNotNull(marriage.getBrideAddressDetails()::setLocalityEnPermanent, marriage.getBrideAddressDetails().getPermntOutsideKeralaLocalityNameEn());
                                 setIfNotNull(marriage.getBrideAddressDetails()::setLocalityMlPermanent, marriage.getBrideAddressDetails().getPermntOutsideKeralaLocalityNameMl());
                                 setIfNotNull(marriage.getBrideAddressDetails()::setStreetNameEnPermanent, marriage.getBrideAddressDetails().getPermntOutsideKeralaStreetNameEn());
                                 setIfNotNull(marriage.getBrideAddressDetails()::setStreetNameMlPermanent, marriage.getBrideAddressDetails().getPermntOutsideKeralaStreetNameMl());
                                 setIfNotNull(marriage.getBrideAddressDetails()::setHouseNameNoEnPermanent, marriage.getBrideAddressDetails().getPermntOutsideKeralaHouseNameEn());
                                 setIfNotNull(marriage.getBrideAddressDetails()::setHouseNameNoMlPermanent, marriage.getBrideAddressDetails().getPermntOutsideKeralaHouseNameMl());
-                                setIfNotNull(marriage.getBrideAddressDetails()::setVillageNamePermanent, marriage.getBrideAddressDetails().getPermntOutsideKeralaVillage());
-                                setIfNotNull(marriage.getBrideAddressDetails()::setPermntOthrTalukName, marriage.getBrideAddressDetails().getPermntOutsideKeralaTaluk());
-                                setIfNotNull(marriage.getBrideAddressDetails()::setPermntOthPostOfficeEn, marriage.getBrideAddressDetails().getPermntOutsideKeralaPostOfficeEn());
-                                setIfNotNull(marriage.getBrideAddressDetails()::setPinNoPermanent, marriage.getBrideAddressDetails().getPermntOutsideKeralaPincode());
+                                //setIfNotNull(marriage.getBrideAddressDetails()::setVillageNamePermanent, marriage.getBrideAddressDetails().getPermntOutsideKeralaVillage());
+                                //setIfNotNull(marriage.getBrideAddressDetails()::setPermntOthrTalukName, marriage.getBrideAddressDetails().getPermntOutsideKeralaTaluk());
+                                //setIfNotNull(marriage.getBrideAddressDetails()::setPermntOthPostOfficeEn, marriage.getBrideAddressDetails().getPermntOutsideKeralaPostOfficeEn());
+                                //setIfNotNull(marriage.getBrideAddressDetails()::setPinNoPermanent, marriage.getBrideAddressDetails().getPermntOutsideKeralaPincode());
 
                             }
                         } else {
-                            if (marriage.getBrideAddressDetails().getPermntOutsideIndiaCountry() != null) {
-                                setIfNotNull(marriage.getBrideAddressDetails()::setCountryIdPresent, marriage.getBrideAddressDetails().getPermntOutsideIndiaCountry());
-                                setIfNotNull(marriage.getBrideAddressDetails()::setVillageNamePermanent, marriage.getBrideAddressDetails().getPermntOutsideIndiaVillage());
-                                setIfNotNull(marriage.getBrideAddressDetails()::setTownOrVillagePermanent, marriage.getBrideAddressDetails().getPermntOutsideIndiaCityTown());
+                            //if (marriage.getBrideAddressDetails().getPermntOutsideIndiaCountry() != null) {
+                                //setIfNotNull(marriage.getBrideAddressDetails()::setCountryIdPresent, marriage.getBrideAddressDetails().getPermntOutsideIndiaCountry());
+                                //setIfNotNull(marriage.getBrideAddressDetails()::setVillageNamePermanent, marriage.getBrideAddressDetails().getPermntOutsideIndiaVillage());
+                                //setIfNotNull(marriage.getBrideAddressDetails()::setTownOrVillagePermanent, marriage.getBrideAddressDetails().getPermntOutsideIndiaCityTown());
                                 setIfNotNull(marriage.getBrideAddressDetails()::setPermntOthrIndiaLineoneEn, marriage.getBrideAddressDetails().getPermntOutsideIndiaLineoneEn());
                                 setIfNotNull(marriage.getBrideAddressDetails()::setPermntOthrIndiaLineoneMl, marriage.getBrideAddressDetails().getPermntOutsideIndiaLineoneMl());
                                 setIfNotNull(marriage.getBrideAddressDetails()::setPermntOthrIndiaLinetwoEn, marriage.getBrideAddressDetails().getPermntOutsideIndiaLinetwoEn());
                                 setIfNotNull(marriage.getBrideAddressDetails()::setPermntOthrIndiaLinetwoMl, marriage.getBrideAddressDetails().getPermntOutsideIndiaLinetwoMl());
-                                setIfNotNull(marriage.getBrideAddressDetails()::setPermntOthrIndiaprovinceEn, marriage.getBrideAddressDetails().getPermntOutSideIndiaProvinceEn());
-                                setIfNotNull(marriage.getBrideAddressDetails()::setPermntOthrIndiaprovinceMl, marriage.getBrideAddressDetails().getPermntOutSideIndiaProvinceMl());
-                                setIfNotNull(marriage.getBrideAddressDetails()::setOutSideIndiaPostCodePermanent, marriage.getBrideAddressDetails().getPermanentOutsideIndiaPostCode());
+                                //setIfNotNull(marriage.getBrideAddressDetails()::setPermntOthrIndiaprovinceEn, marriage.getBrideAddressDetails().getPermntOutSideIndiaProvinceEn());
+                                //setIfNotNull(marriage.getBrideAddressDetails()::setPermntOthrIndiaprovinceMl, marriage.getBrideAddressDetails().getPermntOutSideIndiaProvinceMl());
+                                //setIfNotNull(marriage.getBrideAddressDetails()::setOutSideIndiaPostCodePermanent, marriage.getBrideAddressDetails().getPermanentOutsideIndiaPostCode());
 
-                            }
+                            //}
                         }
 
                     }

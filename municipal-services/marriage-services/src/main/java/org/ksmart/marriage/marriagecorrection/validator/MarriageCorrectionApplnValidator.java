@@ -2,6 +2,8 @@ package org.ksmart.marriage.marriagecorrection.validator;
 
 import org.apache.commons.lang3.StringUtils;
 import org.egov.tracer.model.CustomException;
+import org.ksmart.marriage.marriageapplication.web.model.MarriageApplicationDetails;
+import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageDetailsRequest;
 import org.ksmart.marriage.marriagecorrection.web.model.MarriageCorrectionDetails;
 import org.ksmart.marriage.marriagecorrection.web.model.MarriageCorrectionRequest;
 import org.springframework.stereotype.Component;
@@ -43,6 +45,14 @@ public class MarriageCorrectionApplnValidator {
         if (CollectionUtils.isEmpty(correctionApplications.get(0).getCorrectionField())) {
             throw new CustomException(MARRIAGE_DETAILS_REQUIRED.getCode(),
                     "Marriage Correction Details is required.");
+        }
+        if (StringUtils.isBlank(correctionApplications.get(0).getApplicationtype())) {
+            throw new CustomException(MARRIAGE_DETAILS_INVALID_CREATE.getCode(),
+                    "Application Type is required for create correction request.");
+        }
+        if (StringUtils.isBlank(correctionApplications.get(0).getModuleCode())) {
+            throw new CustomException(MARRIAGE_DETAILS_INVALID_CREATE.getCode(),
+                    "Module Code is required for create correction request.");
         }
     }
 
@@ -103,5 +113,34 @@ public class MarriageCorrectionApplnValidator {
                     "Workflow action is required for update request.");
         }
         //mdmsValidator.validateMdmsData(request, mdmsData);
+    }
+
+
+    public void validateCommonFields(MarriageDetailsRequest request) {
+
+        List<MarriageApplicationDetails> marriageApplication = request.getMarriageDetails();
+        if (marriageApplication != null) {
+            marriageApplication
+                    .forEach(marriagedtls -> {
+                        if (marriagedtls.getDateofmarriage() <= 0) {
+                            throw new CustomException(" DATE OF MARRIAGE INVALID ",
+                                    "The  Date of marriage " +
+                                            marriagedtls.getDateofmarriage()
+                                            + " is invalid");
+                        }
+                        if (marriagedtls.getBrideDetails().getDateofbirth() <= 0) {
+                            throw new CustomException(" DATE OF BIRTH INVALID ",
+                                    "The  Date of birth " +
+                                            marriagedtls.getBrideDetails().getDateofbirth()
+                                            + " is invalid");
+                        }
+                        if (marriagedtls.getGroomDetails().getDateofbirth() <= 0) {
+                            throw new CustomException(" DATE OF BIRTH INVALID ",
+                                    "The  Date of birth " +
+                                            marriagedtls.getGroomDetails().getDateofbirth()
+                                            + " is invalid");
+                        }
+                    });
+        }
     }
 }

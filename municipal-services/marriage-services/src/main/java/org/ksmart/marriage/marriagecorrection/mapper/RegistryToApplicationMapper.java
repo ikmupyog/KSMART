@@ -136,11 +136,12 @@ public class RegistryToApplicationMapper {
         marriageApplicationDetails.getBrideAddressDetails().setPermntOutsideKeralaTaluk(marriageRegistryDetails.getBrideAddressDetails().getPermntOutsideKeralaTaluk());
         marriageApplicationDetails.getBrideAddressDetails().setPermntOutsideKeralaPostOfficeEn(marriageRegistryDetails.getBrideAddressDetails().getPermntOutsideKeralaPostOfficeEn());
         marriageApplicationDetails.getBrideAddressDetails().setPermntOutsideKeralaPostOfficeMl(marriageRegistryDetails.getBrideAddressDetails().getPermntOutsideKeralaPostOfficeMl());
-        marriageApplicationDetails.getBrideAddressDetails().setPermntOutsideIndiaLineoneEn(marriageRegistryDetails.getBrideAddressDetails().getPermntOutsideIndiaLineoneEn());
-        marriageApplicationDetails.getBrideAddressDetails().setPermntOutsideIndiaLineoneMl(marriageRegistryDetails.getBrideAddressDetails().getPermntOutsideIndiaLineoneMl());
-        marriageApplicationDetails.getBrideAddressDetails().setPermntOutsideIndiaLinetwoEn(marriageRegistryDetails.getBrideAddressDetails().getPermntOutsideIndiaLinetwoEn());
-        marriageApplicationDetails.getBrideAddressDetails().setPermntOutsideIndiaLinetwoMl(marriageRegistryDetails.getBrideAddressDetails().getPermntOutsideIndiaLinetwoMl());
+        marriageApplicationDetails.getBrideAddressDetails().setPermntOthrIndiaLineoneEn(marriageRegistryDetails.getBrideAddressDetails().getPermntOutsideIndiaLineoneEn());
+        marriageApplicationDetails.getBrideAddressDetails().setPermntOthrIndiaLineoneMl(marriageRegistryDetails.getBrideAddressDetails().getPermntOutsideIndiaLineoneMl());
+        marriageApplicationDetails.getBrideAddressDetails().setPermntOthrIndiaLinetwoEn(marriageRegistryDetails.getBrideAddressDetails().getPermntOutsideIndiaLinetwoEn());
+        marriageApplicationDetails.getBrideAddressDetails().setPermntOthrIndiaLinetwoMl(marriageRegistryDetails.getBrideAddressDetails().getPermntOutsideIndiaLinetwoMl());
         marriageApplicationDetails.getBrideAddressDetails().setPermntOutSideIndiaProvinceEn(marriageRegistryDetails.getBrideAddressDetails().getPermntOutSideIndiaProvinceEn());
+        marriageApplicationDetails.getBrideAddressDetails().setPermntOutSideIndiaProvinceMl(marriageRegistryDetails.getBrideAddressDetails().getPermntOutSideIndiaProvinceMl());
         marriageApplicationDetails.getBrideAddressDetails().setPermanentOutsideIndiaPostCode(marriageRegistryDetails.getBrideAddressDetails().getPermanentOutsideIndiaPostCode());
         marriageApplicationDetails.getBrideAddressDetails().setPinNoPermanent(marriageRegistryDetails.getBrideAddressDetails().getPinNoPermanent());
 
@@ -165,11 +166,12 @@ public class RegistryToApplicationMapper {
         marriageApplicationDetails.getGroomAddressDetails().setPermntOutsideKeralaTaluk(marriageRegistryDetails.getGroomAddressDetails().getPermntOutsideKeralaTaluk());
         marriageApplicationDetails.getGroomAddressDetails().setPermntOutsideKeralaPostOfficeEn(marriageRegistryDetails.getGroomAddressDetails().getPermntOutsideKeralaPostOfficeEn());
         marriageApplicationDetails.getGroomAddressDetails().setPermntOutsideKeralaPostOfficeMl(marriageRegistryDetails.getGroomAddressDetails().getPermntOutsideKeralaPostOfficeMl());
-        marriageApplicationDetails.getGroomAddressDetails().setPermntOutsideIndiaLineoneEn(marriageRegistryDetails.getGroomAddressDetails().getPermntOutsideIndiaLineoneEn());
-        marriageApplicationDetails.getGroomAddressDetails().setPermntOutsideIndiaLineoneMl(marriageRegistryDetails.getGroomAddressDetails().getPermntOutsideIndiaLineoneMl());
-        marriageApplicationDetails.getGroomAddressDetails().setPermntOutsideIndiaLinetwoEn(marriageRegistryDetails.getGroomAddressDetails().getPermntOutsideIndiaLinetwoEn());
-        marriageApplicationDetails.getGroomAddressDetails().setPermntOutsideIndiaLinetwoMl(marriageRegistryDetails.getGroomAddressDetails().getPermntOutsideIndiaLinetwoMl());
+        marriageApplicationDetails.getGroomAddressDetails().setPermntOthrIndiaLineoneEn(marriageRegistryDetails.getGroomAddressDetails().getPermntOutsideIndiaLineoneEn());
+        marriageApplicationDetails.getGroomAddressDetails().setPermntOthrIndiaLineoneMl(marriageRegistryDetails.getGroomAddressDetails().getPermntOutsideIndiaLineoneMl());
+        marriageApplicationDetails.getGroomAddressDetails().setPermntOthrIndiaLinetwoEn(marriageRegistryDetails.getGroomAddressDetails().getPermntOutsideIndiaLinetwoEn());
+        marriageApplicationDetails.getGroomAddressDetails().setPermntOthrIndiaLinetwoMl(marriageRegistryDetails.getGroomAddressDetails().getPermntOutsideIndiaLinetwoMl());
         marriageApplicationDetails.getGroomAddressDetails().setPermntOutSideIndiaProvinceEn(marriageRegistryDetails.getGroomAddressDetails().getPermntOutSideIndiaProvinceEn());
+        marriageApplicationDetails.getGroomAddressDetails().setPermntOutSideIndiaProvinceMl(marriageRegistryDetails.getGroomAddressDetails().getPermntOutSideIndiaProvinceMl());
         marriageApplicationDetails.getGroomAddressDetails().setPermanentOutsideIndiaPostCode(marriageRegistryDetails.getGroomAddressDetails().getPermanentOutsideIndiaPostCode());
         marriageApplicationDetails.getGroomAddressDetails().setPinNoPermanent(marriageRegistryDetails.getGroomAddressDetails().getPinNoPermanent());
 

@@ -30,6 +30,8 @@ public class MarriageCorrectionDetails {
     @Size(max = 64)
     @JsonProperty("applicationType")
     private String applicationtype;
+    @JsonProperty("moduleCode")
+    private String moduleCode;
     @Size(max = 64)
     @JsonProperty("applicationNumber")
     private String applicationNo;
