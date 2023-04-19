@@ -2,7 +2,6 @@ package org.ksmart.death.deathregistry.repository.querybuilder;
 
 import java.util.List;
 import javax.validation.constraints.NotNull;
-
 import org.ksmart.death.deathregistry.config.DeathRegistryConfiguration;
 import org.ksmart.death.deathregistry.web.models.DeathNACCriteria;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryCriteria;
@@ -10,20 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-/**
-     * Creates CrDeathQueryBuilder
-     * Jasmine
-     * on  08/02/2023
-     */
-
 @Component
 public class DeathRegistryQueryBuilder extends BaseQueryBuilder {
-
-  //Rakhi S on 24.02.2023
   @Autowired
 	private DeathRegistryConfiguration config;
-
-         //Jasmine
          private static final String QUERY = new StringBuilder()
          .append("SELECT dt.id, dt.registrationunit, dt.tenantid, dt.death_date_unavailable, dt.dateofdeath, dt.time_of_death, dt.timeofdeath_unit, dt.date_of_death_to, dt.time_of_death_to, dt.timeofdeath_unit_to, dt.deceased_unidentified") 
          .append("      , dt.deceased_firstname_en, dt.deceased_firstname_ml, dt.deceased_middlename_en, dt.deceased_middlename_ml, dt.deceased_lastname_en, dt.deceased_lastname_ml, dt.deceased_aadhar_number, dt.deceased_gender, dt.age, dt.age_unit, dt.dateofbirth")   
@@ -85,7 +74,6 @@ public class DeathRegistryQueryBuilder extends BaseQueryBuilder {
 			   .append("dt.death_home_taluk_ml,")
 			   .append("dt.death_home_housename_en,")
 			   .append("dt.death_home_housename_ml,")
-         //Rakhi S on 11.02.2023
          .append("dt.certificate_no,")
          .append("dt.certificate_date,")
          .append("dt.registration_date")
@@ -149,63 +137,20 @@ public class DeathRegistryQueryBuilder extends BaseQueryBuilder {
          .append(" ,dt.death_place_locality_ml")
          .append(" ,dt.death_place_street_en")
          .append(" ,dt.death_place_street_ml")
-
          .append(" ,presentaddress.addr_sameas_present as  P_addr_sameas_present")
          .append(" ,permanentAddress.addr_lb_name as  R_addr_lb_name")
-         .append(" ,presentaddress.addr_lb_name as  P_addr_lb_name")
-        //  .append(" ,informantAddress.death_dtl_id  as I_death_dtl_id") 
-        //  .append(" ,informantAddress.tenantid as I_tenantid") 
-        //  .append(" ,informantAddress.addr_typeid as I_addr_typeid") 
-        //  .append(" ,informantAddress.location_type as I_location_type") 
-        //  .append(" ,informantAddress.lbtype as I_lbtype") 
-        //  .append(" ,informantAddress.postal_code as I_postal_code") 
-        //  .append(" ,informantAddress.house_no as I_house_no")
-        //  .append(" ,informantAddress.residence_assc_no as I_residence_assc_no") 
-        //  .append(" ,informantAddress.streetname_en as I_streetname_en") 
-        //  .append(" ,informantAddress.streetname_ml as I_streetname_ml ") 
-        //  .append(" ,informantAddress.locality_en as I_locality_en")
-        //  .append(" ,informantAddress.locality_ml as I_locality_ml ") 
-        //  .append(" ,informantAddress.ward_id as I_ward_id") 
-        //  .append(" ,informantAddress.taluk_id as I_taluk_id") 
-        //  .append(" ,informantAddress.village_id as I_village_id")
-        //  .append(" ,informantAddress.postoffice_id as I_postoffice_id") 
-        //  .append(" ,informantAddress.pincode as I_pincode") 
-        //  .append(" ,informantAddress.district_id as I_district_id") 
-        //  .append(" ,informantAddress.state_id as I_state_id") 
-        //  .append(" ,informantAddress.country_id as I_country_id") 
-        //  .append(" ,informantAddress.taluk_name_en as I_taluk_name_en")
-        //  .append(" ,informantAddress.taluk_name_ml as  I_taluk_name_ml") 
-        //  .append(" ,informantAddress.village_name_en as  I_village_name_en") 
-        //  .append(" ,informantAddress.village_name_ml as  I_village_name_ml") 
-        //  .append(" ,informantAddress.postoffice_name_en as  I_postoffice_name_en")
-        //  .append(" ,informantAddress.postoffice_name_ml as  I_postoffice_name_ml") 
-        //  .append(" ,informantAddress.housename_ml as  I_housename_ml")
-        //  .append(" ,informantAddress.housename_en as  I_housename_en")
-        //  .append(" ,deathplaceAddress.death_dtl_id  as D_death_dtl_id") 
-        //  .append(" ,deathplaceAddress.tenantid as D_tenantid") 
-        //  .append(" ,deathplaceAddress.addr_typeid as D_addr_typeid") 
-        //  .append(" ,deathplaceAddress.house_no as D_house_no") 
-        //  .append(" ,deathplaceAddress.residence_assc_no as D_residence_assc_no") 
-        //  .append(" ,deathplaceAddress.streetname_en as D_streetname_en") 
-        //  .append(" ,deathplaceAddress.streetname_ml as D_streetname_ml") 
-        //  .append(" ,deathplaceAddress.locality_en as D_locality_en ") 
-        //  .append(" ,deathplaceAddress.locality_ml as D_locality_ml")
-        //  .append(" ,deathplaceAddress.ward_id as D_ward_id ") 
-        //  .append(" ,deathplaceAddress.taluk_id as D_taluk_id")
-        //  .append(" ,deathplaceAddress.village_id as D_village_id") 
-        //  .append(" ,deathplaceAddress.postoffice_id as D_postoffice_id")
-        //  .append(" ,deathplaceAddress.pincode as D_pincode") 
-        //  .append(" ,deathplaceAddress.district_id as D_district_id") 
-        //  .append(" ,deathplaceAddress.state_id as D_state_id") 
-        //  .append(" ,deathplaceAddress.country_id as D_country_id")
-        //  .append(" ,deathplaceAddress.taluk_name_en as D_taluk_name_en ") 
-        //  .append(" ,deathplaceAddress.taluk_name_ml as  D_taluk_name_ml")
-        //  .append(" ,deathplaceAddress.village_name_en as  D_village_name_en") 
-        //  .append(" ,deathplaceAddress.village_name_ml as  D_village_name_ml") 
-        //  .append(" ,deathplaceAddress.postoffice_name_en as  D_postoffice_name_en") 
-        //  .append(" ,deathplaceAddress.postoffice_name_ml as  D_postoffice_name_ml")
-        //  .append(" ,deathplaceAddress.housename_ml as  D_housename_ml")
-        //  .append(" ,deathplaceAddress.housename_en as  D_housename_en")
+         .append(" ,presentaddress.addr_lb_name as  P_addr_lb_name")     
+         
+         .append(" ,presentaddress.province_name_en as  P_province_name_en")
+         .append(" ,presentaddress.province_name_ml as  P_province_name_ml")
+         .append(" ,presentaddress.city_town_village as  P_city_town_village")
+         .append(" ,presentaddress.city_en as  P_city_en")
+         .append(" ,permanentAddress.province_name_en as  R_province_name_en")
+         .append(" ,permanentAddress.province_name_ml as  R_province_name_ml")
+         .append(" ,permanentAddress.city_town_village as  R_city_town_village")
+         .append(" ,permanentAddress.city_en as  R_city_en")
+
+         
          .append(" FROM eg_death_dtls_registry dt ") 
          .append("LEFT OUTER JOIN eg_death_statistical_registry stat ON stat.death_dtl_id = dt.id  AND dt.tenantid = stat.tenantid ")
          .append("LEFT OUTER JOIN eg_death_address_registry presentaddress ON ")
@@ -214,15 +159,7 @@ public class DeathRegistryQueryBuilder extends BaseQueryBuilder {
          .append(" LEFT OUTER JOIN eg_death_address_registry permanentAddress ON ")
          .append(" permanentAddress.death_dtl_id = dt.id")
          .append(" AND  permanentaddress.addr_typeid='R'")
-        //  .append(" LEFT OUTER JOIN eg_death_address_registry informantAddress ON ")
-        //  .append(" informantAddress.death_dtl_id = dt.id ")
-        //  .append(" AND  informantAddress.addr_typeid='I' ")
-        //  .append(" LEFT OUTER JOIN eg_death_address_registry deathplaceAddress ON ")
-        //  .append(" deathplaceAddress.death_dtl_id = dt.id ")
-        //  .append(" AND  deathplaceAddress.addr_typeid='D' ")
          .toString();
-
-
 
 public String getDeathSearchQuery(@NotNull DeathRegistryCriteria criteria,
                   @NotNull List<Object> preparedStmtValues, Boolean isCount) {
@@ -232,8 +169,7 @@ StringBuilder orderBy = new StringBuilder();
                         addFilter("dt.id", criteria.getId(), query, preparedStmtValues);
                         addFilter("dt.tenantid", criteria.getTenantId(), query, preparedStmtValues);
                         addFilter("dt.ack_no", criteria.getDeathACKNo(), query, preparedStmtValues);  
-                        addFilter("dt.deceased_firstname_en", criteria.getDeceasedFirstNameEn(), query, preparedStmtValues); 
-                        //Rakhi S on 24.02.2023
+                        addLikeFilter("LOWER(dt.deceased_firstname_en)", criteria.getDeceasedFirstNameEn(), query, preparedStmtValues); 
                         addFilter("dt.registration_no", criteria.getRegistrationNo(), query, preparedStmtValues);
                         // addFilter("dt.dateofdeath", criteria.getDateOfDeath(), query, preparedStmtValues); 
                         addDateRangeFilter("dt.registration_date",
@@ -241,7 +177,6 @@ StringBuilder orderBy = new StringBuilder();
                         criteria.getToDate(),
                         query,
                         preparedStmtValues);
-                         //Rakhi S on 27.02.2023
                       if(criteria.getSortOrder() == null){
                         criteria.setSortOrder(DeathRegistryCriteria.SortOrder.ASC);
                       }
@@ -368,29 +303,7 @@ StringBuilder orderBy = new StringBuilder();
                         addFilter("id", criteria.getId(), query, preparedStmtValues);
                         addFilter("tenantid", criteria.getTenantId(), query, preparedStmtValues);
                         addFilter("ack_no", criteria.getDeathACKNo(), query, preparedStmtValues);  
-                        addFilter("deceased_firstname_en", criteria.getDeceasedFirstNameEn(), query, preparedStmtValues); 
-                      //   addFilter("dt.registration_no", criteria.getRegistrationNo(), query, preparedStmtValues);
-                      //   addDateRangeFilter("dt.registration_date",
-                      //   criteria.getFromDate(),
-                      //   criteria.getToDate(),
-                      //   query,
-                      //   preparedStmtValues);
-                      // if(criteria.getSortOrder() == null){
-                      //   criteria.setSortOrder(DeathRegistryCriteria.SortOrder.ASC);
-                      // }
-                        // if (StringUtils.isEmpty(criteria.getSortBy()))
-                        // addOrderByColumns("dt.createdtime","ASC", orderBy);
-                        // else if (criteria.getSortBy() == DeathRegistryCriteria.SortBy.DateOfDeath)
-                        // addOrderByColumns("dt.dateofdeath",criteria.getSortOrder().toString(), orderBy);
-                        // else if (criteria.getSortBy() == DeathRegistryCriteria.SortBy.DeathACKNo)
-                        // addOrderByColumns("dt.ack_no",criteria.getSortOrder().toString(),orderBy);
-                        // else if (criteria.getSortBy() == DeathRegistryCriteria.SortBy.DeceasedGender)
-                        // addOrderByColumns("dt.deceased_gender",criteria.getSortOrder().toString(), orderBy);
-                        // else if (criteria.getSortBy() == DeathRegistryCriteria.SortBy.TenantId)
-                        // addOrderByColumns("dt.tenantid",criteria.getSortOrder().toString(), orderBy);
-                        // addOrderToQuery(orderBy, query);
-                        // addLimitAndOffset(criteria.getOffset(),criteria.getLimit(), query, preparedStmtValues);
-
+                        addLikeFilter("LOWER(deceased_firstname_en)", criteria.getDeceasedFirstNameEn(), query, preparedStmtValues); 
                         return query.toString();
                         
 } 

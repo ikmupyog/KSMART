@@ -26,6 +26,7 @@ import org.ksmart.death.deathregistry.web.models.DeathRegistryCriteria;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryDtl;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryNACDtls;
 import org.ksmart.death.deathregistry.web.models.DeathNACCriteria;
+import org.ksmart.death.deathregistry.web.models.DeathRegistryBasicInfo;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryCorrectionDtls;
 import org.ksmart.death.deathregistry.web.models.certmodel.DeathCertRequest;
 import org.ksmart.death.deathregistry.web.models.certmodel.DeathCertificate;
@@ -39,44 +40,29 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.util.StringUtils;
 import org.apache.commons.collections4.CollectionUtils;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.gson.Gson;
 import com.jayway.jsonpath.JsonPath;
-
 import lombok.extern.slf4j.Slf4j;
 
-/**
-     * Creates repository
-     * Jasmine 
-     * DeathRegistryRepository : Certificate Download , Query mapping Rakhi S ikm on 10.02.2023
-     */
 @Slf4j
 @Repository
 public class DeathRegistryRepository {
-
     
     private final JdbcTemplate jdbcTemplate;
     private final DeathRegistryQueryBuilder queryBuilder;
     private final DeathRegistryRowMapper rowMapper;
-    //Rakhi S ikm on 10.02.2023
     @Autowired
 	private DeathRegistryConfiguration config;
-
     @Autowired
     DeathRegistryMdmsUtil util;
-
     @Autowired
-    private RestTemplate restTemplate;
-
-    //RAkhi S on 12.02.2023    
+    private RestTemplate restTemplate;  
     private final DeathRegistryProducer producer;
     private final DeathCertificateRegistryRowMapper deathCertRowMapper;
-    private final DeathRegistryCorrectionRowMapper deathCorrectionRowMapper;
-    
+    private final DeathRegistryCorrectionRowMapper deathCorrectionRowMapper;    
     private final DeathRegistryNACRowMapper deathRegistryNACRowMapper;
-
     @Autowired
     DeathRegistryRepository(JdbcTemplate jdbcTemplate, DeathRegistryQueryBuilder queryBuilder
                                 ,DeathRegistryRowMapper rowMapper
@@ -92,28 +78,73 @@ public class DeathRegistryRepository {
         this.deathCorrectionRowMapper = deathCorrectionRowMapper;
         this.deathRegistryNACRowMapper = deathRegistryNACRowMapper;
     }
-    public List<DeathRegistryDtl> getDeathApplication(DeathRegistryCriteria criteria) {
+    public List<DeathRegistryDtl> getDeathApplication(DeathRegistryCriteria criteria, RequestInfo requestInfo) {
         List<Object> preparedStmtValues = new ArrayList<>();
         String query = queryBuilder.getDeathSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
         List<DeathRegistryDtl> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), rowMapper);
-        // try {
-        //     ObjectMapper mapper = new ObjectMapper();
-        //     Object obj = criteria;
-        //     mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        //    System.out.println("Registrysearcriteria "+ mapper.writeValueAsString(obj));
-        //     }catch(Exception e) {
-        //     log.error("Exception while fetching from searcher: ",e);
-        //      }
+        //Rakhi S ikm on 18.04.2023
+        if(result != null) {
+			result.forEach(deathDtl -> {
+                DeathRegistryBasicInfo deathBasicDtls =deathDtl.getDeathBasicInfo();  
+                if(DeathRegistryConstants.DEATH_PLACE_HOSPITAL.toString().equals(deathDtl.getDeathBasicInfo().getDeathPlace())){
+                    Object mdmsDataHospital = util.mDMSCallHospital(requestInfo    
+                                           , deathDtl.getDeathBasicInfo().getTenantId()                           
+                                           , deathDtl.getDeathBasicInfo().getDeathPlaceType());
+                   Map<String,List<String>> masterDataHospital = getAttributeValuesHospital(mdmsDataHospital);
 
+                   Object mdmsDataHospitalMl = util.mDMSCallHospitalMl(requestInfo  
+                                           , deathDtl.getDeathBasicInfo().getTenantId()                           
+                                           , deathDtl.getDeathBasicInfo().getDeathPlaceType());
+                   Map<String,List<String>> masterDataHospitalMl = getAttributeValuesHospital(mdmsDataHospitalMl);
+
+                   String deathPlaceHospital = masterDataHospital.get(DeathRegistryConstants.HOSPITAL_DATA).toString();
+                   deathPlaceHospital = deathPlaceHospital.replaceAll("[\\[\\]\\(\\)]", "");
+
+                   String deathPlaceHospitalMl = masterDataHospitalMl.get(DeathRegistryConstants.HOSPITAL_DATA).toString();
+                   deathPlaceHospitalMl = deathPlaceHospitalMl.replaceAll("[\\[\\]\\(\\)]", "");
+                    
+                deathDtl.getDeathBasicInfo().setDeathPlaceHospitalNameEn(deathPlaceHospital);
+                deathDtl.getDeathBasicInfo().setDeathPlaceHospitalNameMl(deathPlaceHospitalMl);     
+                
+                deathDtl.getDeathBasicInfo().setHospitalNameEn(deathDtl.getDeathBasicInfo().getDeathPlaceType());
+               }
+              else if(DeathRegistryConstants.DEATH_PLACE_INSTITUTION.toString().equals(deathDtl.getDeathBasicInfo().getDeathPlace())){
+                Object mdmsDataInstitution = util.mDMSCallInstitution(requestInfo  
+                                        , deathDtl.getDeathBasicInfo().getTenantId()                           
+                                        , deathDtl.getDeathBasicInfo().getDeathPlaceType());
+                Map<String,List<String>> masterDataInstitution = getAttributeValuesHospital(mdmsDataInstitution);
+
+                Object mdmsDataInstitutionMl = util.mDMSCallInstitutionMl(requestInfo     
+                                        , deathDtl.getDeathBasicInfo().getTenantId()                           
+                                        , deathDtl.getDeathBasicInfo().getDeathPlaceType());
+                Map<String,List<String>> masterDataInstitutionMl = getAttributeValuesHospital(mdmsDataInstitutionMl);
+
+                String deathPlaceInstitution = masterDataInstitution.get(DeathRegistryConstants.INSTITUTION_NAME).toString();
+                deathPlaceInstitution = deathPlaceInstitution.replaceAll("[\\[\\]\\(\\)]", "");
+
+                String deathPlaceInstitutionMl = masterDataInstitutionMl.get(DeathRegistryConstants.INSTITUTION_NAME).toString();
+                deathPlaceInstitutionMl = deathPlaceInstitutionMl.replaceAll("[\\[\\]\\(\\)]", "");
+                
+                deathDtl.getDeathBasicInfo().setDeathPlaceInstitutionNameEn(deathPlaceInstitution);
+                deathDtl.getDeathBasicInfo().setDeathPlaceInstitutionNameMl(deathPlaceInstitutionMl);
+
+                deathDtl.getDeathBasicInfo().setInstitution(deathDtl.getDeathBasicInfo().getDeathPlaceType());
+            }
+            else if(deathDtl.getDeathBasicInfo().getDeathPlace().equals(DeathRegistryConstants.DEATH_PLACE_VEHICLE)){
+                deathDtl.getDeathBasicInfo().setVehicleType(deathDtl.getDeathBasicInfo().getDeathPlaceType());
+            }
+            else if(deathDtl.getDeathBasicInfo().getDeathPlace().equals(DeathRegistryConstants.DEATH_PLACE_PUBLICPLACES)){
+                deathDtl.getDeathBasicInfo().setPublicPlaceType(deathDtl.getDeathBasicInfo().getDeathPlaceType());
+            } 
+            });
+        }
         return result; 
     }
     //Jasmine 15.03.2023
     public List<DeathRegistryCorrectionDtls> getDeathCorrectionApplication(DeathRegistryCriteria criteria) {
         List<Object> preparedStmtValues = new ArrayList<>();
         String query = queryBuilder.getDeathRegistryIdSearchQuery(criteria, preparedStmtValues, Boolean.FALSE);
-        // System.out.println("JasmineQuery"+query);
         List<DeathRegistryCorrectionDtls> result = jdbcTemplate.query(query, preparedStmtValues.toArray(), deathCorrectionRowMapper);
-        // System.out.println("JasmineResult"+result);
         return result; 
     }
     //Rakhi S on 10.02.2023

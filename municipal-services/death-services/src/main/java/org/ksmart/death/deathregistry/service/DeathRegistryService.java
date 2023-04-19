@@ -2,7 +2,6 @@ package org.ksmart.death.deathregistry.service;
 
 import java.util.List;
 import java.util.UUID;
-
 import org.egov.common.contract.request.RequestInfo;
 import org.egov.tracer.model.CustomException;
 import org.ksmart.death.deathregistry.config.DeathRegistryConfiguration;
@@ -28,77 +27,32 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-
 import org.ksmart.death.deathregistry.web.models.DeathNACCriteria;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryCorrectionDtls;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryCorrectionRequest;
-
-
-
 import lombok.extern.slf4j.Slf4j;
 
-/**
-     * Creates CrDeathService
-     * Jasmine IKM
-     * on 07.02.2023
-     * DeathRegistryService create Rakhi S on 09.02.2023
-     */
-
-/**
-     * Creates DeathController 
-     * Jasmine 06/02/2023
-     * Death Application Create Api- Rakhi S on 06.02.2023 
-     */
-
-  @Slf4j
- @Service
- 
+@Slf4j
+@Service 
 public class DeathRegistryService {
-
      private final DeathRegistryProducer producer;
      private final DeathRegistryConfiguration deathConfig;
      private final DeathRegistryRepository repository;
-     private final DeathRegistryEnrichment enrichmentService;
-   
-    // private final CrDeathRegistryMdmsUtil util;
-    // private final RegistryMDMSValidator mdmsValidator;
-    // private final CrDeathRegistryValidator validatorService;
-   
-
+     private final DeathRegistryEnrichment enrichmentService;  
     @Autowired
     DeathRegistryService(DeathRegistryProducer producer,DeathRegistryConfiguration deathConfig 
                                         ,DeathRegistryRepository repository,
                                         DeathRegistryEnrichment enrichmentService ){
-    //  ,,
-    // CrDeathRegistryMdmsUtil util,RegistryMDMSValidator mdmsValidator,
-    // CrDeathRegistryValidator validatorService){
          this.producer = producer;
          this.deathConfig = deathConfig;
          this.repository=repository;
          this.enrichmentService = enrichmentService;
-    
-    //     this.util=util;
-    //     this.mdmsValidator=mdmsValidator;
-    //     this.validatorService=validatorService;
-    }
+     }
     //Rakhi S ikm on 09.02.2023
-    public List<DeathRegistryDtl> create(DeathRegistryRequest request) {
-      // RAkhi S IKM validate mdms data       
+    public List<DeathRegistryDtl> create(DeathRegistryRequest request) {   
      //  Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getDeathCertificateDtls().get(0).getTenantId());
      //  mdmsValidator.validateMDMSData(request,mdmsData);
-    // enrich request
-    //               try {
-    //         ObjectMapper mapper = new ObjectMapper();
-    //         Object obj = request;
-    //         mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-    //        System.out.println("RegistryCreate "+ mapper.writeValueAsString(obj));
-    // }catch(Exception e) {
-    //     log.error("Exception while fetching from searcher: ",e);
-    // }
        enrichmentService.enrichCreate(request);
-       //IDGen call
-       //enrichmentService.setIdgenIds(request);  
-       //Rakhi S on 10.02.2023  
        enrichmentService.setRegistrationNumberDetails(request); 
        enrichmentService.setCertificateNumberDetails(request);
        producer.push(deathConfig.getSaveDeathRegistryDetailsTopic(), request);
@@ -122,10 +76,10 @@ public class DeathRegistryService {
 
       //   return request.getDeathCertificateDtls();
       // }
-    //Search  Jasmine 08.02.2023
-     public List<DeathRegistryDtl> search(DeathRegistryCriteria criteria, RequestInfo requestInfo) {
+    //Registry Normal Search
+      public List<DeathRegistryDtl> search(DeathRegistryCriteria criteria, RequestInfo requestInfo) {
 
-		    return repository.getDeathApplication(criteria);
+		    return repository.getDeathApplication(criteria,requestInfo);
      }
  //Certificate download Rakhi S IKM on 10.02.2023
  public DeathCertificate download(DeathRegistryCriteria criteria, RequestInfo requestInfo) {
@@ -135,7 +89,7 @@ public class DeathRegistryService {
         deathCertificate.setDeathDtlId(criteria.getId());
         deathCertificate.setTenantId(criteria.getTenantId());
         DeathCertRequest deathCertRequest = DeathCertRequest.builder().deathCertificate(deathCertificate).requestInfo(requestInfo).build();
-        List<DeathRegistryDtl> deathDtls = repository.getDeathApplication(criteria);     
+        List<DeathRegistryDtl> deathDtls = repository.getDeathApplication(criteria,requestInfo);     
 
         DeathPdfApplicationRequest applicationRequest = DeathPdfApplicationRequest.builder().requestInfo(requestInfo).deathCertificate(deathDtls).build();
         if(applicationRequest.getDeathCertificate().get(0).getDeathBasicInfo().getCertificateDate()!=0){
@@ -181,8 +135,8 @@ public class DeathRegistryService {
     }
  }
   //Rakhi S IKM on 12.02.2023
-  public List<DeathCertificate> searchCertificate(DeathRegistryCriteria criteria) {      
-    List<DeathRegistryDtl> obj = repository.getDeathApplication(criteria);     
+  public List<DeathCertificate> searchCertificate(DeathRegistryCriteria criteria, RequestInfo requestInfo) {      
+    List<DeathRegistryDtl> obj = repository.getDeathApplication(criteria,requestInfo);     
     return repository.searchCertificate(obj.get(0).getDeathBasicInfo().getId());
   }
  //Jasmine .06.03.2023

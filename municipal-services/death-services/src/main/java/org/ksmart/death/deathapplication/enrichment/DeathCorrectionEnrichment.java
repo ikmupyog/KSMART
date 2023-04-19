@@ -52,7 +52,7 @@ public class DeathCorrectionEnrichment implements BaseEnrichment{
         }
         DeathRegistryCriteria criteria =  new DeathRegistryCriteria();
         criteria.setRegistrationNo(registrationNo);
-        List<DeathRegistryDtl> registerBirthDetails = registerRepo.getDeathApplication(criteria);
+        List<DeathRegistryDtl> registerBirthDetails = registerRepo.getDeathApplication(criteria,request.getRequestInfo());
     //    setApplicationNumbers(request);
         request.getCorrectionDetails()
                 .forEach(death -> {

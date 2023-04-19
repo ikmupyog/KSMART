@@ -37,23 +37,15 @@ import org.ksmart.death.deathregistry.web.models.DeathRegistryCorrectionRequest;
 import org.ksmart.death.deathregistry.web.models.DeathNACCriteria;
 import org.ksmart.death.deathregistry.web.models.DeathRegistryCorrectionDtls;
 
-/**
-     * Creates DeathRegistryController 
-     * Jasmine 06/02/2023
-     * Death Registry Create, Death Certificate download Rakhi S ikm on 09.02.2023
-     */
-
-    @Slf4j
-    @RestController
-    @RequestMapping("/v1")
-    @Validated
+@Slf4j
+@RestController
+@RequestMapping("/v1")
+@Validated
 public class DeathRegistryController {
 
     @Autowired
     private ResponseInfoFactory responseInfoFactory;
-
-	private final DeathRegistryService deathService;
-    
+	private final DeathRegistryService deathService;    
     @Autowired
     public DeathRegistryController(DeathRegistryService deathService) {
 
@@ -61,7 +53,6 @@ public class DeathRegistryController {
     }
     //Rakhi S on 09.02.2023 - Death Registry Create Controller 
     @PostMapping("/crdeathregistry/_createdeath")
-
     public ResponseEntity<DeathRegistryResponse> create(@Valid @RequestBody DeathRegistryRequest request) {
  
         List<DeathRegistryDtl> deathDetails = deathService.create(request);
@@ -94,7 +85,7 @@ public class DeathRegistryController {
     public ResponseEntity<DeathCertResponse> download(@RequestBody RequestInfoWrapper requestInfoWrapper,
                                                     @Valid @ModelAttribute DeathRegistryCriteria criteria){
 
-    List<DeathCertificate> deathCertSearch = deathService.searchCertificate(criteria); 
+    List<DeathCertificate> deathCertSearch = deathService.searchCertificate(criteria,requestInfoWrapper.getRequestInfo()); 
     DeathCertResponse response ;
     if (null != deathCertSearch && !deathCertSearch.isEmpty()){
         if(deathCertSearch.get(0).getCounter()<=0){
