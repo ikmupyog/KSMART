@@ -11,7 +11,18 @@ public interface GroomRegistryAddressRowMapper {
         return GroomRegistryAddressDetails.builder()
 
 //              PRESENT
-
+                .countryIdPresent(rs.getString("GPSA_countryid"))
+                .stateIdPresent(rs.getString("GPSA_stateid"))
+                .districtIdPresent(rs.getString("GPSA_districtid"))
+                .poNoPresent(rs.getString("GPSA_poid"))
+                .presentaddressCountry(rs.getString("GPMA_countryid"))
+                .localityEnPresent(rs.getString("GPSA_locality_en"))
+                .localityMlPresent(rs.getString("GPSA_locality_ml"))
+                .streetNameEnPresent(rs.getString("GPSA_street_name_en"))
+                .streetNameMlPresent(rs.getString("GPSA_street_name_ml"))
+                .houseNameNoEnPresent(rs.getString("GPSA_housename_en"))
+                .houseNameNoMlPresent(rs.getString("GPSA_housename_ml"))
+                .villageNamePresent(rs.getString("GPSA_village_name"))
                 .presentUuid(rs.getString("GPSA_id"))
                 .presentaddressCountry(rs.getString("GPSA_countryid"))
                 .presentaddressStateName(rs.getString("GPSA_stateid"))
@@ -30,7 +41,7 @@ public interface GroomRegistryAddressRowMapper {
                 .presentWardNo(rs.getString("GPSA_ward_code"))
                 .presentOutsideKeralaDistrict(rs.getString("GPSA_districtid"))
                 .presentOutsideKeralaTalukName(rs.getString("GPSA_taluk_name"))
-                //.presentOutsideKeralaCityVilgeEn(rs.getString("GPSA_village_name "))
+//                .presentOutsideKeralaCityVilgeEn(rs.getString("GPSA_village_name "))
                 .presentOutsideKeralaPincode(rs.getString("GPSA_pinno"))
                 .presentOutsideKeralaPostOfficeEn(rs.getString("GPSA_poname_en"))
                 .presentOutsideKeralaPostOfficeMl(rs.getString("GPSA_poname_ml"))
@@ -51,15 +62,26 @@ public interface GroomRegistryAddressRowMapper {
 
 
 
+
 //                PERMANENT
 
-
+                .countryIdPermanent(rs.getString("GPMA_countryid"))
+                .stateIdPermanent(rs.getString("GPMA_stateid"))
+                .districtIdPermanent(rs.getString("GPMA_districtid"))
+                .poNoPermanent(rs.getString("GPMA_poid"))
+                .localityEnPermanent(rs.getString("GPMA_locality_en"))
+                .localityMlPermanent(rs.getString("GPMA_locality_ml"))
+                .streetNameEnPermanent(rs.getString("GPMA_street_name_en"))
+                .streetNameMlPermanent(rs.getString("GPMA_street_name_ml"))
+                .houseNameNoEnPermanent(rs.getString("GPMA_housename_en"))
+                .houseNameNoMlPermanent(rs.getString("GPMA_housename_ml"))
+                .villageNamePermanent(rs.getString("GPMA_village_name"))
                 .permanentUuid(rs.getString("GPMA_id"))
                 .permtaddressCountry(rs.getString("GPMA_countryid"))
                 .permtaddressStateName(rs.getString("GPMA_stateid"))
                 .permntInKeralaAdrLBName(rs.getString("GPMA_tenantid"))
                 .permntInKeralaAdrDistrict(rs.getString("GPMA_districtid"))
-             //   .permntOutsideKeralaCityVilgeEn(rs.getString("GPMA_village_name "))
+                //.permntOutsideKeralaCityVilgeEn(rs.getString("GPMA_village_name "))
                 .permntInKeralaAdrTaluk(rs.getString("GPMA_talukid"))
                 .permntInKeralaAdrVillage(rs.getString("GPMA_villageid"))
                 .permntInKeralaAdrLocalityNameEn(rs.getString("GPMA_locality_en"))
@@ -93,6 +115,7 @@ public interface GroomRegistryAddressRowMapper {
                 .permntOutSideIndiaProvinceMl(rs.getString("GPMA_ot_state_region_province_ml"))
                 .permntOutSideIndiaProvinceEn(rs.getString("GPMA_ot_state_region_province_en"))
                 .brideGroomPermanent(rs.getString("GPMA_bride_groom"))
+
 //                .isPermanentAddress(rs.getInt("GPMA_same_as_present")==1?true:false)
 //                .isPermanentAddressInt(rs.getInt("GPMA_same_as_present"))
                 .build();
