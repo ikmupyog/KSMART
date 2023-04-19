@@ -192,7 +192,7 @@ public List<MarriageCorrectionDetails> updateMarriageCorrectionDetails(MarriageC
     request.setMarriageDetails(searchResult);
 
     if (request.getMarriageCorrectionDetails().get(0).getIsWorkflow()) {
-        workflowIntegrator.callCorrectionWorkFlow(request);
+        //workflowIntegrator.callCorrectionWorkFlow(request);
     }
     producer.push(marriageApplicationConfiguration.getUpdateMarriageApplicationCorrectionTopic(), request);
 
