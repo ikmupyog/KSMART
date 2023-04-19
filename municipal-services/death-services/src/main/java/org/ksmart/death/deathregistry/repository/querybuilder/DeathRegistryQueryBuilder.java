@@ -305,7 +305,10 @@ StringBuilder orderBy = new StringBuilder();
                         addFilter("id", criteria.getId(), query, preparedStmtValues);
                         addFilter("tenantid", criteria.getTenantId(), query, preparedStmtValues);
                         addFilter("ack_no", criteria.getDeathACKNo(), query, preparedStmtValues);  
+                        addFilter("certificate_no", criteria.getCertificateNo(), query, preparedStmtValues);
                         addLikeFilter("LOWER(deceased_firstname_en)", criteria.getDeceasedFirstNameEn(), query, preparedStmtValues); 
+                        addLikeFilter("LOWER(father_name_en)", criteria.getFatherNameEn(), query, preparedStmtValues); 
+                        addLikeFilter("LOWER(mother_name_en)", criteria.getMotherNameEn(), query, preparedStmtValues);  
                         return query.toString();
                         
 } 

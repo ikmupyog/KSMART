@@ -186,6 +186,12 @@ public class DeathRegistryService {
         throw new CustomException("DOWNLOAD_ERROR","Error in Downloading NAC Certificate");
   }
   }
+
+   //Registry NAC Search
+   public List<DeathRegistryNACDtls> searchNAC(DeathNACCriteria criteria, RequestInfo requestInfo) {
+
+    return repository.getDeathNACApplication(criteria,requestInfo);
+ }
     
 }
  //           /********************************************* */

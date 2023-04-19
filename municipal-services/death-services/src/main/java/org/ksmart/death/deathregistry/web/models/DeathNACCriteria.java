@@ -120,4 +120,6 @@ public class DeathNACCriteria {
         DeceasedGender,
         TenantId
     }
+    @JsonProperty("CertificateNo")
+    private String certificateNo;
 }

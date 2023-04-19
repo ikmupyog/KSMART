@@ -163,4 +163,18 @@ public class DeathRegistryController {
             return ResponseEntity.ok(response);
 
     }
+    //Rakhi S on 19.04.2023 - Death Registry NAC Search Controller 
+    @PostMapping("/deathregistry/_searchdeathnac")    
+    public ResponseEntity<DeathRegistryNACResponse> searchNAC(@RequestBody RequestInfoWrapper request,
+                                                          @ModelAttribute DeathNACCriteria criteria) {
+
+        List<DeathRegistryNACDtls> deathDetails = deathService.searchNAC(criteria, request.getRequestInfo());
+
+        DeathRegistryNACResponse response = DeathRegistryNACResponse
+                                            .builder()
+                                            .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))                                                            
+                                            .deathNACDtls(deathDetails)
+                                            .build();
+        return ResponseEntity.ok(response);
+    }
 }
