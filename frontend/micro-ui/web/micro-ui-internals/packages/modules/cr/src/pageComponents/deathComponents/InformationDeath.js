@@ -147,22 +147,23 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
     State["common-masters"].State.map((ob) => {
       cmbState.push(ob);
     });
-  const [DateOfDeath, setDateOfDeath] = useState(
-    isEditDeath &&
-      isEditDeathPageComponents === false &&
-      (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
-      ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath)
-      : formData?.InformationDeath?.DateOfDeath
-  );
- 
+  // const [DateOfDeath, setDateOfDeath] = useState(
+  //   isEditDeath &&
+  //     isEditDeathPageComponents === false &&
+  //     (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
+  //     ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath)
+  //     : formData?.InformationDeath?.DateOfDeath
+  // );
+  const [DateOfDeath, setDateOfDeath] = useState(isEditDeath ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath) : formData?.InformationDeath?.DateOfDeath); 
+  const [FromDate, setFromDate] = useState(isEditDeath ? convertEpochToDate(formData?.InformationDeath?.FromDate) : formData?.InformationDeath?.FromDate); 
 // console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
-  const [FromDate, setFromDate] = useState(
-    isEditDeath &&
-      isEditDeathPageComponents === false &&
-      (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
-      ? convertEpochToDate(formData?.InformationDeath?.FromDate)
-      : formData?.InformationDeath?.FromDate
-  );
+  // const [FromDate, setFromDate] = useState(
+  //   isEditDeath &&
+  //     isEditDeathPageComponents === false &&
+  //     (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
+  //     ? convertEpochToDate(formData?.InformationDeath?.FromDate)
+  //     : formData?.InformationDeath?.FromDate
+  // );
   const handleFromTimeChange = (value, cb) => {
     if (typeof value === "string") {
       cb(value);
@@ -789,8 +790,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
     setSelectedOccupation(value);
   }
  
-
-
+ 
   // function selectDateOfDeath(value) {
   //   setDateOfDeath(value);
   //   const today = new Date();
