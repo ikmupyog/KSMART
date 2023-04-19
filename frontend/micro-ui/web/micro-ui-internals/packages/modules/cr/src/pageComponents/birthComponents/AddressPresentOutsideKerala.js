@@ -69,6 +69,7 @@ const AddressPresentOutsideKerala = ({ config, onSelect, userType, formData, pre
   //   PostOffice["common-masters"].PostOffice.map((ob) => {
   //     cmbPostOffice.push(ob);
   //   });
+  console.log(value);
   useEffect(() => {
     setCmbFilterDistrict(cmbDistrict.filter((cmbDistrict) => cmbDistrict.statecode === value));
     sessionStorage.setItem("presentOutsideKeralaFlag", false);
