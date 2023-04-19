@@ -75,6 +75,7 @@ public class MarriageCorrectionEnrichment implements BaseEnrichment {
             correction.setMarriageId(marriageApplicationDetails.getId());
 
             setApplicationNumbers(correctionRequest, marriageApplicationDetails);
+            correction.setApplicationNo(marriageApplicationDetails.getApplicationNumber());
 
             Map<String, String> marriageApplnDetailsFieldMap = getJsonFieldNames(MarriageApplicationDetails.class.getDeclaredFields());
             Map<String, String> brideDetailsFieldMap = getJsonFieldNames(BrideDetails.class.getDeclaredFields());
@@ -526,8 +527,16 @@ public class MarriageCorrectionEnrichment implements BaseEnrichment {
                 .forEach(personal -> personal.setAuditDetails(auditDetails));
     }
 
-       public void enrichUpdate(MarriageCorrectionRequest request) {
+    public void enrichUpdate(MarriageCorrectionRequest request,List<MarriageApplicationDetails> searchResult) {
 
-       
- }
+        searchResult.get(0).setBusinessservice(request.getMarriageCorrectionDetails().get(0).getBusinessservice());
+        searchResult.get(0).setAction(request.getMarriageCorrectionDetails().get(0).getAction());
+        searchResult.get(0).setStatus(request.getMarriageCorrectionDetails().get(0).getStatus());
+        RequestInfo requestInfo = request.getRequestInfo();
+        User userInfo = requestInfo.getUserInfo();
+
+        AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
+        searchResult.forEach(details -> details.setAuditDetails(auditDetails));
+
+     }
 }

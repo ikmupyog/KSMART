@@ -195,7 +195,7 @@ public class WorkflowIntegrator {
              if (businessServiceFromMDMS == null) {
              businessServiceFromMDMS = MarriageConstants.BUSINESS_SERVICE_BND;
          }
-             if (businessServiceFromMDMS.equals(MarriageConstants.BUSINESS_SERVICE_BND) || !request.getMarriageDetails()
+             if (businessServiceFromMDMS.equals(MarriageConstants.BUSINESS_SERVICE_BND) || !request.getMarriageCorrectionDetails()
             .get(0).getAction().equalsIgnoreCase(MarriageConstants.TRIGGER_NOWORKFLOW)) {
  
                  JSONObject obj = new JSONObject();

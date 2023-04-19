@@ -1,6 +1,5 @@
 package org.ksmart.marriage.marriagecorrection.web.controller;
 
-import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.ksmart.marriage.marriageapplication.web.model.MarriageApplicationDetails;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.MarriageApplicationSearchCriteria;
@@ -8,15 +7,15 @@ import org.ksmart.marriage.marriagecorrection.web.model.MarriageCorrectionDetail
 import org.ksmart.marriage.marriagecorrection.web.model.MarriageCorrectionRequest;
 import org.ksmart.marriage.marriagecorrection.web.model.MarriageCorrectionResponse;
 import org.ksmart.marriage.marriagecorrection.service.MarriageCorrectionService;
-import org.ksmart.marriage.marriageregistry.web.model.MarriageRegistryRequest;
+import org.ksmart.marriage.marriageregistry.service.MarriageRegistryService;
 import org.ksmart.marriage.utils.MarriageConstants;
 import org.ksmart.marriage.utils.ResponseInfoFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -27,10 +26,13 @@ public class MarriageCorrectionController {
 
     private final MarriageCorrectionService marriageCorrectionService;
 
+    private final MarriageRegistryService marriageRegistryService;
+
     private final ResponseInfoFactory responseInfoFactory;
 
-    public MarriageCorrectionController(MarriageCorrectionService marriageCorrectionService, ResponseInfoFactory responseInfoFactory) {
+    public MarriageCorrectionController(MarriageCorrectionService marriageCorrectionService, MarriageRegistryService marriageRegistryService, ResponseInfoFactory responseInfoFactory) {
         this.marriageCorrectionService = marriageCorrectionService;
+        this.marriageRegistryService = marriageRegistryService;
         this.responseInfoFactory = responseInfoFactory;
     }
 
@@ -56,7 +58,7 @@ public class MarriageCorrectionController {
         //Updating Marriage registry if Registrar Approved
         if(request.getMarriageCorrectionDetails().get(0).getStatus().equals(MarriageConstants.WORKFLOW_STATUS_APPROVED) && (request.getMarriageCorrectionDetails().get(0).getApplicationtype().equals(MarriageConstants.APPLICATION_CORRECTION))) {
 
-            List<MarriageCorrectionDetails> marriageCorrectionDetailsList = marriageCorrectionService.updateMarriageRegistry(request);
+            List<MarriageCorrectionDetails> marriageCorrectionDetailsList = marriageRegistryService.updateMarriageRegistry(request);
 
         }
         MarriageCorrectionResponse response = MarriageCorrectionResponse
@@ -68,13 +70,19 @@ public class MarriageCorrectionController {
     }
 
 
-//    @PostMapping(value = {"/searchmarriagecorrection"})
-//    public ResponseEntity<MarriageCorrectionResponse> searchKsmartBirth(@RequestBody MarriageCorrectionRequest request, @Valid @ModelAttribute MarriageApplicationSearchCriteria criteria) {
-//        List<MarriageApplicationDetails> marriageCorrectionAplnDetails=marriageCorrectionService.searchCorrectionDetails(request, criteria);
-//        MarriageCorrectionResponse response=MarriageCorrectionResponse.builder()
-//                .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))
-//                .marriageDetails(marriageCorrectionAplnDetails)
-//                .build();
-//        return ResponseEntity.ok(response);
-//    }
+    @PostMapping(value = {"/searchmarriagecorrection"})
+    public ResponseEntity<MarriageCorrectionResponse> searchKsmartBirth(@RequestBody MarriageCorrectionRequest request, @Valid @ModelAttribute MarriageApplicationSearchCriteria criteria) {
+        List<MarriageApplicationDetails> marriageCorrectionAplnDetails=marriageCorrectionService.searchCorrectionApplinDetails(request, criteria);
+        List<MarriageCorrectionDetails> marriageCorrectionDetails =new ArrayList<>();
+        if(marriageCorrectionAplnDetails.size()==1) {
+            String marriageId = marriageCorrectionAplnDetails.get(0).getId();
+            marriageCorrectionDetails = marriageCorrectionService.searchCorrectionDetails(marriageId);
+        }
+        MarriageCorrectionResponse response=MarriageCorrectionResponse.builder()
+                .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), Boolean.TRUE))
+                .marriageDetails(marriageCorrectionAplnDetails)
+                .marriageCorrectionDetails(marriageCorrectionDetails)
+                .build();
+        return ResponseEntity.ok(response);
+    }
 }

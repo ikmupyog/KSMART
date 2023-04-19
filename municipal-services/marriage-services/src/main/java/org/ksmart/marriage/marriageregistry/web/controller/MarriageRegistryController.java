@@ -56,7 +56,7 @@ public class MarriageRegistryController {
     public ResponseEntity<MarriageRegistryResponse> search(@RequestBody  MarriageRegistryRequest request,
 
                                                            @ModelAttribute MarriageRegistrySearchCriteria criteria) {
-            int registryCount=registryRepository.getMarriageRegistryCount(criteria);
+        int registryCount=registryRepository.getMarriageRegistryCount(criteria);
 
         List<MarriageRegistryDetails> marriageDetails = marriageService.searchRegistry(criteria);
 

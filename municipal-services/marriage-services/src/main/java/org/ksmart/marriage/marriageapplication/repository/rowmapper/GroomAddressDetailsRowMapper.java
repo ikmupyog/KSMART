@@ -13,7 +13,18 @@ public interface GroomAddressDetailsRowMapper {
         return GroomAddressDetails.builder()
 
 //              PRESENT
-
+                .countryIdPresent(rs.getString("GPSA_countryid"))
+                .stateIdPresent(rs.getString("GPSA_stateid"))
+                .districtIdPresent(rs.getString("GPSA_districtid"))
+                .poNoPresent(rs.getString("GPSA_poid"))
+                .presentaddressCountry(rs.getString("GPMA_countryid"))
+                .localityEnPresent(rs.getString("GPSA_locality_en"))
+                .localityMlPresent(rs.getString("GPSA_locality_ml"))
+                .streetNameEnPresent(rs.getString("GPSA_street_name_en"))
+                .streetNameMlPresent(rs.getString("GPSA_street_name_ml"))
+                .houseNameNoEnPresent(rs.getString("GPSA_housename_en"))
+                .houseNameNoMlPresent(rs.getString("GPSA_housename_ml"))
+                .villageNamePresent(rs.getString("GPSA_village_name"))
                 .presentUuid(rs.getString("GPSA_id"))
                 .presentaddressCountry(rs.getString("GPSA_countryid"))
                 .presentaddressStateName(rs.getString("GPSA_stateid"))
@@ -56,7 +67,17 @@ public interface GroomAddressDetailsRowMapper {
 
 //                PERMANENT
 
-
+                .countryIdPermanent(rs.getString("GPMA_countryid"))
+                .stateIdPermanent(rs.getString("GPMA_stateid"))
+                .districtIdPermanent(rs.getString("GPMA_districtid"))
+                .poNoPermanent(rs.getString("GPMA_poid"))
+                .localityEnPermanent(rs.getString("GPMA_locality_en"))
+                .localityMlPermanent(rs.getString("GPMA_locality_ml"))
+                .streetNameEnPermanent(rs.getString("GPMA_street_name_en"))
+                .streetNameMlPermanent(rs.getString("GPMA_street_name_ml"))
+                .houseNameNoEnPermanent(rs.getString("GPMA_housename_en"))
+                .houseNameNoMlPermanent(rs.getString("GPMA_housename_ml"))
+                .villageNamePermanent(rs.getString("GPMA_village_name"))
                 .permanentUuid(rs.getString("GPMA_id"))
                 .permtaddressCountry(rs.getString("GPMA_countryid"))
                 .permtaddressStateName(rs.getString("GPMA_stateid"))

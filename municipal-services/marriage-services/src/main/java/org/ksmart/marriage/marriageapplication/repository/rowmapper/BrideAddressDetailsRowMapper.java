@@ -13,7 +13,18 @@ public interface BrideAddressDetailsRowMapper {
 
 //              PRESENT
 
-
+                .countryIdPresent(rs.getString("BPSA_countryid"))
+                .stateIdPresent(rs.getString("BPSA_stateid"))
+                .districtIdPresent(rs.getString("BPSA_districtid"))
+                .poNoPresent(rs.getString("BPSA_poid"))
+                .presentaddressCountry(rs.getString("GPMA_countryid"))
+                .localityEnPresent(rs.getString("BPSA_locality_en"))
+                .localityMlPresent(rs.getString("BPSA_locality_ml"))
+                .streetNameEnPresent(rs.getString("BPSA_street_name_en"))
+                .streetNameMlPresent(rs.getString("BPSA_street_name_ml"))
+                .houseNameNoEnPresent(rs.getString("BPSA_housename_en"))
+                .houseNameNoMlPresent(rs.getString("BPSA_housename_ml"))
+                .villageNamePresent(rs.getString("BPSA_village_name"))
                 .presentUuid(rs.getString("BPSA_id"))
                 .presentaddressCountry(rs.getString("BPSA_countryid"))
                 .presentaddressStateName(rs.getString("BPSA_stateid"))
@@ -53,7 +64,17 @@ public interface BrideAddressDetailsRowMapper {
 
 //                PERMANENT
 
-
+                .countryIdPermanent(rs.getString("BPMA_countryid"))
+                .stateIdPermanent(rs.getString("BPMA_stateid"))
+                .districtIdPermanent(rs.getString("BPMA_districtid"))
+                .poNoPermanent(rs.getString("BPMA_poid"))
+                .localityEnPermanent(rs.getString("BPMA_locality_en"))
+                .localityMlPermanent(rs.getString("BPMA_locality_ml"))
+                .streetNameEnPermanent(rs.getString("BPMA_street_name_en"))
+                .streetNameMlPermanent(rs.getString("BPMA_street_name_ml"))
+                .houseNameNoEnPermanent(rs.getString("BPMA_housename_en"))
+                .houseNameNoMlPermanent(rs.getString("BPMA_housename_ml"))
+                .villageNamePermanent(rs.getString("BPMA_village_name"))
                 .permanentUuid(rs.getString("BPMA_id"))
                 .permtaddressCountry(rs.getString("BPMA_countryid"))
                 .permtaddressStateName(rs.getString("BPMA_stateid"))

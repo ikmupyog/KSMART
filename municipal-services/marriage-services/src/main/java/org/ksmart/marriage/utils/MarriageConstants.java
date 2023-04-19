@@ -167,4 +167,5 @@ public class MarriageConstants {
     public static final String MARRIAGE_PLACE_DIST_ID = "distId";
     public static final String MARRIAGE_PLACE_STATE_ID = "stateid";
     public static final String MARRIAGE_PLACE_TENENT_CODE = "tenentCode";
+    public static final String BILLING_SERVICE = "BillingService";
 }

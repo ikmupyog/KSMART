@@ -28,6 +28,10 @@ public class CorrectionDocument {
     @SafeHtml
     @JsonProperty("id")
     private String id;
+    @Size(max=64)
+    @SafeHtml
+    @JsonProperty("marriageId")
+    private String marriageId;
     @JsonProperty("correctionId")
     private String correctionId;
      @JsonProperty("correctionFieldName")

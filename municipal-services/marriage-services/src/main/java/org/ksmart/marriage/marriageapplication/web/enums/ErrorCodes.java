@@ -16,7 +16,8 @@ public enum ErrorCodes {
     MDMS_DATA_ERROR("MDMS_DATA_ERROR"),
     INVALID_SEARCH("INVALID_SEARCH"),
     // Idgen Service
-    IDGEN_ERROR("IDGEN_ERROR");
+    IDGEN_ERROR("IDGEN_ERROR"),
+    ROW_MAPPER_ERROR("ROW-MAPPER_ERROR");
     private String code;
 
 

@@ -157,6 +157,7 @@ public class MarriageRegistryRepository {
                 if(null!=req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails()){
                     if(StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getGroomUrl())) {
 
+
                         //req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().setGroomUrl(marriageApplicationConfiguration.getImageURLStartPath() + req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getGroomUrl());
                     }else{
                         throw new CustomException("PDF_ERROR", "Groom Photo not found!!!" );
@@ -224,6 +225,7 @@ public class MarriageRegistryRepository {
                                                 System.out.println(marriageAddr);
                                             }
                                         }
+
                                     }
                                 }
                             }
@@ -292,6 +294,7 @@ public class MarriageRegistryRepository {
                 req.getMarriageCertificate().get(0).setBridePermntFullAddr(marriageRegistryEnrichment.setBridePermanentAddressForCertificate(req.getRequestInfo(), req.getMarriageCertificate().get(0).getMarriageRegistryDetails()));
                 //Setting groom NRI address
 
+
                 //Setting bride address data from MDMS
                 Object mdmsBrideAddressData = util.mDMSCallGetAddress(req.getRequestInfo()
                         , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().getPermntInKeralaAdrLBName()
@@ -342,6 +345,7 @@ public class MarriageRegistryRepository {
                 throw new CustomException("PDF_ERROR", "Error in generating PDF" + e.getMessage());
             }
             return pdfResponse;
+
 
     }
     public String getShortenedUrl(String url) {

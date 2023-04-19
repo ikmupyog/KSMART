@@ -425,6 +425,18 @@ public class BrideRegistryAddressDetails {
     @Size(max = 10)
     @JsonProperty("presentOutSideIndiaPostCode")
     private String presentOutSideIndiaPostCode;
+
+    @Size(max = 1000)
+    @JsonProperty("stateName")
+    private String stateName;
+
+    @Size(max = 1000)
+    @JsonProperty("districtName")
+    private String districtName;
+
+    @Size(max = 1000)
+    @JsonProperty("countryName")
+    private String countryName;
     ////Db Fields//////
 
     @Size(max = 64)
