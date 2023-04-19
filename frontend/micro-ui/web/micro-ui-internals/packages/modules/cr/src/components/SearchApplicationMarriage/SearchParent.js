@@ -15,13 +15,13 @@ const SearchParent = ({
         marriageDOM: "",
         groomFirstnameEn: "",
         brideFirstnameEn: "",
-        marriagePlacetype: "",
     }
 
     if (searchType === 'application') {
         searchDefaultFields.applicationNo = "";
     } else {
         searchDefaultFields.registrationNo = "";
+        searchDefaultFields.certificateNo = "";
     }
 
     const [results, setResults] = useState([]);

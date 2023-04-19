@@ -1,12 +1,15 @@
 import moment from "moment";
+import {DEATH_CORRECTION_FIELD_NAMES} from "../../config/constants";
 
 export const getFilteredDodData = (selectedData, correctionData) => {
   let filteredDocuments = getFilteredDocuments(selectedData,correctionData);
   const computedCurrentValue = computeCurrentValue(selectedData?.InformationDeath?.DateOfDeath);
   const computedInitialValue = computeInitialValue(selectedData?.InformationDeath?.DateOfDeath);
   let selectedDodObj = {
+    fieldName: DEATH_CORRECTION_FIELD_NAMES.DECEASED_DOB,
     initialValue: computedInitialValue,
     curValue: computedCurrentValue,
+    docFlag: null,
     isDisabled: true,
     isEditable: false,
     isFocused: false,
@@ -14,7 +17,6 @@ export const getFilteredDodData = (selectedData, correctionData) => {
   };
   return { ...selectedDodObj };
 };
-
 //TODO need validation to check dob is null
 const computeInitialValue = (dod) => {
   const initialValue = dod;

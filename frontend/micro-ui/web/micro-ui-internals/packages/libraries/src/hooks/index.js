@@ -259,6 +259,9 @@ import useSearchPde from "./tl/useSearchPde";
 import { useRegSearchDeath, getDeathFileSourceDetails } from "./cr/death";
 import { getBirthFileSourceDetails } from "./cr/birth";
 
+import useDeathCorrectionAction from "./cr/useDeathCorrectionAction";
+
+
 const pgr = {
   useComplaintDetails,
   useComplaintsList,
@@ -375,6 +378,7 @@ const tl = {
 const cr = {
   getBirthFileSourceDetails,
   useBirthCorrectionAction,
+  useDeathCorrectionAction,
   useMarriageCorrectionAction,
   useApplicationMarriageActions,
   useRegSearchDeath,
