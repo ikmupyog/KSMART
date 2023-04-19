@@ -223,7 +223,6 @@ const NACParentsDetails = ({ config, onSelect, userType, formData, isEditStillBi
   } else
     return (
       <React.Fragment>
-        {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
         {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
         {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
         <FormStep
@@ -233,7 +232,6 @@ const NACParentsDetails = ({ config, onSelect, userType, formData, isEditStillBi
           onSkip={onSkip}
           isDisabled={!motherAadhar || !motherFirstNameEn || !motherFirstNameMl || !fatherAadhar || !fatherFirstNameEn || !fatherFirstNameMl}
         >
-          {/* {isMotherInfo === false && ( */}
           <div>
             <div className="row">
               <div className="col-md-12">
@@ -305,9 +303,7 @@ const NACParentsDetails = ({ config, onSelect, userType, formData, isEditStillBi
               </div>
             </div>
           </div>
-          {/* // )} */}
 
-          {/* {isFatherInfo === false && ( */}
           <div>
             <div className="row">
               <div className="col-md-12">
@@ -380,7 +376,6 @@ const NACParentsDetails = ({ config, onSelect, userType, formData, isEditStillBi
               </div>
             </div>
           </div>
-          {/* )} */}
 
           {toast && (
             <Toast
