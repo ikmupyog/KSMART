@@ -9,8 +9,10 @@ import {
   StatusTable,
   SubmitBar,
   BackButton,
+  Accordion,
+  CheckBox,
 } from "@egovernments/digit-ui-react-components";
-import React from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import Timeline from "../../../components/MARRIAGETimeline";
@@ -43,6 +45,10 @@ const getPath = (path, params) => {
 
 const MarriageCheckPage = ({ onSubmit, value, userType }) => {
   let isEdit = window.location.href.includes("renew-trade");
+
+  const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(false);
+  const [toast, setToast] = useState(false);
+
   const { t } = useTranslation();
   const history = useHistory();
   const match = useRouteMatch();
@@ -54,7 +60,29 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
       new Date(newdate).getDate().toString() + "/" + (new Date(newdate).getMonth() + 1).toString() + "/" + new Date(newdate).getFullYear().toString()
     }`;
   }
-  let routeLink = "";
+
+  const convertEpochToDate = (dateEpoch) => {
+    // Returning null in else case because new Date(null) returns initial date from calender
+    if (dateEpoch) {
+      const dateFromApi = new Date(dateEpoch);
+      let month = dateFromApi.getMonth() + 1;
+      let day = dateFromApi.getDate();
+      let year = dateFromApi.getFullYear();
+      month = (month > 9 ? "" : "0") + month;
+      day = (day > 9 ? "" : "0") + day;
+      return `${day}-${month}-${year}`;
+    } else {
+      return null;
+    }
+  };
+
+  function setDeclarationInfo(e) {
+    if (e.target.checked == false) {
+      setisInitiatorDeclaration(e.target.checked);
+    } else {
+      setisInitiatorDeclaration(e.target.checked);
+    }
+  }
 
   if (window.location.href.includes("/citizen") == "citizen") {
     userType = "citizen";
@@ -68,7 +96,128 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
       {window.location.href.includes("/citizen") ? <Timeline currentStep={5} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
       <Card>
+        <CardSubHeader style={{ marginBottom: "16px", fontSize: "16px" }}>{t("CR_REG_SUMMARY_HEADING")}</CardSubHeader>
+        <Accordion
+          expanded={true}
+          title={t("CR_MARRIAGE_DETAILS")}
+          content={
+            <StatusTable>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-12">
+                    <h1 className="summaryheadingh">
+                      <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_MARRIAGE_REGISTRATION_DETAILS")}`}</span>{" "}
+                    </h1>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_DATE_OF_MARRIAGE")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {convertEpochToDate(MarriageDetails?.marriageDOM)}
+                    </CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_DISTRICT")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {MarriageDetails?.marriageDistrictid ? MarriageDetails?.marriageDistrictid?.name : "NA"}
+                    </CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_TALUK")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {MarriageDetails?.marriageTalukID ? MarriageDetails?.marriageTalukID?.name : "NA"}
+                    </CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_WARD")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {MarriageDetails?.marriageWardCode ? MarriageDetails?.marriageWardCode?.name : null}
+                    </CardText>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-12">
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_LBTYPE")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {MarriageDetails?.marriageLBType ? MarriageDetails?.marriageLBType?.name : "NA"}
+                    </CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_LB")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {MarriageDetails?.marriageTenantid ? MarriageDetails?.marriageTenantid?.name : "NA"}
+                    </CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_TALUK")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {MarriageDetails?.marriageTalukID ? MarriageDetails?.marriageTalukID?.code : "NA"}
+                    </CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_VILLAGE")}`} :</CardText>
+                  </div>
+                  <div className="col-md-2">
+                    <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
+                      {MarriageDetails?.marriageVillageName ? MarriageDetails?.marriageVillageName?.code : null}
+                    </CardText>
+                  </div>
+                </div>
+              </div>
+            </StatusTable>
+          }
+        />
         <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-12">
+              <CheckBox
+                label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
+                onChange={setDeclarationInfo}
+                value={isInitiatorDeclaration}
+                checked={isInitiatorDeclaration}
+                // disable={isDisableEdit}
+              />
+            </div>
+          </div>
+
+          {toast && (
+            <Toast
+              error={InitiatorDeclareError}
+              label={InitiatorDeclareError ? (InitiatorDeclareError ? t(`BIRTH_DECLARATION_CHOOSE`) : setToast(false)) : setToast(false)}
+              onClose={() => setToast(false)}
+            />
+          )}
+          {""}
+          <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} />
+        </div>
+      </Card>
+    </React.Fragment>
+  );
+};
+
+export default MarriageCheckPage;
+
+{
+  /* <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
               <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_MARRIAGE_REG_SUMMARY_HEADING")}`}</span>
@@ -695,11 +844,5 @@ const MarriageCheckPage = ({ onSubmit, value, userType }) => {
               <span style={{ background: "#fff", padding: "0 10px" }}></span>
             </h1>
           </div>
-        </div>
-        <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmit} />
-      </Card>
-    </React.Fragment>
-  );
-};
-
-export default MarriageCheckPage;
+        </div> */
+}
