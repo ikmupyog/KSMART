@@ -1505,28 +1505,6 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
                     <div className="row">
                       <div className="col-md-12">
                         <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("SL NO")}`} :</CardText>
-                        </div>
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{itemData?.slNo}</CardText>
-                        </div>
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_DATE_OF_BIRTH_TIME")}`} :</CardText>
-                        </div>
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{itemData?.dob}</CardText>
-                        </div>
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}> {`${t("ORDER_OF_BIRTH")}`} :</CardText>
-                        </div>
-                        <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{itemData?.nacorderofChildren}</CardText>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <div className="col-md-2">
                           <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_NAME")}`} :</CardText>
                         </div>
                         <div className="col-md-2">
@@ -1546,13 +1524,28 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
                         </div>
                       </div>
                     </div>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <div className="col-md-2">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_DATE_OF_BIRTH_TIME")}`} :</CardText>
+                        </div>
+                        <div className="col-md-2">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{itemData?.dob}</CardText>
+                        </div>
+                        <div className="col-md-2">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}> {`${t("ORDER_OF_BIRTH")}`} :</CardText>
+                        </div>
+                        <div className="col-md-2">
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{itemData?.nacorderofChildren}</CardText>
+                        </div>
+                      </div>
+                    </div>
                   </StatusTable>
                 }
               />
             );
           }
         })}
-        ;
         <div className="row">
           <div className="col-md-12">
             <h1 className="summaryheadingh">

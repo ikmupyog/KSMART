@@ -147,23 +147,23 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
     State["common-masters"].State.map((ob) => {
       cmbState.push(ob);
     });
-  // const [DateOfDeath, setDateOfDeath] = useState(
-  //   isEditDeath &&
-  //     isEditDeathPageComponents === false &&
-  //     (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
-  //     ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath)
-  //     : formData?.InformationDeath?.DateOfDeath
-  // );
-  const [DateOfDeath, setDateOfDeath] = useState(isEditDeath ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath) : formData?.InformationDeath?.DateOfDeath); 
-  const [FromDate, setFromDate] = useState(isEditDeath ? convertEpochToDate(formData?.InformationDeath?.FromDate) : formData?.InformationDeath?.FromDate); 
-// console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
-  // const [FromDate, setFromDate] = useState(
-  //   isEditDeath &&
-  //     isEditDeathPageComponents === false &&
-  //     (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
-  //     ? convertEpochToDate(formData?.InformationDeath?.FromDate)
-  //     : formData?.InformationDeath?.FromDate
-  // );
+  const [DateOfDeath, setDateOfDeath] = useState(
+    isEditDeath &&
+      isEditDeathPageComponents === false &&
+      (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
+      ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath)
+      : formData?.InformationDeath?.DateOfDeath
+  );
+ //const [DateOfDeath, setDateOfDeath] = useState(isEditDeath ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath) : formData?.InformationDeath?.DateOfDeath); 
+  //const [FromDate, setFromDate] = useState(isEditDeath ? convertEpochToDate(formData?.InformationDeath?.FromDate) : formData?.InformationDeath?.FromDate); 
+console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
+  const [FromDate, setFromDate] = useState(
+    isEditDeath &&
+      isEditDeathPageComponents === false &&
+      (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
+      ? convertEpochToDate(formData?.InformationDeath?.FromDate)
+      : formData?.InformationDeath?.FromDate
+  );
   const handleFromTimeChange = (value, cb) => {
     if (typeof value === "string") {
       cb(value);
@@ -565,7 +565,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
   function setCheckedDate(e) {
     if (e.target.checked === true) {
       setChecked(e.target.checked);
-      setDateOfDeath("");
+      setFromDate("");
       setToDate("");
     } else {
       setChecked(e.target.checked);
@@ -585,12 +585,38 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
   function selectFromDate(value) {
     setFromDate(value);
     const today = new Date();
+    today.setHours(0, 0, 0, 0);
     const deathDate = new Date(value);
+    deathDate.setHours(0, 0, 0, 0);
+
     if (deathDate.getTime() <= today.getTime()) {
+      setDOBError(false);
+      // To calculate the time difference of two dates
       let Difference_In_Time = today.getTime() - deathDate.getTime();
+      // console.log("Difference_In_Time" + Difference_In_Time);
+      setDifferenceInTime(today.getTime() - deathDate.getTime());
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-      Difference_In_DaysRounded = Math.floor(Difference_In_Days);
+      setDifferenceInDaysRounded(Math.floor(DiworkFlfference_In_Days * 24 * 60 * 60 * 1000));
+      if (DeathPlace) {
+        let currentWorgFlow = workFlowData.filter((workFlowData) => workFlowData.DeathPlace === DeathPlace.code && workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime );
+        console.log("currentWorgFlowDOB" + currentWorgFlow);
+        if (currentWorgFlow.length > 0) {
+          // console.log(currentWorgFlow[0].WorkflowCode);
+          setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+          setIsPayment(currentWorgFlow[0].payment);
+          setWorkFlowAmount(currentWorgFlow[0].amount);
+
+        }
+       
+      }
     }
+    // const today = new Date();
+    // const deathDate = new Date(value);
+    // if (deathDate.getTime() <= today.getTime()) {
+    //   let Difference_In_Time = today.getTime() - deathDate.getTime();
+    //   let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+    //   Difference_In_DaysRounded = Math.floor(Difference_In_Days);
+    // }
     // else {
     //   setFromDate(null);
     //   setDOBError(true);
@@ -603,32 +629,58 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
   
   function selectToDate(value) {
     setToDate(value);
-
+    // setFromDate(value);
     const today = new Date();
-    const toDate = new Date(value);
-    const fromDate = new Date(DateOfDeath);
+    today.setHours(0, 0, 0, 0);
+    const deathDate = new Date(value);
+    deathDate.setHours(0, 0, 0, 0);
 
-    if (toDate.getTime() <= today.getTime()) {
-      if (fromDate && toDate.getTime() < fromDate.getTime()) {
-        setToDate(null);
-        setDOBError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 3000);
-      } else {
-        let Difference_In_Time = today.getTime() - toDate.getTime();
-        let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-        Difference_In_DaysRounded = Math.floor(Difference_In_Days);
+    if (deathDate.getTime() <= today.getTime()) {
+      setDOBError(false);
+      // To calculate the time difference of two dates
+      let Difference_In_Time = today.getTime() - deathDate.getTime();
+      // console.log("Difference_In_Time" + Difference_In_Time);
+      setDifferenceInTime(today.getTime() - deathDate.getTime());
+      let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+      setDifferenceInDaysRounded(Math.floor(DiworkFlfference_In_Days * 24 * 60 * 60 * 1000));
+      if (DeathPlace) {
+        let currentWorgFlow = workFlowData.filter((workFlowData) => workFlowData.DeathPlace === DeathPlace.code && workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime );
+        console.log("currentWorgFlowDOB" + currentWorgFlow);
+        if (currentWorgFlow.length > 0) {
+          // console.log(currentWorgFlow[0].WorkflowCode);
+          setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+          setIsPayment(currentWorgFlow[0].payment);
+          setWorkFlowAmount(currentWorgFlow[0].amount);
+
+        }
+       
       }
-    } else {
-      setToDate(null);
-      setDOBError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 3000);
     }
+    // const today = new Date();
+    // const toDate = new Date(value);
+    // const fromDate = new Date(DateOfDeath);
+
+    // if (toDate.getTime() <= today.getTime()) {
+    //   if (fromDate && toDate.getTime() < fromDate.getTime()) {
+    //     setToDate(null);
+    //     setDOBError(true);
+    //     setToast(true);
+    //     setTimeout(() => {
+    //       setToast(false);
+    //     }, 3000);
+    //   } else {
+    //     let Difference_In_Time = today.getTime() - toDate.getTime();
+    //     let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+    //     Difference_In_DaysRounded = Math.floor(Difference_In_Days);
+    //   }
+    // } else {
+    //   setToDate(null);
+    //   setDOBError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 3000);
+    // }
   }
 
   // function selectToDate(value) {
@@ -663,7 +715,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
       // console.log("Difference_In_Time" + Difference_In_Time);
       setDifferenceInTime(today.getTime() - deathDate.getTime());
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-      setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
+      setDifferenceInDaysRounded(Math.floor(DiworkFlfference_In_Days * 24 * 60 * 60 * 1000));
       if (DeathPlace) {
         let currentWorgFlow = workFlowData.filter((workFlowData) => workFlowData.DeathPlace === DeathPlace.code && workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime );
         console.log("currentWorgFlowDOB" + currentWorgFlow);
@@ -1571,10 +1623,10 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
                       <span className="mandatorycss">*</span>
                     </CardLabel>
                     <DatePicker
-                      date={DateOfDeath}
+                      date={FromDate}
                       max={convertEpochToDate(new Date())}
                       name="FromDate"
-                      onChange={selectDeathDate}
+                      onChange={selectFromDate}
                       {...(validation = {
                         pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",
                         isRequired: true,

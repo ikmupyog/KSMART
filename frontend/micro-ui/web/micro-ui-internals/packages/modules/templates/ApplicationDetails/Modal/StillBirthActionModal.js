@@ -110,7 +110,7 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
         : null,
     };
     submitAction({
-      ChildDetails: [applicationData],
+      StillBirthChildDetails: [applicationData],
     });
   }
 

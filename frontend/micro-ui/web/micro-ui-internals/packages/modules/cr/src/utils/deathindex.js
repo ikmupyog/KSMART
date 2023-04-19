@@ -283,9 +283,10 @@ export const convertToDeathRegistration = (data = {}) => {
           RegistrationUnit: null,
           TenantId: data?.InformationDeath?.tenantId,
           DeathDateUnavailable: data?.InformationDeath?.DeathDateUnavailable,
-          DateOfDeath: Date.parse(data?.InformationDeath?.DateOfDeath),
+         // DateOfDeath: Date.parse(data?.InformationDeath?.DateOfDeath),
           
-          //DateOfDeath: DeathDateUnavailable ? Date.parse(data?.InformationDeath?.FromDate) : Date.parse(data?.InformationDeath?.DateOfDeath),
+        DateOfDeath: Date.parse(data?.InformationDeath?.DateOfDeath?data?.InformationDeath?.DateOfDeath
+          :data?.InformationDeath?.FromDate),
           TimeOfDeath: parseInt(data?.InformationDeath?.TimeOfDeath),
           TimeOfDeathUnit: "AM",
           DateOfDeath1: Date.parse(data?.InformationDeath?.ToDate),

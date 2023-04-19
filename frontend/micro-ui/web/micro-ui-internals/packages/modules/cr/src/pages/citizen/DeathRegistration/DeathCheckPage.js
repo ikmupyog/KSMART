@@ -118,7 +118,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
               <div className="col-md-12">
                 <div className="col-md-12">
                   <h1 className="summaryheadingh">
-                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_REGISTRATION_DETAILS")}`}</span>{" "}
+                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DEATH_REG_SUMMARY_HEADING")}`}</span>{" "}
                   </h1>
                 </div>
               </div>
@@ -135,7 +135,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_FROM_DATE")}`} :</CardText>
                     </div>
                     <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformationDeath?.DateOfDeath}</CardText>
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformationDeath?.FromDate}</CardText>
                     </div>
 
                     <div className="col-md-2">

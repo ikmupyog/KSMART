@@ -1062,10 +1062,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   {...(validation = { isRequired: true })}
                 />
               </div>
-              {(groomMaritalstatusID?.code === "MARRIED" ||
-                groomMaritalstatusID?.code === "WIDOWED" ||
-                groomMaritalstatusID?.code === "DIVORCED" ||
-                groomMaritalstatusID?.code === "ANNULELD") && (
+              {groomMaritalstatusID?.code === "MARRIED" && (
                 <div className="col-md-4">
                   <CardLabel>
                     {t("CR_ANY_SPOUSE_LIVING")}
@@ -1083,26 +1080,22 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   />
                 </div>
               )}
-              {(groomMaritalstatusID?.code === "MARRIED" ||
-                groomMaritalstatusID?.code === "WIDOWED" ||
-                groomMaritalstatusID?.code === "DIVORCED" ||
-                groomMaritalstatusID?.code === "ANNULELD") &&
-                groomIsSpouseLiving?.code && (
-                  <div className="col-md-4">
-                    <CardLabel>{t("CR_NUMBER_OF_SPOUSE_LIVING")}</CardLabel>{" "}
-                    <TextInput
-                      t={t}
-                      isMandatory={false}
-                      type={"text"}
-                      optionKey="i18nKey"
-                      name="groomNoOfSpouse"
-                      value={groomNoOfSpouse}
-                      onChange={setSelectGroomNoOfSpouse}
-                      placeholder={`${t("CR_NUMBER_OF_SPOUSE_LIVING")}`}
-                      {...(validation = { pattern: "^([0-3]){1}$", type: "text", isRequired: true, title: t("CR_INVALID_NO_OF_SPOUSE_LIVING") })}
-                    />
-                  </div>
-                )}
+              {groomMaritalstatusID?.code === "MARRIED" && groomIsSpouseLiving?.code && (
+                <div className="col-md-4">
+                  <CardLabel>{t("CR_NUMBER_OF_SPOUSE_LIVING")}</CardLabel>{" "}
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="groomNoOfSpouse"
+                    value={groomNoOfSpouse}
+                    onChange={setSelectGroomNoOfSpouse}
+                    placeholder={`${t("CR_NUMBER_OF_SPOUSE_LIVING")}`}
+                    {...(validation = { pattern: "^([0-3]){1}$", type: "text", isRequired: true, title: t("CR_INVALID_NO_OF_SPOUSE_LIVING") })}
+                  />
+                </div>
+              )}
             </div>
           </div>
           <div className="row">
