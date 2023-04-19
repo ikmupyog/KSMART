@@ -565,7 +565,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
   function setCheckedDate(e) {
     if (e.target.checked === true) {
       setChecked(e.target.checked);
-      setFromDate("");
+      setDateOfDeath("");
       setToDate("");
     } else {
       setChecked(e.target.checked);
@@ -1571,10 +1571,10 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
                       <span className="mandatorycss">*</span>
                     </CardLabel>
                     <DatePicker
-                      date={FromDate}
+                      date={DateOfDeath}
                       max={convertEpochToDate(new Date())}
                       name="FromDate"
-                      onChange={selectFromDate}
+                      onChange={selectDeathDate}
                       {...(validation = {
                         pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",
                         isRequired: true,
