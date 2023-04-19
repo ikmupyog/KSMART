@@ -436,6 +436,7 @@ public class BrideAddressDetails {
     @JsonProperty("PermanentAddrVillageId")
     private String permanentAddrVillageId ;
     @Size(max = 64)
+
     @JsonProperty("countryIdPermanent")
     private String countryIdPermanent;
 
