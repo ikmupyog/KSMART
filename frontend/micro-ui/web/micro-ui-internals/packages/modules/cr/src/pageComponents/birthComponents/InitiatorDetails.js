@@ -259,8 +259,8 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
       {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
       {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
       <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} 
-      isDisabled={!initiatorNameEn || !initiatorAadhar || !initiatorMobile || !initiatorAddress
-        || (isCaretaker === true ? (initiatorDesi === "") : false)
+      isDisabled={!initiatorNameEn || !initiatorAadhar || !initiatorMobile 
+        || (isCaretaker === true ? (initiatorDesi === "" || initiatorAddress === "") : false)
       }>
         {/* !isInitiatorDeclaration */}
         {/* <div className="row">
@@ -428,7 +428,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
               <CardLabel>{`${t("CR_CARE_TAKER_ADDRESS")}`}<span className="mandatorycss">*</span></CardLabel>
             )}
              {isCaretaker === false && (
-              <CardLabel>{`${t("CR_INFORMER_ADDRESS")}`}<span className="mandatorycss">*</span></CardLabel>
+              <CardLabel>{`${t("CR_INFORMER_ADDRESS")}`}</CardLabel>
             )}
               <TextArea
                 t={t}
