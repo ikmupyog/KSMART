@@ -36,7 +36,7 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count, applicatio
       offset: 0,
       limit: 10,
       sortBy: "DateOfDeath",
-      sortOrder: "DESC",
+      sortOrder: "",
     },
   });
 
@@ -44,7 +44,7 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count, applicatio
     register("offset", 0);
     register("limit", 10);
     register("sortBy", "DateOfDeath");
-    register("sortOrder", "DESC");
+    register("sortOrder", "");
   }, [register]);
 
   const onSort = useCallback((args) => {
@@ -79,7 +79,7 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count, applicatio
       offset: 0,
       limit: 10,
       sortBy: "DateOfDeath",
-      sortOrder: "DESC"
+      sortOrder: ""
   });
   previousPage();
   }
