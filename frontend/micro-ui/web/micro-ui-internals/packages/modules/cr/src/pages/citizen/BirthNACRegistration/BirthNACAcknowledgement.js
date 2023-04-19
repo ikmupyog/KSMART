@@ -146,7 +146,7 @@ const BirthNACAcknowledgement = ({ data, onSuccess, userType }) => {
           </Link>
         )}
         <Link to={`/digit-ui/citizen`}>
-          <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />m
+          <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
         </Link>
       </Card>
     );

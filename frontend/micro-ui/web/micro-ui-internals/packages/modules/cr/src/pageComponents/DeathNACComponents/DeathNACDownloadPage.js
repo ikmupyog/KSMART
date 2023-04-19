@@ -32,7 +32,7 @@ const DeathNACDownloadPage = ({config, onSelect}) => {
               <div className="col-md-12">
                 <div className="col-md-12">
                   <h1 className="headingh1">
-                    <span style={{ background: "#fff", padding: "0 10px" }}>NAC Download</span>{" "}
+                    <span style={{ background: "#fff", padding: "0 10px" }}>Instructions for Application Submission</span>{" "}
                   </h1>
                 </div>
               </div>
@@ -40,14 +40,13 @@ const DeathNACDownloadPage = ({config, onSelect}) => {
             <div className="row" style={{marginLeft: "20px"}}>
               Dear Applicant,
               </div>
-              <div className="row" style={{marginLeft: "20px"}}>Please Download the forms attached here and be ready to attach the duly signed/attested forms in 
-                    the attachement window, along with the following documents for submission of application.
+              <div className="row" style={{marginLeft: "20px"}}>Please keep the following documents and  dully filled / attested downloaded forms for submitting the application.
               </div>
               <div className="row" style={{marginTop: "30px"}}>
               <div className="col-md-12">
                 <div className="col-md-12">
                   <h1 className="headingh1">
-                    <span style={{ background: "#fff", padding: "0 10px" }}>List of Documents</span>{" "}
+                    <span style={{ background: "#fff", padding: "0 10px" }}>Form downloads and documents</span>{" "}
                   </h1>
                 </div>
               </div>

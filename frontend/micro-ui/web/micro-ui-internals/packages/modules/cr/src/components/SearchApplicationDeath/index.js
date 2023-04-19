@@ -21,22 +21,21 @@ const hstyle = {
   marginBottom: ".5rem",
   lineHieght: "1.5rem",
 };
-const selectedDeathSearch=[
-  {label:"Death", value:"death"},
-  {label:"Death NAC", value:"deathnac"},
-  {label:"Abandoned Death", value:"abandoneddeathsearch"},
+const selectedDeathSearch = [
+  { label: "Death", value: "death" },
+  { label: "Death NAC", value: "deathnac" },
+  { label: "Abandoned Death", value: "abandoneddeathsearch" },
 ]
-let  validation =''
+let validation = ''
 
 const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count, applicationDeathType, setApplicationDeathType }) => {
-  console.log("SearchApplicationDeath",applicationDeathType);
 
   const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
     defaultValues: {
       offset: 0,
       limit: 10,
       sortBy: "DateOfDeath",
-      sortOrder: "DESC",
+      sortOrder: "",
     },
   });
 
@@ -44,7 +43,7 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count, applicatio
     register("offset", 0);
     register("limit", 10);
     register("sortBy", "DateOfDeath");
-    register("sortOrder", "DESC");
+    register("sortOrder", "");
   }, [register]);
 
   const onSort = useCallback((args) => {
@@ -66,12 +65,12 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count, applicatio
     setValue("offset", getValues("offset") - getValues("limit"));
     handleSubmit(onSubmit)();
   }
-  const setDeathSelectSearch =(value)=>{
+  const setDeathSelectSearch = (value) => {
     setApplicationDeathType(value)
-    reset({ 
-      searchAppllication:[],
-      applicationNumber: "", 
-      fromDate: "", 
+    reset({
+      searchAppllication: [],
+      applicationNumber: "",
+      fromDate: "",
       toDate: "",
       licenseNumbers: "",
       status: "",
@@ -79,7 +78,7 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count, applicatio
       offset: 0,
       limit: 10,
       sortBy: "DateOfDeath",
-      sortOrder: "DESC"
+      sortOrder: ""
   });
   previousPage();
   }
@@ -239,24 +238,24 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count, applicatio
       <div style={mystyle}>
         <h1 style={hstyle}>{t("TL_SEARCH_APPLICATIONS")}</h1>
         <SearchField>
-            <label>
-              {t("Application Type")}
-              <span className="mandatorycss">*</span>
-            </label>
-            <Dropdown
-              t={t}
-              optionKey="label"
-              isMandatory={true}
-              option={selectedDeathSearch}
-              selected={applicationDeathType}
-              select={setDeathSelectSearch}
-              // disable={}
-              placeholder={`${t("applicationDeathType")}`}
-              {...(validation = { isRequired: true, title: t("applicationDeathType") })}
-            />
-          </SearchField>
+          <label>
+            {t("Application Type")}
+            <span className="mandatorycss">*</span>
+          </label>
+          <Dropdown
+            t={t}
+            optionKey="label"
+            isMandatory={true}
+            option={selectedDeathSearch}
+            selected={applicationDeathType}
+            select={setDeathSelectSearch}
+            // disable={}
+            placeholder={`${t("applicationDeathType")}`}
+            {...(validation = { isRequired: true, title: t("applicationDeathType") })}
+          />
+        </SearchField>
         <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
-          <SearchFields {...{ register, control, reset, tenantId, t,previousPage, applicationDeathType  }} />
+          <SearchFields {...{ register, control, reset, tenantId, t, previousPage, applicationDeathType }} />
         </SearchForm>
       </div>
 
@@ -276,8 +275,7 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count, applicatio
             t={t}
             data={data}
             totalRecords={count}
-            columns={applicationDeathType?.value ==="abandoneddeathsearch"? Abandonedcolumns
-            :applicationDeathType?.value ==="death"? columns:[] }
+            columns={applicationDeathType?.value === "abandoneddeathsearch" ? Abandonedcolumns : columns}
             getCellProps={(cellInfo) => {
               return {
                 style: {

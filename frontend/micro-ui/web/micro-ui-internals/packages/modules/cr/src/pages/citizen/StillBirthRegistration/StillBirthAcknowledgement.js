@@ -195,12 +195,12 @@ const StillBirthAcknowledgement = ({ data, onSuccess, userType }) => {
             onClick={handleDownloadPdf}
           />
          
-          {/* {mutation?.data?.StillBirthChildDetails[0]?.applicationStatus === "PENDINGPAYMENT" && <Link to={{
+          {mutation?.data?.StillBirthChildDetails[0]?.applicationStatus === "PENDINGPAYMENT" && <Link to={{
             pathname: `/digit-ui/citizen/payment/collect/${mutation.data.StillBirthChildDetails[0].businessservice}/${mutation.data.StillBirthChildDetails[0].applicationNumber}`,
-            state: { tenantId: mutation.data.ChildDetails[0].tenantid },
+            state: { tenantId: mutation.data.StillBirthChildDetails[0].tenantid },
           }}>
             <SubmitBar label={t("COMMON_MAKE_PAYMENT")} />
-          </Link>} */}
+          </Link>}
           <Link to={`/digit-ui/citizen`}>
             <LinkButton label={t("CORE_COMMON_GO_TO_HOME")} />
           </Link>

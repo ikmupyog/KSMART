@@ -9,6 +9,7 @@ import ForgotPassword from "./ForgotPassword";
 import LanguageSelection from "./LanguageSelection";
 import EmployeeLogin from "./Login";
 import UserProfile from "../citizen/Home/UserProfile";
+import Footer from "../Footer";
 
 const EmployeeApp = ({
   stateInfo,
@@ -30,7 +31,7 @@ const EmployeeApp = ({
   const location = useLocation();
   const showLanguageChange = location?.pathname?.includes("language-selection");
   const isUserProfile = location?.pathname?.includes("user/profile");
-  const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false) 
+  const [editFlag, setFlag] = Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false)
   useEffect(() => {
     Digit.UserService.setType("employee");
     setFlag(false)
@@ -42,7 +43,7 @@ const EmployeeApp = ({
     <div className="employee">
       <Switch>
         <Route path={`${path}/user`}>
-          {isUserProfile&&<TopBarSideBar
+          {isUserProfile && <TopBarSideBar
             t={t}
             stateInfo={stateInfo}
             userDetails={userDetails}
@@ -59,7 +60,7 @@ const EmployeeApp = ({
             style={
               isUserProfile
                 ? { padding: 0, paddingTop: "80px", marginLeft: mobileView ? "" : "64px" }
-                : { "--banner-url": `url(${stateInfo?.bannerUrl})` ,padding:"0px"}
+                : { "--banner-url": `url(${stateInfo?.bannerUrl})`, padding: "0px" }
             }
           >
             <Switch>
@@ -102,17 +103,7 @@ const EmployeeApp = ({
                 {/* <AppModules /> */}
               </ErrorBoundary>
             </div>
-            {/* <div style={{ width: '100%', bottom: 0 }}>
-              <div style={{ display: 'flex', justifyContent: 'center', color:"#22394d" }}>
-                <img style={{ cursor: "pointer", display: "inline-flex", height: '1.4em' }} alt={"Powered by DIGIT"} src={`${sourceUrl}/digit-footer.png`} onError={"this.src='./../digit-footer.png'"} onClick={() => {
-                  window.open('https://www.digit.org/', '_blank').focus();
-                }}></img>
-                <span style={{ margin: "0 10px" }}>|</span>
-                <span style={{ cursor: "pointer", fontSize: "16px", fontWeight: "400"}} onClick={() => { window.open('https://niua.in/', '_blank').focus();}} >Copyright © 2022 National Institute of Urban Affairs</span>
-                <span style={{ margin: "0 10px" }}>|</span>
-                <a style={{ cursor: "pointer", fontSize: "16px", fontWeight: "400"}} href={pdfUrl} target='_blank'>UPYOG License</a>
-              </div>
-            </div> */}
+            <Footer />
           </div>
         </Route>
         <Route>
