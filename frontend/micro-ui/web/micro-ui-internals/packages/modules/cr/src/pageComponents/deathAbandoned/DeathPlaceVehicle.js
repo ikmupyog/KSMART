@@ -29,7 +29,7 @@ const DeathPlaceVehicle = ({
   setVehicleFromplaceMl,
   VehicleToPlaceMl,
   setVehicleToPlaceMl,
-  isEditDeath = false
+  isEditAbandonedDeath = false
 }) => {
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
@@ -45,7 +45,7 @@ const DeathPlaceVehicle = ({
   const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "boundary-data");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [tenantboundary, setTenantboundary] = useState(false);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditAbandonedDeath ? isEditAbandonedDeath : false);
   if (tenantboundary) {
     queryClient.removeQueries("CR_HOSPITALMASTER");
     queryClient.removeQueries("TL_ZONAL_OFFICE");
@@ -104,7 +104,7 @@ const DeathPlaceVehicle = ({
     }
   }, [localbodies, isInitialRender]);
 
-  if (isEditDeath) {
+  if (isEditAbandonedDeath) {
     if (formData?.InformationDeathAband?.vehicleType != null) {
       if (cmbVehicle.length > 0 && (vehicleType === undefined || vehicleType === "")) {
         selectvehicleType(cmbVehicle.filter(cmbVehicle => cmbVehicle.code === formData?.InformationDeathAband?.vehicleType)[0]);

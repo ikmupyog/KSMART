@@ -29,7 +29,7 @@ const DeathPlaceHome = ({
   setDeathPlaceWardId,
   PostOfficevalues,
   setPostOfficevalues,
-  isEditDeath,
+  isEditAbandonedDeath,
 }) => {
   const [pofilter, setPofilter] = useState(false);
   const stateId = Digit.ULBService.getStateId();
@@ -47,7 +47,7 @@ const DeathPlaceHome = ({
   const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "cochin/egov-location", "boundary-data");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [cmbFilterPostOffice, setCmbFilterPostOffice] = useState([]);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditAbandonedDeath ? isEditAbandonedDeath : false);
   let cmbPostOffice = [];
   let cmbLB = [];
   let currentLB = [];
@@ -106,7 +106,7 @@ const DeathPlaceHome = ({
   const onSkip = () => onSelect();
 
 
-  if (isEditDeath) {
+  if (isEditAbandonedDeath) {
     if (formData?.InformationDeathAband?.DeathPlaceHomePostofficeId != null) {
       if (cmbPostOffice.length > 0 && (DeathPlaceHomePostofficeId === undefined || DeathPlaceHomePostofficeId === "")) {
         let pin = cmbPostOffice.filter(cmbPostOffice => cmbPostOffice.code === formData?.InformationDeathAband?.DeathPlaceHomePostofficeId)[0];

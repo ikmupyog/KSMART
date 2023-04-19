@@ -10,7 +10,7 @@ const Hospital = ({
   selecthospitalNameEn,
   HospitalNameMl,
   selectHospitalNameMl,
-  isEditDeath,
+  isEditAbandonedDeath,
 }) => {
   const { t } = useTranslation();  
   const stateId = Digit.ULBService.getStateId();
@@ -22,7 +22,7 @@ const Hospital = ({
   const { data: hospitalData = {}, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "hospital");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [tenantboundary, setTenantboundary] = useState(false);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditAbandonedDeath ? isEditAbandonedDeath : false);
   if (tenantboundary) {
     queryClient.removeQueries("CR_HOSPITALMASTER");
     setTenantboundary(false);
@@ -34,7 +34,7 @@ const Hospital = ({
     hospitalData["egov-location"].hospitalList.map((ob) => {
       cmbhospital.push(ob);
     });
-  if (isEditDeath) {
+  if (isEditAbandonedDeath) {
     if (formData?.InformationDeathAband?.hospitalNameEn != null) {
       if (cmbhospital.length > 0 && (hospitalNameEn === undefined || hospitalNameEn === "")) {
         selecthospitalNameEn(cmbhospital.filter((cmbhospital) => cmbhospital.code === formData?.InformationDeathAband?.hospitalNameEn)[0]);

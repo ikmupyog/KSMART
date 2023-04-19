@@ -19,9 +19,9 @@ const Institution = ({
   setInstitutionFilterList,
   isInitialRenderInstitutionList,
   setIsInitialRenderInstitutionList,
-  isEditDeath  = false
+  isEditAbandonedDeath  = false
 }) => { 
-  const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditAbandonedDeath ? isEditAbandonedDeath : false);
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
@@ -63,7 +63,7 @@ const Institution = ({
     institutionidList["egov-location"].institutionList.map((ob) => {
       cmbInstitutionList.push(ob);
     });
-  if (isEditDeath) {
+  if (isEditAbandonedDeath) {
     if (formData?.InformationDeathAband?.institutionTypeCode != null) {
       if (cmbinstitutionType.length > 0 && (institution === undefined || institution === "")) {
         selectinstitution(

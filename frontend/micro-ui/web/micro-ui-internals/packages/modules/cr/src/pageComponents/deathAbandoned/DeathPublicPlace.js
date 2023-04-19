@@ -21,9 +21,9 @@ const DeathPublicPlace = ({
   setGeneralRemarks,
   DeathPlaceWardId,
   setDeathPlaceWardId,
-  isEditDeath = false
+  isEditAbandonedDeath = false
 }) => {
-  const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditAbandonedDeath ? isEditAbandonedDeath : false);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
@@ -63,7 +63,7 @@ const DeathPublicPlace = ({
     cmbWardNoFinal.push(wardmst);
   });
 
-  if (isEditDeath) {
+  if (isEditAbandonedDeath) {
     if (formData?.InformationDeathAband?.publicPlaceType != null) {
       if (cmbOtherplace.length > 0 && (publicPlaceType === undefined || publicPlaceType === "")) {
         selectpublicPlaceType(cmbOtherplace.filter(cmbOtherplace => cmbOtherplace.code === formData?.InformationDeathAband?.publicPlaceType)[0]);

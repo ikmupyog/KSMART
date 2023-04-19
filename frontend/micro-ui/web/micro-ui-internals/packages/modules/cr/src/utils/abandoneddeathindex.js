@@ -530,6 +530,12 @@ export const convertToAbandonedDeathRegistration = (data = {}) => {
           SmokingType: data?.StatisticalInfoAbandoned?.SmokingType,
           TobaccoType: data?.StatisticalInfoAbandoned?.TobaccoType,
           AlcoholType: data?.StatisticalInfoAbandoned?.AlcoholType,
+          MPName:data?.StatisticalInfoAbandoned?.MPName,
+          MPAadharNumber:data?.StatisticalInfoAbandoned?.MPAadharNumber,
+          MPMobileNo: data?.StatisticalInfoAbandoned?.MPMobileNo,
+          MPRegistrationNumber:data?.StatisticalInfoAbandoned?.MPRegistrationNumber,
+          MPDesignation:data?.StatisticalInfoAbandoned?.MPDesignation,
+          MPAddress :data?.StatisticalInfoAbandoned?.MPAddress
         },
         InformantDetailsDeathAbandoned: {
           // InformantAadharSubmitted: null,
@@ -841,6 +847,12 @@ export const convertToEditAbandonedDeathRegistration = (data = {}) => {
           SmokingType: data?.StatisticalInfoDeathAbandoned?.SmokingType,
           TobaccoType: data?.StatisticalInfoDeathAbandoned?.TobaccoType,
           AlcoholType: data?.StatisticalInfoDeathAbandoned?.AlcoholType,
+          MPName:data?.StatisticalInfoDeathAbandoned?.MPName,
+          MPAadharNumber:data?.StatisticalInfoDeathAbandoned?.MPAadharNumber,
+          MPMobileNo: data?.StatisticalInfoDeathAbandoned?.MPMobileNo,
+          MPRegistrationNumber:data?.StatisticalInfoDeathAbandoned?.MPRegistrationNumber,
+          MPDesignation:data?.StatisticalInfoDeathAbandoned?.MPDesignation,
+          MPAddress :data?.StatisticalInfoDeathAbandoned?.MPAddress
         },
         InformantDetailsDeathAbandoned: {
           InformantOfficeAuthority: data?.InformantDetailsDeathAbandoned?.InformantOfficeAuthority,

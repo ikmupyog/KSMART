@@ -687,7 +687,7 @@ const StatisticalInfoAbandoned = ({ config, onSelect, userType, formData, isEdit
 
   function setSelectMPAadharNumber(e) {
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
-    if (newValue === MotherAadharNo|| newValue === FatherAadharNo) {
+    if (newValue === MPAadharNumber) {
       // If so, clear the Father's Aadhar number field
       setMPAadharNumber("");
       setAadharError(true);
