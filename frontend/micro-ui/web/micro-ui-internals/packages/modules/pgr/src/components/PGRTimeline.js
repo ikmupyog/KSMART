@@ -15,6 +15,7 @@ const getAction = (flow) => {
       // 'Property Landmark',      
       'CS_ADDCOMPLAINT_UPLOAD_PHOTO',
       'CS_ADDCOMPLAINT_PROVIDE_ADDITIONAL_DETAILS',
+      'CS_ADDCOMPLAINT_SUMMARY'
     ]
   }
 }
