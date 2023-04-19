@@ -111,7 +111,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
       {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
       <Card>
         {/* <label style={{ fontSize: "17px", fontWeight: "bold" }}>{t("CR_REG_SUMMARY_HEADING")}</label> */}
-        <CardSubHeader style={{ marginBottom: "16px", fontSize: "16px" }}>{t("CR_REG_SUMMARY_HEADING")}</CardSubHeader>
+        <CardSubHeader style={{ marginBottom: "16px", fontSize: "16px" }}>{t("CR_DEATH_REG_SUMMARY_HEADING")}</CardSubHeader>
         <Accordion expanded={true} title={t("CR_DEATH_INFO")}
           content={<StatusTable >
             <div className="row">
@@ -135,7 +135,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_FROM_DATE")}`} :</CardText>
                     </div>
                     <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformationDeath?.FromDate}</CardText>
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformationDeath?.DateOfDeath}</CardText>
                     </div>
 
                     <div className="col-md-2">

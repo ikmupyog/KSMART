@@ -118,7 +118,7 @@ const SearchDeathApplication = ({ t, onSubmit, data, count, isSuccess, isLoading
   const onSort = useCallback((args) => {
     if (args.length === 0) return;
     setValue("sortBy", args.id);
-    setValue("sortOrder", args.desc ? "" : "ASC");
+    setValue("sortOrder",  "" );
   }, []);
 
   function onPageSizeChange(e) {
