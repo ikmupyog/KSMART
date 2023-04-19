@@ -99,7 +99,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
 
   const [ismotherInfo, setIsmotherInfo] = useState(false);
 
-  const [isfatherInfo, setIsfatherInfo] = useState(false);
+  const [isfatherInfo, setIsfatherInfo] = useState(true);
   
   const [toast, setToast] = useState(false);
 
@@ -123,7 +123,8 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
   const [fatherEducation, setFatherEducation] = useState(formData?.BornOutsideParentsDetails?.fatherEducation?.code ? formData?.BornOutsideParentsDetails?.fatherEducation : formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.fatherEducation ?
     (cmbQualification.filter(cmbQualification => cmbQualification.code === formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.fatherEducation)[0]) : "");
 
-  const [fatherProfession, setFatherProfession] = useState(formData?.BornOutsideParentsDetails?.fatherProfession?.code ? formData?.BornOutsideParentsDetails?.fatherProfession : formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.fatherProfession ?
+  const [fatherProfession, setFatherProfession] = useState(formData?.BornOutsideParentsDetails?.fatherProfession?.code ? formData?.BornOutsideParentsDetails?.fatherProfession : 
+    formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.fatherProfession ?
     (cmbProfession.filter(cmbProfession => cmbProfession.code === formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.fatherProfession)[0]) : "");
 
   const [Religion, setReligion] = useState(formData?.BornOutsideParentsDetails?.Religion?.code ? formData?.BornOutsideParentsDetails?.Religion : formData?.BornOutsideChildDetails?.BornOutsideParentsDetails?.Religion ?
@@ -191,7 +192,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setfatherPassportNo(e.target.value.length<=8 ? e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '') : (e.target.value.replace('[A-PR-WY][1-9]\d\s?\d{4}[1-9]$', '').substring(0, 8)));
+      setfatherPassportNo(e.target.value.length);
     }
   }
 
@@ -322,26 +323,26 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
       }
     }
 
-    if (fatherEducation == null || fatherEducation == "" || fatherEducation == undefined) {
-      validFlag = false;
-      setFatherEduError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      setFatherEduError(false);
-    }
-    if (fatherProfession == null || fatherProfession == "" || fatherProfession == undefined) {
-      validFlag = false;
-      setFatherProfError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      setFatherProfError(false);
-    }
+    // if (fatherEducation == null || fatherEducation == "" || fatherEducation == undefined) {
+    //   validFlag = false;
+    //   setFatherEduError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 2000);
+    // } else {
+    //   setFatherEduError(false);
+    // }
+    // if (fatherProfession == null || fatherProfession == "" || fatherProfession == undefined) {
+    //   validFlag = false;
+    //   setFatherProfError(true);
+    //   setToast(true);
+    //   setTimeout(() => {
+    //     setToast(false);
+    //   }, 2000);
+    // } else {
+    //   setFatherProfError(false);
+    // }
 
     if (fatherMobile != null || fatherMobile != "" || fatherMobile != undefined) {
       let mobileLength = fatherMobile;
@@ -430,7 +431,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
   } else
     return (
       <React.Fragment>
-        <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+        {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
         {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
         {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
 
@@ -584,7 +585,7 @@ const BornOutsideParentsDetails = ({ config, onSelect, userType, formData, isEdi
                     // disable={isFatherInfo}
                     placeholder={`${t("CR_PASSPORT_NO")}`}
                     style={{ textTransform: "uppercase" }}
-                    {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_PASSPORT_NO") })}
+                    {...(validation = { isRequired: false, type: "text", title: t("CR_INVALID_PASSPORT_NO") })}
                   />
                 </div>
                 <div className="col-md-3">

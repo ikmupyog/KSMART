@@ -118,6 +118,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
   const [cityTownMl, setcityTownMl] = useState(formData?.BornOutsideChildDetails?.cityTownMl ? formData?.BornOutsideChildDetails?.cityTownMl : "");
   const [postCode, setpostCode] = useState(formData?.BornOutsideChildDetails?.postCode ? formData?.BornOutsideChildDetails?.postCode : "");
   const [toast, setToast] = useState(false);
+  const [DateError, setDateError] = useState(false);
   const [AadharError, setAadharError] = useState(formData?.BornOutsideChildDetails?.childAadharNo ? false : false);
   const [ChildPassportError, setChildPassportError] = useState(formData?.BornOutsideChildDetails?.childPassportNo ? false : false);
   const [childArrivalDateError, setchildArrivalDateError] = useState(formData?.BornOutsideChildDetails?.childArrivalDate ? false : false);
@@ -310,7 +311,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
   function setSelectChildAadharNo(e) {
     if (e.target.value.trim().length >= 0) {
       setChildAadharNo(
-        e.target.value.length <= 8 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 8)
+        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
       );
     }
   }
@@ -421,6 +422,18 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
     } else {
       setChildPassportError(false);
     }
+    if (childArrivalDate !== null && childDOB !== null) {
+      if(new Date (childArrivalDate) < new Date(childDOB)){
+      validFlag = false;
+      setDateError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setDateError(false);
+    }
+  }
     if (childArrivalDateError) {
       validFlag = false;
       setchildArrivalDateError(true);
@@ -563,7 +576,7 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
   } else {
     return (
       <React.Fragment>
-        <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+        {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
         {window.location.href.includes("/citizen") ? <Timeline /> : null}
         {window.location.href.includes("/employee") ? <Timeline /> : null}
         <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!childPassportNo }>
@@ -981,10 +994,10 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
           {toast && (
             <Toast
               error={
-                DOBError || ChildPassportError || AadharError || childArrivalDateError || ProvinceEnError || ProvinceMlError  || cityTownEnError || cityTownMlError || outsideBirthPlaceEnError || outsideBirthPlaceMlError
+                DateError || DOBError || ChildPassportError || AadharError || childArrivalDateError || ProvinceEnError || ProvinceMlError  || cityTownEnError || cityTownMlError || outsideBirthPlaceEnError || outsideBirthPlaceMlError
               }
               label={
-                DOBError || ChildPassportError || AadharError || childArrivalDateError || ProvinceEnError || ProvinceMlError  || cityTownEnError || cityTownMlError || outsideBirthPlaceEnError || outsideBirthPlaceMlError
+                DateError ||  DOBError || ChildPassportError || AadharError || childArrivalDateError || ProvinceEnError || ProvinceMlError  || cityTownEnError || cityTownMlError || outsideBirthPlaceEnError || outsideBirthPlaceMlError
                   ? DOBError
                     ? t(`BIRTH_ERROR_DOB_CHOOSE`)
                     : AadharError
@@ -1005,6 +1018,8 @@ const BornOutsideChildDetails = ({ config, onSelect, userType, formData, isEditB
                     ? t(`BIRTH_ERROR_OUTSIDE_BIRTH_PLACE_EN_ERROR`)
                     : outsideBirthPlaceMlError
                     ? t(`BIRTH_ERROR_OUTSIDE_BIRTH_PLACE_ML_ERROR`)
+                    :DateError
+                    ?t(`DATE_ERROR`)
                     : setToast(false)
                   : setToast(false)
               }
