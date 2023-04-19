@@ -22,12 +22,12 @@ const CrFlow = ({ path }) => {
       img: <BankIcon />,
       link: `/digit-ui/employee/cr/create-birth/child-details`,
     },
-    // {
-    //   title: "CR_BIRTH_ADOPTION",
-    //   subTitle: "CR_BIRTH_REG_NEW_ADOPTION",
-    //   img: <FileProtected />,
-    //   link: `${path}/adoption-details`,
-    // },
+    {
+      title: "CR_ADOPTION",
+      subTitle: "CR_BIRTH_REG_NEW_ADOPTION",
+      img: <BankIcon />,
+      link: `/digit-ui/employee/cr/create-adoption`,
+    },
     {
       title: "CR_STILL_BIRTH",
       subTitle: "CR_STILL_BIRTH_REG",
@@ -68,6 +68,7 @@ const CrFlow = ({ path }) => {
     CR_ABANDONED_BIRTH_REGISTRATION: "crfilecorrection",
     CR_BIRTH_NAME_INC_CORRECTION: "crfilecorrection",
     CR_NAC_BIRTH: "crfilecorrection",
+    CR_ADOPTION: "crfileadoption",
   };
   return (
     <div>
