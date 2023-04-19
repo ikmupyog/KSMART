@@ -182,7 +182,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
   const [adrsLocalityNameMl, setAdrsLocalityNameMl] = useState(formData?.AdoptionChildDetails?.adrsLocalityNameMl ? formData?.AdoptionChildDetails?.adrsLocalityNameMl : "");
   const [adrsStreetNameEn, setAdrsStreetNameEn] = useState(formData?.AdoptionChildDetails?.adrsStreetNameEn ? formData?.AdoptionChildDetails?.adrsStreetNameEn : "");
   const [adrsStreetNameMl, setAdrsStreetNameMl] = useState(formData?.AdoptionChildDetails?.adrsStreetNameMl ? formData?.AdoptionChildDetails?.adrsStreetNameMl : "");
-  const [wardNo, setWardNo] = useState(formData.AdoptionChildDetails?.wardNo?.code ? formData.AdoptionChildDetails?.wardNo : formData?.AdoptionChildDetails?.wardNo ? "" : "");
+  const [wardNo, setWardNo] = useState(formData?.AdoptionChildDetails?.wardNo?.code ? formData.AdoptionChildDetails?.wardNo : formData?.AdoptionChildDetails?.wardNo ? "" : "");
 
   const [vehicleType, setvehicleType] = useState(formData?.AdoptionChildDetails?.vehicleType ? formData?.AdoptionChildDetails?.vehicleType : "");
   const [vehicleRegistrationNo, setvehicleRegistrationNo] = useState(formData?.AdoptionChildDetails?.vehicleRegistrationNo ? formData?.AdoptionChildDetails?.vehicleRegistrationNo : "");
