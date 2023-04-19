@@ -852,6 +852,32 @@ export const convertToEditAbandonedDeathRegistration = (data = {}) => {
           InformantMobileNo: parseInt(data?.InformantDetailsDeathAbandoned?.InformantMobileNo),              
           InformantAddress: data?.InformantDetailsDeathAbandoned?.InformantAddress
         },
+        DeathAbandonedDocuments: [
+          {
+              DocumentType: "Letter form the Informer/Notifier Official",
+              filestoreId: data?.DeathAbandonedDocuments[0]?.filestoreId
+          },
+          {
+              DocumentType: "Copy of the FIR",
+              filestoreId: data?.DeathAbandonedDocuments[1]?.filestoreId
+          },
+          {
+              DocumentType: "Inquest Report",
+              filestoreId: data?.DeathAbandonedDocuments[2]?.filestoreId
+          },
+          {
+              DocumentType: "Post-Mortem Report",
+              filestoreId: data?.DeathAbandonedDocuments[3]?.filestoreId
+          },
+          {
+              DocumentType: "Medical Certificate of Cause of Death",
+              filestoreId: data?.DeathAbandonedDocuments[4]?.filestoreId
+          },
+          {
+              DocumentType: "Court Order",
+              filestoreId: data?.DeathAbandonedDocuments[5]?.filestoreId
+          }
+      ],
         AuditDetails: {
           createdBy: null,
           lastModifiedBy: null,
