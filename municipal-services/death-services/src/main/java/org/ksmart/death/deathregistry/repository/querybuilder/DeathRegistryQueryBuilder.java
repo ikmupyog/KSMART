@@ -169,7 +169,9 @@ StringBuilder orderBy = new StringBuilder();
                         addFilter("dt.id", criteria.getId(), query, preparedStmtValues);
                         addFilter("dt.tenantid", criteria.getTenantId(), query, preparedStmtValues);
                         addFilter("dt.ack_no", criteria.getDeathACKNo(), query, preparedStmtValues);  
-                        addLikeFilter("LOWER(dt.deceased_firstname_en)", criteria.getDeceasedFirstNameEn(), query, preparedStmtValues); 
+                        addLikeFilter("LOWER(dt.deceased_firstname_en)", criteria.getDeceasedFirstNameEn(), query, preparedStmtValues);
+                        addLikeFilter("LOWER(dt.male_dependent_name_en)", criteria.getFatherNameEn(), query, preparedStmtValues); 
+                        addLikeFilter("LOWER(dt.female_dependent_name_en)", criteria.getMotherNameEn(), query, preparedStmtValues);  
                         addFilter("dt.registration_no", criteria.getRegistrationNo(), query, preparedStmtValues);
                         addFilter("dt.certificate_no", criteria.getCertificateNo(), query, preparedStmtValues); 
                         addDateRangeFilter("dt.registration_date",
