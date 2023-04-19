@@ -158,7 +158,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
   const [isInitialRenderFormData, setisInitialRenderFormData] = useState(false);
 
   const [birthDateTime, setbirthDateTime] = useState(""); 
-  const [isChildName, setIsChildName] = useState(true);
+  const [isChildName, setIsChildName] = useState(formData?.AdoptionChildDetails?.isChildName?formData?.AdoptionChildDetails?.isChildName:false);
   const [adoptionAgency, setIsAdoptionAgency] = useState(formData?.AdoptionChildDetails?.adopthasagency ? formData?.AdoptionChildDetails?.adopthasagency :formData?.AdoptionChildDetails?.adoptionAgency ? formData?.AdoptionChildDetails?.adoptionAgency : false);
   const [birthRegistered, setbirthRegistered] = useState(formData?.AdoptionChildDetails?.birthRegistered ? formData?.AdoptionChildDetails?.birthRegistered : false);
   // const [birthPlace, selectBirthPlace] = useState(isEditAdoption && isEditBirthPageComponents === false && (formData?.AdoptionChildDetails?.IsEditChangeScreen === false || formData?.AdoptionChildDetails?.IsEditChangeScreen === undefined) ? (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.AdoptionChildDetails?.birthPlace)[0]) : formData?.AdoptionChildDetails?.birthPlace);
@@ -485,7 +485,11 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
     setAdoptionAgencyPersonName(e.target.value)
   }
   const setSelectAgencyContactNo =(e)=>{
+    if (e.target.value.trim().length != 0) {
+      setAdoptionContactNo(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 10));
+    }else{
     setAdoptionContactNo(e.target.value)
+    }
   }
   const setSelectSetBirthRegNo =(e)=>{
     setBirthRegNo(e.target.value)
@@ -1135,19 +1139,19 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                <div className="col-md-12">
                  <div className="col-md-3">
                    <CardLabel>
-                     {`${t("CR_BIRTH_RED_ID")}`}
+                     {`${t("CR_SEARCH_BIRTH_REG_ID")}`}
                    </CardLabel>
                    <TextInput
                      t={t}
                      isMandatory={false}
                      type={"text"}
                      optionKey="i18nKey"
-                     name="CR_BIRTH_RED_ID"
+                     name="CR_SEARCH_BIRTH_REG_ID"
                      value={SearchRegId?.applicationNumber}
                      // onKeyPress={setCheckMalayalamInputField}
                     //  onChange={setSelectDeeOrderNo}
                      disable={true}
-                     placeholder={`${t("CR_BIRTH_RED_ID")}`}
+                     placeholder={`${t("CR_SEARCH_BIRTH_REG_ID")}`}
                      {...(validation = {
                        // pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
                        isRequired: false,
@@ -1180,7 +1184,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                       
                  </div> */}
                  <div className="col-md-3">
-                   <CardLabel>{`${t("CR_COMMON_COL_DOB")}`}
+                   <CardLabel>{`${t("CR_SEARCH_DOB")}`}
                    {AdoptionDeedNo ==="" &&  <span className="mandatorycss">*</span>}
                    </CardLabel>
                    <TextInput
@@ -1188,12 +1192,12 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                      isMandatory={false}
                      type={"text"}
                      optionKey="i18nKey"
-                     name="adoptissuingauththority"
+                     name="CR_SEARCH_DOB"
                      value={convertEpochToDateDMY(SearchRegId?.childDOB)}
                      // onKeyPress={setCheckMalayalamInputField}
                      onChange={setSelectIssuingAuthority}
                      disable={true}
-                     placeholder={`${t("CR_COMMON_COL_DOB")}`}
+                     placeholder={`${t("CR_SEARCH_DOB")}`}
                      {...(validation = {
                        // pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
                        isRequired:false,
@@ -1203,7 +1207,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                    />
                  </div>
                  <div className="col-md-3">
-                   <CardLabel>{`${t("CR_COMMON_GENDER")}`}
+                   <CardLabel>{`${t("CR_SEARCH_PLACE")}`}
                    {AdoptionDeedNo ==="" &&  <span className="mandatorycss">*</span>}
                    </CardLabel>
                    <TextInput
@@ -1211,12 +1215,35 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                      isMandatory={false}
                      type={"text"}
                      optionKey="i18nKey"
-                     name="adoptissuingauththority"
+                     name="CR_SEARCH_PLACE"
+                     value={SearchRegId?.birthPlace}
+                     // onKeyPress={setCheckMalayalamInputField}
+                    //  onChange={setSelectIssuingAuthority}
+                     disable={true}
+                     placeholder={`${t("CR_SEARCH_PLACE")}`}
+                     {...(validation = {
+                      
+                       isRequired:  false,
+                       type: "text",
+                       title: t(""),
+                     })}
+                   />
+                 </div>
+                 <div className="col-md-3">
+                   <CardLabel>{`${t("CR_SEARCH_GENDER")}`}
+                   {AdoptionDeedNo ==="" &&  <span className="mandatorycss">*</span>}
+                   </CardLabel>
+                   <TextInput
+                     t={t}
+                     isMandatory={false}
+                     type={"text"}
+                     optionKey="i18nKey"
+                     name="CR_SEARCH_GENDER"
                      value={SearchRegId?.gender}
                      // onKeyPress={setCheckMalayalamInputField}
                     //  onChange={setSelectIssuingAuthority}
                      disable={true}
-                     placeholder={`${t("CR_COMMON_GENDER")}`}
+                     placeholder={`${t("CR_SEARCH_GENDER")}`}
                      {...(validation = {
                       
                        isRequired:  false,
@@ -1269,6 +1296,48 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
           </div>
           <div className="row">
             <div className="col-md-12">
+               <div className="col-md-3">
+                <CardLabel>
+                  {t("CR_DATE_OF_BIRTH_TIME")}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>
+                <DatePicker
+                  date={childDOB}
+                  name="childDOB"
+                  max={convertEpochToDate(new Date())}
+                  //min={convertEpochToDate("1900-01-01")}
+                  onChange={setselectChildDOB}
+                  disable={isDisableEdit}
+                  //  inputFormat="DD-MM-YYYY"
+                  placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
+                  {...(validation = { isRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
+                />
+              </div>
+              <div className="col-md-2">
+                <CardLabel>{t("CR_TIME_OF_BIRTH")}</CardLabel>
+                <CustomTimePicker name="birthDateTime" onChange={val => handleTimeChange(val, setbirthDateTime)}
+                  value={birthDateTime}
+                  disable={isDisableEdit}
+                />
+              </div>
+              <div className="col-md-3">
+                <CardLabel>{`${t("CR_GENDER")}`}<span className="mandatorycss">*</span></CardLabel>
+                <Dropdown
+                  t={t}
+                  optionKey="code"
+                  isMandatory={true}
+                  option={menu}
+                  selected={gender}
+                  select={setselectGender}
+                  disable={isDisableEdit}
+                  placeholder={`${t("CR_GENDER")}`}
+                  {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })}
+                />
+              </div> 
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
               <div className="col-md-12">
                 <h1 className="headingh1">
                   <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_CHILD_INFO")}`}</span>{" "}
@@ -1276,15 +1345,15 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
               </div>
             </div>
           </div>
-          <div className="row">
+          {/* <div className="row">
             <div className="col-md-12">
               <div className="col-md-6">
                    <CheckBox label={t("CR_WANT_TO_ENTER_CHILD_NAME")} onChange={setChildName}
                   value={isChildName} checked={isChildName} />
               </div>
             </div>
-          </div>
-          {isChildName === true && (
+          </div> */}
+          {isChildName === false && (
             <div>
               {/* <div className="row">
               <div className="col-md-12">
@@ -1418,46 +1487,14 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                 </div>
               </div>
             </div>)}
-          <div className="row">
+            <div className="row">
             <div className="col-md-12">
-              <div className="col-md-3">
-                <CardLabel>
-                  {t("CR_DATE_OF_BIRTH_TIME")}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <DatePicker
-                  date={childDOB}
-                  name="childDOB"
-                  max={convertEpochToDate(new Date())}
-                  //min={convertEpochToDate("1900-01-01")}
-                  onChange={setselectChildDOB}
-                  disable={isDisableEdit}
-                  //  inputFormat="DD-MM-YYYY"
-                  placeholder={`${t("CR_DATE_OF_BIRTH_TIME")}`}
-                  {...(validation = { isRequired: true, title: t("CR_DATE_OF_BIRTH_TIME") })}
-                />
+              <div className="col-md-6">
+                <CheckBox label={t("CR_WANT_TO_ENTER_CHILD_NAME")} onChange={setChildName}
+                  value={isChildName} checked={isChildName} />
               </div>
-              <div className="col-md-2">
-                <CardLabel>{t("CR_TIME_OF_BIRTH")}</CardLabel>
-                <CustomTimePicker name="birthDateTime" onChange={val => handleTimeChange(val, setbirthDateTime)}
-                  value={birthDateTime}
-                  disable={isDisableEdit}
-                />
-              </div>
-              <div className="col-md-3">
-                <CardLabel>{`${t("CR_GENDER")}`}<span className="mandatorycss">*</span></CardLabel>
-                <Dropdown
-                  t={t}
-                  optionKey="code"
-                  isMandatory={true}
-                  option={menu}
-                  selected={gender}
-                  select={setselectGender}
-                  disable={isDisableEdit}
-                  placeholder={`${t("CR_GENDER")}`}
-                  {...(validation = { isRequired: true, title: t("CR_INVALID_GENDER") })}
-                />
-              </div>
+            </div>
+          </div> 
               {AdoptionDeedNo ==="" &&(
                      <div className="row">
                      <div className="col-md-12">
@@ -1653,8 +1690,6 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                     {...(validation = { isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                   />
                 </div>)} */}
-            </div>
-          </div>
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-12">
@@ -1912,7 +1947,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                  />
                </div>
                <div className="col-md-3">
-                 <CardLabel>{`${t("CR_ADOPTION_AGENT_ADDRESS")}`}</CardLabel>
+                 <CardLabel>{`${t("CR_ADOPTION_AGENT_ADDRESS")}`} <span className="mandatorycss">*</span></CardLabel>
                  <TextInput
                    t={t}
                    isMandatory={false}
@@ -1959,7 +1994,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                    value={AdoptionContactNo}
                    onChange={setSelectAgencyContactNo}
                    placeholder={`${t("CR_ADOPTION_CONTACT_NO")}`}
-                   {...(validation = { pattern: "^[0-9]{10}$", isRequired: true, type: "decimal", title: t("CR_INVALID_ADOPTION_CONTACT_NO") })}
+                   {...(validation = { pattern: "^[0-9]{10}$", isRequired: true, type: "number", title: t("CR_INVALID_ADOPTION_CONTACT_NO") })}
                  />
                </div>
              </div>

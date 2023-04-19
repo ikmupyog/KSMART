@@ -256,75 +256,90 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   //   }
   // }
   function setSelectwitness1AadharNo(e) {
-    if (e.target.value.trim().length >= 0) {
-      setwitness1AadharNo(
-        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
-      );
-    }
-    // const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12)
-
-    // if (newValue === witness2AadharNo) {
-    //   setwitness1AadharNo("");
-    //   setAadharError(true);
-    //     setToast(true);
-    //     setTimeout(() => {
-    //       setToast(false);
-    //     }, 3000);
-    // } else {
-    //   setwitness1AadharNo(newValue);
+    // if (e.target.value.trim().length >= 0) {
+    //   setwitness1AadharNo(
+    //     e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
+    //   );
     // }
+    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+
+    if (newValue === witness2AadharNo) {
+      setwitness1AadharNo("");
+      setAdhaarDuplicationError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else if (
+      newValue === formData?.GroomDetails?.groomAadharNo ||
+      newValue === formData?.GroomDetails?.groomFatherAadharNo ||
+      newValue === formData?.GroomDetails?.groomMotherAadharNo ||
+      newValue === formData?.GroomDetails?.groomGuardianAadharNo
+    ) {
+      setwitness1AadharNo("");
+      setAdhaarDuplicationError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else if (
+      newValue === formData?.BrideDetails?.brideAdharNo ||
+      newValue === formData?.BrideDetails?.brideFatherAadharNo ||
+      newValue === formData?.BrideDetails?.brideMotherAadharNo ||
+      newValue === formData?.BrideDetails?.brideGuardianAadharNo
+    ) {
+      setwitness1AadharNo("");
+      setAdhaarDuplicationError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else {
+      setwitness1AadharNo(newValue);
+    }
   }
   function setSelectwitness2AadharNo(e) {
-    if (e.target.value.trim().length >= 0) {
-      setwitness2AadharNo(
-        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
-      );
-    }
-    // const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12)
+    // if (e.target.value.trim().length >= 0) {
+    //   setwitness2AadharNo(
+    //     e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
+    //   );
+    // }
+    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
-    // if (newValue === witness1AadharNo) {
-    //   setwitness2AadharNo("");
-    //   setAadharError(true);
-    //     setToast(true);
-    //     setTimeout(() => {
-    //       setToast(false);
-    //     }, 3000);
-    // } else {
-    //   setwitness2AadharNo(newValue);
-    // }
-    // if (e.target.value.trim().length >= 0) {
-    //   setwitness2AadharNo(
-    //     e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
-    //   );
-    // }
-    // i
-    // if (e.target.value.trim().length >= 0) {
-    //   setwitness2AadharNo(
-    //     e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
-    //   );
-    // }
-    // if (e.target.value.length != 0) {
-    //   if (e.target.value.length > 12) {
-    //     // setChildAadharNo(e.target.value);
-    //     setAadharError(true);
-    //     return false;
-    //     // const limit = 12;
-    //     // setChildAadharNo(e.target.value.slice(0, limit));
-    //     // window.alert("Username shouldn't exceed 10 characters")
-    //   } else if (e.target.value.length < 12) {
-    //     setAadharError(true);
-    //     setwitness2AadharNo(e.target.value);
-    //     return false;
-    //   } else {
-    //     setAadharError(false);
-    //     setwitness2AadharNo(e.target.value);
-    //     return true;
-    //   }
-    // } else {
-    //   setAadharError(false);
-    //   setwitness2AadharNo(e.target.value);
-    //   return true;
-    // }
+    if (newValue === witness1AadharNo) {
+      setwitness2AadharNo("");
+      setAdhaarDuplicationError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else if (
+      newValue === formData?.GroomDetails?.groomAadharNo ||
+      newValue === formData?.GroomDetails?.groomFatherAadharNo ||
+      newValue === formData?.GroomDetails?.groomMotherAadharNo ||
+      newValue === formData?.GroomDetails?.groomGuardianAadharNo
+    ) {
+      setwitness2AadharNo("");
+      setAdhaarDuplicationError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else if (
+      newValue === formData?.BrideDetails?.brideAdharNo ||
+      newValue === formData?.BrideDetails?.brideFatherAadharNo ||
+      newValue === formData?.BrideDetails?.brideMotherAadharNo ||
+      newValue === formData?.BrideDetails?.brideGuardianAadharNo
+    ) {
+      setwitness2AadharNo("");
+      setAdhaarDuplicationError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else {
+      setwitness2AadharNo(newValue);
+    }
   }
   function setSelectwitness1NameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
@@ -382,20 +397,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
     //   else{
     //     return false;
     //   }
-    // }
-    // if (e.target.value.length ===3 ) {
-    //   console.log("length="+e.target.value.length);
-    //   return false;
-    //   // window.alert("Username shouldn't exceed 10 characters")
-    // } else {
-    //   if(e.target.value >= 18){
-    //     console.log("value="+e.target.value);
-    //     setwitness1Age(e.target.value);
-    //   }
-    //   else{
-    //     return false;
-    //   }
-
     // }
   }
   function setSelectwitness2Age(e) {
@@ -660,6 +661,7 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
         setToast(false);
       }, 2000);
     }
+
     if (validFlag == true) {
       // sessionStorage.setItem("marraigeDOM", marraigeDOM ? marraigeDOM : null);
       // sessionStorage.setItem("marriageDistrict", marriageDistrict ? marriageDistrict : null);

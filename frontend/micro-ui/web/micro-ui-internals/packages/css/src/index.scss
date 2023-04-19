@@ -106,71 +106,72 @@
 @import "./pages/employee/death-registration.scss";
 @import "./pages/employee/filedetails.scss";
 
-.display-none{
+.display-none {
   display: none;
 }
 
-.p-unset{
+.p-unset {
   padding: unset !important;
 }
 
-.flex-one{
+.flex-one {
   @apply flex-1;
 }
 
-.display-flex-gap-2{
+.display-flex-gap-2 {
   @apply flex gap-3;
 }
+
 .rm-mb {
   margin-bottom: unset !important;
   background: #ffff;
 }
 
-.w-fullwidth{
+.w-fullwidth {
   @apply w-full;
 }
 
-.margin-unset{
+.margin-unset {
   margin: unset !important;
 }
 
-.text-align-center{
+.text-align-center {
   @apply text-center;
 }
 
-.desktop-only{
+.desktop-only {
   @apply hidden;
 }
 
 @screen dt {
-  .desktop-only{
+  .desktop-only {
     @apply block;
-  } 
+  }
 }
 
-.mobile-only{
+.mobile-only {
   @apply block;
 }
 
 @screen dt {
-  .mobile-only{
+  .mobile-only {
     @apply hidden;
-  } 
+  }
 }
 
 .dark {
   @apply text-text-primary;
 }
 
-.mrlg{
+.mrlg {
   @apply mr-lg;
 }
 
-.mrsm{
+.mrsm {
   @apply mr-sm;
 }
 
-.mbsm{
+.mbsm {
   @apply mb-sm;
 }
 
@@ -184,8 +185,8 @@
 }
 
 .clear-search-label {
-  color: #f47738;
   cursor: pointer;
+  @apply text-primary-main;
 }
 
 .search-submit-bar {
@@ -197,7 +198,7 @@
   @apply flex justify-between items-center;
 
   .download-button {
-    color: #f47738;
+    @apply text-primary-main;
     margin-left: 8px;
   }
 }
@@ -206,13 +207,13 @@
   @apply flex mb-sm;
 
   .download-button {
-    color: #f47738;
+    @apply text-primary-main;
     margin-left: 8px;
   }
 }
 
 .check-page-link-button {
-  color: #f47738 !important;
+  @apply text-primary-main;
 }
 
 .pt-application-download-btn {
@@ -226,6 +227,7 @@
     position: unset;
   }
 }
+
 .application-table-container {
   @apply mt-lg ml-lg flex-1;
 }
@@ -238,8 +240,7 @@
     fill: #f47738;
   }
 
-  color: #f47738;
-
+  @apply text-primary-main;
   cursor: pointer;
   font-weight: 500;
   width: fit-content;
@@ -279,14 +280,17 @@
 .react-time-picker {
   width: 194px;
   height: 2.5rem;
+
   &__wrapper {
     border: none;
     padding-left: 16px;
   }
+
   &__inputGroup__input {
     @apply px-sm;
     line-height: 2.5rem;
     min-width: 16px;
+
     &:focus {
       outline: none;
     }
@@ -303,6 +307,7 @@ input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
 input[type="number"] {
   -moz-appearance: textfield;
 }
@@ -315,8 +320,10 @@ input[type="number"] {
     flex: 1;
     max-height: 75vh;
     overflow: scroll;
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
 
     &::-webkit-scrollbar {
       display: none;
@@ -419,6 +426,7 @@ input[type="number"] {
     text-indent: 5px;
     padding: 6px 0px;
   }
+
   button {
     @apply outline-none;
     border: 0px;
@@ -429,8 +437,9 @@ input[type="number"] {
 
 .text-input {
   @apply relative w-full;
-  input{
-    &:hover{
+
+  input {
+    &:hover {
       @apply border-2 border-solid border-primary-main;
     }
   }
@@ -463,7 +472,7 @@ input[type="number"] {
 .card-label-APK {
   @apply w-1/3;
   margin-bottom: revert;
-  width:100%;
+  width: 100%;
 }
 
 .underline {
@@ -494,10 +503,10 @@ input[type="number"] {
 }
 
 
-.edcr-citizen-inbox{ 
-   thead th:first-child{
-  min-width:155px; 
-}
+.edcr-citizen-inbox {
+  thead th:first-child {
+    min-width: 155px;
+  }
 
 }
 
@@ -522,30 +531,42 @@ input[type="number"] {
   padding: 3px;
 }
 
-.full-width-card{
-  width : 92vw !important;
+.full-width-card {
+  width: 92vw !important;
 }
-.full-employee-card-link{
-  width: 100%!important;
+
+.full-employee-card-link {
+  width: 100% !important;
   margin: 7px 0px;
 }
-.full-employee-card-height{
- height: unset !important;
+
+.full-employee-card-height {
+  height: unset !important;
 }
 
 @media (min-width: 640px) {
-  .full-employee-card-height{
+  .full-employee-card-height {
     height: 196px !important;
   }
-  .full-employee-card-link{
-    width: 30%!important;
+
+  .full-employee-card-link {
+    width: 30% !important;
   }
-  .full-width-card{
+
+  .full-width-card {
     @apply w-full !important;
   }
 }
 
-.employee-app-wrapper{
+.employee-app-wrapper {
   padding: 12px;
-min-height: calc(100vh - 8em);
+  min-height: calc(100vh - 8em);
+}
+
+.primary-bg {
+  @apply bg-primary-main;
+}
+
+.primary-text {
+  @apply bg-primary-main;
 }

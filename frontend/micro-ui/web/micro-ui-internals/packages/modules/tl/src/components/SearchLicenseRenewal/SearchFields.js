@@ -9,11 +9,6 @@ const mystyle = {
 
 
 const SearchFields = ({ register, control, reset, tenantId, t  }) => {
-  const queryClient = useQueryClient();
-  const [tenantidsearch, setTenantidsearch] = useState(tenantId);
-  const [initialrender, setInitialrender] = useState(true);
-  const [distlbtypechange,setDistlbtypechange]=useState(true);
-  const [lbchange,setLbchange]=useState(true);
   let Zonal = [];
   let cmbWardNo = [];
   let cmbWardNoFinal = [];
@@ -22,13 +17,43 @@ const SearchFields = ({ register, control, reset, tenantId, t  }) => {
   let LBs = [];
   let cmbSector = [];
   let FilterLocalbody = [];
-  const districtId = useWatch({ control, name: "districtId"});
+  const stateId = Digit.ULBService.getStateId();
+  const { data: Districts = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "common-masters", "District");
+  const { data: LBTypes = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "common-masters", "LBType");
+  const { data: localbodies, islocalbodiesLoading } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "tenant", "Localbody");
+
+  const { data: sector = {}, isSectorLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "EnterpriseType");
+  Districts &&
+  Districts["common-masters"] &&
+  Districts["common-masters"].District.map((ob) => {
+    cmbDistrict.push(ob);
+  });
+LBTypes &&
+  LBTypes["common-masters"] &&
+  LBTypes["common-masters"].LBType.map((ob) => {
+    cmbLBType.push(ob);
+  });
+  let tempdistrictid = Digit.SessionStorage.get("CITIZEN.COMMON.HOME.DISTRICT");
+  let temptenant = Digit.SessionStorage.get("CITIZEN.COMMON.HOME.CITY");
+  const queryClient = useQueryClient();
+  const [tenantidsearch, setTenantidsearch] = useState(tenantId);
+  const [initialrender, setInitialrender] = useState(true);
+  const [distlbtypechange,setDistlbtypechange]=useState(true);
+  const [lbchange,setLbchange]=useState(true);
+
+  const districtId = useWatch({ control, name: "districtId",
+  defaultValue:cmbDistrict?.filter((district) => district?.districtid === tempdistrictid?.districtid)[0]});
   const lbTypeId = useWatch({ control, name: "lbTypeId" });
   const lbId = useWatch({ control, name: "lbId" });
   const zonalId = useWatch({ control, name: "zonalId" });
   const bussinesssector = useWatch({ control, name: "bussinesssector" });
   const wardId = useWatch({ control, name: "wardId" });
   const applicationstatus = useWatch({ control, name: "applicationstatus" });
+
+  const { data: boundaryList = {}, isLoaded } = Digit.Hooks.tl.useTradeLicenseMDMS(lbId?.code ? lbId?.code : tenantidsearch, "egov-location", "boundary-data");
+
+console.log("districtId"+JSON.stringify(register));
+//console.log(tempdistrictid?.districtid);
   if (districtId) {
     if (lbTypeId) {
       if (lbId) {
@@ -41,13 +66,7 @@ const SearchFields = ({ register, control, reset, tenantId, t  }) => {
       }
     }
   }
-  const stateId = Digit.ULBService.getStateId();
-  const { data: Districts = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "common-masters", "District");
-  const { data: LBTypes = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "common-masters", "LBType");
-  const { data: localbodies, islocalbodiesLoading } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "tenant", "Localbody");
-  const { data: boundaryList = {}, isLoaded } = Digit.Hooks.tl.useTradeLicenseMDMS(lbId?.code ? lbId?.code : tenantidsearch, "egov-location", "boundary-data");
 
-  const { data: sector = {}, isSectorLoad } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", "EnterpriseType");
 
   localbodies &&
     localbodies["tenant"] &&
@@ -55,16 +74,7 @@ const SearchFields = ({ register, control, reset, tenantId, t  }) => {
       LBs.push(ob);
     });
 
-  Districts &&
-    Districts["common-masters"] &&
-    Districts["common-masters"].District.map((ob) => {
-      cmbDistrict.push(ob);
-    });
-  LBTypes &&
-    LBTypes["common-masters"] &&
-    LBTypes["common-masters"].LBType.map((ob) => {
-      cmbLBType.push(ob);
-    });
+
 
   boundaryList &&
     boundaryList["egov-location"] &&
@@ -116,6 +126,17 @@ const SearchFields = ({ register, control, reset, tenantId, t  }) => {
     cmbWardNoFinal = cmbWardNotemp;
   }
 
+//   if(districtId===undefined && tempdistrictid?.districtid){
+//     console.log("districtId"+JSON.stringify(districtId));
+//     setValue('districtId',cmbDistrict?.filter((district) => district?.districtid === tempdistrictid?.districtid)[0]);
+//    // setDistrictId(cmbDistrict?.filter((district) => district?.districtid === tempdistrictid?.districtid)[0]);
+//     //districtId=cmbDistrict?.filter((district) => district?.districtid === tempdistrictid?.districtid)[0];
+//  }
+ 
+const districtHandle = (props)=>{
+  console.log("hai firing");
+  props.onChange();
+}
   return <>
     <SearchField>
       <label>{`${t("TL_DISTRICT")}`}</label>
@@ -125,7 +146,7 @@ const SearchFields = ({ register, control, reset, tenantId, t  }) => {
         render={(props) => (
           <Dropdown
             selected={props.value}
-            select={props.onChange}
+            select= {props.onChange}
             onBlur={props.onBlur}
             option={cmbDistrict}
             optionKey="name"
@@ -142,7 +163,7 @@ const SearchFields = ({ register, control, reset, tenantId, t  }) => {
         render={(props) => (
           <Dropdown
             selected={props.value}
-            select={props.onChange}
+            select={props.onChange }
             onBlur={props.onBlur}
             option={cmbLBType}
             optionKey="name"

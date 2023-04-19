@@ -74,7 +74,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
     userType = "employee";
   }
   function onBirthSubmit() {
-    if (!isInitiatorDeclaration) {
+    if (!isInitiatorDeclaration && window.location.href.includes("/citizen")) {
       setInitiatorDeclareError(true);
       setToast(true);
       setTimeout(() => {
@@ -99,7 +99,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
       return null;
     }
   };
-
+  //
   // useEffect(() => {
   //   if (isInitialRender) {
   //     if (formData?.InitiatorinfoDetails?.isInitiatorDeclaration != null) {
@@ -1692,6 +1692,9 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
             </StatusTable>
           }
         />
+        {/* <div>
+        {window.location.href.includes("/citizen") && (
+          <div> */}
         <div className="row">
           <div className="col-md-12">
             <h1 className="summaryheadingh">
@@ -1712,6 +1715,8 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
               />
             </div>
           </div>
+          {/* </div>
+          )} */}
 
           {toast && (
             <Toast

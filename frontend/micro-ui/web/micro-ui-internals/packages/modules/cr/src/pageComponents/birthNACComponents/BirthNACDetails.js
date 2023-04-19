@@ -691,10 +691,10 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
       });
     }
   };
-  if (formData?.ChildDetails?.birthPlace != null) {
+  if (formData?.BirthNACDetails?.birthPlace != null) {
     if (cmbPlaceMaster.length > 0 && (birthPlace === undefined || birthPlace === "")) {
-      selectBirthPlace(cmbPlaceMaster.filter((cmbPlaceMaster) => cmbPlaceMaster.code === formData?.ChildDetails?.birthPlace)[0]);
-      setValue(formData?.ChildDetails?.birthPlace);
+      selectBirthPlace(cmbPlaceMaster.filter((cmbPlaceMaster) => cmbPlaceMaster.code === formData?.BirthNACDetails?.birthPlace)[0]);
+      setValue(formData?.BirthNACDetails?.birthPlace);
     }
   }
   const convertEpochToDate = (dateEpoch) => {
@@ -717,7 +717,7 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
   } else {
     return (
       <React.Fragment>
-        <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+        {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
         {window.location.href.includes("/citizen") ? <Timeline currentStep={1} /> : null}
         {window.location.href.includes("/employee") ? <Timeline currentStep={1} /> : null}
         <FormStep
@@ -905,7 +905,12 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
               </div>
               <div className="col-md-2">
                 <CardLabel>{t("CR_TIME_OF_BIRTH")}</CardLabel>
-                <CustomTimePicker name="birthDateTime" onChange={(val) => handleTimeChange(val, setbirthDateTime)} value={birthDateTime} />
+                <CustomTimePicker
+                  name="birthDateTime"
+                  onChange={(val) => handleTimeChange(val, setbirthDateTime)}
+                  value={birthDateTime}
+                  disable={isDisableEdit}
+                />
               </div>
               <div className="col-md-3">
                 <CardLabel>
@@ -925,17 +930,23 @@ const BirthNACDetails = ({ config, onSelect, userType, formData, isEditBirth }) 
               </div>
               <div className="col-md-4">
                 <CardLabel>
-                  Order of Birth<span className="mandatorycss">*</span>
+                  {`${t("ORDER_OF_BIRTH")}`}
+                  <span className="mandatorycss">*</span>
                 </CardLabel>
                 <TextInput
                   t={t}
-                  type={"number"}
+                  type={"text"}
                   optionKey="i18nKey"
                   name="nacorderofChildren"
                   value={nacorderofChildren}
                   disable={isEdit}
                   onChange={setSelectOrderOfBirth}
                   placeholder={`${t("ORDER_OF_BIRTH")}`}
+                  {...(validation = {
+                    pattern: "^[0-9`' ]*$",
+                    isRequired: true,
+                    type: "text",
+                  })}
                 />
               </div>
             </div>

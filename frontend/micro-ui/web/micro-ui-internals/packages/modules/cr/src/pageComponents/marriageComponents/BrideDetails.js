@@ -132,7 +132,10 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
   const [selectedOption, setSelectedOption] = useState(
     formData?.AddressOfDecesed?.selectedOption ? formData?.AddressOfDecesed?.selectedOption : "ILB"
   );
-  const [AadharError, setAadharError] = useState(formData?.BrideDetails?.brideAadharNo ? false : false);
+  const [brideAadharError, setBrideAadharError] = useState(formData?.BrideDetails?.brideAadharNo ? false : false);
+  const [brideFatherAadharError, setBrideFatherAadharError] = useState(formData?.BrideDetails?.brideFatherAadharNo ? false : false);
+  const [brideMotherAadharError, setBrideMotherAadharError] = useState(formData?.BrideDetails?.brideMotherAadharNo ? false : false);
+  const [brideGuardianAadharError, setBrideGuardianAadharError] = useState(formData?.BrideDetails?.brideGuardianAadharNo ? false : false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditBride ? isEditBride : false);
   const [file, setFile] = useState();
   const [AgeValidationMsg, setAgeValidationMsg] = useState(false);
@@ -313,7 +316,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     birthDate.setHours(0, 0, 0, 0);
 
     if (birthDate.getTime() <= today.getTime()) {
-      //setDOBError(false);
+      setDOBError(false);
       // setbrideDOB(value);
       // const today = new Date();
       // const birthDate = new Date(value);
@@ -395,81 +398,131 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
       setbrideFathernameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
+
   function setSelectbrideFatherAadharNo(e) {
-    if (e.target.value.trim().length >= 0) {
-      setbrideFatherAadharNo(
-        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
-      );
+    // if (e.target.value.trim().length >= 0) {
+    //   setbrideFatherAadharNo(
+    //     e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
+    //   );
+    // }
+    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+    if (newValue === brideAadharNo || newValue === brideMotherAadharNo || newValue === brideGuardianAadharNo) {
+      setbrideFatherAadharNo("");
+      setBrideFatherAadharError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else if (
+      newValue === formData?.GroomDetails?.groomAadharNo ||
+      newValue === formData?.GroomDetails?.groomFatherAadharNo ||
+      newValue === formData?.GroomDetails?.groomMotherAadharNo ||
+      newValue === formData?.GroomDetails?.groomGuardianAadharNo
+    ) {
+      setbrideFatherAadharNo("");
+      setBrideFatherAadharError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else {
+      setbrideFatherAadharNo(newValue);
+      console.log("console" + formData?.GroomDetails?.groomAadharNo);
     }
-    // const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
-    // if (newValue === brideAadharNo || newValue === brideMotherAadharNo || newValue === brideGuardianAadharNo) {
-    //   setbrideFatherAadharNo("");
-    //   setAadharError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 3000);
-    // } else {
-    // setbrideFatherAadharNo(newValue);
-    //  }
   }
 
   function setSelectbrideAadharNo(e) {
-    if (e.target.value.trim().length >= 0) {
-      setBrideAadharNo(
-        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
-      );
-    }
-    // const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+    // if (e.target.value.trim().length >= 0) {
+    //   setBrideAadharNo(
+    //     e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
+    //   );
+    // }
+    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
-    // if (newValue === brideMotherAadharNo || newValue === brideGuardianAadharNo || newValue === brideFatherAadharNo) {
-    //   setBrideAadharNo("");
-    //   setAadharError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 3000);
-    // } else {
-    // setBrideAadharNo(newValue);
-    //  }
+    if (newValue === brideMotherAadharNo || newValue === brideGuardianAadharNo || newValue === brideFatherAadharNo) {
+      setBrideAadharNo("");
+      setBrideAadharError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else if (
+      newValue === formData?.GroomDetails?.groomAadharNo ||
+      newValue === formData?.GroomDetails?.groomFatherAadharNo ||
+      newValue === formData?.GroomDetails?.groomMotherAadharNo ||
+      newValue === formData?.GroomDetails?.groomGuardianAadharNo
+    ) {
+      setBrideAadharNo("");
+      setBrideAadharError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else {
+      setBrideAadharNo(newValue);
+    }
   }
   function setSelectbrideMotherAadharNo(e) {
-    if (e.target.value.trim().length >= 0) {
-      setbrideMotherAadharNo(
-        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
-      );
-    }
-    // const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+    // if (e.target.value.trim().length >= 0) {
+    //   setbrideMotherAadharNo(
+    //     e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
+    //   );
+    // }
+    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
-    // if (newValue === brideAadharNo || newValue === brideGuardianAadharNo || newValue === brideFatherAadharNo) {
-    //   setbrideMotherAadharNo("");
-    //   setAadharError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 3000);
-    // } else {
-    // setbrideMotherAadharNo(newValue);
-    //  }
+    if (newValue === brideAadharNo || newValue === brideGuardianAadharNo || newValue === brideFatherAadharNo) {
+      setbrideMotherAadharNo("");
+      setBrideMotherAadharError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else if (
+      newValue === formData?.GroomDetails?.groomAadharNo ||
+      newValue === formData?.GroomDetails?.groomFatherAadharNo ||
+      newValue === formData?.GroomDetails?.groomMotherAadharNo ||
+      newValue === formData?.GroomDetails?.groomGuardianAadharNo
+    ) {
+      setbrideMotherAadharNo("");
+      setBrideMotherAadharError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else {
+      setbrideMotherAadharNo(newValue);
+    }
   }
   function setSelectbrideGuardianAadharNo(e) {
-    if (e.target.value.trim().length >= 0) {
-      setbrideGuardianAadharNo(
-        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
-      );
-    }
-    // const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+    // if (e.target.value.trim().length >= 0) {
+    //   setbrideGuardianAadharNo(
+    //     e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
+    //   );
+    // }
+    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
-    // if (newValue === brideAadharNo || newValue === brideMotherAadharNo || newValue === brideFatherAadharNo) {
-    //   setbrideGuardianAadharNo("");
-    //   setAadharError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 3000);
-    // } else {
-    // setbrideGuardianAadharNo(newValue);
-    //  }
+    if (newValue === brideAadharNo || newValue === brideMotherAadharNo || newValue === brideFatherAadharNo) {
+      setbrideGuardianAadharNo("");
+      setBrideGuardianAadharError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else if (
+      newValue === formData?.GroomDetails?.groomAadharNo ||
+      newValue === formData?.GroomDetails?.groomFatherAadharNo ||
+      newValue === formData?.GroomDetails?.groomMotherAadharNo ||
+      newValue === formData?.GroomDetails?.groomGuardianAadharNo
+    ) {
+      setbrideGuardianAadharNo("");
+      setBrideGuardianAadharError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else {
+      setbrideGuardianAadharNo(newValue);
+    }
   }
   function setSelectbrideGuardiannameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
@@ -554,29 +607,68 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
       let adharLength = brideAadharNo;
       if (adharLength.length < 12 || adharLength.length > 12) {
         validFlag = false;
-        setAadharError(true);
+        setBrideAadharError(true);
         setToast(true);
         setTimeout(() => {
           setToast(false);
         }, 2000);
       } else {
-        setAadharError(false);
+        setBrideAadharError(false);
       }
     } else {
-      setAadharError(false);
+      setBrideAadharError(false);
     }
-    // if (AadharError) {
-    //   validFlag = false;
-    //   // setAadharErroChildAadharNor(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 2000);
-    //   // return false;
-    //   // window.alert("Username shouldn't exceed 10 characters")
-    // } else {
-    //   setAadharError(false);
-    // }
+    if (brideFatherAadharNo.trim() == null || brideFatherAadharNo.trim() == "" || brideFatherAadharNo.trim() == undefined) {
+      setbrideFatherAadharNo("");
+    } else if (brideFatherAadharNo != null && brideFatherAadharNo != "") {
+      let adharLength = brideFatherAadharNo;
+      if (adharLength.length < 12 || adharLength.length > 12) {
+        validFlag = false;
+        setBrideFatherAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setBrideFatherAadharError(false);
+      }
+    } else {
+      setBrideFatherAadharError(false);
+    }
+    if (brideMotherAadharNo.trim() == null || brideMotherAadharNo.trim() == "" || brideMotherAadharNo.trim() == undefined) {
+      setbrideMotherAadharNo("");
+    } else if (brideMotherAadharNo != null && brideMotherAadharNo != "") {
+      let adharLength = brideMotherAadharNo;
+      if (adharLength.length < 12 || adharLength.length > 12) {
+        validFlag = false;
+        setBrideMotherAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setBrideMotherAadharError(false);
+      }
+    } else {
+      setBrideMotherAadharError(false);
+    }
+    if (brideGuardianAadharNo.trim() == null || brideGuardianAadharNo.trim() == "" || brideGuardianAadharNo.trim() == undefined) {
+      setbrideGuardianAadharNo("");
+    } else if (brideMotherAadharNo != null && brideMotherAadharNo != "") {
+      let adharLength = brideMotherAadharNo;
+      if (adharLength.length < 12 || adharLength.length > 12) {
+        validFlag = false;
+        setBrideGuardianAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setBrideGuardianAadharError(false);
+      }
+    } else {
+      setBrideGuardianAadharError(false);
+    }
     if (validFlag == true) {
       // sessionStorage.setItem("tripStartTime", tripStartTime ? tripStartTime : null);
 
@@ -1028,7 +1120,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                   onChange={setSelectbrideEmailid}
                   disable={isDisableEdit}
                   placeholder={`${t("CR_BRIDE_EMAIL")}`}
-                  {...(validation = { pattern: "^[w-.]+@([w-]+.)+[w-]{2,4}$", isRequired: true, title: t("CR_INVALID_EMAIL") })}
+                  {...(validation = { isRequired: true, title: t("CR_INVALID_EMAIL") })}
                 />
               </div>
             </div>
@@ -1456,13 +1548,19 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
 
             {toast && (
               <Toast
-                error={AadharError || AgeValidationMsg}
+                error={brideAadharError || AgeValidationMsg || brideFatherAadharError || brideGuardianAadharError || brideMotherAadharError}
                 label={
-                  AadharError || AgeValidationMsg
-                    ? AadharError
+                  brideAadharError || AgeValidationMsg || brideFatherAadharError || brideMotherAadharError || brideGuardianAadharError
+                    ? brideAadharError
                       ? t(`CS_COMMON_INVALID_AADHAR_NO`)
                       : AgeValidationMsg
                       ? t(`CR_INVALID_BRIDE_AGE`)
+                      : brideFatherAadharError
+                      ? t(`CS_INVALID_FATHER_AADHAR_NO`)
+                      : brideGuardianAadharError
+                      ? t(`CS_INVALID_GUARDIAN_AADHAR_NO`)
+                      : brideMotherAadharError
+                      ? t(`CS_INVALID_MOTHER_AADHAR_NO`)
                       : setToast(false)
                     : setToast(false)
                 }

@@ -17,7 +17,7 @@ import Institution from "../deathComponents/Institution";
 import DeathPlaceHome from "../deathComponents/DeathPlaceHome";
 import DeathPlaceVehicle from "../deathComponents/DeathPlaceVehicle";
 import DeathPublicPlace from "../deathComponents/DeathPublicPlace";
-// import DeathOutsideJurisdiction from "../deathComponents/DeathOutsideJurisdiction";
+import DeathOutsideJurisdiction from "./DeathOutsideJurisdiction";
 import { useParams } from "react-router-dom";
 import PlaceofBurial from "./PlaceofBurial";
 
@@ -916,7 +916,7 @@ const InformationDeathAbandonedAband = ({ config, onSelect, userType, formData, 
   const [Villagevalues, setLbsVillagevalue] = useState(null);
  
   const [permntInKeralaAdrDistrict, setpermntInKeralaAdrDistrict] = useState(formData?.AddressBirthDetails?.permntInKeralaAdrDistrict?.code ? formData?.AddressBirthDetails?.permntInKeralaAdrDistrict : formData?.ChildDetails?.AddressBirthDetails?.permtaddressCountry ? "" : "");
-  // const [permntInKeralaAdrLBTypeName, setpermntInKeralaAdrLBTypeName] = useState(formData?.AddressBirthDetails?.permntInKeralaAdrLBTypeName ? formData?.AddressBirthDetails?.permntInKeralaAdrLBTypeName : null);
+  const [permntInKeralaAdrLBTypeName, setpermntInKeralaAdrLBTypeName] = useState(formData?.AddressBirthDetails?.permntInKeralaAdrLBTypeName ? formData?.AddressBirthDetails?.permntInKeralaAdrLBTypeName : null);
   const [permntInKeralaAdrLBName, setpermntInKeralaAdrLBName] = useState(formData?.AddressBirthDetails?.permntInKeralaAdrLBName?.code ? formData?.AddressBirthDetails?.permntInKeralaAdrLBName : formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrLBName ? "" : "");
   const [permntInKeralaAdrTaluk, setpermntInKeralaAdrTaluk] = useState(formData?.AddressBirthDetails?.permntInKeralaAdrTaluk ? formData?.AddressBirthDetails?.permntInKeralaAdrTaluk : formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrTaluk ? "" : "");
   const [permntInKeralaAdrVillage, setpermntInKeralaAdrVillage] = useState(formData?.AddressBirthDetails?.permntInKeralaAdrVillage ? formData?.AddressBirthDetails?.permntInKeralaAdrVillage : formData?.ChildDetails?.AddressBirthDetails?.permntInKeralaAdrVillage ? "" : "");
@@ -1473,6 +1473,8 @@ const InformationDeathAbandonedAband = ({ config, onSelect, userType, formData, 
           <PlaceofBurial
            presentWardNo={presentWardNo}
            setPresentWardNo={setPresentWardNo}
+           permntInKeralaAdrLBTypeName={permntInKeralaAdrLBTypeName}
+           setpermntInKeralaAdrLBTypeName={setpermntInKeralaAdrLBTypeName}
            presentInsideKeralaDistrict={presentInsideKeralaDistrict}
            setinsideKeralaDistrict={setinsideKeralaDistrict}
            presentInsideKeralaLBTypeName={presentInsideKeralaLBTypeName}
@@ -1536,6 +1538,12 @@ const InformationDeathAbandonedAband = ({ config, onSelect, userType, formData, 
            permntInKeralaWardNo={permntInKeralaWardNo}
            setpermntInKeralaWardNo={setpermntInKeralaWardNo}
            isEditAbandonedDeath={isEditAbandonedDeath}
+           PlaceOfBurialMl={PlaceOfBurialMl}
+                SelectPlaceOfBurialMl={SelectPlaceOfBurialMl}
+                PlaceOfBurialEn={PlaceOfBurialEn}
+                SelectPlaceOfBurialEn={SelectPlaceOfBurialEn}
+                GeneralRemarks={GeneralRemarks}
+                setGeneralRemarks={setGeneralRemarks}
            formData={formData}/>
            </div>
            </div>

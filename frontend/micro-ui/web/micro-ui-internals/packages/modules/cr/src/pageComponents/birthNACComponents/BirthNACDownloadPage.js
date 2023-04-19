@@ -23,7 +23,6 @@ const BirthNACDownloadPage = ({ config, onSelect }) => {
   };
   return (
     <React.Fragment>
-      <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       {window.location.href.includes("/citizen")}
       {window.location.href.includes("/employee")}
       <FormStep t={t} config={config} isDisabled={false} onSelect={goNext}>
@@ -54,37 +53,37 @@ const BirthNACDownloadPage = ({ config, onSelect }) => {
         </div>
         <div className="row" style={{ paddingLeft: "10px", paddingTop: "50px" }}>
           <div className="col-md-12">
-            <h1 style={{ fontWeight: "bold" }}>1.Address proof of parents at the time of birth</h1>
+            <h1 style={{ fontWeight: "bold" }}>1.{`${t("CR_NAC_DOWNLOAD_ADDRESS_PROOF_PARENTS")}`}</h1>
           </div>
         </div>
         <div className="row" style={{ paddingLeft: "10px", paddingTop: "50px" }}>
           <div className="col-md-12">
-            <h1 style={{ fontWeight: "bold" }}>2. Proof of birth shiowing the date/place/details of parents at the time of birth</h1>
+            <h1 style={{ fontWeight: "bold" }}>2.{`${t("CR_NAC_DOWNLOAD_BIRTH_SHOWING_DATE_PLACE")}`}</h1>
           </div>
         </div>
         <div className="row" style={{ paddingLeft: "10px", paddingTop: "50px" }}>
           <div className="col-md-12">
-            <h1 style={{ fontWeight: "bold" }}>3.School certificate of child if above 6 years</h1>
+            <h1 style={{ fontWeight: "bold" }}>3.{`${t("CR_NAC_DOWNLOAD_SCHOOL_CERTIFICATE")}`}</h1>
           </div>
         </div>
         <div className="row" style={{ paddingLeft: "10px", paddingTop: "50px" }}>
           <div className="col-md-12">
-            <h1 style={{ fontWeight: "bold" }}>4.ID proof of mother at the time of birth</h1>
+            <h1 style={{ fontWeight: "bold" }}>4.{`${t("CR_NAC_DONWLOAD_ID_PROOF_OF_MOTHER")}`}</h1>
           </div>
         </div>
         <div className="row" style={{ paddingLeft: "10px", paddingTop: "50px" }}>
           <div className="col-md-6">
-            <h1 style={{ fontWeight: "bold" }}>5.ID proof of father at the time of birth</h1>
+            <h1 style={{ fontWeight: "bold" }}>5.{`${t("CR_NAC_DONWLOAD_ID_PROOF_OF_FATHER")}`}</h1>
           </div>
         </div>
         <div className="row" style={{ paddingLeft: "10px", paddingTop: "50px" }}>
           <div className="col-md-6">
-            <h1 style={{ fontWeight: "bold" }}>6.Medical certificate, if child is differently abled, for not attending school after 6 years</h1>
+            <h1 style={{ fontWeight: "bold" }}>6.{`${t("CR_NAC_DOWNLOAD_MEDICAL_CERTIFICATE_DIFFERENTLY_ABLED")}`}</h1>
           </div>
         </div>
         <div className="row" style={{ paddingLeft: "10px", paddingTop: "50px" }}>
           <div className="col-md-6">
-            <h1 style={{ fontWeight: "bold" }}>7.Declaration by Applicant, counter signed by gazetted officer</h1>
+            <h1 style={{ fontWeight: "bold" }}>7.{`${t("CR_NAC_DOWNLOAD_COUNTER_SIGNED_OFFICER")}`}</h1>
           </div>
           <div className="col-md-6">
             <MultiLink
@@ -98,7 +97,7 @@ const BirthNACDownloadPage = ({ config, onSelect }) => {
         </div>
         <div className="row" style={{ paddingLeft: "10px", paddingTop: "50px" }}>
           <div className="col-md-6">
-            <h1 style={{ fontWeight: "bold" }}>8.Declaration by a perosn stating the event occured jurisdiction of localbody</h1>
+            <h1 style={{ fontWeight: "bold" }}>8.{`${t("CR_NAC_DOWNLOAD_JURISDICTION_OF_LOCALBODY")}`}</h1>
           </div>
           <div className="col-md-6">
             <MultiLink
@@ -112,7 +111,7 @@ const BirthNACDownloadPage = ({ config, onSelect }) => {
         </div>
         <div className="row" style={{ paddingLeft: "10px", paddingTop: "50px", paddingBottom: "80px" }}>
           <div className="col-md-6">
-            <h1 style={{ fontWeight: "bold" }}>9.Declaration by Applicant, not being admitted in school after 6 years due to specific reasons</h1>
+            <h1 style={{ fontWeight: "bold" }}>9.{`${t("CR_NAC_DOWNLOAD_NOT_ADMITTED_SCHOOL_AFTER_6_YEARS")}`}</h1>
           </div>
           <div className="col-md-6">
             <MultiLink
