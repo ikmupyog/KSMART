@@ -4,7 +4,6 @@ import PGRTimeline from "../../components/PGRTimeline";
 
 const SelectPincode = ({ t, config, onSelect, value }) => {
   const tenants = Digit.Hooks.pgr.useTenants();
-  console.log("first", tenants)
   // const __initPincode = Digit.SessionStorage.get("PGR_CREATE_PINCODE");
   const [pincode, setPincode] = useState(() => {
     const { pincode } = value;

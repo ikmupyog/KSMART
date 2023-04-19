@@ -5,7 +5,7 @@ const useTradeLicenseCorrectionAPI = (tenantId, type = true) => {
   if(type){
   return useMutation((data) => TLService.createcorrection(data, tenantId));
 } else {
-  return useMutation((data) => TLService.update(data, tenantId));
+  return useMutation((data) => TLService.updatecorrection(data, tenantId));
 }
 };
 

@@ -1,18 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, Loader, Toast } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, Loader, Toast,TextArea  } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
 
 const PlaceofBurial = ({ config, onSelect, userType, formData,
   permntInKeralaAdrDistrict, setpermntInKeralaAdrDistrict,
   permntInKeralaAdrLBName, setpermntInKeralaAdrLBName,
+  permntInKeralaAdrLBTypeName,setpermntInKeralaAdrLBTypeName,
+           setinsideKeralaLBTypeName,
+           presentInsideKeralaLBTypeName,
   permntInKeralaAdrTaluk, setpermntInKeralaAdrTaluk, permntInKeralaAdrVillage, setpermntInKeralaAdrVillage,
   permntInKeralaAdrPostOffice, setpermntInKeralaAdrPostOffice, permntInKeralaAdrPincode, setpermntInKeralaAdrPincode,
   permntInKeralaAdrHouseNameEn, setpermntInKeralaAdrHouseNameEn,
   permntInKeralaAdrHouseNameMl, setpermntInKeralaAdrHouseNameMl, permntInKeralaAdrLocalityNameEn, setpermntInKeralaAdrLocalityNameEn,
   permntInKeralaAdrLocalityNameMl, setpermntInKeralaAdrLocalityNameMl, permntInKeralaAdrStreetNameEn, setpermntInKeralaAdrStreetNameEn,
   permntInKeralaAdrStreetNameMl, setpermntInKeralaAdrStreetNameMl, lbs, setLbs, Talukvalues, setLbsTalukvalue, Villagevalues, setLbsVillagevalue, permntInKeralaWardNo,
-  setpermntInKeralaWardNo, PostOfficevalues, setPostOfficevalues, isEditAbandonedDeath = false
+  setpermntInKeralaWardNo, PostOfficevalues, setPostOfficevalues, isEditAbandonedDeath = false,
+  PlaceOfBurialEn,
+  SelectPlaceOfBurialEn,
+  PlaceOfBurialMl,
+  SelectPlaceOfBurialMl,
+  BurialDescription,
+  setBurialDescription,
   // isInitialRender, setIsInitialRender
 
 }) => {
@@ -307,6 +316,30 @@ const PlaceofBurial = ({ config, onSelect, userType, formData,
       e.preventDefault();
     }
   }
+
+  function setSelectPlaceOfBurialEn(e) {
+    if (e.target.value.length === 51) {
+      return false;
+    } else {
+      SelectPlaceOfBurialEn(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    }
+  }
+  function setSelectPlaceOfBurialMl(e) {
+    if (e.target.value.length === 51) {
+      return false;
+    } else {
+      SelectPlaceOfBurialMl(e.target.value.replace(/^[a-zA-Z-.`'0-9 ]/gi, ""));
+    }
+  }
+
+  function setSelectBurialDescription(e) {
+    if (e.target.value.length === 102) {
+      return false;
+    } else {
+      setBurialDescription(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' 0-9]/gi, ""));
+    }
+  }
+
   // useEffect(() => {
   //     if (isInitialRender) {
   //         console.log("presentInsideKeralaDistrict" + districtid);
@@ -344,45 +377,18 @@ const PlaceofBurial = ({ config, onSelect, userType, formData,
             />
           </div>
 
-          {/* <div className="col-md-6" >
+          <div className="col-md-3" >
                     <CardLabel>{`${t("CS_COMMON_LB_TYPE")}`}</CardLabel>
                     <Dropdown
                     t={t}
                     optionKey="name"
                     option={cmbLBType}
-                    selected={permntInKeralaAdrLBTypeName}
+                    selected={presentInsideKeralaLBTypeName}
                     select={setSelectpermntInKeralaAdrLBTypeName}
                     
                     />
-                    </div> */}
-          {/* <div className="col-md-3">
-            <CardLabel>
-              {t("CS_COMMON_TALUK")}
-            </CardLabel>
-            <Dropdown
-              t={t}
-              optionKey="name"
-              option={Talukvalues}
-              selected={permntInKeralaAdrTaluk}
-              select={setSelectpermntInKeralaAdrTaluk}
-              placeholder={`${t("CS_COMMON_TALUK")}`}
-              disable={isDisableEdit} 
-            />
-          </div> */}
-          {/* <div className="col-md-3">
-            <CardLabel>
-              {t("CS_COMMON_VILLAGE")}
-            </CardLabel>
-            <Dropdown
-              t={t}
-              optionKey="name"
-              option={Villagevalues}
-              selected={permntInKeralaAdrVillage}
-              select={setSelectpermntInKeralaAdrVillage}
-              placeholder={`${t("CS_COMMON_VILLAGE")}`}
-              disable={isDisableEdit} 
-            />
-          </div> */}
+                    </div>
+    
           <div className="col-md-3">
             <CardLabel>
               {t("CS_COMMON_LB_NAME")}
@@ -397,9 +403,7 @@ const PlaceofBurial = ({ config, onSelect, userType, formData,
               disable={isDisableEdit} 
             />
           </div>
-        </div>
-        <div className="row">
-          <div className="col-md-4">
+          <div className="col-md-3">
             <CardLabel>
               {`${t("CS_COMMON_WARD")}`}
             </CardLabel>
@@ -414,49 +418,58 @@ const PlaceofBurial = ({ config, onSelect, userType, formData,
               {...(validation = { isRequired: false, title: t("CS_COMMON_INVALID_WARD") })}
             />
           </div>
-          {/* <div className="col-md-4">
-            <CardLabel>
-              {t("CS_COMMON_POST_OFFICE")}
-              <span className="mandatorycss">*</span>
-            </CardLabel>
-            <Dropdown
-              t={t}
-              optionKey="name"
-              option={PostOfficevalues}
-              selected={permntInKeralaAdrPostOffice}
-              select={setSelectpermntInKeralaAdrPostOffice}
-              placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
-              disable={isDisableEdit} 
-            />
-          </div> */}
-          {/* <div className="col-md-4">
-            <CardLabel>
-              {t("CS_COMMON_PIN_CODE")}
-            </CardLabel>
-            <TextInput
-              t={t}
-              type={"text"}
-              optionKey="i18nKey"
-              name="permntInKeralaAdrPincode"
-              value={permntInKeralaAdrPincode}
-              onChange={setSelectpermntInKeralaAdrPincode}
-              disable={isDisableEdit}
-              placeholder={`${t("CS_COMMON_PIN_CODE")}`}
-              {...(validation = {
-                pattern: "^[a-zA-Z-.`' ]*$",
-                isRequired: false,
-                type: "number",
-                maxLength: 6,
-                minLength: 6,
-                title: t("CS_COMMON_INVALID_PIN_CODE"),
-              })}
-            />
-          </div> */}
-
         </div>
-      
+        
         <div className="row">
+        <div className="col-md-3">
+              <CardLabel>
+                {t("CR_PLACE_BURIAL_EN")}
+              </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="PlaceOfBurialEn"
+                value={PlaceOfBurialEn}
+                onChange={setSelectPlaceOfBurialEn}
+                placeholder={`${t("CR_PLACE_BURIAL_EN")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_PLACE_BURIAL_EN") })}
+              />
+            </div>
+            <div className="col-md-3">
+              <CardLabel>
+                {t("CR_PLACE_BURIAL_ML")}
+              </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="PlaceOfBurialMl"
+                value={PlaceOfBurialMl}
+                onChange={setSelectPlaceOfBurialMl}
+                placeholder={`${t("CR_PLACE_BURIAL_ML")}`}
+                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: false, type: "text", title: t("CR_INVALID_PLACE_BURIAL_ML") })}
+              />
+            </div>
+            <div className="col-md-6">
+              <CardLabel>
+                {`${t("CR_DESCRIPTION_OF_PLACE_OF_BURIAL")}`}
 
+              </CardLabel>
+              <TextArea
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="BurialDescription"
+                value={BurialDescription}
+                onChange={setSelectBurialDescription}
+                placeholder={`${t("CR_DESCRIPTION_OF_PLACE_OF_BURIAL")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_OTHER_DETAILS_EN") })}
+              />
+            </div>
         </div>
       {/* </FormStep> */}
     </React.Fragment>

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { convertToNACRegistration } from "../../../utils/birthnacindex";
-import getPDFData from "../../../utils/getTLAcknowledgementData";
+import getPDFData from "../../../utils/getCRBirthNACAcknowledgmentData";
 
 const GetActionMessage = (props) => {
   const { t } = useTranslation();
@@ -22,7 +22,7 @@ const rowContainerStyle = {
 };
 
 const BannerPicker = (props) => {
-  if (props.isSuccess && sessionStorage.getItem("CR_BIRTH_EDIT_FLAG")) {
+  if (props.isSuccess && sessionStorage.getItem("CR_NACBIRTH_EDIT_FLAG")) {
     sessionStorage.setItem("applicationNumber", props.data?.nacDetails[0]?.applicationNumber);
   } else {
     return (
@@ -42,7 +42,7 @@ const BirthNACAcknowledgement = ({ data, onSuccess, userType }) => {
   const resubmit = window.location.href.includes("edit-application");
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const isRenewTrade = !window.location.href.includes("renew-trade");
-  const [isEditBirthNAC, setIsEditBirthNAC] = useState(sessionStorage.getItem("CR_BIRTH_NAC_EDIT_FLAG") ? true : false);
+  const [isEditBirthNAC, setIsEditBirthNAC] = useState(sessionStorage.getItem("CR_NACBIRTH_EDIT_FLAG") ? true : false);
   let applicationNumber = sessionStorage.getItem("applicationNumber") != null ? sessionStorage.getItem("applicationNumber") : null;
 
   const mutation = Digit.Hooks.cr.useCivilRegistrationNACBIRTHAPI(tenantId, isEditBirthNAC ? false : true);

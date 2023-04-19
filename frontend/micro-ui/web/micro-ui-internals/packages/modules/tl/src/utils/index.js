@@ -959,7 +959,10 @@ export const convertToTradeCorrection = (data = {} , dataCorr = {}) => {
           address : addressHistory
         },
         applicationDocuments : applicationDocuments,
-        status: "INITIATED"
+        status: "APPLIED",
+        workflowCode : "CorrectionTL",
+        applicationType:"CORRECTION",
+        action:"APPLY",
       }
     ]
   };

@@ -13,19 +13,16 @@ const ApplicationDetailsCorrection = () => {
   const { id: applicationNumber } = useParams();
   const [showToast, setShowToast] = useState(null);
   // const [callUpdateService, setCallUpdateValve] = useState(false);
-  const [businessService, setBusinessService] = useState("NewTL"); //DIRECTRENEWAL
+  const [businessService, setBusinessService] = useState("CorrectionTL"); //DIRECTRENEWAL
   const [numberOfApplications, setNumberOfApplications] = useState([]);
   const [allowedToNextYear, setAllowedToNextYear] = useState(false);
   sessionStorage.setItem("applicationNumber", applicationNumber)
   const { renewalPending: renewalPending } = Digit.Hooks.useQueryParams();
 
-  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.tl.useApplicationDetail(t, tenantId, applicationNumber);
- 
+  const { isLoading, isError, data: applicationDetails, error } = Digit.Hooks.tl.useApplicationDetail(t, tenantId, applicationNumber,"","","CORRECTION");
   const wardcodes = applicationDetails?.applicationData?.tradeLicenseDetail?.address?.wardId ; //: data?.tradeLicenseDetail?.address?.wardId;
-
   const stateId = Digit.ULBService.getStateId();
   const { data: TradeRenewalDate = {} } = Digit.Hooks.tl.useTradeLicenseMDMS(stateId, "TradeLicense", ["TradeRenewal"]);
-
   const {
     isLoading: updatingApplication,
     isError: updateApplicationError,
@@ -39,7 +36,7 @@ const ApplicationDetailsCorrection = () => {
 
   let workflowDetails = Digit.Hooks.useWorkflowDetails({
     tenantId: applicationDetails?.tenantId || tenantId,
-    id: applicationDetails?.applicationData?.applicationNumber,
+    id: applicationDetails?.applicationData?.correctionAppNumber ,/// applicationDetails?.applicationData?.applicationNumber,
     moduleCode: businessService,
     role: "TL_CEMP",
     config:{EditRenewalApplastModifiedTime:EditRenewalApplastModifiedTime},
@@ -177,9 +174,9 @@ const ApplicationDetailsCorrection = () => {
 
   return (
     <div >
-      <div /* style={{marginLeft: "15px"}} */>
+      {/* <div>
         <Header>{(applicationDetails?.applicationData?.workflowCode == "NewTL" && applicationDetails?.applicationData?.status !== "APPROVED") ? t("TL_TRADE_APPLICATION_DETAILS_LABEL") : t("TL_TRADE_LICENSE_DETAILS_LABEL")}</Header>
-      </div>
+      </div> */}
       <ApplicationDetailsTemplate
         applicationDetails={applicationDetails}
         isLoading={isLoading}

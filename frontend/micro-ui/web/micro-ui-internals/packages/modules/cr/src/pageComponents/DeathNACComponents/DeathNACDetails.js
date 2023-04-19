@@ -288,10 +288,19 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
       ? ""
       : ""
   );
+
+  const [hospitalNameEn, selectHospitalNameEn] = useState(
+      formData?.InformationDeath?.hospitalNameEn?.code
+        ? formData?.InformationDeath?.hospitalNameEn
+        : formData?.InformationDeath?.hospitalNameEn
+        ? ""
+        : ""
+  );
   const [DeathPlaceInstId, setSelectedDeathPlaceInstId] = useState(
     formData?.InformationDeath?.DeathPlaceInstId ? formData?.InformationDeath?.DeathPlaceInstId : null
   );
   const [InstitutionIdMl, setInstitutionIdMl] = useState(formData?.InformationDeath?.DeathPlaceInstId);
+  const [institution, selectinstitution] = useState(formData?.InformationDeath?.DeathPlaceInstId);
   const [InstitutionFilterList, setInstitutionFilterList] = useState(null);
   const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(false);
   // Home
@@ -332,6 +341,12 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
   const [VehicleFirstHaltMl, setVehicleFirstHaltMl] = useState(formData?.InformationDeath?.VehicleFirstHaltMl);
   const [VehicleHospitalEn, setSelectedVehicleHospitalEn] = useState(formData?.InformationDeath?.VehicleHospitalEn);
   const [DeathPlaceWardId, setDeathPlaceWardId] = useState(formData?.InformationDeath?.DeathPlaceWardId);
+  const [vehicleType, selectvehicleType] = useState(formData?.InformationDeath?.DeathPlaceType?.code
+      ? formData?.InformationDeath?.DeathPlaceType
+      : formData?.InformationDeath?.DeathPlaceType
+      ? ""
+      : ""
+  );
   //Public Place
 
   const [DeathPlaceLocalityEn, setDeathPlaceLocalityEn] = useState(
@@ -345,6 +360,12 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
   );
   const [DeathPlaceStreetMl, setDeathPlaceStreetMl] = useState(
     formData?.InformationDeath?.DeathPlaceStreetMl ? formData?.InformationDeath?.DeathPlaceStreetMl : ""
+  );
+  const [publicPlaceType, selectpublicPlaceType] = useState(formData?.InformationDeath?.DeathPlaceType?.code
+      ? formData?.InformationDeath?.DeathPlaceType
+      : formData?.InformationDeath?.DeathPlaceType
+      ? ""
+      : ""
   );
 
   //DeathOutsideJurisdiction
@@ -416,13 +437,14 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
         naturetype = DeathPlace.code;
         setValue(naturetype);
         if (naturetype === "HOSPITAL") {
-          <Hospital DeathPlaceType={DeathPlaceType} HospitalNameMl={HospitalNameMl} />;
+          <Hospital DeathPlaceType={DeathPlaceType} HospitalNameMl={HospitalNameMl} hospitalNameEn={hospitalNameEn} />;
         }
         if (naturetype === "INSTITUTION") {
           <Institution
             DeathPlaceType={DeathPlaceType}
             DeathPlaceInstId={DeathPlaceInstId}
             InstitutionIdMl={InstitutionIdMl}
+            institution={institution}
             InstitutionFilterList={InstitutionFilterList}
             isInitialRenderInstitutionList={isInitialRenderInstitutionList}
           />;
@@ -1165,9 +1187,11 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
         workFlowCode,
         DeathPlaceType,
         HospitalNameMl,
+        hospitalNameEn,
         DeathPlaceTypecode,
         DeathPlaceInstId,
         InstitutionIdMl,
+        institution,
         institutionNameCode,
         DeathPlaceHomeHoueNameEn,
         DeathPlaceHomeHoueNameMl,
@@ -1179,6 +1203,7 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
         DeathPlaceHomepincode,
         DeathPlaceType,
         VehicleNumber,
+        vehicleType,
         VehicleFromplaceEn,
         VehicleToPlaceEn,
         VehicleFromplaceMl,
@@ -1189,6 +1214,7 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
         GeneralRemarks,
         DeathPlaceWardId,
         DeathPlaceType,
+        publicPlaceType,
         DeathPlaceLocalityEn,
         DeathPlaceLocalityMl,
         DeathPlaceStreetEn,
@@ -1418,10 +1444,12 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
               <Hospital
                 formData={formData}
                 isEditDeath={isEditDeath}
-                selectDeathPlaceType={selectDeathPlaceType}
+                // selectDeathPlaceType={selectDeathPlaceType}
                 DeathPlaceType={DeathPlaceType}
                 HospitalNameMl={HospitalNameMl}
                 selectHospitalNameMl={selectHospitalNameMl}
+                hospitalNameEn={hospitalNameEn}
+                selecthospitalNameEn={selectHospitalNameEn}
               />
             </div>
           )}
@@ -1436,6 +1464,8 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
                 setSelectedDeathPlaceInstId={setSelectedDeathPlaceInstId}
                 InstitutionIdMl={InstitutionIdMl}
                 setInstitutionIdMl={setInstitutionIdMl}
+                institution={institution}
+                selectinstitution={selectinstitution}
                 InstitutionFilterList={InstitutionFilterList}
                 setInstitutionFilterList={setInstitutionFilterList}
                 isInitialRenderInstitutionList={isInitialRenderInstitutionList}
@@ -1478,6 +1508,8 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
                 isEditDeath={isEditDeath}
                 DeathPlaceType={DeathPlaceType}
                 selectDeathPlaceType={selectDeathPlaceType}
+                vehicleType={vehicleType}
+                selectvehicleType={selectvehicleType}
                 VehicleNumber={VehicleNumber}
                 setVehicleNumber={setVehicleNumber}
                 VehicleFromplaceEn={VehicleFromplaceEn}
@@ -1508,6 +1540,8 @@ const NACDeathInformation = ({ config, onSelect, userType, formData, isEditDeath
                 isEditDeath={isEditDeath}
                 DeathPlaceType={DeathPlaceType}
                 selectDeathPlaceType={selectDeathPlaceType}
+                publicPlaceType={publicPlaceType}
+                selectpublicPlaceType={selectpublicPlaceType}
                 DeathPlaceLocalityEn={DeathPlaceLocalityEn}
                 setDeathPlaceLocalityEn={setDeathPlaceLocalityEn}
                 DeathPlaceLocalityMl={DeathPlaceLocalityMl}
