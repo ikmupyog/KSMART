@@ -269,49 +269,44 @@ public class MarriageRegistryRepository {
 
                 StringBuilder groomAddr = new StringBuilder();
                 //Setting Groom Address data from MDMS
-                Object mdmsGroomAddressData = util.mDMSCallGetAddress(req.getRequestInfo()
-                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getPermntInKeralaAdrLBName()
-                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getDistrictIdPermanent()
-                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getStateIdPermanent()
-                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getCountryIdPermanent()
-                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getPoNoPermanent()
-                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getVillageNamePermanent()
-                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getPermntInKeralaAdrTaluk());
-                Map<String, List<String>> mdmsGroomAddressMap = util.getMarriageMDMSData(req, mdmsGroomAddressData);
-                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().setPermntInKeralaAdrLBName(getValueFromMap(MarriageConstants.TENANTS, mdmsGroomAddressMap));
-                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().setDistrictIdPresent(getValueFromMap(MarriageConstants.DISTRICT, mdmsGroomAddressMap));
-                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().setStateIdPermanent(getValueFromMap(MarriageConstants.STATE, mdmsGroomAddressMap));
-                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().setCountryIdPermanent(getValueFromMap(MarriageConstants.COUNTRY, mdmsGroomAddressMap));
-                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().setPoNoPermanent(getValueFromMap(MarriageConstants.POSTOFFICE, mdmsGroomAddressMap));
-                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().setVillageNamePermanent(getValueFromMap(MarriageConstants.VILLAGE, mdmsGroomAddressMap));
-                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().setPermntInKeralaAdrTaluk(getValueFromMap(MarriageConstants.TALUK, mdmsGroomAddressMap));
-//            groomAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().get).append(", ");
-//            groomAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getPermntInKeralaWardNo()).append(", ");
-//            groomAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getPermntInKeralaAdrLBName()).append(", ");
-//            groomAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getPermntInKerala).append(", ");
-//            groomAddr.append(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getPermntInKeralaWardNo()).append(", ");
+//                Object mdmsGroomAddressData = util.mDMSCallGetAddress(req.getRequestInfo()
+//                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getPermntInKeralaAdrLBName()
+//                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getDistrictIdPermanent()
+//                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getStateIdPermanent()
+//                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getCountryIdPermanent()
+//                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getPoNoPermanent()
+//                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getVillageNamePermanent()
+//                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().getPermntInKeralaAdrTaluk());
+//                Map<String, List<String>> mdmsGroomAddressMap = util.getMarriageMDMSData(req, mdmsGroomAddressData);
+//                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().setPermntInKeralaAdrLBName(getValueFromMap(MarriageConstants.TENANTS, mdmsGroomAddressMap));
+//                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().setDistrictIdPresent(getValueFromMap(MarriageConstants.DISTRICT, mdmsGroomAddressMap));
+//                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().setStateIdPermanent(getValueFromMap(MarriageConstants.STATE, mdmsGroomAddressMap));
+//                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().setCountryIdPermanent(getValueFromMap(MarriageConstants.COUNTRY, mdmsGroomAddressMap));
+//                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().setPoNoPermanent(getValueFromMap(MarriageConstants.POSTOFFICE, mdmsGroomAddressMap));
+//                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().setVillageNamePermanent(getValueFromMap(MarriageConstants.VILLAGE, mdmsGroomAddressMap));
+//                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getGroomAddressDetails().setPermntInKeralaAdrTaluk(getValueFromMap(MarriageConstants.TALUK, mdmsGroomAddressMap));
                 req.getMarriageCertificate().get(0).setGroomPermntFullAddr(marriageRegistryEnrichment.setGroomPermanentAddressForCertificate(req.getRequestInfo(), req.getMarriageCertificate().get(0).getMarriageRegistryDetails()));
                 req.getMarriageCertificate().get(0).setBridePermntFullAddr(marriageRegistryEnrichment.setBridePermanentAddressForCertificate(req.getRequestInfo(), req.getMarriageCertificate().get(0).getMarriageRegistryDetails()));
                 //Setting groom NRI address
 
 
                 //Setting bride address data from MDMS
-                Object mdmsBrideAddressData = util.mDMSCallGetAddress(req.getRequestInfo()
-                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().getPermntInKeralaAdrLBName()
-                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().getDistrictIdPresent()
-                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().getStateIdPermanent()
-                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().getCountryIdPermanent()
-                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().getPoNoPermanent()
-                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().getVillageNamePermanent()
-                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().getPermntInKeralaAdrTaluk());
-                Map<String, List<String>> mdmsBrideAddressMap = util.getMarriageMDMSData(req, mdmsBrideAddressData);
-                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().setPermntInKeralaAdrLBName(getValueFromMap(MarriageConstants.TENANTS, mdmsBrideAddressMap));
-                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().setDistrictIdPresent(getValueFromMap(MarriageConstants.DISTRICT, mdmsBrideAddressMap));
-                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().setStateIdPermanent(getValueFromMap(MarriageConstants.STATE, mdmsBrideAddressMap));
-                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().setCountryIdPermanent(getValueFromMap(MarriageConstants.COUNTRY, mdmsBrideAddressMap));
-                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().setPoNoPermanent(getValueFromMap(MarriageConstants.POSTOFFICE, mdmsBrideAddressMap));
-                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().setVillageNamePermanent(getValueFromMap(MarriageConstants.VILLAGE, mdmsBrideAddressMap));
-                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().setPermntInKeralaAdrTaluk(getValueFromMap(MarriageConstants.TALUK, mdmsBrideAddressMap));
+//                Object mdmsBrideAddressData = util.mDMSCallGetAddress(req.getRequestInfo()
+//                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().getPermntInKeralaAdrLBName()
+//                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().getDistrictIdPresent()
+//                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().getStateIdPermanent()
+//                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().getCountryIdPermanent()
+//                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().getPoNoPermanent()
+//                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().getVillageNamePermanent()
+//                        , req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().getPermntInKeralaAdrTaluk());
+//                Map<String, List<String>> mdmsBrideAddressMap = util.getMarriageMDMSData(req, mdmsBrideAddressData);
+//                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().setPermntInKeralaAdrLBName(getValueFromMap(MarriageConstants.TENANTS, mdmsBrideAddressMap));
+//                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().setDistrictIdPresent(getValueFromMap(MarriageConstants.DISTRICT, mdmsBrideAddressMap));
+//                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().setStateIdPermanent(getValueFromMap(MarriageConstants.STATE, mdmsBrideAddressMap));
+//                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().setCountryIdPermanent(getValueFromMap(MarriageConstants.COUNTRY, mdmsBrideAddressMap));
+//                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().setPoNoPermanent(getValueFromMap(MarriageConstants.POSTOFFICE, mdmsBrideAddressMap));
+//                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().setVillageNamePermanent(getValueFromMap(MarriageConstants.VILLAGE, mdmsBrideAddressMap));
+//                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getBrideAddressDetails().setPermntInKeralaAdrTaluk(getValueFromMap(MarriageConstants.TALUK, mdmsBrideAddressMap));
 
 
 //            if(StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getGroomUrl())) {
