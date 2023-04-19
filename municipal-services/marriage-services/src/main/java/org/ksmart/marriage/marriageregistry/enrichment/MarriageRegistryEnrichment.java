@@ -533,8 +533,8 @@ public class MarriageRegistryEnrichment implements BaseEnrichment {
         if (registryDetails.getGroomAddressDetails() != null) {
 
 //            if (registryDetails.getGroomAddressDetails().getPermtaddressCountry() != null && registryDetails.getGroomAddressDetails().getPermtaddressStateName() != null) {
-                if (registryDetails.getGroomAddressDetails().getPermtaddressCountry().equals(MarriageConstants.COUNTRY_CODE) || (registryDetails.getGroomAddressDetails().getPermtaddressCountry() == null)) {
-                    if (registryDetails.getGroomAddressDetails().getPermtaddressStateName().equals(MarriageConstants.STATE_CODE_SMALL) || (registryDetails.getGroomAddressDetails().getPermtaddressStateName().isEmpty())) {
+                if (registryDetails.getGroomAddressDetails().getPermtaddressCountry().equals(MarriageConstants.COUNTRY_CODE)) {
+                    if (registryDetails.getGroomAddressDetails().getPermtaddressStateName().equals(MarriageConstants.STATE_CODE_SMALL)) {
 
 
                         Object mdmsGroomAddressData = util.mDMSCallGetAddress(req
@@ -570,25 +570,12 @@ public class MarriageRegistryEnrichment implements BaseEnrichment {
                             appendIfNotBlank(registryDetails.getGroomAddressDetails().getPoNoPermanent(), groomAddressBuilder, true);
 
 //                        appendIfNotBlank(getValueFromMap(MarriageConstants.POSTOFFICE, mdmsGroomAddressMap), groomAddressBuilder, true);
-                    if(!(MarriageConstants.DISTRICT).isEmpty()){
-                        appendIfNotBlank(getValueFromMap(MarriageConstants.DISTRICT, mdmsGroomAddressMap), groomAddressBuilder, true);
-                    }
-                    else{
-                        appendIfNotBlank(registryDetails.getGroomAddressDetails().getDistrictName(), groomAddressBuilder, true);
-                    }
-                    if(!(MarriageConstants.STATE).isEmpty()){
-                                appendIfNotBlank(getValueFromMap(MarriageConstants.STATE, mdmsGroomAddressMap), groomAddressBuilder, true);
-                    }
-                    else{
-                        appendIfNotBlank(registryDetails.getGroomAddressDetails().getStateName(), groomAddressBuilder, true);
-                    }
-                    if(!(MarriageConstants.COUNTRY).isEmpty()) {
+                            appendIfNotBlank(getValueFromMap(MarriageConstants.DISTRICT, mdmsGroomAddressMap), groomAddressBuilder, true);
 
-                        appendIfNotBlank(getValueFromMap(MarriageConstants.COUNTRY, mdmsGroomAddressMap), groomAddressBuilder, true);
-                    }
-                    else{
-                        appendIfNotBlank(registryDetails.getGroomAddressDetails().getCountryName(), groomAddressBuilder, true);
-                    }
+                            appendIfNotBlank(getValueFromMap(MarriageConstants.STATE, mdmsGroomAddressMap), groomAddressBuilder, true);
+
+                            appendIfNotBlank(getValueFromMap(MarriageConstants.COUNTRY, mdmsGroomAddressMap), groomAddressBuilder, true);
+
                             appendIfNotBlank(registryDetails.getGroomAddressDetails().getPinNoPermanent(), groomAddressBuilder, true);
                         }
 
