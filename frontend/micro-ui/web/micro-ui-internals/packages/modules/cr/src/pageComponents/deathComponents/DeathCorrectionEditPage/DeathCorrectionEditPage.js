@@ -8,9 +8,9 @@ import {
   LinkButton,
   EditButton,
   BackButton,
-  SubmitBar,
   EditIcon,
   Loader,
+  SubmitBar
 } from "@egovernments/digit-ui-react-components";
 import FormFieldContainer from "../../../components/FormFieldContainer";
 import { useTranslation } from "react-i18next";
@@ -28,7 +28,7 @@ import { convertEpochToDate  } from "../../../utils";
 import { useForm } from "react-hook-form";
 import { formatApiParams } from "../../../utils/deathCorrectionParams";
 
-function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, sex, cmbPlace , DeathCorrectionDocuments ,navigationData}) {
+function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, sex, cmbPlace , DeathCorrectionDocuments ,navigationData, onSubmitAcknowledgement}) {
   const { t } = useTranslation();
   const tenantId = Digit.ULBService.getCurrentTenantId();
   const [showModal, setShowModal] = useState(false);
@@ -275,6 +275,7 @@ const onPresentAddressChange = (e,fieldType) =>{
     const formattedResp =  formatApiParams(deathCorrectionFormsObj, navigationData);
     console.log("formattedResp", formattedResp);
     mutation.mutate(formattedResp);
+    onSubmitAcknowledgement();
   };
 
   const onSubmit = (data) => console.log(data);
@@ -921,11 +922,14 @@ console.log("deathCorrectionFormsObj==",deathCorrectionFormsObj);
           <div style={{ display: "flex", flexDirection: "column-reverse" }}></div>
             <FormFieldContainer>
               <FieldComponentContainer></FieldComponentContainer>
-              <SubmitBar label={t("CS_COMMON_SUBMIT")} onClick={onSubmitDeathCorrection}>
-                {/* <div style={{ marginTop: "2.5rem" }}>
-                 
-                </div> */}
-              </SubmitBar>
+              {/* <SubmitContainer>
+                <div style={{ marginTop: "2.5rem" }}>
+                  <span onClick={onSubmitDeathCorrection}>
+                    <EditButton selected={true} label={"Submit"} />
+                  </span>
+                </div>
+              </SubmitContainer> */}
+              <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmitDeathCorrection} />
             </FormFieldContainer>
         </form>
         <DeathCorrectionModal 

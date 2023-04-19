@@ -3,12 +3,12 @@ const formFielColumns = {
     DECEASED_SEX:"CR_DECEASED_SEX",
     DECEASED_AADHAR: "CR_DECEASED_AADHAR",
     DECEASED_FATHER: {
-      fatherNameEn: "CR_DECEASED_FATHER_EN",
-      fatherNameMl: "CR_DECEASED_FATHER_EN_ML",
+      fathersNameEn: "CR_DECEASED_FATHER_EN",
+      fathersNameMl: "CR_DECEASED_FATHER_EN_ML",
     },
     DECEASED_MOTHER:{
-      motherNameEn: "CR_DECEASED_MOTHER_EN",
-      motherNameMl: "CR_DECEASED_MOTHER_ML",
+      mothersNameEn: "CR_DECEASED_MOTHER_EN",
+      mothersNameMl: "CR_DECEASED_MOTHER_ML",
     },
     DECEASED_NAME:{
       firstNameEn: "CR_DECEASED_FIRST_NAME_EN",
@@ -18,13 +18,17 @@ const formFielColumns = {
       middleNameMl: "CR_DECEASED_MIDDLE_NAME_ML",
       lastNameMl: "CR_DECEASED_LAST_NAME_ML",
     },
-    PRESENT_ADDRESS: {
+    PERMANENT_ADDRESS: {
       houseNameEn: "CR_HOUSE_NO_AND_NAME_EN",
       houseNameMl: "CR_HOUSE_NO_AND_NAME_ML",
-      localityEn: "CR_LOCALITY_EN",
-      localityMl: "CR_LOCALITY_ML",
-      streetEn: "CR_STREET_EN",
-      streetMl: "CR_STREET_ML",
+      localityNameEn: "CR_LOCALITY_EN",
+      localityNameMl: "CR_LOCALITY_ML",
+      streetNameEn: "CR_STREET_EN",
+      streetNameMl: "CR_STREET_ML",
+    },
+    DECEASED_SPOUSE: {
+      spouseNameEn: "CR_SPOUSE_NAME_EN",
+      spouseNameMl: "CR_SPOUSE_NAME_Ml",
     }
   }
   
@@ -48,13 +52,15 @@ const formFielColumns = {
     let fieldNameData = [];
     console.log("reached--nested==",fieldData,Object.keys(fieldData.curValue));
     if(Object.keys(fieldData.curValue)?.length > 0){
-      fieldNameData = Object.keys(fieldData.curValue).map((item)=>{
-        console.log("looped==",formFielColumns[fieldData?.selectedDocType]?.[item],formFielColumns[fieldData?.selectedDocType]);
-        const columnName = formFielColumns[fieldData?.selectedDocType]?.[item];
+      fieldNameData = Object.keys(fieldData.curValue).map((key)=>{
+        console.log("looped==",key,fieldData.initialValue,fieldData.curValue,formFielColumns[fieldData?.selectedDocType]);
+        const columnName = formFielColumns[fieldData?.selectedDocType]?.[key];
+        const oldValue = fieldData.initialValue?.[key] ? fieldData.initialValue?.[key] : null;
+        const newValue = fieldData.curValue?.[key] ? fieldData.curValue?.[key] : null;
          const tempObj = {
             column: columnName,
-            oldValue: fieldData.initialValue?.[item],
-            newValue: fieldData.curValue?.[item],
+            oldValue:oldValue,
+            newValue:newValue,
           };
           console.log("tempObj==",tempObj);
           return tempObj;
@@ -64,11 +70,11 @@ const formFielColumns = {
   }
   
   const getCorrectionFieldValues = (item) => {
-    console.log("correction item==",item);
+    console.log("correction item==",item.curValue,item);
     let fieldValues = [];
     switch(item?.selectedDocType){
       
-    case "DECEASED_AADHAR": case "DECEASED_DOB": case "DECEASED_SEX":
+    case "DECEASED_AADHAR": 
     fieldValues =  [
       {
         column: formFielColumns[item?.CorrectionField],
@@ -77,7 +83,27 @@ const formFielColumns = {
       },
     ];
     break;
-    case "DECEASED_FATHER" : case "DECEASED_MOTHER": case "DECEASED_NAME" : case "PRESENT_ADDRESS":
+    case "DECEASED_DOB":
+        console.log("DECEASED_DOB",Date(item.curValue),Date(item.curValue).getTime());
+        fieldValues =  [
+          {
+            column: formFielColumns[item?.CorrectionField],
+            oldValue: item.initialValue,
+            newValue:  item.curValue && Date.parse(item.curValue),
+            // newValue: item.curValue && new Date(item.curValue).getTime(),
+          },
+        ];
+        break;
+     case "DECEASED_SEX":
+    fieldValues =  [
+      {
+        column: formFielColumns[item?.CorrectionField],
+        oldValue: item.initialValue?.code,
+        newValue: item.curValue?.code,
+      },
+    ];
+    break;
+    case "DECEASED_FATHER" : case "DECEASED_MOTHER": case "DECEASED_NAME" : case "PERMANENT_ADDRESS": case "DECEASED_SPOUSE" :
     fieldValues =  getNestedFieldNames(item);
     break;
    }
@@ -95,8 +121,8 @@ const formFielColumns = {
             const correctionFieldValues = getCorrectionFieldValues(item);
             const correctionDocs = getCorrectionDocuments(item.Documents);
             const tempObj = {
-              correctionFieldName: item?.CorrectionField,
-              conditionCode: item.conditionCode,
+              correctionFieldName: item?.documentData?.[0]?.CorrectionField,
+              conditionCode: item.documentCondition,
               specificCondition: null,
               correctionFieldValue: correctionFieldValues,
               CorrectionDocument: correctionDocs,
@@ -132,7 +158,6 @@ const formFielColumns = {
         },
       ],
     };
-    console.log("api params==", apiParam);
-    return apiParam;
+     return apiParam;
   };
   

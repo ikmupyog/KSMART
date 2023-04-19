@@ -1,8 +1,11 @@
+  import { DEATH_CORRECTION_FIELD_NAMES } from "../../config/constants";
+  
   export const getFilteredDeceasedMothersName = (selectedData, correctionData) => {
     let filteredDocuments = getFilteredDocuments(correctionData);
-    const computedCurrentValue = computeCurrentValue({mothersNameEn: selectedData?.FamilyInformationDeath?.MotherNameEn, mothersNameMl: selectedData?.FamilyInformationDeath?.MotherNameMl});
-    const computedInitialValue = computeInitialValue({mothersNameEn: selectedData?.FamilyInformationDeath?.MotherNameEn, mothersNameMl: selectedData?.FamilyInformationDeath?.MotherNameMl});
+    const computedCurrentValue = computeCurrentValue(selectedData);
+    const computedInitialValue = computeInitialValue(selectedData);
     let selectedDodObj = {
+      fieldName: DEATH_CORRECTION_FIELD_NAMES.DECEASED_MOTHER,
       initialValue: computedInitialValue,
       curValue: computedCurrentValue,
       isDisabled: true,
@@ -14,14 +17,19 @@
     };
   
   //TODO need validation to check dob is null
-  const computeInitialValue = (motherName) => {
-    const initialValue = motherName;
+  const computeInitialValue = (selectedData) => {
+    const initialValue = {
+      mothersNameEn: selectedData?.FamilyInformationDeath?.MotherNameEn, 
+      mothersNameMl: selectedData?.FamilyInformationDeath?.MotherNameMl
+    };
     return initialValue;
-  };
+    };
 
-
-const computeCurrentValue = (motherName) => {
-  const currentValue = motherName;
+const computeCurrentValue = (selectedData) => {
+  const currentValue = {
+    mothersNameEn: selectedData?.FamilyInformationDeath?.MotherNameEn, 
+      mothersNameMl: selectedData?.FamilyInformationDeath?.MotherNameMl
+  }
   return currentValue;
 };
 

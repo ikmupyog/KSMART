@@ -25,6 +25,20 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
     setUploadDoc({ ...uploadDoc, ...tempObj });
   };
 
+  useEffect(()=>{
+    return ()=>{
+      setUploadedFiles([]);
+    }
+  },[])
+
+  const resetFields = () => {
+    setUploadedFiles([]);
+    setDocuploadedId("");
+    setDocuploadedName("");
+    setDocuploadedType("");
+    setFile({});
+  };
+
   function onDeleteown(e) {
     const removeindex = uploadedFiles.findIndex((element) => {
       return element.documentType === e;
@@ -114,7 +128,7 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
         <h2 style={{ marginBottom: "1rem" }}>{`You have to upload the following documents to edit ${fieldName?.toLowerCase()}.`}</h2>
         {selectedConfig?.Documents?.map((item, index) => (
           <div>
-            {!selectedDocs.includes(item.DocumentId) && (
+            {!selectedDocs.includes(item.DocumentId.toString()) && (
               <div style={{ padding: ".5rem, 0,.5rem, 0" }}>
                 <h1 style={{ fontWeight: "bold" }}>{item.DocumentType}</h1>
                 <div style={{ padding: "1rem 0 1.5rem 1rem" }}>
@@ -142,6 +156,7 @@ const DeathCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedC
           selected={true}
           label={"Save"}
           onClick={() => {
+            resetFields();
             onSubmit(uploadedFiles, error);
           }}
         />
