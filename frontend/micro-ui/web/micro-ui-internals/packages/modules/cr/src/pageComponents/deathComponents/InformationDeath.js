@@ -12,10 +12,10 @@ import DeathOutsideJurisdiction from "./DeathOutsideJurisdiction ";
 // import _ from "lodash";
 // import { STATE_CODE } from "../../config/constants";
 
-const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  = false }) => {
- console.log(formData);
+const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath = false }) => {
+  console.log(formData);
   // console.log(isEditDeath);
-  // console.log(JSON.stringify(formData));  
+  // console.log(JSON.stringify(formData));
   sessionStorage.removeItem("applicationNumber");
   const [isEditDeathPageComponents, setIsEditDeathPageComponents] = useState(false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
@@ -25,7 +25,6 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
   const [workFlowAmount, setWorkFlowAmount] = useState(formData?.InformationDeath?.workFlowAmount);
   const [isPayment, setIsPayment] = useState(formData?.InformationDeath?.isPayment);
 
- 
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
   if (tenantId === "kl") {
@@ -35,7 +34,11 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
   let validation = {};
   // const [cmbAgeUnitFilter, setcmbAgeUnitFilter] = useState();
 
-  const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId,"birth-death-service","WorkFlowDeath");
+  const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
+    stateId,
+    "birth-death-service",
+    "WorkFlowDeath"
+  );
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const { data: Menu, isGenderLoad } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
   const { data: religion = {}, isreligionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Religion");
@@ -59,7 +62,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
       return null;
     }
   };
-   const convertEpochToDate = (dateEpoch) => {
+  const convertEpochToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
       const dateFromApi = new Date(dateEpoch);
@@ -154,9 +157,9 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
       ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath)
       : formData?.InformationDeath?.DateOfDeath
   );
- //const [DateOfDeath, setDateOfDeath] = useState(isEditDeath ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath) : formData?.InformationDeath?.DateOfDeath); 
-  //const [FromDate, setFromDate] = useState(isEditDeath ? convertEpochToDate(formData?.InformationDeath?.FromDate) : formData?.InformationDeath?.FromDate); 
-console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
+  //const [DateOfDeath, setDateOfDeath] = useState(isEditDeath ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath) : formData?.InformationDeath?.DateOfDeath);
+  //const [FromDate, setFromDate] = useState(isEditDeath ? convertEpochToDate(formData?.InformationDeath?.FromDate) : formData?.InformationDeath?.FromDate);
+  console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
   const [FromDate, setFromDate] = useState(
     isEditDeath &&
       isEditDeathPageComponents === false &&
@@ -176,7 +179,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
   //     : formData?.InformationDeath?.DeathTimeFrom
   // );
   const [DeathTimeFrom, setDeathTimeFrom] = useState(formData?.InformationDeath?.DeathTimeFrom ? formData?.InformationDeath?.DeathTimeFrom : "");
-  
+
   const [DeathTimeTo, setDeathTimeTo] = useState(
     isEditDeathPageComponents === false &&
       (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
@@ -199,14 +202,15 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
       ? formData?.InformationDeath?.DeathDateUnavailable
       : false
   );
-  const [TimeOfDeath, setDeathTime] = useState(formData?.InformationDeath?.TimeOfDeath ? formData?.InformationDeath?.TimeOfDeath : ""); 
-  
+  const [TimeOfDeath, setDeathTime] = useState(formData?.InformationDeath?.TimeOfDeath ? formData?.InformationDeath?.TimeOfDeath : "");
+
   const [DeceasedAadharNotAvailable, setDeceasedAadharNotAvailable] = useState(
     formData?.InformationDeath?.DeceasedAadharNotAvailable ? formData?.InformationDeath?.DeceasedAadharNotAvailable : false
   );
   const [DeceasedAadharNumber, setDeceasedAadharNumber] = useState(
-    formData?.InformationDeath?.DeceasedAadharNumber ? formData?.InformationDeath?.DeceasedAadharNumber : null);
-   
+    formData?.InformationDeath?.DeceasedAadharNumber ? formData?.InformationDeath?.DeceasedAadharNumber : null
+  );
+
   const [isTextboxEnabled, setIsTextboxEnabled] = useState(false);
   const [DeceasedIdproofType, setSelectedDeceasedIdproofType] = useState(
     formData?.InformationDeath?.DeceasedIdproofType ? formData?.InformationDeath?.DeceasedIdproofType : null
@@ -328,10 +332,8 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
       ? ""
       : ""
   );
-  const [institution, selectinstitution] = useState(
-    formData?.InformationDeath?.institution ? formData?.InformationDeath?.institution : null
-  );
-   const [DeathPlaceInstId, setSelectedDeathPlaceInstId] = useState(
+  const [institution, selectinstitution] = useState(formData?.InformationDeath?.institution ? formData?.InformationDeath?.institution : null);
+  const [DeathPlaceInstId, setSelectedDeathPlaceInstId] = useState(
     formData?.InformationDeath?.DeathPlaceInstId ? formData?.InformationDeath?.DeathPlaceInstId : null
   );
   const [InstitutionIdMl, setInstitutionIdMl] = useState(formData?.InformationDeath?.DeathPlaceInstId);
@@ -365,9 +367,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
   );
   //Vehicle home OutsideJurisdiction{DeathPlaceWardId} Publicplace OutsideJurisdiction {GeneralRemarks} Publicplace {DeathPlaceWardId}
   //
-  const [vehicleType, selectvehicleType] = useState(
-    formData?.InformationDeath?.vehicleType ? formData?.InformationDeath?.vehicleType : null
-  );
+  const [vehicleType, selectvehicleType] = useState(formData?.InformationDeath?.vehicleType ? formData?.InformationDeath?.vehicleType : null);
   const [VehicleNumber, setVehicleNumber] = useState(formData?.InformationDeath?.VehicleNumber);
   const [VehicleFromplaceEn, setVehicleFromplaceEn] = useState(formData?.InformationDeath?.VehicleFromplaceEn);
   const [VehicleToPlaceEn, setVehicleToPlaceEn] = useState(formData?.InformationDeath?.VehicleToPlaceEn);
@@ -422,12 +422,24 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
   const [AgeUnitError, setAgeUnitError] = useState(formData?.InformationDeath?.AgeUnit ? false : false);
   const [WardNameError, setWardNameError] = useState(formData?.InformationDeath?.DeathPlaceWardId ? false : false);
 
-  const [DeathPlaceHomelocalityEnError, setDeathPlaceHomelocalityEnError] = useState(formData?.InformationDeath?.DeathPlaceHomeLocalityEn ? false : false);
-  const [DeathPlaceHomehoueNameEnError, setDeathPlaceHomehoueNameEnError] = useState(formData?.InformationDeath?.DeathPlaceHomehoueNameEn ? false : false);
-  const [DeathPlaceHomeStreetNameEnError, setDeathPlaceHomeStreetNameEnError] = useState(formData?.InformationDeath?.DeathPlaceHomestreetNameEn ? false : false);
-  const [DeathPlaceHomelocalityMlError, setDeathPlaceHomelocalityMlError] = useState(formData?.InformationDeath?.DeathPlaceHomelocalityMl ? false : false);
-  const [DeathPlaceHomestreetNameMlError, setDeathPlaceHomestreetNameMlError] = useState(formData?.InformationDeath?.DeathPlaceHomestreetNameMl ? false : false);
-  const [DeathPlaceHomehoueNameMlError, setDeathPlaceHomehoueNameMlError] = useState(formData?.InformationDeath?.DeathPlaceHomehoueNameMl ? false : false);
+  const [DeathPlaceHomelocalityEnError, setDeathPlaceHomelocalityEnError] = useState(
+    formData?.InformationDeath?.DeathPlaceHomeLocalityEn ? false : false
+  );
+  const [DeathPlaceHomehoueNameEnError, setDeathPlaceHomehoueNameEnError] = useState(
+    formData?.InformationDeath?.DeathPlaceHomehoueNameEn ? false : false
+  );
+  const [DeathPlaceHomeStreetNameEnError, setDeathPlaceHomeStreetNameEnError] = useState(
+    formData?.InformationDeath?.DeathPlaceHomestreetNameEn ? false : false
+  );
+  const [DeathPlaceHomelocalityMlError, setDeathPlaceHomelocalityMlError] = useState(
+    formData?.InformationDeath?.DeathPlaceHomelocalityMl ? false : false
+  );
+  const [DeathPlaceHomestreetNameMlError, setDeathPlaceHomestreetNameMlError] = useState(
+    formData?.InformationDeath?.DeathPlaceHomestreetNameMl ? false : false
+  );
+  const [DeathPlaceHomehoueNameMlError, setDeathPlaceHomehoueNameMlError] = useState(
+    formData?.InformationDeath?.DeathPlaceHomehoueNameMl ? false : false
+  );
   const [VehicleFromplaceEnError, setVehicleFromplaceEnError] = useState(formData?.InformationDeath?.VehicleFromplaceEn ? false : false);
   const [VehicleToPlaceEnError, setVehicleToPlaceEnError] = useState(formData?.InformationDeath?.setVehicleToPlaceEn ? false : false);
   const [VehicleNumberError, setvVehicleNumberError] = useState(formData?.InformationDeath?.VehicleNumber ? false : false);
@@ -438,7 +450,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
   const [VehicleHospitalEnError, setVehicleHospitalEnError] = useState(formData?.InformationDeath?.VehicleHospitalEn ? false : false);
   const [DeathPlaceLocalityEnError, setDeathPlaceLocalityEnError] = useState(formData?.InformationDeath?.DeathPlaceLocalityEn ? false : false);
   const [DeathPlaceLocalityMlError, setDeathPlaceLocalityMlError] = useState(formData?.InformationDeath?.DeathPlaceLocalityMl ? false : false);
-  
+
   const onSkip = () => onSelect();
   useEffect(() => {
     if (isInitialRender) {
@@ -489,13 +501,11 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
         naturetype = DeathPlace.code;
         setValue(naturetype);
         if (naturetype === "HOSPITAL") {
-          <Hospital 
-          hospitalNameEn={hospitalNameEn} 
-          HospitalNameMl={HospitalNameMl} />;
+          <Hospital hospitalNameEn={hospitalNameEn} HospitalNameMl={HospitalNameMl} />;
         }
         if (naturetype === "INSTITUTION") {
           <Institution
-          institution={institution}
+            institution={institution}
             DeathPlaceInstId={DeathPlaceInstId}
             InstitutionIdMl={InstitutionIdMl}
             InstitutionFilterList={InstitutionFilterList}
@@ -516,12 +526,10 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
             DeathPlaceHomeStreetNameMl={DeathPlaceHomeStreetNameMl}
             PostOfficevalues={PostOfficevalues}
           />;
-
-       
         }
         if (naturetype === "VEHICLE") {
           <DeathPlaceVehicle
-          vehicleType={vehicleType}
+            vehicleType={vehicleType}
             VehicleNumber={VehicleNumber}
             VehicleFromplaceEn={VehicleFromplaceEn}
             VehicleToPlaceEn={VehicleToPlaceEn}
@@ -536,7 +544,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
         }
         if (naturetype === "PUBLIC_PLACES") {
           <DeathPublicPlace
-          publicPlaceType={publicPlaceType}
+            publicPlaceType={publicPlaceType}
             DeathPlaceLocalityEn={DeathPlaceLocalityEn}
             DeathPlaceLocalityMl={DeathPlaceLocalityMl}
             DeathPlaceStreetEn={DeathPlaceStreetEn}
@@ -585,12 +593,41 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
   function selectFromDate(value) {
     setFromDate(value);
     const today = new Date();
+    today.setHours(0, 0, 0, 0);
     const deathDate = new Date(value);
+    deathDate.setHours(0, 0, 0, 0);
+
     if (deathDate.getTime() <= today.getTime()) {
+      setDOBError(false);
+      // To calculate the time difference of two dates
       let Difference_In_Time = today.getTime() - deathDate.getTime();
+      // console.log("Difference_In_Time" + Difference_In_Time);
+      setDifferenceInTime(today.getTime() - deathDate.getTime());
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-      Difference_In_DaysRounded = Math.floor(Difference_In_Days);
+      setDifferenceInDaysRounded(Math.floor(DiworkFlfference_In_Days * 24 * 60 * 60 * 1000));
+      if (DeathPlace) {
+        let currentWorgFlow = workFlowData.filter(
+          (workFlowData) =>
+            workFlowData.DeathPlace === DeathPlace.code &&
+            workFlowData.startdateperiod <= DifferenceInTime &&
+            workFlowData.enddateperiod >= DifferenceInTime
+        );
+        console.log("currentWorgFlowDOB" + currentWorgFlow);
+        if (currentWorgFlow.length > 0) {
+          // console.log(currentWorgFlow[0].WorkflowCode);
+          setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+          setIsPayment(currentWorgFlow[0].payment);
+          setWorkFlowAmount(currentWorgFlow[0].amount);
+        }
+      }
     }
+    // const today = new Date();
+    // const deathDate = new Date(value);
+    // if (deathDate.getTime() <= today.getTime()) {
+    //   let Difference_In_Time = today.getTime() - deathDate.getTime();
+    //   let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+    //   Difference_In_DaysRounded = Math.floor(Difference_In_Days);
+    // }
     // else {
     //   setFromDate(null);
     //   setDOBError(true);
@@ -600,7 +637,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
     //   }, 3000);
     // }
   }
-  
+
   function selectToDate(value) {
     setToDate(value);
 
@@ -663,18 +700,21 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
       // console.log("Difference_In_Time" + Difference_In_Time);
       setDifferenceInTime(today.getTime() - deathDate.getTime());
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-      setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
+      setDifferenceInDaysRounded(Math.floor(DiworkFlfference_In_Days * 24 * 60 * 60 * 1000));
       if (DeathPlace) {
-        let currentWorgFlow = workFlowData.filter((workFlowData) => workFlowData.DeathPlace === DeathPlace.code && workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime );
+        let currentWorgFlow = workFlowData.filter(
+          (workFlowData) =>
+            workFlowData.DeathPlace === DeathPlace.code &&
+            workFlowData.startdateperiod <= DifferenceInTime &&
+            workFlowData.enddateperiod >= DifferenceInTime
+        );
         console.log("currentWorgFlowDOB" + currentWorgFlow);
         if (currentWorgFlow.length > 0) {
           // console.log(currentWorgFlow[0].WorkflowCode);
           setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
           setIsPayment(currentWorgFlow[0].payment);
           setWorkFlowAmount(currentWorgFlow[0].amount);
-
         }
-       
       }
     }
   }
@@ -683,19 +723,19 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
   let wardNumber = "";
   function setCheckSpecialCharSpace(e) {
     let pattern = /^[a-zA-Z-.`' ]*$/;
-    if (!(e.key.match(pattern)) && e.code === 'Space') {
+    if (!e.key.match(pattern) && e.code === "Space") {
       e.preventDefault();
     }
   }
   function setCheckSpecialChar(e) {
     let pattern = /^[0-9]*$/;
-    if (!(e.key.match(pattern))) {
+    if (!e.key.match(pattern)) {
       e.preventDefault();
     }
   }
   function setCheckMalayalamInputField(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
-    if (!(e.key.match(pattern))) {
+    if (!e.key.match(pattern)) {
       e.preventDefault();
     }
   }
@@ -736,7 +776,6 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
     }
   }
 
- 
   function setSelectDeceasedFirstNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
       setDeceasedFirstNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
@@ -778,7 +817,9 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
 
   function setSelectDeceasedAadharNumber(e) {
     if (e.target.value.trim().length >= 0) {
-      setDeceasedAadharNumber(e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12));
+      setDeceasedAadharNumber(
+        e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
+      );
     }
   }
   function setSelectDeceasedIdproofNo(e) {
@@ -789,8 +830,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
   function selectOccupation(value) {
     setSelectedOccupation(value);
   }
- 
- 
+
   // function selectDateOfDeath(value) {
   //   setDateOfDeath(value);
   //   const today = new Date();
@@ -808,7 +848,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
   //     }, 3000);
   //   }
   // }
- 
+
   function selectDeathPlace(value) {
     setselectDeathPlace(value);
     setValue(value.code);
@@ -823,138 +863,136 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
       setIsPayment(currentWorgFlow[0].payment);
       setWorkFlowAmount(currentWorgFlow[0].amount);
     }
-    clearDeathPlace
+    clearDeathPlace;
   }
-    function clearDeathPlace(value) {
-      if (value.code === "HOSPITAL") {
-        selectinstitution("");
-        setSelectedDeathPlaceInstId("");
-        setInstitutionIdMl("");
-        setDeathPlaceHomepostofficeId("");
-        setDeathPlaceHomepincode(null);
-        setDeathPlaceHomehoueNameEn("");
-        setDeathPlaceHomehoueNameMl("");
-        setDeathPlaceHomelocalityEn("");
-        setDeathPlaceHomelocalityMl("");
-        setDeathPlaceHomestreetNameEn("");
-        setDeathPlaceHomestreetNameMl("");
-        setDeathPlaceWardId("");
-        selectvehicleType("");
-        setVehicleNumber("");
-        setVehicleFromplaceEn("");
-        setVehicleToPlaceEn("");
-        setVehicleFromplaceMl("");
-        setVehicleFirstHaltEn("");
-        setVehicleToPlaceMl("");
-        setGeneralRemarks("");
-        setSelectedVehicleHospitalEn("");
-        selectpublicPlaceType("");
-        setDeathPlaceLocalityEn("");
-        setDeathPlaceLocalityMl("");
-        setDeathPlaceStreetEn("");
-        setDeathPlaceStreetMl("");
-        setGeneralRemarks("");
-      }else if (value.code === "INSTITUTION") {
-        selecthospitalNameEn("");
-        selectHospitalNameMl("");
-        setDeathPlaceHomepostofficeId("");
-        setDeathPlaceHomepincode(null);
-        setDeathPlaceHomehoueNameEn("");
-        setDeathPlaceHomehoueNameMl("");
-        setDeathPlaceHomelocalityEn("");
-        setDeathPlaceHomelocalityMl("");
-        setDeathPlaceHomestreetNameEn("");
-        setDeathPlaceHomestreetNameMl("");
-        setDeathPlaceWardId("");
-        selectvehicleType("");
-        setVehicleNumber("");
-        setVehicleFromplaceEn("");
-        setVehicleToPlaceEn("");
-        setVehicleFromplaceMl("");
-        setVehicleFirstHaltEn("");
-        setVehicleToPlaceMl("");
-        setGeneralRemarks("");
-        setSelectedVehicleHospitalEn("");
-        selectpublicPlaceType("");
-        setDeathPlaceLocalityEn("");
-        setDeathPlaceLocalityMl("");
-        setDeathPlaceStreetEn("");
-        setDeathPlaceStreetMl("");
-        setGeneralRemarks("");
-      } else if (value.code === "HOME") {
-        selecthospitalNameEn("");
-        selectHospitalNameMl("");
-        selectinstitution("");
-        setSelectedDeathPlaceInstId("");
-        setInstitutionIdMl("");
-        selectvehicleType("");
-        setVehicleNumber("");
-        setVehicleFromplaceEn("");
-        setVehicleToPlaceEn("");
-        setVehicleFromplaceMl("");
-        setVehicleFirstHaltEn("");
-        setVehicleToPlaceMl("");
-        setGeneralRemarks("");
-        setSelectedVehicleHospitalEn("");
-        selectpublicPlaceType("");
-        setDeathPlaceLocalityEn("");
-        setDeathPlaceLocalityMl("");
-        setDeathPlaceStreetEn("");
-        setDeathPlaceStreetMl("");
-        setGeneralRemarks("");
-      }else if (value.code === "VEHICLE") {
-        selecthospitalNameEn("");
-        selectHospitalNameMl("");
-        selectinstitution("");
-        setSelectedDeathPlaceInstId("");
-        setInstitutionIdMl("");
-        setDeathPlaceHomepostofficeId("");
-        setDeathPlaceHomepincode(null);
-        setDeathPlaceHomehoueNameEn("");
-        setDeathPlaceHomehoueNameMl("");
-        setDeathPlaceHomelocalityEn("");
-        setDeathPlaceHomelocalityMl("");
-        setDeathPlaceHomestreetNameEn("");
-        setDeathPlaceHomestreetNameMl("");
-        setDeathPlaceWardId("");
-        selectpublicPlaceType("");
-        setDeathPlaceLocalityEn("");
-        setDeathPlaceLocalityMl("");
-        setDeathPlaceStreetEn("");
-        setDeathPlaceStreetMl("");
-        setGeneralRemarks("");
-      } else if (value.code === "PUBLIC_PLACES") {
-        selecthospitalNameEn("");
-        selectHospitalNameMl("");
-        selectinstitution("");
-        setSelectedDeathPlaceInstId("");
-        setInstitutionIdMl("");
-        setDeathPlaceHomepostofficeId("");
-        setDeathPlaceHomepincode(null);
-        setDeathPlaceHomehoueNameEn("");
-        setDeathPlaceHomehoueNameMl("");
-        setDeathPlaceHomelocalityEn("");
-        setDeathPlaceHomelocalityMl("");
-        setDeathPlaceHomestreetNameEn("");
-        setDeathPlaceHomestreetNameMl("");
-        setDeathPlaceWardId("");
-        selectvehicleType("");
-        setVehicleNumber("");
-        setVehicleFromplaceEn("");
-        setVehicleToPlaceEn("");
-        setVehicleFromplaceMl("");
-        setVehicleFirstHaltEn("");
-        setVehicleToPlaceMl("");
-        setGeneralRemarks("");
-        setSelectedVehicleHospitalEn("");
-      }
-    
-    
+  function clearDeathPlace(value) {
+    if (value.code === "HOSPITAL") {
+      selectinstitution("");
+      setSelectedDeathPlaceInstId("");
+      setInstitutionIdMl("");
+      setDeathPlaceHomepostofficeId("");
+      setDeathPlaceHomepincode(null);
+      setDeathPlaceHomehoueNameEn("");
+      setDeathPlaceHomehoueNameMl("");
+      setDeathPlaceHomelocalityEn("");
+      setDeathPlaceHomelocalityMl("");
+      setDeathPlaceHomestreetNameEn("");
+      setDeathPlaceHomestreetNameMl("");
+      setDeathPlaceWardId("");
+      selectvehicleType("");
+      setVehicleNumber("");
+      setVehicleFromplaceEn("");
+      setVehicleToPlaceEn("");
+      setVehicleFromplaceMl("");
+      setVehicleFirstHaltEn("");
+      setVehicleToPlaceMl("");
+      setGeneralRemarks("");
+      setSelectedVehicleHospitalEn("");
+      selectpublicPlaceType("");
+      setDeathPlaceLocalityEn("");
+      setDeathPlaceLocalityMl("");
+      setDeathPlaceStreetEn("");
+      setDeathPlaceStreetMl("");
+      setGeneralRemarks("");
+    } else if (value.code === "INSTITUTION") {
+      selecthospitalNameEn("");
+      selectHospitalNameMl("");
+      setDeathPlaceHomepostofficeId("");
+      setDeathPlaceHomepincode(null);
+      setDeathPlaceHomehoueNameEn("");
+      setDeathPlaceHomehoueNameMl("");
+      setDeathPlaceHomelocalityEn("");
+      setDeathPlaceHomelocalityMl("");
+      setDeathPlaceHomestreetNameEn("");
+      setDeathPlaceHomestreetNameMl("");
+      setDeathPlaceWardId("");
+      selectvehicleType("");
+      setVehicleNumber("");
+      setVehicleFromplaceEn("");
+      setVehicleToPlaceEn("");
+      setVehicleFromplaceMl("");
+      setVehicleFirstHaltEn("");
+      setVehicleToPlaceMl("");
+      setGeneralRemarks("");
+      setSelectedVehicleHospitalEn("");
+      selectpublicPlaceType("");
+      setDeathPlaceLocalityEn("");
+      setDeathPlaceLocalityMl("");
+      setDeathPlaceStreetEn("");
+      setDeathPlaceStreetMl("");
+      setGeneralRemarks("");
+    } else if (value.code === "HOME") {
+      selecthospitalNameEn("");
+      selectHospitalNameMl("");
+      selectinstitution("");
+      setSelectedDeathPlaceInstId("");
+      setInstitutionIdMl("");
+      selectvehicleType("");
+      setVehicleNumber("");
+      setVehicleFromplaceEn("");
+      setVehicleToPlaceEn("");
+      setVehicleFromplaceMl("");
+      setVehicleFirstHaltEn("");
+      setVehicleToPlaceMl("");
+      setGeneralRemarks("");
+      setSelectedVehicleHospitalEn("");
+      selectpublicPlaceType("");
+      setDeathPlaceLocalityEn("");
+      setDeathPlaceLocalityMl("");
+      setDeathPlaceStreetEn("");
+      setDeathPlaceStreetMl("");
+      setGeneralRemarks("");
+    } else if (value.code === "VEHICLE") {
+      selecthospitalNameEn("");
+      selectHospitalNameMl("");
+      selectinstitution("");
+      setSelectedDeathPlaceInstId("");
+      setInstitutionIdMl("");
+      setDeathPlaceHomepostofficeId("");
+      setDeathPlaceHomepincode(null);
+      setDeathPlaceHomehoueNameEn("");
+      setDeathPlaceHomehoueNameMl("");
+      setDeathPlaceHomelocalityEn("");
+      setDeathPlaceHomelocalityMl("");
+      setDeathPlaceHomestreetNameEn("");
+      setDeathPlaceHomestreetNameMl("");
+      setDeathPlaceWardId("");
+      selectpublicPlaceType("");
+      setDeathPlaceLocalityEn("");
+      setDeathPlaceLocalityMl("");
+      setDeathPlaceStreetEn("");
+      setDeathPlaceStreetMl("");
+      setGeneralRemarks("");
+    } else if (value.code === "PUBLIC_PLACES") {
+      selecthospitalNameEn("");
+      selectHospitalNameMl("");
+      selectinstitution("");
+      setSelectedDeathPlaceInstId("");
+      setInstitutionIdMl("");
+      setDeathPlaceHomepostofficeId("");
+      setDeathPlaceHomepincode(null);
+      setDeathPlaceHomehoueNameEn("");
+      setDeathPlaceHomehoueNameMl("");
+      setDeathPlaceHomelocalityEn("");
+      setDeathPlaceHomelocalityMl("");
+      setDeathPlaceHomestreetNameEn("");
+      setDeathPlaceHomestreetNameMl("");
+      setDeathPlaceWardId("");
+      selectvehicleType("");
+      setVehicleNumber("");
+      setVehicleFromplaceEn("");
+      setVehicleToPlaceEn("");
+      setVehicleFromplaceMl("");
+      setVehicleFirstHaltEn("");
+      setVehicleToPlaceMl("");
+      setGeneralRemarks("");
+      setSelectedVehicleHospitalEn("");
+    }
   }
- 
+
   function setSelectAge(e) {
     if (e.target.value.trim().length >= 0) {
-      setAge(e.target.value.length <= 3 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 3));
+      setAge(e.target.value.length <= 3 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 3));
       // getAgeUnitOptions(e.target.value);
     }
   }
@@ -1011,7 +1049,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
       setsexError(false);
     }
 
-    if(DeceasedAadharNumber === null || DeceasedAadharNumber.trim() === '' || DeceasedAadharNumber.trim() === undefined){
+    if (DeceasedAadharNumber === null || DeceasedAadharNumber.trim() === "" || DeceasedAadharNumber.trim() === undefined) {
       setDeceasedAadharNumber("");
     } else if (DeceasedAadharNumber != null && DeceasedAadharNumber != "") {
       let adharLength = DeceasedAadharNumber;
@@ -1026,7 +1064,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
         setAadharError(false);
       }
     }
-    if (DeceasedFirstNameEn.trim() == null || DeceasedFirstNameEn.trim() == '' || DeceasedFirstNameEn.trim() == undefined) {
+    if (DeceasedFirstNameEn.trim() == null || DeceasedFirstNameEn.trim() == "" || DeceasedFirstNameEn.trim() == undefined) {
       validFlag = false;
       setDeceasedFirstNameEn("");
       setDeceasedFirstNameEnError(true);
@@ -1037,7 +1075,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
     } else {
       setDeceasedFirstNameEnError(false);
     }
-    if (DeceasedFirstNameMl.trim() == null || DeceasedFirstNameMl.trim() == '' || DeceasedFirstNameMl.trim() == undefined) {
+    if (DeceasedFirstNameMl.trim() == null || DeceasedFirstNameMl.trim() == "" || DeceasedFirstNameMl.trim() == undefined) {
       validFlag = false;
       setDeceasedFirstNameMl("");
       setDeceasedFirstNameMlError(true);
@@ -1048,7 +1086,6 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
     } else {
       setDeceasedFirstNameMlError(false);
     }
-
 
     // if (DeceasedAadharNumber != null || DeceasedAadharNumber != "" || DeceasedAadharNumber != undefined || DeceasedAadharNotAvailable === false) {
     //   let adharLength = DeceasedAadharNumber;
@@ -1106,10 +1143,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
       } else {
         DeathPlaceTypecode = hospitalNameEn.code;
         setHospitalError(false);
-      }   
-
-    
-      
+      }
     } else if (DeathPlace.code === "INSTITUTION") {
       if (institution == null) {
         setInstitutionError(true);
@@ -1133,9 +1167,8 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
           setInstitutionNameError(false);
         }
       }
-    }
-    else if (DeathPlace.code === "HOME") {
-      if (DeathPlaceHomeLocalityEn.trim() == null || DeathPlaceHomeLocalityEn.trim() == '' || DeathPlaceHomeLocalityEn.trim() == undefined) {
+    } else if (DeathPlace.code === "HOME") {
+      if (DeathPlaceHomeLocalityEn.trim() == null || DeathPlaceHomeLocalityEn.trim() == "" || DeathPlaceHomeLocalityEn.trim() == undefined) {
         validFlag = false;
         setDeathPlaceHomelocalityEn("");
         setDeathPlaceHomelocalityEnError(true);
@@ -1157,8 +1190,8 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
       // } else {
       //   setDeathPlaceHomeStreetNameEnError(false);
       // }
-   
-      if (DeathPlaceHomeHoueNameEn.trim() == null || DeathPlaceHomeHoueNameEn.trim() == '' || DeathPlaceHomeHoueNameEn.trim() == undefined) {
+
+      if (DeathPlaceHomeHoueNameEn.trim() == null || DeathPlaceHomeHoueNameEn.trim() == "" || DeathPlaceHomeHoueNameEn.trim() == undefined) {
         validFlag = false;
         setDeathPlaceHomehoueNameEn("");
         setDeathPlaceHomehoueNameEnError(true);
@@ -1169,7 +1202,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
       } else {
         setDeathPlaceHomehoueNameEnError(false);
       }
-      if (DeathPlaceHomeLocalityMl.trim() == null || DeathPlaceHomeLocalityMl.trim() == '' || DeathPlaceHomeLocalityMl.trim() == undefined) {
+      if (DeathPlaceHomeLocalityMl.trim() == null || DeathPlaceHomeLocalityMl.trim() == "" || DeathPlaceHomeLocalityMl.trim() == undefined) {
         validFlag = false;
         setDeathPlaceHomelocalityMl("");
         setDeathPlaceHomelocalityMlError(true);
@@ -1180,8 +1213,8 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
       } else {
         setDeathPlaceHomelocalityMlError(false);
       }
-     
-     if (DeathPlaceHomehoueNameMl.trim() == null || DeathPlaceHomehoueNameMl.trim() == '' || DeathPlaceHomehoueNameMl.trim() == undefined) {
+
+      if (DeathPlaceHomehoueNameMl.trim() == null || DeathPlaceHomehoueNameMl.trim() == "" || DeathPlaceHomehoueNameMl.trim() == undefined) {
         validFlag = false;
         setDeathPlaceHomehoueNameMl("");
         setDeathPlaceHomehoueNameMlError(true);
@@ -1192,108 +1225,102 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
       } else {
         setDeathPlaceHomehoueNameMlError(false);
       }
-  }
-  else if (DeathPlace.code === "VEHICLE") {   
+    } else if (DeathPlace.code === "VEHICLE") {
+      if (vehicleType == null || vehicleType == "" || vehicleType == undefined) {
+        validFlag = false;
+        setvehicleTypeError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setvehicleTypeError(false);
+      }
+      if (VehicleNumber == null || VehicleNumber == "" || VehicleNumber == undefined) {
+        validFlag = false;
+        setvVehicleNumberError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setvVehicleNumberError(false);
+      }
+      if (GeneralRemarks == null || GeneralRemarks == "" || GeneralRemarks == undefined) {
+        validFlag = false;
+        setvehiDesDetailsEnError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setvehiDesDetailsEnError(false);
+      }
+      if (VehicleHospitalEn == null || VehicleHospitalEn == "" || VehicleHospitalEn == undefined) {
+        validFlag = false;
+        setVehicleHospitalEnError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setVehicleHospitalEnError(false);
+      }
 
-    if (vehicleType == null || vehicleType == "" || vehicleType == undefined) {
-      validFlag = false;
-      setvehicleTypeError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      setvehicleTypeError(false);
+      // if (VehicleFirstHaltEn === null || VehicleFirstHaltEn == "" || VehicleFirstHaltEn == undefined) {
+      //   validFlag = false;
+      //   setvehicleHaltPlaceError(true);
+      //   setToast(true);
+      //   setTimeout(() => {
+      //     setToast(false);
+      //   }, 2000);
+      // } else {
+      //   setvehicleHaltPlaceError(false);
+      // }
+      // if (VehicleFromplaceEn.trim() == null || VehicleFromplaceEn.trim() == '' || VehicleFromplaceEn.trim() == undefined) {
+      //   validFlag = false;
+      //   setVehicleFromplaceEn("");
+      //   setVehicleFromplaceEnError(true);
+      //   setToast(true);
+      //   setTimeout(() => {
+      //     setToast(false);
+      //   }, 2000);
+      // } else {
+      //   setVehicleFromplaceEnError(false);
+      // }
+      // if (VehicleToPlaceEn.trim() == null || VehicleToPlaceEn.trim() == '' || VehicleToPlaceEn.trim() == undefined) {
+      //   validFlag = false;
+      //   setVehicleToPlaceEn("");
+      //   setVehicleToPlaceEnError(true);
+      //   setToast(true);
+      //   setTimeout(() => {
+      //     setToast(false);
+      //   }, 2000);
+      // } else {
+      //   setVehicleToPlaceEnError(false);
+      // }
+    } else if (DeathPlace.code === "PUBLIC_PLACES") {
+      if (DeathPlaceLocalityEn == null || DeathPlaceLocalityEn == "" || DeathPlaceLocalityEn == undefined) {
+        validFlag = false;
+        setDeathPlaceLocalityEnError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setDeathPlaceLocalityEnError(false);
+      }
+      if (DeathPlaceLocalityMl == null || DeathPlaceLocalityMl == "" || DeathPlaceLocalityMl == undefined) {
+        validFlag = false;
+        setDeathPlaceLocalityMlError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setDeathPlaceLocalityMlError(false);
+      }
     }
-    if (VehicleNumber == null || VehicleNumber == "" || VehicleNumber == undefined) {
-      validFlag = false;
-      setvVehicleNumberError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      setvVehicleNumberError(false);
-    }
-    if (GeneralRemarks == null || GeneralRemarks == "" || GeneralRemarks == undefined) {
-      validFlag = false;
-      setvehiDesDetailsEnError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      setvehiDesDetailsEnError(false);
-    }
-    if (VehicleHospitalEn == null || VehicleHospitalEn == "" || VehicleHospitalEn == undefined) {
-      validFlag = false;
-      setVehicleHospitalEnError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      setVehicleHospitalEnError(false);
-    }
-  
-    // if (VehicleFirstHaltEn === null || VehicleFirstHaltEn == "" || VehicleFirstHaltEn == undefined) {
-    //   validFlag = false;
-    //   setvehicleHaltPlaceError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 2000);
-    // } else {
-    //   setvehicleHaltPlaceError(false);
-    // }
-    // if (VehicleFromplaceEn.trim() == null || VehicleFromplaceEn.trim() == '' || VehicleFromplaceEn.trim() == undefined) {
-    //   validFlag = false;
-    //   setVehicleFromplaceEn("");
-    //   setVehicleFromplaceEnError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 2000);
-    // } else {
-    //   setVehicleFromplaceEnError(false);
-    // }
-    // if (VehicleToPlaceEn.trim() == null || VehicleToPlaceEn.trim() == '' || VehicleToPlaceEn.trim() == undefined) {
-    //   validFlag = false;
-    //   setVehicleToPlaceEn("");
-    //   setVehicleToPlaceEnError(true);
-    //   setToast(true);
-    //   setTimeout(() => {
-    //     setToast(false);
-    //   }, 2000);
-    // } else {
-    //   setVehicleToPlaceEnError(false);
-    // }
-  }
-  else if (DeathPlace.code === "PUBLIC_PLACES") {
-
-    
-    if (DeathPlaceLocalityEn == null || DeathPlaceLocalityEn == "" || DeathPlaceLocalityEn == undefined) {
-      validFlag = false;
-      setDeathPlaceLocalityEnError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      setDeathPlaceLocalityEnError(false);
-    }
-    if (DeathPlaceLocalityMl == null || DeathPlaceLocalityMl == "" || DeathPlaceLocalityMl == undefined) {
-      validFlag = false;
-      setDeathPlaceLocalityMlError(true);
-      setToast(true);
-      setTimeout(() => {
-        setToast(false);
-      }, 2000);
-    } else {
-      setDeathPlaceLocalityMlError(false);
-    }
-  
-  }
     if (validFlag == true) {
       // // sessionStorage.setItem("tenantId", tenantId ? tenantId : null);
       // // sessionStorage.setItem("DeathDateUnavailable", DeathDateUnavailable ? DeathDateUnavailable : false);
@@ -1388,7 +1415,7 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
       // //   sessionStorage.setItem("PlaceOfBurialMl", PlaceOfBurialMl ? PlaceOfBurialMl : null);
       // //   sessionStorage.setItem("GeneralRemarks", GeneralRemarks ? GeneralRemarks : null);
       // }
-      let IsEditChangeScreen = isEditDeath ? isEditDeath : false;    
+      let IsEditChangeScreen = isEditDeath ? isEditDeath : false;
       let isWorkflow = isEditDeath ? false : true;
       onSelect(config.key, {
         uuid,
@@ -1506,8 +1533,6 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
         setValue(formData?.InformationDeath?.Occupation);
       }
     }
-
-  
   }
   if (
     isWorkFlowDetailsLoading ||
@@ -1531,17 +1556,35 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
           config={config}
           onSelect={goNext}
           onSkip={onSkip}
-         isDisabled={!DeathPlace
-          || (value === "HOSPITAL" ? (!hospitalNameEn || !HospitalNameMl) : false)
-          || (value === "INSTITUTION" ? (!institution || !DeathPlaceInstId || !InstitutionIdMl) : false)
-          || (value === "HOME" ? (!DeathPlaceWardId || !DeathPlaceHomePostofficeId || DeathPlaceHomepincode === "" || DeathPlaceHomeLocalityEn == ""
-          || DeathPlaceHomeHoueNameEn == "" || DeathPlaceHomeLocalityMl == "" || DeathPlaceHomehoueNameMl == "") : false)
-          || (value === "PUBLIC_PLACES" ? (!publicPlaceType || !DeathPlaceWardId || DeathPlaceLocalityEn === "" ) : false)
-          || (value === "VEHICLE" ? (!vehicleType || VehicleNumber === "" || VehicleFirstHaltEn === ""
-             || !DeathPlaceWardId || GeneralRemarks === "") : false) || 
-            (value === "OUTSIDE_JURISDICTION" ? (!DeathPlaceDistrict || DeathPlaceCity == ""|| PlaceOfBurialEn == "" || PlaceOfBurialMl == "" || !DeathPlaceWardId ) : false)
-          || DeceasedFirstNameEn == "" || DeceasedFirstNameMl == "" || !AgeUnit || !Age || !DeceasedGender || !Nationality || !Religion
-          }>
+          isDisabled={
+            !DeathPlace ||
+            (value === "HOSPITAL" ? !hospitalNameEn || !HospitalNameMl : false) ||
+            (value === "INSTITUTION" ? !institution || !DeathPlaceInstId || !InstitutionIdMl : false) ||
+            (value === "HOME"
+              ? !DeathPlaceWardId ||
+                !DeathPlaceHomePostofficeId ||
+                DeathPlaceHomepincode === "" ||
+                DeathPlaceHomeLocalityEn == "" ||
+                DeathPlaceHomeHoueNameEn == "" ||
+                DeathPlaceHomeLocalityMl == "" ||
+                DeathPlaceHomehoueNameMl == ""
+              : false) ||
+            (value === "PUBLIC_PLACES" ? !publicPlaceType || !DeathPlaceWardId || DeathPlaceLocalityEn === "" : false) ||
+            (value === "VEHICLE"
+              ? !vehicleType || VehicleNumber === "" || VehicleFirstHaltEn === "" || !DeathPlaceWardId || GeneralRemarks === ""
+              : false) ||
+            (value === "OUTSIDE_JURISDICTION"
+              ? !DeathPlaceDistrict || DeathPlaceCity == "" || PlaceOfBurialEn == "" || PlaceOfBurialMl == "" || !DeathPlaceWardId
+              : false) ||
+            DeceasedFirstNameEn == "" ||
+            DeceasedFirstNameMl == "" ||
+            !AgeUnit ||
+            !Age ||
+            !DeceasedGender ||
+            !Nationality ||
+            !Religion
+          }
+        >
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
@@ -1633,7 +1676,6 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
                       })}
                     />
                   </div>
-
 
                   <div className="col-md-3">
                     <CardLabel>{t("CR_TIME_OF_DEATH")}</CardLabel>
@@ -2143,9 +2185,31 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
 
           {toast && (
             <Toast
-              error={DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || AgeError || sexError || WardNameError || DeceasedFirstNameEnError || DeceasedFirstNameMlError ||vehiDesDetailsEnError }
+              error={
+                DOBError ||
+                AadharError ||
+                HospitalError ||
+                InstitutionError ||
+                InstitutionNameError ||
+                AgeError ||
+                sexError ||
+                WardNameError ||
+                DeceasedFirstNameEnError ||
+                DeceasedFirstNameMlError ||
+                vehiDesDetailsEnError
+              }
               label={
-                DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || AgeError || sexError || WardNameError || DeceasedFirstNameEnError || DeceasedFirstNameMlError||vehiDesDetailsEnError
+                DOBError ||
+                AadharError ||
+                HospitalError ||
+                InstitutionError ||
+                InstitutionNameError ||
+                AgeError ||
+                sexError ||
+                WardNameError ||
+                DeceasedFirstNameEnError ||
+                DeceasedFirstNameMlError ||
+                vehiDesDetailsEnError
                   ? DOBError
                     ? t(`CR_INVALID_DATE`)
                     : sexError
@@ -2166,7 +2230,8 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
                     ? t(`CR_ERROR_AGE_CHOOSE`)
                     : WardNameError
                     ? t(`CR_ERROR_WARD_CHOOSE`)
-                    : vehiDesDetailsEnError ? t(`DEATH_ERROR_DESCRIPTION_BOX_CHOOSE`)
+                    : vehiDesDetailsEnError
+                    ? t(`DEATH_ERROR_DESCRIPTION_BOX_CHOOSE`)
                     : setToast(false)
                   : setToast(false)
               }
