@@ -33,7 +33,7 @@ const SelectImages = ({ t, config, onSelect, onSkip, value }) => {
         } else if (file?.type && !allowedFileTypesRegex.test(file?.type)) {
           setError(t(`NOT_SUPPORTED_FILE_TYPE`))
         } else {
-          const response = await Digit.UploadServices.Filestorage("PGR", file, Digit.ULBService.getStateId());
+          const response = await Digit.UploadServices.Filestorage("property-upload", file, value.city_complaint?.code);
           if (response && response.data?.files?.length > 0) {
             if (uploadedFile.length > 0) {
               setUploadedFile(old => [...old, response?.data?.files[0]?.fileStoreId]);
@@ -57,7 +57,7 @@ const SelectImages = ({ t, config, onSelect, onSkip, value }) => {
       {window.location.href.includes("/citizen") ? <PGRTimeline currentStep={4} /> : null}
       {window.location.href.includes("/employee") ? <EmpTimeLine currentStep={3} /> : null}
       <FormStep config={config} onSelect={handleSubmit} onSkip={onSkip} t={t} isDisabled={uploadedFile.length === 0}>
-        <CardLabel>{`${t("CS_IMAGES")}`}</CardLabel>
+        <CardLabel>{`${t("CS_IMAGES")}`}<span> {t("PGR_IMAGE_LIMIT")}</span></CardLabel>
         <ImageUploadHandler tenantId={value.city_complaint?.code} uploadedImages={uploadedImages} onPhotoChange={handleUpload} />
         {window.location.href.includes("/employee") && <div style={{ marginBottom: "20px" }}>
           <CardLabel>{`${t("CS_SUPPORTING_DOC")}`}</CardLabel>
