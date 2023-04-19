@@ -305,13 +305,13 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutsideKeralaPostOfficeEn
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutsideIndiaLineoneEn
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOthrIndiaLineoneEn
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutsideIndiaLineoneMl
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOthrIndiaLineoneMl
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutsideIndiaLinetwoEn
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOthrIndiaLinetwoEn
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutsideIndiaLinetwoMl
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOthrIndiaLinetwoMl
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutSideIndiaProvinceEn
 
@@ -363,7 +363,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.poNoPermanent
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.pinNoPermanent
+            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntInKeralaAdrPincode
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.countryIdPermanent
 
