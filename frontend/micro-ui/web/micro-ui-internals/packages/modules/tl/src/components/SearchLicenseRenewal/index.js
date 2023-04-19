@@ -77,7 +77,6 @@ const SearchLicenseRenewal = ({ tenantId, t, onSubmit, data, count, isCancelreq 
     delete finaldata?.tradeLicenseDetail?.applicationDocuments;
     isCancelreq ? Digit.SessionStorage.set("TL_CORRECTION_TRADE", finaldata) : Digit.SessionStorage.set("TL_RENEWAL_TRADE", finaldata);
     let tempdata = { "TradeDetails": finaldata }
-
     isCancelreq ? Digit.SessionStorage.set("TL_CORRECTED_TRADE", tempdata) : "";
     Digit.SessionStorage.set("TL_RENEWAL_ENABLE_TRADE", formdisable);
   }
@@ -148,9 +147,6 @@ const SearchLicenseRenewal = ({ tenantId, t, onSubmit, data, count, isCancelreq 
       <h1 style={hstyle}>{t("TL_SEARCH_APPLICATIONS")}</h1>
       <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit} id="true">
         <SearchFields {...{ register, control, reset, tenantId, t }} />
-
-
-
       </SearchForm>
 
     </div>

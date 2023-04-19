@@ -1,5 +1,5 @@
-import React, {Fragment, useCallback, useMemo} from "react";
-import { Table } from "@egovernments/digit-ui-react-components";
+import React, {Fragment, useCallback, useMemo, useState} from "react";
+import {Loader, Table} from "@egovernments/digit-ui-react-components";
 import {convertEpochToDateDMY} from "../../utils";
 import _ from "lodash";
 import { downloadDocument } from "../../utils/uploadedDocuments";
@@ -19,6 +19,8 @@ const ResultTable = ({
                      }) => {
     const GetCell = (value) => <span className="cell-text">{value}</span>;
     const fileSource = Digit.Hooks.cr.getMarriageRegistryFileSourceDetails(tenantId);
+    const [isLoading, setIsLoading] = useState(false);
+
 
 
     const columns = useMemo(
@@ -63,14 +65,20 @@ const ResultTable = ({
                         return (
                             <div>
                                 {id !== null && <span className="link" onClick={() => {
+                                    setIsLoading(true);
                                     fileSource.mutate({ filters: { id, source: "sms" } }, {
                                         onSuccess: (fileDownloadInfo) => {
+                                            setIsLoading(false);
                                             const { filestoreId } = fileDownloadInfo;
                                             if (filestoreId) {
                                                 downloadDocument(filestoreId);
                                             } else {
                                                 console.log("filestoreId is null");
                                             }
+                                        },
+                                        onError: (err) => {
+                                            setIsLoading(false);
+                                            alert("Download certificate not available");
                                         }
                                     });
                                 }}>
@@ -108,6 +116,7 @@ const ResultTable = ({
 
     return (
         <>
+            {isLoading && <Loader/>}
             <Table
                 t={t}
                 data={data}

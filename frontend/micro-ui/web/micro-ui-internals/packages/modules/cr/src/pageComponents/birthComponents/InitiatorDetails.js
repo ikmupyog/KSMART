@@ -242,11 +242,11 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
 
       onSelect(config.key, {
         relation,
-        initiatorNameEn,
+        initiatorNameEn : initiatorNameEn.trim(),
         initiatorAadhar,
         initiatorMobile,
-        initiatorDesi,
-        initiatorAddress,
+        initiatorDesi : initiatorDesi.trim(),
+        initiatorAddress: initiatorAddress.trim(),
         isInitiatorDeclaration,
         isCaretaker,
       });

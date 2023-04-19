@@ -56,9 +56,8 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
   console.log(AddressBirthDetails);
   function getdate(date) {
     let newdate = Date.parse(date);
-    return `${
-      new Date(newdate).getDate().toString() + "/" + (new Date(newdate).getMonth() + 1).toString() + "/" + new Date(newdate).getFullYear().toString()
-    }`;
+    return `${new Date(newdate).getDate().toString() + "/" + (new Date(newdate).getMonth() + 1).toString() + "/" + new Date(newdate).getFullYear().toString()
+      }`;
   }
   // const typeOfApplication = !isEditProperty ? `new-application` : `renew-trade`;
   let routeLink = "";
@@ -1692,42 +1691,42 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
             </StatusTable>
           }
         />
-        {/* <div>
-        {window.location.href.includes("/citizen") && (
-          <div> */}
-        <div className="row">
-          <div className="col-md-12">
-            <h1 className="summaryheadingh">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
-            </h1>
-          </div>
-        </div>
 
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-12">
-              <CheckBox
-                label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
-                onChange={setDeclarationInfo}
-                value={isInitiatorDeclaration}
-                checked={isInitiatorDeclaration}
-                // disable={isDisableEdit}
-              />
+        {window.location.href.includes("/citizen") && (
+          <div>
+            <div className="row">
+              <div className="col-md-12">
+                <h1 className="summaryheadingh">
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
+                </h1>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-md-12">
+                <div className="col-md-12">
+                  <CheckBox
+                    label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
+                    onChange={setDeclarationInfo}
+                    value={isInitiatorDeclaration}
+                    checked={isInitiatorDeclaration}
+                  // disable={isDisableEdit}
+                  />
+                </div>
+              </div>
             </div>
           </div>
-          {/* </div>
-          )} */}
+        )}
 
-          {toast && (
-            <Toast
-              error={InitiatorDeclareError}
-              label={InitiatorDeclareError ? (InitiatorDeclareError ? t(`BIRTH_DECLARATION_CHOOSE`) : setToast(false)) : setToast(false)}
-              onClose={() => setToast(false)}
-            />
-          )}
-          {""}
-          <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onBirthSubmit} />
-        </div>
+        {toast && (
+          <Toast
+            error={InitiatorDeclareError}
+            label={InitiatorDeclareError ? (InitiatorDeclareError ? t(`BIRTH_DECLARATION_CHOOSE`) : setToast(false)) : setToast(false)}
+            onClose={() => setToast(false)}
+          />
+        )}
+        {""}
+        <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onBirthSubmit} />
       </Card>
     </React.Fragment>
   );
