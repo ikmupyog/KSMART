@@ -869,7 +869,8 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                   <div className="col-md-12">
                     <div className="col-md-4">
                       <CardLabel>
-                        {`${t("CR_WITNESS1_ADDRESS")}`}
+                        CR_WITNESS1_ADDRESS
+                        {`${t("")}`}
                         <span className="mandatorycss">*</span>
                       </CardLabel>
                       <TextArea
