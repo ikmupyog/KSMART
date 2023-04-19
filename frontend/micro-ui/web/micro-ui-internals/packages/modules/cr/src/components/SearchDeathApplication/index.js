@@ -31,7 +31,7 @@ const SearchDeathApplication = ({ t, onSubmit, data, count, isSuccess, isLoading
       offset: 0,
       limit: 10,
       sortBy: "TL_COMMON_TABLE_COL_APP_NO",
-      sortOrder: "DESC",
+      sortOrder: "",
     },
   });
 

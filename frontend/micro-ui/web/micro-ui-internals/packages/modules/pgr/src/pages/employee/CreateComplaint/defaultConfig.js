@@ -54,10 +54,19 @@ export const config = {
       texts: {
         header: "CS_ADDCOMPLAINT_PROVIDE_ADDITIONAL_DETAILS",
         cardText: "CS_ADDCOMPLAINT_DETAILS_TEXT",
+        submitBarLabel: "CS_COMMON_NEXT",
+      },
+      nextStep: "complaint-check",
+    },
+    "complaint-check": {
+      component: "PGRComplaintSummary",
+      texts: {
+        header: "CS_ADDCOMPLAINT_SUMMARY",
+        cardText: "CS_ADDCOMPLAINT_SUMMARY",
         submitBarLabel: "CS_COMMON_SUBMIT",
       },
-      nextStep: null,
-    },
+      nextStep: null
+    }
   },
   indexRoute: "complaint-type",
 };

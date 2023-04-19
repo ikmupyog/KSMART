@@ -431,6 +431,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
   const [VehicleToPlaceEnError, setVehicleToPlaceEnError] = useState(formData?.InformationDeath?.setVehicleToPlaceEn ? false : false);
   const [VehicleNumberError, setvVehicleNumberError] = useState(formData?.InformationDeath?.VehicleNumber ? false : false);
   const [vehicleTypeError, setvehicleTypeError] = useState(formData?.InformationDeath?.vehicleType ? false : false);
+  const [vehiDesDetailsEnError, setvehiDesDetailsEnError] = useState(false);
   const [VehicleFirstHaltEnError, setvehicleHaltPlaceError] = useState(formData?.InformationDeath?.VehicleFirstHaltEn ? false : false);
   const [GeneralRemarksError, setGeneralRemarksError] = useState(formData?.InformationDeath?.GeneralRemarks ? false : false);
   const [VehicleHospitalEnError, setVehicleHospitalEnError] = useState(formData?.InformationDeath?.VehicleHospitalEn ? false : false);
@@ -1216,13 +1217,13 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
     }
     if (GeneralRemarks == null || GeneralRemarks == "" || GeneralRemarks == undefined) {
       validFlag = false;
-      setGeneralRemarksError(true);
+      setvehiDesDetailsEnError(true);
       setToast(true);
       setTimeout(() => {
         setToast(false);
       }, 2000);
     } else {
-      setGeneralRemarksError(false);
+      setvehiDesDetailsEnError(false);
     }
     if (VehicleHospitalEn == null || VehicleHospitalEn == "" || VehicleHospitalEn == undefined) {
       validFlag = false;
@@ -1235,7 +1236,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
       setVehicleHospitalEnError(false);
     }
   
-    // if (VehicleFirstHaltEn == null || VehicleFirstHaltEn == "" || VehicleFirstHaltEn == undefined) {
+    // if (VehicleFirstHaltEn === null || VehicleFirstHaltEn == "" || VehicleFirstHaltEn == undefined) {
     //   validFlag = false;
     //   setvehicleHaltPlaceError(true);
     //   setToast(true);
@@ -2142,9 +2143,9 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
 
           {toast && (
             <Toast
-              error={DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || AgeError || sexError || WardNameError || DeceasedFirstNameEnError || DeceasedFirstNameMlError }
+              error={DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || AgeError || sexError || WardNameError || DeceasedFirstNameEnError || DeceasedFirstNameMlError ||vehiDesDetailsEnError }
               label={
-                DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || AgeError || sexError || WardNameError || DeceasedFirstNameEnError || DeceasedFirstNameMlError
+                DOBError || AadharError || HospitalError || InstitutionError || InstitutionNameError || AgeError || sexError || WardNameError || DeceasedFirstNameEnError || DeceasedFirstNameMlError||vehiDesDetailsEnError
                   ? DOBError
                     ? t(`CR_INVALID_DATE`)
                     : sexError
@@ -2165,6 +2166,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
                     ? t(`CR_ERROR_AGE_CHOOSE`)
                     : WardNameError
                     ? t(`CR_ERROR_WARD_CHOOSE`)
+                    : vehiDesDetailsEnError ? t(`DEATH_ERROR_DESCRIPTION_BOX_CHOOSE`)
                     : setToast(false)
                   : setToast(false)
               }

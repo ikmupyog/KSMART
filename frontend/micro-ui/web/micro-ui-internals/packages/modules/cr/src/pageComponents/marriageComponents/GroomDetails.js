@@ -13,6 +13,7 @@ import {
   Toast,
 } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/MARRIAGETimeline";
+import moment from "moment";
 import { useTranslation } from "react-i18next";
 
 const GroomDetails = ({ config, onSelect, userType, formData }) => {
@@ -153,13 +154,13 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     // setisInitialRenderRadioButtons(true);
   }
   // useEffect(() => {
-  //   if (isInitialRenderRadioButtons) {
-  //     setisInitialRenderRadioButtons(false);
-  //     if (selectedValueRadio) {
-  //       // setIsInitialRenderRadio(false);
-  //       setValueRad(selectedValueRadio.code);
-  //     }
-  //   }
+  // if (isInitialRenderRadioButtons) {
+  // setisInitialRenderRadioButtons(false);
+  // if (selectedValueRadio) {
+  // // setIsInitialRenderRadio(false);
+  // setValueRad(selectedValueRadio.code);
+  // }
+  // }
   // }, [isInitialRenderRadioButtons]);
   const groomTypeRadio = [
     { i18nKey: "CR_RESIDENT_INDIAN", code: "INDIAN" },
@@ -176,31 +177,30 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       month = (month > 9 ? "" : "0") + month;
       day = (day > 9 ? "" : "0") + day;
       return `${year}-${month}-${day}`;
-      //  return `${day}-${month}-${year}`;
+      // return `${day}-${month}-${year}`;
     } else {
       return null;
     }
   };
   //const [AdhaarDuplicationError, setAdhaarDuplicationError] = useState(false);
   const groomTypes = groomTypeRadio.map((type) => type.code);
-  
   // const convertEpochToDate = (dateEpoch) => {
-  //   if (dateEpoch) {
-  //     const dateFromApi = new Date(dateEpoch);
-  //     console.log(dateFromApi);
-  //     let month = dateFromApi.getMonth() + 1;
-  //     console.log(month);
-  //     let day = dateFromApi.getDate();
-  //     console.log(day);
-  //     let year = dateFromApi.getFullYear();
-  //     console.log(year);
-  //     month = (month > 9 ? "" : "0") + month;
-  //     day = (day > 9 ? "" : "0") + day;
-  //     return `${year}-${month}-${day}`;
-  //     //  return `${day}-${month}-${year}`;
-  //   } else {
-  //     return null;
-  //   }
+  // if (dateEpoch) {
+  // const dateFromApi = new Date(dateEpoch);
+  // console.log(dateFromApi);
+  // let month = dateFromApi.getMonth() + 1;
+  // console.log(month);
+  // let day = dateFromApi.getDate();
+  // console.log(day);
+  // let year = dateFromApi.getFullYear();
+  // console.log(year);
+  // month = (month > 9 ? "" : "0") + month;
+  // day = (day > 9 ? "" : "0") + day;
+  // return `${year}-${month}-${day}`;
+  // // return `${day}-${month}-${year}`;
+  // } else {
+  // return null;
+  // }
   // };
 
   function setSelectGroomMaritalstatusID(value) {
@@ -227,10 +227,10 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     }
 
     // if (e.target.value.length >= 12) {
-    //   return false;
-    //   // window.alert("Username shouldn't exceed 10 characters")
+    // return false;
+    // // window.alert("Username shouldn't exceed 10 characters")
     // } else {
-    //   setGroomSocialSecurityNo(e.target.value.replace(/[^A-Z0-9-]/gi, "").substring(0, 9));
+    // setGroomSocialSecurityNo(e.target.value.replace(/[^A-Z0-9-]/gi, "").substring(0, 9));
     // }
   }
   function setSelectGroomMobile(e) {
@@ -254,13 +254,13 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
     } else {
       setGroomNoOfSpouse(e.target.value.replace(/[^0-3]/gi, ""));
     }
-    //   if (e.target.value.length === 2 && e.target.value > 3) {
-    //     return false;
+    // if (e.target.value.length === 2 && e.target.value > 3) {
+    // return false;
     // } else {
-    //   setGroomNoOfSpouse(e.target.value.replace(/[^0-3]/ig, ''));
+    // setGroomNoOfSpouse(e.target.value.replace(/[^0-3]/ig, ''));
     // }
     // if (e.target.value.trim().length >= 0) {
-    //   setGroomNoOfSpouse(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
+    // setGroomNoOfSpouse(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
     // }
   }
   function setSelectGroomAge(e) {
@@ -271,7 +271,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       setGroomAge(e.target.value);
     }
     // if (e.target.value.trim().length >= 0) {
-    //   setGroomAge(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
+    // setGroomAge(e.target.value.length <= 2 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 2));
     // }
   }
 
@@ -309,8 +309,8 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
         setTimeout(() => {
           setToast(false);
         }, 2000);
-        setGroomAge('');
-        setGroomDOB('');
+        setGroomAge("");
+        setGroomDOB("");
       }
     } else {
       setGroomDOB(null);
@@ -439,9 +439,9 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
 
   function setSelectGroomAadharNo(e) {
     // if (e.target.value.trim().length >= 0) {
-    //   setGroomAadharNo(
-    //     e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
-    //   );
+    // setGroomAadharNo(
+    // e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
+    // );
     // }
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
@@ -454,14 +454,14 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
         setToast(false);
       }, 3000);
     } else {
-    setGroomAadharNo(newValue);
-     }
+      setGroomAadharNo(newValue);
+    }
   }
   function setSelectGroomFatherAdharNo(e) {
     // if (e.target.value.trim().length >= 0) {
-    //   setGroomFatherAadharNo(
-    //     e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
-    //   );
+    // setGroomFatherAadharNo(
+    // e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
+    // );
     // }
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
@@ -474,14 +474,14 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
         setToast(false);
       }, 3000);
     } else {
-    setGroomFatherAadharNo(newValue);
-     }
+      setGroomFatherAadharNo(newValue);
+    }
   }
   function setSelectGroomGardianAdhar(e) {
     // if (e.target.value.trim().length >= 0) {
-    //   setGroomGuardianAadharNo(
-    //     e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
-    //   );
+    // setGroomGuardianAadharNo(
+    // e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
+    // );
     // }
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
@@ -494,14 +494,14 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
         setToast(false);
       }, 3000);
     } else {
-    setGroomGuardianAadharNo(newValue);
-     }
+      setGroomGuardianAadharNo(newValue);
+    }
   }
   function setSelectGroomMotherAdharNo(e) {
     // if (e.target.value.trim().length >= 0) {
-    //   setGroomMotherAadharNo(
-    //     e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
-    //   );
+    // setGroomMotherAadharNo(
+    // e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
+    // );
     // }
 
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
@@ -515,20 +515,20 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
         setToast(false);
       }, 3000);
     } else {
-    setGroomMotherAadharNo(newValue);
-    } 
+      setGroomMotherAadharNo(newValue);
+    }
   }
 
-    function setCheckSpecialChar(e) {
-      let pattern = /^[0-9]*$/;
-      if (!(e.key.match(pattern))) {
-        e.preventDefault();
-      }
+  function setCheckSpecialChar(e) {
+    let pattern = /^[0-9]*$/;
+    if (!e.key.match(pattern)) {
+      e.preventDefault();
     }
+  }
 
   let validFlag = true;
   const goNext = () => {
-    if (groomAadharNo.trim() == null || groomAadharNo.trim() == '' || groomAadharNo.trim() == undefined) {
+    if (groomAadharNo.trim() == null || groomAadharNo.trim() == "" || groomAadharNo.trim() == undefined) {
       setGroomAadharNo("");
     } else if (groomAadharNo != null && groomAadharNo != "") {
       let adharLength = groomAadharNo;
@@ -546,7 +546,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       setGroomAadharError(false);
     }
 
-    if (groomFatherAadharNo.trim() == null || groomFatherAadharNo.trim() == '' || groomFatherAadharNo.trim() == undefined) {
+    if (groomFatherAadharNo.trim() == null || groomFatherAadharNo.trim() == "" || groomFatherAadharNo.trim() == undefined) {
       setGroomFatherAadharNo("");
     } else if (groomFatherAadharNo != null && groomFatherAadharNo != "") {
       let adharLength = groomFatherAadharNo;
@@ -560,11 +560,10 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       } else {
         setGroomFatherAadharError(false);
       }
-    }else {
+    } else {
       setGroomFatherAadharError(false);
     }
-    
-    if (groomMotherAadharNo.trim() == null || groomMotherAadharNo.trim() == '' || groomMotherAadharNo.trim() == undefined) {
+    if (groomMotherAadharNo.trim() == null || groomMotherAadharNo.trim() == "" || groomMotherAadharNo.trim() == undefined) {
       setGroomMotherAadharNo("");
     } else if (groomMotherAadharNo != null && groomMotherAadharNo != "") {
       let adharLength = groomMotherAadharNo;
@@ -578,10 +577,10 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       } else {
         setGroomMotherAadharError(false);
       }
-    }else {
+    } else {
       setGroomMotherAadharError(false);
     }
-    if (groomGuardianAadharNo.trim() == null || groomGuardianAadharNo.trim() == '' || groomGuardianAadharNo.trim() == undefined) {
+    if (groomGuardianAadharNo.trim() == null || groomGuardianAadharNo.trim() == "" || groomGuardianAadharNo.trim() == undefined) {
       setGroomGuardianAadharNo("");
     } else if (groomGuardianAadharNo != null && groomGuardianAadharNo != "") {
       let adharLength = groomGuardianAadharNo;
@@ -595,7 +594,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
       } else {
         setGroomGuardianAadharError(false);
       }
-    }else {
+    } else {
       setGroomGuardianAadharError(false);
     }
     if (validFlag == true) {
@@ -683,18 +682,13 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
             !groomGender ||
             !groomDOB ||
             !groomMaritalstatusID ||
-            (groomResidentShip === "INDIAN"
-              ? !groomAadharNo
-              : false) || 
-            (groomResidentShip === "NRI"
-              ? (!groomPassportNo || !groomSocialSecurityNo)
-              : false) || 
-            (groomResidentShip === "FOREIGN"
-              ? (!groomSocialSecurityNo || !groomPassportNo)
-              : false)
-            || (groomParentGuardian === "PARENT" ? (!groomFathernameEn || !groomFathernameMl || !groomMothernameEn
-            || !groomMothernameMl || !groomFatherAadharNo || !groomMotherAadharNo) : false)
-            || (groomParentGuardian === "GUARDIAN" ? (!groomGuardiannameEn || !groomGuardiannameMl || !groomGuardianAadharNo) : false)
+            (groomResidentShip === "INDIAN" ? !groomAadharNo : false) ||
+            (groomResidentShip === "NRI" ? !groomPassportNo || !groomSocialSecurityNo : false) ||
+            (groomResidentShip === "FOREIGN" ? !groomSocialSecurityNo || !groomPassportNo : false) ||
+            (groomParentGuardian === "PARENT"
+              ? !groomFathernameEn || !groomFathernameMl || !groomMothernameEn || !groomMothernameMl || !groomFatherAadharNo || !groomMotherAadharNo
+              : false) ||
+            (groomParentGuardian === "GUARDIAN" ? !groomGuardiannameEn || !groomGuardiannameMl || !groomGuardianAadharNo : false)
           }
         >
           <div className="row">
@@ -736,70 +730,104 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
           </div>
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-4">
-                {" "}
-                <CardLabel>
-                  {`${t("CR_GROOM_AADHAR_NO")}`}
-                  {groomResidentShip === "INDIAN" && <span className="mandatorycss">*</span>}
-                </CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="groomAadharNo"
-                  value={groomAadharNo}
-                  onChange={setSelectGroomAadharNo}
-                  onKeyPress={setCheckSpecialChar}
-                  placeholder={`${t("CR_GROOM_AADHAR_NO")}`}
-                  inputProps={{
-                    maxLength: 12,
-                  }}
-                  {...(groomResidentShip === "INDIAN" && {
-                    ...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") }),
-                  })}
-                />
-              </div>
-              <div className="col-md-4">
-                {" "}
-                <CardLabel>
-                  {t("CR_GROOM_PASSPORT_NO")}
-                  {(groomResidentShip === "NRI" || groomResidentShip === "FOREIGN") && <span className="mandatorycss">*</span>}
-                </CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="groomPassportNo"
-                  value={groomPassportNo}
-                  onChange={setSelectGroomPassportNo}
-                  placeholder={`${t("CR_GROOM_PASSPORT_NO")}`}
-                  {...((groomResidentShip === "NRI" || groomResidentShip === "FOREIGN") && {
-                    ...(validation = { pattern: "^[A-Z0-9]{8}$", type: "text", isRequired: true, title: t("CS_COMMON_INVALID_PASSPORT_NO") }),
-                  })}
-                />
-              </div>
+              {groomResidentShip === "INDIAN" ? (
+                <div className="col-md-4">
+                  {" "}
+                  <CardLabel>
+                    {`${t("CR_GROOM_AADHAR_NO")}`}
+                    {groomResidentShip === "INDIAN" && <span className="mandatorycss">*</span>}
+                  </CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="groomAadharNo"
+                    value={groomAadharNo}
+                    onChange={setSelectGroomAadharNo}
+                    onKeyPress={setCheckSpecialChar}
+                    placeholder={`${t("CR_GROOM_AADHAR_NO")}`}
+                    inputProps={{
+                      maxLength: 12,
+                    }}
+                    {...(groomResidentShip === "INDIAN" && {
+                      ...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") }),
+                    })}
+                  />
+                </div>
+              ) : (
+                <React.Fragment>
+                  <div className="col-md-4">
+                    {" "}
+                    <CardLabel>
+                      {`${t("CR_GROOM_AADHAR_NO")}`}
+                      {groomResidentShip === "INDIAN" && <span className="mandatorycss">*</span>}
+                    </CardLabel>
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      name="groomAadharNo"
+                      value={groomAadharNo}
+                      onChange={setSelectGroomAadharNo}
+                      onKeyPress={setCheckSpecialChar}
+                      placeholder={`${t("CR_GROOM_AADHAR_NO")}`}
+                      inputProps={{
+                        maxLength: 12,
+                      }}
+                      {...(groomResidentShip === "INDIAN" && {
+                        ...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") }),
+                      })}
+                    />
+                  </div>
+                  <div className="col-md-4">
+                    {" "}
+                    <CardLabel>
+                      {t("CR_GROOM_PASSPORT_NO")}
+                      {(groomResidentShip === "NRI" || groomResidentShip === "FOREIGN") && <span className="mandatorycss">*</span>}
+                    </CardLabel>
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      name="groomPassportNo"
+                      value={groomPassportNo}
+                      onChange={setSelectGroomPassportNo}
+                      placeholder={`${t("CR_GROOM_PASSPORT_NO")}`}
+                      {...((groomResidentShip === "NRI" || groomResidentShip === "FOREIGN") && {
+                        ...(validation = { pattern: "^[A-Z0-9]{8}$", type: "text", isRequired: true, title: t("CS_COMMON_INVALID_PASSPORT_NO") }),
+                      })}
+                    />
+                  </div>
 
-              <div className="col-md-4">
-                <CardLabel>
-                  {t("CR_GROOM_SOCIAL_SECURITY_NO")}
-                  {groomResidentShip === "FOREIGN" && <span className="mandatorycss">*</span>}
-                </CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="groomSocialSecurityNo"
-                  value={groomSocialSecurityNo}
-                  onChange={setSelectGroomSocialSecurityNo}
-                  placeholder={`${t("CR_GROOM_SOCIAL_SECURITY_NO")}`}
-                  {...(groomResidentShip === "FOREIGN" && {
-                    ...(validation = { pattern: "^[A-Z0-9-]{12}$", type: "text", isRequired: true, title: t("CR_INVALID_SOCIAL_SECURITY_NUMBER") }),
-                  })}
-                />
-              </div>
+                  <div className="col-md-4">
+                    <CardLabel>
+                      {t("CR_GROOM_SOCIAL_SECURITY_NO")}
+                      {(groomResidentShip === "NRI" || groomResidentShip === "FOREIGN") && <span className="mandatorycss">*</span>}
+                    </CardLabel>
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      name="groomSocialSecurityNo"
+                      value={groomSocialSecurityNo}
+                      onChange={setSelectGroomSocialSecurityNo}
+                      placeholder={`${t("CR_GROOM_SOCIAL_SECURITY_NO")}`}
+                      {...((groomResidentShip === "NRI" || groomResidentShip === "FOREIGN") && {
+                        ...(validation = {
+                          pattern: "^[A-Z0-9-]{12}$",
+                          type: "text",
+                          isRequired: true,
+                          title: t("CR_INVALID_SOCIAL_SECURITY_NUMBER"),
+                        }),
+                      })}
+                    />
+                  </div>
+                </React.Fragment>
+              )}
             </div>
           </div>
           <div className="row">
@@ -952,7 +980,7 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                   value={groomEmailid}
                   onChange={setSelectGroomEmailid}
                   placeholder={`${t("CR_GROOM_EMAIL")}`}
-                  //pattern: "^[^\s@]+@[^\s@]+\.[^\s@]+$" 
+                  //pattern: "^[^\s@]+@[^\s@]+\.[^\s@]+$"
                   {...(validation = { isRequired: true, title: t("CR_INVALID_EMAIL") })}
                 />
               </div>
@@ -984,7 +1012,8 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
                 <DatePicker
                   date={groomDOB}
                   name="groomDOB"
-                  max={convertEpochToDate(new Date())}
+                  max={moment().subtract(21, "year").format("YYYY-MM-DD")}
+                  //max={convertEpochToDate(new Date())}
                   onChange={setselectGroomDOB}
                   placeholder={`${t("CR_GROOM_DATE_OF_BIRTH")}`}
                   {...(validation = {
@@ -1305,31 +1334,24 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
           )}
           {toast && (
             <Toast
-              error={groomAadharError || 
-                    AgeValidationMsg ||
-                    groomFatherAadharError ||
-                    groomMotherAadharError ||
-                    groomGuardianAadharError 
-                    //AdhaarDuplicationError
-                  }
+              error={
+                groomAadharError || AgeValidationMsg || groomFatherAadharError || groomMotherAadharError || groomGuardianAadharError
+                //AdhaarDuplicationError
+              }
               label={
-                groomAadharError || 
-                AgeValidationMsg ||
-                groomFatherAadharError ||
-                groomMotherAadharError ||
-                groomGuardianAadharError 
-                 ? groomAadharError
+                groomAadharError || AgeValidationMsg || groomFatherAadharError || groomMotherAadharError || groomGuardianAadharError
+                  ? groomAadharError
                     ? t(`CS_COMMON_INVALID_AADHAR_NO`)
                     : AgeValidationMsg
-                      ? t(`CR_INVALID_GROOM_AGE`)
-                      : groomFatherAadharError
-                        ? t(`CS_INVALID_FATHER_AADHAR_NO`)
-                        : groomMotherAadharError
-                          ? t(`CS_INVALID_MOTHER_AADHAR_NO`)
-                          : groomGuardianAadharError
-                            ? t(`CS_INVALID_GUARDIAN_AADHAR_NO`)
-                            : setToast(false)
-                 : setToast(false)
+                    ? t(`CR_INVALID_GROOM_AGE`)
+                    : groomFatherAadharError
+                    ? t(`CS_INVALID_FATHER_AADHAR_NO`)
+                    : groomMotherAadharError
+                    ? t(`CS_INVALID_MOTHER_AADHAR_NO`)
+                    : groomGuardianAadharError
+                    ? t(`CS_INVALID_GUARDIAN_AADHAR_NO`)
+                    : setToast(false)
+                  : setToast(false)
               }
               onClose={() => setToast(false)}
             />
