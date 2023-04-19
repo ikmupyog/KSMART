@@ -111,7 +111,7 @@ const ActionModal = ({ t, action, tenantId, state, id, closeModal, submitAction,
         : null,
     };
     submitAction({
-      deathCertificateDtls: [applicationData],
+      deathNACDtls: [applicationData],
     });
   }
 
