@@ -134,4 +134,7 @@ public class DeathRegistryCriteria {
         DeceasedGender,
         TenantId
     }
+
+    @JsonProperty("CertificateNo")
+    private String certificateNo;
 }

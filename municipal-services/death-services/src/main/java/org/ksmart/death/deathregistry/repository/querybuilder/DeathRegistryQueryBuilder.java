@@ -150,7 +150,7 @@ public class DeathRegistryQueryBuilder extends BaseQueryBuilder {
          .append(" ,permanentAddress.city_town_village as  R_city_town_village")
          .append(" ,permanentAddress.city_en as  R_city_en")
 
-         
+
          .append(" FROM eg_death_dtls_registry dt ") 
          .append("LEFT OUTER JOIN eg_death_statistical_registry stat ON stat.death_dtl_id = dt.id  AND dt.tenantid = stat.tenantid ")
          .append("LEFT OUTER JOIN eg_death_address_registry presentaddress ON ")
@@ -171,7 +171,7 @@ StringBuilder orderBy = new StringBuilder();
                         addFilter("dt.ack_no", criteria.getDeathACKNo(), query, preparedStmtValues);  
                         addLikeFilter("LOWER(dt.deceased_firstname_en)", criteria.getDeceasedFirstNameEn(), query, preparedStmtValues); 
                         addFilter("dt.registration_no", criteria.getRegistrationNo(), query, preparedStmtValues);
-                        // addFilter("dt.dateofdeath", criteria.getDateOfDeath(), query, preparedStmtValues); 
+                        addFilter("dt.certificate_no", criteria.getCertificateNo(), query, preparedStmtValues); 
                         addDateRangeFilter("dt.registration_date",
                         criteria.getFromDate(),
                         criteria.getToDate(),
