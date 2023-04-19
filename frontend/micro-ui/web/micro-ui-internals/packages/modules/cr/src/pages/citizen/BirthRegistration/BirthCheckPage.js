@@ -68,7 +68,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
     userType = "employee";
   }
   function onBirthSubmit() {
-    if (!isInitiatorDeclaration) {
+    if (!isInitiatorDeclaration && window.location.href.includes("/citizen")) {
       setInitiatorDeclareError(true);
       setToast(true);
       setTimeout(() => {
@@ -93,7 +93,7 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
       return null;
     }
   };
-// 
+  // 
   // useEffect(() => {
   //   if (isInitialRender) {
   //     if (formData?.InitiatorinfoDetails?.isInitiatorDeclaration != null) {
@@ -605,11 +605,11 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
           content={<StatusTable >
 
             <div className="row">
-                <div className="col-md-12">
-                  <h1 className="summaryheadingh">
-                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_MOTHER_INFORMATION")}`}</span>{" "}
-                  </h1>
-                </div>
+              <div className="col-md-12">
+                <h1 className="summaryheadingh">
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_MOTHER_INFORMATION")}`}</span>{" "}
+                </h1>
+              </div>
             </div>
             {ParentsDetails?.isMotherInfo === true && (
               <div className="row">
@@ -1506,43 +1506,47 @@ const BirthCheckPage = ({ onSubmit, value, userType }) => {
 
           </StatusTable>}
         />
-        <div className="row">
-          <div className="col-md-12">
-            <h1 className="summaryheadingh">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
-            </h1>
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-12">
-              <CheckBox
-                label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
-                onChange={setDeclarationInfo}
-                value={isInitiatorDeclaration}
-                checked={isInitiatorDeclaration}
-              // disable={isDisableEdit}
-              />
+        {/* <div>
+        {window.location.href.includes("/citizen") && (
+          <div> */}
+            <div className="row">
+              <div className="col-md-12">
+                <h1 className="summaryheadingh">
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DECLARATION_DOCUMENTS")}`}</span>{" "}
+                </h1>
+              </div>
             </div>
+
+            <div className="row">
+              <div className="col-md-12">
+                <div className="col-md-12">
+                  <CheckBox
+                    label={t("CR_INITIATOR_DECLARATION_STATEMENT")}
+                    onChange={setDeclarationInfo}
+                    value={isInitiatorDeclaration}
+                    checked={isInitiatorDeclaration}
+                  // disable={isDisableEdit}
+                  />
+                </div>
+              </div>
+            {/* </div>
+          )} */}
+          
+            {toast && (
+              <Toast
+                error={InitiatorDeclareError}
+                label={
+                  InitiatorDeclareError
+                    ? InitiatorDeclareError
+                      ? t(`BIRTH_DECLARATION_CHOOSE`) : setToast(false)
+                    : setToast(false)
+                }
+                onClose={() => setToast(false)}
+              />
+            )}
+            {""}
+            <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onBirthSubmit} />
           </div>
-
-
-          {toast && (
-            <Toast
-              error={InitiatorDeclareError}
-              label={
-                InitiatorDeclareError
-                  ? InitiatorDeclareError
-                    ? t(`BIRTH_DECLARATION_CHOOSE`) : setToast(false)
-                  : setToast(false)
-              }
-              onClose={() => setToast(false)}
-            />
-          )}
-          {""}
-          <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onBirthSubmit} />
-        </div>
 
       </Card>
     </React.Fragment>

@@ -50,6 +50,9 @@ const CRBreadCrumb = ({ location }) => {
   const isDeathInboxFlow = location?.pathname?.includes("deathinbox");
   const isCrFlow = location?.pathname?.includes("cr-flow");
   const isChildDetails = location?.pathname?.includes("/create-birth/child-details");
+  const isAdoptionChildDetails = location?.pathname?.includes("/create-adoption/adoption-child-details");
+  const isAdoptionParentDetails = location?.pathname?.includes("/create-adoption/adoption-parents-details");
+  const isAdoptionAddressdDetails = location?.pathname?.includes("/create-adoption/adoption-address-birth");
   const isDeathFlow = location?.pathname?.includes("death-flow");
   const isDeathDetails = location?.pathname?.includes("information-death");
   const isAbandonedDeathDetails = location?.pathname?.includes("abandoned-information-death");
@@ -106,6 +109,21 @@ const CRBreadCrumb = ({ location }) => {
       path: "digit-ui/employee/cr/create-birth/child-details",
       content: t("Child Details"),
       show: breadCrumbUrls.includes("create-birth/child-details") || isChildDetails,
+    },
+    {
+      path: "digit-ui/employee/cr/create-adoption/adoption-child-details",
+      content: t("Adoption Child Details"),
+      show: breadCrumbUrls.includes("create-adoption/adoption-child-details") || isAdoptionChildDetails,
+    },
+    {
+      path: "digit-ui/employee/cr/create-adoption/adoption-parents-details",
+      content: t("Adoption Parent Details"),
+      show: breadCrumbUrls.includes("create-adoption/adoption-parents-details") || isAdoptionParentDetails,
+    },
+    {
+      path: "digit-ui/employee/cr/create-adoption/adoption-address-birth",
+      content: t("Adoption Address Details"),
+      show: breadCrumbUrls.includes("create-adoption/adoption-address-birth") || isAdoptionAddressdDetails,
     },
     {
       path: "/digit-ui/employee/abandoned-child-details",
@@ -244,6 +262,7 @@ const EmployeeApp = ({ path, url, userType }) => {
   const CreateAbandonedBirth = Digit?.ComponentRegistryService?.getComponent("CreateAbandonedBirth");
   const CreateBornOutsideEmp = Digit?.ComponentRegistryService?.getComponent("CreateBornOutsideEmp");
   const CreateNACBirth = Digit?.ComponentRegistryService?.getComponent("CreateNACBirth");
+  const CreateAdoption = Digit?.ComponentRegistryService?.getComponent("CRCreateAdoptions");
 
   const CreateDeathEmp = Digit?.ComponentRegistryService?.getComponent("CreateDeathEmp");
   const Response = Digit?.ComponentRegistryService?.getComponent("CRResponse");
@@ -267,6 +286,7 @@ const EmployeeApp = ({ path, url, userType }) => {
           <PrivateRoute path={`${path}/create-abandonedbirth`} component={CreateAbandonedBirth} />
           <PrivateRoute path={`${path}/create-bornoutsidebirth`} component={CreateBornOutsideEmp} />
           <PrivateRoute path={`${path}/create-nacbirthsearch`} component={CreateNACBirth} />
+          <PrivateRoute path={`${path}/create-adoption`} component={CreateAdoption} />
 
           <PrivateRoute path={`${path}/create-death`} component={CreateDeathEmp} />
           <PrivateRoute path={`${path}/response`} component={(props) => <Response {...props} parentRoute={path} />} />

@@ -14,7 +14,7 @@ const InitiatorDetails = ({ config, onSelect, userType, formData, isEditBirth = 
     { i18nKey: "Others", code: "OTHERS" },
   ];  
   // console.log(Digit.UserService.getUser().info);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
+  const [isDisableEdit, setisDisableEdit] = useState(false);
   const { name: name, } = Digit.UserService.getUser().info; // window.localStorage.getItem("user-info");
   const { mobileNumber: mobileNumber, } = Digit.UserService.getUser().info; // window.localStorage.getItem("user-info");
   const [isInitiatorDeclaration, setisInitiatorDeclaration] = useState(formData?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.InitiatorinfoDetails?.isInitiatorDeclaration : formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration ? formData?.ChildDetails?.InitiatorinfoDetails?.isInitiatorDeclaration : false);
