@@ -51,9 +51,6 @@ LBTypes &&
   const applicationstatus = useWatch({ control, name: "applicationstatus" });
 
   const { data: boundaryList = {}, isLoaded } = Digit.Hooks.tl.useTradeLicenseMDMS(lbId?.code ? lbId?.code : tenantidsearch, "egov-location", "boundary-data");
-
-console.log("districtId"+JSON.stringify(register));
-//console.log(tempdistrictid?.districtid);
   if (districtId) {
     if (lbTypeId) {
       if (lbId) {
@@ -133,10 +130,7 @@ console.log("districtId"+JSON.stringify(register));
 //     //districtId=cmbDistrict?.filter((district) => district?.districtid === tempdistrictid?.districtid)[0];
 //  }
  
-const districtHandle = (props)=>{
-  console.log("hai firing");
-  props.onChange();
-}
+
   return <>
     <SearchField>
       <label>{`${t("TL_DISTRICT")}`}</label>

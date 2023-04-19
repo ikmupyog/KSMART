@@ -91,8 +91,8 @@ const SelectLandmark = ({ t, config, onSelect, value }) => {
       region: selected.village?.code,
       city_complaint: selected.lbName,
       locality_complaint: selected.ward,
-      street: selected.street,
-      landmark: selected.locality,
+      street: selected.street.trim(),
+      landmark: selected.locality.trim(),
       pincode: selected.pincode,
       complaint_details: selected
     });
@@ -128,8 +128,8 @@ const SelectLandmark = ({ t, config, onSelect, value }) => {
     return <Loader></Loader>;
   }
 
-  let ml_pattern = /^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$/;
-  let en_pattern = /^[a-zA-Z-.`'0-9 ]*$/;
+  let ml_pattern = /^[\u0D00-\u0D7F\u200D\u200C 0-9!@#$%^&*()_+=-`~\\\]\[{}|';:/.,?><]*$/;
+  let en_pattern = /^[A-Za-z0-9\s!@#$%^&*()_+=-`~\\\]\[{}|';:/.,?><]*$/;
 
   const handleLocality = (e) => {
     if (locale === "ml_IN") {

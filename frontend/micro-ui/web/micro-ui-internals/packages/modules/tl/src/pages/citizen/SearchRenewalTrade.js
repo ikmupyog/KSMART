@@ -6,6 +6,9 @@ import { useTranslation } from "react-i18next";
 import { useQueryClient } from "react-query";
 
 const SearchRenewalTrade = ({searchdata,isCancelreq}) => {
+
+
+
     const [searchdatacat, setSearchdatacat] = useState(searchdata);
     const [errorMessage, setErrorMessage] = useState("");
     const [wardmandatory, setWardmandatory] = useState(true);
@@ -47,7 +50,7 @@ const SearchRenewalTrade = ({searchdata,isCancelreq}) => {
         }
         queryClient.removeQueries("TL_SEARCH");
         const data = {
-            ..._data  //,"applicationType":"RENEWAL"
+            ..._data  ,"applicationType":"RENEWAL"
         }
         setPayload(Object.keys(data).filter(k => data[k]).reduce((acc, key) => ({ ...acc, [key]: typeof data[key] === "object" ? data[key].code : data[key] }), {}))
     }
@@ -57,9 +60,9 @@ const SearchRenewalTrade = ({searchdata,isCancelreq}) => {
     }
     const {data: {Licenses: searchReult, Count: count} = {}, isLoading , isSuccess } =
      Digit.Hooks.tl.useSearch({tenantId, filters: payload, config})
- 
+     let searchReultFinal=searchReult ? searchReult.filter((data) => data?.status === null ? data : data?.status.includes("APPROVED")) : [];
     if (wardmandatory)
-         return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} data={!isLoading && isSuccess ? (searchReult?.length > 0 ? searchReult : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} isCancelreq={isCancelreq} />
+         return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} data={!isLoading && isSuccess ? (searchReultFinal?.length > 0 ? searchReultFinal : { display: "ES_COMMON_NO_DATA" }) : ""} count={count} isCancelreq={isCancelreq} />
        // return <Search t={t} tenantId={tenantId} onSubmit={onSubmit} data={searchReult?.length > 0 ? searchReult : { display: "ES_COMMON_NO_DATA" }} count={10} />
     else
         return (
