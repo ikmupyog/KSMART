@@ -143,7 +143,9 @@ public class TLQueryBuilder {
             + LEFT_OUTER_JOIN_STRING
             + "eg_tl_premiseowner premiseown ON premiseown.tradelicensedetailid = tld.id "
             + LEFT_OUTER_JOIN_STRING
-            + "eg_tl_correction correction ON correction.tradelicensedetailid = tld.id and correction.iscurrentrequest=true ";
+            + "eg_tl_correction correction ON correction.tradelicensedetailid = tld.id ";
+
+    // and correction.iscurrentrequest=true
 
     private final String paginationWrapper = "SELECT * FROM " +
             "(SELECT *, DENSE_RANK() OVER (ORDER BY tl_lastModifiedTime DESC , tl_id) offset_ FROM " +
