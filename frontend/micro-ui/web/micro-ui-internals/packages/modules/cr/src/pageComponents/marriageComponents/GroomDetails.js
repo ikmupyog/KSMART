@@ -13,6 +13,7 @@ import {
   Toast,
 } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/MARRIAGETimeline";
+import moment from "moment";
 import { useTranslation } from "react-i18next";
 
 const GroomDetails = ({ config, onSelect, userType, formData }) => {
@@ -729,70 +730,104 @@ const GroomDetails = ({ config, onSelect, userType, formData }) => {
           </div>
           <div className="row">
             <div className="col-md-12">
-              <div className="col-md-4">
-                {" "}
-                <CardLabel>
-                  {`${t("CR_GROOM_AADHAR_NO")}`}
-                  {groomResidentShip === "INDIAN" && <span className="mandatorycss">*</span>}
-                </CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="groomAadharNo"
-                  value={groomAadharNo}
-                  onChange={setSelectGroomAadharNo}
-                  onKeyPress={setCheckSpecialChar}
-                  placeholder={`${t("CR_GROOM_AADHAR_NO")}`}
-                  inputProps={{
-                    maxLength: 12,
-                  }}
-                  {...(groomResidentShip === "INDIAN" && {
-                    ...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") }),
-                  })}
-                />
-              </div>
-              <div className="col-md-4">
-                {" "}
-                <CardLabel>
-                  {t("CR_GROOM_PASSPORT_NO")}
-                  {(groomResidentShip === "NRI" || groomResidentShip === "FOREIGN") && <span className="mandatorycss">*</span>}
-                </CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="groomPassportNo"
-                  value={groomPassportNo}
-                  onChange={setSelectGroomPassportNo}
-                  placeholder={`${t("CR_GROOM_PASSPORT_NO")}`}
-                  {...((groomResidentShip === "NRI" || groomResidentShip === "FOREIGN") && {
-                    ...(validation = { pattern: "^[A-Z0-9]{8}$", type: "text", isRequired: true, title: t("CS_COMMON_INVALID_PASSPORT_NO") }),
-                  })}
-                />
-              </div>
+              {groomResidentShip === "INDIAN" ? (
+                <div className="col-md-4">
+                  {" "}
+                  <CardLabel>
+                    {`${t("CR_GROOM_AADHAR_NO")}`}
+                    {groomResidentShip === "INDIAN" && <span className="mandatorycss">*</span>}
+                  </CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="groomAadharNo"
+                    value={groomAadharNo}
+                    onChange={setSelectGroomAadharNo}
+                    onKeyPress={setCheckSpecialChar}
+                    placeholder={`${t("CR_GROOM_AADHAR_NO")}`}
+                    inputProps={{
+                      maxLength: 12,
+                    }}
+                    {...(groomResidentShip === "INDIAN" && {
+                      ...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") }),
+                    })}
+                  />
+                </div>
+              ) : (
+                <React.Fragment>
+                  <div className="col-md-4">
+                    {" "}
+                    <CardLabel>
+                      {`${t("CR_GROOM_AADHAR_NO")}`}
+                      {groomResidentShip === "INDIAN" && <span className="mandatorycss">*</span>}
+                    </CardLabel>
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      name="groomAadharNo"
+                      value={groomAadharNo}
+                      onChange={setSelectGroomAadharNo}
+                      onKeyPress={setCheckSpecialChar}
+                      placeholder={`${t("CR_GROOM_AADHAR_NO")}`}
+                      inputProps={{
+                        maxLength: 12,
+                      }}
+                      {...(groomResidentShip === "INDIAN" && {
+                        ...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") }),
+                      })}
+                    />
+                  </div>
+                  <div className="col-md-4">
+                    {" "}
+                    <CardLabel>
+                      {t("CR_GROOM_PASSPORT_NO")}
+                      {(groomResidentShip === "NRI" || groomResidentShip === "FOREIGN") && <span className="mandatorycss">*</span>}
+                    </CardLabel>
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      name="groomPassportNo"
+                      value={groomPassportNo}
+                      onChange={setSelectGroomPassportNo}
+                      placeholder={`${t("CR_GROOM_PASSPORT_NO")}`}
+                      {...((groomResidentShip === "NRI" || groomResidentShip === "FOREIGN") && {
+                        ...(validation = { pattern: "^[A-Z0-9]{8}$", type: "text", isRequired: true, title: t("CS_COMMON_INVALID_PASSPORT_NO") }),
+                      })}
+                    />
+                  </div>
 
-              <div className="col-md-4">
-                <CardLabel>
-                  {t("CR_GROOM_SOCIAL_SECURITY_NO")}
-                  {groomResidentShip === "FOREIGN" && <span className="mandatorycss">*</span>}
-                </CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="groomSocialSecurityNo"
-                  value={groomSocialSecurityNo}
-                  onChange={setSelectGroomSocialSecurityNo}
-                  placeholder={`${t("CR_GROOM_SOCIAL_SECURITY_NO")}`}
-                  {...(groomResidentShip === "FOREIGN" && {
-                    ...(validation = { pattern: "^[A-Z0-9-]{12}$", type: "text", isRequired: true, title: t("CR_INVALID_SOCIAL_SECURITY_NUMBER") }),
-                  })}
-                />
-              </div>
+                  <div className="col-md-4">
+                    <CardLabel>
+                      {t("CR_GROOM_SOCIAL_SECURITY_NO")}
+                      {(groomResidentShip === "NRI" || groomResidentShip === "FOREIGN") && <span className="mandatorycss">*</span>}
+                    </CardLabel>
+                    <TextInput
+                      t={t}
+                      isMandatory={false}
+                      type={"text"}
+                      optionKey="i18nKey"
+                      name="groomSocialSecurityNo"
+                      value={groomSocialSecurityNo}
+                      onChange={setSelectGroomSocialSecurityNo}
+                      placeholder={`${t("CR_GROOM_SOCIAL_SECURITY_NO")}`}
+                      {...((groomResidentShip === "NRI" || groomResidentShip === "FOREIGN") && {
+                        ...(validation = {
+                          pattern: "^[A-Z0-9-]{12}$",
+                          type: "text",
+                          isRequired: true,
+                          title: t("CR_INVALID_SOCIAL_SECURITY_NUMBER"),
+                        }),
+                      })}
+                    />
+                  </div>
+                </React.Fragment>
+              )}
             </div>
           </div>
           <div className="row">

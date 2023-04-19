@@ -155,6 +155,15 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   const [isOpenWifeModal, setIsOpenWifeModal] = useState(false);
   const [uniqueId, setUniqueId] = useState(null);
 
+  const [uploadedBrideImageId, setUploadedBrideImageId] = useState(
+    formData?.WitnessDetails?.uploadedBrideImageId ? formData?.WitnessDetails?.uploadedBrideImageId : null
+  );
+  const [uploadedGroomImageId, setUploadedGroomImageId] = useState(
+    formData?.WitnessDetails?.uploadedGroomImageId ? formData?.WitnessDetails?.uploadedGroomImageId : null
+  );
+  const [groomImageURL, setGroomImageURL] = useState(formData?.WitnessDetails?.groomImageURL ? formData?.WitnessDetails?.groomImageURL : null);
+  const [brideImageURL, setBrideImageURL] = useState(formData?.WitnessDetails?.brideImageURL ? formData?.WitnessDetails?.brideImageURL : null);
+
   const currentYear = new Date().getFullYear();
 
   let tenantId = "";
@@ -162,8 +171,6 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
   if (tenantId === "kl") {
     tenantId = Digit.ULBService.getCitizenCurrentTenant();
   }
-
-  const [uploadedImages, setUploadedImagesIds] = useState(null);
 
   const getUserType = () => Digit.UserService.getType();
 
@@ -500,9 +507,19 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
 
   function sendWitness1OTP() {}
 
-  function handleUpload(ids) {
-    setUploadedImagesIds(ids);
+  async function handleUploadBride(id) {
+    setUploadedBrideImageId(id);
+    const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(id, tenantId);
+    setBrideImageURL(fileStoreIds[0].url);
   }
+
+  async function handleUploadGroom(id) {
+    setUploadedGroomImageId(id);
+    const { data: { fileStoreIds = [] } = {} } = await Digit.UploadServices.Filefetch(id, tenantId);
+    setGroomImageURL(fileStoreIds[0].url);
+  }
+
+  console.log({ groomImageURL, brideImageURL });
 
   let validFlag = true;
   const goNext = () => {
@@ -704,6 +721,10 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
         witness2Esigned,
         isExpiredHusband,
         isExpiredWife,
+        brideImageURL,
+        groomImageURL,
+        uploadedBrideImageId,
+        uploadedGroomImageId,
       });
     }
   };
@@ -1108,8 +1129,8 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                         <h2 style={{ marginBottom: "10px", textAlign: "center" }}>CR_GROOM_IMAGE</h2>
                         <ImageUploadHandler
                           tenantId={tenantId}
-                          uploadedImages={uploadedImages}
-                          onPhotoChange={handleUpload}
+                          uploadedImages={uploadedGroomImageId}
+                          onPhotoChange={handleUploadGroom}
                           isMulti={false}
                           moduleType={`crmarriage/${uniqueId}/groom/${currentYear}`}
                           extraParams={{ fileName: "groom.jpg", UUID: uniqueId }}
@@ -1121,8 +1142,8 @@ const WitnessDetails = ({ config, onSelect, userType, formData, isEditWitness })
                         <h2 style={{ marginBottom: "10px", textAlign: "center" }}>CR_BRIDE_IMAGE</h2>
                         <ImageUploadHandler
                           tenantId={tenantId}
-                          uploadedImages={uploadedImages}
-                          onPhotoChange={handleUpload}
+                          uploadedImages={uploadedBrideImageId}
+                          onPhotoChange={handleUploadBride}
                           isMulti={false}
                           moduleType={`crmarriage/${uniqueId}/bride/${currentYear}`}
                           extraParams={{ fileName: "bride.jpg", UUID: uniqueId }}
