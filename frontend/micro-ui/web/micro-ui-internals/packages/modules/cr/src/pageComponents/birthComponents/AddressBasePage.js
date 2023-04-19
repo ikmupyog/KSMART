@@ -81,8 +81,14 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
         formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressCountry ? "" : "");
     const [presentaddressStateName, setaddressStateName] = useState(formData?.AddressBirthDetails?.presentaddressStateName?.code ? formData?.AddressBirthDetails?.presentaddressStateName : formData?.ChildDetails?.AddressBirthDetails?.presentaddressStateName ? "" :
         formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressStateName ? "" : "");
-    const [countryvalue, setCountryValue] = useState(formData?.AddressBirthDetails?.presentaddressCountry?.code ? formData?.AddressBirthDetails?.presentaddressCountry.countrycode : formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry ? formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry :
-        formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressCountry ? formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressCountry : "IND")
+    let countrycode = "";
+    if (formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry === "COUNTRY_INDIA") {
+        countrycode = "IND"
+    } else {
+        countrycode = formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry
+    }
+    const [countryvalue, setCountryValue] = useState(formData?.AddressBirthDetails?.presentaddressCountry?.code ? formData?.AddressBirthDetails?.presentaddressCountry.countrycode : formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry ? countrycode :
+        formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressCountry ? countrycode : "IND")
     const [value, setValue] = useState(formData?.AddressBirthDetails?.presentaddressStateName?.code ? formData?.AddressBirthDetails?.presentaddressStateName.code : formData?.ChildDetails?.AddressBirthDetails?.presentaddressStateName ? formData?.ChildDetails?.AddressBirthDetails?.presentaddressStateName :
         formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressStateName ? formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressStateName : "kl");
 
@@ -168,8 +174,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
         formData?.StillBirthChildDetails?.AddressBirthDetails?.presentOutSideIndiaAdressMlB ? formData?.StillBirthChildDetails?.AddressBirthDetails?.presentOutSideIndiaAdressMlB : "");
     const [presentOutSideIndiaProvinceEn, setProvinceEn] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaProvinceEn ? formData?.AddressBirthDetails?.presentOutSideIndiaProvinceEn : formData?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaProvinceEn ? formData?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaProvinceEn :
         formData?.StillBirthChildDetails?.AddressBirthDetails?.presentOutSideIndiaProvinceEn ? formData?.StillBirthChildDetails?.AddressBirthDetails?.presentOutSideIndiaProvinceEn : "");
-    
-        const [presentOutSideIndiaProvinceMl, setProvinceMl] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaProvinceMl ? formData?.AddressBirthDetails?.presentOutSideIndiaProvinceMl : formData?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaProvinceMl ? formData?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaProvinceMl :
+
+    const [presentOutSideIndiaProvinceMl, setProvinceMl] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaProvinceMl ? formData?.AddressBirthDetails?.presentOutSideIndiaProvinceMl : formData?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaProvinceMl ? formData?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaProvinceMl :
         formData?.StillBirthChildDetails?.AddressBirthDetails?.presentOutSideIndiaProvinceMl ? formData?.StillBirthChildDetails?.AddressBirthDetails?.presentOutSideIndiaProvinceMl : "");
     const [presentOutSideIndiaadrsVillage, setadrsVillage] = useState(formData?.AddressBirthDetails?.presentOutSideIndiaadrsVillage?.code ? formData?.AddressBirthDetails?.presentOutSideIndiaadrsVillage : formData?.ChildDetails?.AddressBirthDetails?.presentOutSideIndiaadrsVillage ? "" :
         formData?.StillBirthChildDetails?.AddressBirthDetails?.presentOutSideIndiaadrsVillage ? "" : "");
@@ -191,8 +197,14 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
         formData?.StillBirthChildDetails?.AddressBirthDetails?.permtaddressCountry ? "" : "");
     const [permtaddressStateName, setpermtaddressStateName] = useState(formData?.AddressBirthDetails?.permtaddressStateName?.code ? formData?.AddressBirthDetails?.permtaddressStateName : formData?.ChildDetails?.AddressBirthDetails?.permtaddressStateName ? "" :
         formData?.StillBirthChildDetails?.AddressBirthDetails?.permtaddressStateName ? "" : "");
-    const [countryValuePermanent, setCountryValuePermanent] = useState(formData?.AddressBirthDetails?.permtaddressCountry?.code ? formData?.AddressBirthDetails?.permtaddressCountry.countrycode : formData?.ChildDetails?.AddressBirthDetails?.permtaddressCountry ? "" :
-        formData?.StillBirthChildDetails?.AddressBirthDetails?.permtaddressCountry ? "" : "IND");
+    let countryPermcode = "";
+    if (formData?.ChildDetails?.AddressBirthDetails?.permtaddressCountry === "COUNTRY_INDIA") {
+        countryPermcode = "IND"
+    } else {
+        countryPermcode = formData?.ChildDetails?.AddressBirthDetails?.permtaddressCountry
+    }
+    const [countryValuePermanent, setCountryValuePermanent] = useState(formData?.AddressBirthDetails?.permtaddressCountry?.code ? formData?.AddressBirthDetails?.permtaddressCountry.countrycode : formData?.ChildDetails?.AddressBirthDetails?.permtaddressCountry ? countryPermcode :
+        formData?.StillBirthChildDetails?.AddressBirthDetails?.permtaddressCountry ? countryPermcode : "IND");
     const [valuePermanent, setValuePermanent] = useState(formData?.AddressBirthDetails?.permtaddressStateName?.code ? formData?.AddressBirthDetails?.permtaddressStateName.code : formData?.ChildDetails?.AddressBirthDetails?.permtaddressStateName ? "" :
         formData?.StillBirthChildDetails?.AddressBirthDetails?.permtaddressStateName ? "" : "kl");
 
@@ -870,7 +882,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
             //Jetheesh
 
             if (isPrsentAddress === false) {
-                if (countryvalue === "IND" && value === "kl") {
+                if (countryValuePermanent === "IND" && valuePermanent === "kl") {
                     if (permtaddressCountry == null || permtaddressCountry == undefined) {
                         setPermanentAddressCountryError(true);
                         validFlag = false;
@@ -1041,7 +1053,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                         setPresentInsideKeralaStreetNameEnError(false);
                     }
                 }
-                if (countryvalue === "IND" && value != "kl") {
+                if (countryValuePermanent === "IND" && valuePermanent != "kl") {
                     if (permtaddressCountry == null || permtaddressCountry == undefined) {
                         setPermanentAddressCountryError(true);
                         validFlag = false;
@@ -1180,7 +1192,7 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                         setPermanentInsideKeralaHouseNameMlError(false);
                     }
                 }
-                if (countryvalue != "IND") {
+                if (countryValuePermanent != "IND") {
 
                     if (permtaddressCountry == null || permtaddressCountry == undefined) {
                         setPermanentAddressCountryError(true);
@@ -1340,8 +1352,8 @@ const AddressBasePage = ({ config, onSelect, userType, formData, isEditBirth = f
                 presentOutSideIndiaPostCode,
                 presentOutSideIndiaAdressEn,
                 presentOutSideIndiaAdressEnB,
-                presentOutSideIndiaAdressMl,                
-                presentOutSideIndiaAdressMlB,               
+                presentOutSideIndiaAdressMl,
+                presentOutSideIndiaAdressMlB,
                 isPrsentAddress,
 
                 permtaddressCountry,

@@ -54,9 +54,6 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
     let cmbFilterVillage = [];
 
     useEffect(() => {
-        console.log("countryvaluePre", countryvalue);
-        console.log("valuePre", value);
-
         if (isInitialRender && countryvalue === "IND" && value === "kl" &&
             (formData?.AddressBirthDetails?.presentaddressStateName === null || formData?.AddressBirthDetails?.presentaddressStateName === "" ||
                 formData?.AddressBirthDetails?.presentaddressStateName === undefined)) {
@@ -78,7 +75,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
                     if (isPrsentAddress) {
                         setpermtaddressStateName(cmbFilterState[0]);
                     }
-                    setValue(cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode)[0].code);
+                    setValue(cmbFilterState[0].code);
                 }
                 // if (cmbVillage.length > 0 && currentLB.length > 0) {
                 //     cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
@@ -87,6 +84,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
                 setIsInitialRender(false);
             }
         } else if (isInitialRender && countryvalue === "IND" && value === "kl" && formData?.AddressBirthDetails?.presentaddressStateName != null) {
+     
             if (cmbLB.length > 0) {
                 currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
                 //console.log(currentLB);
@@ -105,7 +103,7 @@ const AddressPresent = ({ config, onSelect, userType, formData, presentaddressCo
                     if (isPrsentAddress) {
                         setpermtaddressStateName(cmbFilterState[0]);
                     }
-                    setValue(cmbState.filter((cmbState) => cmbState.code === formData?.AddressBirthDetails?.presentaddressStateName.code));
+                    setValue((cmbFilterState[0].code));
                 }
                 // if (cmbVillage.length > 0 && currentLB.length > 0) {
                 //     cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);

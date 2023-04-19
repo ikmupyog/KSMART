@@ -29,7 +29,7 @@ const DeathPlaceVehicle = ({
   setVehicleFromplaceMl,
   VehicleToPlaceMl,
   setVehicleToPlaceMl,
-  isEditDeath = false
+  isEditAbandonedDeath = false
 }) => {
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
@@ -45,7 +45,7 @@ const DeathPlaceVehicle = ({
   const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "boundary-data");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [tenantboundary, setTenantboundary] = useState(false);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditAbandonedDeath ? isEditAbandonedDeath : false);
   if (tenantboundary) {
     queryClient.removeQueries("CR_HOSPITALMASTER");
     queryClient.removeQueries("TL_ZONAL_OFFICE");
@@ -104,20 +104,20 @@ const DeathPlaceVehicle = ({
     }
   }, [localbodies, isInitialRender]);
 
-  if (isEditDeath) {
-    if (formData?.InformationDeath?.vehicleType != null) {
+  if (isEditAbandonedDeath) {
+    if (formData?.InformationDeathAband?.vehicleType != null) {
       if (cmbVehicle.length > 0 && (vehicleType === undefined || vehicleType === "")) {
-        selectvehicleType(cmbVehicle.filter(cmbVehicle => cmbVehicle.code === formData?.InformationDeath?.vehicleType)[0]);
+        selectvehicleType(cmbVehicle.filter(cmbVehicle => cmbVehicle.code === formData?.InformationDeathAband?.vehicleType)[0]);
       }
     }
-    if (formData?.InformationDeath?.VehicleHospitalEn != null) {
+    if (formData?.InformationDeathAband?.VehicleHospitalEn != null) {
       if (cmbhospital.length > 0 && (VehicleHospitalEn === undefined || VehicleHospitalEn === "")) {
-        setSelectedVehicleHospitalEn(cmbhospital.filter(cmbhospital => cmbhospital.code === formData?.InformationDeath?.VehicleHospitalEn)[0]);
+        setSelectedVehicleHospitalEn(cmbhospital.filter(cmbhospital => cmbhospital.code === formData?.InformationDeathAband?.VehicleHospitalEn)[0]);
       }
     }
-    if (formData?.InformationDeath?.DeathPlaceWardId != null) {
+    if (formData?.InformationDeathAband?.DeathPlaceWardId != null) {
       if (cmbWardNo.length > 0 && (DeathPlaceWardId === undefined || DeathPlaceWardId === "")) {
-        setDeathPlaceWardId(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.InformationDeath?.DeathPlaceWardId)[0]);
+        setDeathPlaceWardId(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.InformationDeathAband?.DeathPlaceWardId)[0]);
       }
     }
   }
@@ -404,7 +404,7 @@ const DeathPlaceVehicle = ({
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
-              <CardLabel>{`${t("CR_OTHER_DETAILS_EN")}`}<span className="mandatorycss">*</span></CardLabel>
+              <CardLabel>{`${t("CR_OTHER_DETAILS_EN")}`}</CardLabel>
               <TextArea
                 t={t}
                 isMandatory={false}
@@ -415,7 +415,7 @@ const DeathPlaceVehicle = ({
                 onChange={setSelectGeneralRemarks}
                 placeholder={`${t("CR_OTHER_DETAILS_EN")}`}
                 disable={isDisableEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_OTHER_DETAILS_EN") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_OTHER_DETAILS_EN") })}
               />
             </div>
           </div>

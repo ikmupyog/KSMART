@@ -71,7 +71,6 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
   //     cmbPostOffice.push(ob);
   //   });
   
-console.log("valuePermanent",valuePermanent);
   useEffect(() => {
     setcmbFilterPerDistrict(cmbDistrict.filter((cmbDistrict) => cmbDistrict.statecode === valuePermanent));
   // }
