@@ -74,9 +74,9 @@ export const CRDeathsearch = {
       asSectionHeader: true,
       values: [
         {
-          title: "PDF_DECEASED_NAME",
-          value:
-            response?.InformationDeath?.DeceasedFirstNameEn 
+          // title: "PDF_DECEASED_NAME",
+          // value:
+          //   response?.InformationDeath?.DeceasedFirstNameEn 
             // +
               
             //   response?.InformationDeath?.DeceasedMiddleNameEn +

@@ -609,8 +609,8 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
     if (validFlag == true) {
      
       onSelect(config.key, {
-        motherFirstNameEn,
-        motherFirstNameMl,
+        motherFirstNameEn : motherFirstNameEn.trim(),
+        motherFirstNameMl: motherFirstNameMl.trim(),
         motherAadhar,
         motherMaritalStatus,
         motherMarriageAge,
@@ -622,8 +622,8 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
         fatherAadhar,
         isMotherInfo,
         isFatherInfo,
-        fatherFirstNameEn,
-        fatherFirstNameMl,
+        fatherFirstNameEn: fatherFirstNameEn.trim(),
+        fatherFirstNameMl: fatherFirstNameMl.trim(),
         fatherNationality,
         fatherEducation,
         fatherProfession,

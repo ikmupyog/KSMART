@@ -404,7 +404,7 @@ const DeathPlaceVehicle = ({
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
-              <CardLabel>{`${t("CR_OTHER_DETAILS_EN")}`}</CardLabel>
+              <CardLabel>{`${t("CR_OTHER_DETAILS_EN")}`}<span className="mandatorycss">*</span></CardLabel>
               <TextArea
                 t={t}
                 isMandatory={false}
@@ -415,7 +415,7 @@ const DeathPlaceVehicle = ({
                 onChange={setSelectGeneralRemarks}
                 placeholder={`${t("CR_OTHER_DETAILS_EN")}`}
                 disable={isDisableEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_OTHER_DETAILS_EN") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_OTHER_DETAILS_EN") })}
               />
             </div>
           </div>

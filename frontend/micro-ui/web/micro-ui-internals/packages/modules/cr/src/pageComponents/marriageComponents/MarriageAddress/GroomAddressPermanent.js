@@ -157,7 +157,6 @@ const GroomAddressPermanent = ({
       }
     }
   }
-  const onSkip = () => onSelect();
 
   function setSelectaddressCountry(value) {
     setpermtaddressCountry(value);
@@ -172,48 +171,45 @@ const GroomAddressPermanent = ({
 
   console.log("Adress Groom", formData);
 
-  const goNext = () => {};
   if (isCountryLoading || isStateLoading || islocalbodiesLoading) {
     return <Loader></Loader>;
   } else
     return (
       <React.Fragment>
-        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
-          <div className="row">
+        <div className="row">
+          <div className="col-md-6">
+            <CardLabel>
+              {`${t("CS_COMMON_COUNTRY")}`}
+              <span className="mandatorycss">*</span>
+            </CardLabel>
+            <Dropdown
+              t={t}
+              optionKey="name"
+              isMandatory={false}
+              option={cmbCountry}
+              selected={permtaddressCountry}
+              select={setSelectaddressCountry}
+              disable={isDisableEdit}
+            />
+          </div>
+          {countryValuePermanent === "IND" && (
             <div className="col-md-6">
               <CardLabel>
-                {`${t("CS_COMMON_COUNTRY")}`}
+                {`${t("CS_COMMON_STATE")}`}
                 <span className="mandatorycss">*</span>
               </CardLabel>
               <Dropdown
                 t={t}
                 optionKey="name"
                 isMandatory={false}
-                option={cmbCountry}
-                selected={permtaddressCountry}
-                select={setSelectaddressCountry}
+                option={cmbState}
+                selected={permtaddressStateName}
+                select={setSelectaddressStateName}
                 disable={isDisableEdit}
               />
             </div>
-            {countryValuePermanent === "IND" && (
-              <div className="col-md-6">
-                <CardLabel>
-                  {`${t("CS_COMMON_STATE")}`}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <Dropdown
-                  t={t}
-                  optionKey="name"
-                  isMandatory={false}
-                  option={cmbState}
-                  selected={permtaddressStateName}
-                  select={setSelectaddressStateName}
-                  disable={isDisableEdit}
-                />
-              </div>
-            )}
-          </div>
-        </FormStep>
+          )}
+        </div>
       </React.Fragment>
     );
 };

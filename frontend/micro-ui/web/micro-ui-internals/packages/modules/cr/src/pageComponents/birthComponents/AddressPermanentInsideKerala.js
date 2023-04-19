@@ -112,11 +112,6 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
     cmbWardNoFinal.push(wardmst);
   });
   useEffect(() => {
-    console.log("isInitialRender" , isInitialRender);
-    console.log("countryValuePermanent" , countryValuePermanent);
-    console.log("valuePermanent" , valuePermanent);
-    console.log("permntInKeralaAdrLBName" , formData?.AddressBirthDetails?.permntInKeralaAdrLBName);
-    console.log("isPrsentAddress" , isPrsentAddress);
 
     if (isInitialRender && isPrsentAddress && countryValuePermanent === "IND" && valuePermanent === "kl"
       && (formData?.AddressBirthDetails?.presentInsideKeralaLBName === null || formData?.AddressBirthDetails?.presentInsideKeralaLBName === "" || formData?.AddressBirthDetails?.presentInsideKeralaLBName === undefined)) {
@@ -134,7 +129,6 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
 
   function loadPermanantInsideKeralainitialData(){
     if (cmbLB.length > 0) {
-      console.log("CheckPerm1");
       currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
       if (currentLB.length > 0) {
         setpermntInKeralaAdrLBName(currentLB[0]);
@@ -162,7 +156,6 @@ const AddressPermanentInsideKerala = ({ config, onSelect, userType, formData,
     }
   }
   function loadPermanantInsideKeralaWithoutData(){
-    console.log("CheckPerm2");
     if (cmbLB.length > 0) {
       currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
       if (currentLB.length > 0) {

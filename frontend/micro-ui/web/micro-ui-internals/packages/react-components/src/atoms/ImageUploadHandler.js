@@ -131,6 +131,7 @@ export const ImageUploadHandler = ({ uploadedImages, onPhotoChange, tenantId, mo
     var newUploadedImagesIds = uploadedImagesIds.filter((key) => key !== deleteImageKey[0].key);
     setUploadedImagesThumbs(newThumbsList);
     setUploadedImagesIds(newUploadedImagesIds);
+    onPhotoChange(newUploadedImagesIds)
     Digit.SessionStorage.set("PGR_CREATE_IMAGES", newUploadedImagesIds);
   }
 

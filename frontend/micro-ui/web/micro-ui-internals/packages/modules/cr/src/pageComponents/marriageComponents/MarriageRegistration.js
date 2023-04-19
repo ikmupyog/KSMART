@@ -487,7 +487,6 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
 
   let validFlag = true;
   const goNext = () => {
-    
     if (validFlag == true) {
       // sessionStorage.setItem("marriageDOM", marriageDOM ? marriageDOM : null);
       // sessionStorage.setItem("marriageDistrictid", marriageDistrictid ? marriageDistrictid : null);
@@ -548,9 +547,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
   };
 
   console.log("Registration", formData);
-  console.log({ cmbLBType });
-  console.log({ marriagePlacetype });
-  console.log({ cmbMarriagePlaceIds });
+  console.log({ marriageType });
 
   if (
     isLoading ||
@@ -897,7 +894,7 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                       // option={cmbCountry}
                     />
                   </div>
-                  {marriageType?.i18nKey === "Others" && (
+                  {/* {marriageType?.i18nKey === "Others" && (
                     <div className="col-md-4">
                       <CardLabel>
                         {`${t("CR_MARRIAGE_OTHER_SPECIFY")}`}
@@ -921,26 +918,26 @@ const MarriageRegistration = ({ config, onSelect, userType, formData, isEditMarr
                         })}
                       />
                     </div>
-                  )}
+                  )} */}
                 </div>
               </div>
             </div>
           </div>
           {toast && (
-              <Toast
-                error={DOBError || AgeValidationMsg}
-                label={
-                  DOBError || AgeValidationMsg
-                    ? DOBError
-                      ? t(`MARRIAGE_DOB_VALIDATION_MSG`)
-                      : AgeValidationMsg
-                      ? t(`CR_INVALID_AGE`)
-                      : setToast(false)
+            <Toast
+              error={DOBError || AgeValidationMsg}
+              label={
+                DOBError || AgeValidationMsg
+                  ? DOBError
+                    ? t(`MARRIAGE_DOB_VALIDATION_MSG`)
+                    : AgeValidationMsg
+                    ? t(`CR_INVALID_AGE`)
                     : setToast(false)
-                }
-                onClose={() => setToast(false)}
-              />
-            )}
+                  : setToast(false)
+              }
+              onClose={() => setToast(false)}
+            />
+          )}
         </FormStep>
       </React.Fragment>
     );
