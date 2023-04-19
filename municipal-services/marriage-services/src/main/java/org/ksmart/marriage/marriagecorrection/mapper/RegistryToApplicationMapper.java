@@ -143,6 +143,7 @@ public class RegistryToApplicationMapper {
         marriageApplicationDetails.getBrideAddressDetails().setPermntOutsideIndiaLinetwoEn(marriageRegistryDetails.getBrideAddressDetails().getPermntOutsideIndiaLinetwoEn());
         marriageApplicationDetails.getBrideAddressDetails().setPermntOutsideIndiaLinetwoMl(marriageRegistryDetails.getBrideAddressDetails().getPermntOutsideIndiaLinetwoMl());
         marriageApplicationDetails.getBrideAddressDetails().setPermntOutSideIndiaProvinceEn(marriageRegistryDetails.getBrideAddressDetails().getPermntOutSideIndiaProvinceEn());
+        marriageApplicationDetails.getBrideAddressDetails().setPermntOutSideIndiaProvinceMl(marriageRegistryDetails.getBrideAddressDetails().getPermntOutSideIndiaProvinceMl());
         marriageApplicationDetails.getBrideAddressDetails().setPermanentOutsideIndiaPostCode(marriageRegistryDetails.getBrideAddressDetails().getPermanentOutsideIndiaPostCode());
         marriageApplicationDetails.getBrideAddressDetails().setPinNoPermanent(marriageRegistryDetails.getBrideAddressDetails().getPinNoPermanent());
 
@@ -172,6 +173,7 @@ public class RegistryToApplicationMapper {
         marriageApplicationDetails.getGroomAddressDetails().setPermntOutsideIndiaLinetwoEn(marriageRegistryDetails.getGroomAddressDetails().getPermntOutsideIndiaLinetwoEn());
         marriageApplicationDetails.getGroomAddressDetails().setPermntOutsideIndiaLinetwoMl(marriageRegistryDetails.getGroomAddressDetails().getPermntOutsideIndiaLinetwoMl());
         marriageApplicationDetails.getGroomAddressDetails().setPermntOutSideIndiaProvinceEn(marriageRegistryDetails.getGroomAddressDetails().getPermntOutSideIndiaProvinceEn());
+        marriageApplicationDetails.getGroomAddressDetails().setPermntOutSideIndiaProvinceMl(marriageRegistryDetails.getGroomAddressDetails().getPermntOutSideIndiaProvinceMl());
         marriageApplicationDetails.getGroomAddressDetails().setPermanentOutsideIndiaPostCode(marriageRegistryDetails.getGroomAddressDetails().getPermanentOutsideIndiaPostCode());
         marriageApplicationDetails.getGroomAddressDetails().setPinNoPermanent(marriageRegistryDetails.getGroomAddressDetails().getPinNoPermanent());
 

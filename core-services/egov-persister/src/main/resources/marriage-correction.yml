@@ -261,11 +261,11 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.houseNameNoMlPermanent
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permanentAddrVillageId
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.PermanentAddrVillageId
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.villageNamePermanent
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permanentAddrTalukId
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntInKeralaAdrTaluk
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutsideKeralaTaluk
 
@@ -285,7 +285,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.poNoPermanent
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.pinNoPermanent
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntInKeralaAdrPincode
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.countryIdPermanent
 
@@ -303,7 +303,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.marriageTenantid
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOthPostOfficeEn
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutsideKeralaPostOfficeEn
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutsideIndiaLineoneEn
 
@@ -313,13 +313,13 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutsideIndiaLinetwoMl
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOthrIndiaprovinceEn
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutSideIndiaProvinceEn
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOthrIndiaprovinceMl
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutSideIndiaProvinceMl
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.outSideIndiaPostCodePermanent
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permanentOutsideIndiaPostCode
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOthPostOfficeMl
+            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutsideKeralaPostOfficeMl
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.townOrVillagePermanent
 
@@ -339,11 +339,11 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.houseNameNoMlPermanent
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permanentAddrVillageId
+            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.PermanentAddrVillageId
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.villageNamePermanent
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permanentAddrTalukId
+            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntInKeralaAdrTaluk
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOutsideKeralaTaluk
 
@@ -381,7 +381,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.marriageTenantid
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOthPostOfficeEn
+            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOutsideKeralaPostOfficeEn
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOthrIndiaLineoneEn
 
@@ -391,11 +391,11 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOthrIndiaLinetwoMl
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOthrIndiaprovinceEn
+            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOutSideIndiaProvinceEn
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOthrIndiaprovinceMl
+            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOutSideIndiaProvinceMl
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.outSideIndiaPostCodePermanent
+            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permanentOutsideIndiaPostCode
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOutsideKeralaPostOfficeMl
 
@@ -557,47 +557,49 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.registrationno
 
-        - query:  UPDATE public.eg_register_marriage_details SET
-            dateofmarriage=?, districtid=?, talukid=?, village_name=?, lbtype=?, ward_code=?, placetype=?, placeid=?, placename_en=?, placename_ml=?,
-            locality_en=?, locality_ml=?, street_name_en=?, street_name_ml=?, housenameno_en=?, housenameno_ml=?, landmark=?, lastmodifiedtime=?, 
-            lastmodifiedby=? WHERE registrationno =? and id=? ;
+        - query:  UPDATE public.eg_register_marriage_details SET dateofmarriage=?, lastmodifiedtime=?, lastmodifiedby=? WHERE registrationno =? and id=? ;
+
+#        - query:  UPDATE public.eg_register_marriage_details SET
+#            dateofmarriage=?, districtid=?, talukid=?, village_name=?, lbtype=?, ward_code=?, placetype=?, placeid=?, placename_en=?, placename_ml=?,
+#            locality_en=?, locality_ml=?, street_name_en=?, street_name_ml=?, housenameno_en=?, housenameno_ml=?, landmark=?, lastmodifiedtime=?,
+#            lastmodifiedby=? WHERE registrationno =? and id=? ;
 
           basePath: MarriageDetails.*
           jsonMaps:
 
             - jsonPath: $.MarriageDetails.*.marriageDOM
 
-            - jsonPath: $.MarriageDetails.*.marriageDistrictid
+            #- jsonPath: $.MarriageDetails.*.marriageDistrictid
 
-            - jsonPath: $.MarriageDetails.*.marriageTalukID
+            #- jsonPath: $.MarriageDetails.*.marriageTalukID
 
-            - jsonPath: $.MarriageDetails.*.marriageVillageName
+            #- jsonPath: $.MarriageDetails.*.marriageVillageName
 
-            - jsonPath: $.MarriageDetails.*.marriageLBtype
+            #- jsonPath: $.MarriageDetails.*.marriageLBtype
 
-            - jsonPath: $.MarriageDetails.*.marriageWardCode
+            #- jsonPath: $.MarriageDetails.*.marriageWardCode
 
-            - jsonPath: $.MarriageDetails.*.marriagePlacetype
+            #- jsonPath: $.MarriageDetails.*.marriagePlacetype
 
-            - jsonPath: $.MarriageDetails.*.placeid
+            #- jsonPath: $.MarriageDetails.*.placeid
 
-            - jsonPath: $.MarriageDetails.*.marriagePlacenameEn
+            #- jsonPath: $.MarriageDetails.*.marriagePlacenameEn
 
-            - jsonPath: $.MarriageDetails.*.marriagePlacenameMl
+            #- jsonPath: $.MarriageDetails.*.marriagePlacenameMl
 
-            - jsonPath: $.MarriageDetails.*.marriageLocalityEn
+            #- jsonPath: $.MarriageDetails.*.marriageLocalityEn
 
-            - jsonPath: $.MarriageDetails.*.marriageLocalityMl
+            #- jsonPath: $.MarriageDetails.*.marriageLocalityMl
 
-            - jsonPath: $.MarriageDetails.*.marriageStreetEn
+            #- jsonPath: $.MarriageDetails.*.marriageStreetEn
 
-            - jsonPath: $.MarriageDetails.*.marriageStreetMl
+            #- jsonPath: $.MarriageDetails.*.marriageStreetMl
 
-            - jsonPath: $.MarriageDetails.*.marriageHouseNoAndNameEn
+            #- jsonPath: $.MarriageDetails.*.marriageHouseNoAndNameEn
 
-            - jsonPath: $.MarriageDetails.*.marriageHouseNoAndNameMl
+            #- jsonPath: $.MarriageDetails.*.marriageHouseNoAndNameMl
 
-            - jsonPath: $.MarriageDetails.*.marriageLandmark
+            #- jsonPath: $.MarriageDetails.*.marriageLandmark
 
             - jsonPath: $.MarriageDetails.*.AuditDetails.lastModifiedTime
 
@@ -616,13 +618,19 @@ serviceMaps:
             - jsonPath: $.MarriageDetails.*.id
 
         - query: UPDATE public.eg_register_marriage_bride_groom_details SET
-            residentship=?, firstname_en=?, firstname_ml=?, middlename_en=?, middlename_ml=?, lastname_en=?, lastname_ml=?,
-            dateofbirth=?, age=?, fathername_en=?, fathername_ml=?, mothername_en=?, mothername_ml=?, guardianname_en=?, guardianname_ml=?,      
-            parent_guardian=?, lastmodifiedtime=?, lastmodifiedby=? WHERE  marriageid=? and bride_groom= 'B' ;
+            firstname_en=?, firstname_ml=?, middlename_en=?, middlename_ml=?, lastname_en=?, lastname_ml=?,
+            dateofbirth=?, age=?, fathername_en=?, fathername_ml=?, mothername_en=?, mothername_ml=?, guardianname_en=?, guardianname_ml=?,
+            lastmodifiedtime=?, lastmodifiedby=? WHERE  marriageid=? and bride_groom= 'B' ;
+
+#        - query: UPDATE public.eg_register_marriage_bride_groom_details SET
+#            residentship=?, firstname_en=?, firstname_ml=?, middlename_en=?, middlename_ml=?, lastname_en=?, lastname_ml=?,
+#            dateofbirth=?, age=?, fathername_en=?, fathername_ml=?, mothername_en=?, mothername_ml=?, guardianname_en=?, guardianname_ml=?,
+#            parent_guardian=?, lastmodifiedtime=?, lastmodifiedby=? WHERE  marriageid=? and bride_groom= 'B' ;
+
           basePath: MarriageDetails.*.BrideDetails
           jsonMaps:
 
-            - jsonPath: $.MarriageDetails.*.BrideDetails.brideResidentShip
+            #- jsonPath: $.MarriageDetails.*.BrideDetails.brideResidentShip
 
             - jsonPath: $.MarriageDetails.*.BrideDetails.brideFirstnameEn
 
@@ -652,7 +660,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.BrideDetails.brideGuardiannameMl
 
-            - jsonPath: $.MarriageDetails.*.BrideDetails.brideParentGuardian
+            #- jsonPath: $.MarriageDetails.*.BrideDetails.brideParentGuardian
 
             - jsonPath: $.MarriageDetails.*.AuditDetails.lastModifiedTime
 
@@ -668,13 +676,19 @@ serviceMaps:
             - jsonPath: $.MarriageDetails.*.id
 
         - query: UPDATE public.eg_register_marriage_bride_groom_details SET
-            residentship=?, firstname_en=?, firstname_ml=?, middlename_en=?, middlename_ml=?, lastname_en=?, lastname_ml=?,
-            dateofbirth=?, age=?, fathername_en=?, fathername_ml=?, mothername_en=?, mothername_ml=?, guardianname_en=?, guardianname_ml=?, 
-            parent_guardian=?, lastmodifiedtime=?, lastmodifiedby=? WHERE marriageid=? and bride_groom= 'G' ;
+            firstname_en=?, firstname_ml=?, middlename_en=?, middlename_ml=?, lastname_en=?, lastname_ml=?,
+            dateofbirth=?, age=?, fathername_en=?, fathername_ml=?, mothername_en=?, mothername_ml=?, guardianname_en=?, guardianname_ml=?,
+            lastmodifiedtime=?, lastmodifiedby=? WHERE marriageid=? and bride_groom= 'G' ;
+
+#        - query: UPDATE public.eg_register_marriage_bride_groom_details SET
+#            residentship=?, firstname_en=?, firstname_ml=?, middlename_en=?, middlename_ml=?, lastname_en=?, lastname_ml=?,
+#            dateofbirth=?, age=?, fathername_en=?, fathername_ml=?, mothername_en=?, mothername_ml=?, guardianname_en=?, guardianname_ml=?,
+#            parent_guardian=?, lastmodifiedtime=?, lastmodifiedby=? WHERE marriageid=? and bride_groom= 'G' ;
+
           basePath: MarriageDetails.*.GroomDetails
           jsonMaps:
 
-            - jsonPath: $.MarriageDetails.*.GroomDetails.groomResidentShip
+            #- jsonPath: $.MarriageDetails.*.GroomDetails.groomResidentShip
 
             - jsonPath: $.MarriageDetails.*.GroomDetails.groomFirstnameEn
 
@@ -704,7 +718,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.GroomDetails.groomGuardiannameMl
 
-            - jsonPath: $.MarriageDetails.*.GroomDetails.groomParentGuardian
+            #- jsonPath: $.MarriageDetails.*.GroomDetails.groomParentGuardian
 
             - jsonPath: $.MarriageDetails.*.AuditDetails.lastModifiedTime
 
@@ -720,20 +734,24 @@ serviceMaps:
             - jsonPath: $.MarriageDetails.*.id
 
         - query : UPDATE public.eg_register_marriage_permanent_address_details SET
-            countryid=?, stateid=?, districtid=?, poid=?, locality_en=?, locality_ml=?, street_name_en=?, street_name_ml=?, housename_en=?, housename_ml=?,
-            village_name=?, pinno=?, tenantid=?, talukid=?, villageid=?, ward_code=?, taluk_name=?, poname_en=?, poname_ml=?, ot_address1_en=?, ot_address1_ml=?, 
-            ot_address2_en=?, ot_address2_ml=?, ot_state_region_province_en=?, ot_state_region_province_ml=?, ot_zipcode=?, lastmodifiedtime=?, lastmodifiedby=? WHERE marriageid = ? and bride_groom='B';
+            locality_en=?, locality_ml=?, street_name_en=?, street_name_ml=?, housename_en=?, housename_ml=?,
+            ot_address1_en=?, ot_address1_ml=?, ot_address2_en=?, ot_address2_ml=?, lastmodifiedtime=?, lastmodifiedby=? WHERE marriageid = ? and bride_groom='B';
+
+#        - query : UPDATE public.eg_register_marriage_permanent_address_details SET
+#            countryid=?, stateid=?, districtid=?, poid=?, locality_en=?, locality_ml=?, street_name_en=?, street_name_ml=?, housename_en=?, housename_ml=?,
+#            village_name=?, pinno=?, tenantid=?, talukid=?, villageid=?, ward_code=?, taluk_name=?, poname_en=?, poname_ml=?, ot_address1_en=?, ot_address1_ml=?,
+#            ot_address2_en=?, ot_address2_ml=?, ot_state_region_province_en=?, ot_state_region_province_ml=?, ot_zipcode=?, lastmodifiedtime=?, lastmodifiedby=? WHERE marriageid = ? and bride_groom='B';
 
           basePath: MarriageDetails.*.BrideAddressDetails
           jsonMaps:
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.countryIdPermanent
+            #- jsonPath: $.MarriageDetails.*.BrideAddressDetails.countryIdPermanent
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.stateIdPermanent
+            #- jsonPath: $.MarriageDetails.*.BrideAddressDetails.stateIdPermanent
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.districtIdPermanent
+            #- jsonPath: $.MarriageDetails.*.BrideAddressDetails.districtIdPermanent
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.poNoPermanent
+            #- jsonPath: $.MarriageDetails.*.BrideAddressDetails.poNoPermanent
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.localityEnPermanent
 
@@ -747,23 +765,23 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.houseNameNoMlPermanent
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.villageNamePermanent
+            #- jsonPath: $.MarriageDetails.*.BrideAddressDetails.villageNamePermanent
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntInKeralaAdrPincode
+            #- jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntInKeralaAdrPincode
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntInKeralaAdrLBName
+            #- jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntInKeralaAdrLBName
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntInsideKeralaTaluk
+            #- jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntInsideKeralaTaluk
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntInsideKeralaVillage
+            #- jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntInsideKeralaVillage
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntInKeralaWardNo
+            #- jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntInKeralaWardNo
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutsideKeralaTaluk
+            #- jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutsideKeralaTaluk
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutsideKeralaPostOfficeEn
+            #- jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutsideKeralaPostOfficeEn
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutsideKeralaPostOfficeMl
+            #- jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutsideKeralaPostOfficeMl
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutsideIndiaLineoneEn
 
@@ -773,11 +791,11 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutsideIndiaLinetwoMl
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutSideIndiaProvinceEn
+            #- jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutSideIndiaProvinceEn
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutSideIndiaProvinceMl
+            #- jsonPath: $.MarriageDetails.*.BrideAddressDetails.permntOutSideIndiaProvinceMl
 
-            - jsonPath: $.MarriageDetails.*.BrideAddressDetails.permanentOutsideIndiaPostCode
+            #- jsonPath: $.MarriageDetails.*.BrideAddressDetails.permanentOutsideIndiaPostCode
 
             - jsonPath: $.MarriageDetails.*.AuditDetails.lastModifiedTime
 
@@ -793,20 +811,24 @@ serviceMaps:
             - jsonPath: $.MarriageDetails.*.id
 
         - query : UPDATE public.eg_register_marriage_permanent_address_details SET
-            countryid=?, stateid=?, districtid=?, poid=?, locality_en=?, locality_ml=?, street_name_en=?, street_name_ml=?, housename_en=?, housename_ml=?,
-            village_name=?, pinno=?, tenantid=?, talukid=?, villageid=?, ward_code=?, taluk_name=?, poname_en=?, poname_ml=?, ot_address1_en=?, ot_address1_ml=?, 
-            ot_address2_en=?, ot_address2_ml=?, ot_state_region_province_en=?, ot_state_region_province_ml=?, ot_zipcode=?, lastmodifiedtime=?, lastmodifiedby=? WHERE marriageid = ? and bride_groom='G';
+            locality_en=?, locality_ml=?, street_name_en=?, street_name_ml=?, housename_en=?, housename_ml=?,
+            ot_address1_en=?, ot_address1_ml=?, ot_address2_en=?, ot_address2_ml=?, lastmodifiedtime=?, lastmodifiedby=? WHERE marriageid = ? and bride_groom='G';
+
+#        - query : UPDATE public.eg_register_marriage_permanent_address_details SET
+#            countryid=?, stateid=?, districtid=?, poid=?, locality_en=?, locality_ml=?, street_name_en=?, street_name_ml=?, housename_en=?, housename_ml=?,
+#            village_name=?, pinno=?, tenantid=?, talukid=?, villageid=?, ward_code=?, taluk_name=?, poname_en=?, poname_ml=?, ot_address1_en=?, ot_address1_ml=?,
+#            ot_address2_en=?, ot_address2_ml=?, ot_state_region_province_en=?, ot_state_region_province_ml=?, ot_zipcode=?, lastmodifiedtime=?, lastmodifiedby=? WHERE marriageid = ? and bride_groom='G';
 
           basePath: MarriageDetails.*.GroomAddressDetails
           jsonMaps:
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.countryIdPermanent
+            #- jsonPath: $.MarriageDetails.*.GroomAddressDetails.countryIdPermanent
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.stateIdPermanent
+            #- jsonPath: $.MarriageDetails.*.GroomAddressDetails.stateIdPermanent
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.districtIdPermanent
+            #- jsonPath: $.MarriageDetails.*.GroomAddressDetails.districtIdPermanent
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.poNoPermanent
+            #- jsonPath: $.MarriageDetails.*.GroomAddressDetails.poNoPermanent
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.localityEnPermanent
 
@@ -820,23 +842,23 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.houseNameNoMlPermanent
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.villageNamePermanent
+            #- jsonPath: $.MarriageDetails.*.GroomAddressDetails.villageNamePermanent
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntInKeralaAdrPincode
+            #- jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntInKeralaAdrPincode
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntInKeralaAdrLBName
+            #- jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntInKeralaAdrLBName
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntInsideKeralaTaluk
+            #- jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntInsideKeralaTaluk
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntInsideKeralaVillage
+            #- jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntInsideKeralaVillage
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntInKeralaWardNo
+            #- jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntInKeralaWardNo
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOutsideKeralaTaluk
+            #- jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOutsideKeralaTaluk
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOutsideKeralaPostOfficeEn
+            #- jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOutsideKeralaPostOfficeEn
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOutsideKeralaPostOfficeMl
+            #- jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOutsideKeralaPostOfficeMl
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOutsideIndiaLineoneEn
 
@@ -846,11 +868,11 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOutsideIndiaLinetwoMl
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOutSideIndiaProvinceEn
+            #- jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOutSideIndiaProvinceEn
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOutSideIndiaProvinceMl
+            #- jsonPath: $.MarriageDetails.*.GroomAddressDetails.permntOutSideIndiaProvinceMl
 
-            - jsonPath: $.MarriageDetails.*.GroomAddressDetails.permanentOutsideIndiaPostCode
+            #- jsonPath: $.MarriageDetails.*.GroomAddressDetails.permanentOutsideIndiaPostCode
 
             - jsonPath: $.MarriageDetails.*.AuditDetails.lastModifiedTime
 
