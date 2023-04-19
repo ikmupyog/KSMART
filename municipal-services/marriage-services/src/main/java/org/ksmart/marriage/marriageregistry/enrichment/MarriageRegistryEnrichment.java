@@ -296,18 +296,11 @@ public class MarriageRegistryEnrichment implements BaseEnrichment {
                                 marriage.getGroomAddressDetails().setPermntOthrIndiaprovinceMl(marriage.getGroomAddressDetails().getPermntOutSideIndiaProvinceMl());
 
                              marriage.getGroomAddressDetails().setOutSideIndiaPostCodePermanent(marriage.getGroomAddressDetails().getPermanentOutsideIndiaPostCode());
-
-
-
 //                            }
                         }
-
-
-
                 }
 
             });
-
     }
 
     public void setBridePresentAddress(MarriageRegistryRequest request) {
@@ -402,22 +395,11 @@ public class MarriageRegistryEnrichment implements BaseEnrichment {
                             marriage.getBrideAddressDetails().setPresentOthrIndiaProvinceMl(marriage.getBrideAddressDetails().getPresentOutSideIndiaProvinceMl());
 
                             marriage.getBrideAddressDetails().setOutSideIndiaPostCodePresent(marriage.getBrideAddressDetails().getPresentOutSideIndiaPostCode());
-
-
-
 //                            }
                         }
-                            }
-
-
-
+                    }
                 }
-
-
         });
-
-
-
     }
 
     private void setBridePermanentAddress(MarriageRegistryRequest request) {
@@ -499,7 +481,6 @@ public class MarriageRegistryEnrichment implements BaseEnrichment {
 
 //                               }
                            }
-
                    }
             });
     }
@@ -521,23 +502,15 @@ public class MarriageRegistryEnrichment implements BaseEnrichment {
         if (CollectionUtils.isEmpty(fileCodes)) {
             throw new CustomException(ErrorCodes.IDGEN_ERROR.getCode(), "No file code(s) returned from idgen service");
         }
-
     }
-
-
     public String setGroomPermanentAddressForCertificate(RequestInfo req,MarriageRegistryDetails registryDetails) {
-
-
 
         StringBuilder groomAddressBuilder = new StringBuilder();
         if (registryDetails.getGroomAddressDetails() != null) {
 
-
             if (registryDetails.getGroomAddressDetails().getPermtaddressCountry() != null && registryDetails.getGroomAddressDetails().getPermtaddressStateName() != null) {
                 if (registryDetails.getGroomAddressDetails().getPermtaddressCountry().equals(MarriageConstants.COUNTRY_CODE)) {
                     if (registryDetails.getGroomAddressDetails().getPermtaddressStateName().equals(MarriageConstants.STATE_CODE_SMALL)) {
-
-
                         Object mdmsGroomAddressData = util.mDMSCallGetAddress(req
                                 , registryDetails.getGroomAddressDetails().getPermntInKeralaAdrLBName()
                                 , registryDetails.getGroomAddressDetails().getDistrictIdPermanent()
@@ -827,7 +800,7 @@ public class MarriageRegistryEnrichment implements BaseEnrichment {
                             tenantId,
                             config.getGetMarriageCertificateName(),
                             e.getModuleCode(),
-                            "CERT", 1);
+                            "CER", 1);
                     ListIterator<String> itr = ackNoDetails.listIterator();
                     e.setCertificateNo(itr.next());
 //                    e.setDateofIssue(currentTime);

@@ -301,14 +301,17 @@ public class MarriageRegistryRepository {
 //            if(StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getBrideUrl())) {
 //                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().setBrideUrl(marriageApplicationConfiguration.getImageURLStartPath()+req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getBrideUrl());
 //            }
+System.out.println("MarriageCertificatechecking"+marriageCertPDFRequest.getMarriageCertificate());
             marriageCertPDFRequest.getMarriageCertificate().forEach(cert-> {
                 String uiHost = marriageApplicationConfiguration.getEgovPdfHost();
                 String tenantId = cert.getMarriageRegistryDetails().getTenantid().split("\\.")[0];
+                System.out.println("MarriageCertificateTenantId"+tenantId);
                 String marriageCertPath = StringUtils.replace(marriageApplicationConfiguration.getEgovPdfMarriageEndPoint(),"$tenantId", tenantId);
                 String pdfFinalPath = uiHost + marriageCertPath;
+                System.out.println("pdfFinalPath"+pdfFinalPath);
                 System.out.println(new Gson().toJson(req));
                 MarriageCertPdfResponse response = restTemplate.postForObject(pdfFinalPath, req, MarriageCertPdfResponse.class);//Creating PDF
-
+                System.out.println("pdfResponse"+response);
                 if (response != null && CollectionUtils.isEmpty(response.getFilestoreIds())) {
                     throw new CustomException("EMPTY_FILESTORE_IDS_FROM_PDF_SERVICE",
                             "No file store id found from pdf service");

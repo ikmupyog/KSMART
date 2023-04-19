@@ -105,13 +105,13 @@ public class MarriageApplicationValidator {
             private void validateDoM(Long dateOfMarriage, String wfCode, String applicationType,Object mdmsData, WorkFlowCheck wfc) {
                 Calendar calendar = Calendar.getInstance();
                 Long currentDate = calendar.getTimeInMillis();
-            
+            System.out.println("wfCode"+wfCode);
                 if (dateOfMarriage > currentDate) {
                     throw new CustomException(MARRIAGE_DETAILS_INVALID_CREATE.getCode(),
                             "Date of death should be less than or same as  current date.");
                 } else {
                     wfc = checkValidation(mdmsData, dateOfMarriage, wfc);
-            
+            System.out.println("wfc"+wfc.getWorkflowCode());
                     if(!wfc.getWorkflowCode().equals(wfCode)) {
                         throw new CustomException(MARRIAGE_DETAILS_INVALID_CREATE.getCode(),
                                 "Workflow code from the application request is wrong.");
@@ -129,6 +129,7 @@ public class MarriageApplicationValidator {
                         Long currentDate = calendar.getTimeInMillis();
   
                         List<LinkedHashMap<String, Object>> wfLists = JsonPath.read(mdmsData, MarriageConstants.CR_MDMS_MARRIAGE_NEW_WF_JSONPATH + "[*]");
+                       //System.out.println("mdmswfcode"+wfLists);
                         for (int n = 0; n < wfLists.size(); n++) {
                         String startStr = wfLists.get(n).get("startdateperiod").toString();
                         String endStr = wfLists.get(n).get("enddateperiod").toString();
@@ -136,6 +137,7 @@ public class MarriageApplicationValidator {
                          Long end = Long.parseLong(endStr);
                          if (end > 0L) {
                                 Long comp = currentDate - dateOfMarriage;
+                              //  System.out.println("datedifference"+comp);
                                 if (comp > start && comp <= end){
                                         wfc.setApplicationType(wfLists.get(n).get("ApplicationType").toString());
                                         wfc.setWorkflowCode(wfLists.get(n).get("WorkflowCode").toString());

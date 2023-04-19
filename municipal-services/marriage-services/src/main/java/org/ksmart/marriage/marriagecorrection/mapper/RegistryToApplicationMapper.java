@@ -23,7 +23,6 @@ public class RegistryToApplicationMapper {
         marriageApplicationDetails.setBrideAddressDetails(new BrideAddressDetails());
         marriageApplicationDetails.setGroomAddressDetails(new GroomAddressDetails());
 
-
         MarriageRegistryDetails marriageRegistryDetails=registry.get(0);
 
         marriageApplicationDetails.setDateofmarriage(marriageRegistryDetails.getDateofmarriage());
@@ -51,7 +50,6 @@ public class RegistryToApplicationMapper {
         marriageApplicationDetails.setRegistrationNo(marriageRegistryDetails.getRegistrationno());
         //marriageApplicationDetails.setTalukName(marriageRegistryDetails.getTalukid());
         //marriageApplicationDetails.setVillageId(marriageRegistryDetails.getVillage_name());
-
 
         //marriageApplicationDetails.getBrideDetails().setBrideId(marriageRegistryDetails.getBrideDetails().getBrideId());
         marriageApplicationDetails.getBrideDetails().setBrideGroom(marriageRegistryDetails.getBrideDetails().getBrideGroom());

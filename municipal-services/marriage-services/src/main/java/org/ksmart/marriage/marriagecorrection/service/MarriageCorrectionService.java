@@ -109,7 +109,6 @@ public class MarriageCorrectionService {
         if (!marriageRegistryDetails.isEmpty()) {
             MarriageApplicationDetails marriageApplicationDetail = RegistryToApplicationMapper.convert(marriageRegistryDetails);
             marriageCorrectionEnrichment.enrichCreate(request, marriageApplicationDetail);
-
             List<MarriageApplicationDetails> marriageApplicationDetailsList = new ArrayList<>();
             marriageApplicationDetailsList.add(marriageApplicationDetail);
             request.setMarriageDetails(marriageApplicationDetailsList);

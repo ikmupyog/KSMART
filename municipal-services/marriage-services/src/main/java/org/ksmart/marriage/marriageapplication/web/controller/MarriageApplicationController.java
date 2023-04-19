@@ -91,6 +91,7 @@ public class MarriageApplicationController {
                                                                      @Valid @ModelAttribute MarriageApplicationSearchCriteria criteria) {
         
         int count=repository.getMarriageCount(criteria);
+        
         List<MarriageApplicationDetails> marriageDetails = MarriageService.searchMarriageDetails(criteria, request.getRequestInfo());
     //     try {
     //         ObjectMapper mapper = new ObjectMapper();
@@ -108,4 +109,6 @@ public class MarriageApplicationController {
                                                 .build();
         return ResponseEntity.ok(response);
     }
+
+    
 }

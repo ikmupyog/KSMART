@@ -29,7 +29,6 @@ public class MarriageRegistrySearchCriteria {
 
     @JsonProperty("certificateNo")
     private String certificateNo;
-
     
     @JsonProperty("marriageDOM")
     private Long marriageDOM;
@@ -38,45 +37,15 @@ public class MarriageRegistrySearchCriteria {
     @JsonProperty("groomFirstnameEn")
     private String groomFirstnameEn;
 
-    // @JsonProperty("groomFirstnameMl")
-    // private String groomFirstnameMl;   
-
-    // @JsonProperty("groomMiddlenameEn")
-    // private String groomMiddlenameEn;
-
-    // @JsonProperty("groomMiddlenameMl")
-    // private String groomMiddlenameMl;
-
-    // @JsonProperty("groomLastnameEn")
-    // private String groomLastnameEn;
-
-    // @JsonProperty("groomLastnameMl")
-    // private String groomLastnameMl;
-
     @JsonProperty("groomAadharNo")
     private String groomAdharNo;
-
+    
     //BRIDE
     @JsonProperty("brideAadharNo")
     private String brideAdharNo;
 
     @JsonProperty("brideFirstnameEn")
     private String brideFirstnameEn;
-
-    // @JsonProperty("brideFirstnameMl")
-    // private String brideFirstnameMl;
-
-    // @JsonProperty("brideMiddlenameEn")
-    // private String brideMiddlenameEn;
-
-    // @JsonProperty("brideMiddlenameMl")
-    // private String brideMiddlenameMl;
-
-    // @JsonProperty("brideLastnameEn")
-    // private String brideLastnameEn;
-
-    // @JsonProperty("brideLastnameMl")
-    // private String brideLastnameMl;
 
     @JsonProperty("sortBy")
     private SortBy sortBy;
@@ -107,7 +76,6 @@ public class MarriageRegistrySearchCriteria {
       @JsonProperty("toDate")
       private Long toDate;
   
-         
           public enum SourceEnum {
           sms("sms"),
           
@@ -144,6 +112,4 @@ public class MarriageRegistrySearchCriteria {
           }
         }
       private SourceEnum source;
-
-
 }

@@ -57,8 +57,6 @@ public class MarriageApplicationService {
 
     public List<MarriageApplicationDetails> saveMarriageDetails(MarriageDetailsRequest request) {
 
-
-    //System.out.println("Workflowtesting"+request.getMarriageDetails().get(0).getIsWorkflow());
         WorkFlowCheck wfc = new WorkFlowCheck();
         Object mdmsData = util.mDMSCall(request.getRequestInfo(), request.getMarriageDetails().get(0).getTenantid());
         validatorService.ruleEngineMarriage(request, wfc, mdmsData);
@@ -66,23 +64,24 @@ public class MarriageApplicationService {
         mdmsValidator.validateMarriageMDMSData(request,mdmsData);
         marriageDetailsEnrichment.enrichCreate(request);
         producer.push(marriageApplicationConfiguration.getSaveMarriageApplicationTopic(), request);
-
-
-       // System.out.println("CheckWorkFlow"+request.getMarriageDetails().get(0).isWorkflow());
         if (request.getMarriageDetails().get(0).getIsWorkflow()){
             workflowIntegrator.callWorkFlow(request);
         }
-       request.getMarriageDetails().forEach(marriage->{
+     
+        request.getMarriageDetails().forEach(marriage->{
+
+            System.out.println("workflowstatus"+marriage.getStatus() );
             if(marriage.getStatus() == MarriageConstants.STATUS_FOR_PAYMENT){
                 List<Demand> demands = new ArrayList<>();
                 Demand demand = new Demand();
                 demand.setTenantId(marriage.getTenantid());
                 demand.setConsumerCode(marriage.getApplicationNumber());
                 demands.add(demand);
-                marriageDetailsEnrichment.saveDemand(request.getRequestInfo(),demands);
+                marriageDetailsEnrichment.saveDemand(request.getRequestInfo(),demands);   
             }
         });
-        return request.getMarriageDetails();
+        // producer.push(marriageApplicationConfiguration.getUpdateDemandTopic(), request);
+         return request.getMarriageDetails();
     }
 
     public List<MarriageApplicationDetails> updateMarriageDetails(MarriageDetailsRequest request) {
@@ -101,16 +100,16 @@ public class MarriageApplicationService {
             workflowIntegrator.callWorkFlow(request);
         }
         producer.push(marriageApplicationConfiguration.getUpdateMarriageApplicationTopic(), request);
-        request.getMarriageDetails().forEach(marriage->{
-            if(marriage.getStatus() == MarriageConstants.STATUS_FOR_PAYMENT){
-                List<Demand> demands = new ArrayList<>();
-                Demand demand = new Demand();
-                demand.setTenantId(marriage.getTenantid());
-                demand.setConsumerCode(marriage.getApplicationNumber());
-                demands.add(demand);
-                marriageDetailsEnrichment.saveDemand(request.getRequestInfo(),demands);
-            }
-        }); 
+        // request.getMarriageDetails().forEach(marriage->{
+        //     if(marriage.getStatus() == MarriageConstants.STATUS_FOR_PAYMENT){
+        //         List<Demand> demands = new ArrayList<>();
+        //         Demand demand = new Demand();
+        //         demand.setTenantId(marriage.getTenantid());
+        //         demand.setConsumerCode(marriage.getApplicationNumber());
+        //         demands.add(demand);
+        //         marriageDetailsEnrichment.saveDemand(request.getRequestInfo(),demands);
+        //     }
+        // }); 
         return request.getMarriageDetails();
 
     }
