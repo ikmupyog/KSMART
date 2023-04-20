@@ -152,7 +152,7 @@ public class MarriageRegistryService {
 
 //            }
             marriageCertificate.setMarriagecertificateno(marriageRegistryDetailsList.get(0).getCertificateNo());
-            List<MarriageCertificate> marriageCertSearch = repository.searchCertificateByMarriageId(marriageCertRequest.getMarriageCertificate().getId());
+            List<MarriageCertificate> marriageCertSearch = repository.searchCertificateByMarriageId(marriageCertRequest.getMarriageCertificate().getMarriageRegId());
             if (null != marriageCertSearch && !marriageCertSearch.isEmpty()) {
                 marriageCertRequest.getMarriageCertificate().setId(marriageCertSearch.get(0).getId());
                 repository.updateMarriageCertificate(marriageCertRequest);
