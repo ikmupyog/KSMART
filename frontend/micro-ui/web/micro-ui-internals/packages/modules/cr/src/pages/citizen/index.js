@@ -46,6 +46,7 @@ const App = () => {
   const SearchApplicationMarriage = Digit?.ComponentRegistryService?.getComponent('SearchApplicationMarriage');
   const DownloadMarriageCertificate = Digit?.ComponentRegistryService?.getComponent('DownloadMarriageCertificate');
   const CRBirthInclusionPage = Digit?.ComponentRegistryService?.getComponent('CRBirthInclusionPage');
+  const MarriageCorrectionAcknowledgement = Digit?.ComponentRegistryService?.getComponent('MarriageCorrectionAcknowledgement');
   const DeathCorrectionAcknowledgement = Digit?.ComponentRegistryService?.getComponent('DeathCorrectionAcknowledgement');
   const BirthInclusionAcknowledgement = Digit?.ComponentRegistryService?.getComponent('BirthInclusionAcknowledgement');
 
@@ -71,6 +72,7 @@ React.useEffect(()=>{
     <span className={"cr-citizen"}>
       <Switch>
       <AppContainer>
+      <PrivateRoute path={`${path}/marriage-correction-acknowledgement`} component={MarriageCorrectionAcknowledgement} />
         <PrivateRoute path={`${path}/cr-birth-creation`} component={CreateBirthRegistration} />
         <PrivateRoute path={`${path}/cr-name-inclusion`} component={CRBirthInclusions} />
         <PrivateRoute parentRoute={path} path={`${path}/birth-inclusion-edit`} component={CRBirthInclusionPage} />

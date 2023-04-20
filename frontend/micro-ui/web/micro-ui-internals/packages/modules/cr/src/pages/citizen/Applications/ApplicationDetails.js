@@ -395,7 +395,7 @@ if(wfdata)
               {application?.applicationStatus === "CITIZENACTIONREQUIRED" ? (
                 <Link
                   to={{
-                    pathname: `/digit-ui/citizen/cr/cr-birth-creation/child-details/${application?.applicationNumber}/${application?.tenantId}`,
+                    pathname: `/digit-ui/citizen/tl/tradelicence/edit-application/${application?.applicationNumber}/${application?.tenantId}`,
                     state: {},
                   }}
                 >
