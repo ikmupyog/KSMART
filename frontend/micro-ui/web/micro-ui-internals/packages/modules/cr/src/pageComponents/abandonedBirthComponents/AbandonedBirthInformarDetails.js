@@ -1,25 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { FormStep, CardLabel, TextInput, Dropdown, BackButton, CheckBox, TextArea, Toast ,UploadFile} from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-// import Timeline from "../../components/CRTimeline";
 import Timeline from "../../components/CRABTimeline";
 
-const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,isEditBirth=false }) => {
-  const stateId = Digit.ULBService.getStateId();
+const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,isEditAbandonedBirth=false }) => {
+  const stateId = Digit.ULBService.getStateId();documentList
   const { t } = useTranslation();
   let validation = {};
-  // console.log(Digit.UserService.getUser().info);
-  // const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : true);
-  const {name:name,} =Digit.UserService.getUser().info ; // window.localStorage.getItem("user-info");
-
-  // let extraStyles = {};
-  // extraStyles = getStyle();
+  const [isDisableEdit, setisDisableEdit] = useState(isEditAbandonedBirth ? isEditAbandonedBirth : true);
+  const {name:name,} =Digit.UserService.getUser().info ; 
+  const isEdit = window.location.href.includes("/edit-application/") || window.location.href.includes("renew-trade");
 
   let documentList = [
-    { "code": "REPORTINGFORM", "description": "ReportingForm" , "label" : "Reporting Form " },
-    { "code": "CHILDBIRTHPROOF", "description": "ProofOfIdentity","label" : "Medical Certificate in Proof of Date of Birth of the Child " },
-    // { "code": "OWNERPHOTO", "description": "OwnerPhotoProof","label" : "Photo" }
+    { "code": "REPORTINGFORM", "description": "ReportingForm" , "label" : "CR_REPORTING_FORM" },
+    { "code": "CHILDBIRTHPROOF", "description": "ProofOfIdentity","label" : "CR_CHILDBIRTH_PROOF" },    
   ] 
+  
   const [institutionName, setinstitutionName] = useState(formData?.AbandonedBirthInformarDetails?.institutionName ? formData?.AbandonedBirthInformarDetails?.institutionName : formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.institutionName ? formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.institutionName : "");
   const [caretakerName, setcaretakerName] = useState(formData?.AbandonedBirthInformarDetails?.caretakerName ? formData?.AbandonedBirthInformarDetails?.caretakerName : formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.caretakerName ? formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.caretakerName : "");
   const [caretakerDesignation, setcaretakerDesignation] = useState(formData?.AbandonedBirthInformarDetails?.caretakerDesignation ? formData?.AbandonedBirthInformarDetails?.caretakerDesignation : formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.caretakerDesignation ? formData?.AbandonedChildDetails?.AbandonedBirthInformarDetails?.caretakerDesignation : "");
@@ -40,17 +36,15 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
   // const [error, setError] = useState(null);
   // let acceptFormat = ".jpg,.png,.pdf,.jpeg"
 
-  const [uploadedFiles, setUploadedFiles] = useState(formData?.AbandonedBirthInformarDetails?.document? formData?.AbandonedDocumentUpload?.document: []);
+  const [uploadedFiles, setUploadedFiles] = useState(formData?.AbandonedBirthInformarDetails?.document? formData?.AbandonedBirthInformarDetails?.document: []);
   const [docuploadedId, setDocuploadedId] = useState();
   const [docuploadedName, setDocuploadedName] = useState();
   const [uploadedFile, setUploadedFile] = useState(formData?.AbandonedBirthInformarDetails?.documents?.ProofOfIdentity?.fileStoreId || null);
   const [file, setFile] = useState(formData?.AbandonedBirthInformarDetails?.documents?.ProofOfIdentity);
   const [error, setError] = useState(null);
   const cityDetails = Digit.ULBService.getCurrentUlb();
-  let acceptFormat = ".jpg,.png,.pdf,.jpeg"
-  
-
-
+  let acceptFormat = ".pdf"
+  // let acceptFormat = ".jpg,.png,.pdf,.jpeg"
 
   // const [dropdownValue, setDropdownValue] = useState(formData?.AbandonedBirthInformarDetails?.documents?.ProofOfIdentity?.documentType || null);
   // const tenantId = Digit.ULBService.getCurrentTenantId();
@@ -64,17 +58,17 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
   const onSkip = () => onSelect(); 
 
   function setSelectinstitutionName(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setinstitutionName(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectcaretakerName(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setcaretakerName(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectcaretakerDesignation(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setcaretakerDesignation(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }    
@@ -89,12 +83,12 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
     }
   }   
   function setSelectinfomantinstitution(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setinfomantinstitution(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectinformerDesi(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setinformerDesi(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }  
@@ -104,7 +98,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
     }   
   }
   function setSelectinfomantFirstNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
       setinfomantFirstNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   } 
@@ -119,11 +113,18 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
     }
   } 
   function selectfile(e) {
+    console.log({e});
     let result = documentList.filter(obj => obj.code == e?.target?.id);
     setDocuploadedName(result[0].description);
     setDocuploadedId(e?.target?.id);
     setUploadedFile(null);
     setFile(e.target.files[0]);
+    console.log(result + "documentdetails");  
+
+    // console.log(uploadedFile);  
+  
+
+
   }
   function onDeleteown(e) {
     const removeindex = uploadedFiles.findIndex(element => {
@@ -208,10 +209,10 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
       setError(null);
       if (file && file?.type) {
         if (!(acceptFormat?.split(",")?.includes(`.${file?.type?.split("/")?.pop()}`))) {
-          setError(t("PT_UPLOAD_FORMAT_NOT_SUPPORTED"));
+          setError(t("CR_UPLOAD_FORMAT_NOT_SUPPORTED"));
         }
         else if (file.size >= 2000000) {
-          setError(t("PT_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
+          setError(t("CR_MAXIMUM_UPLOAD_SIZE_EXCEEDED"));
         } else {
           try {
             const response = await Digit.UploadServices.Filestorage("property-upload", file, Digit.ULBService.getStateId());
@@ -291,9 +292,9 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                 name="institutionName"
                 value={institutionName}
                 onChange={setSelectinstitutionName}
-                // disable={isDisableEdit}
+                disable={isEdit}
                 placeholder={`${t("CR_INSTITUTION_NAME_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_ERROR_INSTITUTION_NAME_CHOOSE") })}
+                {...(validation = { pattern: "^[a-zA-Z-.`'  ]*$", isRequired: false, type: "text", title: t("CR_ERROR_INSTITUTION_NAME_CHOOSE") })}
               />
             </div>           
             <div className="col-md-4">
@@ -307,7 +308,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                 name="caretakerName"
                 value={caretakerName}
                 onChange={setSelectcaretakerName}
-                // disable={isDisableEdit}
+                disable={isEdit}
                 placeholder={`${t("CR_CARE_TAKER_NAME")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_ERROR_CARE_TAKER_NAME") })}
               />
@@ -323,7 +324,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                 name="caretakerDesignation"
                 value={caretakerDesignation}
                 onChange={setSelectcaretakerDesignation}
-                // disable={isDisableEdit}
+                disable={isEdit}
                 placeholder={`${t("CR_CARE_TAKER_DESIGNATION")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_ERROR_CARE_TAKER_DESIGNATION") })}
               />
@@ -339,7 +340,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                 name="caretakerMobile"
                 value={caretakerMobile}
                 onChange={setSelectcaretakerMobile}
-                // disable={isDisableEdit}
+                disable={isEdit}
                 placeholder={`${t("CR_MOBILE_NO")}`}
                 {...(validation = { pattern: "^([0-9]){10}$", isRequired: false, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
               />
@@ -354,7 +355,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                 name="caretakerAddress"
                 value={caretakerAddress}
                 onChange={setSelectcaretakerAddress}
-                // disable={isDisableEdit}
+                disable={isEdit}
                 placeholder={`${t("CR_CARE_TAKER_ADDRESS")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRESS") })}
               />
@@ -383,7 +384,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                 name="infomantinstitution"
                 value={infomantinstitution}
                 onChange={setSelectinfomantinstitution}
-                // disable={isDisableEdit}
+                disable={isEdit}
                 placeholder={`${t("CR_OFFICE_INSTITUTION")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_OFFICE_INSTITUTION_NAME") })}
               />
@@ -397,7 +398,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                 name="informerDesi"
                 value={informerDesi}
                 onChange={setSelectinformerDesi}
-                // disable={isDisableEdit}
+                disable={isEdit}
                 placeholder={`${t("CR_INFORMANT_DESIGNATION")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMER_DESIGNATION") })}
               />
@@ -415,7 +416,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                 name="infomantAadhar"
                 value={infomantAadhar}
                 onChange={setSelectinfomantAadhar}
-                // disable={isDisableEdit}
+                disable={isEdit}
                 placeholder={`${t("CS_COMMON_AADHAAR")}`}
                 {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
               />
@@ -433,6 +434,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
               optionKey="i18nKey" 
               name="infomantFirstNameEn"              
               value={infomantFirstNameEn} 
+              disable={isEdit}
               onChange={setSelectinfomantFirstNameEn}  placeholder={`${t("CR_INFORMANT_NAME_EN")}`}
              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMANT_NAME") })} />
             </div>
@@ -450,7 +452,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                 name="infomantMobile"
                 value={infomantMobile}
                 onChange={setSelectinfomantMobile }
-                // disable={isDisableEdit}
+                disable={isEdit}
                 placeholder={`${t("CR_MOBILE_NO")}`}
                 {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
               />
@@ -463,6 +465,7 @@ const AbandonedBirthInformarDetails = ({ config, onSelect, userType, formData,is
                 optionKey="i18nKey"
                 name="informerAddress"
                 value={informerAddress}
+                disable={isEdit}
                 onChange={setSelectinformerAddress}
                 placeholder={`${t("CR_INFORMER_ADDRESS")}`}
                 {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}

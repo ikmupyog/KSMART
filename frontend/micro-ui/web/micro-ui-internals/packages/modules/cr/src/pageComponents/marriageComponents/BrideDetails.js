@@ -17,6 +17,7 @@ import Timeline from "../../components/MARRIAGETimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
 // import { TimePicker } from '@material-ui/pickers';
+import moment from "moment";
 
 const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -32,8 +33,8 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
   // const { data: Profession = {}, isProfessionLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "Profession");
 
   const cmbYesOrNo = [
-    { i18nKey: "Yes", code: "YES" },
-    { i18nKey: "No", code: "NO" },
+    { i18nKey: "Yes", code: true },
+    { i18nKey: "No", code: false },
   ];
   let menu = [];
   let cmbMaritalStatus = [];
@@ -89,8 +90,8 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
   const [brideDOB, setbrideDOB] = useState(formData?.BrideDetails?.brideDOB ? formData?.BrideDetails?.brideDOB : "");
   const [DOBError, setDOBError] = useState(formData?.BrideDetails?.brideDOB ? false : false);
   const [brideAge, setbrideAge] = useState(formData?.BrideDetails?.brideAge ? formData?.BrideDetails?.brideAge : "");
-  const [brideParentGuardian, setbrideParentGuardian] = useState(
-    formData?.BrideDetails?.brideParentGuardian ? formData?.BrideDetails?.brideParentGuardian : ""
+  const [brideParentGuardian, setBrideParentGuardian] = useState(
+    formData?.BrideDetails?.brideParentGuardian ? formData?.BrideDetails?.brideParentGuardian : "PARENT"
   );
   const [brideFathernameEn, setbrideFathernameEn] = useState(
     formData?.BrideDetails?.brideFathernameEn ? formData?.BrideDetails?.brideFathernameEn : ""
@@ -127,12 +128,24 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     formData?.BrideDetails?.brideIsSpouseLiving ? formData?.BrideDetails?.brideIsSpouseLiving : ""
   );
   const [brideNoOfSpouse, setbrideNoOfSpouse] = useState(formData?.BrideDetails?.brideNoOfSpouse ? formData?.BrideDetails?.brideNoOfSpouse : "");
-  const [valueRad, setValueRad] = useState(formData?.GroomDetails?.brideResidentShip ? formData?.GroomDetails?.brideResidentShip : "");
+  const [valueRad, setValueRad] = useState(formData?.BrideDetails?.brideResidentShip ? formData?.BrideDetails?.brideResidentShip : "");
   const [access, setAccess] = React.useState(true);
   const [selectedOption, setSelectedOption] = useState(
     formData?.AddressOfDecesed?.selectedOption ? formData?.AddressOfDecesed?.selectedOption : "ILB"
   );
-  const [AadharError, setAadharError] = useState(formData?.BrideDetails?.brideAadharNo ? false : false);
+  const [AadharError, setAadharError] = useState(false);
+  const [AdhaarDuplicationError, setAdhaarDuplicationError] = useState(false);
+  const [brideFirstnameEnError, setbrideFirstnameEnError] = useState(false);
+  const [brideFirstnameMlError, setBrideFirstnameMlError] = useState(false);
+  const [brideMiddlenameEnError, setbrideMiddlenameEnError] = useState(false);
+  const [brideMiddlenameMlError, setbrideMiddlenameMlError] = useState(false);
+  const [brideLastnameEnError, setbrideLastnameEnError] = useState(false);
+  const [brideLastnameMlError, setbrideLastnameMlError] = useState(false);
+  const [bridePassportNoError, setbridePassportNoError] = useState(false);
+  const [brideSocialSecurityNoError, setbrideSocialSecurityNoError] = useState(false);
+  // const [brideFatherAadharError, setBrideFatherAadharError] = useState(formData?.BrideDetails?.brideFatherAadharNo ? false : false);
+  // const [brideMotherAadharError, setBrideMotherAadharError] = useState(formData?.BrideDetails?.brideMotherAadharNo ? false : false);
+  // const [brideGuardianAadharError, setBrideGuardianAadharError] = useState(formData?.BrideDetails?.brideGuardianAadharNo ? false : false);
   const [isDisableEdit, setisDisableEdit] = useState(isEditBride ? isEditBride : false);
   const [file, setFile] = useState();
   const [AgeValidationMsg, setAgeValidationMsg] = useState(false);
@@ -176,14 +189,29 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
   ];
 
   const brideParent = parentDetails.map((parent) => parent.code);
+  const convertEpochToDate = (dateEpoch) => {
+    // Returning null in else case because new Date(null) returns initial date from calender
+    if (dateEpoch) {
+      const dateFromApi = new Date(dateEpoch);
+      let month = dateFromApi.getMonth() + 1;
+      let day = dateFromApi.getDate();
+      let year = dateFromApi.getFullYear();
+      month = (month > 9 ? "" : "0") + month;
+      day = (day > 9 ? "" : "0") + day;
+      return `${year}-${month}-${day}`;
+      //  return `${day}-${month}-${year}`;
+    } else {
+      return null;
+    }
+  };
 
   function setSelectbrideFirstnameMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setBrideFirstnameMl('');
+      setBrideFirstnameMl("");
     } else {
-      setBrideFirstnameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setBrideFirstnameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
 
     // if (e.target.value.length === 51) {
@@ -196,8 +224,8 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     // }
   }
   function setSelectbrideFirstnameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setbrideFirstnameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setbrideFirstnameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
     // if (e.target.value.length === 51) {
     //   return false;
@@ -207,8 +235,8 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     // }
   }
   function setSelectbrideMiddlenameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setbrideMiddlenameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setbrideMiddlenameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
     // if (e.target.value.length === 51) {
 
@@ -222,9 +250,9 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setMotherFirstNameMl('');
+      setbrideMiddlenameMl("");
     } else {
-      setbrideMiddlenameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setbrideMiddlenameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
     // if (e.target.value.length === 51) {
     //   return false;
@@ -236,8 +264,8 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     // }
   }
   function setSelectbrideLastnameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setbrideLastnameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setbrideLastnameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
     // if (e.target.value.length === 51) {
     //   return false;
@@ -250,13 +278,13 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setbrideLastnameMl('');
+      setbrideLastnameMl("");
     } else {
-      setbrideLastnameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setbrideLastnameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectbrideMobile(e) {
-    if (e.target.value.trim().length != 0) {
+    if (e.target.value.trim().length >= 0) {
       setbrideMobile(e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 10));
     }
   }
@@ -293,19 +321,31 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
   function setSelectbrideDOB(value) {
     setbrideDOB(value);
     const today = new Date();
+    today.setHours(0, 0, 0, 0);
     const birthDate = new Date(value);
+    birthDate.setHours(0, 0, 0, 0);
+
     if (birthDate.getTime() <= today.getTime()) {
+      setDOBError(false);
+      // setbrideDOB(value);
+      // const today = new Date();
+      // const birthDate = new Date(value);
+      // if (birthDate.getTime() <= today.getTime()) {
       // To calculate the time difference of two dates
-      const dobFullYear = new Date(value).getFullYear();
-      const currentYear = new Date().getFullYear();
-      const age = currentYear - dobFullYear;
+      const dob = new Date(value);
+      const month_diff = Date.now() - dob.getTime();
+      const age_dt = new Date(month_diff);
+      const year = age_dt.getUTCFullYear();
+      const age = Math.abs(year - 1970);
       setbrideAge(age);
-      if (age < 21) {
+      if (age < 18) {
         setAgeValidationMsg(true);
         setToast(true);
         setTimeout(() => {
           setToast(false);
         }, 2000);
+        setbrideAge("");
+        setbrideDOB("");
       }
     } else {
       setbrideDOB(null);
@@ -321,7 +361,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
       return false;
       // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setbrideAge(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' a-zA-Z]/gi, ""));
+      setbrideAge(e.target.value);
     }
   }
   function setSelectbrideParentGuardian(e) {
@@ -330,104 +370,173 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
         e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
       );
     }
-    
   }
   function setSelectbrideFathernameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setbrideFathernameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setbrideFathernameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectbrideMothernameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setbrideMothernameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setbrideMothernameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectbrideMothernameMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setbrideMothernameMl('');
+      setbrideMothernameMl("");
     } else {
-      setbrideMothernameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setbrideMothernameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectbrideGuardiannameMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setMotherFirstNameMl('');
+      setbrideGuardiannameMl("");
     } else {
-      setbrideGuardiannameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setbrideGuardiannameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectbrideFathernameMl(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
-      setbrideFathernameMl('');
+      setbrideFathernameMl("");
     } else {
-      setbrideFathernameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+      setbrideFathernameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
+
   function setSelectbrideFatherAadharNo(e) {
-    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12)
+    // if (e.target.value.trim().length >= 0) {
+    //   setbrideFatherAadharNo(
+    //     e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
+    //   );
+    // }
+    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
     if (newValue === brideAadharNo || newValue === brideMotherAadharNo || newValue === brideGuardianAadharNo) {
       setbrideFatherAadharNo("");
-      setAadharError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 3000);
+      setAdhaarDuplicationError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else if (
+      newValue === formData?.BrideDetails?.brideAadharNo ||
+      newValue === formData?.BrideDetails?.brideFatherAadharNo ||
+      newValue === formData?.BrideDetails?.brideMotherAadharNo ||
+      newValue === formData?.BrideDetails?.brideGuardianAadharNo
+    ) {
+      setbrideFatherAadharNo("");
+      setAdhaarDuplicationError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
     } else {
       setbrideFatherAadharNo(newValue);
+      console.log("console" + formData?.BrideDetails?.brideAadharNo);
     }
   }
-  
+
   function setSelectbrideAadharNo(e) {
-    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12)
-   
+    // if (e.target.value.trim().length >= 0) {
+    //   setBrideAadharNo(
+    //     e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
+    //   );
+    // }
+    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+
     if (newValue === brideMotherAadharNo || newValue === brideGuardianAadharNo || newValue === brideFatherAadharNo) {
       setBrideAadharNo("");
-      setAadharError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 3000);
+      setAdhaarDuplicationError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else if (
+      newValue === formData?.BrideDetails?.brideAadharNo ||
+      newValue === formData?.BrideDetails?.brideFatherAadharNo ||
+      newValue === formData?.BrideDetails?.brideMotherAadharNo ||
+      newValue === formData?.BrideDetails?.brideGuardianAadharNo
+    ) {
+      setBrideAadharNo("");
+      setAdhaarDuplicationError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
     } else {
       setBrideAadharNo(newValue);
     }
   }
   function setSelectbrideMotherAadharNo(e) {
-    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12)
-   
+    // if (e.target.value.trim().length >= 0) {
+    //   setbrideMotherAadharNo(
+    //     e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
+    //   );
+    // }
+    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+
     if (newValue === brideAadharNo || newValue === brideGuardianAadharNo || newValue === brideFatherAadharNo) {
       setbrideMotherAadharNo("");
-      setAadharError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 3000);
+      setAdhaarDuplicationError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else if (
+      newValue === formData?.BrideDetails?.brideAadharNo ||
+      newValue === formData?.BrideDetails?.brideFatherAadharNo ||
+      newValue === formData?.BrideDetails?.brideMotherAadharNo ||
+      newValue === formData?.BrideDetails?.brideGuardianAadharNo
+    ) {
+      setbrideMotherAadharNo("");
+      setAdhaarDuplicationError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
     } else {
       setbrideMotherAadharNo(newValue);
     }
   }
   function setSelectbrideGuardianAadharNo(e) {
-    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 12)
-   
+    // if (e.target.value.trim().length >= 0) {
+    //   setbrideGuardianAadharNo(
+    //     e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12)
+    //   );
+    // }
+    const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+
     if (newValue === brideAadharNo || newValue === brideMotherAadharNo || newValue === brideFatherAadharNo) {
       setbrideGuardianAadharNo("");
-      setAadharError(true);
-        setToast(true);
-        setTimeout(() => {
-          setToast(false);
-        }, 3000);
+      setAdhaarDuplicationError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
+    } else if (
+      newValue === formData?.BrideDetails?.brideAadharNo ||
+      newValue === formData?.BrideDetails?.brideFatherAadharNo ||
+      newValue === formData?.BrideDetails?.brideMotherAadharNo ||
+      newValue === formData?.BrideDetails?.brideGuardianAadharNo
+    ) {
+      setbrideGuardianAadharNo("");
+      setAdhaarDuplicationError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 3000);
     } else {
       setbrideGuardianAadharNo(newValue);
     }
   }
   function setSelectbrideGuardiannameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
-      setbrideGuardiannameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setbrideGuardiannameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
 
@@ -447,9 +556,8 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
       if (e.target.value > 3) {
         return false;
       }
-      // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setbrideNoOfSpouse(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' a-zA-Z]/gi, ""));
+      setbrideNoOfSpouse(e.target.value.replace(/[^0-3]/gi, ""));
     }
   }
   function setSelectbrideEmailid(e) {
@@ -461,25 +569,32 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
     }
   }
   function setSelectbrideSocialSecurityNo(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setbrideSocialSecurityNo(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' a-z]/gi, ""));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[A-Z-0-9 ]*$") != null) {
+      setbrideSocialSecurityNo(e.target.value.length <= 12 ? e.target.value : e.target.value.substring(0, 12));
     }
+    // let value = e.target.value;
+    // console.log({ value });
+    // // setbrideSocialSecurityNo(value);
+    // let pattern = /[A-Z1-9-]$/g;
+    //   if (value.length <= 12) {
+    //     if (pattern.test(value)) {
+    //       setbrideSocialSecurityNo(value);
+    //     }
+    //   }
   }
   function setSelectbridePassportNo(e) {
-    if (e.target.value.length === 21) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setbridePassportNo(e.target.value.replace(/^^[\u0D00-\u0D7F\u200D\u200C .&'@' a-zA-Z]/gi, ""));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[A-Z0-9 ]*$") != null) {
+      setbridePassportNo(e.target.value.length <= 8 ? e.target.value : e.target.value.substring(0, 8));
     }
+    // setbridePassportNo(
+    //   e.target.value.length <= 8
+    //     ? e.target.value.replace("[A-PR-WY][1-9]ds?d{4}[1-9]$", "")
+    //     : e.target.value.replace("[A-PR-WY][1-9]ds?d{4}[1-9]$", "").substring(0, 8)
+    // );
   }
   function selectParentType(e) {
-    setSelectedParent(e.target.value);
+    setBrideParentGuardian(e.target.value);
   }
-  
 
   const handleTimeChange = (value, cb) => {
     if (typeof value === "string") {
@@ -487,21 +602,221 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
       setTripStartTime(value);
     }
   };
- 
+  function setCheckSpecialChar(e) {
+    let pattern = /^[0-9]*$/;
+    if (!e.key.match(pattern)) {
+      e.preventDefault();
+    }
+  }
+
   let validFlag = true;
   const goNext = () => {
-    if (AadharError) {
+    if (brideAadharNo.trim() == null || brideAadharNo.trim() == "" || brideAadharNo.trim() == undefined) {
+      setBrideAadharNo("");
+      setAadharError(true);
+      setAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+    } else if (brideAadharNo != null && brideAadharNo != "") {
+      let adharLength = brideAadharNo;
+      if (adharLength.length < 12 || adharLength.length > 12) {
+        validFlag = false;
+        setAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setAadharError(false);
+      }
+    } else {
+      setAadharError(false);
+    }
+    if (brideFatherAadharNo.trim() == null || brideFatherAadharNo.trim() == "" || brideFatherAadharNo.trim() == undefined) {
+      setbrideFatherAadharNo("");
+      setAadharError(true);
+      setAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+    } else if (brideFatherAadharNo != null && brideFatherAadharNo != "") {
+      let adharLength = brideFatherAadharNo;
+      if (adharLength.length < 12 || adharLength.length > 12) {
+        validFlag = false;
+        setAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setAadharError(false);
+      }
+    } else {
+      setAadharError(false);
+    }
+    if (brideMotherAadharNo.trim() == null || brideMotherAadharNo.trim() == "" || brideMotherAadharNo.trim() == undefined) {
+      setbrideMotherAadharNo("");
+      setAadharError(true);
+      setAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+    } else if (brideMotherAadharNo != null && brideMotherAadharNo != "") {
+      let adharLength = brideMotherAadharNo;
+      if (adharLength.length < 12 || adharLength.length > 12) {
+        validFlag = false;
+        setAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setAadharError(false);
+      }
+    } else {
+      setAadharError(false);
+    }
+    if (brideGuardianAadharNo.trim() == null || brideGuardianAadharNo.trim() == "" || brideGuardianAadharNo.trim() == undefined) {
+      setbrideGuardianAadharNo("");
+      setAadharError(true);
+      setAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+    } else if (brideMotherAadharNo != null && brideMotherAadharNo != "") {
+      let adharLength = brideMotherAadharNo;
+      if (adharLength.length < 12 || adharLength.length > 12) {
+        validFlag = false;
+        setAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setAadharError(false);
+      }
+    } else {
+      setAadharError(false);
+    }
+    if (bridePassportNo.trim() == null || bridePassportNo.trim() == "" || bridePassportNo.trim() == undefined) {
+      setbridePassportNo("");
+      setbridePassportNoError(true);
+      setAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+    } else if (bridePassportNo != null && bridePassportNo != "") {
+      let pasportLength = bridePassportNo;
+      if (pasportLength.length < 8 || pasportLength.length > 8) {
+        validFlag = false;
+        setbridePassportNoError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setbridePassportNoError(false);
+      }
+    } else {
+      setbridePassportNoError(false);
+    }
+    if (brideSocialSecurityNo.trim() == null || brideSocialSecurityNo.trim() == "" || brideSocialSecurityNo.trim() == undefined) {
+      setbrideSocialSecurityNo("");
+      setbrideSocialSecurityNoError(true);
+      setAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+    } else if (brideSocialSecurityNo != null && brideSocialSecurityNo != "") {
+      let socialLength = brideSocialSecurityNo;
+      if (socialLength.length < 12) {
+        validFlag = false;
+        setbrideSocialSecurityNoError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setbrideSocialSecurityNoError(false);
+      }
+    } else {
+      setbrideSocialSecurityNoError(false);
+    }
+
+    if (brideFirstnameEn.trim() == null || brideFirstnameEn.trim() == "" || brideFirstnameEn.trim() == undefined) {
       validFlag = false;
-      setAadharErroChildAadharNor(true);
+      setbrideFirstnameEn("");
+      setbrideFirstnameEnError(true);
       setToast(true);
       setTimeout(() => {
         setToast(false);
       }, 2000);
-      // return false;
-      // window.alert("Username shouldn't exceed 10 characters")
     } else {
-      setAadharError(false);
+      setbrideFirstnameEnError(false);
     }
+    if (brideFirstnameMl.trim() == null || brideFirstnameMl.trim() == "" || brideFirstnameMl.trim() == undefined) {
+      validFlag = false;
+      setBrideFirstnameMl("");
+      setBrideFirstnameMlError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setBrideFirstnameMlError(false);
+    }
+    if (brideMiddlenameEn.trim() == null || brideMiddlenameEn.trim() == "" || brideMiddlenameEn.trim() == undefined) {
+      validFlag = false;
+      setbrideMiddlenameEn("");
+      setbrideMiddlenameEnError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setbrideMiddlenameEnError(false);
+    }
+    if (brideMiddlenameMl.trim() == null || brideMiddlenameMl.trim() == "" || brideMiddlenameMl.trim() == undefined) {
+      validFlag = false;
+      setbrideMiddlenameMl("");
+      setbrideMiddlenameMlError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setbrideMiddlenameMlError(false);
+    }
+    if (brideLastnameEn.trim() == null || brideLastnameEn.trim() == "" || brideLastnameEn.trim() == undefined) {
+      validFlag = false;
+      setbrideLastnameEn("");
+      setbrideLastnameEnError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setbrideLastnameEnError(false);
+    }
+    if (brideLastnameMl.trim() == null || brideLastnameMl.trim() == "" || brideLastnameMl.trim() == undefined) {
+      validFlag = false;
+      setbrideLastnameMl("");
+      setbrideLastnameMlError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setbrideLastnameMlError(false);
+    }
+
     if (validFlag == true) {
       // sessionStorage.setItem("tripStartTime", tripStartTime ? tripStartTime : null);
 
@@ -546,6 +861,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
       // sessionStorage.setItem("selectedOption", selectedOption ? selectedOption : "ILB");
       // // sessionStorage.setItem("isMotherInfo", isMotherInfo);
       onSelect(config.key, {
+        brideResidentShip,
         selectedOption,
         brideAadharNo,
         bridePassportNo,
@@ -558,6 +874,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
         brideMobile,
         brideGender,
         brideDOB,
+        brideAge,
         brideMothernameEn,
         brideMothernameMl,
         brideGuardiannameMl,
@@ -570,6 +887,7 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
         brideMaritalstatusID,
         brideIsSpouseLiving,
         brideNoOfSpouse,
+        brideParentGuardian,
         brideGuardiannameEn,
         brideGuardianAadharNo,
         brideEmailid,
@@ -577,23 +895,36 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
       });
     }
   };
-
-  if (isLoading) {
+  console.log("Bride", formData);
+  if (isLoading || isMaritalStatusLoading) {
     return <Loader></Loader>;
   } else
     return (
       <React.Fragment>
-        <BackButton>{t("CS_COMMON_BACK")}</BackButton>
         {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
         {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
-        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
-          {/* <div className="row">
-            <div className="col-md-12">
-              <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_BRIDE_REGISTRATION_DETAILS")}`}</span>{" "}
-              </h1>
-            </div>
-          </div> */}
+        <FormStep
+          t={t}
+          config={config}
+          onSelect={goNext}
+          onSkip={onSkip}
+          isDisabled={
+            !brideFirstnameEn ||
+            !brideMobile ||
+            !brideFirstnameMl ||
+            !brideEmailid ||
+            !brideGender ||
+            !brideDOB ||
+            !brideMaritalstatusID ||
+            (brideResidentShip === "INDIAN" ? !brideAadharNo : false) ||
+            (brideResidentShip === "NRI" ? !bridePassportNo || !brideSocialSecurityNo : false) ||
+            (brideResidentShip === "FOREIGN" ? !brideSocialSecurityNo || !bridePassportNo : false) ||
+            (brideParentGuardian === "PARENT"
+              ? !brideFathernameEn || !brideFathernameMl || !brideMothernameEn || !brideMothernameMl || !brideFatherAadharNo || !brideMotherAadharNo
+              : false) ||
+            (brideParentGuardian === "GUARDIAN" ? !brideGuardiannameEn || !brideGuardiannameMl || !brideGuardianAadharNo : false)
+          }
+        >
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
@@ -601,30 +932,20 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
               </h1>
             </div>
           </div>
-          {/* <div className="row">
-          <div className="col-md-12">
-            <div className="col-md-6">
-              <CardLabel>
-                {t("CR_NATIONALITY_&RESIDENTSHIP")}
 
-                <span className="mandatorycss">*</span>
-              </CardLabel>
-            </div>
-          </div>
-        </div> */}
           <div className="row">
             <div className="col-md-12">
               <div className="radios">
                 {brideTypes.map((type, index) => (
                   <div style={{ display: "flex", alignItems: "center", columnGap: "8px" }}>
                     <input
-                      className="form-check-input"
+                      className="bride-residentship"
                       type="radio"
-                      name="brideType"
+                      name="brideResidentship"
                       style={{ height: "20px", width: "20px" }}
                       onChange={selectSetBrideResidentShip}
                       value={type}
-                      defaultChecked={index === 0}
+                      checked={brideResidentShip === type}
                     />
                     <label class="form-check-label" for="flexRadioDefault1">
                       {type}
@@ -633,316 +954,411 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                 ))}
               </div>
             </div>
-            {/* <div className="col-md-4">
-              <h2>Add Image:</h2>
-              <input type="file" onChange={handleChange} />
-              <img src={file} />
-            </div> */}
           </div>
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_BRIDE_ADHAR_&_PASSPORT")}`}</span>{" "}
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_BRIDE_AADHAR_AND_PASSPORT_NO")}`}</span>{" "}
               </h1>
             </div>
           </div>
-
           <div className="row">
-            <div className="col-md-12">
+            {brideResidentShip === "INDIAN" ? (
               <div className="col-md-4">
                 {" "}
                 <CardLabel>
-                  {t("CR_ADHAR_NO")}
+                  {`${t("CR_BRIDE_AADHAR_NO")}`}
                   {brideResidentShip === "INDIAN" && <span className="mandatorycss">*</span>}
                 </CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
-                  type={"number"}
+                  type={"text"}
                   optionKey="i18nKey"
                   name="brideAadharNo"
                   value={brideAadharNo}
                   onChange={setSelectbrideAadharNo}
-                  disable={isDisableEdit}
-                  placeholder={`${t("CR_ADHAR_NO")}`}
+                  onKeyPress={setCheckSpecialChar}
+                  placeholder={`${t("CR_BRIDE_AADHAR_NO")}`}
                   inputProps={{
                     maxLength: 12,
                   }}
                   {...(brideResidentShip === "INDIAN" && {
                     ...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") }),
                   })}
-                  // {...(validation = { pattern: "^[0-9]{12}$", type: "number", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                 />
               </div>
-              <div className="col-md-4">
-                {" "}
-                <CardLabel>
-                  {t("CR_PASSPORT_NO")}
-                  {(brideResidentShip === "NRI" || brideResidentShip === "FOREIGN") && <span className="mandatorycss">*</span>}
-                </CardLabel>
-                <TextInput
-                  t={t}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="bridePassportNo"
-                  onChange={setSelectbridePassportNo}
-                  disable={isDisableEdit}
-                  placeholder={`${t("CR_PASSPORT_NO")}`}
-                  inputProps={{
-                    maxLength: 12,
-                  }}
-                  {...((brideResidentShip === "NRI" || brideResidentShip === "FOREIGN") && {
-                    ...(validation = { pattern: "^[0-9]{12}$", type: "number", isRequired: true, title: t("CS_COMMON_INVALID_PASSPORT_NO") }),
-                  })}
-                />
-              </div>
+            ) : (
+              <React.Fragment>
+                <div className="col-md-4">
+                  {" "}
+                  <CardLabel>
+                    {`${t("CR_BRIDE_AADHAR_NO")}`}
+                    {brideResidentShip === "INDIAN" && <span className="mandatorycss">*</span>}
+                  </CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="brideAadharNo"
+                    value={brideAadharNo}
+                    onChange={setSelectbrideAadharNo}
+                    onKeyPress={setCheckSpecialChar}
+                    placeholder={`${t("CR_BRIDE_AADHAR_NO")}`}
+                    inputProps={{
+                      maxLength: 12,
+                    }}
+                    {...(brideResidentShip === "INDIAN" && {
+                      ...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") }),
+                    })}
+                  />
+                </div>
+                <div className="col-md-4">
+                  {" "}
+                  <CardLabel>
+                    {t("CR_BRIDE_PASSPORT_NO")}
+                    {(brideResidentShip === "NRI" || brideResidentShip === "FOREIGN") && <span className="mandatorycss">*</span>}
+                  </CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="bridePassportNo"
+                    value={bridePassportNo}
+                    onChange={setSelectbridePassportNo}
+                    placeholder={`${t("CR_BRIDE_PASSPORT_NO")}`}
+                    {...((brideResidentShip === "NRI" || brideResidentShip === "FOREIGN") && {
+                      ...(validation = { pattern: "^[A-Z0-9]{8}$", type: "text", isRequired: true, title: t("CS_COMMON_INVALID_PASSPORT_NO") }),
+                    })}
+                  />
+                </div>
 
-              <div className="col-md-4">
-                {" "}
-                <CardLabel>
-                  {t("CR_SOCIAL_SECURITY_NO")}
-                  {brideResidentShip === "FOREIGN" && <span className="mandatorycss">*</span>}
-                </CardLabel>
-                <TextInput
-                  t={t}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="brideSocialSecurityNo"
-                  disable={isDisableEdit}
-                  onChange={setSelectbrideSocialSecurityNo}
-                  placeholder={`${t("CR_SOCIAL_SECURITY_NO")}`}
-                  inputProps={{
-                    maxLength: 12,
-                  }}
-                  {...(brideResidentShip === "FOREIGN" && {
-                    ...(validation = { pattern: "^[0-9]{12}$", type: "number", isRequired: true, title: t("CR_INVALID_SOCIAL_SECURITY_NUMBER") }),
-                  })}
-                />
-              </div>
-            </div>
-            {/* <div className="col-md-12">
-              <div className="col-md-6">
-                <CardLabel>
-                  {t("CR_NAME")}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-              </div>
-            </div> */}
-
+                <div className="col-md-4">
+                  <CardLabel>
+                    {t("CR_BRIDE_SOCIAL_SECURITY_NO")}
+                    {(brideResidentShip === "NRI" || brideResidentShip === "FOREIGN") && <span className="mandatorycss">*</span>}
+                  </CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="brideSocialSecurityNo"
+                    value={brideSocialSecurityNo}
+                    onChange={setSelectbrideSocialSecurityNo}
+                    placeholder={`${t("CR_BRIDE_SOCIAL_SECURITY_NO")}`}
+                    {...((brideResidentShip === "NRI" || brideResidentShip === "FOREIGN") && {
+                      ...(validation = {
+                        pattern: "^[A-Z0-9-]{12}$",
+                        type: "text",
+                        isRequired: true,
+                        title: t("CR_INVALID_SOCIAL_SECURITY_NUMBER"),
+                      }),
+                    })}
+                  />
+                </div>
+              </React.Fragment>
+            )}
+          </div>
+          <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
                 <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_BRIDE_DETAILS")}`}</span>{" "}
               </h1>
             </div>
-            {/* <div className="row"> */}
-            <div className="col-md-12">
-              <div className="col-md-3">
-                {" "}
-                <CardLabel>
-                  {`${t("CR_BRIDE_FIRST_NAME_EN")}`}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="brideFirstnameEn"
-                  value={brideFirstnameEn}
-                  onChange={setSelectbrideFirstnameEn}
-                  //  onChange={(e,v) => this.updateTextField(e,v)}
-                  disable={isDisableEdit}
-                  placeholder={`${t("CR_BRIDE_FIRST_NAME_EN")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
-                />
-              </div>
-              <div className="col-md-3">
-                {" "}
-                <CardLabel>{`${t("CR_BRIDE_MIDDLE_NAME_EN")}`}</CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="brideMiddlenameEn"
-                  value={brideMiddlenameEn}
-                  onChange={setSelectbrideMiddlenameEn}
-                  disable={isDisableEdit}
-                  placeholder={`${t("CR_BRIDE_MIDDLE_NAME_EN")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })}
-                />
-              </div>
-              <div className="col-md-3">
-                {" "}
-                <CardLabel>{`${t("CR_BRIDE_LAST_NAME_EN")}`}</CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="brideLastnameEn"
-                  value={brideLastnameEn}
-                  onChange={setSelectbrideLastnameEn}
-                  disable={isDisableEdit}
-                  placeholder={`${t("CR_BRIDE_LAST_NAME_EN")}`}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
-                />
-              </div>
-              <div className="col-md-3">
-                {" "}
-                <CardLabel>
-                  {`${t("CR_BRIDE_MOBILE_NO")}`} <span className="mandatorycss">*</span>
-                </CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="brideMobile"
-                  value={brideMobile}
-                  onChange={setSelectbrideMobile}
-                  disable={isDisableEdit}
-                  placeholder={`${t("CR_BRIDE_MOBILE_NO")}`}
-                  {...(validation = { pattern: "^[0-9]{10}$", type: "number", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })}
-                />
-              </div>
+          </div>
+          <div className="row">
+            <div className="col-md-3">
+              <CardLabel>
+                {t("CR_BRIDE_FIRST_NAME_EN")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="brideFirstnameEn"
+                value={brideFirstnameEn}
+                onChange={setSelectbrideFirstnameEn}
+                placeholder={`${t("CR_BRIDE_FIRST_NAME_EN")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+              />
             </div>
-            {/* </div> */}
-            {/* <div className="row"> */}
-            <div className="col-md-12">
-              <div className="col-md-3">
-                {" "}
-                <CardLabel>
-                  {`${t("CR_BRIDE_FIRST_NAME_ML")}`}
-                  <span className="mandatorycss">*</span>
-                </CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="brideFirstnameMl"
-                  value={brideFirstnameMl}
-                  onChange={setSelectbrideFirstnameMl}
-                  disable={isDisableEdit}
-                  placeholder={`${t("CR_BRIDE_FIRST_NAME_ML")}`}
-                  {...(validation = {
-                    pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                    isRequired: true,
-                    type: "text",
-                    title: t("CR_INVALID_FIRST_NAME_ML"),
-                  })}
-                />
-              </div>
-              <div className="col-md-3">
-                {" "}
-                <CardLabel>{`${t("CR_BRIDE_MIDDLE_NAME_ML")}`}</CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="brideMiddlenameMl"
-                  value={brideMiddlenameMl}
-                  onChange={setSelectbrideMiddlenameMl}
-                  disable={isDisableEdit}
-                  placeholder={`${t("CR_BRIDE_MIDDLE_NAME_ML")}`}
-                  {...(validation = {
-                    pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                    isRequired: false,
-                    type: "text",
-                    title: t("CR_INVALID_MIDDLE_NAME_ML"),
-                  })}
-                />
-              </div>
-              <div className="col-md-3">
-                {" "}
-                <CardLabel>{`${t("CR_BRIDE_LAST_NAME_ML")}`}</CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="brideLastnameMl"
-                  value={brideLastnameMl}
-                  onChange={setSelectbrideLastnameMl}
-                  disable={isDisableEdit}
-                  placeholder={`${t("CR_BRIDE_LAST_NAME_ML")}`}
-                  {...(validation = {
-                    pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                    isRequired: false,
-                    type: "text",
-                    title: t("CR_INVALID_LAST_NAME_ML"),
-                  })}
-                />
-              </div>
-              <div className="col-md-3">
-                {" "}
-                <CardLabel>
-                  {`${t("CR_BRIDE_EMAIL")}`} <span className="mandatorycss">*</span>
-                </CardLabel>
-                <TextInput
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="i18nKey"
-                  name="brideEmailid"
-                  value={brideEmailid}
-                  onChange={setSelectbrideEmailid}
-                  disable={isDisableEdit}
-                  placeholder={`${t("CR_BRIDE_EMAIL")}`}
-                  {...(validation = { title: t("CR_INVALID_EMAIL") })}
-                />
-              </div>
-            </div>
-            {/* </div> */}
-            {/* <div className="row"> */}
-            <div className="col-md-12">
-              <div className="col-md-6"></div>
-            </div>
-            <div>
-              <div className="col-md-12">
-                <div className="col-md-4">
-                  {" "}
-                  <CardLabel>
-                    {`${t("CR_GENDER")}`}
-                    <span className="mandatorycss">*</span>
-                  </CardLabel>
-                  <Dropdown
-                    t={t}
-                    optionKey="code"
-                    isMandatory={false}
-                    option={menu}
-                    selected={brideGender}
-                    select={setSelectbrideGender}
-                    disable={isDisableEdit}
-                    placeholder={`${t("CR_GENDER")}`}
-                    {...(validation = { isRequired: true })}
-                  />
-                </div>
 
+            <div className="col-md-3">
+              <CardLabel>{t("CR_BRIDE_MIDDLE_NAME_EN")}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="brideMiddlenameEn"
+                value={brideMiddlenameEn}
+                onChange={setSelectbrideMiddlenameEn}
+                placeholder={`${t("CR_BRIDE_MIDDLE_NAME_EN")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_MIDDLE_NAME_EN") })}
+              />
+            </div>
+            <div className="col-md-3">
+              <CardLabel>{t("CR_BRIDE_LAST_NAME_EN")}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="brideLastnameEn"
+                value={brideLastnameEn}
+                onChange={setSelectbrideLastnameEn}
+                placeholder={`${t("CR_BRIDE_LAST_NAME_EN")}`}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_LAST_NAME_EN") })}
+              />
+            </div>
+            <div className="col-md-3">
+              <CardLabel>
+                {t("CR_BRIDE_MOBILE_NO")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="brideMobile"
+                value={brideMobile}
+                onChange={setSelectbrideMobile}
+                placeholder={`${t("CR_BRIDE_MOBILE_NO")}`}
+                {...(validation = { pattern: "^[0-9]{10}$", type: "text", isRequired: true, title: t("CR_INVALID_MOBILE_NO") })}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-3">
+              <CardLabel>
+                {t("CR_BRIDE_FIRST_NAME_ML")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="brideFirstnameMl"
+                value={brideFirstnameMl}
+                onChange={setSelectbrideFirstnameMl}
+                placeholder={`${t("CR_BRIDE_FIRST_NAME_ML")}`}
+                {...(validation = {
+                  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                  isRequired: true,
+                  type: "text",
+                  title: t("CR_INVALID_FIRST_NAME_ML"),
+                })}
+              />
+            </div>
+            <div className="col-md-3">
+              <CardLabel>{t("CR_BRIDE_MIDDLE_NAME_ML")}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="brideMiddlenameMl"
+                value={brideMiddlenameMl}
+                onChange={setSelectbrideMiddlenameMl}
+                placeholder={`${t("CR_BRIDE_MIDDLE_NAME_ML")}`}
+                {...(validation = {
+                  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                  isRequired: false,
+                  type: "text",
+                  title: t("CR_INVALID_MIDDLE_NAME_ML"),
+                })}
+              />
+            </div>
+            <div className="col-md-3">
+              <CardLabel>{t("CR_BRIDE_LAST_NAME_ML")}</CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="brideLastnameMl"
+                value={brideLastnameMl}
+                onChange={setSelectbrideLastnameMl}
+                placeholder={`${t("CR_BRIDE_LAST_NAME_ML")}`}
+                {...(validation = {
+                  pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                  isRequired: false,
+                  type: "text",
+                  title: t("CR_INVALID_LAST_NAME_ML"),
+                })}
+              />
+            </div>
+            <div className="col-md-3">
+              <CardLabel>
+                {t("CR_BRIDE_EMAIL")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"email"}
+                optionKey="i18nKey"
+                name="brideEmailid"
+                value={brideEmailid}
+                onChange={setSelectbrideEmailid}
+                placeholder={`${t("CR_BRIDE_EMAIL")}`}
+                //pattern: "^[^\s@]+@[^\s@]+\.[^\s@]+$"
+                {...(validation = { isRequired: true, title: t("CR_INVALID_EMAIL") })}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-4">
+              <CardLabel>
+                {`${t("CR_BRIDE_GENDER")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <Dropdown
+                t={t}
+                optionKey="code"
+                isMandatory={true}
+                option={menu}
+                selected={brideGender}
+                select={setSelectbrideGender}
+                placeholder={`${t("CR_BRIDE_GENDER")}`}
+                {...(validation = { isRequired: true })}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>
+                {`${t("CR_BRIDE_DATE_OF_BIRTH")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <DatePicker
+                date={brideDOB}
+                name="brideDOB"
+                max={moment().subtract(18, "year").format("YYYY-MM-DD")}
+                //max={convertEpochToDate(new Date())}
+                onChange={setSelectbrideDOB}
+                placeholder={`${t("CR_BRIDE_DATE_OF_BIRTH")}`}
+                {...(validation = {
+                  pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",
+                  isRequired: true,
+                  type: "text",
+                  title: t("CR_INVALID_DATE"),
+                })}
+              />
+            </div>
+            <div className="col-md-4">
+              <CardLabel>
+                {`${t("CR_BRIDE_AGE")}`}
+                <span className="mandatorycss">*</span>
+              </CardLabel>
+              <TextInput
+                t={t}
+                isMandatory={false}
+                type={"text"}
+                optionKey="i18nKey"
+                name="brideAge"
+                value={brideAge}
+                disable={true}
+                onChange={setSelectbrideAge}
+                placeholder={`${t("CR_BRIDE_AGE")}`}
+                {...(validation = { pattern: "^[0-9]{2}$", type: "text", isRequired: true })}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-4">
+              <CardLabel>
+                {t("CR_BRIDE_MARITAL_STATUS")}
+                <span className="mandatorycss">*</span>
+              </CardLabel>{" "}
+              <Dropdown
+                t={t}
+                optionKey="name"
+                isMandatory={false}
+                option={cmbMaritalStatus}
+                selected={brideMaritalstatusID}
+                select={setSelectbrideMaritalstatusID}
+                placeholder={`${t("CR_BRIDE_MARITAL_STATUS")}`}
+                {...(validation = { isRequired: true })}
+              />
+            </div>
+            {brideMaritalstatusID?.code === "MARRIED" && (
+              <div className="col-md-4">
+                <CardLabel>
+                  {t("CR_ANY_SPOUSE_LIVING")}
+                  <span className="mandatorycss">*</span>
+                </CardLabel>{" "}
+                <Dropdown
+                  t={t}
+                  optionKey="i18nKey"
+                  isMandatory={false}
+                  option={cmbYesOrNo}
+                  selected={brideIsSpouseLiving}
+                  select={setSelectbrideIsSpouseLiving}
+                  placeholder={`${t("CR_ANY_SPOUSE_LIVING")}`}
+                  {...(validation = { isRequired: true })}
+                />
+              </div>
+            )}
+            {brideMaritalstatusID?.code === "MARRIED" && brideIsSpouseLiving?.code && (
+              <div className="col-md-4">
+                <CardLabel>{t("CR_NUMBER_OF_SPOUSE_LIVING")}</CardLabel>{" "}
+                <TextInput
+                  t={t}
+                  isMandatory={false}
+                  type={"text"}
+                  optionKey="i18nKey"
+                  name="brideNoOfSpouse"
+                  value={brideNoOfSpouse}
+                  onChange={setSelectbrideNoOfSpouse}
+                  placeholder={`${t("CR_NUMBER_OF_SPOUSE_LIVING")}`}
+                  {...(validation = { pattern: "^([0-3]){1}$", type: "text", isRequired: true, title: t("CR_INVALID_NO_OF_SPOUSE_LIVING") })}
+                />
+              </div>
+            )}
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+              <h1 className="headingh1">
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PARENTS_GUARDIAN_DETILS")}`}</span>{" "}
+              </h1>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+              {/* <div className="col-md-6"> */}
+              <div className="radios" style={{ justifyContent: "center", columnGap: "40px" }}>
+                {brideParent.map((type) => (
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", columnGap: "8px" }}>
+                    <input
+                      className="form-check-input"
+                      type="radio"
+                      name="brideParent"
+                      id="flexRadioDefault1"
+                      style={{ height: "20px", width: "20px" }}
+                      onChange={selectParentType}
+                      value={type}
+                      checked={brideParentGuardian === type}
+                    />
+                    <label class="form-check-label" for="flexRadioDefault1">
+                      {type}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          {brideParentGuardian === "PARENT" && (
+            <div>
+              <div className="row">
                 <div className="col-md-4">
                   <CardLabel>
-                    {`${t("CR_BRIDE_DATE_OF_BIRTH_TIME")}`}
-                    <span className="mandatorycss">*</span>
-                  </CardLabel>
-                  <DatePicker
-                    date={brideDOB}
-                    name="brideDOB"
-                    onChange={setSelectbrideDOB}
-                    inputFormat="DD-MM-YYYY"
-                    placeholder={`${t("CR_BRIDE_DATE_OF_BIRTH_TIME")}`}
-                    {...(validation = {
-                      pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",
-                      isRequired: true,
-                      type: "text",
-                      title: t("CR_INVALID_DATE"),
-                    })}
-                  />
-                </div>
-                <div className="col-md-4">
-                  <CardLabel>
-                    {`${t("CR_AGE")}`}
+                    {t("CR_BRIDE_FATHER_AADHAR_NO")}
                     <span className="mandatorycss">*</span>
                   </CardLabel>
                   <TextInput
@@ -950,389 +1366,244 @@ const BrideDetails = ({ config, onSelect, userType, formData, isEditBride }) => 
                     isMandatory={false}
                     type={"text"}
                     optionKey="i18nKey"
-                    name="brideAge"
-                    value={brideAge}
-                    onChange={setSelectbrideAge}
-                    disable={true}
-                    placeholder={`${t("CR_AGE")}`}
-                    {...(validation = { pattern: "^[0-9]{2}$", type: "text", isRequired: true })}
+                    name="brideFatherAadharNo"
+                    value={brideFatherAadharNo}
+                    onChange={setSelectbrideFatherAadharNo}
+                    placeholder={`${t("CR_BRIDE_FATHER_AADHAR_NO")}`}
+                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                   />
                 </div>
-              </div>
-            </div>
-            <div className="col-md-12">
-              <div className="col-md-4">
-                {" "}
-                <CardLabel>
-                  {t("CR_MARIATAL_STATUS'")} <span className="mandatorycss">*</span>
-                </CardLabel>
-                <Dropdown
-                  t={t}
-                  isMandatory={false}
-                  type={"text"}
-                  optionKey="name"
-                  option={cmbMaritalStatus}
-                  selected={brideMaritalstatusID}
-                  select={setSelectbrideMaritalstatusID}
-                  disable={isDisableEdit}
-                  placeholder={t("CR_MARIATAL_STATUS")}
-                  {...(validation = { isRequired: true })}
-                />
-              </div>
-              {(brideMaritalstatusID?.code === "MARRIED" ||
-                brideMaritalstatusID?.code === "WIDOWED" ||
-                brideMaritalstatusID?.code === "DIVORCED" ||
-                brideMaritalstatusID?.code === "ANNULELD") && (
                 <div className="col-md-4">
                   {" "}
                   <CardLabel>
-                    {t("CR_ANY_SPOUSE_IN_LIVING")} <span className="mandatorycss">*</span>
+                    {t("CR_BRIDE_FATHER_NAME_EN")}
+                    <span className="mandatorycss">*</span>
                   </CardLabel>
-                  <Dropdown
+                  <TextInput
                     t={t}
                     isMandatory={false}
                     type={"text"}
                     optionKey="i18nKey"
-                    option={cmbYesOrNo}
-                    selected={brideIsSpouseLiving}
-                    select={setSelectbrideIsSpouseLiving}
-                    placeholder={t("CR_Y/N")}
-                    {...(validation = { isRequired: true })}
+                    name="brideFathernameEn"
+                    value={brideFathernameEn}
+                    onChange={setSelectbrideFathernameEn}
+                    placeholder={`${t("CR_BRIDE_FATHER_NAME_EN")}`}
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FATHER_NAME_EN") })}
                   />
                 </div>
-              )}
-              {(brideMaritalstatusID?.code === "MARRIED" ||
-                brideMaritalstatusID?.code === "WIDOWED" ||
-                brideMaritalstatusID?.code === "DIVORCED" ||
-                brideMaritalstatusID?.code === "ANNULELD") &&
-                brideIsSpouseLiving?.code === "YES" && (
-                  <div className="col-md-4">
-                    {" "}
-                    <CardLabel>
-                      {t("CR_NO_OF_SPOUSE_LIVING")} <span className="mandatorycss">*</span>
-                    </CardLabel>
-                    <TextInput
-                      t={t}
-                      isMandatory={false}
-                      type={"text"}
-                      optionKey="i18nKey"
-                      name="brideNoOfSpouse"
-                      value={brideNoOfSpouse}
-                      onChange={setSelectbrideNoOfSpouse}
-                      disable={isDisableEdit}
-                      placeholder={t("CR_INT1-3")}
-                      {...(validation = { isRequired: true, title: t("CR_INVALID_NO_OF_SPOUSE_LIVING") })}
-                    />
-                  </div>
-                )}
+                <div className="col-md-4">
+                  {" "}
+                  <CardLabel>
+                    {t("CR_BRIDE_FATHER_NAME_ML")}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="brideFathernameMl"
+                    value={brideFathernameMl}
+                    onChange={setSelectbrideFathernameMl}
+                    placeholder={`${t("CR_BRIDE_FATHER_NAME_ML")}`}
+                    {...(validation = {
+                      pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                      isRequired: true,
+                      type: "text",
+                      title: t("CR_INVALID_FATHER_NAME_ML"),
+                    })}
+                  />
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-4">
+                  {" "}
+                  <CardLabel>
+                    {t("CR_BRIDE_MOTHER_AADHAR_NO")}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="brideMotherAadharNo"
+                    value={brideMotherAadharNo}
+                    onChange={setSelectbrideMotherAadharNo}
+                    placeholder={`${t("CR_BRIDE_MOTHER_AADHAR_NO")}`}
+                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                  />
+                </div>
+                <div className="col-md-4">
+                  {" "}
+                  <CardLabel>
+                    {t("CR_BRIDE_MOTHER_NAME_EN")}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="brideMothernameEn"
+                    value={brideMothernameEn}
+                    onChange={setSelectbrideMothernameEn}
+                    placeholder={`${t("CR_BRIDE_MOTHER_NAME_EN")}`}
+                    {...(validation = { isRequired: true })}
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_MOTHER_NAME_EN") })}
+                  />
+                </div>
+                <div className="col-md-4">
+                  {" "}
+                  <CardLabel>
+                    {t("CR_BRIDE_MOTHER_NAME_ML")}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="brideMothernameMl"
+                    value={brideMothernameMl}
+                    onChange={setSelectbrideMothernameMl}
+                    placeholder={`${t("CR_BRIDE_MOTHER_NAME_ML")}`}
+                    {...(validation = {
+                      pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                      isRequired: true,
+                      type: "text",
+                      title: t("CR_INVALID_MOTHER_NAME_ML"),
+                    })}
+                  />
+                </div>
+              </div>
             </div>
+          )}
+          {brideParentGuardian === "GUARDIAN" && (
+            <div>
+              <div className="row">
+                <div className="col-md-4">
+                  <CardLabel>
+                    {t("CR_BRIDE_GUARDIAN_AADHAR_NO")}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="brideGuardianAadharNo"
+                    value={brideGuardianAadharNo}
+                    onChange={setSelectbrideGuardianAadharNo}
+                    placeholder={`${t("CR_BRIDE_GUARDIAN_AADHAR_NO")}`}
+                    {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                  />
+                </div>
+                <div className="col-md-4">
+                  {" "}
+                  <CardLabel>
+                    {t("CR_BRIDE_GUARDIAN_NAME_EN")}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="brideGuardiannameEn"
+                    value={brideGuardiannameEn}
+                    onChange={setSelectbrideGuardiannameEn}
+                    placeholder={`${t("CR_BRIDE_GUARDIAN_NAME_EN")}`}
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_GUARDIAN_NAME_EN") })}
+                  />
+                </div>
+                <div className="col-md-4">
+                  {" "}
+                  <CardLabel>
+                    {t("CR_BRIDE_GUARDIAN_NAME_ML")}
+                    <span className="mandatorycss">*</span>
+                  </CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="brideGuardiannameMl"
+                    value={brideGuardiannameMl}
+                    onChange={setSelectbrideGuardiannameMl}
+                    placeholder={`${t("CR_BRIDE_GUARDIAN_NAME_ML")}`}
+                    {...(validation = {
+                      pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                      isRequired: true,
+                      type: "text",
+                      title: t("CR_INVALID_GUARDIAN_NAME_ML"),
+                    })}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
 
-            {/* </div> */}
-            <div className="row">
-              <div className="col-md-12">
-                <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_BRIDE_PARENT_DETAILS")}`}</span>{" "}
-                </h1>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-12">
-                <div className="radios" style={{ justifyContent: "center", columnGap: "40px" }}>
-                  {brideParent.map((type, index) => (
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", columnGap: "8px" }}>
-                      <input
-                        className="form-check-input"
-                        type="radio"
-                        name="groomParent"
-                        id="flexRadioDefault1"
-                        style={{ height: "20px", width: "20px" }}
-                        onChange={selectParentType}
-                        value={type}
-                        defaultChecked={index === 0}
-                      />
-                      <label class="form-check-label" for="flexRadioDefault1">
-                        {type}
-                      </label>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-            {selectedParent === "PARENT" && (
-              <div>
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="col-md-4">
-                      <CardLabel>
-                        {`${t("CR_BRIDE_FATHER_ADHAR_NO")}`}
-                        <span className="mandatorycss">*</span>
-                      </CardLabel>
-                      <TextInput
-                        t={t}
-                        isMandatory={false}
-                        type={"number"}
-                        optionKey="i18nKey"
-                        name="brideFatherAadharNo"
-                        value={brideFatherAadharNo}
-                        onChange={setSelectbrideFatherAadharNo}
-                        disable={isDisableEdit}
-                        placeholder={`${t("CR_BRIDE_FATHER_ADHAR_NO")}`}
-                        inputProps={{
-                          maxLength: 12,
-                        }}
-                        {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
-                        // {...(validation = { isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
-                      />
-                    </div>
-                    <div className="col-md-4">
-                      {" "}
-                      <CardLabel>
-                        {`${t("CR_BRIDE_FATHER_NAME_EN")}`}
-                        <span className="mandatorycss">*</span>
-                      </CardLabel>
-                      <TextInput
-                        t={t}
-                        isMandatory={false}
-                        type={"text"}
-                        optionKey="i18nKey"
-                        name="brideFathernameEn"
-                        value={brideFathernameEn}
-                        onChange={setSelectbrideFathernameEn}
-                        disable={isDisableEdit}
-                        placeholder={`${t("CR_FATHER_NAME_EN")}`}
-                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FATHER_NAME_EN") })}
-                      />
-                    </div>
-                    <div className="col-md-4">
-                      {" "}
-                      <CardLabel>
-                        {`${t("CR_BRIDE_FATHER_NAME_MAL")}`}
-                        <span className="mandatorycss">*</span>
-                      </CardLabel>
-                      <TextInput
-                        t={t}
-                        isMandatory={false}
-                        type={"text"}
-                        optionKey="i18nKey"
-                        name="brideFathernameMl"
-                        value={brideFathernameMl}
-                        onChange={setSelectbrideFathernameMl}
-                        disable={isDisableEdit}
-                        placeholder={`${t("CR_BRIDE_FATHER_NAME_MAL")}`}
-                        {...(validation = {
-                          pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                          isRequired: true,
-                          type: "text",
-                          title: t("CR_INVALID_FATHER_NAME_ML"),
-                        })}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="col-md-4">
-                      {" "}
-                      <CardLabel>
-                        {`${t("CR_BRIDE_MOTHER_ADHAR_NO")}`}
-                        <span className="mandatorycss">*</span>
-                      </CardLabel>
-                      <TextInput
-                        t={t}
-                        isMandatory={false}
-                        type={"number"}
-                        optionKey="i18nKey"
-                        name="brideMotherAadharNo"
-                        value={brideMotherAadharNo}
-                        onChange={setSelectbrideMotherAadharNo}
-                        disable={isDisableEdit}
-                        placeholder={`${t("CR_BRIDE_MOTHER_ADHAR_NO")}`}
-                        inputProps={{
-                          maxLength: 12,
-                        }}
-                        {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
-                        // {...(validation = { isRequired: false, type: "number", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
-                      />
-                    </div>
-                    <div className="col-md-4">
-                      {" "}
-                      <CardLabel>
-                        {`${t("CR_BRIDE_MOTHER_NAME_EN")}`}
-                        <span className="mandatorycss">*</span>
-                      </CardLabel>
-                      <TextInput
-                        t={t}
-                        isMandatory={false}
-                        type={"text"}
-                        optionKey="i18nKey"
-                        name="brideMothernameEn"
-                        value={brideMothernameEn}
-                        onChange={setSelectbrideMothernameEn}
-                        disable={isDisableEdit}
-                        placeholder={`${t("CR_BRIDE_MOTHER_NAME_EN")}`}
-                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_MOTHER_NAME_EN") })}
-                      />
-                    </div>
-                    <div className="col-md-4">
-                      {" "}
-                      <CardLabel>
-                        {`${t("CR_BRIDE_MOTHER_NAME_MAL")}`}
-                        <span className="mandatorycss">*</span>
-                      </CardLabel>
-                      <TextInput
-                        t={t}
-                        isMandatory={false}
-                        type={"text"}
-                        optionKey="i18nKey"
-                        name="brideMothernameMl"
-                        value={brideMothernameMl}
-                        onChange={setSelectbrideMothernameMl}
-                        disable={isDisableEdit}
-                        placeholder={`${t("CR_BRIDE_MOTHER_NAME_MAL")}`}
-                        {...(validation = {
-                          pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                          isRequired: true,
-                          type: "text",
-                          title: t("CR_INVALID_MOTHER_NAME_ML"),
-                        })}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {selectedParent === "GUARDIAN" && (
-              <div>
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="col-md-4">
-                      {" "}
-                      <CardLabel>
-                        {`${t("CR_BRIDE_GUARDIAN_ADHAR")}`}
-                        <span className="mandatorycss">*</span>
-                      </CardLabel>
-                      <TextInput
-                        t={t}
-                        isMandatory={false}
-                        type={"number"}
-                        optionKey="i18nKey"
-                        name="brideGuardianAadharNo"
-                        value={brideGuardianAadharNo}
-                        onChange={setSelectbrideGuardianAadharNo}
-                        disable={isDisableEdit}
-                        placeholder={`${t("CR_BRIDE_GUARDIAN_ADHAR")}`}
-                        inputProps={{
-                          maxLength: 12,
-                        }}
-                        {...(validation = { pattern: "^([0-9]){12}$", isRequired: true, type: "text", title: t("CS_COMMON_INVALID_AADHAR_NO") })}
-                      />
-                    </div>
-                    <div className="col-md-4">
-                      {" "}
-                      <CardLabel>
-                        {`${t("CR_BRIDE_GUARDIAN_NAME_EN")}`}
-                        <span className="mandatorycss">*</span>
-                      </CardLabel>
-                      <TextInput
-                        t={t}
-                        isMandatory={false}
-                        type={"text"}
-                        optionKey="i18nKey"
-                        name="brideGuardiannameEn"
-                        value={brideGuardiannameEn}
-                        onChange={setSelectbrideGuardiannameEn}
-                        disable={isDisableEdit}
-                        placeholder={`${t("CR_BRIDE_GUARDIAN_NAME_EN")}`}
-                        {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_GUARDIAN_NAME_EN") })}
-                      />
-                    </div>
-                    <div className="col-md-4">
-                      {" "}
-                      <CardLabel>
-                        {`${t("CR_BRIDE_GUARDIAN_NAME_MAL")}`}
-                        <span className="mandatorycss">*</span>
-                      </CardLabel>
-                      <TextInput
-                        t={t}
-                        isMandatory={false}
-                        type={"text"}
-                        optionKey="i18nKey"
-                        name="brideGuardiannameMl"
-                        value={brideGuardiannameMl}
-                        onChange={setSelectbrideGuardiannameMl}
-                        disable={isDisableEdit}
-                        placeholder={`${t("CR_BRIDE_GUARDIAN_NAME_MAL")}`}
-                        {...(validation = {
-                          pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                          isRequired: true,
-                          type: "text",
-                          title: t("CR_INVALID_GUARDIAN_NAME_ML"),
-                        })}
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-            {/* <div className="row">
-              <div className="col-md-12">
-                <h1 className="headingh1">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_BRIDE_OTHER_DETAILS")}`}</span>{" "}
-                </h1>
-              </div>
-            </div> */}
-            {/* <div className="col-md-4">
-              <CardLabel>{t("CR_OCCUPATION_OR_PROFESSION'")}</CardLabel>
-            </div>
+          {toast && (
+            <Toast
+              error={
+                AadharError ||
+                AgeValidationMsg ||
+                AdhaarDuplicationError ||
+                brideFirstnameEnError ||
+                brideFirstnameMlError ||
+                brideMiddlenameEnError ||
+                brideMiddlenameMlError ||
+                brideLastnameEnError ||
+                brideLastnameMlError ||
+                bridePassportNoError ||
+                brideSocialSecurityNoError
+              }
+              label={
+                AadharError ||
+                AgeValidationMsg ||
+                AdhaarDuplicationError ||
+                brideFirstnameEnError ||
+                brideFirstnameMlError ||
+                brideMiddlenameEnError ||
+                brideMiddlenameMlError ||
+                brideLastnameEnError ||
+                brideLastnameMlError ||
+                bridePassportNoError ||
+                bridePassportNoError
+                  ? AadharError
+                    ? t(`CS_COMMON_INVALID_AADHAR_NO`)
+                    : AgeValidationMsg
+                    ? t(`CR_INVALID_BRIDE_AGE`)
+                    : AdhaarDuplicationError
+                    ? t("DUPLICATE_AADHAR_NO")
+                    : brideFirstnameEnError
+                    ? t(`CR_INVALID_FIRST_NAME_EN`)
+                    : brideFirstnameMlError
+                    ? t(`CR_INVALID_FIRST_NAME_ML`)
+                    : brideMiddlenameEnError
+                    ? t(`CR_INVALID_MIDDLE_NAME_EN`)
+                    : brideMiddlenameMlError
+                    ? t(`CR_INVALID_MIDDLE_NAME_ML`)
+                    : brideLastnameEnError
+                    ? t(`CR_INVALID_LAST_NAME_EN`)
+                    : brideLastnameMlError
+                    ? t(`CR_INVALID_LAST_NAME_ML`)
+                    : bridePassportNoError
+                    ? t(`CR_INVALID_BRIDE_PASSPORT_NO`)
+                    : bridePassportNoError
+                    ? t(`CR_INVALID_SOCIAL_SECURITY_NO`)
+                    : setToast(false)
+                  : setToast(false)
+              }
+              onClose={() => setToast(false)}
+            />
+          )}
+          <div className="row">
             <div className="col-md-12">
-              <div className="col-md-6">
-                <CardLabel>{t("CR_PROFESSION_EN'")}</CardLabel>
-                <Dropdown
-                  t={t}
-                  isMandatory={false}
-                  optionKey="name"
-                  option={cmbProfession}
-                  name="brideProfessionEn"
-                  value={brideProfessionEn}
-                  select={setSelectbrideProfessionEn}
-                  selected={brideProfessionEn}
-                  placeholder={t("CR_PROFESSION_EN'")}
-                />
-              </div>
-              <div className="col-md-6">
-                <CardLabel>{t("CR_PROFESSION_MAL'")}</CardLabel>
-                <Dropdown
-                  t={t}
-                  isMandatory={false}
-                  optionKey="namelocal"
-                  option={cmbProfession}
-                  name="brideProfessionMal"
-                  value={brideProfessionMal}
-                  select={setSelectbrideProfessionMal}
-                  selected={brideProfessionMal}
-                  placeholder={t("CR_PROFESSION_MAL'")}
-                />
-              </div>
-            </div> */}
-
-            {toast && (
-              <Toast 
-              error={AadharError || AgeValidationMsg} 
-              label={AadharError || AgeValidationMsg 
-                ? AadharError ? t(`CS_COMMON_INVALID_AADHAR_NO`)
-                 : AgeValidationMsg ? t(`CR_INVALID_BRIDE_AGE`) 
-                 : setToast(false)
-                : setToast(false)} 
-                onClose={() => setToast(false)} 
-              />
-            )}
-            <div className="row">
-              <div className="col-md-12">
-                <h1 className="">
-                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("")}`}</span>{" "}
-                </h1>
-              </div>
+              <h1 className="">
+                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("")}`}</span>{" "}
+              </h1>
             </div>
           </div>
         </FormStep>

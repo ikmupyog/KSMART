@@ -17,6 +17,7 @@ import { useForm, Controller } from "react-hook-form";
 import { Route, Switch, useRouteMatch, useLocation, useHistory, Redirect } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import SearchDeathInclusion from "../../../components/SearchDeathInclusion";
+import DeathCorrectionAcknowledgement from "../../../pageComponents/deathComponents/DeathCorrectionEditPage/DeathCorrectionAcknowledgement";
 
 
 const DeathInclusion = () => {
@@ -61,7 +62,7 @@ const DeathInclusion = () => {
     isSuccess,
   } = Digit.Hooks.cr.useRegistrySearchDeath({filters: payload, config }); 
   useEffect(()=>{
-    console.log("searchResult==",searchResult);
+    console.log("searchResult==",searchResult,path);
   },[searchResult,isLoading])
 //   let payloadData = { id: isSuccess && searchResult[0]?.id, source: "sms" };
 //   let registryPayload = Object.keys(payloadData)
@@ -69,7 +70,8 @@ const DeathInclusion = () => {
 //     .reduce((acc, key) => ({ ...acc, [key]: typeof payloadData[key] === "object" ? payloadData[key].code : payloadData[key] }), {});
 //   const { data:  { filestoreId: storeId } = {} } = Digit.Hooks.cr.useRegistryDownloadDeath({  filters: registryPayload, config });
 
-  
+  const params = {}
+  const onSuccess = {}
   return (
     <React.Fragment>
         <BackButton>{t("CS_COMMON_BACK2")}</BackButton>
@@ -77,14 +79,13 @@ const DeathInclusion = () => {
         <SearchDeathInclusion
         t={t}
         onSubmit={onSubmit}
-        data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : { display: "ES_COMMON_NO_DATA" }) : ""}
+        data={!isLoading && isSuccess ? (searchResult?.length > 0 ? searchResult : []) : ""}
         // filestoreId={storeId}
         // isSuccess={isSuccess}
         // isLoading={isLoading}
         count={count}
         onCorrectionClick={gotoEditCorrection}
       />
-  
   </React.Fragment>
   );
 };

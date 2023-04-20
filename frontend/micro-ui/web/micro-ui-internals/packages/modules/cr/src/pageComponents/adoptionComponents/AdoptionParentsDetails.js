@@ -162,7 +162,7 @@ const AdoptionParentsDetails = ({ config, onSelect, userType, formData, isEditAd
 
 
   function setSelectMotherFirstNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 ) {
       setMotherFirstNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
@@ -277,7 +277,7 @@ const AdoptionParentsDetails = ({ config, onSelect, userType, formData, isEditAd
   }
 
   function setSelectFatherFirstNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+    if (e.target.value.trim().length >= 0 ) {
       setFatherFirstNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
@@ -567,7 +567,7 @@ const AdoptionParentsDetails = ({ config, onSelect, userType, formData, isEditAd
   } else
     return (
       <React.Fragment>
-        <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+        {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
         {window.location.href.includes("/citizen") ? <Timeline currentStep={2} /> : null}
         {window.location.href.includes("/employee") ? <Timeline currentStep={2} /> : null}
 

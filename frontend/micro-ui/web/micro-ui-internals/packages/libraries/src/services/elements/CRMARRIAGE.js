@@ -2,6 +2,17 @@ import Urls from "../atoms/urls";
 import { Request } from "../atoms/Utils/Request";
 
 export const CRMarriageService = {
+  correctMarriage: (details, tenantId) =>
+    Request({
+      url: Urls.crmarriage.correct_update,
+      data: details,
+      useCache: false,
+      setTimeParam: false,
+      userService: true,
+      method: "POST",
+      params: {},
+      auth: true,
+    }),
   create: (details, tenantId) =>
     Request({
       url: Urls.crmarriage.create,
@@ -13,13 +24,13 @@ export const CRMarriageService = {
       params: {},
       auth: true,
     }),
-  search: ({ tenantId, filters }) =>
+  search: ({ filters }) =>
     Request({
       url: Urls.crmarriage.search,
       useCache: false,
       userService: false,
       method: "POST",
-      params: { tenantId, ...filters },
+      params: { ...filters },
       auth: true,
     }),
     CRRegistrySearchMarriage: ({ filters }) =>
@@ -42,4 +53,26 @@ export const CRMarriageService = {
       params: {},
       auth: true,
     }),
+    CRMarriagesearch: ({ tenantId, filters }) =>
+    Request({
+      url: Urls.crmarriage.search,
+      useCache: false,
+      method: "POST",
+      auth: true,
+      userService: false,
+      params: { tenantId, ...filters },
+    }),
+    CRRegDownloadMarriageRegistryDetails: ({params={}, tenantId, additionalProps={}}) =>
+        Request({
+            url: Urls.crmarriage.registry_download,
+            data: {},
+            useCache: false,
+            method: "POST",
+            params,
+            auth: true,
+            locale: true,
+            userInfo: true,
+            userDownloadInfo: true,
+            ...additionalProps
+        })
 };

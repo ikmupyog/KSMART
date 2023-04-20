@@ -18,9 +18,11 @@ const SelectLandmark = ({ t, config, onSelect, value }) => {
   const stateId = Digit.SessionStorage.get("Citizen.tenantId");
   const tenantId = Digit.SessionStorage.get("Employee.tenantId");
   const { tenants } = Digit.SessionStorage.get("initData");
+  const locale = Digit.SessionStorage.get("locale");
 
+  const stateCode = window?.globalConfigs?.getConfig("STATE_LEVEL_TENANT_ID") || "kl";
 
-  const [tenantWard, setTenantWard] = useState(stateId);
+  const [tenantWard, setTenantWard] = useState(tenantId);
   const [districtId, setDistrictId] = useState(complaint_details?.district?.districtid || tenantId);
   const [tenantboundary, setTenantboundary] = useState(false);
 
@@ -34,9 +36,9 @@ const SelectLandmark = ({ t, config, onSelect, value }) => {
   }
 
   // const { data: { districts:District } = {}, isLoad:isDistrictLoading } = Digit.Hooks.useStore.getInitData();
-  const { data: PostOffice = {}, isPostOfficeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
-  const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
-  const { data: District = {}, isDistrictLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "District");
+  const { data: PostOffice = {}, isPostOfficeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateCode, "common-masters", "PostOffice");
+  const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateCode, "common-masters", "Village");
+  const { data: District = {}, isDistrictLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateCode, "common-masters", "District");
   const { data: BoundaryList = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantWard, "egov-location", "boundary-data");
 
   let cmbDistrict = [];
@@ -48,7 +50,7 @@ const SelectLandmark = ({ t, config, onSelect, value }) => {
 
   District && District["common-masters"] &&
     District["common-masters"].District.map((ob) => {
-      if (ob.statecode === stateId) { cmbDistrict.push(ob) };
+      if (ob.statecode === stateCode) { cmbDistrict.push(ob) };
     });
 
   tenants && tenants.map((ob) => {
@@ -89,8 +91,8 @@ const SelectLandmark = ({ t, config, onSelect, value }) => {
       region: selected.village?.code,
       city_complaint: selected.lbName,
       locality_complaint: selected.ward,
-      street: selected.street,
-      landmark: selected.locality,
+      street: selected.street.trim(),
+      landmark: selected.locality.trim(),
       pincode: selected.pincode,
       complaint_details: selected
     });
@@ -104,7 +106,7 @@ const SelectLandmark = ({ t, config, onSelect, value }) => {
   const handleChange = (type, val) => {
     switch (type) {
       case "LB":
-        setSelected({ ...selected, lbName: val })
+        setSelected({ ...selected, lbName: val, ward: "" })
         setTenantWard(val.code);
         setTenantboundary(true)
         break;
@@ -126,10 +128,35 @@ const SelectLandmark = ({ t, config, onSelect, value }) => {
     return <Loader></Loader>;
   }
 
+  let ml_pattern = /^[\u0D00-\u0D7F\u200D\u200C 0-9!@#$%^&*()_+=-`~\\\]\[{}|';:/.,?><]*$/;
+  let en_pattern = /^[A-Za-z0-9\s!@#$%^&*()_+=-`~\\\]\[{}|';:/.,?><]*$/;
+
+  const handleLocality = (e) => {
+    if (locale === "ml_IN") {
+      if (e.target.value.match(ml_pattern)) {
+        setSelected({ ...selected, locality: e.target.value });
+      }
+    } else if (e.target.value.match(en_pattern)) {
+      setSelected({ ...selected, locality: e.target.value });
+    }
+  }
+
+  const handleAddress = (e) => {
+    if (locale === "ml_IN") {
+      if (e.target.value.match(ml_pattern)) {
+        setSelected({ ...selected, street: e.target.value });
+      }
+    } else if (e.target.value.match(en_pattern)) {
+      setSelected({ ...selected, street: e.target.value });
+    }
+  }
+
+  const isDisabled = selected.pincode && selected.street && selected.locality
+
   return (
     <React.Fragment>
       {window.location.href.includes("/employee") ? <EmpTimeLine currentStep={2} /> : null}
-      <FormStep config={config} onSelect={goNext} isDisabled={selected.pincode ? false : true}>
+      <FormStep config={config} onSelect={goNext} isDisabled={!isDisabled}>
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-4">
@@ -167,7 +194,7 @@ const SelectLandmark = ({ t, config, onSelect, value }) => {
               />
             </div>
             <div className="col-md-4">
-              <CardLabel> {`${t("CS_FILE_APPLICATION_PINCODE_LABEL")}`} </CardLabel>
+              <CardLabel> {`${t("CS_FILE_APPLICATION_PINCODE_LABEL")}`}<span className="mandatorycss">*</span> </CardLabel>
               <TextInput t={t} isMandatory={false} type={"text"} name="locality" value={selected.pincode}
                 disabled={true} placeholder={`${t("CS_FILE_APPLICATION_PINCODE_LABEL")}`} />
             </div>
@@ -176,14 +203,14 @@ const SelectLandmark = ({ t, config, onSelect, value }) => {
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-5">
-              <CardLabel> {`${t("CS_ADDCOMPLAINT_LANDMARK")}`} </CardLabel>
+              <CardLabel> {`${t("CS_ADDCOMPLAINT_LANDMARK")}`}<span className="mandatorycss">*</span> </CardLabel>
               <TextArea t={t} isMandatory={false} type={"text"} name="locality" value={selected.locality}
-                onChange={(e) => setSelected({ ...selected, locality: e.target.value })} placeholder={`${t("CS_ADDCOMPLAINT_COMPLAINT_LOCATION")}`} />
+                onChange={handleLocality} placeholder={`${t("CS_ADDCOMPLAINT_COMPLAINT_LOCATION")}`} />
             </div>
             <div className="col-md-5">
-              <CardLabel> {`${t("CS_ADDCOMPLAINT_PROVIDE_COMPLAINT_ADDRESS")}`} </CardLabel>
+              <CardLabel> {`${t("CS_ADDCOMPLAINT_PROVIDE_COMPLAINT_ADDRESS")}`}<span className="mandatorycss">*</span> </CardLabel>
               <TextArea t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="street" value={selected.street}
-                onChange={(e) => setSelected({ ...selected, street: e.target.value })} placeholder={`${t("CS_ADDCOMPLAINT_PROVIDE_COMPLAINT_ADDRESS")}`} />
+                onChange={handleAddress} placeholder={`${t("CS_ADDCOMPLAINT_PROVIDE_COMPLAINT_ADDRESS")}`} />
             </div>
           </div>
         </div>

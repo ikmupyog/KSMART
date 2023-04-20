@@ -396,7 +396,7 @@ export const convertToAdoptionRegistration = (data = {}) => {
           presentInsideKeralaStreetNameMl: data?.AdoptionAddressBasePage?.presentInsideKeralaStreetNameMl,
           presentInsideKeralaHouseNameMl: data?.AdoptionAddressBasePage?.presentInsideKeralaHouseNameMl,
           presentInsideKeralaPincode: data?.AdoptionAddressBasePage?.presentInsideKeralaPincode
-            ? data?.AdoptionAddressBasePage?.presentInsideKeralaPincode.code
+            ? data?.AdoptionAddressBasePage?.presentInsideKeralaPincode
             : null,
           presentInsideKeralaPostOffice: data?.AdoptionAddressBasePage?.presentInsideKeralaPostOffice
             ? data?.AdoptionAddressBasePage?.presentInsideKeralaPostOffice.code
@@ -459,7 +459,7 @@ export const convertToAdoptionRegistration = (data = {}) => {
           permntInKeralaAdrStreetNameMl: data?.AdoptionAddressBasePage?.permntInKeralaAdrStreetNameMl,
           permntInKeralaAdrHouseNameMl: data?.AdoptionAddressBasePage?.permntInKeralaAdrHouseNameMl,
           permntInKeralaAdrPincode: data?.AdoptionAddressBasePage?.permntInKeralaAdrPincode
-            ? data?.AdoptionAddressBasePage?.permntInKeralaAdrPincode.code
+            ? data?.AdoptionAddressBasePage?.permntInKeralaAdrPincode
             : null,
           permntInKeralaAdrPostOffice: data?.AdoptionAddressBasePage?.permntInKeralaAdrPostOffice
             ? data?.AdoptionAddressBasePage?.permntInKeralaAdrPostOffice.code
@@ -569,7 +569,8 @@ export const convertToAdoptionUpdation = (data = {}) => {
         pregnancyDuration: data?.AdoptionChildDetails?.pregnancyDuration ? data?.AdoptionChildDetails?.pregnancyDuration : null,
         medicalAttensionSub: data?.AdoptionChildDetails?.medicalAttensionSub ? data?.AdoptionChildDetails?.medicalAttensionSub.code : null,
         deliveryMethods: data?.AdoptionChildDetails?.deliveryMethods ? data?.AdoptionChildDetails?.deliveryMethods.code : null,
-        action: "INITIATE",
+        action: "APPLY",
+        isWorkflow: data?.AdoptionChildDetails.isWorkflow,
         adoptdeedorderno: data?.AdoptionChildDetails?.AdoptionDeedNo ? data?.AdoptionChildDetails?.AdoptionDeedNo : null,
         adoptdateoforderdeed: data?.AdoptionChildDetails?.AdoptionDeedRegDate ? Date.parse(data?.AdoptionChildDetails?.AdoptionDeedRegDate) : null,
         adoptissuingauththority: data?.AdoptionChildDetails?.IssuingAuthority ? data?.AdoptionChildDetails?.IssuingAuthority : null,
@@ -589,7 +590,7 @@ export const convertToAdoptionUpdation = (data = {}) => {
           : "",
         applicationtype: "CRBRAD",
         businessservice: "birth-services",
-        workflowcode: data?.AdoptionChildDetails?.workFlowCode,
+        workflowcode: data?.AdoptionChildDetails?.workflowcode,
         applicationnumber: data?.AdoptionChildDetails?.applicationNumber ? data?.AdoptionChildDetails?.applicationNumber : "",
         id: data?.AdoptionChildDetails?.id ? data?.AdoptionChildDetails?.id : "",
         ParentsDetails: {
@@ -641,7 +642,7 @@ export const convertToAdoptionUpdation = (data = {}) => {
           presentInsideKeralaStreetNameMl: data?.AdoptionAddressBasePage?.presentInsideKeralaStreetNameMl,
           presentInsideKeralaHouseNameMl: data?.AdoptionAddressBasePage?.presentInsideKeralaHouseNameMl,
           presentInsideKeralaPincode: data?.AdoptionAddressBasePage?.presentInsideKeralaPincode
-            ? data?.AdoptionAddressBasePage?.presentInsideKeralaPincode.code
+            ? data?.AdoptionAddressBasePage?.presentInsideKeralaPincode
             : null,
           presentInsideKeralaPostOffice: data?.AdoptionAddressBasePage?.presentInsideKeralaPostOffice
             ? data?.AdoptionAddressBasePage?.presentInsideKeralaPostOffice.code
@@ -704,7 +705,7 @@ export const convertToAdoptionUpdation = (data = {}) => {
           permntInKeralaAdrStreetNameMl: data?.AdoptionAddressBasePage?.permntInKeralaAdrStreetNameMl,
           permntInKeralaAdrHouseNameMl: data?.AdoptionAddressBasePage?.permntInKeralaAdrHouseNameMl,
           permntInKeralaAdrPincode: data?.AdoptionAddressBasePage?.permntInKeralaAdrPincode
-            ? data?.AdoptionAddressBasePage?.permntInKeralaAdrPincode.code
+            ? data?.AdoptionAddressBasePage?.permntInKeralaAdrPincode
             : null,
           permntInKeralaAdrPostOffice: data?.AdoptionAddressBasePage?.permntInKeralaAdrPostOffice
             ? data?.AdoptionAddressBasePage?.permntInKeralaAdrPostOffice.code

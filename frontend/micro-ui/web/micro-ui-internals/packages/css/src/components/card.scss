@@ -153,7 +153,8 @@
 
 .submit-bar {
   @apply h-10 bg-primary-main text-center w-full outline-none;
-  
+  float: right;
+
 
   &:focus {
     @apply outline-none;
@@ -169,7 +170,9 @@
 }
 
 .submit-bar-disabled {
-  @apply h-10 bg-primary-main text-center w-full outline-none opacity-50;
+  @apply h-10 bg-primary-main text-center outline-none opacity-50;
+  width: 15%;
+  float: right;
 
   &:focus {
     @apply outline-none;
@@ -183,7 +186,7 @@
 @screen dt {
   .submit-bar,
   .submit-bar-disabled {
-    width: 240px;
+    width: 15%;
   }
 
   .card {
@@ -284,15 +287,16 @@
 
     .field-container {
       span {
-        border: 2px solid black;
+        border: 1px solid #c9cccf;        ;
         background: rgb(247, 247, 247);
         width: 40px;
         height: 40px;
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-top: -16px;
+        margin-top: -23px;
         border-right: none;
+        border-radius:5px;
       }
     }
   }

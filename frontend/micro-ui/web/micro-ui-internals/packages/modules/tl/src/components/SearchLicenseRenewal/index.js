@@ -77,7 +77,6 @@ const SearchLicenseRenewal = ({ tenantId, t, onSubmit, data, count, isCancelreq 
     delete finaldata?.tradeLicenseDetail?.applicationDocuments;
     isCancelreq ? Digit.SessionStorage.set("TL_CORRECTION_TRADE", finaldata) : Digit.SessionStorage.set("TL_RENEWAL_TRADE", finaldata);
     let tempdata = { "TradeDetails": finaldata }
-
     isCancelreq ? Digit.SessionStorage.set("TL_CORRECTED_TRADE", tempdata) : "";
     Digit.SessionStorage.set("TL_RENEWAL_ENABLE_TRADE", formdisable);
   }
@@ -91,13 +90,21 @@ const SearchLicenseRenewal = ({ tenantId, t, onSubmit, data, count, isCancelreq 
       disableSortBy: true,
       Cell: ({ row }) => {
         return (
-          <div>
-            <span className="link">
-              <Link onClick={event => handleLinkClick(row.original)} to={{ pathname: routepath }}>
+          (isCancelreq && row.original["isCurrentRequest"]) ?
+            <div>
+              <span >
                 {row.original["applicationNumber"]}
-              </Link>
-            </span>
-          </div>
+              </span>
+            </div>
+            :
+            <div>
+              <span className="link">
+
+                <Link onClick={event => handleLinkClick(row.original)} to={{ pathname: routepath }}>
+                  {row.original["applicationNumber"]}
+                </Link>
+              </span>
+            </div>
         );
       },
     },
@@ -125,7 +132,10 @@ const SearchLicenseRenewal = ({ tenantId, t, onSubmit, data, count, isCancelreq 
     {
       Header: t("TL_HOME_SEARCH_RESULTS_APP_STATUS_LABEL"),
       disableSortBy: true,
-      accessor: (row) => GetCell(row.status),
+      accessor: (row) => (isCancelreq && row.isCurrentRequest) ? "Active Request Pending" :
+      (isCancelreq) ? ""
+      : 
+      GetCell(row.status),
     },
 
 
@@ -137,9 +147,6 @@ const SearchLicenseRenewal = ({ tenantId, t, onSubmit, data, count, isCancelreq 
       <h1 style={hstyle}>{t("TL_SEARCH_APPLICATIONS")}</h1>
       <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit} id="true">
         <SearchFields {...{ register, control, reset, tenantId, t }} />
-
-
-
       </SearchForm>
 
     </div>

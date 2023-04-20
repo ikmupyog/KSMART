@@ -43,6 +43,7 @@ const BornOutsideStaticInfn = ({ config, onSelect, userType, formData, isEditBor
 
   let cmbAttDeliverySub = [];
   let cmbDeliveryMethod = [];
+  
 
   AttentionOfDelivery &&
     AttentionOfDelivery["birth-death-service"] &&
@@ -56,6 +57,12 @@ const BornOutsideStaticInfn = ({ config, onSelect, userType, formData, isEditBor
     DeliveryMethodList["birth-death-service"].DeliveryMethod.map((ob) => {
       cmbDeliveryMethod.push(ob);
     });
+
+    const cmbRelation = [
+      { i18nKey: "Father", code: "FATHER" },
+      { i18nKey: "Mother", code: "MOTHER" },
+      { i18nKey: "Others", code: "OTHERS" },
+    ];  
     const [pregnancyDuration, setPregnancyDuration] = useState(
       formData?.BornOutsideStaticInfn?.pregnancyDuration ? formData?.BornOutsideStaticInfn?.pregnancyDuration : null
     );
@@ -163,10 +170,8 @@ const BornOutsideStaticInfn = ({ config, onSelect, userType, formData, isEditBor
   function setSelectDeliveryMethod(value) {
     setDeliveryMethod(value);
   }
-  function setSelectrelation(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z]*$") != null) {
-      setrelation(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
-    }
+  function setSelectrelation(value) {
+    setrelation(value);
   }
   function setSelectinformarNameEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
@@ -362,7 +367,7 @@ const BornOutsideStaticInfn = ({ config, onSelect, userType, formData, isEditBor
   } else {
     return (
       <React.Fragment>
-        <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+        {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
         {window.location.href.includes("/citizen") ? <Timeline currentStep={4} /> : null}
         {window.location.href.includes("/employee") ? <Timeline currentStep={4} /> : null}
 
@@ -400,7 +405,9 @@ const BornOutsideStaticInfn = ({ config, onSelect, userType, formData, isEditBor
               </div>
 
               <div className="col-md-3">
-                <CardLabel>{`${t("CR_PREGNANCY_DURATION")}`}</CardLabel>
+                <CardLabel>{`${t("CR_PREGNANCY_DURATION")}`}
+                <span className="mandatorycss">*</span>
+                </CardLabel>
                 <TextInput
                   t={t}
                   isMandatory={false}
@@ -489,19 +496,17 @@ const BornOutsideStaticInfn = ({ config, onSelect, userType, formData, isEditBor
             <div className="col-md-12">
               <div className="col-md-3">
                 <CardLabel>{`${t("CR_RELATION")}`}</CardLabel>
-                <TextInput
+                <Dropdown
                   t={t}
-                  type={"text"}
                   optionKey="i18nKey"
-                  name="relation"
-                  value={relation}
-                  onChange={setSelectrelation}
-                  placeholder={`${t("CR_RELATION")}`}
+                  isMandatory={false}
+                  option={cmbRelation}
+                  selected={relation}
+                  select={setSelectrelation}
                   disable={isDisableEdit}
-                  {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_RELATION") })}
+                  placeholder={`${t("CR_RELATION")}`}
                 />
               </div>
-
               <div className="col-md-3">
                 <CardLabel>
                   {`${t("CS_COMMON_AADHAAR")}`}
@@ -554,7 +559,9 @@ const BornOutsideStaticInfn = ({ config, onSelect, userType, formData, isEditBor
                 {...(validation = { pattern: "^([0-9]){10}$", isRequired: true, type: "text", title: t("CR_INVALID_MOBILE_NO") })}
               />
             </div>
-            </div>
+              </div>
+
+             
           </div>
           <div className="row">
           <div className="col-md-12">

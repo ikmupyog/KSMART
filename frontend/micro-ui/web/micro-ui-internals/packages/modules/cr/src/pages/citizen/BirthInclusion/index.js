@@ -23,7 +23,7 @@ const BirthInclusion = () => {
   const { t } = useTranslation();
   const { path } = useRouteMatch();
   let history = useHistory();
-
+  const [apiConfig,setApiConfig] = useState({enabled: false})
   const [payload, setPayload] = useState({});
 
   function onSubmit(_data) {
@@ -42,6 +42,7 @@ const BirthInclusion = () => {
         .filter((k) => data[k])
         .reduce((acc, key) => ({ ...acc, [key]: typeof data[key] === "object" ? data[key].code : data[key] }), {})
     );
+    setApiConfig({enabled:true})
   }
   //   const queryClient = useQueryClient();
   // const tenantId = Digit.ULBService.getCurrentTenantId();
@@ -73,7 +74,7 @@ const BirthInclusion = () => {
           <SearchBirthInclusion
             t={t}
             onSubmit={onSubmit}
-            data={!isLoading && isSuccess ? (searchReult?.length > 0 ? searchReult : { display: "ES_COMMON_NO_DATA" }) : ""}
+            data={!isLoading && isSuccess ? (searchReult?.length > 0 ? searchReult : []) : ""}
             // filestoreId={storeId}
             // isSuccess={isSuccess}
             // isLoading={isLoading}
@@ -81,7 +82,7 @@ const BirthInclusion = () => {
             onInclusionClick={gotoEditInclusion}
           />
         {/* </Route> */}
-        {/* <Route path={`${path}/birth-inclusion-edit`}>
+        {/* <Route path={`${path}/acknowledgement`}>
           <BirthInclusionEditPage />
         </Route> */}
         {/* <Route>

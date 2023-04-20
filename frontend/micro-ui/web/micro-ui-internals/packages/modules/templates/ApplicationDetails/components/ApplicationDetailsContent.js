@@ -1,6 +1,5 @@
 import {
   BreakLine,
-  Card,
   CardSectionHeader,
   CardSubHeader,
   CheckPoint,
@@ -8,6 +7,7 @@ import {
   Loader,
   Row,
   StatusTable,
+  Accordion
 } from "@egovernments/digit-ui-react-components";
 import React, { Fragment } from "react";
 import { useTranslation } from "react-i18next";
@@ -83,9 +83,10 @@ function ApplicationDetailsContent({
   };
 
   const checkLocation =
-    window.location.href.includes("employee/tl") || window.location.href.includes("employee/obps") || window.location.href.includes("employee/noc");
+    window.location.href.includes("employee/obps") || window.location.href.includes("employee/noc");
   const isNocLocation = window.location.href.includes("employee/noc");
   const isBPALocation = window.location.href.includes("employee/obps");
+
 
   const getRowStyles = () => {
     if (window.location.href.includes("employee/obps") || window.location.href.includes("employee/noc")) {
@@ -130,79 +131,66 @@ function ApplicationDetailsContent({
           {applicationDetails?.applicationDetails?.map((detail, index) => (
             <React.Fragment key={index}>
               <div style={getMainDivStyles()}>
-                {index === 0 && !detail.asSectionHeader ? (
-                  <CardSubHeader style={{ marginBottom: "16px", fontSize: "16px" }}>{t(detail.title)}</CardSubHeader>
-                ) : (
-                  <React.Fragment>
-                    <CardSectionHeader
-                      style={
-                        index == 0 && checkLocation
-                          ? { marginBottom: "16px", fontSize: "16px" }
-                          : { marginBottom: "16px", marginTop: "32px", fontSize: "16px" }
-                      }
-                    >
-                      {isNocLocation ? `${t(detail.title)}` : t(detail.title)}
-                      {detail?.Component ? <detail.Component /> : null}
-                    </CardSectionHeader>
-                  </React.Fragment>
-                )}
-                {/* TODO, Later will move to classes */}
-                <StatusTable style={getTableStyles()}>
-                  {detail?.title &&
-                    !detail?.title.includes("NOC") &&
-                    detail?.values?.map((value, index) => {
-                      if (value.map === true && value.value !== "N/A") {
-                        return <Row key={t(value.title)} label={t(value.title)} text={<img src={t(value.value)} alt="" />} />;
-                      }
-                      if (value?.isLink == true) {
-                        return (
-                          <Row
-                            key={t(value.title)}
-                            label={
-                              window.location.href.includes("tl") ? (
-                                <div style={{ width: "200%" }}>
-                                  <Link to={value?.to}>
-                                    <span className="link" style={{ color: "#F47738" }}>
-                                      {t(value?.title)}
-                                    </span>
-                                  </Link>
-                                </div>
-                              ) : isNocLocation || isBPALocation ? (
-                                `${t(value.title)}`
-                              ) : (
-                                t(value.title)
-                              )
-                            }
-                            text={
-                              <div>
-                                <Link to={value?.to}>
-                                  <span className="link" style={{ color: "#F47738" }}>
-                                    {value?.value}
-                                  </span>
-                                </Link>
-                              </div>
-                            }
-                            last={index === detail?.values?.length - 1}
-                            caption={value.caption}
-                            className="border-none"
-                            rowContainerStyle={getRowStyles()}
-                          />
-                        );
-                      }
-                      return (
-                        <Row
-                          key={t(value.title)}
-                          label={isNocLocation || isBPALocation ? `${t(value.title)}` : t(value.title)}
-                          text={getTextValue(value)}
-                          last={index === detail?.values?.length - 1}
-                          caption={value.caption}
-                          className=" "
-                          // TODO, Later will move to classes
-                          rowContainerStyle={getRowStyles()}
-                        />
-                      );
-                    })}
-                </StatusTable>
+                {index === 0 ? <CardSubHeader style={{ marginBottom: "16px", fontSize: "16px" }}>{t(detail.title)}</CardSubHeader>
+                  :
+                  <Accordion expanded={index === 1 ? true : false} title={isNocLocation ? `${t(detail.title)}` : t(detail.title)}
+                    content={<StatusTable style={getTableStyles()}>
+                      {detail?.title &&
+                        !detail?.title.includes("NOC") &&
+                        detail?.values?.map((value, index) => {
+                          if (value.map === true && value.value !== "N/A") {
+                            return <Row key={t(value.title)} label={t(value.title)} text={<img src={t(value.value)} alt="" />} />;
+                          }
+                          if (value?.isLink == true) {
+                            return (
+                              <Row
+                                key={t(value.title)}
+                                label={
+                                  window.location.href.includes("tl") ? (
+                                    <div style={{ width: "200%" }}>
+                                      <Link to={value?.to}>
+                                        <span className="link" style={{ color: "#F47738" }}>
+                                          {t(value?.title)}
+                                        </span>
+                                      </Link>
+                                    </div>
+                                  ) : isNocLocation || isBPALocation ? (
+                                    `${t(value.title)}`
+                                  ) : (
+                                    t(value.title)
+                                  )
+                                }
+                                text={
+                                  <div>
+                                    <Link to={value?.to}>
+                                      <span className="link" style={{ color: "#F47738" }}>
+                                        {value?.value}
+                                      </span>
+                                    </Link>
+                                  </div>
+                                }
+                                last={index === detail?.values?.length - 1}
+                                caption={value.caption}
+                                className="border-none"
+                                rowContainerStyle={getRowStyles()}
+                              />
+                            );
+                          }
+                          return (
+                            <Row
+                              key={t(value.title)}
+                              label={isNocLocation || isBPALocation ? `${t(value.title)}` : t(value.title)}
+                              text={getTextValue(value)}
+                              last={index === detail?.values?.length - 1}
+                              caption={value.caption}
+                              className=" "
+                              // TODO, Later will move to classes
+                              rowContainerStyle={getRowStyles()}
+                            />
+                          );
+                        })}
+                    </StatusTable>} />
+                }
               </div>
               {detail?.belowComponent && <detail.belowComponent />}
               {detail?.additionalDetails?.inspectionReport && (
@@ -271,7 +259,7 @@ function ApplicationDetailsContent({
                     {/* {t("ES_APPLICATION_DETAILS_APPLICATION_TIMELINE")} */}
                     {t("Activities")}
                   </CardSectionHeader>
-                  <BreakLine style={{ marginLeft: "-40px" }} />
+                  <BreakLine />
                   {workflowDetails?.data?.timeline && workflowDetails?.data?.timeline?.length === 1 ? (
                     <CheckPoint
                       isCompleted={true}
@@ -289,8 +277,7 @@ function ApplicationDetailsContent({
                                 isCompleted={index === 0}
                                 info={checkpoint.comment}
                                 label={t(
-                                  `${timelineStatusPrefix}${
-                                    checkpoint?.performedAction === "REOPEN" ? checkpoint?.performedAction : checkpoint?.[statusAttribute]
+                                  `${timelineStatusPrefix}${checkpoint?.performedAction === "REOPEN" ? checkpoint?.performedAction : checkpoint?.[statusAttribute]
                                   }`
                                 )}
                                 customChild={getTimelineCaptions(checkpoint)}

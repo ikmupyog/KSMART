@@ -1,7 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { Controller, useWatch } from "react-hook-form";
 import { TextInput, SubmitBar, DatePicker, SearchField, Dropdown, Loader, ButtonSelector } from "@egovernments/digit-ui-react-components";
-
 //style
 const mystyle = {
   display: "block",
@@ -10,7 +9,7 @@ let validation = {};
 
 const SearchFields = ({ register, control, reset, tenantId, t, previousPage }) => {
   const stateId = Digit.ULBService.getStateId();
-  const { data: applicationTypes, isLoading: applicationTypesLoading } = Digit.Hooks.cr.useMDMS.applicationTypes(tenantId);
+  // const { data: applicationTypes, isLoading: applicationTypesLoading } = Digit.Hooks.cr.useMDMS.applicationTypes(tenantId);
   const { data: place, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "MarriagePlaceType");
 
   const [DeceasedAadharNumber, setDeceasedAadharNumber] = useState();
@@ -21,7 +20,7 @@ const SearchFields = ({ register, control, reset, tenantId, t, previousPage }) =
   let cmbPlaceType = [];
   place &&
     place["birth-death-service"]?.MarriagePlaceType?.map((placeDetails) => {
-      cmbPlaceType.push({ i18nKey: `CR_COMMON_GENDER_${t(placeDetails.code)}`, code: `${t(placeDetails.code)}`, value: `${placeDetails.code}` });
+      cmbPlaceType.push({ i18nKey: `CR_COMMON_GENDER_${t(placeDetails.code)}`, code: `${t(placeDetails.code)}`, value: `${placeDetails.name}` });
     });
 
   function setSelectmarriagePlacetype(value) {
@@ -32,6 +31,17 @@ const SearchFields = ({ register, control, reset, tenantId, t, previousPage }) =
 
   return (
     <>
+     <SearchField>
+        <label>
+        <span className="mandatorycss">*</span>{t("REGISTRATION NUMBER")}
+        </label>
+        <TextInput
+          name="registrationNo"
+          inputRef={register({})}
+          placeholder={`${t("MARRIAGE_REGISTRATION_NUMBER")}`}
+          {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_REGISTRATION_NUMBER") })}
+        />
+      </SearchField>
     <SearchField>
         <label>
           {t("DATE_OF_MARRIAGE")}
@@ -58,14 +68,12 @@ const SearchFields = ({ register, control, reset, tenantId, t, previousPage }) =
         />
       </SearchField>
       <SearchField>
-        <label>
-          <span className="mandatorycss">*</span> {t("CERTIFICATE NO")}
-        </label>
+        <label> {t("CR_NAME_OF_WIFE")}</label>
         <TextInput
-          name="id"
+          name="brideFirstnameEn"
           inputRef={register({})}
-          placeholder={`${t("Certificate No")}`}
-          {...(validation = { isRequired: false, type: "text", title: t("DC_INVALID_CERTIFICATE_NO") })}
+          placeholder={`${t("CR_NAME_OF_WIFE")}`}
+          {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_BRIDE_NAME") })}
         />
       </SearchField>
       <SearchField>
@@ -82,7 +90,7 @@ const SearchFields = ({ register, control, reset, tenantId, t, previousPage }) =
               select={setSelectmarriagePlacetype}
               onBlur={props.onBlur}
               option={cmbPlaceType}
-              optionKey="code"
+              optionKey="value"
               t={t}
               placeholder={`${t("PLACE_OF_MARRIAGE")}`}
               {...(validation = { isRequired: false, title: t("DC_INVALID_GENDER") })}
@@ -90,16 +98,19 @@ const SearchFields = ({ register, control, reset, tenantId, t, previousPage }) =
           )}
         />
       </SearchField>
-      {/* <SearchField>
-       <div className="row">
-            <div className="col-md-12">
-              <h1 className="headingh1">
-                <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_PARTNER_DETAILS")}`}</span>{" "}
-              </h1>
-            </div>
-          </div>
-       </SearchField> */}
       <SearchField>
+        <label>
+          {/* <span className="mandatorycss">*</span>  */}
+          {t("KEY NO")}
+        </label>
+        <TextInput
+          name="id"
+          inputRef={register({})}
+          placeholder={`${t("Key No")}`}
+          {...(validation = { isRequired: false, type: "text", title: t("DC_INVALID_KEY_NO") })}
+        />
+      </SearchField>     
+      {/* <SearchField>
         <label> {t("CR_AADHAR")}</label>
         <TextInput
           t={t}
@@ -115,17 +126,9 @@ const SearchFields = ({ register, control, reset, tenantId, t, previousPage }) =
           placeholder={`${t("CR_AADHAR")}`}
           {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
         />
-      </SearchField>
-      <SearchField>
-        <label> {t("CR_BRIDE_NAME")}</label>
-        <TextInput
-          name="brideFirstnameEn"
-          inputRef={register({})}
-          placeholder={`${t("CR_BRIDE_NAME")}`}
-          {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_BRIDE_NAME") })}
-        />
-      </SearchField>
-      <SearchField>
+      </SearchField> */}
+     
+      {/* <SearchField>
         <label> {t("CR_AADHAR")}</label>
         <TextInput
           t={t}
@@ -142,17 +145,7 @@ const SearchFields = ({ register, control, reset, tenantId, t, previousPage }) =
           {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
         />
       </SearchField>
-      <SearchField>
-        <label>
-          {t("REGISTRATION NUMBER")}
-        </label>
-        <TextInput
-          name="registrationNo"
-          inputRef={register({})}
-          placeholder={`${t("MARRIAGE_REGISTRATION_NUMBER")}`}
-          {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_REGISTRATION_NUMBER") })}
-        />
-      </SearchField>
+      */}
       <SearchField className="submit">
         <SubmitBar label={t("ES_COMMON_SEARCH")} submit />
         <p

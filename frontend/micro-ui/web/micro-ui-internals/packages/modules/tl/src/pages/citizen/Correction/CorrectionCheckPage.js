@@ -13,7 +13,7 @@ import {
 } from "@egovernments/digit-ui-react-components";
 
 
-
+import { stringReplaceAll } from "../../../utils/index";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { useHistory, useRouteMatch } from "react-router-dom";
@@ -76,7 +76,6 @@ const CorrectionCheckPage = ({ onSubmit, value, valuenew }) => {
   const TradeDetailsNew = valuenew;
   const { applicant, address, owners, propertyType, subtype, pitType, pitDetail, isEditProperty, cpt } = value;
   const { applicantnew, addressnew, ownersnew, propertyTypenew, subtypenew, pitTypenew, pitDetailnew, isEditPropertynew, cptnew } = valuenew;
-  console.log(JSON.stringify(TradeDetails));
   function getdate(date) {
     let newdate = Date.parse(date);
     return `${new Date(newdate).getDate().toString() + "/" + (new Date(newdate).getMonth() + 1).toString() + "/" + new Date(newdate).getFullYear().toString()
@@ -134,9 +133,10 @@ const CorrectionCheckPage = ({ onSubmit, value, valuenew }) => {
 
   return (
     <React.Fragment>
-     <div style={{display: "flex",gap: "80px"}}>
-     <Card >
-        <div style={{width: "700px"}}>
+         {window.location.href.includes("/citizen") ? <Timeline currentStep={3} flow={'CORRECTION'}/> : null}
+     <div style={{display: "flex",gap: "80px"}} >
+     <Card>
+        <div style={{width: "100%"}}>
           <CardSubHeader>{`${t("TL_OLD_DET_LABEL")}`}</CardSubHeader>
           <div style={{marginLeft: "15px"}}>
             <StatusTable>
@@ -169,20 +169,20 @@ const CorrectionCheckPage = ({ onSubmit, value, valuenew }) => {
           
             <div style={{ backgroundColor: "#EEEEEE" }}>
               <div className="scroll-table-width-wrapper">
-                <table style={{ borderCollapse: "separate" }}>
+                <table style={{ border:"solid 1px",width:"100%" }}>
                   {
                     <thead>
                       <tr>
-                        <th style={{ whiteSpace: "break-spaces", paddingBottom: "13px" , paddingTop: "14px" }} className="first-col">
+                        <th style={{ whiteSpace: "break-spaces", paddingBottom: "13px" , paddingTop: "14px" , border:"solid 1px"}} className="first-col">
                           {`${t("TL_SL_NO")}`}
                         </th>
-                        <th style={{ whiteSpace: "break-spaces", paddingBottom: "13px" , paddingTop: "14px" }} className="first-col">
+                        <th style={{ whiteSpace: "break-spaces", paddingBottom: "13px" , paddingTop: "14px", border:"solid 1px" }} className="first-col">
                           {`${t("TL_LOCALIZATION_SECTOR")}`}
                         </th>
-                        <th style={{ whiteSpace: "break-spaces", paddingBottom: "13px" , paddingTop: "14px" }} className="first-col">
+                        <th style={{ whiteSpace: "break-spaces", paddingBottom: "13px" , paddingTop: "14px", border:"solid 1px" }} className="first-col">
                           {`${t("TL_NEW_TRADE_DETAILS_TRADE_TYPE_LABEL")}`}
                         </th>
-                        <th style={{ whiteSpace: "break-spaces", paddingBottom: "13px" , paddingTop: "14px" }} className="first-col">
+                        <th style={{ whiteSpace: "break-spaces", paddingBottom: "13px" , paddingTop: "14px", border:"solid 1px" }} className="first-col">
                           {`${t("TL_NEW_TRADE_DETAILS_TRADE_SUBTYPE_LABEL")}`}
                         </th>
                       </tr>
@@ -192,17 +192,17 @@ const CorrectionCheckPage = ({ onSubmit, value, valuenew }) => {
                     {
                       TradeDetails?.tradeLicenseDetail?.tradeUnits.map((unit, index) => (
                           <tr>
-                            <td className="first-col">
+                            <td style={{border:"solid 1px"}}>
                               {index + 1}
                             </td>
-                            <td className="first-col">
+                            <td style={{border:"solid 1px"}}>
                               {`${t(unit.businessCategory)}`}
                             </td>
-                            <td className="first-col">
-                              {`${t(unit.businessType)}`}
+                            <td style={{border:"solid 1px"}}>
+                              {`${t(stringReplaceAll(unit.businessType, ".", "_"))}`}
                             </td>
-                            <td className="last-col">
-                              {`${t(unit.businessSubtype)}`}
+                            <td style={{border:"solid 1px"}}>
+                              {`${t(stringReplaceAll(unit.businessSubtype, ".", "_"))}`}
                             </td>
                           </tr>
                         )
@@ -216,7 +216,7 @@ const CorrectionCheckPage = ({ onSubmit, value, valuenew }) => {
         </div>
       </Card> 
       <Card>
-        <div style={{width: "700px"}}>
+        <div style={{width: "100%"}}>
           <CardSubHeader>{`${t("TL_NEW_DET_LABEL")}`}</CardSubHeader>
           <div style={{marginLeft: "15px"}}>
             <StatusTable>
@@ -248,20 +248,20 @@ const CorrectionCheckPage = ({ onSubmit, value, valuenew }) => {
             
               <div style={{ backgroundColor: "#EEEEEE" }}>
                 <div className="scroll-table-width-wrapper">
-                  <table style={{ borderCollapse: "separate" ,border : "1px" }}>
+                  <table style={{  border:"solid 1px",width:"100%"}}>
                     {
                       <thead>
                         <tr>
-                          <th style={{ whiteSpace: "break-spaces", paddingBottom: "13px" , paddingTop: "14px" }} className="first-col">
+                          <th style={{ whiteSpace: "break-spaces", paddingBottom: "13px" , paddingTop: "14px", border:"solid 1px", }} className="first-col">
                             {`${t("TL_SL_NO")}`}
                           </th>
-                          <th style={{ whiteSpace: "break-spaces", paddingBottom: "13px" , paddingTop: "14px" }} className="first-col">
+                          <th style={{ whiteSpace: "break-spaces", paddingBottom: "13px" , paddingTop: "14px" , border:"solid 1px",}} className="first-col">
                             {`${t("TL_LOCALIZATION_SECTOR")}`}
                           </th>
-                          <th style={{ whiteSpace: "break-spaces", paddingBottom: "13px" , paddingTop: "14px" }} className="first-col">
+                          <th style={{ whiteSpace: "break-spaces", paddingBottom: "13px" , paddingTop: "14px", border:"solid 1px", }} className="first-col">
                             {`${t("TL_NEW_TRADE_DETAILS_TRADE_TYPE_LABEL")}`}
                           </th>
-                          <th style={{ whiteSpace: "break-spaces", paddingBottom: "13px" , paddingTop: "14px" }} className="first-col">
+                          <th style={{ whiteSpace: "break-spaces", paddingBottom: "13px" , paddingTop: "14px", border:"solid 1px", }} className="first-col">
                             {`${t("TL_NEW_TRADE_DETAILS_TRADE_SUBTYPE_LABEL")}`}
                           </th>
                         </tr>
@@ -271,17 +271,17 @@ const CorrectionCheckPage = ({ onSubmit, value, valuenew }) => {
                       {
                         TradeDetailsNew.TradeDetails?.tradeLicenseDetail?.tradeUnits.map((unit, index) => (
                             <tr>
-                              <td className="first-col">
+                              <td style={{border:"solid 1px"}}>
                                 {index + 1}
                               </td>
-                              <td className="first-col">
+                              <td style={{border:"solid 1px"}}>
                                 {`${t(unit.businessCategory)}`}
                               </td>
-                              <td className="first-col">
-                                {`${t(unit.businessType)}`}
+                              <td style={{border:"solid 1px"}}>
+                                {`${t(stringReplaceAll(unit.businessType, ".", "_"))}`}
                               </td>
-                              <td className="last-col">
-                                {`${t(unit.businessSubtype)}`}
+                              <td style={{border:"solid 1px"}}>
+                                {`${t(stringReplaceAll(unit.businessSubtype, ".", "_"))}`}
                               </td>
                             </tr>
                           )

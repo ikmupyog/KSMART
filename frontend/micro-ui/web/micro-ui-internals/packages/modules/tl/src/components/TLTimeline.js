@@ -14,6 +14,13 @@ const getAction = (flow) => {
   switch (flow) {
     case "STAKEHOLDER": actions = []
       break;
+    case "CORRECTION" :
+      actions = [
+        'TL_COMMON_TR_DETAILS',
+        'TL_DOCUMENT_DETAIL',
+        'TL_COMMON_SUMMARY',
+      ]
+break;
     default: actions = [
       'TL_COMMON_TR_DETAILS',
       'TL_APPLICANT_AND_OWNER_DETAILS',
@@ -21,6 +28,7 @@ const getAction = (flow) => {
    //   'TL_NEW_TRADE_DETAILS_TRADE_COMM_DATE_HEADER',
       'TL_COMMON_SUMMARY',
     ]
+    break;
   }
 }
 

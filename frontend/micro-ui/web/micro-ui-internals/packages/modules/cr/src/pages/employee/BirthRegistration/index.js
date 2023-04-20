@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Route, Switch, useRouteMatch, useLocation, useHistory } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { newConfig as newConfigCR } from "../../../config/config";

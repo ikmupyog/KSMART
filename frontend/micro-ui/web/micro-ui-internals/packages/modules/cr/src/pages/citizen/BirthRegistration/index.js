@@ -24,11 +24,16 @@ const CreateBirthRegistration = ({ parentUrl }) => {
   let config = [];
   let { data: newConfig, isLoading } = true;
 
+  // newConfig = newConfigCR;
+  // newConfig?.forEach((obj) => {
+  //   config = config.concat(obj.body.filter((a) => !a.hideInCitizen));
+  // });
+  // config.indexRoute = "child-details";
   newConfig = newConfigCR;
-  newConfig?.forEach((obj) => {
-    config = config.concat(obj.body.filter((a) => !a.hideInCitizen));
-  });
+  const birthConfig = newConfig.find((item)=> item.head === "Birth Routing");
+  config = config.concat(birthConfig.body.filter((a) => !a.hideInCitizen));
   config.indexRoute = "child-details";
+  
   const goNext = (skipStep, index, isAddMultiple, key, isPTCreateSkip) => {
     let currentPath = pathname.split("/").pop(),
       nextPage;
@@ -113,9 +118,15 @@ const CreateBirthRegistration = ({ parentUrl }) => {
     history.push(`${match.path}/acknowledgement`);
   };
 
-  const onSuccess = () => {
-    sessionStorage.removeItem("CurrentFinancialYear");
+  const onSuccess = (data) => {
+    // console.log(data);
+    // console.log(data?.ChildDetails[0].applicationNumber);
+    if(isEditBirth === false){
+      clearParams();
+    }    
+    // sessionStorage.removeItem("CurrentFinancialYear");
     queryClient.invalidateQueries("CR_CREATE_BIRTH_REG");
+
   };
   const handleSkip = () => { };
   const handleMultiple = () => { };

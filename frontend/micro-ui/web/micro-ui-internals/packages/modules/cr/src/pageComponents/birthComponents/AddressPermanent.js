@@ -5,7 +5,8 @@ import { useTranslation } from "react-i18next";
 const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCountry, setpermtaddressCountry,
     permtaddressStateName, setpermtaddressStateName, value, setValue, countryvalue, setCountryValue,
     isPrsentAddress, setIsPrsentAddress, countryValuePermanent, setCountryValuePermanent,
-    valuePermanent, setValuePermanent, isEditBirth = false, isEditDeath = false,isEditStillBirth = false,
+    valuePermanent, setValuePermanent, isEditBirth = false, isEditDeath = false, isEditStillBirth = false, isEditAdoption,
+    isEditBirthNAC = false
     // isInitialRender, setIsInitialRender
 }) => {
     const stateId = Digit.ULBService.getStateId();
@@ -20,24 +21,24 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
     const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
     const { data: State = {}, isStateLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
     const [isInitialRender, setIsInitialRender] = useState(true);
-    const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : isEditStillBirth ? isEditStillBirth :  false);
+    const [isDisableEdit, setisDisableEdit] = useState(false);
 
     let cmbLB = [];
     let cmbCountry = [];
     let cmbState = [];
 
     Country &&
-        Country["common-masters"] &&
+        Country["common-masters"] && Country["common-masters"].Country &&
         Country["common-masters"].Country.map((ob) => {
             cmbCountry.push(ob);
         });
     State &&
-        State["common-masters"] &&
+        State["common-masters"] && State["common-masters"].State &&
         State["common-masters"].State.map((ob) => {
             cmbState.push(ob);
         });
     localbodies &&
-        localbodies["tenant"] &&
+        localbodies["tenant"] && localbodies["tenant"].tenants &&
         localbodies["tenant"].tenants.map((ob) => {
             cmbLB.push(ob);
         });
@@ -45,35 +46,66 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
     let cmbFilterCountry = [];
     let cmbFilterState = [];
     useEffect(() => {
-
-        if (isInitialRender && isPrsentAddress) {
+        if (isPrsentAddress && isInitialRender) {
             if (cmbLB.length > 0) {
                 currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
                 // setAdrsLBName(currentLB[0]);
-                cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
-                setpermtaddressCountry(cmbFilterCountry[0]);
-                setCountryValue(cmbFilterCountry[0].countrycode);
-                setCountryValuePermanent(cmbFilterCountry[0].countrycode);
-                cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
-                setpermtaddressStateName(cmbFilterState[0]);
-                setValue(cmbFilterState[0].statecode);
-                setValuePermanent(cmbFilterState[0].statecode);
+                if (cmbCountry.length > 0 && currentLB.length > 0) {
+                    cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
+                    setpermtaddressCountry(cmbFilterCountry[0]);
+                    //setCountryValue(cmbFilterCountry[0].countrycode);
+                    setCountryValuePermanent(cmbFilterCountry[0].countrycode);
+                }
+                if (cmbState.length > 0 && currentLB.length > 0) {
+                    cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
+                    setpermtaddressStateName(cmbFilterState[0]);
+                    //setValue(cmbFilterState[0].statecode);
+                    setValuePermanent(cmbFilterState[0].statecode);
+                }
                 setIsInitialRender(false);
             }
-        } else {
+        } else if (isPrsentAddress === false && countryValuePermanent === "IND" && valuePermanent === "kl" &&
+            (formData?.AddressBirthDetails?.permtaddressStateName === null || formData?.AddressBirthDetails?.permtaddressStateName === "" || formData?.AddressBirthDetails?.permtaddressStateName === undefined)) {
             if (cmbLB.length > 0) {
                 currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
                 // setAdrsLBName(currentLB[0]);
-                cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
-                setpermtaddressCountry(cmbFilterCountry[0]);
-                setCountryValuePermanent(cmbFilterCountry[0].countrycode);
-                cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
-                setpermtaddressStateName(cmbFilterState[0]);
-                setValuePermanent(cmbFilterState[0].statecode);
+                if (cmbCountry.length > 0 && currentLB.length > 0) {
+                    cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
+                    setpermtaddressCountry(cmbFilterCountry[0]);
+                    setCountryValuePermanent(cmbFilterCountry[0].countrycode);
+                }
+                if (cmbState.length > 0 && currentLB.length > 0) {
+                    cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
+                    // console.log("test",cmbFilterState);
+                    setpermtaddressStateName(cmbFilterState[0]);
+                    // console.log(cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode)[0].code);
+                    setValuePermanent(cmbFilterState[0].code);
+                }
                 setIsInitialRender(false);
             }
         }
-    }, [Country, State, localbodies, isInitialRender]);
+        else if (isPrsentAddress === false && countryValuePermanent === "IND" && valuePermanent === "kl" &&
+            (formData?.AddressBirthDetails?.permtaddressStateName != null)) {
+            if (cmbLB.length > 0) {
+                currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
+                // setAdrsLBName(currentLB[0]);
+                if (cmbCountry.length > 0 && currentLB.length > 0) {
+                    cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
+                    setpermtaddressCountry(cmbFilterCountry[0]);
+                    setCountryValuePermanent(cmbFilterCountry[0].countrycode);
+                }
+                if (cmbState.length > 0 && currentLB.length > 0) {
+                    cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
+                    // console.log("test",cmbFilterState);
+                    setpermtaddressStateName(cmbFilterState[0]);
+                    // console.log(cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode)[0].code);
+                    setValuePermanent(cmbFilterState[0].code);
+                }
+                setIsInitialRender(false);
+            }
+        }
+    }, [isPrsentAddress, localbodies, isInitialRender]);
+
     if (isEditBirth) {
         if (formData?.ChildDetails?.AddressBirthDetails?.permtaddressCountry != null) {
             if (cmbCountry.length > 0 && (permtaddressCountry === undefined || permtaddressCountry === "")) {
@@ -85,6 +117,19 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
             if (cmbState.length > 0 && (permtaddressStateName === undefined || permtaddressStateName === "")) {
                 setpermtaddressStateName(cmbState.filter(cmbState => cmbState.code === formData?.ChildDetails?.AddressBirthDetails?.permtaddressStateName)[0]);
                 setValuePermanent(value.formData?.ChildDetails?.AddressBirthDetails?.permtaddressStateName);
+            }
+        }
+    } else if (isEditAdoption !== false) {
+        if (formData?.AdoptionAddressBasePage?.permtaddressCountry != null) {
+            if (cmbCountry.length > 0 && (permtaddressCountry === undefined || permtaddressCountry === "")) {
+                setpermtaddressCountry(cmbCountry.filter(cmbCountry => cmbCountry.code === formData?.AdoptionAddressBasePage?.permtaddressCountry)[0]);
+                setCountryValuePermanent(value.formData?.AdoptionAddressBasePage?.permtaddressCountry);
+            }
+        }
+        if (formData?.AdoptionAddressBasePage?.permtaddressStateName != null) {
+            if (cmbState.length > 0 && (permtaddressStateName === undefined || permtaddressStateName === "")) {
+                setpermtaddressStateName(cmbState.filter(cmbState => cmbState.code === formData?.AdoptionAddressBasePage?.permtaddressStateName)[0]);
+                setValuePermanent(value.formData?.AdoptionAddressBasePage?.permtaddressStateName);
             }
         }
     } else if (isEditDeath) {
@@ -123,8 +168,7 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
     }
     function setSelectaddressStateName(value) {
         setpermtaddressStateName(value);
-        // setValue(value.statecode);
-        setValuePermanent(value.statecode);
+        setValuePermanent(value.code);
     }
 
     const goNext = () => {
@@ -134,43 +178,43 @@ const AddressPermanent = ({ config, onSelect, userType, formData, permtaddressCo
     } else
         return (
             <React.Fragment>
-                <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
+                {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} > */}
 
-                    <div className="row">
+                <div className="row">
+                    <div className="col-md-6">
+                        <CardLabel>
+                            {`${t("CS_COMMON_COUNTRY")}`}
+                            <span className="mandatorycss">*</span>
+                        </CardLabel>
+                        <Dropdown
+                            t={t}
+                            optionKey="name"
+                            isMandatory={false}
+                            option={cmbCountry}
+                            selected={permtaddressCountry}
+                            select={setSelectaddressCountry}
+                            disable={isDisableEdit}
+                        />
+                    </div>
+                    {countryValuePermanent === "IND" && (
                         <div className="col-md-6">
                             <CardLabel>
-                                {`${t("CS_COMMON_COUNTRY")}`}
+                                {`${t("CS_COMMON_STATE")}`}
                                 <span className="mandatorycss">*</span>
                             </CardLabel>
                             <Dropdown
                                 t={t}
                                 optionKey="name"
                                 isMandatory={false}
-                                option={cmbCountry}
-                                selected={permtaddressCountry}
-                                select={setSelectaddressCountry}
-                                disable={isDisableEdit} 
+                                option={cmbState}
+                                selected={permtaddressStateName}
+                                select={setSelectaddressStateName}
+                                disable={isDisableEdit}
                             />
                         </div>
-                        {countryValuePermanent === "IND" && (
-                            <div className="col-md-6">
-                                <CardLabel>
-                                    {`${t("CS_COMMON_STATE")}`}
-                                    <span className="mandatorycss">*</span>
-                                </CardLabel>
-                                <Dropdown
-                                    t={t}
-                                    optionKey="name"
-                                    isMandatory={false}
-                                    option={cmbState}
-                                    selected={permtaddressStateName}
-                                    select={setSelectaddressStateName}
-                                    disable={isDisableEdit} 
-                                />
-                            </div>
-                        )}
-                    </div>
-                </FormStep>
+                    )}
+                </div>
+                {/* </FormStep> */}
             </React.Fragment>
         );
 };

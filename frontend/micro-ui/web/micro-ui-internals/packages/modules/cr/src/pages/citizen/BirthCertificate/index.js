@@ -1,43 +1,21 @@
 import React, { useState } from "react";
-import {
-  BackButton,
-  TextInput,
-  Label,
-  SubmitBar,
-  LinkLabel,
-  ActionBar,
-  CloseSvg,
-  DatePicker,
-  CardLabelError,
-  SearchForm,
-  SearchField,
-  Dropdown,
-} from "@egovernments/digit-ui-react-components";
-import { useForm, Controller } from "react-hook-form";
-import { useParams } from "react-router-dom";
+import { BackButton } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
-// import BirthCertificate from "./BirthCertificate";
 import BirthCertificate from "../../../components/SearchRegistryBirth";
+import _ from "lodash";
+import { convertDateToEpoch } from "../../../utils";
 
 const BirthCertificateSearch = ({ path }) => {
-  const { variant } = useParams();
   const { t } = useTranslation();
-  // const tenantId = Digit.ULBService.getCurrentTenantId();
   const [payload, setPayload] = useState({});
 
-  const Search = Digit.ComponentRegistryService.getComponent(variant === "license" ? "SearchLicense" : "SearchDfmApplication");
-
   function onSubmit(_data) {
-    var fromDate = new Date(_data?.fromDate);
-    fromDate?.setSeconds(fromDate?.getSeconds() - 19800);
-    var toDate = new Date(_data?.toDate);
-    toDate?.setSeconds(toDate?.getSeconds() + 86399 - 19800);
     const data = {
-      ..._data,
-      ...(_data.toDate ? { toDate: toDate?.getTime() } : {}),
-      ...(_data.fromDate ? { fromDate: fromDate?.getTime() } : {}),
+      ..._data
     };
-
+    if (!_.isEmpty(_data.birthDate)) {
+      _.set(data, "birthDate", convertDateToEpoch(_data.birthDate, "start"))
+    }
     setPayload(
       Object.keys(data)
         .filter((k) => data[k])
@@ -46,19 +24,13 @@ const BirthCertificateSearch = ({ path }) => {
   }
 
   const config = {
-    enabled: !!(payload && Object.keys(payload).length > 0),
+    enabled: !!(payload && Object.keys(payload).length > 0)
   };
 
   const { data: { RegisterBirthDetails: searchReult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.cr.useRegistrySearchBirth({
     filters: payload,
     config,
   });
-  // console.log(searchReult);
-  let payloadData = { id: isSuccess && searchReult[0]?.id, source: "sms" };
-  let registryPayload = Object.keys(payloadData)
-    .filter((k) => payloadData[k])
-    .reduce((acc, key) => ({ ...acc, [key]: typeof payloadData[key] === "object" ? payloadData[key].code : payloadData[key] }), {});
-  const { data: { filestoreId: storeId } = {} } = Digit.Hooks.cr.useResistryDownloadBirth({ filters: registryPayload, config });
 
   return (
     <React.Fragment>
@@ -66,8 +38,7 @@ const BirthCertificateSearch = ({ path }) => {
       <BirthCertificate
         t={t}
         onSubmit={onSubmit}
-        data={!isLoading && isSuccess ? (searchReult?.length > 0 ? searchReult : { display: "ES_COMMON_NO_DATA" }) : ""}
-        filestoreId={storeId}
+        data={searchReult || []}
         isSuccess={isSuccess}
         isLoading={isLoading}
         count={count}

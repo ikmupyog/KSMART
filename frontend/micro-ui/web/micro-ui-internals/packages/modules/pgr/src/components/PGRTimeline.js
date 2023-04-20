@@ -13,12 +13,13 @@ const getAction = (flow) => {
       'CS_ADDCOMPLAINT_COMPLAINT_LOCATION',
       'CS_ADDCOMPLAINT_PROVIDE_COMPLAINT_ADDRESS',
       // 'Property Landmark',      
-      'CR_DOCUMENTS',
+      'CS_ADDCOMPLAINT_UPLOAD_PHOTO',
       'CS_ADDCOMPLAINT_PROVIDE_ADDITIONAL_DETAILS',
+      'CS_ADDCOMPLAINT_SUMMARY'
     ]
   }
 }
-const Timeline = ({ currentStep = 1, flow = "" }) => {
+const PGRTimeline = ({ currentStep = 1, flow = "" }) => {
   const { t } = useTranslation();
   const isMobile = window.Digit.Utils.browser.isMobile();
   getAction(flow);
@@ -37,4 +38,4 @@ const Timeline = ({ currentStep = 1, flow = "" }) => {
   )
 }
 
-export default Timeline; 
+export default PGRTimeline; 

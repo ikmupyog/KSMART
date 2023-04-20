@@ -327,8 +327,11 @@ export const convertToBirthRegistration = (data = {}) => {
         deliveryMethods: data?.ChildDetails?.deliveryMethods ? data?.ChildDetails?.deliveryMethods.code : null,
         action: "INITIATE",
         applicationtype: "CRBRNR",
-        businessservice: "birth-services",
-        workflowcode: data?.ChildDetails?.workFlowCode,
+        businessservice: "CR",
+        workflowcode: data?.ChildDetails?.workFlowCode,        
+        isPayment:data?.ChildDetails?.isPayment,
+        Amount:data?.ChildDetails?.Amount,
+        applicationStatus: data?.ChildDetails?.isPayment ? "PENDINGPAYMENT" : "INITIATED",
         ParentsDetails: {
           motherFirstNameEn: data?.ParentsDetails?.motherFirstNameEn,
           motherFirstNameMl: data?.ParentsDetails?.motherFirstNameMl,
@@ -478,7 +481,7 @@ export const convertToBirthRegistration = (data = {}) => {
           isDeclarationInfo: data?.InformarHosInstDetails?.isDeclarationInfo,
         },
         InitiatorinfoDetails: {
-          relation: data?.InitiatorinfoDetails?.relation,
+          relation: data?.InitiatorinfoDetails?.relation ? data?.InitiatorinfoDetails?.relation.code : null,
           initiatorNameEn: data?.InitiatorinfoDetails?.initiatorNameEn,
           initiatorAadhar: data?.InitiatorinfoDetails?.initiatorAadhar,
           initiatorMobile: data?.InitiatorinfoDetails?.initiatorMobile,
@@ -498,13 +501,13 @@ export const convertToBirthRegistration = (data = {}) => {
             demandDetails: [
               {
                 taxHeadMasterCode: "CRB_FEES",
-                taxAmount: 12,
+                taxAmount: data?.ChildDetails?.Amount,
                 collectionAmount: 0,
               },
             ],
-            minimumAmountPayable: 12,
+            minimumAmountPayable: data?.ChildDetails?.Amount,
             additionalDetails: {
-              HI: "hi",
+              HI: "New Birth Digital Payment",
             },
           },
         ],
@@ -574,7 +577,7 @@ export const convertToEditBirthRegistration = (data = {}) => {
         deliveryMethods: data?.ChildDetails?.deliveryMethods ? data?.ChildDetails?.deliveryMethods.code : null,
         action: "APPLY",
         applicationtype: "CRBRNR",
-        businessservice: "birth-services",
+        businessservice: "CR",
         applicationStatus: "",
         workflowcode: data?.ChildDetails.workflowcode,
         isWorkflow: data?.ChildDetails.isWorkflow,

@@ -1,47 +1,16 @@
-import { Header, CitizenHomeCard, CaseIcon, HomeLink } from "@egovernments/digit-ui-react-components";
+import {CitizenHomeCard, CaseIcon } from "@egovernments/digit-ui-react-components";
 import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useRouteMatch } from "react-router-dom";
 import TradeLicense from "../src/pageComponents/TradeLicense";
-import TLSelectGeolocation from "../src/pageComponents/TLSelectGeolocation";
-import TLSelectAddress from "./pageComponents/TLSelectAddress";
-import TLSelectPincode from "./pageComponents/TLSelectPincode";
 import Proof from "./pageComponents/Proof";
-import SelectOwnerShipDetails from "./pageComponents/SelectOwnerShipDetails";
-import SelectOwnerDetails from "./pageComponents/SelectOwnerDetails";
-import SelectOwnerAddress from "./pageComponents/SelectOwnerAddress";
-import SelectProofIdentity from "./pageComponents/SelectProofIdentity";
-import SelectOwnershipProof from "./pageComponents/SelectOwnershipProof";
-import SelectTradeName from "./pageComponents/SelectTradeName";
-import SelectStructureType from "./pageComponents/SelectStructureType";
-import SelectVehicleType from "./pageComponents/SelectVehicleType";
-import SelectBuildingType from "./pageComponents/SelectBuildingType";
-import SelectCommencementDate from "./pageComponents/SelectCommencementDate";
-import SelectTradeUnits from "./pageComponents/SelectTradeUnits";
-import SelectAccessories from "./pageComponents/SelectAccessories";
-import SelectAccessoriesDetails from "./pageComponents/SelectAccessoriesDetails";
 import TLCheckPage from "./pages/citizen/Create/CheckPage";
 import TLDocument from "./pageComponents/TLDocumets";
 import TLAcknowledgement from "./pages/citizen/Create/TLAcknowledgement";
-import MyApplications from "./pages/citizen/Applications/Application";
 import TradeLicenseList from "./pages/citizen/Renewal/TradeLicenseList";
 import TLWFApplicationTimeline from "./pageComponents/TLWFApplicationTimeline";
 
-import SelectLicensee from "./pageComponents/SelectLicensee";
-import SelectLicenseeIndividualDetails from "./pageComponents/SelectLicenseeIndividualDetails";
-import SelectLicenseeInstitutionDetails from "./pageComponents/SelectLicenseeInstitutionDetails";
-import SelectLicenseePlaceActivity from "./pageComponents/SelectLicenseePlaceActivity";
-import SelectLand from "./pageComponents/SelectLand";
-import SelectBuilding from "./pageComponents/SelectBuilding";
-import SelectBusinessCategory from "./pageComponents/SelectBusinessCategory";
-import SelectTradeAddress from "./pageComponents/SelectTradeAddress";
-import SelectTLVechicle from "./pageComponents/SelectTLVechicle";
-import SelectTLWater from "./pageComponents/SelectTLWater";
-import TLOwnerDetailsEmployee from "./pageComponents/TLOwnerDetailsEmployee";
-import TLTradeDetailsEmployee from "./pageComponents/TLTradeDetailsEmployee";
-import TLTradeUnitsEmployee from "./pageComponents/TLTradeUnitsEmployee";
-import TLAccessoriesEmployee from "./pageComponents/TLAccessoriesEmployee";
-import TLDocumentsEmployee from "./pageComponents/TLDocumentsEmployee";
+
 import TLCard from "./components/TLCard";
 import TLInfoLabel from "./pageComponents/TLInfoLabel";
 import SearchApplication from "./components/SearchApplication"
@@ -83,6 +52,9 @@ import CorrectionCheckPage from "./pages/citizen/Correction/CorrectionCheckPage"
 import TLCorrectionDetailsView from "./pageComponents/TLCorrectionDetailsView"
 import TLCorrectionDocumentUpload from "./pageComponents/TLCorrectionDocumentUpload"
 import TLCorrectionAcknowledgement from "./pages/citizen/Correction/TLCorrectionAcknowledgement"
+import MyApplicationDetails from "./pages/citizen/Applications/MyApplicationDetails"
+import SearchCitizenApplication from "./components/SearchCitizenApplication"
+
 export const TLModule = ({ stateCode, userType, tenants }) => {
   const { path, url } = useRouteMatch();
 
@@ -136,44 +108,12 @@ const componentsToRegister = {
   TLModule,
   TLLinks,
   TLCard,
-  SelectLicensee,
-  SelectLicenseeIndividualDetails,
-  SelectLicenseeInstitutionDetails,
-  SelectLicenseePlaceActivity,
-  SelectLand,
-  SelectBuilding,
-  SelectBusinessCategory,
-  SelectTradeAddress,
-  SelectTLVechicle,
-  SelectTLWater,
   TradeLicense,
-  SelectTradeName,
-  SelectStructureType,
-  SelectVehicleType,
-  SelectBuildingType,
-  SelectCommencementDate,
-  SelectTradeUnits,
-  SelectAccessories,
-  SelectAccessoriesDetails,
-  TLSelectGeolocation,
-  TLSelectAddress,
-  TLSelectPincode,
   Proof,
-  SelectOwnerShipDetails,
-  SelectOwnerDetails,
-  SelectOwnerAddress,
-  SelectProofIdentity,
-  SelectOwnershipProof,
   TLCheckPage,
   TLDocument,
   TLAcknowledgement,
   TradeLicenseList,
-  MyApplications,
-  TLOwnerDetailsEmployee,
-  TLTradeDetailsEmployee,
-  TLTradeUnitsEmployee,
-  TLAccessoriesEmployee,
-  TLDocumentsEmployee,
   SearchApplication,
   SearchLicense,
   TL_INBOX_FILTER,
@@ -210,7 +150,9 @@ const componentsToRegister = {
   CorrectionCheckPage,
   TLCorrectionDetailsView,
   TLCorrectionAcknowledgement,
-  TLCorrectionDocumentUpload
+  TLCorrectionDocumentUpload,
+  MyApplicationDetails,
+  SearchCitizenApplication
 };
 export const initTLComponents = () => {
   Object.entries(componentsToRegister).forEach(([key, value]) => {

@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { SearchForm, Table, Card, Header } from "@egovernments/digit-ui-react-components";
+import { SearchForm, Table, Card, Header,SearchField,Dropdown } from "@egovernments/digit-ui-react-components";
 import { Link } from "react-router-dom";
 import { convertEpochToDateDMY } from "../../utils";
 import SearchFields from "./SearchDeathFields";
@@ -21,16 +21,21 @@ const hstyle = {
   marginBottom: ".5rem",
   lineHieght: "1.5rem",
 };
+const selectedDeathSearch = [
+  { label: "Death", value: "death" },
+  { label: "Death NAC", value: "deathnac" },
+  { label: "Abandoned Death", value: "abandoneddeathsearch" },
+]
+let validation = ''
 
-const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count }) => {
-  console.log(data);
+const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count, applicationDeathType, setApplicationDeathType }) => {
 
   const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
     defaultValues: {
       offset: 0,
       limit: 10,
       sortBy: "DateOfDeath",
-      sortOrder: "DESC",
+      sortOrder: "",
     },
   });
 
@@ -38,7 +43,7 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count }) => {
     register("offset", 0);
     register("limit", 10);
     register("sortBy", "DateOfDeath");
-    register("sortOrder", "DESC");
+    register("sortOrder", "");
   }, [register]);
 
   const onSort = useCallback((args) => {
@@ -60,6 +65,23 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count }) => {
     setValue("offset", getValues("offset") - getValues("limit"));
     handleSubmit(onSubmit)();
   }
+  const setDeathSelectSearch = (value) => {
+    setApplicationDeathType(value)
+    reset({
+      searchAppllication: [],
+      applicationNumber: "",
+      fromDate: "",
+      toDate: "",
+      licenseNumbers: "",
+      status: "",
+      tradeName: "",
+      offset: 0,
+      limit: 10,
+      sortBy: "DateOfDeath",
+      sortOrder: ""
+  });
+  previousPage();
+  }
 
   const isMobile = window.Digit.Utils.browser.isMobile();
 
@@ -70,6 +92,11 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count }) => {
     console.log({ finaldata });
     Digit.SessionStorage.set("CR_DEATH_EDIT", finaldata);
     sessionStorage.setItem("CR_DEATH_EDIT_FLAG", true);
+  };
+  const handleAbandonedLinkClick = (finaldata) => {
+    console.log( "CR_CREATE_ABANDONEDDEATH_REG",finaldata );
+    Digit.SessionStorage.set("CR_CREATE_ABANDONEDDEATH_REG", finaldata);
+    sessionStorage.setItem("CR_DEATH_AbandonedEDIT_FLAG", true);
   };
   //need to get from workflow
   const GetCell = (value) => <span className="cell-text">{value}</span>;
@@ -85,7 +112,17 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count }) => {
               <span className="link">
                 <Link
                   onClick={handleLinkClick(row.original)}
-                  to={`/digit-ui/employee/cr/application-deathdetails/${row.original.InformationDeath["DeathACKNo"]}`}
+                  to={row.original.InformationDeath["DeathACKNo"].includes("CRDRNR") ?
+                    `/digit-ui/employee/cr/application-deathdetails/${row.original.InformationDeath["DeathACKNo"]}`
+                    :
+                    row.original.InformationDeath["DeathACKNo"].includes("CRDRNA") ?
+                      `/digit-ui/employee/cr/application-deathnacdetails/${row.original.InformationDeath["DeathACKNo"]}` 
+                    // :
+                    //   row.original.InformationDeathAbandoned["DeathACKNo"].includes("CRDRAB") ?
+                    //   `/digit-ui/employee/cr/application-abandoneddeathdetails/${row.original.InformationDeathAbandoned["DeathACKNo"]}`
+
+                    : "/digit-ui/employee/cr/search-flow/deathsearch/application"
+                  }
                 >
                   {row.original.InformationDeath["DeathACKNo"]}
                 </Link>
@@ -106,7 +143,7 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count }) => {
         accessor: (row) =>
           GetCell(
             row.InformationDeath?.DeceasedFirstNameEn + row.InformationDeath?.DeceasedMiddleNameEn + row.InformationDeath?.DeceasedLastNameEn ||
-              t("CR_NOT_RECORDED")
+            t("CR_NOT_RECORDED")
           ),
       },
       {
@@ -133,12 +170,92 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count }) => {
     []
   );
 
+  const Abandonedcolumns = useMemo(
+    () => [
+      {
+        Header: t("CR_SEARCH_ACK_NO"),
+        accessor: "DeathACKNo",
+        disableSortBy: true,
+        Cell: ({ row }) => {
+          {console.log("row",row)}
+          return (
+          
+            <div>
+              <span className="link">
+                <Link
+                  onClick={handleAbandonedLinkClick(row.original)}
+                  to={
+                     `/digit-ui/employee/cr/application-abandoneddeathdetails/${row.original.InformationDeathAbandoned["DeathACKNo"]}`
+                  }
+                >
+                  {row.original.InformationDeathAbandoned["DeathACKNo"]}
+                </Link>
+              </span>
+            </div>
+          );
+        },
+      },
+      {
+        Header: t("CR_SEARCH_ACK_NO"),
+        disableSortBy: true,
+        accessor: (row) => GetCell(row.InformationDeathAbandoned?.DateOfDeath ? convertEpochToDateDMY(row.InformationDeathAbandoned?.DateOfDeath) : ""),
+      },
+
+      {
+        Header: t("CR_COMMON_DECEASED_NAME"),
+        disableSortBy: true,
+        accessor: (row) =>
+          GetCell(
+            row.InformationDeathAbandoned?.DeceasedFirstNameEn + row.InformationDeathAbandoned?.DeceasedMiddleNameEn + row.InformationDeathAbandoned?.DeceasedLastNameEn ||
+            t("CR_NOT_RECORDED")
+          ),
+      },
+      {
+        Header: t("CR_COMMON_DEATH_PLACE"),
+        disableSortBy: true,
+        accessor: (row) => GetCell(row.deathPlace || "-"),
+      },
+      // {
+      //   Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),
+      //   disableSortBy: true,
+      //   accessor: (row) => GetCell(row.tradeName || ""),
+      // },
+      // {
+      //   Header: t("TL_LOCALIZATION_TRADE_OWNER_NAME"),
+      //   accessor: (row) => GetCell(row.tradeLicenseDetail.owners.map( o => o.name ). join(",") || ""),
+      //   disableSortBy: true,
+      // },
+      // {
+      //   Header: t("TL_COMMON_TABLE_COL_STATUS"),
+      //   accessor: (row) =>GetCell(t( row?.workflowCode&&row?.status&&`WF_${row?.workflowCode?.toUpperCase()}_${row.status}`|| "NA") ),
+      //   disableSortBy: true,
+      // }
+    ],
+    []
+  );
   return (
     <React.Fragment>
       <div style={mystyle}>
         <h1 style={hstyle}>{t("TL_SEARCH_APPLICATIONS")}</h1>
+        <SearchField>
+          <label>
+            {t("Application Type")}
+            <span className="mandatorycss">*</span>
+          </label>
+          <Dropdown
+            t={t}
+            optionKey="label"
+            isMandatory={true}
+            option={selectedDeathSearch}
+            selected={applicationDeathType}
+            select={setDeathSelectSearch}
+            // disable={}
+            placeholder={`${t("applicationDeathType")}`}
+            {...(validation = { isRequired: true, title: t("applicationDeathType") })}
+          />
+        </SearchField>
         <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
-          <SearchFields {...{ register, control, reset, tenantId, t }} />
+          <SearchFields {...{ register, control, reset, tenantId, t, previousPage, applicationDeathType }} />
         </SearchForm>
       </div>
 
@@ -158,7 +275,7 @@ const SearchApplicationDeath = ({ tenantId, t, onSubmit, data, count }) => {
             t={t}
             data={data}
             totalRecords={count}
-            columns={columns}
+            columns={applicationDeathType?.value === "abandoneddeathsearch" ? Abandonedcolumns : columns}
             getCellProps={(cellInfo) => {
               return {
                 style: {

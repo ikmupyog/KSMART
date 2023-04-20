@@ -1,13 +1,13 @@
-import React, { useCallback, useMemo, useEffect,useState } from "react";
+import React, { useCallback, useMemo, useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { SearchForm, Table, Card, Header, SubmitBar, Loader } from "@egovernments/digit-ui-react-components";
-import { Link } from "react-router-dom";
+import { SearchForm, Table, Card, Loader } from "@egovernments/digit-ui-react-components";
 import { convertEpochToDateDMY } from "../../utils";
 import SearchFields from "./SearchFields";
 import MobileSearchApplication from "./MobileSearchApplication";
 import { useTranslation } from "react-i18next";
-import { Route, Switch, useLocation, useRouteMatch, useHistory } from "react-router-dom";
 import { downloadDocument } from "../../utils/uploadedDocuments";
+import { STATE_CODE } from "../../config/constants";
+import _ from "lodash";
 
 const mystyle = {
   bgOpacity: "1",
@@ -24,21 +24,19 @@ const hstyle = {
   marginBottom: ".5rem",
   lineHieght: "1.5rem",
 };
-const registyBtnStyle = {
-  display: "flex",
-  justifyContent: "flex-end",
-  marginRight: "15px",
-  marginBottom: "15px",
-};
 
-const SearchRegistryBirth = ({  onSubmit, data, filestoreId, isSuccess, isLoading, count }) => {
-  const [FileData, setFileData] = useState([]);
+const SearchRegistryBirth = ({ onSubmit, data, isSuccess, isLoading, count }) => {
+  let tenantId = Digit.ULBService.getCurrentTenantId();
+  if (tenantId === STATE_CODE.KL) {
+    tenantId = Digit.ULBService.getCitizenCurrentTenant();
+  }
+  const fileSource = Digit.Hooks.cr.getBirthFileSourceDetails({ params: { tenantId } });
 
   const { register, control, handleSubmit, setValue, getValues, reset } = useForm({
     defaultValues: {
       offset: 0,
       limit: 10,
-      // sortBy: "dateOfBirth",
+      sortBy: "birthDate",
       sortOrder: "DESC",
     },
   });
@@ -47,7 +45,7 @@ const SearchRegistryBirth = ({  onSubmit, data, filestoreId, isSuccess, isLoadin
   useEffect(() => {
     register("offset", 0);
     register("limit", 10);
-    //register("sortBy", "dateOfBirth");
+    register("sortBy", "birthDate");
     register("sortOrder", "DESC");
   }, [register]);
 
@@ -74,7 +72,7 @@ const SearchRegistryBirth = ({  onSubmit, data, filestoreId, isSuccess, isLoadin
   const isMobile = window.Digit.Utils.browser.isMobile();
 
   if (isMobile) {
-    return <MobileSearchApplication {...{ Controller, register, control, t, reset, previousPage, handleSubmit,  data, onSubmit }} />;
+    return <MobileSearchApplication {...{ Controller, register, control, t, reset, previousPage, handleSubmit, data, onSubmit }} />;
   }
 
   //need to get from workflow
@@ -101,7 +99,7 @@ const SearchRegistryBirth = ({  onSubmit, data, filestoreId, isSuccess, isLoadin
       {
         Header: t("CR_COMMON_CHILD_NAME"),
         disableSortBy: true,
-        accessor: (row) => GetCell(row?.fullName? row?.fullName: "-"),
+        accessor: (row) => GetCell(row?.fullName ? row?.fullName : "-"),
       },
       {
         Header: t("CR_COMMON_COL_APP_DATE"),
@@ -132,19 +130,26 @@ const SearchRegistryBirth = ({  onSubmit, data, filestoreId, isSuccess, isLoadin
         Header: t("Download Certificate"),
         disableSortBy: true,
         Cell: ({ row }) => {
-          // console.log('row',row?.original);
+          let id = _.get(row, "original.id", null);
           return (
             <div>
-              {row.original?.filestoreId && row.original?.isSuccess === true ? (
-                <span className="link" onClick={() => downloadDocument(row?.original?.filestoreId)}>
-                  Download
-                </span>
-              ) : (
-                <Loader />
-              )}
+              {id !== null && <span className="link" onClick={() => {
+                fileSource.mutate({ filters: { id, source: "sms" } }, {
+                  onSuccess: (fileDownloadInfo) => {
+                    const { filestoreId } = fileDownloadInfo;
+                    if (filestoreId) {
+                      downloadDocument(filestoreId);
+                    } else {
+                      console.log("filestoreId is null");
+                    }
+                  }
+                });
+              }}>
+                Download
+              </span>}
             </div>
           );
-        },
+        }
       },
       // {
       //   Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),
@@ -165,65 +170,41 @@ const SearchRegistryBirth = ({  onSubmit, data, filestoreId, isSuccess, isLoadin
     []
   );
 
-  let tmpData = data;
-  useEffect(() => {
-    if (filestoreId && isSuccess === true) {
-      tmpData[0] = { ...data[0], filestoreId, isSuccess };
-    }
-    setFileData(tmpData);
-  }, [filestoreId]);
   return (
     <React.Fragment>
       <div style={mystyle}>
         <h1 style={hstyle}>{t("BIRTH CERTIFICATE")}</h1>
         <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
-          <SearchFields {...{ register, control, reset, previousPage, t }} />
+          <SearchFields {...{ register, control, reset, previousPage, t ,tenantId}} />
         </SearchForm>
       </div>
-      {FileData?.display ? (
-        <Card style={{ marginTop: 20 }}>
-          {t(FileData.display)
-            .split("\\n")
-            .map((text, index) => (
-              <p key={index} style={{ textAlign: "center" }}>
-                {text}
-              </p>
-            ))}
-        </Card>
-      ) : isLoading && !FileData === true ? (
-        <Loader />
-      ) : (
-        FileData !== "" && (
-          <React.Fragment>
-            {/* {(filestoreId && isSuccess === true )? <div style={registyBtnStyle}>
-        <SubmitBar label={t("Download Certificate")} onSubmit={() => downloadDocument(filestoreId)} />
-       </div>:<Loader/>} */}
-            <Table
-              t={t}
-              data={FileData ? FileData : data}
-              totalRecords={count}
-              columns={columns}
-              getCellProps={(cellInfo) => {
-                return {
-                  style: {
-                    minWidth: cellInfo.column.Header === t("ES_INBOX_APPLICATION_NO") ? "240px" : "",
-                    padding: "20px 18px",
-                    fontSize: "16px",
-                  },
-                };
-              }}
-              onPageSizeChange={onPageSizeChange}
-              currentPage={getValues("offset") / getValues("limit")}
-              onNextPage={nextPage}
-              onPrevPage={previousPage}
-              pageSizeLimit={getValues("limit")}
-              onSort={onSort}
-              disableSort={false}
-              sortParams={[{ id: getValues("sortBy"), desc: getValues("sortOrder") === "DESC" ? true : false }]}
-            />
-          </React.Fragment>
-        )
-      )}
+      {isLoading ? <Loader /> : data.length > 0 ? <Table
+        t={t}
+        data={data || []}
+        totalRecords={count}
+        columns={columns}
+        getCellProps={(cellInfo) => {
+          return {
+            style: {
+              minWidth: cellInfo.column.Header === t("ES_INBOX_APPLICATION_NO") ? "240px" : "",
+              padding: "20px 18px",
+              fontSize: "16px",
+            },
+          };
+        }}
+        onPageSizeChange={onPageSizeChange}
+        currentPage={getValues("offset") / getValues("limit")}
+        onNextPage={nextPage}
+        onPrevPage={previousPage}
+        pageSizeLimit={getValues("limit")}
+        onSort={onSort}
+        disableSort={false}
+        sortParams={[{ id: getValues("sortBy"), desc: getValues("sortOrder") === "DESC" ? true : false }]}
+      /> : <Card style={{ marginTop: 20 }}>
+        <p style={{ textAlign: "center" }}>
+          {t("ES_COMMON_NO_DATA")}
+        </p>
+      </Card>}
     </React.Fragment>
   );
 };

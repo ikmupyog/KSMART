@@ -40,15 +40,16 @@ const DatePicker = (props) => {
           name={props.name}
           id={props.id}
           disabled={props.disabled}
+          autofocus={props.autofocus}
           value={getDatePrint() ? getDatePrint() : "DD/MM/YYYY"}
           readOnly
           className={`employee-card-input ${props.disabled ? "disabled" : ""}`}
           style={{ width: "calc(100%-62px)" }}
         />
-        <CalendarIcon isdisabled={props.disabled ? true : false} style={{ right: "6px", zIndex: "10", top: 6, position: "absolute" }} />
+        <CalendarIcon isdisabled={props.disabled ? true : false} style={{ right: "13px", zIndex: "10", top: "10px",  position: "absolute" }} />
         <input
           className={`${props.disabled ? "disabled" : ""}`}
-          style={{ right: "6px", zIndex: "100", top: 6, position: "absolute", opacity: 0, width: "100%" }}
+          style={{  right: "13px", zIndex: "100",opacity:"0", top: "-10px", height:"58px", position: "absolute",width:"100%" }}
           value={props.date ? props.date : ""}
           type="date"
           ref={dateInp}

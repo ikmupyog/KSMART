@@ -12,7 +12,7 @@ import AddressPermanentInsideKerala from "../birthComponents/AddressPermanentIns
 import AddressPermanentOutsideKerala from "../birthComponents/AddressPermanentOutsideKerala";
 import AddressPermanentOutsideIndia from "../birthComponents/AddressPermanentOutsideIndia";
 
-const DeathNACAddressPage = ({ config, onSelect, userType, formData, isEditBirth = false, isEditDeath = false }) => {
+const DeathNACAddressPage = ({ config, onSelect, userType, formData, isEditBirth = false, isEditDeath = false, isEditBirthNAC = false }) => {
     console.log(formData);
     const stateId = Digit.ULBService.getStateId();
     let tenantId = "";
@@ -96,6 +96,7 @@ const DeathNACAddressPage = ({ config, onSelect, userType, formData, isEditBirth
     const [presentInsideKeralaStreetNameEn, setinsideKeralaStreetNameEn] = useState(formData?.AddressBirthDetails?.presentInsideKeralaStreetNameEn ? formData?.AddressBirthDetails?.presentInsideKeralaStreetNameEn : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameEn ? formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameEn : "");
     const [presentInsideKeralaStreetNameMl, setinsideKeralaStreetNameMl] = useState(formData?.AddressBirthDetails?.presentInsideKeralaStreetNameMl ? formData?.AddressBirthDetails?.presentInsideKeralaStreetNameMl : formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameMl ? formData?.ChildDetails?.AddressBirthDetails?.presentInsideKeralaStreetNameMl : "");
     const [Talukvalues, setLbsTalukvalue] = useState(null);
+    const [Districtvalues, setDistrictvalue] = useState(null);
     const [Villagevalues, setLbsVillagevalue] = useState(null);
     const [PostOfficevalues, setPostOfficevalues] = useState(null);
     //################################# Present Outside Kerala ##########################################################################################################
@@ -834,6 +835,7 @@ const DeathNACAddressPage = ({ config, onSelect, userType, formData, isEditBirth
                             setIsPrsentAddress={setIsPrsentAddress}
                             isEditBirth={isEditBirth}
                             isEditDeath={isEditDeath}
+                            isEditBirthNAC={isEditBirthNAC}
                             formData={formData}
                         />
                     </div>
@@ -871,6 +873,8 @@ const DeathNACAddressPage = ({ config, onSelect, userType, formData, isEditBirth
                                 lbs={lbs}
                                 setLbs={setLbs}
                                 Talukvalues={Talukvalues}
+                                Districtvalues={Districtvalues}
+                                setDistrictvalue={setDistrictvalue}
                                 setLbsTalukvalue={setLbsTalukvalue}
                                 Villagevalues={Villagevalues}
                                 setLbsVillagevalue={setLbsVillagevalue}
@@ -906,6 +910,7 @@ const DeathNACAddressPage = ({ config, onSelect, userType, formData, isEditBirth
                                 setpermntInKeralaWardNo={setpermntInKeralaWardNo}
                                 isEditBirth={isEditBirth}
                                 isEditDeath={isEditDeath}
+                                isEditBirthNAC={isEditBirthNAC}
                                 formData={formData}
                             />
                         </div>
@@ -971,6 +976,7 @@ const DeathNACAddressPage = ({ config, onSelect, userType, formData, isEditBirth
                                 setpermntoutsideKeralaPostOfficeMl={setpermntoutsideKeralaPostOfficeMl}
                                 isEditBirth={isEditBirth}
                                 isEditDeath={isEditDeath}
+                                isEditBirthNAC={isEditBirthNAC}
                                 formData={formData}
                             />
                         </div>
@@ -1024,6 +1030,7 @@ const DeathNACAddressPage = ({ config, onSelect, userType, formData, isEditBirth
                                 // setPermntOutsideIndiaCountry={setPermntOutsideIndiaCountry}
                                 isEditBirth={isEditBirth}
                                 isEditDeath={isEditDeath}
+                                isEditBirthNAC={isEditBirthNAC}
                                 formData={formData}
                             />
                         </div>
@@ -1034,6 +1041,7 @@ const DeathNACAddressPage = ({ config, onSelect, userType, formData, isEditBirth
                             setIsPrsentAddress={setIsPrsentAddress}
                             isEditBirth={isEditBirth}
                             isEditDeath={isEditDeath}
+                            isEditBirthNAC={isEditBirthNAC}
                             formData={formData}
                         />
                     </div>
@@ -1056,6 +1064,7 @@ const DeathNACAddressPage = ({ config, onSelect, userType, formData, isEditBirth
                                 setValuePermanent={setValuePermanent}
                                 isEditBirth={isEditBirth}
                                 isEditDeath={isEditDeath}
+                                isEditBirthNAC={isEditBirthNAC}
                                 formData={formData}
                             />
                         </div>
@@ -1099,6 +1108,7 @@ const DeathNACAddressPage = ({ config, onSelect, userType, formData, isEditBirth
                                 setPostOfficevalues={setPostOfficevalues}
                                 isEditBirth={isEditBirth}
                                 isEditDeath={isEditDeath}
+                                isEditBirthNAC={isEditBirthNAC}
                                 formData={formData}
                             />
                         </div>
@@ -1136,6 +1146,7 @@ const DeathNACAddressPage = ({ config, onSelect, userType, formData, isEditBirth
                                 setValue={setValue}
                                 isEditBirth={isEditBirth}
                                 isEditDeath={isEditDeath}
+                                isEditBirthNAC={isEditBirthNAC}
                                 formData={formData}
                             />
                         </div>
@@ -1167,6 +1178,7 @@ const DeathNACAddressPage = ({ config, onSelect, userType, formData, isEditBirth
                                 setCountryValue={setCountryValue}
                                 isEditBirth={isEditBirth}
                                 isEditDeath={isEditDeath}
+                                isEditBirthNAC={isEditBirthNAC}
                                 formData={formData}
                             />
                         </div>

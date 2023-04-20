@@ -27,6 +27,8 @@ const mystyle = {
   {label:"New Birth", value:"birthsearch"},
   { label: "Still Birth", value: "stillbirthsearch" },
   { label: "Birth - Born Outside India", value: "bornoutsidebirthsearch" },
+  { label: "Abandoned Birth", value: "abandonedbirthsearch" },
+  { label: "NAC Birth", value: "nacbirthsearch" },
 ]
 let  validation =''
 
@@ -224,7 +226,7 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count,applicationType, 
       ]), [] )
 
       const handleStillBirthLinkClick = (finaldata) => {  
-        console.log(finaldata);
+        // console.log(finaldata);
         let temp={};
         temp.StillBirthChildDetails =finaldata;
          Digit.SessionStorage.set("CR_EDIT_STILLBIRTH_REG", temp);      
@@ -297,13 +299,19 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count,applicationType, 
         []
       );
       const handleBornOutsideBirthLinkClick = (finaldata) => {  
-        console.log(finaldata);
         let temp={};
         temp.BornOutsideChildDetails =finaldata;
          Digit.SessionStorage.set("CR_EDIT_BORNOUTSIDEBIRTH_REG", temp);      
          sessionStorage.setItem("CR_BORNOUTSIDEBIRTH_EDIT_FLAG", true);
       }
-      const BornOutSideBirthColumns = useMemo(
+      const handleNACBirthLinkClick = (finaldata) => {  
+        let temp={};
+        temp.NacDetails =finaldata;
+         Digit.SessionStorage.set("CR_EDIT_NACEBIRTH_REG", temp);      
+         sessionStorage.setItem("CR_NACBIRTH_EDIT_FLAG", true);
+      }
+      
+      const NACBirthColumns = useMemo(
         () => [
           {
             Header: t("CR_COMMON_COL_APP_NO"),
@@ -314,8 +322,130 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count,applicationType, 
                 <div>
                   <span className="link">
                     <Link
+                      onClick={(event) => handleNACBirthLinkClick(row.original)}
+                      to={`/digit-ui/employee/cr/application-nacbirth/${row.original.applicationNumber}`}
+                    >
+                      {/* {row.original.applicationNumber} */}
+                      {row.original.applicationNumber}
+                    </Link>
+                  </span>
+                </div>
+              );
+            },
+          },
+          {
+            Header: t("CR_COMMON_COL_APP_DATE"),
+            disableSortBy: true,
+            accessor: (row) => GetCell(row.auditDetails.createdTime ? convertEpochToDateDMY(row.auditDetails.createdTime) : ""),
+          },
+          {
+            Header: t("CR_COMMON_COL_DOB"),
+            disableSortBy: true,
+            accessor: (row) => GetCell(row.childDOB ? convertEpochToDateDMY(row.childDOB) : ""),
+          },
+          {
+            Header: t("CR_COMMON_COL_MOTHER_NAME"),
+            disableSortBy: true,
+            accessor: (row) => GetCell(row.ParentsDetails["motherFirstNameEn"] || "-"),
+          },
+          {
+            Header: t("CR_COMMON_COL_FATHER_NAME"),
+            disableSortBy: true,
+            accessor: (row) => GetCell(row.ParentsDetails["fatherFirstNameEn"] || "-"),
+          },
+        ],
+        []
+      );
+      const BornOutSideBirthColumns = useMemo(
+        () => [
+          {
+            Header: t("CR_COMMON_COL_APP_NO"),
+            accessor: "applicationNumber",
+            disableSortBy: true,
+            Cell: ({ row }) => {
+              console.log("row",row)
+              return (
+                <div>
+                  <span className="link">
+                    <Link
                       onClick={(event) => handleBornOutsideBirthLinkClick(row.original)}
-                      to={`/digit-ui/employee/cr/application-bornoutsidebirth/${row.original.applicationNumber}`}
+                      to={`/digit-ui/employee/cr/application-bornOutsideIndia/${row.original.applicationNumber}`}
+                    >
+                      {/* {row.original.applicationNumber} */}
+                      {row.original.applicationNumber}
+                    </Link>
+                  </span>
+                </div>
+              );
+            },
+          },
+          {
+            Header: t("CR_COMMON_COL_APP_DATE"),
+            disableSortBy: true,
+            
+            accessor: (row) => 
+            GetCell(row.auditDetails.createdTime ? convertEpochToDateDMY(row.auditDetails.createdTime) : ""),
+          },
+          {
+            Header: t("CR_COMMON_COL_DOB"),
+            disableSortBy: true,
+            accessor: (row) => GetCell(row.childDOB ? convertEpochToDateDMY(row.childDOB) : ""),
+          },
+          // {
+          //     Header: t("TL_APPLICATION_TYPE_LABEL"),
+          //     disableSortBy: true,
+          //     accessor: (row) => GetCell(t(`TL_LOCALIZATION_APPLICATIONTYPE_${row.applicationType}`)),
+          // },
+          {
+            Header: t("CR_COMMON_COL_MOTHER_NAME"),
+            disableSortBy: true,
+            accessor: (row) => GetCell(row.BornOutsideParentsDetails["motherFirstNameEn"] || "-"),
+          },
+          {
+            Header: t("CR_COMMON_COL_FATHER_NAME"),
+            disableSortBy: true,
+            accessor: (row) => GetCell(row.BornOutsideParentsDetails["fatherFirstNameEn"] || "-"),
+          },
+    
+          // {
+          //   Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),
+          //   disableSortBy: true,
+          //   accessor: (row) => GetCell(row.tradeName || ""),
+          // },
+          // {
+          //   Header: t("TL_LOCALIZATION_TRADE_OWNER_NAME"),
+          //   accessor: (row) => GetCell(row.tradeLicenseDetail.owners.map( o => o.name ). join(",") || ""),
+          //   disableSortBy: true,
+          // },
+          // {
+          //   Header: t("TL_COMMON_TABLE_COL_STATUS"),
+          //   accessor: (row) =>GetCell(t( row?.workflowCode&&row?.status&&`WF_${row?.workflowCode?.toUpperCase()}_${row.status}`|| "NA") ),
+          //   disableSortBy: true,
+          // }
+        ],
+        []
+      );  
+
+      const handleAbandonedBirthLinkClick = (finaldata) => {  
+        console.log(finaldata);
+        let temp={};
+        temp.AbandonedChildDetails =finaldata;
+         Digit.SessionStorage.set("CR_EDIT_ABANDONEDBIRTH_REG", temp);      
+         sessionStorage.setItem("CR_ABANDONEDBIRTH_EDIT_FLAG", true);
+      }
+      const AbandonedBirthColumns = useMemo(
+        () => [
+          {
+            Header: t("CR_COMMON_COL_APP_NO"),
+            accessor: "applicationNumber",
+            disableSortBy: true,
+            Cell: ({ row }) => {
+              return (
+                <div>
+                  <span className="link">
+                    <Link
+                      onClick={(event) => handleAbandonedBirthLinkClick(row.original)}
+                      to={`/digit-ui/employee/cr/application-abandonedbirth/${row.original.applicationNumber}`}
                     >
                       {/* {row.original.applicationNumber} */}
                       {row.original.applicationNumber}
@@ -343,13 +473,13 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count,applicationType, 
           {
             Header: t("CR_COMMON_COL_MOTHER_NAME"),
             disableSortBy: true,
-            accessor: (row) => GetCell(row.StillBirthParentsDetails["motherFirstNameEn"] || "-"),
+            accessor: (row) => GetCell(row.ParentsDetails["motherFirstNameEn"] || "-"),
           },
-          {
-            Header: t("CR_COMMON_COL_FATHER_NAME"),
-            disableSortBy: true,
-            accessor: (row) => GetCell(row.StillBirthParentsDetails["fatherFirstNameEn"] || "-"),
-          },
+          // {
+          //   Header: t("CR_COMMON_COL_FATHER_NAME"),
+          //   disableSortBy: true,
+          //   accessor: (row) => GetCell(row.ParentsDetails["fatherFirstNameEn"] || "-"),
+          // },
     
           // {
           //   Header: t("TL_COMMON_TABLE_COL_TRD_NAME"),
@@ -412,7 +542,7 @@ const SearchApplication = ({tenantId, t, onSubmit, data, count,applicationType, 
               data={data}
               totalRecords={count}
               // columns={applicationType?.value =="adoptionsearch"?AdoptionColumns:applicationType?.value =="birthsearch"?columns:[]}
-              columns={applicationType?.value == "adoptionsearch" ? AdoptionColumns : applicationType?.value == "stillbirthsearch" ? StillBirthColumns : applicationType?.value == "bornoutsidebirthsearch" ? BornOutSideBirthColumns : applicationType?.value == "birthsearch" ? columns : []}
+              columns={applicationType?.value == "adoptionsearch" ? AdoptionColumns : applicationType?.value == "stillbirthsearch" ? StillBirthColumns : applicationType?.value == "bornoutsidebirthsearch" ? BornOutSideBirthColumns  : applicationType?.value === "nacbirthsearch" ? NACBirthColumns: applicationType?.value == "abandonedbirthsearch" ? AbandonedBirthColumns: applicationType?.value == "birthsearch" ? columns : []}
               getCellProps={(cellInfo) => {
                 return {
                   style: {

@@ -258,12 +258,12 @@ const BornoutsidePermanentInsideKerala = ({
     }
   }
   function setSelectpermntInKeralaAdrHouseNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
-      setpermntInKeralaAdrHouseNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9 ]*$") != null)) {
+      setpermntInKeralaAdrHouseNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectpermntInKeralaAdrHouseNameMl(e) {
-    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$/;
     if (!e.target.value.match(pattern)) {
       e.preventDefault();
       setpermntInKeralaAdrHouseNameMl("");
@@ -313,6 +313,12 @@ const BornoutsidePermanentInsideKerala = ({
       e.preventDefault();
     }
   }
+  function setCheckMalayalamInputFieldWithSplChar(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]/;
+    if (!(e.key.match(pattern))) {
+        e.preventDefault();
+    }
+}
   // useEffect(() => {
   //     if (isInitialRender) {
   //         console.log("presentInsideKeralaDistrict" + districtid);
@@ -330,7 +336,7 @@ const BornoutsidePermanentInsideKerala = ({
   }
   return (
     <React.Fragment>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
+      {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}> */}
         <div className="row">
           <div className="col-md-3">
             <CardLabel>
@@ -501,7 +507,7 @@ const BornoutsidePermanentInsideKerala = ({
               value={permntInKeralaAdrHouseNameEn}
               onChange={setSelectpermntInKeralaAdrHouseNameEn}
               placeholder={`${t("CR_HOUSE_NAME_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`'0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
+              {...(validation = { pattern: "^[a-zA-Z-0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
             />
           </div>
         </div>
@@ -558,11 +564,11 @@ const BornoutsidePermanentInsideKerala = ({
               optionKey="i18nKey"
               name="permntInKeralaAdrHouseNameMl"
               value={permntInKeralaAdrHouseNameMl}
-              onKeyPress={setCheckMalayalamInputField}
+              onKeyPress={setCheckMalayalamInputFieldWithSplChar}
               onChange={setSelectpermntInKeralaAdrHouseNameMl}
               placeholder={`${t("CR_HOUSE_NAME_ML")}`}
               {...(validation = {
-                pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
+                pattern: "^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$",
                 isRequired: true,
                 type: "text",
                 title: t("CR_INVALID_HOUSE_NAME_ML"),
@@ -572,7 +578,7 @@ const BornoutsidePermanentInsideKerala = ({
         </div>
 
         <div className="row"></div>
-      </FormStep>
+      {/* </FormStep> */}
     </React.Fragment>
   );
 };

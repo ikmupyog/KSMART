@@ -269,17 +269,16 @@ export const gettradeupdateaccessories = (data) => {
   return TLaccessories;
 };
 export const convertToNACRegistration = (data = {}) => {
-  console.log(data);
   const formdata = {
     NacDetails: [
       {
         childDOB: Date.parse(data?.BirthNACDetails?.childDOB),
-        birthDateTime: parseInt(data?. BirthNACDetails?.birthDateTime),
+        birthDateTime: parseInt(data?.BirthNACDetails?.birthDateTime),
         gender: data?.BirthNACDetails?.gender ? data?.BirthNACDetails?.gender.code : null,
         childAadharNo: data?.BirthNACDetails?.childAadharNo,
-        nacorderofChildren: data?.BirthNACDetails?.nacorderofChildren ? data?.BirthNACDetails?.nacorderofChildren: null,
-        isChildName: data?.BirthNACDetails?.isChildName ? data?. BirthNACDetails?.isChildName : false,
-        tenantid: data?.BirthNACDetails?.tenantid,
+        nacorderofChildren: data?.BirthNACDetails?.nacorderofChildren,
+        isChildName: data?.BirthNACDetails?.isChildName ? data?.BirthNACDetails?.isChildName : false,
+        tenantid: data?.BirthNACDetails?.tenantId,
         childFirstNameEn: data?.BirthNACDetails?.childFirstNameEn,
         childFirstNameMl: data?.BirthNACDetails?.childFirstNameMl,
         childMiddleNameEn: data?.BirthNACDetails?.childMiddleNameEn,
@@ -290,47 +289,47 @@ export const convertToNACRegistration = (data = {}) => {
         birthPlace: data?.BirthNACDetails?.birthPlace ? data?.BirthNACDetails?.birthPlace.code : null,
         hospitalName: data?.BirthNACDetails?.hospitalName ? data?.BirthNACDetails?.hospitalName.hospitalName : null,
         hospitalNameMl: data?.BirthNACDetails?.hospitalName ? data?.BirthNACDetails?.hospitalName.hospitalNamelocal : null,
-        institutionTypeCode: data?.BirthNACDetails?.institution ? data?. BirthNACDetails?.institution.code : null,
+        institutionTypeCode: data?.BirthNACDetails?.institution ? data?.BirthNACDetails?.institution.code : null,
         institution: data?.BirthNACDetails?.institution ? data?.BirthNACDetails?.institution.name : null,
-        institutionNameCode: data?. BirthNACDetails?.institutionId ? data?. BirthNACDetails?.institutionId.code : null,
-        institutionId: data?. BirthNACDetails?.institutionId ? data?. BirthNACDetails?.institutionId.institutionName : null,
-        institutionIdMl: data?. BirthNACDetails?.institutionIdMl ? data?. BirthNACDetails?.institutionIdMl.institutionNamelocal : null,
-        wardNo: data?. BirthNACDetails?.wardNo ? data?. BirthNACDetails?.wardNo.code : null,
-        wardNameEn: data?. BirthNACDetails?.wardNameEn ? data?. BirthNACDetails?.wardNameEn : null,
-        wardNameMl: data?. BirthNACDetails?.wardNameMl ? data?. BirthNACDetails?.wardNameMl : null,
-        wardNumber: data?. BirthNACDetails?.wardNumber ? data?. BirthNACDetails?.wardNumber : null,
-        adrsHouseNameEn: data?. BirthNACDetails?.adrsHouseNameEn,
-        adrsHouseNameMl: data?. BirthNACDetails?.adrsHouseNameMl,
-        adrsLocalityNameEn: data?. BirthNACDetails?.adrsLocalityNameEn,
-        adrsLocalityNameMl: data?. BirthNACDetails?.adrsLocalityNameMl,
-        adrsStreetNameEn: data?. BirthNACDetails?.adrsStreetNameEn,
-        adrsStreetNameMl: data?. BirthNACDetails?.adrsStreetNameMl,
-        adrsPostOffice: data?. BirthNACDetails?.adrsPostOffice ? data?. BirthNACDetails?.adrsPostOffice.code : null,
-        adrsPincode: data?. BirthNACDetails?.adrsPincode ? data?. BirthNACDetails?.adrsPincode.code : null,
-        vehicleType: data?. BirthNACDetails?.vehicleType ? data?. BirthNACDetails?.vehicleType.code : null,
-        vehicleHaltPlace: data?. BirthNACDetails?.vehicleHaltPlace,
-        vehicleHaltPlaceMl: data?. BirthNACDetails?.vehicleHaltPlaceMl,
-        vehicleRegistrationNo: data?. BirthNACDetails?.vehicleRegistrationNo,
-        vehicleFromEn: data?. BirthNACDetails?.vehicleFromEn,
-        vehicleToEn: data?. BirthNACDetails?.vehicleToEn,
-        vehicleFromMl: data?. BirthNACDetails?.vehicleFromMl,
-        vehicleToMl: data?. BirthNACDetails?.vehicleToMl,
-        setadmittedHospitalEn: data?. BirthNACDetails?.setadmittedHospitalEn ? data?. BirthNACDetails?.setadmittedHospitalEn.code : null,
-        vehicleDesDetailsEn: data?. BirthNACDetails?.vehicleDesDetailsEn ? data?. BirthNACDetails?.vehicleDesDetailsEn : null,
-        publicPlaceType: data?. BirthNACDetails?.publicPlaceType ? data?. BirthNACDetails?.publicPlaceType.code : null,
-        localityNameEn: data?. BirthNACDetails?.localityNameEn,
-        localityNameMl: data?. BirthNACDetails?.localityNameMl,
-        streetNameEn: data?. BirthNACDetails?.streetNameEn,
-        streetNameMl: data?. BirthNACDetails?.streetNameMl,
+        institutionNameCode: data?.BirthNACDetails?.institutionId ? data?.BirthNACDetails?.institutionId.code : null,
+        institutionId: data?.BirthNACDetails?.institutionId ? data?.BirthNACDetails?.institutionId.institutionName : null,
+        institutionIdMl: data?.BirthNACDetails?.institutionIdMl ? data?.BirthNACDetails?.institutionIdMl.institutionNamelocal : null,
+        wardNo: data?.BirthNACDetails?.wardNo ? data?.BirthNACDetails?.wardNo.code : null,
+        wardNameEn: data?.BirthNACDetails?.wardNameEn ? data?.BirthNACDetails?.wardNameEn : null,
+        wardNameMl: data?.BirthNACDetails?.wardNameMl ? data?.BirthNACDetails?.wardNameMl : null,
+        wardNumber: data?.BirthNACDetails?.wardNumber ? data?.BirthNACDetails?.wardNumber : null,
+        adrsHouseNameEn: data?.BirthNACDetails?.adrsHouseNameEn,
+        adrsHouseNameMl: data?.BirthNACDetails?.adrsHouseNameMl,
+        adrsLocalityNameEn: data?.BirthNACDetails?.adrsLocalityNameEn,
+        adrsLocalityNameMl: data?.BirthNACDetails?.adrsLocalityNameMl,
+        adrsStreetNameEn: data?.BirthNACDetails?.adrsStreetNameEn,
+        adrsStreetNameMl: data?.BirthNACDetails?.adrsStreetNameMl,
+        adrsPostOffice: data?.BirthNACDetails?.adrsPostOffice ? data?.BirthNACDetails?.adrsPostOffice.code : null,
+        adrsPincode: data?.BirthNACDetails?.adrsPincode ? data?.BirthNACDetails?.adrsPincode.code : null,
+        vehicleType: data?.BirthNACDetails?.vehicleType ? data?.BirthNACDetails?.vehicleType.code : null,
+        vehicleHaltPlace: data?.BirthNACDetails?.vehicleHaltPlace,
+        vehicleHaltPlaceMl: data?.BirthNACDetails?.vehicleHaltPlaceMl,
+        vehicleRegistrationNo: data?.BirthNACDetails?.vehicleRegistrationNo,
+        vehicleFromEn: data?.BirthNACDetails?.vehicleFromEn,
+        vehicleToEn: data?.BirthNACDetails?.vehicleToEn,
+        vehicleFromMl: data?.BirthNACDetails?.vehicleFromMl,
+        vehicleToMl: data?.BirthNACDetails?.vehicleToMl,
+        setadmittedHospitalEn: data?.BirthNACDetails?.setadmittedHospitalEn ? data?.BirthNACDetails?.setadmittedHospitalEn.code : null,
+        vehicleDesDetailsEn: data?.BirthNACDetails?.vehicleDesDetailsEn ? data?.BirthNACDetails?.vehicleDesDetailsEn : null,
+        publicPlaceType: data?.BirthNACDetails?.publicPlaceType ? data?.BirthNACDetails?.publicPlaceType.code : null,
+        localityNameEn: data?.BirthNACDetails?.localityNameEn,
+        localityNameMl: data?.BirthNACDetails?.localityNameMl,
+        streetNameEn: data?.BirthNACDetails?.streetNameEn,
+        streetNameMl: data?.BirthNACDetails?.streetNameMl,
         publicPlaceDecpEn: null,
         birthWeight: null,
         pregnancyDuration: null,
         medicalAttensionSub: null,
         deliveryMethods: null,
         action: "INITIATE",
-        applicationtype: "CRBRNR",
+        applicationtype: "CRBRNC",
         businessservice: "birth-services",
-        workflowcode: data?.BirthNACDetails?.workFlowCode,
+        workflowcode: "NACAPP",
 
         ParentsDetails: {
           motherFirstNameEn: data?.BirthNACParentsDetails?.motherFirstNameEn,
@@ -353,132 +352,124 @@ export const convertToNACRegistration = (data = {}) => {
           fatherProfession: null,
           Religion: null,
           fatherMobile: null,
-          fatherEmail: null
+          fatherEmail: null,
         },
         AddressBirthDetails: {
-          presentaddressCountry: data?.BirthNACAddressPage?.presentaddressCountry
-            ? data?.BirthNACAddressPage?.presentaddressCountry.code
+          presentaddressCountry: data?.AddressBirthDetails?.presentaddressCountry ? data?.AddressBirthDetails?.presentaddressCountry.code : null,
+          presentaddressStateName: data?.AddressBirthDetails?.presentaddressStateName
+            ? data?.AddressBirthDetails?.presentaddressStateName.code
             : null,
-          presentaddressStateName: data?.BirthNACAddressPage?.presentaddressStateName
-            ? data?. BirthNACAddressPage?.presentaddressStateName.code
+          presentInsideKeralaLBName: data?.AddressBirthDetails?.presentInsideKeralaLBName
+            ? data?.AddressBirthDetails?.presentInsideKeralaLBName.code
             : null,
-          presentInsideKeralaLBName: data?. BirthNACAddressPage?.presentInsideKeralaLBName
-            ? data?. BirthNACAddressPage?.presentInsideKeralaLBName.code
+          presentInsideKeralaDistrict: data?.AddressBirthDetails?.presentInsideKeralaDistrict
+            ? data?.AddressBirthDetails?.presentInsideKeralaDistrict.code
             : null,
-          presentInsideKeralaDistrict: data?. BirthNACAddressPage?.presentInsideKeralaDistrict
-            ? data?. BirthNACAddressPage?.presentInsideKeralaDistrict.code
+          presentInsideKeralaTaluk: data?.AddressBirthDetails?.presentInsideKeralaTaluk
+            ? data?.AddressBirthDetails?.presentInsideKeralaTaluk.code
             : null,
-          presentInsideKeralaTaluk: data?. BirthNACAddressPage?.presentInsideKeralaTaluk
-            ? data?. BirthNACAddressPage?.presentInsideKeralaTaluk.code
+          presentInsideKeralaVillage: data?.AddressBirthDetails?.presentInsideKeralaVillage
+            ? data?.AddressBirthDetails?.presentInsideKeralaVillage.code
             : null,
-          presentInsideKeralaVillage: data?. BirthNACAddressPage?.presentInsideKeralaVillage
-            ? data?. BirthNACAddressPage?.presentInsideKeralaVillage.code
+          presentInsideKeralaLocalityNameEn: data?.AddressBirthDetails?.presentInsideKeralaLocalityNameEn,
+          presentInsideKeralaStreetNameEn: data?.AddressBirthDetails?.presentInsideKeralaStreetNameEn,
+          presentInsideKeralaHouseNameEn: data?.AddressBirthDetails?.presentInsideKeralaHouseNameEn,
+          presentInsideKeralaLocalityNameMl: data?.AddressBirthDetails?.presentInsideKeralaLocalityNameMl,
+          presentInsideKeralaStreetNameMl: data?.AddressBirthDetails?.presentInsideKeralaStreetNameMl,
+          presentInsideKeralaHouseNameMl: data?.AddressBirthDetails?.presentInsideKeralaHouseNameMl,
+          presentInsideKeralaPincode: data?.AddressBirthDetails?.presentInsideKeralaPincode
+            ? data?.AddressBirthDetails?.presentInsideKeralaPincode.code
             : null,
-          presentInsideKeralaLocalityNameEn: data?. BirthNACAddressPage?.presentInsideKeralaLocalityNameEn,
-          presentInsideKeralaStreetNameEn: data?. BirthNACAddressPage?.presentInsideKeralaStreetNameEn,
-          presentInsideKeralaHouseNameEn: data?. BirthNACAddressPage?.presentInsideKeralaHouseNameEn,
-          presentInsideKeralaLocalityNameMl: data?. BirthNACAddressPage?.presentInsideKeralaLocalityNameMl,
-          presentInsideKeralaStreetNameMl: data?. BirthNACAddressPage?.presentInsideKeralaStreetNameMl,
-          presentInsideKeralaHouseNameMl: data?. BirthNACAddressPage?.presentInsideKeralaHouseNameMl,
-          presentInsideKeralaPincode: data?. BirthNACAddressPage?.presentInsideKeralaPincode
-            ? data?. BirthNACAddressPage?.presentInsideKeralaPincode.code
+          presentInsideKeralaPostOffice: data?.AddressBirthDetails?.presentInsideKeralaPostOffice
+            ? data?.AddressBirthDetails?.presentInsideKeralaPostOffice.code
             : null,
-          presentInsideKeralaPostOffice: data?. BirthNACAddressPage?.presentInsideKeralaPostOffice
-            ? data?. BirthNACAddressPage?.presentInsideKeralaPostOffice.code
+          presentWardNo: data?.AddressBirthDetails?.presentWardNo ? data?.AddressBirthDetails?.presentWardNo.code : null,
+          presentOutsideKeralaDistrict: data?.AddressBirthDetails?.presentOutsideKeralaDistrict
+            ? data?.AddressBirthDetails?.presentOutsideKeralaDistrict.code
             : null,
-          presentWardNo: data?. BirthNACAddressPage?.presentWardNo ? data?. BirthNACAddressPage?.presentWardNo.code : null,
-          presentOutsideKeralaDistrict: data?. BirthNACAddressPage?.presentOutsideKeralaDistrict
-            ? data?. BirthNACAddressPage?.presentOutsideKeralaDistrict.code
+          presentOutsideKeralaTaluk: data?.AddressBirthDetails?.presentOutsideKeralaTaluk
+            ? data?.AddressBirthDetails?.presentOutsideKeralaTaluk
             : null,
-          presentOutsideKeralaTaluk: data?. BirthNACAddressPage?.presentOutsideKeralaTaluk
-            ? data?. BirthNACAddressPage?.presentOutsideKeralaTaluk
+          presentOutsideKeralaVillage: data?.AddressBirthDetails?.presentOutsideKeralaVillage
+            ? data?.AddressBirthDetails?.presentOutsideKeralaVillage.code
             : null,
-          presentOutsideKeralaVillage: data?. BirthNACAddressPage?.presentOutsideKeralaVillage
-            ? data?. BirthNACAddressPage?.presentOutsideKeralaVillage.code
+          presentOutsideKeralaCityVilgeEn: data?.AddressBirthDetails?.presentOutsideKeralaCityVilgeEn,
+          presentOutsideKeralaPincode: data?.AddressBirthDetails?.presentOutsideKeralaPincode
+            ? data?.AddressBirthDetails?.presentOutsideKeralaPincode.code
             : null,
-          presentOutsideKeralaCityVilgeEn: data?. BirthNACAddressPage?.presentOutsideKeralaCityVilgeEn,
-          presentOutsideKeralaPincode: data?. BirthNACAddressPage?.presentOutsideKeralaPincode
-            ? data?. BirthNACAddressPage?.presentOutsideKeralaPincode.code
+          presentOutsideKeralaPostOfficeEn: data?.AddressBirthDetails?.presentOutsideKeralaPostOfficeEn,
+          presentOutsideKeralaPostOfficeMl: data?.AddressBirthDetails?.presentOutsideKeralaPostOfficeMl,
+          presentOutsideKeralaLocalityNameEn: data?.AddressBirthDetails?.presentOutsideKeralaLocalityNameEn,
+          presentOutsideKeralaStreetNameEn: data?.AddressBirthDetails?.presentOutsideKeralaStreetNameEn,
+          presentOutsideKeralaHouseNameEn: data?.AddressBirthDetails?.presentOutsideKeralaHouseNameEn,
+          presentOutsideKeralaLocalityNameMl: data?.AddressBirthDetails?.presentOutsideKeralaLocalityNameMl,
+          presentOutsideKeralaStreetNameMl: data?.AddressBirthDetails?.presentOutsideKeralaStreetNameMl,
+          presentOutsideKeralaHouseNameMl: data?.AddressBirthDetails?.presentOutsideKeralaHouseNameMl,
+          presentOutSideIndiaAdressEn: data?.AddressBirthDetails?.presentOutSideIndiaAdressEn,
+          presentOutSideIndiaAdressMl: data?.AddressBirthDetails?.presentOutSideIndiaAdressMl,
+          presentOutSideIndiaAdressEnB: data?.AddressBirthDetails?.presentOutSideIndiaAdressEnB,
+          presentOutSideIndiaAdressMlB: data?.AddressBirthDetails?.presentOutSideIndiaAdressMlB,
+          presentOutSideIndiaProvinceEn: data?.AddressBirthDetails?.presentOutSideIndiaProvinceEn,
+          presentOutSideCountry: data?.AddressBirthDetails?.presentOutSideCountry ? data?.AddressBirthDetails?.presentOutSideCountry.code : null,
+          presentOutSideIndiaadrsVillage: data?.AddressBirthDetails?.presentOutSideIndiaadrsVillage
+            ? data?.AddressBirthDetails?.presentOutSideIndiaadrsVillage.code
             : null,
-          presentOutsideKeralaPostOfficeEn: data?. BirthNACAddressPage?.presentOutsideKeralaPostOfficeEn,
-          presentOutsideKeralaPostOfficeMl: data?. BirthNACAddressPage?.presentOutsideKeralaPostOfficeMl,
-          presentOutsideKeralaLocalityNameEn: data?. BirthNACAddressPage?.presentOutsideKeralaLocalityNameEn,
-          presentOutsideKeralaStreetNameEn: data?. BirthNACAddressPage?.presentOutsideKeralaStreetNameEn,
-          presentOutsideKeralaHouseNameEn: data?. BirthNACAddressPage?.presentOutsideKeralaHouseNameEn,
-          presentOutsideKeralaLocalityNameMl: data?. BirthNACAddressPage?.presentOutsideKeralaLocalityNameMl,
-          presentOutsideKeralaStreetNameMl: data?. BirthNACAddressPage?.presentOutsideKeralaStreetNameMl,
-          presentOutsideKeralaHouseNameMl: data?. BirthNACAddressPage?.presentOutsideKeralaHouseNameMl,
-          presentOutSideIndiaAdressEn: data?. BirthNACAddressPage?.presentOutSideIndiaAdressEn,
-          presentOutSideIndiaAdressMl: data?. BirthNACAddressPage?.presentOutSideIndiaAdressMl,
-          presentOutSideIndiaAdressEnB: data?. BirthNACAddressPage?.presentOutSideIndiaAdressEnB,
-          presentOutSideIndiaAdressMlB: data?. BirthNACAddressPage?.presentOutSideIndiaAdressMlB,
-          presentOutSideIndiaProvinceEn: data?. BirthNACAddressPage?.presentOutSideIndiaProvinceEn,
-          presentOutSideCountry: data?. BirthNACAddressPage?.presentOutSideCountry
-            ? data?. BirthNACAddressPage?.presentOutSideCountry.code
+          presentOutSideIndiaadrsCityTown: data?.AddressBirthDetails?.presentOutSideIndiaadrsCityTown,
+          isPrsentAddress: data?.AddressBirthDetails?.isPrsentAddress ? data?.AddressBirthDetails?.isPrsentAddress : null,
+          permtaddressCountry: data?.AddressBirthDetails?.permtaddressCountry ? data?.AddressBirthDetails?.permtaddressCountry.code : null,
+          permtaddressStateName: data?.AddressBirthDetails?.permtaddressStateName ? data?.AddressBirthDetails?.permtaddressStateName.code : null,
+          permntInKeralaAdrLBName: data?.AddressBirthDetails?.permntInKeralaAdrLBName
+            ? data?.AddressBirthDetails?.permntInKeralaAdrLBName.code
             : null,
-          presentOutSideIndiaadrsVillage: data?. BirthNACAddressPage?.presentOutSideIndiaadrsVillage
-            ? data?. BirthNACAddressPage?.presentOutSideIndiaadrsVillage.code
+          permntInKeralaAdrDistrict: data?.AddressBirthDetails?.permntInKeralaAdrDistrict
+            ? data?.AddressBirthDetails?.permntInKeralaAdrDistrict.code
             : null,
-          presentOutSideIndiaadrsCityTown: data?. BirthNACAddressPage?.presentOutSideIndiaadrsCityTown,
-          isPrsentAddress: data?. BirthNACAddressPage?.isPrsentAddress,
-          permtaddressCountry: data?. BirthNACAddressPage?.permtaddressCountry ? data?. BirthNACAddressPage?.permtaddressCountry.code : null,
-          permtaddressStateName: data?. BirthNACAddressPage?.permtaddressStateName
-            ? data?. BirthNACAddressPage?.permtaddressStateName.code
+          permntInKeralaAdrTaluk: data?.AddressBirthDetails?.permntInKeralaAdrTaluk ? data?.AddressBirthDetails?.permntInKeralaAdrTaluk.code : null,
+          permntInKeralaAdrVillage: data?.AddressBirthDetails?.permntInKeralaAdrVillage
+            ? data?.AddressBirthDetails?.permntInKeralaAdrVillage.code
             : null,
-          permntInKeralaAdrLBName: data?. BirthNACAddressPage?.permntInKeralaAdrLBName
-            ? data?. BirthNACAddressPage?.permntInKeralaAdrLBName.code
+          permntInKeralaAdrLocalityNameEn: data?.AddressBirthDetails?.permntInKeralaAdrLocalityNameEn,
+          permntInKeralaAdrStreetNameEn: data?.AddressBirthDetails?.permntInKeralaAdrStreetNameEn,
+          permntInKeralaAdrHouseNameEn: data?.AddressBirthDetails?.permntInKeralaAdrHouseNameEn,
+          permntInKeralaAdrLocalityNameMl: data?.AddressBirthDetails?.permntInKeralaAdrLocalityNameMl,
+          permntInKeralaAdrStreetNameMl: data?.AddressBirthDetails?.permntInKeralaAdrStreetNameMl,
+          permntInKeralaAdrHouseNameMl: data?.AddressBirthDetails?.permntInKeralaAdrHouseNameMl,
+          permntInKeralaAdrPincode: data?.AddressBirthDetails?.permntInKeralaAdrPincode
+            ? data?.AddressBirthDetails?.permntInKeralaAdrPincode.code
             : null,
-          permntInKeralaAdrDistrict: data?. BirthNACAddressPage?.permntInKeralaAdrDistrict
-            ? data?. BirthNACAddressPage?.permntInKeralaAdrDistrict.code
+          permntInKeralaAdrPostOffice: data?.AddressBirthDetails?.permntInKeralaAdrPostOffice
+            ? data?.AddressBirthDetails?.permntInKeralaAdrPostOffice.code
             : null,
-          permntInKeralaAdrTaluk: data?. BirthNACAddressPage?.permntInKeralaAdrTaluk
-            ? data?. BirthNACAddressPage?.permntInKeralaAdrTaluk.code
+          permntInKeralaWardNo: data?.AddressBirthDetails?.permntInKeralaWardNo ? data?.AddressBirthDetails?.permntInKeralaWardNo.code : null,
+          permntOutsideKeralaDistrict: data?.AddressBirthDetails?.permntOutsideKeralaDistrict
+            ? data?.AddressBirthDetails?.permntOutsideKeralaDistrict.code
             : null,
-          permntInKeralaAdrVillage: data?. BirthNACAddressPage?.permntInKeralaAdrVillage
-            ? data?. BirthNACAddressPage?.permntInKeralaAdrVillage.code
+          permntOutsideKeralaTaluk: data?.AddressBirthDetails?.permntOutsideKeralaTaluk
+            ? data?.AddressBirthDetails?.permntOutsideKeralaTaluk.code
             : null,
-          permntInKeralaAdrLocalityNameEn: data?. BirthNACAddressPage?.permntInKeralaAdrLocalityNameEn,
-          permntInKeralaAdrStreetNameEn: data?. BirthNACAddressPage?.permntInKeralaAdrStreetNameEn,
-          permntInKeralaAdrHouseNameEn: data?. BirthNACAddressPage?.permntInKeralaAdrHouseNameEn,
-          permntInKeralaAdrLocalityNameMl: data?. BirthNACAddressPage?.permntInKeralaAdrLocalityNameMl,
-          permntInKeralaAdrStreetNameMl: data?. BirthNACAddressPage?.permntInKeralaAdrStreetNameMl,
-          permntInKeralaAdrHouseNameMl: data?. BirthNACAddressPage?.permntInKeralaAdrHouseNameMl,
-          permntInKeralaAdrPincode: data?. BirthNACAddressPage?.permntInKeralaAdrPincode
-            ? data?. BirthNACAddressPage?.permntInKeralaAdrPincode.code
+          permntOutsideKeralaVillage: data?.AddressBirthDetails?.permntOutsideKeralaVillage
+            ? data?.AddressBirthDetails?.permntOutsideKeralaVillage.code
             : null,
-          permntInKeralaAdrPostOffice: data?. BirthNACAddressPage?.permntInKeralaAdrPostOffice
-            ? data?. BirthNACAddressPage?.permntInKeralaAdrPostOffice.code
+          permntOutsideKeralaCityVilgeEn: data?.AddressBirthDetails?.permntOutsideKeralaCityVilgeEn,
+          permntOutsideKeralaPincode: data?.AddressBirthDetails?.permntOutsideKeralaPincode,
+          permntOutsideKeralaLocalityNameEn: data?.AddressBirthDetails?.permntOutsideKeralaLocalityNameEn,
+          permntOutsideKeralaStreetNameEn: data?.AddressBirthDetails?.permntOutsideKeralaStreetNameEn,
+          permntOutsideKeralaHouseNameEn: data?.AddressBirthDetails?.permntOutsideKeralaHouseNameEn,
+          permntOutsideKeralaLocalityNameMl: data?.AddressBirthDetails?.permntOutsideKeralaLocalityNameMl,
+          permntOutsideKeralaStreetNameMl: data?.AddressBirthDetails?.permntOutsideKeralaStreetNameMl,
+          permntOutsideKeralaHouseNameMl: data?.AddressBirthDetails?.permntOutsideKeralaHouseNameMl,
+          permntOutsideKeralaPostOfficeEn: data?.AddressBirthDetails?.permntOutsideKeralaPostOfficeEn,
+          permntOutsideKeralaPostOfficeMl: data?.AddressBirthDetails?.permntOutsideKeralaPostOfficeMl,
+          permntOutsideIndiaLineoneEn: data?.AddressBirthDetails?.permntOutsideIndiaLineoneEn,
+          permntOutsideIndiaLineoneMl: data?.AddressBirthDetails?.permntOutsideIndiaLineoneMl,
+          permntOutsideIndiaLinetwoEn: data?.AddressBirthDetails?.permntOutsideIndiaLinetwoEn,
+          permntOutsideIndiaLinetwoMl: data?.AddressBirthDetails?.permntOutsideIndiaLinetwoMl,
+          permntOutsideIndiaprovinceEn: data?.AddressBirthDetails?.permntOutsideIndiaprovinceEn,
+          permntOutsideIndiaVillage: data?.AddressBirthDetails?.permntOutsideIndiaVillage
+            ? data?.AddressBirthDetails?.permntOutsideIndiaVillage.code
             : null,
-          permntInKeralaWardNo: data?. BirthNACAddressPage?.permntInKeralaWardNo ? data?. BirthNACAddressPage?.permntInKeralaWardNo.code : null,
-          permntOutsideKeralaDistrict: data?. BirthNACAddressPage?.permntOutsideKeralaDistrict
-            ? data?. BirthNACAddressPage?.permntOutsideKeralaDistrict.code
-            : null,
-          permntOutsideKeralaTaluk: data?. BirthNACAddressPage?.permntOutsideKeralaTaluk
-            ? data?. BirthNACAddressPage?.permntOutsideKeralaTaluk.code
-            : null,
-          permntOutsideKeralaVillage: data?. BirthNACAddressPage?.permntOutsideKeralaVillage
-            ? data?. BirthNACAddressPage?.permntOutsideKeralaVillage.code
-            : null,
-          permntOutsideKeralaCityVilgeEn: data?. BirthNACAddressPage?.permntOutsideKeralaCityVilgeEn,
-          permntOutsideKeralaPincode: data?. BirthNACAddressPage?.permntOutsideKeralaPincode,
-          permntOutsideKeralaLocalityNameEn: data?. BirthNACAddressPage?.permntOutsideKeralaLocalityNameEn,
-          permntOutsideKeralaStreetNameEn: data?. BirthNACAddressPage?.permntOutsideKeralaStreetNameEn,
-          permntOutsideKeralaHouseNameEn: data?. BirthNACAddressPage?.permntOutsideKeralaHouseNameEn,
-          permntOutsideKeralaLocalityNameMl: data?. BirthNACAddressPage?.permntOutsideKeralaLocalityNameMl,
-          permntOutsideKeralaStreetNameMl: data?. BirthNACAddressPage?.permntOutsideKeralaStreetNameMl,
-          permntOutsideKeralaHouseNameMl: data?. BirthNACAddressPage?.permntOutsideKeralaHouseNameMl,
-          permntOutsideKeralaPostOfficeEn: data?. BirthNACAddressPage?.permntOutsideKeralaPostOfficeEn,
-          permntOutsideKeralaPostOfficeMl: data?. BirthNACAddressPage?.permntOutsideKeralaPostOfficeMl,
-          permntOutsideIndiaLineoneEn: data?. BirthNACAddressPage?.permntOutsideIndiaLineoneEn,
-          permntOutsideIndiaLineoneMl: data?. BirthNACAddressPage?.permntOutsideIndiaLineoneMl,
-          permntOutsideIndiaLinetwoEn: data?. BirthNACAddressPage?.permntOutsideIndiaLinetwoEn,
-          permntOutsideIndiaLinetwoMl: data?. BirthNACAddressPage?.permntOutsideIndiaLinetwoMl,
-          permntOutsideIndiaprovinceEn: data?. BirthNACAddressPage?.permntOutsideIndiaprovinceEn,
-          permntOutsideIndiaVillage: data?. BirthNACAddressPage?.permntOutsideIndiaVillage
-            ? data?. BirthNACAddressPage?.permntOutsideIndiaVillage.code
-            : null,
-          permntOutsideIndiaCityTown: data?. BirthNACAddressPage?.permntOutsideIndiaCityTown,
-          permanentOutsideIndiaPostCode: data?. BirthNACAddressPage?.permanentOutsideIndiaPostCode,
+          permntOutsideIndiaCityTown: data?.AddressBirthDetails?.permntOutsideIndiaCityTown,
+          permanentOutsideIndiaPostCode: data?.AddressBirthDetails?.permanentOutsideIndiaPostCode,
         },
         ApplicantDetails: {
           applicantNameEn: data?.BirthNACInitiator?.initiatorNameEn,
@@ -489,16 +480,35 @@ export const convertToNACRegistration = (data = {}) => {
           careofapplicant: data?.BirthNACInitiator?.careofapplicant,
           isunderstood: data?.isunderstood?.isunderstood,
           declarationId: data?.BirthNACInitiator?.declarationId,
-          isEsigned: data?.BirthNACInitiator?.declarationId
+          isEsigned: data?.BirthNACInitiator?.declarationId,
         },
-        OtherChildren: {
-          childNameEn: data?.BirthNACInitiator?.childNameEn,
-          childNameMl: data?.BirthNACInitiator?.childNameMl,
-          sex: data?.BirthNACInitiator?.sex,
-          orderOfBirth: data?.BirthNACInitiator?.orderOfBirth,
-          dob: data?.BirthNACInitiator?.dob,
-          isAlive: data?.BirthNACInitiator?.isAlive,
-        }
+        OtherChildren: data.BirthNACInitiator.ownerState,
+        BirthNACDocuments: [
+          {
+            DocumentType: "Address proof of parents at the time of birth",
+            filestoreId: data?.BirthNACDocuments?.uploadedFile,
+          },
+          {
+            DocumentType: "Proof of birth showing the date/place/details of parents",
+            filestoreId: data?.BirthNACDocuments?.uploadedFile1,
+          },
+          {
+            DocumentType: "School certificate of child if above 6 years",
+            filestoreId: data?.BirthNACDocuments?.uploadedFile2,
+          },
+          {
+            DocumentType: "ID proof of mother at the time of birth",
+            filestoreId: data?.BirthNACDocuments?.uploadedFile3,
+          },
+          {
+            DocumentType: "ID proof of father at the time of birth",
+            filestoreId: data?.BirthNACDocuments?.uploadedFile4,
+          },
+          {
+            DocumentType: "Medical certificate, if child is differently abled",
+            filestoreId: data?.BirthNACDocuments?.uploadedFile5,
+          },
+        ],
       },
     ],
   };
@@ -717,8 +727,8 @@ export const convertToEditTrade = (data, fy = []) => {
           structureType: isDirectrenewal
             ? data.tradeLicenseDetail.structureType
             : data?.TradeDetails?.VehicleType
-              ? data?.TradeDetails?.VehicleType.code
-              : data?.TradeDetails?.BuildingType.code,
+            ? data?.TradeDetails?.VehicleType.code
+            : data?.TradeDetails?.BuildingType.code,
           subOwnerShipCategory: data?.ownershipCategory?.code.includes("INSTITUTIONAL")
             ? data?.owners?.owners?.[0]?.subOwnerShipCategory.code
             : data?.ownershipCategory?.code,
@@ -785,12 +795,12 @@ export const convertToResubmitTrade = (data) => {
           id: data.tradeLicenseDetail.id,
           institution: data?.ownershipCategory?.code.includes("INSTITUTIONAL")
             ? {
-              designation: data?.owners?.owners?.[0]?.designation,
-              ContactNo: data?.owners?.owners?.[0]?.altContactNumber,
-              mobileNumber: data?.owners?.owners?.[0]?.mobilenumber,
-              instituionName: data?.owners?.owners?.[0]?.institutionName,
-              name: data?.owners?.owners?.[0]?.name,
-            }
+                designation: data?.owners?.owners?.[0]?.designation,
+                ContactNo: data?.owners?.owners?.[0]?.altContactNumber,
+                mobileNumber: data?.owners?.owners?.[0]?.mobilenumber,
+                instituionName: data?.owners?.owners?.[0]?.institutionName,
+                name: data?.owners?.owners?.[0]?.name,
+              }
             : null,
         },
         calculation: null,
@@ -979,10 +989,10 @@ export const convertDateToEpoch = (dateString, dayStartOrEnd = "dayend") => {
 export const getQueryStringParams = (query) => {
   return query
     ? (/^[?#]/.test(query) ? query.slice(1) : query).split("&").reduce((params, param) => {
-      let [key, value] = param.split("=");
-      params[key] = value ? decodeURIComponent(value.replace(/\+/g, " ")) : "";
-      return params;
-    }, {})
+        let [key, value] = param.split("=");
+        params[key] = value ? decodeURIComponent(value.replace(/\+/g, " ")) : "";
+        return params;
+      }, {})
     : {};
 };
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton, Loader, Toast, SubmitBar } from "@egovernments/digit-ui-react-components";
+import { CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton, Loader, Toast } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/CRTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
@@ -10,13 +10,15 @@ import BirthPlaceVehicle from "../../pageComponents/birthComponents/BirthPlaceVe
 import BirthPlacePublicPlace from "../../pageComponents/birthComponents/BirthPlacePublicPlace";
 import FormStep from "../../../../../react-components/src/molecules/FormStep";
 
-const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false }) => {
+const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = false }) => {
   // console.log(JSON.stringify(formData));  
   // console.log(formData);
-  // console.log(isEditBirth);
+  // console.log(isEditBirth);  
+  sessionStorage.removeItem("applicationNumber");
   const [isEditBirthPageComponents, setIsEditBirthPageComponents] = useState(false);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
-  const [workFlowCode, setWorkFlowCode] = useState();
+  const [workFlowCode, setWorkFlowCode] = useState(formData?.ChildDetails?.workFlowCode);
+  const [isPayment, setIsPayment] = useState(formData?.ChildDetails?.isPayment);
+  const [Amount, setAmount] = useState(formData?.ChildDetails?.Amount);
 
   const stateId = Digit.ULBService.getStateId();
   let tenantId = "";
@@ -31,12 +33,20 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
   const { data: AttentionOfDelivery = {}, isAttentionOfDeliveryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "AttentionOfDelivery");
   const { data: DeliveryMethodList = {}, isDeliveryMethodListLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeliveryMethod");
   const { data: PlaeceMaster = {}, isPlaceMasterLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "PlaceMaster");
+  const [userRole, setuserRole] = useState(formData?.ChildDetails?.userRole);
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
   const [InstitutionFilterList, setInstitutionFilterList] = useState(null);
   const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(false);
   const [DifferenceInDaysRounded, setDifferenceInDaysRounded] = useState();
-  const {uuid:uuid,} =Digit.UserService.getUser().info ; 
+  const [isDisableEdit, setisDisableEdit] = useState(false);
+  const [isDisableEditRole, setisDisableEditRole] = useState(false);
   // console.log(Digit.UserService.getUser().info);
+  const { roles: userRoles, uuid: uuid, } = Digit.UserService.getUser().info;
+  const roletemp = Array.isArray(userRoles) && userRoles.filter((doc) => doc.code.includes("HOSPITAL_OPERATOR"));
+  console.log(roletemp);
+  // const [isDisableEdit, setisDisableEdit] = useState((userRole === "HOSPITAL_OPERATOR") && isEditBirth ? false : false);
+
+
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
     if (dateEpoch) {
@@ -104,37 +114,35 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
     DeliveryMethodList["birth-death-service"].DeliveryMethod.map((ob) => {
       cmbDeliveryMethod.push(ob);
     });
-  const cmbPregWeek = [
-    { i18nKey: "20", code: "20" },
-    { i18nKey: "21", code: "21" },
-    { i18nKey: "22", code: "22" },
-    { i18nKey: "22", code: "22" },
-    { i18nKey: "23", code: "23" },
-    { i18nKey: "25", code: "25" },
-    { i18nKey: "26", code: "26" },
-    { i18nKey: "27", code: "27" },
-    { i18nKey: "28", code: "28" },
-    { i18nKey: "29", code: "29" },
-    { i18nKey: "30", code: "30" },
-    { i18nKey: "31", code: "31" },
-    { i18nKey: "32", code: "32" },
-    { i18nKey: "33", code: "33" },
-    { i18nKey: "34", code: "34" },
-    { i18nKey: "35", code: "35" },
-    { i18nKey: "36", code: "36" },
-    { i18nKey: "37", code: "37" },
-    { i18nKey: "38", code: "38" },
-    { i18nKey: "39", code: "39" },
-    { i18nKey: "40", code: "40" },
-    { i18nKey: "41", code: "41" },
-    { i18nKey: "42", code: "42" },
-  ];
-  const [childDOB, setChildDOB] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? convertEpochToDate(formData?.ChildDetails?.childDOB) : formData?.ChildDetails?.childDOB); //formData?.ChildDetails?.childDOB
-  // const [gender, selectGender] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? (menu.filter(menu => menu.code === formData?.ChildDetails?.gender)[0]) : formData?.ChildDetails?.gender);
+  // const cmbPregWeek = [
+  //   { i18nKey: "20", code: "20" },
+  //   { i18nKey: "21", code: "21" },
+  //   { i18nKey: "22", code: "22" },
+  //   { i18nKey: "22", code: "22" },
+  //   { i18nKey: "23", code: "23" },
+  //   { i18nKey: "25", code: "25" },
+  //   { i18nKey: "26", code: "26" },
+  //   { i18nKey: "27", code: "27" },
+  //   { i18nKey: "28", code: "28" },
+  //   { i18nKey: "29", code: "29" },
+  //   { i18nKey: "30", code: "30" },
+  //   { i18nKey: "31", code: "31" },
+  //   { i18nKey: "32", code: "32" },
+  //   { i18nKey: "33", code: "33" },
+  //   { i18nKey: "34", code: "34" },
+  //   { i18nKey: "35", code: "35" },
+  //   { i18nKey: "36", code: "36" },
+  //   { i18nKey: "37", code: "37" },
+  //   { i18nKey: "38", code: "38" },
+  //   { i18nKey: "39", code: "39" },
+  //   { i18nKey: "40", code: "40" },
+  //   { i18nKey: "41", code: "41" },
+  //   { i18nKey: "42", code: "42" },
+  // ];
+  const [childDOB, setChildDOB] = useState(isEditBirth ? convertEpochToDate(formData?.ChildDetails?.childDOB) : formData?.ChildDetails?.childDOB); //formData?.ChildDetails?.childDOB
   const [gender, selectGender] = useState(formData?.ChildDetails?.gender?.code ? formData?.ChildDetails?.gender : formData?.ChildDetails?.gender ?
     (menu.filter(menu => menu.code === formData?.ChildDetails?.gender)[0]) : "");
-
-  const [childAadharNo, setChildAadharNo] = useState(formData?.ChildDetails?.childAadharNo ? formData?.ChildDetails?.childAadharNo : null);
+  const [childAadharNo, setChildAadharNo] = useState(formData?.ChildDetails?.childAadharNo ? formData?.ChildDetails?.childAadharNo : "");
   const [childFirstNameEn, setChildFirstNameEn] = useState(formData?.ChildDetails?.childFirstNameEn ? formData?.ChildDetails?.childFirstNameEn : "");
   const [childMiddleNameEn, setChildMiddleNameEn] = useState(formData?.ChildDetails?.childMiddleNameEn ? formData?.ChildDetails?.childMiddleNameEn : "");
   const [childLastNameEn, setChildLastNameEn] = useState(formData?.ChildDetails?.childLastNameEn ? formData?.ChildDetails?.childLastNameEn : "");
@@ -142,11 +150,11 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
   const [childMiddleNameMl, setChildMiddleNameMl] = useState(formData?.ChildDetails?.childMiddleNameMl ? formData?.ChildDetails?.childMiddleNameMl : "");
   const [childLastNameMl, setChildLastNameMl] = useState(formData?.ChildDetails?.childLastNameMl ? formData?.ChildDetails?.childLastNameMl : "");
   const [isInitialRender, setIsInitialRender] = useState(true);
+  const [isInitialRenderRoles, setInitialRenderRoles] = useState(true);
   const [isInitialRenderPlace, setIsInitialRenderPlace] = useState(true);
   const [isInitialRenderFormData, setisInitialRenderFormData] = useState(false);
-  const [birthDateTime, setbirthDateTime] = useState(""); //formData?.ChildDetails?.birthDateTime ? formData?.ChildDetails?.birthDateTime :
+  const [birthDateTime, setbirthDateTime] = useState(formData?.ChildDetails?.birthDateTime ? formData?.ChildDetails?.birthDateTime : ""); //formData?.ChildDetails?.birthDateTime ? formData?.ChildDetails?.birthDateTime :
   const [isChildName, setIsChildName] = useState(formData?.ChildDetails?.isChildName ? formData?.ChildDetails?.isChildName : false);
-  // const [birthPlace, selectBirthPlace] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.ChildDetails?.birthPlace)[0]) : formData?.ChildDetails?.birthPlace);
   const [birthPlace, selectBirthPlace] = useState(formData?.ChildDetails?.birthPlace?.code ? formData?.ChildDetails?.birthPlace : formData?.ChildDetails?.birthPlace ?
     (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.ChildDetails?.birthPlace)[0]) : "");
   const [value, setValue] = useState();
@@ -200,34 +208,42 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
   const [DifferenceInTime, setDifferenceInTime] = useState(formData?.ChildDetails?.DifferenceInTime);
 
   const [toast, setToast] = useState(false);
-  const [AadharError, setAadharError] = useState(formData?.ChildDetails?.childAadharNo ? false : false);
+  const [AadharError, setAadharError] = useState(false);
   const [ChildAadharHIde, setChildAadharHIde] = useState(formData?.ChildDetails?.childAadharNo ? true : false);
-  const [DOBError, setDOBError] = useState(formData?.ChildDetails?.childDOB ? false : false);
-  const [HospitalError, setHospitalError] = useState(formData?.ChildDetails?.hospitalName ? false : false);
-  const [InstitutionError, setInstitutionError] = useState(formData?.ChildDetails?.institution ? false : false);
-  const [InstitutionNameError, setInstitutionNameError] = useState(formData?.ChildDetails?.institutionId ? false : false);
-  const [WardError, setAdsWardError] = useState(formData?.ChildDetails?.wardNo ? false : false);
-  const [AdsHomePostOfficeError, setAdsHomePostOfficeError] = useState(formData?.ChildDetails?.AdrsHomePostOffice ? false : false);
-  const [AdsHomePincodeError, setAdsHomePincodeError] = useState(formData?.ChildDetails?.AdrsHomePincode ? false : false);
-  const [AdsHomeHouseNameEnError, setAdsHomeHouseNameEnError] = useState(formData?.ChildDetails?.AdrsHomeHouseNameEn ? false : false);
-  const [AdsHomeHouseNameMlError, setAdsHomeHouseNameMlError] = useState(formData?.ChildDetails?.AdrsHomeHouseNameMl ? false : false);
-  const [AdsHomeLocalityNameEnError, setAdsHomeLocalityNameEnError] = useState(formData?.ChildDetails?.AdrsHomeLocalityNameEn ? false : false);
-  const [AdsHomeLocalityNameMlError, setAdsHomeLocalityNameMlError] = useState(formData?.ChildDetails?.AdrsHomeLocalityNameMl ? false : false);
-  const [vehicleRegiNoError, setvehicleRegiNoError] = useState(formData?.ChildDetails?.VehicleRegistrationNo ? false : false);
-  const [vehiTypeError, setvehiTypeError] = useState(formData?.ChildDetails?.vehicleType ? false : false);
-  const [vehicleHaltPlaceError, setvehicleHaltPlaceError] = useState(formData?.ChildDetails?.vehicleHaltPlace ? false : false);
+  const [DOBError, setDOBError] = useState(false);
+  const [HospitalError, setHospitalError] = useState(false);
+  const [InstitutionError, setInstitutionError] = useState(false);
+  const [InstitutionNameError, setInstitutionNameError] = useState(false);
+  const [WardError, setAdsWardError] = useState(false);
+  const [AdsHomePostOfficeError, setAdsHomePostOfficeError] = useState(false);
+  const [AdsHomePincodeError, setAdsHomePincodeError] = useState(false);
+  const [AdsHomeHouseNameEnError, setAdsHomeHouseNameEnError] = useState(false);
+  const [AdsHomeHouseNameMlError, setAdsHomeHouseNameMlError] = useState(false);
+  const [AdsHomeLocalityNameEnError, setAdsHomeLocalityNameEnError] = useState(false);
+  const [AdsHomeLocalityNameMlError, setAdsHomeLocalityNameMlError] = useState(false);
+  const [vehicleRegiNoError, setvehicleRegiNoError] = useState(false);
+  const [vehiTypeError, setvehiTypeError] = useState(false);
+  const [vehicleHaltPlaceError, setvehicleHaltPlaceError] = useState(false);
   // const [vehiHaltPlaceMlError, setvehiHaltPlaceMlError] = useState(formData?.ChildDetails?.vehicleHaltPlaceMl ? false : false);
-  const [admittedHospitalEnError, setadmittedHospitalEnError] = useState(formData?.ChildDetails?.setadmittedHospitalEn ? false : false);
-  const [vehiDesDetailsEnError, setvehiDesDetailsEnError] = useState(formData?.ChildDetails?.vehicleDesDetailsEn ? false : false);
-  const [placeTypepEnError, setplaceTypepEnError] = useState(formData?.ChildDetails?.publicPlaceType ? false : false);
-  const [localNameEnError, setlocalNameEnError] = useState(formData?.ChildDetails?.localityNameEn ? false : false);
-  const [localNameMlError, setlocalNameMlError] = useState(formData?.ChildDetails?.localityNameMl ? false : false);
-  const [BirthWeightError, setBirthWeightError] = useState(formData?.ChildDetails?.birthWeight ? false : false);
-  const [MedicalAttensionSubStError, setMedicalAttensionSubStError] = useState(formData?.ChildDetails?.medicalAttensionSub ? false : false);
+  const [admittedHospitalEnError, setadmittedHospitalEnError] = useState(false);
+  const [vehiDesDetailsEnError, setvehiDesDetailsEnError] = useState(false);
+  const [placeTypepEnError, setplaceTypepEnError] = useState(false);
+  const [localNameEnError, setlocalNameEnError] = useState(false);
+  const [localNameMlError, setlocalNameMlError] = useState(false);
+  const [BirthWeightError, setBirthWeightError] = useState(false);
+  const [MedicalAttensionSubStError, setMedicalAttensionSubStError] = useState(false);
 
-  const [DeliveryMethodStError, setDeliveryMethodStError] = useState(formData?.ChildDetails?.deliveryMethods ? false : false);
-  const [PregnancyDurationStError, setPregnancyDurationStError] = useState(formData?.ChildDetails?.pregnancyDuration ? false : false);
-  const [PregnancyDurationInvalidError, setPregnancyDurationInvalidError] = useState(formData?.ChildDetails?.pregnancyDuration ? false : false);
+  const [DeliveryMethodStError, setDeliveryMethodStError] = useState(false);
+  const [PregnancyDurationStError, setPregnancyDurationStError] = useState(false);
+  const [PregnancyDurationInvalidError, setPregnancyDurationInvalidError] = useState(false);
+  const [ChildFirstNameEnError, setChildFirstNameEnError] = useState(false);
+  const [ChildMiddleNameEnError, setChildMiddleNameEnError] = useState(false);
+  const [ChildLastNameEnError, setChildLastNameEnError] = useState(false);
+  const [ChildFirstNameMlError, setChildFirstNameMlError] = useState(false);
+  const [ChildMiddleNameMlError, setChildMiddleNameMlError] = useState(false);
+  const [ChildLastNameMlError, setChildLastNameMlError] = useState(false);
+  const [AdsHomeStreetNameEnError, setAdsHomeStreetNameEnError] = useState(false);
+  const [AdsHomeStreetNameMlError, setAdsHomeStreetNameMlError] = useState(false);
 
   const [access, setAccess] = React.useState(true);
 
@@ -241,7 +257,54 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
       }
     }
   }, [isInitialRender]);
+  // console.log(userRoles);
+  const roleall = [];
+  roleall.push(...roletemp);
+  const rolecombine = [];
+  roleall?.map?.((e) => {
+    rolecombine.push(e.code);
+  });
+  const { data: userData, isLoading: PTALoading } = Digit.Hooks.useEmployeeSearch(
+    tenantId,
+    {
+      roles: rolecombine?.map?.((e) => ({ code: e })),
+      isActive: true,
+      uuids: uuid,
+      rolecodes: rolecombine?.map?.((e) => (e)).join(",")
+    }
+    // { enabled: !action?.isTerminateState }
+  );
 
+  const operatorwardtemp = userData?.Employees[0]?.jurisdictions?.filter((doc) => doc?.roleCode?.includes("HOSPITAL_OPERATOR"));
+  const appwardtemp = userData?.Employees[0]?.jurisdictions?.filter((doc) => doc?.roleCode?.includes("TL_PDEAPPROVER"));
+
+  const operatorward = [];
+  const appward = [];
+  operatorwardtemp?.map((ob) => {
+    console.log(ob);
+    operatorward.push(...ob.jurisdictionChilds);
+
+  });
+
+
+  useEffect(() => {
+    if (isInitialRenderRoles) {
+      if (userRoles.length > 0) {
+        if (userRoles[0].code === "HOSPITAL_OPERATOR") {
+          if (cmbPlaceMaster.length > 0) {
+            selectBirthPlace(cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === "HOSPITAL")[0]);
+            setValue(cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === "HOSPITAL")[0].code);
+            setisDisableEditRole(true)
+            setInitialRenderRoles(false);
+          }
+        }
+      }
+    }
+  }, [cmbPlaceMaster, isInitialRenderRoles]);
+  // if(roles[0].code === "HOSPITAL_OPERATOR"){
+  //   const { data: { HospDetails: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.hrms.useHRMSSearch({ tenantId, filters: payload, config })
+  //   console.log(searchResult);
+  // }
   React.useEffect(() => {
     if (isInitialRenderPlace) {
       if (birthPlace) {
@@ -321,14 +384,15 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
   }
 
   function setselectChildDOB(value) {
+
     setChildDOB(value);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const birthDate = new Date(value);
     birthDate.setHours(0, 0, 0, 0);
-    
+
     if (birthDate.getTime() <= today.getTime()) {
-      
+
       setDOBError(false);
       // To calculate the time difference of two dates
       let Difference_In_Time = today.getTime() - birthDate.getTime();
@@ -339,17 +403,18 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
       setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
       if (birthPlace) {
         let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.BirtPlace === birthPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
-        console.log("currentWorgFlowDOB" + currentWorgFlow);
         if (currentWorgFlow.length > 0) {
-          // console.log(currentWorgFlow[0].WorkflowCode);
+          console.log(currentWorgFlow);
           setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+          setIsPayment(currentWorgFlow[0].payment);
+          setAmount(currentWorgFlow[0].amount);
         }
       }
       if (Difference_In_Days >= 365) {
         setChildAadharHIde(true);
       } else {
         setChildAadharHIde(false);
-        setChildAadharNo(null);
+        setChildAadharNo("");
       }
     }
     // else {
@@ -388,7 +453,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
   }
   function setCheckMalayalamInputField(e) {
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
-    if (!(e.key.match(pattern))) {
+    if (!(e.key.match(pattern)) && e.code === 'Space') {
       e.preventDefault();
     }
   }
@@ -396,7 +461,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!(e.target.value.match(pattern))) {
       e.preventDefault();
-      setChildFirstNameMl('');
+      setChildFirstNameMl("");
     }
     else {
       setChildFirstNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
@@ -406,7 +471,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!(e.target.value.match(pattern))) {
       e.preventDefault();
-      setChildMiddleNameMl('');
+      setChildMiddleNameMl("");
     }
     else {
       setChildMiddleNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
@@ -416,7 +481,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
     let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
     if (!(e.target.value.match(pattern))) {
       e.preventDefault();
-      setChildLastNameMl('');
+      setChildLastNameMl("");
     }
     else {
       setChildLastNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
@@ -468,9 +533,9 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
     if (typeof value === "string") {
       cb(value);
       console.log(value);
-      let hour = value;
-      let period = hour > 12 ? "PM" : "AM";
-      console.log(period);
+      // let hour = value;
+      // let period = hour > 12 ? "PM" : "AM";
+      // console.log(period);
       setbirthDateTime(value);
     }
   };
@@ -491,10 +556,132 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
   function setSelectDeliveryMethod(value) {
     setDeliveryMethod(value);
   }
+  function clearBirthPalce(value) {
+    if (value.code === "HOSPITAL") {
+      setInstitution("");
+      setInstitutionId("");
+      setInstitutionIdMl("");
+      setAdrsPostOffice("");
+      setAdrsPincode(null);
+      setAdrsHouseNameEn("");
+      setAdrsHouseNameMl("");
+      setAdrsLocalityNameEn("");
+      setAdrsLocalityNameMl("");
+      setAdrsStreetNameEn("");
+      setAdrsStreetNameMl("");
+      setWardNo("");
+      setvehicleType("");
+      setvehicleRegistrationNo("");
+      setvehicleFromEn("");
+      setvehicleToEn("");
+      setvehicleFromMl("");
+      setvehicleHaltPlace("");
+      setvehicleToMl("");
+      setvehicleDesDetailsEn("");
+      setSelectedadmittedHospitalEn("");
+      setpublicPlaceType("");
+      setlocalityNameEn("");
+      setlocalityNameMl("");
+      setstreetNameEn("");
+      setstreetNameMl("");
+      setpublicPlaceDecpEn("");
+    } else if (value.code === "INSTITUTION") {
+      selectHospitalName("");
+      selectHospitalNameMl("");
+      setAdrsPostOffice("");
+      setAdrsPincode(null);
+      setAdrsHouseNameEn("");
+      setAdrsHouseNameMl("");
+      setAdrsLocalityNameEn("");
+      setAdrsLocalityNameMl("");
+      setAdrsStreetNameEn("");
+      setAdrsStreetNameMl("");
+      setWardNo("");
+      setvehicleType("");
+      setvehicleRegistrationNo("");
+      setvehicleFromEn("");
+      setvehicleToEn("");
+      setvehicleFromMl("");
+      setvehicleHaltPlace("");
+      setvehicleToMl("");
+      setvehicleDesDetailsEn("");
+      setSelectedadmittedHospitalEn("");
+      setpublicPlaceType("");
+      setlocalityNameEn("");
+      setlocalityNameMl("");
+      setstreetNameEn("");
+      setstreetNameMl("");
+      setpublicPlaceDecpEn("");
+    } else if (value.code === "HOME") {
+      selectHospitalName("");
+      selectHospitalNameMl("");
+      setInstitution("");
+      setInstitutionId("");
+      setInstitutionIdMl("");
+      setvehicleType("");
+      setvehicleRegistrationNo("");
+      setvehicleFromEn("");
+      setvehicleToEn("");
+      setvehicleFromMl("");
+      setvehicleHaltPlace("");
+      setvehicleToMl("");
+      setvehicleDesDetailsEn("");
+      setSelectedadmittedHospitalEn("");
+      setpublicPlaceType("");
+      setlocalityNameEn("");
+      setlocalityNameMl("");
+      setstreetNameEn("");
+      setstreetNameMl("");
+      setpublicPlaceDecpEn("");
+    } else if (value.code === "VEHICLE") {
+      selectHospitalName("");
+      selectHospitalNameMl("");
+      setInstitution("");
+      setInstitutionId("");
+      setInstitutionIdMl("");
+      setAdrsPostOffice("");
+      setAdrsPincode(null);
+      setAdrsHouseNameEn("");
+      setAdrsHouseNameMl("");
+      setAdrsLocalityNameEn("");
+      setAdrsLocalityNameMl("");
+      setAdrsStreetNameEn("");
+      setAdrsStreetNameMl("");
+      setpublicPlaceType("");
+      setlocalityNameEn("");
+      setlocalityNameMl("");
+      setstreetNameEn("");
+      setstreetNameMl("");
+      setpublicPlaceDecpEn("");
+    } else if (value.code === "PUBLIC_PLACES") {
+      selectHospitalName("");
+      selectHospitalNameMl("");
+      setInstitution("");
+      setInstitutionId("");
+      setInstitutionIdMl("");
+      setAdrsPostOffice("");
+      setAdrsPincode(null);
+      setAdrsHouseNameEn("");
+      setAdrsHouseNameMl("");
+      setAdrsLocalityNameEn("");
+      setAdrsLocalityNameMl("");
+      setAdrsStreetNameEn("");
+      setAdrsStreetNameMl("");
+      setvehicleType("");
+      setvehicleRegistrationNo("");
+      setvehicleFromEn("");
+      setvehicleToEn("");
+      setvehicleFromMl("");
+      setvehicleHaltPlace("");
+      setvehicleToMl("");
+      setvehicleDesDetailsEn("");
+      setSelectedadmittedHospitalEn("");
+    }
+  }
   function setselectBirthPlace(value) {
     // console.log(workFlowData);
     // console.log("DifferenceInDaysRounded" + DifferenceInDaysRounded);
-    console.log("DifferenceInTimeJEtheesh" + DifferenceInTime);
+    // console.log("DifferenceInTimeJEtheesh" + DifferenceInTime);
 
     selectBirthPlace(value);
     setValue(value.code);
@@ -503,30 +690,46 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
     if (currentWorgFlow.length > 0) {
       // console.log(currentWorgFlow[0].WorkflowCode);
       setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+      setIsPayment(currentWorgFlow[0].payment);
+      setAmount(currentWorgFlow[0].amount);
     }
+    clearBirthPalce(value);
+
   }
   function setSelectBirthWeight(e) {
-    if (e.target.value.length === 5) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setBirthWeight(e.target.value);
-      // if(e.target.value <= 0 || e.target.value > 10 ){
-      //   setBirthWeightError(true);
-      //   setToast(true);
-      //   setTimeout(() => {
-      //   setToast(false);
-      // }, 3000);
-      // } else {
-      //   setBirthWeightError(false);
-      //   setBirthWeight(e.target.value);        
-      // }
+    if (e.target.value.trim().length >= 0) {
+      // if (!amount || amount.match(/^\d{1,}(\.\d{0,4})?$/)) {
+      setBirthWeight(e.target.value.length <= 4 ? e.target.value.replace(/[^0-9.]/ig, '') : (e.target.value.replace(/[^0-9.]/ig, '')).substring(0, 4));
+    }
+    // if (e.target.value.length === 5) {
+    //   return false;
+    //   // window.alert("Username shouldn't exceed 10 characters")
+    // } else {
+    //   setBirthWeight(e.target.value);
+    //   // if(e.target.value <= 0 || e.target.value > 10 ){
+    //   //   setBirthWeightError(true);
+    //   //   setToast(true);
+    //   //   setTimeout(() => {
+    //   //   setToast(false);
+    //   // }, 3000);
+    //   // } else {
+    //   //   setBirthWeightError(false);
+    //   //   setBirthWeight(e.target.value);        
+    //   // }
 
+    // }
+  }
+  function setCheckSpecialChar(e) {
+    let pattern = /^[0-9]*$/;
+    if (!(e.key.match(pattern))) {
+      e.preventDefault();
     }
   }
   let validFlag = true;
   const goNext = () => {
-    if (childAadharNo != null) {
+    if (childAadharNo.trim() == null || childAadharNo.trim() == '' || childAadharNo.trim() == undefined) {
+      setChildAadharNo("");
+    } else if (childAadharNo != null && childAadharNo != "") {
       let adharLength = childAadharNo;
       if (adharLength.length < 12 || adharLength.length > 12) {
         validFlag = false;
@@ -554,6 +757,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
         setHospitalError(false);
       }
     } else if (birthPlace.code === "INSTITUTION") {
+
       if (institution == null) {
         setInstitutionError(true);
         validFlag = false;
@@ -629,8 +833,9 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
           }
         }
       }
-      if (adrsLocalityNameEn === null || adrsLocalityNameEn === "" || adrsLocalityNameEn === undefined) {
+      if (adrsLocalityNameEn === null || adrsLocalityNameEn.trim() == '' || adrsLocalityNameEn.trim() == undefined) {
         validFlag = false;
+        setAdrsLocalityNameEn("");
         setAdsHomeLocalityNameEnError(true);
         setToast(true);
         setTimeout(() => {
@@ -639,8 +844,9 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
       } else {
         setAdsHomeLocalityNameEnError(false);
       }
-      if (adrsLocalityNameMl == null || adrsLocalityNameMl == "" || adrsLocalityNameMl == undefined) {
+      if (adrsLocalityNameMl === null || adrsLocalityNameMl.trim() == '' || adrsLocalityNameMl.trim() == undefined) {
         validFlag = false;
+        setAdrsLocalityNameMl("");
         setAdsHomeLocalityNameMlError(true);
         setToast(true);
         setTimeout(() => {
@@ -649,8 +855,9 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
       } else {
         setAdsHomeLocalityNameMlError(false);
       }
-      if (adrsHouseNameEn == null || adrsHouseNameEn == "" || adrsHouseNameEn == undefined) {
+      if (adrsHouseNameEn === null || adrsHouseNameEn.trim() == '' || adrsHouseNameEn.trim() == undefined) {
         validFlag = false;
+        setAdrsHouseNameEn("");
         setAdsHomeHouseNameEnError(true);
         setToast(true);
         setTimeout(() => {
@@ -659,8 +866,9 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
       } else {
         setAdsHomeHouseNameEnError(false);
       }
-      if (adrsHouseNameMl == null || adrsHouseNameMl == "" || adrsHouseNameMl == undefined) {
+      if (adrsHouseNameMl === null || adrsHouseNameMl.trim() == '' || adrsHouseNameMl.trim() == undefined) {
         validFlag = false;
+        setAdrsHouseNameMl("");
         setAdsHomeHouseNameMlError(true);
         setToast(true);
         setTimeout(() => {
@@ -669,7 +877,38 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
       } else {
         setAdsHomeHouseNameMlError(false);
       }
+      if (adrsStreetNameEn === null || adrsStreetNameEn.trim() === '' || adrsStreetNameEn.trim() === undefined) {
+        setAdrsStreetNameEn("");
+      } else {
+        if (adrsStreetNameEn != null && (adrsStreetNameMl === null || adrsStreetNameMl.trim() === '' || adrsStreetNameMl.trim() === undefined)) {
+          validFlag = false;
+          setAdrsStreetNameMl("");
+          setAdsHomeStreetNameMlError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } else {
+          setAdsHomeStreetNameMlError(false);
+        }
+      }
+      if (adrsStreetNameMl === null || adrsStreetNameMl.trim() === '' || adrsStreetNameMl.trim() === undefined) {
+        setAdrsStreetNameMl("");
+      } else {
+        if (adrsStreetNameMl != null && (adrsStreetNameEn === null || adrsStreetNameEn.trim() === '' || adrsStreetNameEn.trim() === undefined)) {
+          validFlag = false;
+          setAdrsStreetNameEn("");
+          setAdsHomeStreetNameEnError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } else {
+          setAdsHomeStreetNameEnError(false);
+        }
+      }
     } else if (birthPlace.code === "VEHICLE") {
+
       if (wardNo === null) {
         validFlag = false;
         setAdsWardError(true);
@@ -694,9 +933,10 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
       } else {
         setvehiTypeError(false);
       }
-      if (vehicleRegistrationNo == null || vehicleRegistrationNo == "" || vehicleRegistrationNo == undefined) {
+      if (vehicleRegistrationNo === null || vehicleRegistrationNo.trim() == '' || vehicleRegistrationNo.trim() == undefined) {
         validFlag = false;
         setvehicleRegiNoError(true);
+        setvehicleRegistrationNo("");
         setToast(true);
         setTimeout(() => {
           setToast(false);
@@ -704,9 +944,10 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
       } else {
         setvehicleRegiNoError(false);
       }
-      if (vehicleHaltPlace == null || vehicleHaltPlace == "" || vehicleHaltPlace == undefined) {
+      if (vehicleHaltPlace === null || vehicleHaltPlace.trim() == '' || vehicleHaltPlace.trim() == undefined) {
         validFlag = false;
         setvehicleHaltPlaceError(true);
+        setvehicleHaltPlace("");
         setToast(true);
         setTimeout(() => {
           setToast(false);
@@ -724,9 +965,10 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
       // } else {
       //   setvehiHaltPlaceMlError(false);
       // }
-      if (vehicleDesDetailsEn == null || vehicleDesDetailsEn == "" || vehicleDesDetailsEn == undefined) {
+      if (vehicleDesDetailsEn === null || vehicleDesDetailsEn.trim() == '' || vehicleDesDetailsEn.trim() == undefined) {
         validFlag = false;
         setvehiDesDetailsEnError(true);
+        setvehicleDesDetailsEn("");
         setToast(true);
         setTimeout(() => {
           setToast(false);
@@ -745,6 +987,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
         setadmittedHospitalEnError(false);
       }
     } else if (birthPlace.code === "PUBLIC_PLACES") {
+
       if (wardNo === null) {
         validFlag = false;
         setAdsWardError(true);
@@ -758,9 +1001,10 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
         wardNumber = wardNo.wardno;
         setAdsWardError(false);
       }
-      if (localityNameEn == null || localityNameEn == "" || localityNameEn == undefined) {
+      if (localityNameEn === null || localityNameEn.trim() == '' || localityNameEn.trim() == undefined) {
         validFlag = false;
         setlocalNameEnError(true);
+        setlocalityNameEn("");
         setToast(true);
         setTimeout(() => {
           setToast(false);
@@ -768,9 +1012,10 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
       } else {
         setlocalNameEnError(false);
       }
-      if (localityNameMl == null || localityNameMl == "" || localityNameMl == undefined) {
+      if (localityNameMl === null || localityNameMl.trim() == '' || localityNameMl.trim() == undefined) {
         validFlag = false;
         setlocalNameMlError(true);
+        setlocalityNameMl("");
         setToast(true);
         setTimeout(() => {
           setToast(false);
@@ -791,15 +1036,24 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
     }
     if (birthWeight != null || birthWeight != "" || birthWeight != undefined) {
       let BirthWeightCheck = birthWeight;
-      if (BirthWeightCheck < 0.25 || BirthWeightCheck > 10) {
+      if (BirthWeightCheck != ".") {
+        if (BirthWeightCheck < 0.25 || BirthWeightCheck > 10) {
+          validFlag = false;
+          setBirthWeightError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } else {
+          setBirthWeightError(false);
+        }
+      } else {
         validFlag = false;
         setBirthWeightError(true);
         setToast(true);
         setTimeout(() => {
           setToast(false);
         }, 2000);
-      } else {
-        setBirthWeightError(false);
       }
     }
     else {
@@ -829,7 +1083,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
         setToast(false);
       }, 2000);
     } else {
-      if (pregnancyDuration < 20 || pregnancyDuration > 44) {
+      if (pregnancyDuration < 20 || pregnancyDuration > 42) {
         validFlag = false;
         setPregnancyDurationInvalidError(true);
         setToast(true);
@@ -851,21 +1105,130 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
     } else {
       setDeliveryMethodStError(false);
     }
+    if (!isChildName) {
+      if (childFirstNameEn.trim() == null || childFirstNameEn.trim() == '' || childFirstNameEn.trim() == undefined) {
+        validFlag = false;
+        setChildFirstNameEn("");
+        setChildFirstNameEnError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setChildFirstNameEnError(false);
+      }
+      if (childMiddleNameEn.trim() == null || childMiddleNameEn.trim() == '' || childMiddleNameEn.trim() == undefined) {
+        setChildMiddleNameEn("");
+      } else {
+        if (childMiddleNameMl.trim() == null || childMiddleNameMl.trim() == '' || childMiddleNameMl.trim() == undefined) {
+          validFlag = false;
+          setChildMiddleNameMl("");
+          setChildMiddleNameMlError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } else {
+          setChildMiddleNameMlError(false);
+        }
+      }
+      if (childLastNameEn.trim() == null || childLastNameEn.trim() == '' || childLastNameEn.trim() == undefined) {
+        setChildLastNameEn("");
+      } else {
+        if (childLastNameMl.trim() == null || childLastNameMl.trim() == '' || childLastNameMl.trim() == undefined) {
+          validFlag = false;
+          setChildLastNameMl("");
+          setChildLastNameMlError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } else {
+          setChildLastNameMlError(false);
+        }
+      }
+      if (childFirstNameMl.trim() === null || childFirstNameMl.trim() === '' || childFirstNameMl.trim() === undefined) {
+        validFlag = false;
+        setChildFirstNameMl('');
+        setChildFirstNameMlError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 2000);
+      } else {
+        setChildFirstNameMlError(false);
+      }
+      if (childMiddleNameMl.trim() == null || childMiddleNameMl.trim() == '' || childMiddleNameMl.trim() == undefined) {
+        setChildMiddleNameMl("");
+        setChildMiddleNameEnError(false);
+      } else {
+        if (childMiddleNameEn.trim() == null || childMiddleNameEn.trim() == '' || childMiddleNameEn.trim() == undefined) {
+          validFlag = false;
+          setChildMiddleNameEn("");
+          setChildMiddleNameEnError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } else {
+          setChildMiddleNameEnError(false);
+        }
+      }
+      if (childLastNameMl.trim() == null || childLastNameMl.trim() == '' || childLastNameMl.trim() == undefined) {
+        setChildLastNameMl("");
+        setChildLastNameEnError(false);
+      } else {
+        if (childLastNameEn.trim() == null || childLastNameEn.trim() == '' || childLastNameEn.trim() == undefined) {
+          validFlag = false;
+          setChildLastNameEn("");
+          setChildLastNameEnError(true);
+          setToast(true);
+          setTimeout(() => {
+            setToast(false);
+          }, 2000);
+        } else {
+          setChildLastNameEnError(false);
+        }
+      }
+    }
     if (validFlag == true) {
-      
+
       let IsEditChangeScreen = (isEditBirth ? isEditBirth : false);
       let isWorkflow = isEditBirth ? false : true;
       onSelect(config.key, {
         stateId, tenantId, workFlowCode, childDOB, birthDateTime, gender, childAadharNo,
-        isChildName, childFirstNameEn, childMiddleNameEn, childLastNameEn, childFirstNameMl, childMiddleNameMl, childLastNameMl,
+        isChildName,
+        childFirstNameEn: childFirstNameEn.trim(),
+        childMiddleNameEn: childMiddleNameEn.trim(),
+        childLastNameEn: childLastNameEn.trim(),
+        childFirstNameMl: childFirstNameMl.trim(),
+        childMiddleNameMl: childMiddleNameMl.trim(),
+        childLastNameMl: childLastNameMl.trim(),
         birthPlace, hospitalCode, hospitalName, hospitalNameMl,
         institutionTypeCode, institution, institutionNameCode, institutionId, institutionIdMl,
-        wardNo, wardNameEn, wardNameMl, wardNumber, adrsHouseNameEn, adrsHouseNameMl, adrsLocalityNameEn, adrsLocalityNameMl, adrsStreetNameEn, adrsStreetNameMl, adrsPostOffice, adrsPincode,
-        vehicleType, vehicleHaltPlace, vehicleRegistrationNo, vehicleFromEn, vehicleToEn, vehicleFromMl,
-        vehicleToMl, setadmittedHospitalEn, vehicleDesDetailsEn,
-        publicPlaceType, localityNameEn, localityNameMl, streetNameEn, streetNameMl, publicPlaceDecpEn,
+        wardNo, wardNameEn, wardNameMl, wardNumber,
+        adrsHouseNameEn: adrsHouseNameEn.trim(),
+        adrsHouseNameMl: adrsHouseNameMl.trim(),
+        adrsLocalityNameEn: adrsLocalityNameEn.trim(),
+        adrsLocalityNameMl: adrsLocalityNameMl.trim(),
+        adrsStreetNameEn: adrsStreetNameEn.trim(),
+        adrsStreetNameMl: adrsStreetNameMl.trim(), adrsPostOffice, adrsPincode,
+        vehicleType,
+        vehicleHaltPlace: vehicleHaltPlace.trim(),
+        vehicleRegistrationNo: vehicleRegistrationNo.trim(),
+        vehicleFromEn: vehicleFromEn.trim(),
+        vehicleToEn: vehicleToEn.trim(),
+        vehicleFromMl: vehicleFromMl.trim(),
+        vehicleToMl: vehicleToMl.trim(), setadmittedHospitalEn,
+        vehicleDesDetailsEn: vehicleDesDetailsEn.trim(),
+        publicPlaceType,
+        localityNameEn: localityNameEn.trim(),
+        localityNameMl: localityNameMl.trim(),
+        streetNameEn: streetNameEn.trim(),
+        streetNameMl: streetNameMl.trim(),
+        publicPlaceDecpEn: publicPlaceDecpEn.trim(),
         birthWeight, pregnancyDuration, medicalAttensionSub, deliveryMethods, IsEditChangeScreen,
-        uuid,DifferenceInTime,isWorkflow
+        uuid, DifferenceInTime, isWorkflow, isPayment, Amount
       });
     }
   };
@@ -906,7 +1269,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
   } else {
     return (
       <React.Fragment>
-        <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+        {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
         {window.location.href.includes("/citizen") ? <Timeline /> : null}
         {window.location.href.includes("/employee") ? <Timeline /> : null}
         <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!childDOB || !gender || !birthPlace
@@ -980,6 +1343,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
                     value={childAadharNo}
                     disable={isDisableEdit}
                     onChange={setSelectChildAadharNo}
+                    onKeyPress={setCheckSpecialChar}
                     placeholder={`${t("CS_COMMON_CHILD_AADHAAR")}`}
                     inputProps={{
                       maxLength: 12,
@@ -1009,7 +1373,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
                   isMandatory={false}
                   option={cmbPlaceMaster}
                   selected={birthPlace}
-                  disable={isDisableEdit}
+                  disable={isDisableEditRole}
                   select={setselectBirthPlace}
                   placeholder={`${t("CR_BIRTH_PLACE")}`}
                 />
@@ -1135,15 +1499,8 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
               </div>
             </div>
           </div>
-          <div className="row">
-            <div className="col-md-12">
-              <div className="col-md-6">
-                <CheckBox label={t("CR_WANT_TO_ENTER_CHILD_NAME")} onChange={setChildName}
-                  value={isChildName} checked={isChildName} />
-              </div>
-            </div>
-          </div>
-          {isChildName === true && (
+
+          {isChildName === false && (
             <div>
               {/* <div className="row">
               <div className="col-md-12">
@@ -1277,6 +1634,14 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
                 </div>
               </div>
             </div>)}
+          <div className="row">
+            <div className="col-md-12">
+              <div className="col-md-6">
+                <CheckBox label={t("CR_WANT_TO_ENTER_CHILD_NAME")} onChange={setChildName}
+                  value={isChildName} checked={isChildName} />
+              </div>
+            </div>
+          </div>
           {/* <div className="row">
           <div className="col-md-12" ><h1 className="headingh1" ><span style={{ background: "#fff", padding: "0 10px" }}>{`${t("OTHER_DETAILS")}`}</span> </h1>
           </div>
@@ -1371,7 +1736,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
                   value={birthWeight}
                   onChange={setSelectBirthWeight}
                   placeholder={`${t("CR_BIRTH_WEIGHT")}`}
-                  {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "decimal", title: t("CR_INVALID_BIRTH_WEIGHT") })}
+                  {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_BIRTH_WEIGHT") })}
                 />
               </div>
             </div>
@@ -1393,9 +1758,9 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
                 admittedHospitalEnError || vehiDesDetailsEnError ||
                 placeTypepEnError || localNameEnError || localNameMlError ||
                 MedicalAttensionSubStError || DeliveryMethodStError || BirthWeightError
-                || PregnancyDurationStError || PregnancyDurationInvalidError
-
-
+                || PregnancyDurationStError || PregnancyDurationInvalidError || ChildFirstNameEnError || ChildMiddleNameEnError
+                || ChildLastNameEnError || ChildFirstNameMlError || ChildMiddleNameMlError || ChildLastNameMlError
+                || AdsHomeStreetNameEnError || AdsHomeStreetNameMlError
               }
               label={
                 AadharError || DOBError || HospitalError || InstitutionError || InstitutionNameError ||
@@ -1412,7 +1777,9 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
                   admittedHospitalEnError || vehiDesDetailsEnError ||
                   placeTypepEnError || localNameEnError || localNameMlError ||
                   MedicalAttensionSubStError || DeliveryMethodStError || BirthWeightError
-                  || PregnancyDurationStError || PregnancyDurationInvalidError
+                  || PregnancyDurationStError || PregnancyDurationInvalidError || ChildFirstNameEnError || ChildMiddleNameEnError
+                  || ChildLastNameEnError || ChildFirstNameMlError || ChildMiddleNameMlError || ChildLastNameMlError
+                  || AdsHomeStreetNameEnError || AdsHomeStreetNameMlError
                   ?
                   AadharError
                     ? t(`CS_COMMON_INVALID_AADHAR_NO`) : DOBError ? t(`BIRTH_DOB_VALIDATION_MSG`)
@@ -1440,9 +1807,15 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth=false 
                                                               : PregnancyDurationStError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_CHOOSE`)
                                                                 : PregnancyDurationInvalidError ? t(`BIRTH_ERROR_PREGNANCY_DURATION_INVALID_CHOOSE`)
                                                                   : DeliveryMethodStError ? t(`BIRTH_ERROR_DELIVERY_METHOD_CHOOSE`)
-
-
-                                                                    : setToast(false)
+                                                                    : ChildFirstNameEnError ? t(`BIRTH_ERROR_CHILD_FIRST_NAME_EN`)
+                                                                      : ChildMiddleNameEnError ? t(`BIRTH_ERROR_CHILD_MIDDLE_NAME_EN`)
+                                                                        : ChildLastNameEnError ? t(`BIRTH_ERROR_CHILD_LAST_NAME_EN`)
+                                                                          : ChildFirstNameMlError ? t(`BIRTH_ERROR_CHILD_FIRST_NAME_ML`)
+                                                                            : ChildMiddleNameMlError ? t(`BIRTH_ERROR_CHILD_MIDDLE_NAME_ML`)
+                                                                              : ChildLastNameMlError ? t(`BIRTH_ERROR_CHILD_LAST_NAME_ML`)
+                                                                                : AdsHomeStreetNameEnError ? t(`BIRTH_ERROR_HOME_STREET_NAME_EN`)
+                                                                                  : AdsHomeStreetNameMlError ? t(`BIRTH_ERROR_HOME_STREET_NAME_ML`)
+                                                                                    : setToast(false)
                   : setToast(false)
               }
               onClose={() => setToast(false)}

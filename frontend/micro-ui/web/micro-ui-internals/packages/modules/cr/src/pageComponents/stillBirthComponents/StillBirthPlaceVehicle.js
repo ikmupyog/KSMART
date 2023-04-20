@@ -141,10 +141,15 @@ const StillBirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleT
       setvehicleToMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
-  function setSelectVehicleOtherDetailsEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
-      setvehicleDesDetailsEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
-    }
+  // function setSelectVehicleOtherDetailsEn(e) {
+  //   if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z]*$") != null)) {
+  //     setvehicleDesDetailsEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+  //   }
+  // }
+
+  function setSelectVehicleOtherDetailsEn(e) {   
+      setvehicleDesDetailsEn(e.target.value);
+    
   }
   function selectadmittedHospitalEn(value) {
     setSelectedadmittedHospitalEn(value);
@@ -167,7 +172,9 @@ const StillBirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleT
   } else
   return (
     <React.Fragment>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} >
+      {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} > */}
+     
+        <div className="col-md-12" >
         <div className="row">
           <div className="col-md-12" >
             <h1 className="headingh1" >
@@ -343,8 +350,9 @@ const StillBirthPlaceVehicle = ({ config, onSelect, userType, formData, vehicleT
             />
           </div>
         </div>
-
-      </FormStep>
+        </div>
+       
+      {/* </FormStep> */}
     </React.Fragment>
   );
 };

@@ -13,7 +13,7 @@ const ApplicationDetails = () => {
   const { id: applicationNumber } = useParams();
   const [showToast, setShowToast] = useState(null);
   // const [callUpdateService, setCallUpdateValve] = useState(false);
-  const [businessService, setBusinessService] = useState("BIRTHHOSP21"); //DIRECTRENEWAL BIRTHHOSP21
+  const [businessService, setBusinessService] = useState("WFBIRTH21DAYS"); //DIRECTRENEWAL BIRTHHOSP21
   const [numberOfApplications, setNumberOfApplications] = useState([]);
   const [allowedToNextYear, setAllowedToNextYear] = useState(false);
   sessionStorage.setItem("applicationNumber", applicationNumber);
@@ -73,7 +73,7 @@ const ApplicationDetails = () => {
     if ((!actions || actions?.length == 0) && workflowDetails?.data?.actionState) workflowDetails.data.actionState.nextActions = [];
 
     workflowDetails?.data?.actionState?.nextActions?.forEach(data => {
-      console.log(data.action);
+      // console.log(data.action);
       if (data.action == "EDIT") {
         // /digit-ui/employee/cr/cr-flow/child-details/${applicationNumber}      
           data.redirectionUrl = {

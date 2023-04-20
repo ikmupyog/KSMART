@@ -1,5 +1,5 @@
-import { BackButton,CardBasedOptions,ComplaintIcon ,OBPSIcon,DropIcon} from "@egovernments/digit-ui-react-components";
-import React from "react";
+import { BackButton, CardBasedOptions, ComplaintIcon, OBPSIcon, DropIcon } from "@egovernments/digit-ui-react-components";
+import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Route, Switch, useLocation, useRouteMatch, useHistory } from "react-router-dom";
 import ErrorBoundary from "../../components/ErrorBoundaries";
@@ -13,6 +13,7 @@ import UserProfile from "./Home/UserProfile";
 import Dashboard from "./Dashboard";
 // import PDF from "../../assets/";
 import { useQueryClient } from "react-query";
+import Footer from "../Footer";
 
 const getTenants = (codes, tenants) => {
   return tenants.filter((tenant) => codes.map((item) => item.code).includes(tenant.code));
@@ -34,25 +35,25 @@ const Home = ({
   pathname,
 }) => {
   const queryClient = useQueryClient();
-  // queryClient.removeQueries("CR_CREATE_BIRTH_REG");  
-  // Digit.sessionStorage.removeItem("CR_CREATE_BIRTH_REG");
-  // Digit.sessionStorage.removeItem("CR_BIRTH_EDIT_FLAG");
-  sessionStorage.removeItem("CR_BIRTH_EDIT_FLAG");
-  sessionStorage.removeItem("CR_EDIT_BIRTH_REG");
-
   sessionStorage.removeItem("CR_DEATH_EDIT_FLAG");
   sessionStorage.removeItem("Digit.CR_DEATH_EDIT");
-  const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false) 
-  
-  const location = useLocation()
+  const [editFlag, setFlag] = Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false);
+  //Birth Data Reset
+  sessionStorage.removeItem("CR_BIRTH_EDIT_FLAG");
+  // const [params, setParams, clearParams] = Digit.Hooks.useSessionStorage("CR_CREATE_BIRTH_REG", {});
+
+  // useEffect(() => {
+  //   clearParams();
+  // }, []);
+
+  const location = useLocation();
   const classname = Digit.Hooks.fsm.useRouteSubscription(pathname);
   const { t } = useTranslation();
   const { path } = useRouteMatch();
   sourceUrl = "https://s3.ap-south-1.amazonaws.com/egov-qa-assets";
-  const pdfUrl = "https://pg-egov-assets.s3.ap-south-1.amazonaws.com/Upyog+Code+and+Copyright+License_v1.pdf"
-  React.useEffect(()=>{
-    setFlag(false)
-  },[])
+  React.useEffect(() => {
+    setFlag(false);
+  }, []);
   const appRoutes = modules.map(({ code, tenants }, index) => {
     const Module = Digit.ComponentRegistryService.getComponent(`${code}Module`);
     return (
@@ -62,15 +63,15 @@ const Home = ({
     );
   });
 
-  const ModuleLevelLinkHomePages = modules.map(({ code, bannerImage,...others }, index) => {
+  const ModuleLevelLinkHomePages = modules.map(({ code, bannerImage, ...others }, index) => {
     let Links = Digit.ComponentRegistryService.getComponent(`${code}Links`) || (() => <React.Fragment />);
-    let crBirth = "cr-birth"
-    let crDeath = "cr-death"
-    let crMarriage ="cr-marriage"
-    let matchPath=`/digit-ui/citizen/${code.toLowerCase()}`
+    let crBirth = "cr-birth";
+    let crDeath = "cr-death";
+    let crMarriage = "cr-marriage";
+    let matchPath = `/digit-ui/citizen/${code.toLowerCase()}`;
     // console.log(code);
     const history = useHistory();
-    
+
     const birthProps = {
       header: t(""),
       sideOption: {
@@ -79,14 +80,14 @@ const Home = ({
       },
       options: [
         {
-          name: t("CR_BIRTH_CODE"),
+          name: t("CR_BIRTH_REGISTRATION"),
           Icon: <OBPSIcon />,
-          onClick: () => history.push({
-            pathname: '/digit-ui/citizen/cr-birth-home',
-            state: { module: "cr-birth" }
-          }),
+          onClick: () =>
+            history.push({
+              pathname: "/digit-ui/citizen/cr-birth-home",
+              state: { module: "cr-birth" },
+            }),
         },
-
       ],
       styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
     };
@@ -98,14 +99,14 @@ const Home = ({
       },
       options: [
         {
-          name: t("CR_MARRIAGE_CODE"),
+          name: t("CR_MARRIAGE_REGISTRATION"),
           Icon: <OBPSIcon />,
-          onClick: () => history.push({
-            pathname: '/digit-ui/citizen/cr-marriage-home',
-            state: { module: "cr-marriage" }
-          }),
+          onClick: () =>
+            history.push({
+              pathname: "/digit-ui/citizen/cr-marriage-home",
+              state: { module: "cr-marriage" },
+            }),
         },
-
       ],
       styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
     };
@@ -119,44 +120,48 @@ const Home = ({
         {
           name: t("CR_BIRTH_NEW_REGISTRATION"),
           Icon: <OBPSIcon />,
-          onClick: () => history.push({
-            pathname: `${matchPath}/cr-birth-creation`,
-            state: { module: "cr-birth" }
-          }),
+          onClick: () =>
+            history.push({
+              pathname: `${matchPath}/cr-birth-creation`,
+              state: { module: "cr-birth" },
+            }),
         },
         {
           name: t("CR_STILL_BIRTH_REG"),
           Icon: <OBPSIcon />,
-          onClick: () => history.push({
-            pathname: `${matchPath}/cr-stillbirth-creation`,
-            state: { module: "cr-birth" }
-          }),
+          onClick: () =>
+            history.push({
+              pathname: `${matchPath}/cr-stillbirth-creation`,
+              state: { module: "cr-birth" },
+            }),
         },
         {
-          name:t("CR_OUTSIDEINDIA_BIRTH_REGISTRATION"),
+          name: t("CR_OUTSIDEINDIA_BIRTH_REGISTRATION"),
           Icon: <OBPSIcon />,
-          onClick: () => history.push({
-            pathname: `${matchPath}/cr-outsideindiabirth-creation`,
-            state: { module: "cr-birth" }
-          }),
+          onClick: () =>
+            history.push({
+              pathname: `${matchPath}/cr-outsideindiabirth-creation`,
+              state: { module: "cr-birth" },
+            }),
         },
         {
           name: t("CR_ADOPTION"),
           Icon: <OBPSIcon />,
-          onClick: () => history.push({
-            pathname:`${matchPath}/cr-adoption`,
-            state: { module: "cr-birth" }
-          }),
+          onClick: () =>
+            history.push({
+              pathname: `${matchPath}/cr-adoption`,
+              state: { module: "cr-birth" },
+            }),
         },
         {
-          name: t("CR_NAC"),
+          name: t("CR_BIRTH_NAC"),
           Icon: <OBPSIcon />,
-          onClick: () => history.push({
-            pathname:`${matchPath}/cr-birth-nac`,
-            state: { module: "cr-birth" }
-          }),
+          onClick: () =>
+            history.push({
+              pathname: `${matchPath}/cr-birth-nac`,
+              state: { module: "cr-birth" },
+            }),
         },
-    
       ],
       styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
     };
@@ -168,31 +173,32 @@ const Home = ({
       },
       options: [
         {
-          name:t("CR_NAME_INCLUSION_CORRECTION"),
+          name: t("CR_NAME_INCLUSION_CORRECTION"),
           Icon: <OBPSIcon />,
-          onClick: () => history.push({
-            pathname: `${matchPath}/cr-name-inclusion`,
-            state: { module: "cr-birth" }
-          }),
+          onClick: () =>
+            history.push({
+              pathname: `${matchPath}/cr-name-inclusion`,
+              state: { module: "cr-birth" },
+            }),
         },
         {
           name: t("CR_COMMON_CERT_DOWNLOAD"),
           Icon: <OBPSIcon />,
-          onClick: () => history.push({
-            pathname:`${matchPath}/create-birth-certificate`,
-            state: { module: "cr-birth" }
-          }),
+          onClick: () =>
+            history.push({
+              pathname: `${matchPath}/create-birth-certificate`,
+              state: { module: "cr-birth" },
+            }),
         },
         {
-          name:  t("TL_MY_APPLICATIONS_HEADER"),
+          name: t("TL_MY_APPLICATIONS_HEADER"),
           Icon: <OBPSIcon />,
-          onClick: () => history.push({
-            pathname: `${matchPath}/cr/my-application`,
-            state: { module: "cr-birth" }
-          }),
-        },    
-        
-
+          onClick: () =>
+            history.push({
+              pathname: `${matchPath}/cr/my-application`,
+              state: { module: "cr-birth" },
+            }),
+        },
       ],
       styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
     };
@@ -206,39 +212,29 @@ const Home = ({
         {
           name: t("CR_DEATH_NEW_REGISTRATION"),
           Icon: <OBPSIcon />,
-          onClick: () => history.push({
-            pathname: `${matchPath}/cr-death-creation`,
-            state: { module: "cr-death" }
-          }),
+          onClick: () =>
+            history.push({
+              pathname: `${matchPath}/cr-death-creation`,
+              state: { module: "cr-death" },
+            }),
         },
-       
+        // {
+        //   name: t("CR_COMMON_ABANDONED_DEATH"),
+        //   Icon: <OBPSIcon />,
+        //   onClick: () => history.push({
+        //     pathname: `${matchPath}/cr/`,
+        //     state: { module: "cr-death" }
+        //   }),
+        // },
         {
-          name: t("CR_DEATH_CORRECTIONS"),
+          name: t("CR_DEATH_NAC"),
           Icon: <OBPSIcon />,
-          onClick: () => history.push({
-            pathname: `${matchPath}/cr-death-inclusion`,
-            state: { module: "cr-death" }
-          }),
-          
+          onClick: () =>
+            history.push({
+              pathname: `${matchPath}/cr-death-nac`,
+              state: { module: "cr-death" },
+            }),
         },
-        
-       
-        {
-          name: t("CR_COMMON_ABANDONED_DEATH"),
-          Icon: <OBPSIcon />,
-          onClick: () => history.push({
-            pathname: `${matchPath}/cr/`,
-            state: { module: "cr-death" }
-          }),
-        }, 
-        {
-          name: t("CR_NAC"),
-          Icon: <OBPSIcon />,
-          onClick: () => history.push({
-            pathname: `${matchPath}/cr-death-nac`,
-            state: { module: "cr-death" }
-          }),
-        }, 
       ],
       styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
     };
@@ -249,23 +245,33 @@ const Home = ({
         onClick: () => history.push("/digit-ui/citizen/all-services"),
       },
       options: [
-           {
+        {
+          name: t("CR_DEATH_CORRECTIONS"),
+          Icon: <OBPSIcon />,
+          onClick: () =>
+            history.push({
+              pathname: `${matchPath}/cr-death-inclusion`,
+              state: { module: "cr-death" },
+            }),
+        },
+        {
           name: t("CR_COMMON_CERT_DOWNLOAD"),
           Icon: <OBPSIcon />,
-          onClick: () => history.push({
-            pathname: `${matchPath}/create-death-certificate`,
-            state: { module: "cr-death" }
-          }),
-        }, 
+          onClick: () =>
+            history.push({
+              pathname: `${matchPath}/create-death-certificate`,
+              state: { module: "cr-death" },
+            }),
+        },
         {
           name: t("TL_MY_APPLICATIONS_HEADER"),
           Icon: <OBPSIcon />,
-          onClick: () => history.push({
-            pathname: `${matchPath}/cr/death/my-application`,
-            state: { module: "cr-death" }
-          }),
-        },       
-
+          onClick: () =>
+            history.push({
+              pathname: `${matchPath}/cr/death/my-application`,
+              state: { module: "cr-death" },
+            }),
+        },
       ],
       styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "200%" },
     };
@@ -279,47 +285,49 @@ const Home = ({
         {
           name: t("CR_MARRIAGE_NEW_REGISTRATION"),
           Icon: <OBPSIcon />,
-          onClick: () => history.push({
-            pathname: `${matchPath}/cr-marriage-creation`,
-            state: { module: "cr-marriage" }
-          }),
+          onClick: () =>
+            history.push({
+              pathname: `${matchPath}/cr-marriage-creation`,
+              state: { module: "cr-marriage" },
+            }),
         },
         {
           name: t("CR_MARRIAGE_CORRECTIONS"),
           Icon: <OBPSIcon />,
-          onClick: () => history.push({
-            pathname: `${matchPath}/cr-marriage-inclusion`,
-            state: { module: "cr-marriage" }
-          }),
+          onClick: () =>
+            history.push({
+              pathname: `${matchPath}/cr-marriage-correction`,
+              state: { module: "cr-marriage" },
+            }),
         },
       ],
-        styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
-      };
-      const mrgcertProps = {
-        header: t(""),
-        sideOption: {
-          name: t(""),
-          onClick: () => history.push("/digit-ui/citizen/all-services"),
-        },
-        options: [
-          
-             {
-            name: t("CR_COMMON_CERT_DOWNLOAD"),
-            Icon: <OBPSIcon />,
-            onClick: () => history.push({
-              pathname: `${matchPath}/create-death-certificate`,
-              state: { module: "cr-death" }
+      styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
+    };
+    const mrgcertProps = {
+      header: t(""),
+      sideOption: {
+        name: t(""),
+        onClick: () => history.push("/digit-ui/citizen/all-services"),
+      },
+      options: [
+        {
+          name: t("CR_COMMON_CERT_DOWNLOAD"),
+          Icon: <OBPSIcon />,
+          onClick: () =>
+            history.push({
+              pathname: `${matchPath}/cr/marriage/download-certificate`,
+              state: { module: "cr-marriage" },
             }),
-          }, 
+        },
         {
           name: t("TL_MY_APPLICATIONS_HEADER"),
           Icon: <OBPSIcon />,
-          onClick: () => history.push({
-            pathname: `${matchPath}/cr-marriage-creation`,
-            state: { module: "cr-marriage" }
-          }),
+          onClick: () =>
+            history.push({
+              pathname: `${matchPath}/cr/marriage/my-application`,
+              state: { module: "cr-marriage" },
+            }),
         },
-
       ],
       styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
     };
@@ -332,63 +340,117 @@ const Home = ({
       },
       options: [
         {
-        name: t("CR_DEATH_CODE"),
-        Icon: <OBPSIcon />,
-        onClick: () => history.push({
-          pathname: '/digit-ui/citizen/cr-death-home',
-          state: { module: "cr-death" }
-        }),
+          name: t("CR_DEATH_REGISTRATION"),
+          Icon: <OBPSIcon />,
+          onClick: () =>
+            history.push({
+              pathname: "/digit-ui/citizen/cr-death-home",
+              state: { module: "cr-death" },
+            }),
+        },
+      ],
+      styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
+    };
 
+    const complaintProps = {
+      header: t(""),
+      sideOption: {
+        name: t(""),
+        onClick: () => history.push("/digit-ui/citizen/all-services"),
       },
+      options: [
+        {
+          name: t("CS_COMMON_FILE_A_COMPLAINT"),
+          Icon: <OBPSIcon />,
+          onClick: () =>
+            history.push({
+              pathname: "/digit-ui/citizen/pgr/create-complaint/complaint-type",
+              state: { module: "pgr" },
+            }),
+        },
+      ],
+      styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
+    };
 
+    const myComplaintProps = {
+      header: t(""),
+      sideOption: {
+        name: t(""),
+        onClick: () => history.push("/digit-ui/citizen/all-services"),
+      },
+      options: [
+        {
+          name: t("CS_HOME_MY_COMPLAINTS"),
+          Icon: <OBPSIcon />,
+          onClick: () =>
+            history.push({
+              pathname: "/digit-ui/citizen/pgr/complaints",
+              state: { module: "pgr" },
+            }),
+        },
       ],
       styles: { display: "flex", flexWrap: "wrap", justifyContent: "flex-start", width: "100%" },
     };
 
     return (
-      <React.Fragment>
-       
+      <React.Fragment key={index}>
         {code === "CR" && location?.state?.module === crBirth ? (
-          <Route key={index} path={`${path}/${crBirth.toLowerCase()}-home`}>
+          <Route path={`${path}/${crBirth.toLowerCase()}-home`}>
             <div className="moduleLinkHomePage">
               <img src={bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
               <BackButton className="moduleLinkHomePageBackButton" />
-                <h1>{t("CR_BIRTH_REGISTRATION".toUpperCase())}</h1>
+              <h1>{t("CR_BIRTH_REGISTRATION".toUpperCase())}</h1>
             </div>
-             <div className="ServicesSection" style={{display:"flex",marginTop:"20px"}}>
-                <CardBasedOptions {...birthSectionAProps} />
-                <CardBasedOptions {...birthSectionBProps} />
+            <div className="ServicesSection" style={{ display: "flex", marginTop: "20px" }}>
+              <CardBasedOptions {...birthSectionAProps} />
+              <CardBasedOptions {...birthSectionBProps} />
             </div>
           </Route>
-        ) :
-         code === "CR" && location?.state?.module === crDeath ? (
-          <Route key={index} path={`${path}/${crDeath.toLowerCase()}-home`}>
+        ) : code === "CR" && location?.state?.module === crDeath ? (
+          <Route path={`${path}/${crDeath.toLowerCase()}-home`}>
             <div className="moduleLinkHomePage">
               <img src={bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
               <BackButton className="moduleLinkHomePageBackButton" />
-                <h1>{t("CR_DEATH_REGISTRATION".toUpperCase())}</h1>
+              <h1>{t("CR_DEATH_REGISTRATION".toUpperCase())}</h1>
             </div>
-            <div className="ServicesSection" style={{display:"flex",marginTop:"20px"}}>
-                <CardBasedOptions {...DearhRegProps} />
-                <CardBasedOptions {...DeathcertProps} />
+            <div className="ServicesSection" style={{ display: "flex", marginTop: "20px" }}>
+              <CardBasedOptions {...DearhRegProps} />
+              <CardBasedOptions {...DeathcertProps} />
             </div>
           </Route>
-        ) :  code === "CR" && location?.state?.module === crMarriage ? (
-          <Route key={index} path={`${path}/${crMarriage.toLowerCase()}-home`}>
+        ) : code === "CR" && location?.state?.module === crMarriage ? (
+          <Route path={`${path}/${crMarriage.toLowerCase()}-home`}>
             <div className="moduleLinkHomePage">
               <img src={bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
               <BackButton className="moduleLinkHomePageBackButton" />
-                <h1>{t('CR_MODULE_MARRIAGE'.toUpperCase())}</h1>
+              <h1>{t("CR_MODULE_MARRIAGE".toUpperCase())}</h1>
             </div>
-            <div className="ServicesSection" style={{display:"flex",marginTop:"20px"}}>
-                <CardBasedOptions {...MarriageRegProps} />
-                <CardBasedOptions {...mrgcertProps} />
-                
+            <div className="ServicesSection" style={{ display: "flex", marginTop: "20px" }}>
+              <CardBasedOptions {...MarriageRegProps} />
+              <CardBasedOptions {...mrgcertProps} />
             </div>
           </Route>
-        ) :
-        code === "CR"?
-        (
+        ) : code === "CR" ? (
+          <Route path={`${path}/${code.toLowerCase()}-home`}>
+            <div className="moduleLinkHomePage">
+              <img src={bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
+              <BackButton className="moduleLinkHomePageBackButton" />
+              <h1>{t("MODULE_" + code.toUpperCase())}</h1>
+            </div>
+            <div className="moduleLinkHomePageModuleLinks">
+              <div
+                className="ServicesSection flexService"
+                style={{
+                  display: "flex",
+                }}
+              >
+                <CardBasedOptions {...birthProps} />
+                <CardBasedOptions {...deathProps} />
+                <CardBasedOptions {...marriageProps} />
+              </div>
+            </div>
+          </Route>
+        ) : code === "PGR" ? (
           <Route key={index} path={`${path}/${code.toLowerCase()}-home`}>
             <div className="moduleLinkHomePage">
               <img src={bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
@@ -396,17 +458,14 @@ const Home = ({
               <h1>{t("MODULE_" + code.toUpperCase())}</h1>
             </div>
             <div className="moduleLinkHomePageModuleLinks">
-            <div className="ServicesSection" style={{display:"flex"}}>
-                <CardBasedOptions {...birthProps} />
-                <CardBasedOptions {...deathProps} />
-                <CardBasedOptions {...marriageProps} />
-         </div>
+              <div className="ServicesSection" style={{ display: "flex" }}>
+                <CardBasedOptions {...complaintProps} />
+                <CardBasedOptions {...myComplaintProps} />
+              </div>
             </div>
           </Route>
-        )
-        :
-         (
-          <Route key={index} path={`${path}/${code.toLowerCase()}-home`}>
+        ) : (
+          <Route path={`${path}/${code.toLowerCase()}-home`}>
             <div className="moduleLinkHomePage">
               <img src={bannerImage || stateInfo?.bannerUrl} alt="noimagefound" />
               <BackButton className="moduleLinkHomePageBackButton" />
@@ -417,7 +476,6 @@ const Home = ({
             </div>
           </Route>
         )}
-
       </React.Fragment>
     );
   });
@@ -472,17 +530,7 @@ const Home = ({
           </ErrorBoundary>
         </Switch>
       </div>
-      {/* <div style={{ width: '100%', bottom: 0 }}>
-        <div style={{ display: 'flex', justifyContent: 'center', color:"#22394d" }}>
-          <img style={{ cursor: "pointer", display: "inline-flex", height: '1.4em' }} alt={"Powered by DIGIT"} src={`${sourceUrl}/digit-footer.png`} onError={"this.src='./../digit-footer.png'"} onClick={() => {
-            window.open('https://www.digit.org/', '_blank').focus();
-          }}></img>
-          <span style={{ margin: "0 10px" }}>|</span>
-          <span style={{ cursor: "pointer", fontSize: "16px", fontWeight: "400"}} onClick={() => { window.open('https://niua.in/', '_blank').focus();}} >Copyright © 2022 National Institute of Urban Affairs</span>
-          <span style={{ margin: "0 10px" }}>|</span>
-          <a style={{ cursor: "pointer", fontSize: "16px", fontWeight: "400"}} href={pdfUrl} target='_blank'>UPYOG License</a>
-        </div>
-      </div> */}
+      <Footer/>
     </div>
   );
 };

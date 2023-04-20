@@ -32,25 +32,26 @@ const convertEpochToDate = (dateEpoch) => {
 //     address?.pincode && t(address?.pincode) ? `, ${address.pincode}` : " "
 //   }`;
 // };
-export const CRAbandonedBirthsearch = {
+export const CRAbandonedsearch = {
   all: async (tenantId, filters = {}) => {
     const response = await CRABNBirthService.CRAbandonedsearch({ tenantId, filters });
     return response;
   },
   application: async (tenantId, filters = {}) => {
     const response = await CRABNBirthService.CRAbandonedsearch({ tenantId, filters });
-    return response.ChildDetails[0];
+    console.log(response);
+    return response.AbandonedDetails[0];
   },
 
   numberOfApplications: async (tenantId, filters = {}) => {
     const response = await CRABNBirthService.CRAbandonedsearch({ tenantId, filters });
-    return response.ChildDetails;
+    return response.AbandonedChildDetails;
   },
 
   applicationDetails: async (t, tenantId, applicationNumber, userType) => {
     // console.log("applicationNumber" + applicationNumber);
     const filter = { applicationNumber };
-    const response = await CRStillBirthsearch.application(tenantId, filter);
+    const response = await CRAbandonedsearch.application(tenantId, filter);
     // console.log(response);
     // const propertyDetails =
     //   response?.tradeLicenseDetail?.additionalDetail?.propertyId &&
@@ -59,7 +60,7 @@ export const CRAbandonedBirthsearch = {
     if (response?.licenseNumber) {
       const birthNumbers = response?.applicationNumber;
       const filters = { birthNumbers, offset: 0 };
-      numOfApplications = await CRsearch.numberOfApplications(tenantId, filters);
+      numOfApplications = await CRAbandonedsearch.numberOfApplications(tenantId, filters);
     }
     let employeeResponse = [];
     const Birthdetails = {
@@ -71,81 +72,61 @@ export const CRAbandonedBirthsearch = {
       asSectionHeader: true,
       values: [
         { title: "CR_SEARCH_APP_NO_LABEL", value: response?.applicationNumber || "NA" },
-        { title: "PDF_BIRTH_CHILD_NAME", value: response?.childFirstNameEn + response?.childMiddleNameEn + response?.childLastNameEn },
+        // { title: "PDF_BIRTH_CHILD_NAME", value: response?.childFirstNameEn + response?.childMiddleNameEn + response?.childLastNameEn },
         { title: "PDF_BIRTH_CHILD_SEX", value: response?.gender },
         { title: "PDF_BIRTH_DATE_OF_BIRTH", value: response?.childDOB ? convertEpochToDate(response?.childDOB) : "NA" },
-        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.hospitalName + "/" + response?.hospitalNameMl || "NA"},       
+        { title: "PDF_BIRTH_PLACE_OF_BIRTH", value: response?.hospitalName + "/" + response?.hospitalNameMl || "NA"}, 
+        
        ],
     };
-    const parentInfo = {
-      title: "CR_BIRTH_PARENT_INFORMATION_HEADER",
+    // const parentInfo = {
+    //   title: "CR_BIRTH_PARENT_INFORMATION_HEADER",
+    //   values: [
+    //     { title: "PDF_BIRTH_NAME_OF_MOTHER", value: response?.ParentsDetails?.motherFirstNameEn + " / " + response?.ParentsDetails?.motherFirstNameMl || "NA"},
+    //     { title: "PDF_BIRTH_MOTHER_AADHAR", value: response?.ParentsDetails?.motherAadhar  || "NA"},
+    //     { title: "PDF_BIRTH_MOTHER_ADDRESS", value: response?.ParentsDetails?.addressOfMother  || "NA"},
+    //   ],
+    // };
+    const motherInfo = {
+      title: "CR_BIRTH_MOTHER_INFORMATION_HEADER",
       values: [
         { title: "PDF_BIRTH_NAME_OF_MOTHER", value: response?.ParentsDetails?.motherFirstNameEn + " / " + response?.ParentsDetails?.motherFirstNameMl || "NA"},
-        { title: "PDF_BIRTH_NAME_OF_FATHER", value: response?.ParentsDetails?.fatherFirstNameEn + " / " + response?.ParentsDetails?.fatherFirstNameMl || "NA"},       
+        { title: "PDF_BIRTH_MOTHER_AADHAR", value: response?.ParentsDetails?.motherAadhar  || "NA"},
+        { title: "PDF_BIRTH_MOTHER_ADDRESS", value: response?.ParentsDetails?.addressOfMother  || "NA"},
       ],
     };
-    const AddressBirthDetailsInfo = {
-      title: "CR_ADDRESS_INFORMATION_HEADER",
-      // values: [
-      //   { title: "CR_BIRTH_PERS_HO_NAME_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaHouseNameEn || "CR_NOT_RECORDED"},
-      //   { title: "CR_BIRTH_PERS_STREET_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaStreetNameEn || "CR_NOT_RECORDED"},
-      //   { title: "CR_BIRTH_PERS_LOCALITY_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaLocalityNameEn || "CR_NOT_RECORDED"},
-      //   { title: "CR_BIRTH_PERS_POSTOFFICE_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaPostOffice.name || "CR_NOT_RECORDED"},
-      //   { title: "CR_BIRTH_PERS_PINCODE_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaPincode || "CR_NOT_RECORDED"},
-      //   { title: "CR_BIRTH_PERS_DISTRICT_LABEL", value: response?.AddressBirthDetails.presentInsideKeralaDistrict.name|| "CR_NOT_RECORDED"},
-      //   { title: "CR_BIRTH_PERS_STATE_LABEL", value: response?.AddressBirthDetails. AddressBirthDetails.presentaddressStateName.name || "CR_NOT_RECORDED"},
-      //   { title: "CR_BIRTH_PERS_COUNTRY_LABEL", value: response?.AddressBirthDetails.presentaddressCountry.name || "CR_NOT_RECORDED"},
-
-      //   { title: "CR_BIRTH_PERM_HO_NAME_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrHouseNameEn || "CR_NOT_RECORDED"},
-      //   { title: "CR_BIRTH_PERM_STREET_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrStreetNameEn || "CR_NOT_RECORDED"},
-      //   { title: "CR_BIRTH_PERM_LOCALITY_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrLocalityNameEn || "CR_NOT_RECORDED"},
-      //   { title: "CR_BIRTH_PERM_POSTOFFICE_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrPostOffice.name || "CR_NOT_RECORDED"},
-      //   { title: "CR_BIRTH_PERM_PINCODE_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrPincode || "CR_NOT_RECORDED"},
-      //   { title: "CR_BIRTH_PERM_DISTRICT_LABEL", value: response?.AddressBirthDetails.permntInKeralaAdrDistrict.name|| "CR_NOT_RECORDED"},
-      //   { title: "CR_BIRTH_PERM_STATE_LABEL", value: response?.AddressBirthDetails.permtaddressStateName.name || "CR_NOT_RECORDED"},
-      //   { title: "CR_BIRTH_PERM_COUNTRY_LABEL", value: response?.AddressBirthDetails.permtaddressCountry.name || "CR_NOT_RECORDED"},
-        
-        
-      // ],
-    };
-    // const fatherInfo = {
-    //   title: "CR_BIRTH_FATHER_INFORMATION_HEADER",
-    //   values: [
-    //     { title: "CR_BIRTH_FATHERNAME_LABEL", value: response?.birthFather.firstname_en + response?.birthFather.middlename_en + response?.birthFather.lastname_en },
-    //     { title: "CR_BIRTH_FATHER_AADHAR_LABEL", value: response?.birthFather.aadharno || "NA" },
-    //     { title: "CR_BIRTH_FATHER_EMAIL_LABEL", value: response?.birthFather.emailid || "NA" },
-    //     { title: "CR_BIRTH_FATHER_MOBILE_LABEL", value: response?.birthFather.mobileno || "NA" },
-    //   ],
-    // };
-    // const motherInfo = {
-    //   title: "CR_BIRTH_MOTHER_INFORMATION_HEADER",
-    //   values: [
-    //     { title: "CR_BIRTH_MOTHERNAME_LABEL", value: response?.birthMother.firstname_en + " " + response?.birthMother.middlename_en + " " + response?.birthMother.lastname_en },
-    //     { title: "CR_BIRTH_MOTHER_AADHAR_LABEL", value: response?.birthMother.aadharnoaadharno || "NA"},
-    //     { title: "CR_BIRTH_MOTHER_EMAIL_LABEL", value: response?.birthMother.emailid || "NA" },
-    //     { title: "CR_BIRTH_MOTHER_MOBILE_LABEL", value: response?.birthMother.mobileno || "NA" },
-    //   ],
-    // };
-    // const addressInfo = {
-    //   title: "CR_ADDRESS_INFORMATION_HEADER",
-    //   values: [
-    //     { title: "CR_BIRTH_PERM_HO_NO_LABEL", value: response?.birthPermanent.houseno || "NA"},
-    //     { title: "CR_BIRTH_PERM_HO_NAME_LABEL", value: response?.birthPermanent.housename_en || "NA" },
-    //     { title: "CR_BIRTH_PERM_HO_LOCALITY_LABEL", value: response?.birthPermanent.locality_en || "NA" },
-    //     { title: "CR_BIRTH_PERM_HO_CITY_LABEL", value: response?.birthPermanent.city_en || "NA" },
-    //   ],
-    // };
     const statisticalInfo = {
       title: "CR_STATSTICAL_INFORMATION_HEADER",
-      // values: [
-      //   { title: "CR_STATSTICAL_WEIGHT_LABEL", value: response?.birthStatistical.weight_of_child || "NA" },
-      //   { title: "CR_STATSTICAL_HEIGHT_LABEL", value: response?.birthStatistical.height_of_child || "NA" },
-      //   { title: "CR_STATSTICAL_PWEEK_LABEL", value: response?.birthStatistical.duration_of_pregnancy_in_week || "NA" },
-      //   { title: "CR_STATSTICAL_DEL_METHOD_LABEL", value: response?.birthStatistical.delivery_method || "NA" },
-      // ],
+      values: [
+        { title: "PDF_BIRTH_NATURE_MEDICAL_ATTENTION", value: response?.medicalAttensionSub || "NA" },
+        { title: "PDF_BIRTH_DURATION_PREGNANCY", value: response?.medicalAttensionSub || "NA" },
+        { title: "PDF_BIRTH_DELIVERYMETHOD", value: response?.deliveryMethods || "NA" },
+        { title: "PDF_BIRTH_WEIGHT", value: response?.birthWeight || "NA" },
+      ],
     };
-    
-
+    const childCustodyInfo = {
+      title: "CR_CARETAKER_INFORMATION_HEADER",
+      values: [
+        { title: "PDF_BIRTH_INSTITUTION", value: response?.caretakerDetails?.caretakerDetails || "NA" },
+        { title: "PDF_BIRTH_CARETAKER_NAME", value: response?.caretakerDetails?.caretakerName || "NA" },
+        { title: "PDF_BIRTH_CARETAKER_DESI", value: response?.caretakerDetails?.caretakerDesignation || "NA" },
+        { title: "PDF_BIRTH_CARETAKER_MOBILE", value: response?.caretakerDetails?.caretakerMobile || "NA" },
+        { title: "PDF_BIRTH_CARETAKER_ADDRESS", value: response?.caretakerDetails?.caretakerAddress || "NA" },
+        
+      ],
+    };
+   
+    const informantDetailsInfo = {
+      title: "CR_OFFICIAL_INFORMANT_HEADER",
+      values: [
+        { title: "PDF_BIRTH_OFFICE_INSTITUTION", value: response?.InformarHosInstDetails?.infomantinstitution || "NA" },
+        { title: "PDF_BIRTH_INFORMANT_NAME", value: response?.InformarHosInstDetails?.infomantFirstNameEn || "NA" },
+        { title: "PDF_BIRTH_INFORMANT_DESI", value: response?.InformarHosInstDetails?.informerDesi || "NA" },
+        { title: "PDF_BIRTH_INFORMANT_MOBILE", value: response?.InformarHosInstDetails?.infomantMobile || "NA" },
+        { title: "PDF_BIRTH_INFORMANT_ADDRESS", value: response?.InformarHosInstDetails?.informerAddress || "NA" },
+        
+      ],
+    };
     // if (response?.workflowCode == "NewTL" && response?.status !== "APPROVED") {
     //   const details = {
     //     title: "",
@@ -161,10 +142,13 @@ export const CRAbandonedBirthsearch = {
     // }
     response && employeeResponse.push(Birthdetails);
     response && employeeResponse.push(childdetails);
-    response && employeeResponse.push(parentInfo);
+    response && employeeResponse.push(motherInfo);
     // response && employeeResponse.push(motherInfo);
     // response && employeeResponse.push(addressInfo);
-    // response && employeeResponse.push(statisticalInfo);
+    response && employeeResponse.push(statisticalInfo);
+    response && employeeResponse.push(childCustodyInfo);
+    response && employeeResponse.push(informantDetailsInfo);
+    
 
     return {
       tenantId: response.tenantId,

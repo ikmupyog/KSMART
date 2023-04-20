@@ -3,30 +3,34 @@ import { FormStep, CardLabel, TextInput, Dropdown, CheckBox, BackButton,Toast } 
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 
-const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => {
-  // console.log(formData);
+const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath, isEditDeathPageComponents  }) => {
+  console.log(formData);
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
   let validation = {};
   const { data: Spouse = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "SpouseType");
   let cmbspouse = [];
   Spouse &&
-    Spouse["birth-death-service"] &&
-    Spouse["birth-death-service"].SpouseType.map((ob) => {
+    Spouse["birth-death-service"] && Spouse["birth-death-service"].spouseType &&
+    Spouse["birth-death-service"].spouseType.map((ob) => {
       cmbspouse.push(ob);
     });
+    //const [isEditDeathPageComponents, setIsEditDeathPageComponents] = useState(false);
+    const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
+
   const [SpouseType, setSpouseType] = useState(
     formData?.FamilyInformationDeath?.SpouseType?.code
       ? formData?.FamilyInformationDeath?.SpouseType
-      : formData?.FamilyInformationDeath?.SpouseType
-      ? cmbspouse.filter((cmbspouse) => cmbspouse.code === formData?.FamilyInformationDeath?.SpouseType)[0]
-      : ""
-  );
+      : formData?.InformationDeath?.FamilyInformationDeath?.SpouseType
+      ? cmbspouse.filter((cmbspouse) => cmbspouse.code === formData?.InformationDeath ?.FamilyInformationDeath?.SpouseType)[0]
+      : "" );
+     
+
   const [SpouseUnavailable, setSpouseUnavailable] = useState(
     formData?.FamilyInformationDeath?.SpouseUnavailable
       ? formData?.FamilyInformationDeath?.SpouseUnavailable
-      : formData?.FamilyInformationDeath?.SpouseUnavailable
-      ? formData?.FamilyInformationDeath?.SpouseUnavailable
+      : formData?.InformationDeath?.FamilyInformationDeath ?.SpouseUnavailable
+      ? formData?.InformationDeath?.FamilyInformationDeath ?.SpouseUnavailable
       : false
   );
   // const [Nationality, setSelectedNationality] = useState(
@@ -43,62 +47,75 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
   //     ? cmbspouse.filter((cmbspouse) => cmbspouse.code === formData?.InformationDeath?.SpouseType)[0]
   //     : null
   // );
-  const [SpouseNameEN, setSpouseNameEN] = useState(
-   formData?.FamilyInformationDeath?.SpouseNameEN ? formData?.FamilyInformationDeath?.SpouseNameEN : ""
-
-  );
-  
+  const [SpouseNameEn, setSpouseNameEN] = useState(
+   formData?.FamilyInformationDeath?.SpouseNameEn ? formData?.FamilyInformationDeath?.SpouseNameEn :
+   formData?.InformationDeath ?.FamilyInformationDeath?.SpouseNameEn ? formData?.InformationDeath ?.FamilyInformationDeath?.SpouseNameEn  :""  );
+ 
   // const [SpouseNameEN, setSpouseNameEN] = useState(
   //   formData?.FamilyInformationDeath?.SpouseNameEN ? formData?.FamilyInformationDeath?.SpouseNameEN : ""
   // );
 
-  const [SpouseNameMl, setSpouseNameMl] = useState(
-    formData?.FamilyInformationDeath?.SpouseNameMl ? formData?.FamilyInformationDeath?.SpouseNameMl : ""
-  );
+  const [SpouseNameML, setSpouseNameMl] = useState(
+    formData?.FamilyInformationDeath?.SpouseNameML ? formData?.FamilyInformationDeath?.SpouseNameML :
+    formData?.InformationDeath ?.FamilyInformationDeath?.SpouseNameML ? formData?.InformationDeath ?.FamilyInformationDeath?.SpouseNameML  :""  );
   const [SpouseAadhaar, setSpouseAadhaar] = useState(
-    formData?.FamilyInformationDeath?.SpouseAadhaar ? formData?.FamilyInformationDeath?.SpouseAadhaar : ""
-  );
-
+    formData?.FamilyInformationDeath?.SpouseAadhaar ? formData?.FamilyInformationDeath?.SpouseAadhaar :
+      formData?.InformationDeath ?.FamilyInformationDeath?.SpouseAadhaar ? formData?.InformationDeath ?.FamilyInformationDeath?.SpouseAadhaar :""  );
   const [FatherUnavailable, setFatherUnavailablechecked] = useState(
     formData?.FamilyInformationDeath?.FatherUnavailable
       ? formData?.FamilyInformationDeath?.FatherUnavailable
-      : formData?.FamilyInformationDeath?.FatherUnavailable
-      ? formData?.FamilyInformationDeath?.FatherUnavailable
+      : formData?.InformationDeath?.FamilyInformationDeath?.FatherUnavailable
+      ? formData?.FamilyInformationDeath?.FamilyInformationDeath?.FatherUnavailable
       : false
   );
   const [FatherNameEn, setFatherNameEn] = useState(
-    formData?.FamilyInformationDeath?.FatherNameEn ? formData?.FamilyInformationDeath?.FatherNameEn : ""
+    formData?.FamilyInformationDeath?.FatherNameEn ? formData?.FamilyInformationDeath?.FatherNameEn :
+    formData?.InformationDeath?.FamilyInformationDeath?.FatherNameEn ? formData?.InformationDeath?.FamilyInformationDeath?.FatherNameEn :
+     ""
   );
   const [FatherNameMl, setFatherNameMl] = useState(
-    formData?.FamilyInformationDeath?.FatherNameMl ? formData?.FamilyInformationDeath?.FatherNameMl : ""
+    formData?.FamilyInformationDeath?.FatherNameMl ? formData?.FamilyInformationDeath?.FatherNameMl :
+    formData?.InformationDeath?.FamilyInformationDeath?.FatherNameMl ? formData?.InformationDeath?.FamilyInformationDeath?.FatherNameMl : ""
   );
   const [FatherAadharNo, setFatherAadharNo] = useState(
-    formData?.FamilyInformationDeath?.FatherAadharNo ? formData?.FamilyInformationDeath?.FatherAadharNo : ""
+    formData?.FamilyInformationDeath?.FatherAadharNo ? formData?.FamilyInformationDeath?.FatherAadharNo :
+    formData?.InformationDeath?.FamilyInformationDeath?.FatherAadharNo ? formData?.InformationDeath?.FamilyInformationDeath?.FatherAadharNo : ""
   );
   const [MotherUnavailable, setMotherUnavailable] = useState(
-    formData?.FamilyInformationDeath?.MotherUnavailable ? formData?.FamilyInformationDeath?.MotherUnavailable : false
+    formData?.FamilyInformationDeath?.MotherUnavailable ? formData?.FamilyInformationDeath?.MotherUnavailable :
+    formData?.InformationDeath?.FamilyInformationDeath?.MotherUnavailable ? formData?.InformationDeath?.FamilyInformationDeath?.MotherUnavailable  : false
   );
   const [MotherNameEn, setMotherNameEn] = useState(
-    formData?.FamilyInformationDeath?.MotherNameEn ? formData?.FamilyInformationDeath?.MotherNameEn : ""
+    formData?.FamilyInformationDeath?.MotherNameEn ? formData?.FamilyInformationDeath?.MotherNameEn : 
+    formData?.InformationDeath?.FamilyInformationDeath?.MotherNameEn ? formData?.InformationDeath?.FamilyInformationDeath?.MotherNameEn :""
   );
   const [MotherNameMl, setMotherNameMl] = useState(
-    formData?.FamilyInformationDeath?.MotherNameMl ? formData?.FamilyInformationDeath?.MotherNameMl : ""
+    formData?.FamilyInformationDeath?.MotherNameMl ? formData?.FamilyInformationDeath?.MotherNameMl :
+    formData?.InformationDeath?.FamilyInformationDeath?.MotherNameMl ? formData?.InformationDeath?.FamilyInformationDeath?.MotherNameMl : ""
   );
   const [MotherAadharNo, setMotherAadharNo] = useState(
-    formData?.FamilyInformationDeath?.MotherAadharNo ? formData?.FamilyInformationDeath?.MotherAadharNo : ""
+    formData?.FamilyInformationDeath?.MotherAadharNo ? formData?.FamilyInformationDeath?.MotherAadharNo : 
+    formData?.InformationDeath?.FamilyInformationDeath?.MotherAadharNo ? formData?.InformationDeath?.FamilyInformationDeath?.MotherAadharNo :""
   );
 
   const [FamilyMobileNo, setFamilyMobileNo] = useState(
-    formData?.FamilyInformationDeath?.FamilyMobileNo ? formData?.FamilyInformationDeath?.FamilyMobileNo : ""
+    formData?.FamilyInformationDeath?.FamilyMobileNo ? formData?.FamilyInformationDeath?.FamilyMobileNo :
+    formData?.InformationDeath?.FamilyInformationDeath?.FamilyMobileNo ? formData?.InformationDeath?.FamilyInformationDeath?.FamilyMobileNo : ""
   );
 
   const [FamilyEmailId, setFamilyEmailId] = useState(
-    formData?.FamilyInformationDeath?.FamilyEmailId ? formData?.FamilyInformationDeath?.FamilyEmailId : ""
+    formData?.FamilyInformationDeath?.FamilyEmailId ? formData?.FamilyInformationDeath?.FamilyEmailId :
+    formData?.InformationDeath?.FamilyInformationDeath?.FamilyEmailId ? formData?.InformationDeath?.FamilyInformationDeath?.FamilyEmailId : ""
   );
   // const [inputValue, setInputValue] = useState("");
   const [toast, setToast] = useState(false);
   const [AadharError, setAadharError] = useState(formData?.InformationDeath?.DeceasedAadharNumber ? false : false);
-
+  const [SpouseNameEnError, setSpouseNameEnError] = useState(false);
+  const [SpouseNameMLError, setSpouseNameMLError] = useState(false);
+  const [FatherNameEnError, setFatherNameEnError] = useState(false);
+  const [FatherNameMlError, setFatherNameMlError] = useState(false);
+  const [MotherNameEnError, setMotherNameEnError] = useState(false);
+  const [MotherNameMlError, setMotherNameMlError] = useState(false);
   const onSkip = () => onSelect();
   // function setFatherUnavailablechecked(e){
   //   if (e.target.checked === true) {
@@ -112,29 +129,29 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
   //     setDeathTime("");
   //   }
   // }
-  function setSelectFatherNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setFatherNameEn(
-        e.target.value.replace(
-          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
-          ""
-        )
-      );
-    }
-  }
-  function setSelectFatherNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setFatherNameMl(
-        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-      );
-    }
-  }
+  // function setSelectFatherNameEn(e) {
+  //   if (e.target.value.length === 51) {
+  //     return false;
+  //     // window.alert("Username shouldn't exceed 10 characters")
+  //   } else {
+  //     setFatherNameEn(
+  //       e.target.value.replace(
+  //         /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
+  //         ""
+  //       )
+  //     );
+  //   }
+  // }
+  // function setSelectFatherNameMl(e) {
+  //   if (e.target.value.length === 51) {
+  //     return false;
+  //     // window.alert("Username shouldn't exceed 10 characters")
+  //   } else {
+  //     setFatherNameMl(
+  //       e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
+  //     );
+  //   }
+  // }
   function setSelectFatherAadharNo(e) {
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
@@ -156,29 +173,81 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
     setSpouseType(value);
   }
 
+  // function setSelectSpouseNameEN(e) {
+  //   if (e.target.value.length === 51) {
+  //     return false;
+  //     // window.alert("Username shouldn't exceed 10 characters")
+  //   } else {
+  //     setSpouseNameEN(
+  //       e.target.value.replace(
+  //         /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
+  //         ""
+  //       )
+  //     );
+  //   }
+  // }
+
   function setSelectSpouseNameEN(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setSpouseNameEN(
-        e.target.value.replace(
-          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
-          ""
-        )
-      );
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setSpouseNameEN(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectSpouseNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setSpouseNameMl(
-        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-      );
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern)) && e.target.value.trim() !== " ") {
+      e.preventDefault();
+      setSpouseNameMl('');
+    }
+    else {
+      setSpouseNameMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
+
+  function setSelectFatherNameEn(e) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setFatherNameEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    }
+  }
+
+  function setSelectFatherNameMl(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern)) && e.target.value.trim() !== " ") {
+      e.preventDefault();
+      setFatherNameMl('');
+    }
+    else {
+      setFatherNameMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    }
+  }
+  function setSelectMotherNameEn(e) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+      setMotherNameEn(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    }
+  }
+
+  function setSelectMotherNameMl(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern)) && e.target.value.trim() !== " ") {
+      e.preventDefault();
+      setMotherNameMl('');
+    }
+    else {
+      setMotherNameMl(e.target.value.trim().length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
+    }
+  }
+
+
+
+  // function setSelectSpouseNameMl(e) {
+  //   if (e.target.value.length === 51) {
+  //     return false;
+  //     // window.alert("Username shouldn't exceed 10 characters")
+  //   } else {
+  //     setSpouseNameMl(
+  //       e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
+  //     );
+  //   }
+  // }
 
     function setSelectSpouseAadhaar(e) {
       const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
@@ -201,29 +270,29 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
     //   );
     // }
 
-  function setSelectMotherNameEn(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setMotherNameEn(
-        e.target.value.replace(
-          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
-          ""
-        )
-      );
-    }
-  }
-  function setSelectMotherNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setMotherNameMl(
-        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-      );
-    }
-  }
+  // function setSelectMotherNameEn(e) {
+  //   if (e.target.value.length === 51) {
+  //     return false;
+  //     // window.alert("Username shouldn't exceed 10 characters")
+  //   } else {
+  //     setMotherNameEn(
+  //       e.target.value.replace(
+  //         /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
+  //         ""
+  //       )
+  //     );
+  //   }
+  // }
+  // function setSelectMotherNameMl(e) {
+  //   if (e.target.value.length === 51) {
+  //     return false;
+  //     // window.alert("Username shouldn't exceed 10 characters")
+  //   } else {
+  //     setMotherNameMl(
+  //       e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
+  //     );
+  //   }
+  // }
   function setSelectMotherAadharNo(e) {
     const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
 
@@ -246,27 +315,115 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
     // }
   }
   function setSelectFamilyMobileNo(e) {
-    if (e.target.value != null || e.target.value != "") {
-      if (e.target.value.length <= 10) {
-        if (e.target.value < 10) {
-          setFamilyMobileNo(e.target.value);
-          // setMotherAgeMarriageError(true);
-          return false;
-        } else {
-          setFamilyMobileNo(e.target.value);
-          // setMotherAgeMarriageError(false);
-        }
-      } else {
-        // setMotherAgeMarriageError(true);
-        return false;
-      }
+    if (e.target.value.trim().length >= 0) {
+      setFamilyMobileNo(
+        e.target.value.length <= 10 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 10)
+      );
     }
   }
   function setSelectFamilyEmailId(e) {
     setFamilyEmailId(e.target.value);
   }
 
+  function setCheckMalayalamInputField(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]/;
+    if (!(e.key.match(pattern))) {
+      e.preventDefault();
+    }
+  }
+  function setCheckSpecialCharSpace(e) {
+    let pattern = /^[a-zA-Z-.`' ]*$/;
+    if (!(e.key.match(pattern)) && e.code === 'Space') {
+      e.preventDefault();
+    }
+  }
+  function setCheckSpecialChar(e) {
+    let pattern = /^[0-9]*$/;
+    if (!(e.key.match(pattern))) {
+      e.preventDefault();
+    }
+  }
+
+
+  if (isEditDeath) {
+    if (formData?.FamilyInformationDeath?.SpouseType != null) {
+      if (cmbspouse.length > 0 && (SpouseType === undefined || SpouseType === "")) {
+        setSpouseType(cmbspouse.filter((cmbspouse) => cmbspouse.code === formData?.FamilyInformationDeath?.SpouseType));
+      }
+    }
+  }
+  let validFlag = true;
   const goNext = () => {
+
+
+
+    if (SpouseNameEn.trim() == null || SpouseNameEn.trim() == '' || SpouseNameEn.trim() == undefined) {
+      validFlag = false;
+      setSpouseNameEN("");
+      setSpouseNameEnError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setSpouseNameEnError(false);
+    }
+    if (SpouseNameML.trim() == null || SpouseNameML.trim() == '' || SpouseNameML.trim() == undefined) {
+      validFlag = false;
+      setSpouseNameMl("");
+      setSpouseNameMLError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setSpouseNameMLError(false);
+    }
+
+    if (FatherNameEn.trim() == null || FatherNameEn.trim() == '' || FatherNameEn.trim() == undefined) {
+      validFlag = false;
+      setFatherNameEn("");
+      setFatherNameEnError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setFatherNameEnError(false);
+    }
+    if (FatherNameMl.trim() == null || FatherNameMl.trim() == '' || FatherNameMl.trim() == undefined) {
+      validFlag = false;
+      setFatherNameMl("");
+      setFatherNameMlError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setFatherNameMlError(false);
+    }
+    if (MotherNameEn.trim() == null || MotherNameEn.trim() == '' || MotherNameEn.trim() == undefined) {
+      validFlag = false;
+      setMotherNameEn("");
+      setMotherNameEnError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setMotherNameEnError(false);
+    }
+    if (MotherNameMl.trim() == null || MotherNameMl.trim() == '' || MotherNameMl.trim() == undefined) {
+      validFlag = false;
+      setMotherNameMl("");
+      setMotherNameMlError(true);
+      setToast(true);
+      setTimeout(() => {
+        setToast(false);
+      }, 2000);
+    } else {
+      setMotherNameMlError(false);
+    }
     // sessionStorage.setItem("SpouseType", SpouseType ? SpouseType.code : null);
     // sessionStorage.setItem("SpouseNameEN", SpouseNameEN ? SpouseNameEN : null);
     // sessionStorage.setItem("SpouseNameMl", SpouseNameMl ? SpouseNameMl : null);
@@ -285,8 +442,8 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
 
     onSelect(config.key, {
       SpouseType,
-      SpouseNameEN,
-      SpouseNameMl,
+      SpouseNameEn,
+      SpouseNameML,
       SpouseAadhaar,
       FatherNameEn,
       FatherNameMl,
@@ -309,6 +466,14 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
   //     }
   //   }
   // }
+ 
+  // if (
+  //   isEditDeath &&
+  //   isEditDeathPageComponents === false &&
+  //   (formData?.InformationDeath?.IsEditChangeScreen === false || formData?.InformationDeath?.IsEditChangeScreen === undefined)
+  // ) {
+    
+  // }
 
   // const handleBlur = (event) => {
   //   const value = event.target.value;
@@ -323,7 +488,7 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
       <BackButton>{t("CS_COMMON_BACK")}</BackButton>
       {window.location.href.includes("/citizen") || window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
 
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip}>
+      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!FamilyMobileNo}>
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -379,9 +544,10 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
                     isMandatory={false}
                     type={"text"}
                     optionKey="i18nKey"
-                    name="SpouseNameEN"
-                    value={SpouseNameEN}
+                    name="SpouseNameEn"
+                    value={SpouseNameEn}
                     onChange={setSelectSpouseNameEN}
+                    onKeyPress={setCheckSpecialCharSpace}
                     placeholder={`${t("CR_NAME")}`}
                     {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_NAME_EN") })}
                   />
@@ -395,8 +561,9 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
                     isMandatory={false}
                     type={"text"}
                     optionKey="i18nKey"
-                    name="SpouseNameMl"
-                    value={SpouseNameMl}
+                    name="SpouseNameML"
+                    value={SpouseNameML}
+                    onKeyPress={setCheckMalayalamInputField}
                     onChange={setSelectSpouseNameMl}
                     placeholder={`${t("CR_NAME_ML")}`}
                     {...(validation = {
@@ -461,6 +628,7 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
                     name="FatherNameEn"
                     value={FatherNameEn}
                     onChange={setSelectFatherNameEn}
+                    onKeyPress={setCheckSpecialCharSpace}
                     placeholder={`${t("CR_NAME")}`}
                     {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_NAME_EN") })}
                   />
@@ -476,6 +644,7 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
                     optionKey="i18nKey"
                     name="FatherNameMl"
                     value={FatherNameMl}
+                    onKeyPress={setCheckMalayalamInputField}
                     onChange={setSelectFatherNameMl}
                     placeholder={`${t("CR_NAME_ML")}`}
                     {...(validation = {
@@ -542,6 +711,7 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
                     name="MotherNameEn"
                     value={MotherNameEn}
                     onChange={setSelectMotherNameEn}
+                    onKeyPress={setCheckSpecialCharSpace}
                     placeholder={`${t("CR_NAME")}`}
                     {...(validation = { pattern:  "^[a-zA-Z-.`' ]*$", type: "text", isRequired: true, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
                   />
@@ -558,6 +728,7 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
                     optionKey="i18nKey"
                     name="MotherNameMl"
                     value={MotherNameMl}
+                    onKeyPress={setCheckMalayalamInputField}
                     onChange={setSelectMotherNameMl}
                     placeholder={`${t("CR_NAME_ML")}`}
                     {...(validation = {
@@ -602,14 +773,15 @@ const FamilyInformationDeath = ({ config, onSelect, formData, isEditDeath }) => 
               </CardLabel>
               <TextInput
                 t={t}
-                isMandatory={false}
                 type={"number"}
                 optionKey="i18nKey"
                 name="FamilyMobileNo"
                 value={FamilyMobileNo}
                 onChange={setSelectFamilyMobileNo}
                 placeholder={`${t("CR_FAMILY_MOBILE_NO")}`}
-                {...(validation = { pattern: "^[0-9 ]*$", isRequired: false, type: "text", title: t("CR_INVALID_PHONE_NO") })}
+                {...(validation = { pattern: "^[.0-9`' ]*$", isRequired: true, type: "number", title: t("CS_COMMON_INVALID_AGE") })}
+
+                // {...(validation = { pattern: "^[0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_PHONE_NO") })}
               />
             </div>
             <div className="col-md-4">

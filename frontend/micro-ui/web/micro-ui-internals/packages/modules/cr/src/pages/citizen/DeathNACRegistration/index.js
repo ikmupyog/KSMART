@@ -40,7 +40,6 @@ const CreateDeathNACRegistration = ({ parentUrl }) => {
       return redirectWithHistory(`${match.path}/nac-death-summary`);
     }
     nextPage = `${match.path}/${nextStep}`;
-    console.log("nextPage",nextPage);
     redirectWithHistory(nextPage);
   };
 
@@ -67,9 +66,8 @@ const CreateDeathNACRegistration = ({ parentUrl }) => {
   };
   const handleSkip = () => {};
   const handleMultiple = () => {};
-  const DeathNACCheckPage = Digit?.ComponentRegistryService?.getComponent("CRCreateDeathNACRegistration");
+  const DeathNACCheckPage = Digit?.ComponentRegistryService?.getComponent("DeathNACCheckPage");
   const DeathNACAcknowledgement = Digit?.ComponentRegistryService?.getComponent("DeathNACAcknowledgement");
-  console.log("config==",config);
   return (
     
     <React.Fragment>

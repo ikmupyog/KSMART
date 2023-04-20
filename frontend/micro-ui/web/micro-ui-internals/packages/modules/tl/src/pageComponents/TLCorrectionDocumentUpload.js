@@ -210,8 +210,8 @@ const TLCorrectionDocumentUpload = ({ t, config, onSelect, formData,onEditSelect
 
   return (
     <React.Fragment>
-      {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null}
-      {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null}
+      {window.location.href.includes("/citizen") ? <Timeline currentStep={2}  flow={'CORRECTION'}/> : null}
+      {window.location.href.includes("/employee") ? <Timeline currentStep={2} flow={'CORRECTION'}/> : null}
       <FormStep config={config} onSelect={handleSubmit} onSkip={onSkip} t={t} >
         {/* isDisabled={!uploadedFile || error} */}
         <div className="row">

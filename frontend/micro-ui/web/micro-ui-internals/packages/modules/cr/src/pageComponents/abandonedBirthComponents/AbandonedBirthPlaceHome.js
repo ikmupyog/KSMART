@@ -8,7 +8,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
   adrsPincode, adrsHouseNameEn, adrsHouseNameMl, adrsLocalityNameEn, adrsLocalityNameMl, adrsStreetNameEn, adrsStreetNameMl,
   wardNo, setWardNo, adrsPostOffice, setAdrsPostOffice, setAdrsPincode, setAdrsHouseNameEn, setAdrsHouseNameMl, setAdrsLocalityNameEn,
   setAdrsLocalityNameMl, setAdrsStreetNameEn, setAdrsStreetNameMl, PostOfficevalues, setPostOfficevalues,
-  isEditBirth
+  isEditAbandonedBirth
 
 }) => {
   const [pofilter, setPofilter] = useState(false);
@@ -27,7 +27,7 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
   const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "boundary-data");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [cmbFilterPostOffice, setCmbFilterPostOffice] = useState([]);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
+  const [isDisableEdit, setisDisableEdit] = useState(isEditAbandonedBirth ? isEditAbandonedBirth : false);
   let cmbPostOffice = [];
   let cmbLB = [];
   let currentLB = [];
@@ -75,17 +75,17 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
     }
   }, [localbodies, PostOfficevalues, isInitialRender]);
   const onSkip = () => onSelect();
-  if (isEditBirth) {
-    if (formData?.ChildDetails?.adrsPostOffice != null) {
+  if (isEditAbandonedBirth) {
+    if (formData?.AbandonedChildDetails?.adrsPostOffice != null) {
       if (cmbPostOffice.length > 0 && (adrsPostOffice === undefined || adrsPostOffice === "")) {
-        let pin = cmbPostOffice.filter(cmbPostOffice => cmbPostOffice.code === formData?.ChildDetails?.adrsPostOffice)[0];
-        setAdrsPostOffice(cmbPostOffice.filter(cmbPostOffice => cmbPostOffice.code === formData?.ChildDetails?.adrsPostOffice)[0]);
+        let pin = cmbPostOffice.filter(cmbPostOffice => cmbPostOffice.code === formData?.AbandonedChildDetails?.adrsPostOffice)[0];
+        setAdrsPostOffice(cmbPostOffice.filter(cmbPostOffice => cmbPostOffice.code === formData?.AbandonedChildDetails?.adrsPostOffice)[0]);
         setAdrsPincode(pin.pincode);
       }
     }
-    if (formData?.ChildDetails?.wardNo != null) {
+    if (formData?.AbandonedChildDetails?.wardNo != null) {
       if (cmbWardNo.length > 0 && (wardNo === undefined || wardNo === "")) {
-        setWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.ChildDetails?.wardNo)[0]);
+        setWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === formData?.AbandonedChildDetails?.wardNo)[0]);
       }
     }
   }
@@ -204,7 +204,8 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
   } else
     return (
       <React.Fragment>
-        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!adrsLocalityNameEn}>
+        {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!adrsLocalityNameEn}> */}
+        <div className="col-md-12">
           <div className="row">
             <div className="col-md-12">
               <h1 className="headingh1">
@@ -379,7 +380,8 @@ const BirthPlaceHome = ({ config, onSelect, userType, formData,
               />
             </div>
           </div>
-        </FormStep>
+          </div>
+        {/* </FormStep> */}
       </React.Fragment>
     );
 };

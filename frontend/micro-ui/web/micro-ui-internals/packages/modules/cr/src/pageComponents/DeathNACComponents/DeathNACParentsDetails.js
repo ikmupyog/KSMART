@@ -12,6 +12,7 @@ const DeathNACParentsDetails =({ config, onSelect, userType, formData, isEditSti
     "birth-death-service",
     "Qualification"
   );
+
   const { data: QualificationSub = {}, isQualificationSubLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
     stateId,
     "birth-death-service",
@@ -21,6 +22,7 @@ const DeathNACParentsDetails =({ config, onSelect, userType, formData, isEditSti
   const { data: ReligionList = {}, isReligionListLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Religion");
   const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
+  const { data: Spouse = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "SpouseType");
   const [isInitialRender, setIsInitialRender] = useState(true);
   const [isDisableEdit, setisDisableEdit] = useState(isEditStillBirth ? isEditStillBirth : false);
   let cmbfilterNation = [];
@@ -37,6 +39,19 @@ const DeathNACParentsDetails =({ config, onSelect, userType, formData, isEditSti
     Qualification["birth-death-service"].Qualification.map((ob) => {
       cmbQualification.push(ob);
     });
+    let cmbspouse = [];
+    Spouse &&
+      Spouse["birth-death-service"] && Spouse["birth-death-service"].spouseType &&
+      Spouse["birth-death-service"].spouseType.map((ob) => {
+        cmbspouse.push(ob);
+      });
+      const [SpouseType, setSpouseType] = useState(
+        formData?.FamilyInformationDeath?.SpouseType?.code
+          ? formData?.FamilyInformationDeath?.SpouseType
+          : formData?.FamilyInformationDeath?.SpouseType
+          ? cmbspouse.filter((cmbspouse) => cmbspouse.code === formData?.FamilyInformationDeath?.SpouseType)[0]
+          : ""
+      );
   let cmbQualificationSub = [];
   QualificationSub &&
     QualificationSub["birth-death-service"] &&
@@ -66,6 +81,8 @@ const DeathNACParentsDetails =({ config, onSelect, userType, formData, isEditSti
     Nation["common-masters"].Country.map((ob) => {
       cmbNation.push(ob);
     });
+
+  
 
   let cmbReligion = [];
   ReligionList &&
@@ -98,7 +115,22 @@ const DeathNACParentsDetails =({ config, onSelect, userType, formData, isEditSti
   const [FatherAadharError, setFatherAadharError] = useState(formData?.ParentsDetails?.fatherAadhar ? false : false);
   const [FatherFirstNmeEnError, setFatherFirstNmeEnError] = useState(formData?.ParentsDetails?.fatherFirstNameEn ? false : false);
   const [FatherFirstNmeMlError, setFatherFirstNmeMlError] = useState(formData?.ParentsDetails?.fatherFirstNameMl ? false : false);
-
+  const [SpouseUnavailable, setSpouseUnavailable] = useState(
+    formData?.ParentsDetails?.SpouseUnavailable
+      ? formData?.ParentsDetails?.SpouseUnavailable
+      : formData?.ParentsDetails?.SpouseUnavailable
+      ? formData?.ParentsDetails?.SpouseUnavailable
+      : false
+  );
+  const [SpouseNameEN, setSpouseNameEN] = useState(
+    formData?.ParentsDetails?.SpouseNameEN ? formData?.ParentsDetails?.SpouseNameEN : ""
+  );
+  const [SpouseNameMl, setSpouseNameMl] = useState(
+    formData?.ParentsDetails?.SpouseNameMl ? formData?.ParentsDetails?.SpouseNameMl : ""
+  );
+  const [SpouseAadhaar, setSpouseAadhaar] = useState(
+    formData?.ParentsDetails?.SpouseAadhaar ? formData?.ParentsDetails?.SpouseAadhaar : ""
+  );
   
 
   const onSkip = () => onSelect();
@@ -167,6 +199,49 @@ const DeathNACParentsDetails =({ config, onSelect, userType, formData, isEditSti
       setFatherFirstNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
+  function setSelectSpouseType(value) {
+    setSpouseType(value);
+  }
+  function setSelectSpouseNameEN(e) {
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setSpouseNameEN(
+        e.target.value.replace(
+          /^^[\u0D00-\u0D7F\u200D\u200C -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi,
+          ""
+        )
+      );
+    }
+  }
+  function setSelectSpouseNameMl(e) {
+    if (e.target.value.length === 51) {
+      return false;
+      // window.alert("Username shouldn't exceed 10 characters")
+    } else {
+      setSpouseNameMl(
+        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
+      );
+    }
+  }
+
+    function setSelectSpouseAadhaar(e) {
+      const newValue = e.target.value.length <= 12 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 12);
+      if (newValue === MotherAadharNo|| newValue === FatherAadharNo) {
+        // If so, clear the Father's Aadhar number field
+        setSpouseAadhaar("");
+        setAadharError(true);
+        setToast(true);
+        setTimeout(() => {
+          setToast(false);
+        }, 3000);
+      } else {
+        setSpouseAadhaar(newValue);
+      }
+      
+    }
+  
   function setMotherInfo(e) {
     if (e.target.checked == true) {
       //setIsMotherInfo(e.target.checked);
@@ -261,6 +336,10 @@ const DeathNACParentsDetails =({ config, onSelect, userType, formData, isEditSti
         //isFatherInfo,
         fatherFirstNameEn,
         fatherFirstNameMl,
+        SpouseType,
+        SpouseNameEN,
+      SpouseNameMl,
+      SpouseAadhaar,
       });
     }
   };
@@ -296,7 +375,102 @@ const DeathNACParentsDetails =({ config, onSelect, userType, formData, isEditSti
           //   fatherMobile === ""
           // }
         >
-
+          <div className="row">
+          <div className="col-md-12">
+            <div className="col-md-6">
+              <CheckBox
+                label={t("CR_SPOUSE_UNAVAILABLE")}
+                onChange={() => setSpouseUnavailable(!SpouseUnavailable)}
+                value={SpouseUnavailable}
+                checked={SpouseUnavailable}
+              />
+            </div>
+          </div>
+        </div>
+        {
+          SpouseUnavailable ? null : (
+            <div>
+            <div className="row">
+              <div className="col-md-12">
+                <h1 className="headingh1">
+                  <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_SPOUSE_DETAILS")}`}</span>
+                </h1>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <div className="col-md-3">
+                  <CardLabel>
+                    {`${t("CR_SPOUSE_TYPE_EN")}`} <span className="mandatorycss">*</span>
+                  </CardLabel>
+                  <Dropdown
+                    t={t}
+                    optionKey="name"
+                    isMandatory={false}
+                    option={cmbspouse}
+                    selected={SpouseType}
+                    select={setSelectSpouseType}
+                    placeholder={`${t("CR_SPOUSE_TYPE_EN")}`}
+                  />
+                </div>
+                <div className="col-md-3">
+                  <CardLabel>
+                    {`${t("CR_NAME")}`} <span className="mandatorycss">*</span>
+                  </CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="SpouseNameEN"
+                    value={SpouseNameEN}
+                    onChange={setSelectSpouseNameEN}
+                    placeholder={`${t("CR_NAME")}`}
+                    {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_NAME_EN") })}
+                  />
+                </div>
+                <div className="col-md-3">
+                  <CardLabel>
+                    {`${t("CR_NAME_ML")}`} <span className="mandatorycss">*</span>
+                  </CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type={"text"}
+                    optionKey="i18nKey"
+                    name="SpouseNameMl"
+                    value={SpouseNameMl}
+                    onChange={setSelectSpouseNameMl}
+                    placeholder={`${t("CR_NAME_ML")}`}
+                    {...(validation = {
+                      pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
+                      isRequired: true,
+                      type: "text",
+                      title: t("CR_INVALID_NAME_ML"),
+                    })}
+                  />
+                </div>
+                <div className="col-md-3">
+                  <CardLabel>{t("CS_COMMON_AADHAAR")}</CardLabel>
+                  <TextInput
+                    t={t}
+                    isMandatory={false}
+                    type="number"
+                    max="12"
+                    optionKey="i18nKey"
+                    name="SpouseAadhaar"
+                    value={SpouseAadhaar}
+                    onChange={setSelectSpouseAadhaar}
+                    placeholder={`${t("CS_COMMON_AADHAAR")}`}
+                    {...(validation = { pattern: "^[0-9]{12}$", type: "text", isRequired: false, title: t("CS_COMMON_INVALID_AADHAR_NO") })}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          // <div>Availables</div>
+          )
+        }
           {/* {isMotherInfo === false && ( */}
             <div>
               <div className="row">
