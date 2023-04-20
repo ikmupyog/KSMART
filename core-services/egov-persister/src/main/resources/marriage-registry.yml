@@ -671,7 +671,7 @@ serviceMaps:
       queryMaps:
         - query: INSERT INTO public.eg_marriage_certificate
             (id, registrationno, registrydetailsid, filestoreid, status,embeddedurl, dateofissue, tenantid, createdtime, createdby, lastmodifiedtime, lastmodifiedby, count)
-            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?);
+            VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?);
           basePath: marriageCertificate
           jsonMaps:
             - jsonPath: $.marriageCertificate.id
