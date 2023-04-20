@@ -191,6 +191,9 @@ public class MarriageCertificate {
     @JsonProperty("placeid")
     private String placeid;
 
+    @JsonProperty("count")
+    private int count;
+
 //    @Size(max = 2500)
 //    @JsonProperty("marriageHouseNoAndNameEn")
 //    private String marriageHouseNoAndNameEn;

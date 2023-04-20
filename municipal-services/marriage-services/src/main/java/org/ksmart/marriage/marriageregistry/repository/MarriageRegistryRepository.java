@@ -316,6 +316,13 @@ public class MarriageRegistryRepository {
 //            if(StringUtils.isNotBlank(req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getBrideUrl())) {
 //                req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().setBrideUrl(marriageApplicationConfiguration.getImageURLStartPath()+req.getMarriageCertificate().get(0).getMarriageRegistryDetails().getWitnessDetails().getBrideUrl());
 //            }
+                marriageCertPDFRequest.getMarriageCertificate().forEach(cert->{
+                    String uiHost = marriageApplicationConfiguration.getUiAppHost();
+                    String marriageCertPath = StringUtils.replaceEach(marriageApplicationConfiguration.getMarriageCertLink(),
+                            new String[]{"$id","$tenantId","$regNo","$marriagecertificateno"},
+                            new String[]{cert.getId(),cert.getMarriageRegistryDetails().getTenantid(),cert.getMarriageRegistryDetails().getRegistrationno(),cert.getMarriagecertificateno()});
+                    cert.setEmbeddedUrl(getShortenedUrl(uiHost+marriageCertPath));
+                });
                 marriageCertPDFRequest.getMarriageCertificate().forEach(cert -> {
                     String uiHost = marriageApplicationConfiguration.getEgovPdfHost();
                     String tenantId = cert.getMarriageRegistryDetails().getTenantid().split("\\.")[0];

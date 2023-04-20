@@ -670,7 +670,7 @@ serviceMaps:
       isTransaction: true
       queryMaps:
         - query: INSERT INTO public.eg_marriage_certificate
-            (id, registrationno, registrydetailsid, filestoreid, status,embeddedurl, dateofissue, tenantid, createdtime, createdby, lastmodifiedtime, lastmodifiedby)
+            (id, registrationno, registrydetailsid, filestoreid, status,embeddedurl, dateofissue, tenantid, createdtime, createdby, lastmodifiedtime, lastmodifiedby, count)
             VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?);
           basePath: marriageCertificate
           jsonMaps:
@@ -697,6 +697,7 @@ serviceMaps:
             - jsonPath: $.marriageCertificate.AuditDetails.lastModifiedTime
 
             - jsonPath: $.marriageCertificate.AuditDetails.lastModifiedBy
+            - jsonPath: $.marriageCertificate.count
 
     - version: 1.0
       description: Persists update marriage certificate details in marriage certificate table
@@ -704,7 +705,7 @@ serviceMaps:
       isTransaction: true
       queryMaps:
         - query: UPDATE public.eg_marriage_certificate
-            set filestoreid=? , embeddedurl=?, dateofissue=?, lastmodifiedtime=?, lastmodifiedby=? where id=? and registrydetailsid=?;
+            set filestoreid=? , embeddedurl=?, dateofissue=?, lastmodifiedtime=?, lastmodifiedby=? , count=? where id=? and registrydetailsid=?;
           basePath: marriageCertificate
           jsonMaps:
             - jsonPath: $.marriageCertificate.filestoreid
@@ -716,6 +717,8 @@ serviceMaps:
             - jsonPath: $.marriageCertificate.AuditDetails.lastModifiedTime
 
             - jsonPath: $.marriageCertificate.AuditDetails.lastModifiedBy
+
+            - jsonPath: $.marriageCertificate.count
 
             - jsonPath: $.marriageCertificate.id
 

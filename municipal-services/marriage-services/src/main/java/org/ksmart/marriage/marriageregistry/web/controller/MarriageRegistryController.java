@@ -74,15 +74,23 @@ public class MarriageRegistryController {
                                                                      @Valid @ModelAttribute MarriageRegistrySearchCriteria criteria) {
         List<MarriageCertificate> marriageCertResponseList = marriageService.searchCertificate(criteria);
         MarriageCertResponse response;
-//        if(null!=marriageCertResponseList&&!marriageCertResponseList.isEmpty()){
-//            response = MarriageCertResponse
-//                    .builder()
-//                    .filestoreId(marriageCertResponseList.get(0).getFilestoreid())
-//                    .tenantId(marriageCertResponseList.get(0).getMarriageRegistryDetails().getTenantid())
-//                    .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), true))
-//                    .build();
-//            return ResponseEntity.ok(response);
-//        }else{
+
+
+
+        if(null!=marriageCertResponseList&&!marriageCertResponseList.isEmpty()&&marriageCertResponseList.get(0).getCount()>0){
+
+
+            response = MarriageCertResponse
+                    .builder()
+                    .filestoreId(marriageCertResponseList.get(0).getFilestoreid())
+                    .tenantId(marriageCertResponseList.get(0).getMarriageRegistryDetails().getTenantid())
+                    .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), true))
+                    .build();
+            return ResponseEntity.ok(response);
+        }else{
+
+
+
             MarriageCertificate marriageCertificate = marriageService.download(criteria,request.getRequestInfo());
 
             response = MarriageCertResponse
@@ -90,7 +98,7 @@ public class MarriageRegistryController {
                     .filestoreId(marriageCertificate.getFilestoreid())
                     .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(), true))
                     .build();
-//        }
+        }
         return ResponseEntity.ok(response);
     }
 

@@ -125,11 +125,6 @@ public class MarriageRegistryService {
 //                marriageDtls.add(marriageCertificate);
 //            }
             MarriageCertPDFRequest marriageCertPDFRequest = MarriageCertPDFRequest.builder().requestInfo(requestInfo).marriageCertificate(Arrays.asList(marriageCertificate)).build();
-            marriageCertPDFRequest.getMarriageCertificate().forEach(cert->{
-                String uiHost = marriageApplicationConfiguration.getUiAppHost();
-                String marriageCertPath = StringUtils.replaceEach(marriageApplicationConfiguration.getMarriageCertLink(),new String[]{"$id","$tenantId","$regNo","$marriagecertificateno"}, new String[]{cert.getId(),cert.getMarriageRegistryDetails().getTenantid(),cert.getMarriageRegistryDetails().getRegistrationno(),cert.getMarriagecertificateno()});
-                cert.setEmbeddedUrl(repository.getShortenedUrl(uiHost+marriageCertPath));
-            });
             long currentDate=System.currentTimeMillis();
             marriageCertificate.setDateofissue(currentDate);
             String strDate=null;
@@ -153,6 +148,7 @@ public class MarriageRegistryService {
 //            marriageCertificate.setDateofissue(marriageCertPDFRequest.getMarriageCertificate().get(0).getMarriageRegistryDetails().getRegistrationDate());
             marriageCertificate.setFilestoreid(pdfResp.getFilestoreIds().get(0));
             marriageCertificate.setCertificateStatus(MarriageCertificate.StatusEnum.FREE_DOWNLOAD);
+            marriageCertificate.setCount(1);//If 1 download from filestoreId, If 0, need to regenerate certificate
 
 //            }
             marriageCertificate.setMarriagecertificateno(marriageRegistryDetailsList.get(0).getCertificateNo());

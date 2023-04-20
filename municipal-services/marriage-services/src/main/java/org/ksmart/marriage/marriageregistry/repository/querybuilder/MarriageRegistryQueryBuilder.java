@@ -14,7 +14,7 @@ public class MarriageRegistryQueryBuilder extends BaseMarriageQuery {
 //    @Autowired
 //    CommonQueryBuilder commonQueryBuilder;
     private static final String CERTIFICATE_QUERY = new StringBuilder()
-            .append(" SELECT MC.id as MC_ID, MC.registrationno as MC_registrationno, MC.registrydetailsid as MC_registrydetailsid, MC.filestoreid as MC_filestoreid, MC.status as MC_status, MC.additionaldetail as MC_additionaldetail, MC.embeddedurl as MC_embeddedurl, MC.dateofissue as MC_dateofissue, MC.tenantid as MC_tenantid, " )
+            .append(" SELECT MC.id as MC_ID, MC.registrationno as MC_registrationno, MC.registrydetailsid as MC_registrydetailsid, MC.filestoreid as MC_filestoreid, MC.status as MC_status, MC.additionaldetail as MC_additionaldetail, MC.embeddedurl as MC_embeddedurl, MC.dateofissue as MC_dateofissue, MC.tenantid as MC_tenantid,MC.count as MC_count, " )
             .append(" MC.createdtime as MC_createdtime, MC.lastmodifiedtime as MC_lastmodifiedtime, MC.createdby as MC_createdby, MC.lastmodifiedby as MC_lastmodifiedby FROM public.eg_marriage_certificate MC").toString();
 
 //Jasmine  26.03.2023
