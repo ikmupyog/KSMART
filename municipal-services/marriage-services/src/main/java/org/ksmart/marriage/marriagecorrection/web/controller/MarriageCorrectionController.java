@@ -70,7 +70,7 @@ public class MarriageCorrectionController {
     }
 
 
-    @PostMapping(value = {"/searchmarriagecorrection"})
+    @PostMapping(value = {"/_searchmarriagecorrection"})
     public ResponseEntity<MarriageCorrectionResponse> searchKsmartBirth(@RequestBody MarriageCorrectionRequest request, @Valid @ModelAttribute MarriageApplicationSearchCriteria criteria) {
         List<MarriageApplicationDetails> marriageCorrectionAplnDetails=marriageCorrectionService.searchCorrectionApplinDetails(request, criteria);
         List<MarriageCorrectionDetails> marriageCorrectionDetails =new ArrayList<>();
