@@ -7,9 +7,6 @@ import org.egov.filemgmnt.util.FMUtils;
 import org.egov.filemgmnt.util.ResponseInfoFactory;
 import org.egov.filemgmnt.web.models.RequestInfoWrapper;
 import org.egov.filemgmnt.web.models.drafting.DraftFiles;
-import org.egov.filemgmnt.web.models.drafting.DraftFilesProcessInstance;
-import org.egov.filemgmnt.web.models.drafting.DraftFilesProcessInstanceRequest;
-import org.egov.filemgmnt.web.models.drafting.DraftFilesProcessInstanceResponse;
 import org.egov.filemgmnt.web.models.drafting.DraftFilesRequest;
 import org.egov.filemgmnt.web.models.drafting.DraftFilesResponse;
 import org.egov.filemgmnt.web.models.drafting.DraftFilesSearchCriteria;
@@ -89,23 +86,6 @@ public class DraftFilesController {
                                                                                                                              Boolean.TRUE))
                                                          .draftings(result)
                                                          .build());
-    }
-
-    /////////////////////// Draft Save on Process Instance Table
-
-    @PostMapping("/draftfiles/_createprocessinstance")
-    public ResponseEntity<DraftFilesProcessInstanceResponse> createDraftProcessInstance(@RequestBody final DraftFilesProcessInstanceRequest request) {
-        if (log.isDebugEnabled()) {
-            log.debug("Drafting main-create:  \n{}", FMUtils.toJson(request));
-        }
-        List<DraftFilesProcessInstance> draftProcessInstanceObj = draftingService.createDraftProcessInstance(request);
-
-        DraftFilesProcessInstanceResponse response = DraftFilesProcessInstanceResponse.builder()
-                                                                                      .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
-                                                                                                                                                          Boolean.TRUE))
-                                                                                      .processInstances(draftProcessInstanceObj)
-                                                                                      .build();
-        return ResponseEntity.ok(response);
     }
 
 }

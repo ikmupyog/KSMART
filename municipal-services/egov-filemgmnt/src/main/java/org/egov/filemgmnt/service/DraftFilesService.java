@@ -11,8 +11,6 @@ import org.egov.filemgmnt.kafka.Producer;
 import org.egov.filemgmnt.repository.DraftFilesRepository;
 import org.egov.filemgmnt.validators.DraftFilesValidator;
 import org.egov.filemgmnt.web.models.drafting.DraftFiles;
-import org.egov.filemgmnt.web.models.drafting.DraftFilesProcessInstance;
-import org.egov.filemgmnt.web.models.drafting.DraftFilesProcessInstanceRequest;
 import org.egov.filemgmnt.web.models.drafting.DraftFilesRequest;
 import org.egov.filemgmnt.web.models.drafting.DraftFilesSearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,7 +88,6 @@ public class DraftFilesService {
         String dType = null;
         String assignerUid = null;
 
-
         for (DraftFiles newDrafts : statusrequest.getDrafting()) {
             fCode = newDrafts.getFileCode();
             dType = newDrafts.getDraftType();
@@ -118,13 +115,4 @@ public class DraftFilesService {
         return (result);
     }
 
-    public List<DraftFilesProcessInstance> createDraftProcessInstance(DraftFilesProcessInstanceRequest request) {
-
-        draftingEnrichment.enrichcreateDraftProcessInstance(request);
-        draftingEnrichment.enrichCreateDraftProcessDocument(request);
-
-        producer.push(fmConfig.getSaveDraftProcessInstance(), request);
-
-        return request.getProcessInstances();
-    }
 }
