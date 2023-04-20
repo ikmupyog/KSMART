@@ -58,6 +58,7 @@ const MarriageCorrectionEditPage = ({
   //     : ""
   // );
   const [selectedCorrectionItem, setSelectedCorrectionItem] = useState([]);
+  const [selectedDocData, setSelectedDocData] = useState([]);
   let tenantId = "";
   tenantId = Digit.ULBService.getCurrentTenantId();
   if (tenantId === "kl") {
@@ -300,10 +301,20 @@ const MarriageCorrectionEditPage = ({
   }, [marriageCorrectionFormsObj]);
 
   const onUploadDocSubmit = async ({ fileData, documentCondition }) => {
+   
+
+    // if (tempFieldType?.documentData?.Documents?.length === fileData?.length) {
     if (fileData && fileData?.length > 0) {
       const selectedDocIds = fileData.map((item) => item.documentId);
-      setSelectedDocs(selectedDocIds);
+      setSelectedDocs([...selectedDocs,...selectedDocIds]);
+      const filteredData = fileData.filter((item)=> {
+        if(!selectedDocs.includes(item.documentId)){
+              return item
+        }
+      });
+      setSelectedDocData([...selectedDocData,...filteredData]);
     }
+    console.log("uploaded documents==",fileData,selectedDocData,selectedDocs);
     selectedDocs;
     let tempObj = { ...marriageCorrectionFormsObj };
     let tempFieldType = tempObj[selectedFieldType];
@@ -1416,7 +1427,10 @@ const MarriageCorrectionEditPage = ({
                     </div>
                   </div>
                 </div>
-                <FormFieldContainer>
+              {((marriageCorrectionFormsObj.BRIDE_PERADD?.addressType === "insideKerala")||
+               (marriageCorrectionFormsObj.BRIDE_PERADD?.addressType === "outsideKerala")) ? (  
+                <div>
+              <FormFieldContainer>
                   <FieldComponentContainer>
                     <div className="col-md-6">
                       <CardLabel>{`${t("CR_HOUSE_NO_AND_NAME_EN")}`}</CardLabel>
@@ -1517,10 +1531,89 @@ const MarriageCorrectionEditPage = ({
                     </div>
                   </FieldComponentContainer>
                 </FormFieldContainer>
+                </div>
+              )
+              :
+                ( 
+                  <div>
+                    <FormFieldContainer>
+                  <FieldComponentContainer>
+                    <div className="col-md-4">
+                      <CardLabel>{`${t("CR_ADDRESS_LINE_1_EN")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        type={"text"}
+                        name="DeceasedHouseNameEn"
+                        disabled={marriageCorrectionFormsObj.BRIDE_PERADD?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
+                        defaultValue={marriageCorrectionFormsObj?.BRIDE_PERADD?.curValue.houseNameEn}
+                        onBlur={(e) => onBrideAddressChange(e, "houseNameEn")}
+                        placeholder={`${t("CR_HOUSE_NO_AND_NAME_EN")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <CardLabel>{`${t("CR_ADDRESS_LINE_2_EN")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        type={"text"}
+                        name="DeceasedLocalityEn"
+                        disabled={marriageCorrectionFormsObj.BRIDE_PERADD?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
+                        defaultValue={marriageCorrectionFormsObj?.BRIDE_PERADD?.curValue.localityNameEn}
+                        onBlur={(e) => onBrideAddressChange(e, "localityNameEn")}
+                        placeholder={`${t("CR_LOCALITY_EN")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                  </FieldComponentContainer>
+                  <div style={{ marginTop: "2.5rem" }}>
+                    {marriageCorrectionFormsObj?.GROOM_PERADD?.isDisable && (
+                      <ButtonContainer>
+                        <span onClick={() => setBirthInclusionFilterQuery(MARRIAGE_INCLUSION_FIELD_NAMES["BRIDE_PERADD"])}>
+                          <EditIcon style={{ position: "absolute", top: "0.8rem" }}/>
+                        </span>
+                      </ButtonContainer>
+                    )}
+                  </div>
+                </FormFieldContainer>
+                <FormFieldContainer>
+                  <FieldComponentContainer>
+                    <div className="col-md-4">
+                      <CardLabel>{`${t("CR_ADDRESS_LINE_1_ML")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        type={"text"}
+                        name="DeceasedHouseNameMl"
+                        defaultValue={marriageCorrectionFormsObj?.BRIDE_PERADD?.curValue.houseNameMl}
+                        disabled={marriageCorrectionFormsObj.BRIDE_PERADD?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
+                        onBlur={(e) => onBrideAddressChange(e, "houseNameMl")}
+                        placeholder={`${t("CR_HOUSE_NO_AND_NAME_MAL")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                    <div className="col-md-4">
+                      <CardLabel>{`${t("CR_ADDRESS_LINE_2_ML")}`}</CardLabel>
+                      <TextInput
+                        t={t}
+                        type={"text"}
+                        name="DeceasedLocalityMl"
+                        defaultValue={marriageCorrectionFormsObj?.BRIDE_PERADD?.curValue.localityNameMl}
+                        disabled={marriageCorrectionFormsObj.BRIDE_PERADD?.isDisable}
+                        autofocus={marriageCorrectionFormsObj.BRIDE_PERADD?.isFocused}
+                        onBlur={(e) => onBrideAddressChange(e, "localityNameMl")}
+                        placeholder={`${t("CR_LOCALITY_MAL")}`}
+                        // {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_FIRST_NAME_EN") })}
+                      />
+                    </div>
+                  </FieldComponentContainer>
+                </FormFieldContainer>
+                </div>
+              )}
               </div>
             )}
           </FormFieldContainer>
-<<<<<<< HEAD
           <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmitMarriageCorrection} />
           <MarriageCorrectionModal
             showModal={showModal}
@@ -1528,6 +1621,7 @@ const MarriageCorrectionEditPage = ({
             onSubmit={onUploadDocSubmit}
             selectedDocs={selectedDocs}
             hideModal={_hideModal}
+            selectedDocData={selectedDocData}
           />
         </FormStep>
       </React.Fragment>
@@ -1535,31 +1629,6 @@ const MarriageCorrectionEditPage = ({
   } else {
     return <Loader />;
   }
-=======
-          <div style={{ display: "flex", flexDirection: "column-reverse" }}></div>
-          <FormFieldContainer>
-            <FieldComponentContainer></FieldComponentContainer>
-            
-                <span onClick={onSubmitBirthInclusion}>
-                  <EditButton selected={true} label={"Submit"} />
-                </span>
-              
-          </FormFieldContainer>
-        {/* </form> */}
-        <MarriageCorrectionModal 
-        showModal={showModal} 
-        selectedConfig={selectedCorrectionItem} 
-        onSubmit={onUploadDocSubmit} 
-        selectedDocs={selectedDocs}
-        hideModal={_hideModal}
-        />
-      </FormStep>
-    </React.Fragment>
-  );
-   } else{
-     return (<Loader/>)
-   }
->>>>>>> 7b5712eb7434463b9c57d5ef7b3e6ead9fdb2569
 };
 
 export default MarriageCorrectionEditPage;

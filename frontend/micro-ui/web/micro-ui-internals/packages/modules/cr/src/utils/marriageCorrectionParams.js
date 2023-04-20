@@ -74,13 +74,29 @@ const formFielColumns = {
     }
   },
   BRIDE_PERADD: {
-    houseNameEn: "BrideAddressDetails.permntInKeralaAdrHouseNameEn",
-    houseNameMl: "BrideAddressDetails.permntInKeralaAdrHouseNameMl",
-    localityNameEn: "BrideAddressDetails.permntInKeralaAdrLocalityNameEn",
-    localityNameMl: "BrideAddressDetails.permntInKeralaAdrLocalityNameMl",
-    streetNameEn: "BrideAddressDetails.permntInKeralaAdrLocalityNameEn",
-    streetNameMl: "BrideAddressDetails.permntInKeralaAdrStreetNameMl",
-  }
+    insideKerala:{
+      houseNameEn: "BrideAddressDetails.permntInKeralaAdrHouseNameEn",
+      houseNameMl: "BrideAddressDetails.permntInKeralaAdrHouseNameMl",
+      localityNameEn: "BrideAddressDetails.permntInKeralaAdrLocalityNameEn",
+      localityNameMl: "BrideAddressDetails.permntInKeralaAdrLocalityNameMl",
+      streetNameEn: "BrideAddressDetails.permntInKeralaAdrLocalityNameEn",
+      streetNameMl: "BrideAddressDetails.permntInKeralaAdrStreetNameMl",
+      },
+      outsideKerala:{
+        houseNameEn: "BrideAddressDetails.permntOutsideKeralaHouseNameEn",
+        houseNameMl: "BrideAddressDetails.permntOutsideKeralaHouseNameMl",
+        localityNameEn: "BrideAddressDetails.permntOutsideKeralaLocalityNameEn",
+        localityNameMl: "BrideAddressDetails.permntOutsideKeralaLocalityNameMl",
+        streetNameEn: "BrideAddressDetails.permntOutsideKeralaStreetNameEn",
+        streetNameMl: "BrideAddressDetails.permntOutsideKeralaStreetNameMl",
+        },
+      outsideIndia:{
+      addressLine1En: "BrideAddressDetails.permntOutsideIndiaLineoneEn", 
+      addressLine1Ml: "BrideAddressDetails.permntOutsideIndiaLineoneMl", 
+      addressLine2En: "BrideAddressDetails.permntOutsideIndiaLinetwoEn",
+      addressLine2Ml: "BrideAddressDetails.permntOutsideIndiaLinetwoMl",
+      }
+    },
 }
   
   const getCorrectionDocuments = (docData) => {

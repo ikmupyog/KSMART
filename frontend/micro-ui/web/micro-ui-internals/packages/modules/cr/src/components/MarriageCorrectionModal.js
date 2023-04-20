@@ -5,7 +5,7 @@ import { checkForEmployee } from "../utils";
 import UploadDoc from "../../../../react-components/src/atoms/UploadDoc";
 import { MARRIAGE_INCLUSION_FIELD_NAMES } from "../config/constants";
 
-const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedConfig,selectedDocs }) => {
+const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, selectedConfig,selectedDocData,selectedDocs }) => {
   const { t } = useTranslation();
   let formData = {};
   let docIdDetails = [];
@@ -21,11 +21,26 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
   const [isLoading, setIsLoading] = useState(false);
   const [file, setFile] = useState(formData?.owners?.documents?.ProofOfIdentity);
   const [error, setError] = useState(null);
+  const [fileDocError, setFileDocError] = useState("");
   let acceptFormat = ".jpg,.png,.pdf,.jpeg";
   const handleUploadDoc = (file, docType) => {
     let tempObj = { [docType]: [...file] };
     setUploadDoc({ ...uploadDoc, ...tempObj });
   };
+
+  useEffect(() => {
+    if(selectedDocuments?.length === 1){
+    const existingDocIds = selectedDocuments?.[0]?.Documents?.map((item) => {
+      if (selectedDocs.includes(item.DocumentId?.toString())) {
+        return item.DocumentId?.toString();
+      }
+    });
+
+    const filteredData = selectedDocData.filter((item) => existingDocIds.includes(item.documentId));
+    console.log("initial value==",selectedDocuments?.[0]?.Documents,selectedDocData,selectedDocs,filteredData,existingDocIds);
+    setUploadedFiles([...filteredData]);
+  }
+  }, [selectedDocuments]);
 
   useEffect(() => {
     setSelectedDocuments(selectedConfig?.documentData);
@@ -45,6 +60,16 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
     docIdDetails.push(e);
     setUploadedFiles(!!uploadedFiles.splice(removeindex, 1));
   }
+
+  const renderLoader = (details) => {
+    if (isLoading && (details.DocumentId.toString() === docuploadedId)) {
+      return (
+        <div style={{margin:0}}>
+          <h1 style={{ fontWeight: "bold" }}>Uploading...</h1>
+        </div>
+      );
+    }
+  };
 
   function selectfile(e) {
     let result = selectedDocuments?.[0]?.Documents?.filter((obj) => obj.DocumentId == e?.target?.id);
@@ -111,6 +136,7 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
 
   
   const resetFields = () => {
+    setFileDocError("");
     setUploadedFiles([]);
     setDocuploadedId("");
     setDocuploadedName("");
@@ -169,6 +195,7 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
         {selectedDocuments?.length == 1 && (
           <div>
         <h2 style={{ marginBottom: "1rem" }}>{`You have to upload the following documents to edit ${fieldName?.toLowerCase()}.`}</h2>
+        {fileDocError?.length > 0 && <p style={{ color: "red" }}>{fileDocError}</p>}
         {selectedDocuments?.[0]?.Documents?.map((item, index) => (
           <div>
             {!selectedDocs.includes(item.DocumentId?.toString()) && (
@@ -189,6 +216,7 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
                     message={uploadedFile ? `1 ${t(`TL_ACTION_FILEUPLOADED`)}` : t(`TL_ACTION_NO_FILEUPLOADED`)}
                     error={error}
                   />
+                  {renderLoader(item)}
                 </div>
               </div>
             )}
@@ -201,8 +229,18 @@ const MarriageCorrectionModal = ({ title, showModal, onSubmit, hideModal, select
           selected={true}
           label={"Save"}
           onClick={() => {
-            resetFields();
-            onSubmit({fileData:uploadedFiles,documentCondition: selectedDocuments?.[0]?.conditionCode});
+            // resetFields();
+            // onSubmit({fileData:uploadedFiles,documentCondition: selectedDocuments?.[0]?.conditionCode});
+            if (selectedDocuments?.length === 1) {
+              if (!isLoading && (selectedDocuments?.[0]?.Documents?.length === uploadedFiles?.length)) {
+                resetFields();
+                onSubmit({ fileData: uploadedFiles, documentCondition: selectedDocuments?.[0]?.conditionCode });
+              } else {
+                setFileDocError("You have to upload following documents to make changes in the field");
+              }
+            } else{
+              setFileDocError("Please select an option");
+            }
           }}
         />
         <EditButton

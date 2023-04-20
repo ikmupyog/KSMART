@@ -46,12 +46,9 @@ const App = () => {
   const SearchApplicationMarriage = Digit?.ComponentRegistryService?.getComponent('SearchApplicationMarriage');
   const DownloadMarriageCertificate = Digit?.ComponentRegistryService?.getComponent('DownloadMarriageCertificate');
   const CRBirthInclusionPage = Digit?.ComponentRegistryService?.getComponent('CRBirthInclusionPage');
-<<<<<<< HEAD
   const MarriageCorrectionAcknowledgement = Digit?.ComponentRegistryService?.getComponent('MarriageCorrectionAcknowledgement');
-=======
   const DeathCorrectionAcknowledgement = Digit?.ComponentRegistryService?.getComponent('DeathCorrectionAcknowledgement');
   const BirthInclusionAcknowledgement = Digit?.ComponentRegistryService?.getComponent('BirthInclusionAcknowledgement');
->>>>>>> 7b5712eb7434463b9c57d5ef7b3e6ead9fdb2569
 
 React.useEffect(()=>{
   setFlag(false)
