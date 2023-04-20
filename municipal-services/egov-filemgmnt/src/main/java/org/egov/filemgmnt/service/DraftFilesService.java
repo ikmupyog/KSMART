@@ -1,7 +1,5 @@
 package org.egov.filemgmnt.service;
 
-import lombok.extern.java.Log;
-import lombok.extern.slf4j.Slf4j;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,13 +14,14 @@ import org.egov.filemgmnt.validators.DraftFilesValidator;
 import org.egov.filemgmnt.web.models.certificate.DraftFiles.DraftCertificateDetails;
 import org.egov.filemgmnt.web.models.certificate.DraftFiles.DraftCertificateRequest;
 import org.egov.filemgmnt.web.models.drafting.DraftFiles;
-import org.egov.filemgmnt.web.models.drafting.DraftFilesProcessInstance;
-import org.egov.filemgmnt.web.models.drafting.DraftFilesProcessInstanceRequest;
 import org.egov.filemgmnt.web.models.drafting.DraftFilesRequest;
 import org.egov.filemgmnt.web.models.drafting.DraftFilesSearchCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
+import lombok.extern.slf4j.Slf4j;
+
 @Slf4j
 @Service
 public class DraftFilesService {
@@ -39,7 +38,8 @@ public class DraftFilesService {
     private final DraftCertificateService draftCertificateService;
 
     DraftFilesService(DraftFilesRepository repository, FMConfiguration fmConfig, Producer producer,
-                      DraftFilesEnrichment draftingEnrichment, DraftFilesValidator validator, final DraftCertificateService draftCertificateService ) {
+                      DraftFilesEnrichment draftingEnrichment, DraftFilesValidator validator,
+                      final DraftCertificateService draftCertificateService) {
         this.repository = repository;
         this.fmConfig = fmConfig;
         this.draftingEnrichment = draftingEnrichment;
@@ -99,7 +99,6 @@ public class DraftFilesService {
         String dType = null;
         String assignerUid = null;
 
-
         for (DraftFiles newDrafts : statusrequest.getDrafting()) {
             fCode = newDrafts.getFileCode();
             dType = newDrafts.getDraftType();
@@ -127,20 +126,11 @@ public class DraftFilesService {
         return (result);
     }
 
-    public List<DraftFilesProcessInstance> createDraftProcessInstance(DraftFilesProcessInstanceRequest request) {
-
-        draftingEnrichment.enrichcreateDraftProcessInstance(request);
-        draftingEnrichment.enrichCreateDraftProcessDocument(request);
-
-        producer.push(fmConfig.getSaveDraftProcessInstance(), request);
-
-        return request.getProcessInstances();
-    }
-
     // Draft certificate download
     public List<DraftCertificateDetails> downloadDraftCertificate(final RequestInfo requestInfo,
-                                                        final DraftFilesSearchCriteria searchCriteria) {
-        final DraftCertificateRequest request = draftCertificateService.createDraftCertificateRequest(searchCriteria, requestInfo);
+                                                                  final DraftFilesSearchCriteria searchCriteria) {
+        final DraftCertificateRequest request = draftCertificateService.createDraftCertificateRequest(searchCriteria,
+                                                                                                      requestInfo);
 
         if (log.isDebugEnabled()) {
             log.debug("Certificate request: \n{}", FMUtils.toJson(request));
@@ -150,4 +140,5 @@ public class DraftFilesService {
 
         return request.getDraftCertificateDetails();
     }
+
 }

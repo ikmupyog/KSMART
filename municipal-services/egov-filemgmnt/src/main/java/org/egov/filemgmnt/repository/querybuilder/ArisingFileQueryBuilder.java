@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class ArisingFileQueryBuilder extends BaseQueryBuilder {
 
     private static final String QUERY = new StringBuilder().append("SELECT")
-                                                           .append("  id,tenantid, filenumber, filecode,filearisingmode")
+                                                           .append("  id,tenantid, filecode,filearisingmode")
                                                            .append("  , filearisingdate,financialyear,workflowcode,businessservice")
                                                            .append("  , assignee, action,filestatus,createdby,createdtime")
                                                            .append("   ,lastmodifiedby,lastmodifiedtime")

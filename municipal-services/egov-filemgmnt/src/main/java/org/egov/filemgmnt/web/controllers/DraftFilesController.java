@@ -9,9 +9,6 @@ import org.egov.filemgmnt.web.models.RequestInfoWrapper;
 import org.egov.filemgmnt.web.models.certificate.DraftFiles.DraftCertificateDetails;
 import org.egov.filemgmnt.web.models.certificate.DraftFiles.DraftCertificateResponse;
 import org.egov.filemgmnt.web.models.drafting.DraftFiles;
-import org.egov.filemgmnt.web.models.drafting.DraftFilesProcessInstance;
-import org.egov.filemgmnt.web.models.drafting.DraftFilesProcessInstanceRequest;
-import org.egov.filemgmnt.web.models.drafting.DraftFilesProcessInstanceResponse;
 import org.egov.filemgmnt.web.models.drafting.DraftFilesRequest;
 import org.egov.filemgmnt.web.models.drafting.DraftFilesResponse;
 import org.egov.filemgmnt.web.models.drafting.DraftFilesSearchCriteria;
@@ -93,34 +90,17 @@ public class DraftFilesController {
                                                          .build());
     }
 
-    /////////////////////// Draft Save on Process Instance Table
-
-    @PostMapping("/draftfiles/_createprocessinstance")
-    public ResponseEntity<DraftFilesProcessInstanceResponse> createDraftProcessInstance(@RequestBody final DraftFilesProcessInstanceRequest request) {
-        if (log.isDebugEnabled()) {
-            log.debug("Drafting main-create:  \n{}", FMUtils.toJson(request));
-        }
-        List<DraftFilesProcessInstance> draftProcessInstanceObj = draftingService.createDraftProcessInstance(request);
-
-        DraftFilesProcessInstanceResponse response = DraftFilesProcessInstanceResponse.builder()
-                                                                                      .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
-                                                                                                                                                          Boolean.TRUE))
-                                                                                      .processInstances(draftProcessInstanceObj)
-                                                                                      .build();
-        return ResponseEntity.ok(response);
-    }
-
     @PostMapping("/applicantservices/_downloadDraftPdf")
     public ResponseEntity<DraftCertificateResponse> downloadDraftCertificate(@RequestBody final RequestInfoWrapper request,
-                                                                   @ModelAttribute final DraftFilesSearchCriteria searchCriteria) {
+                                                                             @ModelAttribute final DraftFilesSearchCriteria searchCriteria) {
 
         final List<DraftCertificateDetails> certificateDetails = draftingService.downloadDraftCertificate(request.getRequestInfo(),
-                                                                                          searchCriteria);
+                                                                                                          searchCriteria);
         return ResponseEntity.ok(DraftCertificateResponse.builder()
-                                                    .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
-                                                                                                                        Boolean.TRUE))
-                                                    .draftCertificateDetails(certificateDetails)
-                                                    .build());
+                                                         .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+                                                                                                                             Boolean.TRUE))
+                                                         .draftCertificateDetails(certificateDetails)
+                                                         .build());
     }
 
 }
