@@ -41,7 +41,6 @@ export const CRNACDeathsearch = {
 
   application: async (tenantId, filters = {}) => {
     const response = await CRNACDeathService.CRNACDeathsearch({ tenantId, filters });
-    console.log(response.deathNACDtls);
     return response.deathNACDtls[0] || {};
   },
 
@@ -53,7 +52,6 @@ export const CRNACDeathsearch = {
   applicationDetails: async (t, tenantId, DeathACKNo, userType) => {
     const filter = { DeathACKNo };
     const response = await CRNACDeathsearch.application(tenantId, filter);
-    console.log(response, "response");
     // const propertyDetails =
     //   response?.tradeLicenseDetail?.additionalDetail?.propertyId &&
     //   (await Digit.PTService.search({ tenantId, filters: { propertyIds: response?.tradeLicenseDetail?.additionalDetail?.propertyId } }));
@@ -121,84 +119,12 @@ export const CRNACDeathsearch = {
         // }),
       ],
     };
-
-    // const DeathPlaceHome = "";
-    // console.log(response?.InformationDeath?.DeathPlace);
-    // if (response?.InformationDeath?.DeathPlace === "HOSPITAL") {
-    //   DeathPlaceHome = {
-    //     title: "PDF_PLACE_OF_DEATH",
-    //     values: [
-    //       {
-    //         title: "PDF_BIRTH_NAME_OF_MOTHER",
-    //         value: response?.FamilyInformationDeath?.DeathPlaceType  || "NA",
-    //       },
-    //     ],
-    //   };
-    // }
-
-    // const childdetails = {
-    //   title: "CR_BIRTH_CHILD_DETAILS",
-    //   asSectionHeader: true,
-    //   values: [
-    //     { title: "CR_SEARCH_APP_NO_LABEL", value: response?.applicationNumber || "NA" },
-    //     { title: "CR_BIRTH_CHILDNAME_LABEL", value: response?.childFirstNameEn + response?.childMiddleNameEn + response?.childLastNameEn },
-    //     { title: "CR_BIRTH_GENDER_LABEL", value: response?.gender},
-    //     { title: "CR_BIRTH_DOB_LABEL", value: response?.childDOB ? convertEpochToDate(response?.childDOB) : "NA" },
-    //     { title: "CR_BIRTH_PLACE_LABEL", value: response?.hospitalName + "/" + response?.hospitalNameMl || "NA"},
-    //     { title: "CR_BIRTH_MOTHER_NAME_LABEL", value: response?.ParentsDetails?.motherFirstNameEn + " / " + response?.ParentsDetails?.motherFirstNameMl || "NA"},
-    //     { title: "CR_BIRTH_FATHER_NAME_LABEL", value: response?.ParentsDetails?.fatherFirstNameEn + " / " + response?.ParentsDetails?.fatherFirstNameMl || "NA"},
-    //    ],
-    // };
-    // const FamilyInformationDeath = {
-    //   title: "CR_DEATH_INFORMANT_ADDRESS_INFORMATION_HEADER",
-    //   values: [
-    //     { title: "CR_DEATH_INFORMANT_HOUSE_NO_LABEL", value: response?.addressInfo?.informantAddress.houseNo || "NA"},
-    //     { title: "CR_DEATH_INFORMANT_HOUSE_NAME_LABEL", value: response?.addressInfo?.informantAddress.houeNameEn || "NA" },
-    //     { title: "CR_DEATH_INFORMANT_LOCALITY_LABEL", value: response?.addressInfo?.informantAddress.localityEn || "NA" },
-    //     { title: "CR_DEATH_INFORMANT_CITY_LABEL", value: response?.addressInfo?.informantAddress.cityEn || "NA" },
-    //   ],
-    // };
-    // const addressInfo = {
-    //   title: "CR_DEATH_ADDRESS_INFORMATION_HEADER",
-    //   values: [
-    //     { title: "CR_DEATH_ADDRESS_HOUSE_NO_LABEL", value: response?.addressInfo?.presentAddress.houseNo || "NA"},
-    //     { title: "CR_DEATH_ADDRESS_HOUSE_NAME_LABEL", value: response?.addressInfo?.presentAddress.houeNameEn || "NA" },
-    //     { title: "CR_DEATH_ADDRESS_HOUSE_LOCALITY_LABEL", value: response?.addressInfo?.presentAddress.localityEn || "NA" },
-    //     { title: "CR_DEATH_ADDRESS_HOUSE_CITY_LABEL", value: response?.addressInfo?.presentAddress.cityEn || "NA" },
-    //   ],
-    // };
-    // const statisticalInfo = {
-    //   title: "CR_DEATH_STATSTICAL_INFORMATION_HEADER",
-    //   values: [
-    //     { title: "CR_STATSTICAL_DEATH_CAUSE_MAIN", value: response?.statisticalInfo.deathCauseMain || "NA" },
-    //     { title: "CR_STATSTICAL_DEATH_MEDICAL_ATTENTION_TYPE", value: response?.statisticalInfo.medicalAttentionType || "NA" },
-    //     { title: "CR_STATSTICAL_DEATH_OCCUPATION", value: response?.statisticalInfo.occupation || "NA" },
-    //     { title: "CR_STATSTICAL_DEATH_SMOKING_NUM_YEARS", value: response?.statisticalInfo.smokingNumYears || "NA" },
-    //   ],
-    // };
-    // const permanentAddress = {
-    //   title: "CR_DEATH_PERMANENT_ADDRESS_INFORMATION_HEADER",
-    //   values: [
-    //     { title: "CR_DEATH_PERM_HOUSE_NO_LABEL", value: response?.addressInfo?.permanentAddress.houseNo || "NA"},
-    //     { title: "CR_DEATH_PERM_HOUSE_NAME_LABEL", value: response?.addressInfo?.permanentAddress.houeNameEn || "NA" },
-    //     { title: "CR_DEATH_PERM_HOUSE_LOCALITY_LABEL", value: response?.addressInfo?.permanentAddress.localityEn || "NA" },
-    //     { title: "CR_DEATH_PERM_HOUSE_CITY_LABEL", value: response?.addressInfo?.permanentAddress.cityEn || "NA" },
-    //   ],
-    // };
-
-    // if (response?.workflowCode == "NewTL" && response?.status !== "APPROVED") {
-    //   const details = {
-    //     title: "",
-    //     values: [
-    //       { title: "TL_COMMON_TABLE_COL_APP_NO", value: response?.applicationNumber || "NA" },
-    //       {
-    //         title: "TL_APPLICATION_CHALLAN_LABEL",
-    //         value: (response?.tradeLicenseDetail?.channel && `TL_CHANNEL_${response?.tradeLicenseDetail?.channel}`) || "NA",
-    //       },
-    //     ],
-    //   };
-    //   response && employeeResponse.push(details);
-    // }
+    const Docdetails = {
+      title: "Document SUMMARY DETAILS",
+      documents: true,
+      tenentId:Digit.ULBService.getStateId(),
+      values:response.DeathNACDocuments.map((doc) => doc?.FileStoreId)
+    }
 
     response && employeeResponse.push(Deathdetails);
     response && employeeResponse.push(InformationDeath);
@@ -209,6 +135,7 @@ export const CRNACDeathsearch = {
     return {
       tenantId: response.tenantId,
       applicationDetails: employeeResponse,
+      documents:Docdetails,
       // additionalDetails: response?.additionalDetails,
       applicationData: response,
       numOfApplications: numOfApplications,
