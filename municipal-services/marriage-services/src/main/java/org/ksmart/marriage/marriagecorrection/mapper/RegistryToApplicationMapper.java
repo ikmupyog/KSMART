@@ -23,7 +23,6 @@ public class RegistryToApplicationMapper {
         marriageApplicationDetails.setBrideAddressDetails(new BrideAddressDetails());
         marriageApplicationDetails.setGroomAddressDetails(new GroomAddressDetails());
 
-
         MarriageRegistryDetails marriageRegistryDetails=registry.get(0);
 
         marriageApplicationDetails.setDateofmarriage(marriageRegistryDetails.getDateofmarriage());
@@ -52,7 +51,6 @@ public class RegistryToApplicationMapper {
         //marriageApplicationDetails.setTalukName(marriageRegistryDetails.getTalukid());
         //marriageApplicationDetails.setVillageId(marriageRegistryDetails.getVillage_name());
 
-
         //marriageApplicationDetails.getBrideDetails().setBrideId(marriageRegistryDetails.getBrideDetails().getBrideId());
         marriageApplicationDetails.getBrideDetails().setBrideGroom(marriageRegistryDetails.getBrideDetails().getBrideGroom());
         marriageApplicationDetails.getBrideDetails().setResidentship(marriageRegistryDetails.getBrideDetails().getResidentship());
@@ -71,7 +69,7 @@ public class RegistryToApplicationMapper {
         marriageApplicationDetails.getBrideDetails().setDateofbirth(marriageRegistryDetails.getBrideDetails().getDateofbirth());
         marriageApplicationDetails.getBrideDetails().setAge(marriageRegistryDetails.getBrideDetails().getAge());
         marriageApplicationDetails.getBrideDetails().setParentGuardian(marriageRegistryDetails.getBrideDetails().getParent_guardian());
-        //marriageApplicationDetails.getBrideDetails().setBrideIsSpouseLiving(marriageRegistryDetails.getBrideDetails().getBrideIsSpouseLiving());
+        marriageApplicationDetails.getBrideDetails().setBrideIsSpouseLiving(marriageRegistryDetails.getBrideDetails().getBrideIsSpouseLiving());
         marriageApplicationDetails.getBrideDetails().setBrideNoOfSpouse(marriageRegistryDetails.getBrideDetails().getBrideNoOfSpouse());
         marriageApplicationDetails.getBrideDetails().setFatherAadharno(marriageRegistryDetails.getBrideDetails().getFather_aadharno());
         marriageApplicationDetails.getBrideDetails().setFathernameEn(marriageRegistryDetails.getBrideDetails().getFathername_en());
@@ -84,6 +82,7 @@ public class RegistryToApplicationMapper {
         marriageApplicationDetails.getBrideDetails().setMotherAadharno(marriageRegistryDetails.getBrideDetails().getMother_aadharno());
         marriageApplicationDetails.getBrideDetails().setMaritalstatusid(marriageRegistryDetails.getBrideDetails().getMaritalstatusid());
         //marriageApplicationDetails.getBrideDetails().setMarriageid(marriageRegistryDetails.getBrideDetails().getMarriageid());
+        marriageApplicationDetails.getBrideDetails().setTenentId(marriageRegistryDetails.getBrideDetails().getTenentId());
 
 
         marriageApplicationDetails.getGroomDetails().setBrideGroom(marriageRegistryDetails.getGroomDetails().getBrideGroom());
@@ -116,6 +115,8 @@ public class RegistryToApplicationMapper {
         marriageApplicationDetails.getGroomDetails().setParentGuardian(marriageRegistryDetails.getGroomDetails().getParent_guardian());
         marriageApplicationDetails.getGroomDetails().setPassportno(marriageRegistryDetails.getGroomDetails().getPassportno());
         marriageApplicationDetails.getGroomDetails().setResidentship(marriageRegistryDetails.getGroomDetails().getResidentship());
+        marriageApplicationDetails.getGroomDetails().setGroomIsSpouseLiving(marriageRegistryDetails.getGroomDetails().getGroomIsSpouseLiving());
+        marriageApplicationDetails.getGroomDetails().setTenentId(marriageRegistryDetails.getGroomDetails().getTenentId());
 
 
         marriageApplicationDetails.getBrideAddressDetails().setCountryIdPermanent(marriageRegistryDetails.getBrideAddressDetails().getCountryIdPermanent());

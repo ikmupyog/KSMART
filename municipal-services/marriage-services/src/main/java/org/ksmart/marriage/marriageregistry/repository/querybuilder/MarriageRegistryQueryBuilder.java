@@ -6,7 +6,7 @@ import org.springframework.util.StringUtils;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 /**
-     * Created by Jasmine
+     * Created by Jasminezxx
      * on 24.03.2023
      */
 @Component
@@ -113,9 +113,6 @@ public class MarriageRegistryQueryBuilder extends BaseMarriageQuery {
     .append("WD2.serial_no = 2 ")
     .toString();
 
-
-
-
     public String getMarriageRegistrySearchQuery(@NotNull MarriageRegistrySearchCriteria criteria,
     @NotNull List<Object> preparedStmtValues, Boolean isCount) {
 
@@ -161,7 +158,6 @@ public class MarriageRegistryQueryBuilder extends BaseMarriageQuery {
           addOrderByColumns("MD.tenantid",criteria.getSortOrder().toString(), orderBy);
           addOrderToQuery(orderBy, query);
           addLimitAndOffset(criteria.getOffset(),criteria.getLimit(), query, preparedStmtValues);
-
           return query.toString();
 
 }  
@@ -197,7 +193,6 @@ public class MarriageRegistryQueryBuilder extends BaseMarriageQuery {
     .append("LEFT JOIN eg_register_marriage_witness_details as WD2 ON WD2.marriageid = MD.id  AND ")
     .append("WD2.serial_no = 2 ")
     .toString();
-
 
     public String getMarriageRegistryCountQuery(@NotNull MarriageRegistrySearchCriteria criteria,
     @NotNull List<Object> preparedStmtValues, Boolean isCount) {

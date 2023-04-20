@@ -111,7 +111,6 @@ public class MarriageCorrectionService {
         if (!marriageRegistryDetails.isEmpty()) {
             MarriageApplicationDetails marriageApplicationDetail = RegistryToApplicationMapper.convert(marriageRegistryDetails);
             marriageCorrectionEnrichment.enrichCreate(request, marriageApplicationDetail);
-
             List<MarriageApplicationDetails> marriageApplicationDetailsList = new ArrayList<>();
             marriageApplicationDetailsList.add(marriageApplicationDetail);
             request.setMarriageDetails(marriageApplicationDetailsList);
@@ -193,7 +192,7 @@ public List<MarriageCorrectionDetails> updateMarriageCorrectionDetails(MarriageC
     request.setMarriageDetails(searchResult);
 
     if (request.getMarriageCorrectionDetails().get(0).getIsWorkflow()) {
-        workflowIntegrator.callCorrectionWorkFlow(request);
+        //workflowIntegrator.callCorrectionWorkFlow(request);
     }
     producer.push(marriageApplicationConfiguration.getUpdateMarriageApplicationCorrectionTopic(), request);
 

@@ -120,7 +120,6 @@ public class MarriageApplicationRepository {
             List<Object> preparedStmtList = new ArrayList<>();
             String query = marriageQueryBuilder.getMarriageCountQuery(criteria, preparedStmtList, Boolean.FALSE);
             int MarriageCount = jdbcTemplate.queryForObject(query,preparedStmtList.toArray(),Integer.class);
-           // System.out.println("Marriagecountquery"+query);
             return MarriageCount;
         }
 

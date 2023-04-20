@@ -78,6 +78,8 @@ public class MarriageRegistryRequestService {
 
     private GroomRegistryAddressDetails groomAddressRegistryDetails(MarriageDetailsRequest marriageGroomAddressrequest) {
         GroomRegistryAddressDetails groomRegistryAddressDetails = new GroomRegistryAddressDetails();
+       // permtaddressCountry
+        groomRegistryAddressDetails.setPermtaddressCountry(marriageGroomAddressrequest.getMarriageDetails().get(0).getGroomAddressDetails().getPermtaddressCountry());
         groomRegistryAddressDetails.setCountryIdPresent(marriageGroomAddressrequest.getMarriageDetails().get(0).getGroomAddressDetails().getCountryIdPresent());
         groomRegistryAddressDetails.setCountryIdPermanent(marriageGroomAddressrequest.getMarriageDetails().get(0).getGroomAddressDetails().getCountryIdPermanent());
         groomRegistryAddressDetails.setStateIdPresent(marriageGroomAddressrequest.getMarriageDetails().get(0).getGroomAddressDetails().getStateIdPresent());
@@ -127,6 +129,7 @@ public class MarriageRegistryRequestService {
 
     private BrideRegistryAddressDetails brideAddressRegistryDetails(MarriageDetailsRequest marriageBrideAddressrequest) {
         BrideRegistryAddressDetails brideRegistryAddressDetails = new BrideRegistryAddressDetails();
+        brideRegistryAddressDetails.setPermtaddressCountry(marriageBrideAddressrequest.getMarriageDetails().get(0).getGroomAddressDetails().getPermtaddressCountry());
         brideRegistryAddressDetails.setCountryIdPresent(marriageBrideAddressrequest.getMarriageDetails().get(0).getBrideAddressDetails().getCountryIdPresent());
         brideRegistryAddressDetails.setCountryIdPermanent(marriageBrideAddressrequest.getMarriageDetails().get(0).getBrideAddressDetails().getCountryIdPermanent());
         brideRegistryAddressDetails.setStateIdPresent(marriageBrideAddressrequest.getMarriageDetails().get(0).getBrideAddressDetails().getStateIdPresent());
@@ -195,6 +198,8 @@ public class MarriageRegistryRequestService {
         witnessRegistryDetails.setWitness2AadharNo(marriageWitnessrequest.getMarriageDetails().get(0).getWitnessDetails().getWitness2AadharNo());
         witnessRegistryDetails.setWitness1Esigned(marriageWitnessrequest.getMarriageDetails().get(0).getWitnessDetails().getWitness1Esigned());
         witnessRegistryDetails.setWitness2Esigned(marriageWitnessrequest.getMarriageDetails().get(0).getWitnessDetails().getWitness2Esigned());
+        witnessRegistryDetails.setBrideUrl(marriageWitnessrequest.getMarriageDetails().get(0).getWitnessDetails().getBrideUrl());
+        witnessRegistryDetails.setGroomUrl(marriageWitnessrequest.getMarriageDetails().get(0).getWitnessDetails().getGroomUrl());
 
         return witnessRegistryDetails;
     }

@@ -145,7 +145,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.BrideDetails.brideMaritalstatusID
 
-            - jsonPath: $.MarriageDetails.*.BrideDetails.brideIslivingSpouse
+            - jsonPath: $.MarriageDetails.*.BrideDetails.brideIsSpouseLiving
 
             - jsonPath: $.MarriageDetails.*.id
 
@@ -161,7 +161,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.BrideDetails.brideNoOfSpouse
 
-            - jsonPath: $.MarriageDetails.*.marriageTenantid
+            - jsonPath: $.MarriageDetails.*.BrideDetails.tenentId
 
 
         - query:  INSERT INTO public.eg_marriage_bride_groom_details(
@@ -228,7 +228,6 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.BrideDetails.groomIsSpouseLiving
 
-
             - jsonPath: $.MarriageDetails.*.id
 
             - jsonPath: $.MarriageDetails.*.GroomDetails.brideGroom
@@ -243,7 +242,7 @@ serviceMaps:
 
             - jsonPath: $.MarriageDetails.*.GroomDetails.groomNoOfSpouse
 
-            - jsonPath: $.MarriageDetails.*.marriageTenantid
+            - jsonPath: $.MarriageDetails.*.GroomDetails.tenentId
 
 
 
