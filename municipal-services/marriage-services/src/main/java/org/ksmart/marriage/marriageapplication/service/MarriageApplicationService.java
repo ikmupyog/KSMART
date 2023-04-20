@@ -35,8 +35,9 @@ public class MarriageApplicationService {
     private final MarriageMdmsUtil util;
     private final MarriageMDMSValidator mdmsValidator;
     private final MarriageApplicationConfiguration marriageApplicationConfiguration;
-
     private final MarriageApplicationValidator validatorService;
+    private final DemandService demandService;
+
 
     public MarriageApplicationService(MarriageProducer producer, MarriageApplicationRepository repository ,
                                       WorkflowIntegrator workflowIntegrator,
@@ -44,7 +45,8 @@ public class MarriageApplicationService {
                                       MarriageMdmsUtil util,
                                       MarriageMDMSValidator mdmsValidator,
                                       MarriageApplicationConfiguration marriageApplicationConfiguration, 
-                                      MarriageApplicationValidator validatorService) {
+                                      MarriageApplicationValidator validatorService,
+                                      DemandService demandService) {
         this.repository = repository;
         this.workflowIntegrator = workflowIntegrator;
         this. marriageDetailsEnrichment= marriageDetailsEnrichment;
@@ -53,6 +55,7 @@ public class MarriageApplicationService {
         this.producer = producer;
         this.marriageApplicationConfiguration = marriageApplicationConfiguration;
         this.validatorService = validatorService;
+        this.demandService = demandService;
     }
 
     public List<MarriageApplicationDetails> saveMarriageDetails(MarriageDetailsRequest request) {
@@ -69,17 +72,32 @@ public class MarriageApplicationService {
         }
      
         request.getMarriageDetails().forEach(marriage->{
-
-            System.out.println("workflowstatus"+marriage.getStatus() );
-            if(marriage.getStatus() == MarriageConstants.STATUS_FOR_PAYMENT){
-                List<Demand> demands = new ArrayList<>();
-                Demand demand = new Demand();
-                demand.setTenantId(marriage.getTenantid());
-                demand.setConsumerCode(marriage.getApplicationNumber());
-                demands.add(demand);
-                marriageDetailsEnrichment.saveDemand(request.getRequestInfo(),demands);   
+            if(wfc.getPayment()!= null){
+                if(marriage.getStatus().equals(MarriageConstants.STATUS_FOR_PAYMENT)){
+                    System.out.println("hienterpayment");
+                    List<Demand> demands = new ArrayList<>();
+                    Demand demand = new Demand();
+                    demand.setTenantId(marriage.getTenantid());
+                    demand.setConsumerCode(marriage.getApplicationNumber());
+                    demands.add(demand);
+                    marriage.setDemands(demandService.saveDemandDetails(demands,request.getRequestInfo(), wfc));
+                   // marriageDetailsEnrichment.saveDemand(request.getRequestInfo(),demands);   
+                }
             }
         });
+
+    //     request.getDeathCertificateDtls().forEach(death->{
+    //         if(wfc.getPayment()!= null){
+    //             if(death.getApplicationStatus().equals(DeathConstants.STATUS_FOR_PAYMENT)){
+    //                 List<Demand> demands = new ArrayList<>();
+    //                 Demand demand = new Demand();
+    //                 demand.setTenantId(death.getDeathBasicInfo().getTenantId());
+    //                 demand.setConsumerCode(death.getDeathBasicInfo().getDeathACKNo());
+    //                 demands.add(demand);
+    //                 death.setDemands(demandService.saveDemandDetails(demands,request.getRequestInfo(), wfc));
+    //             }
+    //         }
+    //    });
         // producer.push(marriageApplicationConfiguration.getUpdateDemandTopic(), request);
          return request.getMarriageDetails();
     }

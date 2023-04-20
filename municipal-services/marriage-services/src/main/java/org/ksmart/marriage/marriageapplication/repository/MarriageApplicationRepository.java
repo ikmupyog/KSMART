@@ -119,6 +119,7 @@ public class MarriageApplicationRepository {
         public int getMarriageCount(MarriageApplicationSearchCriteria criteria) {
             List<Object> preparedStmtList = new ArrayList<>();
             String query = marriageQueryBuilder.getMarriageCountQuery(criteria, preparedStmtList, Boolean.FALSE);
+          // System.out.println("searchQuery"+query);
             int MarriageCount = jdbcTemplate.queryForObject(query,preparedStmtList.toArray(),Integer.class);
             return MarriageCount;
         }
