@@ -26,7 +26,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
   }
   let validation = {};
   const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : isEditStillBirth ? isEditStillBirth : false);
+  const [isDisableEdit, setisDisableEdit] = useState(false);
 
   let cmbCountry = [];
   Country &&
@@ -184,21 +184,9 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
   //   setPostCode(e.target.value);
   // }
   function setSelectPostCode(e) {
-    if (e.target.value.length != 0) {
-      if (e.target.value.length > 6) {
-        return false;
-      } else if (e.target.value.length < 6) {
-        setPostCode(e.target.value);
-        return false;
-      } else {
-        setPostCode(e.target.value);
-        if (isPrsentAddress) {
-          setPermantpostCode(e.target.value);
-        } 
-        // else {
-        //   setPermantpostCode('');
-        // }
-      }
+    setPostCode(e.target.value.length <= 6 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 6));
+    if (isPrsentAddress) {
+      setPermantpostCode(e.target.value.trim().length <= 6 ? e.target.value.trim().replace(/[^0-9]/ig, '') : (e.target.value.trim().replace(/[^0-9]/ig, '')).substring(0, 6));
     }
   }
   function setCheckMalayalamInputField(e) {
@@ -252,7 +240,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
                 onChange={setSelectProvinceEn}
                 placeholder={`${t("CR_STATE_REGION_PROVINCE_EN")}`}
                 disable={isDisableEdit}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
+                {...(validation = { pattern: "^[a-zA-Z ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
               />
             </div>
             <div className="col-md-6">
@@ -267,7 +255,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
                 onChange={setSelectProvinceMl}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_STATE_REGION_PROVINCE_ML")}`}
-                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
+                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
               /> 
             </div>
           </div>
@@ -301,7 +289,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
                 onChange={setSelectadrsCityTown}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_CITY_TOWN_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_TOWN_EN") })}
+                {...(validation = { pattern: "^[a-zA-Z ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_TOWN_EN") })}
               />
             </div>
             <div className="col-md-4">
@@ -316,9 +304,9 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
                 disable={isDisableEdit}
                 placeholder={`${t("CR_ZIP_CODE")}`}
                 {...(validation = {
-                  pattern: "^[a-zA-Z-.`' ]*$",
+                  pattern: "^[0-9]*$",
                   isRequired: true,
-                  type: "number",
+                  type: "text",
                   maxLength: 6,
                   minLength: 6,
                   title: t("CR_INVALID_ZIP_CODE"),
@@ -339,7 +327,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
                 onChange={setSelectAdressEn}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_ADDRES_LINE_ONE_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_ADDRES_LINE_ONE_EN") })}
+                {...(validation = { pattern: "^[a-zA-Z ]*$", isRequired: true, type: "text", title: t("CR_INVALID_ADDRES_LINE_ONE_EN") })}
               />
             </div>
             <div className="col-md-6">
@@ -353,7 +341,7 @@ const AddressPresentOutsideIndia = ({ config, onSelect, userType, formData, pres
                 onChange={setSelectAdressEnB}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_ADDRES_LINE_TWO_EN")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRES_LINE_TWO_EN") })}
+                {...(validation = { pattern: "^[a-zA-Z ]*$", isRequired: false, type: "text", title: t("CR_INVALID_ADDRES_LINE_TWO_EN") })}
               />
             </div>
 

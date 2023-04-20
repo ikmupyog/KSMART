@@ -1520,6 +1520,7 @@ const MarriageCorrectionEditPage = ({
               </div>
             )}
           </FormFieldContainer>
+<<<<<<< HEAD
           <SubmitBar label={t("CS_COMMON_SUBMIT")} onSubmit={onSubmitMarriageCorrection} />
           <MarriageCorrectionModal
             showModal={showModal}
@@ -1534,6 +1535,31 @@ const MarriageCorrectionEditPage = ({
   } else {
     return <Loader />;
   }
+=======
+          <div style={{ display: "flex", flexDirection: "column-reverse" }}></div>
+          <FormFieldContainer>
+            <FieldComponentContainer></FieldComponentContainer>
+            
+                <span onClick={onSubmitBirthInclusion}>
+                  <EditButton selected={true} label={"Submit"} />
+                </span>
+              
+          </FormFieldContainer>
+        {/* </form> */}
+        <MarriageCorrectionModal 
+        showModal={showModal} 
+        selectedConfig={selectedCorrectionItem} 
+        onSubmit={onUploadDocSubmit} 
+        selectedDocs={selectedDocs}
+        hideModal={_hideModal}
+        />
+      </FormStep>
+    </React.Fragment>
+  );
+   } else{
+     return (<Loader/>)
+   }
+>>>>>>> 7b5712eb7434463b9c57d5ef7b3e6ead9fdb2569
 };
 
 export default MarriageCorrectionEditPage;

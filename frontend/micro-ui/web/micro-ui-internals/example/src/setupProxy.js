@@ -51,6 +51,7 @@ module.exports = function (app) {
     "/death-services/v1/deathdetails/_createdeathabandoned",
     "/death-services/v1/deathdetails/_searchdeathabandoned",
     "/marriage-services/v1/marriagedetails/_searchregistry",
+    "/marriage-services/v1/marriagedetails/_certificate",
     "/death-services/v1/crdeathdetails/_create",
     "/death-services/v1/crdeathdetails/_search",
     "/filemgmnt/v1/applicantpersonals/_create",

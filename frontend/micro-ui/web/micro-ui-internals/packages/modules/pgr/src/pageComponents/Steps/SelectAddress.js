@@ -56,21 +56,23 @@ const SelectAddress = ({ t, config, onSelect, value }) => {
     // Digit.SessionStorage.set("locality_complaint", locality);
   }
 
-  let ml_pattern = /^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$/;
-  let en_pattern = /^[a-zA-Z-.`'0-9 ]*$/;
+  let ml_pattern = /^[\u0D00-\u0D7F\u200D\u200C 0-9!@#$%^&*()_+=-`~\\\]\[{}|';:/.,?><]*$/;
+  let en_pattern = /^[A-Za-z0-9\s!@#$%^&*()_+=-`~\\\]\[{}|';:/.,?><]*$/;
 
   const handleLandmark = (e) => {
-    if (locale === "ml_IN") {
-      if (e.target.value.match(ml_pattern)) {
-        setLandmark(e.target.value);
+    if (e.target.value.trim().length <= 100) {
+      if (locale === "ml_IN") {
+        if (e.target.value.match(ml_pattern)) {
+          setLandmark(e.target.value.substring(0, 100));
+        }
+      } else if (e.target.value.match(en_pattern)) {
+        setLandmark(e.target.value.substring(0, 100));
       }
-    } else if (e.target.value.match(en_pattern)) {
-      setLandmark(e.target.value);
     }
   }
 
   function onSubmit() {
-    onSelect({ city_complaint: selectedCity, locality_complaint: selectedLocality, landmark: landmark });
+    onSelect({ city_complaint: selectedCity, locality_complaint: selectedLocality, landmark: landmark.trim() });
   }
   return (
     <React.Fragment>
@@ -97,7 +99,7 @@ const SelectAddress = ({ t, config, onSelect, value }) => {
           <div className="row">
             <div className="col-md-12">
               <div className="col-md-12">
-                <CardLabel> {`${t("CS_ADDCOMPLAINT_LANDMARK")}`} <span className="mandatorycss">*</span></CardLabel>
+                <CardLabel> {`${t("CS_ADDCOMPLAINT_LANDMARK")}`} <span className="mandatorycss">*</span><span> {t("PGR_LANDMARK_LIMIT")}</span></CardLabel>
                 <TextArea t={t} isMandatory={false} type={"text"} optionKey="i18nKey" name="landmark" value={landmark}
                   onChange={handleLandmark} placeholder={`${t("CS_ADDCOMPLAINT_COMPLAINT_LOCATION")}`} />
               </div>

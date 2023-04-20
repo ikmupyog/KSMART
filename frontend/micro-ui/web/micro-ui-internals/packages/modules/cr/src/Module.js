@@ -27,6 +27,7 @@ import BirthInclusionEditPage from "./pageComponents/birthComponents/BirthInclus
 import BirthInclusionPage from "./pageComponents/birthComponents/BirthInclusionPage/index";
 import SearchBirthInclusion from "./components/SearchBirthInclusion";
 import BirthInclusionModal from "./components/BirthInclusionModal";
+import BirthInclusionAcknowledgement from "./pageComponents/birthComponents/BirthInclusionPage/BirthInclusionAcknowledgement";
 
 import SearchMarriageInclusion from "./components/SearchMarriageInclusion";
 import SearchApplicationMarriage from "./components/SearchApplicationMarriage";
@@ -38,6 +39,7 @@ import CreateAbandonedBirth from "./pages/employee/Abandoned-birth-route";
 import CrFlowApp from "./pages/employee/Birth-route";
 import ScrFlowApp from "./pages/employee/StillBirth-route";
 import CreateBornOutsideEmp from "./pages/employee/OutsideIndiaBirth-route";
+import CreateNACBirth from "./pages/employee/NacBirth-route";
 
 import ParentsDetails from "../src/pageComponents/birthComponents/ParentsDetails";
 import BirthPlaceHospital from "../src/pageComponents/birthComponents/BirthPlaceHospital";
@@ -108,6 +110,7 @@ import DeathPlaceHome from "./pageComponents/deathComponents/DeathPlaceHome";
 import DeathPlaceVehicle from "./pageComponents/deathComponents/DeathPlaceVehicle";
 import DeathPublicPlace from "./pageComponents/deathComponents/DeathPublicPlace";
 import DeathOutsideJurisdiction from "./pageComponents/deathComponents/DeathOutsideJurisdiction ";
+import DeathCorrectionAcknowledgement from "./pageComponents/deathComponents/DeathCorrectionEditPage/DeathCorrectionAcknowledgement";
 import Informer from "./pageComponents/deathComponents/Informer";
 // AbandonedInitiater
 import AbandonedInitiater from "./pageComponents/deathAbandoned/AbandonedInformer";
@@ -295,9 +298,12 @@ export const CRLinks = ({ matchPath, userType }) => {
 };
 
 const componentsToRegister = {
+  BirthInclusionAcknowledgement,
+  DeathCorrectionAcknowledgement,
   CrFlowApp,
   ScrFlowApp,
   CreateBornOutsideEmp,
+  CreateNACBirth,
   MyCRApplications,
   MyCRDeathApplications,
   CustomTimePicker,
@@ -496,7 +502,7 @@ const componentsToRegister = {
   StatisticalInfoAbandoned,
   AbandonedBirthAcknowledgement,
   AbandonedBirthCheckPage,
-  AbandonedInformer
+  AbandonedInformer,
 };
 
 export const initCRComponents = () => {

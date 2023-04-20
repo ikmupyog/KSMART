@@ -50,6 +50,13 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
     { label: "Husband", value: "HUSBAND" },
     { label: "other", value: "OTHER" },
   ]
+  const docType1 = "Address proof of deceased at the time of death";
+  const docType2 = "ID CARD OF APPLICANT";
+  const docType3 = "ID proof of father/mother/spouse";
+  const docType4 = "PROOF OF DEATH";
+  const docType5 = "Declaration by Applicant  Stating that death occured in this ulb area, DOD. Place of Death, and address at the time of death counter signed by gazetted officer";
+  const docType6 = "Declaration by a credible person stating the event occured with in the jurisdiction of local body concerned";
+  const docType7 = "Declaration by another credible person stating the event occured with in the jurisdiction of local body concerned";
 
   useEffect(() => {
     if (isInitialRender) {
@@ -354,6 +361,20 @@ const DeathNACInitiatorDetails = ({ config, onSelect, userType, formData, isEdit
         isInitiatorDeclaration,
         initiatorEmail,
         RelationwithDeceased,
+        uploadedFile,
+        uploadedFile1,
+        uploadedFile2,
+        uploadedFile3,
+        uploadedFile4,
+        uploadedFile5,
+        uploadedFile6,
+        docType1,
+        docType2,
+        docType3,
+        docType4,
+        docType5,
+        docType6,
+        docType7,
       });
     }
   };

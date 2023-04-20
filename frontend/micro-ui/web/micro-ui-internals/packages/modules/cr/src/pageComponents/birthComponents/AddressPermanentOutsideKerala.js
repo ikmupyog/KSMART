@@ -37,7 +37,7 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
 //isEditBirth ? isEditBirth : isEditDeath ? false :
   const [toast, setToast] = useState(false);
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : isEditStillBirth ? isEditStillBirth :  false);
+  const [isDisableEdit, setisDisableEdit] = useState(false);
   const [cmbFilterPerDistrict, setcmbFilterPerDistrict] = useState();
   const cmbUrbanRural = [
     { i18nKey: "Town", code: "TOWN" },
@@ -71,7 +71,6 @@ const AddressPermanentOutsideKerala = ({ config, onSelect, userType, formData, p
   //     cmbPostOffice.push(ob);
   //   });
   
-console.log("valuePermanent",valuePermanent);
   useEffect(() => {
     setcmbFilterPerDistrict(cmbDistrict.filter((cmbDistrict) => cmbDistrict.statecode === valuePermanent));
   // }
@@ -179,17 +178,7 @@ console.log("valuePermanent",valuePermanent);
   //   setoutsideKeralaPostOffice(value);
   // }
   function setSelectpermntOutsideKeralaPincode(e) {
-    if (e.target.value.length != 0) {
-      if (e.target.value.length > 6) {
-        return false;
-      } else if (e.target.value.length < 6) {
-        setpermntOutsideKeralaPincode(e.target.value);
-        return false;
-      } else {
-        setpermntOutsideKeralaPincode(e.target.value);
-        return true;
-      }
-    }
+    setpermntOutsideKeralaPincode(e.target.value.length <= 6 ? e.target.value.replace(/[^0-9]/ig, '') : (e.target.value.replace(/[^0-9]/ig, '')).substring(0, 6));
   }
   function setSelectoutsideKeralaPostOfficeEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
@@ -205,16 +194,17 @@ console.log("valuePermanent",valuePermanent);
     }
   }
   function setSelectpermntOutsideKeralaHouseNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z ]*$") != null)) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && (e.target.value.match("^[a-zA-Z-0-9 ]*$") != null)) {
       setpermntOutsideKeralaHouseNameEn(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));
     }
   }
   function setSelectpermntOutsideKeralaHouseNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setpermntOutsideKeralaHouseNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$/;
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      setpermntOutsideKeralaHouseNameMl('');    }
+    else {
+      setpermntOutsideKeralaHouseNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));      
     }
   }
   function setSelectpermntOutsideKeralaLocalityNameEn(e) {
@@ -223,11 +213,13 @@ console.log("valuePermanent",valuePermanent);
     }
   }
   function setSelectpermntOutsideKeralaLocalityNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setpermntOutsideKeralaLocalityNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      setpermntOutsideKeralaLocalityNameMl('');
+    }
+    else {
+      setpermntOutsideKeralaLocalityNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));      
     }
   }
   function setSelectpermntOutsideKeralaStreetNameEn(e) {
@@ -236,11 +228,13 @@ console.log("valuePermanent",valuePermanent);
     }
   }
   function setSelectpermntOutsideKeralaStreetNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
-    } else {
-      setpermntOutsideKeralaStreetNameMl(e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, ""));
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!(e.target.value.match(pattern))) {
+      e.preventDefault();
+      setpermntOutsideKeralaStreetNameMl('');
+    }
+    else {
+      setpermntOutsideKeralaStreetNameMl(e.target.value.length <= 50 ? e.target.value : (e.target.value).substring(0, 50));   
     }
   }
   function setSelectpermntOutsideKeralaCityVilgeEn(e) {
@@ -253,6 +247,12 @@ console.log("valuePermanent",valuePermanent);
     if(!(e.key.match(pattern))){
       e.preventDefault();
     }    
+  }
+  function setCheckMalayalamInputFieldWithSplChar(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]/;
+    if (!(e.key.match(pattern))) {
+      e.preventDefault();
+    }
   }
   const goNext = () => {
   };
@@ -363,9 +363,9 @@ console.log("valuePermanent",valuePermanent);
               disable={isDisableEdit}
               placeholder={`${t("CS_COMMON_PIN_CODE")}`}
               {...(validation = {
-                pattern: "^[a-zA-Z-.`' ]*$",
+                pattern: "^[0-9]*$",
                 isRequired: true,
-                type: "number",
+                type: "text",
                 maxLength: 6,
                 minLength: 6,
                 title: t("CS_COMMON_INVALID_PIN_CODE"),
@@ -454,7 +454,7 @@ console.log("valuePermanent",valuePermanent);
               disable={isDisableEdit} 
               placeholder={`${t("CR_LOCALITY_ML")}`}
               {...(validation = {
-                pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
+                pattern: "^[\u0D00-\u0D7F\u200D\u200C ]*$",
                 isRequired: true,
                 type: "text",
                 title: t("CR_INVALID_LOCALITY_ML"),
@@ -490,7 +490,7 @@ console.log("valuePermanent",valuePermanent);
               disable={isDisableEdit} 
               placeholder={`${t("CR_STREET_NAME_ML")}`}
               {...(validation = {
-                pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
+                pattern: "^[\u0D00-\u0D7F\u200D\u200C ]*$",
                 isRequired: false,
                 type: "text",
                 title: t("CR_INVALID_STREET_NAME_ML"),
@@ -513,7 +513,7 @@ console.log("valuePermanent",valuePermanent);
               onChange={setSelectpermntOutsideKeralaHouseNameEn}
               disable={isDisableEdit} 
               placeholder={`${t("CR_HOUSE_NAME_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
+              {...(validation = { pattern: "^[a-zA-Z-0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
             />
           </div>
           <div className="col-md-6">
@@ -527,12 +527,12 @@ console.log("valuePermanent",valuePermanent);
               optionKey="i18nKey"
               name="permntOutsideKeralaHouseNameMl"
               value={permntOutsideKeralaHouseNameMl}
-              onKeyPress = {setCheckMalayalamInputField}
+              onKeyPress = {setCheckMalayalamInputFieldWithSplChar}
               onChange={setSelectpermntOutsideKeralaHouseNameMl}
               disable={isDisableEdit} 
               placeholder={`${t("CR_HOUSE_NAME_ML")}`}
               {...(validation = {
-                pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
+                pattern: "^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$",
                 isRequired: true,
                 type: "text",
                 title: t("CR_INVALID_HOUSE_NAME_ML"),

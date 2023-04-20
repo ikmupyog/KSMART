@@ -16,7 +16,7 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
   const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const { data: Nation = {}, isNationLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : false);
+  const [isDisableEdit, setisDisableEdit] = useState(false);
   let cmbfilterNation = [];
   const cmbMaritalStatus = [
     { i18nKey: "Married", code: "MARRIED" },
@@ -609,8 +609,8 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
     if (validFlag == true) {
      
       onSelect(config.key, {
-        motherFirstNameEn,
-        motherFirstNameMl,
+        motherFirstNameEn : motherFirstNameEn.trim(),
+        motherFirstNameMl: motherFirstNameMl.trim(),
         motherAadhar,
         motherMaritalStatus,
         motherMarriageAge,
@@ -622,8 +622,8 @@ const ParentsDetails = ({ config, onSelect, userType, formData, isEditBirth, isE
         fatherAadhar,
         isMotherInfo,
         isFatherInfo,
-        fatherFirstNameEn,
-        fatherFirstNameMl,
+        fatherFirstNameEn: fatherFirstNameEn.trim(),
+        fatherFirstNameMl: fatherFirstNameMl.trim(),
         fatherNationality,
         fatherEducation,
         fatherProfession,

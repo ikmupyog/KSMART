@@ -46,7 +46,12 @@ const App = () => {
   const SearchApplicationMarriage = Digit?.ComponentRegistryService?.getComponent('SearchApplicationMarriage');
   const DownloadMarriageCertificate = Digit?.ComponentRegistryService?.getComponent('DownloadMarriageCertificate');
   const CRBirthInclusionPage = Digit?.ComponentRegistryService?.getComponent('CRBirthInclusionPage');
+<<<<<<< HEAD
   const MarriageCorrectionAcknowledgement = Digit?.ComponentRegistryService?.getComponent('MarriageCorrectionAcknowledgement');
+=======
+  const DeathCorrectionAcknowledgement = Digit?.ComponentRegistryService?.getComponent('DeathCorrectionAcknowledgement');
+  const BirthInclusionAcknowledgement = Digit?.ComponentRegistryService?.getComponent('BirthInclusionAcknowledgement');
+>>>>>>> 7b5712eb7434463b9c57d5ef7b3e6ead9fdb2569
 
 React.useEffect(()=>{
   setFlag(false)
@@ -75,6 +80,8 @@ React.useEffect(()=>{
         <PrivateRoute path={`${path}/cr-name-inclusion`} component={CRBirthInclusions} />
         <PrivateRoute parentRoute={path} path={`${path}/birth-inclusion-edit`} component={CRBirthInclusionPage} />
         <PrivateRoute parentRoute={path} path={`${path}/marriage-correction-edit`} component={CRMarriageCorrectionLoadPage} />
+        <PrivateRoute  path={`${path}/birth-inclusion-acknowledgement`} component={BirthInclusionAcknowledgement} />
+        <PrivateRoute path={`${path}/death-correction-acknowledgement`} component={DeathCorrectionAcknowledgement} />
         <PrivateRoute path={`${path}/cr-birth-nac`} component={CreateBirthNACRegistration} />
         <PrivateRoute path={`${path}/cr-death-nac`} component={CRCreateDeathNACRegistration} />
         <PrivateRoute path={`${path}/cr-adoption`} component={CreateAdoption} />

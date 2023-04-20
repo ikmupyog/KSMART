@@ -76,7 +76,7 @@ const ApplicationNACBirthDetails = () => {
       if (data.action == "EDIT") {
         // /digit-ui/employee/cr/cr-flow/child-details/${applicationNumber}
         (data.redirectionUrl = {
-          pathname: `/digit-ui/employee/cr/create-nacbirth/nacbirth-child-details`,
+          pathname: `/digit-ui/employee/cr/create-nacbirthsearech/nacbirth-download-details`,
           state: applicationDetails,
         }),
           (data.tenantId = stateId);
