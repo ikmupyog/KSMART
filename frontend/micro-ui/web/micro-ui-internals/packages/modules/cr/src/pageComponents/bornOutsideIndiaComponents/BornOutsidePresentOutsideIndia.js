@@ -117,16 +117,19 @@ const BornOutsidePresentOutsideIndia = ({ config, onSelect, userType, formData, 
   //   setPostCode(e.target.value);
   // }
   function setSelectPostCode(e) {
-    if (e.target.value.length != 0) {
-      if (e.target.value.length > 6) {
-        return false;
-      } else if (e.target.value.length < 6) {
-        setPostCode(e.target.value);
-        return false;
-      } else {
-        setPostCode(e.target.value);
+    // if (e.target.value.length != 0) {
+    //   if (e.target.value.length > 6) {
+    //     return false;
+    //   } else if (e.target.value.length < 6) {
+    //     setPostCode(e.target.value);
+    //     return false;
+    //   } else {
+    //     setPostCode(e.target.value);
        
-      }
+    //   }
+    // }
+    if (e.target.value.trim().length >= 0) {
+      setPostCode(e.target.value.length <= 6 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 6));
     }
   }
   function setCheckMalayalamInputField(e) {
@@ -143,7 +146,7 @@ const BornOutsidePresentOutsideIndia = ({ config, onSelect, userType, formData, 
   } else
     return (
       <React.Fragment>
-        <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!presentOutSideIndiaAdressEn}>
+        {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!presentOutSideIndiaAdressEn}> */}
           {/* <header className="card-header" style={{ fontSize: "35px" }}>
           {t("CR_ADDRESS_TYPE_OUTSIDE_INDIA")}
         </header> */}
@@ -194,7 +197,7 @@ const BornOutsidePresentOutsideIndia = ({ config, onSelect, userType, formData, 
                 onKeyPress={setCheckMalayalamInputField}
                 onChange={setSelectProvinceMl}
                 placeholder={`${t("CR_STATE_REGION_PROVINCE_ML")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_EN") })}
+                {...(validation = { pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$", isRequired: true, type: "text", title: t("CR_INVALID_STATE_REGION_PROVINCE_ML") })}
               />
             </div>
           </div>
@@ -242,7 +245,7 @@ const BornOutsidePresentOutsideIndia = ({ config, onSelect, userType, formData, 
                 {...(validation = {
                   pattern: "^[a-zA-Z-.0-9`' ]*$",
                   isRequired: true,
-                  type: "number",
+                  type: "text",
                   max: 6,
                   min: 6,
                   title: t("CR_INVALID_ZIP_CODE"),
@@ -322,7 +325,7 @@ const BornOutsidePresentOutsideIndia = ({ config, onSelect, userType, formData, 
           </div>
 
           
-        </FormStep>
+        {/* </FormStep> */}
       </React.Fragment>
     );
 };

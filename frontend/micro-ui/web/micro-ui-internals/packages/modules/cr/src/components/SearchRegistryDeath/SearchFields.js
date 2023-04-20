@@ -1,85 +1,46 @@
 import React, { Fragment } from "react"
-import { Controller, useWatch } from "react-hook-form";
-import { TextInput, SubmitBar, DatePicker, SearchField, Dropdown, Loader, ButtonSelector } from "@egovernments/digit-ui-react-components";
+import { Controller } from "react-hook-form";
+import { TextInput, SubmitBar, DatePicker, SearchField, Dropdown } from "@egovernments/digit-ui-react-components";
 import _ from "lodash";
 
-//style
-const mystyle = {
-    display: "block"
-};
 let validation = {}
 
 const SearchFields = ({ register, control, reset, tenantId, t, previousPage, onRestClick }) => {
     const stateId = Digit.ULBService.getStateId();
-    const { data: applicationTypes, isLoading: applicationTypesLoading } = Digit.Hooks.cr.useMDMS.applicationTypes(tenantId)
-    const { data: Menu, isLoading: genderLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
-    const { data: hospitalData = {}, isLoading:hospitalLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "hospital");
+    const { data: Menu } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
+    const { data: hospitalData = {} } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "hospital");
 
-    const applicationType = useWatch({ control, name: "applicationType" });
-
-    let businessServices = [];
-    if (applicationType && applicationType?.code === "RENEWAL")
-        businessServices = ["EDITRENEWAL", "DIRECTRENEWAL"]
-    else if (applicationType && applicationType?.code === "NEW")
-        businessServices = ["NewTL"]
-    else
-        businessServices = ["EDITRENEWAL", "DIRECTRENEWAL", "NewTL"]
-
-    const { data: statusData, isLoading } = Digit.Hooks.useApplicationStatusGeneral({ businessServices, tenantId }, {});
-    let applicationStatuses = []
-
-    statusData && statusData?.otherRoleStates?.map((status) => {
-        let found = applicationStatuses.length > 0 ? applicationStatuses?.some(el => el?.code === status.applicationStatus) : false;
-        if (!found) applicationStatuses.push({ code: status?.applicationStatus, i18nKey: `WF_NEWTL_${(status?.applicationStatus)}` })
-    })
-
-    statusData && statusData?.userRoleStates?.map((status) => {
-        let found = applicationStatuses.length > 0 ? applicationStatuses?.some(el => el?.code === status.applicationStatus) : false;
-        if (!found) applicationStatuses.push({ code: status?.applicationStatus, i18nKey: `WF_NEWTL_${(status?.applicationStatus)}` })
-    })
     let GenderOptions = [];
     Menu &&
         Menu.map((genderDetails) => {
             GenderOptions.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
         });
-    
-    return <>
-        <SearchField>
-            <label><span className="mandatorycss">*</span> {t("Registry ID")}</label>
-            <TextInput name="Id" inputRef={register({})}
-                placeholder={`${t("Registry ID")}`}
-                {...(validation = { isRequired: false, type: "text", title: t("DC_INVALID_REGISTRY_ID") })} />
-        </SearchField>
+
+    return <Fragment>
         <SearchField>
             <label>
-                {/* <span className="mandatorycss">*</span>  */}
-                {t("Aknowledgement Number")}</label>
-            <TextInput name="DeathACKNo" inputRef={register({})}
-                placeholder={`${t("DC_DEATH_AKNOWLEDGEMENT_NUMBER")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.0-9`'/ ]*$", isRequired: false, type: "text", title: t("DC_INVALID_REGISTRATION_NUMBER") })} />
-        </SearchField>
-        <SearchField>
-            <label>
-                {/* <span className="mandatorycss">*</span> */}
-                {t(" DC_NAME_DECEASED")}</label>
-            <TextInput name="deceasedFirstNameEn" inputRef={register({})}
+                <span className="mandatorycss">*</span>
+                {t("DC_NAME_DECEASED")}</label>
+            <TextInput name="DeceasedFirstNameEn" inputRef={register({})}
                 placeholder={`${t("DC_NAME_DECEASED")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_NAME_DECEASED") })} />
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title:t("TEMPLATE_INVALID", { type: t("DC_NAME_DECEASED") }) })} />
         </SearchField>
+
         <SearchField>
             <label>
-                {/* <span className="mandatorycss">*</span> */}
-                {t("DC_DATE_DEATH")}</label>
+                <span className="mandatorycss">*</span>
+                {t("DATE_OF_DEATH")}</label>
             <Controller
-                render={(props) => <DatePicker date={props.value} onChange={props.onChange}  {...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: false, title: t("CR_INVALID_DATE") })} />}
+                render={(props) => <DatePicker date={props.value} onChange={props.onChange}  {...(validation = { pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}", isRequired: true, title: t("TEMPLATE_INVALID", { type: t("DATE_OF_DEATH") }) })} />}
                 name="DateOfDeath"
                 control={control}
             />
         </SearchField>
+
         <SearchField>
             <label>
-                {/* <span className="mandatorycss">*</span> */}
-                {t("DC_GENDER")}</label>
+                <span className="mandatorycss">*</span>
+                {t("SEX")}</label>
             <Controller
                 control={control}
                 name="DeceasedGender"
@@ -91,33 +52,28 @@ const SearchFields = ({ register, control, reset, tenantId, t, previousPage, onR
                         option={GenderOptions}
                         optionKey="code"
                         t={t}
-                        placeholder={`${t("DC_GENDER")}`}
-                        {...(validation = { isRequired: false, title: t("DC_INVALID_GENDER") })}
+                        placeholder={`${t("SEX")}`}
+                        {...(validation = { isRequired: true, title: t("TEMPLATE_INVALID", { type: t("SEX") }) })}
                     />
                 )}
             />
         </SearchField>
+
         <SearchField>
-            <label> {t("DC_DECEASED_FATHER_NAME")}</label>
-            <TextInput name="FatherNameEn" inputRef={register({})} placeholder={`${t("DC_DECEASED_FATHER_NAME")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_DECEASED_FATHER_NAME") })} />
-        </SearchField>
-        <SearchField>
-            <label> {t("DC_DECEASED_MOTHER_NAME")}</label>
-            <TextInput name="MotherNameEn" inputRef={register({})} placeholder={`${t("DC_DECEASED_MOTHER_NAME")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_NAME_MOTHER_NAME") })} />
+            <label> {t("TEMPLATE_NAME", { type: t("MOTHER", { context: 'S' }) })}</label>
+            <TextInput name="MotherNameEn" inputRef={register({})} placeholder={t("TEMPLATE_NAME", { type: t("MOTHER", { context: 'S' }) })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("TEMPLATE_INVALID", { type: t("TEMPLATE_NAME", { type: t("MOTHER", { context: 'S' }) }) }) })} />
         </SearchField>
 
         <SearchField>
-            <label>{t("DC_HUSBAND_OR_WIFE_NAME")}</label>
-            <TextInput name="SpouseNameEn" inputRef={register({})}
-                placeholder={`${t("DC_HUSBAND_OR_WIFE_NAME")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_HUSBAND_OR_WIFE_NAME") })} />
+            <label> {t("TEMPLATE_NAME", { type: t("FATHER", { context: 'S' }) })}</label>
+            <TextInput name="FatherNameEn" inputRef={register({})} placeholder={t("TEMPLATE_NAME", { type: t("FATHER", { context: 'S' }) })}
+                {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("TEMPLATE_INVALID", { type: t("TEMPLATE_NAME", { type: t("FATHER", { context: 'S' }) }) }) })} />
         </SearchField>
+
         <SearchField>
-            <label>{`${t("CD_HOSPITAL")}`}</label>
+            <label> {t("TEMPLATE_NAME", { type: t("HOSPITAL", { context: 'S' }) })}</label>
             <Controller
-
                 control={control}
                 name="hospital"
                 render={(props) => (
@@ -125,90 +81,54 @@ const SearchFields = ({ register, control, reset, tenantId, t, previousPage, onR
                         selected={props.value}
                         select={props.onChange}
                         onBlur={props.onBlur}
-                        option={_.get(hospitalData,"egov-location.hospitalList",[])}
+                        option={_.get(hospitalData, "egov-location.hospitalList", [])}
                         optionKey="hospitalName"
                         t={t}
-                        placeholder={`${t("CD_HOSPITAL")}`}
+                        placeholder={t("TEMPLATE_NAME", { type: t("HOSPITAL", { context: 'S' }) })}
                     />
                 )}
             />
         </SearchField>
-        {/* <SearchField>
-            <label>  {t("DC_REGISTRATION_NUMBER")}</label>
-            <TextInput name="RegistrationNumber" inputRef={register({})}
-                placeholder={`${t("DC_REGISTRATION_NUMBER")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("DC_INVALID_REGISTRATION_NUMBER") })} />
-        </SearchField> */}
 
+        <SearchField>
+            <label> {t("TEMPLATE_NUMBER", { type: t("REGISTRATION") })}</label>
+            <TextInput name="RegistrationNo" inputRef={register({})} placeholder={t("TEMPLATE_NUMBER", { type: t("REGISTRATION") })}
+                {...(validation = { isRequired: false, type: "text", title: t("TEMPLATE_INVALID", { type: t("TEMPLATE_NUMBER", { type: t("REGISTRATION") }) }) })} />
+        </SearchField>
 
-        {/* {applicationTypesLoading ? <Loader/> : <SearchField> 
-            <label>{t("CR_SEARCH_APPLICATION_TYPE")}</label>
-            <Controller
-           
-                    control={control}
-                    name="applicationType"
-                    render={(props) => (
-                        <Dropdown
-                        selected={props.value}
-                        select={props.onChange}
-                        onBlur={props.onBlur}
-                        option={applicationTypes}
-                        optionKey="i18nKey"
-                        t={t}
-                        />
-                    )}
-                    />
-        </SearchField>}
         <SearchField>
-            <label  style={mystyle}>{t("CR_SEARCH_FROM_DATE")}</label>
-            <Controller
-           
-                render={(props) => <DatePicker  date={props.value} onChange={props.onChange} />}
-                name="fromDate"
-                control={control}
-                />
-        </SearchField>
-        <SearchField>
-            <label style={mystyle}>{t("CR_SEARCH_TO_DATE")}</label>
-            <Controller
-                render={(props) => <DatePicker   date={props.value} onChange={props.onChange} />}
-                name="toDate"
-                control={control}
-                />
-        </SearchField>
-        { isLoading ? <Loader/> : <SearchField>
-            <label>{t("CR_SEARCH_RESULTS_APP_STATUS_LABEL")}</label>
-            <Controller
-                    control={control}
-                    name="status"
-                    render={(props) => (
-                        <Dropdown
-                        selected={props.value}
-                        select={props.onChange}
-                        onBlur={props.onBlur}
-                        option={applicationStatuses}
-                        optionKey="i18nKey"
-                        t={t}
-                        />
-                    )}
+            <label> {t("TEMPLATE_NUMBER", { type: t("DEATH_ACKNOWLEDGEMENT") })}</label>
+            <TextInput
+                name="DeathACKNo"
+                inputRef={register({})}
+                placeholder={t("TEMPLATE_NUMBER", { type: t("DEATH_ACKNOWLEDGEMENT") })}
+                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TEMPLATE_INVALID", { type: t("TEMPLATE_NUMBER", { type: t("DEATH_ACKNOWLEDGEMENT") }) }) })}
             />
-        </SearchField>}
-        <SearchField>
-            <label>{t("CR_SEARCH_MOTHER_NAME")}</label>
-            <TextInput  name="tradeName" inputRef={register({})}/>
         </SearchField>
-       */}
+
+        <SearchField>
+            <label> {t("TEMPLATE_NUMBER", { type: t("KEY") })}</label>
+            <TextInput
+                name="CertificateNo"
+                inputRef={register({})}
+                placeholder={t("TEMPLATE_NUMBER", { type: t("KEY") })}
+                {...(validation = { pattern: "^[a-zA-Z-.0-9`' ]*$", isRequired: false, type: "text", title: t("TEMPLATE_INVALID", { type: t("TEMPLATE_NUMBER", { type: t("KEY") }) }) })}
+            />
+        </SearchField>
+
         <SearchField className="submit">
             <SubmitBar label={t("ES_COMMON_SEARCH")} submit />
             <p onClick={() => {
                 reset({
-                    Id: "",
-                    DeathACKNo: "",
                     DeceasedFirstNameEn: "",
                     DateOfDeath: "",
                     DeceasedGender: "",
-                    SpouseNameEn: "",
-                    DeathPlaceType: "",
+                    MotherNameEn: "",
+                    FatherNameEn: "",
+                    hospital: "",
+                    RegistrationNo: "",
+                    DeathACKNo: "",
+                    CertificateNo: "",
                     offset: 0,
                     limit: 10,
                     sortBy: "DateOfDeath",
@@ -218,6 +138,6 @@ const SearchFields = ({ register, control, reset, tenantId, t, previousPage, onR
                 previousPage();
             }}>{t(`ES_COMMON_CLEAR_ALL`)}</p>
         </SearchField>
-    </>
+    </Fragment>
 }
 export default SearchFields

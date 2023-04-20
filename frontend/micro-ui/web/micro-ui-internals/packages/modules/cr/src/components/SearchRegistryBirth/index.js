@@ -175,7 +175,7 @@ const SearchRegistryBirth = ({ onSubmit, data, isSuccess, isLoading, count }) =>
       <div style={mystyle}>
         <h1 style={hstyle}>{t("BIRTH CERTIFICATE")}</h1>
         <SearchForm onSubmit={onSubmit} handleSubmit={handleSubmit}>
-          <SearchFields {...{ register, control, reset, previousPage, t }} />
+          <SearchFields {...{ register, control, reset, previousPage, t ,tenantId}} />
         </SearchForm>
       </div>
       {isLoading ? <Loader /> : data.length > 0 ? <Table

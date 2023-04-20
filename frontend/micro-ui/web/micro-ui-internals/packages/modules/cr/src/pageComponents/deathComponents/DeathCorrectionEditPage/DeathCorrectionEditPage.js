@@ -44,6 +44,8 @@ function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, sex, cmbPla
   const [value, setValue1] = useState(0);
   const [deathCorrectionFormsObj, setDeathCorrectionFormsObj] = useState(false);
   const [selectedDocs, setSelectedDocs] = useState([]);
+  const [selectedDocData, setSelectedDocData] = useState([]);
+  
   // const [isDisabled,setDisabled] = useState(false);
   let validation = {};
   const _hideModal = () => {
@@ -144,17 +146,6 @@ function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, sex, cmbPla
   const [DeathPlaceStreetMl, setDeathPlaceStreetMl] = useState(
     formData?.InformationDeath?.DeathPlaceStreetMl ? formData?.InformationDeath?.DeathPlaceStreetMl : ""
   );
-  //DeathOutsideJurisdiction
-  const [DeathPlaceCountry, setSelectDeathPlaceCountry] = useState(formData?.InformationDeath?.DeathPlaceCountry);
-  const [DeathPlaceState, SelectDeathPlaceState] = useState(formData?.InformationDeath?.DeathPlaceState);
-  const [DeathPlaceDistrict, SelectDeathPlaceDistrict] = useState(formData?.InformationDeath?.DeathPlaceDistrict);
-  const [DeathPlaceCity, SelectDeathPlaceCity] = useState(formData?.InformationDeath?.DeathPlaceCity);
-  const [DeathPlaceRemarksEn, SelectDeathPlaceRemarksEn] = useState(formData?.InformationDeath?.DeathPlaceRemarksEn);
-  const [DeathPlaceRemarksMl, SelectDeathPlaceRemarksMl] = useState(formData?.InformationDeath?.DeathPlaceRemarksMl);
-  const [PlaceOfBurialEn, SelectPlaceOfBurialEn] = useState(formData?.InformationDeath?.PlaceOfBurialEn);
-  const [PlaceOfBurialMl, SelectPlaceOfBurialMl] = useState(formData?.InformationDeath?.PlaceOfBurialMl);
-
-  const [AadharError, setAadharError] = useState(formData?.InformationDeath?.DeceasedAadharNumber ? false : false);
 
   const mutation = Digit.Hooks.cr.useDeathCorrectionAction(tenantId);
 
@@ -187,18 +178,30 @@ function DeathCorrectionEditPage({ formData, isEditDeath ,cmbNation, sex, cmbPla
 
  
     const onUploadDocSubmit = async (fileData, error) => {
+      let tempObj = { ...deathCorrectionFormsObj };
+      console.log("tempObj==",fileData,selectedFieldType,tempObj);
+      let tempFieldType = tempObj[selectedFieldType];
+
+      // if (tempFieldType?.documentData?.Documents?.length === fileData?.length) {
       if (fileData && fileData?.length > 0) {
         const selectedDocIds = fileData.map((item) => item.documentId);
-        setSelectedDocs(selectedDocIds);
+        setSelectedDocs([...selectedDocs,...selectedDocIds]);
+        const filteredData = fileData.filter((item)=> {
+          if(!selectedDocs.includes(item.documentId)){
+                return item
+          }
+        });
+        setSelectedDocData([...selectedDocData,...filteredData]);
       }
    
-      let tempObj = { ...deathCorrectionFormsObj };
-      console.log("tempObj==",selectedFieldType,tempObj);
-      let tempFieldType = tempObj[selectedFieldType];
+      
       tempObj = { ...tempObj, [selectedFieldType]: { ...tempFieldType, Documents: fileData, selectedDocType: selectedFieldType, isEditable: true, isFocused: true, isDisabled: false } };
   
       setDeathCorrectionFormsObj(tempObj);
       setShowModal(false);
+    // } else {
+    //   setFileUploadError("You have to upload following documents to make changes in the field");
+    // }
     };
 
   const {  handleSubmit,  setValue } = useForm({
@@ -271,11 +274,16 @@ const onPresentAddressChange = (e,fieldType) =>{
   setDeathCorrectionFormsObj(tempObj);
 }
 
+const onDocUploadSuccess = (data) =>{
+  console.log("success==",data);
+  onSubmitAcknowledgement(data);
+}
+
   const onSubmitDeathCorrection = () => {
     const formattedResp =  formatApiParams(deathCorrectionFormsObj, navigationData);
     console.log("formattedResp", formattedResp);
-    mutation.mutate(formattedResp);
-    onSubmitAcknowledgement();
+    mutation.mutate(formattedResp,{ onSuccess: onDocUploadSuccess });
+    
   };
 
   const onSubmit = (data) => console.log(data);
@@ -938,6 +946,7 @@ console.log("deathCorrectionFormsObj==",deathCorrectionFormsObj);
         onSubmit={onUploadDocSubmit} 
         hideModal={_hideModal}
         selectedDocs={selectedDocs}
+        selectedDocData={selectedDocData}
         />
       </FormStep>
     </React.Fragment>

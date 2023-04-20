@@ -30,59 +30,6 @@ const formFielColumns = {
   }
 }
 
-const data = [
-  {
-    correctionFieldName: "CHILD_DOB",
-    conditionCode: "DOB_INSTITUTIONAL",
-    specificCondition: null,
-    // correctionFieldValue: getCorrectionFieldValues(),
-    CorrectionDocument: [
-      {
-        DocumentId: 3,
-        DocumentType: "Applicant ID proof",
-        DocumentName: "ID_PROOF_EPIC",
-        filestoreId: "9a6a52a4-3c03-4ca4-8bb1-54a8a4c48827",
-      },
-    ],
-  },
-  {
-    correctionFieldName: "FATHER_DETAILS",
-    conditionCode: "FATER_DETAILS_CORRECTION_WITH_OUT_CERTIFICATE",
-    specificCondition: "CORRECTION",
-    correctionFieldValue: [
-      {
-        column: "fatherfnen",
-        newValue: "fatherFirstNameEn",
-        oldValue: null,
-      },
-      {
-        column: "fatherfnml",
-        newValue: "fatherFirstNameMl",
-        oldValue: null,
-      },
-      {
-        column: "fatheraadhar",
-        newValue: "123456789012",
-        oldValue: null,
-      },
-    ],
-    CorrectionDocument: [
-      {
-        DocumentId: 3,
-        DocumentType: "Applicant ID proof",
-        DocumentName: "ID_PROOF_EPIC",
-        filestoreId: "9a6a52a4-3c03-4ca4-8bb1-54a8a4c48827",
-      },
-      {
-        DocumentId: 4,
-        DocumentType: "ID proof of father",
-        DocumentName: "ID_PROOF_PPO",
-        filestoreId: "9a6a52a4-3c03-4ca4-8bb1-54a8a4c48827",
-      },
-    ],
-  },
-];
-
 const getCorrectionDocuments = (docData) => {
   console.log("docData", docData);
   let selectedDocs = [];
@@ -149,7 +96,7 @@ const getCorrectionFieldValues = (item) => {
     },
   ];
   break;
-  case "FATHER_DETAILS" : case "CHILD_NAME" : case "MOTHER_DETAILS":
+  case "FATHER_DETAILS" : case "CHILD_NAME" : case "MOTHER_DETAILS": case "PRESENT_ADDRESS":
   fieldValues =  getNestedFieldNames(item);
   break;
  }
