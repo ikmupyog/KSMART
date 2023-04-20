@@ -582,6 +582,33 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
   //     setDateOfDeath("");
   //   }
   // }
+  // function selectFromDate(value) {
+  //   setFromDate(value);
+  //   const today = new Date();
+  //   today.setHours(0, 0, 0, 0);
+  //   const deathDate = new Date(value);
+  //   deathDate.setHours(0, 0, 0, 0);
+
+  //   if (deathDate.getTime() <= today.getTime()) {
+  //     setDOBError(false);
+  //     // To calculate the time difference of two dates
+  //     let Difference_In_Time = today.getTime() - deathDate.getTime();
+  //     // console.log("Difference_In_Time" + Difference_In_Time);
+  //     setDifferenceInTime(today.getTime() - deathDate.getTime());
+  //     let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+  //     setDifferenceInDaysRounded(Math.floor(DiworkFlfference_In_Days * 24 * 60 * 60 * 1000));
+  //     if (DeathPlace) {
+  //       let currentWorgFlow = workFlowData.filter((workFlowData) => workFlowData.DeathPlace === DeathPlace.code && workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime );
+  //       console.log("currentWorgFlowDOB" + currentWorgFlow);
+  //       if (currentWorgFlow.length > 0) {
+  //         // console.log(currentWorgFlow[0].WorkflowCode);
+  //         setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+  //         setIsPayment(currentWorgFlow[0].payment);
+  //         setWorkFlowAmount(currentWorgFlow[0].amount);
+
+  //       }
+       
+  //     }
   function selectFromDate(value) {
     setFromDate(value);
     const today = new Date();
@@ -590,26 +617,27 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
     deathDate.setHours(0, 0, 0, 0);
 
     if (deathDate.getTime() <= today.getTime()) {
+
       setDOBError(false);
       // To calculate the time difference of two dates
       let Difference_In_Time = today.getTime() - deathDate.getTime();
       // console.log("Difference_In_Time" + Difference_In_Time);
       setDifferenceInTime(today.getTime() - deathDate.getTime());
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-      setDifferenceInDaysRounded(Math.floor(DiworkFlfference_In_Days * 24 * 60 * 60 * 1000));
+      // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
+      setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
       if (DeathPlace) {
-        let currentWorgFlow = workFlowData.filter((workFlowData) => workFlowData.DeathPlace === DeathPlace.code && workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime );
-        console.log("currentWorgFlowDOB" + currentWorgFlow);
+        let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.DeathPlace === DeathPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
         if (currentWorgFlow.length > 0) {
-          // console.log(currentWorgFlow[0].WorkflowCode);
+          console.log(currentWorgFlow);
           setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
           setIsPayment(currentWorgFlow[0].payment);
-          setWorkFlowAmount(currentWorgFlow[0].amount);
-
+          setAmount(currentWorgFlow[0].amount);
         }
-       
       }
+     
     }
+  }
     // const today = new Date();
     // const deathDate = new Date(value);
     // if (deathDate.getTime() <= today.getTime()) {
@@ -625,37 +653,65 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
     //     setToast(false);
     //   }, 3000);
     // }
-  }
   
+  
+  // function selectToDate(value) {
+  //   setToDate(value);
+  //   // setFromDate(value);
+  //   const today = new Date();
+  //   today.setHours(0, 0, 0, 0);
+  //   const deathDate = new Date(value);
+  //   deathDate.setHours(0, 0, 0, 0);
+
+  //   if (deathDate.getTime() <= today.getTime()) {
+  //     setDOBError(false);
+  //     // To calculate the time difference of two dates
+  //     let Difference_In_Time = today.getTime() - deathDate.getTime();
+  //     // console.log("Difference_In_Time" + Difference_In_Time);
+  //     setDifferenceInTime(today.getTime() - deathDate.getTime());
+  //     let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+  //     setDifferenceInDaysRounded(Math.floor(DiworkFlfference_In_Days * 24 * 60 * 60 * 1000));
+  //     if (DeathPlace) {
+  //       let currentWorgFlow = workFlowData.filter((workFlowData) => workFlowData.DeathPlace === DeathPlace.code && workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime );
+  //       console.log("currentWorgFlowDOB" + currentWorgFlow);
+  //       if (currentWorgFlow.length > 0) {
+  //         // console.log(currentWorgFlow[0].WorkflowCode);
+  //         setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+  //         setIsPayment(currentWorgFlow[0].payment);
+  //         setWorkFlowAmount(currentWorgFlow[0].amount);
+
+  //       }
+       
+  //     }
+  //   }
   function selectToDate(value) {
     setToDate(value);
-    // setFromDate(value);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const deathDate = new Date(value);
-    deathDate.setHours(0, 0, 0, 0);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const deathDate = new Date(value);
+  deathDate.setHours(0, 0, 0, 0);
 
-    if (deathDate.getTime() <= today.getTime()) {
-      setDOBError(false);
-      // To calculate the time difference of two dates
-      let Difference_In_Time = today.getTime() - deathDate.getTime();
-      // console.log("Difference_In_Time" + Difference_In_Time);
-      setDifferenceInTime(today.getTime() - deathDate.getTime());
-      let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-      setDifferenceInDaysRounded(Math.floor(DiworkFlfference_In_Days * 24 * 60 * 60 * 1000));
-      if (DeathPlace) {
-        let currentWorgFlow = workFlowData.filter((workFlowData) => workFlowData.DeathPlace === DeathPlace.code && workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime );
-        console.log("currentWorgFlowDOB" + currentWorgFlow);
-        if (currentWorgFlow.length > 0) {
-          // console.log(currentWorgFlow[0].WorkflowCode);
-          setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
-          setIsPayment(currentWorgFlow[0].payment);
-          setWorkFlowAmount(currentWorgFlow[0].amount);
+  if (deathDate.getTime() <= today.getTime()) {
 
-        }
-       
+    setDOBError(false);
+    // To calculate the time difference of two dates
+    let Difference_In_Time = today.getTime() - deathDate.getTime();
+    // console.log("Difference_In_Time" + Difference_In_Time);
+    setDifferenceInTime(today.getTime() - deathDate.getTime());
+    let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+    // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
+    setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
+    if (DeathPlace) {
+      let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.DeathPlace === DeathPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
+      if (currentWorgFlow.length > 0) {
+        console.log(currentWorgFlow);
+        setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+        setIsPayment(currentWorgFlow[0].payment);
+        setAmount(currentWorgFlow[0].amount);
       }
     }
+   
+  }
     // const today = new Date();
     // const toDate = new Date(value);
     // const fromDate = new Date(DateOfDeath);
@@ -701,6 +757,35 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
   //   }
 
   // }
+  // function selectDeathDate(value) {
+  //   setDateOfDeath(value);
+  //   const today = new Date();
+  //   today.setHours(0, 0, 0, 0);
+  //   const deathDate = new Date(value);
+  //   deathDate.setHours(0, 0, 0, 0);
+
+  //   if (deathDate.getTime() <= today.getTime()) {
+  //     setDOBError(false);
+  //     // To calculate the time difference of two dates
+  //     let Difference_In_Time = today.getTime() - deathDate.getTime();
+  //     // console.log("Difference_In_Time" + Difference_In_Time);
+  //     setDifferenceInTime(today.getTime() - deathDate.getTime());
+  //     let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+  //     setDifferenceInDaysRounded(Math.floor(DiworkFlfference_In_Days * 24 * 60 * 60 * 1000));
+  //     if (DeathPlace) {
+  //       let currentWorgFlow = workFlowData.filter((workFlowData) => workFlowData.DeathPlace === DeathPlace.code && workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime );
+  //       console.log("currentWorgFlowDOB" + currentWorgFlow);
+  //       if (currentWorgFlow.length > 0) {
+  //         // console.log(currentWorgFlow[0].WorkflowCode);
+  //         setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
+  //         setIsPayment(currentWorgFlow[0].payment);
+  //         setWorkFlowAmount(currentWorgFlow[0].amount);
+
+  //       }
+       
+  //     }
+  //   }
+  // }
   function selectDeathDate(value) {
     setDateOfDeath(value);
     const today = new Date();
@@ -709,25 +794,25 @@ console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
     deathDate.setHours(0, 0, 0, 0);
 
     if (deathDate.getTime() <= today.getTime()) {
+
       setDOBError(false);
       // To calculate the time difference of two dates
       let Difference_In_Time = today.getTime() - deathDate.getTime();
       // console.log("Difference_In_Time" + Difference_In_Time);
       setDifferenceInTime(today.getTime() - deathDate.getTime());
       let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-      setDifferenceInDaysRounded(Math.floor(DiworkFlfference_In_Days * 24 * 60 * 60 * 1000));
+      // console.log("Difference_In_Days" + Math.floor(Difference_In_Days));
+      setDifferenceInDaysRounded(Math.floor(Difference_In_Days * 24 * 60 * 60 * 1000));
       if (DeathPlace) {
-        let currentWorgFlow = workFlowData.filter((workFlowData) => workFlowData.DeathPlace === DeathPlace.code && workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime );
-        console.log("currentWorgFlowDOB" + currentWorgFlow);
+        let currentWorgFlow = workFlowData.filter(workFlowData => workFlowData.DeathPlace === DeathPlace.code && (workFlowData.startdateperiod <= DifferenceInTime && workFlowData.enddateperiod >= DifferenceInTime));
         if (currentWorgFlow.length > 0) {
-          // console.log(currentWorgFlow[0].WorkflowCode);
+          console.log(currentWorgFlow);
           setWorkFlowCode(currentWorgFlow[0].WorkflowCode);
           setIsPayment(currentWorgFlow[0].payment);
-          setWorkFlowAmount(currentWorgFlow[0].amount);
-
+          setAmount(currentWorgFlow[0].amount);
         }
-       
       }
+     
     }
   }
   let wardNameEn = "";
