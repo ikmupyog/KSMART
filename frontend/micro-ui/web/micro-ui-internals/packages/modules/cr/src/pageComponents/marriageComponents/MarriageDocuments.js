@@ -1440,13 +1440,13 @@ const MarriageDocuments = ({ formData, config, onSelect }) => {
                 </div>
               </div>
               <div className="row">
-                {(marriageType === "MARRIAGE_TYPE_HINDU" ||
-                  marriageType === "MARRIAGE_TYPE_CHRISTIAN" ||
-                  marriageType === "MARRIAGE_TYPE_MUSLIM" ||
-                  marriageType === "MARRIAGE_TYPE_BUDHISM" ||
-                  marriageType === "MARRIAGE_TYPE_JAINISM" ||
-                  marriageType === "MARRIAGE_TYPE_SIKHISM" ||
-                  marriageType === "MARRIAGE_TYPE_ZORASTRIANISM") && (
+                {(marriageType?.code === "MARRIAGE_TYPE_HINDU" ||
+                  marriageType?.code === "MARRIAGE_TYPE_CHRISTIAN" ||
+                  marriageType?.code === "MARRIAGE_TYPE_MUSLIM" ||
+                  marriageType?.code === "MARRIAGE_TYPE_BUDHISM" ||
+                  marriageType?.code === "MARRIAGE_TYPE_JAINISM" ||
+                  marriageType?.code === "MARRIAGE_TYPE_SIKHISM" ||
+                  marriageType?.code === "MARRIAGE_TYPE_ZORASTRIANISM") && (
                   <div className="col-md-6">
                     <div className="col-md-12">
                       <CardLabel>

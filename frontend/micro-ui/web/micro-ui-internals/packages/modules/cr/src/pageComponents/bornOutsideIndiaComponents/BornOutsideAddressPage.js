@@ -341,7 +341,7 @@ const BornOutsideAddressPage = ({ config, onSelect, userType, formData, isEditBo
     } else
         return (
             <React.Fragment>
-                <BackButton>{t("CS_COMMON_BACK")}</BackButton>
+                {/* <BackButton>{t("CS_COMMON_BACK")}</BackButton> */}
                 {/* {window.location.href.includes("/citizen") ? <Timeline currentStep={3} /> : null} */}
                 {/* {window.location.href.includes("/employee") ? <Timeline currentStep={3} /> : null} */}
                 {window.location.href.includes("/citizen/cr/cr-outsideindiabirth-creation/born-outside-address") ? <Timeline currentStep={3} /> : null }

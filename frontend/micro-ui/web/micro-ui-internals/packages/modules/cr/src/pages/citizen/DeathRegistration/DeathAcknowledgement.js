@@ -3,9 +3,10 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { convertToDeathRegistration} from "../../../utils/deathindex";
-import getPDFData from "../../../utils/getTLAcknowledgementData";
+import getPDFData from "../../../utils/getCRDeathAcknowledgementData";
+// import getPDFData from "../../../utils/getTLAcknowledgementData";
 import { useHistory } from "react-router-dom";
-  
+
 const GetActionMessage = (props) => {
   const { t } = useTranslation();
   if (props.isSuccess) {

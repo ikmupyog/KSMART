@@ -32,11 +32,14 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
   const { data: DeliveryMethodList = {}, isDeliveryMethodListLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeliveryMethod");
   const { data: PlaeceMaster = {}, isPlaceMasterLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "PlaceMaster");
   const { data: hospitalData = {}, isLoadings } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "hospital");
+  const { data: boundaryList = {}, isWardLoaded } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "boundary-data");
+  const { data: PostOffice = {}, isPostOfficeLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "PostOffice");
   const [editFlag, setFlag] =  Digit.Hooks.useSessionStorage("CR_EDIT_ADOPTION_FLAG", false) 
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
   const [InstitutionFilterList, setInstitutionFilterList] = useState(null);
   const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(false);
   const [SearchRegId,setSearchRegId] = useState()
+  const [birthRegPopup, setBirthRegPopup] = useState(false)
 // console.log('M',formData,isEditAdoption);
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
@@ -81,6 +84,9 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
   let wardNameEn = "";
   let wardNameMl = "";
   let wardNumber = "";
+  let cmbWardNo = [];
+  let cmbPostOffice = []
+  let Zonal =[]
   let Difference_In_DaysRounded = "";
   // let workFlowCode = "BIRTHHOSP21";
   WorkFlowDetails &&
@@ -108,6 +114,21 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
     DeliveryMethodList["birth-death-service"].DeliveryMethod.map((ob) => {
       cmbDeliveryMethod.push(ob);
     });
+    boundaryList &&
+      boundaryList["egov-location"] && boundaryList["egov-location"].TenantBoundary &&
+      boundaryList["egov-location"].TenantBoundary.map((ob) => {
+        if (ob?.hierarchyType.code === "REVENUE") {
+          Zonal.push(...ob.boundary.children);
+          ob.boundary.children.map((obward) => {
+            cmbWardNo.push(...obward.children);
+          });
+        }
+      });
+      PostOffice &&
+      PostOffice["common-masters"] && PostOffice["common-masters"].PostOffice &&
+      PostOffice["common-masters"].PostOffice.map((ob) => {
+        cmbPostOffice.push(ob);
+      });
  
     hospitalData &&
       hospitalData["egov-location"] && hospitalData["egov-location"].hospitalList &&
@@ -302,7 +323,22 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
         SearchRegId?.childFirstNameMl ? setChildFirstNameMl(SearchRegId.childFirstNameMl):setChildFirstNameMl('')
         SearchRegId?.childMiddleNameMl ? setChildMiddleNameMl(SearchRegId.childMiddleNameMl):setChildMiddleNameMl('')
         SearchRegId?.childLastNameMl ? setChildLastNameMl(SearchRegId.childLastNameMl):setChildLastNameMl('')
-    }
+        SearchRegId?.birthPlace ? selectBirthPlace((cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === SearchRegId?.birthPlace)[0])):selectBirthPlace('')
+        SearchRegId?.birthPlace ? setValue(SearchRegId?.birthPlace):setValue('') 
+        // console.log(cmbPostOffice.filter(cmbPostOffice => cmbPostOffice.code === SearchRegId?.adrsPostOffice)[0]?.pincode);
+        SearchRegId?.hospitalCode ? selectHospitalName((cmbhospital.filter(cmbhospital => cmbhospital.code === SearchRegId?.hospitalCode )[0])): selectHospitalName('')
+        SearchRegId?.hospitalNameMl ? selectHospitalNameMl((cmbhospital.filter(cmbhospital => cmbhospital.code === SearchRegId?.hospitalCode )[0]).hospitalNamelocal):selectHospitalNameMl('')
+        SearchRegId?.wardNo ?setWardNo(cmbWardNo.filter(cmbWardNo => cmbWardNo.code === SearchRegId?.wardNo )[0]):setWardNo([])
+        SearchRegId?.adrsPostOffice?setAdrsPostOffice(cmbPostOffice.filter(cmbPostOffice => cmbPostOffice.code === SearchRegId?.adrsPostOffice)[0]):''
+        SearchRegId?.adrsPostOffice?setAdrsPincode(cmbPostOffice.filter(cmbPostOffice => cmbPostOffice.code === SearchRegId?.adrsPostOffice)[0]?.pincode):''
+        SearchRegId?.adrsLocalityNameEn?setAdrsLocalityNameEn(SearchRegId?.adrsLocalityNameEn):setAdrsLocalityNameEn('')
+        SearchRegId?.adrsLocalityNameMl?setAdrsLocalityNameMl(SearchRegId?.adrsLocalityNameMl):setAdrsLocalityNameMl('')
+        SearchRegId?.adrsHouseNameEn?setAdrsHouseNameEn( SearchRegId?.adrsHouseNameEn):setAdrsHouseNameEn('')
+        SearchRegId?.adrsHouseNameMl? setAdrsHouseNameMl(SearchRegId?.adrsHouseNameMl):setAdrsHouseNameMl('')
+        SearchRegId?.streetNameEn?setAdrsStreetNameEn(SearchRegId?.streetNameEn):setAdrsStreetNameEn('')
+        SearchRegId?.streetNameMl?setAdrsStreetNameMl(SearchRegId?.streetNameMl):setAdrsStreetNameMl()
+      }
+
    
   },[SearchRegId])
 
@@ -598,6 +634,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
   function setBirthRegDetails(e) {
     if (e.target.checked === true) {
       setbirthRegistered(e.target.checked);
+      setBirthRegPopup(!birthRegPopup)
 
     } else {
       setbirthRegistered(e.target.checked)
@@ -1126,15 +1163,15 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
           )}
             
 
-          {!editFlag && birthRegistered == true &&(<React.Fragment>
+          {!editFlag && birthRegPopup && birthRegistered == true &&(<React.Fragment>
             {/* {isEditFlag?(
               <AdoptionBirthReqSearch BirthRegNo={BirthRegNo} setSelectSetBirthRegNo={setSelectSetBirthRegNo} setSearchRegId={setSearchRegId}/>
             ):
             ( */}
-              <BirthReqSearch BirthRegNo={BirthRegNo} setSelectSetBirthRegNo={setSelectSetBirthRegNo} setSearchRegId={setSearchRegId}/>
+              <BirthReqSearch BirthRegNo={BirthRegNo} closePopup ={()=>{setBirthRegPopup(false), setbirthRegistered(false)}} setBirthRegPopup={setBirthRegPopup} setSelectSetBirthRegNo={setSelectSetBirthRegNo} setSearchRegId={setSearchRegId}/>
             
             
-          {birthRegistered == true && BirthRegNo && SearchRegId && (
+          {/* {birthRegistered == true && SearchRegId && (
                <div className="row">
                <div className="col-md-12">
                  <div className="col-md-3">
@@ -1160,29 +1197,6 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                      })}
                    />
                  </div>
-                 {/* <div className="col-md-3">
-                   <CardLabel>{`${t("CR_COMMON_COL_MOTHER_NAME")}`}
-                   {AdoptionDeedNo ==="" &&  <span className="mandatorycss">*</span>}
-                   </CardLabel>
-                   <TextInput
-                     t={t}
-                     isMandatory={false}
-                     type={"text"}
-                     optionKey="i18nKey"
-                     name="CR_COMMON_COL_MOTHER_NAME"
-                     value={SearchRegId?.ParentsDetails?.motherFirstNameEn}
-                     onKeyPress={setCheckMalayalamInputField}
-                     onChange={setSelectChildMiddleNameMl}
-                     disable={true}
-                     placeholder={`${t("CR_COMMON_COL_MOTHER_NAME")}`}
-                     {...(validation = {
-                       isRequired: false,
-                       type: "text",
-                       title: t(""),
-                     })}
-                   />
-                      
-                 </div> */}
                  <div className="col-md-3">
                    <CardLabel>{`${t("CR_SEARCH_DOB")}`}
                    {AdoptionDeedNo ==="" &&  <span className="mandatorycss">*</span>}
@@ -1255,7 +1269,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                </div>
              </div>
           )
-           }
+           }  */}
            {BirthRegNo && SearchRegId==""&&(
                 <div style={{ marginTop: "24px", marginTop: "24px", marginLeft: "24px", flex:1 }}>
                 <Card style={{ marginTop: 20,display:'flex',justifyContent:"center" }}>{t("CR_INVALID_BIRTH_REG_ID")}</Card>
