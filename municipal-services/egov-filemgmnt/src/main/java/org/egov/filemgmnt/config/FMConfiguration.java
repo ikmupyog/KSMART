@@ -171,6 +171,8 @@ public class FMConfiguration {
     @Value("${persister.update.modulemaster.topic:}")
     private String updateModuleMasterTopic;
 
+    @Value("${persister.save.subfunction.topic:}")
+    private String SaveSubFunctionTopic;
 
 
 

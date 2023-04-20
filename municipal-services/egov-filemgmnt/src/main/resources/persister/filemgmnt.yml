@@ -992,3 +992,32 @@ serviceMaps:
         - jsonPath: $.ModuleDetails.moduleNameMalayalam
 
         - jsonPath: $.ModuleDetails.moduleCode
+  - version: 1.0
+    description: Create subfunction master in egov_filemgmnt database, eg_fm_subfunctionmaster
+    fromTopic: save-fm-subfunction
+    isTransaction: true
+    queryMaps:
+    - query: >
+        INSERT INTO public.eg_fm_subfunctionmaster(id, tenantid, sfcode, mfid, sfnameeng, sfnamemal, createdby, createdtime, lastmodifiedby, lastmodifiedtime)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+    basePath: SubFunctionDetails
+    jsonMaps:
+        - jsonPath: $.SubFunctionDetails.id
+
+        - jsonPath: $.SubFunctionDetails.tenantId
+
+        - jsonPath: $.SubFunctionDetails.subFunctionCode
+
+        - jsonPath: $.SubFunctionDetails.majorFunctionId
+
+        - jsonPath: $.SubFunctionDetails.subFunctionNameEnglish
+
+        - jsonPath: $.SubFunctionDetails.subFunctionNameMalayalam
+
+        - jsonPath: $.ModuleDetails.auditDetails.createdBy
+
+        - jsonPath: $.ModuleDetails.auditDetails.createdTime
+
+        - jsonPath: $.ModuleDetails.auditDetails.lastModifiedBy
+
+        - jsonPath: $.ModuleDetails.auditDetails.lastModifiedTime

@@ -43,12 +43,15 @@ public class GlobalMasterServices {
 //        producer.push(fmConfiguration.getSaveMajorFunctionTopic(),request);
 //        return request.getMajorFunctionDetails();
 //    }
-//    //create Subfunction
-//    public  SubFunctionDetails createSF(SubFunctionDetailsRequest request) {
-//        GlobalMasterEnrichment.enrichCreateSubFunction(request);
-//        producer.push(fmConfiguration.getSaveSubFunctionTopic(),request);
-//        return request.getSubFunctionDetails();
-//    }
+
+
+    //create Subfunction
+    public  SubFunctionDetails createSF(final SubFunctionDetailsRequest request) {
+        final SubFunctionDetails subFunctionDetails=request.getSubFunctionDetails();
+        enrichment.enrichCreateSubFunction(request);
+        producer.push(fmConfiguration.getSaveSubFunctionTopic(),request);
+        return request.getSubFunctionDetails();
+    }
 //    //create Servicedetails
 //    public ServiceDetails createService(ServiceDetailsRequest request){
 //        GlobalMasterEnrichment.enrichCreateServiceDetails(request);
@@ -79,6 +82,33 @@ public class GlobalMasterServices {
 
     public List<ModuleDetails> searchModule(RequestInfo requestInfo, ModuleSearchCriteria searchCriteria) {
         final List<ModuleDetails> result= repository.searchModule(searchCriteria);
+        return (result);
+    }
+
+
+    public SubFunctionDetails updateSF(SubFunctionDetailsRequest request) {
+        final SubFunctionDetails subFunctionDetails = request.getSubFunctionDetails();
+
+        String sfCode = null;
+        sfCode = subFunctionDetails.getSubFunctionCode();
+
+        // search database
+        List<SubFunctionDetails> searchResult = repository.searchSF(SubFunctionSearchCriteria.builder()
+                .subFunctionCode(sfCode)
+                .build());
+        // validate request
+        //  validator.validateUpdate(request, searchResult);
+
+        enrichment.enrichUpdateSubFunction(request);
+
+      //  producer.push(fmConfiguration.getUpdateSubFunctionTopic(), request);
+
+        return request.getSubFunctionDetails();
+
+    }
+
+    public List<SubFunctionDetails> searchSF(RequestInfo requestInfo, SubFunctionSearchCriteria searchCriteria) {
+        final List<SubFunctionDetails> result= repository.searchSF(searchCriteria);
         return (result);
     }
 

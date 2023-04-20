@@ -23,10 +23,11 @@ public class GlobalMasterController {
     private final ResponseInfoFactory responseInfoFactory;
     private final GlobalMasterServices globalMasterServices;
 
-    GlobalMasterController(final  ResponseInfoFactory responseInfoFactory, final GlobalMasterServices globalMasterServices) {
+    GlobalMasterController(final ResponseInfoFactory responseInfoFactory, final GlobalMasterServices globalMasterServices) {
         this.globalMasterServices = globalMasterServices;
         this.responseInfoFactory = responseInfoFactory;
     }
+
     @PostMapping("/Globalmaster/_createmodule")
     public ResponseEntity<ModuleDetailsResponse> createModuledetails(@RequestBody final ModuleDetailsRequest request) {
 //        if (log.isDebugEnabled()) {
@@ -53,19 +54,22 @@ public class GlobalMasterController {
 //                .build());
 //            }
 //
-//    @PostMapping("/subfunctiondetails/_create")
-//    public ResponseEntity<SubFunctionDetailsResponse> createSubFunction(@RequestBody SubFunctionDetailsRequest request) {
-//        if (log.isDebugEnabled()) {
-//            log.debug("subfunction-create:  \n{}", FMUtils.toJson(request));
-//        }
-//        final SubFunctionDetails subFunctionDetails = globalMasterServices.createSF(request);
-//        return ResponseEntity.ok(SubFunctionDetailsResponse .builder()
-//                .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
-//                        Boolean.TRUE))
-//                .subFunctionDetails(subFunctionDetails)
-//                .build());
-//    }
-//    @PostMapping("/servicedetails/_create")
+
+
+    @PostMapping("/Globalmaster/_createSF")
+    public ResponseEntity<SubFunctionDetailsResponse> createSubFunction(@RequestBody SubFunctionDetailsRequest request) {
+        if (log.isDebugEnabled()) {
+            log.debug("lobalmaster/_createSF:  \n{}", FMUtils.toJson(request));
+        }
+        final SubFunctionDetails subFunctionDetails = globalMasterServices.createSF(request);
+        return ResponseEntity.ok(SubFunctionDetailsResponse.builder()
+                .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+                        Boolean.TRUE))
+                .subFunctionDetails(subFunctionDetails)
+                .build());
+    }
+
+    //    @PostMapping("/servicedetails/_create")
 //    public ResponseEntity<ServiceDetailsResponse>createServiceDetails(@RequestBody final ServiceDetailsRequest request){
 //        if (log.isDebugEnabled()) {
 //            log.debug("moduledetails-create:  \n{}", FMUtils.toJson(request));
@@ -78,20 +82,21 @@ public class GlobalMasterController {
 //                .build());
 //    }
 //
-@PostMapping("/Globalmaster/_searchmodule")
-public ResponseEntity<ModuleSearchResponse> searchModule(@RequestBody final RequestInfoWrapper request,
-                                                            @ModelAttribute final ModuleSearchCriteria searchCriteria) {
-    if (log.isDebugEnabled()) {
-        log.debug("Globalmaster/_searchmodule:  \n{}", FMUtils.toJson(searchCriteria));
-    }
-    final List<ModuleDetails> result = globalMasterServices.searchModule(request.getRequestInfo(), searchCriteria);
+    @PostMapping("/Globalmaster/_searchmodule")
+    public ResponseEntity<ModuleSearchResponse> searchModule(@RequestBody final RequestInfoWrapper request,
+                                                             @ModelAttribute final ModuleSearchCriteria searchCriteria) {
+        if (log.isDebugEnabled()) {
+            log.debug("Globalmaster/_searchmodule:  \n{}", FMUtils.toJson(searchCriteria));
+        }
+        final List<ModuleDetails> result = globalMasterServices.searchModule(request.getRequestInfo(), searchCriteria);
 
-    return ResponseEntity.ok(ModuleSearchResponse.builder()
-            .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
-                    Boolean.TRUE))
-            .moduleDetails(result)
-            .build());
-}
+        return ResponseEntity.ok(ModuleSearchResponse.builder()
+                .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+                        Boolean.TRUE))
+                .moduleDetails(result)
+                .build());
+    }
+
     @PostMapping("/Globalmaster/_updatemodule")
     public ResponseEntity<ModuleDetailsResponse> updateModule(@RequestBody ModuleDetailsRequest request) {
         if (log.isDebugEnabled()) {
@@ -105,7 +110,39 @@ public ResponseEntity<ModuleSearchResponse> searchModule(@RequestBody final Requ
                         Boolean.TRUE))
                 .moduleDetails(moduleDetail)
                 .build());
-          }
+    }
+    @PostMapping("/Globalmaster/_updateSF")
+    public ResponseEntity<SubFunctionDetailsResponse> updateSF(@RequestBody SubFunctionDetailsRequest request) {
+        if (log.isDebugEnabled()) {
+            log.debug("Globalmaster/_updateSF:  \n{}", FMUtils.toJson(request));
+        }
+
+        final SubFunctionDetails subFunctionDetail = globalMasterServices.updateSF(request);
+
+        return ResponseEntity.ok(SubFunctionDetailsResponse.builder()
+                .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+                        Boolean.TRUE))
+                .subFunctionDetails(subFunctionDetail)
+                .build());
+    }
+
+    @PostMapping("/Globalmaster/_searchSF")
+    public ResponseEntity<SubFunctionSearchResponse> searchSF(@RequestBody final RequestInfoWrapper request,
+                                                              @ModelAttribute final SubFunctionSearchCriteria searchCriteria) {
+        if (log.isDebugEnabled()) {
+            log.debug("Globalmaster/_searchSF:  \n{}", FMUtils.toJson(searchCriteria));
+        }
+        final List<SubFunctionDetails> result = globalMasterServices.searchSF(request.getRequestInfo(), searchCriteria);
+
+        return ResponseEntity.ok(SubFunctionSearchResponse.builder()
+                .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+                        Boolean.TRUE))
+                .subFunctionDetails(result)
+                .build());
+
+
+    }
 
 
 }
+
