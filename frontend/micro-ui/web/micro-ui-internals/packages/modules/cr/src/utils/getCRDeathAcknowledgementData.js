@@ -70,7 +70,7 @@ const ulbCamel = (ulb) => ulb.toLowerCase().split(" ").map(capitalize).join(" ")
 // };
 const getInformationDeath = (application, t) => {
   console.log(application);
-  application.owners = application?.deathCertificateDtls[0]?.InformationDeath?.filter((applicationNumber) => applicationNumber.active == true) || [];
+  application.owners = application?.deathCertificateDtls?.InformationDeath?.filter((applicationNumber) => applicationNumber.active == true) || [];
   //if (application?.ChildDetails?.applicationNumber == "TL_COMMON_TABLE_COL_APP_NO") {
  
   return {

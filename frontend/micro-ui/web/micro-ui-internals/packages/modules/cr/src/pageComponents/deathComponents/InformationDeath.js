@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox, BackButton, Toast } from "@egovernments/digit-ui-react-components";
+import { FormStep, CardLabel, TextInput, Dropdown, DatePicker, CheckBox,Loader, BackButton, Toast } from "@egovernments/digit-ui-react-components";
 import Timeline from "../../components/DRTimeline";
 import { useTranslation } from "react-i18next";
 import CustomTimePicker from "../../components/CustomTimePicker";
@@ -18,7 +18,8 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
   // console.log(JSON.stringify(formData));  
   sessionStorage.removeItem("applicationNumber");
   const [isEditDeathPageComponents, setIsEditDeathPageComponents] = useState(false);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
+  const [isDisableEdit, setisDisableEdit] = useState(false);
+  //const [isDisableEdit, setisDisableEdit] = useState(isEditDeath ? isEditDeath : false);
   const stateId = Digit.ULBService.getStateId();
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
   const [workFlowCode, setWorkFlowCode] = useState(formData?.InformationDeath?.workFlowCode);
@@ -157,7 +158,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
  const [DateOfDeath, setDateOfDeath] = useState(isEditDeath ? convertEpochToDate(formData?.InformationDeath?.DateOfDeath) : formData?.InformationDeath?.DateOfDeath); 
   const [FromDate, setFromDate] = useState(isEditDeath ? convertEpochToDate(formData?.InformationDeath?.FromDate) : formData?.InformationDeath?.FromDate); 
   const [ToDate, setToDate] = useState(isEditDeath ? convertEpochToDate(formData?.InformationDeath?.ToDate) : formData?.InformationDeath?.ToDate); 
-  console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
+  //console.log(convertEpochToDate(formData?.InformationDeath?.DateOfDeath));
   // const [FromDate, setFromDate] = useState(
   //   isEditDeath &&
   //     isEditDeathPageComponents === false &&
@@ -441,7 +442,7 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
   const [VehicleHospitalEnError, setVehicleHospitalEnError] = useState(formData?.InformationDeath?.VehicleHospitalEn ? false : false);
   const [DeathPlaceLocalityEnError, setDeathPlaceLocalityEnError] = useState(formData?.InformationDeath?.DeathPlaceLocalityEn ? false : false);
   const [DeathPlaceLocalityMlError, setDeathPlaceLocalityMlError] = useState(formData?.InformationDeath?.DeathPlaceLocalityMl ? false : false);
-  
+  const [access, setAccess] = React.useState(true);
   const onSkip = () => onSelect();
   useEffect(() => {
     if (isInitialRender) {
@@ -2352,5 +2353,5 @@ const InformationDeath = ({ config, onSelect, userType, formData, isEditDeath  =
     );
   }
 };
-//anzar
+
 export default InformationDeath;
