@@ -149,6 +149,10 @@ public class MarriageRegistryDetails {
     @JsonProperty("marriageHouseNoAndNameMl")
     private String marriageHouseNoAndNameMl;
 
+    @Size(max = 64)
+    @JsonProperty("zonalOffice")
+    private String zonalOffice;
+
     // @Size(max = 1000)
     // @JsonProperty("marriageReligiousInstitutionOther")
     // private String marriageReligiousInstitutionOther;
