@@ -2,17 +2,26 @@ import React, { useState } from "react";
 import { Loader } from "@egovernments/digit-ui-react-components";
 import { useTranslation } from "react-i18next";
 
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 
 import BirthInclusionEditPage from "./BirthInclusionEditPage";
 
 const BirthInclusionPage = () => {
   const { t } = useTranslation();
+  const history = useHistory();
 
   const stateId = Digit.ULBService.getStateId();
 
   let location = useLocation();
   let navigationData = location?.state?.inclusionData;
+
+  const navigateAcknowledgement = (navData) =>{
+    history.push({
+      pathname: `/digit-ui/citizen/cr/birth-inclusion-acknowledgement`,
+      state: { navData }
+    });
+  }
+  
 
   const { data: correctionsData = {}, isSuccess, isError, isLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(
     stateId,
@@ -61,6 +70,7 @@ const BirthInclusionPage = () => {
         cmbPlace={cmbPlace}
         BirthCorrectionDocuments={BirthCorrectionDocuments}
         navigationData={navigationData}
+        navigateAcknowledgement={navigateAcknowledgement}
         // birthInclusionFormData={birthInclusionFormData}
       />
     );

@@ -37,6 +37,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
   const [InstitutionFilterList, setInstitutionFilterList] = useState(null);
   const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(false);
   const [SearchRegId,setSearchRegId] = useState()
+  const [birthRegPopup, setBirthRegPopup] = useState(false)
 // console.log('M',formData,isEditAdoption);
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
@@ -302,6 +303,11 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
         SearchRegId?.childFirstNameMl ? setChildFirstNameMl(SearchRegId.childFirstNameMl):setChildFirstNameMl('')
         SearchRegId?.childMiddleNameMl ? setChildMiddleNameMl(SearchRegId.childMiddleNameMl):setChildMiddleNameMl('')
         SearchRegId?.childLastNameMl ? setChildLastNameMl(SearchRegId.childLastNameMl):setChildLastNameMl('')
+        SearchRegId?.birthPlace ? selectBirthPlace((cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === SearchRegId?.birthPlace)[0])):selectBirthPlace('')
+        SearchRegId?.birthPlace ? setValue(SearchRegId?.birthPlace):setValue('') 
+        // console.log(cmbhospital,cmbhospital.filter(cmbhospital => cmbhospital.code === SearchRegId?.hospitalCode )[0]);
+        SearchRegId?.hospitalCode ? selectHospitalName((cmbhospital.filter(cmbhospital => cmbhospital.code === SearchRegId?.hospitalCode )[0])): selectHospitalName('')
+        SearchRegId?.hospitalNameMl ? selectHospitalNameMl((cmbhospital.filter(cmbhospital => cmbhospital.code === SearchRegId?.hospitalCode )[0]).hospitalNamelocal):selectHospitalNameMl('')
     }
    
   },[SearchRegId])
@@ -598,6 +604,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
   function setBirthRegDetails(e) {
     if (e.target.checked === true) {
       setbirthRegistered(e.target.checked);
+      setBirthRegPopup(!birthRegPopup)
 
     } else {
       setbirthRegistered(e.target.checked)
@@ -1126,15 +1133,15 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
           )}
             
 
-          {!editFlag && birthRegistered == true &&(<React.Fragment>
+          {!editFlag && birthRegPopup && birthRegistered == true &&(<React.Fragment>
             {/* {isEditFlag?(
               <AdoptionBirthReqSearch BirthRegNo={BirthRegNo} setSelectSetBirthRegNo={setSelectSetBirthRegNo} setSearchRegId={setSearchRegId}/>
             ):
             ( */}
-              <BirthReqSearch BirthRegNo={BirthRegNo} setSelectSetBirthRegNo={setSelectSetBirthRegNo} setSearchRegId={setSearchRegId}/>
+              <BirthReqSearch BirthRegNo={BirthRegNo} closePopup ={()=>{setBirthRegPopup(false), setbirthRegistered(false)}} setBirthRegPopup={setBirthRegPopup} setSelectSetBirthRegNo={setSelectSetBirthRegNo} setSearchRegId={setSearchRegId}/>
             
             
-          {birthRegistered == true && BirthRegNo && SearchRegId && (
+          {/* {birthRegistered == true && SearchRegId && (
                <div className="row">
                <div className="col-md-12">
                  <div className="col-md-3">
@@ -1160,29 +1167,6 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                      })}
                    />
                  </div>
-                 {/* <div className="col-md-3">
-                   <CardLabel>{`${t("CR_COMMON_COL_MOTHER_NAME")}`}
-                   {AdoptionDeedNo ==="" &&  <span className="mandatorycss">*</span>}
-                   </CardLabel>
-                   <TextInput
-                     t={t}
-                     isMandatory={false}
-                     type={"text"}
-                     optionKey="i18nKey"
-                     name="CR_COMMON_COL_MOTHER_NAME"
-                     value={SearchRegId?.ParentsDetails?.motherFirstNameEn}
-                     onKeyPress={setCheckMalayalamInputField}
-                     onChange={setSelectChildMiddleNameMl}
-                     disable={true}
-                     placeholder={`${t("CR_COMMON_COL_MOTHER_NAME")}`}
-                     {...(validation = {
-                       isRequired: false,
-                       type: "text",
-                       title: t(""),
-                     })}
-                   />
-                      
-                 </div> */}
                  <div className="col-md-3">
                    <CardLabel>{`${t("CR_SEARCH_DOB")}`}
                    {AdoptionDeedNo ==="" &&  <span className="mandatorycss">*</span>}
@@ -1255,7 +1239,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                </div>
              </div>
           )
-           }
+           }  */}
            {BirthRegNo && SearchRegId==""&&(
                 <div style={{ marginTop: "24px", marginTop: "24px", marginLeft: "24px", flex:1 }}>
                 <Card style={{ marginTop: 20,display:'flex',justifyContent:"center" }}>{t("CR_INVALID_BIRTH_REG_ID")}</Card>

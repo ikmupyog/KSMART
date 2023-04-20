@@ -84,12 +84,12 @@ const formFielColumns = {
     ];
     break;
     case "DECEASED_DOB":
-        console.log("DECEASED_DOB",Date(item.curValue),Date(item.curValue).getTime());
+        // console.log("DECEASED_DOB",Date(item.curValue),Date(item.curValue).getTime());
         fieldValues =  [
           {
             column: formFielColumns[item?.CorrectionField],
             oldValue: item.initialValue,
-            newValue:  item.curValue && Date.parse(item.curValue),
+            newValue:  item.curValue && Date.now(item.curValue),
             // newValue: item.curValue && new Date(item.curValue).getTime(),
           },
         ];
@@ -145,7 +145,7 @@ const formFielColumns = {
       CorrectionDetails: [
         {
           id: userData?.id,
-          tenantid: "kl.cochin",
+        //   tenantid: "kl.cochin",
           applicationtype: "CRBRCN",
           businessservice: "birth-services",
           workflowcode: "BIRTHHOSP21",
@@ -154,6 +154,9 @@ const formFielColumns = {
           registrationNo: userData?.InformationDeath.registrationNo,
           registrationDate: null,
           applicationStatus: "INITIATED",
+          InformationDeathCorrection: {
+            tenantId: "kl.cochin"
+        },
           CorrectionField: correctionFieldData,
         },
       ],
