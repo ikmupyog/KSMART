@@ -297,7 +297,7 @@ export const convertToEditBornOutsideBirthRegistration = (data = {}) => {
         action: "INITIATE",
         applicationtype: "CRBRBO",
         businessservice: "CR",
-        workflowcode: "BORNOUTSIDE60",
+        workflowcode: "WFBORNOUTSIDE60",
         BornOutsideParentsDetails: {
           motherFirstNameEn: data?.BornOutsideParentsDetails?.motherFirstNameEn,
           motherFirstNameMl: data?.BornOutsideParentsDetails?.motherFirstNameMl,
@@ -438,7 +438,7 @@ export const convertToBornOutsideBirthRegistration = (data = {}) => {
         action: "INITIATE",
         applicationtype: "CRBRBO",
         businessservice: "CR",
-        workflowcode: "BORNOUTSIDE60",
+        workflowcode: "WFBORNOUTSIDE60",
         BornOutsideParentsDetails: {
           motherFirstNameEn: data?.BornOutsideParentsDetails?.motherFirstNameEn,
           motherFirstNameMl: data?.BornOutsideParentsDetails?.motherFirstNameMl,
@@ -449,7 +449,7 @@ export const convertToBornOutsideBirthRegistration = (data = {}) => {
           motherProfession: data?.BornOutsideParentsDetails?.motherProfession ? data?.BornOutsideParentsDetails?.motherProfession.code : null,
           motherNationality: data?.BornOutsideParentsDetails?.motherNationality ? data?.BornOutsideParentsDetails?.motherNationality.code : null,
           ismotherInfo: false,
-          isfatherInfo: false,
+          isfatherInfo: true,
           fatherFirstNameEn: data?.BornOutsideParentsDetails?.fatherFirstNameEn,
           fatherFirstNameMl: data?.BornOutsideParentsDetails?.fatherFirstNameMl,
           fatherNationality: data?.BornOutsideParentsDetails?.fatherNationality ? data?.BornOutsideParentsDetails?.fatherNationality.code : null,

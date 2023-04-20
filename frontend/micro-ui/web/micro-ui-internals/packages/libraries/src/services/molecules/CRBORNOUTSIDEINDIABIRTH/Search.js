@@ -127,11 +127,11 @@ export const CRBornOutsideIndiasearch = {
           title: "CR_BIRTH_PERM_LOCALITY_LABEL",
           value: response?.BornOutsideAddressBirthDetails.permntInKeralaAdrLocalityNameEn || "CR_NOT_RECORDED",
         },
-        { title: "CR_BIRTH_PERM_POSTOFFICE_LABEL", value: response?.BornOutsideAddressBirthDetails.permntInKeralaAdrPostOffice || "CR_NOT_RECORDED" },
+        { title: "CS_COMMON_POST_OFFICE", value: response?.BornOutsideAddressBirthDetails.permntInKeralaAdrPostOffice || "CR_NOT_RECORDED" },
         { title: "CR_BIRTH_PERM_PINCODE_LABEL", value: response?.BornOutsideAddressBirthDetails.permntInKeralaAdrPincode || "CR_NOT_RECORDED" },
-        { title: "CR_BIRTH_PERM_VILLAGE_LABEL", value: response?.BornOutsideAddressBirthDetails.permntInKeralaAdrVillage || "CR_NOT_RECORDED" },
-        { title: "CR_BIRTH_PERM_TALUK_LABEL", value: response?.BornOutsideAddressBirthDetails.permntInKeralaAdrTaluk || "CR_NOT_RECORDED" },
-        { title: "CR_BIRTH_PERM_DISTRICT_LABEL", value: response?.BornOutsideAddressBirthDetails.permntInKeralaAdrDistrict || "CR_NOT_RECORDED" },
+        { title: "CS_COMMON_VILLAGE", value: response?.BornOutsideAddressBirthDetails.permntInKeralaAdrVillage || "CR_NOT_RECORDED" },
+        { title: "CS_COMMON_TALUK", value: response?.BornOutsideAddressBirthDetails.permntInKeralaAdrTaluk || "CR_NOT_RECORDED" },
+        { title: "CS_COMMON_DISTRICT", value: response?.BornOutsideAddressBirthDetails.permntInKeralaAdrDistrict || "CR_NOT_RECORDED" },
         { title: "CR_BIRTH_PERM_STATE_LABEL", value: response?.BornOutsideAddressBirthDetails.permtaddressStateName || "CR_NOT_RECORDED" },
         { title: "CR_BIRTH_PERM_COUNTRY_LABEL", value: response?.BornOutsideAddressBirthDetails.permtaddressCountry || "CR_NOT_RECORDED" },
       ],
@@ -196,10 +196,18 @@ export const CRBornOutsideIndiasearch = {
     const statisticalInfo = {
       title: "CR_STATSTICAL_INFORMATION_HEADER",
       values: [
-        // { title: "CR_BIRTH_WEIGHT", value: response?.BornOutsideStaticInfn.birthWeight || "NA" },
+        { title: "CR_BIRTH_WEIGHT", value: response?.BornOutsideStaticInfn?.birthWeight || "NA" },
         // { title: "CR_STATSTICAL_HEIGHT_LABEL", value: response?.BornOutsideStaticInfn.height_of_child || "NA" },
-        // { title: "CR_STATSTICAL_PWEEK_LABEL", value: response?.BornOutsideStaticInfn.pregnancyDuration || "NA" },
-        // { title: "CR_STATSTICAL_DEL_METHOD_LABEL", value: response?.BornOutsideStaticInfn.deliveryMethods || "NA" },
+        { title: "CR_PREGNANCY_DURATION", value: response?.BornOutsideStaticInfn?.pregnancyDuration || "NA" },
+        { title: "CR_DELIVERY_METHOD", value: response?.BornOutsideStaticInfn?.deliveryMethods || "NA" },
+        { title: "CR_NATURE_OF_MEDICAL_ATTENTION", value: response?.BornOutsideStaticInfn?.medicalAttensionSub || "NA" },
+        { title: "CR_ORDER_CURRENT_DELIVERY", value: response?.BornOutsideStaticInfn?.orderofChildren || "NA" },
+        { title: "CR_RELATION", value: response?.BornOutsideStaticInfn?.relation || "NA" },
+        { title: "CS_COMMON_AADHAAR", value: response?.BornOutsideStaticInfn?.informarAadhar || "NA" },
+        { title: "CR_INFORMANT_NAME", value: response?.BornOutsideStaticInfn?.informarNameEn || "NA" },
+        { title: "CR_MOBILE_NO", value: response?.BornOutsideStaticInfn?.informarMobile || "NA" },
+        { title: "CR_INFORMER_ADDRESS", value: response?.BornOutsideStaticInfn?.informarAddress || "NA" },
+
       ],
     };
 
