@@ -154,7 +154,12 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{convertEpochToDate(InformationDeath?.DateOfDeath)}</CardText>
                 </div>
+                {/* <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_TIME_OF_DEATH")}`} :</CardText>
+                </div> */}
+              
         </div>
+        
       )}
     </div>
   </div>
@@ -493,7 +498,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_WARD")}`} :</CardText>
                     </div>
                     <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformationDeath?.DeathPlaceWardId.namecmb}</CardText>
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformationDeath?.DeathPlaceHomeWardId.namecmb}</CardText>
                     </div>
                     <div className="col-md-2">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_POST_OFFICE")}`} :</CardText>
@@ -505,7 +510,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CS_COMMON_PIN_CODE")}`} :</CardText>
                     </div>
                     <div className="col-md-2">
-                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformationDeath?.DeathPlaceHomepincode}</CardText>
+                      <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformationDeath?.DeathPlaceHomePincode}</CardText>
                     </div>
                   </div>
                 </div>
