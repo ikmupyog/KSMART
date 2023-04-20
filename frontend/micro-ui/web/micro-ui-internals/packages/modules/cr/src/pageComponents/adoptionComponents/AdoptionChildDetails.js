@@ -28,6 +28,10 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
   let validation = {};
   const { data: WorkFlowDetails = {}, isWorkFlowDetailsLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "WorkFlowAdoption");
   const { data: Menu, isLoading } = Digit.Hooks.cr.useCRGenderMDMS(stateId, "common-masters", "GenderType");
+  const { data: institutionType = {}, isinstitutionLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "InstitutionTypePlaceOfEvent");
+  const { data: otherplace = {}, isotherLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "OtherBithPlace");
+  const { data: institutionidList = {}, isinstitutionidLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(tenantId, "egov-location", "institution");
+  const { data: Vehicle = {}, isLoad } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "VehicleType");
   const { data: AttentionOfDelivery = {}, isAttentionOfDeliveryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "AttentionOfDelivery");
   const { data: DeliveryMethodList = {}, isDeliveryMethodListLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeliveryMethod");
   const { data: PlaeceMaster = {}, isPlaceMasterLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "PlaceMaster");
@@ -87,6 +91,10 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
   let cmbWardNo = [];
   let cmbPostOffice = []
   let Zonal =[]
+  let cmbVehicle = [];
+  let cmbInstitutionType = [];
+  let cmbInstitutionList = [];
+  let cmbOtherplace = [];
   let Difference_In_DaysRounded = "";
   // let workFlowCode = "BIRTHHOSP21";
   WorkFlowDetails &&
@@ -95,6 +103,28 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
       workFlowData.push(ob);
       // console.log(workFlowData);
     });
+  
+    otherplace &&
+      otherplace["birth-death-service"] && otherplace["birth-death-service"].OtherBithPlace &&
+      otherplace["birth-death-service"].OtherBithPlace.map((ob) => {
+        cmbOtherplace.push(ob);
+      });
+  
+    institutionType &&
+      institutionType["birth-death-service"] && institutionType["birth-death-service"].InstitutionTypePlaceOfEvent &&
+      institutionType["birth-death-service"].InstitutionTypePlaceOfEvent.map((ob) => {
+        cmbInstitutionType.push(ob);
+      });
+    institutionidList &&
+      institutionidList["egov-location"] && institutionidList["egov-location"].institutionList &&
+      institutionidList["egov-location"].institutionList.map((ob) => {
+        cmbInstitutionList.push(ob);
+      });
+    Vehicle &&
+      Vehicle["birth-death-service"] && Vehicle["birth-death-service"].VehicleType &&
+      Vehicle["birth-death-service"].VehicleType.map((ob) => {
+        cmbVehicle.push(ob);
+      });
   Menu &&
     Menu.map((genderDetails) => {
       menu.push({ i18nKey: `CR_COMMON_GENDER_${genderDetails.code}`, code: `${genderDetails.code}`, value: `${genderDetails.code}` });
@@ -337,6 +367,24 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
         SearchRegId?.adrsHouseNameMl? setAdrsHouseNameMl(SearchRegId?.adrsHouseNameMl):setAdrsHouseNameMl('')
         SearchRegId?.streetNameEn?setAdrsStreetNameEn(SearchRegId?.streetNameEn):setAdrsStreetNameEn('')
         SearchRegId?.streetNameMl?setAdrsStreetNameMl(SearchRegId?.streetNameMl):setAdrsStreetNameMl()
+        SearchRegId?.vehicleToEn?setvehicleToEn(SearchRegId?.vehicleToEn):setvehicleToEn('')
+        SearchRegId?.vehicleType?setvehicleType(cmbVehicle.filter(cmbVehicle => cmbVehicle.code === SearchRegId?.vehicleType)[0]):setvehicleType('')
+        SearchRegId?.vehicleRegistrationNo?setvehicleRegistrationNo(SearchRegId?.vehicleRegistrationNo):setvehicleRegistrationNo('')
+        SearchRegId?.vehicleFromEn?setvehicleFromEn(SearchRegId?.vehicleFromEn):setvehicleFromEn('')
+        SearchRegId?.vehicleFromMl?setvehicleFromMl(SearchRegId?.vehicleFromMl):setvehicleFromMl('')
+        SearchRegId?. vehicleHaltPlace?setvehicleHaltPlace(SearchRegId?. vehicleHaltPlace):setvehicleHaltPlace('')
+        SearchRegId?.vehicleToMl?setvehicleToMl(SearchRegId?.vehicleToMl):setvehicleToMl('')
+        SearchRegId?.vehicleDesDetailsEn?setvehicleDesDetailsEn(SearchRegId?.vehicleDesDetailsEn):setvehicleDesDetailsEn('')
+        SearchRegId?.setadmittedHospitalEn?setSelectedadmittedHospitalEn(cmbhospital.filter(cmbhospital => cmbhospital.code === SearchRegId?.setadmittedHospitalEn)[0]):''
+        SearchRegId?.institutionTypeCode?setInstitution(cmbInstitutionType.filter(cmbInstitutionType => cmbInstitutionType.code ===SearchRegId?.institutionTypeCode)[0]):setInstitution('')
+        SearchRegId?.institutionId ?setInstitutionId(cmbInstitutionList.filter(cmbInstitutionList => cmbInstitutionList.institutionName === SearchRegId?.institutionNameCode)[0]):setInstitutionId('')
+        SearchRegId?.institutionIdMl ?setInstitutionIdMl(cmbInstitutionList.filter(cmbInstitutionList => cmbInstitutionList.institutionName === SearchRegId?.institutionNameCode)[0]):setInstitutionIdMl('')
+        SearchRegId?.publicPlaceType? setpublicPlaceType(cmbOtherplace.filter(cmbOtherplace => cmbOtherplace.code ===  SearchRegId?.publicPlaceType)[0]):setpublicPlaceType('')
+        SearchRegId?.localityNameEn ?setlocalityNameEn( SearchRegId?.localityNameEn):setlocalityNameEn('')
+        SearchRegId?.localityNameMl ?setlocalityNameMl(SearchRegId?.localityNameMl ):setlocalityNameMl("")
+        SearchRegId?.streetNameEn ?setstreetNameEn(SearchRegId?.streetNameEn ):setstreetNameEn('')
+        SearchRegId?.streetNameMl ?setstreetNameMl(SearchRegId?.streetNameMl):setstreetNameMl("")
+        SearchRegId?.vehicleDesDetailsEn ?setpublicPlaceDecpEn( SearchRegId?.vehicleDesDetailsEn):setpublicPlaceDecpEn('')
       }
 
    
