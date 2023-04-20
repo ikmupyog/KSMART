@@ -140,7 +140,7 @@ const Urls = {
   },
   crabandonedbirth: {
     create: "/birth-services/cr/createabandoned",
-    search: "/birth-services/cr/searchbornoutside",
+    search: "/birth-services/cr/searchabandoned",
     update: "/birth-services/cr/updatebornoutside",
   },
   crnacdeath: {
