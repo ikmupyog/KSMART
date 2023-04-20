@@ -152,9 +152,6 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}> {`${t("PDF_BIRTH_CHILD_SEX")}`} </CardLabel>
                   </div>
                   <div className="col-md-6">
-                    {/* <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                      : ആൺ / MALE
-                    </CardText> */}
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                       : {t(DeathNACDetails.DeceasedGender.code + "_ML") + " / " + (DeathNACDetails.DeceasedGender.code)}
                     </CardText>
@@ -163,9 +160,6 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                     <CardLabel style={{ lineHeight: "auto", fontWeight: "bold" }}> {`${t("PDF_CR_DEATH_OF_DATE")}`} </CardLabel>
                   </div>
                   <div className="col-md-6">
-                    {/* <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                      : 06-04-2022
-                    </CardText> */}
                     <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                       : {t(convertEpochToDate(DeathNACDetails.DateOfDeath) ? convertEpochToDate(DeathNACDetails.DateOfDeath) : " CR_NOT_RECORDED")}{" "}
                     </CardText>
@@ -180,7 +174,6 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
           title="Death Place Details"
           content={
             <StatusTable>
-              {/* {dcode === "Hospital" && ( */}
                  {DeathNACDetails.DeathPlace.code === "HOSPITAL" && (
                 <div className="row">
                   <div className="col-md-12">
@@ -192,7 +185,6 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                 </div>
               )}
-              {/* {dcode === "INSTITUTION" && ( */}
                 {DeathNACDetails.DeathPlace.code === "INSTITUTION" && (
                 <div className="row">
                   <div className="col-md-12">
@@ -204,7 +196,6 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                 </div>
               )}
-              {/* {dcode === "HOME" && ( */}
                 {DeathNACDetails.DeathPlace.code === "HOME" && (
                 <div className="row">
                   <div className="col-md-12">
@@ -216,7 +207,6 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                 </div>
               )}
-              {/* {dcode === "VEHICLE" && ( */}
                 {DeathNACDetails.DeathPlace.code === "VEHICLE" && (
                 <div className="row">
                   <div className="col-md-12">
@@ -228,7 +218,6 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                 </div>
               )}
-              {/* {dcode === "PUBLIC_PLACES" && ( */}
                 {DeathNACDetails.DeathPlace.code === "PUBLIC_PLACES" && (
                 <div className="row">
                   <div className="col-md-12">
@@ -254,7 +243,6 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                 </div>
               </div>
-              {/* {dcode === "Hospital" && ( */}
                 {DeathNACDetails.DeathPlace.code === "HOSPITAL" && (
                 <div className="row">
                   <div className="col-md-12">
@@ -262,28 +250,21 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>Hospital Name :</CardText>
                     </div>
                     <div className="col-md-3">
-                      {/* <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        Akshya Hospital, Kottayam
-                      </CardText> */}
                       <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                        : {t(DeathNACDetails.DeathPlaceType.hospitalNamelocal) + "/" + DeathNACDetails.DeathPlaceType.hospitalName}
+                        : {t(DeathNACDetails.HospitalNameMl.addressLocal)}
                       </CardText>
                     </div>
                     <div className="col-md-3">
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>Hospital Name  :</CardText>
                     </div>
                     <div className="col-md-3">
-                      {/* <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        അക്ഷയ  ഹോസ്പിറ്റൽ , കോട്ടയം
-                      </CardText> */}
                       <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
-                        : {t(DeathNACDetails.DeathPlaceType.hospitalNamelocal) + "/" + DeathNACDetails.DeathPlaceType.hospitalName}
+                        : {t(DeathNACDetails.hospitalNameEn.address)}
                       </CardText>
                     </div>
                   </div>
                 </div>
               )}
-              {/* {dcode === "INSTITUTION" && ( */}
                 {DeathNACDetails.DeathPlace.code === "INSTITUTION" && (
                 <div className="row">
                   <div className="col-md-12">
@@ -291,9 +272,6 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>INSTITUTION Type :</CardText>
                     </div>
                     <div className="col-md-3">
-                      {/* <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        INSTITUTION Type
-                      </CardText> */}
                       <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                         :{" "}
                         {t(DeathNACDetails.DeathPlaceType.namelocal) +
@@ -309,9 +287,6 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>INSTITUTION Name EN  :</CardText>
                     </div>
                     <div className="col-md-3">
-                      {/* <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        അക്ഷയ  ഹോസ്പിറ്റൽ , കോട്ടയം
-                      </CardText> */}
                       <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                         :{" "}
                         {t(DeathNACDetails.DeathPlaceType.namelocal) +
@@ -327,9 +302,6 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>INSTITUTION Name ML :</CardText>
                     </div>
                     <div className="col-md-3">
-                      {/* <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        അക്ഷയ  ഹോസ്പിറ്റൽ , കോട്ടയം
-                      </CardText> */}
                       <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                         :{" "}
                         {t(DeathNACDetails.DeathPlaceType.namelocal) +
@@ -344,7 +316,6 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                 </div>
               )}
-              {/* {dcode === "HOME" && ( */}
                 {DeathNACDetails.DeathPlace.code === "HOME" && (
                 <div className="row">
                   <div className="col-md-12">
@@ -352,9 +323,6 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>Ward :</CardText>
                     </div>
                     <div className="col-md-3">
-                      {/* <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        INSTITUTION Type
-                      </CardText> */}
                       <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                         :{" "}
                         {t(DeathNACDetails.DeathPlaceHomeHoueNameMl) +
@@ -446,7 +414,6 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                 </div>
               )}
-              {/* {dcode === "VEHICLE" && ( */}
                 {DeathNACDetails.DeathPlace.code === "VEHICLE" && (
                 <div className="row">
                   <div className="col-md-12">
@@ -454,9 +421,6 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>VEHICLE Type :</CardText>
                     </div>
                     <div className="col-md-3">
-                      {/* <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        INSTITUTION Type
-                      </CardText> */}
                       <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                         :
                         {`${t("PDF_CR_VEHICLE_STATEMENT_ONE") +
@@ -570,7 +534,6 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                   </div>
                 </div>
               )}
-              {/* {dcode === "PUBLIC_PLACES" && ( */}
                 {DeathNACDetails.DeathPlace.code === "PUBLIC_PLACES" && (
                 <div className="row">
                   <div className="col-md-12">
@@ -578,9 +541,6 @@ const DeathNACCheckPage = ({ onSubmit, value, userType }) => {
                       <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>PUBLIC_PLACES Type :</CardText>
                     </div>
                     <div className="col-md-3">
-                      {/* <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>
-                        INSTITUTION Type
-                      </CardText> */}
                       <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>
                         :{" "}
                         {t(DeathNACDetails.DeathPlaceLocalityMl) +

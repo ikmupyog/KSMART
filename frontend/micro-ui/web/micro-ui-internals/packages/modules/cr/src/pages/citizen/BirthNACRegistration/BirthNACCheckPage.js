@@ -1483,6 +1483,7 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
         />
         {ownerState.map((item) => {
           let itemData = _.head(item) || {};
+          //let dob = new Date(itemData?.dob);
           if (Array.isArray(item)) {
             return (
               <Accordion
@@ -1520,7 +1521,7 @@ const BirthNACCheckPage = ({ onSubmit, value, userType, formData }) => {
                           <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_GENDER")}`} :</CardText>
                         </div>
                         <div className="col-md-2">
-                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{itemData?.sex}</CardText>
+                          <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{itemData?.sex.value}</CardText>
                         </div>
                       </div>
                     </div>
