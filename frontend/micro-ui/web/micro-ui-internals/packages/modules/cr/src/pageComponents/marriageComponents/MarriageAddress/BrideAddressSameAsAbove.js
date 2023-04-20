@@ -14,7 +14,164 @@ const BrideAddressSameAsAbove = ({
   isEditDeath = false,
   isEditStillBirth = false,
   isEditBirthNAC = false,
-  // isInitialRender, setIsInitialRender
+  presentaddressCountry,
+  setaddressCountry,
+  presentaddressStateName,
+  setaddressStateName,
+  presentOutsideKeralaDistrict,
+  setoutsideKeralaDistrict,
+  value,
+  setValue,
+  countryvalue,
+  setCountryValue,
+  countryValuePermanent,
+  setCountryValuePermanent,
+  valuePermanent,
+  setValuePermanent,
+  permtaddressCountry,
+  setpermtaddressCountry,
+  permtaddressStateName,
+  setpermtaddressStateName,
+  presentWardNo,
+  setPresentWardNo,
+  presentInsideKeralaDistrict,
+  setinsideKeralaDistrict,
+  presentInsideKeralaLBTypeName,
+  setinsideKeralaLBTypeName,
+  presentInsideKeralaLBName,
+  setinsideKeralaLBName,
+  presentInsideKeralaTaluk,
+  setinsideKeralaTaluk,
+  presentInsideKeralaVillage,
+  setinsideKeralaVillage,
+  presentInsideKeralaPostOffice,
+  setinsideKeralaPostOffice,
+  presentInsideKeralaPincode,
+  setinsideKeralaPincode,
+  presentInsideKeralaHouseNameEn,
+  setinsideKeralaHouseNameEn,
+  presentInsideKeralaHouseNameMl,
+  setinsideKeralaHouseNameMl,
+  presentInsideKeralaLocalityNameEn,
+  setinsideKeralaLocalityNameEn,
+  presentInsideKeralaLocalityNameMl,
+  setinsideKeralaLocalityNameMl,
+  presentInsideKeralaStreetNameEn,
+  setinsideKeralaStreetNameEn,
+  presentInsideKeralaStreetNameMl,
+  setinsideKeralaStreetNameMl,
+  permntInKeralaAdrDistrict,
+  setpermntInKeralaAdrDistrict,
+  permntInKeralaAdrLBName,
+  setpermntInKeralaAdrLBName,
+  permntInKeralaAdrTaluk,
+  setpermntInKeralaAdrTaluk,
+  permntInKeralaAdrVillage,
+  setpermntInKeralaAdrVillage,
+  permntInKeralaAdrPostOffice,
+  setpermntInKeralaAdrPostOffice,
+  permntInKeralaAdrPincode,
+  setpermntInKeralaAdrPincode,
+  permntInKeralaAdrHouseNameEn,
+  setpermntInKeralaAdrHouseNameEn,
+  permntInKeralaAdrHouseNameMl,
+  setpermntInKeralaAdrHouseNameMl,
+  permntInKeralaAdrLocalityNameEn,
+  setpermntInKeralaAdrLocalityNameEn,
+  permntInKeralaAdrLocalityNameMl,
+  setpermntInKeralaAdrLocalityNameMl,
+  permntInKeralaAdrStreetNameEn,
+  setpermntInKeralaAdrStreetNameEn,
+  permntInKeralaAdrStreetNameMl,
+  setpermntInKeralaAdrStreetNameMl,
+  permntInKeralaWardNo,
+  setpermntInKeralaWardNo,
+  presentOutsideKeralaTaluk,
+  setoutsideKeralaTaluk,
+  presentOutsideKeralaCityVilgeEn,
+  setoutsideKeralaCityVilgeEn,
+  presentOutsideKeralaVillage,
+  setoutsideKeralaVillage,
+  presentOutsideKeralaPincode,
+  setoutsideKeralaPincode,
+  presentOutsideKeralaHouseNameEn,
+  setoutsideKeralaHouseNameEn,
+  presentOutsideKeralaHouseNameMl,
+  setoutsideKeralaHouseNameMl,
+  presentOutsideKeralaLocalityNameEn,
+  setoutsideKeralaLocalityNameEn,
+  presentOutsideKeralaLocalityNameMl,
+  setoutsideKeralaLocalityNameMl,
+  presentOutsideKeralaStreetNameEn,
+  setoutsideKeralaStreetNameEn,
+  presentOutsideKeralaStreetNameMl,
+  setoutsideKeralaStreetNameMl,
+  presentOutsideKeralaPostOfficeEn,
+  setoutsideKeralaPostOfficeEn,
+  presentOutsideKeralaPostOfficeMl,
+  setoutsideKeralaPostOfficeMl,
+  permntOutsideKeralaDistrict,
+  setpermntOutsideKeralaDistrict,
+  permntOutsideKeralaTaluk,
+  setpermntOutsideKeralaTaluk,
+  permntOutsideKeralaCityVilgeEn,
+  setpermntOutsideKeralaCityVilgeEn,
+  permntOutsideKeralaVillage,
+  setpermntOutsideKeralaVillage,
+  permntOutsideKeralaPincode,
+  setpermntOutsideKeralaPincode,
+  permntOutsideKeralaHouseNameEn,
+  setpermntOutsideKeralaHouseNameEn,
+  permntOutsideKeralaHouseNameMl,
+  setpermntOutsideKeralaHouseNameMl,
+  permntOutsideKeralaLocalityNameEn,
+  setpermntOutsideKeralaLocalityNameEn,
+  permntOutsideKeralaLocalityNameMl,
+  setpermntOutsideKeralaLocalityNameMl,
+  permntOutsideKeralaStreetNameEn,
+  setpermntOutsideKeralaStreetNameEn,
+  permntOutsideKeralaStreetNameMl,
+  setpermntOutsideKeralaStreetNameMl,
+  permntOutsideKeralaPostOfficeEn,
+  setpermntoutsideKeralaPostOfficeEn,
+  permntOutsideKeralaPostOfficeMl,
+  setpermntoutsideKeralaPostOfficeMl,
+  presentOutSideIndiaAdressEn,
+  setAdressEn,
+  presentOutSideIndiaAdressMl,
+  setAdressMl,
+  presentOutSideIndiaAdressEnB,
+  setAdressEnB,
+  presentOutSideIndiaAdressMlB,
+  setAdressMlB,
+  presentOutSideIndiaProvinceEn,
+  setProvinceEn,
+  presentOutSideIndiaProvinceMl,
+  setProvinceMl,
+  presentOutSideIndiaadrsVillage,
+  setadrsVillage,
+  presentOutSideIndiaadrsCityTown,
+  setadrsCityTown,
+  presentOutSideIndiaPostCode,
+  setPostCode,
+  permntOutsideIndiaLineoneEn,
+  setadrsPermntOutsideIndiaLineoneEn,
+  permntOutsideIndiaLineoneMl,
+  setadrsPermntOutsideIndiaLineoneMl,
+  permntOutsideIndiaLinetwoEn,
+  setadrsPermntOutsideIndiaLinetwoEn,
+  permntOutsideIndiaLinetwoMl,
+  setadrsPermntOutsideIndiaLinetwoMl,
+  permntOutsideIndiaprovinceEn,
+  setPermntOutsideIndiaprovinceEn,
+  permntOutsideIndiaprovinceMl,
+  setPermntOutsideIndiaprovinceMl,
+  permntOutsideIndiaVillage,
+  setadrsPermntOutsideIndiaVillage,
+  permntOutsideIndiaCityTown,
+  setadrsPermntOutsideIndiaCityTown,
+  permanentOutsideIndiaPostCode,
+  setPermantpostCode,
 }) => {
   const stateId = Digit.ULBService.getStateId();
   const { t } = useTranslation();
@@ -24,49 +181,99 @@ const BrideAddressSameAsAbove = ({
 
   // const [isPrsentAddress, setIsPrsentAddress] = useState(formData?.AddressSameAsAboveDetails?.isPrsentAddress);
 
+  const onSkip = () => onSelect();
+
   function setSameAsPresent(e) {
     setIsPrsentAddress(e.target.checked);
     if (e.target.checked == true) {
-      // setPermanentLBTypeName(PresentLBTypeName);
-      // setPermanentBuldingNo(PresentBuldingNo);
-      // setPermanentDoorNo(PresentDoorNo);
-      // setPermanentHouseNameEn(PresentHouseNameEn);
-      // setPermanentHouseNameMl(PresentHouseNameMl);
-      // setPermanentMainPlaceEn(PresentMainPlaceEn);
-      // setPermanentMainPlaceMl(PresentMainPlaceMl);
-      // setPermanentLocalityNameEn(PresentLocalityNameEn);
-      // setPermanentLocalityNameMl(PresentLocalityNameMl);
-      // setPermanentStreetNameEn(PresentStreetNameEn);
-      // setPermanentStreetNameMl(PresentStreetNameMl);
-      // setPermanentVillage(PresentVillage);
-      // setPermanentLBName(PresentLBName);
-      // setPermanentDistrict(PresentDistrict);
-      // setPermanentTaluk(PresentTaluk);
-      // setPermanentPostOffice(PresentPostOffice);
-      // setPermanentPincode(PresentPincode);
+      setpermtaddressCountry(presentaddressCountry);
+      setpermtaddressStateName(presentaddressStateName);
+      setCountryValuePermanent(countryValuePermanent);
+      setValuePermanent(valuePermanent);
+      setpermntInKeralaAdrDistrict(presentInsideKeralaDistrict);
+      setpermntInKeralaAdrLBName(presentInsideKeralaLBName);
+      setpermntInKeralaAdrTaluk(presentInsideKeralaTaluk);
+      setpermntInKeralaAdrVillage(presentInsideKeralaVillage);
+      setpermntInKeralaAdrPostOffice(presentInsideKeralaPostOffice);
+      setpermntInKeralaAdrPincode(presentInsideKeralaPincode);
+      setpermntInKeralaAdrHouseNameEn(presentInsideKeralaHouseNameEn);
+      setpermntInKeralaAdrHouseNameMl(presentInsideKeralaHouseNameMl);
+      setpermntInKeralaAdrLocalityNameEn(presentInsideKeralaLocalityNameEn);
+      setpermntInKeralaAdrLocalityNameMl(presentInsideKeralaLocalityNameMl);
+      setpermntInKeralaAdrStreetNameEn(presentInsideKeralaStreetNameEn);
+      setpermntInKeralaAdrStreetNameMl(presentInsideKeralaStreetNameMl);
+      setpermntInKeralaWardNo(presentWardNo);
+      setpermntOutsideKeralaDistrict(presentOutsideKeralaDistrict);
+      setpermntOutsideKeralaTaluk(presentOutsideKeralaTaluk);
+      setpermntOutsideKeralaCityVilgeEn(presentOutsideKeralaCityVilgeEn);
+      setpermntOutsideKeralaVillage(presentOutsideKeralaVillage);
+      setpermntOutsideKeralaPincode(presentOutsideKeralaPincode);
+      setpermntOutsideKeralaHouseNameEn(presentOutsideKeralaHouseNameEn);
+      setpermntOutsideKeralaHouseNameMl(presentOutsideKeralaHouseNameMl);
+      setpermntOutsideKeralaLocalityNameEn(presentOutsideKeralaLocalityNameEn);
+      setpermntOutsideKeralaLocalityNameMl(presentOutsideKeralaLocalityNameMl);
+      setpermntOutsideKeralaStreetNameEn(presentOutsideKeralaStreetNameEn);
+      setpermntOutsideKeralaStreetNameMl(presentOutsideKeralaStreetNameMl);
+      setpermntoutsideKeralaPostOfficeEn(presentOutsideKeralaPostOfficeEn);
+      setpermntoutsideKeralaPostOfficeMl(presentOutsideKeralaPostOfficeMl);
+      setadrsPermntOutsideIndiaLineoneEn(presentOutSideIndiaAdressEn);
+      setadrsPermntOutsideIndiaLineoneMl(presentOutSideIndiaAdressMl);
+      setadrsPermntOutsideIndiaLinetwoEn(presentOutSideIndiaAdressEnB);
+      setadrsPermntOutsideIndiaLinetwoMl(presentOutSideIndiaAdressMlB);
+      setPermntOutsideIndiaprovinceEn(presentOutSideIndiaProvinceEn);
+      setPermntOutsideIndiaprovinceMl(presentOutSideIndiaProvinceMl);
+      setadrsPermntOutsideIndiaVillage(presentOutSideIndiaadrsVillage);
+      setadrsPermntOutsideIndiaCityTown(presentOutSideIndiaadrsCityTown);
+      setPermantpostCode(presentOutSideIndiaPostCode);
     } else {
-      // setPermanentLBTypeName(' ');
-      // setPermanentBuldingNo('');
-      // setPermanentDoorNo('');
-      // setPermanentHouseNameEn('');
-      // setPermanentHouseNameMl('');
-      // setPermanentMainPlaceEn('');
-      // setPermanentMainPlaceMl('');
-      // setPermanentLocalityNameEn('');
-      // setPermanentLocalityNameMl('');
-      // setPermanentStreetNameEn('');
-      // setPermanentStreetNameMl('');
-      // setPermanentVillage('');
-      // setPermanentLBName('');
-      // setPermanentDistrict('');
-      // setPermanentTaluk('');
-      // setPermanentPostOffice('');
-      // setPermanentPincode('');
+      // setpermtaddressCountry(presentaddressCountry);
+      // setpermtaddressStateName(presentaddressStateName);
+      // setCountryValuePermanent(countryvalue);
+      // setValuePermanent(value);
+      setpermntInKeralaAdrDistrict("");
+      setpermntInKeralaAdrLBName("");
+      setpermntInKeralaAdrTaluk("");
+      setpermntInKeralaAdrVillage("");
+      setpermntInKeralaAdrPostOffice("");
+      setpermntInKeralaAdrPincode("");
+      setpermntInKeralaAdrHouseNameEn("");
+      setpermntInKeralaAdrHouseNameMl("");
+      setpermntInKeralaAdrLocalityNameEn("");
+      setpermntInKeralaAdrLocalityNameMl("");
+      setpermntInKeralaAdrStreetNameEn("");
+      setpermntInKeralaAdrStreetNameMl("");
+      setpermntInKeralaWardNo("");
+      setpermntOutsideKeralaDistrict("");
+      setpermntOutsideKeralaTaluk("");
+      setpermntOutsideKeralaCityVilgeEn("");
+      setpermntOutsideKeralaVillage("");
+      setpermntOutsideKeralaPincode("");
+      setpermntOutsideKeralaHouseNameEn("");
+      setpermntOutsideKeralaHouseNameMl("");
+      setpermntOutsideKeralaLocalityNameEn("");
+      setpermntOutsideKeralaLocalityNameMl("");
+      setpermntOutsideKeralaStreetNameEn("");
+      setpermntOutsideKeralaStreetNameMl("");
+      setpermntoutsideKeralaPostOfficeEn("");
+      setpermntoutsideKeralaPostOfficeMl("");
+      setadrsPermntOutsideIndiaLineoneEn("");
+      setadrsPermntOutsideIndiaLineoneMl("");
+      setadrsPermntOutsideIndiaLinetwoEn("");
+      setadrsPermntOutsideIndiaLinetwoMl("");
+      setPermntOutsideIndiaprovinceEn("");
+      setPermntOutsideIndiaprovinceMl("");
+      setadrsPermntOutsideIndiaVillage("");
+      setadrsPermntOutsideIndiaCityTown("");
+      setPermantpostCode("");
     }
   }
 
+  const goNext = () => {
+    onSelect(config.key, {});
+  };
   return (
     <React.Fragment>
+      {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!isPrsentAddress}> */}
       <div className="row">
         <div className="col-md-12">
           <h1 className="headingh1">
@@ -89,6 +296,8 @@ const BrideAddressSameAsAbove = ({
           </div>
         </div>
       </div>
+
+      {/* </FormStep> */}
     </React.Fragment>
   );
 };

@@ -42,9 +42,9 @@ const BrideAddressPresent = ({
   const { data: localbodies = {}, islocalbodiesLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "tenant", "tenants");
   const { data: Country = {}, isCountryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Country");
   const { data: State = {}, isStateLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "State");
-  const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
+  // const { data: Village = {}, isVillageLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "common-masters", "Village");
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : isEditStillBirth ? isEditStillBirth : false);
+  const [isDisableEdit, setisDisableEdit] = useState(false);
 
   let cmbLB = [];
   let cmbCountry = [];
@@ -68,42 +68,79 @@ const BrideAddressPresent = ({
     localbodies["tenant"].tenants.map((ob) => {
       cmbLB.push(ob);
     });
-  Village &&
-    Village["common-masters"] &&
-    Village["common-masters"].Village &&
-    Village["common-masters"].Village.map((ob) => {
-      cmbVillage.push(ob);
-    });
+  // Village &&
+  //     Village["common-masters"] && Village["common-masters"].Village &&
+  //     Village["common-masters"].Village.map((ob) => {
+  //         cmbVillage.push(ob);
+  //     });
   let currentLB = [];
   let cmbFilterCountry = [];
   let cmbFilterState = [];
   let cmbFilterVillage = [];
 
   useEffect(() => {
-    // if (isInitialRender) {
-    if (cmbLB.length > 0) {
-      currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
-      //console.log(currentLB);
-      // setAdrsLBName(currentLB[0]);
-      if (cmbCountry.length > 0 && currentLB.length > 0) {
-        cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
-        setaddressCountry(cmbFilterCountry[0]);
-        setpermtaddressCountry(cmbFilterCountry[0]);
-        setCountryValue(cmbFilterCountry[0].countrycode);
+    if (
+      isInitialRender &&
+      countryvalue === "IND" &&
+      value === "kl" &&
+      (formData?.BrideAddressDetails?.presentaddressStateName === null ||
+        formData?.BrideAddressDetails?.presentaddressStateName === "" ||
+        formData?.BrideAddressDetails?.presentaddressStateName === undefined)
+    ) {
+      if (cmbLB.length > 0) {
+        currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
+        //console.log(currentLB);
+        // setAdrsLBName(currentLB[0]);
+        if (cmbCountry.length > 0 && currentLB.length > 0) {
+          cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === currentLB[0].city.countrycode);
+          setaddressCountry(cmbFilterCountry[0]);
+          if (isPrsentAddress) {
+            setpermtaddressCountry(cmbFilterCountry[0]);
+          }
+          setCountryValue(cmbFilterCountry[0].countrycode);
+        }
+        if (cmbState.length > 0 && currentLB.length > 0) {
+          cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
+          setaddressStateName(cmbFilterState[0]);
+          if (isPrsentAddress) {
+            setpermtaddressStateName(cmbFilterState[0]);
+          }
+          setValue(cmbFilterState[0].code);
+        }
+        // if (cmbVillage.length > 0 && currentLB.length > 0) {
+        //     cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
+        //     setLbsVillagevalue(cmbFilterVillage);
+        // }
+        setIsInitialRender(false);
       }
-      if (cmbState.length > 0 && currentLB.length > 0) {
-        cmbFilterState = cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode);
-        setaddressStateName(cmbFilterState[0]);
-        setpermtaddressStateName(cmbFilterState[0]);
-        setValue(cmbState.filter((cmbState) => cmbState.code === currentLB[0].city.statecode)[0].statecode);
+    } else if (isInitialRender && countryvalue === "IND" && value === "kl" && formData?.BrideAddressDetails?.presentaddressStateName != null) {
+      if (cmbLB.length > 0) {
+        currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
+        //console.log(currentLB);
+        // setAdrsLBName(currentLB[0]);
+        if (cmbCountry.length > 0) {
+          cmbFilterCountry = cmbCountry.filter((cmbCountry) => cmbCountry.code === formData?.BrideAddressDetails?.presentaddressCountry.code);
+          setaddressCountry(cmbFilterCountry[0]);
+          if (isPrsentAddress) {
+            setpermtaddressCountry(cmbFilterCountry[0]);
+          }
+          setCountryValue(cmbFilterCountry[0].countrycode);
+        }
+        if (cmbState.length > 0) {
+          cmbFilterState = cmbState.filter((cmbState) => cmbState.code === formData?.BrideAddressDetails?.presentaddressStateName.code);
+          setaddressStateName(cmbFilterState[0]);
+          if (isPrsentAddress) {
+            setpermtaddressStateName(cmbFilterState[0]);
+          }
+          setValue(cmbFilterState[0].code);
+        }
+        // if (cmbVillage.length > 0 && currentLB.length > 0) {
+        //     cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
+        //     setLbsVillagevalue(cmbFilterVillage);
+        // }
+        setIsInitialRender(false);
       }
-      // if (cmbVillage.length > 0 && currentLB.length > 0) {
-      //     cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
-      //     setLbsVillagevalue(cmbFilterVillage);
-      // }
-      // setIsInitialRender(false);
     }
-    // }
   }, [cmbLB]);
 
   if (isEditBirth) {
@@ -112,39 +149,39 @@ const BrideAddressPresent = ({
         setaddressCountry(
           cmbCountry.filter((cmbCountry) => cmbCountry.code === formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry)[0]
         );
-        setCountryValue(value.formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry);
+        setCountryValue(formData?.ChildDetails?.AddressBirthDetails?.presentaddressCountry);
       }
     }
     if (formData?.ChildDetails?.AddressBirthDetails?.presentaddressStateName != null) {
       if (cmbState.length > 0 && (presentaddressStateName === undefined || presentaddressStateName === "")) {
         setaddressStateName(cmbState.filter((cmbState) => cmbState.code === formData?.ChildDetails?.AddressBirthDetails?.presentaddressStateName)[0]);
-        setValue(value.formData?.ChildDetails?.AddressBirthDetails?.presentaddressStateName);
+        setValue(formData?.ChildDetails?.AddressBirthDetails?.presentaddressStateName);
       }
     }
   } else if (isEditAdoption !== false) {
     if (formData?.AdoptionAddressBasePage?.presentaddressCountry != null) {
       if (cmbCountry.length > 0 && (presentaddressCountry === undefined || presentaddressCountry === "")) {
         setaddressCountry(cmbCountry.filter((cmbCountry) => cmbCountry.code === formData?.AdoptionAddressBasePage?.presentaddressCountry)[0]);
-        setCountryValue(value.formData?.AdoptionAddressBasePage?.presentaddressCountry);
+        setCountryValue(formData?.AdoptionAddressBasePage?.presentaddressCountry);
       }
     }
     if (formData?.AdoptionAddressBasePage?.presentaddressStateName != null) {
       if (cmbState.length > 0 && (presentaddressStateName === undefined || presentaddressStateName === "")) {
         setaddressStateName(cmbState.filter((cmbState) => cmbState.code === formData?.AdoptionAddressBasePage?.presentaddressStateName)[0]);
-        setValue(value.formData?.AdoptionAddressBasePage?.presentaddressStateName);
+        setValue(formData?.AdoptionAddressBasePage?.presentaddressStateName);
       }
     }
   } else if (isEditDeath) {
-    if (formData?.AddressBirthDetails?.presentaddressCountry != null) {
+    if (formData?.BrideAddressDetails?.presentaddressCountry != null) {
       if (cmbCountry.length > 0 && (presentaddressCountry === undefined || presentaddressCountry === "")) {
-        setaddressCountry(cmbCountry.filter((cmbCountry) => cmbCountry.code === formData?.AddressBirthDetails?.presentaddressCountry)[0]);
-        setCountryValue(value.formData?.AddressBirthDetails?.presentaddressCountry);
+        setaddressCountry(cmbCountry.filter((cmbCountry) => cmbCountry.code === formData?.BrideAddressDetails?.presentaddressCountry)[0]);
+        setCountryValue(formData?.BrideAddressDetails?.presentaddressCountry);
       }
     }
-    if (formData?.AddressBirthDetails?.presentaddressStateName != null) {
+    if (formData?.BrideAddressDetails?.presentaddressStateName != null) {
       if (cmbState.length > 0 && (presentaddressStateName === undefined || presentaddressStateName === "")) {
-        setaddressStateName(cmbState.filter((cmbState) => cmbState.code === formData?.AddressBirthDetails?.presentaddressStateName)[0]);
-        setValue(value.formData?.AddressBirthDetails?.presentaddressStateName);
+        setaddressStateName(cmbState.filter((cmbState) => cmbState.code === formData?.BrideAddressDetails?.presentaddressStateName)[0]);
+        setValue(formData?.BrideAddressDetails?.presentaddressStateName);
       }
     }
   } else if (isEditStillBirth) {
@@ -153,7 +190,7 @@ const BrideAddressPresent = ({
         setaddressCountry(
           cmbCountry.filter((cmbCountry) => cmbCountry.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressCountry)[0]
         );
-        setCountryValue(value.formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressCountry);
+        setCountryValue(formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressCountry);
       }
     }
     if (formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressStateName != null) {
@@ -161,22 +198,20 @@ const BrideAddressPresent = ({
         setaddressStateName(
           cmbState.filter((cmbState) => cmbState.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressStateName)[0]
         );
-        setValue(value.formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressStateName);
+        setValue(formData?.StillBirthChildDetails?.AddressBirthDetails?.presentaddressStateName);
       }
     }
   }
+  const onSkip = () => onSelect();
 
   function setSelectaddressCountry(value) {
     setaddressCountry(value);
     setCountryValue(value.countrycode);
     if (isPrsentAddress) {
       setpermtaddressCountry(value);
-    } else {
-      setpermtaddressCountry("");
     }
   }
   function setSelectaddressStateName(value) {
-    //console.log(value);
     setaddressStateName(value);
     setValue(value.code);
     // if (value.code != "kl") {
@@ -189,18 +224,16 @@ const BrideAddressPresent = ({
     // }
     if (isPrsentAddress) {
       setpermtaddressStateName(value);
-    } else {
-      setpermtaddressStateName("");
     }
   }
 
-  console.log("Adress Groom", formData);
-
+  const goNext = () => {};
   if (isCountryLoading || isStateLoading || islocalbodiesLoading) {
     return <Loader></Loader>;
   } else
     return (
       <React.Fragment>
+        {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!presentaddressCountry}> */}
         <div className="row">
           <div className="col-md-12">
             <h1 className="headingh1">
@@ -242,6 +275,7 @@ const BrideAddressPresent = ({
             </div>
           )}
         </div>
+        {/* </FormStep> */}
       </React.Fragment>
     );
 };
