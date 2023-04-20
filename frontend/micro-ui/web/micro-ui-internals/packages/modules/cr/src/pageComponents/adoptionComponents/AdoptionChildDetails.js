@@ -1509,6 +1509,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
               </div>
             </div>
           </div> 
+
               {AdoptionDeedNo ==="" &&(
                      <div className="row">
                      <div className="col-md-12">
@@ -1526,7 +1527,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                            value={AdoptionDecreOrderNo}
                            // onKeyPress={setCheckMalayalamInputField}
                            onChange={setSelectDeeOrderNo}
-                           disable={isDisableEdit || AdoptionDeedNo !==""}
+                           disable={isDisableEdit || AdoptionDeedNo !=="" ||RegistrationAuthority !==""||AdoptionDeedRegDate!==""}
                            placeholder={`${t("CR_ADOPTION_DECREE")}`}
                            {...(validation = {
                              // pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -1540,31 +1541,13 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                          <CardLabel>{`${t("CR_ADOPTION_DECREE_ORDER_DATE")}`}
                          {AdoptionDeedNo ==="" &&  <span className="mandatorycss">*</span>}
                          </CardLabel>
-                         {/* <TextInput
-                           t={t}
-                           isMandatory={false}
-                           type={"text"}
-                           optionKey="i18nKey"
-                           name="adoptdateoforderdecree"
-                           value={childMiddleNameMl}
-                           onKeyPress={setCheckMalayalamInputField}
-                           onChange={setSelectChildMiddleNameMl}
-                           disable={isDisableEdit}
-                           placeholder={`${t("CR_ADOPTION_DECREE_ORDER_DATE")}`}
-                           {...(validation = {
-                             pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                             isRequired: false,
-                             type: "text",
-                             title: t("CR_INVALID_ADOPTION_DECREE_ORDER_DATE"),
-                           })}
-                         /> */}
                             <DatePicker
                                date={AdoptionDecreOrderDate}
                                name="adoptdateoforderdecree"
                                max={convertEpochToDate(new Date())}
                                //min={convertEpochToDate("1900-01-01")}
                                onChange={setSelectDeeOrderDate}
-                               disabled={isDisableEdit || AdoptionDeedNo !==""}
+                               disabled={isDisableEdit || AdoptionDeedNo !=="" ||RegistrationAuthority !=="" ||AdoptionDeedRegDate!==""}
                                //  inputFormat="DD-MM-YYYY"
                                placeholder={`${t("CR_ADOPTION_DECREE_ORDER_DATE")}`}
                                {...(validation = { isRequired: AdoptionDeedNo ===""? true : false, title: t("CR_INVALID_ADOPTION_DECREE_ORDER_DATE") })}
@@ -1583,7 +1566,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                            value={IssuingAuthority}
                            // onKeyPress={setCheckMalayalamInputField}
                            onChange={setSelectIssuingAuthority}
-                           disable={isDisableEdit || AdoptionDeedNo !==""}
+                           disable={isDisableEdit || AdoptionDeedNo !=="" ||RegistrationAuthority !=="" ||AdoptionDeedRegDate!==""}
                            placeholder={`${t("CR_ISSUING_AUTHORITY")}`}
                            {...(validation = {
                              // pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
@@ -1614,7 +1597,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                        value={AdoptionDeedNo}
                        // onKeyPress={setCheckMalayalamInputField}
                        onChange={setSelectDeedNo}
-                       disable={isDisableEdit ||AdoptionDecreOrderNo !=="" }
+                       disable={isDisableEdit ||AdoptionDecreOrderNo !=="" ||IssuingAuthority !=="" || AdoptionDecreOrderDate!==""}
                        placeholder={`${t("CR_ADOPTION_DEED_NO")}`}
                        {...(validation = {
                          pattern: "^[0-9`' ]*$",
@@ -1628,31 +1611,13 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                      <CardLabel>{`${t("CR_DEED_REG_DATE")}`}
                      {AdoptionDecreOrderNo ==="" && <span className="mandatorycss">*</span> }
                      </CardLabel>
-                     {/* <TextInput
-                       t={t}
-                       isMandatory={false}
-                       type={"text"}
-                       optionKey="i18nKey"
-                       name="adoptdateoforderdecree"
-                       value={childMiddleNameMl}
-                       onKeyPress={setCheckMalayalamInputField}
-                       onChange={setSelectChildMiddleNameMl}
-                       disable={isDisableEdit}
-                       placeholder={`${t("CR_ADOPTION_DECREE_ORDER_DATE")}`}
-                       {...(validation = {
-                         pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@']*$",
-                         isRequired: false,
-                         type: "text",
-                         title: t("CR_INVALID_ADOPTION_DECREE_ORDER_DATE"),
-                       })}
-                     /> */}
                         <DatePicker
                            date={AdoptionDeedRegDate}
                            name="adoptdateoforderdeed"
                            max={convertEpochToDate(new Date())}
                            //min={convertEpochToDate("1900-01-01")}
                            onChange={setSelectDeedRegDate}
-                           disabled={isDisableEdit  ||AdoptionDecreOrderNo !==""}
+                           disabled={isDisableEdit  ||AdoptionDecreOrderNo !==""||IssuingAuthority !=="" || AdoptionDecreOrderDate!==""}
                            //  inputFormat="DD-MM-YYYY"
                            placeholder={`${t("CR_DEED_REG_DATE")}`}
                            {...(validation = { isRequired: AdoptionDecreOrderNo =="" ?true:false, title: t("CR_INVALID_DEED_REG_DATE") })}
@@ -1670,7 +1635,7 @@ const AdoptionChildDetails = ({ config, onSelect, userType, formData, isEditAdop
                        value={RegistrationAuthority}
                        // onKeyPress={setCheckMalayalamInputField}
                        onChange={setSelectRegistrationAuthority}
-                       disable={isDisableEdit  || AdoptionDecreOrderNo !==""}
+                       disable={isDisableEdit  || AdoptionDecreOrderNo !=="" ||IssuingAuthority !=="" || AdoptionDecreOrderDate!==""}
                        placeholder={`${t("CR_REG_AUTHORITY")}`}
                        {...(validation = {
                          pattern: "^[a-zA-Z-.`' ]*$",
