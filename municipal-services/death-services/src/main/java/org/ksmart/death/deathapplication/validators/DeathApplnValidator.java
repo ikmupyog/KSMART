@@ -249,10 +249,10 @@ public void validateCommonFields(DeathDtlRequest request) {
                     throw new CustomException("DEATHPLACE VEHICLE FIRST HALT IS INVALID", "The vehicle first halt in english " +
                     basicInfo.getVehicleFirstHaltEn()+ " is invalid");  
                 } 
-                if(StringUtils.isEmpty(basicInfo.getVehicleFirstHaltMl())) {
-                    throw new CustomException("DEATHPLACE VEHICLE FIRST HALT IS INVALID", "The vehicle first halt in malayalam " +
-                    basicInfo.getVehicleFirstHaltMl()+ " is invalid");  
-                } 
+                // if(StringUtils.isEmpty(basicInfo.getVehicleFirstHaltMl())) {
+                //     throw new CustomException("DEATHPLACE VEHICLE FIRST HALT IS INVALID", "The vehicle first halt in malayalam " +
+                //     basicInfo.getVehicleFirstHaltMl()+ " is invalid");  
+                // } 
                 if(StringUtils.isEmpty(basicInfo.getVehicleHospitalEn())  ){
                     throw new CustomException("DEATHPLACE ADMITTED HOSPITAL IS INVALID", "The name of admitted hospital " +
                     basicInfo.getVehicleHospitalEn()+ " is invalid");  
@@ -1024,10 +1024,10 @@ public void validateCorrectionCommonFields(DeathCorrectionRequest request) {
                     throw new CustomException("DEATHPLACE VEHICLE FIRST HALT IS INVALID", "The vehicle first halt in english " +
                     basicInfo.getVehicleFirstHaltEn()+ " is invalid");  
                 } 
-                if(StringUtils.isEmpty(basicInfo.getVehicleFirstHaltMl())) {
-                    throw new CustomException("DEATHPLACE VEHICLE FIRST HALT IS INVALID", "The vehicle first halt in malayalam " +
-                    basicInfo.getVehicleFirstHaltMl()+ " is invalid");  
-                } 
+                // if(StringUtils.isEmpty(basicInfo.getVehicleFirstHaltMl())) {
+                //     throw new CustomException("DEATHPLACE VEHICLE FIRST HALT IS INVALID", "The vehicle first halt in malayalam " +
+                //     basicInfo.getVehicleFirstHaltMl()+ " is invalid");  
+                // } 
                 if(StringUtils.isEmpty(basicInfo.getVehicleHospitalEn())  ){
                     throw new CustomException("DEATHPLACE ADMITTED HOSPITAL IS INVALID", "The name of admitted hospital " +
                     basicInfo.getVehicleHospitalEn()+ " is invalid");  

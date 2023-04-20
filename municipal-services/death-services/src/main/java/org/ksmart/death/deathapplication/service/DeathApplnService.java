@@ -176,7 +176,7 @@ public class DeathApplnService {
           enrichmentService.setAbandonedDeathPlaceTypes(request);
           enrichmentService.setAbandonedPresentAddress(request);
           enrichmentService.setAbandonedPermanentAddress(request);
-          enrichmentService.enrichAbandonedUpdate(request);
+          // enrichmentService.enrichAbandonedUpdate(request);
           String ackNumber = request.getDeathAbandonedDtls().get(0).getDeathBasicInfo().getDeathACKNo();
           DeathSearchCriteria criteria =(DeathSearchCriteria.builder()
                                         .deathACKNo(ackNumber)
