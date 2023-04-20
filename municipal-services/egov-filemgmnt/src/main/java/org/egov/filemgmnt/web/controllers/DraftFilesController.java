@@ -6,6 +6,8 @@ import org.egov.filemgmnt.service.DraftFilesService;
 import org.egov.filemgmnt.util.FMUtils;
 import org.egov.filemgmnt.util.ResponseInfoFactory;
 import org.egov.filemgmnt.web.models.RequestInfoWrapper;
+import org.egov.filemgmnt.web.models.certificate.DraftFiles.DraftCertificateDetails;
+import org.egov.filemgmnt.web.models.certificate.DraftFiles.DraftCertificateResponse;
 import org.egov.filemgmnt.web.models.drafting.DraftFiles;
 import org.egov.filemgmnt.web.models.drafting.DraftFilesRequest;
 import org.egov.filemgmnt.web.models.drafting.DraftFilesResponse;
@@ -85,6 +87,19 @@ public class DraftFilesController {
                                                          .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
                                                                                                                              Boolean.TRUE))
                                                          .draftings(result)
+                                                         .build());
+    }
+
+    @PostMapping("/applicantservices/_downloadDraftPdf")
+    public ResponseEntity<DraftCertificateResponse> downloadDraftCertificate(@RequestBody final RequestInfoWrapper request,
+                                                                             @ModelAttribute final DraftFilesSearchCriteria searchCriteria) {
+
+        final List<DraftCertificateDetails> certificateDetails = draftingService.downloadDraftCertificate(request.getRequestInfo(),
+                                                                                                          searchCriteria);
+        return ResponseEntity.ok(DraftCertificateResponse.builder()
+                                                         .responseInfo(responseInfoFactory.createResponseInfoFromRequestInfo(request.getRequestInfo(),
+                                                                                                                             Boolean.TRUE))
+                                                         .draftCertificateDetails(certificateDetails)
                                                          .build());
     }
 

@@ -18,7 +18,7 @@ public class ModuleDetailsResponse {
     @JsonProperty("ResponseInfo")
     private ResponseInfo responseInfo;
 
-    @JsonProperty("ModuleDetail")
+    @JsonProperty("ModuleDetails")
     private ModuleDetails moduleDetails;
 
 }

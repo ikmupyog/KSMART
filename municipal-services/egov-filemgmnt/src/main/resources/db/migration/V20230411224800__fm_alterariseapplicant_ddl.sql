@@ -1,4 +1,4 @@
-
+/*
 ALTER TABLE eg_fm_arisingfileapplicantdetails
     RENAME COLUMN applicantnameeng TO applicantfnameeng;
 ALTER TABLE eg_fm_arisingfileapplicantdetails
@@ -6,6 +6,7 @@ ALTER TABLE eg_fm_arisingfileapplicantdetails
 
 ALTER TABLE eg_fm_arisingfileapplicantdetails
     ADD COLUMN applicantmidname varchar(64);
+
 ALTER TABLE eg_fm_arisingfileapplicantdetails
     ADD COLUMN applicantlastname varchar(64);
 
@@ -23,3 +24,4 @@ ALTER TABLE eg_fm_arisingfileapplicantdetails
 
 ALTER TABLE eg_fm_arisingfileapplicantdetails
     ADD COLUMN cityname varchar(64);
+*/

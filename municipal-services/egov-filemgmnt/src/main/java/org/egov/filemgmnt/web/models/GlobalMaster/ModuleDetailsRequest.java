@@ -7,9 +7,6 @@ import lombok.*;
 import org.egov.common.contract.request.RequestInfo;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Schema(description = "Module request for create and update")
 @Validated
 

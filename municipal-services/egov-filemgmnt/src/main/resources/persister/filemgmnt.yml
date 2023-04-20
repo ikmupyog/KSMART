@@ -855,4 +855,50 @@ serviceMaps:
 
           - jsonPath: $.Enquiry.*.auditDetails.lastModifiedTime
 
-  
+  - version: 1.0
+    description: Insert Modulemaster  details in egov_filemgmnt database, eg_fm_modulemaster table
+    fromTopic: save_fm_modulemaster
+    isTransaction: true
+    queryMaps:
+
+    - query: >
+        INSERT INTO public.eg_fm_modulemaster(id, tenantid, modulecode, modulenameeng, modulenamemal, status, 
+        createdby, createdtime, lastmodifiedby, lastmodifiedtime)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+      basePath: ModuleDetails
+      jsonMaps:
+        - jsonPath: $.ModuleDetails.id
+
+        - jsonPath: $.ModuleDetails.tenantId
+
+        - jsonPath: $.ModuleDetails.moduleCode
+
+        - jsonPath: $.ModuleDetails.moduleNameEnglish
+
+        - jsonPath: $.ModuleDetails.moduleNameMalayalam
+
+        - jsonPath: $.ModuleDetails.status
+
+        - jsonPath: $.ModuleDetails.auditDetails.createdBy
+
+        - jsonPath: $.ModuleDetails.auditDetails.createdTime
+
+        - jsonPath: $.ModuleDetails.auditDetails.lastModifiedBy
+
+        - jsonPath: $.ModuleDetails.auditDetails.lastModifiedTime
+
+  - version: 1.0
+    description: Update module master in egov_filemgmnt database, eg_fm_modulemaster
+    fromTopic: update-fm-modulemaster
+    isTransaction: true
+    queryMaps:
+    - query: UPDATE public.eg_fm_modulemaster SET modulenameeng=?, modulenamemal=?
+               WHERE modulecode= ?;
+      basePath: ModuleDetails
+      jsonMaps:
+        - jsonPath: $.ModuleDetails.moduleNameEnglish
+
+        - jsonPath: $.ModuleDetails.moduleNameMalayalam
+
+        - jsonPath: $.ModuleDetails.moduleCode
+

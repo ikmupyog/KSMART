@@ -13,18 +13,18 @@ import java.util.UUID;
 
 @Component
 public class GlobalMasterEnrichment extends BaseEnrichment{
-
+    @Autowired
     private FMConfiguration fmConfiguration;
-    public static void enrichCreateModule(ModuleDetailsRequest request){
+    public  void enrichCreateModule(ModuleDetailsRequest request){
         RequestInfo requestInfo = request.getRequestInfo();
         User userInfo = requestInfo.getUserInfo();
 
-        AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
+       final AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.TRUE);
        final ModuleDetails moduleDetails = request.getModuleDetails();
        final AuditDetails moduleAuditDetails = moduleDetails.getAuditDetails();
         moduleDetails.setId(UUID.randomUUID()
                 .toString());
-        moduleDetails.setAuditDetails(moduleAuditDetails);
+        moduleDetails.setAuditDetails(auditDetails);
         moduleDetails.getAuditDetails().setLastModifiedBy(auditDetails.getLastModifiedBy());
         moduleDetails.getAuditDetails().setLastModifiedTime(auditDetails.getLastModifiedTime());
     }
@@ -73,6 +73,18 @@ public class GlobalMasterEnrichment extends BaseEnrichment{
 //                    .setLastModifiedTime(auditDetails.getLastModifiedTime());
 //
 //    }
+public void enrichUpdateModule(ModuleDetailsRequest request) {
+
+    final RequestInfo requestInfo = request.getRequestInfo();
+    final User userInfo = requestInfo.getUserInfo();
+    final AuditDetails auditDetails = buildAuditDetails(userInfo.getUuid(), Boolean.FALSE);
+    final  ModuleDetails moduleDetails= request.getModuleDetails();
+     moduleDetails.setAuditDetails(auditDetails);
+     moduleDetails.getModuleNameEnglish();
+     moduleDetails.getModuleNameMalayalam();
+
+}
+
 
 }
 

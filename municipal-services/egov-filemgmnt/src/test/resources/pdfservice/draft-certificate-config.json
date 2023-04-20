@@ -1,0 +1,78 @@
+{
+    "key": "draft-certificate",
+    "DataConfigs": {
+      "serviceName": "rainmaker-common",
+      "version": "1.0.0",
+      "baseKeyPath": "$.BuildDraftCertificate.*",
+      "entityIdPath": "$.id",
+      "isCommonTableBorderRequired": true,
+      "mappings": [
+        {
+          "topic": "common-pdf-generation-3",
+          "mappings": [
+            {
+              "direct": [
+                {
+                  "variable": "tenantLogo",
+                  "url": "https://ulb-logos.s3.ap-south-1.amazonaws.com/kerala_logo.jpg",
+                  "type": "image"
+                },
+                {
+                  "variable": "waterMarkImage",
+                  "url": "https://ulb-logos.s3.ap-south-1.amazonaws.com/kerala_logo.jpg",
+                  "type": "image"
+                },
+                {
+                  "variable": "fileCode",
+                  "value": {
+                    "path": "$.fileCode"
+                  }
+                },
+                {
+                  "variable": "draftText",
+                  "value": {
+                    "path": "$.draftText"
+                  },
+                  "type": "setEmpty"
+                },
+                {
+                  "variable": "embeddedUrl",
+                  "value": {
+                    "path": "$.embeddedUrl"
+                  },
+                  "type": "setEmpty"
+                },
+                {
+                  "variable": "tenantId",
+                  "value": {
+                    "path": "$.tenantId"
+                  },
+                  "localisation": {
+                    "required": true,
+                    "prefix": "TENANT_TENANTS",
+                    "module": "rainmaker-common"
+                  }
+                },
+                {
+                  "variable": "certificateDate",
+                  "value": {
+                    "path": "$.dateOfIssue"
+                  },
+                  "type": "date",
+                  "format": "DD/MM/YYYY"
+                }
+              ]
+            },
+            {
+              "qrcodeConfig": [
+                {
+                  "variable": "qrCodeImage",
+                  "value": "{{embeddedUrl}}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
