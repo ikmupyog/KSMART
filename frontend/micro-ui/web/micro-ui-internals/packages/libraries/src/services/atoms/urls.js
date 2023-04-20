@@ -120,6 +120,9 @@ const Urls = {
     create_adoption: "/birth-services/cr/createadoption",
     correct_update: "/birth-services/cr/createbirthcorrection",
   },
+  crcommonpayment: {
+    update: "/birth-services/cr/common/updatepaywf",
+  },
   crstillbirth: {
     create: "/birth-services/cr/createstillbirth",
     search: "/birth-services/cr/searchstillbirth",
