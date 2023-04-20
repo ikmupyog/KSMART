@@ -111,14 +111,14 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
       {window.location.href.includes("/employee") ? <Timeline currentStep={5} /> : null}
       <Card>
         {/* <label style={{ fontSize: "17px", fontWeight: "bold" }}>{t("CR_REG_SUMMARY_HEADING")}</label> */}
-        <CardSubHeader style={{ marginBottom: "16px", fontSize: "16px" }}>{t("CR_REG_SUMMARY_HEADING")}</CardSubHeader>
+        <CardSubHeader style={{ marginBottom: "16px", fontSize: "16px" }}>{t("CR_DEATH_REG_SUMMARY_HEADING")}</CardSubHeader>
         <Accordion expanded={true} title={t("CR_DEATH_INFO")}
           content={<StatusTable >
             <div className="row">
               <div className="col-md-12">
                 <div className="col-md-12">
                   <h1 className="summaryheadingh">
-                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_REGISTRATION_DETAILS")}`}</span>{" "}
+                    <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_DEATH_REG_SUMMARY_HEADING")}`}</span>{" "}
                   </h1>
                 </div>
               </div>
@@ -262,7 +262,7 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_AADHAR")}`} :</CardText>
                 </div>
                 <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{convertEpochToDate(InformationDeath?.DeceasedAadharNumber)}</CardText>
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformationDeath?.DeceasedAadharNumber}</CardText>
                 </div>
         </div>
       )}
@@ -325,14 +325,16 @@ const DeathCheckPage = ({ onSubmit, value, userType }) => {
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_AGE")}`} :</CardText>
                 </div>
                 <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformationDeath?.Age}</CardText>
+                <CardText style={{ fontSize: "15px", Colour: "black", fontWeight: "bold" }}>: {t(InformationDeath.Age) + "  " + t(InformationDeath?.AgeUnit.name)}
+                    </CardText>
                 </div>
-                <div className="col-md-2">
-                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_AGE_UNIT")}`} :</CardText>
-                </div>
-                <div className="col-md-2">
+                {/* <div className="col-md-2">
+                  <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_AGE_UNIT")}`} :</CardText>            
+                 
+                </div> */}
+                {/* <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{InformationDeath?.AgeUnit.name}</CardText>
-                </div>
+                </div> */}
                 <div className="col-md-2">
                   <CardText style={{ fontSize: "15px", Colour: "black", textAlign: "left" }}>{`${t("CR_NATIONALITY")}`} :</CardText>
                 </div>

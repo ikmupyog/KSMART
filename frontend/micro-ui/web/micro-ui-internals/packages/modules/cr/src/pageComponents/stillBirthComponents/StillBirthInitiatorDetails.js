@@ -468,10 +468,12 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData, isEd
         <div className="row">
           <div className="col-md-12">
             <div className="col-md-6">
-              <CardLabel>
-                {`${t("CR_INFORMER_ADDRESS")}`}
-                <span className="mandatorycss">*</span>
-              </CardLabel>
+            {isCaretaker === true && (
+              <CardLabel>{`${t("CR_CARE_TAKER_ADDRESS")}`}<span className="mandatorycss">*</span></CardLabel>
+            )}
+             {isCaretaker === false && (
+              <CardLabel>{`${t("CR_INFORMER_ADDRESS")}`}</CardLabel>
+            )}
               <TextArea
                 t={t}
                 type={"text"}
@@ -481,11 +483,12 @@ const StillBirthInitiatorDetails = ({ config, onSelect, userType, formData, isEd
                 onChange={setSelectinitiatorAddress}
                 disable={isDisableEdit}
                 placeholder={`${t("CR_INFORMER_ADDRESS")}`}
-                {...(validation = { pattern: "^[a-zA-Z-.,`'0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
+                {...(validation = { pattern: "^[a-zA-Z-0-9, ]*$", isRequired: true, type: "text", title: t("CR_INVALID_INFORMER_ADDRESS") })}
               />
             </div>
           </div>
         </div>
+
 
         {toast && (
           <Toast

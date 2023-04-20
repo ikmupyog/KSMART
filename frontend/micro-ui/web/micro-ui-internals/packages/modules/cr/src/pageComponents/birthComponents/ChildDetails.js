@@ -33,21 +33,19 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const { data: AttentionOfDelivery = {}, isAttentionOfDeliveryLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "AttentionOfDelivery");
   const { data: DeliveryMethodList = {}, isDeliveryMethodListLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "DeliveryMethod");
   const { data: PlaeceMaster = {}, isPlaceMasterLoading } = Digit.Hooks.cr.useCivilRegistrationMDMS(stateId, "birth-death-service", "PlaceMaster");
-  // const [userRole, setuserRole] = useState(formData?.ChildDetails?.userRole);
+  const [userRole, setuserRole] = useState(formData?.ChildDetails?.userRole);
   const [PostOfficevalues, setPostOfficevalues] = useState(null);
   const [InstitutionFilterList, setInstitutionFilterList] = useState(null);
   const [isInitialRenderInstitutionList, setIsInitialRenderInstitutionList] = useState(false);
   const [DifferenceInDaysRounded, setDifferenceInDaysRounded] = useState();
-  const { uuid: uuid, } = Digit.UserService.getUser().info;
-  // console.log(Digit.UserService.getUser().info);
-  // const { roles: roles, } = Digit.UserService.getUser().info;
-  // console.log(roles);
-  // if (roles.length > 0) {
-  //   console.log(roles[0].code);
-  //   setuserRole(roles[0].code);
-  // }
-  // const [isDisableEdit, setisDisableEdit] = useState((userRole === "HOSPITAL_OPERATOR") && isEditBirth ? false : false);
   const [isDisableEdit, setisDisableEdit] = useState(false);
+  const [isDisableEditRole, setisDisableEditRole] = useState(false);
+  // console.log(Digit.UserService.getUser().info);
+  const { roles: userRoles, uuid: uuid, } = Digit.UserService.getUser().info;
+  const roletemp = Array.isArray(userRoles) && userRoles.filter((doc) => doc.code.includes("HOSPITAL_OPERATOR"));
+  console.log(roletemp);
+  // const [isDisableEdit, setisDisableEdit] = useState((userRole === "HOSPITAL_OPERATOR") && isEditBirth ? false : false);
+
 
   const convertEpochFormateToDate = (dateEpoch) => {
     // Returning null in else case because new Date(null) returns initial date from calender
@@ -116,36 +114,34 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
     DeliveryMethodList["birth-death-service"].DeliveryMethod.map((ob) => {
       cmbDeliveryMethod.push(ob);
     });
-  const cmbPregWeek = [
-    { i18nKey: "20", code: "20" },
-    { i18nKey: "21", code: "21" },
-    { i18nKey: "22", code: "22" },
-    { i18nKey: "22", code: "22" },
-    { i18nKey: "23", code: "23" },
-    { i18nKey: "25", code: "25" },
-    { i18nKey: "26", code: "26" },
-    { i18nKey: "27", code: "27" },
-    { i18nKey: "28", code: "28" },
-    { i18nKey: "29", code: "29" },
-    { i18nKey: "30", code: "30" },
-    { i18nKey: "31", code: "31" },
-    { i18nKey: "32", code: "32" },
-    { i18nKey: "33", code: "33" },
-    { i18nKey: "34", code: "34" },
-    { i18nKey: "35", code: "35" },
-    { i18nKey: "36", code: "36" },
-    { i18nKey: "37", code: "37" },
-    { i18nKey: "38", code: "38" },
-    { i18nKey: "39", code: "39" },
-    { i18nKey: "40", code: "40" },
-    { i18nKey: "41", code: "41" },
-    { i18nKey: "42", code: "42" },
-  ];
+  // const cmbPregWeek = [
+  //   { i18nKey: "20", code: "20" },
+  //   { i18nKey: "21", code: "21" },
+  //   { i18nKey: "22", code: "22" },
+  //   { i18nKey: "22", code: "22" },
+  //   { i18nKey: "23", code: "23" },
+  //   { i18nKey: "25", code: "25" },
+  //   { i18nKey: "26", code: "26" },
+  //   { i18nKey: "27", code: "27" },
+  //   { i18nKey: "28", code: "28" },
+  //   { i18nKey: "29", code: "29" },
+  //   { i18nKey: "30", code: "30" },
+  //   { i18nKey: "31", code: "31" },
+  //   { i18nKey: "32", code: "32" },
+  //   { i18nKey: "33", code: "33" },
+  //   { i18nKey: "34", code: "34" },
+  //   { i18nKey: "35", code: "35" },
+  //   { i18nKey: "36", code: "36" },
+  //   { i18nKey: "37", code: "37" },
+  //   { i18nKey: "38", code: "38" },
+  //   { i18nKey: "39", code: "39" },
+  //   { i18nKey: "40", code: "40" },
+  //   { i18nKey: "41", code: "41" },
+  //   { i18nKey: "42", code: "42" },
+  // ];
   const [childDOB, setChildDOB] = useState(isEditBirth ? convertEpochToDate(formData?.ChildDetails?.childDOB) : formData?.ChildDetails?.childDOB); //formData?.ChildDetails?.childDOB
-  // const [gender, selectGender] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? (menu.filter(menu => menu.code === formData?.ChildDetails?.gender)[0]) : formData?.ChildDetails?.gender);
   const [gender, selectGender] = useState(formData?.ChildDetails?.gender?.code ? formData?.ChildDetails?.gender : formData?.ChildDetails?.gender ?
     (menu.filter(menu => menu.code === formData?.ChildDetails?.gender)[0]) : "");
-
   const [childAadharNo, setChildAadharNo] = useState(formData?.ChildDetails?.childAadharNo ? formData?.ChildDetails?.childAadharNo : "");
   const [childFirstNameEn, setChildFirstNameEn] = useState(formData?.ChildDetails?.childFirstNameEn ? formData?.ChildDetails?.childFirstNameEn : "");
   const [childMiddleNameEn, setChildMiddleNameEn] = useState(formData?.ChildDetails?.childMiddleNameEn ? formData?.ChildDetails?.childMiddleNameEn : "");
@@ -154,11 +150,11 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
   const [childMiddleNameMl, setChildMiddleNameMl] = useState(formData?.ChildDetails?.childMiddleNameMl ? formData?.ChildDetails?.childMiddleNameMl : "");
   const [childLastNameMl, setChildLastNameMl] = useState(formData?.ChildDetails?.childLastNameMl ? formData?.ChildDetails?.childLastNameMl : "");
   const [isInitialRender, setIsInitialRender] = useState(true);
+  const [isInitialRenderRoles, setInitialRenderRoles] = useState(true);
   const [isInitialRenderPlace, setIsInitialRenderPlace] = useState(true);
   const [isInitialRenderFormData, setisInitialRenderFormData] = useState(false);
   const [birthDateTime, setbirthDateTime] = useState(formData?.ChildDetails?.birthDateTime ? formData?.ChildDetails?.birthDateTime : ""); //formData?.ChildDetails?.birthDateTime ? formData?.ChildDetails?.birthDateTime :
   const [isChildName, setIsChildName] = useState(formData?.ChildDetails?.isChildName ? formData?.ChildDetails?.isChildName : false);
-  // const [birthPlace, selectBirthPlace] = useState(isEditBirth && isEditBirthPageComponents === false && (formData?.ChildDetails?.IsEditChangeScreen === false || formData?.ChildDetails?.IsEditChangeScreen === undefined) ? (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.ChildDetails?.birthPlace)[0]) : formData?.ChildDetails?.birthPlace);
   const [birthPlace, selectBirthPlace] = useState(formData?.ChildDetails?.birthPlace?.code ? formData?.ChildDetails?.birthPlace : formData?.ChildDetails?.birthPlace ?
     (cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === formData?.ChildDetails?.birthPlace)[0]) : "");
   const [value, setValue] = useState();
@@ -261,7 +257,54 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       }
     }
   }, [isInitialRender]);
+  // console.log(userRoles);
+  const roleall = [];
+  roleall.push(...roletemp);
+  const rolecombine = [];
+  roleall?.map?.((e) => {
+    rolecombine.push(e.code);
+  });
+  const { data: userData, isLoading: PTALoading } = Digit.Hooks.useEmployeeSearch(
+    tenantId,
+    {
+      roles: rolecombine?.map?.((e) => ({ code: e })),
+      isActive: true,
+      uuids: uuid,
+      rolecodes: rolecombine?.map?.((e) => (e)).join(",")
+    }
+    // { enabled: !action?.isTerminateState }
+  );
 
+  const operatorwardtemp = userData?.Employees[0]?.jurisdictions?.filter((doc) => doc?.roleCode?.includes("HOSPITAL_OPERATOR"));
+  const appwardtemp = userData?.Employees[0]?.jurisdictions?.filter((doc) => doc?.roleCode?.includes("TL_PDEAPPROVER"));
+
+  const operatorward = [];
+  const appward = [];
+  operatorwardtemp?.map((ob) => {
+    console.log(ob);
+    operatorward.push(...ob.jurisdictionChilds);
+
+  });
+
+
+  useEffect(() => {
+    if (isInitialRenderRoles) {
+      if (userRoles.length > 0) {
+        if (userRoles[0].code === "HOSPITAL_OPERATOR") {
+          if (cmbPlaceMaster.length > 0) {
+            selectBirthPlace(cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === "HOSPITAL")[0]);
+            setValue(cmbPlaceMaster.filter(cmbPlaceMaster => cmbPlaceMaster.code === "HOSPITAL")[0].code);
+            setisDisableEditRole(true)
+            setInitialRenderRoles(false);
+          }
+        }
+      }
+    }
+  }, [cmbPlaceMaster, isInitialRenderRoles]);
+  // if(roles[0].code === "HOSPITAL_OPERATOR"){
+  //   const { data: { HospDetails: searchResult, Count: count } = {}, isLoading, isSuccess } = Digit.Hooks.hrms.useHRMSSearch({ tenantId, filters: payload, config })
+  //   console.log(searchResult);
+  // }
   React.useEffect(() => {
     if (isInitialRenderPlace) {
       if (birthPlace) {
@@ -1154,13 +1197,36 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
       let isWorkflow = isEditBirth ? false : true;
       onSelect(config.key, {
         stateId, tenantId, workFlowCode, childDOB, birthDateTime, gender, childAadharNo,
-        isChildName, childFirstNameEn, childMiddleNameEn, childLastNameEn, childFirstNameMl, childMiddleNameMl, childLastNameMl,
+        isChildName,
+        childFirstNameEn: childFirstNameEn.trim(),
+        childMiddleNameEn: childMiddleNameEn.trim(),
+        childLastNameEn: childLastNameEn.trim(),
+        childFirstNameMl: childFirstNameMl.trim(),
+        childMiddleNameMl: childMiddleNameMl.trim(),
+        childLastNameMl: childLastNameMl.trim(),
         birthPlace, hospitalCode, hospitalName, hospitalNameMl,
         institutionTypeCode, institution, institutionNameCode, institutionId, institutionIdMl,
-        wardNo, wardNameEn, wardNameMl, wardNumber, adrsHouseNameEn, adrsHouseNameMl, adrsLocalityNameEn, adrsLocalityNameMl, adrsStreetNameEn, adrsStreetNameMl, adrsPostOffice, adrsPincode,
-        vehicleType, vehicleHaltPlace, vehicleRegistrationNo, vehicleFromEn, vehicleToEn, vehicleFromMl,
-        vehicleToMl, setadmittedHospitalEn, vehicleDesDetailsEn,
-        publicPlaceType, localityNameEn, localityNameMl, streetNameEn, streetNameMl, publicPlaceDecpEn,
+        wardNo, wardNameEn, wardNameMl, wardNumber,
+        adrsHouseNameEn: adrsHouseNameEn.trim(),
+        adrsHouseNameMl: adrsHouseNameMl.trim(),
+        adrsLocalityNameEn: adrsLocalityNameEn.trim(),
+        adrsLocalityNameMl: adrsLocalityNameMl.trim(),
+        adrsStreetNameEn: adrsStreetNameEn.trim(),
+        adrsStreetNameMl: adrsStreetNameMl.trim(), adrsPostOffice, adrsPincode,
+        vehicleType,
+        vehicleHaltPlace: vehicleHaltPlace.trim(),
+        vehicleRegistrationNo: vehicleRegistrationNo.trim(),
+        vehicleFromEn: vehicleFromEn.trim(),
+        vehicleToEn: vehicleToEn.trim(),
+        vehicleFromMl: vehicleFromMl.trim(),
+        vehicleToMl: vehicleToMl.trim(), setadmittedHospitalEn,
+        vehicleDesDetailsEn: vehicleDesDetailsEn.trim(),
+        publicPlaceType,
+        localityNameEn: localityNameEn.trim(),
+        localityNameMl: localityNameMl.trim(),
+        streetNameEn: streetNameEn.trim(),
+        streetNameMl: streetNameMl.trim(),
+        publicPlaceDecpEn: publicPlaceDecpEn.trim(),
         birthWeight, pregnancyDuration, medicalAttensionSub, deliveryMethods, IsEditChangeScreen,
         uuid, DifferenceInTime, isWorkflow, isPayment, Amount
       });
@@ -1307,7 +1373,7 @@ const ChildDetails = ({ config, onSelect, userType, formData, isEditBirth = fals
                   isMandatory={false}
                   option={cmbPlaceMaster}
                   selected={birthPlace}
-                  disable={isDisableEdit}
+                  disable={isDisableEditRole}
                   select={setselectBirthPlace}
                   placeholder={`${t("CR_BIRTH_PLACE")}`}
                 />

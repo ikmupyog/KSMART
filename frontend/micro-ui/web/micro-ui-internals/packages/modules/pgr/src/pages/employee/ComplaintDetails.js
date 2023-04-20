@@ -45,13 +45,13 @@ const MapView = (props) => {
 };
 const cardStyle = {
   display: "flex",
-  gap: "80px",
+  gap: "40px",
 };
 const complntSummary = {
-  width: "700px",
+  width: "100%",
 };
 const timelineWidth = {
-  width: "400px",
+  width: "100%",
 };
 const Heading = (props) => {
   return <h1 className="heading-m">{props.label}</h1>;
@@ -255,6 +255,7 @@ export const ComplaintDetails = (props) => {
   const [businessService, setBusinessService] = useState("pgrhealthcomplaints"); //DIRECTRENEWAL
   const workflowDetails = Digit.Hooks.useWorkflowDetails({ tenantId, id, moduleCode: businessService, role: "EMPLOYEE" });
   const [imagesToShowBelowComplaintDetails, setImagesToShowBelowComplaintDetails] = useState([]);
+
 
   // RAIN-5692 PGR : GRO is assigning complaint, Selecting employee and assign. Its not getting assigned.
   // Fix for next action  assignee dropdown issue
@@ -482,7 +483,7 @@ export const ComplaintDetails = (props) => {
   return (
     <React.Fragment>
       <div style={cardStyle}>
-        <Card>
+        <Card style={{ width: "69%" }}>
           <div style={complntSummary}>
             <CardSubHeader>{t(`CS_HEADER_COMPLAINT_SUMMARY`)}</CardSubHeader>
             <CardLabel>{t(`CS_COMPLAINT_DETAILS_COMPLAINT_DETAILS`)}</CardLabel>
@@ -516,7 +517,7 @@ export const ComplaintDetails = (props) => {
             ) : null}
           </div>
         </Card>
-        <Card>
+        <Card style={{ width: "30%" }}>
           {/* <div style={borderStyle}></div> */}
           {/* <BreakLine /> */}
           <div style={timelineWidth}>

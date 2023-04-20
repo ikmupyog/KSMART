@@ -67,7 +67,7 @@ const MyCRApplications = ({ view }) => {
         );
       })} */}
       <BackButton>{t("CS_COMMON_BACK2")}</BackButton>
-       <SearchBirthApplication
+      <SearchBirthApplication
         t={t}
         data={data || []}
         onSubmit={onSubmit}

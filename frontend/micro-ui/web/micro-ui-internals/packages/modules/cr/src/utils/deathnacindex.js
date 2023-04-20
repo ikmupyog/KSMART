@@ -166,6 +166,37 @@ export const DeathNACRegistrationData = (data = {}) => {
         lastModifiedBy : null,
         lastModifiedTime : null,
     }
+    let  DeathNACDocuments = [
+                {
+                    DocumentType: _.get(DeathNACInitiator, "docType1", ""),
+                    filestoreId: _.get(DeathNACInitiator, "uploadedFile", ""),
+                },
+                {
+                    DocumentType: _.get(DeathNACInitiator, "docType2", ""),
+                    filestoreId: _.get(DeathNACInitiator, "uploadedFile1", ""),
+                },
+                {
+                    DocumentType: _.get(DeathNACInitiator, "docType3", ""),
+                    filestoreId: _.get(DeathNACInitiator, "uploadedFile2", ""),
+                },
+                {
+                    DocumentType: _.get(DeathNACInitiator, "docType4", ""),
+                    filestoreId: _.get(DeathNACInitiator, "uploadedFile3", ""),
+                },
+                {
+                    DocumentType: _.get(DeathNACInitiator, "docType5", ""),
+                    filestoreId: _.get(DeathNACInitiator, "uploadedFile4", ""),
+                },
+                {
+                    DocumentType: _.get(DeathNACInitiator, "docType6", ""),
+                    filestoreId: _.get(DeathNACInitiator, "uploadedFile5", ""),
+                },
+                {
+                    DocumentType: _.get(DeathNACInitiator, "docType7", ""),
+                    filestoreId: _.get(DeathNACInitiator, "uploadedFile6", ""),
+                },
+        
+            ]
 
     const response = {
         "deathNACDtls": [
@@ -173,13 +204,14 @@ export const DeathNACRegistrationData = (data = {}) => {
             InformationDeath,
             AddressBirthDetails,
             DeathApplicantDtls,
+            DeathNACDocuments,
             AuditDetails,
             "applicationType": "nac",
             "applicationStatus": null,
             "businessService": "CR",
             "action": "INITIATE",
             "assignee": [],
-            "workflowcode": "NACAPP",
+            "workflowcode": "NACDEATH",
             "wfDocuments": null
         }
         ]

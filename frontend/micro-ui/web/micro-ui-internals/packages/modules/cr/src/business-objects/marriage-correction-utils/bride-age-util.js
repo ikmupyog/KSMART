@@ -1,9 +1,11 @@
+import moment from "moment";
 export const getFilteredBrideAgeData = (selectedData, inclusionData) => {
-    let filteredDocuments = getFilteredDocuments(selectedData,inclusionData);
-    const computedValue = computeInitialValue(selectedData?.BrideDetails);
+    let filteredDocuments = getFilteredDocuments(inclusionData);
+    const computedInitialValue = computeInitialValue(selectedData?.BrideDetails);
+    const computedCurrentValue = computeCurrentValue(selectedData?.BrideDetails);
     let selectedDomObj = {
-      initialValue: computedValue,
-      curValue: computedValue,
+      initialValue: computedInitialValue,
+      curValue: computedCurrentValue,
       isDisable: true,
       isEditable: false,
       isFocused: false,
@@ -14,16 +16,23 @@ export const getFilteredBrideAgeData = (selectedData, inclusionData) => {
   
   //TODO need validation to check dob is null
   const computeInitialValue = (brideDetails) => {
-    const initialValue = brideDetails?.brideAge;
-    return initialValue;
+    const brideDOB = {
+      dob: brideDetails?.brideDOB,
+      age: brideDetails?.brideAge,
+    }
+    return brideDOB;
   };
   
-  const getFilteredDocuments = (selectedData,inclusionData) => {
-    let filteredData  = {};
-    if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
-      filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
-    } else {
-      filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
+  const computeCurrentValue = (brideDetails) => {
+    const brideDOBAge = {
+      dob: brideDetails && moment(brideDetails?.brideDOB).format("DD/MM/YYYY"),
+      age: brideDetails?.brideAge,
     }
-    return filteredData;
+    return brideDOBAge;
+  };
+  
+  
+  const getFilteredDocuments = (inclusionData) => {
+    let filteredData  = inclusionData;
+    return {documentData:filteredData, docFlag: "BRIDE_AGE"}; 
   };

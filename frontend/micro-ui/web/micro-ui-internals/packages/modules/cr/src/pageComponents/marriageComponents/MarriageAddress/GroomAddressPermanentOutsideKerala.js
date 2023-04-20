@@ -42,6 +42,13 @@ const GroomAddressPermanentOutsideKerala = ({
   isEditStillBirth = false,
   isEditAdoption,
   isEditBirthNAC = false,
+  countryValuePermanent,
+  setCountryValuePermanent,
+  valuePermanent,
+  setValuePermanent,
+  isPrsentAddress,
+  setIsPrsentAddress,
+
   // isInitialRender, setIsInitialRender
 }) => {
   const stateId = Digit.ULBService.getStateId();
@@ -64,8 +71,8 @@ const GroomAddressPermanentOutsideKerala = ({
   //isEditBirth ? isEditBirth : isEditDeath ? false :
   const [toast, setToast] = useState(false);
   const [isInitialRender, setIsInitialRender] = useState(true);
-  const [isDisableEdit, setisDisableEdit] = useState(isEditBirth ? isEditBirth : isEditDeath ? false : isEditStillBirth ? isEditStillBirth : false);
-
+  const [isDisableEdit, setisDisableEdit] = useState(false);
+  const [cmbFilterPerDistrict, setcmbFilterPerDistrict] = useState();
   const cmbUrbanRural = [
     { i18nKey: "Town", code: "TOWN" },
     { i18nKey: "Village", code: "VILLAGE" },
@@ -77,7 +84,6 @@ const GroomAddressPermanentOutsideKerala = ({
   let districtid = null;
   let cmbFilterDistrict = [];
   let cmbLB = [];
-  console.log(value);
   Taluk &&
     Taluk["common-masters"] &&
     Taluk["common-masters"].Taluk &&
@@ -103,14 +109,16 @@ const GroomAddressPermanentOutsideKerala = ({
   //   });
 
   useEffect(() => {
+    setcmbFilterPerDistrict(cmbDistrict.filter((cmbDistrict) => cmbDistrict.statecode === valuePermanent));
+    // }
+  }, [valuePermanent]);
+  useEffect(() => {
     if (isInitialRender) {
       if (cmbDistrict.length > 0) {
-        console.log(cmbDistrict);
         // currentLB = cmbLB.filter((cmbLB) => cmbLB.code === tenantId);
         // setinsideKeralaLBName(currentLB[0]);
-        cmbFilterDistrict = cmbDistrict.filter((cmbDistrict) => cmbDistrict.statecode === "pb");
-        console.log(cmbFilterDistrict);
-        // setpermntOutsideKeralaDistrict(cmbFilterDistrict);
+        //cmbFilterDistrict = cmbDistrict.filter((cmbDistrict) => cmbDistrict.statecode === "pb");
+        setcmbFilterPerDistrict(cmbDistrict.filter((cmbDistrict) => cmbDistrict.statecode === valuePermanent));
         // cmbFilterTaluk = cmbTaluk.filter((cmbTaluk) => cmbTaluk.distId === currentLB[0].city.districtid);
         // setLbsTalukvalue(cmbFilterTaluk);
         // cmbFilterVillage = cmbVillage.filter((cmbVillage) => cmbVillage.distId === currentLB[0].city.districtid);
@@ -118,7 +126,7 @@ const GroomAddressPermanentOutsideKerala = ({
         setIsInitialRender(false);
       }
     }
-  }, [cmbFilterDistrict, isInitialRender]);
+  }, [cmbFilterPerDistrict, isInitialRender]);
 
   if (isEditBirth) {
     if (formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaDistrict != null) {
@@ -136,29 +144,29 @@ const GroomAddressPermanentOutsideKerala = ({
       }
     }
     if (formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaVillage != null) {
-      if (cmbVillage.length > 0 && (permntOutsideKeralaVillage === undefined || permntOutsideKeralaVillage === "")) {
+      if (cmbUrbanRural.length > 0 && (permntOutsideKeralaVillage === undefined || permntOutsideKeralaVillage === "")) {
         setpermntOutsideKeralaVillage(
-          cmbVillage.filter((cmbVillage) => cmbVillage.code === formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaVillage)[0]
+          cmbUrbanRural.filter((cmbUrbanRural) => cmbUrbanRural.code === formData?.ChildDetails?.AddressBirthDetails?.permntOutsideKeralaVillage)[0]
         );
       }
     }
   } else if (isEditDeath) {
-    if (formData?.AddressBirthDetails?.permntOutsideKeralaDistrict != null) {
+    if (formData?.GroomAddressDetails?.permntOutsideKeralaDistrict != null) {
       if (cmbDistrict.length > 0 && (permntOutsideKeralaDistrict === undefined || permntOutsideKeralaDistrict === "")) {
         setpermntOutsideKeralaDistrict(
-          cmbDistrict.filter((cmbDistrict) => cmbDistrict.code === formData?.AddressBirthDetails?.permntOutsideKeralaDistrict)[0]
+          cmbDistrict.filter((cmbDistrict) => cmbDistrict.code === formData?.GroomAddressDetails?.permntOutsideKeralaDistrict)[0]
         );
       }
     }
-    if (formData?.AddressBirthDetails?.permntOutsideKeralaTaluk != null) {
+    if (formData?.GroomAddressDetails?.permntOutsideKeralaTaluk != null) {
       if (cmbTaluk.length > 0 && (permntOutsideKeralaTaluk === undefined || permntOutsideKeralaTaluk === "")) {
-        setpermntOutsideKeralaTaluk(cmbTaluk.filter((cmbTaluk) => cmbTaluk.code === formData?.AddressBirthDetails?.permntOutsideKeralaTaluk)[0]);
+        setpermntOutsideKeralaTaluk(cmbTaluk.filter((cmbTaluk) => cmbTaluk.code === formData?.GroomAddressDetails?.permntOutsideKeralaTaluk)[0]);
       }
     }
-    if (formData?.AddressBirthDetails?.permntOutsideKeralaVillage != null) {
-      if (cmbVillage.length > 0 && (permntOutsideKeralaVillage === undefined || permntOutsideKeralaVillage === "")) {
+    if (formData?.GroomAddressDetails?.permntOutsideKeralaVillage != null) {
+      if (cmbUrbanRural.length > 0 && (permntOutsideKeralaVillage === undefined || permntOutsideKeralaVillage === "")) {
         setpermntOutsideKeralaVillage(
-          cmbVillage.filter((cmbVillage) => cmbVillage.code === formData?.AddressBirthDetails?.permntOutsideKeralaVillage)[0]
+          cmbUrbanRural.filter((cmbUrbanRural) => cmbUrbanRural.code === formData?.GroomAddressDetails?.permntOutsideKeralaVillage)[0]
         );
       }
     }
@@ -180,9 +188,11 @@ const GroomAddressPermanentOutsideKerala = ({
       }
     }
     if (formData?.StillBirthChildDetails?.AddressBirthDetails?.permntOutsideKeralaVillage != null) {
-      if (cmbVillage.length > 0 && (permntOutsideKeralaVillage === undefined || permntOutsideKeralaVillage === "")) {
+      if (cmbUrbanRural.length > 0 && (permntOutsideKeralaVillage === undefined || permntOutsideKeralaVillage === "")) {
         setpermntOutsideKeralaVillage(
-          cmbVillage.filter((cmbVillage) => cmbVillage.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.permntOutsideKeralaVillage)[0]
+          cmbUrbanRural.filter(
+            (cmbUrbanRural) => cmbUrbanRural.code === formData?.StillBirthChildDetails?.AddressBirthDetails?.permntOutsideKeralaVillage
+          )[0]
         );
       }
     }
@@ -200,9 +210,9 @@ const GroomAddressPermanentOutsideKerala = ({
       }
     }
     if (formData?.AdoptionAddressBasePage?.permntOutsideKeralaVillage != null) {
-      if (cmbVillage.length > 0 && (permntOutsideKeralaVillage === undefined || permntOutsideKeralaVillage === "")) {
+      if (cmbUrbanRural.length > 0 && (permntOutsideKeralaVillage === undefined || permntOutsideKeralaVillage === "")) {
         setpermntOutsideKeralaVillage(
-          cmbVillage.filter((cmbVillage) => cmbVillage.code === formData?.AdoptionAddressBasePage?.permntOutsideKeralaVillage)[0]
+          cmbUrbanRural.filter((cmbUrbanRural) => cmbUrbanRural.code === formData?.AdoptionAddressBasePage?.permntOutsideKeralaVillage)[0]
         );
       }
     }
@@ -212,29 +222,25 @@ const GroomAddressPermanentOutsideKerala = ({
   function setSelectpermntOutsideKeralaDistrict(value) {
     setpermntOutsideKeralaDistrict(value);
     districtid = value.districtid;
+    setcmbFilterPerDistrict(null);
   }
 
   function setSelectpermntOutsideKeralaVillage(value) {
     setpermntOutsideKeralaVillage(value);
   }
-  function setSelectpermntOutsideKeralaTaluk(value) {
-    setpermntOutsideKeralaTaluk(value);
+  function setSelectpermntOutsideKeralaTaluk(e) {
+    // setpermntOutsideKeralaTaluk(value);
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+      setpermntOutsideKeralaTaluk(e.target.value.trim().length <= 50 ? e.target.value : e.target.value.substring(0, 50));
+    }
   }
   // function setSelectoutsideKeralaPostOffice(value) {
   //   setoutsideKeralaPostOffice(value);
   // }
   function setSelectpermntOutsideKeralaPincode(e) {
-    if (e.target.value.length != 0) {
-      if (e.target.value.length > 6) {
-        return false;
-      } else if (e.target.value.length < 6) {
-        setpermntOutsideKeralaPincode(e.target.value);
-        return false;
-      } else {
-        setpermntOutsideKeralaPincode(e.target.value);
-        return true;
-      }
-    }
+    setpermntOutsideKeralaPincode(
+      e.target.value.length <= 6 ? e.target.value.replace(/[^0-9]/gi, "") : e.target.value.replace(/[^0-9]/gi, "").substring(0, 6)
+    );
   }
   function setSelectoutsideKeralaPostOfficeEn(e) {
     if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
@@ -250,18 +256,17 @@ const GroomAddressPermanentOutsideKerala = ({
     }
   }
   function setSelectpermntOutsideKeralaHouseNameEn(e) {
-    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z ]*$") != null) {
+    if (e.target.value.trim().length >= 0 && e.target.value.trim() !== "." && e.target.value.match("^[a-zA-Z-0-9 ]*$") != null) {
       setpermntOutsideKeralaHouseNameEn(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectpermntOutsideKeralaHouseNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]*$/;
+    if (!e.target.value.match(pattern)) {
+      e.preventDefault();
+      setpermntOutsideKeralaHouseNameMl("");
     } else {
-      setpermntOutsideKeralaHouseNameMl(
-        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-      );
+      setpermntOutsideKeralaHouseNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectpermntOutsideKeralaLocalityNameEn(e) {
@@ -270,13 +275,12 @@ const GroomAddressPermanentOutsideKerala = ({
     }
   }
   function setSelectpermntOutsideKeralaLocalityNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!e.target.value.match(pattern)) {
+      e.preventDefault();
+      setpermntOutsideKeralaLocalityNameMl("");
     } else {
-      setpermntOutsideKeralaLocalityNameMl(
-        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-      );
+      setpermntOutsideKeralaLocalityNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectpermntOutsideKeralaStreetNameEn(e) {
@@ -285,13 +289,12 @@ const GroomAddressPermanentOutsideKerala = ({
     }
   }
   function setSelectpermntOutsideKeralaStreetNameMl(e) {
-    if (e.target.value.length === 51) {
-      return false;
-      // window.alert("Username shouldn't exceed 10 characters")
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C ]*$/;
+    if (!e.target.value.match(pattern)) {
+      e.preventDefault();
+      setpermntOutsideKeralaStreetNameMl("");
     } else {
-      setpermntOutsideKeralaStreetNameMl(
-        e.target.value.replace(/^[a-zA-Z -.&'@''!''~''`''#''$''%''^''*''('')''_''+''=''|''<'',''>''?''/''"'':'';''{''}''[' 0-9]/gi, "")
-      );
+      setpermntOutsideKeralaStreetNameMl(e.target.value.length <= 50 ? e.target.value : e.target.value.substring(0, 50));
     }
   }
   function setSelectpermntOutsideKeralaCityVilgeEn(e) {
@@ -305,6 +308,12 @@ const GroomAddressPermanentOutsideKerala = ({
       e.preventDefault();
     }
   }
+  function setCheckMalayalamInputFieldWithSplChar(e) {
+    let pattern = /^[\u0D00-\u0D7F\u200D\u200C0-9 \-]/;
+    if (!e.key.match(pattern)) {
+      e.preventDefault();
+    }
+  }
   const goNext = () => {};
 
   if (isDistrictLoading || isTalukLoading || isVillageLoading) {
@@ -313,105 +322,116 @@ const GroomAddressPermanentOutsideKerala = ({
 
   return (
     <React.Fragment>
-      <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!permntOutsideKeralaDistrict}>
-        <div className="row">
-          <div className="col-md-12">
-            <h1 className="headingh1">
-              <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INSIDE_INDIA_OUTSIDE_KERALA_PERM_ADDRESS")}`}</span>{" "}
-            </h1>
-          </div>
+      {/* <FormStep t={t} config={config} onSelect={goNext} onSkip={onSkip} isDisabled={!permntOutsideKeralaDistrict}> */}
+      <div className="row">
+        <div className="col-md-12">
+          <h1 className="headingh1">
+            <span style={{ background: "#fff", padding: "0 10px" }}>{`${t("CR_INSIDE_INDIA_OUTSIDE_KERALA_PERM_ADDRESS")}`}</span>{" "}
+          </h1>
         </div>
+      </div>
 
-        <div className="row">
-          <div className="col-md-3">
-            <CardLabel>
-              {t("CS_COMMON_DISTRICT")}
-              <span className="mandatorycss">*</span>
-            </CardLabel>
-            <Dropdown
-              t={t}
-              optionKey="name"
-              option={cmbDistrict}
-              selected={permntOutsideKeralaDistrict}
-              select={setSelectpermntOutsideKeralaDistrict}
-              disable={isDisableEdit}
-              placeholder={`${t("CS_COMMON_DISTRICT")}`}
-            />
-          </div>
-          <div className="col-md-3">
-            <CardLabel>
-              {t("CR_TALUK_TEHSIL")}
-              <span className="mandatorycss">*</span>
-            </CardLabel>
-            <Dropdown
+      <div className="row">
+        <div className="col-md-3">
+          <CardLabel>
+            {t("CS_COMMON_DISTRICT")}
+            <span className="mandatorycss">*</span>
+          </CardLabel>
+          <Dropdown
+            t={t}
+            optionKey="name"
+            option={cmbFilterPerDistrict}
+            selected={permntOutsideKeralaDistrict}
+            select={setSelectpermntOutsideKeralaDistrict}
+            disable={isDisableEdit}
+            placeholder={`${t("CS_COMMON_DISTRICT")}`}
+          />
+        </div>
+        <div className="col-md-3">
+          <CardLabel>
+            {t("CR_TALUK_TEHSIL")}
+            <span className="mandatorycss">*</span>
+          </CardLabel>
+          <TextInput
+            t={t}
+            type={"text"}
+            optionKey="i18nKey"
+            name="permntOutsideKeralaTaluk"
+            value={permntOutsideKeralaTaluk}
+            onChange={setSelectpermntOutsideKeralaTaluk}
+            placeholder={`${t("CR_TALUK_TEHSIL")}`}
+            disable={isDisableEdit}
+            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_VILLAGE_NAME_EN") })}
+          />
+          {/* <Dropdown
               t={t}
               optionKey="name"
               option={cmbTaluk}
               selected={permntOutsideKeralaTaluk}
               select={setSelectpermntOutsideKeralaTaluk}
-              disable={isDisableEdit}
+              disable={isDisableEdit} 
               placeholder={`${t("CR_TALUK_TEHSIL")}`}
-            />
-          </div>
-          <div className="col-md-3">
-            <CardLabel>
-              {t("CR_TOWN_VILLAGE_EN")}
-              <span className="mandatorycss">*</span>
-            </CardLabel>
-            <Dropdown
-              t={t}
-              optionKey="i18nKey"
-              option={cmbUrbanRural}
-              selected={permntOutsideKeralaVillage}
-              select={setSelectpermntOutsideKeralaVillage}
-              disable={isDisableEdit}
-              placeholder={`${t("CR_TOWN_VILLAGE_EN")}`}
-            />
-          </div>
-          <div className="col-md-3">
-            <CardLabel>
-              {t("CR_CITY_VILLAGE_NAME_EN")}
-              <span className="mandatorycss">*</span>
-            </CardLabel>
-            <TextInput
-              t={t}
-              type={"text"}
-              optionKey="i18nKey"
-              name="permntOutsideKeralaCityVilgeEn"
-              value={permntOutsideKeralaCityVilgeEn}
-              onChange={setSelectpermntOutsideKeralaCityVilgeEn}
-              disable={isDisableEdit}
-              placeholder={`${t("CR_CITY_VILLAGE_NAME_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_VILLAGE_NAME_EN") })}
-            />
-          </div>
+            /> */}
         </div>
-        <div className="row">
-          <div className="col-md-4">
-            <CardLabel>
-              {t("CS_COMMON_PIN_CODE")}
-              <span className="mandatorycss">*</span>
-            </CardLabel>
-            <TextInput
-              t={t}
-              type={"text"}
-              optionKey="i18nKey"
-              name="permntOutsideKeralaPincode"
-              value={permntOutsideKeralaPincode}
-              onChange={setSelectpermntOutsideKeralaPincode}
-              disable={isDisableEdit}
-              placeholder={`${t("CS_COMMON_PIN_CODE")}`}
-              {...(validation = {
-                pattern: "^[a-zA-Z-.`' ]*$",
-                isRequired: true,
-                type: "number",
-                maxLength: 6,
-                minLength: 6,
-                title: t("CS_COMMON_INVALID_PIN_CODE"),
-              })}
-            />
-          </div>
-          {/* <div className="col-md-4">
+        <div className="col-md-3">
+          <CardLabel>
+            {t("CR_TOWN_VILLAGE_EN")}
+            <span className="mandatorycss">*</span>
+          </CardLabel>
+          <Dropdown
+            t={t}
+            optionKey="i18nKey"
+            option={cmbUrbanRural}
+            selected={permntOutsideKeralaVillage}
+            select={setSelectpermntOutsideKeralaVillage}
+            disable={isDisableEdit}
+            placeholder={`${t("CR_TOWN_VILLAGE_EN")}`}
+          />
+        </div>
+        <div className="col-md-3">
+          <CardLabel>
+            {t("CR_CITY_VILLAGE_NAME_EN")}
+            <span className="mandatorycss">*</span>
+          </CardLabel>
+          <TextInput
+            t={t}
+            type={"text"}
+            optionKey="i18nKey"
+            name="permntOutsideKeralaCityVilgeEn"
+            value={permntOutsideKeralaCityVilgeEn}
+            onChange={setSelectpermntOutsideKeralaCityVilgeEn}
+            disable={isDisableEdit}
+            placeholder={`${t("CR_CITY_VILLAGE_NAME_EN")}`}
+            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_VILLAGE_NAME_EN") })}
+          />
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-md-4">
+          <CardLabel>
+            {t("CS_COMMON_PIN_CODE")}
+            <span className="mandatorycss">*</span>
+          </CardLabel>
+          <TextInput
+            t={t}
+            type={"text"}
+            optionKey="i18nKey"
+            name="permntOutsideKeralaPincode"
+            value={permntOutsideKeralaPincode}
+            onChange={setSelectpermntOutsideKeralaPincode}
+            disable={isDisableEdit}
+            placeholder={`${t("CS_COMMON_PIN_CODE")}`}
+            {...(validation = {
+              pattern: "^[0-9]*$",
+              isRequired: true,
+              type: "text",
+              maxLength: 6,
+              minLength: 6,
+              title: t("CS_COMMON_INVALID_PIN_CODE"),
+            })}
+          />
+        </div>
+        {/* <div className="col-md-4">
               <CardLabel>
                 {t("CS_COMMON_POST_OFFICE")}
                 <span className="mandatorycss">*</span>
@@ -425,24 +445,24 @@ const GroomAddressPermanentOutsideKerala = ({
                 placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
               />
             </div> */}
-          <div className="col-md-4">
-            <CardLabel>
-              {t("CS_COMMON_POST_OFFICE")}
-              <span className="mandatorycss">*</span>
-            </CardLabel>
-            <TextInput
-              t={t}
-              type={"text"}
-              optionKey="i18nKey"
-              name="permntOutsideKeralaPostOfficeEn"
-              value={permntOutsideKeralaPostOfficeEn}
-              onChange={setSelectoutsideKeralaPostOfficeEn}
-              disable={isDisableEdit}
-              placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_VILLAGE_NAME_EN") })}
-            />
-          </div>
-          {/* <div className="col-md-4">
+        <div className="col-md-4">
+          <CardLabel>
+            {t("CS_COMMON_POST_OFFICE")}
+            <span className="mandatorycss">*</span>
+          </CardLabel>
+          <TextInput
+            t={t}
+            type={"text"}
+            optionKey="i18nKey"
+            name="permntOutsideKeralaPostOfficeEn"
+            value={permntOutsideKeralaPostOfficeEn}
+            onChange={setSelectoutsideKeralaPostOfficeEn}
+            disable={isDisableEdit}
+            placeholder={`${t("CS_COMMON_POST_OFFICE")}`}
+            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_VILLAGE_NAME_EN") })}
+          />
+        </div>
+        {/* <div className="col-md-4">
             <CardLabel>
               {t("CS_COMMON_POST_OFFICE")}
               <span className="mandatorycss">*</span>
@@ -458,128 +478,128 @@ const GroomAddressPermanentOutsideKerala = ({
               {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_CITY_VILLAGE_NAME_EN") })}
             />
           </div> */}
+      </div>
+      <div className="row">
+        <div className="col-md-6">
+          <CardLabel>
+            {t("CR_LOCALITY_EN")}
+            <span className="mandatorycss">*</span>
+          </CardLabel>
+          <TextInput
+            t={t}
+            type={"text"}
+            optionKey="i18nKey"
+            name="permntOutsideKeralaLocalityNameEn"
+            value={permntOutsideKeralaLocalityNameEn}
+            onChange={setSelectpermntOutsideKeralaLocalityNameEn}
+            disable={isDisableEdit}
+            placeholder={`${t("CR_LOCALITY_EN")}`}
+            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
+          />
         </div>
-        <div className="row">
-          <div className="col-md-6">
-            <CardLabel>
-              {t("CR_LOCALITY_EN")}
-              <span className="mandatorycss">*</span>
-            </CardLabel>
-            <TextInput
-              t={t}
-              type={"text"}
-              optionKey="i18nKey"
-              name="permntOutsideKeralaLocalityNameEn"
-              value={permntOutsideKeralaLocalityNameEn}
-              onChange={setSelectpermntOutsideKeralaLocalityNameEn}
-              disable={isDisableEdit}
-              placeholder={`${t("CR_LOCALITY_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_LOCALITY_EN") })}
-            />
-          </div>
-          <div className="col-md-6">
-            <CardLabel>
-              {t("CR_LOCALITY_ML")}
-              <span className="mandatorycss">*</span>
-            </CardLabel>
-            <TextInput
-              t={t}
-              type={"text"}
-              optionKey="i18nKey"
-              name="permntOutsideKeralaLocalityNameMl"
-              value={permntOutsideKeralaLocalityNameMl}
-              onKeyPress={setCheckMalayalamInputField}
-              onChange={setSelectpermntOutsideKeralaLocalityNameMl}
-              disable={isDisableEdit}
-              placeholder={`${t("CR_LOCALITY_ML")}`}
-              {...(validation = {
-                pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
-                isRequired: true,
-                type: "text",
-                title: t("CR_INVALID_LOCALITY_ML"),
-              })}
-            />
-          </div>
+        <div className="col-md-6">
+          <CardLabel>
+            {t("CR_LOCALITY_ML")}
+            <span className="mandatorycss">*</span>
+          </CardLabel>
+          <TextInput
+            t={t}
+            type={"text"}
+            optionKey="i18nKey"
+            name="permntOutsideKeralaLocalityNameMl"
+            value={permntOutsideKeralaLocalityNameMl}
+            onKeyPress={setCheckMalayalamInputField}
+            onChange={setSelectpermntOutsideKeralaLocalityNameMl}
+            disable={isDisableEdit}
+            placeholder={`${t("CR_LOCALITY_ML")}`}
+            {...(validation = {
+              pattern: "^[\u0D00-\u0D7F\u200D\u200C ]*$",
+              isRequired: true,
+              type: "text",
+              title: t("CR_INVALID_LOCALITY_ML"),
+            })}
+          />
         </div>
-        <div className="row">
-          <div className="col-md-6">
-            <CardLabel>{t("CR_STREET_NAME_EN")}</CardLabel>
-            <TextInput
-              t={t}
-              type={"text"}
-              optionKey="i18nKey"
-              name="permntOutsideKeralaStreetNameEn"
-              value={permntOutsideKeralaStreetNameEn}
-              onChange={setSelectpermntOutsideKeralaStreetNameEn}
-              disable={isDisableEdit}
-              placeholder={`${t("CR_STREET_NAME_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
-            />
-          </div>
-          <div className="col-md-6">
-            <CardLabel>{t("CR_STREET_NAME_ML")}</CardLabel>
-            <TextInput
-              t={t}
-              type={"text"}
-              optionKey="i18nKey"
-              name="permntOutsideKeralaStreetNameMl"
-              value={permntOutsideKeralaStreetNameMl}
-              onKeyPress={setCheckMalayalamInputField}
-              onChange={setSelectpermntOutsideKeralaStreetNameMl}
-              disable={isDisableEdit}
-              placeholder={`${t("CR_STREET_NAME_ML")}`}
-              {...(validation = {
-                pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
-                isRequired: false,
-                type: "text",
-                title: t("CR_INVALID_STREET_NAME_ML"),
-              })}
-            />
-          </div>
+      </div>
+      <div className="row">
+        <div className="col-md-6">
+          <CardLabel>{t("CR_STREET_NAME_EN")}</CardLabel>
+          <TextInput
+            t={t}
+            type={"text"}
+            optionKey="i18nKey"
+            name="permntOutsideKeralaStreetNameEn"
+            value={permntOutsideKeralaStreetNameEn}
+            onChange={setSelectpermntOutsideKeralaStreetNameEn}
+            disable={isDisableEdit}
+            placeholder={`${t("CR_STREET_NAME_EN")}`}
+            {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: false, type: "text", title: t("CR_INVALID_STREET_NAME_EN") })}
+          />
         </div>
-        <div className="row">
-          <div className="col-md-6">
-            <CardLabel>
-              {t("CR_HOUSE_NAME_EN")}
-              <span className="mandatorycss">*</span>
-            </CardLabel>
-            <TextInput
-              t={t}
-              type={"text"}
-              optionKey="i18nKey"
-              name="permntOutsideKeralaHouseNameEn"
-              value={permntOutsideKeralaHouseNameEn}
-              onChange={setSelectpermntOutsideKeralaHouseNameEn}
-              disable={isDisableEdit}
-              placeholder={`${t("CR_HOUSE_NAME_EN")}`}
-              {...(validation = { pattern: "^[a-zA-Z-.`' ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
-            />
-          </div>
-          <div className="col-md-6">
-            <CardLabel>
-              {t("CR_HOUSE_NAME_ML")}
-              <span className="mandatorycss">*</span>
-            </CardLabel>
-            <TextInput
-              t={t}
-              type={"text"}
-              optionKey="i18nKey"
-              name="permntOutsideKeralaHouseNameMl"
-              value={permntOutsideKeralaHouseNameMl}
-              onKeyPress={setCheckMalayalamInputField}
-              onChange={setSelectpermntOutsideKeralaHouseNameMl}
-              disable={isDisableEdit}
-              placeholder={`${t("CR_HOUSE_NAME_ML")}`}
-              {...(validation = {
-                pattern: "^[\u0D00-\u0D7F\u200D\u200C .&'@' .0-9`' ]*$",
-                isRequired: true,
-                type: "text",
-                title: t("CR_INVALID_HOUSE_NAME_ML"),
-              })}
-            />
-          </div>
+        <div className="col-md-6">
+          <CardLabel>{t("CR_STREET_NAME_ML")}</CardLabel>
+          <TextInput
+            t={t}
+            type={"text"}
+            optionKey="i18nKey"
+            name="permntOutsideKeralaStreetNameMl"
+            value={permntOutsideKeralaStreetNameMl}
+            onKeyPress={setCheckMalayalamInputField}
+            onChange={setSelectpermntOutsideKeralaStreetNameMl}
+            disable={isDisableEdit}
+            placeholder={`${t("CR_STREET_NAME_ML")}`}
+            {...(validation = {
+              pattern: "^[\u0D00-\u0D7F\u200D\u200C ]*$",
+              isRequired: false,
+              type: "text",
+              title: t("CR_INVALID_STREET_NAME_ML"),
+            })}
+          />
         </div>
-      </FormStep>
+      </div>
+      <div className="row">
+        <div className="col-md-6">
+          <CardLabel>
+            {t("CR_HOUSE_NAME_EN")}
+            <span className="mandatorycss">*</span>
+          </CardLabel>
+          <TextInput
+            t={t}
+            type={"text"}
+            optionKey="i18nKey"
+            name="permntOutsideKeralaHouseNameEn"
+            value={permntOutsideKeralaHouseNameEn}
+            onChange={setSelectpermntOutsideKeralaHouseNameEn}
+            disable={isDisableEdit}
+            placeholder={`${t("CR_HOUSE_NAME_EN")}`}
+            {...(validation = { pattern: "^[a-zA-Z-0-9 ]*$", isRequired: true, type: "text", title: t("CR_INVALID_HOUSE_NAME_EN") })}
+          />
+        </div>
+        <div className="col-md-6">
+          <CardLabel>
+            {t("CR_HOUSE_NAME_ML")}
+            <span className="mandatorycss">*</span>
+          </CardLabel>
+          <TextInput
+            t={t}
+            type={"text"}
+            optionKey="i18nKey"
+            name="permntOutsideKeralaHouseNameMl"
+            value={permntOutsideKeralaHouseNameMl}
+            onKeyPress={setCheckMalayalamInputFieldWithSplChar}
+            onChange={setSelectpermntOutsideKeralaHouseNameMl}
+            disable={isDisableEdit}
+            placeholder={`${t("CR_HOUSE_NAME_ML")}`}
+            {...(validation = {
+              pattern: "^[\u0D00-\u0D7F\u200D\u200C0-9 -]*$",
+              isRequired: true,
+              type: "text",
+              title: t("CR_INVALID_HOUSE_NAME_ML"),
+            })}
+          />
+        </div>
+      </div>
+      {/* </FormStep> */}
     </React.Fragment>
   );
 };

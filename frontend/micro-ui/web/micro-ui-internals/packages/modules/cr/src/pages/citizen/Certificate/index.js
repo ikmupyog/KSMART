@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import SearchRegistryDeath from "../../../components/SearchRegistryDeath";
 import { STATE_CODE } from "../../../config/constants";
+import { convertDateToEpoch } from "../../../utils";
 
 const DeathCertificateSearch = () => {
   const { t } = useTranslation();
@@ -19,17 +20,11 @@ const DeathCertificateSearch = () => {
   const [isLoading, setIsLoading] = useState(false);
 
 
-  function onSubmit(_data) {
-    var fromDate = new Date(_data?.fromDate);
-    fromDate?.setSeconds(fromDate?.getSeconds() - 19800);
-    var toDate = new Date(_data?.toDate);
-    toDate?.setSeconds(toDate?.getSeconds() + 86399 - 19800);
-    const data = {
-      ..._data,
-      ...(_data.toDate ? { toDate: toDate?.getTime() } : {}),
-      ...(_data.fromDate ? { fromDate: fromDate?.getTime() } : {}),
-    };
-
+  function onSubmit(data) {
+    if (!_.isEmpty(data.DateOfDeath)) {
+      _.set(data, "DateOfDeath", convertDateToEpoch(data.DateOfDeath, "start"))
+    }
+    
     setPayload(
       Object.keys(data)
         .filter((k) => data[k])

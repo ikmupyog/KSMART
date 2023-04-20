@@ -1,9 +1,11 @@
+import moment from "moment";
 export const getFilteredGroomAgeData = (selectedData, inclusionData) => {
-    let filteredDocuments = getFilteredDocuments(selectedData,inclusionData);
-    const computedValue = computeInitialValue(selectedData?.GroomDetails);
+    let filteredDocuments = getFilteredDocuments(inclusionData);
+    const computedInitialValue = computeInitialValue(selectedData?.GroomDetails);
+    const computedCurrentValue = computeCurrentValue(selectedData?.GroomDetails);
     let selectedDomObj = {
-      initialValue: computedValue,
-      curValue: computedValue,
+      initialValue: computedInitialValue,
+      curValue: computedCurrentValue,
       isDisable: true,
       isEditable: false,
       isFocused: false,
@@ -14,16 +16,24 @@ export const getFilteredGroomAgeData = (selectedData, inclusionData) => {
   
   //TODO need validation to check dob is null
   const computeInitialValue = (groomDetails) => {
-    const initialValue = groomDetails?.groomAge;
-    return initialValue;
+    const groomDOB = {
+      dob: groomDetails?.groomDOB,
+      age: groomDetails?.groomAge,
+    }
+    return groomDOB;
   };
   
-  const getFilteredDocuments = (selectedData,inclusionData) => {
-    let filteredData  = {};
-    if (selectedData?.registerBirthPlace?.placeofbirthid === "HOSPITAL") {
-      filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_INSTITUTIONAL");
-    } else {
-      filteredData = inclusionData?.find((item) => item.conditionCode === "DOB_NON_INSTITUTIONAL");
+  const computeCurrentValue = (groomDetails) => {
+    console.log("moment(groomDetails?.groomDOB)",moment(groomDetails?.groomDOB).format("DD/MM/YYYY"));
+    const groomDOBAge = {
+      dob: groomDetails && moment(groomDetails?.groomDOB).format("DD/MM/YYYY"),
+      age: groomDetails?.groomAge,
     }
-    return filteredData;
+    return groomDOBAge;
+  };
+  
+  
+  const getFilteredDocuments = (inclusionData) => {
+    let filteredData  = inclusionData;
+    return {documentData:filteredData, docFlag: "GROOM_AGE"}; 
   };
