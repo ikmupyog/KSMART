@@ -31,7 +31,7 @@ import org.springframework.stereotype.Service;
 import com.jayway.jsonpath.JsonPath;
 /**
      * Creates DemandService
-     * RAkhi S  on 28.03.2023
+     * Jasmine on 10.04.2023
      * 
      */
 
@@ -53,6 +53,7 @@ public class DemandService {
 
     public List<Demand> saveDemandDetails(List<Demand> demands, RequestInfo requestInfo, WorkFlowCheck wfc) {
         demands.forEach(demand -> setDemandParamsLateFee(demand, requestInfo, wfc));
+        System.out.println("hientersavedemand");
         return  enrichmentService.saveDemand(requestInfo,demands);
     }
     public void setDemandParamsLateFee(Demand demand, RequestInfo requestInfo, WorkFlowCheck wfc) {
@@ -60,7 +61,7 @@ public class DemandService {
         demand.setBusinessService("CR");
         ArrayList<DemandDetail> demandDetails = new ArrayList<>();
         DemandDetail demandDetail=new DemandDetail();
-        demandDetail.setTaxHeadMasterCode("CRB_FEES");
+        demandDetail.setTaxHeadMasterCode("CRM_FEES");
         demandDetail.setTaxAmount(new BigDecimal(wfc.getAmount()));
         demandDetail.setTenantId(demand.getTenantId());
         setGLCode(demandDetail, requestInfo);

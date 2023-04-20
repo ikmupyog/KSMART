@@ -697,10 +697,14 @@ public class MarriageDetailsEnrichment implements BaseEnrichment {
     }
 //Jasmine 30.03.2023
     public List<Demand> saveDemand(RequestInfo requestInfo, List<Demand> demands){
+        System.out.println("hientersaveDemand");
         StringBuilder url = new StringBuilder(config.getBillingHost());
         url.append(config.getDemandCreateEndpoint());
         DemandRequest request = new DemandRequest(requestInfo,demands);
         Object result = serviceRequestRepository.fetchResult(url,request);
+        
+        System.out.println("demands"+demands);
+        System.out.println("demandresult"+result);
         DemandResponse response = null;
         try{
             response = mapper.convertValue(result,DemandResponse.class);

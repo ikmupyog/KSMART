@@ -3,6 +3,7 @@ package org.ksmart.marriage.marriageapplication.web.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.ksmart.marriage.common.model.AuditDetails;
+import org.ksmart.marriage.marriageapplication.web.model.Demand.Demand;
 import org.ksmart.marriage.marriageapplication.web.model.marriage.*;
 //import org.ksmart.marriage.common.model.AuditDetails;
 //import org.ksmart.marriage.common.model.Document;
@@ -195,6 +196,10 @@ public class MarriageApplicationDetails {
     @JsonProperty("MarriageDocuments")
     @Valid
     private List<MarriageDocument> MarriageDocuments ;
+
+    
+    @JsonProperty("Demands")
+    private List<Demand> demands;
 
     private boolean wfnormalRegn ;
     private boolean wfdelayedWithinFiveYear ;
