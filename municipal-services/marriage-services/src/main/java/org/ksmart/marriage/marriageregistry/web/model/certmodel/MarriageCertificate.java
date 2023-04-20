@@ -236,6 +236,8 @@ public class MarriageCertificate {
     private String year;
     @JsonProperty("dateOfIssue")
     private Long dateofissue;
+    @JsonProperty("dateOfIssueInWords")
+    private String dateOfIssueInWords;
 
     @JsonProperty("certificateStatus")
     private StatusEnum certificateStatus = null;
